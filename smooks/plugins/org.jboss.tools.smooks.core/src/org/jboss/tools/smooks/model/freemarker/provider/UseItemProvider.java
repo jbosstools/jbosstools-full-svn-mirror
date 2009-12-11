@@ -106,7 +106,7 @@ public class UseItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Use"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Use")); //$NON-NLS-1$
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class UseItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Use_type");
+		return getString("_UI_Use_type"); //$NON-NLS-1$
 	}
 
 	/**

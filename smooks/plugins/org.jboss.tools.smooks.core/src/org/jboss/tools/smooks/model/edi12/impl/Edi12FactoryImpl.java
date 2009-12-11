@@ -31,7 +31,7 @@ public class Edi12FactoryImpl extends EFactoryImpl implements Edi12Factory {
 	 */
 	public static Edi12Factory init() {
 		try {
-			Edi12Factory theEdi12Factory = (Edi12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/edi-1.2.xsd"); 
+			Edi12Factory theEdi12Factory = (Edi12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/edi-1.2.xsd");  //$NON-NLS-1$
 			if (theEdi12Factory != null) {
 				return theEdi12Factory;
 			}
@@ -62,7 +62,7 @@ public class Edi12FactoryImpl extends EFactoryImpl implements Edi12Factory {
 			case Edi12Package.EDI12_DOCUMENT_ROOT: return createEDI12DocumentRoot();
 			case Edi12Package.EDI12_READER: return createEDI12Reader();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Edi12FactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.Edi12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

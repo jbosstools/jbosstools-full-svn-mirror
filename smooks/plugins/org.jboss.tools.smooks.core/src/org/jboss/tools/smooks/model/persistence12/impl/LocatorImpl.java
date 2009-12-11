@@ -666,22 +666,22 @@ public class LocatorImpl extends ElementVisitorImpl implements Locator {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (query: ");
+		result.append(" (query: "); //$NON-NLS-1$
 		result.append(query);
-		result.append(", beanId: ");
+		result.append(", beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", dao: ");
+		result.append(", dao: "); //$NON-NLS-1$
 		result.append(dao);
-		result.append(", lookup: ");
+		result.append(", lookup: "); //$NON-NLS-1$
 		result.append(lookup);
-		result.append(", lookupOnElement: ");
+		result.append(", lookupOnElement: "); //$NON-NLS-1$
 		result.append(lookupOnElement);
-		result.append(", lookupOnElementNS: ");
+		result.append(", lookupOnElementNS: "); //$NON-NLS-1$
 		result.append(lookupOnElementNS);
-		result.append(", onNoResult: ");
-		if (onNoResultESet) result.append(onNoResult); else result.append("<unset>");
-		result.append(", uniqueResult: ");
-		if (uniqueResultESet) result.append(uniqueResult); else result.append("<unset>");
+		result.append(", onNoResult: "); //$NON-NLS-1$
+		if (onNoResultESet) result.append(onNoResult); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", uniqueResult: "); //$NON-NLS-1$
+		if (uniqueResultESet) result.append(uniqueResult); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

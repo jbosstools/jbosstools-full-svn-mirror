@@ -37,7 +37,7 @@ public interface EsbroutingPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "esbrouting";
+	String eNAME = "esbrouting"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -45,7 +45,7 @@ public interface EsbroutingPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.jboss.org/xsd/jbossesb/smooks/routing-1.0.xsd";
+	String eNS_URI = "http://www.jboss.org/xsd/jbossesb/smooks/routing-1.0.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -53,7 +53,7 @@ public interface EsbroutingPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "esb";
+	String eNS_PREFIX = "esb"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

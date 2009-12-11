@@ -88,7 +88,7 @@ public final class MessageType extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final MessageType TEXT_MESSAGE_LITERAL = new MessageType(TEXT_MESSAGE, "TextMessage", "TextMessage");
+	public static final MessageType TEXT_MESSAGE_LITERAL = new MessageType(TEXT_MESSAGE, "TextMessage", "TextMessage"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Object Message</b></em>' literal object.
@@ -98,7 +98,7 @@ public final class MessageType extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final MessageType OBJECT_MESSAGE_LITERAL = new MessageType(OBJECT_MESSAGE, "ObjectMessage", "ObjectMessage");
+	public static final MessageType OBJECT_MESSAGE_LITERAL = new MessageType(OBJECT_MESSAGE, "ObjectMessage", "ObjectMessage"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Map Message</b></em>' literal object.
@@ -108,7 +108,7 @@ public final class MessageType extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final MessageType MAP_MESSAGE_LITERAL = new MessageType(MAP_MESSAGE, "MapMessage", "MapMessage");
+	public static final MessageType MAP_MESSAGE_LITERAL = new MessageType(MAP_MESSAGE, "MapMessage", "MapMessage"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * An array of all the '<em><b>Message Type</b></em>' enumerators.

@@ -79,8 +79,8 @@ public class DescriptionItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Description_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Description_name_feature", "_UI_Description_type"),
+				 getString("_UI_Description_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Description_name_feature", "_UI_Description_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.DESCRIPTION__NAME,
 				 true,
 				 false,
@@ -101,8 +101,8 @@ public class DescriptionItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Description_version_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Description_version_feature", "_UI_Description_type"),
+				 getString("_UI_Description_version_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Description_version_feature", "_UI_Description_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.DESCRIPTION__VERSION,
 				 true,
 				 false,
@@ -120,7 +120,7 @@ public class DescriptionItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Description"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Description")); //$NON-NLS-1$
 	}
 
 	/**
@@ -133,8 +133,8 @@ public class DescriptionItemProvider
 	public String getText(Object object) {
 		String label = ((Description)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Description_type") :
-			getString("_UI_Description_type") + " " + label;
+			getString("_UI_Description_type") : //$NON-NLS-1$
+			getString("_UI_Description_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

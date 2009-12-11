@@ -79,8 +79,8 @@ public class InlineItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Inline_directive_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Inline_directive_feature", "_UI_Inline_type"),
+				 getString("_UI_Inline_directive_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Inline_directive_feature", "_UI_Inline_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 XslPackage.Literals.INLINE__DIRECTIVE,
 				 true,
 				 false,
@@ -98,7 +98,7 @@ public class InlineItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Inline"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Inline")); //$NON-NLS-1$
 	}
 
 	/**
@@ -112,8 +112,8 @@ public class InlineItemProvider
 		InlineDirective labelValue = ((Inline)object).getDirective();
 		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Inline_type") :
-			getString("_UI_Inline_type") + " " + label;
+			getString("_UI_Inline_type") : //$NON-NLS-1$
+			getString("_UI_Inline_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

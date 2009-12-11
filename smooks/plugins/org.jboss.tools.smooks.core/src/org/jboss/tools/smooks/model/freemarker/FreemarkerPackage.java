@@ -42,7 +42,7 @@ public interface FreemarkerPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "freemarker";
+	String eNAME = "freemarker"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -50,7 +50,7 @@ public interface FreemarkerPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/freemarker-1.1.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/freemarker-1.1.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -58,7 +58,7 @@ public interface FreemarkerPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "ftl";
+	String eNS_PREFIX = "ftl"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

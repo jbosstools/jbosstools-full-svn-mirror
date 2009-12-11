@@ -642,17 +642,17 @@ public class SmooksResourceListTypeImpl extends AbstractAnyTypeImpl implements S
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (abstractReaderGroup: ");
+		result.append(" (abstractReaderGroup: "); //$NON-NLS-1$
 		result.append(abstractReaderGroup);
-		result.append(", abstractResourceConfigGroup: ");
+		result.append(", abstractResourceConfigGroup: "); //$NON-NLS-1$
 		result.append(abstractResourceConfigGroup);
-		result.append(", defaultConditionRef: ");
+		result.append(", defaultConditionRef: "); //$NON-NLS-1$
 		result.append(defaultConditionRef);
-		result.append(", defaultSelector: ");
+		result.append(", defaultSelector: "); //$NON-NLS-1$
 		result.append(defaultSelector);
-		result.append(", defaultSelectorNamespace: ");
+		result.append(", defaultSelectorNamespace: "); //$NON-NLS-1$
 		result.append(defaultSelectorNamespace);
-		result.append(", defaultTargetProfile: ");
+		result.append(", defaultTargetProfile: "); //$NON-NLS-1$
 		result.append(defaultTargetProfile);
 		result.append(')');
 		return result.toString();

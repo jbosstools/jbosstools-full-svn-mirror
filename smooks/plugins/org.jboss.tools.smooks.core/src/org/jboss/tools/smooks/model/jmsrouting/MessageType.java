@@ -35,7 +35,7 @@ public enum MessageType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	TEXT_MESSAGE(0, "TextMessage", "TextMessage"),
+	TEXT_MESSAGE(0, "TextMessage", "TextMessage"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Object Message</b></em>' literal object.
@@ -45,7 +45,7 @@ public enum MessageType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	OBJECT_MESSAGE(1, "ObjectMessage", "ObjectMessage"),
+	OBJECT_MESSAGE(1, "ObjectMessage", "ObjectMessage"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Map Message</b></em>' literal object.
@@ -55,7 +55,7 @@ public enum MessageType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	MAP_MESSAGE(2, "MapMessage", "MapMessage");
+	MAP_MESSAGE(2, "MapMessage", "MapMessage"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Text Message</b></em>' literal value.

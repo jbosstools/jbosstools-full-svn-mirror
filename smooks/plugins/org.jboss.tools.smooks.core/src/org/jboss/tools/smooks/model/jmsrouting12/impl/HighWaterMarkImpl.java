@@ -359,12 +359,12 @@ public class HighWaterMarkImpl extends AbstractAnyTypeImpl implements HighWaterM
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (mark: ");
-		if (markESet) result.append(mark); else result.append("<unset>");
-		result.append(", pollFrequency: ");
-		if (pollFrequencyESet) result.append(pollFrequency); else result.append("<unset>");
-		result.append(", timeout: ");
-		if (timeoutESet) result.append(timeout); else result.append("<unset>");
+		result.append(" (mark: "); //$NON-NLS-1$
+		if (markESet) result.append(mark); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", pollFrequency: "); //$NON-NLS-1$
+		if (pollFrequencyESet) result.append(pollFrequency); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", timeout: "); //$NON-NLS-1$
+		if (timeoutESet) result.append(timeout); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

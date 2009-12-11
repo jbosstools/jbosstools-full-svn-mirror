@@ -279,10 +279,10 @@ public class SessionImpl extends EObjectImpl implements Session {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (acknowledgeMode: ");
-		if (acknowledgeModeESet) result.append(acknowledgeMode); else result.append("<unset>");
-		result.append(", transacted: ");
-		if (transactedESet) result.append(transacted); else result.append("<unset>");
+		result.append(" (acknowledgeMode: "); //$NON-NLS-1$
+		if (acknowledgeModeESet) result.append(acknowledgeMode); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", transacted: "); //$NON-NLS-1$
+		if (transactedESet) result.append(transacted); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

@@ -40,7 +40,7 @@ public interface Validation10Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "validation10";
+	String eNAME = "validation10"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -48,7 +48,7 @@ public interface Validation10Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/validation-1.0.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/validation-1.0.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -56,7 +56,7 @@ public interface Validation10Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "validation";
+	String eNS_PREFIX = "validation"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

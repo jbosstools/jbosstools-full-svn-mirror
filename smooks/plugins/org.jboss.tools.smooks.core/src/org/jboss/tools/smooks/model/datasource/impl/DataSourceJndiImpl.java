@@ -294,11 +294,11 @@ public class DataSourceJndiImpl extends ElementVisitorImpl implements DataSource
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (autoCommit: ");
-		if (autoCommitESet) result.append(autoCommit); else result.append("<unset>");
-		result.append(", bindOnElement: ");
+		result.append(" (autoCommit: "); //$NON-NLS-1$
+		if (autoCommitESet) result.append(autoCommit); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", bindOnElement: "); //$NON-NLS-1$
 		result.append(bindOnElement);
-		result.append(", datasource: ");
+		result.append(", datasource: "); //$NON-NLS-1$
 		result.append(datasource);
 		result.append(')');
 		return result.toString();

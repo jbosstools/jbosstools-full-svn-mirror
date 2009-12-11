@@ -85,8 +85,8 @@ public class UpdaterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Updater_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_beanId_feature", "_UI_Updater_type"),
+				 getString("_UI_Updater_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_beanId_feature", "_UI_Updater_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.UPDATER__BEAN_ID,
 				 true,
 				 false,
@@ -107,8 +107,8 @@ public class UpdaterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Updater_dao_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_dao_feature", "_UI_Updater_type"),
+				 getString("_UI_Updater_dao_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_dao_feature", "_UI_Updater_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.UPDATER__DAO,
 				 true,
 				 false,
@@ -129,8 +129,8 @@ public class UpdaterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Updater_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_name_feature", "_UI_Updater_type"),
+				 getString("_UI_Updater_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_name_feature", "_UI_Updater_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.UPDATER__NAME,
 				 true,
 				 false,
@@ -151,8 +151,8 @@ public class UpdaterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Updater_updateBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_updateBefore_feature", "_UI_Updater_type"),
+				 getString("_UI_Updater_updateBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_updateBefore_feature", "_UI_Updater_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.UPDATER__UPDATE_BEFORE,
 				 true,
 				 false,
@@ -173,8 +173,8 @@ public class UpdaterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Updater_updatedBeanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_updatedBeanId_feature", "_UI_Updater_type"),
+				 getString("_UI_Updater_updatedBeanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_updatedBeanId_feature", "_UI_Updater_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.UPDATER__UPDATED_BEAN_ID,
 				 true,
 				 false,
@@ -195,8 +195,8 @@ public class UpdaterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Updater_updateOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_updateOnElement_feature", "_UI_Updater_type"),
+				 getString("_UI_Updater_updateOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_updateOnElement_feature", "_UI_Updater_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.UPDATER__UPDATE_ON_ELEMENT,
 				 true,
 				 false,
@@ -217,8 +217,8 @@ public class UpdaterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Updater_updateOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_updateOnElementNS_feature", "_UI_Updater_type"),
+				 getString("_UI_Updater_updateOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Updater_updateOnElementNS_feature", "_UI_Updater_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.UPDATER__UPDATE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -235,7 +235,7 @@ public class UpdaterItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Updater"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Updater")); //$NON-NLS-1$
 	}
 
 	/**
@@ -247,8 +247,8 @@ public class UpdaterItemProvider
 	public String getText(Object object) {
 		String label = ((Updater)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Updater_type") :
-			getString("_UI_Updater_type") + " " + label;
+			getString("_UI_Updater_type") : //$NON-NLS-1$
+			getString("_UI_Updater_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

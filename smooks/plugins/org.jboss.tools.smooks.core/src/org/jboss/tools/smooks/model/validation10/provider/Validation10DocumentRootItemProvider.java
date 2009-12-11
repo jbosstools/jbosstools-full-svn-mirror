@@ -102,7 +102,7 @@ public class Validation10DocumentRootItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Validation10DocumentRoot"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Validation10DocumentRoot")); //$NON-NLS-1$
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class Validation10DocumentRootItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		return getString("_UI_Validation10DocumentRoot_type");
+		return getString("_UI_Validation10DocumentRoot_type"); //$NON-NLS-1$
 	}
 
 	/**

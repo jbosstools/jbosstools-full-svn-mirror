@@ -331,12 +331,12 @@ public class ResultSetImpl extends EObjectImpl implements ResultSet {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", scope: ");
-		if (scopeESet) result.append(scope); else result.append("<unset>");
-		result.append(", timeToLive: ");
-		if (timeToLiveESet) result.append(timeToLive); else result.append("<unset>");
+		result.append(", scope: "); //$NON-NLS-1$
+		if (scopeESet) result.append(scope); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", timeToLive: "); //$NON-NLS-1$
+		if (timeToLiveESet) result.append(timeToLive); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

@@ -67,7 +67,7 @@ public final class DeliveryMode extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final DeliveryMode PERSISTENT_LITERAL = new DeliveryMode(PERSISTENT, "persistent", "persistent");
+	public static final DeliveryMode PERSISTENT_LITERAL = new DeliveryMode(PERSISTENT, "persistent", "persistent"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Non Persistent</b></em>' literal object.
@@ -77,7 +77,7 @@ public final class DeliveryMode extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final DeliveryMode NON_PERSISTENT_LITERAL = new DeliveryMode(NON_PERSISTENT, "nonPersistent", "non-persistent");
+	public static final DeliveryMode NON_PERSISTENT_LITERAL = new DeliveryMode(NON_PERSISTENT, "nonPersistent", "non-persistent"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * An array of all the '<em><b>Delivery Mode</b></em>' enumerators.

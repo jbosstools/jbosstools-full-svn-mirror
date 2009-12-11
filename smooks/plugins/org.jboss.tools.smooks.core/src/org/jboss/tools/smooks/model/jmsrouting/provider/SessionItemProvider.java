@@ -82,8 +82,8 @@ public class SessionItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Session_acknowledgeMode_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Session_acknowledgeMode_feature", "_UI_Session_type"),
+				 getString("_UI_Session_acknowledgeMode_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Session_acknowledgeMode_feature", "_UI_Session_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.SESSION__ACKNOWLEDGE_MODE,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class SessionItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Session_transacted_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Session_transacted_feature", "_UI_Session_type"),
+				 getString("_UI_Session_transacted_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Session_transacted_feature", "_UI_Session_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.SESSION__TRANSACTED,
 				 true,
 				 false,
@@ -123,7 +123,7 @@ public class SessionItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Session"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Session")); //$NON-NLS-1$
 	}
 
 	/**
@@ -137,8 +137,8 @@ public class SessionItemProvider
 		AcknowledgeMode labelValue = ((Session)object).getAcknowledgeMode();
 		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Session_type") :
-			getString("_UI_Session_type") + " " + label;
+			getString("_UI_Session_type") : //$NON-NLS-1$
+			getString("_UI_Session_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

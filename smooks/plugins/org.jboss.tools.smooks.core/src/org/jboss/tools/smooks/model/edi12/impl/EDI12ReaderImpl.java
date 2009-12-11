@@ -41,7 +41,7 @@ public class EDI12ReaderImpl extends AbstractReaderImpl implements EDI12Reader {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ENCODING_EDEFAULT = "UTF-8";
+	protected static final String ENCODING_EDEFAULT = "UTF-8"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
@@ -325,12 +325,12 @@ public class EDI12ReaderImpl extends AbstractReaderImpl implements EDI12Reader {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (encoding: ");
-		if (encodingESet) result.append(encoding); else result.append("<unset>");
-		result.append(", mappingModel: ");
+		result.append(" (encoding: "); //$NON-NLS-1$
+		if (encodingESet) result.append(encoding); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", mappingModel: "); //$NON-NLS-1$
 		result.append(mappingModel);
-		result.append(", validate: ");
-		if (validateESet) result.append(validate); else result.append("<unset>");
+		result.append(", validate: "); //$NON-NLS-1$
+		if (validateESet) result.append(validate); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

@@ -35,7 +35,7 @@ public enum DeliveryMode implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	PERSISTENT(0, "persistent", "persistent"),
+	PERSISTENT(0, "persistent", "persistent"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Non Persistent</b></em>' literal object.
@@ -45,7 +45,7 @@ public enum DeliveryMode implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	NON_PERSISTENT(1, "nonPersistent", "non-persistent");
+	NON_PERSISTENT(1, "nonPersistent", "non-persistent"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Persistent</b></em>' literal value.

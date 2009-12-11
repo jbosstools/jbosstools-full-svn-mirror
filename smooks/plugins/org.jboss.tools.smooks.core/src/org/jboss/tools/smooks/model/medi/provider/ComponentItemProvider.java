@@ -78,8 +78,8 @@ public class ComponentItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Component_required_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Component_required_feature", "_UI_Component_type"),
+				 getString("_UI_Component_required_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Component_required_feature", "_UI_Component_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.COMPONENT__REQUIRED,
 				 true,
 				 false,
@@ -100,8 +100,8 @@ public class ComponentItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Component_truncatable_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Component_truncatable_feature", "_UI_Component_type"),
+				 getString("_UI_Component_truncatable_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Component_truncatable_feature", "_UI_Component_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.COMPONENT__TRUNCATABLE,
 				 true,
 				 false,
@@ -149,7 +149,7 @@ public class ComponentItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Component"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Component")); //$NON-NLS-1$
 	}
 
 	/**
@@ -162,8 +162,8 @@ public class ComponentItemProvider
 	public String getText(Object object) {
 		String label = ((Component)object).getXmltag();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Component_type") :
-			getString("_UI_Component_type") + " " + label;
+			getString("_UI_Component_type") : //$NON-NLS-1$
+			getString("_UI_Component_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

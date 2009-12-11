@@ -31,7 +31,7 @@ public class Json12FactoryImpl extends EFactoryImpl implements Json12Factory {
 	 */
 	public static Json12Factory init() {
 		try {
-			Json12Factory theJson12Factory = (Json12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/json-1.2.xsd"); 
+			Json12Factory theJson12Factory = (Json12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/json-1.2.xsd");  //$NON-NLS-1$
 			if (theJson12Factory != null) {
 				return theJson12Factory;
 			}
@@ -64,7 +64,7 @@ public class Json12FactoryImpl extends EFactoryImpl implements Json12Factory {
 			case Json12Package.KEY_MAP: return createKeyMap();
 			case Json12Package.JSON12_READER: return createJson12Reader();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Json12FactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.Json12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

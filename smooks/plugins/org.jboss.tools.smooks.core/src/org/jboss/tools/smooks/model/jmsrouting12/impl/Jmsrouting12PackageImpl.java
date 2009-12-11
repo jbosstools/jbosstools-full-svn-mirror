@@ -725,70 +725,70 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 		sessionEClass.getESuperTypes().add(theCommonPackage.getAbstractAnyType());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(connectionEClass, Connection.class, "Connection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getConnection_Factory(), theXMLTypePackage.getString(), "factory", "ConnectionFactory", 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getConnection_SecurityCredential(), theXMLTypePackage.getString(), "securityCredential", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getConnection_SecurityPrincipal(), theXMLTypePackage.getString(), "securityPrincipal", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(connectionEClass, Connection.class, "Connection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getConnection_Factory(), theXMLTypePackage.getString(), "factory", "ConnectionFactory", 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getConnection_SecurityCredential(), theXMLTypePackage.getString(), "securityCredential", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getConnection_SecurityPrincipal(), theXMLTypePackage.getString(), "securityPrincipal", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(jmsRouting12DocumentRootEClass, JMSRouting12DocumentRoot.class, "JMSRouting12DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getJMSRouting12DocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJMSRouting12DocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJMSRouting12DocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJMSRouting12DocumentRoot_Router(), this.getJMS12Router(), null, "router", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(jmsRouting12DocumentRootEClass, JMSRouting12DocumentRoot.class, "JMSRouting12DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getJMSRouting12DocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJMSRouting12DocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJMSRouting12DocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJMSRouting12DocumentRoot_Router(), this.getJMS12Router(), null, "router", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(highWaterMarkEClass, HighWaterMark.class, "HighWaterMark", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getHighWaterMark_Mark(), theXMLTypePackage.getInt(), "mark", "200", 0, 1, HighWaterMark.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getHighWaterMark_PollFrequency(), theXMLTypePackage.getInt(), "pollFrequency", "1000", 0, 1, HighWaterMark.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getHighWaterMark_Timeout(), theXMLTypePackage.getInt(), "timeout", "60000", 0, 1, HighWaterMark.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(highWaterMarkEClass, HighWaterMark.class, "HighWaterMark", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getHighWaterMark_Mark(), theXMLTypePackage.getInt(), "mark", "200", 0, 1, HighWaterMark.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getHighWaterMark_PollFrequency(), theXMLTypePackage.getInt(), "pollFrequency", "1000", 0, 1, HighWaterMark.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getHighWaterMark_Timeout(), theXMLTypePackage.getInt(), "timeout", "60000", 0, 1, HighWaterMark.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
-		initEClass(jndiEClass, Jndi.class, "Jndi", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getJndi_ContextFactory(), theXMLTypePackage.getString(), "contextFactory", null, 0, 1, Jndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJndi_NamingFactory(), theXMLTypePackage.getString(), "namingFactory", null, 0, 1, Jndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJndi_Properties(), theXMLTypePackage.getString(), "properties", null, 0, 1, Jndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJndi_ProviderUrl(), theXMLTypePackage.getString(), "providerUrl", null, 0, 1, Jndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(jndiEClass, Jndi.class, "Jndi", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getJndi_ContextFactory(), theXMLTypePackage.getString(), "contextFactory", null, 0, 1, Jndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJndi_NamingFactory(), theXMLTypePackage.getString(), "namingFactory", null, 0, 1, Jndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJndi_Properties(), theXMLTypePackage.getString(), "properties", null, 0, 1, Jndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJndi_ProviderUrl(), theXMLTypePackage.getString(), "providerUrl", null, 0, 1, Jndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(messageEClass, Message.class, "Message", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMessage_CorrelationIdPattern(), theXMLTypePackage.getString(), "correlationIdPattern", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMessage_DeliveryMode(), this.getDeliveryMode(), "deliveryMode", "persistent", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMessage_Priority(), theXMLTypePackage.getInt(), "priority", "4", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMessage_TimeToLive(), theXMLTypePackage.getLong(), "timeToLive", "0", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMessage_Type(), this.getMessageType(), "type", "TextMessage", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(messageEClass, Message.class, "Message", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getMessage_CorrelationIdPattern(), theXMLTypePackage.getString(), "correlationIdPattern", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getMessage_DeliveryMode(), this.getDeliveryMode(), "deliveryMode", "persistent", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getMessage_Priority(), theXMLTypePackage.getInt(), "priority", "4", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getMessage_TimeToLive(), theXMLTypePackage.getLong(), "timeToLive", "0", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getMessage_Type(), this.getMessageType(), "type", "TextMessage", 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
-		initEClass(jms12RouterEClass, JMS12Router.class, "JMS12Router", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getJMS12Router_Message(), this.getMessage(), null, "message", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJMS12Router_Connection(), this.getConnection(), null, "connection", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJMS12Router_Session(), this.getSession(), null, "session", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJMS12Router_Jndi(), this.getJndi(), null, "jndi", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJMS12Router_HighWaterMark(), this.getHighWaterMark(), null, "highWaterMark", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJMS12Router_BeanId(), theXMLTypePackage.getString(), "beanId", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJMS12Router_Destination(), theXMLTypePackage.getString(), "destination", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJMS12Router_ExecuteBefore(), theXMLTypePackage.getBoolean(), "executeBefore", "false", 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJMS12Router_RouteOnElement(), theXMLTypePackage.getString(), "routeOnElement", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJMS12Router_RouteOnElementNS(), theXMLTypePackage.getString(), "routeOnElementNS", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(jms12RouterEClass, JMS12Router.class, "JMS12Router", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getJMS12Router_Message(), this.getMessage(), null, "message", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJMS12Router_Connection(), this.getConnection(), null, "connection", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJMS12Router_Session(), this.getSession(), null, "session", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJMS12Router_Jndi(), this.getJndi(), null, "jndi", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJMS12Router_HighWaterMark(), this.getHighWaterMark(), null, "highWaterMark", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJMS12Router_BeanId(), theXMLTypePackage.getString(), "beanId", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJMS12Router_Destination(), theXMLTypePackage.getString(), "destination", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJMS12Router_ExecuteBefore(), theXMLTypePackage.getBoolean(), "executeBefore", "false", 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getJMS12Router_RouteOnElement(), theXMLTypePackage.getString(), "routeOnElement", null, 1, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJMS12Router_RouteOnElementNS(), theXMLTypePackage.getString(), "routeOnElementNS", null, 0, 1, JMS12Router.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(sessionEClass, Session.class, "Session", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSession_AcknowledgeMode(), this.getAcknowledgeMode(), "acknowledgeMode", "AUTO_ACKNOWLEDGE", 0, 1, Session.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSession_Transacted(), theXMLTypePackage.getBoolean(), "transacted", "false", 0, 1, Session.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(sessionEClass, Session.class, "Session", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getSession_AcknowledgeMode(), this.getAcknowledgeMode(), "acknowledgeMode", "AUTO_ACKNOWLEDGE", 0, 1, Session.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getSession_Transacted(), theXMLTypePackage.getBoolean(), "transacted", "false", 0, 1, Session.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		// Initialize enums and add enum literals
-		initEEnum(acknowledgeModeEEnum, AcknowledgeMode.class, "AcknowledgeMode");
+		initEEnum(acknowledgeModeEEnum, AcknowledgeMode.class, "AcknowledgeMode"); //$NON-NLS-1$
 		addEEnumLiteral(acknowledgeModeEEnum, AcknowledgeMode.AUTOACKNOWLEDGE_LITERAL);
 		addEEnumLiteral(acknowledgeModeEEnum, AcknowledgeMode.CLIENTACKNOWLEDGE_LITERAL);
 		addEEnumLiteral(acknowledgeModeEEnum, AcknowledgeMode.DUPSOKACKNOWLEDGE_LITERAL);
 
-		initEEnum(deliveryModeEEnum, DeliveryMode.class, "DeliveryMode");
+		initEEnum(deliveryModeEEnum, DeliveryMode.class, "DeliveryMode"); //$NON-NLS-1$
 		addEEnumLiteral(deliveryModeEEnum, DeliveryMode.PERSISTENT_LITERAL);
 		addEEnumLiteral(deliveryModeEEnum, DeliveryMode.NON_PERSISTENT_LITERAL);
 
-		initEEnum(messageTypeEEnum, MessageType.class, "MessageType");
+		initEEnum(messageTypeEEnum, MessageType.class, "MessageType"); //$NON-NLS-1$
 		addEEnumLiteral(messageTypeEEnum, MessageType.TEXT_MESSAGE_LITERAL);
 		addEEnumLiteral(messageTypeEEnum, MessageType.OBJECT_MESSAGE_LITERAL);
 		addEEnumLiteral(messageTypeEEnum, MessageType.MAP_MESSAGE_LITERAL);
 
 		// Initialize data types
-		initEDataType(acknowledgeModeObjectEDataType, AcknowledgeMode.class, "AcknowledgeModeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(deliveryModeObjectEDataType, DeliveryMode.class, "DeliveryModeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(messageTypeObjectEDataType, MessageType.class, "MessageTypeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(acknowledgeModeObjectEDataType, AcknowledgeMode.class, "AcknowledgeModeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(deliveryModeObjectEDataType, DeliveryMode.class, "DeliveryModeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(messageTypeObjectEDataType, MessageType.class, "MessageTypeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);
@@ -805,319 +805,319 @@ public class Jmsrouting12PackageImpl extends EPackageImpl implements Jmsrouting1
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";				
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";				 //$NON-NLS-1$
 		addAnnotation
 		  (acknowledgeModeEEnum, 
 		   source, 
 		   new String[] {
-			 "name", "acknowledgeMode"
+			 "name", "acknowledgeMode" //$NON-NLS-1$ //$NON-NLS-2$
 		   });					
 		addAnnotation
 		  (acknowledgeModeObjectEDataType, 
 		   source, 
 		   new String[] {
-			 "name", "acknowledgeMode:Object",
-			 "baseType", "acknowledgeMode"
+			 "name", "acknowledgeMode:Object", //$NON-NLS-1$ //$NON-NLS-2$
+			 "baseType", "acknowledgeMode" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (connectionEClass, 
 		   source, 
 		   new String[] {
-			 "name", "connection",
-			 "kind", "empty"
+			 "name", "connection", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "empty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getConnection_Factory(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "factory"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "factory" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getConnection_SecurityCredential(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "securityCredential"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "securityCredential" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getConnection_SecurityPrincipal(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "securityPrincipal"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "securityPrincipal" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (deliveryModeEEnum, 
 		   source, 
 		   new String[] {
-			 "name", "deliveryMode"
+			 "name", "deliveryMode" //$NON-NLS-1$ //$NON-NLS-2$
 		   });				
 		addAnnotation
 		  (deliveryModeObjectEDataType, 
 		   source, 
 		   new String[] {
-			 "name", "deliveryMode:Object",
-			 "baseType", "deliveryMode"
+			 "name", "deliveryMode:Object", //$NON-NLS-1$ //$NON-NLS-2$
+			 "baseType", "deliveryMode" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (jmsRouting12DocumentRootEClass, 
 		   source, 
 		   new String[] {
-			 "name", "",
-			 "kind", "mixed"
+			 "name", "", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getJMSRouting12DocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
-			 "kind", "elementWildcard",
-			 "name", ":mixed"
+			 "kind", "elementWildcard", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", ":mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getJMSRouting12DocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xmlns:prefix"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xmlns:prefix" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getJMSRouting12DocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xsi:schemaLocation"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xsi:schemaLocation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMSRouting12DocumentRoot_Router(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "router",
-			 "namespace", "##targetNamespace",
-			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "router", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace", //$NON-NLS-1$ //$NON-NLS-2$
+			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (highWaterMarkEClass, 
 		   source, 
 		   new String[] {
-			 "name", "highWaterMark",
-			 "kind", "empty"
+			 "name", "highWaterMark", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "empty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getHighWaterMark_Mark(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "mark"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "mark" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getHighWaterMark_PollFrequency(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "pollFrequency"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "pollFrequency" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getHighWaterMark_Timeout(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "timeout"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "timeout" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (jndiEClass, 
 		   source, 
 		   new String[] {
-			 "name", "jndi",
-			 "kind", "empty"
+			 "name", "jndi", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "empty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJndi_ContextFactory(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "contextFactory"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "contextFactory" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJndi_NamingFactory(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "namingFactory"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "namingFactory" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJndi_Properties(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "properties"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "properties" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJndi_ProviderUrl(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "providerUrl"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "providerUrl" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (messageEClass, 
 		   source, 
 		   new String[] {
-			 "name", "message",
-			 "kind", "elementOnly"
+			 "name", "message", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getMessage_CorrelationIdPattern(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "correlationIdPattern",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "correlationIdPattern", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getMessage_DeliveryMode(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "deliveryMode"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "deliveryMode" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getMessage_Priority(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "priority"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "priority" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getMessage_TimeToLive(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "timeToLive"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "timeToLive" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getMessage_Type(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "type"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "type" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (messageTypeEEnum, 
 		   source, 
 		   new String[] {
-			 "name", "messageType"
+			 "name", "messageType" //$NON-NLS-1$ //$NON-NLS-2$
 		   });					
 		addAnnotation
 		  (messageTypeObjectEDataType, 
 		   source, 
 		   new String[] {
-			 "name", "messageType:Object",
-			 "baseType", "messageType"
+			 "name", "messageType:Object", //$NON-NLS-1$ //$NON-NLS-2$
+			 "baseType", "messageType" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (jms12RouterEClass, 
 		   source, 
 		   new String[] {
-			 "name", "router",
-			 "kind", "elementOnly"
+			 "name", "router", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_Message(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "message",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "message", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_Connection(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "connection",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "connection", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_Session(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "session",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "session", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", Messages.Jmsrouting12PackageImpl_197 //$NON-NLS-1$
 		   });			
 		addAnnotation
 		  (getJMS12Router_Jndi(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "jndi",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "jndi", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_HighWaterMark(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "highWaterMark",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "highWaterMark", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_BeanId(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "beanId"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "beanId" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_Destination(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "destination"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "destination" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_ExecuteBefore(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "executeBefore"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "executeBefore" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_RouteOnElement(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "routeOnElement"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "routeOnElement" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJMS12Router_RouteOnElementNS(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "routeOnElementNS"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "routeOnElementNS" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (sessionEClass, 
 		   source, 
 		   new String[] {
-			 "name", "session",
-			 "kind", "empty"
+			 "name", "session", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "empty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getSession_AcknowledgeMode(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "acknowledgeMode"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "acknowledgeMode" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getSession_Transacted(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "transacted"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "transacted" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

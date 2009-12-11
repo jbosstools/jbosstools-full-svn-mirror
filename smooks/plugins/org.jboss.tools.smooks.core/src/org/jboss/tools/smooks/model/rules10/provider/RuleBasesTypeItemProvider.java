@@ -105,7 +105,7 @@ public class RuleBasesTypeItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RuleBasesType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/RuleBasesType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -117,8 +117,8 @@ public class RuleBasesTypeItemProvider
 	public String getText(Object object) {
 		String label = ((RuleBasesType)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_RuleBasesType_type") :
-			getString("_UI_RuleBasesType_type") + " " + label;
+			getString("_UI_RuleBasesType_type") : //$NON-NLS-1$
+			getString("_UI_RuleBasesType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

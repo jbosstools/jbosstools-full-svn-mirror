@@ -60,7 +60,7 @@ public final class OnNoResult extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final OnNoResult NULLIFY_LITERAL = new OnNoResult(NULLIFY, "NULLIFY", "NULLIFY");
+	public static final OnNoResult NULLIFY_LITERAL = new OnNoResult(NULLIFY, "NULLIFY", "NULLIFY"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>EXCEPTION</b></em>' literal object.
@@ -70,7 +70,7 @@ public final class OnNoResult extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final OnNoResult EXCEPTION_LITERAL = new OnNoResult(EXCEPTION, "EXCEPTION", "EXCEPTION");
+	public static final OnNoResult EXCEPTION_LITERAL = new OnNoResult(EXCEPTION, "EXCEPTION", "EXCEPTION"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * An array of all the '<em><b>On No Result</b></em>' enumerators.

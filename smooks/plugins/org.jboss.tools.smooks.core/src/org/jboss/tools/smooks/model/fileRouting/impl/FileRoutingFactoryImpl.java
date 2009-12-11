@@ -31,7 +31,7 @@ public class FileRoutingFactoryImpl extends EFactoryImpl implements FileRoutingF
 	 */
 	public static FileRoutingFactory init() {
 		try {
-			FileRoutingFactory theFileRoutingFactory = (FileRoutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/file-routing-1.1.xsd"); 
+			FileRoutingFactory theFileRoutingFactory = (FileRoutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/file-routing-1.1.xsd");  //$NON-NLS-1$
 			if (theFileRoutingFactory != null) {
 				return theFileRoutingFactory;
 			}
@@ -64,7 +64,7 @@ public class FileRoutingFactoryImpl extends EFactoryImpl implements FileRoutingF
 			case FileRoutingPackage.HIGH_WATER_MARK: return createHighWaterMark();
 			case FileRoutingPackage.OUTPUT_STREAM: return createOutputStream();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.FileRoutingFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.FileRoutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

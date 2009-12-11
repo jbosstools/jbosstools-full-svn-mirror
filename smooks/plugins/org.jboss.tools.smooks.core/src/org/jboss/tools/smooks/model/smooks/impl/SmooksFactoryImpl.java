@@ -31,7 +31,7 @@ public class SmooksFactoryImpl extends EFactoryImpl implements SmooksFactory {
 	 */
 	public static SmooksFactory init() {
 		try {
-			SmooksFactory theSmooksFactory = (SmooksFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks-1.1.xsd"); 
+			SmooksFactory theSmooksFactory = (SmooksFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks-1.1.xsd");  //$NON-NLS-1$
 			if (theSmooksFactory != null) {
 				return theSmooksFactory;
 			}
@@ -78,7 +78,7 @@ public class SmooksFactoryImpl extends EFactoryImpl implements SmooksFactory {
 			case SmooksPackage.SET_ON_TYPE: return createSetOnType();
 			case SmooksPackage.SMOOKS_RESOURCE_LIST_TYPE: return createSmooksResourceListType();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.SmooksFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.SmooksFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

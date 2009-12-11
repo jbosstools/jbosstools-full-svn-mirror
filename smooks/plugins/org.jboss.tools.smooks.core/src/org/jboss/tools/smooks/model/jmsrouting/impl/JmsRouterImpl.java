@@ -747,15 +747,15 @@ public class JmsRouterImpl extends ElementVisitorImpl implements JmsRouter {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanId: ");
+		result.append(" (beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", destination: ");
+		result.append(", destination: "); //$NON-NLS-1$
 		result.append(destination);
-		result.append(", executeBefore: ");
-		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>");
-		result.append(", routeOnElement: ");
+		result.append(", executeBefore: "); //$NON-NLS-1$
+		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", routeOnElement: "); //$NON-NLS-1$
 		result.append(routeOnElement);
-		result.append(", routeOnElementNS: ");
+		result.append(", routeOnElementNS: "); //$NON-NLS-1$
 		result.append(routeOnElementNS);
 		result.append(')');
 		return result.toString();

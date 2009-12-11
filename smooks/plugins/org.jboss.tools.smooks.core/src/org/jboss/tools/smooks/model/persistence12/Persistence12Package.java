@@ -42,7 +42,7 @@ public interface Persistence12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "persistence12";
+	String eNAME = "persistence12"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -50,7 +50,7 @@ public interface Persistence12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/persistence-1.2.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -58,7 +58,7 @@ public interface Persistence12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "persistence";
+	String eNS_PREFIX = "persistence"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

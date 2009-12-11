@@ -41,7 +41,7 @@ public class JmsroutingFactoryImpl extends EFactoryImpl implements JmsroutingFac
 	 */
 	public static JmsroutingFactory init() {
 		try {
-			JmsroutingFactory theJmsroutingFactory = (JmsroutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/jms-routing-1.1.xsd"); 
+			JmsroutingFactory theJmsroutingFactory = (JmsroutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/jms-routing-1.1.xsd");  //$NON-NLS-1$
 			if (theJmsroutingFactory != null) {
 				return theJmsroutingFactory;
 			}
@@ -78,7 +78,7 @@ public class JmsroutingFactoryImpl extends EFactoryImpl implements JmsroutingFac
 			case JmsroutingPackage.JMS_ROUTER: return createJmsRouter();
 			case JmsroutingPackage.SESSION: return createSession();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.JmsroutingFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.JmsroutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class JmsroutingFactoryImpl extends EFactoryImpl implements JmsroutingFac
 			case JmsroutingPackage.MESSAGE_TYPE_OBJECT:
 				return createMessageTypeObjectFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.JmsroutingFactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.JmsroutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -128,7 +128,7 @@ public class JmsroutingFactoryImpl extends EFactoryImpl implements JmsroutingFac
 			case JmsroutingPackage.MESSAGE_TYPE_OBJECT:
 				return convertMessageTypeObjectToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.JmsroutingFactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.JmsroutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -209,7 +209,7 @@ public class JmsroutingFactoryImpl extends EFactoryImpl implements JmsroutingFac
 	 */
 	public AcknowledgeMode createAcknowledgeModeFromString(EDataType eDataType, String initialValue) {
 		AcknowledgeMode result = AcknowledgeMode.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.JmsroutingFactoryImpl_Error_Value + initialValue + Messages.JmsroutingFactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
@@ -229,7 +229,7 @@ public class JmsroutingFactoryImpl extends EFactoryImpl implements JmsroutingFac
 	 */
 	public DeliveryMode createDeliveryModeFromString(EDataType eDataType, String initialValue) {
 		DeliveryMode result = DeliveryMode.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.JmsroutingFactoryImpl_Error_Value + initialValue + Messages.JmsroutingFactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
@@ -249,7 +249,7 @@ public class JmsroutingFactoryImpl extends EFactoryImpl implements JmsroutingFac
 	 */
 	public MessageType createMessageTypeFromString(EDataType eDataType, String initialValue) {
 		MessageType result = MessageType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.JmsroutingFactoryImpl_Error_Value + initialValue + Messages.JmsroutingFactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 

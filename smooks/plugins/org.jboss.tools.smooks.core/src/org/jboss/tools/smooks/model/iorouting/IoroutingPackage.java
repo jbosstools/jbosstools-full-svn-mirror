@@ -37,7 +37,7 @@ public interface IoroutingPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "iorouting";
+	String eNAME = "iorouting"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -45,7 +45,7 @@ public interface IoroutingPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/io-routing-1.1.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/io-routing-1.1.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -53,7 +53,7 @@ public interface IoroutingPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "io";
+	String eNS_PREFIX = "io"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

@@ -83,8 +83,8 @@ public class FreemarkerItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Freemarker_applyBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Freemarker_applyBefore_feature", "_UI_Freemarker_type"),
+				 getString("_UI_Freemarker_applyBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Freemarker_applyBefore_feature", "_UI_Freemarker_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FreemarkerPackage.Literals.FREEMARKER__APPLY_BEFORE,
 				 true,
 				 false,
@@ -105,8 +105,8 @@ public class FreemarkerItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Freemarker_applyOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Freemarker_applyOnElement_feature", "_UI_Freemarker_type"),
+				 getString("_UI_Freemarker_applyOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Freemarker_applyOnElement_feature", "_UI_Freemarker_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT,
 				 true,
 				 false,
@@ -127,8 +127,8 @@ public class FreemarkerItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Freemarker_applyOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Freemarker_applyOnElementNS_feature", "_UI_Freemarker_type"),
+				 getString("_UI_Freemarker_applyOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Freemarker_applyOnElementNS_feature", "_UI_Freemarker_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -178,7 +178,7 @@ public class FreemarkerItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Freemarker"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Freemarker")); //$NON-NLS-1$
 	}
 
 	/**
@@ -191,8 +191,8 @@ public class FreemarkerItemProvider
 	public String getText(Object object) {
 		String label = ((Freemarker)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Freemarker_type") :
-			getString("_UI_Freemarker_type") + " " + label;
+			getString("_UI_Freemarker_type") : //$NON-NLS-1$
+			getString("_UI_Freemarker_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

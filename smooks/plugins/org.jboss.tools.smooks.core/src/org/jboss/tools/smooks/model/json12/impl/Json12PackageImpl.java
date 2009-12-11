@@ -414,30 +414,30 @@ public class Json12PackageImpl extends EPackageImpl implements Json12Package {
 		json12ReaderEClass.getESuperTypes().add(theSmooksPackage.getAbstractReader());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(json12DocumentRootEClass, Json12DocumentRoot.class, "Json12DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getJson12DocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJson12DocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJson12DocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getJson12DocumentRoot_Reader(), this.getJson12Reader(), null, "reader", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(json12DocumentRootEClass, Json12DocumentRoot.class, "Json12DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getJson12DocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJson12DocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJson12DocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getJson12DocumentRoot_Reader(), this.getJson12Reader(), null, "reader", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(keyEClass, Key.class, "Key", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getKey_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getKey_From(), theXMLTypePackage.getString(), "from", null, 1, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getKey_To(), theXMLTypePackage.getString(), "to", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(keyEClass, Key.class, "Key", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getKey_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getKey_From(), theXMLTypePackage.getString(), "from", null, 1, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getKey_To(), theXMLTypePackage.getString(), "to", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(keyMapEClass, KeyMap.class, "KeyMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getKeyMap_Key(), this.getKey(), null, "key", null, 1, -1, KeyMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(keyMapEClass, KeyMap.class, "KeyMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getKeyMap_Key(), this.getKey(), null, "key", null, 1, -1, KeyMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(json12ReaderEClass, Json12Reader.class, "Json12Reader", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getJson12Reader_KeyMap(), this.getKeyMap(), null, "keyMap", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJson12Reader_ArrayElementName(), theXMLTypePackage.getString(), "arrayElementName", "element", 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJson12Reader_Encoding(), theXMLTypePackage.getString(), "encoding", "UTF-8", 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJson12Reader_IllegalElementNameCharReplacement(), theXMLTypePackage.getString(), "illegalElementNameCharReplacement", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJson12Reader_Indent(), theXMLTypePackage.getBoolean(), "indent", "false", 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJson12Reader_KeyPrefixOnNumeric(), theXMLTypePackage.getString(), "keyPrefixOnNumeric", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJson12Reader_KeyWhitspaceReplacement(), theXMLTypePackage.getString(), "keyWhitspaceReplacement", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJson12Reader_NullValueReplacement(), theXMLTypePackage.getString(), "nullValueReplacement", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getJson12Reader_RootName(), theXMLTypePackage.getString(), "rootName", "json", 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(json12ReaderEClass, Json12Reader.class, "Json12Reader", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getJson12Reader_KeyMap(), this.getKeyMap(), null, "keyMap", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJson12Reader_ArrayElementName(), theXMLTypePackage.getString(), "arrayElementName", "element", 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getJson12Reader_Encoding(), theXMLTypePackage.getString(), "encoding", "UTF-8", 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getJson12Reader_IllegalElementNameCharReplacement(), theXMLTypePackage.getString(), "illegalElementNameCharReplacement", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJson12Reader_Indent(), theXMLTypePackage.getBoolean(), "indent", "false", 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getJson12Reader_KeyPrefixOnNumeric(), theXMLTypePackage.getString(), "keyPrefixOnNumeric", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJson12Reader_KeyWhitspaceReplacement(), theXMLTypePackage.getString(), "keyWhitspaceReplacement", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJson12Reader_NullValueReplacement(), theXMLTypePackage.getString(), "nullValueReplacement", null, 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getJson12Reader_RootName(), theXMLTypePackage.getString(), "rootName", "json", 0, 1, Json12Reader.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		// Create resource
 		createResource(eNS_URI);
@@ -454,157 +454,157 @@ public class Json12PackageImpl extends EPackageImpl implements Json12Package {
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";			
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";			 //$NON-NLS-1$
 		addAnnotation
 		  (json12DocumentRootEClass, 
 		   source, 
 		   new String[] {
-			 "name", "",
-			 "kind", "mixed"
+			 "name", "", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getJson12DocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
-			 "kind", "elementWildcard",
-			 "name", ":mixed"
+			 "kind", "elementWildcard", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", ":mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getJson12DocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xmlns:prefix"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xmlns:prefix" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getJson12DocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xsi:schemaLocation"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xsi:schemaLocation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12DocumentRoot_Reader(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "reader",
-			 "namespace", "##targetNamespace",
-			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-reader"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "reader", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace", //$NON-NLS-1$ //$NON-NLS-2$
+			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-reader" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (keyEClass, 
 		   source, 
 		   new String[] {
-			 "name", "key",
-			 "kind", "simple"
+			 "name", "key", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "simple" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getKey_Value(), 
 		   source, 
 		   new String[] {
-			 "name", ":0",
-			 "kind", "simple"
+			 "name", ":0", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "simple" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getKey_From(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "from"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "from" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getKey_To(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "to"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "to" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (keyMapEClass, 
 		   source, 
 		   new String[] {
-			 "name", "keyMap",
-			 "kind", "elementOnly"
+			 "name", "keyMap", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getKeyMap_Key(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "key",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "key", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (json12ReaderEClass, 
 		   source, 
 		   new String[] {
-			 "name", "reader",
-			 "kind", "elementOnly"
+			 "name", "reader", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_KeyMap(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "keyMap",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "keyMap", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_ArrayElementName(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "arrayElementName"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "arrayElementName" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_Encoding(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "encoding"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "encoding" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_IllegalElementNameCharReplacement(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "illegalElementNameCharReplacement"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "illegalElementNameCharReplacement" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_Indent(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "indent"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "indent" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_KeyPrefixOnNumeric(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "keyPrefixOnNumeric"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "keyPrefixOnNumeric" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_KeyWhitspaceReplacement(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "keyWhitspaceReplacement"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "keyWhitspaceReplacement" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_NullValueReplacement(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "nullValueReplacement"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "nullValueReplacement" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getJson12Reader_RootName(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "rootName"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "rootName" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

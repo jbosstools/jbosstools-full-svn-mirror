@@ -194,8 +194,8 @@ public class InlineImpl extends AbstractAnyTypeImpl implements Inline {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (directive: ");
-		if (directiveESet) result.append(directive); else result.append("<unset>");
+		result.append(" (directive: "); //$NON-NLS-1$
+		if (directiveESet) result.append(directive); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

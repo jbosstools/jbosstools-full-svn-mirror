@@ -83,8 +83,8 @@ public class ResultSetRowSelectorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSetRowSelector_where_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_where_feature", "_UI_ResultSetRowSelector_type"),
+				 getString("_UI_ResultSetRowSelector_where_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_where_feature", "_UI_ResultSetRowSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET_ROW_SELECTOR__WHERE,
 				 true,
 				 false,
@@ -105,8 +105,8 @@ public class ResultSetRowSelectorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSetRowSelector_failedSelectError_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_failedSelectError_feature", "_UI_ResultSetRowSelector_type"),
+				 getString("_UI_ResultSetRowSelector_failedSelectError_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_failedSelectError_feature", "_UI_ResultSetRowSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET_ROW_SELECTOR__FAILED_SELECT_ERROR,
 				 true,
 				 false,
@@ -127,8 +127,8 @@ public class ResultSetRowSelectorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSetRowSelector_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_beanId_feature", "_UI_ResultSetRowSelector_type"),
+				 getString("_UI_ResultSetRowSelector_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_beanId_feature", "_UI_ResultSetRowSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET_ROW_SELECTOR__BEAN_ID,
 				 true,
 				 false,
@@ -149,8 +149,8 @@ public class ResultSetRowSelectorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSetRowSelector_executeBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_executeBefore_feature", "_UI_ResultSetRowSelector_type"),
+				 getString("_UI_ResultSetRowSelector_executeBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_executeBefore_feature", "_UI_ResultSetRowSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET_ROW_SELECTOR__EXECUTE_BEFORE,
 				 true,
 				 false,
@@ -171,8 +171,8 @@ public class ResultSetRowSelectorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSetRowSelector_resultSetName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_resultSetName_feature", "_UI_ResultSetRowSelector_type"),
+				 getString("_UI_ResultSetRowSelector_resultSetName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_resultSetName_feature", "_UI_ResultSetRowSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET_ROW_SELECTOR__RESULT_SET_NAME,
 				 true,
 				 false,
@@ -193,8 +193,8 @@ public class ResultSetRowSelectorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSetRowSelector_selectRowOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_selectRowOnElement_feature", "_UI_ResultSetRowSelector_type"),
+				 getString("_UI_ResultSetRowSelector_selectRowOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSetRowSelector_selectRowOnElement_feature", "_UI_ResultSetRowSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET_ROW_SELECTOR__SELECT_ROW_ON_ELEMENT,
 				 true,
 				 false,
@@ -212,7 +212,7 @@ public class ResultSetRowSelectorItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResultSetRowSelector"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResultSetRowSelector")); //$NON-NLS-1$
 	}
 
 	/**
@@ -225,8 +225,8 @@ public class ResultSetRowSelectorItemProvider
 	public String getText(Object object) {
 		String label = ((ResultSetRowSelector)object).getResultSetName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ResultSetRowSelector_type") :
-			getString("_UI_ResultSetRowSelector_type") + " " + label;
+			getString("_UI_ResultSetRowSelector_type") : //$NON-NLS-1$
+			getString("_UI_ResultSetRowSelector_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

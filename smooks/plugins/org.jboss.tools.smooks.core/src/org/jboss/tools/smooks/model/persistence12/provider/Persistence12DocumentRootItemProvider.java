@@ -106,7 +106,7 @@ public class Persistence12DocumentRootItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Persistence12DocumentRoot"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Persistence12DocumentRoot")); //$NON-NLS-1$
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class Persistence12DocumentRootItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		return getString("_UI_Persistence12DocumentRoot_type");
+		return getString("_UI_Persistence12DocumentRoot_type"); //$NON-NLS-1$
 	}
 
 	/**

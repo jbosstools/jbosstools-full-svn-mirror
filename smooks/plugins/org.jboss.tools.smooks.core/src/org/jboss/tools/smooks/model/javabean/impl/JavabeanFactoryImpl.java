@@ -31,7 +31,7 @@ public class JavabeanFactoryImpl extends EFactoryImpl implements JavabeanFactory
 	 */
 	public static JavabeanFactory init() {
 		try {
-			JavabeanFactory theJavabeanFactory = (JavabeanFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/javabean-1.1.xsd"); 
+			JavabeanFactory theJavabeanFactory = (JavabeanFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/javabean-1.1.xsd");  //$NON-NLS-1$
 			if (theJavabeanFactory != null) {
 				return theJavabeanFactory;
 			}
@@ -67,7 +67,7 @@ public class JavabeanFactoryImpl extends EFactoryImpl implements JavabeanFactory
 			case JavabeanPackage.VALUE_TYPE: return createValueType();
 			case JavabeanPackage.WIRING_TYPE: return createWiringType();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.JavabeanFactoryImpl_Error_Class_not_valid + eClass.getName() + Messages.JavabeanFactoryImpl_Error_Not_Valid_Identifier);
 		}
 	}
 

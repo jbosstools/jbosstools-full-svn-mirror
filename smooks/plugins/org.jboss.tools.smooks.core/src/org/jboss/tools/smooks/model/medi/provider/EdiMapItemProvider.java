@@ -106,7 +106,7 @@ public class EdiMapItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EdiMap"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EdiMap")); //$NON-NLS-1$
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class EdiMapItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_EdiMap_type");
+		return getString("_UI_EdiMap_type"); //$NON-NLS-1$
 	}
 
 	/**

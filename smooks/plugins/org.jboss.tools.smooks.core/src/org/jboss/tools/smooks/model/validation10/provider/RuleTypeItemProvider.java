@@ -82,8 +82,8 @@ public class RuleTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RuleType_executeOn_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RuleType_executeOn_feature", "_UI_RuleType_type"),
+				 getString("_UI_RuleType_executeOn_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleType_executeOn_feature", "_UI_RuleType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Validation10Package.Literals.RULE_TYPE__EXECUTE_ON,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class RuleTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RuleType_executeOnNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RuleType_executeOnNS_feature", "_UI_RuleType_type"),
+				 getString("_UI_RuleType_executeOnNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleType_executeOnNS_feature", "_UI_RuleType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Validation10Package.Literals.RULE_TYPE__EXECUTE_ON_NS,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class RuleTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RuleType_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RuleType_name_feature", "_UI_RuleType_type"),
+				 getString("_UI_RuleType_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleType_name_feature", "_UI_RuleType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Validation10Package.Literals.RULE_TYPE__NAME,
 				 true,
 				 false,
@@ -148,8 +148,8 @@ public class RuleTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RuleType_onFail_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RuleType_onFail_feature", "_UI_RuleType_type"),
+				 getString("_UI_RuleType_onFail_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RuleType_onFail_feature", "_UI_RuleType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Validation10Package.Literals.RULE_TYPE__ON_FAIL,
 				 true,
 				 false,
@@ -166,7 +166,7 @@ public class RuleTypeItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RuleType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/RuleType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -178,8 +178,8 @@ public class RuleTypeItemProvider
 	public String getText(Object object) {
 		String label = ((RuleType)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_RuleType_type") :
-			getString("_UI_RuleType_type") + " " + label;
+			getString("_UI_RuleType_type") : //$NON-NLS-1$
+			getString("_UI_RuleType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

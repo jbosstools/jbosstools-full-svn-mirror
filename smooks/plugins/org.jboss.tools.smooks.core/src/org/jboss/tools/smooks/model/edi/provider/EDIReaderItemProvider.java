@@ -79,8 +79,8 @@ public class EDIReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EDIReader_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EDIReader_encoding_feature", "_UI_EDIReader_type"),
+				 getString("_UI_EDIReader_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EDIReader_encoding_feature", "_UI_EDIReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EdiPackage.Literals.EDI_READER__ENCODING,
 				 true,
 				 false,
@@ -101,8 +101,8 @@ public class EDIReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EDIReader_mappingModel_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EDIReader_mappingModel_feature", "_UI_EDIReader_type"),
+				 getString("_UI_EDIReader_mappingModel_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EDIReader_mappingModel_feature", "_UI_EDIReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EdiPackage.Literals.EDI_READER__MAPPING_MODEL,
 				 true,
 				 false,
@@ -120,7 +120,7 @@ public class EDIReaderItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EDIReader"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EDIReader")); //$NON-NLS-1$
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class EDIReaderItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return "EDI";
+		return "EDI"; //$NON-NLS-1$
 //		String label = ((EDIReader)object).getTargetProfile();
 //		return label == null || label.length() == 0 ?
 //			getString("_UI_EDIReader_type") :

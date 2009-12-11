@@ -71,7 +71,7 @@ public class AbstractResourceConfigItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_AbstractResourceConfig_type");
+		return getString("_UI_AbstractResourceConfig_type"); //$NON-NLS-1$
 	}
 
 	/**

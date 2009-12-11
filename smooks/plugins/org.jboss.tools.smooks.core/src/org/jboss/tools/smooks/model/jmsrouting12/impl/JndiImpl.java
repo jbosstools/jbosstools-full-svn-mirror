@@ -309,13 +309,13 @@ public class JndiImpl extends AbstractAnyTypeImpl implements Jndi {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (contextFactory: ");
+		result.append(" (contextFactory: "); //$NON-NLS-1$
 		result.append(contextFactory);
-		result.append(", namingFactory: ");
+		result.append(", namingFactory: "); //$NON-NLS-1$
 		result.append(namingFactory);
-		result.append(", properties: ");
+		result.append(", properties: "); //$NON-NLS-1$
 		result.append(properties);
-		result.append(", providerUrl: ");
+		result.append(", providerUrl: "); //$NON-NLS-1$
 		result.append(providerUrl);
 		result.append(')');
 		return result.toString();

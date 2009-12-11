@@ -32,7 +32,7 @@ public class GroovyFactoryImpl extends EFactoryImpl implements GroovyFactory {
 	 */
 	public static GroovyFactory init() {
 		try {
-			GroovyFactory theGroovyFactory = (GroovyFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/groovy-1.1.xsd"); 
+			GroovyFactory theGroovyFactory = (GroovyFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/groovy-1.1.xsd");  //$NON-NLS-1$
 			if (theGroovyFactory != null) {
 				return theGroovyFactory;
 			}
@@ -65,7 +65,7 @@ public class GroovyFactoryImpl extends EFactoryImpl implements GroovyFactory {
 			case GroovyPackage.GROOVY: return createGroovy();
 			case GroovyPackage.SCRIPT_TYPE: return createScriptType();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.GroovyFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.GroovyFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

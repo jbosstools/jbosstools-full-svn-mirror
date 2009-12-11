@@ -151,7 +151,7 @@ public class MapBindingImpl extends BindingImpl implements MapBinding {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (keyField: ");
+		result.append(" (keyField: "); //$NON-NLS-1$
 		result.append(keyField);
 		result.append(')');
 		return result.toString();

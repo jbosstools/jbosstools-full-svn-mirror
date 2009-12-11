@@ -413,17 +413,17 @@ public class ExpressionTypeImpl extends AbstractAnyTypeImpl implements Expressio
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
+		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
-		result.append(", execOnElement: ");
+		result.append(", execOnElement: "); //$NON-NLS-1$
 		result.append(execOnElement);
-		result.append(", execOnElementNS: ");
+		result.append(", execOnElementNS: "); //$NON-NLS-1$
 		result.append(execOnElementNS);
-		result.append(", initVal: ");
+		result.append(", initVal: "); //$NON-NLS-1$
 		result.append(initVal);
-		result.append(", property: ");
+		result.append(", property: "); //$NON-NLS-1$
 		result.append(property);
-		result.append(", setterMethod: ");
+		result.append(", setterMethod: "); //$NON-NLS-1$
 		result.append(setterMethod);
 		result.append(')');
 		return result.toString();

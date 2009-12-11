@@ -61,7 +61,7 @@ public class Json12ReaderImpl extends AbstractReaderImpl implements Json12Reader
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ARRAY_ELEMENT_NAME_EDEFAULT = "element";
+	protected static final String ARRAY_ELEMENT_NAME_EDEFAULT = "element"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getArrayElementName() <em>Array Element Name</em>}' attribute.
@@ -90,7 +90,7 @@ public class Json12ReaderImpl extends AbstractReaderImpl implements Json12Reader
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ENCODING_EDEFAULT = "UTF-8";
+	protected static final String ENCODING_EDEFAULT = "UTF-8"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
@@ -228,7 +228,7 @@ public class Json12ReaderImpl extends AbstractReaderImpl implements Json12Reader
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ROOT_NAME_EDEFAULT = "json";
+	protected static final String ROOT_NAME_EDEFAULT = "json"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getRootName() <em>Root Name</em>}' attribute.
@@ -735,22 +735,22 @@ public class Json12ReaderImpl extends AbstractReaderImpl implements Json12Reader
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (arrayElementName: ");
-		if (arrayElementNameESet) result.append(arrayElementName); else result.append("<unset>");
-		result.append(", encoding: ");
-		if (encodingESet) result.append(encoding); else result.append("<unset>");
-		result.append(", illegalElementNameCharReplacement: ");
+		result.append(" (arrayElementName: "); //$NON-NLS-1$
+		if (arrayElementNameESet) result.append(arrayElementName); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", encoding: "); //$NON-NLS-1$
+		if (encodingESet) result.append(encoding); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", illegalElementNameCharReplacement: "); //$NON-NLS-1$
 		result.append(illegalElementNameCharReplacement);
-		result.append(", indent: ");
-		if (indentESet) result.append(indent); else result.append("<unset>");
-		result.append(", keyPrefixOnNumeric: ");
+		result.append(", indent: "); //$NON-NLS-1$
+		if (indentESet) result.append(indent); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", keyPrefixOnNumeric: "); //$NON-NLS-1$
 		result.append(keyPrefixOnNumeric);
-		result.append(", keyWhitspaceReplacement: ");
+		result.append(", keyWhitspaceReplacement: "); //$NON-NLS-1$
 		result.append(keyWhitspaceReplacement);
-		result.append(", nullValueReplacement: ");
+		result.append(", nullValueReplacement: "); //$NON-NLS-1$
 		result.append(nullValueReplacement);
-		result.append(", rootName: ");
-		if (rootNameESet) result.append(rootName); else result.append("<unset>");
+		result.append(", rootName: "); //$NON-NLS-1$
+		if (rootNameESet) result.append(rootName); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

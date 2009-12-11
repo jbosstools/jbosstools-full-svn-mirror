@@ -83,8 +83,8 @@ public class IORouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_IORouter_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_beanId_feature", "_UI_IORouter_type"),
+				 getString("_UI_IORouter_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_beanId_feature", "_UI_IORouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 IoroutingPackage.Literals.IO_ROUTER__BEAN_ID,
 				 true,
 				 false,
@@ -105,8 +105,8 @@ public class IORouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_IORouter_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_encoding_feature", "_UI_IORouter_type"),
+				 getString("_UI_IORouter_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_encoding_feature", "_UI_IORouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 IoroutingPackage.Literals.IO_ROUTER__ENCODING,
 				 true,
 				 false,
@@ -127,8 +127,8 @@ public class IORouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_IORouter_executeBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_executeBefore_feature", "_UI_IORouter_type"),
+				 getString("_UI_IORouter_executeBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_executeBefore_feature", "_UI_IORouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 IoroutingPackage.Literals.IO_ROUTER__EXECUTE_BEFORE,
 				 true,
 				 false,
@@ -149,8 +149,8 @@ public class IORouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_IORouter_resourceName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_resourceName_feature", "_UI_IORouter_type"),
+				 getString("_UI_IORouter_resourceName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_resourceName_feature", "_UI_IORouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 IoroutingPackage.Literals.IO_ROUTER__RESOURCE_NAME,
 				 true,
 				 false,
@@ -171,8 +171,8 @@ public class IORouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_IORouter_routeOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_routeOnElement_feature", "_UI_IORouter_type"),
+				 getString("_UI_IORouter_routeOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_routeOnElement_feature", "_UI_IORouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 IoroutingPackage.Literals.IO_ROUTER__ROUTE_ON_ELEMENT,
 				 true,
 				 false,
@@ -193,8 +193,8 @@ public class IORouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_IORouter_routeOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_routeOnElementNS_feature", "_UI_IORouter_type"),
+				 getString("_UI_IORouter_routeOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_IORouter_routeOnElementNS_feature", "_UI_IORouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 IoroutingPackage.Literals.IO_ROUTER__ROUTE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -212,7 +212,7 @@ public class IORouterItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/IORouter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/IORouter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -225,8 +225,8 @@ public class IORouterItemProvider
 	public String getText(Object object) {
 		String label = ((IORouter)object).getResourceName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_IORouter_type") :
-			getString("_UI_IORouter_type") + " " + label;
+			getString("_UI_IORouter_type") : //$NON-NLS-1$
+			getString("_UI_IORouter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

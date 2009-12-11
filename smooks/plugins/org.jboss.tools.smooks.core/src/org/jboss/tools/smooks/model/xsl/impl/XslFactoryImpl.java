@@ -32,7 +32,7 @@ public class XslFactoryImpl extends EFactoryImpl implements XslFactory {
 	 */
 	public static XslFactory init() {
 		try {
-			XslFactory theXslFactory = (XslFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/xsl-1.1.xsd"); 
+			XslFactory theXslFactory = (XslFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/xsl-1.1.xsd");  //$NON-NLS-1$
 			if (theXslFactory != null) {
 				return theXslFactory;
 			}
@@ -69,7 +69,7 @@ public class XslFactoryImpl extends EFactoryImpl implements XslFactory {
 			case XslPackage.USE: return createUse();
 			case XslPackage.XSL: return createXsl();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.XslFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.XslFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class XslFactoryImpl extends EFactoryImpl implements XslFactory {
 			case XslPackage.INLINE_DIRECTIVE_OBJECT:
 				return createInlineDirectiveObjectFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.XslFactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.XslFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class XslFactoryImpl extends EFactoryImpl implements XslFactory {
 			case XslPackage.INLINE_DIRECTIVE_OBJECT:
 				return convertInlineDirectiveObjectToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.XslFactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.XslFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -184,7 +184,7 @@ public class XslFactoryImpl extends EFactoryImpl implements XslFactory {
 	 */
 	public InlineDirective createInlineDirectiveFromString(EDataType eDataType, String initialValue) {
 		InlineDirective result = InlineDirective.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.XslFactoryImpl_Error_Value + initialValue + Messages.XslFactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + Messages.XslFactoryImpl_9);
 		return result;
 	}
 

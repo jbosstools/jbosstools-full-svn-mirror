@@ -337,22 +337,22 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 		scriptTypeEClass.getESuperTypes().add(theXMLTypePackage.getAnyType());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Groovy(), this.getGroovy(), null, "groovy", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Script(), this.getScriptType(), null, "script", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDocumentRoot_Groovy(), this.getGroovy(), null, "groovy", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDocumentRoot_Script(), this.getScriptType(), null, "script", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(groovyEClass, Groovy.class, "Groovy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getGroovy_Imports(), theXMLTypePackage.getString(), "imports", null, 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGroovy_Param(), theSmooksPackage.getParamType(), null, "param", null, 0, -1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGroovy_Script(), this.getScriptType(), null, "script", null, 1, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroovy_ExecuteBefore(), theXMLTypePackage.getBoolean(), "executeBefore", "false", 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroovy_ExecuteOnElement(), theXMLTypePackage.getString(), "executeOnElement", null, 1, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroovy_ExecuteOnElementNS(), theXMLTypePackage.getAnyURI(), "executeOnElementNS", null, 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(groovyEClass, Groovy.class, "Groovy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getGroovy_Imports(), theXMLTypePackage.getString(), "imports", null, 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getGroovy_Param(), theSmooksPackage.getParamType(), null, "param", null, 0, -1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getGroovy_Script(), this.getScriptType(), null, "script", null, 1, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getGroovy_ExecuteBefore(), theXMLTypePackage.getBoolean(), "executeBefore", "false", 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getGroovy_ExecuteOnElement(), theXMLTypePackage.getString(), "executeOnElement", null, 1, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getGroovy_ExecuteOnElementNS(), theXMLTypePackage.getAnyURI(), "executeOnElementNS", null, 0, 1, Groovy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(scriptTypeEClass, ScriptType.class, "ScriptType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(scriptTypeEClass, ScriptType.class, "ScriptType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);
@@ -369,110 +369,110 @@ public class GroovyPackageImpl extends EPackageImpl implements GroovyPackage {
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";			
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";			 //$NON-NLS-1$
 		addAnnotation
 		  (documentRootEClass, 
 		   source, 
 		   new String[] {
-			 "name", "",
-			 "kind", "mixed"
+			 "name", "", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
-			 "kind", "elementWildcard",
-			 "name", ":mixed"
+			 "kind", "elementWildcard", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", ":mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xmlns:prefix"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xmlns:prefix" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xsi:schemaLocation"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xsi:schemaLocation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDocumentRoot_Groovy(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "groovy",
-			 "namespace", "##targetNamespace",
-			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "groovy", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace", //$NON-NLS-1$ //$NON-NLS-2$
+			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDocumentRoot_Script(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "script",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "script", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (groovyEClass, 
 		   source, 
 		   new String[] {
-			 "name", "groovy",
-			 "kind", "elementOnly"
+			 "name", "groovy", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getGroovy_Imports(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "imports",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "imports", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getGroovy_Param(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "param",
-			 "namespace", "http://www.milyn.org/xsd/smooks-1.1.xsd"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "param", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "http://www.milyn.org/xsd/smooks-1.1.xsd" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getGroovy_Script(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "script",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "script", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getGroovy_ExecuteBefore(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "executeBefore"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "executeBefore" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getGroovy_ExecuteOnElement(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "executeOnElement"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "executeOnElement" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getGroovy_ExecuteOnElementNS(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "executeOnElementNS"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "executeOnElementNS" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (scriptTypeEClass, 
 		   source, 
 		   new String[] {
-			 "name", "script_._type",
-			 "kind", "mixed"
+			 "name", "script_._type", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

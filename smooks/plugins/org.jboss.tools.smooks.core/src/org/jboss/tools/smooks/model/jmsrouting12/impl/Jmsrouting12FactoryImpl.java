@@ -32,7 +32,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 	 */
 	public static Jmsrouting12Factory init() {
 		try {
-			Jmsrouting12Factory theJmsrouting12Factory = (Jmsrouting12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/jms-routing-1.2.xsd"); 
+			Jmsrouting12Factory theJmsrouting12Factory = (Jmsrouting12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/jms-routing-1.2.xsd");  //$NON-NLS-1$
 			if (theJmsrouting12Factory != null) {
 				return theJmsrouting12Factory;
 			}
@@ -68,7 +68,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 			case Jmsrouting12Package.JMS12_ROUTER: return createJMS12Router();
 			case Jmsrouting12Package.SESSION: return createSession();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 			case Jmsrouting12Package.MESSAGE_TYPE_OBJECT:
 				return createMessageTypeObjectFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 			case Jmsrouting12Package.MESSAGE_TYPE_OBJECT:
 				return convertMessageTypeObjectToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -197,7 +197,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 	 */
 	public AcknowledgeMode createAcknowledgeModeFromString(EDataType eDataType, String initialValue) {
 		AcknowledgeMode result = AcknowledgeMode.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
@@ -217,7 +217,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 	 */
 	public DeliveryMode createDeliveryModeFromString(EDataType eDataType, String initialValue) {
 		DeliveryMode result = DeliveryMode.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
@@ -237,7 +237,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 	 */
 	public MessageType createMessageTypeFromString(EDataType eDataType, String initialValue) {
 		MessageType result = MessageType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 

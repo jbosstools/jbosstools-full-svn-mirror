@@ -32,7 +32,7 @@ public class IoroutingFactoryImpl extends EFactoryImpl implements IoroutingFacto
 	 */
 	public static IoroutingFactory init() {
 		try {
-			IoroutingFactory theIoroutingFactory = (IoroutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/io-routing-1.1.xsd"); 
+			IoroutingFactory theIoroutingFactory = (IoroutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/io-routing-1.1.xsd");  //$NON-NLS-1$
 			if (theIoroutingFactory != null) {
 				return theIoroutingFactory;
 			}
@@ -64,7 +64,7 @@ public class IoroutingFactoryImpl extends EFactoryImpl implements IoroutingFacto
 			case IoroutingPackage.IO_DOCUMENT_ROOT: return createIODocumentRoot();
 			case IoroutingPackage.IO_ROUTER: return createIORouter();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.IoroutingFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.IoroutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

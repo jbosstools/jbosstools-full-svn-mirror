@@ -156,7 +156,7 @@ public class FreemarkerImpl extends ElementVisitorImpl implements Freemarker {
 	 */
 	protected FreemarkerImpl() {
 		super();
-		this.setApplyOnElement("#document");
+		this.setApplyOnElement("#document"); //$NON-NLS-1$
 		setTemplate(FreemarkerFactory.eINSTANCE.createTemplate());
 	}
 
@@ -494,11 +494,11 @@ public class FreemarkerImpl extends ElementVisitorImpl implements Freemarker {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (applyBefore: ");
-		if (applyBeforeESet) result.append(applyBefore); else result.append("<unset>");
-		result.append(", applyOnElement: ");
+		result.append(" (applyBefore: "); //$NON-NLS-1$
+		if (applyBeforeESet) result.append(applyBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", applyOnElement: "); //$NON-NLS-1$
 		result.append(applyOnElement);
-		result.append(", applyOnElementNS: ");
+		result.append(", applyOnElementNS: "); //$NON-NLS-1$
 		result.append(applyOnElementNS);
 		result.append(')');
 		return result.toString();

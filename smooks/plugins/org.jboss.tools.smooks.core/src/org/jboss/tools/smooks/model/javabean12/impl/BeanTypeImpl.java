@@ -521,18 +521,18 @@ public class BeanTypeImpl extends ElementVisitorImpl implements BeanType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (group: ");
+		result.append(" (group: "); //$NON-NLS-1$
 		result.append(group);
-		result.append(", beanId: ");
+		result.append(", beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", class: ");
+		result.append(", class: "); //$NON-NLS-1$
 		result.append(class_);
-		result.append(", createOnElement: ");
+		result.append(", createOnElement: "); //$NON-NLS-1$
 		result.append(createOnElement);
-		result.append(", createOnElementNS: ");
+		result.append(", createOnElementNS: "); //$NON-NLS-1$
 		result.append(createOnElementNS);
-		result.append(", extendLifecycle: ");
-		if (extendLifecycleESet) result.append(extendLifecycle); else result.append("<unset>");
+		result.append(", extendLifecycle: "); //$NON-NLS-1$
+		if (extendLifecycleESet) result.append(extendLifecycle); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

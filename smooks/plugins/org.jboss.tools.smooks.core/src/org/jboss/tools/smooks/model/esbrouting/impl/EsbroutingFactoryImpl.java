@@ -31,7 +31,7 @@ public class EsbroutingFactoryImpl extends EFactoryImpl implements EsbroutingFac
 	 */
 	public static EsbroutingFactory init() {
 		try {
-			EsbroutingFactory theEsbroutingFactory = (EsbroutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.jboss.org/xsd/jbossesb/smooks/routing-1.0.xsd"); 
+			EsbroutingFactory theEsbroutingFactory = (EsbroutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.jboss.org/xsd/jbossesb/smooks/routing-1.0.xsd");  //$NON-NLS-1$
 			if (theEsbroutingFactory != null) {
 				return theEsbroutingFactory;
 			}
@@ -63,7 +63,7 @@ public class EsbroutingFactoryImpl extends EFactoryImpl implements EsbroutingFac
 			case EsbroutingPackage.ESB_ROUTING_DOCUMENT_ROOT: return createESBRoutingDocumentRoot();
 			case EsbroutingPackage.ROUTE_BEAN: return createRouteBean();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.EsbroutingFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.EsbroutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

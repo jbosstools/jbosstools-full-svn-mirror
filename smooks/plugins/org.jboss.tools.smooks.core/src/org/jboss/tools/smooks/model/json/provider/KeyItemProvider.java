@@ -82,8 +82,8 @@ public class KeyItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Key_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Key_value_feature", "_UI_Key_type"),
+				 getString("_UI_Key_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Key_value_feature", "_UI_Key_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.KEY__VALUE,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class KeyItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Key_from_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Key_from_feature", "_UI_Key_type"),
+				 getString("_UI_Key_from_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Key_from_feature", "_UI_Key_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.KEY__FROM,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class KeyItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Key_to_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Key_to_feature", "_UI_Key_type"),
+				 getString("_UI_Key_to_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Key_to_feature", "_UI_Key_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.KEY__TO,
 				 true,
 				 false,
@@ -145,7 +145,7 @@ public class KeyItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Key"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Key")); //$NON-NLS-1$
 	}
 
 	/**
@@ -158,9 +158,9 @@ public class KeyItemProvider
 	public String getText(Object object) {
 		String label = ((Key)object).getTo();
 		String from = ((Key)object).getFrom();
-		String returnText = "-> ";
+		String returnText = "-> "; //$NON-NLS-1$
 		if(from != null){
-			returnText = from + " -> ";
+			returnText = from + " -> "; //$NON-NLS-1$
 		}
 		if(label != null){
 			returnText = returnText + label;

@@ -38,7 +38,7 @@ public interface Rules10Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "rules10";
+	String eNAME = "rules10"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -46,7 +46,7 @@ public interface Rules10Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/rules-1.0.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/rules-1.0.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -54,7 +54,7 @@ public interface Rules10Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "rules";
+	String eNS_PREFIX = "rules"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

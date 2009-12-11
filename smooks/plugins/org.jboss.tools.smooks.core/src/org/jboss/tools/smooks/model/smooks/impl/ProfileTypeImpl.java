@@ -263,11 +263,11 @@ public class ProfileTypeImpl extends AbstractAnyTypeImpl implements ProfileType 
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
+		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
-		result.append(", baseProfile: ");
+		result.append(", baseProfile: "); //$NON-NLS-1$
 		result.append(baseProfile);
-		result.append(", subProfiles: ");
+		result.append(", subProfiles: "); //$NON-NLS-1$
 		result.append(subProfiles);
 		result.append(')');
 		return result.toString();

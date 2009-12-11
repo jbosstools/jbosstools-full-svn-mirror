@@ -32,7 +32,7 @@ public class FreemarkerFactoryImpl extends EFactoryImpl implements FreemarkerFac
 	 */
 	public static FreemarkerFactory init() {
 		try {
-			FreemarkerFactory theFreemarkerFactory = (FreemarkerFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/freemarker-1.1.xsd"); 
+			FreemarkerFactory theFreemarkerFactory = (FreemarkerFactory)EPackage.Registry.INSTANCE.getEFactory(Messages.FreemarkerFactoryImpl_0); 
 			if (theFreemarkerFactory != null) {
 				return theFreemarkerFactory;
 			}
@@ -69,7 +69,7 @@ public class FreemarkerFactoryImpl extends EFactoryImpl implements FreemarkerFac
 			case FreemarkerPackage.TEMPLATE: return createTemplate();
 			case FreemarkerPackage.USE: return createUse();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.FreemarkerFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.FreemarkerFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class FreemarkerFactoryImpl extends EFactoryImpl implements FreemarkerFac
 			case FreemarkerPackage.INLINE_DIRECTIVE_OBJECT:
 				return createInlineDirectiveObjectFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.FreemarkerFactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.FreemarkerFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class FreemarkerFactoryImpl extends EFactoryImpl implements FreemarkerFac
 			case FreemarkerPackage.INLINE_DIRECTIVE_OBJECT:
 				return convertInlineDirectiveObjectToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.FreemarkerFactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.FreemarkerFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -184,7 +184,7 @@ public class FreemarkerFactoryImpl extends EFactoryImpl implements FreemarkerFac
 	 */
 	public InlineDirective createInlineDirectiveFromString(EDataType eDataType, String initialValue) {
 		InlineDirective result = InlineDirective.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.FreemarkerFactoryImpl_Error_Value_Not_Valid + initialValue + Messages.FreemarkerFactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 

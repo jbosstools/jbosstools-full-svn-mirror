@@ -87,8 +87,8 @@ public class CSV12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CSV12Reader_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_encoding_feature", "_UI_CSV12Reader_type"),
+				 getString("_UI_CSV12Reader_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_encoding_feature", "_UI_CSV12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.CSV12_READER__ENCODING,
 				 true,
 				 false,
@@ -109,8 +109,8 @@ public class CSV12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CSV12Reader_fields_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_fields_feature", "_UI_CSV12Reader_type"),
+				 getString("_UI_CSV12Reader_fields_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_fields_feature", "_UI_CSV12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.CSV12_READER__FIELDS,
 				 true,
 				 false,
@@ -131,8 +131,8 @@ public class CSV12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CSV12Reader_indent_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_indent_feature", "_UI_CSV12Reader_type"),
+				 getString("_UI_CSV12Reader_indent_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_indent_feature", "_UI_CSV12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.CSV12_READER__INDENT,
 				 true,
 				 false,
@@ -153,8 +153,8 @@ public class CSV12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CSV12Reader_quote_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_quote_feature", "_UI_CSV12Reader_type"),
+				 getString("_UI_CSV12Reader_quote_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_quote_feature", "_UI_CSV12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.CSV12_READER__QUOTE,
 				 true,
 				 false,
@@ -175,8 +175,8 @@ public class CSV12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CSV12Reader_recordElementName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_recordElementName_feature", "_UI_CSV12Reader_type"),
+				 getString("_UI_CSV12Reader_recordElementName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_recordElementName_feature", "_UI_CSV12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.CSV12_READER__RECORD_ELEMENT_NAME,
 				 true,
 				 false,
@@ -197,8 +197,8 @@ public class CSV12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CSV12Reader_rootElementName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_rootElementName_feature", "_UI_CSV12Reader_type"),
+				 getString("_UI_CSV12Reader_rootElementName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_rootElementName_feature", "_UI_CSV12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.CSV12_READER__ROOT_ELEMENT_NAME,
 				 true,
 				 false,
@@ -219,8 +219,8 @@ public class CSV12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CSV12Reader_separator_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_separator_feature", "_UI_CSV12Reader_type"),
+				 getString("_UI_CSV12Reader_separator_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_separator_feature", "_UI_CSV12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.CSV12_READER__SEPARATOR,
 				 true,
 				 false,
@@ -241,8 +241,8 @@ public class CSV12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CSV12Reader_skipLines_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_skipLines_feature", "_UI_CSV12Reader_type"),
+				 getString("_UI_CSV12Reader_skipLines_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CSV12Reader_skipLines_feature", "_UI_CSV12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.CSV12_READER__SKIP_LINES,
 				 true,
 				 false,
@@ -289,7 +289,7 @@ public class CSV12ReaderItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CSV12Reader"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CSV12Reader")); //$NON-NLS-1$
 	}
 
 	/**
@@ -299,7 +299,7 @@ public class CSV12ReaderItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		return "CSV";
+		return "CSV"; //$NON-NLS-1$
 //		String label = ((CSV12Reader)object).getRecordElementName();
 //		return label == null || label.length() == 0 ?
 //			getString("_UI_CSV12Reader_type") :
@@ -395,7 +395,7 @@ public class CSV12ReaderItemProvider
 
 		if (qualify) {
 			return getString
-				("_UI_CreateChild_text2",
+				("_UI_CreateChild_text2", //$NON-NLS-1$
 				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);

@@ -106,7 +106,7 @@ public class ParamsTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ParamsType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ParamsType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class ParamsTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_ParamsType_type");
+		return getString("_UI_ParamsType_type"); //$NON-NLS-1$
 	}
 
 	/**

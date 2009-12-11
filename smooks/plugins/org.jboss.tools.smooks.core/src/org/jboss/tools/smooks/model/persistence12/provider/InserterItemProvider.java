@@ -85,8 +85,8 @@ public class InserterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Inserter_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_beanId_feature", "_UI_Inserter_type"),
+				 getString("_UI_Inserter_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_beanId_feature", "_UI_Inserter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.INSERTER__BEAN_ID,
 				 true,
 				 false,
@@ -107,8 +107,8 @@ public class InserterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Inserter_dao_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_dao_feature", "_UI_Inserter_type"),
+				 getString("_UI_Inserter_dao_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_dao_feature", "_UI_Inserter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.INSERTER__DAO,
 				 true,
 				 false,
@@ -129,8 +129,8 @@ public class InserterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Inserter_insertBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_insertBefore_feature", "_UI_Inserter_type"),
+				 getString("_UI_Inserter_insertBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_insertBefore_feature", "_UI_Inserter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.INSERTER__INSERT_BEFORE,
 				 true,
 				 false,
@@ -151,8 +151,8 @@ public class InserterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Inserter_insertedBeanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_insertedBeanId_feature", "_UI_Inserter_type"),
+				 getString("_UI_Inserter_insertedBeanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_insertedBeanId_feature", "_UI_Inserter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.INSERTER__INSERTED_BEAN_ID,
 				 true,
 				 false,
@@ -173,8 +173,8 @@ public class InserterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Inserter_insertOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_insertOnElement_feature", "_UI_Inserter_type"),
+				 getString("_UI_Inserter_insertOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_insertOnElement_feature", "_UI_Inserter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.INSERTER__INSERT_ON_ELEMENT,
 				 true,
 				 false,
@@ -195,8 +195,8 @@ public class InserterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Inserter_insertOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_insertOnElementNS_feature", "_UI_Inserter_type"),
+				 getString("_UI_Inserter_insertOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_insertOnElementNS_feature", "_UI_Inserter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.INSERTER__INSERT_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -217,8 +217,8 @@ public class InserterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Inserter_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_name_feature", "_UI_Inserter_type"),
+				 getString("_UI_Inserter_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Inserter_name_feature", "_UI_Inserter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.INSERTER__NAME,
 				 true,
 				 false,
@@ -235,7 +235,7 @@ public class InserterItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Inserter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Inserter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -247,8 +247,8 @@ public class InserterItemProvider
 	public String getText(Object object) {
 		String label = ((Inserter)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Inserter_type") :
-			getString("_UI_Inserter_type") + " " + label;
+			getString("_UI_Inserter_type") : //$NON-NLS-1$
+			getString("_UI_Inserter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

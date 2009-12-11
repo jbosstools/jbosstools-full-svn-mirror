@@ -10,7 +10,7 @@ import org.osgi.framework.BundleContext;
 public class SmooksCoreActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.smooks.core";
+	public static final String PLUGIN_ID = "org.jboss.tools.smooks.core"; //$NON-NLS-1$
 
 	// The shared instance
 	private static SmooksCoreActivator plugin;
@@ -54,9 +54,9 @@ public class SmooksCoreActivator extends AbstractUIPlugin {
 	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
 		super.initializeImageRegistry(reg);
-		reg.put("BindingsType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/BindingsType.gif"));
-		reg.put("ExpressionType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/ExpressionType.gif"));
-		reg.put("ValueType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/ValueType.gif"));
-		reg.put("WiringType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/WiringType.gif"));
+		reg.put("BindingsType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/BindingsType.gif")); //$NON-NLS-1$ //$NON-NLS-2$
+		reg.put("ExpressionType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/ExpressionType.gif")); //$NON-NLS-1$ //$NON-NLS-2$
+		reg.put("ValueType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/ValueType.gif")); //$NON-NLS-1$ //$NON-NLS-2$
+		reg.put("WiringType",imageDescriptorFromPlugin(PLUGIN_ID, "/icons/full/obj16/WiringType.gif")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

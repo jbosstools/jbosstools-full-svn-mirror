@@ -42,23 +42,23 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 public class SmooksModelUtils {
 
-	public static final String KEY_TEMPLATE_TYPE = "messageType";
+	public static final String KEY_TEMPLATE_TYPE = "messageType"; //$NON-NLS-1$
 
-	public static final String FREEMARKER_TEMPLATE_TYPE_CSV = "CSV";
+	public static final String FREEMARKER_TEMPLATE_TYPE_CSV = "CSV"; //$NON-NLS-1$
 
-	public static final String KEY_CSV_FIELDS = "csvFields";
+	public static final String KEY_CSV_FIELDS = "csvFields"; //$NON-NLS-1$
 
-	public static final String KEY_TASK_ID_REF = "idref";
+	public static final String KEY_TASK_ID_REF = "idref"; //$NON-NLS-1$
 
-	public static final String KEY_OBJECT_ID = "id";
+	public static final String KEY_OBJECT_ID = "id"; //$NON-NLS-1$
 
-	public static final String KEY_CSV_SEPERATOR = "seperator";
+	public static final String KEY_CSV_SEPERATOR = "seperator"; //$NON-NLS-1$
 
-	public static final String KEY_CSV_QUOTE = "quote";
+	public static final String KEY_CSV_QUOTE = "quote"; //$NON-NLS-1$
 
 	public static final String INPUT_TYPE_JAVA = SmooksInputType.INPUT_TYPE_JAVA;
 
-	public static final String INPUT_TYPE = "inputType";
+	public static final String INPUT_TYPE = "inputType"; //$NON-NLS-1$
 
 	public static final String INPUT_TYPE_CUSTOME = SmooksInputType.INPUT_TYPE_CUSTOM;
 
@@ -66,31 +66,31 @@ public class SmooksModelUtils {
 
 	public static final String INPUT_TYPE_CSV = SmooksInputType.INPUT_TYPE_CSV;
 
-	public static final String INPUT_ACTIVE_TYPE = "input.type.actived";
+	public static final String INPUT_ACTIVE_TYPE = "input.type.actived"; //$NON-NLS-1$
 
-	public static final String INPUT_DEACTIVE_TYPE = "input.type.deactived";
+	public static final String INPUT_DEACTIVE_TYPE = "input.type.deactived"; //$NON-NLS-1$
 
 	public static final String INPUT_TYPE_CSV_1_2 = SmooksInputType.INPUT_TYPE_CSV;
 
-	public static final String PARAM_NAME_CLASS = "class";
+	public static final String PARAM_NAME_CLASS = "class"; //$NON-NLS-1$
 
-	public static final String PARAM_NAME_PATH = "path";
+	public static final String PARAM_NAME_PATH = "path"; //$NON-NLS-1$
 
-	public static final String PARAM_NAME_ACTIVED = "actived";
+	public static final String PARAM_NAME_ACTIVED = "actived"; //$NON-NLS-1$
 
 	public static final String INPUT_TYPE_XML = SmooksInputType.INPUT_TYPE_XML;
 
 	public static final String INPUT_TYPE_XSD = SmooksInputType.INPUT_TYPE_XSD;
 
-	public static final String TYPE_XSL = "xsl";
+	public static final String TYPE_XSL = "xsl"; //$NON-NLS-1$
 
-	public static final String[] TEMPLATE_TYPES = new String[] { "xsl", "ftl" };
+	public static final String[] TEMPLATE_TYPES = new String[] { "xsl", "ftl" }; //$NON-NLS-1$ //$NON-NLS-2$
 
-	public static final String BEAN_CLASS = "beanClass";
+	public static final String BEAN_CLASS = "beanClass"; //$NON-NLS-1$
 
-	public static final String BEAN_ID = "beanId";
+	public static final String BEAN_ID = "beanId"; //$NON-NLS-1$
 
-	public static final String BINDINGS = "bindings";
+	public static final String BINDINGS = "bindings"; //$NON-NLS-1$
 
 	public static final String INPUT_TYPE_EDI_1_1 = SmooksInputType.INPUT_TYPE_EDI;
 
@@ -98,16 +98,16 @@ public class SmooksModelUtils {
 
 	public static final String INPUT_TYPE_JSON_1_2 = SmooksInputType.INPUT_TYPE_JSON;
 
-	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(null, "property",
+	public static EStructuralFeature ATTRIBUTE_PROPERTY = ExtendedMetaData.INSTANCE.demandFeature(null, "property", //$NON-NLS-1$
 			false);
 
-	public static EStructuralFeature ATTRIBUTE_SELECTOR = ExtendedMetaData.INSTANCE.demandFeature(null, "selector",
+	public static EStructuralFeature ATTRIBUTE_SELECTOR = ExtendedMetaData.INSTANCE.demandFeature(null, "selector", //$NON-NLS-1$
 			false);
 
-	public static EStructuralFeature ATTRIBUTE_TYPE = ExtendedMetaData.INSTANCE.demandFeature(null, "type", false);
+	public static EStructuralFeature ATTRIBUTE_TYPE = ExtendedMetaData.INSTANCE.demandFeature(null, "type", false); //$NON-NLS-1$
 
 	public static EStructuralFeature ELEMENT_BINDING = ExtendedMetaData.INSTANCE.demandFeature(
-			"http://www.milyn.org/xsd/smooks-1.0.xsd", "binding", true);
+			"http://www.milyn.org/xsd/smooks-1.0.xsd", "binding", true); //$NON-NLS-1$ //$NON-NLS-2$
 
 	// public static AnyType addBindingTypeToParamType(ParamType param, String
 	// property, String selector, String type,
@@ -615,8 +615,8 @@ public class SmooksModelUtils {
 			String value = typeParam.getStringValue();
 			if (value != null) {
 				value = value.trim();
-				if (!"".equals(value)) {
-					return value.split(",");
+				if (!"".equals(value)) { //$NON-NLS-1$
+					return value.split(","); //$NON-NLS-1$
 				}
 			}
 		}

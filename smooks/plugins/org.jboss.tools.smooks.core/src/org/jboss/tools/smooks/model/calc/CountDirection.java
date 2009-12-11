@@ -36,7 +36,7 @@ public enum CountDirection implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	INCREMENT(0, "INCREMENT", "INCREMENT"),
+	INCREMENT(0, "INCREMENT", "INCREMENT"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>DECREMENT</b></em>' literal object.
@@ -46,7 +46,7 @@ public enum CountDirection implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	DECREMENT(1, "DECREMENT", "DECREMENT");
+	DECREMENT(1, "DECREMENT", "DECREMENT"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>INCREMENT</b></em>' literal value.

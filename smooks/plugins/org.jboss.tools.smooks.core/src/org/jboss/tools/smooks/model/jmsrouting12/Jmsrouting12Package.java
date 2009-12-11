@@ -42,7 +42,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "jmsrouting12";
+	String eNAME = "jmsrouting12"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -50,7 +50,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/jms-routing-1.2.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/jms-routing-1.2.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -58,7 +58,7 @@ public interface Jmsrouting12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "jms";
+	String eNS_PREFIX = "jms"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

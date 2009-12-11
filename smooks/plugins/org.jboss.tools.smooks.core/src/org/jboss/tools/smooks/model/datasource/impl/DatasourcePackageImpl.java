@@ -388,27 +388,27 @@ public class DatasourcePackageImpl extends EPackageImpl implements DatasourcePac
 		dataSourceJndiEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(directEClass, Direct.class, "Direct", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDirect_AutoCommit(), theXMLTypePackage.getBoolean(), "autoCommit", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDirect_BindOnElement(), theXMLTypePackage.getString(), "bindOnElement", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDirect_BindOnElementNS(), theXMLTypePackage.getString(), "bindOnElementNS", null, 0, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDirect_Datasource(), theXMLTypePackage.getString(), "datasource", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDirect_Driver(), theXMLTypePackage.getString(), "driver", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDirect_Password(), theXMLTypePackage.getString(), "password", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDirect_Url(), theXMLTypePackage.getAnyURI(), "url", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDirect_Username(), theXMLTypePackage.getString(), "username", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(directEClass, Direct.class, "Direct", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getDirect_AutoCommit(), theXMLTypePackage.getBoolean(), "autoCommit", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDirect_BindOnElement(), theXMLTypePackage.getString(), "bindOnElement", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDirect_BindOnElementNS(), theXMLTypePackage.getString(), "bindOnElementNS", null, 0, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDirect_Datasource(), theXMLTypePackage.getString(), "datasource", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDirect_Driver(), theXMLTypePackage.getString(), "driver", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDirect_Password(), theXMLTypePackage.getString(), "password", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDirect_Url(), theXMLTypePackage.getAnyURI(), "url", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDirect_Username(), theXMLTypePackage.getString(), "username", null, 1, 1, Direct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(dataSourceDocumentRootEClass, DataSourceDocumentRoot.class, "DataSourceDocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDataSourceDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataSourceDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataSourceDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDataSourceDocumentRoot_Direct(), this.getDirect(), null, "direct", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getDataSourceDocumentRoot_JNDI(), this.getDataSourceJndi(), null, "jNDI", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(dataSourceDocumentRootEClass, DataSourceDocumentRoot.class, "DataSourceDocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getDataSourceDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDataSourceDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDataSourceDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDataSourceDocumentRoot_Direct(), this.getDirect(), null, "direct", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDataSourceDocumentRoot_JNDI(), this.getDataSourceJndi(), null, "jNDI", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(dataSourceJndiEClass, DataSourceJndi.class, "DataSourceJndi", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDataSourceJndi_AutoCommit(), theXMLTypePackage.getBoolean(), "autoCommit", null, 1, 1, DataSourceJndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataSourceJndi_BindOnElement(), theXMLTypePackage.getString(), "bindOnElement", null, 1, 1, DataSourceJndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDataSourceJndi_Datasource(), theXMLTypePackage.getString(), "datasource", null, 1, 1, DataSourceJndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(dataSourceJndiEClass, DataSourceJndi.class, "DataSourceJndi", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getDataSourceJndi_AutoCommit(), theXMLTypePackage.getBoolean(), "autoCommit", null, 1, 1, DataSourceJndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDataSourceJndi_BindOnElement(), theXMLTypePackage.getString(), "bindOnElement", null, 1, 1, DataSourceJndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getDataSourceJndi_Datasource(), theXMLTypePackage.getString(), "datasource", null, 1, 1, DataSourceJndi.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);
@@ -425,143 +425,143 @@ public class DatasourcePackageImpl extends EPackageImpl implements DatasourcePac
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";				
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";				 //$NON-NLS-1$
 		addAnnotation
 		  (directEClass, 
 		   source, 
 		   new String[] {
-			 "name", "direct",
-			 "kind", "elementOnly"
+			 "name", "direct", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDirect_AutoCommit(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "autoCommit"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "autoCommit" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDirect_BindOnElement(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "bindOnElement"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "bindOnElement" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDirect_BindOnElementNS(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "bindOnElementNS"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "bindOnElementNS" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDirect_Datasource(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "datasource"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "datasource" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDirect_Driver(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "driver"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "driver" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDirect_Password(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "password"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "password" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDirect_Url(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "url"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "url" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDirect_Username(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "username"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "username" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (dataSourceDocumentRootEClass, 
 		   source, 
 		   new String[] {
-			 "name", "",
-			 "kind", "mixed"
+			 "name", "", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDataSourceDocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
-			 "kind", "elementWildcard",
-			 "name", ":mixed"
+			 "kind", "elementWildcard", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", ":mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDataSourceDocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xmlns:prefix"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xmlns:prefix" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDataSourceDocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xsi:schemaLocation"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xsi:schemaLocation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDataSourceDocumentRoot_Direct(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "direct",
-			 "namespace", "##targetNamespace",
-			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "direct", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace", //$NON-NLS-1$ //$NON-NLS-2$
+			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDataSourceDocumentRoot_JNDI(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "JNDI",
-			 "namespace", "##targetNamespace",
-			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "JNDI", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace", //$NON-NLS-1$ //$NON-NLS-2$
+			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (dataSourceJndiEClass, 
 		   source, 
 		   new String[] {
-			 "name", "Jndi",
-			 "kind", "elementOnly"
+			 "name", "Jndi", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDataSourceJndi_AutoCommit(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "autoCommit"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "autoCommit" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDataSourceJndi_BindOnElement(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "bindOnElement"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "bindOnElement" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDataSourceJndi_Datasource(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "datasource"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "datasource" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

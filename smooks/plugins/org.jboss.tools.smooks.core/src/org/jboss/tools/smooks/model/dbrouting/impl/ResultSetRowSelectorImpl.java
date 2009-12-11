@@ -450,17 +450,17 @@ public class ResultSetRowSelectorImpl extends ElementVisitorImpl implements Resu
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (where: ");
+		result.append(" (where: "); //$NON-NLS-1$
 		result.append(where);
-		result.append(", failedSelectError: ");
+		result.append(", failedSelectError: "); //$NON-NLS-1$
 		result.append(failedSelectError);
-		result.append(", beanId: ");
+		result.append(", beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", executeBefore: ");
-		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>");
-		result.append(", resultSetName: ");
+		result.append(", executeBefore: "); //$NON-NLS-1$
+		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", resultSetName: "); //$NON-NLS-1$
 		result.append(resultSetName);
-		result.append(", selectRowOnElement: ");
+		result.append(", selectRowOnElement: "); //$NON-NLS-1$
 		result.append(selectRowOnElement);
 		result.append(')');
 		return result.toString();

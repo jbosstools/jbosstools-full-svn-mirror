@@ -31,7 +31,7 @@ public class CommonFactoryImpl extends EFactoryImpl implements CommonFactory {
 	 */
 	public static CommonFactory init() {
 		try {
-			CommonFactory theCommonFactory = (CommonFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.jboss.org/smookstools"); 
+			CommonFactory theCommonFactory = (CommonFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.jboss.org/smookstools");  //$NON-NLS-1$
 			if (theCommonFactory != null) {
 				return theCommonFactory;
 			}
@@ -61,7 +61,7 @@ public class CommonFactoryImpl extends EFactoryImpl implements CommonFactory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.CommonFactoryImpl_Error_Invalid_Classifier + eClass.getName() + Messages.CommonFactoryImpl_Error_Invalid_Classifier2);
 		}
 	}
 

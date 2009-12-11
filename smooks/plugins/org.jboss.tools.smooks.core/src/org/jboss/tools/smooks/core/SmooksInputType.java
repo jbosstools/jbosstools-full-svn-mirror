@@ -25,17 +25,17 @@ package org.jboss.tools.smooks.core;
  */
 public class SmooksInputType {
 	
-	public static final String INPUT_TYPE_JAVA = "input.java";
+	public static final String INPUT_TYPE_JAVA = "input.java"; //$NON-NLS-1$
 
-	public static final String INPUT_TYPE_CUSTOM = "input.custom";
+	public static final String INPUT_TYPE_CUSTOM = "input.custom"; //$NON-NLS-1$
 
-	public static final String INPUT_TYPE_JSON = "input.json";
+	public static final String INPUT_TYPE_JSON = "input.json"; //$NON-NLS-1$
 
-	public static final String INPUT_TYPE_CSV = "input.csv";
+	public static final String INPUT_TYPE_CSV = "input.csv"; //$NON-NLS-1$
 
-	public static final String INPUT_TYPE_XML = "input.xml";
+	public static final String INPUT_TYPE_XML = "input.xml"; //$NON-NLS-1$
 
-	public static final String INPUT_TYPE_XSD = "input.xsd";
+	public static final String INPUT_TYPE_XSD = "input.xsd"; //$NON-NLS-1$
 
-	public static final String INPUT_TYPE_EDI = "input.edi";
+	public static final String INPUT_TYPE_EDI = "input.edi"; //$NON-NLS-1$
 }

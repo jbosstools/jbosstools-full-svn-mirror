@@ -82,8 +82,8 @@ public class ProfileTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ProfileType_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_value_feature", "_UI_ProfileType_type"),
+				 getString("_UI_ProfileType_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_value_feature", "_UI_ProfileType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.PROFILE_TYPE__VALUE,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class ProfileTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ProfileType_baseProfile_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_baseProfile_feature", "_UI_ProfileType_type"),
+				 getString("_UI_ProfileType_baseProfile_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_baseProfile_feature", "_UI_ProfileType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.PROFILE_TYPE__BASE_PROFILE,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class ProfileTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ProfileType_subProfiles_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_subProfiles_feature", "_UI_ProfileType_type"),
+				 getString("_UI_ProfileType_subProfiles_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ProfileType_subProfiles_feature", "_UI_ProfileType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.PROFILE_TYPE__SUB_PROFILES,
 				 true,
 				 false,
@@ -145,7 +145,7 @@ public class ProfileTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ProfileType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ProfileType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -158,8 +158,8 @@ public class ProfileTypeItemProvider
 	public String getText(Object object) {
 		String label = ((ProfileType)object).getValue();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ProfileType_type") :
-			getString("_UI_ProfileType_type") + " " + label;
+			getString("_UI_ProfileType_type") : //$NON-NLS-1$
+			getString("_UI_ProfileType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

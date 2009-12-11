@@ -84,8 +84,8 @@ public class ExecutorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Executor_statement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_statement_feature", "_UI_Executor_type"),
+				 getString("_UI_Executor_statement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_statement_feature", "_UI_Executor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.EXECUTOR__STATEMENT,
 				 true,
 				 false,
@@ -106,8 +106,8 @@ public class ExecutorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Executor_datasource_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_datasource_feature", "_UI_Executor_type"),
+				 getString("_UI_Executor_datasource_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_datasource_feature", "_UI_Executor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.EXECUTOR__DATASOURCE,
 				 true,
 				 false,
@@ -128,8 +128,8 @@ public class ExecutorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Executor_executeBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_executeBefore_feature", "_UI_Executor_type"),
+				 getString("_UI_Executor_executeBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_executeBefore_feature", "_UI_Executor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.EXECUTOR__EXECUTE_BEFORE,
 				 true,
 				 false,
@@ -150,8 +150,8 @@ public class ExecutorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Executor_executeOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_executeOnElement_feature", "_UI_Executor_type"),
+				 getString("_UI_Executor_executeOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_executeOnElement_feature", "_UI_Executor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.EXECUTOR__EXECUTE_ON_ELEMENT,
 				 true,
 				 false,
@@ -172,8 +172,8 @@ public class ExecutorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Executor_executeOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_executeOnElementNS_feature", "_UI_Executor_type"),
+				 getString("_UI_Executor_executeOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Executor_executeOnElementNS_feature", "_UI_Executor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.EXECUTOR__EXECUTE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -221,7 +221,7 @@ public class ExecutorItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Executor"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Executor")); //$NON-NLS-1$
 	}
 
 	/**
@@ -234,8 +234,8 @@ public class ExecutorItemProvider
 	public String getText(Object object) {
 		String label = ((Executor)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Executor_type") :
-			getString("_UI_Executor_type") + " " + label;
+			getString("_UI_Executor_type") : //$NON-NLS-1$
+			getString("_UI_Executor_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

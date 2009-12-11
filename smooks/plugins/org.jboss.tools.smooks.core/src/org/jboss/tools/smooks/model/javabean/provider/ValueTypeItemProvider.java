@@ -85,8 +85,8 @@ public class ValueTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueType_data_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_data_feature", "_UI_ValueType_type"),
+				 getString("_UI_ValueType_data_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_data_feature", "_UI_ValueType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.VALUE_TYPE__DATA,
 				 true,
 				 false,
@@ -107,8 +107,8 @@ public class ValueTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueType_dataNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_dataNS_feature", "_UI_ValueType_type"),
+				 getString("_UI_ValueType_dataNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_dataNS_feature", "_UI_ValueType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.VALUE_TYPE__DATA_NS,
 				 true,
 				 false,
@@ -129,8 +129,8 @@ public class ValueTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueType_decoder_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_decoder_feature", "_UI_ValueType_type"),
+				 getString("_UI_ValueType_decoder_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_decoder_feature", "_UI_ValueType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.VALUE_TYPE__DECODER,
 				 true,
 				 false,
@@ -151,8 +151,8 @@ public class ValueTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueType_default_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_default_feature", "_UI_ValueType_type"),
+				 getString("_UI_ValueType_default_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_default_feature", "_UI_ValueType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.VALUE_TYPE__DEFAULT,
 				 true,
 				 false,
@@ -173,8 +173,8 @@ public class ValueTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueType_property_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_property_feature", "_UI_ValueType_type"),
+				 getString("_UI_ValueType_property_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_property_feature", "_UI_ValueType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.VALUE_TYPE__PROPERTY,
 				 true,
 				 false,
@@ -195,8 +195,8 @@ public class ValueTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueType_setterMethod_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_setterMethod_feature", "_UI_ValueType_type"),
+				 getString("_UI_ValueType_setterMethod_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueType_setterMethod_feature", "_UI_ValueType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.VALUE_TYPE__SETTER_METHOD,
 				 true,
 				 false,
@@ -244,7 +244,7 @@ public class ValueTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/value_binding"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/value_binding")); //$NON-NLS-1$
 	}
 
 	/**
@@ -257,8 +257,8 @@ public class ValueTypeItemProvider
 	public String getText(Object object) {
 		String label = ((ValueType)object).getProperty();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ValueType_type") :
-			getString("_UI_ValueType_type") + " (" + label + ")";
+			getString("_UI_ValueType_type") : //$NON-NLS-1$
+			getString("_UI_ValueType_type") + " (" + label + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**

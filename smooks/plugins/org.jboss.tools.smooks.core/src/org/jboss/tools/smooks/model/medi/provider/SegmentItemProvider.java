@@ -80,8 +80,8 @@ public class SegmentItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Segment_maxOccurs_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_maxOccurs_feature", "_UI_Segment_type"),
+				 getString("_UI_Segment_maxOccurs_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_maxOccurs_feature", "_UI_Segment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.SEGMENT__MAX_OCCURS,
 				 true,
 				 false,
@@ -102,8 +102,8 @@ public class SegmentItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Segment_minOccurs_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_minOccurs_feature", "_UI_Segment_type"),
+				 getString("_UI_Segment_minOccurs_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_minOccurs_feature", "_UI_Segment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.SEGMENT__MIN_OCCURS,
 				 true,
 				 false,
@@ -124,8 +124,8 @@ public class SegmentItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Segment_segcode_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_segcode_feature", "_UI_Segment_type"),
+				 getString("_UI_Segment_segcode_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_segcode_feature", "_UI_Segment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.SEGMENT__SEGCODE,
 				 true,
 				 false,
@@ -146,8 +146,8 @@ public class SegmentItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Segment_truncatable_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_truncatable_feature", "_UI_Segment_type"),
+				 getString("_UI_Segment_truncatable_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Segment_truncatable_feature", "_UI_Segment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.SEGMENT__TRUNCATABLE,
 				 true,
 				 false,
@@ -196,7 +196,7 @@ public class SegmentItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Segment"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Segment")); //$NON-NLS-1$
 	}
 
 	/**
@@ -209,8 +209,8 @@ public class SegmentItemProvider
 	public String getText(Object object) {
 		String label = ((Segment)object).getXmltag();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Segment_type") :
-			getString("_UI_Segment_type") + " " + label;
+			getString("_UI_Segment_type") : //$NON-NLS-1$
+			getString("_UI_Segment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

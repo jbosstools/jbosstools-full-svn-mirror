@@ -109,7 +109,7 @@ public class AbstractAnyTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_AbstractAnyType_type");
+		return getString("_UI_AbstractAnyType_type"); //$NON-NLS-1$
 	}
 
 	/**

@@ -310,20 +310,20 @@ public class Rules10PackageImpl extends EPackageImpl implements Rules10Package {
 		ruleBasesTypeEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(rules10DocumentRootEClass, Rules10DocumentRoot.class, "Rules10DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRules10DocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRules10DocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRules10DocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRules10DocumentRoot_RuleBases(), this.getRuleBasesType(), null, "ruleBases", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(rules10DocumentRootEClass, Rules10DocumentRoot.class, "Rules10DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getRules10DocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getRules10DocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getRules10DocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getRules10DocumentRoot_RuleBases(), this.getRuleBasesType(), null, "ruleBases", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(ruleBaseEClass, RuleBase.class, "RuleBase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRuleBase_Name(), theXMLTypePackage.getString(), "name", null, 1, 1, RuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRuleBase_Provider(), theXMLTypePackage.getString(), "provider", null, 1, 1, RuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRuleBase_Src(), theXMLTypePackage.getString(), "src", null, 0, 1, RuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(ruleBaseEClass, RuleBase.class, "RuleBase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getRuleBase_Name(), theXMLTypePackage.getString(), "name", null, 1, 1, RuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getRuleBase_Provider(), theXMLTypePackage.getString(), "provider", null, 1, 1, RuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getRuleBase_Src(), theXMLTypePackage.getString(), "src", null, 0, 1, RuleBase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(ruleBasesTypeEClass, RuleBasesType.class, "RuleBasesType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRuleBasesType_Group(), ecorePackage.getEFeatureMapEntry(), "group", null, 0, -1, RuleBasesType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRuleBasesType_RuleBase(), this.getRuleBase(), null, "ruleBase", null, 1, -1, RuleBasesType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(ruleBasesTypeEClass, RuleBasesType.class, "RuleBasesType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getRuleBasesType_Group(), ecorePackage.getEFeatureMapEntry(), "group", null, 0, -1, RuleBasesType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getRuleBasesType_RuleBase(), this.getRuleBase(), null, "ruleBase", null, 1, -1, RuleBasesType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);
@@ -340,94 +340,94 @@ public class Rules10PackageImpl extends EPackageImpl implements Rules10Package {
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";			
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";			 //$NON-NLS-1$
 		addAnnotation
 		  (rules10DocumentRootEClass, 
 		   source, 
 		   new String[] {
-			 "name", "",
-			 "kind", "mixed"
+			 Messages.Rules10PackageImpl_13, Messages.Rules10PackageImpl_14,
+			 Messages.Rules10PackageImpl_15, Messages.Rules10PackageImpl_16
 		   });		
 		addAnnotation
 		  (getRules10DocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
-			 "kind", "elementWildcard",
-			 "name", ":mixed"
+			 Messages.Rules10PackageImpl_17, Messages.Rules10PackageImpl_18,
+			 Messages.Rules10PackageImpl_19, Messages.Rules10PackageImpl_20
 		   });		
 		addAnnotation
 		  (getRules10DocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xmlns:prefix"
+			 Messages.Rules10PackageImpl_21, Messages.Rules10PackageImpl_22,
+			 Messages.Rules10PackageImpl_23, Messages.Rules10PackageImpl_24
 		   });		
 		addAnnotation
 		  (getRules10DocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xsi:schemaLocation"
+			 Messages.Rules10PackageImpl_25, Messages.Rules10PackageImpl_26,
+			 Messages.Rules10PackageImpl_27, Messages.Rules10PackageImpl_28
 		   });		
 		addAnnotation
 		  (getRules10DocumentRoot_RuleBases(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "ruleBases",
-			 "namespace", "##targetNamespace",
-			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
+			 Messages.Rules10PackageImpl_29, Messages.Rules10PackageImpl_30,
+			 Messages.Rules10PackageImpl_31, Messages.Rules10PackageImpl_32,
+			 Messages.Rules10PackageImpl_33, Messages.Rules10PackageImpl_34,
+			 Messages.Rules10PackageImpl_35, Messages.Rules10PackageImpl_36
 		   });		
 		addAnnotation
 		  (ruleBaseEClass, 
 		   source, 
 		   new String[] {
-			 "name", "ruleBase",
-			 "kind", "elementOnly"
+			 Messages.Rules10PackageImpl_37, Messages.Rules10PackageImpl_38,
+			 Messages.Rules10PackageImpl_39, Messages.Rules10PackageImpl_40
 		   });			
 		addAnnotation
 		  (getRuleBase_Name(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "name"
+			 Messages.Rules10PackageImpl_41, Messages.Rules10PackageImpl_42,
+			 Messages.Rules10PackageImpl_43, Messages.Rules10PackageImpl_44
 		   });			
 		addAnnotation
 		  (getRuleBase_Provider(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "provider"
+			 Messages.Rules10PackageImpl_45, Messages.Rules10PackageImpl_46,
+			 Messages.Rules10PackageImpl_47, Messages.Rules10PackageImpl_48
 		   });			
 		addAnnotation
 		  (getRuleBase_Src(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "src"
+			 Messages.Rules10PackageImpl_49, Messages.Rules10PackageImpl_50,
+			 Messages.Rules10PackageImpl_51, Messages.Rules10PackageImpl_52
 		   });		
 		addAnnotation
 		  (ruleBasesTypeEClass, 
 		   source, 
 		   new String[] {
-			 "name", "ruleBases_._type",
-			 "kind", "elementOnly"
+			 Messages.Rules10PackageImpl_53, Messages.Rules10PackageImpl_54,
+			 Messages.Rules10PackageImpl_55, Messages.Rules10PackageImpl_56
 		   });		
 		addAnnotation
 		  (getRuleBasesType_Group(), 
 		   source, 
 		   new String[] {
-			 "kind", "group",
-			 "name", "group:2"
+			 Messages.Rules10PackageImpl_57, Messages.Rules10PackageImpl_58,
+			 Messages.Rules10PackageImpl_59, Messages.Rules10PackageImpl_60
 		   });		
 		addAnnotation
 		  (getRuleBasesType_RuleBase(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "ruleBase",
-			 "namespace", "##targetNamespace",
-			 "group", "#group:2"
+			 Messages.Rules10PackageImpl_61, Messages.Rules10PackageImpl_62,
+			 Messages.Rules10PackageImpl_63, Messages.Rules10PackageImpl_64,
+			 Messages.Rules10PackageImpl_65, Messages.Rules10PackageImpl_66,
+			 Messages.Rules10PackageImpl_67, Messages.Rules10PackageImpl_68
 		   });
 	}
 

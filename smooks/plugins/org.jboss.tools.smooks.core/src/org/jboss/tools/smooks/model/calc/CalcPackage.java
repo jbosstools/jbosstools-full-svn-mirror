@@ -40,7 +40,7 @@ public interface CalcPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "calc";
+	String eNAME = "calc"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -48,7 +48,7 @@ public interface CalcPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/calc-1.1.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/calc-1.1.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -56,7 +56,7 @@ public interface CalcPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "calc";
+	String eNS_PREFIX = "calc"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

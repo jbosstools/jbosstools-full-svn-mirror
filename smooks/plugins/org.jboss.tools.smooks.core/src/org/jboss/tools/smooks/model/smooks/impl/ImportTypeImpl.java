@@ -216,7 +216,7 @@ public class ImportTypeImpl extends AbstractResourceConfigImpl implements Import
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (file: ");
+		result.append(" (file: "); //$NON-NLS-1$
 		result.append(file);
 		result.append(')');
 		return result.toString();

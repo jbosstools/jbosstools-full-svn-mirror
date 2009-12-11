@@ -157,7 +157,7 @@ public abstract class AbstractReaderImpl extends AbstractResourceConfigImpl impl
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (targetProfile: ");
+		result.append(" (targetProfile: "); //$NON-NLS-1$
 		result.append(targetProfile);
 		result.append(')');
 		return result.toString();

@@ -536,47 +536,47 @@ public class XslPackageImpl extends EPackageImpl implements XslPackage {
 		xslEClass.getESuperTypes().add(theSmooksPackage.getElementVisitor());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(bindToEClass, BindTo.class, "BindTo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getBindTo_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, BindTo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(bindToEClass, BindTo.class, "BindTo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getBindTo_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, BindTo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDocumentRoot_Xsl(), this.getXsl(), null, "xsl", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, null, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getDocumentRoot_Xsl(), this.getXsl(), null, "xsl", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(inlineEClass, Inline.class, "Inline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getInline_Directive(), this.getInlineDirective(), "directive", null, 1, 1, Inline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(inlineEClass, Inline.class, "Inline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getInline_Directive(), this.getInlineDirective(), "directive", null, 1, 1, Inline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(outputToEClass, OutputTo.class, "OutputTo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getOutputTo_OutputStreamResource(), theXMLTypePackage.getString(), "outputStreamResource", null, 1, 1, OutputTo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(outputToEClass, OutputTo.class, "OutputTo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getOutputTo_OutputStreamResource(), theXMLTypePackage.getString(), "outputStreamResource", null, 1, 1, OutputTo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(templateEClass, Template.class, "Template", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTemplate_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, Template.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTemplate_Encoding(), theXMLTypePackage.getString(), "encoding", "UTF-8", 0, 1, Template.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(templateEClass, Template.class, "Template", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getTemplate_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, Template.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getTemplate_Encoding(), theXMLTypePackage.getString(), "encoding", "UTF-8", 0, 1, Template.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
-		initEClass(useEClass, Use.class, "Use", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getUse_Inline(), this.getInline(), null, "inline", null, 0, 1, Use.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUse_BindTo(), this.getBindTo(), null, "bindTo", null, 0, 1, Use.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getUse_OutputTo(), this.getOutputTo(), null, "outputTo", null, 0, 1, Use.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(useEClass, Use.class, "Use", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getUse_Inline(), this.getInline(), null, "inline", null, 0, 1, Use.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getUse_BindTo(), this.getBindTo(), null, "bindTo", null, 0, 1, Use.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getUse_OutputTo(), this.getOutputTo(), null, "outputTo", null, 0, 1, Use.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(xslEClass, Xsl.class, "Xsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getXsl_Template(), this.getTemplate(), null, "template", null, 1, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getXsl_Use(), this.getUse(), null, "use", null, 0, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getXsl_Param(), theSmooksPackage.getParamType(), null, "param", null, 0, -1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getXsl_ApplyBefore(), theXMLTypePackage.getBoolean(), "applyBefore", "false", 0, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getXsl_ApplyOnElement(), theXMLTypePackage.getString(), "applyOnElement", null, 1, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getXsl_ApplyOnElementNS(), theXMLTypePackage.getAnyURI(), "applyOnElementNS", null, 0, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(xslEClass, Xsl.class, "Xsl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getXsl_Template(), this.getTemplate(), null, "template", null, 1, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getXsl_Use(), this.getUse(), null, "use", null, 0, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getXsl_Param(), theSmooksPackage.getParamType(), null, "param", null, 0, -1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getXsl_ApplyBefore(), theXMLTypePackage.getBoolean(), "applyBefore", "false", 0, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getXsl_ApplyOnElement(), theXMLTypePackage.getString(), "applyOnElement", null, 1, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getXsl_ApplyOnElementNS(), theXMLTypePackage.getAnyURI(), "applyOnElementNS", null, 0, 1, Xsl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
-		initEEnum(inlineDirectiveEEnum, InlineDirective.class, "InlineDirective");
+		initEEnum(inlineDirectiveEEnum, InlineDirective.class, "InlineDirective"); //$NON-NLS-1$
 		addEEnumLiteral(inlineDirectiveEEnum, InlineDirective.ADDTO);
 		addEEnumLiteral(inlineDirectiveEEnum, InlineDirective.REPLACE);
 		addEEnumLiteral(inlineDirectiveEEnum, InlineDirective.INSERTBEFORE);
 		addEEnumLiteral(inlineDirectiveEEnum, InlineDirective.INSERTAFTER);
 
 		// Initialize data types
-		initEDataType(inlineDirectiveObjectEDataType, InlineDirective.class, "InlineDirectiveObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(inlineDirectiveObjectEDataType, InlineDirective.class, "InlineDirectiveObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);
@@ -593,202 +593,202 @@ public class XslPackageImpl extends EPackageImpl implements XslPackage {
 	 * @generated
 	 */
 	protected void createExtendedMetaDataAnnotations() {
-		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";				
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";				 //$NON-NLS-1$
 		addAnnotation
 		  (bindToEClass, 
 		   source, 
 		   new String[] {
-			 "name", "bindTo",
-			 "kind", "empty"
+			 "name", "bindTo", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "empty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getBindTo_Id(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "id"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "id" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (documentRootEClass, 
 		   source, 
 		   new String[] {
-			 "name", "",
-			 "kind", "mixed"
+			 "name", "", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDocumentRoot_Mixed(), 
 		   source, 
 		   new String[] {
-			 "kind", "elementWildcard",
-			 "name", ":mixed"
+			 "kind", "elementWildcard", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", ":mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDocumentRoot_XMLNSPrefixMap(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xmlns:prefix"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xmlns:prefix" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getDocumentRoot_XSISchemaLocation(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "xsi:schemaLocation"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xsi:schemaLocation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getDocumentRoot_Xsl(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "xsl",
-			 "namespace", "##targetNamespace",
-			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "xsl", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace", //$NON-NLS-1$ //$NON-NLS-2$
+			 "affiliation", "http://www.milyn.org/xsd/smooks-1.1.xsd#abstract-resource-config" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (inlineEClass, 
 		   source, 
 		   new String[] {
-			 "name", "inline",
-			 "kind", "empty"
+			 "name", "inline", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "empty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getInline_Directive(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "directive"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "directive" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (inlineDirectiveEEnum, 
 		   source, 
 		   new String[] {
-			 "name", "inlineDirective"
+			 "name", "inlineDirective" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (inlineDirectiveObjectEDataType, 
 		   source, 
 		   new String[] {
-			 "name", "inlineDirective:Object",
-			 "baseType", "inlineDirective"
+			 "name", "inlineDirective:Object", //$NON-NLS-1$ //$NON-NLS-2$
+			 "baseType", "inlineDirective" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (outputToEClass, 
 		   source, 
 		   new String[] {
-			 "name", "outputTo",
-			 "kind", "empty"
+			 "name", "outputTo", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "empty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getOutputTo_OutputStreamResource(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "outputStreamResource"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "outputStreamResource" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (templateEClass, 
 		   source, 
 		   new String[] {
-			 "name", "template",
-			 "kind", "mixed"
+			 "name", "template", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "mixed" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getTemplate_Value(), 
 		   source, 
 		   new String[] {
-			 "name", ":0",
-			 "kind", "simple"
+			 "name", ":0", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "simple" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getTemplate_Encoding(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "encoding"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "encoding" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (useEClass, 
 		   source, 
 		   new String[] {
-			 "name", "use",
-			 "kind", "elementOnly"
+			 "name", "use", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getUse_Inline(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "inline",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "inline", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getUse_BindTo(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "bindTo",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "bindTo", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getUse_OutputTo(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "outputTo",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "outputTo", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (xslEClass, 
 		   source, 
 		   new String[] {
-			 "name", "xsl",
-			 "kind", "elementOnly"
+			 "name", "xsl", //$NON-NLS-1$ //$NON-NLS-2$
+			 "kind", "elementOnly" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getXsl_Template(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "template",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "template", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getXsl_Use(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "use",
-			 "namespace", "##targetNamespace"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "use", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "##targetNamespace" //$NON-NLS-1$ //$NON-NLS-2$
 		   });		
 		addAnnotation
 		  (getXsl_Param(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "param",
-			 "namespace", "http://www.milyn.org/xsd/smooks-1.1.xsd"
+			 "kind", "element", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "param", //$NON-NLS-1$ //$NON-NLS-2$
+			 "namespace", "http://www.milyn.org/xsd/smooks-1.1.xsd" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getXsl_ApplyBefore(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "applyBefore"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "applyBefore" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getXsl_ApplyOnElement(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "applyOnElement"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "applyOnElement" //$NON-NLS-1$ //$NON-NLS-2$
 		   });			
 		addAnnotation
 		  (getXsl_ApplyOnElementNS(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "applyOnElementNS"
+			 "kind", "attribute", //$NON-NLS-1$ //$NON-NLS-2$
+			 "name", "applyOnElementNS" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

@@ -101,7 +101,7 @@ public class SegmentsItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Segments"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Segments")); //$NON-NLS-1$
 	}
 
 	/**
@@ -114,8 +114,8 @@ public class SegmentsItemProvider
 	public String getText(Object object) {
 		String label = ((Segments)object).getXmltag();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Segments_type") :
-			getString("_UI_Segments_type") + " " + label;
+			getString("_UI_Segments_type") : //$NON-NLS-1$
+			getString("_UI_Segments_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

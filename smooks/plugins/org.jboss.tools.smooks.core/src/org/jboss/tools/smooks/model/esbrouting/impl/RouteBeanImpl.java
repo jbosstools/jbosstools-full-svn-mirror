@@ -62,7 +62,7 @@ public class RouteBeanImpl extends ElementVisitorImpl implements RouteBean {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String MESSAGE_PAYLOAD_LOCATION_EDEFAULT = "";
+	protected static final String MESSAGE_PAYLOAD_LOCATION_EDEFAULT = ""; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getMessagePayloadLocation() <em>Message Payload Location</em>}' attribute.
@@ -536,19 +536,19 @@ public class RouteBeanImpl extends ElementVisitorImpl implements RouteBean {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanIdRef: ");
+		result.append(" (beanIdRef: "); //$NON-NLS-1$
 		result.append(beanIdRef);
-		result.append(", messagePayloadLocation: ");
-		if (messagePayloadLocationESet) result.append(messagePayloadLocation); else result.append("<unset>");
-		result.append(", routeBefore: ");
-		if (routeBeforeESet) result.append(routeBefore); else result.append("<unset>");
-		result.append(", routeOnElement: ");
+		result.append(", messagePayloadLocation: "); //$NON-NLS-1$
+		if (messagePayloadLocationESet) result.append(messagePayloadLocation); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", routeBefore: "); //$NON-NLS-1$
+		if (routeBeforeESet) result.append(routeBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", routeOnElement: "); //$NON-NLS-1$
 		result.append(routeOnElement);
-		result.append(", routeOnElementNS: ");
+		result.append(", routeOnElementNS: "); //$NON-NLS-1$
 		result.append(routeOnElementNS);
-		result.append(", toServiceCategory: ");
+		result.append(", toServiceCategory: "); //$NON-NLS-1$
 		result.append(toServiceCategory);
-		result.append(", toServiceName: ");
+		result.append(", toServiceName: "); //$NON-NLS-1$
 		result.append(toServiceName);
 		result.append(')');
 		return result.toString();

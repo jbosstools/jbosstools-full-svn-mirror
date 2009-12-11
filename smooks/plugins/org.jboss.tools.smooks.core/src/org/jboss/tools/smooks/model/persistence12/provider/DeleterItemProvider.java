@@ -85,8 +85,8 @@ public class DeleterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Deleter_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_beanId_feature", "_UI_Deleter_type"),
+				 getString("_UI_Deleter_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_beanId_feature", "_UI_Deleter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DELETER__BEAN_ID,
 				 true,
 				 false,
@@ -107,8 +107,8 @@ public class DeleterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Deleter_dao_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_dao_feature", "_UI_Deleter_type"),
+				 getString("_UI_Deleter_dao_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_dao_feature", "_UI_Deleter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DELETER__DAO,
 				 true,
 				 false,
@@ -129,8 +129,8 @@ public class DeleterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Deleter_deleteBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_deleteBefore_feature", "_UI_Deleter_type"),
+				 getString("_UI_Deleter_deleteBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_deleteBefore_feature", "_UI_Deleter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DELETER__DELETE_BEFORE,
 				 true,
 				 false,
@@ -151,8 +151,8 @@ public class DeleterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Deleter_deletedBeanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_deletedBeanId_feature", "_UI_Deleter_type"),
+				 getString("_UI_Deleter_deletedBeanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_deletedBeanId_feature", "_UI_Deleter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DELETER__DELETED_BEAN_ID,
 				 true,
 				 false,
@@ -173,8 +173,8 @@ public class DeleterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Deleter_deleteOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_deleteOnElement_feature", "_UI_Deleter_type"),
+				 getString("_UI_Deleter_deleteOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_deleteOnElement_feature", "_UI_Deleter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DELETER__DELETE_ON_ELEMENT,
 				 true,
 				 false,
@@ -195,8 +195,8 @@ public class DeleterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Deleter_deleteOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_deleteOnElementNS_feature", "_UI_Deleter_type"),
+				 getString("_UI_Deleter_deleteOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_deleteOnElementNS_feature", "_UI_Deleter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DELETER__DELETE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -217,8 +217,8 @@ public class DeleterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Deleter_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_name_feature", "_UI_Deleter_type"),
+				 getString("_UI_Deleter_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Deleter_name_feature", "_UI_Deleter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DELETER__NAME,
 				 true,
 				 false,
@@ -235,7 +235,7 @@ public class DeleterItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Deleter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Deleter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -247,8 +247,8 @@ public class DeleterItemProvider
 	public String getText(Object object) {
 		String label = ((Deleter)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Deleter_type") :
-			getString("_UI_Deleter_type") + " " + label;
+			getString("_UI_Deleter_type") : //$NON-NLS-1$
+			getString("_UI_Deleter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

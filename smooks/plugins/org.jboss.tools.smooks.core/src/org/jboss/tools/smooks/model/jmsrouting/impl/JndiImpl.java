@@ -40,7 +40,7 @@ public class JndiImpl extends EObjectImpl implements Jndi {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String CONTEXT_FACTORY_EDEFAULT = "org.jnp.interfaces.NamingContextFactory";
+	protected static final String CONTEXT_FACTORY_EDEFAULT = "org.jnp.interfaces.NamingContextFactory"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getContextFactory() <em>Context Factory</em>}' attribute.
@@ -69,7 +69,7 @@ public class JndiImpl extends EObjectImpl implements Jndi {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAMING_FACTORY_EDEFAULT = "org.jboss.naming:java.naming.factory.url.pkgs";
+	protected static final String NAMING_FACTORY_EDEFAULT = "org.jboss.naming:java.naming.factory.url.pkgs"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getNamingFactory() <em>Naming Factory</em>}' attribute.
@@ -98,7 +98,7 @@ public class JndiImpl extends EObjectImpl implements Jndi {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PROVIDER_URL_EDEFAULT = "jnp://localhost:1099";
+	protected static final String PROVIDER_URL_EDEFAULT = "jnp://localhost:1099"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getProviderUrl() <em>Provider Url</em>}' attribute.
@@ -364,12 +364,12 @@ public class JndiImpl extends EObjectImpl implements Jndi {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (contextFactory: ");
-		if (contextFactoryESet) result.append(contextFactory); else result.append("<unset>");
-		result.append(", namingFactory: ");
-		if (namingFactoryESet) result.append(namingFactory); else result.append("<unset>");
-		result.append(", providerUrl: ");
-		if (providerUrlESet) result.append(providerUrl); else result.append("<unset>");
+		result.append(" (contextFactory: "); //$NON-NLS-1$
+		if (contextFactoryESet) result.append(contextFactory); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", namingFactory: "); //$NON-NLS-1$
+		if (namingFactoryESet) result.append(namingFactory); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", providerUrl: "); //$NON-NLS-1$
+		if (providerUrlESet) result.append(providerUrl); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

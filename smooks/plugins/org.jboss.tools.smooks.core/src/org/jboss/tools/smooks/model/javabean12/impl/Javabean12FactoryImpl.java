@@ -31,7 +31,7 @@ public class Javabean12FactoryImpl extends EFactoryImpl implements Javabean12Fac
 	 */
 	public static Javabean12Factory init() {
 		try {
-			Javabean12Factory theJavabean12Factory = (Javabean12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/javabean-1.2.xsd"); 
+			Javabean12Factory theJavabean12Factory = (Javabean12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/javabean-1.2.xsd");  //$NON-NLS-1$
 			if (theJavabean12Factory != null) {
 				return theJavabean12Factory;
 			}
@@ -67,7 +67,7 @@ public class Javabean12FactoryImpl extends EFactoryImpl implements Javabean12Fac
 			case Javabean12Package.VALUE_TYPE: return createValueType();
 			case Javabean12Package.WIRING_TYPE: return createWiringType();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Javabean12FactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.Javabean12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

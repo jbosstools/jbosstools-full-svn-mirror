@@ -30,7 +30,7 @@ public enum InlineDirective implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	ADDTO(0, "addto", "addto"),
+	ADDTO(0, "addto", "addto"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Replace</b></em>' literal object.
@@ -40,7 +40,7 @@ public enum InlineDirective implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	REPLACE(1, "replace", "replace"),
+	REPLACE(1, "replace", "replace"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Insertbefore</b></em>' literal object.
@@ -50,7 +50,7 @@ public enum InlineDirective implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	INSERTBEFORE(2, "insertbefore", "insertbefore"),
+	INSERTBEFORE(2, "insertbefore", "insertbefore"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Insertafter</b></em>' literal object.
@@ -60,7 +60,7 @@ public enum InlineDirective implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	INSERTAFTER(3, "insertafter", "insertafter");
+	INSERTAFTER(3, "insertafter", "insertafter"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Addto</b></em>' literal value.

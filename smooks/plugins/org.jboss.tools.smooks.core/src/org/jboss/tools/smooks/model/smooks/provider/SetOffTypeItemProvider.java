@@ -80,8 +80,8 @@ public class SetOffTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_SetOffType_feature_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SetOffType_feature_feature", "_UI_SetOffType_type"),
+				 getString("_UI_SetOffType_feature_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_SetOffType_feature_feature", "_UI_SetOffType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.SET_OFF_TYPE__FEATURE,
 				 true,
 				 false,
@@ -99,7 +99,7 @@ public class SetOffTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SetOffType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SetOffType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -112,8 +112,8 @@ public class SetOffTypeItemProvider
 	public String getText(Object object) {
 		String label = ((SetOffType)object).getFeature();
 		return label == null || label.length() == 0 ?
-			getString("_UI_SetOffType_type") :
-			getString("_UI_SetOffType_type") + " " + label;
+			getString("_UI_SetOffType_type") : //$NON-NLS-1$
+			getString("_UI_SetOffType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

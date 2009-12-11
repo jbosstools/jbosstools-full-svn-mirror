@@ -153,7 +153,7 @@ public class ResultTypeImpl extends ElementVisitorImpl implements ResultType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (retainBeans: ");
+		result.append(" (retainBeans: "); //$NON-NLS-1$
 		result.append(retainBeans);
 		result.append(')');
 		return result.toString();

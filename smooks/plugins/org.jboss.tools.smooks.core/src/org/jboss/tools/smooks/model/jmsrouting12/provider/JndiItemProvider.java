@@ -82,8 +82,8 @@ public class JndiItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Jndi_contextFactory_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Jndi_contextFactory_feature", "_UI_Jndi_type"),
+				 getString("_UI_Jndi_contextFactory_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Jndi_contextFactory_feature", "_UI_Jndi_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JNDI__CONTEXT_FACTORY,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class JndiItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Jndi_namingFactory_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Jndi_namingFactory_feature", "_UI_Jndi_type"),
+				 getString("_UI_Jndi_namingFactory_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Jndi_namingFactory_feature", "_UI_Jndi_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JNDI__NAMING_FACTORY,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class JndiItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Jndi_properties_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Jndi_properties_feature", "_UI_Jndi_type"),
+				 getString("_UI_Jndi_properties_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Jndi_properties_feature", "_UI_Jndi_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JNDI__PROPERTIES,
 				 true,
 				 false,
@@ -148,8 +148,8 @@ public class JndiItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Jndi_providerUrl_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Jndi_providerUrl_feature", "_UI_Jndi_type"),
+				 getString("_UI_Jndi_providerUrl_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Jndi_providerUrl_feature", "_UI_Jndi_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JNDI__PROVIDER_URL,
 				 true,
 				 false,
@@ -166,7 +166,7 @@ public class JndiItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Jndi"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Jndi")); //$NON-NLS-1$
 	}
 
 	/**
@@ -178,8 +178,8 @@ public class JndiItemProvider
 	public String getText(Object object) {
 		String label = ((Jndi)object).getContextFactory();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Jndi_type") :
-			getString("_UI_Jndi_type") + " " + label;
+			getString("_UI_Jndi_type") : //$NON-NLS-1$
+			getString("_UI_Jndi_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

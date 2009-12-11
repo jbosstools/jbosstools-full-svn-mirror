@@ -499,16 +499,16 @@ public class MessageImpl extends AbstractAnyTypeImpl implements Message {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (correlationIdPattern: ");
+		result.append(" (correlationIdPattern: "); //$NON-NLS-1$
 		result.append(correlationIdPattern);
-		result.append(", deliveryMode: ");
-		if (deliveryModeESet) result.append(deliveryMode); else result.append("<unset>");
-		result.append(", priority: ");
-		if (priorityESet) result.append(priority); else result.append("<unset>");
-		result.append(", timeToLive: ");
-		if (timeToLiveESet) result.append(timeToLive); else result.append("<unset>");
-		result.append(", type: ");
-		if (typeESet) result.append(type); else result.append("<unset>");
+		result.append(", deliveryMode: "); //$NON-NLS-1$
+		if (deliveryModeESet) result.append(deliveryMode); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", priority: "); //$NON-NLS-1$
+		if (priorityESet) result.append(priority); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", timeToLive: "); //$NON-NLS-1$
+		if (timeToLiveESet) result.append(timeToLive); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", type: "); //$NON-NLS-1$
+		if (typeESet) result.append(type); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

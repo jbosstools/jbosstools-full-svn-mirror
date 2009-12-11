@@ -35,7 +35,7 @@ public interface SmooksPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "smooks";
+	String eNAME = "smooks"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -43,7 +43,7 @@ public interface SmooksPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks-1.1.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks-1.1.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -51,7 +51,7 @@ public interface SmooksPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "smooks";
+	String eNS_PREFIX = "smooks"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

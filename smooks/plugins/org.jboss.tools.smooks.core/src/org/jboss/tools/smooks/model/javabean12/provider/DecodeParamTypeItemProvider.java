@@ -80,8 +80,8 @@ public class DecodeParamTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DecodeParamType_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DecodeParamType_value_feature", "_UI_DecodeParamType_type"),
+				 getString("_UI_DecodeParamType_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_DecodeParamType_value_feature", "_UI_DecodeParamType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.DECODE_PARAM_TYPE__VALUE,
 				 true,
 				 false,
@@ -102,8 +102,8 @@ public class DecodeParamTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DecodeParamType_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DecodeParamType_name_feature", "_UI_DecodeParamType_type"),
+				 getString("_UI_DecodeParamType_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_DecodeParamType_name_feature", "_UI_DecodeParamType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.DECODE_PARAM_TYPE__NAME,
 				 true,
 				 false,
@@ -120,7 +120,7 @@ public class DecodeParamTypeItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/DecodeParamType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DecodeParamType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -132,8 +132,8 @@ public class DecodeParamTypeItemProvider
 	public String getText(Object object) {
 		String label = ((DecodeParamType)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_DecodeParamType_type") :
-			getString("_UI_DecodeParamType_type") + " " + label;
+			getString("_UI_DecodeParamType_type") : //$NON-NLS-1$
+			getString("_UI_DecodeParamType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

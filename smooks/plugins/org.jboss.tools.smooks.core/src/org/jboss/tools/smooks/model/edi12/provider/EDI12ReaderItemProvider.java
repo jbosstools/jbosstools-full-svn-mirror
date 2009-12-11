@@ -81,8 +81,8 @@ public class EDI12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EDI12Reader_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EDI12Reader_encoding_feature", "_UI_EDI12Reader_type"),
+				 getString("_UI_EDI12Reader_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EDI12Reader_encoding_feature", "_UI_EDI12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Edi12Package.Literals.EDI12_READER__ENCODING,
 				 true,
 				 false,
@@ -103,8 +103,8 @@ public class EDI12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EDI12Reader_mappingModel_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EDI12Reader_mappingModel_feature", "_UI_EDI12Reader_type"),
+				 getString("_UI_EDI12Reader_mappingModel_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EDI12Reader_mappingModel_feature", "_UI_EDI12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Edi12Package.Literals.EDI12_READER__MAPPING_MODEL,
 				 true,
 				 false,
@@ -125,8 +125,8 @@ public class EDI12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_EDI12Reader_validate_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EDI12Reader_validate_feature", "_UI_EDI12Reader_type"),
+				 getString("_UI_EDI12Reader_validate_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_EDI12Reader_validate_feature", "_UI_EDI12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Edi12Package.Literals.EDI12_READER__VALIDATE,
 				 true,
 				 false,
@@ -143,7 +143,7 @@ public class EDI12ReaderItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EDI12Reader"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EDI12Reader")); //$NON-NLS-1$
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class EDI12ReaderItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		return "EDI";
+		return "EDI"; //$NON-NLS-1$
 //		String label = ((EDI12Reader)object).getTargetProfile();
 //		return label == null || label.length() == 0 ?
 //			getString("_UI_EDI12Reader_type") :

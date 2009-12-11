@@ -186,17 +186,17 @@ public class CommonPackageImpl extends EPackageImpl implements CommonPackage {
 		abstractAnyTypeEClass.getESuperTypes().add(theXMLTypePackage.getAnyType());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(abstractAnyTypeEClass, AbstractAnyType.class, "AbstractAnyType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(abstractAnyTypeEClass, AbstractAnyType.class, "AbstractAnyType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		addEOperation(abstractAnyTypeEClass, null, "getCDATA", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(abstractAnyTypeEClass, null, "getCDATA", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		EOperation op = addEOperation(abstractAnyTypeEClass, null, "setCDATA", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theXMLTypePackage.getString(), "cdata", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(abstractAnyTypeEClass, null, "setCDATA", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, theXMLTypePackage.getString(), "cdata", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		addEOperation(abstractAnyTypeEClass, null, "getStringValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEOperation(abstractAnyTypeEClass, null, "getStringValue", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = addEOperation(abstractAnyTypeEClass, null, "setStringValue", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, theXMLTypePackage.getString(), "stringValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		op = addEOperation(abstractAnyTypeEClass, null, "setStringValue", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, theXMLTypePackage.getString(), "stringValue", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

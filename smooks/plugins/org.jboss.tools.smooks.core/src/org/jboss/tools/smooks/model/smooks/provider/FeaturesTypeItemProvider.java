@@ -107,7 +107,7 @@ public class FeaturesTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/FeaturesType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/FeaturesType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class FeaturesTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_FeaturesType_type");
+		return getString("_UI_FeaturesType_type"); //$NON-NLS-1$
 	}
 
 	/**

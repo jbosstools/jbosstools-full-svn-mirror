@@ -87,8 +87,8 @@ public class OutputStreamItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputStream_fileNamePattern_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_fileNamePattern_feature", "_UI_OutputStream_type"),
+				 getString("_UI_OutputStream_fileNamePattern_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_fileNamePattern_feature", "_UI_OutputStream_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FileRoutingPackage.Literals.OUTPUT_STREAM__FILE_NAME_PATTERN,
 				 true,
 				 false,
@@ -109,8 +109,8 @@ public class OutputStreamItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputStream_destinationDirectoryPattern_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_destinationDirectoryPattern_feature", "_UI_OutputStream_type"),
+				 getString("_UI_OutputStream_destinationDirectoryPattern_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_destinationDirectoryPattern_feature", "_UI_OutputStream_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FileRoutingPackage.Literals.OUTPUT_STREAM__DESTINATION_DIRECTORY_PATTERN,
 				 true,
 				 false,
@@ -131,8 +131,8 @@ public class OutputStreamItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputStream_listFileNamePattern_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_listFileNamePattern_feature", "_UI_OutputStream_type"),
+				 getString("_UI_OutputStream_listFileNamePattern_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_listFileNamePattern_feature", "_UI_OutputStream_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FileRoutingPackage.Literals.OUTPUT_STREAM__LIST_FILE_NAME_PATTERN,
 				 true,
 				 false,
@@ -153,8 +153,8 @@ public class OutputStreamItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputStream_closeOnCondition_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_closeOnCondition_feature", "_UI_OutputStream_type"),
+				 getString("_UI_OutputStream_closeOnCondition_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_closeOnCondition_feature", "_UI_OutputStream_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FileRoutingPackage.Literals.OUTPUT_STREAM__CLOSE_ON_CONDITION,
 				 true,
 				 false,
@@ -175,8 +175,8 @@ public class OutputStreamItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputStream_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_encoding_feature", "_UI_OutputStream_type"),
+				 getString("_UI_OutputStream_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_encoding_feature", "_UI_OutputStream_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FileRoutingPackage.Literals.OUTPUT_STREAM__ENCODING,
 				 true,
 				 false,
@@ -197,8 +197,8 @@ public class OutputStreamItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputStream_openOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_openOnElement_feature", "_UI_OutputStream_type"),
+				 getString("_UI_OutputStream_openOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_openOnElement_feature", "_UI_OutputStream_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT,
 				 true,
 				 false,
@@ -219,8 +219,8 @@ public class OutputStreamItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputStream_openOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_openOnElementNS_feature", "_UI_OutputStream_type"),
+				 getString("_UI_OutputStream_openOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_openOnElementNS_feature", "_UI_OutputStream_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -241,8 +241,8 @@ public class OutputStreamItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputStream_resourceName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_resourceName_feature", "_UI_OutputStream_type"),
+				 getString("_UI_OutputStream_resourceName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputStream_resourceName_feature", "_UI_OutputStream_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FileRoutingPackage.Literals.OUTPUT_STREAM__RESOURCE_NAME,
 				 true,
 				 false,
@@ -290,7 +290,7 @@ public class OutputStreamItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/OutputStream"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OutputStream")); //$NON-NLS-1$
 	}
 
 	/**
@@ -303,8 +303,8 @@ public class OutputStreamItemProvider
 	public String getText(Object object) {
 		String label = ((OutputStream)object).getResourceName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_OutputStream_type") :
-			getString("_UI_OutputStream_type") + " " + label;
+			getString("_UI_OutputStream_type") : //$NON-NLS-1$
+			getString("_UI_OutputStream_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

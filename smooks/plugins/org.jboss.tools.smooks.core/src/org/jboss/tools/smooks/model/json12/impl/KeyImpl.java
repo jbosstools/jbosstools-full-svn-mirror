@@ -257,11 +257,11 @@ public class KeyImpl extends AbstractAnyTypeImpl implements Key {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
+		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
-		result.append(", from: ");
+		result.append(", from: "); //$NON-NLS-1$
 		result.append(from);
-		result.append(", to: ");
+		result.append(", to: "); //$NON-NLS-1$
 		result.append(to);
 		result.append(')');
 		return result.toString();

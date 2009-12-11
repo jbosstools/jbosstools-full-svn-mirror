@@ -79,8 +79,8 @@ public class ResultTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultType_retainBeans_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultType_retainBeans_feature", "_UI_ResultType_type"),
+				 getString("_UI_ResultType_retainBeans_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultType_retainBeans_feature", "_UI_ResultType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.RESULT_TYPE__RETAIN_BEANS,
 				 true,
 				 false,
@@ -97,7 +97,7 @@ public class ResultTypeItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResultType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResultType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -109,8 +109,8 @@ public class ResultTypeItemProvider
 	public String getText(Object object) {
 		String label = ((ResultType)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ResultType_type") :
-			getString("_UI_ResultType_type") + " " + label;
+			getString("_UI_ResultType_type") : //$NON-NLS-1$
+			getString("_UI_ResultType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
