@@ -15,10 +15,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.jboss.template.csv.CSVFreeMarkerTemplateBuilder;
-import org.jboss.template.csv.CSVModelBuilder;
-import org.jboss.template.exception.InvalidMappingException;
-import org.jboss.template.exception.TemplateBuilderException;
+import org.jboss.tools.smooks.templating.model.ModelBuilderException;
+import org.jboss.tools.smooks.templating.model.csv.CSVModelBuilder;
+import org.jboss.tools.smooks.templating.template.csv.CSVFreeMarkerTemplateBuilder;
+import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
+import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
@@ -35,9 +36,13 @@ import org.w3c.dom.Element;
  * 
  */
 public class FreemarkerCSVContentGenerator {
+	
+	public FreemarkerCSVContentGenerator() {
+		//empty constructor
+	}
 
 	public String generateCSVContents(FreemarkerCSVNodeGraphicalModel csvRecordGraphicalModel)
-			throws TemplateBuilderException {
+			throws TemplateBuilderException, ModelBuilderException {
 
 		// CSVNodeModel csvRecordModel = (CSVNodeModel)
 		// csvRecordGraphicalModel.getData();
@@ -88,10 +93,11 @@ public class FreemarkerCSVContentGenerator {
 		}
 
 		CSVModelBuilder modelBuilder = new CSVModelBuilder(fieldsName.toArray(new String[] {}));
-		Document model = modelBuilder.buildModel();
 		CSVFreeMarkerTemplateBuilder builder;
+		Document model;
 
-		builder = new CSVFreeMarkerTemplateBuilder(model, sperator, quote);
+		builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, sperator, quote);
+		model = builder.getModel();
 
 		List<TreeNodeConnection> connections = csvRecordGraphicalModel.getTargetConnections();
 		if (!connections.isEmpty() && connections.size() == 1) {

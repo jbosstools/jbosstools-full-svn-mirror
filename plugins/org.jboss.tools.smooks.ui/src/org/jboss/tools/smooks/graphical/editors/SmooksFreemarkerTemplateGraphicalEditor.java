@@ -28,11 +28,11 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.jboss.template.CollectionMapping;
-import org.jboss.template.Mapping;
-import org.jboss.template.TemplateBuilder;
-import org.jboss.template.csv.CSVFreeMarkerTemplateBuilder;
-import org.jboss.template.csv.CSVModelBuilder;
+import org.jboss.tools.smooks.templating.model.csv.CSVModelBuilder;
+import org.jboss.tools.smooks.templating.template.CollectionMapping;
+import org.jboss.tools.smooks.templating.template.Mapping;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
+import org.jboss.tools.smooks.templating.template.csv.CSVFreeMarkerTemplateBuilder;
 import org.jboss.tools.smooks.configuration.editors.actions.AbstractSmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -472,8 +472,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 			try {
 				if (contents != null) {
 					CSVModelBuilder modelBuilder = new CSVModelBuilder(fields);
-					Document model = modelBuilder.buildModel();
-					TemplateBuilder builder = new CSVFreeMarkerTemplateBuilder(model, seprator, quote, contents);
+					TemplateBuilder builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, seprator, quote, contents);
 					List<Mapping> mappings = builder.getMappings();
 					mappingList.addAll(mappings);
 				}
