@@ -32,7 +32,7 @@ public class CalcFactoryImpl extends EFactoryImpl implements CalcFactory {
 	 */
 	public static CalcFactory init() {
 		try {
-			CalcFactory theCalcFactory = (CalcFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/calc-1.1.xsd"); 
+			CalcFactory theCalcFactory = (CalcFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/calc-1.1.xsd");  //$NON-NLS-1$
 			if (theCalcFactory != null) {
 				return theCalcFactory;
 			}
@@ -64,7 +64,7 @@ public class CalcFactoryImpl extends EFactoryImpl implements CalcFactory {
 			case CalcPackage.COUNTER: return createCounter();
 			case CalcPackage.CALC_DOCUMENT_ROOT: return createCalcDocumentRoot();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.CalcFactoryImpl_Error_Invalid_Classifier + eClass.getName() + Messages.CalcFactoryImpl_Error_Invalid_Classifier2);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class CalcFactoryImpl extends EFactoryImpl implements CalcFactory {
 			case CalcPackage.COUNT_DIRECTION_OBJECT:
 				return createCountDirectionObjectFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.CalcFactoryImpl_Error_Invalid_Datatype + eDataType.getName() + Messages.CalcFactoryImpl_Error_Invalid_Classifier2);
 		}
 	}
 
@@ -98,7 +98,7 @@ public class CalcFactoryImpl extends EFactoryImpl implements CalcFactory {
 			case CalcPackage.COUNT_DIRECTION_OBJECT:
 				return convertCountDirectionObjectToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.CalcFactoryImpl_Error_Invalid_Datatype + eDataType.getName() + Messages.CalcFactoryImpl_Error_Invalid_Classifier2);
 		}
 	}
 
@@ -129,7 +129,7 @@ public class CalcFactoryImpl extends EFactoryImpl implements CalcFactory {
 	 */
 	public CountDirection createCountDirectionFromString(EDataType eDataType, String initialValue) {
 		CountDirection result = CountDirection.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.CalcFactoryImpl_Error_Invalid_Enumerator + initialValue + Messages.CalcFactoryImpl_Error_Invalid_Enumerator2 + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 

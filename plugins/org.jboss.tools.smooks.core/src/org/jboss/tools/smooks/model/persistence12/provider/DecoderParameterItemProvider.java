@@ -80,8 +80,8 @@ public class DecoderParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DecoderParameter_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DecoderParameter_value_feature", "_UI_DecoderParameter_type"),
+				 getString("_UI_DecoderParameter_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_DecoderParameter_value_feature", "_UI_DecoderParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DECODER_PARAMETER__VALUE,
 				 true,
 				 false,
@@ -102,8 +102,8 @@ public class DecoderParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DecoderParameter_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DecoderParameter_name_feature", "_UI_DecoderParameter_type"),
+				 getString("_UI_DecoderParameter_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_DecoderParameter_name_feature", "_UI_DecoderParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.DECODER_PARAMETER__NAME,
 				 true,
 				 false,
@@ -120,7 +120,7 @@ public class DecoderParameterItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/DecoderParameter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DecoderParameter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -132,8 +132,8 @@ public class DecoderParameterItemProvider
 	public String getText(Object object) {
 		String label = ((DecoderParameter)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_DecoderParameter_type") :
-			getString("_UI_DecoderParameter_type") + " " + label;
+			getString("_UI_DecoderParameter_type") : //$NON-NLS-1$
+			getString("_UI_DecoderParameter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -309,13 +309,13 @@ public class WiringParameterImpl extends AbstractAnyTypeImpl implements WiringPa
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanIdRef: ");
+		result.append(" (beanIdRef: "); //$NON-NLS-1$
 		result.append(beanIdRef);
-		result.append(", name: ");
+		result.append(", name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", wireOnElement: ");
+		result.append(", wireOnElement: "); //$NON-NLS-1$
 		result.append(wireOnElement);
-		result.append(", wireOnElementNS: ");
+		result.append(", wireOnElementNS: "); //$NON-NLS-1$
 		result.append(wireOnElementNS);
 		result.append(')');
 		return result.toString();

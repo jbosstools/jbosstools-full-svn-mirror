@@ -102,7 +102,7 @@ public class EDI12DocumentRootItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EDI12DocumentRoot"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EDI12DocumentRoot")); //$NON-NLS-1$
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class EDI12DocumentRootItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		return getString("_UI_EDI12DocumentRoot_type");
+		return getString("_UI_EDI12DocumentRoot_type"); //$NON-NLS-1$
 	}
 
 	/**

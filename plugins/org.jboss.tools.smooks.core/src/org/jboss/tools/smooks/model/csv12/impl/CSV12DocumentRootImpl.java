@@ -283,7 +283,7 @@ public class CSV12DocumentRootImpl extends EObjectImpl implements CSV12DocumentR
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (mixed: ");
+		result.append(" (mixed: "); //$NON-NLS-1$
 		result.append(mixed);
 		result.append(')');
 		return result.toString();

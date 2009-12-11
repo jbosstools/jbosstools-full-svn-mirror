@@ -33,7 +33,7 @@ public class Test {
 		
 		
 		Resource resource = new CommonResourceFactoryImpl().createResource(null);
-		InputStream stream = Test.class.getResourceAsStream("/test/XSLConfig.xml");
+		InputStream stream = Test.class.getResourceAsStream("/test/XSLConfig.xml"); //$NON-NLS-1$
 		try {
 			resource.load(stream, Collections.EMPTY_MAP);
 			EObject obj = (EObject) resource.getContents().get(0);

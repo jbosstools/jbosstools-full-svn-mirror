@@ -87,8 +87,8 @@ public class ValueParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueParameter_data_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_data_feature", "_UI_ValueParameter_type"),
+				 getString("_UI_ValueParameter_data_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_data_feature", "_UI_ValueParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.VALUE_PARAMETER__DATA,
 				 true,
 				 false,
@@ -109,8 +109,8 @@ public class ValueParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueParameter_dataNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_dataNS_feature", "_UI_ValueParameter_type"),
+				 getString("_UI_ValueParameter_dataNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_dataNS_feature", "_UI_ValueParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.VALUE_PARAMETER__DATA_NS,
 				 true,
 				 false,
@@ -131,8 +131,8 @@ public class ValueParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueParameter_decoder_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_decoder_feature", "_UI_ValueParameter_type"),
+				 getString("_UI_ValueParameter_decoder_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_decoder_feature", "_UI_ValueParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.VALUE_PARAMETER__DECODER,
 				 true,
 				 false,
@@ -153,8 +153,8 @@ public class ValueParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueParameter_default_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_default_feature", "_UI_ValueParameter_type"),
+				 getString("_UI_ValueParameter_default_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_default_feature", "_UI_ValueParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.VALUE_PARAMETER__DEFAULT,
 				 true,
 				 false,
@@ -175,8 +175,8 @@ public class ValueParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueParameter_index_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_index_feature", "_UI_ValueParameter_type"),
+				 getString("_UI_ValueParameter_index_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_index_feature", "_UI_ValueParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.VALUE_PARAMETER__INDEX,
 				 true,
 				 false,
@@ -197,8 +197,8 @@ public class ValueParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ValueParameter_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_name_feature", "_UI_ValueParameter_type"),
+				 getString("_UI_ValueParameter_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ValueParameter_name_feature", "_UI_ValueParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.VALUE_PARAMETER__NAME,
 				 true,
 				 false,
@@ -243,7 +243,7 @@ public class ValueParameterItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ValueParameter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ValueParameter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -255,8 +255,8 @@ public class ValueParameterItemProvider
 	public String getText(Object object) {
 		String label = ((ValueParameter)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ValueParameter_type") :
-			getString("_UI_ValueParameter_type") + " " + label;
+			getString("_UI_ValueParameter_type") : //$NON-NLS-1$
+			getString("_UI_ValueParameter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

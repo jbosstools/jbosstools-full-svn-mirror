@@ -80,8 +80,8 @@ public class DataSourceJndiItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DataSourceJndi_autoCommit_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DataSourceJndi_autoCommit_feature", "_UI_DataSourceJndi_type"),
+				 getString("_UI_DataSourceJndi_autoCommit_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataSourceJndi_autoCommit_feature", "_UI_DataSourceJndi_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DATA_SOURCE_JNDI__AUTO_COMMIT,
 				 true,
 				 false,
@@ -102,8 +102,8 @@ public class DataSourceJndiItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DataSourceJndi_bindOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DataSourceJndi_bindOnElement_feature", "_UI_DataSourceJndi_type"),
+				 getString("_UI_DataSourceJndi_bindOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataSourceJndi_bindOnElement_feature", "_UI_DataSourceJndi_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DATA_SOURCE_JNDI__BIND_ON_ELEMENT,
 				 true,
 				 false,
@@ -124,8 +124,8 @@ public class DataSourceJndiItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_DataSourceJndi_datasource_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DataSourceJndi_datasource_feature", "_UI_DataSourceJndi_type"),
+				 getString("_UI_DataSourceJndi_datasource_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataSourceJndi_datasource_feature", "_UI_DataSourceJndi_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DATA_SOURCE_JNDI__DATASOURCE,
 				 true,
 				 false,
@@ -143,7 +143,7 @@ public class DataSourceJndiItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/DataSourceJndi"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DataSourceJndi")); //$NON-NLS-1$
 	}
 
 	/**
@@ -156,8 +156,8 @@ public class DataSourceJndiItemProvider
 	public String getText(Object object) {
 		String label = ((DataSourceJndi)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_DataSourceJndi_type") :
-			getString("_UI_DataSourceJndi_type") + " " + label;
+			getString("_UI_DataSourceJndi_type") : //$NON-NLS-1$
+			getString("_UI_DataSourceJndi_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -84,8 +84,8 @@ public class RouteBeanItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RouteBean_beanIdRef_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_beanIdRef_feature", "_UI_RouteBean_type"),
+				 getString("_UI_RouteBean_beanIdRef_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_beanIdRef_feature", "_UI_RouteBean_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EsbroutingPackage.Literals.ROUTE_BEAN__BEAN_ID_REF,
 				 true,
 				 false,
@@ -106,8 +106,8 @@ public class RouteBeanItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RouteBean_messagePayloadLocation_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_messagePayloadLocation_feature", "_UI_RouteBean_type"),
+				 getString("_UI_RouteBean_messagePayloadLocation_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_messagePayloadLocation_feature", "_UI_RouteBean_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EsbroutingPackage.Literals.ROUTE_BEAN__MESSAGE_PAYLOAD_LOCATION,
 				 true,
 				 false,
@@ -128,8 +128,8 @@ public class RouteBeanItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RouteBean_routeBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_routeBefore_feature", "_UI_RouteBean_type"),
+				 getString("_UI_RouteBean_routeBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_routeBefore_feature", "_UI_RouteBean_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_BEFORE,
 				 true,
 				 false,
@@ -150,8 +150,8 @@ public class RouteBeanItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RouteBean_routeOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_routeOnElement_feature", "_UI_RouteBean_type"),
+				 getString("_UI_RouteBean_routeOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_routeOnElement_feature", "_UI_RouteBean_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT,
 				 true,
 				 false,
@@ -172,8 +172,8 @@ public class RouteBeanItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RouteBean_routeOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_routeOnElementNS_feature", "_UI_RouteBean_type"),
+				 getString("_UI_RouteBean_routeOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_routeOnElementNS_feature", "_UI_RouteBean_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -194,8 +194,8 @@ public class RouteBeanItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RouteBean_toServiceCategory_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_toServiceCategory_feature", "_UI_RouteBean_type"),
+				 getString("_UI_RouteBean_toServiceCategory_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_toServiceCategory_feature", "_UI_RouteBean_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EsbroutingPackage.Literals.ROUTE_BEAN__TO_SERVICE_CATEGORY,
 				 true,
 				 false,
@@ -216,8 +216,8 @@ public class RouteBeanItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_RouteBean_toServiceName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_toServiceName_feature", "_UI_RouteBean_type"),
+				 getString("_UI_RouteBean_toServiceName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_RouteBean_toServiceName_feature", "_UI_RouteBean_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 EsbroutingPackage.Literals.ROUTE_BEAN__TO_SERVICE_NAME,
 				 true,
 				 false,
@@ -235,7 +235,7 @@ public class RouteBeanItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/RouteBean"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/RouteBean")); //$NON-NLS-1$
 	}
 
 	/**
@@ -254,9 +254,9 @@ public class RouteBeanItemProvider
 			returnServiceName  = true;
 		}
 		if(returnServiceName){
-			return getString("_UI_RouteBean_type") + " (" + label+" : " + categoryName + ")";
+			return getString("_UI_RouteBean_type") + " (" + label+" : " + categoryName + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}else{
-			return getString("_UI_RouteBean_type");
+			return getString("_UI_RouteBean_type"); //$NON-NLS-1$
 		}
 		
 	}

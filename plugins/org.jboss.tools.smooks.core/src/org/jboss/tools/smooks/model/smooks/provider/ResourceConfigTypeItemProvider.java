@@ -79,8 +79,8 @@ public class ResourceConfigTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResourceConfigType_selector_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResourceConfigType_selector_feature", "_UI_ResourceConfigType_type"),
+				 getString("_UI_ResourceConfigType_selector_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResourceConfigType_selector_feature", "_UI_ResourceConfigType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR,
 				 true,
 				 false,
@@ -101,8 +101,8 @@ public class ResourceConfigTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResourceConfigType_selectorNamespace_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResourceConfigType_selectorNamespace_feature", "_UI_ResourceConfigType_type"),
+				 getString("_UI_ResourceConfigType_selectorNamespace_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResourceConfigType_selectorNamespace_feature", "_UI_ResourceConfigType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR_NAMESPACE,
 				 true,
 				 false,
@@ -123,8 +123,8 @@ public class ResourceConfigTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResourceConfigType_targetProfile_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResourceConfigType_targetProfile_feature", "_UI_ResourceConfigType_type"),
+				 getString("_UI_ResourceConfigType_targetProfile_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResourceConfigType_targetProfile_feature", "_UI_ResourceConfigType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__TARGET_PROFILE,
 				 true,
 				 false,
@@ -174,7 +174,7 @@ public class ResourceConfigTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResourceConfigType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResourceConfigType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -187,8 +187,8 @@ public class ResourceConfigTypeItemProvider
 	public String getText(Object object) {
 		String label = ((ResourceConfigType)object).getSelectorNamespace();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ResourceConfigType_type") :
-			getString("_UI_ResourceConfigType_type") + " " + label;
+			getString("_UI_ResourceConfigType_type") : //$NON-NLS-1$
+			getString("_UI_ResourceConfigType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

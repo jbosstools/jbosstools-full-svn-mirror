@@ -79,8 +79,8 @@ public class TemplateItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Template_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Template_value_feature", "_UI_Template_type"),
+				 getString("_UI_Template_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Template_value_feature", "_UI_Template_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 XslPackage.Literals.TEMPLATE__VALUE,
 				 true,
 				 false,
@@ -101,8 +101,8 @@ public class TemplateItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Template_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Template_encoding_feature", "_UI_Template_type"),
+				 getString("_UI_Template_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Template_encoding_feature", "_UI_Template_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 XslPackage.Literals.TEMPLATE__ENCODING,
 				 true,
 				 false,
@@ -120,7 +120,7 @@ public class TemplateItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Template"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Template")); //$NON-NLS-1$
 	}
 
 	/**
@@ -133,8 +133,8 @@ public class TemplateItemProvider
 	public String getText(Object object) {
 		String label = null;
 		return label == null || label.length() == 0 ?
-			getString("_UI_Template_type") :
-			getString("_UI_Template_type") + " " + label;
+			getString("_UI_Template_type") : //$NON-NLS-1$
+			getString("_UI_Template_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

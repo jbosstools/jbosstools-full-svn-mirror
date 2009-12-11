@@ -510,14 +510,14 @@ public class SegmentImpl extends MappingNodeImpl implements Segment {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (maxOccurs: ");
-		if (maxOccursESet) result.append(maxOccurs); else result.append("<unset>");
-		result.append(", minOccurs: ");
-		if (minOccursESet) result.append(minOccurs); else result.append("<unset>");
-		result.append(", segcode: ");
+		result.append(" (maxOccurs: "); //$NON-NLS-1$
+		if (maxOccursESet) result.append(maxOccurs); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", minOccurs: "); //$NON-NLS-1$
+		if (minOccursESet) result.append(minOccurs); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", segcode: "); //$NON-NLS-1$
 		result.append(segcode);
-		result.append(", truncatable: ");
-		if (truncatableESet) result.append(truncatable); else result.append("<unset>");
+		result.append(", truncatable: "); //$NON-NLS-1$
+		if (truncatableESet) result.append(truncatable); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

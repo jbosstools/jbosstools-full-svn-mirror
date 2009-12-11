@@ -35,7 +35,7 @@ public interface MEdiPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "eedi";
+	String eNAME = "eedi"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -43,7 +43,7 @@ public interface MEdiPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/schema/edi-message-mapping-1.0.xsd";
+	String eNS_URI = "http://www.milyn.org/schema/edi-message-mapping-1.0.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -51,7 +51,7 @@ public interface MEdiPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "eedi";
+	String eNS_PREFIX = "eedi"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

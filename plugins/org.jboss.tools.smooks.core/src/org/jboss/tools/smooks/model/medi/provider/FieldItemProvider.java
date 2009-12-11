@@ -78,8 +78,8 @@ public class FieldItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Field_required_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Field_required_feature", "_UI_Field_type"),
+				 getString("_UI_Field_required_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Field_required_feature", "_UI_Field_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.FIELD__REQUIRED,
 				 true,
 				 false,
@@ -100,8 +100,8 @@ public class FieldItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Field_truncatable_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Field_truncatable_feature", "_UI_Field_type"),
+				 getString("_UI_Field_truncatable_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Field_truncatable_feature", "_UI_Field_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.FIELD__TRUNCATABLE,
 				 true,
 				 false,
@@ -149,7 +149,7 @@ public class FieldItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Field"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Field")); //$NON-NLS-1$
 	}
 
 	/**
@@ -162,8 +162,8 @@ public class FieldItemProvider
 	public String getText(Object object) {
 		String label = ((Field)object).getXmltag();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Field_type") :
-			getString("_UI_Field_type") + " " + label;
+			getString("_UI_Field_type") : //$NON-NLS-1$
+			getString("_UI_Field_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

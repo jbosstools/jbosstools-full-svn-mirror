@@ -35,7 +35,7 @@ public class Csv12FactoryImpl extends EFactoryImpl implements Csv12Factory {
 	 */
 	public static Csv12Factory init() {
 		try {
-			Csv12Factory theCsv12Factory = (Csv12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/csv-1.2.xsd"); 
+			Csv12Factory theCsv12Factory = (Csv12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/csv-1.2.xsd");  //$NON-NLS-1$
 			if (theCsv12Factory != null) {
 				return theCsv12Factory;
 			}
@@ -68,7 +68,7 @@ public class Csv12FactoryImpl extends EFactoryImpl implements Csv12Factory {
 			case Csv12Package.MAP_BINDING: return createMapBinding();
 			case Csv12Package.CSV12_READER: return createCSV12Reader();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Csv12FactoryImpl_Error_Invalid_Class + eClass.getName() + Messages.Csv12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -82,7 +82,7 @@ public class Csv12FactoryImpl extends EFactoryImpl implements Csv12Factory {
 			case Csv12Package.CHAR:
 				return createCharFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Csv12FactoryImpl_Error_Invalid_Datatype + eDataType.getName() + Messages.Csv12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class Csv12FactoryImpl extends EFactoryImpl implements Csv12Factory {
 			case Csv12Package.CHAR:
 				return convertCharToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Csv12FactoryImpl_Error_Invalid_Datatype + eDataType.getName() + Messages.Csv12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

@@ -257,11 +257,11 @@ public class RuleBaseImpl extends ElementVisitorImpl implements RuleBase {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", provider: ");
+		result.append(", provider: "); //$NON-NLS-1$
 		result.append(provider);
-		result.append(", src: ");
+		result.append(", src: "); //$NON-NLS-1$
 		result.append(src);
 		result.append(')');
 		return result.toString();

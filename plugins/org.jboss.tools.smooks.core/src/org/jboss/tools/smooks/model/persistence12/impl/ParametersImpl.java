@@ -314,10 +314,10 @@ public class ParametersImpl extends AbstractAnyTypeImpl implements Parameters {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (group: ");
+		result.append(" (group: "); //$NON-NLS-1$
 		result.append(group);
-		result.append(", type: ");
-		if (typeESet) result.append(type); else result.append("<unset>");
+		result.append(", type: "); //$NON-NLS-1$
+		if (typeESet) result.append(type); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

@@ -84,8 +84,8 @@ public class JmsRouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JmsRouter_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_beanId_feature", "_UI_JmsRouter_type"),
+				 getString("_UI_JmsRouter_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_beanId_feature", "_UI_JmsRouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID,
 				 true,
 				 false,
@@ -106,8 +106,8 @@ public class JmsRouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JmsRouter_destination_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_destination_feature", "_UI_JmsRouter_type"),
+				 getString("_UI_JmsRouter_destination_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_destination_feature", "_UI_JmsRouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.JMS_ROUTER__DESTINATION,
 				 true,
 				 false,
@@ -128,8 +128,8 @@ public class JmsRouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JmsRouter_executeBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_executeBefore_feature", "_UI_JmsRouter_type"),
+				 getString("_UI_JmsRouter_executeBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_executeBefore_feature", "_UI_JmsRouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.JMS_ROUTER__EXECUTE_BEFORE,
 				 true,
 				 false,
@@ -150,8 +150,8 @@ public class JmsRouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JmsRouter_routeOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_routeOnElement_feature", "_UI_JmsRouter_type"),
+				 getString("_UI_JmsRouter_routeOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_routeOnElement_feature", "_UI_JmsRouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT,
 				 true,
 				 false,
@@ -172,8 +172,8 @@ public class JmsRouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JmsRouter_routeOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_routeOnElementNS_feature", "_UI_JmsRouter_type"),
+				 getString("_UI_JmsRouter_routeOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JmsRouter_routeOnElementNS_feature", "_UI_JmsRouter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -225,7 +225,7 @@ public class JmsRouterItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/JmsRouter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/JmsRouter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -238,8 +238,8 @@ public class JmsRouterItemProvider
 	public String getText(Object object) {
 		String label = ((JmsRouter)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_JmsRouter_type") :
-			getString("_UI_JmsRouter_type") + " " + label;
+			getString("_UI_JmsRouter_type") : //$NON-NLS-1$
+			getString("_UI_JmsRouter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

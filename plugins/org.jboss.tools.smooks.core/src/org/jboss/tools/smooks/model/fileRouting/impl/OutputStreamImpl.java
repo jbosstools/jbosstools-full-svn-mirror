@@ -137,7 +137,7 @@ public class OutputStreamImpl extends ElementVisitorImpl implements OutputStream
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ENCODING_EDEFAULT = "UTF-8";
+	protected static final String ENCODING_EDEFAULT = "UTF-8"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
@@ -635,21 +635,21 @@ public class OutputStreamImpl extends ElementVisitorImpl implements OutputStream
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (fileNamePattern: ");
+		result.append(" (fileNamePattern: "); //$NON-NLS-1$
 		result.append(fileNamePattern);
-		result.append(", destinationDirectoryPattern: ");
+		result.append(", destinationDirectoryPattern: "); //$NON-NLS-1$
 		result.append(destinationDirectoryPattern);
-		result.append(", listFileNamePattern: ");
+		result.append(", listFileNamePattern: "); //$NON-NLS-1$
 		result.append(listFileNamePattern);
-		result.append(", closeOnCondition: ");
+		result.append(", closeOnCondition: "); //$NON-NLS-1$
 		result.append(closeOnCondition);
-		result.append(", encoding: ");
-		if (encodingESet) result.append(encoding); else result.append("<unset>");
-		result.append(", openOnElement: ");
+		result.append(", encoding: "); //$NON-NLS-1$
+		if (encodingESet) result.append(encoding); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", openOnElement: "); //$NON-NLS-1$
 		result.append(openOnElement);
-		result.append(", openOnElementNS: ");
+		result.append(", openOnElementNS: "); //$NON-NLS-1$
 		result.append(openOnElementNS);
-		result.append(", resourceName: ");
+		result.append(", resourceName: "); //$NON-NLS-1$
 		result.append(resourceName);
 		result.append(')');
 		return result.toString();

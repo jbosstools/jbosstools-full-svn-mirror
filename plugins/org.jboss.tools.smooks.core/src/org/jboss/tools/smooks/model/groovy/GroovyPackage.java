@@ -39,7 +39,7 @@ public interface GroovyPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "groovy";
+	String eNAME = "groovy"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -47,7 +47,7 @@ public interface GroovyPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/groovy-1.1.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/groovy-1.1.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -55,7 +55,7 @@ public interface GroovyPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "g";
+	String eNS_PREFIX = "g"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

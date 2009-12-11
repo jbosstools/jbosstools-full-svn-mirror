@@ -191,8 +191,8 @@ public class SubComponentImpl extends MappingNodeImpl implements SubComponent {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (required: ");
-		if (requiredESet) result.append(required); else result.append("<unset>");
+		result.append(" (required: "); //$NON-NLS-1$
+		if (requiredESet) result.append(required); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

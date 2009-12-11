@@ -470,13 +470,13 @@ public class GroovyImpl extends ElementVisitorImpl implements Groovy {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (imports: ");
+		result.append(" (imports: "); //$NON-NLS-1$
 		result.append(imports);
-		result.append(", executeBefore: ");
-		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>");
-		result.append(", executeOnElement: ");
+		result.append(", executeBefore: "); //$NON-NLS-1$
+		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", executeOnElement: "); //$NON-NLS-1$
 		result.append(executeOnElement);
-		result.append(", executeOnElementNS: ");
+		result.append(", executeOnElementNS: "); //$NON-NLS-1$
 		result.append(executeOnElementNS);
 		result.append(')');
 		return result.toString();

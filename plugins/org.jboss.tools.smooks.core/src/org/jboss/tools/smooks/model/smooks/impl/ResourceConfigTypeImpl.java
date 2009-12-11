@@ -454,11 +454,11 @@ public class ResourceConfigTypeImpl extends AbstractResourceConfigImpl implement
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (selector: ");
+		result.append(" (selector: "); //$NON-NLS-1$
 		result.append(selector);
-		result.append(", selectorNamespace: ");
+		result.append(", selectorNamespace: "); //$NON-NLS-1$
 		result.append(selectorNamespace);
-		result.append(", targetProfile: ");
+		result.append(", targetProfile: "); //$NON-NLS-1$
 		result.append(targetProfile);
 		result.append(')');
 		return result.toString();

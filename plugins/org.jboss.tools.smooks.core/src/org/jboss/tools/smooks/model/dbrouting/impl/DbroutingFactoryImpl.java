@@ -36,7 +36,7 @@ public class DbroutingFactoryImpl extends EFactoryImpl implements DbroutingFacto
 	 */
 	public static DbroutingFactory init() {
 		try {
-			DbroutingFactory theDbroutingFactory = (DbroutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/db-routing-1.1.xsd"); 
+			DbroutingFactory theDbroutingFactory = (DbroutingFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/db-routing-1.1.xsd");  //$NON-NLS-1$
 			if (theDbroutingFactory != null) {
 				return theDbroutingFactory;
 			}
@@ -70,7 +70,7 @@ public class DbroutingFactoryImpl extends EFactoryImpl implements DbroutingFacto
 			case DbroutingPackage.RESULT_SET: return createResultSet();
 			case DbroutingPackage.RESULT_SET_ROW_SELECTOR: return createResultSetRowSelector();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.DbroutingFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.DbroutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class DbroutingFactoryImpl extends EFactoryImpl implements DbroutingFacto
 			case DbroutingPackage.RESULT_SET_SCOPE_TYPE_OBJECT:
 				return createResultSetScopeTypeObjectFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.DbroutingFactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.DbroutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -104,7 +104,7 @@ public class DbroutingFactoryImpl extends EFactoryImpl implements DbroutingFacto
 			case DbroutingPackage.RESULT_SET_SCOPE_TYPE_OBJECT:
 				return convertResultSetScopeTypeObjectToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.DbroutingFactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.DbroutingFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -155,7 +155,7 @@ public class DbroutingFactoryImpl extends EFactoryImpl implements DbroutingFacto
 	 */
 	public ResultSetScopeType createResultSetScopeTypeFromString(EDataType eDataType, String initialValue) {
 		ResultSetScopeType result = ResultSetScopeType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.DbroutingFactoryImpl_Error_Value_Not_Valid + initialValue + Messages.DbroutingFactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + Messages.DbroutingFactoryImpl_9);
 		return result;
 	}
 

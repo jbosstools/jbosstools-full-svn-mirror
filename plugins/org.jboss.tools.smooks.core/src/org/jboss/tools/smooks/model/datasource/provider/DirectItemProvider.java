@@ -85,8 +85,8 @@ public class DirectItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Direct_autoCommit_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_autoCommit_feature", "_UI_Direct_type"),
+				 getString("_UI_Direct_autoCommit_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_autoCommit_feature", "_UI_Direct_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DIRECT__AUTO_COMMIT,
 				 true,
 				 false,
@@ -107,8 +107,8 @@ public class DirectItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Direct_bindOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_bindOnElement_feature", "_UI_Direct_type"),
+				 getString("_UI_Direct_bindOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_bindOnElement_feature", "_UI_Direct_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT,
 				 true,
 				 false,
@@ -129,8 +129,8 @@ public class DirectItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Direct_bindOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_bindOnElementNS_feature", "_UI_Direct_type"),
+				 getString("_UI_Direct_bindOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_bindOnElementNS_feature", "_UI_Direct_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -151,8 +151,8 @@ public class DirectItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Direct_datasource_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_datasource_feature", "_UI_Direct_type"),
+				 getString("_UI_Direct_datasource_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_datasource_feature", "_UI_Direct_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DIRECT__DATASOURCE,
 				 true,
 				 false,
@@ -173,8 +173,8 @@ public class DirectItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Direct_driver_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_driver_feature", "_UI_Direct_type"),
+				 getString("_UI_Direct_driver_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_driver_feature", "_UI_Direct_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DIRECT__DRIVER,
 				 true,
 				 false,
@@ -195,8 +195,8 @@ public class DirectItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Direct_password_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_password_feature", "_UI_Direct_type"),
+				 getString("_UI_Direct_password_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_password_feature", "_UI_Direct_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DIRECT__PASSWORD,
 				 true,
 				 false,
@@ -217,8 +217,8 @@ public class DirectItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Direct_url_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_url_feature", "_UI_Direct_type"),
+				 getString("_UI_Direct_url_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_url_feature", "_UI_Direct_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DIRECT__URL,
 				 true,
 				 false,
@@ -239,8 +239,8 @@ public class DirectItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Direct_username_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_username_feature", "_UI_Direct_type"),
+				 getString("_UI_Direct_username_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Direct_username_feature", "_UI_Direct_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DatasourcePackage.Literals.DIRECT__USERNAME,
 				 true,
 				 false,
@@ -258,7 +258,7 @@ public class DirectItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Direct"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Direct")); //$NON-NLS-1$
 	}
 
 	/**
@@ -271,8 +271,8 @@ public class DirectItemProvider
 	public String getText(Object object) {
 		String label = ((Direct)object).getUsername();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Direct_type") :
-			getString("_UI_Direct_type") + " " + label;
+			getString("_UI_Direct_type") : //$NON-NLS-1$
+			getString("_UI_Direct_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

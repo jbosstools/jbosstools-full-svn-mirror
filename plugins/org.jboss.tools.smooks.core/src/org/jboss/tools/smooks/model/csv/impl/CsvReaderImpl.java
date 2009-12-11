@@ -42,7 +42,7 @@ public class CsvReaderImpl extends AbstractReaderImpl implements CsvReader {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ENCODING_EDEFAULT = "UTF-8";
+	protected static final String ENCODING_EDEFAULT = "UTF-8"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
@@ -91,7 +91,7 @@ public class CsvReaderImpl extends AbstractReaderImpl implements CsvReader {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String QUOTE_EDEFAULT = "\"";
+	protected static final String QUOTE_EDEFAULT = "\""; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getQuote() <em>Quote</em>}' attribute.
@@ -120,7 +120,7 @@ public class CsvReaderImpl extends AbstractReaderImpl implements CsvReader {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String SEPARATOR_EDEFAULT = ",";
+	protected static final String SEPARATOR_EDEFAULT = ","; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getSeparator() <em>Separator</em>}' attribute.
@@ -149,7 +149,7 @@ public class CsvReaderImpl extends AbstractReaderImpl implements CsvReader {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final BigInteger SKIP_LINES_EDEFAULT = new BigInteger("0");
+	protected static final BigInteger SKIP_LINES_EDEFAULT = new BigInteger("0"); //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getSkipLines() <em>Skip Lines</em>}' attribute.
@@ -502,16 +502,16 @@ public class CsvReaderImpl extends AbstractReaderImpl implements CsvReader {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (encoding: ");
-		if (encodingESet) result.append(encoding); else result.append("<unset>");
-		result.append(", fields: ");
+		result.append(" (encoding: "); //$NON-NLS-1$
+		if (encodingESet) result.append(encoding); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", fields: "); //$NON-NLS-1$
 		result.append(fields);
-		result.append(", quote: ");
-		if (quoteESet) result.append(quote); else result.append("<unset>");
-		result.append(", separator: ");
-		if (separatorESet) result.append(separator); else result.append("<unset>");
-		result.append(", skipLines: ");
-		if (skipLinesESet) result.append(skipLines); else result.append("<unset>");
+		result.append(", quote: "); //$NON-NLS-1$
+		if (quoteESet) result.append(quote); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", separator: "); //$NON-NLS-1$
+		if (separatorESet) result.append(separator); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", skipLines: "); //$NON-NLS-1$
+		if (skipLinesESet) result.append(skipLines); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

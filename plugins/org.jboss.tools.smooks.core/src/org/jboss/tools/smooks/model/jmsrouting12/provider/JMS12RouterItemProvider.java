@@ -86,8 +86,8 @@ public class JMS12RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JMS12Router_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_beanId_feature", "_UI_JMS12Router_type"),
+				 getString("_UI_JMS12Router_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_beanId_feature", "_UI_JMS12Router_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID,
 				 true,
 				 false,
@@ -108,8 +108,8 @@ public class JMS12RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JMS12Router_destination_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_destination_feature", "_UI_JMS12Router_type"),
+				 getString("_UI_JMS12Router_destination_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_destination_feature", "_UI_JMS12Router_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JMS12_ROUTER__DESTINATION,
 				 true,
 				 false,
@@ -130,8 +130,8 @@ public class JMS12RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JMS12Router_executeBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_executeBefore_feature", "_UI_JMS12Router_type"),
+				 getString("_UI_JMS12Router_executeBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_executeBefore_feature", "_UI_JMS12Router_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JMS12_ROUTER__EXECUTE_BEFORE,
 				 true,
 				 false,
@@ -152,8 +152,8 @@ public class JMS12RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JMS12Router_routeOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_routeOnElement_feature", "_UI_JMS12Router_type"),
+				 getString("_UI_JMS12Router_routeOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_routeOnElement_feature", "_UI_JMS12Router_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JMS12_ROUTER__ROUTE_ON_ELEMENT,
 				 true,
 				 false,
@@ -174,8 +174,8 @@ public class JMS12RouterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JMS12Router_routeOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_routeOnElementNS_feature", "_UI_JMS12Router_type"),
+				 getString("_UI_JMS12Router_routeOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JMS12Router_routeOnElementNS_feature", "_UI_JMS12Router_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.JMS12_ROUTER__ROUTE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -224,7 +224,7 @@ public class JMS12RouterItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/JMS12Router"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/JMS12Router")); //$NON-NLS-1$
 	}
 
 	/**
@@ -236,8 +236,8 @@ public class JMS12RouterItemProvider
 	public String getText(Object object) {
 		String label = ((JMS12Router)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_JMS12Router_type") :
-			getString("_UI_JMS12Router_type") + " " + label;
+			getString("_UI_JMS12Router_type") : //$NON-NLS-1$
+			getString("_UI_JMS12Router_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

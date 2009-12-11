@@ -315,13 +315,13 @@ public class DelimitersImpl extends AbstractAnyTypeImpl implements Delimiters {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (component: ");
+		result.append(" (component: "); //$NON-NLS-1$
 		result.append(component);
-		result.append(", field: ");
+		result.append(", field: "); //$NON-NLS-1$
 		result.append(field);
-		result.append(", segment: ");
+		result.append(", segment: "); //$NON-NLS-1$
 		result.append(segment);
-		result.append(", subComponent: ");
+		result.append(", subComponent: "); //$NON-NLS-1$
 		result.append(subComponent);
 		result.append(')');
 		return result.toString();

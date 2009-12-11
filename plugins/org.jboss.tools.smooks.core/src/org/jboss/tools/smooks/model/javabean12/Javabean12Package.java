@@ -40,7 +40,7 @@ public interface Javabean12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "javabean12";
+	String eNAME = "javabean12"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -48,7 +48,7 @@ public interface Javabean12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/javabean-1.2.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/javabean-1.2.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -56,7 +56,7 @@ public interface Javabean12Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "jb";
+	String eNS_PREFIX = "jb"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

@@ -108,7 +108,7 @@ public class DataSourceDocumentRootItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/DataSourceDocumentRoot"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DataSourceDocumentRoot")); //$NON-NLS-1$
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class DataSourceDocumentRootItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_DataSourceDocumentRoot_type");
+		return getString("_UI_DataSourceDocumentRoot_type"); //$NON-NLS-1$
 	}
 
 	/**

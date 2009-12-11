@@ -31,7 +31,7 @@ public class Rules10FactoryImpl extends EFactoryImpl implements Rules10Factory {
 	 */
 	public static Rules10Factory init() {
 		try {
-			Rules10Factory theRules10Factory = (Rules10Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/rules-1.0.xsd"); 
+			Rules10Factory theRules10Factory = (Rules10Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/rules-1.0.xsd");  //$NON-NLS-1$
 			if (theRules10Factory != null) {
 				return theRules10Factory;
 			}
@@ -63,7 +63,7 @@ public class Rules10FactoryImpl extends EFactoryImpl implements Rules10Factory {
 			case Rules10Package.RULE_BASE: return createRuleBase();
 			case Rules10Package.RULE_BASES_TYPE: return createRuleBasesType();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Rules10FactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.Rules10FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

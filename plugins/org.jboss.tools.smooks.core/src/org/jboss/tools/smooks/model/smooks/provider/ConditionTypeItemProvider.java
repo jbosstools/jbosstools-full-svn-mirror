@@ -83,8 +83,8 @@ public class ConditionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ConditionType_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_value_feature", "_UI_ConditionType_type"),
+				 getString("_UI_ConditionType_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_value_feature", "_UI_ConditionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.CONDITION_TYPE__VALUE,
 				 true,
 				 false,
@@ -105,8 +105,8 @@ public class ConditionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ConditionType_evaluator_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_evaluator_feature", "_UI_ConditionType_type"),
+				 getString("_UI_ConditionType_evaluator_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_evaluator_feature", "_UI_ConditionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.CONDITION_TYPE__EVALUATOR,
 				 true,
 				 false,
@@ -127,8 +127,8 @@ public class ConditionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ConditionType_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_id_feature", "_UI_ConditionType_type"),
+				 getString("_UI_ConditionType_id_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_id_feature", "_UI_ConditionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.CONDITION_TYPE__ID,
 				 true,
 				 false,
@@ -149,8 +149,8 @@ public class ConditionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ConditionType_idRef_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_idRef_feature", "_UI_ConditionType_type"),
+				 getString("_UI_ConditionType_idRef_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ConditionType_idRef_feature", "_UI_ConditionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.CONDITION_TYPE__ID_REF,
 				 true,
 				 false,
@@ -168,7 +168,7 @@ public class ConditionTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ConditionType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ConditionType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -181,8 +181,8 @@ public class ConditionTypeItemProvider
 	public String getText(Object object) {
 		String label = ((ConditionType)object).getId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ConditionType_type") :
-			getString("_UI_ConditionType_type") + " " + label;
+			getString("_UI_ConditionType_type") : //$NON-NLS-1$
+			getString("_UI_ConditionType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -361,15 +361,15 @@ public class WiringTypeImpl extends AbstractAnyTypeImpl implements WiringType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanIdRef: ");
+		result.append(" (beanIdRef: "); //$NON-NLS-1$
 		result.append(beanIdRef);
-		result.append(", property: ");
+		result.append(", property: "); //$NON-NLS-1$
 		result.append(property);
-		result.append(", setterMethod: ");
+		result.append(", setterMethod: "); //$NON-NLS-1$
 		result.append(setterMethod);
-		result.append(", wireOnElement: ");
+		result.append(", wireOnElement: "); //$NON-NLS-1$
 		result.append(wireOnElement);
-		result.append(", wireOnElementNS: ");
+		result.append(", wireOnElementNS: "); //$NON-NLS-1$
 		result.append(wireOnElementNS);
 		result.append(')');
 		return result.toString();

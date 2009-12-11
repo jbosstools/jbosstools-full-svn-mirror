@@ -159,7 +159,7 @@ public class OutputToImpl extends AbstractAnyTypeImpl implements OutputTo {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (outputStreamResource: ");
+		result.append(" (outputStreamResource: "); //$NON-NLS-1$
 		result.append(outputStreamResource);
 		result.append(')');
 		return result.toString();

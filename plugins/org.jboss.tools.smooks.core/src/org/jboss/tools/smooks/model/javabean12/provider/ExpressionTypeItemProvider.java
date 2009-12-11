@@ -81,8 +81,8 @@ public class ExpressionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionType_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_value_feature", "_UI_ExpressionType_type"),
+				 getString("_UI_ExpressionType_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_value_feature", "_UI_ExpressionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.EXPRESSION_TYPE__VALUE,
 				 true,
 				 false,
@@ -103,8 +103,8 @@ public class ExpressionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionType_execOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_execOnElement_feature", "_UI_ExpressionType_type"),
+				 getString("_UI_ExpressionType_execOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_execOnElement_feature", "_UI_ExpressionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
 				 true,
 				 false,
@@ -125,8 +125,8 @@ public class ExpressionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionType_execOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_execOnElementNS_feature", "_UI_ExpressionType_type"),
+				 getString("_UI_ExpressionType_execOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_execOnElementNS_feature", "_UI_ExpressionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -147,8 +147,8 @@ public class ExpressionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionType_initVal_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_initVal_feature", "_UI_ExpressionType_type"),
+				 getString("_UI_ExpressionType_initVal_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_initVal_feature", "_UI_ExpressionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.EXPRESSION_TYPE__INIT_VAL,
 				 true,
 				 false,
@@ -169,8 +169,8 @@ public class ExpressionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionType_property_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_property_feature", "_UI_ExpressionType_type"),
+				 getString("_UI_ExpressionType_property_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_property_feature", "_UI_ExpressionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.EXPRESSION_TYPE__PROPERTY,
 				 true,
 				 false,
@@ -191,8 +191,8 @@ public class ExpressionTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionType_setterMethod_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_setterMethod_feature", "_UI_ExpressionType_type"),
+				 getString("_UI_ExpressionType_setterMethod_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionType_setterMethod_feature", "_UI_ExpressionType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Javabean12Package.Literals.EXPRESSION_TYPE__SETTER_METHOD,
 				 true,
 				 false,
@@ -209,7 +209,7 @@ public class ExpressionTypeItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/expression_binding"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/expression_binding")); //$NON-NLS-1$
 	}
 
 	/**
@@ -221,8 +221,8 @@ public class ExpressionTypeItemProvider
 	public String getText(Object object) {
 		String label = ((ExpressionType)object).getValue();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ExpressionType_type") :
-			getString("_UI_ExpressionType_type") + " " + label;
+			getString("_UI_ExpressionType_type") : //$NON-NLS-1$
+			getString("_UI_ExpressionType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

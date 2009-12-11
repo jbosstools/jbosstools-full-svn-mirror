@@ -82,8 +82,8 @@ public class FlusherItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Flusher_dao_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Flusher_dao_feature", "_UI_Flusher_type"),
+				 getString("_UI_Flusher_dao_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Flusher_dao_feature", "_UI_Flusher_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.FLUSHER__DAO,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class FlusherItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Flusher_flushBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Flusher_flushBefore_feature", "_UI_Flusher_type"),
+				 getString("_UI_Flusher_flushBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Flusher_flushBefore_feature", "_UI_Flusher_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.FLUSHER__FLUSH_BEFORE,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class FlusherItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Flusher_flushOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Flusher_flushOnElement_feature", "_UI_Flusher_type"),
+				 getString("_UI_Flusher_flushOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Flusher_flushOnElement_feature", "_UI_Flusher_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.FLUSHER__FLUSH_ON_ELEMENT,
 				 true,
 				 false,
@@ -148,8 +148,8 @@ public class FlusherItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Flusher_flushOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Flusher_flushOnElementNS_feature", "_UI_Flusher_type"),
+				 getString("_UI_Flusher_flushOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Flusher_flushOnElementNS_feature", "_UI_Flusher_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.FLUSHER__FLUSH_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -166,7 +166,7 @@ public class FlusherItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Flusher"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Flusher")); //$NON-NLS-1$
 	}
 
 	/**
@@ -178,8 +178,8 @@ public class FlusherItemProvider
 	public String getText(Object object) {
 		String label = ((Flusher)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Flusher_type") :
-			getString("_UI_Flusher_type") + " " + label;
+			getString("_UI_Flusher_type") : //$NON-NLS-1$
+			getString("_UI_Flusher_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

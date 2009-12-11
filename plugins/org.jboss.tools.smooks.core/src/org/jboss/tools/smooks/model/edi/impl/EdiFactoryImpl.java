@@ -32,7 +32,7 @@ public class EdiFactoryImpl extends EFactoryImpl implements EdiFactory {
 	 */
 	public static EdiFactory init() {
 		try {
-			EdiFactory theEdiFactory = (EdiFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/edi-1.1.xsd"); 
+			EdiFactory theEdiFactory = (EdiFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/edi-1.1.xsd");  //$NON-NLS-1$
 			if (theEdiFactory != null) {
 				return theEdiFactory;
 			}
@@ -64,7 +64,7 @@ public class EdiFactoryImpl extends EFactoryImpl implements EdiFactory {
 			case EdiPackage.EDI_DOCUMENT_ROOT: return createEDIDocumentRoot();
 			case EdiPackage.EDI_READER: return createEDIReader();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.EdiFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.EdiFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

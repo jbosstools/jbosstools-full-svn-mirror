@@ -77,8 +77,8 @@ public class ImportTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ImportType_file_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ImportType_file_feature", "_UI_ImportType_type"),
+				 getString("_UI_ImportType_file_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ImportType_file_feature", "_UI_ImportType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.IMPORT_TYPE__FILE,
 				 true,
 				 false,
@@ -126,7 +126,7 @@ public class ImportTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ImportType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ImportType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -139,8 +139,8 @@ public class ImportTypeItemProvider
 	public String getText(Object object) {
 		String label = ((ImportType)object).getFile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ImportType_type") :
-			getString("_UI_ImportType_type") + " " + label;
+			getString("_UI_ImportType_type") : //$NON-NLS-1$
+			getString("_UI_ImportType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -41,7 +41,7 @@ public class ConnectionImpl extends AbstractAnyTypeImpl implements Connection {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String FACTORY_EDEFAULT = "ConnectionFactory";
+	protected static final String FACTORY_EDEFAULT = "ConnectionFactory"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getFactory() <em>Factory</em>}' attribute.
@@ -291,11 +291,11 @@ public class ConnectionImpl extends AbstractAnyTypeImpl implements Connection {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (factory: ");
-		if (factoryESet) result.append(factory); else result.append("<unset>");
-		result.append(", securityCredential: ");
+		result.append(" (factory: "); //$NON-NLS-1$
+		if (factoryESet) result.append(factory); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", securityCredential: "); //$NON-NLS-1$
 		result.append(securityCredential);
-		result.append(", securityPrincipal: ");
+		result.append(", securityPrincipal: "); //$NON-NLS-1$
 		result.append(securityPrincipal);
 		result.append(')');
 		return result.toString();

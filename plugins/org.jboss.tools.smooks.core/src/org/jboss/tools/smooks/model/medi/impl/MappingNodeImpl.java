@@ -159,7 +159,7 @@ public class MappingNodeImpl extends AbstractAnyTypeImpl implements MappingNode 
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (xmltag: ");
+		result.append(" (xmltag: "); //$NON-NLS-1$
 		result.append(xmltag);
 		result.append(')');
 		return result.toString();

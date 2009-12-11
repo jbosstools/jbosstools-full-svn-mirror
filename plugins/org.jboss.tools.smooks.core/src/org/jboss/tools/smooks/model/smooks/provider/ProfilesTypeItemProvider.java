@@ -106,7 +106,7 @@ public class ProfilesTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ProfilesType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ProfilesType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class ProfilesTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_ProfilesType_type");
+		return getString("_UI_ProfilesType_type"); //$NON-NLS-1$
 	}
 
 	/**

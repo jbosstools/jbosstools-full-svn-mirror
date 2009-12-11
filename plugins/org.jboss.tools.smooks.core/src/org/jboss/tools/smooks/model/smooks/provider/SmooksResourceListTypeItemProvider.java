@@ -112,9 +112,9 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	protected void addDefaultConditionRefPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
 				.getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SmooksResourceListType_defaultConditionRef_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultConditionRef_feature",
-						"_UI_SmooksResourceListType_type"),
+				getString("_UI_SmooksResourceListType_defaultConditionRef_feature"), getString( //$NON-NLS-1$
+						"_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultConditionRef_feature", //$NON-NLS-1$ //$NON-NLS-2$
+						"_UI_SmooksResourceListType_type"), //$NON-NLS-1$
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_CONDITION_REF, true, false, false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
@@ -128,9 +128,9 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	protected void addDefaultSelectorPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
 				.getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SmooksResourceListType_defaultSelector_feature"), getString(
-						"_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultSelector_feature",
-						"_UI_SmooksResourceListType_type"),
+				getString("_UI_SmooksResourceListType_defaultSelector_feature"), getString( //$NON-NLS-1$
+						"_UI_PropertyDescriptor_description", "_UI_SmooksResourceListType_defaultSelector_feature", //$NON-NLS-1$ //$NON-NLS-2$
+						"_UI_SmooksResourceListType_type"), //$NON-NLS-1$
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR, true, false, false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
@@ -144,10 +144,10 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	protected void addDefaultSelectorNamespacePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
 				.getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SmooksResourceListType_defaultSelectorNamespace_feature"), getString(
-						"_UI_PropertyDescriptor_description",
-						"_UI_SmooksResourceListType_defaultSelectorNamespace_feature",
-						"_UI_SmooksResourceListType_type"),
+				getString("_UI_SmooksResourceListType_defaultSelectorNamespace_feature"), getString( //$NON-NLS-1$
+						"_UI_PropertyDescriptor_description", //$NON-NLS-1$
+						"_UI_SmooksResourceListType_defaultSelectorNamespace_feature", //$NON-NLS-1$
+						"_UI_SmooksResourceListType_type"), //$NON-NLS-1$
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE, true, false, false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
@@ -161,9 +161,9 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	protected void addDefaultTargetProfilePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
 				.getRootAdapterFactory(), getResourceLocator(),
-				getString("_UI_SmooksResourceListType_defaultTargetProfile_feature"), getString(
-						"_UI_PropertyDescriptor_description",
-						"_UI_SmooksResourceListType_defaultTargetProfile_feature", "_UI_SmooksResourceListType_type"),
+				getString("_UI_SmooksResourceListType_defaultTargetProfile_feature"), getString( //$NON-NLS-1$
+						"_UI_PropertyDescriptor_description", //$NON-NLS-1$
+						"_UI_SmooksResourceListType_defaultTargetProfile_feature", "_UI_SmooksResourceListType_type"), //$NON-NLS-1$ //$NON-NLS-2$
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_TARGET_PROFILE, true, false, false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
@@ -213,7 +213,7 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SmooksResourceListType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SmooksResourceListType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -225,8 +225,8 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	@Override
 	public String getText(Object object) {
 		String label = ((SmooksResourceListType) object).getDefaultSelectorNamespace();
-		return label == null || label.length() == 0 ? getString("_UI_SmooksResourceListType_type")
-				: getString("_UI_SmooksResourceListType_type") + " " + label;
+		return label == null || label.length() == 0 ? getString("_UI_SmooksResourceListType_type") //$NON-NLS-1$
+				: getString("_UI_SmooksResourceListType_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

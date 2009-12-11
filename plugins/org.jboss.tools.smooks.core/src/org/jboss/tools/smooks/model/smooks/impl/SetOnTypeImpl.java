@@ -159,7 +159,7 @@ public class SetOnTypeImpl extends AbstractAnyTypeImpl implements SetOnType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (feature: ");
+		result.append(" (feature: "); //$NON-NLS-1$
 		result.append(feature);
 		result.append(')');
 		return result.toString();

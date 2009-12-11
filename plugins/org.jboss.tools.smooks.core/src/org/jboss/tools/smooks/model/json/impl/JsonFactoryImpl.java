@@ -34,7 +34,7 @@ public class JsonFactoryImpl extends EFactoryImpl implements JsonFactory {
 	 */
 	public static JsonFactory init() {
 		try {
-			JsonFactory theJsonFactory = (JsonFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/json-1.1.xsd"); 
+			JsonFactory theJsonFactory = (JsonFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/json-1.1.xsd");  //$NON-NLS-1$
 			if (theJsonFactory != null) {
 				return theJsonFactory;
 			}
@@ -68,7 +68,7 @@ public class JsonFactoryImpl extends EFactoryImpl implements JsonFactory {
 			case JsonPackage.KEY_MAP: return createKeyMap();
 			case JsonPackage.JSON_READER: return createJsonReader();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 

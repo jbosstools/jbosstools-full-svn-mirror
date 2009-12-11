@@ -344,14 +344,14 @@ public class RuleTypeImpl extends ElementVisitorImpl implements RuleType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (executeOn: ");
+		result.append(" (executeOn: "); //$NON-NLS-1$
 		result.append(executeOn);
-		result.append(", executeOnNS: ");
+		result.append(", executeOnNS: "); //$NON-NLS-1$
 		result.append(executeOnNS);
-		result.append(", name: ");
+		result.append(", name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", onFail: ");
-		if (onFailESet) result.append(onFail); else result.append("<unset>");
+		result.append(", onFail: "); //$NON-NLS-1$
+		if (onFailESet) result.append(onFail); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

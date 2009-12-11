@@ -31,7 +31,7 @@ public class MEdiFactoryImpl extends EFactoryImpl implements MEdiFactory {
 	 */
 	public static MEdiFactory init() {
 		try {
-			MEdiFactory theEdiFactory = (MEdiFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/schema/edi-message-mapping-1.0.xsd"); 
+			MEdiFactory theEdiFactory = (MEdiFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/schema/edi-message-mapping-1.0.xsd");  //$NON-NLS-1$
 			if (theEdiFactory != null) {
 				return theEdiFactory;
 			}
@@ -71,7 +71,7 @@ public class MEdiFactoryImpl extends EFactoryImpl implements MEdiFactory {
 			case MEdiPackage.SEGMENTS: return createSegments();
 			case MEdiPackage.SUB_COMPONENT: return createSubComponent();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.MEdiFactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.MEdiFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

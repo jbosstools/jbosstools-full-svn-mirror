@@ -78,8 +78,8 @@ public class OutputToItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_OutputTo_outputStreamResource_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_OutputTo_outputStreamResource_feature", "_UI_OutputTo_type"),
+				 getString("_UI_OutputTo_outputStreamResource_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_OutputTo_outputStreamResource_feature", "_UI_OutputTo_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 XslPackage.Literals.OUTPUT_TO__OUTPUT_STREAM_RESOURCE,
 				 true,
 				 false,
@@ -97,7 +97,7 @@ public class OutputToItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/OutputTo"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OutputTo")); //$NON-NLS-1$
 	}
 
 	/**
@@ -110,8 +110,8 @@ public class OutputToItemProvider
 	public String getText(Object object) {
 		String label = ((OutputTo)object).getOutputStreamResource();
 		return label == null || label.length() == 0 ?
-			getString("_UI_OutputTo_type") :
-			getString("_UI_OutputTo_type") + " " + label;
+			getString("_UI_OutputTo_type") : //$NON-NLS-1$
+			getString("_UI_OutputTo_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -75,8 +75,8 @@ public class AbstractReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AbstractReader_targetProfile_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractReader_targetProfile_feature", "_UI_AbstractReader_type"),
+				 getString("_UI_AbstractReader_targetProfile_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_AbstractReader_targetProfile_feature", "_UI_AbstractReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.ABSTRACT_READER__TARGET_PROFILE,
 				 true,
 				 false,
@@ -96,8 +96,8 @@ public class AbstractReaderItemProvider
 	public String getText(Object object) {
 		String label = ((AbstractReader)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_AbstractReader_type") :
-			getString("_UI_AbstractReader_type") + " " + label;
+			getString("_UI_AbstractReader_type") : //$NON-NLS-1$
+			getString("_UI_AbstractReader_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

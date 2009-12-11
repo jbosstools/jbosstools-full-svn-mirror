@@ -107,7 +107,7 @@ public class EDIDocumentRootItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/EDIDocumentRoot"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/EDIDocumentRoot")); //$NON-NLS-1$
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class EDIDocumentRootItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_EDIDocumentRoot_type");
+		return getString("_UI_EDIDocumentRoot_type"); //$NON-NLS-1$
 	}
 
 	/**

@@ -343,13 +343,13 @@ public class FlusherImpl extends ElementVisitorImpl implements Flusher {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (dao: ");
+		result.append(" (dao: "); //$NON-NLS-1$
 		result.append(dao);
-		result.append(", flushBefore: ");
-		if (flushBeforeESet) result.append(flushBefore); else result.append("<unset>");
-		result.append(", flushOnElement: ");
+		result.append(", flushBefore: "); //$NON-NLS-1$
+		if (flushBeforeESet) result.append(flushBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", flushOnElement: "); //$NON-NLS-1$
 		result.append(flushOnElement);
-		result.append(", flushOnElementNS: ");
+		result.append(", flushOnElementNS: "); //$NON-NLS-1$
 		result.append(flushOnElementNS);
 		result.append(')');
 		return result.toString();

@@ -35,7 +35,7 @@ public enum AcknowledgeMode implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	AUTOACKNOWLEDGE(0, "AUTOACKNOWLEDGE", "AUTO_ACKNOWLEDGE"),
+	AUTOACKNOWLEDGE(0, "AUTOACKNOWLEDGE", "AUTO_ACKNOWLEDGE"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>CLIENTACKNOWLEDGE</b></em>' literal object.
@@ -45,7 +45,7 @@ public enum AcknowledgeMode implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	CLIENTACKNOWLEDGE(1, "CLIENTACKNOWLEDGE", "CLIENT_ACKNOWLEDGE"),
+	CLIENTACKNOWLEDGE(1, "CLIENTACKNOWLEDGE", "CLIENT_ACKNOWLEDGE"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>DUPSOKACKNOWLEDGE</b></em>' literal object.
@@ -55,7 +55,7 @@ public enum AcknowledgeMode implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	DUPSOKACKNOWLEDGE(2, "DUPSOKACKNOWLEDGE", "DUPS_OK_ACKNOWLEDGE");
+	DUPSOKACKNOWLEDGE(2, "DUPSOKACKNOWLEDGE", "DUPS_OK_ACKNOWLEDGE"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>AUTOACKNOWLEDGE</b></em>' literal value.

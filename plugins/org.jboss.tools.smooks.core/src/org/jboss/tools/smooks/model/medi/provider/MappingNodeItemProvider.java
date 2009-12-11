@@ -78,8 +78,8 @@ public class MappingNodeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_MappingNode_xmltag_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_MappingNode_xmltag_feature", "_UI_MappingNode_type"),
+				 getString("_UI_MappingNode_xmltag_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_MappingNode_xmltag_feature", "_UI_MappingNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.MAPPING_NODE__XMLTAG,
 				 true,
 				 false,
@@ -97,7 +97,7 @@ public class MappingNodeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/MappingNode"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/MappingNode")); //$NON-NLS-1$
 	}
 
 	/**
@@ -110,8 +110,8 @@ public class MappingNodeItemProvider
 	public String getText(Object object) {
 		String label = ((MappingNode)object).getXmltag();
 		return label == null || label.length() == 0 ?
-			getString("_UI_MappingNode_type") :
-			getString("_UI_MappingNode_type") + " " + label;
+			getString("_UI_MappingNode_type") : //$NON-NLS-1$
+			getString("_UI_MappingNode_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

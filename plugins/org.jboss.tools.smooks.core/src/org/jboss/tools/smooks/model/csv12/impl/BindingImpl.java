@@ -205,9 +205,9 @@ public class BindingImpl extends AbstractResourceConfigImpl implements Binding {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanId: ");
+		result.append(" (beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", class: ");
+		result.append(", class: "); //$NON-NLS-1$
 		result.append(class_);
 		result.append(')');
 		return result.toString();

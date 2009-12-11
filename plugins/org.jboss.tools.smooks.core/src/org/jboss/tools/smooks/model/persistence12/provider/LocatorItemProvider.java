@@ -89,8 +89,8 @@ public class LocatorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Locator_query_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_query_feature", "_UI_Locator_type"),
+				 getString("_UI_Locator_query_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_query_feature", "_UI_Locator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.LOCATOR__QUERY,
 				 true,
 				 false,
@@ -111,8 +111,8 @@ public class LocatorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Locator_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_beanId_feature", "_UI_Locator_type"),
+				 getString("_UI_Locator_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_beanId_feature", "_UI_Locator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.LOCATOR__BEAN_ID,
 				 true,
 				 false,
@@ -133,8 +133,8 @@ public class LocatorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Locator_dao_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_dao_feature", "_UI_Locator_type"),
+				 getString("_UI_Locator_dao_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_dao_feature", "_UI_Locator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.LOCATOR__DAO,
 				 true,
 				 false,
@@ -155,8 +155,8 @@ public class LocatorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Locator_lookup_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_lookup_feature", "_UI_Locator_type"),
+				 getString("_UI_Locator_lookup_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_lookup_feature", "_UI_Locator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.LOCATOR__LOOKUP,
 				 true,
 				 false,
@@ -177,8 +177,8 @@ public class LocatorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Locator_lookupOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_lookupOnElement_feature", "_UI_Locator_type"),
+				 getString("_UI_Locator_lookupOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_lookupOnElement_feature", "_UI_Locator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.LOCATOR__LOOKUP_ON_ELEMENT,
 				 true,
 				 false,
@@ -199,8 +199,8 @@ public class LocatorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Locator_lookupOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_lookupOnElementNS_feature", "_UI_Locator_type"),
+				 getString("_UI_Locator_lookupOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_lookupOnElementNS_feature", "_UI_Locator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.LOCATOR__LOOKUP_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -221,8 +221,8 @@ public class LocatorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Locator_onNoResult_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_onNoResult_feature", "_UI_Locator_type"),
+				 getString("_UI_Locator_onNoResult_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_onNoResult_feature", "_UI_Locator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.LOCATOR__ON_NO_RESULT,
 				 true,
 				 false,
@@ -243,8 +243,8 @@ public class LocatorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Locator_uniqueResult_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_uniqueResult_feature", "_UI_Locator_type"),
+				 getString("_UI_Locator_uniqueResult_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Locator_uniqueResult_feature", "_UI_Locator_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.LOCATOR__UNIQUE_RESULT,
 				 true,
 				 false,
@@ -289,7 +289,7 @@ public class LocatorItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Locator"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Locator")); //$NON-NLS-1$
 	}
 
 	/**
@@ -301,8 +301,8 @@ public class LocatorItemProvider
 	public String getText(Object object) {
 		String label = ((Locator)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Locator_type") :
-			getString("_UI_Locator_type") + " " + label;
+			getString("_UI_Locator_type") : //$NON-NLS-1$
+			getString("_UI_Locator_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

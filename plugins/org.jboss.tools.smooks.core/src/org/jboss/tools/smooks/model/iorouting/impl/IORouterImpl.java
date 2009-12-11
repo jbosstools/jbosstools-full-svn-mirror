@@ -61,7 +61,7 @@ public class IORouterImpl extends ElementVisitorImpl implements IORouter {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ENCODING_EDEFAULT = "UTF-8";
+	protected static final String ENCODING_EDEFAULT = "UTF-8"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getEncoding() <em>Encoding</em>}' attribute.
@@ -484,17 +484,17 @@ public class IORouterImpl extends ElementVisitorImpl implements IORouter {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanId: ");
+		result.append(" (beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", encoding: ");
-		if (encodingESet) result.append(encoding); else result.append("<unset>");
-		result.append(", executeBefore: ");
-		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>");
-		result.append(", resourceName: ");
+		result.append(", encoding: "); //$NON-NLS-1$
+		if (encodingESet) result.append(encoding); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", executeBefore: "); //$NON-NLS-1$
+		if (executeBeforeESet) result.append(executeBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", resourceName: "); //$NON-NLS-1$
 		result.append(resourceName);
-		result.append(", routeOnElement: ");
+		result.append(", routeOnElement: "); //$NON-NLS-1$
 		result.append(routeOnElement);
-		result.append(", routeOnElementNS: ");
+		result.append(", routeOnElementNS: "); //$NON-NLS-1$
 		result.append(routeOnElementNS);
 		result.append(')');
 		return result.toString();

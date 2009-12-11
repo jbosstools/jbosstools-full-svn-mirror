@@ -89,8 +89,8 @@ public class Json12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Json12Reader_arrayElementName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_arrayElementName_feature", "_UI_Json12Reader_type"),
+				 getString("_UI_Json12Reader_arrayElementName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_arrayElementName_feature", "_UI_Json12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Json12Package.Literals.JSON12_READER__ARRAY_ELEMENT_NAME,
 				 true,
 				 false,
@@ -111,8 +111,8 @@ public class Json12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Json12Reader_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_encoding_feature", "_UI_Json12Reader_type"),
+				 getString("_UI_Json12Reader_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_encoding_feature", "_UI_Json12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Json12Package.Literals.JSON12_READER__ENCODING,
 				 true,
 				 false,
@@ -133,8 +133,8 @@ public class Json12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Json12Reader_illegalElementNameCharReplacement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_illegalElementNameCharReplacement_feature", "_UI_Json12Reader_type"),
+				 getString("_UI_Json12Reader_illegalElementNameCharReplacement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_illegalElementNameCharReplacement_feature", "_UI_Json12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Json12Package.Literals.JSON12_READER__ILLEGAL_ELEMENT_NAME_CHAR_REPLACEMENT,
 				 true,
 				 false,
@@ -155,8 +155,8 @@ public class Json12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Json12Reader_indent_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_indent_feature", "_UI_Json12Reader_type"),
+				 getString("_UI_Json12Reader_indent_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_indent_feature", "_UI_Json12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Json12Package.Literals.JSON12_READER__INDENT,
 				 true,
 				 false,
@@ -177,8 +177,8 @@ public class Json12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Json12Reader_keyPrefixOnNumeric_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_keyPrefixOnNumeric_feature", "_UI_Json12Reader_type"),
+				 getString("_UI_Json12Reader_keyPrefixOnNumeric_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_keyPrefixOnNumeric_feature", "_UI_Json12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Json12Package.Literals.JSON12_READER__KEY_PREFIX_ON_NUMERIC,
 				 true,
 				 false,
@@ -199,8 +199,8 @@ public class Json12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Json12Reader_keyWhitspaceReplacement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_keyWhitspaceReplacement_feature", "_UI_Json12Reader_type"),
+				 getString("_UI_Json12Reader_keyWhitspaceReplacement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_keyWhitspaceReplacement_feature", "_UI_Json12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Json12Package.Literals.JSON12_READER__KEY_WHITSPACE_REPLACEMENT,
 				 true,
 				 false,
@@ -221,8 +221,8 @@ public class Json12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Json12Reader_nullValueReplacement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_nullValueReplacement_feature", "_UI_Json12Reader_type"),
+				 getString("_UI_Json12Reader_nullValueReplacement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_nullValueReplacement_feature", "_UI_Json12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Json12Package.Literals.JSON12_READER__NULL_VALUE_REPLACEMENT,
 				 true,
 				 false,
@@ -243,8 +243,8 @@ public class Json12ReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Json12Reader_rootName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_rootName_feature", "_UI_Json12Reader_type"),
+				 getString("_UI_Json12Reader_rootName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Json12Reader_rootName_feature", "_UI_Json12Reader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Json12Package.Literals.JSON12_READER__ROOT_NAME,
 				 true,
 				 false,
@@ -289,7 +289,7 @@ public class Json12ReaderItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Json12Reader"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Json12Reader")); //$NON-NLS-1$
 	}
 
 	/**
@@ -299,7 +299,7 @@ public class Json12ReaderItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		return "JSON";
+		return "JSON"; //$NON-NLS-1$
 //		String label = ((Json12Reader)object).getArrayElementName();
 //		return label == null || label.length() == 0 ?
 //			getString("_UI_Json12Reader_type") :

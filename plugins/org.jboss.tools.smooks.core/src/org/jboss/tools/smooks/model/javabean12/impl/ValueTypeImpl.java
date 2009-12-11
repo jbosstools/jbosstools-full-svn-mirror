@@ -470,17 +470,17 @@ public class ValueTypeImpl extends AbstractAnyTypeImpl implements ValueType {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (data: ");
+		result.append(" (data: "); //$NON-NLS-1$
 		result.append(data);
-		result.append(", dataNS: ");
+		result.append(", dataNS: "); //$NON-NLS-1$
 		result.append(dataNS);
-		result.append(", decoder: ");
+		result.append(", decoder: "); //$NON-NLS-1$
 		result.append(decoder);
-		result.append(", default: ");
+		result.append(", default: "); //$NON-NLS-1$
 		result.append(default_);
-		result.append(", property: ");
+		result.append(", property: "); //$NON-NLS-1$
 		result.append(property);
-		result.append(", setterMethod: ");
+		result.append(", setterMethod: "); //$NON-NLS-1$
 		result.append(setterMethod);
 		result.append(')');
 		return result.toString();

@@ -82,8 +82,8 @@ public class ExpressionParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionParameter_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionParameter_value_feature", "_UI_ExpressionParameter_type"),
+				 getString("_UI_ExpressionParameter_value_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionParameter_value_feature", "_UI_ExpressionParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.EXPRESSION_PARAMETER__VALUE,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class ExpressionParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionParameter_execOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionParameter_execOnElement_feature", "_UI_ExpressionParameter_type"),
+				 getString("_UI_ExpressionParameter_execOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionParameter_execOnElement_feature", "_UI_ExpressionParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.EXPRESSION_PARAMETER__EXEC_ON_ELEMENT,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class ExpressionParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionParameter_execOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionParameter_execOnElementNS_feature", "_UI_ExpressionParameter_type"),
+				 getString("_UI_ExpressionParameter_execOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionParameter_execOnElementNS_feature", "_UI_ExpressionParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.EXPRESSION_PARAMETER__EXEC_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -148,8 +148,8 @@ public class ExpressionParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ExpressionParameter_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionParameter_name_feature", "_UI_ExpressionParameter_type"),
+				 getString("_UI_ExpressionParameter_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ExpressionParameter_name_feature", "_UI_ExpressionParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.EXPRESSION_PARAMETER__NAME,
 				 true,
 				 false,
@@ -166,7 +166,7 @@ public class ExpressionParameterItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ExpressionParameter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ExpressionParameter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -178,8 +178,8 @@ public class ExpressionParameterItemProvider
 	public String getText(Object object) {
 		String label = ((ExpressionParameter)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ExpressionParameter_type") :
-			getString("_UI_ExpressionParameter_type") + " " + label;
+			getString("_UI_ExpressionParameter_type") : //$NON-NLS-1$
+			getString("_UI_ExpressionParameter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

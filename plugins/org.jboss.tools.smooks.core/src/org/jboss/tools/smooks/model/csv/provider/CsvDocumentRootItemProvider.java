@@ -107,7 +107,7 @@ public class CsvDocumentRootItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CsvDocumentRoot"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CsvDocumentRoot")); //$NON-NLS-1$
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class CsvDocumentRootItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_CsvDocumentRoot_type");
+		return getString("_UI_CsvDocumentRoot_type"); //$NON-NLS-1$
 	}
 
 	/**

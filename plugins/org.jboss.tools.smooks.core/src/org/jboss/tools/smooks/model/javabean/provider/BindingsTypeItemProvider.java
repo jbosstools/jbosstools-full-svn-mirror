@@ -85,8 +85,8 @@ public class BindingsTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_BindingsType_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_beanId_feature", "_UI_BindingsType_type"),
+				 getString("_UI_BindingsType_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_beanId_feature", "_UI_BindingsType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID,
 				 true,
 				 false,
@@ -107,8 +107,8 @@ public class BindingsTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_BindingsType_class_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_class_feature", "_UI_BindingsType_type"),
+				 getString("_UI_BindingsType_class_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_class_feature", "_UI_BindingsType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.BINDINGS_TYPE__CLASS,
 				 true,
 				 false,
@@ -129,8 +129,8 @@ public class BindingsTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_BindingsType_createOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_createOnElement_feature", "_UI_BindingsType_type"),
+				 getString("_UI_BindingsType_createOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_createOnElement_feature", "_UI_BindingsType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT,
 				 true,
 				 false,
@@ -151,8 +151,8 @@ public class BindingsTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_BindingsType_createOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_createOnElementNS_feature", "_UI_BindingsType_type"),
+				 getString("_UI_BindingsType_createOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_createOnElementNS_feature", "_UI_BindingsType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -173,8 +173,8 @@ public class BindingsTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_BindingsType_extendLifecycle_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_extendLifecycle_feature", "_UI_BindingsType_type"),
+				 getString("_UI_BindingsType_extendLifecycle_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_BindingsType_extendLifecycle_feature", "_UI_BindingsType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JavabeanPackage.Literals.BINDINGS_TYPE__EXTEND_LIFECYCLE,
 				 true,
 				 false,
@@ -222,7 +222,7 @@ public class BindingsTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/java_bean.png"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/java_bean.png")); //$NON-NLS-1$
 	}
 
 	/**
@@ -235,8 +235,8 @@ public class BindingsTypeItemProvider
 	public String getText(Object object) {
 		String label = ((BindingsType)object).getBeanId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_BindingsType_type") :
-			getString("_UI_BindingsType_type") + " (" + label+")";
+			getString("_UI_BindingsType_type") : //$NON-NLS-1$
+			getString("_UI_BindingsType_type") + " (" + label+")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**

@@ -102,7 +102,7 @@ public class CSV12DocumentRootItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CSV12DocumentRoot"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CSV12DocumentRoot")); //$NON-NLS-1$
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class CSV12DocumentRootItemProvider
 	 * @generated
 	 */
 	public String getText(Object object) {
-		return getString("_UI_CSV12DocumentRoot_type");
+		return getString("_UI_CSV12DocumentRoot_type"); //$NON-NLS-1$
 	}
 
 	/**

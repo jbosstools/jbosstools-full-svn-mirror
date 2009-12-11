@@ -82,8 +82,8 @@ public class CsvReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CsvReader_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_encoding_feature", "_UI_CsvReader_type"),
+				 getString("_UI_CsvReader_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_encoding_feature", "_UI_CsvReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CsvPackage.Literals.CSV_READER__ENCODING,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class CsvReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CsvReader_fields_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_fields_feature", "_UI_CsvReader_type"),
+				 getString("_UI_CsvReader_fields_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_fields_feature", "_UI_CsvReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CsvPackage.Literals.CSV_READER__FIELDS,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class CsvReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CsvReader_quote_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_quote_feature", "_UI_CsvReader_type"),
+				 getString("_UI_CsvReader_quote_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_quote_feature", "_UI_CsvReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CsvPackage.Literals.CSV_READER__QUOTE,
 				 true,
 				 false,
@@ -148,8 +148,8 @@ public class CsvReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CsvReader_separator_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_separator_feature", "_UI_CsvReader_type"),
+				 getString("_UI_CsvReader_separator_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_separator_feature", "_UI_CsvReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CsvPackage.Literals.CSV_READER__SEPARATOR,
 				 true,
 				 false,
@@ -170,8 +170,8 @@ public class CsvReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_CsvReader_skipLines_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_skipLines_feature", "_UI_CsvReader_type"),
+				 getString("_UI_CsvReader_skipLines_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_CsvReader_skipLines_feature", "_UI_CsvReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CsvPackage.Literals.CSV_READER__SKIP_LINES,
 				 true,
 				 false,
@@ -189,7 +189,7 @@ public class CsvReaderItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CsvReader"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CsvReader")); //$NON-NLS-1$
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class CsvReaderItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return "CSV";
+		return "CSV"; //$NON-NLS-1$
 //		String label = ((CsvReader)object).getTargetProfile();
 //		return label == null || label.length() == 0 ?
 //			getString("_UI_CsvReader_type") :

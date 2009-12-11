@@ -104,7 +104,7 @@ public class ScriptTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ScriptType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ScriptType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class ScriptTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_ScriptType_type");
+		return getString("_UI_ScriptType_type"); //$NON-NLS-1$
 	}
 
 	/**

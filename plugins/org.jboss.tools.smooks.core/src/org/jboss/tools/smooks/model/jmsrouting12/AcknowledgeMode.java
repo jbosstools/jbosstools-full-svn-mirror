@@ -85,7 +85,7 @@ public final class AcknowledgeMode extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final AcknowledgeMode AUTOACKNOWLEDGE_LITERAL = new AcknowledgeMode(AUTOACKNOWLEDGE, "AUTOACKNOWLEDGE", "AUTO_ACKNOWLEDGE");
+	public static final AcknowledgeMode AUTOACKNOWLEDGE_LITERAL = new AcknowledgeMode(AUTOACKNOWLEDGE, "AUTOACKNOWLEDGE", "AUTO_ACKNOWLEDGE"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>CLIENTACKNOWLEDGE</b></em>' literal object.
@@ -95,7 +95,7 @@ public final class AcknowledgeMode extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final AcknowledgeMode CLIENTACKNOWLEDGE_LITERAL = new AcknowledgeMode(CLIENTACKNOWLEDGE, "CLIENTACKNOWLEDGE", "CLIENT_ACKNOWLEDGE");
+	public static final AcknowledgeMode CLIENTACKNOWLEDGE_LITERAL = new AcknowledgeMode(CLIENTACKNOWLEDGE, "CLIENTACKNOWLEDGE", "CLIENT_ACKNOWLEDGE"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>DUPSOKACKNOWLEDGE</b></em>' literal object.
@@ -105,7 +105,7 @@ public final class AcknowledgeMode extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final AcknowledgeMode DUPSOKACKNOWLEDGE_LITERAL = new AcknowledgeMode(DUPSOKACKNOWLEDGE, "DUPSOKACKNOWLEDGE", "DUPS_OK_ACKNOWLEDGE");
+	public static final AcknowledgeMode DUPSOKACKNOWLEDGE_LITERAL = new AcknowledgeMode(DUPSOKACKNOWLEDGE, "DUPSOKACKNOWLEDGE", "DUPS_OK_ACKNOWLEDGE"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * An array of all the '<em><b>Acknowledge Mode</b></em>' enumerators.

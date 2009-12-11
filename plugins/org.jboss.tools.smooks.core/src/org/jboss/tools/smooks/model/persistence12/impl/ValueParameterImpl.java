@@ -495,17 +495,17 @@ public class ValueParameterImpl extends AbstractAnyTypeImpl implements ValuePara
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (data: ");
+		result.append(" (data: "); //$NON-NLS-1$
 		result.append(data);
-		result.append(", dataNS: ");
+		result.append(", dataNS: "); //$NON-NLS-1$
 		result.append(dataNS);
-		result.append(", decoder: ");
+		result.append(", decoder: "); //$NON-NLS-1$
 		result.append(decoder);
-		result.append(", default: ");
+		result.append(", default: "); //$NON-NLS-1$
 		result.append(default_);
-		result.append(", index: ");
+		result.append(", index: "); //$NON-NLS-1$
 		result.append(index);
-		result.append(", name: ");
+		result.append(", name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');
 		return result.toString();

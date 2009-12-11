@@ -159,7 +159,7 @@ public class HandlerTypeImpl extends AbstractAnyTypeImpl implements HandlerType 
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (class: ");
+		result.append(" (class: "); //$NON-NLS-1$
 		result.append(class_);
 		result.append(')');
 		return result.toString();

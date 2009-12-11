@@ -33,7 +33,7 @@ public class DatasourceFactoryImpl extends EFactoryImpl implements DatasourceFac
 	 */
 	public static DatasourceFactory init() {
 		try {
-			DatasourceFactory theDatasourceFactory = (DatasourceFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/datasource-1.1.xsd"); 
+			DatasourceFactory theDatasourceFactory = (DatasourceFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/datasource-1.1.xsd");  //$NON-NLS-1$
 			if (theDatasourceFactory != null) {
 				return theDatasourceFactory;
 			}
@@ -66,7 +66,7 @@ public class DatasourceFactoryImpl extends EFactoryImpl implements DatasourceFac
 			case DatasourcePackage.DATA_SOURCE_DOCUMENT_ROOT: return createDataSourceDocumentRoot();
 			case DatasourcePackage.DATA_SOURCE_JNDI: return createDataSourceJndi();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.DatasourceFactoryImpl_Error_Invalid_Class + eClass.getName() + Messages.DatasourceFactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 

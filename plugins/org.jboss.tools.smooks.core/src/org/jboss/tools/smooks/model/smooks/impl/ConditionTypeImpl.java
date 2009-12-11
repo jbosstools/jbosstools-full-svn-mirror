@@ -62,7 +62,7 @@ public class ConditionTypeImpl extends AbstractAnyTypeImpl implements ConditionT
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String EVALUATOR_EDEFAULT = "org.milyn.javabean.expression.BeanMapExpressionEvaluator";
+	protected static final String EVALUATOR_EDEFAULT = "org.milyn.javabean.expression.BeanMapExpressionEvaluator"; //$NON-NLS-1$
 
 	/**
 	 * The cached value of the '{@link #getEvaluator() <em>Evaluator</em>}' attribute.
@@ -349,13 +349,13 @@ public class ConditionTypeImpl extends AbstractAnyTypeImpl implements ConditionT
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
+		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
-		result.append(", evaluator: ");
-		if (evaluatorESet) result.append(evaluator); else result.append("<unset>");
-		result.append(", id: ");
+		result.append(", evaluator: "); //$NON-NLS-1$
+		if (evaluatorESet) result.append(evaluator); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", id: "); //$NON-NLS-1$
 		result.append(id);
-		result.append(", idRef: ");
+		result.append(", idRef: "); //$NON-NLS-1$
 		result.append(idRef);
 		result.append(')');
 		return result.toString();

@@ -81,8 +81,8 @@ public class HighWaterMarkItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_HighWaterMark_mark_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_HighWaterMark_mark_feature", "_UI_HighWaterMark_type"),
+				 getString("_UI_HighWaterMark_mark_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_HighWaterMark_mark_feature", "_UI_HighWaterMark_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.HIGH_WATER_MARK__MARK,
 				 true,
 				 false,
@@ -103,8 +103,8 @@ public class HighWaterMarkItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_HighWaterMark_pollFrequency_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_HighWaterMark_pollFrequency_feature", "_UI_HighWaterMark_type"),
+				 getString("_UI_HighWaterMark_pollFrequency_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_HighWaterMark_pollFrequency_feature", "_UI_HighWaterMark_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.HIGH_WATER_MARK__POLL_FREQUENCY,
 				 true,
 				 false,
@@ -125,8 +125,8 @@ public class HighWaterMarkItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_HighWaterMark_timeout_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_HighWaterMark_timeout_feature", "_UI_HighWaterMark_type"),
+				 getString("_UI_HighWaterMark_timeout_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_HighWaterMark_timeout_feature", "_UI_HighWaterMark_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Jmsrouting12Package.Literals.HIGH_WATER_MARK__TIMEOUT,
 				 true,
 				 false,
@@ -143,7 +143,7 @@ public class HighWaterMarkItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/HighWaterMark"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/HighWaterMark")); //$NON-NLS-1$
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class HighWaterMarkItemProvider
 	 */
 	public String getText(Object object) {
 		HighWaterMark highWaterMark = (HighWaterMark)object;
-		return getString("_UI_HighWaterMark_type") + " " + highWaterMark.getMark();
+		return getString("_UI_HighWaterMark_type") + " " + highWaterMark.getMark(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

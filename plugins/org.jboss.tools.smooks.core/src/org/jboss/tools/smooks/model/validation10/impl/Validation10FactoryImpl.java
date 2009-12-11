@@ -32,7 +32,7 @@ public class Validation10FactoryImpl extends EFactoryImpl implements Validation1
 	 */
 	public static Validation10Factory init() {
 		try {
-			Validation10Factory theValidation10Factory = (Validation10Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/validation-1.0.xsd"); 
+			Validation10Factory theValidation10Factory = (Validation10Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/validation-1.0.xsd");  //$NON-NLS-1$
 			if (theValidation10Factory != null) {
 				return theValidation10Factory;
 			}
@@ -63,7 +63,7 @@ public class Validation10FactoryImpl extends EFactoryImpl implements Validation1
 			case Validation10Package.VALIDATION10_DOCUMENT_ROOT: return createValidation10DocumentRoot();
 			case Validation10Package.RULE_TYPE: return createRuleType();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Validation10FactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.Validation10FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class Validation10FactoryImpl extends EFactoryImpl implements Validation1
 			case Validation10Package.ON_FAIL_OBJECT:
 				return createOnFailObjectFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Validation10FactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.Validation10FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -95,7 +95,7 @@ public class Validation10FactoryImpl extends EFactoryImpl implements Validation1
 			case Validation10Package.ON_FAIL_OBJECT:
 				return convertOnFailObjectToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Validation10FactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.Validation10FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -126,7 +126,7 @@ public class Validation10FactoryImpl extends EFactoryImpl implements Validation1
 	 */
 	public OnFail createOnFailFromString(EDataType eDataType, String initialValue) {
 		OnFail result = OnFail.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.Validation10FactoryImpl_Error_Value_Not_Valid + initialValue + Messages.Validation10FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$
 		return result;
 	}
 

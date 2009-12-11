@@ -764,26 +764,26 @@ public class CounterImpl extends ElementVisitorImpl implements Counter {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (startExpression: ");
+		result.append(" (startExpression: "); //$NON-NLS-1$
 		result.append(startExpression);
-		result.append(", amountExpression: ");
+		result.append(", amountExpression: "); //$NON-NLS-1$
 		result.append(amountExpression);
-		result.append(", resetCondition: ");
+		result.append(", resetCondition: "); //$NON-NLS-1$
 		result.append(resetCondition);
-		result.append(", amount: ");
-		if (amountESet) result.append(amount); else result.append("<unset>");
-		result.append(", beanId: ");
+		result.append(", amount: "); //$NON-NLS-1$
+		if (amountESet) result.append(amount); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", countOnElement: ");
+		result.append(", countOnElement: "); //$NON-NLS-1$
 		result.append(countOnElement);
-		result.append(", countOnElementNS: ");
+		result.append(", countOnElementNS: "); //$NON-NLS-1$
 		result.append(countOnElementNS);
-		result.append(", direction: ");
-		if (directionESet) result.append(direction); else result.append("<unset>");
-		result.append(", executeAfter: ");
-		if (executeAfterESet) result.append(executeAfter); else result.append("<unset>");
-		result.append(", start: ");
-		if (startESet) result.append(start); else result.append("<unset>");
+		result.append(", direction: "); //$NON-NLS-1$
+		if (directionESet) result.append(direction); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", executeAfter: "); //$NON-NLS-1$
+		if (executeAfterESet) result.append(executeAfter); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", start: "); //$NON-NLS-1$
+		if (startESet) result.append(start); else result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

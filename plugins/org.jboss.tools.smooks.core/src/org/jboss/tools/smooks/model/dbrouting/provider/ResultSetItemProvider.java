@@ -82,8 +82,8 @@ public class ResultSetItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSet_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSet_name_feature", "_UI_ResultSet_type"),
+				 getString("_UI_ResultSet_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSet_name_feature", "_UI_ResultSet_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET__NAME,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class ResultSetItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSet_scope_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSet_scope_feature", "_UI_ResultSet_type"),
+				 getString("_UI_ResultSet_scope_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSet_scope_feature", "_UI_ResultSet_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET__SCOPE,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class ResultSetItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ResultSet_timeToLive_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSet_timeToLive_feature", "_UI_ResultSet_type"),
+				 getString("_UI_ResultSet_timeToLive_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ResultSet_timeToLive_feature", "_UI_ResultSet_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 DbroutingPackage.Literals.RESULT_SET__TIME_TO_LIVE,
 				 true,
 				 false,
@@ -145,7 +145,7 @@ public class ResultSetItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResultSet"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ResultSet")); //$NON-NLS-1$
 	}
 
 	/**
@@ -158,8 +158,8 @@ public class ResultSetItemProvider
 	public String getText(Object object) {
 		String label = ((ResultSet)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ResultSet_type") :
-			getString("_UI_ResultSet_type") + " " + label;
+			getString("_UI_ResultSet_type") : //$NON-NLS-1$
+			getString("_UI_ResultSet_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

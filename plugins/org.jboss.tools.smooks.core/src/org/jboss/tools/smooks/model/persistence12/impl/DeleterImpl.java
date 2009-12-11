@@ -499,19 +499,19 @@ public class DeleterImpl extends ElementVisitorImpl implements Deleter {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanId: ");
+		result.append(" (beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", dao: ");
+		result.append(", dao: "); //$NON-NLS-1$
 		result.append(dao);
-		result.append(", deleteBefore: ");
-		if (deleteBeforeESet) result.append(deleteBefore); else result.append("<unset>");
-		result.append(", deletedBeanId: ");
+		result.append(", deleteBefore: "); //$NON-NLS-1$
+		if (deleteBeforeESet) result.append(deleteBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", deletedBeanId: "); //$NON-NLS-1$
 		result.append(deletedBeanId);
-		result.append(", deleteOnElement: ");
+		result.append(", deleteOnElement: "); //$NON-NLS-1$
 		result.append(deleteOnElement);
-		result.append(", deleteOnElementNS: ");
+		result.append(", deleteOnElementNS: "); //$NON-NLS-1$
 		result.append(deleteOnElementNS);
-		result.append(", name: ");
+		result.append(", name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');
 		return result.toString();

@@ -75,8 +75,8 @@ public class MapBindingItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_MapBinding_keyField_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_MapBinding_keyField_feature", "_UI_MapBinding_type"),
+				 getString("_UI_MapBinding_keyField_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_MapBinding_keyField_feature", "_UI_MapBinding_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.MAP_BINDING__KEY_FIELD,
 				 true,
 				 false,
@@ -93,7 +93,7 @@ public class MapBindingItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/MapBinding"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/MapBinding")); //$NON-NLS-1$
 	}
 
 	/**
@@ -105,8 +105,8 @@ public class MapBindingItemProvider
 	public String getText(Object object) {
 		String label = ((MapBinding)object).getBeanId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_MapBinding_type") :
-			getString("_UI_MapBinding_type") + " " + label;
+			getString("_UI_MapBinding_type") : //$NON-NLS-1$
+			getString("_UI_MapBinding_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -38,7 +38,7 @@ public interface CsvPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "csv";
+	String eNAME = "csv"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -46,7 +46,7 @@ public interface CsvPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/csv-1.1.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/csv-1.1.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -54,7 +54,7 @@ public interface CsvPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "csv";
+	String eNS_PREFIX = "csv"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

@@ -499,19 +499,19 @@ public class InserterImpl extends ElementVisitorImpl implements Inserter {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanId: ");
+		result.append(" (beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", dao: ");
+		result.append(", dao: "); //$NON-NLS-1$
 		result.append(dao);
-		result.append(", insertBefore: ");
-		if (insertBeforeESet) result.append(insertBefore); else result.append("<unset>");
-		result.append(", insertedBeanId: ");
+		result.append(", insertBefore: "); //$NON-NLS-1$
+		if (insertBeforeESet) result.append(insertBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", insertedBeanId: "); //$NON-NLS-1$
 		result.append(insertedBeanId);
-		result.append(", insertOnElement: ");
+		result.append(", insertOnElement: "); //$NON-NLS-1$
 		result.append(insertOnElement);
-		result.append(", insertOnElementNS: ");
+		result.append(", insertOnElementNS: "); //$NON-NLS-1$
 		result.append(insertOnElementNS);
-		result.append(", name: ");
+		result.append(", name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');
 		return result.toString();

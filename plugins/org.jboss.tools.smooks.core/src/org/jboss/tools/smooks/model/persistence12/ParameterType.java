@@ -60,7 +60,7 @@ public final class ParameterType extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final ParameterType POSITIONAL_LITERAL = new ParameterType(POSITIONAL, "POSITIONAL", "POSITIONAL");
+	public static final ParameterType POSITIONAL_LITERAL = new ParameterType(POSITIONAL, "POSITIONAL", "POSITIONAL"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>NAMED</b></em>' literal object.
@@ -70,7 +70,7 @@ public final class ParameterType extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final ParameterType NAMED_LITERAL = new ParameterType(NAMED, "NAMED", "NAMED");
+	public static final ParameterType NAMED_LITERAL = new ParameterType(NAMED, "NAMED", "NAMED"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * An array of all the '<em><b>Parameter Type</b></em>' enumerators.

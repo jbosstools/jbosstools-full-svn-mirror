@@ -77,8 +77,8 @@ public class ReaderTypeItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ReaderType_class_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ReaderType_class_feature", "_UI_ReaderType_type"),
+				 getString("_UI_ReaderType_class_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ReaderType_class_feature", "_UI_ReaderType_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.READER_TYPE__CLASS,
 				 true,
 				 false,
@@ -128,7 +128,7 @@ public class ReaderTypeItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ReaderType"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ReaderType")); //$NON-NLS-1$
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class ReaderTypeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return "Custom";
+		return "Custom"; //$NON-NLS-1$
 //		String label = ((ReaderType)object).getTargetProfile();
 //		return label == null || label.length() == 0 ?
 //			getString("_UI_ReaderType_type") :

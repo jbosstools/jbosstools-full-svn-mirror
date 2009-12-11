@@ -30,7 +30,7 @@ public enum ResultSetScopeType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	EXECUTION(0, "EXECUTION", "EXECUTION"),
+	EXECUTION(0, "EXECUTION", "EXECUTION"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>APPLICATION</b></em>' literal object.
@@ -40,7 +40,7 @@ public enum ResultSetScopeType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	APPLICATION(1, "APPLICATION", "APPLICATION");
+	APPLICATION(1, "APPLICATION", "APPLICATION"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>EXECUTION</b></em>' literal value.

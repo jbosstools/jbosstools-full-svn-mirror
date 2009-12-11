@@ -87,8 +87,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_startExpression_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_startExpression_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_startExpression_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_startExpression_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__START_EXPRESSION,
 				 true,
 				 false,
@@ -109,8 +109,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_amountExpression_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_amountExpression_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_amountExpression_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_amountExpression_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__AMOUNT_EXPRESSION,
 				 true,
 				 false,
@@ -131,8 +131,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_resetCondition_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_resetCondition_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_resetCondition_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_resetCondition_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__RESET_CONDITION,
 				 true,
 				 false,
@@ -153,8 +153,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_amount_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_amount_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_amount_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_amount_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__AMOUNT,
 				 true,
 				 false,
@@ -175,8 +175,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_beanId_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_beanId_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__BEAN_ID,
 				 true,
 				 false,
@@ -197,8 +197,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_countOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_countOnElement_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_countOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_countOnElement_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT,
 				 true,
 				 false,
@@ -219,8 +219,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_countOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_countOnElementNS_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_countOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_countOnElementNS_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -241,8 +241,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_direction_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_direction_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_direction_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_direction_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__DIRECTION,
 				 true,
 				 false,
@@ -263,8 +263,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_executeAfter_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_executeAfter_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_executeAfter_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_executeAfter_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__EXECUTE_AFTER,
 				 true,
 				 false,
@@ -285,8 +285,8 @@ public class CounterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Counter_start_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_start_feature", "_UI_Counter_type"),
+				 getString("_UI_Counter_start_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Counter_start_feature", "_UI_Counter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 CalcPackage.Literals.COUNTER__START,
 				 true,
 				 false,
@@ -304,7 +304,7 @@ public class CounterItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Counter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Counter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -317,8 +317,8 @@ public class CounterItemProvider
 	public String getText(Object object) {
 		String label = ((Counter)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Counter_type") :
-			getString("_UI_Counter_type") + " " + label;
+			getString("_UI_Counter_type") : //$NON-NLS-1$
+			getString("_UI_Counter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -70,9 +70,9 @@ public class WiringTypeItemProvider extends AbstractAnyTypeItemProvider implemen
 	 */
 	protected void addBeanIdRefPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_beanIdRef_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_beanIdRef_feature",
-						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF, true, false,
+				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_beanIdRef_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_beanIdRef_feature", //$NON-NLS-1$ //$NON-NLS-2$
+						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF, true, false, //$NON-NLS-1$
 				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
@@ -84,9 +84,9 @@ public class WiringTypeItemProvider extends AbstractAnyTypeItemProvider implemen
 	 */
 	protected void addPropertyPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_property_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_property_feature",
-						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__PROPERTY, true, false, false,
+				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_property_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_property_feature", //$NON-NLS-1$ //$NON-NLS-2$
+						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__PROPERTY, true, false, false, //$NON-NLS-1$
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
@@ -98,9 +98,9 @@ public class WiringTypeItemProvider extends AbstractAnyTypeItemProvider implemen
 	 */
 	protected void addSetterMethodPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_setterMethod_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_setterMethod_feature",
-						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__SETTER_METHOD, true, false,
+				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_setterMethod_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_setterMethod_feature", //$NON-NLS-1$ //$NON-NLS-2$
+						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__SETTER_METHOD, true, false, //$NON-NLS-1$
 				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
@@ -112,9 +112,9 @@ public class WiringTypeItemProvider extends AbstractAnyTypeItemProvider implemen
 	 */
 	protected void addWireOnElementPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_wireOnElement_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_wireOnElement_feature",
-						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT, true, false,
+				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_wireOnElement_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_wireOnElement_feature", //$NON-NLS-1$ //$NON-NLS-2$
+						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT, true, false, //$NON-NLS-1$
 				false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
@@ -126,9 +126,9 @@ public class WiringTypeItemProvider extends AbstractAnyTypeItemProvider implemen
 	 */
 	protected void addWireOnElementNSPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory)
-				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_wireOnElementNS_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_wireOnElementNS_feature",
-						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS, true,
+				.getRootAdapterFactory(), getResourceLocator(), getString("_UI_WiringType_wireOnElementNS_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_WiringType_wireOnElementNS_feature", //$NON-NLS-1$ //$NON-NLS-2$
+						"_UI_WiringType_type"), Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS, true, //$NON-NLS-1$
 				false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
@@ -139,7 +139,7 @@ public class WiringTypeItemProvider extends AbstractAnyTypeItemProvider implemen
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/wiring_binding"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/wiring_binding")); //$NON-NLS-1$
 	}
 
 	/**
@@ -150,8 +150,8 @@ public class WiringTypeItemProvider extends AbstractAnyTypeItemProvider implemen
 	 */
 	public String getText(Object object) {
 		String label = ((WiringType) object).getProperty();
-		return label == null || label.length() == 0 ? getString("_UI_WiringType_type")
-				: getString("_UI_WiringType_type") + " (" + label + ")";
+		return label == null || label.length() == 0 ? getString("_UI_WiringType_type") //$NON-NLS-1$
+				: getString("_UI_WiringType_type") + " (" + label + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**

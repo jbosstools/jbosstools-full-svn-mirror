@@ -90,7 +90,7 @@ public final class OnFail extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final OnFail OK_LITERAL = new OnFail(OK, "OK", "OK");
+	public static final OnFail OK_LITERAL = new OnFail(OK, "OK", "OK"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>WARN</b></em>' literal object.
@@ -100,7 +100,7 @@ public final class OnFail extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final OnFail WARN_LITERAL = new OnFail(WARN, "WARN", "WARN");
+	public static final OnFail WARN_LITERAL = new OnFail(WARN, "WARN", "WARN"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>ERROR</b></em>' literal object.
@@ -110,7 +110,7 @@ public final class OnFail extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final OnFail ERROR_LITERAL = new OnFail(ERROR, "ERROR", "ERROR");
+	public static final OnFail ERROR_LITERAL = new OnFail(ERROR, "ERROR", "ERROR"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>FATAL</b></em>' literal object.
@@ -120,7 +120,7 @@ public final class OnFail extends AbstractEnumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final OnFail FATAL_LITERAL = new OnFail(FATAL, "FATAL", "FATAL");
+	public static final OnFail FATAL_LITERAL = new OnFail(FATAL, "FATAL", "FATAL"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * An array of all the '<em><b>On Fail</b></em>' enumerators.

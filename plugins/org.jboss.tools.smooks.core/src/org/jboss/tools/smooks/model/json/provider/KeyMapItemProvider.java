@@ -107,7 +107,7 @@ public class KeyMapItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/KeyMap"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/KeyMap")); //$NON-NLS-1$
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class KeyMapItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_KeyMap_type");
+		return getString("_UI_KeyMap_type"); //$NON-NLS-1$
 	}
 
 	/**

@@ -85,8 +85,8 @@ public class ParametersItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Parameters_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Parameters_type_feature", "_UI_Parameters_type"),
+				 getString("_UI_Parameters_type_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Parameters_type_feature", "_UI_Parameters_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.PARAMETERS__TYPE,
 				 true,
 				 false,
@@ -131,7 +131,7 @@ public class ParametersItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Parameters"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Parameters")); //$NON-NLS-1$
 	}
 
 	/**
@@ -144,8 +144,8 @@ public class ParametersItemProvider
 		ParameterType labelValue = ((Parameters)object).getType();
 		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Parameters_type") :
-			getString("_UI_Parameters_type") + " " + label;
+			getString("_UI_Parameters_type") : //$NON-NLS-1$
+			getString("_UI_Parameters_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

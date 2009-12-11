@@ -33,7 +33,7 @@ public interface CommonPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "common";
+	String eNAME = "common"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -41,7 +41,7 @@ public interface CommonPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.jboss.org/smookstools";
+	String eNS_URI = "http://www.jboss.org/smookstools"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -49,7 +49,7 @@ public interface CommonPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "common";
+	String eNS_PREFIX = "common"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

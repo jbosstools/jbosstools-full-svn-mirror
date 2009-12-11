@@ -86,8 +86,8 @@ public class JsonReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JsonReader_arrayElementName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_arrayElementName_feature", "_UI_JsonReader_type"),
+				 getString("_UI_JsonReader_arrayElementName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_arrayElementName_feature", "_UI_JsonReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.JSON_READER__ARRAY_ELEMENT_NAME,
 				 true,
 				 false,
@@ -108,8 +108,8 @@ public class JsonReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JsonReader_encoding_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_encoding_feature", "_UI_JsonReader_type"),
+				 getString("_UI_JsonReader_encoding_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_encoding_feature", "_UI_JsonReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.JSON_READER__ENCODING,
 				 true,
 				 false,
@@ -130,8 +130,8 @@ public class JsonReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JsonReader_illegalElementNameCharReplacement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_illegalElementNameCharReplacement_feature", "_UI_JsonReader_type"),
+				 getString("_UI_JsonReader_illegalElementNameCharReplacement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_illegalElementNameCharReplacement_feature", "_UI_JsonReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.JSON_READER__ILLEGAL_ELEMENT_NAME_CHAR_REPLACEMENT,
 				 true,
 				 false,
@@ -152,8 +152,8 @@ public class JsonReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JsonReader_keyPrefixOnNumeric_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_keyPrefixOnNumeric_feature", "_UI_JsonReader_type"),
+				 getString("_UI_JsonReader_keyPrefixOnNumeric_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_keyPrefixOnNumeric_feature", "_UI_JsonReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.JSON_READER__KEY_PREFIX_ON_NUMERIC,
 				 true,
 				 false,
@@ -174,8 +174,8 @@ public class JsonReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JsonReader_keyWhitspaceReplacement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_keyWhitspaceReplacement_feature", "_UI_JsonReader_type"),
+				 getString("_UI_JsonReader_keyWhitspaceReplacement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_keyWhitspaceReplacement_feature", "_UI_JsonReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.JSON_READER__KEY_WHITSPACE_REPLACEMENT,
 				 true,
 				 false,
@@ -196,8 +196,8 @@ public class JsonReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JsonReader_nullValueReplacement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_nullValueReplacement_feature", "_UI_JsonReader_type"),
+				 getString("_UI_JsonReader_nullValueReplacement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_nullValueReplacement_feature", "_UI_JsonReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.JSON_READER__NULL_VALUE_REPLACEMENT,
 				 true,
 				 false,
@@ -218,8 +218,8 @@ public class JsonReaderItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_JsonReader_rootName_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_rootName_feature", "_UI_JsonReader_type"),
+				 getString("_UI_JsonReader_rootName_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_JsonReader_rootName_feature", "_UI_JsonReader_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JsonPackage.Literals.JSON_READER__ROOT_NAME,
 				 true,
 				 false,
@@ -267,7 +267,7 @@ public class JsonReaderItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/JsonReader"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/JsonReader")); //$NON-NLS-1$
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class JsonReaderItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return "JSON";
+		return "JSON"; //$NON-NLS-1$
 //		String label = ((JsonReader)object).getArrayElementName();
 //		return label == null || label.length() == 0 ?
 //			getString("_UI_JsonReader_type") :

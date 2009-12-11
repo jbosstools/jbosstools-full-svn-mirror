@@ -499,19 +499,19 @@ public class UpdaterImpl extends ElementVisitorImpl implements Updater {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (beanId: ");
+		result.append(" (beanId: "); //$NON-NLS-1$
 		result.append(beanId);
-		result.append(", dao: ");
+		result.append(", dao: "); //$NON-NLS-1$
 		result.append(dao);
-		result.append(", name: ");
+		result.append(", name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", updateBefore: ");
-		if (updateBeforeESet) result.append(updateBefore); else result.append("<unset>");
-		result.append(", updatedBeanId: ");
+		result.append(", updateBefore: "); //$NON-NLS-1$
+		if (updateBeforeESet) result.append(updateBefore); else result.append("<unset>"); //$NON-NLS-1$
+		result.append(", updatedBeanId: "); //$NON-NLS-1$
 		result.append(updatedBeanId);
-		result.append(", updateOnElement: ");
+		result.append(", updateOnElement: "); //$NON-NLS-1$
 		result.append(updateOnElement);
-		result.append(", updateOnElementNS: ");
+		result.append(", updateOnElementNS: "); //$NON-NLS-1$
 		result.append(updateOnElementNS);
 		result.append(')');
 		return result.toString();

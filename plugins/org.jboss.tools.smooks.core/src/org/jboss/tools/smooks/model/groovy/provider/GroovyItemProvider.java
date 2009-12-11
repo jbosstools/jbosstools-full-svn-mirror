@@ -83,8 +83,8 @@ public class GroovyItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Groovy_imports_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_imports_feature", "_UI_Groovy_type"),
+				 getString("_UI_Groovy_imports_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_imports_feature", "_UI_Groovy_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 GroovyPackage.Literals.GROOVY__IMPORTS,
 				 true,
 				 false,
@@ -105,8 +105,8 @@ public class GroovyItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Groovy_executeBefore_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_executeBefore_feature", "_UI_Groovy_type"),
+				 getString("_UI_Groovy_executeBefore_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_executeBefore_feature", "_UI_Groovy_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 GroovyPackage.Literals.GROOVY__EXECUTE_BEFORE,
 				 true,
 				 false,
@@ -127,8 +127,8 @@ public class GroovyItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Groovy_executeOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_executeOnElement_feature", "_UI_Groovy_type"),
+				 getString("_UI_Groovy_executeOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_executeOnElement_feature", "_UI_Groovy_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT,
 				 true,
 				 false,
@@ -149,8 +149,8 @@ public class GroovyItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Groovy_executeOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_executeOnElementNS_feature", "_UI_Groovy_type"),
+				 getString("_UI_Groovy_executeOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Groovy_executeOnElementNS_feature", "_UI_Groovy_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -199,7 +199,7 @@ public class GroovyItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Groovy"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Groovy")); //$NON-NLS-1$
 	}
 
 	/**
@@ -212,8 +212,8 @@ public class GroovyItemProvider
 	public String getText(Object object) {
 		String label = ((Groovy)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Groovy_type") :
-			getString("_UI_Groovy_type") + " " + label;
+			getString("_UI_Groovy_type") : //$NON-NLS-1$
+			getString("_UI_Groovy_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

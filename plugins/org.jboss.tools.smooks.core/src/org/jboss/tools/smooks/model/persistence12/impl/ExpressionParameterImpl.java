@@ -309,13 +309,13 @@ public class ExpressionParameterImpl extends AbstractAnyTypeImpl implements Expr
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (value: ");
+		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
-		result.append(", execOnElement: ");
+		result.append(", execOnElement: "); //$NON-NLS-1$
 		result.append(execOnElement);
-		result.append(", execOnElementNS: ");
+		result.append(", execOnElementNS: "); //$NON-NLS-1$
 		result.append(execOnElementNS);
-		result.append(", name: ");
+		result.append(", name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');
 		return result.toString();

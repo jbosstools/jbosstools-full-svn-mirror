@@ -77,8 +77,8 @@ public class ElementVisitorItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ElementVisitor_targetProfile_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ElementVisitor_targetProfile_feature", "_UI_ElementVisitor_type"),
+				 getString("_UI_ElementVisitor_targetProfile_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_ElementVisitor_targetProfile_feature", "_UI_ElementVisitor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 SmooksPackage.Literals.ELEMENT_VISITOR__TARGET_PROFILE,
 				 true,
 				 false,
@@ -128,8 +128,8 @@ public class ElementVisitorItemProvider
 	public String getText(Object object) {
 		String label = ((ElementVisitor)object).getTargetProfile();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ElementVisitor_type") :
-			getString("_UI_ElementVisitor_type") + " " + label;
+			getString("_UI_ElementVisitor_type") : //$NON-NLS-1$
+			getString("_UI_ElementVisitor_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

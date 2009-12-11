@@ -37,7 +37,7 @@ public interface JsonPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "json";
+	String eNAME = "json"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -45,7 +45,7 @@ public interface JsonPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.milyn.org/xsd/smooks/json-1.1.xsd";
+	String eNS_URI = "http://www.milyn.org/xsd/smooks/json-1.1.xsd"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -53,7 +53,7 @@ public interface JsonPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "json";
+	String eNS_PREFIX = "json"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

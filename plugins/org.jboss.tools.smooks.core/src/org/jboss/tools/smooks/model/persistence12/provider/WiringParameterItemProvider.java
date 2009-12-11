@@ -82,8 +82,8 @@ public class WiringParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_WiringParameter_beanIdRef_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_WiringParameter_beanIdRef_feature", "_UI_WiringParameter_type"),
+				 getString("_UI_WiringParameter_beanIdRef_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_WiringParameter_beanIdRef_feature", "_UI_WiringParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.WIRING_PARAMETER__BEAN_ID_REF,
 				 true,
 				 false,
@@ -104,8 +104,8 @@ public class WiringParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_WiringParameter_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_WiringParameter_name_feature", "_UI_WiringParameter_type"),
+				 getString("_UI_WiringParameter_name_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_WiringParameter_name_feature", "_UI_WiringParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.WIRING_PARAMETER__NAME,
 				 true,
 				 false,
@@ -126,8 +126,8 @@ public class WiringParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_WiringParameter_wireOnElement_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_WiringParameter_wireOnElement_feature", "_UI_WiringParameter_type"),
+				 getString("_UI_WiringParameter_wireOnElement_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_WiringParameter_wireOnElement_feature", "_UI_WiringParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.WIRING_PARAMETER__WIRE_ON_ELEMENT,
 				 true,
 				 false,
@@ -148,8 +148,8 @@ public class WiringParameterItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_WiringParameter_wireOnElementNS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_WiringParameter_wireOnElementNS_feature", "_UI_WiringParameter_type"),
+				 getString("_UI_WiringParameter_wireOnElementNS_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_WiringParameter_wireOnElementNS_feature", "_UI_WiringParameter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Persistence12Package.Literals.WIRING_PARAMETER__WIRE_ON_ELEMENT_NS,
 				 true,
 				 false,
@@ -166,7 +166,7 @@ public class WiringParameterItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/WiringParameter"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/WiringParameter")); //$NON-NLS-1$
 	}
 
 	/**
@@ -178,8 +178,8 @@ public class WiringParameterItemProvider
 	public String getText(Object object) {
 		String label = ((WiringParameter)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_WiringParameter_type") :
-			getString("_UI_WiringParameter_type") + " " + label;
+			getString("_UI_WiringParameter_type") : //$NON-NLS-1$
+			getString("_UI_WiringParameter_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -78,8 +78,8 @@ public class BindToItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_BindTo_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BindTo_id_feature", "_UI_BindTo_type"),
+				 getString("_UI_BindTo_id_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_BindTo_id_feature", "_UI_BindTo_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 FreemarkerPackage.Literals.BIND_TO__ID,
 				 true,
 				 false,
@@ -97,7 +97,7 @@ public class BindToItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/BindTo"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/BindTo")); //$NON-NLS-1$
 	}
 
 	/**
@@ -110,8 +110,8 @@ public class BindToItemProvider
 	public String getText(Object object) {
 		String label = ((BindTo)object).getId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_BindTo_type") :
-			getString("_UI_BindTo_type") + " (" + label+")";
+			getString("_UI_BindTo_type") : //$NON-NLS-1$
+			getString("_UI_BindTo_type") + " (" + label+")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**

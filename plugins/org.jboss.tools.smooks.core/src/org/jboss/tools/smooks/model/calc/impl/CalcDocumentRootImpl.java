@@ -277,7 +277,7 @@ public class CalcDocumentRootImpl extends EObjectImpl implements CalcDocumentRoo
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (mixed: ");
+		result.append(" (mixed: "); //$NON-NLS-1$
 		result.append(mixed);
 		result.append(')');
 		return result.toString();

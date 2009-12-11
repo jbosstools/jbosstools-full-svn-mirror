@@ -77,8 +77,8 @@ public class BindingItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Binding_beanId_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Binding_beanId_feature", "_UI_Binding_type"),
+				 getString("_UI_Binding_beanId_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Binding_beanId_feature", "_UI_Binding_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.BINDING__BEAN_ID,
 				 true,
 				 false,
@@ -99,8 +99,8 @@ public class BindingItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Binding_class_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Binding_class_feature", "_UI_Binding_type"),
+				 getString("_UI_Binding_class_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Binding_class_feature", "_UI_Binding_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 Csv12Package.Literals.BINDING__CLASS,
 				 true,
 				 false,
@@ -117,7 +117,7 @@ public class BindingItemProvider
 	 * @generated
 	 */
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Binding"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Binding")); //$NON-NLS-1$
 	}
 
 	/**
@@ -129,8 +129,8 @@ public class BindingItemProvider
 	public String getText(Object object) {
 		String label = ((Binding)object).getBeanId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Binding_type") :
-			getString("_UI_Binding_type") + " " + label;
+			getString("_UI_Binding_type") : //$NON-NLS-1$
+			getString("_UI_Binding_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

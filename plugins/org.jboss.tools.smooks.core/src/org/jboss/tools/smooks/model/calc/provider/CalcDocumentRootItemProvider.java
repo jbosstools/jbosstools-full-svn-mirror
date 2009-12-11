@@ -104,7 +104,7 @@ public class CalcDocumentRootItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CalcDocumentRoot"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CalcDocumentRoot")); //$NON-NLS-1$
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class CalcDocumentRootItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_CalcDocumentRoot_type");
+		return getString("_UI_CalcDocumentRoot_type"); //$NON-NLS-1$
 	}
 
 	/**

@@ -75,8 +75,8 @@ public class SubComponentItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_SubComponent_required_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SubComponent_required_feature", "_UI_SubComponent_type"),
+				 getString("_UI_SubComponent_required_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_SubComponent_required_feature", "_UI_SubComponent_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 MEdiPackage.Literals.SUB_COMPONENT__REQUIRED,
 				 true,
 				 false,
@@ -94,7 +94,7 @@ public class SubComponentItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SubComponent"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SubComponent")); //$NON-NLS-1$
 	}
 
 	/**
@@ -107,8 +107,8 @@ public class SubComponentItemProvider
 	public String getText(Object object) {
 		String label = ((SubComponent)object).getXmltag();
 		return label == null || label.length() == 0 ?
-			getString("_UI_SubComponent_type") :
-			getString("_UI_SubComponent_type") + " " + label;
+			getString("_UI_SubComponent_type") : //$NON-NLS-1$
+			getString("_UI_SubComponent_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -84,8 +84,8 @@ public class MessageItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Message_correlationIdPattern_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Message_correlationIdPattern_feature", "_UI_Message_type"),
+				 getString("_UI_Message_correlationIdPattern_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Message_correlationIdPattern_feature", "_UI_Message_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.MESSAGE__CORRELATION_ID_PATTERN,
 				 true,
 				 false,
@@ -106,8 +106,8 @@ public class MessageItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Message_deliveryMode_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Message_deliveryMode_feature", "_UI_Message_type"),
+				 getString("_UI_Message_deliveryMode_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Message_deliveryMode_feature", "_UI_Message_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.MESSAGE__DELIVERY_MODE,
 				 true,
 				 false,
@@ -128,8 +128,8 @@ public class MessageItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Message_priority_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Message_priority_feature", "_UI_Message_type"),
+				 getString("_UI_Message_priority_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Message_priority_feature", "_UI_Message_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.MESSAGE__PRIORITY,
 				 true,
 				 false,
@@ -150,8 +150,8 @@ public class MessageItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Message_timeToLive_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Message_timeToLive_feature", "_UI_Message_type"),
+				 getString("_UI_Message_timeToLive_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Message_timeToLive_feature", "_UI_Message_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.MESSAGE__TIME_TO_LIVE,
 				 true,
 				 false,
@@ -172,8 +172,8 @@ public class MessageItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Message_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Message_type_feature", "_UI_Message_type"),
+				 getString("_UI_Message_type_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_Message_type_feature", "_UI_Message_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				 JmsroutingPackage.Literals.MESSAGE__TYPE,
 				 true,
 				 false,
@@ -191,7 +191,7 @@ public class MessageItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Message"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Message")); //$NON-NLS-1$
 	}
 
 	/**
@@ -204,8 +204,8 @@ public class MessageItemProvider
 	public String getText(Object object) {
 		String label = ((Message)object).getCorrelationIdPattern();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Message_type") :
-			getString("_UI_Message_type") + " " + label;
+			getString("_UI_Message_type") : //$NON-NLS-1$
+			getString("_UI_Message_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

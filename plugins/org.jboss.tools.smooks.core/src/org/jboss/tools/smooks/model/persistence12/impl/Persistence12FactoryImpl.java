@@ -32,7 +32,7 @@ public class Persistence12FactoryImpl extends EFactoryImpl implements Persistenc
 	 */
 	public static Persistence12Factory init() {
 		try {
-			Persistence12Factory thePersistence12Factory = (Persistence12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/persistence-1.2.xsd"); 
+			Persistence12Factory thePersistence12Factory = (Persistence12Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.milyn.org/xsd/smooks/persistence-1.2.xsd");  //$NON-NLS-1$
 			if (thePersistence12Factory != null) {
 				return thePersistence12Factory;
 			}
@@ -72,7 +72,7 @@ public class Persistence12FactoryImpl extends EFactoryImpl implements Persistenc
 			case Persistence12Package.VALUE_PARAMETER: return createValueParameter();
 			case Persistence12Package.WIRING_PARAMETER: return createWiringParameter();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Class_Not_Valid + eClass.getName() + Messages.Persistence12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Persistence12FactoryImpl extends EFactoryImpl implements Persistenc
 			case Persistence12Package.PARAMETER_TYPE_OBJECT:
 				return createParameterTypeObjectFromString(eDataType, initialValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.Persistence12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class Persistence12FactoryImpl extends EFactoryImpl implements Persistenc
 			case Persistence12Package.PARAMETER_TYPE_OBJECT:
 				return convertParameterTypeObjectToString(eDataType, instanceValue);
 			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Datatype_Not_Valid + eDataType.getName() + Messages.Persistence12FactoryImpl_Error_Not_Valid_Classifier);
 		}
 	}
 
@@ -233,7 +233,7 @@ public class Persistence12FactoryImpl extends EFactoryImpl implements Persistenc
 	 */
 	public OnNoResult createOnNoResultFromString(EDataType eDataType, String initialValue) {
 		OnNoResult result = OnNoResult.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Value + initialValue + Messages.Persistence12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$
 		return result;
 	}
 
@@ -253,7 +253,7 @@ public class Persistence12FactoryImpl extends EFactoryImpl implements Persistenc
 	 */
 	public ParameterType createParameterTypeFromString(EDataType eDataType, String initialValue) {
 		ParameterType result = ParameterType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		if (result == null) throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Value + initialValue + Messages.Persistence12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$
 		return result;
 	}
 

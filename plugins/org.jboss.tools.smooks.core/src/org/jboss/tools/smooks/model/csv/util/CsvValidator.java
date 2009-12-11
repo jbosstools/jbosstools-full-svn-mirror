@@ -42,7 +42,7 @@ public class CsvValidator extends EObjectValidator {
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
 	 */
-	public static final String DIAGNOSTIC_SOURCE = "csv";
+	public static final String DIAGNOSTIC_SOURCE = "csv"; //$NON-NLS-1$
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
