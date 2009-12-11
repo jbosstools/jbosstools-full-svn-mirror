@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Hibernate tools 3.3.0.M4 and 3.3.0.CR1 What's New</title>
+</head>
+<body>
+<h1>Hibernate tools 3.3.0.M4 and 3.3.0.CR1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../maven/maven-news-1.0.0.M3.html">Maven Tools &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Source Editing</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Properties editor for hibernate.properties</b></td>
+    <td valign="top">
+    <p>JBoss Tools Properties editor now can be extended to recognize particular files by name and provides content assist with help hoover for available properties.</p>
+
+    <p>For hibernate.properties files editor shows available properties in 'Add/Edit property' dialog.</p>
+	<img src="images/hibernate-props-ca1.png" />
+    <p>the same content assists works for source tab if you prefer use text editor to edit properties files.</p>
+	<img src="images/hibernate-props-ca2.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4916">Releated jira</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Code Generation</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>DDL generation dialog</b></td>
+    <td valign="top">
+
+    <p>In DDL generation dialog new option added to execute generated script in selected DB.</p>
+	<img src="images/ddl-gen-export-to-db.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4733">Releated jira</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Mapping Diagram</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Views improvements</b></td>
+    <td valign="top">
+
+    <p>'Outline' View for hibernate mapping diagram supports alphabet sorting. 'Sort' button was added to view's action bar.</p>
+	<img src="images/sortedoutline.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4715">Releated jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Dali Support</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>@Generated annotation</b></td>
+    <td valign="top">
+
+    <p>The JPA UI and validation has been extended to cover Hibernate @Generated annotation.</p>
+	<img src="images/generatedannotation.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4665">Releated jira</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  
+    <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>@Index annotation</b></td>
+    <td valign="top">
+
+    <p>The JPA UI and validation has been extended to cover Hibernate @Index annotation.</p>
+	<img src="images/indexannotation.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4666">Releated jira</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>@Index annotation</b></td>
+    <td valign="top">
+
+    <p>The JPA validation has been extended to cover Hibernate @ForeignKey annotation.</p>
+	<img src="images/foreignkeyannotation.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4664">Releated jira</a></small></p>
+    </td>
+  </tr>
+  
+  
+  
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>ConsoleConfiguration</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Use Eclipse's preferences</b></td>
+    <td valign="top">
+
+    <p>Console configuration life circle depends on Eclipse's launch configuration preferences.</p>
+	<img src="images/configuration_preferences.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5222">Releated jira</a>, <a href="https://jira.jboss.org/jira/browse/JBIDE-4899">one more</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+    <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Refactoring</b></td>
+    <td valign="top">
+
+    <p>Rename NamingStrategy and EntityResolver on refactoring changes.</p>
+	<img src="images/refactoring.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4780">Releated jira</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  
+  
+  
+  
+</table>
+
+</body>
+
+</html>
+
+
