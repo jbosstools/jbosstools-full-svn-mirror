@@ -358,7 +358,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		elReferenceListListener.addChangeListener(this);
 
 		// initialization of vpe update delay time
-		vpeUpdateDelayTime = 400;
+		vpeUpdateDelayTime = 0;
 
 		// pageContext.fireTaglibsChanged();
 
@@ -564,7 +564,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			} else {
 				uiJob.cancel();
 				uiJob.schedule(getVpeUpdateDelayTime());
-				setVpeUpdateDelayTime(400);
+				setVpeUpdateDelayTime(0);
 			}
 
 			return;
