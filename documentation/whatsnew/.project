@@ -5,7 +5,13 @@
 	<projects>
 	</projects>
 	<buildSpec>
+		<buildCommand>
+			<name>org.jboss.tools.jst.web.kb.kbbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.jboss.tools.jst.web.kb.kbnature</nature>
 	</natures>
 </projectDescription>
