@@ -36,7 +36,14 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-
+	<plugin
+         id="org.mozilla.xulrunner.cocoa.macosx"
+         os="macosx"
+         ws="cocoa"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+         
    <plugin
          id="org.mozilla.xulrunner.gtk.linux.x86"
          os="linux"
