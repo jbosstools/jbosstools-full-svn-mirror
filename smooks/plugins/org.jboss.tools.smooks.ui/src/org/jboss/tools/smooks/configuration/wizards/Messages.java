@@ -10,7 +10,7 @@ public class Messages extends NLS {
 	public static String SmooksConfigurationFileNewWizard_0;
 	public static String SmooksConfigurationFileNewWizard_ErrorDialogTitle;
 	public static String SmooksConfigurationFileNewWizard_PageName;
-	public static String SmooksConfigurationFileNewWizard_VersionPageName;
+/*	public static String SmooksConfigurationFileNewWizard_VersionPageName; */
 	public static String SmooksFileContainerSelectionPage_Page_Description;
 	public static String SmooksFileContainerSelectionPage_Page_Title;
 	public static String SmooksVersionSelectionPage_Label_Smooks_Version;

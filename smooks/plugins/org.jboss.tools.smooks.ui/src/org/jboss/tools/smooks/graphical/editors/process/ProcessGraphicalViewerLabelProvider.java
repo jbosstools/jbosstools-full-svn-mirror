@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.zest.core.viewers.IFigureProvider;
@@ -24,6 +25,7 @@ import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphNode;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
 import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager.TaskTypeDescriptor;
@@ -35,6 +37,12 @@ import org.jboss.tools.smooks.graphical.editors.TaskTypeManager.TaskTypeDescript
 public class ProcessGraphicalViewerLabelProvider extends LabelProvider implements IFigureProvider, ISelfStyleProvider {
 
 	private SmooksProcessGraphicalEditor processEditor;
+	
+
+	@Override
+	public void dispose() {
+		super.dispose();
+	}
 
 	public ProcessGraphicalViewerLabelProvider(SmooksProcessGraphicalEditor graph) {
 		this.processEditor = graph;
@@ -92,10 +100,42 @@ public class ProcessGraphicalViewerLabelProvider extends LabelProvider implement
 	public void selfStyleConnection(Object element, GraphConnection connection) {
 		connection.setLineColor(GraphicsConstants.BORDER_CORLOR);
 	}
+	
+	private String getProblemMessage(List<String> message){
+		String m = null;
+		if(message != null && !message.isEmpty()){
+			m = ""; //$NON-NLS-1$
+			for (Iterator<String> iterator = message.iterator(); iterator.hasNext();) {
+				String string = (String) iterator.next();
+				m = m + " - " + string +" \n"; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		}
+		return m;
+	}
 
 	public void selfStyleNode(Object element, GraphNode node) {
 		if (node instanceof CGraphNode) {
 			IFigure figure = ((CGraphNode) node).getFigure();
+			if(figure instanceof TaskNodeFigure && element instanceof TaskType){
+				int problem = ((TaskType)element).getProblemType();
+				List<String> problemMessages = ((TaskType)element).getProblemMessages();
+				
+				String message = getProblemMessage(problemMessages);
+				
+				ImageRegistry ir = SmooksConfigurationActivator.getDefault().getImageRegistry();
+				switch(problem){
+				case IFieldMarker.TYPE_NONE:
+					((TaskNodeFigure)figure).getLabel().setIcon(null);
+					break;
+				case IFieldMarker.TYPE_ERROR:
+					((TaskNodeFigure)figure).getLabel().setIcon(ir.get(GraphicsConstants.IMAGE_ERROR));
+					break;
+				case IFieldMarker.TYPE_WARINING:
+					((TaskNodeFigure)figure).getLabel().setIcon(ir.get(GraphicsConstants.IMAGE_WARNING));
+					break;
+				}
+				((TaskNodeFigure)figure).setProblemMessage(message);
+			}
 			Dimension size = figure.getLayoutManager().getPreferredSize(figure, -1, -1);
 			figure.setSize(size);
 		}

@@ -17,7 +17,7 @@ public class Messages extends NLS {
 	public static String JavaBeanCreationWizardPage_CatFindClassErrorMessage1;
 	public static String JavaBeanCreationWizardPage_CollectionButtonLabel;
 	public static String JavaBeanCreationWizardPage_CollectionClassLabel;
-	public static String JavaBeanCreationWizardPage_CollectionComponentClassEmptyErrorMessage;
+/*	public static String JavaBeanCreationWizardPage_CollectionComponentClassEmptyErrorMessage; */
 	public static String JavaBeanCreationWizardPage_Error_Abstract;
 	public static String JavaBeanCreationWizardPage_Error_Cannot_Be_Instantiated;
 	public static String JavaBeanCreationWizardPage_Error_Class_Needs_Public_Default_Const;

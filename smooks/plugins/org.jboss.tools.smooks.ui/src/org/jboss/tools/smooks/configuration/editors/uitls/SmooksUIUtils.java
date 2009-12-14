@@ -833,7 +833,7 @@ public class SmooksUIUtils {
 		layout.numColumns = 2;
 		layout.marginLeft = 0;
 		layout.marginRight = 0;
-		layout.horizontalSpacing = 0;
+		layout.horizontalSpacing = 1;
 		tcom.setLayout(layout);
 
 		FieldMarkerComposite notificationComposite = new FieldMarkerComposite(tcom, SWT.NONE);
@@ -854,7 +854,7 @@ public class SmooksUIUtils {
 
 		tcom.setLayoutData(gd);
 
-		toolkit.paintBordersFor(textContainer);
+		toolkit.paintBordersFor(tcom);
 		if (openFile) {
 			final IFilePathProcessor processor = filePathProcessor;
 			Button fileBrowseButton = toolkit.createButton(textContainer, Messages.SmooksUIUtils_BrowseButtonLabel,

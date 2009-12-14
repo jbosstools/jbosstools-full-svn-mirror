@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.csv12;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,32 +19,24 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ICellModifier;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
+import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
 import org.jboss.tools.smooks.configuration.editors.ModelMultiChildrenTabelPanelCreator;
 import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.graphical.wizard.freemarker.Messages;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
 
@@ -53,10 +44,6 @@ import org.jboss.tools.smooks.model.csv12.Csv12Package;
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
  */
 public class Csv12ReaderUICreator extends PropertyUICreator {
-
-
-	private List<FieldText> fieldsList = new ArrayList<FieldText>();
-
 
 	/*
 	 * (non-Javadoc)
@@ -75,9 +62,18 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 	}
 
 	@Override
+	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingDomain,
+			FormToolkit formToolkit, Composite detailsComposite, Object model, ISmooksModelProvider formEditor,
+			IEditorPart editorPart) {
+		createFiledsComposite(editingDomain, formToolkit, detailsComposite, model, formEditor);
+		return super.createExtendUIOnTop(editingDomain, formToolkit, detailsComposite, model, formEditor, editorPart);
+	}
+
+	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart editorPart) {
-		createFiledsComposite(editingdomain, toolkit, parent, model, formEditor);
+		// createFiledsComposite(editingdomain, toolkit, parent, model,
+		// formEditor);
 		createParametersGroup(parent, (CSV12Reader) model, toolkit, formEditor, editorPart);
 		return super.createExtendUIOnBottom(editingdomain, toolkit, parent, model, formEditor, editorPart);
 	}
@@ -87,13 +83,25 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 		if (feature.equals(Csv12Package.Literals.CSV12_READER__FIELDS)) {
 			return true;
 		}
+		if (feature.equals(Csv12Package.Literals.CSV12_READER__QUOTE)) {
+			return true;
+		}
+		if (feature.equals(Csv12Package.Literals.CSV12_READER__SEPARATOR)) {
+			return true;
+		}
+		if (feature.equals(Csv12Package.Literals.CSV12_READER__RECORD_ELEMENT_NAME)) {
+			return true;
+		}
+		if (feature.equals(Csv12Package.Literals.CSV12_READER__ROOT_ELEMENT_NAME)) {
+			return true;
+		}
 		return super.ignoreProperty(feature);
 	}
 
 	private void createParametersGroup(Composite parent, CSV12Reader reader, FormToolkit toolkit,
 			ISmooksModelProvider modelProvider, IEditorPart editorPart) {
 		Group group = new Group(parent, SWT.NONE);
-		group.setText(Messages.Csv12ReaderUICreator_0);
+		group.setText(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_0);
 		group.setBackground(ColorConstants.white);
 		FillLayout fl = new FillLayout();
 		group.setLayout(fl);
@@ -130,224 +138,113 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 
 	private void createFiledsComposite(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model, ISmooksModelProvider formEditor) {
-		fieldsList.clear();
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.heightHint = 150;
-		gd.horizontalSpan = 2;
-		Group fieldsComposite = new Group(parent, SWT.NONE);
-		fieldsComposite.setBackground(toolkit.getColors().getBackground());
-		fieldsComposite.setText(Messages.Csv12ReaderUICreator_1);
-		fieldsComposite.setLayoutData(gd);
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 2;
-		fieldsComposite.setLayout(gl);
+		// fieldsList.clear();
+		// GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		// gd.heightHint = 150;
+		// gd.horizontalSpan = 2;
+		// Group fieldsComposite = new Group(parent, SWT.NONE);
+		// fieldsComposite.setBackground(toolkit.getColors().getBackground());
+		// fieldsComposite.setText(Messages.Csv12ReaderUICreator_1);
+		// fieldsComposite.setLayoutData(gd);
+		// GridLayout gl = new GridLayout();
+		// gl.numColumns = 2;
+		// fieldsComposite.setLayout(gl);
 
 		IItemPropertySource propertySource = (IItemPropertySource) editingdomain.getAdapterFactory().adapt(model,
 				IItemPropertySource.class);
+
 		final IItemPropertyDescriptor descriptor = propertySource.getPropertyDescriptor(model,
+				Csv12Package.Literals.CSV12_READER__SEPARATOR);
+
+		final AttributeFieldEditPart separatorEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Separator_Char,
+				parent, editingdomain, toolkit, descriptor, model, false, false, false, null, 0, null,
+				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
+		Text separateText = (Text) separatorEditPart.getContentControl();
+		separateText.setTextLimit(1);
+
+		final IItemPropertyDescriptor quotedescriptor = propertySource.getPropertyDescriptor(model,
+				Csv12Package.Literals.CSV12_READER__QUOTE);
+
+		final AttributeFieldEditPart quoteEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Quote_Char, parent,
+				editingdomain, toolkit, quotedescriptor, model, false, false, false, null, 0, null,
+				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
+		Text quoteText = (Text) quoteEditPart.getContentControl();
+		quoteText.setTextLimit(1);
+
+		final IItemPropertyDescriptor fieldsDescriptor = propertySource.getPropertyDescriptor(model,
 				Csv12Package.Literals.CSV12_READER__FIELDS);
 
-		final Object readOnlyMoel = model;
+		String fields = (String) SmooksUIUtils.getEditValue(fieldsDescriptor, model);
 
-		String fields = (String) SmooksUIUtils.getEditValue(descriptor, model);
+		final AttributeFieldEditPart fieldsEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Fields, parent,
+				editingdomain, toolkit, fieldsDescriptor, model, false, false, false, null, 0, null,
+				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
+		Text text = (Text) fieldsEditPart.getContentControl();
+		text.addModifyListener(new ModifyListener() {
 
-		gd = new GridData(GridData.FILL_BOTH);
-		final TableViewer fieldsViewer = new TableViewer(fieldsComposite, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION);
-		fieldsViewer.getControl().setLayoutData(gd);
-		fieldsViewer.getTable().setLinesVisible(true);
-		fieldsViewer.setContentProvider(new FieldsContentProvider());
-		fieldsViewer.setLabelProvider(new FieldsLabelProvider());
-
-		CellEditor fieldCellEditor = new TextCellEditor(fieldsViewer.getTable(), SWT.BORDER);
-
-		fieldsViewer.getTable().setLinesVisible(true);
-
-		fieldsViewer.setCellEditors(new CellEditor[] { fieldCellEditor });
-
-		fieldsViewer.setColumnProperties(new String[] { "field" }); //$NON-NLS-1$
-
-		fieldsViewer.setCellModifier(new ICellModifier() {
-
-			public void modify(Object element, String property, Object value) {
-				Object el = null;
-				if (element instanceof Item) {
-					el = ((Item) element).getData();
-				}
-				if (el == null)
-					return;
-				if (el instanceof FieldText && value instanceof String) {
-					if (property.equals("field")) { //$NON-NLS-1$
-
-						if (value.toString().equals(((FieldText) el).getText())) {
-							return;
-						}
-						((FieldText) el).setText(value.toString());
-
-						fieldsViewer.refresh(el);
-						setFieldsValue(readOnlyMoel, descriptor);
-					}
-
-				}
-			}
-
-			public Object getValue(Object element, String property) {
-				if (element instanceof FieldText) {
-					if (property.equals("field")) { //$NON-NLS-1$
-						return ((FieldText) element).getText();
-					}
-				}
-
-				return null;
-			}
-
-			public boolean canModify(Object element, String property) {
-				if (element instanceof FieldText) {
-					if (property.equals("field")) { //$NON-NLS-1$
-						return true;
-					}
-				}
-				return false;
+			public void modifyText(ModifyEvent arg0) {
+				updateFieldsMessage(((Text) arg0.getSource()).getText(), fieldsEditPart);
 			}
 		});
+		updateFieldsMessage(fields, fieldsEditPart);
+
+		final IItemPropertyDescriptor recorddescriptor = propertySource.getPropertyDescriptor(model,
+				Csv12Package.Literals.CSV12_READER__RECORD_ELEMENT_NAME);
+
+		final AttributeFieldEditPart recordEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Record_Name, parent,
+				editingdomain, toolkit, recorddescriptor, model, false, false, false, null, 0, null,
+				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
+
+		final IItemPropertyDescriptor rootdescriptor = propertySource.getPropertyDescriptor(model,
+				Csv12Package.Literals.CSV12_READER__ROOT_ELEMENT_NAME);
+
+		final AttributeFieldEditPart rootEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Root_Name, parent,
+				editingdomain, toolkit, rootdescriptor, model, false, false, false, null, 0, null,
+				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
+
+	}
+
+	protected void updateFieldsMessage(String fields, AttributeFieldEditPart editPart) {
+		editPart.getFieldMarker().clean();
+		String error = null;
 		if (fields == null) {
-			fields = ""; //$NON-NLS-1$
-		}
-		fillFieldsList(fields);
-		fieldsViewer.setInput(fieldsList);
+			error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
+		} else {
+			fields = fields.trim();
+			if ("".equals(fields)) { //$NON-NLS-1$
+				error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
+			} else {
+				char[] chars = fields.toCharArray();
+				for (int i = 0; i < chars.length; i++) {
+					char c = chars[i];
+					if (c == ',') {
+						continue;
+					}
+					if (Character.isLetterOrDigit(c)) {
 
-		Composite buttonComposite = toolkit.createComposite(fieldsComposite);
-		gd = new GridData(GridData.FILL_VERTICAL);
-		gd.widthHint = 100;
-		buttonComposite.setLayoutData(gd);
-
-		GridLayout bgl = new GridLayout();
-		buttonComposite.setLayout(bgl);
-
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-
-		final Button addButton = new Button(buttonComposite, SWT.NONE);
-		addButton.setLayoutData(gd);
-		addButton.setText(Messages.Csv12ReaderUICreator_7);
-
-		final Button removeButton = new Button(buttonComposite, SWT.NONE);
-		removeButton.setLayoutData(gd);
-		removeButton.setText(Messages.Csv12ReaderUICreator_8);
-
-		addButton.addSelectionListener(new SelectionListener() {
-
-			public void widgetSelected(SelectionEvent e) {
-				// addButton.setEnabled(false);
-				try {
-					FieldText field = new FieldText(Messages.Csv12ReaderUICreator_9);
-					fieldsList.add(field);
-					fieldsViewer.refresh();
-					setFieldsValue(readOnlyMoel, descriptor);
-				} catch (Throwable t) {
-					t.printStackTrace();
-				} finally {
-					// addButton.setEnabled(true);
+					} else {
+						error = Messages.FreemarkerCSVCreationWizardPage_Error_Incorrect + c
+								+ Messages.FreemarkerCSVCreationWizardPage_Error_Incorrect2;
+						break;
+					}
 				}
-			}
 
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		removeButton.addSelectionListener(new SelectionListener() {
-
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection s = (IStructuredSelection) fieldsViewer.getSelection();
-				fieldsList.removeAll(s.toList());
-				fieldsViewer.refresh();
-				setFieldsValue(readOnlyMoel, descriptor);
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-
-			}
-		});
-	}
-
-	private void setFieldsValue(Object model, IItemPropertyDescriptor ps) {
-		String fieldsString = ""; //$NON-NLS-1$
-		for (int i = 0; i < fieldsList.size(); i++) {
-			FieldText fieldText = fieldsList.get(i);
-			fieldsString += fieldText.getText();
-			if (i < fieldsList.size() - 1) {
-				fieldsString += ","; //$NON-NLS-1$
-			}
-		}
-		ps.setPropertyValue(model, fieldsString);
-	}
-
-	private void fillFieldsList(String fieldsString) {
-		if (fieldsString == null || fieldsString.length() == 0)
-			return;
-		String input = fieldsString.toString();
-		input = input.trim();
-		if (input.indexOf(",") != -1) { //$NON-NLS-1$
-			String[] fields = input.split(","); //$NON-NLS-1$
-			if (fields != null && fields.length > 0) {
-				for (int i = 0; i < fields.length; i++) {
-					String field = fields[i];
-					if (field != null) {
-						field = field.trim();
-						fieldsList.add(new FieldText(field));
+				String[] fieldsArray = fields.split(","); //$NON-NLS-1$
+				if (fieldsArray.length == 0) {
+					error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
+				}
+				for (int i = 0; i < fieldsArray.length; i++) {
+					String f = fieldsArray[i];
+					if (f == null || "".equals(f.trim())) { //$NON-NLS-1$
+						error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
+						break;
 					}
 				}
 			}
-		}else{
-			fieldsList.add(new FieldText(input));
 		}
-	}
-
-	private class FieldsLabelProvider extends LabelProvider {
-
-		@Override
-		public String getText(Object element) {
-			if (element instanceof FieldText) {
-				return ((FieldText) element).getText();
-			}
-			return super.getText(element);
+		if (error != null) {
+			editPart.getFieldMarker().setMarkerType(IFieldMarker.TYPE_ERROR);
+			editPart.getFieldMarker().setMessage(error);
 		}
-
-	}
-
-	private class FieldsContentProvider implements IStructuredContentProvider {
-
-		public void dispose() {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-
-		}
-
-		public Object[] getElements(Object inputElement) {
-			if (inputElement instanceof List<?>) {
-				return ((List<?>) inputElement).toArray();
-			}
-			return new Object[] {};
-		}
-	}
-
-	private class FieldText {
-		private String text = null;
-
-		public FieldText(String t) {
-			setText(t);
-		}
-
-		public String getText() {
-			return text;
-		}
-
-		public void setText(String text) {
-			this.text = text;
-		}
-
 	}
 }

@@ -365,13 +365,13 @@ public class SmooksRunTab extends AbstractLaunchConfigurationTab {
 
 		IStatus status= ResourcesPlugin.getWorkspace().validatePath(IPath.SEPARATOR + projectName, IResource.PROJECT);
 		if (!status.isOK() || !Path.ROOT.isValidSegment(projectName)) {
-			setErrorMessage(Messages.SmooksRunTab_Error_Invalid_Project_Name + projectName + "'."); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+			setErrorMessage(Messages.SmooksRunTab_Error_Invalid_Project_Name + projectName + "'."); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 			return;
 		}
 
 		IProject project= getWorkspaceRoot().getProject(projectName);
 		if (!project.exists()) {
-			setErrorMessage(Messages.SmooksRunTab_Error_Unknown_Project_Name + projectName + "'."); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+			setErrorMessage(Messages.SmooksRunTab_Error_Unknown_Project_Name + projectName + "'."); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 			return;
 		}
 

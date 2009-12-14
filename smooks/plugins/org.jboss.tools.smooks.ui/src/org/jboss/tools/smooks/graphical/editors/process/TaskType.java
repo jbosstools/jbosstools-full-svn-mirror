@@ -31,6 +31,22 @@ import java.util.List;
  */
 public interface TaskType {
 	
+	int getProblemType();
+	
+	/**
+	 * 
+	 * @param type 
+	 */
+	void setProblemType(int type);
+	
+	List<String> getProblemMessages();
+	
+	void cleanProblemMessages();
+	
+	void removeProblemMessage(String message);
+	
+	void addProblemMessage(String message);
+	
 	void setPropertyChangeSupport(PropertyChangeSupport support);
 	
 	Object getParent();

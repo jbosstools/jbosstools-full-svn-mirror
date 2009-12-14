@@ -53,7 +53,7 @@ public class CSVInputDataWizard extends Wizard implements IStructuredDataSelecti
 //		}
 		
 		if (pathPage == null) {
-			pathPage = new CSVDataPathWizardPage(Messages.CSVInputDataWizard_WizardPageText, new String[] {"csv"},configPage); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+			pathPage = new CSVDataPathWizardPage(Messages.CSVInputDataWizard_WizardPageText, new String[] {"csv"},configPage); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 			if(folder != null){
 				pathPage.setInitSelections(new Object[]{folder});
 			}

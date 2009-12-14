@@ -81,7 +81,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 			
 			for(RuntimeDependency dependency : dependencies) {
 				if(!dependency.isOnProjectClasspath(projectClassLoader)) {
-					displayError(smooksConfigName, Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact + dependency.getGroupId() + ":" + dependency.getArtifactId() + Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact2); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
+					displayError(smooksConfigName, Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact + dependency.getGroupId() + ":" + dependency.getArtifactId() + Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact2); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 					return;
 				}
 			}
@@ -109,7 +109,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		display.syncExec(new Runnable() {
 		    public void run(){
 				Shell shell = display.getActiveShell();
-				ErrorDialog.openError(shell, Messages.SmooksLaunchConfigurationDelegate_Error_Title, Messages.SmooksLaunchConfigurationDelegate_Error_launching + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, errorMessage, new Exception())); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
+				ErrorDialog.openError(shell, Messages.SmooksLaunchConfigurationDelegate_Error_Title, Messages.SmooksLaunchConfigurationDelegate_Error_launching + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, errorMessage, new Exception())); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		    }
 		});
 	}

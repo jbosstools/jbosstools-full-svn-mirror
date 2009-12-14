@@ -44,6 +44,8 @@ import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
  * 
  */
 public class TaskNodeFigure extends Figure {
+	
+	private Label problemTooltip;
 
 	private IFigure mainFigure;
 
@@ -70,8 +72,22 @@ public class TaskNodeFigure extends Figure {
 		this.image = image;
 		this.labelText = labelText;
 		this.processGraphicalViewerEditor = graph;
+		this.problemTooltip = new Label();
 		initFigure();
 		hookTaskNodeFigure();
+	}
+	
+	public void setProblemMessage(String message){
+		if(message == null){
+			this.setToolTip(null);
+		}else{
+			this.problemTooltip.setText(message);
+			this.setToolTip(problemTooltip);
+		}
+	}
+
+	public Label getLabel() {
+		return label;
 	}
 
 	private void hookTaskNodeFigure() {
