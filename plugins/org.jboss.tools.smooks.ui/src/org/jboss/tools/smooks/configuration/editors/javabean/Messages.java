@@ -4,10 +4,10 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.configuration.editors.javabean.messages"; //$NON-NLS-1$
-	public static String BindingsPropertyUICreator_CantGetClassErrorMessage;
+/*	public static String BindingsPropertyUICreator_CantGetClassErrorMessage;
 	public static String BindingsPropertyUICreator_ClassVCantBeEmptyErrorMessage;
 	public static String BindingsPropertyUICreator_CreateOnElementgroupname;
-	public static String BindingsPropertyUICreator_ErrorDialogTitle;
+	public static String BindingsPropertyUICreator_ErrorDialogTitle; */
 	public static String JavaBeanSelectionWizardPage_ArrayCheckBoxLabel;
 	public static String JavaBeanSelectionWizardPage_BeanClassEmptyErrorMessage;
 	public static String JavaBeanSelectionWizardPage_BeanClassLabel;
@@ -19,11 +19,11 @@ public class Messages extends NLS {
 	public static String JavaBeanSelectionWizardPage_CollectionLabel;
 	public static String JavaBeanSelectionWizardPage_WizardDes;
 	public static String JavaBeanSelectionWizardPage_WizardTitle;
-	public static String JavabeanExpressionUICreator_ExecuteOngroupname;
-	public static String JavabeanExpressionUICreator_ExpressionLabel;
+/*	public static String JavabeanExpressionUICreator_ExecuteOngroupname;
+	public static String JavabeanExpressionUICreator_ExpressionLabel; */
 	public static String JavabeanStrucutredDataWizard_WizardTitle;
-	public static String JavabeanValueUICreator_DatagroupName;
-	public static String JavabeanWiringUICreator_WiringOnElementGroupName;
+/*	public static String JavabeanValueUICreator_DatagroupName;
+	public static String JavabeanWiringUICreator_WiringOnElementGroupName; */
 	public static String JavaMethodsSelectionDialog_ErrorDialogTitle;
 	public static String JavaMethodsSelectionDialog_ErrorMessage;
 	public static String JavaMethodsSelectionDialog_MethodNameColumnText;

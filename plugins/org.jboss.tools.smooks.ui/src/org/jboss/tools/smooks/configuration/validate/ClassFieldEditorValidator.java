@@ -124,7 +124,7 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 						}
 						String message = null;
 						if (clazz1 == null) {
-							message = Messages.ClassFieldEditorValidator_Warning_Cannot_Find_Class + classString + "\""; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
+							message = Messages.ClassFieldEditorValidator_Warning_Cannot_Find_Class + classString + "\""; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 						}else{
 							if(Modifier.isAbstract(clazz1.getModifiers())){
 								message = Messages.ClassFieldEditorValidator_Warning_Abstract_Class;

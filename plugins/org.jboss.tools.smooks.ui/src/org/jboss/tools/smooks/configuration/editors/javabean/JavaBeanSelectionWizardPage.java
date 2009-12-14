@@ -401,7 +401,7 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 			} catch (JavaModelException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				error = Messages.JavaBeanSelectionWizardPage_CantFindClass1 + beanClass + "\""; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+				error = Messages.JavaBeanSelectionWizardPage_CantFindClass1 + beanClass + "\""; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 			}
 		}
 

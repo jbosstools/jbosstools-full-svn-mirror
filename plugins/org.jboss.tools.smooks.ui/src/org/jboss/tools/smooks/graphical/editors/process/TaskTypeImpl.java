@@ -10,6 +10,8 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
+
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
  * <em><b>Task Type</b></em>'. <!-- end-user-doc -->
@@ -39,6 +41,40 @@ public class TaskTypeImpl implements TaskType {
 	private Object parent;
 
 	private List<Object> smooksModel = null;
+
+	private int problemType = IFieldMarker.TYPE_NONE;
+
+	private List<String> problemMessages = null;
+
+	public List<String> getProblemMessages() {
+		if (problemMessages == null) {
+			problemMessages = new ArrayList<String>();
+		}
+		return problemMessages;
+	}
+
+	public void addProblemMessage(String message) {
+		getProblemMessages().add(message);
+	}
+
+	public void removeProblemMessage(String message) {
+		getProblemMessages().remove(message);
+	}
+
+	public void cleanProblemMessages() {
+		getProblemMessages().clear();
+	}
+
+	public int getProblemType() {
+		return problemType;
+	}
+
+	public void setProblemType(int problemType) {
+		if (this.problemType == IFieldMarker.TYPE_ERROR && problemType == IFieldMarker.TYPE_WARINING) {
+			return;
+		}
+		this.problemType = problemType;
+	}
 
 	/**
 	 * @return the propertyChangeSupport

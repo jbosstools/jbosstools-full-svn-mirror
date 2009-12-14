@@ -71,7 +71,10 @@ import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
+import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.SmooksReaderFormPage;
+import org.jboss.tools.smooks.configuration.editors.input.InputType;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
@@ -89,6 +92,8 @@ import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
 import org.jboss.tools.smooks.graphical.editors.process.TaskNodeFigure;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
@@ -524,7 +529,6 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		// TODO Auto-generated method stub
 		super.createPartControl(parent);
 		updateHeaderFormMessage();
 	}
@@ -629,6 +633,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		createTaskDetailsSection(toolkit, sashForm);
 
 		sashForm.setWeights(new int[] { 3, 7 });
+
+		validateEnd(null);
 	}
 
 	private void handleCommandStack(org.eclipse.emf.common.command.CommandStack commandStack) {
@@ -647,6 +653,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 							for (Iterator<?> iterator = activeModel.iterator(); iterator.hasNext();) {
 								Object object = (Object) iterator.next();
 								if (object instanceof TaskType || object instanceof ProcessType) {
+									validateEnd(null);
 									if (getProcessGraphViewer() != null) {
 										getProcessGraphViewer().refresh();
 										getProcessGraphViewer().applyLayout();
@@ -667,6 +674,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 											Object object = (Object) iterator2.next();
 											object = AdapterFactoryEditingDomain.unwrap(object);
 											if (object instanceof TaskType || object instanceof ProcessType) {
+												validateEnd(null);
 												showTaskControl(null);
 												break;
 											}
@@ -679,6 +687,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 											Object object = (Object) iterator2.next();
 											object = AdapterFactoryEditingDomain.unwrap(object);
 											if (object instanceof TaskType) {
+												validateEnd(null);
 												showTaskControl((TaskType) object);
 												break;
 											}
@@ -693,6 +702,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 										object = AdapterFactoryEditingDomain.unwrap(object);
 										if (object instanceof TaskType || object instanceof ProcessType) {
 											if (getProcessGraphViewer() != null) {
+												validateEnd(null);
 												showTaskControl(null);
 												break;
 											}
@@ -705,6 +715,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 										Object object = (Object) iterator2.next();
 										object = AdapterFactoryEditingDomain.unwrap(object);
 										if (object instanceof TaskType) {
+											validateEnd(null);
 											showTaskControl((TaskType) object);
 											break;
 										}
@@ -741,14 +752,14 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		this.smooksModelProvider = smooksModelProvider;
 	}
 
-	public EObject getSmooksResourceList() {
+	public SmooksResourceListType getSmooksResourceList() {
 		if (smooksModelProvider != null) {
 			EObject m = null;
 			EObject smooksModel = smooksModelProvider.getSmooksModel();
 			if (smooksModel instanceof DocumentRoot) {
 				m = ((DocumentRoot) smooksModel).getSmooksResourceList();
 			}
-			return m;
+			return (SmooksResourceListType) m;
 		}
 		return null;
 	}
@@ -1134,7 +1145,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				((ISmooksModelValidateListener) object).validateEnd(diagnosticResult);
 			}
 		}
-
+		ProcessType process = this.getProcess();
+		validateProcess(process);
 	}
 
 	public void validateStart() {
@@ -1145,7 +1157,98 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				((ISmooksModelValidateListener) object).validateStart();
 			}
 		}
+	}
 
+	protected void validateProcess(ProcessType process) {
+		if (process != null) {
+			validateTasks(process.getTask());
+			GraphViewer viewer = this.getProcessGraphViewer();
+			if (viewer != null)
+				viewer.refresh();
+		}
+	}
+
+	protected void validateTasks(List<TaskType> tasks) {
+		if (tasks == null)
+			return;
+		for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
+			TaskType taskType = (TaskType) iterator.next();
+			validateTask(taskType);
+			validateTasks(taskType.getTask());
+		}
+	}
+
+	protected void validateTask(TaskType task) {
+		if (task == null)
+			return;
+		task.setProblemType(IFieldMarker.TYPE_NONE);
+		task.cleanProblemMessages();
+		String id = task.getId();
+		if (TaskTypeManager.TASK_ID_INPUT.equals(id)) {
+			// check the input data
+			List<InputType> inputLists = SmooksUIUtils.getInputTypeList(getSmooksResourceListType());
+			if (inputLists == null || inputLists.isEmpty()) {
+				task.setProblemType(IFieldMarker.TYPE_WARINING);
+				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_Empty_Input_File);
+			} else {
+				boolean noactived = true;
+				for (Iterator<?> iterator = inputLists.iterator(); iterator.hasNext();) {
+					InputType inputType = (InputType) iterator.next();
+					if (inputType.isActived()) {
+						noactived = false;
+						break;
+					}
+				}
+				if (noactived) {
+					task.setProblemType(IFieldMarker.TYPE_WARINING);
+					task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_No_Input_File_Active);
+				} else {
+					List<Object> inputs = SelectorCreationDialog.generateInputData(getSmooksResourceListType());
+					if (inputs == null || inputs.size() == 0) {
+						task.setProblemType(IFieldMarker.TYPE_ERROR);
+						task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_No_Input_Task_Found);
+					}
+				}
+			}
+		}
+		if (TaskTypeManager.TASK_ID_JAVA_MAPPING.equals(id)) {
+			List<Object> inputs = SelectorCreationDialog.generateInputData(getSmooksResourceListType());
+			if (inputs == null || inputs.size() == 0) {
+				task.setProblemType(IFieldMarker.TYPE_WARINING);
+				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_No_Input_Specified);
+			}
+			SmooksResourceListType sr = getSmooksResourceListType();
+			List<AbstractResourceConfig> rcs = sr.getAbstractResourceConfig();
+			boolean correct = false;
+			for (Iterator<?> iterator = rcs.iterator(); iterator.hasNext();) {
+				AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+				if (abstractResourceConfig instanceof BeanType) {
+					correct = true;
+					break;
+				}
+			}
+			if (!correct) {
+				task.setProblemType(IFieldMarker.TYPE_ERROR);
+				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_Java_Mapping_Not_Found);
+			}
+		}
+
+		if (TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE.equals(id)) {
+			SmooksResourceListType sr = getSmooksResourceListType();
+			List<AbstractResourceConfig> rcs = sr.getAbstractResourceConfig();
+			boolean correct = false;
+			for (Iterator<?> iterator = rcs.iterator(); iterator.hasNext();) {
+				AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+				if (abstractResourceConfig instanceof BeanType) {
+					correct = true;
+					break;
+				}
+			}
+			if (!correct) {
+				task.setProblemType(IFieldMarker.TYPE_WARINING);
+				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_4);
+			}
+		}
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -1168,6 +1271,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		if (ProcessType.PRO_REMOVE_CHILD.equals(name)) {
 			this.showTaskControl(null);
 		}
+		validateEnd(null);
 	}
 
 	public void initFailed(int messageType, String message) {

@@ -87,7 +87,7 @@ public class JavaPropertiesSelectionDialog implements IFieldDialog {
 		} catch (ClassNotFoundException e) {
 			errorMessage = "'" + className + "' can't be found."; //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		MessageDialog.openInformation(shell, Messages.JavaPropertiesSelectionDialog_CantOpenDialogTitle, Messages.JavaPropertiesSelectionDialog_CantOpenDialogErrorMessage1 + className + "'.\n" //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+		MessageDialog.openInformation(shell, Messages.JavaPropertiesSelectionDialog_CantOpenDialogTitle, Messages.JavaPropertiesSelectionDialog_CantOpenDialogErrorMessage1 + className + "'.\n" //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 				+ errorMessage);
 		return null;
 	}

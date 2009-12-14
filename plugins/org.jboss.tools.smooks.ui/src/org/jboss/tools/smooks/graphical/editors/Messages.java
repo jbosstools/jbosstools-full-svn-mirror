@@ -17,6 +17,7 @@ public class Messages extends NLS {
 	public static String SmooksJavaMappingGraphicalEditor_NodeMustLinkWithJavaBean;
 	public static String SmooksJavaMappingGraphicalEditor_NodeMustLinkWithSource;
 	public static String SmooksJavaMappingGraphicalEditor_NullLabel;
+	public static String SmooksProcessGraphicalEditor_4;
 	public static String SmooksProcessGraphicalEditor_AddTaskActionText;
 	public static String SmooksProcessGraphicalEditor_FormText;
 	public static String SmooksProcessGraphicalEditor_TaskConfigurationSectionTitle;
@@ -28,6 +29,11 @@ public class Messages extends NLS {
 	public static String TaskTypeManager_InputTaskLabel;
 	public static String TaskTypeManager_JavaMappingTaskLabel;
 	public static String XSLLabelProvider_Text_Null_Value;
+	public static String SmooksProcessGraphicalEditor_Empty_Input_File;
+	public static String SmooksProcessGraphicalEditor_Java_Mapping_Not_Found;
+	public static String SmooksProcessGraphicalEditor_No_Input_File_Active;
+	public static String SmooksProcessGraphicalEditor_No_Input_Specified;
+	public static String SmooksProcessGraphicalEditor_No_Input_Task_Found;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

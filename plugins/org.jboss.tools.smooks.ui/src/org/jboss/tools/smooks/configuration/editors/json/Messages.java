@@ -8,7 +8,7 @@ public class Messages extends NLS {
 	public static String JsonDataPathWizardPage_WIzardTitle;
 	public static String JsonDataWizard_PageText;
 	public static String JsonDataWizard_WizardTitle;
-	public static String JsonReaderUICreator_KeysMapLabel;
+/*	public static String JsonReaderUICreator_KeysMapLabel; */
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

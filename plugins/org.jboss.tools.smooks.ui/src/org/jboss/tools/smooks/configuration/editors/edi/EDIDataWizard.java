@@ -46,7 +46,7 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 
 	@Override
 	public void addPages() {
-		ediFilePage = new EDIDataPathWizardPage(Messages.EDIDataWizard_0, new String[] { "edi" }); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+		ediFilePage = new EDIDataPathWizardPage(Messages.EDIDataWizard_0, new String[] { "edi" }); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		this.addPage(ediFilePage);
 		if (folder != null) {
 			ediFilePage.setInitSelections(new Object[] { folder });
