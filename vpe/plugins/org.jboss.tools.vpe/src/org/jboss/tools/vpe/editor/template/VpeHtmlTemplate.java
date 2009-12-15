@@ -554,16 +554,23 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext,
 			Node sourceNode, nsIDOMNode domNode) {
 		if(sourceNode != null && sourceNode instanceof Element) {
+			Element sourceElement = (Element) sourceNode;
+		    String templateName = VpeTemplateManager.getInstance()
+		    		.getTemplateName(pageContext, sourceElement);
+
 		    Attr file = null;
-		    if ("jsp:directive.include".equals(sourceNode.getNodeName())) { //$NON-NLS-1$
-			    file = ((Element)sourceNode).getAttributeNode("file"); //$NON-NLS-1$
-		    } else if ("jsp:include".equals(sourceNode.getNodeName())) { //$NON-NLS-1$
-			    file = ((Element)sourceNode).getAttributeNode("page"); //$NON-NLS-1$
-		    } else if(HTML.TAG_A.equalsIgnoreCase(sourceNode.getNodeName())) {
-		    	file = ((Element)sourceNode).getAttributeNode(HTML.ATTR_HREF);
+		    if ("jsp:directive.include".equals(templateName)) { //$NON-NLS-1$
+			    file = sourceElement.getAttributeNode("file"); //$NON-NLS-1$
+		    } else if ("jsp:include".equals(templateName)) { //$NON-NLS-1$
+			    file = sourceElement.getAttributeNode("page"); //$NON-NLS-1$
+		    } else if (HTML.TAG_A.equalsIgnoreCase(templateName)) {
+		    	file = sourceElement.getAttributeNode(HTML.ATTR_HREF);
+		    } else if ("h:outputStylesheet".equals(templateName)) { //$NON-NLS-1$
+		    	file = sourceElement.getAttributeNode("name"); //$NON-NLS-1$
 		    }
-		    if(file!=null) {
-		    	return new Region(NodesManagingUtil.getStartOffsetNode(file),0);
+
+		    if(file != null) {
+		    	return new Region(NodesManagingUtil.getStartOffsetNode(file), 0);
 		    }
 		}
 		return null;
