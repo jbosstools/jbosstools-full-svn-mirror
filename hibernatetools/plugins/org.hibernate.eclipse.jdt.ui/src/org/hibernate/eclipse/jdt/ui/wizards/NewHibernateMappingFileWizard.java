@@ -427,5 +427,10 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 					HibernateConsolePlugin.getDefault().log(e);
 				}
 		}
+	}	
+	
+	@Override
+	public boolean canFinish() {
+		return !page0.getSelection().isEmpty() || cPage.isPageComplete();
 	}
 }
