@@ -1279,6 +1279,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	public void validateEnd(List<Diagnostic> diagnosticResult) {
+		if(diagnosticResult == null) return;
 		Object model = getCurrentReaderModel();
 		if (model == null)
 			return;
