@@ -1182,7 +1182,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 					});
 				} else {
-//					graphAnimation.start(figureList);
+					// graphAnimation.start(figureList);
 				}
 			}
 			Iterator<IMoveableModel> it1 = map.keySet().iterator();
@@ -1439,6 +1439,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	}
 
 	public void validateEnd(List<Diagnostic> diagnosticResult) {
+		if (diagnosticResult == null)
+			return;
 		IEditorSite editorSite = this.getEditorSite();
 		if (editorSite != null) {
 			if (root == null)
