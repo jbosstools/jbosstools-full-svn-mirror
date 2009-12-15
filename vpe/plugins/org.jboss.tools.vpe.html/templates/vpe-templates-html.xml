@@ -297,8 +297,8 @@
 				<vpe:height height-attr="style.height" />
 			</vpe:resize>
 			<vpe:dnd>
-				<vpe:drag start-enable="yes" />
-				<vpe:drop container="no"></vpe:drop>
+				<vpe:drag start-enable="no" />
+				<vpe:drop container="yes"></vpe:drop>
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
