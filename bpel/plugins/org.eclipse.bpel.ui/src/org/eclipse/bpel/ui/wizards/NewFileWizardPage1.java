@@ -15,6 +15,8 @@ package org.eclipse.bpel.ui.wizards;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.bpel.model.util.BPELConstants;
@@ -72,6 +74,9 @@ public class NewFileWizardPage1 extends WizardPage
     Button processAbstractOptionButton;
     
     private Map<String,Object> mArgs = new HashMap<String,Object> (3);
+    
+    private String[] lastNS;
+    private List<String> temNS;
     
      
     
@@ -134,10 +139,7 @@ public class NewFileWizardPage1 extends WizardPage
      * @param parent the parent composite
      */
     private final void createProjectGroup(Composite parent) 
-    {                
-        // project specification group
-    	IDialogSettings settings = getWizard().getDialogSettings();
-    	
+    {                	
         Group projectGroup = new Group(parent, SWT.NONE);
         projectGroup.setText(Messages.NewFileWizardPage1_4);
         projectGroup.setLayout(new GridLayout());
@@ -175,15 +177,20 @@ public class NewFileWizardPage1 extends WizardPage
         data.widthHint = SIZING_TEXT_FIELD_WIDTH;
         processNamespaceField.setLayoutData(data);
         processNamespaceField.setFont(parent.getFont());
-        String lastNamespace = settings.get( LAST_NAMESPACE_KEY );
+        	
+        // add the namespace values
+        processNamespaceField.setItems( getProcessNameSpaces() );
+        processNamespaceField.addListener(SWT.Modify, validateListner);
+        
+        String lastNamespace = null;
+        if(lastNS != null){
+        	if(lastNS.length > 0){
+        		lastNamespace = lastNS[0];
+        	}
+        }
         if (lastNamespace != null) {
         	processNamespaceField.setText( lastNamespace );
         }
-        	
-        // add the namespace values
-        processNamespaceField.setItems( BPELUIPlugin.INSTANCE.getTemplates().getNamespaceNames() );
-        processNamespaceField.addListener(SWT.Modify, validateListner);
-        
 
         // new project type
         Label typeLabel = new Label(fields, SWT.NONE);
@@ -241,9 +248,27 @@ public class NewFileWizardPage1 extends WizardPage
     }
     
 
-   
+    private String[] getProcessNameSpaces() {
+    	// project specification group
+    	IDialogSettings settings = getWizard().getDialogSettings();
+    	String ns = settings.get( LAST_NAMESPACE_KEY );
+    	ArrayList<String> list = new ArrayList<String>();
+    	if(ns != null && !"".equals(ns)) {
+    	    lastNS = ns.split(";");
+    	    for(String str : lastNS){
+    		    list.add(str);
+    	    }
+    	}
+    	temNS = new ArrayList<String>();
+    	for(String str : BPELUIPlugin.INSTANCE.getTemplates().getNamespaceNames()){
+    		temNS.add(str);
+    	}
+    	list.addAll(temNS);
+    	String[] a = new String[(lastNS == null ? 0 : lastNS.length) + temNS.size()];
+		return list.toArray(a);
+	}
 
-    /**
+	/**
      * Returns the current project name as entered by the user, or its anticipated
      * initial value.
      *
@@ -344,7 +369,7 @@ public class NewFileWizardPage1 extends WizardPage
         		BPELConstants.NAMESPACE_ABSTRACT_2007: BPELConstants.NAMESPACE;
         
         // settings for next time the dialog is used.
-        settings.put( LAST_NAMESPACE_KEY , namespace) ;
+        settings.put( LAST_NAMESPACE_KEY , addNSToDefault(namespace)) ;
                 
         // Template arguments
         mArgs.put("processName", processName ); //$NON-NLS-1$
@@ -356,8 +381,39 @@ public class NewFileWizardPage1 extends WizardPage
         return true;
     }
 
-    
     /**
+     * add the last namespace to the default namespace array
+     * 
+     * @param namespace
+     * @return
+     */
+    private String addNSToDefault(String namespace) {
+    	StringBuffer ns = new StringBuffer();
+    	if(!"".equals(namespace)&& !temNS.contains(namespace)){
+    		ns.append(namespace).append(";");;
+    		if(lastNS != null){
+    		    for(int i = 0 ; i<lastNS.length ; i++){
+    			    if(namespace.equals(lastNS[i])){
+    				    continue;
+    			    } else {
+    			    	ns.append(lastNS[i]).append(";");
+    			    	if(i > 8){
+    			    		break;
+    			    	}
+    			    } 
+    		    }
+    		}
+    	} else {
+    		if(lastNS != null){
+    		    for(String str : lastNS){
+				    ns.append(str).append(";");
+    		    }
+    		}
+    	}    	
+		return ns.toString();
+	}
+
+	/**
      * @return true if Option for abstract process is checked
      */
     private boolean isAbstractOptionButtonChecked() {
