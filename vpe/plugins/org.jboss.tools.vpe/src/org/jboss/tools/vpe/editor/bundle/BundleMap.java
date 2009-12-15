@@ -46,6 +46,7 @@ import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
+import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
@@ -155,7 +156,7 @@ public class BundleMap {
 			if (!project.exists() || !project.isOpen()) return false;
 
 			for (int i = 0; i < JSF_PROJECT_NATURES.length; i++) {
-				if (project.getNature(JSF_PROJECT_NATURES[i]) != null) 
+				if (project.hasNature(JSF_PROJECT_NATURES[i])) 
 					return true;
 			}
 		} catch (CoreException e) {
