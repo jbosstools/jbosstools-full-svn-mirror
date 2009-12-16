@@ -18,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -82,7 +83,7 @@ public class NewFileWizard extends Wizard implements INewWizard {
 
 	public void init(IWorkbench workbench, IStructuredSelection currentSelection) {
 		fWorkbench = workbench;
-		mContainer = getClosestContainer( currentSelection.getFirstElement() );					
+		mContainer = getBPELContainer( currentSelection.getFirstElement() );					
 	}
 
 	
@@ -191,23 +192,31 @@ public class NewFileWizard extends Wizard implements INewWizard {
 
 	
 	/**
-	 * Return the closest container in which we can generate 
+	 * Return the BPEL files container in which we can generate 
 	 * process from the template. 
 	 * 
-	 * @return the closest IContainer
+	 * @return the BPEL files IContainer
 	 */
 	
-	IContainer getClosestContainer ( Object obj ) {
+	IContainer getBPELContainer ( Object obj ) {
 		
 		if (obj == null) {
 			return null;
 		}
+		IProject project = null;
 		if (obj instanceof IFile) {
 			IFile file = (IFile) obj;
-			return file.getParent();
+			project = file.getProject();
 		}
 		if (obj instanceof IContainer) {
-			return (IContainer) obj;
+			IContainer container = (IContainer)obj;			
+			project = container.getProject();
+		}
+		if (project != null) {
+			IContainer bpelContent = project.getFolder("bpelContent");
+			if (bpelContent != null) {
+				return bpelContent;
+			}
 		}
 		return null;		
 	}

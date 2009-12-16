@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -108,30 +109,14 @@ public class ODEDeployWizardPage extends WizardPage {
 			Object obj = ssel.getFirstElement();
 
 			if (obj instanceof IResource) {
-				IContainer container;
-				if (obj instanceof IContainer)
-					container = (IContainer) obj;
-				else
-					container = ((IResource) obj).getParent();
-				containerText.setText(container.getFullPath().toString());
-			} else if (obj instanceof IJavaElement) {
-				
-				IPath path = ((IJavaElement) obj).getPath();
-				IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-				if (!(obj instanceof IJavaProject)) {
-					IFolder containerFolder = root.getFolder(path);
-					while (!containerFolder.exists()) {
-						obj = ((IJavaElement) obj).getParent();
-						if (obj instanceof IJavaElement) {
-							path = ((IJavaElement) obj).getPath();
-							containerFolder = root.getFolder(path);
-						}
-
-					}
-				}
-				if (path != null) {
-					containerText.setText(path.toOSString());
-				}
+				IProject project;
+				project = ((IResource) obj).getProject();
+			    IContainer bpelContent = project.getFolder("bpelContent");
+			    if (bpelContent != null) {
+			    	containerText.setText(bpelContent.getFullPath().toString());	
+			    } else {
+			    	containerText.setText(project.getFullPath().toString());
+			    }
 			}
 		}
 	}
