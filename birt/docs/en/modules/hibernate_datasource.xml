@@ -29,7 +29,7 @@
                 guide.</para>
         <para>
             If you followed the steps described in the
-            <link linkend="birt_integration">Adding BIRT Functionality to Standard Seam Web Project</link> chapter,
+            <link linkend="birt_integration_with_seam">Adding BIRT Functionality to Standard Seam Web Project</link> chapter,
             you would have a connection profile already configured.        
                 </para>
     </tip>
