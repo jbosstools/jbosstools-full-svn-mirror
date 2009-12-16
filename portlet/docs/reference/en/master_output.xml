@@ -24,13 +24,13 @@
     
      <bookinfo>
          <title>JBoss Portal Tools Reference Guide</title>
-             <corpauthor diffmk:change="added">
-                 <inlinemediaobject diffmk:change="added">
-                     <imageobject diffmk:change="added" role="fo">
-                         <imagedata diffmk:change="added" fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+             <corpauthor>
+                 <inlinemediaobject>
+                     <imageobject role="fo">
+                         <imagedata fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
                      </imageobject>	
-                     <imageobject diffmk:change="added" role="html">
-                         <imagedata diffmk:change="added"></imagedata>
+                     <imageobject role="html">
+                         <imagedata></imagedata>
                      </imageobject>	
                  </inlinemediaobject>           
              </corpauthor>
@@ -43,10 +43,10 @@
 	                       <copyright>
 	                           <year>2008</year>
 	                           <year>2009</year>
-	                           <holder><diffmk:wrapper diffmk:change="changed">JBoss by Red Hat</diffmk:wrapper></holder>
+	                           <holder>JBoss by Red Hat</holder>
 	                       </copyright>
           <releaseinfo><diffmk:wrapper diffmk:change="changed">
-              Version: 1.1.0.M2
+              Version: 1.1.0.CR1
           </diffmk:wrapper></releaseinfo>
 	
 <abstract>
@@ -62,7 +62,7 @@
 
 
     
-<chapter id="intro" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/portlet/docs/reference/en/modules/intro.xml" xreflabel="intro">
+<chapter id="intro" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/portlet/docs/reference/en/modules/intro.xml" xreflabel="intro">
     <?dbhtml filename="intro.html"?>
     <title>Introduction</title>
 
@@ -193,7 +193,7 @@
 </chapter>
 
     
-<chapter id="installation" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/portlet/docs/reference/en/modules/installation.xml" xreflabel="installation">
+<chapter id="installation" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/portlet/docs/reference/en/modules/installation.xml" xreflabel="installation">
     <?dbhtml filename="installation.html"?>
     <title>Installation issues</title>
 
@@ -233,7 +233,7 @@
 </chapter>
 
     
-<chapter id="starting_project" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/portlet/docs/reference/en/modules/starting_project.xml" xreflabel="starting_project">
+<chapter id="starting_project" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/portlet/docs/reference/en/modules/starting_project.xml" xreflabel="starting_project">
     <?dbhtml filename="starting_project.html"?>
     <title>Starting the Project with JBoss Portal</title>
 
@@ -647,7 +647,7 @@
 </chapter>
 
     
-<chapter id="jsf_portlet" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/portlet/docs/reference/en/modules/jsf_portlet.xml" xreflabel="jsf_portlet">
+<chapter id="jsf_portlet" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/portlet/docs/reference/en/modules/jsf_portlet.xml" xreflabel="jsf_portlet">
     <?dbhtml filename="jsf_portlet.html"?>
     <title>Creating JSF Portlet</title>
 
@@ -715,7 +715,7 @@
         <tip>
             <title>Tip:</title>
             
-            <para>You can download JBoss Portlet Bridge 1.0.0.B4 from <ulink url="http://www.jboss.org/portletbridge/download/"><diffmk:wrapper diffmk:change="changed">Portletbridge Download page</diffmk:wrapper></ulink>.</para>
+            <para>You can download JBoss Portlet Bridge 1.0.0.B4 from <ulink url="http://www.jboss.org/portletbridge/download/">Portletbridge Download page</ulink>.</para>
         </tip>
         
         <para>Next click <emphasis>
@@ -836,7 +836,7 @@
 </chapter>
 
     
-<chapter id="seam_portlet" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/portlet/docs/reference/en/modules/seam_portlet.xml" xreflabel="seam_portlet">
+<chapter id="seam_portlet" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/portlet/docs/reference/en/modules/seam_portlet.xml" xreflabel="seam_portlet">
     <?dbhtml filename="seam_portlet.html"?>
     <title>Creating Seam Portlet</title>
 
@@ -974,7 +974,7 @@
 </chapter>
 
     
-<chapter id="portlets_to_nonWTP_projects" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/portlet/docs/reference/en/modules/portlets_to_nonWTP_projects.xml" xreflabel="portlets_to_nonWTP_projects">
+<chapter id="portlets_to_nonWTP_projects" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/portlet/docs/reference/en/modules/portlets_to_nonWTP_projects.xml" xreflabel="portlets_to_nonWTP_projects">
     <?dbhtml filename="portlets_to_nonWTP_projects.html"?>
     <title>Adding Portlets to non-WTP Projects</title>
 
