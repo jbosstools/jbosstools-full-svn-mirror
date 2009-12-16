@@ -25,13 +25,13 @@
     
      <bookinfo>
          <title>Drools Tools Reference Guide</title>
-             <corpauthor diffmk:change="added">
-                 <inlinemediaobject diffmk:change="added">
-                     <imageobject diffmk:change="added" role="fo">
-                         <imagedata diffmk:change="added" fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+             <corpauthor>
+                 <inlinemediaobject>
+                     <imageobject role="fo">
+                         <imagedata fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
                      </imageobject>	
-                     <imageobject diffmk:change="added" role="html">
-                         <imagedata diffmk:change="added"></imagedata>
+                     <imageobject role="html">
+                         <imagedata></imagedata>
                      </imageobject>	
                  </inlinemediaobject>           
              </corpauthor>
@@ -41,11 +41,11 @@
 	                       <copyright>
 			             <year>2007</year>
 	                           <year>2009</year>
-	                           <holder><diffmk:wrapper diffmk:change="changed">JBoss by Red Hat</diffmk:wrapper></holder>
+	                           <holder>JBoss by Red Hat</holder>
 	                       </copyright>
-          <releaseinfo><diffmk:wrapper diffmk:change="changed">
+          <releaseinfo>
               Version: 5.1.0.trunk
-          </diffmk:wrapper></releaseinfo>
+          </releaseinfo>
 <abstract>
    <title></title>
        <para>
@@ -58,7 +58,7 @@
     
     <toc></toc> 
     
-<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/drools/docs/reference/en/modules/introduction.xml" xreflabel="introduction">
+<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/drools/docs/reference/en/modules/introduction.xml" xreflabel="introduction">
     <title>Introduction</title>
 
     <section id="whatisDrools">
@@ -228,7 +228,7 @@
 </chapter>
 
     
-<chapter id="create_new_project" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/drools/docs/reference/en/modules/create_new_project.xml" xreflabel="create_new_project">
+<chapter id="create_new_project" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/drools/docs/reference/en/modules/create_new_project.xml" xreflabel="create_new_project">
     <chapterinfo>
         <keywordset>
             <keyword>JBoss Tools</keyword>
@@ -445,7 +445,7 @@
 </chapter>
 
     
-<chapter id="debugging_rules" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/drools/docs/reference/en/modules/debugging_rules.xml" xreflabel="debugging_rules">
+<chapter id="debugging_rules" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/drools/docs/reference/en/modules/debugging_rules.xml" xreflabel="debugging_rules">
 	<chapterinfo>
 		<keywordset>
 			<keyword>JBoss Tools</keyword>
@@ -583,7 +583,7 @@
 </chapter>
 
     
-<chapter id="editors" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/drools/docs/reference/en/modules/editors.xml" xreflabel="editors">
+<chapter id="editors" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/drools/docs/reference/en/modules/editors.xml" xreflabel="editors">
     <chapterinfo>
         <keywordset>
             <keyword>JBoss Tools</keyword>
@@ -769,7 +769,7 @@
                 <para>The <property moreinfo="none">Rete Tree view</property> works only in Drools Rule Projects,
                     where the Drools Builder is set in the project properties.</para>
             </note>
-            <para>We hope, this guide helped you to get started with the JBoss BPMN Convert module. Besides, for additional information you are welcome on <ulink url="http://www.jboss.com/index.html?module=bb&op=viewforum&f=201">JBoss forum</ulink>.</para>
+            <para>We hope, this guide helped you to get started with the JBoss BPMN Convert module. Besides, for additional information you are welcome on <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss forum</ulink>.</para>
         </section>
         
     </section>
