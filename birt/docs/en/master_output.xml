@@ -7,11 +7,14 @@
 <!ENTITY birt_integration_with_seam SYSTEM "modules/birt_integration_with_seam.xml">
 <!ENTITY hibernate_datasource SYSTEM "modules/hibernate_datasource.xml">      
 <!ENTITY birt_reports_deployment SYSTEM "modules/birt_reports_deployment.xml">    
+<!ENTITY framework SYSTEM "modules/framework.xml">  
+<!ENTITY tasks SYSTEM "modules/tasks.xml"> 
+<!ENTITY links SYSTEM "modules/links.xml">
 
 <!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
 ]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
     <bookinfo>
-        <title>Birt Plugin Integration Reference Guide</title>
+        <title><diffmk:wrapper diffmk:change="changed">JBoss BIRT Integration User Guide</diffmk:wrapper></title>
 
         <corpauthor>
             <inlinemediaobject>
@@ -23,18 +26,31 @@
                 </imageobject>	
             </inlinemediaobject>           
         </corpauthor>
-        
+    
+        <author diffmk:change="added"><firstname diffmk:change="added"><diffmk:wrapper diffmk:change="added">Michael</diffmk:wrapper></firstname><surname diffmk:change="added"><diffmk:wrapper diffmk:change="added">Sorokin</diffmk:wrapper></surname><email diffmk:change="added"><diffmk:wrapper diffmk:change="added">msorokin@exadel.com</diffmk:wrapper></email></author>      
         <author><firstname>Anastasiya</firstname><surname>Bogachuk</surname><email>abogachuk@exadel.com</email></author> 
         <author><firstname>Olga</firstname><surname>Chikvina</surname></author> 
         
-        <pubdate>August 2008</pubdate>
+    <othercredit diffmk:change="added">  
+          
+        <contrib diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+            Special thanks to Snjezana Peco
+        </diffmk:wrapper></contrib>
+        
+       
+        
+        
+    </othercredit>   
+    
         <copyright>
                      <year>2008</year>
                      <year>2009</year>
             <holder>JBoss by Red Hat</holder>
         </copyright>
+     
+        
         <releaseinfo><diffmk:wrapper diffmk:change="changed">
-            Version: 1.1.0.M2
+            Version: 1.1.0.CR1
         </diffmk:wrapper></releaseinfo>
   
 
@@ -50,7 +66,7 @@
  <toc></toc> 
     
     
-<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/birt/docs/en/modules/introduction.xml">
+<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/introduction.xml">
     <?dbhtml filename="introduction.html"?>
 
     <chapterinfo>
@@ -65,6 +81,9 @@
     </chapterinfo>
 
     <title>Introduction</title>
+    
+    
+    
 
     <section>
 
@@ -103,85 +122,30 @@
             Eclipse BIRT you'll find out in the next sections.</para>
     </section>
 
-<section id="BIRT_key_features">
-    <title>Key Features of BIRT</title>
-    <para>For a start, we propose you to look through the table of main features of BIRT plugin:</para>
 
-    <table>
-        
-        <title>Key Functionality for BIRT Plugin</title>
-        <tgroup cols="3">
-            
-            <colspec align="left" colnum="1" colwidth="2*"></colspec>
-            <colspec colnum="2" colwidth="4*"></colspec>
-            <colspec align="left" colnum="3" colwidth="2*"></colspec>
-            
-            <thead>
-                <row>
-                    <entry>Feature</entry>
-                    <entry>Benefit</entry>
-                    <entry>Chapter</entry>
-                </row>
-            </thead>
-            
-            <tbody>
-                
-                <row>
-                    <entry><para>Integration with Seam</para></entry>
-                    <entry><para>You can add a BIRT report to an .xhtml file or embed it in some Seam .xhtml page.</para></entry>
-                    <entry>
-                        <link linkend="integration">integration with Seam</link>
-                    </entry>
-                </row>
-                
-                <row>
-                    <entry><para>Hibernate ODA Data Source</para></entry>
-                    <entry><para>Hibernate ODA Data Source for the JBoss BIRT Integration feature is completely integrated with Hibernate Tools.</para></entry>
-                    <entry>
-                        <link linkend="hibernate_datasource">Hibernate ODA data source</link>
-                    </entry>
-                </row>
-                
-                                
-            </tbody>
-            
-        </tgroup>
-    </table>
-
-
-
-
-
-
-</section>
-    
     
     <section>
         <title>JBoss BIRT Integration Functionality Overview</title>
+        
+        <para><diffmk:wrapper diffmk:change="added">
+            The key feature of JBoss BIRT Integration  is the JBoss BIRT Integration Framework, which allows to integrate a BIRT report into Seam/JSF container.
+            The framework API reference is in the 
+            </diffmk:wrapper><link diffmk:change="added" linkend="framework"><diffmk:wrapper diffmk:change="added">JBoss BIRT Integraion Framework API Reference</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> chapter of the guide.
+        </diffmk:wrapper></para>     
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+            
+            This  guide also covers functionality of </diffmk:wrapper><property moreinfo="none">JBoss Tools</property><diffmk:wrapper diffmk:change="added"> module  which assists in  
+            integration with BIRT.
+            The integration plug-in allows you to visually configure </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Hibernate Data Source</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> (specify a Hibernate configuration or JNDI URL),  
+            compose HQL queries with syntax-highlighting, content-assist, formatting as well as other functionalities available in the HQL editor. 
+           
+           
+          </diffmk:wrapper></para>
 
-        <para>This reference guide describes the one module of the <property moreinfo="none">JBoss Tools</property> project which 
-           performs the integration with BIRT. The integration includes the following functionalities:</para>
-        <itemizedlist>
-            <listitem>
-                <para>Hibernate ODA driver that includes a dialog to create HQL queries with
-                    syntax-highlighting, content-assist, formatting as well as other functionalities
-                    available in the HQL editor. There is also a possibility to add
-                    parameters.</para>
-            </listitem>
-            <listitem>
-                <para>possibility to add JBoss BIRT functionality to the standard Seam web
-                    project</para>
-            </listitem>
-            <listitem>
-                <para>BIRT JSF/Seam control</para>
-            </listitem>
-            <listitem>
-                <para>deployment of BIRT reports within web projects (Seam, JSF, etc.)</para>
-            </listitem>
-        </itemizedlist>
-
-        <para>To enable <property moreinfo="none">JBoss Tools</property> integration with BIRT you are intended to
-            have the next:</para>
+        <para><diffmk:wrapper diffmk:change="changed">
+            To enable </diffmk:wrapper><property moreinfo="none">JBoss Tools</property><diffmk:wrapper diffmk:change="changed"> integration with BIRT you are intended to
+            have the next:
+        </diffmk:wrapper></para>
         <itemizedlist>
             <listitem>
                 <para>Eclipse with <property moreinfo="none">JBoss Tools</property>
@@ -205,59 +169,71 @@
         </note>
     </section>
 
-    <section id="birt_plugin_rel_resources">
-        <title>Other Relevant Resources on the Topic</title>
-
-        <para>All JBoss Developer Studio/JBoss Tools release documentation you can find at<ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>
-        <para>The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">http://download.jboss.org/jbosstools/nightly-docs</ulink>.</para>
-    </section>
+    
 
 </chapter>
 
     
-<chapter id="birt_integration_with_seam" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/birt/docs/en/modules/birt_integration_with_seam.xml" xreflabel="birt_integration_with_seam">
-
-    <?dbhtml filename="birt_integration_with_seam.html"?>
+ 
+<chapter diffmk:change="added" id="tasks" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/tasks.xml" xreflabel="tasks">
+    <?dbhtml filename="tasks.html"?>
     <chapterinfo>
         <keywordset>
+
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">Eclipse</diffmk:wrapper></keyword>
             <keyword>JBoss</keyword>
-            <keyword>BIRT</keyword>
-            <keyword>Seam</keyword>
+            <keyword><diffmk:wrapper diffmk:change="changed">JBoss Tools</diffmk:wrapper></keyword>
+                   <keyword><diffmk:wrapper diffmk:change="changed">BIRT Integration</diffmk:wrapper></keyword>
         </keywordset>
     </chapterinfo>
+
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Tasks</diffmk:wrapper></title>
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> In this chapter of the guide you will find information on the tasks that you can perform integrating BIRT. The required version of BIRT is 2.3.2 or greater.</diffmk:wrapper></para>
+
+    
+    
+   
+   
+<section diffmk:change="added" id="birt_integration_with_seam" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/birt_integration_with_seam.xml">
     <title>Adding BIRT Functionality to Standard Seam Web Project</title>
 
-    <para>In this chapter you'll know how to create a Seam web project with BIRT
-        capabilities included.</para>
+    <para><diffmk:wrapper diffmk:change="changed">In this section you'll know how to integrate BIRT into a Seam web project. </diffmk:wrapper></para>
 
-    <para>You are supposed to have Seam runtime and JBoss Application Server downloaded and
-        extracted somewhere on you hard drive.</para>
+    <para><diffmk:wrapper diffmk:change="added">You are supposed to have Seam runtime and JBoss Application Server downloaded and
+        extracted on your hard drive. 
+        You can download Seam from the
+        </diffmk:wrapper><ulink diffmk:change="added" url="http://seamframework.org/Download"><diffmk:wrapper diffmk:change="added">Seam Framework</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> web page and 
+        JBoss Application Server from </diffmk:wrapper><ulink diffmk:change="added" url="http://jboss.org/jbossas/downloads/"><diffmk:wrapper diffmk:change="added">JBoss Application Server</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> official site.
+    
+    </diffmk:wrapper></para>
 
     <tip>
         <title>Tip:</title>
-        <para>We used<ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Seam 2.0.1 GA</ulink> and <ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Application Server 4.2.2 GA</ulink> in examples of this guide.</para>
+        <para><diffmk:wrapper diffmk:change="changed">We used </diffmk:wrapper><ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Seam 2.0.1 GA</ulink> and <ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Application Server 4.2.2 GA</ulink> in examples of this guide.</para>
     </tip>
 
     <section id="creatin_project_with_birt">
         <title>Creating Seam Web Project with Birt Facet</title>
 
-        <para>First, open <property moreinfo="none">Seam perspective</property> by going to <emphasis>
-                <property moreinfo="none">Window &gt; Open Perspective &gt; Other &gt; Seam</property>.
-            </emphasis> To create a new Seam Web project follow to <emphasis>
+        <para><diffmk:wrapper diffmk:change="changed">We recommend to open </diffmk:wrapper><property moreinfo="none">Seam perspective</property> by going to <emphasis>
+            <property moreinfo="none">Window &gt; Open Perspective &gt; Other &gt; Seam</property></emphasis><diffmk:wrapper diffmk:change="changed"> , this way you will have all the tools to work with Seam at hand.
+             To create a new Seam Web project navigate to </diffmk:wrapper><emphasis>
                 <property moreinfo="none">File &gt; New &gt; Seam Web Project</property>
-            </emphasis> (or <emphasis>
+             </emphasis><diffmk:wrapper diffmk:change="changed">. Otherwise you should go to </diffmk:wrapper><emphasis> 
+                 
                 <property moreinfo="none">File &gt; New &gt; Other &gt; Seam &gt; Seam Web
                     Project</property>
-            </emphasis> if you are not in the <property moreinfo="none">Seam perspective</property>).</para>
+            </emphasis><diffmk:wrapper diffmk:change="changed"> if  </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Seam</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> perspective is not active.</diffmk:wrapper></para>
 
-        <para>On the first wizard page enter the project name, then specify the target runtime and
-            target server. In the <emphasis>
-                <property moreinfo="none">Configuration</property>
-            </emphasis> section click <emphasis>
-                <property moreinfo="none">Modify</property>
-            </emphasis> to configure the project facets.</para>
-
-        <figure float="0">
+        <orderedlist continuation="restarts" diffmk:change="added" inheritnum="ignore">   
+         
+         <listitem diffmk:change="added">
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the first wizard page enter the project name, then specify the target runtime and
+            target server. We recommend to use JBoss AS server and runtime environment to ensure best performance.
+ </diffmk:wrapper></para>
+        
+            
+        <figure float="0" id="CreatingSeamWebProject">
             <title>Creating Seam Web Project</title>
             <mediaobject>
                 <imageobject>
@@ -265,12 +241,17 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
-        <para>Choose the 2.0 version of the <emphasis>
+         </listitem>
+            <listitem diffmk:change="added">
+        <para><diffmk:wrapper diffmk:change="added">In the </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Configuration</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> group choose the version of  </diffmk:wrapper><emphasis>
                 <property moreinfo="none">Seam</property>
-            </emphasis> facet and enable the <emphasis>
+        </emphasis><diffmk:wrapper diffmk:change="added"> framework you are planning to use in your application. In this guide we used Seam 2.2. </diffmk:wrapper></para>
+            </listitem>
+            <listitem diffmk:change="added">
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Click the </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Modify</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="changed"> button
+        and enable the </diffmk:wrapper><emphasis>
                 <property moreinfo="none">Birt Reporting Runtime Component</property>
-            </emphasis> facet.</para>
+            </emphasis><diffmk:wrapper diffmk:change="changed"> facet by checking the appropriate option.</diffmk:wrapper></para>
 
         <figure float="0">
             <title>Adding the Birt Reporting Runtime Component Facet </title>
@@ -280,582 +261,544 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
-        <para>Or you can just choose the <emphasis>
-                <property moreinfo="none">JBoss BIRT Integration Web Project</property>
-            </emphasis> configuration.</para>
-
-        <figure float="0">
-            <title>Choosing the JBoss BIRT Integration Web Project Configuration</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/projectBirtConfiguration.png"></imagedata>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>Next three pages are filled out with defaults, just leave them through by pressing <emphasis>
-                <property moreinfo="none">Next</property>.</emphasis> On the <emphasis>
-                <property moreinfo="none">Seam Facet</property>
-            </emphasis> page you should specify the Seam runtime and Connection profile.</para>
-
-        <figure float="0">
-            <title>Configuring the Seam Facet settings</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/seamFacet.png"></imagedata>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
+                <para><diffmk:wrapper diffmk:change="changed">Alternatively you can just choose the </diffmk:wrapper><emphasis>
+                    <property moreinfo="none">JBoss BIRT Integration Web Project</property>
+                </emphasis><diffmk:wrapper diffmk:change="added"> configuration from the drop-down list in the </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Configuration</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="changed"> group </diffmk:wrapper></para>
+                
+                <figure float="0">
+                    <title>Choosing the JBoss BIRT Integration Web Project Configuration</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/birt_integration_with_seam/projectBirtConfiguration.png"></imagedata>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                
+                </listitem>
+       
+        
+     <listitem diffmk:change="added">   
+         <para><diffmk:wrapper diffmk:change="changed">You may leave the next two pages with default values, just press </diffmk:wrapper><emphasis><property moreinfo="none">Next</property></emphasis><diffmk:wrapper diffmk:change="added"> to proceed.
+    </diffmk:wrapper></para>
+     </listitem> 
+            
+            <listitem diffmk:change="added">
+                
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the </diffmk:wrapper><emphasis><property moreinfo="none">Birt Configuration</property></emphasis><diffmk:wrapper diffmk:change="changed"> page you can modify the BIRT deployment settings, which you can edit afterwards  in the web.xml of the generated project. Let's keep the default values for now.
+                </diffmk:wrapper></para>
+               
+                <figure float="0">
+                    <title>Configuring BIRT Deployment Settings</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/birt_integration_with_seam/birtDeploymentSettings.png"></imagedata>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                
+                
+                
+            </listitem>
+       
+        <listitem diffmk:change="added">		
+            <para><diffmk:wrapper diffmk:change="changed">You can also leave the </diffmk:wrapper><emphasis><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JSF Capabilities</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> page with default values.     </diffmk:wrapper></para>         
+        </listitem>
+          
+          <listitem diffmk:change="added">
+             <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the </diffmk:wrapper><emphasis diffmk:change="added">
+                  <property moreinfo="none">Seam Facet</property>
+              </emphasis><diffmk:wrapper diffmk:change="added"> page you should specify the Seam runtime and Connection profile. Please note, that the Seam runtime must be of the version you initially specified in the project settings (See the </diffmk:wrapper><link diffmk:change="added" linkend="CreatingSeamWebProject"><diffmk:wrapper diffmk:change="added">Creating Seam Web Project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> figure).  </diffmk:wrapper></para>
+              <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> When creating a Seam project with BIRT capabilities you can use the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">BIRT Classic Models Sample Database</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> connection profile  to work with the BIRT sample database.</diffmk:wrapper></para>
+       
+              <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For more details on how to configure database connection for a Seam project please read the  
+                  </diffmk:wrapper><ulink diffmk:change="added" url="http://docs.jboss.org/tools/3.0.0.GA/en/seam/html_single/index.html#seamFacet"><diffmk:wrapper diffmk:change="added">Configure Seam Facet Settings</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> chapter of Seam Dev Tools Reference Guide.</diffmk:wrapper></para>
+              <figure float="0">
+                  <title>Configuring the Seam Facet settings</title>
+                  <mediaobject>
+                      <imageobject>
+                          <imagedata fileref="images/birt_integration_with_seam/seamFacet.png"></imagedata>
+                      </imageobject>
+                  </mediaobject>
+              </figure>
+              
+          </listitem>
+     
+	
+      <listitem diffmk:change="added"> 
         <para>Hit <emphasis>
                 <property moreinfo="none">Finish</property>
-            </emphasis> to create the project with Birt functionality enabled.</para>
+        </emphasis><diffmk:wrapper diffmk:change="changed"> to create the project with BIRT functionality enabled.</diffmk:wrapper></para>
+      </listitem>
+        </orderedlist>
     </section>
 
     <section id="integration">
         <title>Integration with Seam</title>
-
-        <para>The JBoss BIRT Integration feature contains the BIRT tag that allows the user to add a
-            BIRT report to an <emphasis>
-                <property moreinfo="none">.xhtml</property>
-            </emphasis> file:</para>
-
-        <programlisting format="linespecific" role="XHTML"><![CDATA[<p:birt xmlns:ui="http://java.sun.com/jsf/facelets" 
-            xmlns:s="http://jboss.com/products/seam/taglib" 
-            xmlns:p="http://jboss.com/products/seam/birt" 
-            designType="run" 
-            format="pdf" 
-            designName="test.rptdesign" 
-            title="JBoss Birt Test">
+<para><diffmk:wrapper diffmk:change="changed">
+    In the previous section you have created a Seam project with BIRT capabilities. 
+    Now you can create a simple kick start project to see that everything is configured correctly. 
+</diffmk:wrapper></para>
         
-</p:birt>]]></programlisting>
+        
+        <orderedlist continuation="restarts" diffmk:change="added" inheritnum="ignore">
+            <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="added">Now create a BIRT report file and insert  test data into the file.
+                Name the report file </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.rptdesign</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">, the report should print the data from the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> table of the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">BIRT Classic Models Sample Database</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">, namely: customer number (</diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS.CUSTOMERNAME</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">), 
+                contact person  first name ( </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS.CONTACTFIRSTNAME</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">) ,
+                contact person last name (</diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS.CONTACTLASTNAME</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">) and 
+                contact person phone number(</diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS.PHONE</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">).  
+            </diffmk:wrapper></para>
+             <para><diffmk:wrapper diffmk:change="added">The title of the report should be set via </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">reportTitle</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> parameter</diffmk:wrapper></para>  
+                <para><diffmk:wrapper diffmk:change="added">
+                    As this guide is primarily focused on the BIRT integration and not the BIRT technology itself we will not show the steps required to make the report. If you do not feel strong about creating a BIRT report file please read </diffmk:wrapper><ulink diffmk:change="added" url="http://eclipse.org/birt/phoenix/tutorial/"><diffmk:wrapper diffmk:change="added">BIRT documentation</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.
+                  </diffmk:wrapper></para>  
+                <para><diffmk:wrapper diffmk:change="added">You can download  the file </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.rptdesign</diffmk:wrapper></property> <ulink diffmk:change="added" url="files/helloBirt.rptdesign"><diffmk:wrapper diffmk:change="added">here</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> and copy it to the WebContent folder of your Seam project.</diffmk:wrapper></para>      
+                
+            </listitem>
+     
+        <listitem diffmk:change="added">
+        <para><diffmk:wrapper diffmk:change="added">
+            When you are done with the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.rptdesign</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file, you should create a </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file that will contain the BIRT report you have just created.
+        </diffmk:wrapper></para>   
+        
+   
+        <para><diffmk:wrapper diffmk:change="added">                 
+          The JBoss BIRT Integration framework provides 2 components represented as </diffmk:wrapper><emphasis diffmk:change="added" role="bold"> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:birt&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> and </diffmk:wrapper><emphasis diffmk:change="added" role="bold"> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:param&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> tags. The jboss-seam-birt.jar library implements the functionality of the components. To find more information about the framework pleas read the  </diffmk:wrapper><link diffmk:change="added" linkend="framework"><diffmk:wrapper diffmk:change="added">JBoss BIRT Integraion Framework API Reference</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> chapter.
+              To use that tags on the page you need to declare the tag library and define the name space like this: 
+      </diffmk:wrapper></para>
 
-        <para>Let's look how it works.</para>
-        <para>Create in the <emphasis>
-                <property moreinfo="none">Web Content</property>
-            </emphasis> folder three <emphasis>
-                <property moreinfo="none">.xhtml</property>
-            </emphasis> pages with the following content:</para>
+        
+            <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[         
+            xmlns:b="http://jboss.com/products/seam/birt" 
+ ]]></diffmk:wrapper></programlisting>     
 
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <emphasis>
-                        <property moreinfo="none">birttests.xhtml</property>:</emphasis>
-                </para>
-                <programlisting format="linespecific" role="XHTML"><![CDATA[<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                                                            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-    <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-                                  xmlns:s="http://jboss.com/products/seam/taglib"
-                                  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-                                  xmlns:h="http://java.sun.com/jsf/html" 
-                                  xmlns:rich="http://richfaces.org/rich" 
-                                  template="layout/template.xhtml">
+      <para><diffmk:wrapper diffmk:change="changed">
+          The </diffmk:wrapper> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:birt&gt;</diffmk:wrapper></property></para><diffmk:wrapper diffmk:change="added"> is a container for a BIRT report, that helps you integrate the report into Seam environment. 
+          You can manage the properties of the report using the attributes of the </diffmk:wrapper><emphasis diffmk:change="added" role="bold"> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:birt&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> tag.
+      </diffmk:wrapper></listitem>
+    
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
             
-        <ui:define name="body">  
-                <h:messages globalOnly="true" styleClass="message"/> 
-                        <rich:panel> 
-                            <f:facet name="header">Welcome to JBoss BIRT!</f:facet> 
-                            <ul>
-                                    <li><s:link view="/testbirt.xhtml" value="Test Birt" /></li>  
-                                    <li><s:link view="/testbirt1.xhtml" value="Test Birt 1" /></li>  
-                            </ul>
-                        </rich:panel> 
-        </ui:define>
-    </ui:composition>]]></programlisting>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis>
-                        <property moreinfo="none">testbirt.xhtml</property>:</emphasis>
-                </para>
-                <programlisting format="linespecific" role="XHTML"><![CDATA[<p:birt xmlns:ui="http://java.sun.com/jsf/facelets" 
-                    xmlns:s="http://jboss.com/products/seam/taglib" 
-                    xmlns:p="http://jboss.com/products/seam/birt" 
-                    designType="run" 
-                    format="pdf" 
-                    designName="test.rptdesign" 
-                    title="JBoss Birt Test">
-                        
-                        <p:param name="sample" value="sample param"/>
-</p:birt>]]></programlisting>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis>
-                        <property moreinfo="none">testbirt1.xhtml</property>:</emphasis>
-                </para>
-                <programlisting format="linespecific" role="XHTML"><![CDATA[<p:birt xmlns:ui="http://java.sun.com/jsf/facelets"
-                    xmlns:s="http://jboss.com/products/seam/taglib"
-                    xmlns:p="http://jboss.com/products/seam/birt"
-                    designType="frameset"
-                    designName="test1.rptdesign"
-                    title="JBoss Birt Test"> 
-</p:birt>]]></programlisting>
-            </listitem>
-        </itemizedlist>
-
-        <para>Now start the application server by clicking the <emphasis>
-                <property moreinfo="none">Start</property>
-            </emphasis> option in the context menu of the server in the <property moreinfo="none">JBoss Server
-                View</property> (if the view isn't open go to <emphasis>
-                <property moreinfo="none">Window &gt; Show View &gt; Other &gt; JBoss Server
-                    View</property>)</emphasis>. Try the tests out by accessing <emphasis>
-                <property moreinfo="none">http://localhost:8080/hellobirt/birttests.seam</property>
-            </emphasis> in your web browser.</para>
-
-        <figure float="0">
-            <title>Welcome Page in the Browser</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/birttestsPage.png"></imagedata>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>Now if you click <emphasis>
-                <property moreinfo="none">Test Birt</property>
-            </emphasis> you should see the following <emphasis>
-                <property moreinfo="none">.pdf</property>
-            </emphasis> file:</para>
-
-        <figure float="0">
-            <title>After Clicking Test Birt</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/testbirtPage.png"></imagedata>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>After clicking <emphasis>
-                <property moreinfo="none">Test Birt 1</property>
-            </emphasis> the next page is displayed:</para>
-
-        <figure float="0">
-            <title>After Clicking Test Birt 1</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/testbirt1Page1.png"></imagedata>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>Put the <emphasis>
-                <property moreinfo="none">test param</property>
-            </emphasis> as Sample Parameter value, specify the maximum possible Customer Number as
-            <emphasis>
-                <property moreinfo="none">1001</property>,</emphasis> for instance, and then press <emphasis>
-                <property moreinfo="none">Ok</property>.</emphasis> You'll see the following BIRT
-            report:</para>
-
-        <figure float="0">
-            <title>BIRT Report in the Browser Window</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/testbirt1Page2.png"></imagedata>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>The BIRT tag recognizes most of the parameters described on <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">the
-                BIRT Report Viewer Parameters page</ulink>. The attributes of the BIRT tag
-            don't contain the <emphasis>
-                <property moreinfo="none">"__"</property>
-            </emphasis> prefix.</para>
-
-        <para>The <emphasis>
-                <property moreinfo="none">param</property>
-            </emphasis> tag describes report parameters (see the listing for the <emphasis>
-                <property moreinfo="none">testbirt.xhtml</property>
-            </emphasis> above). It supports the following attributes: </para>
-        <itemizedlist>
-            <listitem>
-                <para><emphasis>
-                        <property moreinfo="none">name</property>
-                    </emphasis> - the parameter name (required)</para>
-            </listitem>
-            <listitem>
-                <para><emphasis>
-                        <property moreinfo="none">value</property>
-                    </emphasis> - the parameter value (required)</para>
-            </listitem>
-            <listitem>
-                <para><emphasis>
-                        <property moreinfo="none">isnull</property>
-                    </emphasis> - specifies that a report parameter has a null value
-                    (optional)</para>
-            </listitem>
-            <listitem>
-                <para><emphasis>
-                        <property moreinfo="none">islocale</property>
-                    </emphasis> - specifies whether the parameter is localized (optional)</para>
-            </listitem>
-        </itemizedlist>
-
-        <para>These tags are defined in the <emphasis>
-                <property moreinfo="none">org.jboss.birt.core/resources/jboss-seam-birt.jar</property>
-            </emphasis> library that contains source. </para>
-
-        <para>It is also possible to embed a BIRT report in some Seam <emphasis>
-                <property moreinfo="none">.xhtml</property>
-            </emphasis> page. See how it may be done:</para>
-        <para></para>
-
-        <para>
-            <emphasis role="bold">Example:</emphasis>
-        </para>
-        <programlisting format="linespecific" role="XHTML"><![CDATA[<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-                                                        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
-		                 xmlns:s="http://jboss.com/products/seam/taglib" 
-		                 xmlns:ui="http://java.sun.com/jsf/facelets" 
-		                 xmlns:f="http://java.sun.com/jsf/core" 
-		                 xmlns:h="http://java.sun.com/jsf/html" 
-		                 xmlns:rich="http://richfaces.org/rich" 
-		                 xmlns:b="http://jboss.com/products/seam/birt" 
-		                 template="layout/template.xhtml">
-        <ui:define name="body">
-                <h:messages globalOnly="true" styleClass="message" id="globalMessages"/>
-                     <rich:panel>
-                         <f:facet name="header">Products</f:facet>
-                         <b:birt designType="embed" designName="ProductCatalog.rptdesign" 
-                                         embeddable="true" masterpage="false"/>
-                             <div style="clear:both"/>
-                     </rich:panel>
-                     <div class="actionButtons">
-                         <s:button view="/ProductsEdit.xhtml" id="edit" value="Edit"/>
-                         
-                         <s:button view="/#{empty productsFrom ? 'ProductsList' : productsFrom}.xhtml" 
-                                             id="done" value="Done"/>
-                     </div>
-        </ui:define>
-</ui:composition>]]></programlisting>
-
-        <para>See the result in a Browser:</para>
-        
-        <figure float="0">
-            <title>Embedding BIRT Report in Seam xhtml Page</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/embeddedReportInSeamPage.png"></imagedata>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-    </section>
-</chapter>
+            The </diffmk:wrapper><emphasis diffmk:change="added" role="bold"> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:param&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> tag describes report parameters.  To set a parameter you need to specify it's name the value you want to pass. 
+            You can use EL expressions to bind the representation layer with back-end logic.
+        </diffmk:wrapper></para>
+     
+        </orderedlist>
 
     
-<chapter id="hibernate_datasource" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/birt/docs/en/modules/hibernate_datasource.xml" xreflabel="hibernate_datasource">
+            
+            
+             <listitem diffmk:change="added">
+                 
+                 
+                 <para><diffmk:wrapper diffmk:change="added">Create the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file  in the WebContent with the following content: </diffmk:wrapper></para>
+             
+                 <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[...
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:b="http://jboss.com/products/seam/birt"
+	template="layout/template.xhtml">
+	<ui:define name="body">
+		<rich:panel>
+			<b:birt designType="embed" designName="helloBirt.rptdesign"
+				embeddable="true">
+				<b:param name="reportTitle" value="Customers Contacts" />
+			</b:birt>
+		</rich:panel>
+	</ui:define>
+</ui:composition>            
+...]]></diffmk:wrapper></programlisting> 
+                 
+                 <para><diffmk:wrapper diffmk:change="changed">From this listing above you see that the title of the report is set via </diffmk:wrapper> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:param&gt;</diffmk:wrapper></property></para><diffmk:wrapper diffmk:change="added"> by setting the parameter name and defining the </diffmk:wrapper><emphasis><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">"value"</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="changed"> attribute with the "Customers Contacts" value.</diffmk:wrapper></listitem>
+                <listitem>
+        <para><diffmk:wrapper diffmk:change="added">We have created a Seam  project and inserted the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> report into the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> view file.</diffmk:wrapper></para>
 
-    <?dbhtml filename="hibernate_datasource.html"?>
-    <chapterinfo>
-        <keywordset>
-            <keyword>JBoss</keyword>
-            <keyword>BIRT</keyword>
-            <keyword>Seam</keyword>
-        </keywordset>
-    </chapterinfo>
 
-    <title>Hibernate ODA Data Source</title>
+<para><diffmk:wrapper diffmk:change="added">To see that the application works correctly and as you expect, you need to launch it on the server.</diffmk:wrapper></para>
+    </listitem>
+    <listitem><para><diffmk:wrapper diffmk:change="added">In the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Server View </diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> (If it is not open navigate to </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Windows &gt; Show View &gt; Other &gt; JBoss Server View </diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">), select the server the application is deployed to and hit the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Start</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button. </diffmk:wrapper></para></listitem>
+    <listitem diffmk:change="added">
+        <para><diffmk:wrapper diffmk:change="added">When the server is started, open your favourite browser and point it to </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">http://localhost:8080/HelloBirt/helloBirt.seam</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> .</diffmk:wrapper></para>
 
-    <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source completely
-        integrated with Hibernate Tools. You can use it in the way you use any of BIRT ODA drivers.
-        Let's perform simple actions that demonstrate it.</para>
 
-    <para>First, run the <emphasis>
-            <property moreinfo="none">Seam Generate Entities</property>
-        </emphasis> action (You can access it from <emphasis>
-            <property moreinfo="none">File &gt; New &gt; Seam Generate Entities</property>
-        </emphasis> in the <property moreinfo="none">Seam perspective</property>. More details on the Seam Generate
-        Entities read in our <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#generate_entities">Seam Dev Tools Reference guide</ulink>). This action will create a Hibernate Console
-        configuration.</para>
+<figure float="0">
+    <title><diffmk:wrapper diffmk:change="changed">Integrating BIRT into Seam Project</diffmk:wrapper></title>
+    <mediaobject>
+        <imageobject>
+            <imagedata diffmk:change="added" fileref="images/birt_integration_with_seam/helloBirtproject.png"></imagedata>
+        </imageobject>
+    </mediaobject>
+</figure>
+    </listitem>
+          </section>
+        </section>
+        <section id="hibernate_datasource">
+
+
+    <title>Using Hibernate ODA Data Source</title>
+
+    <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source which is  completely
+        integrated with Hibernate Tools. You can use it the way as you would use any of BIRT ODA drivers.
+
+    </para>
+
+<orderedlist>
+    <listitem>
+    <para>First, you need to reverse engineer from the database to generate Seam entities. You can perform this operation going to  <emphasis>
+            <property>File &gt; New &gt; Seam Generate Entities</property>
+        </emphasis> in the <property>Seam perspective</property>. More details on the Seam Generate
+        Entities please read <ulink
+            url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#generate_entities"
+            >Seam Dev Tools Reference guide</ulink>).
+        In this guide we will use the <property>Employees</property> table of the <property>DATAMODELS</property> database.
+</para>
 
     <tip>
         <title>Tip:</title>
         <para>Before performing Seam Generate Entities, you should have a connection profile
-            adjusted and connected to a database. How to do this see in the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#d0e2725">CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
-            guide.</para>
+            adjusted and connected to a database. How to do this see in the <ulink
+                url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#d0e2725"
+                >CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
+                guide.</para>
+        <para>
+            If you followed the steps described in the
+            <link linkend="birt_integration_with_seam">Adding BIRT Functionality to Standard Seam Web Project</link> chapter,
+            you would have a connection profile already configured.
+                </para>
     </tip>
+    </listitem>
+    <listitem>
+<para>
+    Next you should create a new BIRT report file ( <emphasis>><property>File &gt; New &gt; Other &gt; Business Intelligence and Reporting
+        Tools &gt; Report</property></emphasis>) to represent the data from the <property>Employees</property> table. Call the file <property>employees.rptdesign</property>.
+</para>
+    </listitem>
 
-    <para>Next add a new BIRT report. To do that navigate to <emphasis>
-            <property moreinfo="none">File &gt; New &gt; Other &gt; Business Intelligence and Reporting
-                Tools &gt; Report</property>.</emphasis> In the <property moreinfo="none">New Report
-            wizard</property> enter the report name, for instance <emphasis>
-            <property moreinfo="none">testHibernateOda.rptdesign</property>,</emphasis> then click <emphasis>
-            <property moreinfo="none">Finish</property>.</emphasis></para>
+<listitem>
 
-    <figure float="0">
-        <title>Creating a New BIRT Report </title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/creatingNewBirtReport.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
 
-    <para>Now switch to the <property moreinfo="none">Report Design perspective</property>.</para>
-
-    <para>In the <property moreinfo="none">Data Explorer View</property> right-click the <emphasis>
-            <property moreinfo="none">Data Source</property>
+    <para>Now switch to the <property>BIRT Report Design</property> perspective.</para>
+</listitem>
+    <listitem>
+    <para>In the <property>Data Explorer</property> view right-click the <emphasis>
+            <property>Data Source</property>
         </emphasis> node and choose <emphasis>
-            <property moreinfo="none">New Data Source</property>.</emphasis></para>
+            <property>New Data Source</property>.</emphasis></para>
 
-    <figure float="0">
+    <figure>
         <title>Creating a New Data Source</title>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/hibernate_datasource/creatingDataSource.png"></imagedata>
+                <imagedata fileref="images/hibernate_datasource/creatingDataSource.png"/>
             </imageobject>
         </mediaobject>
     </figure>
+</listitem>
+    <listitem>
+    <para>The wizard will prompt you to select data source type.  Choose <emphasis>
+            <property>Hibernate Data Source</property>
+        </emphasis> and give it a meaningful name, for instance <emphasis>
+            <property>HibernateDataSource</property>
+        </emphasis>. Hit <emphasis>
+            <property>Next</property> to proceed.</emphasis></para>
 
-    <para>In the wizard select <emphasis>
-            <property moreinfo="none">Hibernate Data Source</property>
-        </emphasis> and give it a proper name, <emphasis>
-            <property moreinfo="none">HbDataSource</property>
-        </emphasis> for instance. Hit <emphasis>
-            <property moreinfo="none">Next</property>.</emphasis></para>
-
-    <figure float="0">
+    <figure>
         <title>Creating Hibernate Data Source</title>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/hibernate_datasource/hibernateDataSource.png"></imagedata>
+                <imagedata fileref="images/hibernate_datasource/hibernateDataSource.png"/>
             </imageobject>
         </mediaobject>
     </figure>
+    </listitem>
+    <listitem>
+    <para>On the next wizard's dialog you can leave the everything with default values, press the <emphasis>
+            <property>Test Connection</property>
+    </emphasis> button to verify  that the connection is established successfully.</para>
 
-    <para>On the next wizard page leave everything as it is, just press the <emphasis>
-            <property moreinfo="none">Test Connection</property>
-        </emphasis> button to verify the connection is successful.</para>
+    <para>
+        The <property>Hibernate Data Source</property> enables you to specify a Hibernate Configuration or JNDI URL.
 
-    <figure float="0">
+    </para>
+
+    <figure>
         <title>Hibernate Data Source Profile</title>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/hibernate_datasource/connectionSuccessful.png"></imagedata>
+                <imagedata fileref="images/hibernate_datasource/connectionSuccessful.png"/>
             </imageobject>
         </mediaobject>
     </figure>
+    </listitem>
+    <listitem>
+    <para>Press  <emphasis>
+            <property>Finish</property>
+        </emphasis> to complete <property>New Data Source</property> wizard.</para>
+    </listitem>
 
-    <para>Click <emphasis>
-            <property moreinfo="none">Ok</property>
-        </emphasis> and then <emphasis>
-            <property moreinfo="none">Finish</property>
-        </emphasis> to complete.</para>
-
-    <para>Now let's add a Hibernate ODA dataset. To do that you should bring up the
-            <property moreinfo="none">New Data Set wizard</property>. In the <property moreinfo="none">Data Explorer View</property>
+    <listitem>
+    <para>Now you need to configure a new Hibernate ODA data set. Launch the
+        <property>New Data Set</property> wizard. In the <property>Data Explorer View</property>
         right-click the <emphasis>
-            <property moreinfo="none">Data Set</property>
+            <property>Data Set</property>
         </emphasis> node and select <emphasis>
-            <property moreinfo="none">New Data Set</property>.</emphasis></para>
+            <property>New Data Set</property>.</emphasis></para>
 
-    <figure float="0">
-        <title>Creating a New Data Set</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/creatingDataSet.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
+    </listitem>
+    <listitem>
+    <para>Select <property>HibernateDataSource</property> as target data source and type in the new data set name.
+        Call it <property>HibernateDataSet</property>.</para>
 
-    <para>In the <emphasis>
-            <property moreinfo="none">Data Set Name</property>
-        </emphasis> section specify the name. Let's it be <emphasis>
-            <property moreinfo="none">HbDataSet</property>.</emphasis></para>
 
-    <figure float="0">
+
+
+    <figure>
         <title>Creating a Hibernate ODA Data Set</title>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/hibernate_datasource/addingHibernateODADataset.png"></imagedata>
+                <imagedata fileref="images/hibernate_datasource/addingHibernateODADataset.png"/>
             </imageobject>
         </mediaobject>
     </figure>
+    </listitem>
+    <listitem>
 
-    <para>Next you'll be prompted to define the query for this data set. To validate the
+    <para>The next dialog of the wizard will help you compose a query for the new data set.</para>
+    <para>We will make a report that will print all employees in the database who has Sales Rep job title.</para>
+
+       <programlisting role="SQL"><![CDATA[...
+select jobtitle, firstname, lastname, email
+from Employees as employees where employees.jobtitle = 'Sales Rep'
+...]]></programlisting>
+
+
+
+ <para>
+
+        To validate the
         entered query you can press the <emphasis>
-            <property moreinfo="none">Test query</property>
+            <property>Test query</property>
         </emphasis> button. All the HQL features like syntax highlighting, content assist,
-        formatting, Drag and Drop, etc., are available to you here.</para>
+        formatting, drag-and-drop, etc., are available to facilitate query composing.</para>
 
-    <figure float="0">
-        <title>Testing Query </title>
+    <figure>
+        <title>Composing query for Data Set</title>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/hibernate_datasource/testingQuery.png"></imagedata>
+                <imagedata fileref="images/hibernate_datasource/testingQuery.png"/>
             </imageobject>
         </mediaobject>
     </figure>
+    </listitem>
+    <listitem>
 
-    <para>Next the output columns will be displayed. It's possible to edit them
-        here.</para>
+    <para>Pressing <property>Finish</property> will call the <property>Edit Data Set</property>  dialog where you can adjust the parameters of the data set and preview the resulted set.
+        If everything looks good, hit <property>Ok</property> to generate a new data set.
+     </para>
+    </listitem>
+    <listitem>
 
-    <figure float="0">
-        <title>HQL Features - Output Columns Section</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/hqlFeaturesOutputColumns.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
+    <para>Now you can insert the  data set items of <property>HibernateDataSet</property> into the <property>employees.rptdesign</property>.</para>
 
-    <para>To preview the results of the defined query click the <emphasis>
-            <property moreinfo="none">Preview Results</property>
-        </emphasis> item.</para>
-    <figure float="0">
-        <title>HQL Features - Preview Results Section</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/hqlFeaturesPreviewResults.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-    <para>So far you have the Hibernate data source and data set defined. Now you can create a BIRT
-        report using this data source and data set.</para>
 
     <tip>
         <title>Tip:</title>
-        <para>If you don't know how to do this we suggest that you refer to the <ulink url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT Tutorial</ulink>.</para>
+        <para>If you don&apos;t know how to do this we suggest that you refer to the <ulink
+                url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT Tutorial</ulink>.</para>
     </tip>
 
-    <figure float="0">
-        <title>Creating a BIRT Report using Created Data Source and Data Set</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/BIRTReportUsingDataSourceAndSet.png "></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
 
-    <para>If you switch to the <emphasis>
-        <property moreinfo="none">Preview</property></emphasis> tab, it will run your report and show the output.</para>
-    
-    <figure float="0">
-        <title>BIRT Report -Preview Tab</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/BIRTReportPreviewTab.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-    <para>You can also use parameters within the Hibernate ODA driver.</para>
-
-    <figure float="0">
-        <title>Using Parameters within the Hibernate ODA Driver</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/parametersWithinHibernateODADriver.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-
-    <figure float="0">
-        <title>Adding New Parameter</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/addingNewParameter.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-    <para>Again, to preview the results switch to the <emphasis>
-            <property moreinfo="none">Preview Results</property>
-        </emphasis> item.</para>
-    <figure float="0">
-        <title>Previewing the Results</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/previewingResults.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-</chapter>
-
-    
-<chapter id="birt_reports_deployment" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/birt/docs/en/modules/birt_reports_deployment.xml" xreflabel="birt_reports_deployment">
-
-    <?dbhtml filename="birt_reports_deployment"?>
-    <chapterinfo>
-        <keywordset>
-            <keyword>JBoss</keyword>
-            <keyword>BIRT</keyword>
-            <keyword>Seam</keyword>
-        </keywordset>
-    </chapterinfo>
-
-    <title>BIRT Reports Deployment</title>
-
-    <para>When everything is configured correctly you will be able to view/render the designed
-        reports in your Seam (or any other) Web application.</para>
-
-    <para>You can deploy a report by adding an action button to the Seam's CRUD <emphasis>
-            <property moreinfo="none">.xhtml</property>
-        </emphasis> file.</para>
-
-    <figure float="0">
-        <title>Adding Action Button to the Seam file</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/birt_reports_deployment/addingActionButton.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
-
-    <para>As you can see on the figure you should have the <emphasis>
-            <property moreinfo="none">testHibernateOda.xhtml</property>
-        </emphasis> file. It's content should be the following:</para>
-
-    <programlisting format="linespecific" role="XHTML"><![CDATA[<p:birt xmlns:ui="http://java.sun.com/jsf/facelets"
-            xmlns:s="http://jboss.com/products/seam/taglib"
-            xmlns:p="http://jboss.com/products/seam/birt"
-            designType="run"
-            format="pdf"
-            designName="testHibernateOda.rptdesign"
-            title="JBoss Birt Test">
-      
-</p:birt>
+<para>You can also use parameters in the query to add  dynamics to your report. In the previous example we hardcoded the selection criterion in the <code>where</code> clause. </para>
+    <para>To specify the job title on-the-fly your query should look like this:</para>
+    <programlisting role="XML"><![CDATA[
+select jobtitle,firstname, lastname,email
+from Employees as employees where employees.jobtitle = ?
 ]]></programlisting>
 
-    <para>Next run the Seam page with embedded report on the server by right-clicking the file and
-        going to <emphasis>
-            <property moreinfo="none">Run &gt; Run on Server</property>.</emphasis></para>
+    <para>The question mark represents a data set input parameter, which is not the same as a report parameter.
+        Now you need to define an new report parameter to pass the data to the report, call it <code>JobTitle</code>.
 
-    <figure float="0">
-        <title>Opening Employees.xhtml Page</title>
+
+
+        The dataset parameter can be linked to a report parameter.
+        In the <property>Data Explorer</property> view click the Data Set node to open it and right-click
+        on the data set you created previously( in our case it is <property>HibernateDataSet</property>),
+        choose <property>Edit</property> and navigate to the <property>Parameters</property> section.
+        Declare a new data set parameter, name it <code>jobtitle</code> and map it to the already existing <code>JobTitle</code> report parameter.
+        </para>
+    </listitem>
+    <listitem>
+    <para>You report is ready, you can view it by clicking on  the <property>Preview</property> tab of the <property>BIRT Report Designer</property> editor. </para>
+
+
+        <para>You will be prompted to assign a value to the report parameter. For instance you can enter &quot;Sales Rep&quot;. </para>
+
+    <figure>
+        <title>Resulted Dynamic Report</title>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/birt_reports_deployment/openingArticlesPage.png"></imagedata>
+                <imagedata fileref="images/hibernate_datasource/finalReport.png"/>
             </imageobject>
         </mediaobject>
     </figure>
+    </listitem>
+</orderedlist>
+</section>
+        <section diffmk:change="added" id="birt_reports_deployment" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/birt_reports_deployment.xml">
+    <title><diffmk:wrapper diffmk:change="changed">Creating a Dynamic BIRT Report</diffmk:wrapper></title>
 
-    <para>After clicking the <emphasis>
-            <property moreinfo="none">BIRT PDF Report</property>
-        </emphasis> button, you should see the following report:</para>
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The </diffmk:wrapper><link diffmk:change="added" linkend="birt_integration_with_seam"><diffmk:wrapper diffmk:change="added">Adding BIRT Functionality to Standard Seam Web Project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">
+        and </diffmk:wrapper><link diffmk:change="added" linkend="hibernate_datasource"><diffmk:wrapper diffmk:change="added">Using Hibernate ODA Data Sourc</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> sections tell how to integrate a BIRT report into
+        a Seam web project and how to use Hibernate data source to generate a dynamic report.
+        In this section we will create a Seam web project that can make a dynamic report using the parameters that are defined on a web page.</diffmk:wrapper></para>
 
-    <figure float="0">
-        <title>Birt PDF Report</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/birt_reports_deployment/BirtPDFReport.png"></imagedata>
-            </imageobject>
-        </mediaobject>
-    </figure>
 
-    <para>Thus, a Seam project that includes the BIRT facet can be deployed as any project. If you
-        define the Hibernate ODA driver, the JBoss BIRT engine will use JNDI URL that has to be bind
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">We will use the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">PRODUCTS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> table of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">DATAMODELS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> database for the purpose of this demo project.
+        In the first place, you need to generate Seam entities like we did in the previous chapter (</diffmk:wrapper><link diffmk:change="added" linkend="hibernate_datasource"><diffmk:wrapper diffmk:change="added">Hibernate ODA Data Source</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> ). The demo application will generate a report about the company's products, whereas it will allow to specify a product line. </diffmk:wrapper></para>
+
+<orderedlist continuation="restarts" diffmk:change="added" inheritnum="ignore">
+    <listitem diffmk:change="added">
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The next step is to create a Java class that will store the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> variable and its assessors, register the class in faces.config.xml.
+    The variable will be needed to pass dynamic data to the report via report parameters, therefore it has to be of session scope.</diffmk:wrapper></para>
+    </listitem>
+
+    <listitem diffmk:change="added">
+    <para><diffmk:wrapper diffmk:change="added">
+
+
+    The report will print the data from the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">Products</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> table, hence you need to create a report file first.
+    You can use either the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">BIRT JDBC Data Source</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> or </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Hibernate Data Source</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> data source to create the  data set for this project. If you want to use the latter please read the previous chapter </diffmk:wrapper><link diffmk:change="added" linkend="hibernate_datasource"><diffmk:wrapper diffmk:change="added">Hibernate ODA Data Source</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">.
+</diffmk:wrapper></para>
+
+
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+      The data set should have at least the following data set items: product vendor, product name, quantity in stock and buy price. The data is retrieved from the database with this query :
+  </diffmk:wrapper></para>
+
+
+    <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[
+SELECT  productvedor,
+productname,
+quantityinstock,
+buyprice
+FROM Products as products
+
+]]></diffmk:wrapper></programlisting>
+    </listitem>
+    <listitem diffmk:change="added">
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Make a table in the report and put each data set item into a column.</diffmk:wrapper></para>
+    </listitem>
+     <listitem diffmk:change="added">
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">As it was stated in the beginning of the chapter the report will be dynamic, therefore you need to declare a report parameter first, let it be </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> and to add the parameter to the query. BIRT offers rich JavaScript API, so you can modify the query programmatically like this:</diffmk:wrapper></para>
+<programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added">
+
+&lt;xml-property name="queryText"&gt;&lt;![CDATA[
+SELECT  productvedor,
+productname,
+quantityinstock,
+buyprice
+FROM Products as products
+]]&gt;&lt;/xml-property&gt;
+    &lt;method name="beforeOpen"&gt;&lt;![CDATA[
+queryString = " ORDER BY products."+reportContext.getParameterValue("sortOrder")+" "+"DESC";
+this.queryText = this.queryText+queryString;
+]]&gt;&lt;/method&gt;
+
+</diffmk:wrapper></programlisting>
+     </listitem>
+    <listitem diffmk:change="added">
+<para><diffmk:wrapper diffmk:change="changed">The report is ready. You can preview it to make sure it works properly. </diffmk:wrapper></para>
+    </listitem>
+        <listitem diffmk:change="added">        <para><diffmk:wrapper diffmk:change="added">To set the report parameter you should create an </diffmk:wrapper><property moreinfo="none">.xhtml</property><diffmk:wrapper diffmk:change="added"> view page, call it </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Products.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. On the page you can set the value of the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> Java bean variable and press the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Generate Report</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button to open another view page that will display the resulted report.
+        </diffmk:wrapper></para>
+
+
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The source code of the  </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Products.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> should be the following:</diffmk:wrapper></para>
+
+   <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j" template="layout/template.xhtml">
+	<ui:define name="body">
+		<rich:panel>
+			<f:facet name="header">BIRT Report Generator</f:facet>
+			<a4j:form ajaxSubmit="true" reRender="criterion">
+				<table>
+					<tr>
+						<td>Select sort order criterion:</td>
+						<td><h:selectOneMenu onchange="submit()"
+							value="#{yourJavaBean.sortOrder}"> <!-- Bind to your Java Bean -->
+							<f:selectItem itemValue="buyprice" itemLabel="buy price" />
+							<f:selectItem itemValue="quantityinstock" itemLabel="quantity in stock" />
+						</h:selectOneMenu>
+						</td>
+					</tr>
+				</table>
+				</a4j:form>
+			<s:button
+				view="/#{!empty reportParameters.order ? 'Products' : 'ProductsReport'}.xhtml" id="generate" value="Generate Report" /> <!-- If the sertOrder variable is not set the button won't work -->
+		</rich:panel>
+	</ui:define>
+</ui:composition>
+]]></diffmk:wrapper></programlisting>
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The logic of the file is quite simple, when the sort order criterion is select the value of  </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">yourJavaBean.sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">
+    is set automatically via Ajax and the report is ready to be generated.</diffmk:wrapper></para>
+        </listitem>
+    <listitem diffmk:change="added">
+    <para><diffmk:wrapper diffmk:change="added">Now you need to create the web page that will print the report, name the file </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">ProductsReport.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.
+        The file to output the report should have the following content:</diffmk:wrapper></para>
+
+
+  <para><diffmk:wrapper diffmk:change="added">
+      As you know from the  </diffmk:wrapper><link diffmk:change="added" linkend="birt_integration_with_seam"><diffmk:wrapper diffmk:change="added">Adding BIRT Functionality to Standard Seam Web Project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">  chapter, before using the BIRT Integration framework tags on the page you need to declare the tag library and specify the name space with this line:
+   </diffmk:wrapper></para>
+
+      <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[
+	xmlns:b="http://jboss.com/products/seam/birt"
+]]></diffmk:wrapper></programlisting>
+      <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+ The dynamics to the report adds this line:
+  </diffmk:wrapper></para>
+   <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[
+<b:param name="sortOrder" value="#{yourJavaBean.sortOrder}" />
+]]></diffmk:wrapper></programlisting>
+
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">We bound the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> report parameter to Java Bean variable </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">value="#{yourJavaBean.sortOrder}"</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> using EL expression, and the value to the variable is assigned in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Products.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file. </diffmk:wrapper></para>
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">By default if you embed a report into HTML page the HTML-format report contains  the &lt;html&gt;,
+        &lt;head&gt;, &lt;body&gt; etc., tags. However if your HTML page already has those tags, you can rid of them using the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">embeddable="true"</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> attribute of
+
+       the </diffmk:wrapper><emphasis diffmk:change="added" role="bold"><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:birt&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added">  component.</diffmk:wrapper></para>
+    </listitem>
+        <listitem diffmk:change="added">
+        <para><diffmk:wrapper diffmk:change="added">Deploy the project onto the server and open your browser to see the report is successfully generated. You should navigate to
+
+       </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">http://localhost:8080/yourProjectName/Products.seam</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> to select the criterion and press the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Generate Report</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button. You will be redirected to the  </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">http://localhost:8080/HelloBirt/ProductsReport.seam</diffmk:wrapper></code>
+
+   </para>
+   <figure float="0">
+       <title><diffmk:wrapper diffmk:change="changed">Dynamic Report</diffmk:wrapper></title>
+       <mediaobject>
+           <imageobject>
+                <imagedata fileref="images/hibernate_datasource/finalReport.png"/>
+           </imageobject>
+       </mediaobject>
+   </figure>
+        </listitem>
+</orderedlist>
+     <para><diffmk:wrapper diffmk:change="changed">Thus, a Seam project that includes the BIRT facet can be deployed as any project. If you
+        define the Hibernate ODA driver, the JBoss BIRT engine will use JNDI URL that has to be bound
         to either Hibernate Session Factory or Hibernate Entity Manager Factory. If you
         don't specify the JNDI URL property, our engine will try the following JNDI
-        URLs:</para>
+        URLs:</diffmk:wrapper></para>
     <itemizedlist>
         <listitem>
             <para>
@@ -870,13 +813,13 @@
     </itemizedlist>
 
     <para>When creating a Seam EAR project, Hibernate Entity Manager Factory is bound to
-            <emphasis>java:/{projectName}EntityManagerFactory</emphasis>. All you need to do is
-        using the Hibernate Configuration created automatically. You can use default values for the
-        Hibernate Configuration and JNDI URL within the BIRT Hibernate Data Source.</para>
+            <emphasis>java:/{projectName}EntityManagerFactory</emphasis><diffmk:wrapper diffmk:change="changed">. All you need to do is
+        to use the Hibernate Configuration created automatically. You can use default values for the
+        Hibernate Configuration and JNDI URL within the BIRT Hibernate Data Source.</diffmk:wrapper></para>
 
-    <para>When using a Seam WAR project, neither HSF nor HEMF aren't binded to JNDI by
-        default. You has to do this manually. For instance, HSF can be bound to JNDI by adding the
-        following property to the <emphasis>
+    <para><diffmk:wrapper diffmk:change="changed">When using a Seam WAR project, neither HSF nor HEMF aren't bound to JNDI by
+        default. You have to do this manually. For instance, HSF can be bound to JNDI by adding the
+        following property to the </diffmk:wrapper><emphasis>
             <property moreinfo="none">persistence.xml</property></emphasis> file:</para>
 
     <programlisting format="linespecific" role="XHTML"><![CDATA[<property name="hibernate.session_factory_name" value="java:/projectname"/>
@@ -893,13 +836,293 @@
                 <property moreinfo="none">WebContent/WEB-INF/platform/configuration/config.ini</property>
             </emphasis> file.</para>
     </note>
-    <para>In conclusion, the main goal of this document is to get you know with a full featureset
-        that <property moreinfo="none">JBoss BIRT Tools</property> provide. Thus if you have some questions,
+
+    <para><diffmk:wrapper diffmk:change="changed">In conclusion, the main goal of this document is to get you to know with a full feature set
+        that </diffmk:wrapper><property moreinfo="none">JBoss BIRT Tools</property> provide. Thus if you have some questions,
         comments or suggestions on the topic, please feel free to ask in the <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
             Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs in
-        future leaving your vote on our page <ulink url="http://www.jboss.org/community/docs/DOC-10795">here</ulink>.</para>
+        future leaving your vote on the article <ulink url="http://www.jboss.org/community/docs/DOC-10795">Overview of the improvements required by JBossTools/JBDS Docs users</ulink>.</para>
+
+</section>
+    </chapter>
+
+
+<chapter diffmk:change="added" id="framework" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/tasks.xml" xreflabel="framework">
+    <?dbhtml filename="framework.html"?>
+
+    <chapterinfo>
+        <keywordset>
+
+            <keyword>Eclipse</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>JBoss Tools</keyword>
+                   <keyword>BIRT Integration</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>JBoss BIRT Integraion Framework API Reference</title>
+
+
+<section>
+
+    <title>
+        <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> Component
+    </title>
+
+
+
+<para>
+    The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> component servers to integrate a BIRT report into Seam/JSF  container.
+    The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> tag recognizes most of the parameters described on the BIRT
+    <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">Report Viewer Parameters</ulink> page, though it has attributes of its own.
+
+</para>
+
+
+    <table>
+        <title><emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> Component Reference</title>
+    <tgroup cols="3">
+        <thead>
+            <row>
+                <entry>Attribute</entry>
+                <entry>Correspondance to BIRT Report Viewer parameters</entry>
+                <entry>Description/</entry>
+
+            </row>
+        </thead>
+        <tbody>
+            <row>
+                <entry>designType</entry>
+                <entry> - </entry>
+                <entry>Corresponds to the BIRT servlet mappings. Possible values are run, frameset, preview and embed.
+                If the attribute is set to  embed the component is used for
+                embeddable html. This type ignores all the attributes except designName
+                and masterpage.
+               </entry>
+            </row>
+            <row>
+                <entry>embeddable</entry>
+                <entry> - </entry>
+                <entry>A BIRT report occupies the whole page by default. It contains the &lt;html&gt;,
+                    &lt;head&gt;, &lt;body&gt; etc., tags. Embedded report can be a part of another page.
+                    It doesn't contain the above mentioned tags. Only HTML report can be embedded.</entry>
+            </row>
+            <row>
+                <entry>designName</entry>
+                <entry>__report</entry>
+                <entry>Sets the name of the report design to process. This can be an absolute path or relative to the working folder. Valid values are  run, frameset and preview</entry>
+            </row>
+
+            <row>
+                <entry>format</entry>
+                <entry>__format</entry>
+                <entry>Specifies the desired output format, such as pdf, html, doc, ppt, or xls.</entry>
+            </row>
+
+            <row>
+                <entry>title</entry>
+                <entry>__title</entry>
+                <entry>Sets the report title.</entry>
+            </row>
+
+            <row>
+                <entry>showtitle</entry>
+                <entry>__showtitle</entry>
+                <entry>Determines if the report title is shown in the frameset viewer. Defaults to true.</entry>
+            </row>
+
+            <row>
+                <entry>toolbar</entry>
+                <entry>__toolbar</entry>
+                <entry>
+
+                    Determines if the report toolbar is shown in the frameset viewer.Defaults to true. Valid values are true and false.</entry>
+            </row>
+
+
+
+            <row>
+                <entry>navigationbar</entry>
+                <entry>__navigationbar</entry>
+                <entry>
+
+                    Determines if the navigation bar is shown in the frameset viewer. Defaults to true. Valid values are true and false.</entry>
+            </row>
+
+
+            <row>
+                <entry>document</entry>
+                <entry>__document</entry>
+                <entry>
+                    Sets the name for the rptdocument. The document is created when the report engine separates run and render tasks, and
+                    is used to support features like table of contents and pagination.
+                    This setting can be an absolute path or relative to the working folder. If no document parameter is used, a unique document is created in the document folder.
+                    </entry>
+            </row>
+
+            <row>
+                <entry>locale</entry>
+                <entry>__locale</entry>
+                <entry>
+     Specifies the locale for the specific operation. Note that this will override the default locale.
+                </entry>
+            </row>
+            <row>
+                <entry>svg</entry>
+                <entry>__svg</entry>
+                <entry>
+             Specifies whether SVG is supported.
+                </entry>
+            </row>
+
+
+
+            <row>
+                <entry>page</entry>
+                <entry>__page</entry>
+                <entry>
+                  Specifies specific page to render.
+                </entry>
+            </row>
+
+
+            <row>
+                <entry>pagerange</entry>
+                <entry>__pagerange</entry>
+                <entry>
+                    Specifies page range to render. Eg 1-4,7.
+                </entry>
+            </row>
+
+
+            <row>
+                <entry>masterpage</entry>
+                <entry>__masterpage</entry>
+                <entry>
+
+                    Indicates that the report master page should be used or not. Validvalues are true and false.
+                </entry>
+            </row>
+
+
+            <row>
+                <entry>overwrite</entry>
+                <entry>__overwrite</entry>
+                <entry>
+
+                    This setting if set to true will force an overwrite of the existing report document.
+                </entry>
+            </row>
+
+            <row>
+                <entry>bookmark</entry>
+                <entry>__bookmark</entry>
+                <entry>
+
+                    Specifies a specific bookmark within the report to load. The viewer will automatically load the appropriate page.
+                </entry>
+            </row>
+
+
+
+            <row>
+                <entry>rtl</entry>
+                <entry>__rtl</entry>
+                <entry>
+                    Specifies whether to display the report in right to left format. This setting defaults to false.
+                </entry>
+            </row>
+
+
+
+            <row>
+                <entry>fittopage</entry>
+                <entry>__fittopage</entry>
+                <entry>
+                Specifies whether PDF generation should fit content to a page. Valid values are true and false.
+                </entry>
+            </row>
+
+
+            <row>
+                <entry>resourceFolder</entry>
+                <entry>__resourceFolder</entry>
+                <entry>
+                Specifies the resource folder to use. This setting will override the default setting in the web.xml. The resource folder is used to locate libraries, images, and resource files.
+                </entry>
+            </row>
+
+        </tbody>
+    </tgroup>
+    </table>
+
+</section>
+
+    <section>
+        <title><emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> Component</title>
+        <para>
+            The <emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> tag describes report parameter.
+        </para>
+
+        <table>
+            <title><emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> Component</title>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Attribute</entry>
+
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>name</entry>
+                        <entry>The parameter name. Required.</entry>
+                    </row>
+                    <row>
+                        <entry>value</entry>
+                        <entry>The parameter value. Required.</entry>
+                    </row>
+
+                    <row>
+                        <entry>isnull</entry>
+                        <entry>Specifies that a report parameter has a null value</entry>
+                    </row>
+                    <row>
+                        <entry>islocale</entry>
+                        <entry>Specifies whether the parameter is localized</entry>
+                    </row>
+
+                </tbody>
+
+            </tgroup>
+        </table>
+    </section>
 
 </chapter>
+
+<chapter diffmk:change="added" id="birt_plugin_rel_resources" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/links.xml" xreflabel="birt_plugin_rel_resources">
+    <?dbhtml filename="links.html"?>
+    <chapterinfo diffmk:change="added">
+        <keywordset diffmk:change="added">
+
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">Eclipse</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></keyword>
+                   <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">BIRT Integration</diffmk:wrapper></keyword>
+        </keywordset>
+    </chapterinfo>
+
+
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Other Relevant Resources on the Topic</diffmk:wrapper></title>
+
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">All JBoss Developer Studio/JBoss Tools release documentation you can find at </diffmk:wrapper><ulink diffmk:change="added" url="http://docs.jboss.org/tools/"><diffmk:wrapper diffmk:change="added">http://docs.jboss.org/tools</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> in the corresponding release directory.</diffmk:wrapper></para>
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The latest documentation builds are available at </diffmk:wrapper><ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/nightly-docs/"><diffmk:wrapper diffmk:change="added">http://download.jboss.org/jbosstools/nightly-docs</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.
+
+</diffmk:wrapper></para>
+
+</chapter>
+
 
 
 </book>
