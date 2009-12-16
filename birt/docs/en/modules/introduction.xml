@@ -83,9 +83,9 @@
             <listitem>
                 <para>Eclipse with <property>JBoss Tools</property>
                     installed (how to install <property>JBoss Tools</property> on Eclipse, what
-                    dependences and versions requirements are needed reed in the <link
-                        linkend="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/html_single/index.html#JBossToolsInstall"
-                        >JBoss Tools Installation</link> section)</para>
+                    dependences and versions requirements are needed reed in the <ulink
+                        url="&gsglink;#JBossToolsInstall"
+                        >JBoss Tools Installation</ulink> section)</para>
             </listitem>
             <listitem>
                 <para>BIRT Report Designer (BIRT Report Designer 2.3.2 
