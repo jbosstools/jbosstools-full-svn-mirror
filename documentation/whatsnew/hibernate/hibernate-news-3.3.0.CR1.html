@@ -11,7 +11,7 @@
 <body>
 <h1>Hibernate tools 3.3.0.M4 and 3.3.0.CR1 What's New</h1>
 
-<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../maven/maven-news-1.0.0.M3.html">Maven Tools &gt;</a></p>
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../maven/maven-news-1.0.0.CR1.html">Maven Tools &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 
@@ -26,11 +26,15 @@
   <tr>
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Properties editor for hibernate.properties</b></td>
     <td valign="top">
-    <p>JBoss Tools Properties editor now can be extended to recognize particular files by name and provides content assist with help hoover for available properties.</p>
+    <p>JBoss Tools Properties editor can be extended to recognize
+    particular files by name and provides content assist with help
+    hoover for available properties.</p>
 
-    <p>For hibernate.properties files editor shows available properties in 'Add/Edit property' dialog.</p>
+    <p>For hibernate.properties files editor shows available
+	properties in 'Add/Edit property' dialog.</p>
 	<img src="images/hibernate-props-ca1.png" />
-    <p>the same content assists works for source tab if you prefer use text editor to edit properties files.</p>
+    <p>The same content assists works for source tab if you prefer use
+	text editor to edit properties files.</p>
 	<img src="images/hibernate-props-ca2.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4916">Releated jira</a></small></p>
     </td>
@@ -42,10 +46,11 @@
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Possibility to open orm.xml</b></td>
+    <td valign="top" align="right"><a name="itemname3"
+    id="itemname3"></a><b>Possibility to open orm.xml</b></td>
     <td valign="top">
 
-    <p>"Open Mapping File" can open orm.xml for JPA project, for Hibernate JPA configuration</p>
+    <p>"Open Mapping File" now also open orm.xml for JPA project if relevant for Hibernate JPA entity.</p>
 	<img src="images/open-orm-xml.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4227">Releated jira</a></small></p>
     </td>
@@ -78,10 +83,10 @@
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Views improvements</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Alphabetical sort in outline</b></td>
     <td valign="top">
 
-    <p>'Outline' View for hibernate mapping diagram supports alphabet sorting. 'Sort' button was added to view's action bar.</p>
+    <p>'Outline' View for hibernate mapping diagram now has a toggle for alphabetical sorting. 'Sort' button was added to view's action bar.</p>
 	<img src="images/sortedoutline.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4715">Releated jira</a></small></p>
     </td>
@@ -93,10 +98,10 @@
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Capability to change connection router</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Different connection routers</b></td>
     <td valign="top">
 
-    <p>Supports direct connections as straight lines and connections as routed</p>
+    <p>You can now select if you want the layout of the Mapping Diagram to use straight lines or routed lines.</p>
 	<img src="images/selectconnections.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5124">Releated jira</a>, <a href="https://jira.jboss.org/jira/browse/JBIDE-4873">one more</a></small></p>
     </td>
@@ -108,10 +113,10 @@
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Display db tables relations</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Hide/show Foreign key constraints</b></td>
     <td valign="top">
 
-    <p>"Foreign key constraints" - possible to Show|Hide these relations </p>
+    <p>You can toggle wether "Foreign key constraints" are to be shown or not in the diagram. </p>
 	<img src="images/display-foreign-key-constrains.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4956">Releated jira</a>, <a href="https://jira.jboss.org/jira/browse/JBIDE-4873">one more</a></small></p>
     </td>
@@ -141,10 +146,10 @@
   </tr>
   
     <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>@Index annotation</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>@Index</b></td>
     <td valign="top">
 
-    <p>The JPA UI and validation has been extended to cover Hibernate @Index annotation.</p>
+    <p>The JPA UI has been extended to cover Hibernate @Index annotation.</p>
 	<img src="images/indexannotation.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4666">Releated jira</a></small></p>
     </td>
@@ -156,7 +161,7 @@
   </tr>
   
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>@Index annotation</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>@ForeignKey</b></td>
     <td valign="top">
 
     <p>The JPA validation has been extended to cover Hibernate @ForeignKey annotation.</p>
@@ -164,8 +169,6 @@
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4664">Releated jira</a></small></p>
     </td>
   </tr>
-  
-  
   
   <tr>
     <td colspan="2">
@@ -176,10 +179,14 @@
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Use Eclipse's preferences</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Console Configuration view and life cycle</b></td>
     <td valign="top">
 
-    <p>Console configuration life circle depends on Eclipse's launch configuration preferences.</p>
+    <p>The console configuration view now listens to the Eclipse
+	preferences concerning launch configurations. Allowing you to
+	hide configurations that are associated with closed or missing
+	projects. Similarly you can enable an option to delete the
+	launch configuraiton if you delete the associated project.</p>
 	<img src="images/configuration_preferences.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5222">Releated jira</a>, <a href="https://jira.jboss.org/jira/browse/JBIDE-4899">one more</a></small></p>
     </td>
@@ -193,7 +200,7 @@
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Refactoring</b></td>
     <td valign="top">
 
-    <p>Rename NamingStrategy and EntityResolver on refactoring changes.</p>
+    <p>Naming strategy and Entity resolvers now get updated if you rename the classes.</p>
 	<img src="images/refactoring.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4780">Releated jira</a></small></p>
     </td>

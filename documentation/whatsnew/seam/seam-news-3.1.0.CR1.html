@@ -12,7 +12,7 @@
 <h1>Seam tools 3.1.0.CR1 What's New</h1>
 
 <p align="right"><a href="../index.html">&lt; Main Index</a> <a
-	href="../jst/jst-news-3.1.0.CR1.html">JST/JSF Tools News &gt;</a></p>
+	href="../vpe/vpe-news-3.1.0.CR1.html">Visual Page Editor News &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 	<tr>
@@ -24,10 +24,10 @@
 	</tr>
 	<tr>
 		<td valign="top" align="left">
-		<p><b>Test project creation.</b></p>
+		<p><b>Optional test project creation</b></p>
 		</td>
 		<td valign="top">
-		<p>There is a new option to avoid test project creation in the wizard.</p>
+		<p>The Seam Wizard now have an option to prevent the creation of a test project in case you prefer another kind of test project.</p>
 		<img src="images/testProjectCreation.png">
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-2807">Related Jira</a></small></p>
@@ -43,8 +43,11 @@
 		<p><b>Connection configuration changes</b></p>
 		</td>
 		<td valign="top">
-		<p>Seam project uses DTP connection profile direct(without copying it's settings into hibernate.properties file).</p>
-		<img src="images/seam_only.png" />	
+		<p>Seam projects now creates a Hibernate configuration
+		that uses the selected connection profile directly
+		(without copying it's settings into
+		hibernate.properties file).</p>
+		<img src="images/seam_only.png" />
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-4985">Related Jira</a></small></p>
 		</td>
@@ -54,24 +57,6 @@
 		<hr />
 		</td>
 	</tr>
-	<tr>
-		<td valign="top" align="left">
-		<p><b>Seam+JPA</b></p>
-		</td>
-		<td valign="top">
-		<p>Seam project with JPA facet uses JPA's configured connection.</p>
-
-		<img src="images/seam_and_jpa.png" />	
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-4987">Related Jira</a></small></p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr />
-		</td>
-	</tr>
-
 	<tr>
 		<td colspan="2">
 		<hr />
@@ -84,7 +69,9 @@
 		<p><b>Validation Improvements</b></p>
 		</td>
 		<td valign="top">
-		<p>Now Seam project is revalidated if Seam Runtime changed, added or removed within Seam Preference page.</p>
+		<p>Seam project is now revalidated if Seam Runtime
+		changed, added or removed within Seam Preference
+		page.</p>
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-5170">Related Jira</a></small></p>
 		</td>
@@ -112,11 +99,6 @@
 			href="https://jira.jboss.org/jira/browse/JBIDE-5090">Related Jira</a></small></p>
 		</td>
 	</tr>
-	<tr>
-		<td colspan="2">
-		<hr />
-		</td>
-	</tr>
 
 	<tr>
 		<td colspan="2">
@@ -130,7 +112,7 @@
 		<p><b>Add/Remove Seam Support Wizard.</b></p>
 		</td>
 		<td valign="top">
-		<p>There is a new actions in <i><b>Project->Configuration...</b></i> menu to add/remove Seam support to a project.</p>
+		<p><i><b>Project->Configuration...</b></i> menu is now used to allow for add/remove Seam support to a project.</p>
 		<img src="images/addSeamSupport.png"><br/><br/>
 		<img src="images/removeSeamSupport.png">
 		<p><small><a

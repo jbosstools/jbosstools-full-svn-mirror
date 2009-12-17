@@ -12,46 +12,31 @@
 <h1>JST/JSF 3.1.0.M4 and 3.1.0.CR1  What's New</h1>
 
 <p align="right"><a href="../index.html">&lt;
-Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
+Main Index</a> <a href="../hibernate/hibernate-news-3.3.0.CR1.html">Hibernate Tools &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
-	<tr>
+
+		<tr>
 		<td colspan="2">
 		<hr />
-		<h3>Web Projects View</h3>
+		<h3>Refactoring / References Search</h3>
 		<hr />
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Menu
-		key is supported</b></td>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Search EL references to Java Method or Property</b></td>
 		<td valign="top">
-		<p>Menu key now shows the same context menu in 'Web Projects' view
-		as right mouse click does.</p>
-
+		  Find references and rename now supported through context menu or Ctr+Shift+G for: 
+		<ul>
+			<li>Manage Bean's property/method</li>
+			<li>JavaBean property/method</li>
+			<li>Message Bundle property</li>
+		</ul>
 		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-5041">Related Jira</a></small></p>
+			href="https://jira.jboss.org/jira/browse/JBIDE-4771">Related Jira</a></small></p>
 		</td>
 	</tr>
 
-	<tr>
-		<td colspan="2">
-		<hr />
-		<h3>RichFaces Support</h3>
-		<hr />
-		</td>
-	</tr>
-	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>3.3.2.S1 release included</b></td>
-		<td valign="top">
-		<p>Richfaces 3.3 Capability was updated to Richfaces 3.3.2.SR1
-		release</p>
-
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-5025">Related Jira</a></small></p>
-
-		</td>
-	</tr>
 
 	<tr>
 		<td colspan="2">
@@ -63,7 +48,7 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>JSF 2 Composite Component Attributes</b></td>
 		<td valign="top">
-		<p>Content assists support added for JSF 2 Composite UI Components</p>
+		<p>Content assist now understands composite componenents from JSF 2. When you use a composite component code assist reads the component metadata and provide code completion for the components attributes.</p>
 	 	<p><img src="images/composite-comp-ca.png" /></p>
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-4970">Related Jira</a></small></p>
@@ -77,9 +62,13 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Resource Bundle Content Assist</b></td>
+		<td valign="top" align="left"><a name="itemname3"
+		id="itemname3"></a><b>Resource Bundle Content Assist
+		from includes</b></td>
 		<td valign="top">
-		<p>Content assist in template clients now includes proposals loaded from resource bundles declared in template.</p>
+		<p>Resource bundles (f:loadBundle) included in
+		templates are now considered when perfoming content
+		assist in files that uses the templates.</p>
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-816">Related Jira</a></small></p>
 
@@ -92,13 +81,15 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Expression Language Content Assist</b></td>
+		<td valign="top" align="left"><a name="itemname3"
+		id="itemname3"></a><b>EL Hoover Doc</b></td>
 		<td valign="top">
-		<p>Content assists for expression language shows hoovers with JavaDoc-comments if exist for proposed operands of EL.</p>
+		<p>Content assists for expression language now shows
+		Java doc if available for referenced methods.</p>
 	 	<p><img src="images/javadochooverfrombin.png" /></p>
 	 	<p><img src="images/javadochooverfromsource.png" /></p>
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-2541">Related Jira</a></small></p>
+		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-2541">Related
+			Jira</a></small></p>
 
 		</td>
 	</tr>
@@ -109,13 +100,16 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Content Assist on CSS class names</b></td>
+		<td valign="top" align="left"><a name="itemname3"
+		id="itemname3"></a><b>Content Assist on CSS class
+		names</b></td>
 		<td valign="top">
-		<p>Content assists for "class" and "styleClass" attributes for html and jsf tags shows CSS classes loaded on the page.</p>
+		<p>Content assists for "class" and "styleClass"
+		attributes for html and jsf tags shows CSS available
+		on the page.</p>
 	 	<p><img src="images/caforstyleclassattribute.png" /></p>
-	 	<p><img src="images/caforclassattribute.png" /></p>
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-3563">Related Jira</a></small></p>
+		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3563">Related
+			Jira</a></small></p>
 
 		</td>
 	</tr>
@@ -125,12 +119,15 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Content Assist on JSF Tags</b></td>
+		<td valign="top" align="left"><a name="itemname3"
+		id="itemname3"></a><b>Content Assist on JSF
+		Tags</b></td>
 		<td valign="top">
-		<p>Content assists supports multiple namespaces with the same URI.</p>
+		<p>Content assists supports multiple namespaces with
+		the same URI.</p>
 	 	<p><img src="images/sameurifornamespaces.png" /></p>
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-5097">Related Jira</a></small></p>
+		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5097">Related
+			Jira</a></small></p>
 
 		</td>
 	</tr>
@@ -168,25 +165,6 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 		</td>
 	</tr>
 
-		<tr>
-		<td colspan="2">
-		<hr />
-		<h3>Refactoring / References Search</h3>
-		<hr />
-		</td>
-	</tr>
-	<tr>
-		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Search EL references to Java Method or Property</b></td>
-		<td valign="top">
-		<ul>Find references and rename now supported through context menu or Ctr+Shift+G for: 
-			<li>Manage Bean's property/method</li>
-			<li>JavaBean property/method</li>
-			<li>Message Bundle property</li>
-		</ul>
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-4771">Related Jira</a></small></p>
-		</td>
-	</tr>
 
 			<tr>
 		<td colspan="2">
@@ -217,7 +195,7 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Content Navigation</b></td>
 		<td valign="top">
-		<p>Open-on now supports EL substitution to make it working even for strings with El inside</p>
+		<p>Open-on now understands EL substitution. Allowing openOns to work on expresssions like <code>#{images}/seamlogo.png</code>. This will work if #{images} is defined and resolves to a folder where seamlogo.png is present.</p>
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-2806">Related Jira</a></small></p>
 		</td>
@@ -232,7 +210,7 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Palette View</b></td>
 		<td valign="top">
-		<p>JBoss Tools Palette is hooked into standard Eclipse GEF Palette view. Now it could be accessed from "Window->Show View->Palette".
+		<p>JBoss Tools Palette is hooked into standard Eclipse GEF Palette view. Now it can be accessed from "Window->Show View->Palette".
 		</p>
 		
 		<img src="images/showviewpalette.png">
@@ -247,7 +225,28 @@ Main Index</a> <a href="../as/as-news-3.1.0.CR1.html">Server Tools &gt;</a></p>
 		<hr />
 		</td>
 	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>RichFaces Support</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>3.3.2.S1 release included</b></td>
+		<td valign="top">
+		<p>Richfaces 3.3 Capability was updated to Richfaces 3.3.2.SR1
+		release</p>
+
+		<p><small><a
+			href="https://jira.jboss.org/jira/browse/JBIDE-5025">Related Jira</a></small></p>
+
+		</td>
+	</tr>
+
 </table>
+
 
 </body>
 

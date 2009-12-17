@@ -1,0 +1,160 @@
+      <p><a href="smooks/smooks-news-1.1.0.CR1.html">Smooks Tools</a></p>      <?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>ESB tools 1.1.0.CR1 What's New</title>
+</head>
+<body>
+<h1>ESB tools 1.1.0.CR1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../smooks/smooks-news-1.1.0.M4.html">Smooks Tools &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Runtimes</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>ESB 4.7 Support</b></td>
+    <td valign="top">
+    <p>The ESB runtime definition now supports ESB 4.7 which had an updated layout for jars and new schema files.</p>
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5229">Related Jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      
+	<hr/>
+    </td>
+  </tr>
+	
+	 <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b> JBoss Server configuration  support for ESB runtime</b></td>
+    <td valign="top">
+    <p>In early ESB tools, hardcode to use &quot;default&quot; configuration as JBoss Server configuration when define a ESB runtime by point to a SOA-P, in the new ESB tools, the user can choose any available configurations, for Server applied ESB runtime in ESB project creation wizard, the configuration will be picked up from JBoss server runtime.</p>
+    <img src="images/esbnewruntime.gif" alt="" />
+
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5108">Related Jira</a></small></p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Deployment</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>ESB Projects are now WTP Modules</b></td>
+    <td valign="top">
+    <p>The ESB projects are now full fledged WTP modules meaning it is possible to use an ESB module inside a WAR or EAR in WTP. ESB projects can still be deployed as an individual module.</p>
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4320">Related Jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      
+	<hr/>
+    </td>
+  </tr>
+	
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Editors</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>OpenOn in ESB Form Editor</b></td>
+    <td valign="top">
+    <p>When editing ESB actions which refer to other files (Drools,
+    Groovy, Smooks, etc.), the label for the field turns into a link
+    to launch the editor associated with that type of file. Simply
+    click the link and the appropriate editor should launch if the
+    path to the file is accessible within the project.</p>
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5191">Related Jira</a></small></p>
+    <img src="images/esb-editor-linking-smooks.jpg" alt="" />
+    </td>
+  </tr>
+ 
+  <tr>
+  <td colspan="2">
+      <hr/>
+    </td>
+	</tr>
+	
+	 <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>New Actions Available for ESB 4.7</b></td>
+    <td valign="top">
+    <p>New actions are available to support ESB 4.7. New actions (XsltAction, PersistAction, BpmProcessor, ScriptingAction), new processors (EJBProcessor), new routers (HttpRouter, JMSRouter, EmailRouter), and more -- SyncServiceInvoker, EmailWiretap, Wise SOAP Client, SOAPProxy, and SchemaValidationAction, as well as changes to existing components.</p>
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5199">Related Jira</a></small></p>
+    <img src="images/esb-editor-new-4.7-actions.jpg" alt="" />
+    </td>
+  </tr>
+  
+  <tr>
+  <td colspan="2">
+      <hr/>
+    </td>
+	</tr>
+
+	 <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Browse for Action class</b></td>
+    <td valign="top">
+    <p>The class of Action's now has a Browse button which will show you possible classes that extends from  <code>AbstractActionLifecycle</code>.</p>
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-2023">Related Jira</a></small></p>
+    </td>
+	
+	 <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Browse for process method(s)</b></td>
+    <td valign="top">
+    <p>The Process field on an Action in the ESB now has a Browse button which allows you to select which method on the Action class should be used for the proces. The list in the dialog will show all public methods that has a <code>Message</code> parameter. You can select multiple methods if you need.</p>
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-2024">Related Jira</a></small></p>
+<p><img src="../images/esbmultimethodbrowse.png"/></p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Wizards</h3>
+	<hr/>
+    </td>
+  </tr>
+	
+	 <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>New icon for ESB Wizards</b></td>
+    <td valign="top">
+    <p>The ESB wizards now uses a more ESB like icon instead of the default "red ball".</p>
+<p><img src="../images/esbnewwizardlogo.png"/></p>
+
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4730">Related Jira</a></small></p>
+
+    </td>
+  </tr>
+  
+</table>
+
+</body>
+
+</html>
+
+
