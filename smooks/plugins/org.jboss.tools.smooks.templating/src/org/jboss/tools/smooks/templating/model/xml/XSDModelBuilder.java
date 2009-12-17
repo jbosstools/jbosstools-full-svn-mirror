@@ -186,7 +186,6 @@ public class XSDModelBuilder extends ModelBuilder {
     }
 
     private void expand(XSDElementDeclaration elementDeclaration, int minOccurs, int maxOccurs, Node parent, Document document) {
-        String elementName = elementDeclaration.getName();
         XSDTypeDefinition typeDef;
 
         if(elementDeclaration.isElementDeclarationReference()) {
@@ -196,8 +195,9 @@ public class XSDModelBuilder extends ModelBuilder {
             typeDef = elementDeclaration.getTypeDefinition();
         }
 
+        String elementName = elementDeclaration.getName();
         if(elementDeclaration.isAbstract()) {
-            if(typeDef == null) {
+            if(typeDef != null) {
                 addTypeImpls(typeDef, minOccurs, maxOccurs, parent, document);
             }
             return;

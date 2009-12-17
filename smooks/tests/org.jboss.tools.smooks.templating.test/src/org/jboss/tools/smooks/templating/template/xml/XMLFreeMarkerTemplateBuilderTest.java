@@ -21,6 +21,7 @@ package org.jboss.tools.smooks.templating.template.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -148,7 +149,11 @@ public class XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		builder.setRootElementName("smooks-resource-list");
 		XMLFreeMarkerTemplateBuilder templateBuilder = new XMLFreeMarkerTemplateBuilder(builder);
 		Document document = templateBuilder.getModel();
-		checkNodeName(document.getDocumentElement());
+		
+		StringWriter writer = new StringWriter();
+		XmlUtil.serialize(document, true, writer);
+		System.out.println(writer);
+		//checkNodeName(document.getDocumentElement());
 	}
 
 	private void checkNodeName(Node node) {
