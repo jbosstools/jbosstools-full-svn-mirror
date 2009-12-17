@@ -1,7 +1,6 @@
 package org.eclipse.bpel.ui.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +35,18 @@ public class CompoundCommand extends AutoUndoCommand {
 			if (cmd == null)
 				return false;
 			if (!cmd.canExecute())
+				return false;
+		}
+		return true;
+	}
+	
+	public boolean canDoExecute() {
+		if (commandList.size() == 0)
+			return false;
+		for (Command cmd : commandList) {
+			if (cmd == null)
+				return false;
+			if ((cmd instanceof AutoUndoCommand) && !((AutoUndoCommand)cmd).canDoExecute())
 				return false;
 		}
 		return true;
