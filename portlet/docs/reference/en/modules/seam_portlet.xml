@@ -1,139 +1,220 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="seam_portlet" xreflabel="seam_portlet">
-    <?dbhtml filename="seam_portlet.html"?>
-    <title>Creating Seam Portlet</title>
+<section id="seam_portlet">
+	<title>Creating and Deploying a Seam Portlet</title>
 
-    <para>This chapter covers the steps on how to configure Seam Portlet within Dynamic Web
-        Project and Seam Project by using the wizards <property>JBoss Tools</property> provides.</para>
+    <para>This chapter covers the steps on how to configure a Seam portlet within a Seam
+        project with the help of the <property>JBoss Portlet Tools</property> features.</para>
     
     <section id="seam_portlet1">
-        <title>Adding Seam Portlet to Dynamic Web Project</title>
+    	<title>Creating a Seam Project with JBoss Portlet Capabilities</title>
 
-        <para>To add Seam Portlet to a Dynamic Web Project first you should organize New Dynamic Web
-            Project with the Configuration setting to <emphasis>
-                <property>JBoss Seam Portlet Project v2.0</property>.</emphasis></para>
-
-        <figure>
-            <title>Calling New Portlet Wizard</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/seam_portlet/seam_portlet1.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>It will add all needed facets to your project. By clicking the <emphasis>
-                <property>Modify</property>
-            </emphasis> button you can observe the chosen configuration of facets as well as modify
-            it. As you can see, all JBoss Portlets are checked.</para>
-
-        <figure>
-            <title>Project Facets</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/seam_portlet/seam_portlet2.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>Next wizard pages are for adjusting the Project Web Modules and JSF Configuration.
-            They include default values, so you can skip them by pressing <emphasis>
-                <property>Next</property>.</emphasis></para>
-
-        <para>On the <property>Seam Facet</property> page <ulink url="&seamlink;#seamFacet">set
-                Connection Profile</ulink> and hit <emphasis>
-                <property>Next</property>.</emphasis></para>
-
-        <figure>
-            <title>Seam Facet Settings</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/seam_portlet/seam_portlet3.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>Last wizard page will prompt you to set the path to Portletbridge Runtime
-            location.</para>
-
-        <figure>
-            <title>Setting the Portletbridge Runtime</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/seam_portlet/seam_portlet4.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <tip>
-            <title>Tip:</title>
-
-            <para>Thus you should have JBoss Portlet Bridge downloaded and extracted somewhere on
-                your hard drive. You can download JBoss Portlet Bridge 1.0.0.B4 from <ulink
-                    url="http://www.jboss.org/portletbridge/download/">www.jboss.org/portletbridge/download</ulink>.</para>
-        </tip>
-
-        <para>Now, to add Seam Portlet to the project you should follow to <emphasis>
-                <property>New > Other > JBoss Tools Web > Portlet > JSF/Seam
-                Portlet</property>.</emphasis> This will call the wizard for creating JSF/Seam
-            Portlets.</para>
-
-        <figure>
-            <title>Calling the Create Portlet Wizard</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/seam_portlet/seam_portlet5.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>As we set Seam Configuration for the Dynamic Web Project, the wizard puts the values
-            as for Seam Portlet.</para>
-
-        <figure>
-            <title>Creating Seam Portlet</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/seam_portlet/seam_portlet6.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>After creating the Seam Portlet, you should <link linkend="deploying_to_portal">deploy
-                the project to JBoss Portal</link> and start the Server. In a Browser
-            you&apos;ll see the following:</para>
-
-        <figure>
-            <title>Seam Portlet in the Browser</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/seam_portlet/seam_portlet7.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<para>Follow one of two ways of creating a Seam project with JBoss Portlet capabilities enabled:</para>
+    	<orderedlist>
+    		<listitem>
+    			<para>Create a dynamic Web project with the <emphasis><property>Seam</property></emphasis>
+    				and <emphasis><property>JBoss Portlets</property></emphasis> facets enabled (<link linkend="create_dyn_web_proj_seam">the steps to proceed</link>)</para>    			
+    		</listitem>
+    		<listitem><para>Or create a Seam project with the JBoss Seam portlet configuration using the wizard JBoss Seam Tools provides  
+    			and follow all the wizard steps to enable JBoss Portlet capabilities (<link linkend="create_seam_proj">the steps to proceed</link>)</para></listitem>
+    	</orderedlist>
+    	
+    	<section id="create_dyn_web_proj_seam">
+    		<title>Creating a Dynamic Web Project with Seam and JBoss Portlet Capabilities</title>
+    		
+    		<para>To create a dynamic Web project with Seam and JBoss Portlet capabilities you should take the following steps:</para>
+    		
+    		<orderedlist>
+    			<listitem>
+    				<para>In the <emphasis><property>File</property></emphasis> menu, go to 
+    					<emphasis><property>New &gt; Other &gt; Web &gt; Dynamic Web Project</property>.</emphasis> The <property>New Dynamic Web Project</property>
+    					wizard starts.</para>
+    				
+    				<figure>
+    					<title>Creating a New Dynamic Web Project</title>
+    					<mediaobject>
+    						<imageobject>
+    							<imagedata fileref="images/seam_portlet/seam_portlet1.png"/>
+    						</imageobject>
+    					</mediaobject>
+    				</figure>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>Give the project a name and follow the steps 3, 4, 5 of the 
+    					<link linkend="jboss_core_portlet">&quot;Creating a Web Project with JBoss Portlet Capabilities&quot;</link> procedure to set the target runtime.</para>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>In the <emphasis><property>Configuration</property></emphasis> area of the first wizard page, 
+    					select <emphasis>
+    						<property>JBoss Seam Portlet Project v2.0</property>.</emphasis> It will add needed facets to the project.</para>
+    				
+    				<tip>
+    					<title>Tip:</title>
+    					<para>If you now click the <emphasis><property>Modify</property></emphasis> button, you should see the 
+    					<emphasis><property>JavaServer Faces</property>,</emphasis> <emphasis><property>Jboss Portlets</property></emphasis>
+    					and <emphasis><property>Seam</property></emphasis> facets enabled.</para>
+    				</tip>
+    				
+    				<figure>
+    					<title>Project Facets</title>
+    					<mediaobject>
+    						<imageobject>
+    							<imagedata fileref="images/seam_portlet/seam_portlet2.png"/>
+    						</imageobject>
+    					</mediaobject>
+    				</figure>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>The next two pages are for adjusting the project Java and Web modules.
+    					They include the default values, so you can skip them by pressing <emphasis>
+    						<property>Next</property>.</emphasis></para>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>On the <property>Jboss Portlet Capabilities</property> page, select 
+    				<emphasis><property>Portlet Target Runtime Provider</property></emphasis> as the portlet implementation library.</para>
+    				
+    				<tip>
+    					<title>Tip:</title>
+    					<para>All types of the portlet implementation library are described more closely in the wiki article at: 
+    						<ulink url="http://www.jboss.org/community/wiki/PortletFacetLibraries">http://www.jboss.org/community/wiki/PortletFacetLibraries</ulink>.</para>
+    				</tip>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>The next page is for configuring JSF capabilities. As it contains the default values, just click
+    				<emphasis><property>Next</property></emphasis> to proceed.</para>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>On the <property>Seam Facet</property> page, set a Seam runtime and
+    					a connection profile.</para>
+    				
+    				<tip>
+    					<title>Tip:</title>
+    					<para>For details about how to set a Seam runtime and a connection profile, see 
+    						<ulink url="&seamlink;#seamFacet">&quot;Configure Seam Facet Settings&quot;</ulink> in the Chapter 2, 
+    						<ulink url="&seamlink;">&quot;Seam Dev Tools Reference Guide&quot;</ulink>.</para>
+    				</tip>
+    				
+    				<figure>
+    					<title>Seam Facet Settings</title>
+    					<mediaobject>
+    						<imageobject>
+    							<imagedata fileref="images/seam_portlet/seam_portlet3.png"/>
+    						</imageobject>
+    					</mediaobject>
+    				</figure>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>On the <property>JBoss JSF Portlet Capabilities</property> page, select the 
+    					<emphasis><property>JSF Portlet Target Runtime Provider</property></emphasis> type of the implementation library.</para>
+    				
+    				<tip>
+    					<title>Tip:</title>
+    					<para>If you have <property>JBoss Portlet Bridge</property> downloaded, 
+    						alternatively you can select <emphasis><property>JSF Portletbridge Runtime Provider</property></emphasis> and then provide a path to
+    						the <property>JBoss Portlet Bridge</property> distribution.</para>
+    				</tip>
+    				
+    				<figure>
+    					<title>Setting Portlet Bridge Provider</title>
+    					<mediaobject>
+    						<imageobject>
+    							<imagedata fileref="images/jsf_portlet/jsf_portlet4.png"/>
+    						</imageobject>
+    					</mediaobject>
+    				</figure>
+    			
+    				<para>It will add <property>JBoss Portlet Bridge</property> libraries to the project classpath.</para>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>Hit <emphasis><property>Finish</property></emphasis> to complete the project creation.</para>
+    			</listitem>
+    		</orderedlist>
+    	</section>
+    	
+    	<section id="create_seam_proj">
+    		<title>Creating a Seam Project with JBoss Portlet Capabilities</title>
+    		
+    		<para>The steps to create a Seam project with JBoss Portlet capabilities are as follows:</para>
+    		
+    		<orderedlist>
+    			<listitem>
+    				<para>In the <emphasis><property>File</property></emphasis> menu, go to <emphasis>
+    					<property>New &gt; Other &gt; Seam &gt; Seam Web Project</property>.</emphasis> The <property>New Seam Project</property>
+    					wizard appears.</para>
+    			</listitem>
+    			
+    			<listitem>
+    				<para>Next steps are the same as in the <link
+    					linkend="create_dyn_web_proj_seam">&quot;Creating a Dynamic Web Project with Seam and JBoss Portlet Capabilities&quot;</link>
+    					procedure starting from the step 2.</para>
+    			</listitem>
+    		</orderedlist>
+    	</section>
     </section>
     
     <section id="seam_portlet_to_seam_project">
-        <title>Adding Seam Portlet to Seam Project</title>
+    	<title>Adding a Seam Portlet to the Project and Deploying It to JBoss Portal</title>
+    	
+    	<para>The previous section has shown you how to create a Web project with Seam and JBoss Portlet capabilities. Now you can create a Seam portlet 
+    		and deploy it to <property>JBoss Portal</property> by following the next procedure:</para>
         
-        <para>First start a Seam Project by following to <emphasis>
-            <property>New > Other > Seam > Seam Web Project</property>. </emphasis> On the first
-            wizard page specify JBoss Portal directory location as <property>Target
-                Runtime</property> and <emphasis>
-                    <property>JBoss Seam Portlet Project v2.0</property>
-                </emphasis> as <property>Configuration</property>.</para>
-        
-        <figure>
-            <title>Project Facets</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/seam_portlet/seam_portlet8.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-        
-        <para>Next steps will be the same as we did for the Dynamic Web Project in the <link
-            linkend="seam_portlet1">Adding Seam Portlet to Dynamic Web Project</link>
-            section.</para>
+        <orderedlist>
+        	<listitem>
+        		<para>In the <emphasis><property>File</property></emphasis> or context menu of the project go to 
+        			<emphasis><property>New > Other > JBoss Tools Web > Portlet > JSF/Seam
+        			Portlet</property>.</emphasis></para>
+        		
+        		<figure>
+        			<title>Calling the Create Portlet Wizard</title>
+        			<mediaobject>
+        				<imageobject>
+        					<imagedata fileref="images/seam_portlet/seam_portlet5.png"/>
+        				</imageobject>
+        			</mediaobject>
+        		</figure>
+        	</listitem>
+        	
+        	<listitem>
+        		<para>The <property>Create Portlet</property> wizard starts (for more information about wizard options, see 
+        			<link linkend="jsf_seam_portlet_wizard">&quot;JSF/Seam Portlet Wizard&quot;</link> in the guide reference). 
+        			As the Seam configuration is set for the project, the wizard puts the values as for Seam portlet.</para>
+        		
+        		<figure>
+        			<title>Creating Seam Portlet</title>
+        			<mediaobject>
+        				<imageobject>
+        					<imagedata fileref="images/seam_portlet/seam_portlet6.png"/>
+        				</imageobject>
+        			</mediaobject>
+        		</figure>
+        	</listitem>
+        	
+        	<listitem>
+        		<para>Next two pages are filled out with default values, just press <emphasis><property>Next</property></emphasis> to
+        		proceed. On the last one click <emphasis><property>Finish</property></emphasis> to complete.</para>
+        	</listitem>
+        	
+        	<listitem>
+        		<para>To deploy and run the portlet on <property>JBoss Portal</property> complete the steps described in the 
+        			<link linkend="deploying_to_portal">&quot;Deploying a Portlet to JBoss Portal&quot;</link> procedure. Just use the following URL to see it in the browser:
+        			<emphasis>http://localhost:8080/portal/portal/default/SeamPortlet</emphasis>.</para>
+        		
+        		<figure>
+        			<title>Seam Portlet in the Browser Window</title>
+        			<mediaobject>
+        				<imageobject>
+        					<imagedata fileref="images/seam_portlet/seam_portlet7.png"/>
+        				</imageobject>
+        			</mediaobject>
+        		</figure>
+        	</listitem>
+        </orderedlist>
         </section>
-</chapter>
+</section>

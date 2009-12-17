@@ -3,25 +3,33 @@
     <?dbhtml filename="intro.html"?>
     <title>Introduction</title>
 
-    <para>Starting from 3.0.0.Alpha1 version, JBoss set of plugins extends <property>JBoss Portal</property>
-        features. Thus, this guide is intended to explain you how to manage the functionality
-            <property>JBoss Tools</property> provide to ease the development with <property>JBoss
-            Portal</property>.</para>
+	<para>Starting from 3.0.0.Alpha1 version, JBoss set of plugins includes tools for supporting <property>JBoss Portal</property> and JSR-186/JSR-286 portlets.
+		Thus, this guide is intended to explain you how to get started and manage <property>JBoss Portlet Tools</property>.</para>
 
     <section id="preface">
-        <title>Preface</title>
+        <title>What is JBoss Portal and Portlet Tools?</title>
         <para><property>JBoss Portal</property> provides an open source platform for hosting and
             serving a portal's Web interface, publishing and managing its content, and customizing
             its experience. It supports a wide range of features, including standard portlets,
-            single sign-on, clustering, and internationalization.</para>
+            single sign-on, clustering, and internationalization. More about <property>JBoss Portal</property> you can find visiting 
+        	its home page at: <ulink url="http://www.jboss.org/jbossportal/">http://www.jboss.org/jbossportal/</ulink>.</para>
+    	
+    	<para>With <property>JBoss Portlet Tools</property> you can easily create a Java, JSF and Seam portlet and deploy it to <property>JBoss Portal</property>.</para>
     </section>
 
     <section id="key_features">
-        <title>Key Features</title>
-        <para>The next table lists key features supplied by <property>JBoss Portal Tools</property>.</para>
+    	<title>Key Features of JBoss Portlet Tools</title>
+    	<para><property>JBoss Portlet Tools</property> supports the <ulink url="http://www.jcp.org/en/jsr/detail?id=168">JSR-168 Portlet Specification (Portlet 1.0)</ulink> and
+    		<ulink url="http://www.jcp.org/en/jsr/detail?id=286">JSR-286 Portlet Specification (Portlet 2.0)</ulink> and works with 
+    		<ulink url="http://www.jboss.org/portletbridge/">JBoss Portlet Bridge</ulink> for supporting Portlets 
+    		in JSF/Seam applications. To enable these features, you need to add the JBoss Portlet facet to a new or an existing web project 
+    		(see <link linkend="portlet_tools_tasks">JBoss Portlet Tools Tasks</link>). The project could be a non-WTP project, but you should know that 
+    		if it does not have the proper portlet API jar's the generated classes will have compile errors.</para>
+        
+    	<para>The next table lists key features supplied by <property>JBoss Portlet Tools</property>.</para>
 
         <table>
-            <title>Key Functionality of JBoss Portal Tools</title>
+        	<title>Key Features of JBoss Portlet Tools</title>
             <tgroup cols="3">
 
                 <colspec colnum="1" align="left" colwidth="1*"/>
@@ -40,93 +48,77 @@
 
                     <row>
                         <entry>
-                            <para>Wizards for creating Projects with Portlet Facets</para>
+                        	<para>JBoss Portlet facets</para>
                         </entry>
                         <entry>
-                            <para>New Dynamic Web Project wizard allows you to select a proper
-                                Configuration to enable Portlet Facet in it.</para>
+                        	<para><property>JBoss Portlet Tools</property> provides the Java, JSF and Seam Portlet facets that could be enabled for a Web project.</para>
                         </entry>
                         <entry>
-                            <link linkend="creating_project_with_jbossportal">Creating a Dynamic
-                                Web Project</link>
-                        </entry>
-                    </row>
-
-
-                    <row>
-                        <entry>
-                            <para>Create Java Portlet wizard</para>
-                        </entry>
-
-                        <entry>
-                            <para>The wizard enables creating a JSR-186/JSR-286 compliant
-                            portlet.</para>
-                        </entry>
-                        <entry>
-                            <link linkend="adding_java_portlet">Adding Java Portlet to a
-                            project</link>
+                        	<link linkend="portlet_tools_tasks">JBoss Portlet Tools Tasks</link>
                         </entry>
                     </row>
 
                     <row>
                         <entry>
-                            <para>Create JSF/Seam Portlet wizard</para>
+                        	<para>Java Portlet wizard</para>
+                        </entry>
+
+                        <entry>
+                            <para>The wizard helps create a JSR-186/JSR-286 compliant
+                            portlets</para>
                         </entry>
                         <entry>
-                            <para>This wizard allows to create JSF/Seam portlets</para>
-                        </entry>
-                        <entry>
-                            <link linkend="jsf_portlet">Creating JSF Portlet</link>
-                            <link linkend="seam_portlet">Creating Seam Portlet</link>
+                        	<link linkend="java_portlet_wizard">Java Portlet Wizard</link>
                         </entry>
                     </row>
 
+                    <row>
+                        <entry>
+                        	<para>JSF/Seam Portlet wizard</para>
+                        </entry>
+                        <entry>
+                            <para>This wizard helps create JSF/Seam portlets</para>
+                        </entry>
+                        <entry>
+                        	<link linkend="jsf_seam_portlet_wizard">JSF/Seam Portlet Wizard</link>
+                        </entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
     </section>
+	
+	<section id="requirements_installation">
+		<title>Requirements and Installation</title>
+		<para><property>JBoss
+			Portlet Tools</property> needs the following minimal requirements:</para>
+		
+		<itemizedlist>
+			<listitem>
+				<para>Eclipse 3.4.2/Ganymede</para>
+			</listitem>
+			<listitem>
+				<para>JBoss Tools 3.0.0.Alpha1 (for higher versions of JBoss Tools make sure you use the 
+					<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">compatible version of Eclipse</ulink>)</para>
+			</listitem>
+			<listitem><para>JDK 5 or higher</para></listitem>
+			<listitem>
+				<para>JBoss Portal + JBoss AS bundle from: <ulink
+					url="http://www.jboss.org/jbossportal/download/index.html">http://www.jboss.org/jbossportal/download/index.html</ulink></para>
+				<note>
+					<title>Note:</title>
+					<para>JBoss Portlet Tools has been tested using 2.6.5 and 2.7.0.ALPHA
+						versions of <property>JBoss Portal</property>. Remember, if you want to use Portlet
+						version 2.0 (JSR-268), you have to choose JBoss Portal 2.7.</para>
+				</note>
+			</listitem>
+			<listitem>
+				<para>JBoss Portlet Bridge (optionally) from: <ulink url="http://www.jboss.org/portletbridge/downloads.html">http://www.jboss.org/portletbridge/downloads.html</ulink></para>
+			</listitem>
+		</itemizedlist>
 
-    <section id="rel_resources">
-        <title>Other relevant resources on the topic</title>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <ulink url="http://www.jboss.org/jbossportal/">JBoss Portal Home Page</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://wiki.jboss.org/wiki/JBossPortal">JBoss Portal Wiki</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://www.jboss.org/tools/">JBoss Tools Home Page</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink
-                        url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
-                        >JBoss Tools Forum</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">The latest
-                        JBossTools/JBDS documentation builds</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>JBoss Developer Studio/JBoss Tools release documentation you can find at<ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>
-            </listitem>
-        </itemizedlist>
-
-    </section>
+		<para><property>JBoss Portlet Tools</property> is included as part of <property>JBoss Tools</property> project. 
+			Refer to <ulink url="http://www.jboss.org/tools/download/installation.html">http://www.jboss.org/tools/download/installation.html</ulink> 
+			for installation methods of <property>JBoss Tools</property>.</para>
+	</section>
 </chapter>
