@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="portlet_tools_tasks" xreflabel="portlet_tools_tasks">
+	<?dbhtml filename="portlet_tools_tasks.html"?>
+	<title>JBoss Portlet Tools Tasks</title>
+	
+	&starting_project;
+	&jsf_portlet;
+	&seam_portlet;
+</chapter>
