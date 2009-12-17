@@ -22,19 +22,19 @@
    </url>
 
    <includes
-         id="org.jboss.tools.jbpm.common.feature"
+         id="org.jboss.tools.jbpm3.feature"
          version="0.0.0"/>
-
-   <includes
+         
+   <!--includes
          id="org.jboss.tools.jbpm.common.source.feature"
          version="0.0.0"/>
 
    <includes
-         id="org.jbpm.gd.jpdl.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.jbpm.gd.jpdl.source.feature"
+         version="0.0.0"/-->
+         
+   <includes
+         id="org.jboss.tools.jbpm3.source.feature"
          version="0.0.0"/>
-
+         
 </feature>

@@ -16,7 +16,18 @@ Require-Bundle: org.jboss.tools.flow.common;bundle-version="1.0.0",
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jboss.tools.flow.jpdl4.Activator
 Export-Package: org.jboss.tools.flow.jpdl4,
+ org.jboss.tools.flow.jpdl4.command,
  org.jboss.tools.flow.jpdl4.editor,
+ org.jboss.tools.flow.jpdl4.editpart,
+ org.jboss.tools.flow.jpdl4.figure,
+ org.jboss.tools.flow.jpdl4.handler,
  org.jboss.tools.flow.jpdl4.io,
- org.jboss.tools.flow.jpdl4.model
+ org.jboss.tools.flow.jpdl4.model,
+ org.jboss.tools.flow.jpdl4.policy,
+ org.jboss.tools.flow.jpdl4.preferences,
+ org.jboss.tools.flow.jpdl4.properties,
+ org.jboss.tools.flow.jpdl4.strategy,
+ org.jboss.tools.flow.jpdl4.util,
+ org.jboss.tools.flow.jpdl4.view,
+ org.jboss.tools.flow.jpdl4.wizard
 Bundle-Localization: plugin

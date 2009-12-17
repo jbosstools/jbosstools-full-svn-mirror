@@ -22,10 +22,6 @@
    </url>
 
    <includes
-         id="org.jboss.tools.jbpm.common.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.jboss.tools.flow.common.feature"
          version="0.0.0"/>
 
