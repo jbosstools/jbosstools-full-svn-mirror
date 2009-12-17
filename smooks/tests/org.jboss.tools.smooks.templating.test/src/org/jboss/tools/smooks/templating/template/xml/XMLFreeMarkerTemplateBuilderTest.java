@@ -141,18 +141,20 @@ public class XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		assertEquals(template, builder2.buildTemplate());
 	}
 
-	public void test_elementname() throws IOException, ModelBuilderException{
-    	File xsdFile = new File("src/org/jboss/tools/smooks/templating/template/xml/smooks1_0.xsd");
-    	URI uri = URI.createFileURI(xsdFile.getCanonicalFile().toString());
-    	XSDModelBuilder builder = new XSDModelBuilder(uri);
+	public void test_elementname() throws IOException, ModelBuilderException {
+		File xsdFile = new File("src/org/jboss/tools/smooks/templating/template/xml/smooks1_0.xsd");
+		URI uri = URI.createFileURI(xsdFile.getCanonicalFile().toString());
+		XSDModelBuilder builder = new XSDModelBuilder(uri);
 		builder.setRootElementName("smooks-resource-list");
 		XMLFreeMarkerTemplateBuilder templateBuilder = new XMLFreeMarkerTemplateBuilder(builder);
 		Document document = templateBuilder.getModel();
 		checkNodeName(document.getDocumentElement());
-    }
-	
-	private void checkNodeName(Node node){
-		assertNotNull(node.getNodeName());
+	}
+
+	private void checkNodeName(Node node) {
+		if (node instanceof Element) {
+			assertNotNull(((Element)node).getTagName());
+		}
 		System.out.println(node.getNodeName());
 		assertTrue(node.getNodeName().indexOf("null") == -1);
 		NodeList nodeList = node.getChildNodes();
