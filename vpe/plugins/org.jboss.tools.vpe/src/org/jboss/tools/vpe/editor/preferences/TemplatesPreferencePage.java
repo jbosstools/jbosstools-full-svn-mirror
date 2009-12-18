@@ -30,7 +30,8 @@ import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
-public class TemplatesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage, CommandBarListener {
+public class TemplatesPreferencePage extends PreferencePage implements
+		IWorkbenchPreferencePage, CommandBarListener {
 	static String EDIT = VpeUIMessages.TemplatesPreferencePage_Edit; 
 	static String REMOVE = VpeUIMessages.TemplatesPreferencePage_Remove; 
 	protected TemplatesTableProvider tableProvider;// = new TemplatesTableProvider();
@@ -40,7 +41,8 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
 	protected boolean changed;
 	
 	public TemplatesPreferencePage() {
-		noDefaultAndApplyButton();
+//		noDefaultAndApplyButton();
+		setPreferenceStore(getPreferenceStore());
 		init();
 	}
 	
@@ -95,7 +97,9 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
 		update();
 	}
 	public boolean performOk() {
-		if(changed)VpeTemplateManager.getInstance().setAnyTemplates(dataList);
+		if(changed) {
+			VpeTemplateManager.getInstance().setAnyTemplates(dataList);
+		}
 		return super.performOk();
 	}
 	
@@ -103,7 +107,9 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
 		VpeAnyData data = (VpeAnyData)dataList.get(index);
 		VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
 		editDialog.open();
-		if(data.isChanged()) changed = true;
+		if(data.isChanged()){
+			changed = true;
+		}
 	}
 	
 	void remove(int index) {
@@ -112,7 +118,9 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
 	}
 
 	public void update() {
-		if(table != null) table.update();
+		if(table != null){
+			table.update();
+		}
 		updateBars();
 	}
 
@@ -122,6 +130,7 @@ public class TemplatesPreferencePage extends PreferencePage implements IWorkbenc
 	}
 
 	private boolean canModify() {
-		return table.getSelectionIndex() >= 0;
+		return (table.getSelectionIndex() >= 0);
 	}
+	
 }

@@ -53,7 +53,8 @@ public class VpeTemplateManager {
 			= "templates/vpe-templates-auto.xml"; //$NON-NLS-1$
 	static final String TEMPLATES_FOLDER = File.separator + "templates" + File.separator; //$NON-NLS-1$
 	public static final String VPE_PREFIX = "vpe:"; //$NON-NLS-1$
-
+	public static final String TAG_TEMPLATES = VPE_PREFIX + "templates"; //$NON-NLS-1$
+	
 	static final String TAG_LIST = VPE_PREFIX + "list"; //$NON-NLS-1$
 	static final String ATTR_LIST_ORDERED = "ordered"; //$NON-NLS-1$
 	static final String[] ATTR_LIST_PROPERTIES = {
@@ -82,7 +83,6 @@ public class VpeTemplateManager {
 	};
 	
 	static final String TAG_TEMPLATES_LIST = VPE_PREFIX + "templates-list"; //$NON-NLS-1$
-	static final String TAG_TEMPLATES = VPE_PREFIX + "templates"; //$NON-NLS-1$
 	static final String TAG_TEMPLATE_TAGLIB = VPE_PREFIX + "template-taglib"; //$NON-NLS-1$
 	static final String TAG_TAG = VPE_PREFIX + "tag"; //$NON-NLS-1$
 	static final String TAG_IF = VPE_PREFIX + "if"; //$NON-NLS-1$
@@ -768,13 +768,12 @@ public class VpeTemplateManager {
 		return null;
 	}
 	
-
-	public void setAnyTemplates(List<VpeAnyData> templates) {
+	public void setAnyTemplates(List<VpeAnyData> templates, IPath path) {
 		if (templates != null) {
 			Set<String> prefixSet = new HashSet<String>();
 			Element root = XMLUtilities.createDocumentElement(TAG_TEMPLATES);
 			Document document = root.getOwnerDocument();
-
+			
 			for (Iterator<VpeAnyData> iter = templates.iterator(); iter.hasNext();) {
 				VpeAnyData data = iter.next();
 				root.appendChild(createNewTagElement(document, data));
@@ -784,14 +783,23 @@ public class VpeTemplateManager {
 					prefixSet.add(prefix);
 				}
 			}
-
+			
 			try {
-				IPath path = getAutoTemplates();
 				// fixed bug [EFWPE-869] - uncomment this line
 				XMLUtilities.serialize(root, path.toOSString());
 			} catch(IOException e) {
 				VpePlugin.reportProblem(e);
 			}
+		}
+	}
+	
+	public void setAnyTemplates(List<VpeAnyData> templates) {
+		IPath path;
+		try {
+			path = getAutoTemplates();
+			setAnyTemplates(templates, path);
+		} catch (IOException e) {
+			VpePlugin.reportProblem(e);
 		}
 	}
 

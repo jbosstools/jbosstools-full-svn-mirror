@@ -138,4 +138,14 @@ public final class VpeUIMessages extends NLS {
 	public static String VISUAL_APPEARANCE_GROUP_TITLE;
 	public static String CONFIRMATION_GROUP_TITLE;
 	public static String TABS_GROUP_TITLE;
+	public static String IMPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE;
+	public static String EXPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE;
+	public static String EXPORT_UNKNOWN_TAGS_PAGE_TITLE;
+	public static String EXPORT_UNKNOWN_TAGS_PAGE_DESCRIPTION;
+	public static String IMPORT_UNKNOWN_TAGS_PAGE_TITLE;
+	public static String IMPORT_UNKNOWN_TAGS_PAGE_DESCRIPTION;
+	public static String SELECT_ALL;
+	public static String DESELECT_ALL;
+	public static String BROWSE_BUTTON_TEXT;
+	
 }

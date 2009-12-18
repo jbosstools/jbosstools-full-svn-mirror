@@ -121,4 +121,32 @@
         	</dynamic>
         </menuContribution>
   </extension>
+  
+    <extension
+        point="org.eclipse.ui.exportWizards">
+     <wizard
+           id="org.jboss.tools.vpe.editor.wizards.ExportUnknownTagsTemplatesWizard"
+           class="org.jboss.tools.vpe.editor.wizards.ExportUnknownTagsTemplatesWizard"
+           name="%exportUnknownTagsTemplatesWizardName"
+           icon="icons/">
+        <description>
+              %exportUnknownTagsTemplatesWizardDescription
+        </description>
+     </wizard>
+  </extension>
+  
+    <extension
+        point="org.eclipse.ui.importWizards">
+     <wizard
+           id="org.jboss.tools.vpe.editor.wizards.ImportUnknownTagsTemplatesWizard"
+           class="org.jboss.tools.vpe.editor.wizards.ImportUnknownTagsTemplatesWizard"
+           name="%importUnknownTagsTemplatesWizardName"
+           icon="icons/">
+        <description>
+              %importUnknownTagsTemplatesWizardDescription
+        </description>
+     </wizard>
+  </extension>
+  
+  
 </plugin>
