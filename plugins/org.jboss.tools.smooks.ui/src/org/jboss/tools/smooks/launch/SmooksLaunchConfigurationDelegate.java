@@ -51,6 +51,9 @@ import org.jboss.tools.smooks.configuration.RuntimeDependency;
 import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.core.SmooksInputType;
+import org.jboss.tools.smooks.launch.serialize.MarshallingStrategy;
+import org.jboss.tools.smooks.launch.serialize.ObjectSerializer;
+import org.jboss.tools.smooks.launch.serialize.XPathMarshaller;
 
 /**
  * Smooks Launch Configuration Delegate.
@@ -125,6 +128,9 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		addToCP(wsTempClasses, SmooksLauncher.class);
 		addToCP(wsTempClasses, SmooksInputType.class);
 		addToCP(wsTempClasses, ProcessNodeType.class);
+		addToCP(wsTempClasses, ObjectSerializer.class);
+		addToCP(wsTempClasses, MarshallingStrategy.class);
+		addToCP(wsTempClasses, XPathMarshaller.class);
 		classpath.add(wsTempClasses.getAbsolutePath());
 		
 		VMRunnerConfiguration runConfig= new VMRunnerConfiguration(SmooksLauncher.class.getName(), classpath.toArray(new String[classpath.size()]));
