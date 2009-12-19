@@ -24,20 +24,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.xml.transform.stream.StreamSource;
 
 import org.jboss.tools.smooks.configuration.ProcessNodeType;
 import org.jboss.tools.smooks.core.SmooksInputType;
+import org.jboss.tools.smooks.launch.serialize.ObjectSerializer;
 import org.milyn.Smooks;
 import org.milyn.payload.JavaResult;
 import org.milyn.payload.StringResult;
 import org.xml.sax.SAXException;
-
-import com.thoughtworks.xstream.XStream;
 
 /**
  * Smooks runtime Launcher class.
@@ -83,14 +82,13 @@ public class SmooksLauncher {
 					smooks.filterSource(new StreamSource(new FileInputStream(input)), javaResult);
 				}
 
-				Set<Entry<String, Object>> bindings = javaResult.getResultMap().entrySet();
-				if(!bindings.isEmpty()) {
-					System.out.println("[JavaResult Objects (XML Serialized)...]"); //$NON-NLS-1$
+				Collection<ObjectSerializer> serializedJavaResults = ObjectSerializer.serialize(javaResult);
+				if(!serializedJavaResults.isEmpty()) {
+					System.out.println("[JavaResult Objects...]"); //$NON-NLS-1$
 					
-					for(Entry<String, Object> binding : bindings) {
-						System.out.println("\n" + binding.getKey() + ":"); //$NON-NLS-1$ //$NON-NLS-2$
+					for(ObjectSerializer serializedJavaResult : serializedJavaResults) {
 						System.out.println("    |--"); //$NON-NLS-1$
-						System.out.println(indent((new XStream()).toXML(binding.getValue())));
+						System.out.println(indent(serializedJavaResult.getSerializedForm()));
 						System.out.println("    |--"); //$NON-NLS-1$
 					}
 					nothingDisplayed = false;
