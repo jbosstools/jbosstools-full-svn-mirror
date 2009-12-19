@@ -32,7 +32,7 @@ public class ImportUnknownTagsTemplatesWizard extends Wizard implements
 	 * Constructor
 	 */
 	public ImportUnknownTagsTemplatesWizard() {
-		
+		setWindowTitle(VpeUIMessages.IMPORT_UNKNOWN_TAGS_PAGE_TITLE);
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
@@ -51,12 +51,12 @@ public class ImportUnknownTagsTemplatesWizard extends Wizard implements
 
 	@Override
 	public boolean canFinish() {
-		return false;
+		return mainPage.isPageComplete();
 	}
 
 	@Override
 	public boolean performFinish() {
-		return false;
+		return mainPage.finish();
 	}
 
 }

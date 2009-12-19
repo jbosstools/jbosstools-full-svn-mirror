@@ -36,13 +36,8 @@ public class VpeTemplateFileList {
 	}
 	
 	void load() {
-		VpeTemplateFile newAutoTemplateFile = null;
-		try {
-			newAutoTemplateFile = new VpeTemplateFile(
-					VpeTemplateManager.getAutoTemplates(), null);
-		} catch (IOException e) {
-			VpePlugin.getPluginLog().logError("Default template for unknown tags loading error ",e); //$NON-NLS-1$
-		}
+		VpeTemplateFile newAutoTemplateFile = new VpeTemplateFile(
+				VpeTemplateManager.getAutoTemplates(), null);
 		changed = (autoTemplateFile == null) != (newAutoTemplateFile == null);
 		if (!changed && autoTemplateFile != null) {
 			changed = !autoTemplateFile.isEqual(newAutoTemplateFile);

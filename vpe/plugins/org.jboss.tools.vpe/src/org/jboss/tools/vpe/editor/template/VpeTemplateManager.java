@@ -296,6 +296,9 @@ public class VpeTemplateManager {
 	 */
 	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE = "namespaceIdentifier"; //$NON-NLS-1$
 
+	private static final IPath DEFAULT_AUTO_TEMPLATES_PATH = VpePlugin.getDefault()
+			.getStateLocation().append(VPE_TEMPLATES_AUTO);
+	
 	private VpeTemplateManager() {
 		// singleton
 	}
@@ -544,7 +547,7 @@ public class VpeTemplateManager {
 		String elementName = data.getName();
 		boolean caseSensitive = data.isCaseSensitive();
 		
-		Element root = loadAutoTemplate();
+		Element root = loadAutoTemplate(DEFAULT_AUTO_TEMPLATES_PATH);
 		if (root == null) {
 			root = XMLUtilities.createDocumentElement(TAG_TEMPLATES);
 		}
@@ -589,7 +592,7 @@ public class VpeTemplateManager {
 		root = appendTaglib(prefixSet, document, root, data);
 
 		try {
-			IPath path = getAutoTemplates();
+			IPath path = getAutoTemplates(DEFAULT_AUTO_TEMPLATES_PATH);
 			XMLUtilities.serialize(root, path.toOSString());
 		} catch(IOException e) {
 			VpePlugin.reportProblem(e);
@@ -625,10 +628,13 @@ public class VpeTemplateManager {
 	}
 
 	public List<VpeAnyData> getAnyTemplates() {
+		return getAnyTemplates(DEFAULT_AUTO_TEMPLATES_PATH);
+	}
+	public List<VpeAnyData> getAnyTemplates(IPath path) {
 		List<VpeAnyData> anyTemplateList = new ArrayList<VpeAnyData>();
 		Map<String,Node> taglibs = new HashMap<String,Node>();
 
-		Element root = loadAutoTemplate();
+		Element root = loadAutoTemplate(path);
 		if (root == null) {
 			root = XMLUtilities.createDocumentElement(TAG_TEMPLATES);
 		}
@@ -768,6 +774,10 @@ public class VpeTemplateManager {
 		return null;
 	}
 	
+	public void setAnyTemplates(List<VpeAnyData> templates) {
+		setAnyTemplates(templates, DEFAULT_AUTO_TEMPLATES_PATH);
+	}
+	
 	public void setAnyTemplates(List<VpeAnyData> templates, IPath path) {
 		if (templates != null) {
 			Set<String> prefixSet = new HashSet<String>();
@@ -792,16 +802,7 @@ public class VpeTemplateManager {
 			}
 		}
 	}
-	
-	public void setAnyTemplates(List<VpeAnyData> templates) {
-		IPath path;
-		try {
-			path = getAutoTemplates();
-			setAnyTemplates(templates, path);
-		} catch (IOException e) {
-			VpePlugin.reportProblem(e);
-		}
-	}
+
 
 	static public Element createNewTagElement(Document document, VpeAnyData data) {
 		Element newTagElement = document.createElement(TAG_TAG);
@@ -846,15 +847,10 @@ public class VpeTemplateManager {
 		return newTaglibElement;
 	}
 
-	private Element loadAutoTemplate() {
-		try {
-			IPath path = getAutoTemplates();
-			Element root = XMLUtilities.getElement(path.toFile(), null);
-			if (root != null && TAG_TEMPLATES.equals(root.getNodeName())) {
-				return root;
-			}
-		} catch (IOException e) {
-			VpePlugin.reportProblem(e);
+	private Element loadAutoTemplate(IPath path) {
+		Element root = XMLUtilities.getElement(path.toFile(), null);
+		if (root != null && TAG_TEMPLATES.equals(root.getNodeName())) {
+			return root;
 		}
 		return null;
 	}
@@ -1056,7 +1052,7 @@ public class VpeTemplateManager {
 
 		return defaultTextFormattingData;
 	}
-
+	
 	/**
 	 * Returns the user's template file path.
 	 * <P>
@@ -1070,19 +1066,25 @@ public class VpeTemplateManager {
 	 * @see <a href="https://jira.jboss.org/jira/browse/JBIDE-4131" >
 				JBIDE-4131: Change saving of vpe auto templates</a> 
 	 */
-	public static IPath getAutoTemplates() throws IOException {
-		final IPath workspaceTemplatePath = VpePlugin.getDefault()
-				.getStateLocation().append(VPE_TEMPLATES_AUTO);
-
+	public static IPath getAutoTemplates(IPath workspaceTemplatePath) {
 		final File workspaceTemplateFile = workspaceTemplatePath.toFile();
 		if (!workspaceTemplateFile.exists()) {
-			final IPath dafaultTemplatePath = VpeTemplateFileList
-					.getFilePath(EMPTY_VPE_TEMPLATES_AUTO, null);
+			IPath dafaultTemplatePath;
+			try {
+				dafaultTemplatePath = VpeTemplateFileList
+						.getFilePath(EMPTY_VPE_TEMPLATES_AUTO, null);
 			final File defaultTemplateFile = dafaultTemplatePath.toFile();
 			copy(defaultTemplateFile, workspaceTemplateFile);
+			} catch (IOException e) {
+				VpePlugin.reportProblem(e);
+			}
 		}
-
 		return workspaceTemplatePath;
+	}
+	
+
+	public static IPath getAutoTemplates() {
+		return getAutoTemplates(DEFAULT_AUTO_TEMPLATES_PATH);
 	}
 
     /** 
