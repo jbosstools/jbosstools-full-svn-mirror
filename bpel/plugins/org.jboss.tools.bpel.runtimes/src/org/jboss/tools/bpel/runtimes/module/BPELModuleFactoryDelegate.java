@@ -18,12 +18,9 @@ import org.jboss.tools.bpel.runtimes.IBPELModuleFacetConstants;
 public class BPELModuleFactoryDelegate extends JBTProjectModuleFactory {
 	public static final String FACTORY_ID = "org.jboss.tools.bpel.runtimes.module.moduleFactory";
 	public static final String MODULE_TYPE = IBPELModuleFacetConstants.BPEL_MODULE_TYPE;
-	private static BPELModuleFactoryDelegate factDelegate;
 
-	public static BPELModuleFactoryDelegate getFactory() {
-		if (factDelegate == null)
-			factDelegate = (BPELModuleFactoryDelegate)getFactory(FACTORY_ID);
-		return factDelegate;
+	public String getFactoryId() {
+		return FACTORY_ID;
 	}
 
 	public BPELModuleFactoryDelegate() {
