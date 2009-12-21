@@ -26,15 +26,5 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
 	<linkedResources>
-		<link>
-			<name>smooks-core</name>
-			<type>2</type>
-			<location>/Users/tfennelly/packs/eclipse/Eclipse.app/Contents/MacOS/D::/Users/tfennelly/packs/eclipse/Eclipse.app/Contents/MacOS/D::/Users/tfennelly/milyn/trunk/smooks-core/src/main/java</location>
-		</link>
-		<link>
-			<name>smooks-csv</name>
-			<type>2</type>
-			<location>/Users/tfennelly/packs/eclipse/Eclipse.app/Contents/MacOS/D::/Users/tfennelly/packs/eclipse/Eclipse.app/Contents/MacOS/D::/Users/tfennelly/milyn/trunk/smooks-cartridges/csv/src/main/java</location>
-		</link>
 	</linkedResources>
 </projectDescription>
