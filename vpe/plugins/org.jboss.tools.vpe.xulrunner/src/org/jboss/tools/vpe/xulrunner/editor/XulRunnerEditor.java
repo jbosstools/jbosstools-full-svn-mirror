@@ -81,8 +81,8 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 	// have drowed border. When we draw new border,
 	// we should remove old one;
 	private nsIDOMElement lastBorderedElement;
-	private static final String INVISIBLE_ELEMENT_BORDER = "border: 2px solid red;";//$NON-NLS-1$
-	private static final String VISIBLE_ELEMENT_BORDER = "border: 2px solid blue;";//$NON-NLS-1$
+	private static final String INVISIBLE_ELEMENT_BORDER = "border: 2px solid red !important;";//$NON-NLS-1$
+	private static final String VISIBLE_ELEMENT_BORDER = "border: 2px solid blue !important;";//$NON-NLS-1$
 	private static final String PREV_STYLE_ATTR_NAME = "oldstyle";//$NON-NLS-1$
 
 	/**

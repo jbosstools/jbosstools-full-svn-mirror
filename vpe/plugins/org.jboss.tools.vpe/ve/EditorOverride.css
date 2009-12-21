@@ -343,10 +343,10 @@ select table {
 }
 
 span.vpe-text {
-	/* background	:inherit !important; */
+	background	:inherit !important; */
 	background-image:none !important;
-	 /* border	:0px !important; */
-	/*  bottom	:inherit !important; */
+	border	:0px !important; */
+	bottom	:inherit !important; */
 	caption-side	:inherit !important;
 	clear	:inherit !important;
 	clip	:inherit !important;
