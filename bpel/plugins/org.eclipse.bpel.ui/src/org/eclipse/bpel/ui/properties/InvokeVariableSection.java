@@ -1019,7 +1019,7 @@ public class InvokeVariableSection extends BPELPropertySection {
 	}
 
 	private boolean isReceive() {
-		return getInput() instanceof Receive;
+		return getInput() instanceof Receive || getInput() instanceof OnMessage;
 	}
 
 	/**
