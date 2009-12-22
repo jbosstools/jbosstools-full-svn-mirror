@@ -28,10 +28,12 @@ import org.jboss.tools.common.model.ui.objecteditor.XTable;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class TemplatesPreferencePage extends PreferencePage implements
 		IWorkbenchPreferencePage, CommandBarListener {
+	static String ADD = VpeUIMessages.TemplatesPreferencePage_Add; 
 	static String EDIT = VpeUIMessages.TemplatesPreferencePage_Edit; 
 	static String REMOVE = VpeUIMessages.TemplatesPreferencePage_Remove; 
 	protected TemplatesTableProvider tableProvider;// = new TemplatesTableProvider();
@@ -57,7 +59,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		
 		bar.getLayout().buttonWidth = 80;
 		bar.getLayout().direction = SWT.VERTICAL;
-		bar.setCommands(new String[]{EDIT, REMOVE});
+		bar.setCommands(new String[]{ADD, EDIT, REMOVE});
 		bar.addCommandBarListener(this);
 		table.setTableProvider(tableProvider);
 	}
@@ -80,6 +82,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 				widgetSelected(e);
 			}
 		});
+		
 		update();
 		return c;
 	}
@@ -89,7 +92,9 @@ public class TemplatesPreferencePage extends PreferencePage implements
 
 	public void action(String command) {
 		int index = table.getSelectionIndex();
-		if(EDIT.equals(command)) {
+		if(ADD.equals(command)) {
+			add(index);
+		} else if(EDIT.equals(command)) {
 			edit(index);
 		} else if(REMOVE.equals(command)) {
 			remove(index);
@@ -101,6 +106,15 @@ public class TemplatesPreferencePage extends PreferencePage implements
 			VpeTemplateManager.getInstance().setAnyTemplates(dataList);
 		}
 		return super.performOk();
+	}
+	
+	void add(int index) {
+		VpeAnyData data = new VpeAnyData(Constants.EMPTY, Constants.EMPTY, Constants.EMPTY);
+		VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
+		editDialog.open();
+		if(data.isChanged()){
+			VpeTemplateManager.getInstance().setAnyTemplate(data);
+		}
 	}
 	
 	void edit(int index) {

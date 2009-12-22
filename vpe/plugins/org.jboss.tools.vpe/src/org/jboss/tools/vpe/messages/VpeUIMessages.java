@@ -37,9 +37,12 @@ public final class VpeUIMessages extends NLS {
 	public static String GENERAL;
 	public static String TEMPLATES;
 	public static String TEMPLATE;
+	public static String UNKNOWN_TAGS_DIALOG_DESCRIPTION;
 	public static String TAG_ATTRIBUTES;
 	public static String TAG_NAME;
 	public static String TAG_URI;
+	public static String TAG_FOR_DISPLAY;
+	public static String TAG_STYLE;
 	public static String CHILDREN;
 	public static String VALUE;
 	public static String VALUE_IS_NOT_VALID;
@@ -78,11 +81,11 @@ public final class VpeUIMessages extends NLS {
 	public static String SHOW;
 	public static String HIDE;
 	public static String TAG_FOR_DISPLAY_IS_NOT_VALID;
-	public static String TAG_FOR_DISPLAY;
 	public static String MenuCreationHelper_Cut;
 	public static String MenuCreationHelper_Paste;
 	public static String MenuCreationHelper_Test;
 	public static String SelectionBar_MoreNodes;
+	public static String TemplatesPreferencePage_Add;
 	public static String TemplatesPreferencePage_Edit;
 	public static String TemplatesPreferencePage_Remove;
 	public static String TemplatesTableProvider_Children;

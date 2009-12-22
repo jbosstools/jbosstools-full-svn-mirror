@@ -10,15 +10,21 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import java.io.IOException;
+import java.net.URL;
 import java.text.MessageFormat;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -35,6 +41,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.common.model.ui.ModelUIPlugin;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.outline.cssdialog.CSSStyleDialog;
 import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
@@ -43,6 +50,9 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.Message;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
+import org.jboss.tools.vpe.resref.Activator;
+import org.jboss.tools.vpe.resref.core.Messages;
+import org.osgi.framework.Bundle;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 
@@ -54,25 +64,51 @@ import org.w3c.dom.Document;
 public class VpeEditAnyDialog extends TitleAreaDialog {
 
 	private VpeAnyData data;
-	private CheckControl ctlChildren;
+	private Button childrenCheckbox;
 	private Text txtTagForDisplay;
 	private Text txtValue;
 	private Text txtStyle;
     private VpeEditAnyDialogValidator templateVerifier;
+    private final String DIALOG_TITLE_IMAGE_PATH = "/images/xstudio/wizards/EclipseDefault.png"; //$NON-NLS-1$
 
 	public VpeEditAnyDialog(Shell shell, VpeAnyData data) {
 		super(shell);
 		this.data = data;
+		setHelpAvailable(false);
 	}
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		templateVerifier = new VpeEditAnyDialogValidator();
+		/*
+		 * Setting dialog Title, Message, Image.
+		 */
+		Bundle bundle = Platform.getBundle(ModelUIPlugin.PLUGIN_ID);
+		URL url = null;
+		if (null != bundle) {
+			try {
+				url = FileLocator.resolve(bundle.getEntry(DIALOG_TITLE_IMAGE_PATH));
+			} catch (IOException e) {
+				Activator.getDefault().logError(
+						NLS.bind(Messages.VRD_TITLE_IMAGE_CANNOT_BE_RESOLVED,
+								url), e);
+			}
+		}
+		if (null != url) {
+			ImageDescriptor image = ImageDescriptor.createFromURL(url);
+			setTitleImage(image.createImage(null));
+		}
 		getShell().setText(VpeUIMessages.TEMPLATE);
 		setTitle(VpeUIMessages.TAG_ATTRIBUTES);
-
-		setMessage(getDefaultMessage());
-
+		setMessage(VpeUIMessages.UNKNOWN_TAGS_DIALOG_DESCRIPTION);
+		
+		/*
+		 * Create validator
+		 */
+		templateVerifier = new VpeEditAnyDialogValidator();
+		
+		/*
+		 * Create composites.
+		 */
 		Composite topComposite = (Composite)super.createDialogArea(parent);
 		((GridData)topComposite.getLayoutData()).widthHint = 300;
 
@@ -82,51 +118,118 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		gridLayout.marginHeight = 20;
 		gridLayout.horizontalSpacing = 5;
 		composite.setLayout(gridLayout);
-		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		composite.setBackground(parent.getBackground());
 		composite.setForeground(parent.getForeground());
 		composite.setFont(parent.getFont());
 		
-	    //added by estherbin https://jira.jboss.org/jira/browse/JBIDE-2521
-	    GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        Label tagFDisplayLabel = makeLabel(composite, VpeUIMessages.TAG_FOR_DISPLAY);
+		/*
+		 * Create Tag Name label
+		 */
+		Label tagNameLabel = new Label(composite, SWT.NONE);
+		tagNameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+		tagNameLabel.setText(VpeUIMessages.TAG_NAME);
+		
+		/*
+		 * Create Tag Name value
+		 */
+		Text tagName = new Text(composite, SWT.BORDER);
+		tagName.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
+		String text = Constants.EMPTY;
+		if ((data != null) && (data.getName() != null)){
+			text = data.getName();
+		}
+		tagName.setText(text);
+		
+		/*
+		 * Create Tag URI label
+		 */
+		Label tagUriLabel = new Label(composite, SWT.NONE);
+		tagUriLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+		tagUriLabel.setText(VpeUIMessages.TAG_URI);
+		
+		/*
+		 * Create Tag URI value
+		 */
+		Text tagUri = new Text(composite, SWT.BORDER);
+		tagUri.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
+		text = Constants.EMPTY;
+		if ((data != null) && (data.getUri() != null)) {
+			text = data.getUri();
+		}
+		tagUri.setText(text);
+
+		/*
+		 * Create Tag for display label
+		 */
+        Label tagForDisplayLabel = new Label(composite, SWT.NONE); 
+        tagForDisplayLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+        tagForDisplayLabel.setText(VpeUIMessages.TAG_FOR_DISPLAY);
         
-        tagFDisplayLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-        txtTagForDisplay = new Text(composite,SWT.BORDER);
-        gd.horizontalSpan=2;
-        txtTagForDisplay.setLayoutData(gd);
-        txtTagForDisplay.setText(data.getTagForDisplay() != null ? data.getTagForDisplay() : ""); //$NON-NLS-1$
+        /*
+		 * Create Tag for display value
+		 */
+        txtTagForDisplay = new Text(composite, SWT.BORDER);
+        txtTagForDisplay.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
+        text = Constants.EMPTY;
+		if ((data != null) && (data.getTagForDisplay() != null)) {
+			text = data.getTagForDisplay();
+		}
+        txtTagForDisplay.setText(text);
         txtTagForDisplay.addModifyListener(templateVerifier);
-//        txtTagForDisplay.select(tagNameItemIndex);
         
+        /*
+         * Create Children label
+         */
+        Label childrenCheckboxLabel = new Label(composite, SWT.NONE);
+        childrenCheckboxLabel.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
+        childrenCheckboxLabel.setText(VpeUIMessages.CHILDREN);
+		
+        /*
+         * Create check box for Children
+         */
+        childrenCheckbox = new Button(composite, SWT.CHECK);
+        childrenCheckbox.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, true, false, 2, 1));
         
-//		ctlCaseSensitive = new CheckControl(composite, "Case sensitive", data.isCaseSensitive());
-		ctlChildren = new CheckControl(composite, VpeUIMessages.CHILDREN, data.isChildren());
-//		ctlModify = new CheckControl(composite, "Modify", data.isModify());
-			
-		//value control
-		Label lblValue = makeLabel(composite, VpeUIMessages.VALUE);
-		lblValue.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+		/*
+		 * Create value label
+		 */
+		Label lblValue = new Label(composite, SWT.NONE); 
+		lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+		lblValue.setText( VpeUIMessages.VALUE);
+		
+		/*
+		 * Create value
+		 */
 		txtValue = new Text(composite, SWT.BORDER);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
-		txtValue.setLayoutData(gd);
+		txtValue.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
 		txtValue.setText(data.getValue() != null ? data.getValue() : ""); //$NON-NLS-1$
 		txtValue.addModifyListener(templateVerifier);
 
-		//style control
-		Label lbStyle = makeLabel(composite, VpeUIMessages.STYLE);
-		lbStyle.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+		/*
+		 * Create style label
+		 */
+		Label lbStyle = new Label(composite, SWT.NONE); 
+		lbStyle.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+		lbStyle.setText(VpeUIMessages.TAG_STYLE);
+		
+		/*
+		 * Create style value
+		 */
 		txtStyle =  new Text(composite, SWT.BORDER);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 1;
-		gd.grabExcessHorizontalSpace = true;
-		txtStyle.setLayoutData(gd);
-		txtStyle.setText(data.getStyle() !=null ? data.getStyle() : ""); //$NON-NLS-1$
+		txtStyle.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+		 text = Constants.EMPTY;
+		if ((data != null) && (data.getStyle() != null)) {
+			text = data.getStyle();
+		}
+		txtStyle.setText(text);
 	
+		/*
+		 * Create style button
+		 */
 		Button button = new Button(composite, SWT.PUSH);
-		button.setLayoutData(new GridData());
+		button.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
 		button.setToolTipText(VpeUIMessages.BACKGROUND_COLOR_TIP);
 		ImageDescriptor colorDesc = JspEditorPlugin
 			.getImageDescriptor(Constants.IMAGE_COLORLARGE_FILE_LOCATION);
@@ -151,8 +254,6 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 
 		return composite;
 	}
-	
-	
 
 	@Override
 	public void create() {
@@ -160,26 +261,11 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		templateVerifier.validateAll(false);
 	}
 
-	private IMessageProvider getDefaultMessage() {
-		final String message = (data.getUri() != null 
-					? (MessageFormat.format(VpeUIMessages.TAG_URI, data.getUri()) + "\n") //$NON-NLS-1$ 
-					: "") //$NON-NLS-1$
-				+ MessageFormat.format(VpeUIMessages.TAG_NAME, data.getName()); 
-		return new Message(message, IMessageProvider.NONE);
-	}
-
-	private Label makeLabel(Composite parent, String text) {
-		Label lbl = new Label(parent, SWT.NONE);
-		lbl.setText(text);
-		lbl.setBackground(parent.getBackground());
-		return lbl;
-	}
-
 	@Override
 	protected void okPressed() {
 
-		data.setChanged(data.isChanged() || (data.isChildren() != ctlChildren.getSelection()));
-		data.setChildren(ctlChildren.getSelection());
+		data.setChanged(data.isChanged() || (data.isChildren() != childrenCheckbox.getSelection()));
+		data.setChildren(childrenCheckbox.getSelection());
 
 		data.setChanged(isChanged(data,data.getTagForDisplay(),txtTagForDisplay.getText()));
 		data.setTagForDisplay(txtTagForDisplay.getText().trim());
@@ -216,31 +302,6 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 			setMessage(null, IMessageProvider.NONE);
 		} else {
 			setMessage(message.getMessage(), message.getMessageType());			
-		}
-	}
-
-	private static class CheckControl {
-		private Label label;
-		private Button button;
-
-		public CheckControl(Composite parent, String labelText, boolean value) {
-			label = new Label(parent, SWT.NONE);
-			label.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-			label.setText(labelText);
-			button = new Button(parent, SWT.CHECK);
-			GridData gd = new GridData(GridData.BEGINNING);
-			gd.horizontalSpan = 2;
-			button.setLayoutData(gd);
-			button.setSelection(value);
-		}
-
-		public void setVisible(boolean visible) {
-			label.setVisible(visible);
-			button.setVisible(visible);
-		}
-
-		public boolean getSelection() {
-			return button.getSelection();
 		}
 	}
 
@@ -310,7 +371,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		 * @param updateMessage if it is {@code true}, the dialog's message will be updated.
 		 */
 		void validateAll(boolean updateMessage) {
-			IMessageProvider message = VpeEditAnyDialog.this.getDefaultMessage();
+			IMessageProvider message = null;
 
 			IMessageProvider tagForDisplayMessage = validateTagForDisplay();
 			IMessageProvider valueMessage = validateValue();
@@ -319,10 +380,15 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 				message = tagForDisplayMessage;
 			} else if (valueMessage != null) {
 				message = valueMessage;
+			} else {
+				/*
+				 * If everything is OK - set default message
+				 */
+				setMessage(VpeUIMessages.UNKNOWN_TAGS_DIALOG_DESCRIPTION);
 			}
 
 			Button okButton = getButton(IDialogConstants.OK_ID);
-			if (message.getMessageType() <= IMessageProvider.INFORMATION) {
+			if ((message == null) || (message.getMessageType() <= IMessageProvider.INFORMATION)) {
 				okButton.setEnabled(true);
 			} else {
 				okButton.setEnabled(false);
