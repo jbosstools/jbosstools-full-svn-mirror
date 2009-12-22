@@ -169,6 +169,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	protected boolean lockCheck = false;
 	private Button removeInputDataButton;
 	private Button addInputDataButton;
+	private ScrolledPageBook scrolledPageBook;
 
 	public SmooksReaderFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
@@ -381,12 +382,12 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		FillLayout flayout = new FillLayout();
 		section.setLayout(flayout);
 
-		ScrolledPageBook pageBook = new ScrolledPageBook(section);
-		pageBook.setBackground(toolkit.getColors().getBackground());
-		section.setClient(pageBook);
+		scrolledPageBook = new ScrolledPageBook(section);
+		scrolledPageBook.setBackground(toolkit.getColors().getBackground());
+		section.setClient(scrolledPageBook);
 
-		readerConfigComposite = pageBook.createPage(pageBook);
-		pageBook.showPage(pageBook);
+		readerConfigComposite = scrolledPageBook.createPage(scrolledPageBook);
+		scrolledPageBook.showPage(scrolledPageBook);
 
 		GridLayout gl = new GridLayout();
 		gl.numColumns = 2;
@@ -716,6 +717,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 		}
 		if (readerConfigComposite != null) {
 			disposeCompositeControls(readerConfigComposite, null);
+			scrolledPageBook.reflow(true);
 		}
 		if (reader instanceof EObject) {
 			Object obj = ((EObject) reader);
@@ -762,7 +764,12 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 					IItemPropertySource.class);
 			modelPanelCreator.createModelPanel(reader, getManagedForm().getToolkit(), readerConfigComposite, ps,
 					(ISmooksModelProvider) getEditor(), getEditor());
-			readerConfigComposite.getParent().layout();
+			Composite parentPage = readerConfigComposite.getParent();
+			if(parentPage  != null){
+				parentPage.layout();
+			}
+			scrolledPageBook.reflow(true);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
