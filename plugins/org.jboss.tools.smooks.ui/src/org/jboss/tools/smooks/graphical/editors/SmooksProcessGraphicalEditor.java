@@ -966,7 +966,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 							if (page != null && page instanceof IEditorPart) {
 								try {
 									parent.setLayout(new FillLayout());
-
+									
 									ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
 											.getAdapter(ITaskNodeProvider.class);
 									if (nodeProvider != null) {
