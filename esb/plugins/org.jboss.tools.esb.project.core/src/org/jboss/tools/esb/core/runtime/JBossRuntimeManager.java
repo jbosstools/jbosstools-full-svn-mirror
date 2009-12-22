@@ -518,10 +518,4 @@ public class JBossRuntimeManager {
 		
 		return version;
 	}
-	
-	public static void main(String[] args){
-		File file = new File("/home/fugang/jboss-all/jboss-soa-p.5.0.0/");
-		JBossRuntimeManager.getInstance().getVersion(file.getAbsolutePath().toString(), "default");
-	}
-	
 }
