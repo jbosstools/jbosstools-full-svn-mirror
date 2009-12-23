@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.jboss.tools.tests.ImportBean;
 import org.jboss.tools.vpe.editor.menu.VpePopupMenuTest;
+import org.jboss.tools.vpe.ui.test.dialog.VpeEditAnyDialogTest;
 import org.jboss.tools.vpe.ui.test.dialog.VpeResourcesDialogTest;
 import org.jboss.tools.vpe.ui.test.editor.CustomSashFormTest;
 import org.jboss.tools.vpe.ui.test.preferences.VpeEditorPreferencesPageTest;
@@ -34,6 +35,7 @@ public class VpeUiTests {
 		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
 		suite.addTestSuite(CustomSashFormTest.class);
 		suite.addTestSuite(VpePopupMenuTest.class);
+		suite.addTestSuite(VpeEditAnyDialogTest.class);
 		
 		/*
 		 * Add projects that will be used in junit tests.
