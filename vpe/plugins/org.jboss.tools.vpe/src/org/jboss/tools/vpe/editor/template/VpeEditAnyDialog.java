@@ -143,6 +143,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 			text = data.getName();
 		}
 		tagName.setText(text);
+		tagName.addModifyListener(templateVerifier);
 		
 		/*
 		 * Create Tag URI label
@@ -161,6 +162,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 			text = data.getUri();
 		}
 		tagUri.setText(text);
+		tagUri.addModifyListener(templateVerifier);
 
 		/*
 		 * Create Tag for display label
@@ -193,6 +195,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
          */
         childrenCheckbox = new Button(composite, SWT.CHECK);
         childrenCheckbox.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, true, false, 2, 1));
+        childrenCheckbox.setSelection(data.isChildren());
         
 		/*
 		 * Create value label
@@ -206,7 +209,11 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		 */
 		txtValue = new Text(composite, SWT.BORDER);
 		txtValue.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
-		txtValue.setText(data.getValue() != null ? data.getValue() : ""); //$NON-NLS-1$
+		text = Constants.EMPTY;
+		if ((data != null) && (data.getValue() != null)) {
+			text = data.getValue();
+		}
+		txtValue.setText(text);
 		txtValue.addModifyListener(templateVerifier);
 
 		/*
@@ -334,6 +341,26 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 				VpePlugin.getPluginLog().logError(e);
 			}
 		}
+		
+		/**
+		 * Validates tag name.
+		 * <p>
+		 * Prefix should exist. 
+		 * <p>
+		 * Otherwise template won't be saved correctly to auto-templates.xml.
+		 * 
+		 * @return message is validation failed, null otherwise.
+		 */
+		private IMessageProvider validateTagName() {
+			Message message = null;
+			if (tagName.getText().indexOf(":") < 0) { //$NON-NLS-1$
+				message = new Message(
+						MessageFormat.format(VpeUIMessages.TAG_NAME_IS_NOT_VALID,
+								tagName.getText().trim()),
+			IMessageProvider.ERROR);
+			}
+			return message;
+		}
 
 		/**
 		 * Validates {@link VpeEditAnyDialog#txtTagForDisplay} field.
@@ -387,8 +414,11 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 
 			IMessageProvider tagForDisplayMessage = validateTagForDisplay();
 			IMessageProvider valueMessage = validateValue();
+			IMessageProvider tagNameMessage = validateTagName();
 
-			if (tagForDisplayMessage != null) {
+			if (tagNameMessage != null) {
+				message = tagNameMessage;
+			} else if (tagForDisplayMessage != null) {
 				message = tagForDisplayMessage;
 			} else if (valueMessage != null) {
 				message = valueMessage;

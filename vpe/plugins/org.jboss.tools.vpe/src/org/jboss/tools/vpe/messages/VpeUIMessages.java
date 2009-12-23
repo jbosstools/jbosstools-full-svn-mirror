@@ -45,6 +45,8 @@ public final class VpeUIMessages extends NLS {
 	public static String TAG_STYLE;
 	public static String CHILDREN;
 	public static String VALUE;
+	public static String TAG_NAME_IS_NOT_VALID;
+	public static String TAG_FOR_DISPLAY_IS_NOT_VALID;
 	public static String VALUE_IS_NOT_VALID;
 	public static String BACKGROUND_COLOR;
 	public static String ERROR_OF_TYPE_CONVERSION;
@@ -80,7 +82,6 @@ public final class VpeUIMessages extends NLS {
 	public static String HIDE_TOOLBAR;
 	public static String SHOW;
 	public static String HIDE;
-	public static String TAG_FOR_DISPLAY_IS_NOT_VALID;
 	public static String MenuCreationHelper_Cut;
 	public static String MenuCreationHelper_Paste;
 	public static String MenuCreationHelper_Test;

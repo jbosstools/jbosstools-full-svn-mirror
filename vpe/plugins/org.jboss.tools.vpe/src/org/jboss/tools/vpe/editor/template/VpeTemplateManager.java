@@ -788,7 +788,7 @@ public class VpeTemplateManager {
 				VpeAnyData data = iter.next();
 				root.appendChild(createNewTagElement(document, data));
 				String prefix = data.getPrefix();
-				if (prefix != null && prefix.length() > 0 && !prefixSet.contains(prefix)) {
+				if ((prefix != null) && (prefix.length() > 0) && !prefixSet.contains(prefix)) {
 					root = appendTaglib(prefixSet, document, root, data);
 					prefixSet.add(prefix);
 				}

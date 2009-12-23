@@ -18,8 +18,6 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -33,9 +31,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.jboss.tools.common.model.ui.action.CommandBar;
-import org.jboss.tools.common.model.ui.action.CommandBarListener;
-import org.jboss.tools.common.model.ui.objecteditor.XTable;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
@@ -50,7 +45,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		VpeUIMessages.TemplatesTableProvider_URI,
 		VpeUIMessages.TemplatesTableProvider_Children};
 	private static final int[] COLUMNS_WIDTHS = new int[] {
-		50, 50, 90, 30
+		50, 50, 90, 40
 	};
 	private Table tagsTable;
 	private Button addButton;
@@ -58,10 +53,9 @@ public class TemplatesPreferencePage extends PreferencePage implements
 	private Button removeButton;
 	private List<VpeAnyData> tagsList;
 	
-	protected boolean changed;
+	protected boolean tagListWasChanged;
 	
 	public TemplatesPreferencePage() {
-		setPreferenceStore(getPreferenceStore());
 		/*
 		 * Initialize tags list from the file
 		 */
@@ -86,7 +80,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
         composite.setFont(parent.getFont());
         
         /*
-         * Create datatable with the list of unknown tags 
+         * Create data-table with the list of unknown tags 
          */
         tagsTable = new Table(composite,  SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         TableLayout layout = new TableLayout();
@@ -94,19 +88,6 @@ public class TemplatesPreferencePage extends PreferencePage implements
         tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
         tagsTable.setHeaderVisible(true);
         tagsTable.setLinesVisible(true);
-        tagsTable.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-			}
-        	
-		});
         
         /*
          * Create columns in the table
@@ -126,16 +107,16 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		/*
 		 * Add buttons
 		 */
-		addButton = new Button(composite, SWT.NONE);
-		addButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		addButton = new Button(composite, SWT.BUTTON1);
+		addButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		addButton.setText(VpeUIMessages.TemplatesPreferencePage_Add);
 		
-		editButton = new Button(composite, SWT.NONE);
-		editButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		editButton = new Button(composite, SWT.BUTTON1);
+		editButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		editButton.setText(VpeUIMessages.TemplatesPreferencePage_Edit);
 		
-		removeButton = new Button(composite, SWT.NONE);
-		removeButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		removeButton = new Button(composite, SWT.BUTTON1);
+		removeButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		removeButton.setText(VpeUIMessages.TemplatesPreferencePage_Remove);
 		
 		/*
@@ -152,19 +133,26 @@ public class TemplatesPreferencePage extends PreferencePage implements
 	}
 
 	private void updateTagsTable() {
+		/*
+		 * If widget is null or disposed - exit.
+		 */
 		if(tagsTable == null || tagsTable.isDisposed()) {
 			return;
 		}
+		/*
+		 * Remember selection index.
+		 */
 		int selectionIndex = tagsTable.getSelectionIndex();
 		/*
 		 * Clear all previously saved items.
 		 */
 		tagsTable.clearAll();
-		TableItem tableItem = null;
+		tagsTable.update();
 		
 		/*
 		 * Recreate table items
 		 */
+		TableItem tableItem = null;
 		for (int i = 0; i < tagsList.size(); i++) {
 			if(tagsTable.getItemCount() > i) {
 				/*
@@ -179,7 +167,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 			}
 			/*
 			 * Fill in columns.
-			 * Tags table has 5 columns with checkbox in the first column.
+			 * Tags table has 4 columns.
 			 */
 			String[] itemColumnsData = new String[tagsTable.getColumnCount()];
 			for (int j = 0; j < itemColumnsData.length; j++) {
@@ -241,16 +229,6 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		if(v.indexOf('\r') >= 0) v = v.replace('\r', ' ');
 		return v;
 	}
-
-	public boolean performOk() {
-		if(changed) {
-			/*
-			 * Commit changes to the file
-			 */
-			VpeTemplateManager.getInstance().setAnyTemplates(tagsList);
-		}
-		return true;
-	}
 	
 	public void handleEvent(Event event) {
 		Widget source = event.widget;
@@ -266,6 +244,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 				 * Add new template to the list.
 				 */
 				tagsList.add(data);
+				tagListWasChanged = true;
 			}
 		} else if (source == editButton) {
 			/*
@@ -274,22 +253,51 @@ public class TemplatesPreferencePage extends PreferencePage implements
 			VpeAnyData data = (VpeAnyData) tagsList.get(tagsTable.getSelectionIndex());
 			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
 			editDialog.open();
-			if(data.isChanged()){
-				changed = true;
+			if(data.isChanged()) {
+				tagListWasChanged = true;
 			}
 		} else if (source == removeButton) {
 			/*
 			 * Handle remove event
 			 */
 			tagsList.remove(tagsTable.getSelectionIndex());
+			tagListWasChanged = true;
 		} else {
 			/*
 			 * Handle default event
 			 */
 		}
 		/*
-		 * Update tags table with the new tempales.
+		 * Update tags table with the new templates.
 		 */
 		updateTagsTable();
 	}
+	
+	@Override
+	public boolean performOk() {
+		if(tagListWasChanged) {
+			/*
+			 * Commit changes to the file
+			 */
+			VpeTemplateManager.getInstance().setAnyTemplates(tagsList);
+		}
+		return true;
+	}
+
+	@Override
+	protected void performApply() {
+		performOk();
+	}
+
+	@Override
+	protected void performDefaults() {
+		/*
+		 * Initialize tags list from the file again.
+		 * Update visual table.
+		 */
+		tagsList = VpeTemplateManager.getInstance().getAnyTemplates();
+		updateTagsTable();
+	}
+	
+	
 }
