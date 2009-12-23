@@ -64,6 +64,8 @@ import org.w3c.dom.Document;
 public class VpeEditAnyDialog extends TitleAreaDialog {
 
 	private VpeAnyData data;
+	Text tagName;
+	Text tagUri;
 	private Button childrenCheckbox;
 	private Text txtTagForDisplay;
 	private Text txtValue;
@@ -134,7 +136,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		/*
 		 * Create Tag Name value
 		 */
-		Text tagName = new Text(composite, SWT.BORDER);
+		tagName = new Text(composite, SWT.BORDER);
 		tagName.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
 		String text = Constants.EMPTY;
 		if ((data != null) && (data.getName() != null)){
@@ -152,7 +154,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		/*
 		 * Create Tag URI value
 		 */
-		Text tagUri = new Text(composite, SWT.BORDER);
+		tagUri = new Text(composite, SWT.BORDER);
 		tagUri.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
 		text = Constants.EMPTY;
 		if ((data != null) && (data.getUri() != null)) {
@@ -263,17 +265,23 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 
 	@Override
 	protected void okPressed() {
-
-		data.setChanged(data.isChanged() || (data.isChildren() != childrenCheckbox.getSelection()));
-		data.setChildren(childrenCheckbox.getSelection());
-
-		data.setChanged(isChanged(data,data.getTagForDisplay(),txtTagForDisplay.getText()));
-		data.setTagForDisplay(txtTagForDisplay.getText().trim());
+		boolean isChanged = false;
+		if ((data.isChildren() != childrenCheckbox.getSelection())
+				|| isChanged(data, data.getName(), tagName.getText())
+				|| isChanged(data, data.getUri(), tagUri.getText())
+				|| isChanged(data, data.getTagForDisplay(), txtTagForDisplay.getText())
+				|| isChanged(data, data.getValue(), txtValue.getText())
+				|| isChanged(data, data.getStyle(), txtStyle.getText())) {
+			isChanged = true;
+		}
 		
-		data.setChanged(isChanged(data, data.getValue(), txtValue.getText()));
+		data.setChanged(isChanged);
+		
+		data.setChildren(childrenCheckbox.getSelection());
+		data.setName(tagName.getText().trim());
+		data.setUri(tagUri.getText().trim());
+		data.setTagForDisplay(txtTagForDisplay.getText().trim());
 		data.setValue(txtValue.getText().trim());
-
-		data.setChanged(isChanged(data, data.getStyle(), txtStyle.getText()));
 		data.setStyle(txtStyle.getText());
 		
 		super.okPressed();
@@ -281,14 +289,18 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 
 	private boolean isChanged(VpeAnyData data, String oldValue, String newValue) {
 		boolean isChanged = false;
-		if (oldValue == null) oldValue = ""; //$NON-NLS-1$
-		if (newValue == null) newValue = ""; //$NON-NLS-1$
+		if (oldValue == null) {
+			oldValue = Constants.EMPTY;
+		}
+		if (newValue == null) {
+			newValue = Constants.EMPTY;
+		}
 		if (data.isCaseSensitive()) {
 			isChanged = !oldValue.trim().equals(newValue.trim());
 		} else {
 			isChanged = !oldValue.trim().equalsIgnoreCase(newValue.trim());
 		}
-		return data.isChanged() || isChanged;
+		return isChanged;
 	}
 
 	/**

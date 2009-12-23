@@ -13,13 +13,24 @@ package org.jboss.tools.vpe.editor.preferences;
 import java.util.List;
 
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.viewers.ColumnLayoutData;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.jboss.tools.common.model.ui.action.CommandBar;
@@ -32,119 +43,253 @@ import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class TemplatesPreferencePage extends PreferencePage implements
-		IWorkbenchPreferencePage, CommandBarListener {
-	static String ADD = VpeUIMessages.TemplatesPreferencePage_Add; 
-	static String EDIT = VpeUIMessages.TemplatesPreferencePage_Edit; 
-	static String REMOVE = VpeUIMessages.TemplatesPreferencePage_Remove; 
-	protected TemplatesTableProvider tableProvider;// = new TemplatesTableProvider();
-	protected XTable table = new XTable();
-	protected CommandBar bar = new CommandBar();
-	protected List dataList;
+		IWorkbenchPreferencePage, Listener {
+	private static final String[] COLUMNS_NAMES = new String[] {
+		VpeUIMessages.TemplatesTableProvider_TagName, 
+		VpeUIMessages.TemplatesTableProvider_TagForDisplay,
+		VpeUIMessages.TemplatesTableProvider_URI,
+		VpeUIMessages.TemplatesTableProvider_Children};
+	private static final int[] COLUMNS_WIDTHS = new int[] {
+		50, 50, 90, 30
+	};
+	private Table tagsTable;
+	private Button addButton;
+	private Button editButton;
+	private Button removeButton;
+	private List<VpeAnyData> tagsList;
+	
 	protected boolean changed;
 	
 	public TemplatesPreferencePage() {
-//		noDefaultAndApplyButton();
 		setPreferenceStore(getPreferenceStore());
-		init();
+		/*
+		 * Initialize tags list from the file
+		 */
+		tagsList = VpeTemplateManager.getInstance().getAnyTemplates();
 	}
 	
 	public String getTitle() {
 		return VpeUIMessages.TEMPLATES;
 	}
 	
-	private void init() {
-		changed = false;
-		dataList = VpeTemplateManager.getInstance().getAnyTemplates();
-		tableProvider = new TemplatesTableProvider(dataList);
-		
-		bar.getLayout().buttonWidth = 80;
-		bar.getLayout().direction = SWT.VERTICAL;
-		bar.setCommands(new String[]{ADD, EDIT, REMOVE});
-		bar.addCommandBarListener(this);
-		table.setTableProvider(tableProvider);
-	}
-
-	protected Control createContents(Composite parent) {
-		Composite c = new Composite(parent, SWT.NONE);
-		c.setLayoutData(new GridData(GridData.FILL_BOTH));
-		GridLayout g = new GridLayout(2, false);
-		c.setLayout(g);
-		Control slc = table.createControl(c);
-		slc.setLayoutData(new GridData(GridData.FILL_BOTH));
-		Control bc = bar.createControl(c);
-		GridData gd = new GridData(GridData.FILL_VERTICAL);
-		bc.setLayoutData(gd);
-		table.getTable().addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
-				updateBars();
-			}
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
-		});
-		
-		update();
-		return c;
-	}
-
 	public void init(IWorkbench workbench) {
 	}
 
-	public void action(String command) {
-		int index = table.getSelectionIndex();
-		if(ADD.equals(command)) {
-			add(index);
-		} else if(EDIT.equals(command)) {
-			edit(index);
-		} else if(REMOVE.equals(command)) {
-			remove(index);
+	protected Control createContents(Composite parent) {
+		/*
+		 * Create main composite element with grid layout.
+		 * Two columns.
+		 */
+		Composite composite = new Composite(parent, SWT.NONE);
+        composite.setLayout(new GridLayout(2, false));
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        composite.setFont(parent.getFont());
+        
+        /*
+         * Create datatable with the list of unknown tags 
+         */
+        tagsTable = new Table(composite,  SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+        TableLayout layout = new TableLayout();
+        tagsTable.setLayout(layout);
+        tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
+        tagsTable.setHeaderVisible(true);
+        tagsTable.setLinesVisible(true);
+        tagsTable.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+			}
+        	
+		});
+        
+        /*
+         * Create columns in the table
+         */
+		ColumnLayoutData columnLayoutData;
+		for (int i = 0; i < COLUMNS_NAMES.length; i++) {
+			TableColumn column = new TableColumn(tagsTable, SWT.NONE);
+			column.setText(COLUMNS_NAMES[i]);
+			columnLayoutData = new ColumnWeightData(COLUMNS_WIDTHS[i], true);
+			layout.addColumnData(columnLayoutData);
 		}
-		update();
+		/*
+		 * Fill the table with stored tags
+		 */
+		updateTagsTable();
+		
+		/*
+		 * Add buttons
+		 */
+		addButton = new Button(composite, SWT.NONE);
+		addButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		addButton.setText(VpeUIMessages.TemplatesPreferencePage_Add);
+		
+		editButton = new Button(composite, SWT.NONE);
+		editButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		editButton.setText(VpeUIMessages.TemplatesPreferencePage_Edit);
+		
+		removeButton = new Button(composite, SWT.NONE);
+		removeButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		removeButton.setText(VpeUIMessages.TemplatesPreferencePage_Remove);
+		
+		/*
+		 * Adding event listeners to the buttons
+		 */
+		addButton.addListener(SWT.Modify, this);
+		addButton.addListener(SWT.Selection, this);
+		editButton.addListener(SWT.Modify, this);
+		editButton.addListener(SWT.Selection, this);
+		removeButton.addListener(SWT.Modify, this);
+		removeButton.addListener(SWT.Selection, this);
+
+		return composite;
 	}
+
+	private void updateTagsTable() {
+		if(tagsTable == null || tagsTable.isDisposed()) {
+			return;
+		}
+		int selectionIndex = tagsTable.getSelectionIndex();
+		/*
+		 * Clear all previously saved items.
+		 */
+		tagsTable.clearAll();
+		TableItem tableItem = null;
+		
+		/*
+		 * Recreate table items
+		 */
+		for (int i = 0; i < tagsList.size(); i++) {
+			if(tagsTable.getItemCount() > i) {
+				/*
+				 * Use existed items
+				 */
+				tableItem = tagsTable.getItem(i);
+			} else {
+				/*
+				 * Add necessary item
+				 */
+				tableItem = new TableItem(tagsTable, SWT.BORDER, i);
+			}
+			/*
+			 * Fill in columns.
+			 * Tags table has 5 columns with checkbox in the first column.
+			 */
+			String[] itemColumnsData = new String[tagsTable.getColumnCount()];
+			for (int j = 0; j < itemColumnsData.length; j++) {
+				/*
+				 * Getting values from tagList
+				 */
+				itemColumnsData[j] = toVisualValue(getValueAt(i, (j)));
+			}
+			/*
+			 * Set cells text
+			 */
+			tableItem.setText(itemColumnsData);
+		}
+		
+		/*
+		 * Restoring selection index
+		 */
+		if (selectionIndex > 0 ) {
+			 try {
+					tagsTable.setSelection(selectionIndex);
+				} catch (SWTException e) {
+					/*
+					 * Do nothing
+					 */
+				}
+		}
+	}
+	
+	public String getValueAt(int row, int column) {
+		String result = "List is empty"; //$NON-NLS-1$
+		if (null != tagsList) {
+			VpeAnyData tagItem = (VpeAnyData)tagsList.get(row);
+			switch(column){
+			case 0:
+				result = tagItem.getName();
+				break;
+			case 1:
+				result = tagItem.getTagForDisplay();
+				break;
+			case 2:
+				result = tagItem.getUri();
+				break;
+			case 3:
+				if(tagItem.isChildren()) {
+					result = VpeUIMessages.TemplatesTableProvider_Yes;
+				} else {
+					result = VpeUIMessages.TemplatesTableProvider_No;
+				}
+				break;
+			}
+		}
+		return result;
+	}
+	
+	private String toVisualValue(String v) {
+		if(v == null) return ""; //$NON-NLS-1$
+		if(v.indexOf('\n') >= 0) v = v.replace('\n', ' ');
+		if(v.indexOf('\t') >= 0) v = v.replace('\t', ' ');
+		if(v.indexOf('\r') >= 0) v = v.replace('\r', ' ');
+		return v;
+	}
+
 	public boolean performOk() {
 		if(changed) {
-			VpeTemplateManager.getInstance().setAnyTemplates(dataList);
+			/*
+			 * Commit changes to the file
+			 */
+			VpeTemplateManager.getInstance().setAnyTemplates(tagsList);
 		}
-		return super.performOk();
+		return true;
 	}
 	
-	void add(int index) {
-		VpeAnyData data = new VpeAnyData(Constants.EMPTY, Constants.EMPTY, Constants.EMPTY);
-		VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
-		editDialog.open();
-		if(data.isChanged()){
-			VpeTemplateManager.getInstance().setAnyTemplate(data);
+	public void handleEvent(Event event) {
+		Widget source = event.widget;
+		if (source == addButton) {
+			/*
+			 * Handle add event
+			 */
+			VpeAnyData data = new VpeAnyData(Constants.EMPTY, Constants.EMPTY, Constants.EMPTY);
+			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
+			editDialog.open();
+			if(data.isChanged()) {
+				/*
+				 * Add new template to the list.
+				 */
+				tagsList.add(data);
+			}
+		} else if (source == editButton) {
+			/*
+			 * Handle edit event
+			 */
+			VpeAnyData data = (VpeAnyData) tagsList.get(tagsTable.getSelectionIndex());
+			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
+			editDialog.open();
+			if(data.isChanged()){
+				changed = true;
+			}
+		} else if (source == removeButton) {
+			/*
+			 * Handle remove event
+			 */
+			tagsList.remove(tagsTable.getSelectionIndex());
+		} else {
+			/*
+			 * Handle default event
+			 */
 		}
+		/*
+		 * Update tags table with the new tempales.
+		 */
+		updateTagsTable();
 	}
-	
-	void edit(int index) {
-		VpeAnyData data = (VpeAnyData)dataList.get(index);
-		VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
-		editDialog.open();
-		if(data.isChanged()){
-			changed = true;
-		}
-	}
-	
-	void remove(int index) {
-		dataList.remove(index);
-		changed = true;
-	}
-
-	public void update() {
-		if(table != null){
-			table.update();
-		}
-		updateBars();
-	}
-
-	void updateBars() {
-		bar.setEnabled(EDIT, canModify());
-		bar.setEnabled(REMOVE, canModify());
-	}
-
-	private boolean canModify() {
-		return (table.getSelectionIndex() >= 0);
-	}
-	
 }
