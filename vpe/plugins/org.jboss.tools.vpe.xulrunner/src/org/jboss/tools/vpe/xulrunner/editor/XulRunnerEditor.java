@@ -48,7 +48,6 @@ import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITooltipListener;
 import org.mozilla.interfaces.nsITransferable;
-import org.mozilla.interfaces.nsIWebProgress;
 import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
@@ -56,10 +55,10 @@ import org.mozilla.xpcom.XPCOMException;
  * @author Sergey Vasilyev (svasilyev@exadel.com)
  * 
  */
-public class XulRunnerEditor extends XulRunnerBrowser{
-	
+public class XulRunnerEditor extends XulRunnerBrowser {
+
 	private VisualPaintListener paintListener;
-	
+
 	/** IVpeResizeListener */
 	private IVpeResizeListener resizeListener;
 
@@ -165,10 +164,7 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 				}
 				getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this,
 						nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
-				nsIWebProgress webProgress = (nsIWebProgress) getServiceManager()
-	    		.getServiceByContractID("@mozilla.org/docloaderservice;1", //$NON-NLS-1$
-	    			nsIWebProgress.NS_IWEBPROGRESS_IID);
-	            webProgress.removeProgressListener(XulRunnerEditor.this);
+				removeProgressListener(XulRunnerEditor.this);
 				removeSelectionListener();
 				if (resizeListener != null)
 					getIXulRunnerVpeResizer().removeResizeListener(
@@ -189,7 +185,7 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 			}
 
 		});
-		//Part of fix https://jira.jboss.org/jira/browse/JBIDE-4022
+		// Part of fix https://jira.jboss.org/jira/browse/JBIDE-4022
 		paintListener = new VisualPaintListener();
 		getBrowser().getParent().addPaintListener(paintListener);
 		// addListener(SWT.Activate, eventListenet);
@@ -211,7 +207,7 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 		// addListener(SWT.FocusOut, eventListenet);
 		addListener(SWT.Selection, eventListenet);
 		addListener(SWT.Paint, eventListenet);
-	
+
 		resizeListener = new IVpeResizeListener() {
 			public void onEndResizing(int usedResizeMarkerHandle, int top,
 					int left, int width, int height,
@@ -397,13 +393,14 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 
 		nsIDOMElement element = getElement(node);
 
-		//See https://jira.jboss.org/jira/browse/JBIDE-5117. We make 
-		//unnecessary redrawing of previously selected component in VE
-		//which happens in drawElementOutline(nsIDOMElement domElement) 
-		//method and call IFlasher.drawElementOutline(nsIDOMElement domElement)
-		//twice for different elements without browser repainting. So, for some 
-		//conflicts in Mozilla browser border above TR element wasn't repainted.
-		
+		// See https://jira.jboss.org/jira/browse/JBIDE-5117. We make
+		// unnecessary redrawing of previously selected component in VE
+		// which happens in drawElementOutline(nsIDOMElement domElement)
+		// method and call IFlasher.drawElementOutline(nsIDOMElement domElement)
+		// twice for different elements without browser repainting. So, for some
+		// conflicts in Mozilla browser border above TR element wasn't
+		// repainted.
+
 		// if (getLastSelectedElement() != null) {
 		//			
 		// scrollRegtangleFlag = scroll && node != null;
@@ -787,12 +784,14 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 						+ ';' + XulRunnerEditor.VISIBLE_ELEMENT_BORDER);
 			}
 			this.lastBorderedElement = domElement;
-			this.lastBorderedElement.setAttribute(PREV_STYLE_ATTR_NAME, oldstyle);
+			this.lastBorderedElement.setAttribute(PREV_STYLE_ATTR_NAME,
+					oldstyle);
 		} else {
 			// under osx function drawElementOutline not works
 			getIFlasher().drawElementOutline(domElement);
 		}
 	}
+
 	/**
 	 * Checks if node has select in parent node, if has it's cause crash on OSX
 	 * and xulrunner 1.8.1.3
@@ -809,21 +808,20 @@ public class XulRunnerEditor extends XulRunnerBrowser{
 	// return hasSelectInParenNodes(domNode.getParentNode());
 	// }
 	// }
-	
+
 	@Override
 	protected void onDispose() {
 		lastSelectedNode = null;
 		iFlasher = null;
 		super.onDispose();
 	}
-	
-	private class VisualPaintListener implements PaintListener{
+
+	private class VisualPaintListener implements PaintListener {
 
 		public void paintControl(PaintEvent e) {
 			showSelectionRectangle();
 		}
-		
+
 	}
-	
-	
+
 }

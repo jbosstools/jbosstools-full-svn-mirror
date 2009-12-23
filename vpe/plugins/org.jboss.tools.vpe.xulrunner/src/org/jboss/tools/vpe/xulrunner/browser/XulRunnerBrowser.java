@@ -167,20 +167,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	public void dispose() {
 		//added by mareshkau, here we remove listener.
 		//if we hasn't do it, listener will be continue work even after close browser
-        nsIServiceManager serviceManager = mozilla.getServiceManager();
-        nsIWebProgress webProgress = (nsIWebProgress) serviceManager
-		.getServiceByContractID("@mozilla.org/docloaderservice;1", //$NON-NLS-1$
-			nsIWebProgress.NS_IWEBPROGRESS_IID);
-        try {
-        	webProgress.removeProgressListener(this);
-        } catch(XPCOMException xpcomException) {
-        	
-        	//this exception throws when progress listener already has been deleted, 
-        	//so just ignore if error code NS_ERROR_FAILURE
-        	if(xpcomException.errorcode!=XulRunnerBrowser.NS_ERROR_FAILURE) {
-        		throw xpcomException;
-        	}
-        }
+		removeProgressListener(this);
 		browser.dispose();
 		browser = null;
 	}
@@ -449,4 +436,22 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	public void setText(String html) {
 		browser.setText(html);
 	}
+	
+	protected void removeProgressListener(nsIWebProgressListener progressListener){
+		 nsIServiceManager serviceManager = mozilla.getServiceManager();
+	        nsIWebProgress webProgress = (nsIWebProgress) serviceManager
+			.getServiceByContractID("@mozilla.org/docloaderservice;1", //$NON-NLS-1$
+				nsIWebProgress.NS_IWEBPROGRESS_IID);
+	        try {
+	        	webProgress.removeProgressListener(progressListener);
+	        } catch(XPCOMException xpcomException) {
+	        	
+	        	//this exception throws when progress listener already has been deleted, 
+	        	//so just ignore if error code NS_ERROR_FAILURE
+	        	if(xpcomException.errorcode!=XulRunnerBrowser.NS_ERROR_FAILURE) {
+	        		throw xpcomException;
+	        	}
+	        }
+	}
+	
 }
