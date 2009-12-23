@@ -587,10 +587,6 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			Copy copy = BPELFactory.eINSTANCE.createCopy();
 			Assign a = (Assign) ((To) side.getCopyRuleSide()).getContainer()
 					.getContainer();
-			getCommandFramework()
-					.execute(
-							wrapInShowContextCommand(new InsertCopyCommand(a,
-									copy, 0)));
 			To to = BPELFactory.eINSTANCE.createTo();
 			From from = BPELFactory.eINSTANCE.createFrom();
 			copy.setFrom(from);
@@ -598,6 +594,10 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			from.setLiteral(literal);
 			to.setVariable(side.getVariable());
 			to.setPart(side.getPart());
+			getCommandFramework()
+			.execute(
+					wrapInShowContextCommand(new InsertCopyCommand(a,
+							copy, 0)));
 		} catch (Exception e) {
 			throw new IllegalStateException(
 					"Can't generate initializer, check WSDL file");
