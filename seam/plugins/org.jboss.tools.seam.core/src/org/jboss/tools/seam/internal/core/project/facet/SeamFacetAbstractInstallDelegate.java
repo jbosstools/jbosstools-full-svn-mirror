@@ -307,7 +307,7 @@ public abstract class SeamFacetAbstractInstallDelegate implements ILogListener,
 	protected File webInfClassesMetaInf;
 	protected File persistenceFile;
 	protected File hibernateConsoleLaunchFile;
-	//protected File hibernateConsolePropsFile;
+	protected File hibernateConsolePropsFile;
 
 	/**
 	 * 
@@ -498,10 +498,10 @@ public abstract class SeamFacetAbstractInstallDelegate implements ILogListener,
 						viewFilterSetCollection, false);
 			}			
 
-			/*AntCopyUtils.copyFileToFolder(
+			AntCopyUtils.copyFileToFolder(
 					hibernateConsolePropsFile, 
 					project.getLocation().toFile(),
-					hibernateDialectFilterSet, false);*/
+					hibernateDialectFilterSet, false);
 
 			WtpUtils.setClasspathEntryAsExported(project, new Path("org.eclipse.jst.j2ee.internal.web.container"), monitor); //$NON-NLS-1$
 		} else {
@@ -684,8 +684,8 @@ public abstract class SeamFacetAbstractInstallDelegate implements ILogListener,
 			ejbProjectFolder, ejbProjectFolder.getName() + ".launch"), //$NON-NLS-1$
 			new FilterSetCollection(ejbFilterSet), false);
 
-		/*AntCopyUtils.copyFileToFolder(hibernateConsolePropsFile,
-			ejbProjectFolder, hibernateDialectFilterSet, false);*/
+		AntCopyUtils.copyFileToFolder(hibernateConsolePropsFile,
+			ejbProjectFolder, hibernateDialectFilterSet, false);
 	}
 
 	enum ProjectType {
@@ -763,6 +763,11 @@ public abstract class SeamFacetAbstractInstallDelegate implements ILogListener,
 			dataSourceDsFile = new File(seamGenResFolder, "datasource-ds.xml"); //$NON-NLS-1$
 			componentsFile = new File(seamGenResFolder, "WEB-INF/components" + (isWarConfiguration(model) ? "-war" : "") + ".xml"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
+			try {
+				hibernateConsolePropsFile = new File(SeamFacetInstallDataModelProvider.getTemplatesFolder(), "hibernatetools/hibernate-console.properties"); //$NON-NLS-1$
+			} catch (IOException e) {
+				SeamCorePlugin.getPluginLog().logError(e);
+			}
 			if (jpaVersion != null) {
 				IScopeContext context = new ProjectScope(project);
 				IEclipsePreferences prefs = context.getNode("org.eclipse.jpt.core");
@@ -774,7 +779,7 @@ public abstract class SeamFacetAbstractInstallDelegate implements ILogListener,
 					hibernateConsoleLaunchFile = null;
 				} else {
 					try {
-						hibernateConsoleLaunchFile = new File(SeamFacetInstallDataModelProvider.getTemplatesFolder(), "hibernatetools/hibernate-console_jpa.launch");
+						hibernateConsoleLaunchFile = new File(SeamFacetInstallDataModelProvider.getTemplatesFolder(), "hibernatetools/hibernate-console_jpa.launch");//$NON-NLS-1$
 					} catch (IOException e) {
 						SeamCorePlugin.getPluginLog().logError(e);
 					}
@@ -788,7 +793,6 @@ public abstract class SeamFacetAbstractInstallDelegate implements ILogListener,
 				}
 				//hibernateConsoleLaunchFile = new File(seamGenHomeFolder, "hibernatetools/hibernate-console.launch"); //$NON-NLS-1$
 			}
-			//hibernateConsolePropsFile = new File(seamGenHomeFolder, "hibernatetools/hibernate-console.properties"); //$NON-NLS-1$
 			//final File hibernateConsolePref = new File(seamGenHomeFolder, "hibernatetools/.settings/org.hibernate.eclipse.console.prefs"); //$NON-NLS-1$
 			persistenceFile = new File(seamGenResFolder, "META-INF/persistence-" + (isWarConfiguration(model) ? DEV_WAR_PROFILE : DEV_EAR_PROFILE) + ".xml"); //$NON-NLS-1$ //$NON-NLS-2$
 
