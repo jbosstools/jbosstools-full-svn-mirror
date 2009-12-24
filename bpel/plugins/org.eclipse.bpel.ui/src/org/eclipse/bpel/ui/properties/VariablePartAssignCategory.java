@@ -722,7 +722,7 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			MyDOMContentBuilderImpl contentBuilder = new MyDOMContentBuilderImpl(
 					xmlDocument);
 
-			contentBuilder.setBuildPolicy(buildPolicy);
+			contentBuilder.setBuildPolicy(contentBuilder.BUILD_OPTIONAL_ELEMENTS);
 			contentBuilder.createDefaultRootContent(cmDocument,
 					cmElementDeclaration, namespaceInfoList);
 
