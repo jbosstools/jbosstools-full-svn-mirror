@@ -778,5 +778,102 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			}
 			createDefaultContent(document, rootCMElementDeclaration);
 		}
+		
+		
+		public void visitCMElementDeclaration(CMElementDeclaration ed) {
+			int min = ed.getMinOccur() > 0 ? ed.getMinOccur() : 1;
+
+			// Correct the min value if the element is contained in
+			// a group.
+			if (!cmGroupStack.isEmpty()) {
+				CMGroup group = (CMGroup) cmGroupStack.peek();
+				int gmin = group.getMinOccur();
+				if (gmin == 0)
+					if (buildOptionalElements(buildPolicy)) { 
+						/* do nothing: min = min */
+					}
+					else {
+						min = min * gmin; // min = 0
+					}
+				else {
+					min = min * gmin;
+				}
+			}
+
+			int max = Math.min(ed.getMaxOccur(), getNumOfRepeatableElements());
+			if (max < min)
+				max = min;
+
+			alwaysVisit = false;
+
+			// Note - ed may not be abstract but has substitutionGroups
+			// involved.
+			if (buildFirstSubstitution(buildPolicy) || isAbstract(ed)) // leave
+																		// this
+																		// for
+																		// backward
+																		// compatibility
+																		// for now
+			{
+				// Note - To change so that if ed is optional, we do not
+				// generate anything here.
+				ed = getSubstitution(ed);
+
+				// Note - the returned ed may be an abstract element in
+				// which case the xml will be invalid.
+			}
+
+			if (min > 0 && !visitedCMElementDeclarationList.contains(ed)) {
+				visitedCMElementDeclarationList.add(ed);
+				for (int i = 1; i <= max; i++) {
+					// create an Element for each
+					Element element = null;
+					if (rootElement != null) {
+						element = rootElement;
+						rootElement = null;
+					}
+					else {
+						element = createElement(ed, computeName(ed, currentParent), currentParent);
+					}
+
+					// visit the children of the GrammarElement
+					Node oldParent = currentParent;
+					currentParent = element;
+					handlePushParent(element, ed);
+
+					namespaceTable.addElement(element);
+
+					boolean oldAttachNodesToParent = attachNodesToParent;
+					attachNodesToParent = true;
+
+					// instead of calling super.visitCMElementDeclaration()
+					// we duplicate the code with some minor modifications
+					CMNamedNodeMap nodeMap = ed.getAttributes();
+					int size = nodeMap.getLength();
+					for (int j = 0; j < size; j++) {
+						visitCMNode(nodeMap.item(j));
+					}
+
+					CMContent content = ed.getContent();
+					if (content != null) {
+						visitCMNode(content);
+					}
+
+					if (ed.getContentType() == CMElementDeclaration.PCDATA) {
+						CMDataType dataType = ed.getDataType();
+						if (dataType != null) {
+							visitCMDataType(dataType);
+						}
+					}
+					// end duplication
+					attachNodesToParent = oldAttachNodesToParent;
+					handlePopParent(element, ed);
+					currentParent = oldParent;
+					linkNode(element);
+				}
+				int size = visitedCMElementDeclarationList.size();
+				visitedCMElementDeclarationList.remove(size - 1);
+			}
+		}
 	}
 }
