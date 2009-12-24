@@ -10,6 +10,7 @@
 package org.jboss.tools.vpe.ui.test.dialog;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.window.Window;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
 import org.jboss.tools.vpe.ui.test.TestUtil;
@@ -40,7 +41,7 @@ public class VpeResourcesDialogTest extends VpeTest {
 		/*
 		 * Assert that window has been created.
 		 */
-		assertEquals(0, code);
+		assertEquals(Window.OK, code);
 
 		dialog.close();
 	}
