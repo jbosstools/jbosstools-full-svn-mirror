@@ -550,6 +550,7 @@ class ImageButton {
 	private ToolItem item;
 	private Composite composite;
 	private Image emptyImage;
+	private Image image;
 
 	public ImageButton(Composite parent, Image image, String toolTip) {
 		composite = new Composite(parent, SWT.NONE);
@@ -566,6 +567,7 @@ class ImageButton {
 		layoutTl.horizontalSpacing = 0;
 		composite.setLayout(layoutTl);
 
+		this.image = image;
 		ToolBar toolBar = new ToolBar(composite, SWT.HORIZONTAL | SWT.FLAT);
 		item = new ToolItem(toolBar, SWT.FLAT);
 		item.setImage(image);
@@ -599,10 +601,18 @@ class ImageButton {
 			composite.dispose();
 			composite = null;
 			item = null;
+			image = null;
 		}
 	}
 	public void setEnabled (boolean enabled) {
 		item.setEnabled(enabled);
+
+		// fix for JBIDE-5588
+		if (enabled) {
+			item.setImage(image);
+		} else {
+			item.setImage(emptyImage);
+		}
 	}
 
 	public Rectangle getButtonBounds() {
