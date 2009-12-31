@@ -12,7 +12,9 @@ package org.eclipse.bpel.ui.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.bpel.model.messageproperties.MessagepropertiesPackage;
 import org.eclipse.bpel.model.messageproperties.Property;
@@ -32,6 +34,7 @@ import org.eclipse.wst.wsdl.ExtensibilityElement;
 import org.eclipse.wst.wsdl.Import;
 import org.eclipse.wst.wsdl.Message;
 import org.eclipse.wst.wsdl.PortType;
+import org.eclipse.wst.wsdl.Types;
 import org.eclipse.wst.wsdl.WSDLFactory;
 import org.eclipse.wst.wsdl.WSDLPackage;
 import org.eclipse.wst.wsdl.util.WSDLResourceImpl;
@@ -81,6 +84,40 @@ public class WSDLImportHelper {
 				Message msg = (Message)((PropertyAlias)ee).getMessageType(); 
 				if (msg != null && msg.getQName() != null) {
 					addImportAndNamespace(definition, msg.getEnclosingDefinition());
+			        // add the namespaces of the propertyalias, message, part, type definition
+			        // for maybe the query of the propertyalias will use the elements in the namespaces
+			        if (((PropertyAlias) ee).getQuery() != null
+			                && !"".equals(((PropertyAlias) ee).getQuery().getValue())) {
+			            String query = ((PropertyAlias) ee).getQuery().getValue();
+			            String[] queryArr = query.split("/");
+			            List<String> prefixList = new LinkedList<String>();
+			            for (String qname : queryArr) {
+			                String[] strs = qname.split(":");
+			                if (strs.length > 1) {
+			                    prefixList.add(strs[0]);
+			                }
+			            }
+			            if (prefixList.size() > 0) {
+			                Types types = (Types) msg.getEnclosingDefinition().getTypes();
+			                if (types != null && types.getSchemas() != null) {
+			                    XSDSchema xsd = null;
+			                    for (int i = 0; i < types.getSchemas().size(); i++) {
+			                        xsd = (XSDSchema) types.getSchemas().get(i);
+			                        Map<String, String> map = xsd
+			                                .getQNamePrefixToNamespaceMap();
+			                        if (map != null) {
+			                            for (Object obj : map.keySet().toArray()) {
+			                                if (prefixList.contains((String) obj)) {
+			                                    definition.addNamespace((String) obj,
+			                                            (String) map.get((String) obj));
+			                                }
+
+			                            }
+			                        }
+			                    }
+			                }
+			            }
+			        }					
 				}
 			}
 			if (ee instanceof Property) {

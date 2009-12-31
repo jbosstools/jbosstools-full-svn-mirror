@@ -202,14 +202,19 @@ public class EditPropertyAliasDialog extends Dialog {
 		String query = ""; //$NON-NLS-1$
 		ITreeNode result = (ITreeNode)((IStructuredSelection) messagePartViewer.getSelection()).getFirstElement();
 		while (result != null) {
+			String qname = "";
+			if (result.getModelObject() instanceof XSDElementDeclaration) {
+				XSDElementDeclaration xsd = (XSDElementDeclaration)result.getModelObject();
+				qname = xsd.getQName();
+			}
 			if (result instanceof PartTreeNode) {
 				part = result.getLabel();
 				break;
 			}
 			if (!query.equals("")) { //$NON-NLS-1$
-				query = result.getLabel() + "/" + query; //$NON-NLS-1$
+				query = qname + "/" + query; //$NON-NLS-1$
 			} else {
-				query = result.getLabel();
+				query = qname;
 			}
 			result = (ITreeNode)tcp.getParent(result);
 		}
