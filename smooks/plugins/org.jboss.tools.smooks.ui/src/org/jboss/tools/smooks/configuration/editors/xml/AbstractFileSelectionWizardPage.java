@@ -51,7 +51,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 
 	private IFilePathProcessor filePathProcessor = null;
 
-	private String[] fileExtensionNames;
+	protected String[] fileExtensionNames;
 	
 	public AbstractFileSelectionWizardPage(String pageName, boolean multiSelect, Object[] initSelections,
 			List<ViewerFilter> filters,String[] fileExtensionNames) {

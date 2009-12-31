@@ -38,6 +38,8 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHighlighFigure {
 	private List<ITreeFigureListener> treeListener = new ArrayList<ITreeFigureListener>();
 
+	private Color oldLabelColor = null;
+
 	protected int SPACE_INT = 14;
 
 	protected int CLICKNODE_HEIGHT = 18;
@@ -335,12 +337,19 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 	}
 
 	public void paint(Graphics graphics) {
-		label.setForegroundColor(ColorConstants.black);
+		if (oldLabelColor == null){
+			oldLabelColor = label.getForegroundColor();
+		}
+		label.setForegroundColor(oldLabelColor);
 		if (isFocus() || isSelected() || showHighlight) {
 			label.setForegroundColor(GraphicsConstants.FONT_COLOR);
 		}
 
 		super.paint(graphics);
+	}
+	
+	public void setNodeLabelForegroundColor(Color color){
+		this.oldLabelColor = color;
 	}
 
 	protected void drawClickFigure(IFigure clickFigure, Graphics graphics) {

@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.actions;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -23,7 +26,7 @@ import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.process.ProcessFactory;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.wizard.TemplateMessageTypeWizard;
-import org.jboss.tools.smooks.graphical.wizard.freemarker.FreemarkerCSVTemplateCreationWizard;
+import org.jboss.tools.smooks.graphical.wizard.freemarker.FreemarkerTemplateParametersProvider;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
@@ -48,80 +51,60 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 		super.init();
 	}
 
+	protected void addFreemarkerTemplateTask(IWizard currentWizard, SmooksResourceListType resourceList) {
+		if (currentWizard instanceof FreemarkerTemplateParametersProvider) {
+
+			Freemarker freemarker = FreemarkerFactory.eINSTANCE.createFreemarker();
+
+			Map<String, String> parameters = ((FreemarkerTemplateParametersProvider) currentWizard).getParameters();
+			Iterator<String> keys = parameters.keySet().iterator();
+			while (keys.hasNext()) {
+				String key = keys.next();
+				String value = parameters.get(key);
+
+				ParamType param = SmooksFactory.eINSTANCE.createParamType();
+				param.setName(key);
+				param.setStringValue(value);
+
+				freemarker.getParam().add(param);
+			}
+			
+			String type = ((FreemarkerTemplateParametersProvider) currentWizard).getTemplateType();
+			if (type != null) {
+				ParamType param = SmooksFactory.eINSTANCE.createParamType();
+				param.setName(SmooksModelUtils.KEY_TEMPLATE_TYPE);
+				param.setStringValue(type);
+				freemarker.getParam().add(param);
+			}
+
+			Command addFreemarkerCommand = AddCommand.create(this.provider.getEditingDomain(), resourceList,
+					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+							.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER, freemarker));
+
+			if (addFreemarkerCommand.canExecute()) {
+				provider.getEditingDomain().getCommandStack().execute(addFreemarkerCommand);
+				TaskType parentTask = this.getCurrentSelectedTask().get(0);
+				TaskType childTask = ProcessFactory.eINSTANCE.createTemplateTask();
+				childTask.addSmooksModel(freemarker);
+				childTask.setType(type);
+				parentTask.addTask(childTask);
+			}
+		}
+	}
+
 	@Override
 	public void run() {
 		super.run();
 		if (this.provider != null) {
 			SmooksResourceListType resourceList = SmooksUIUtils.getSmooks11ResourceListType(provider.getSmooksModel());
-			if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE)) {
+			if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
 				// open wizard
 				TemplateMessageTypeWizard wizard = new TemplateMessageTypeWizard();
 				WizardDialog dialog = new WizardDialog(editorPart.getSite().getShell(), wizard);
 				if (dialog.open() == Dialog.OK) {
 					// init freemarker model
 					IWizard currentWizard = wizard.getWizard();
-					if (currentWizard instanceof FreemarkerCSVTemplateCreationWizard) {
-
-						String fieldsString = ((FreemarkerCSVTemplateCreationWizard) currentWizard).getFieldsString();
-						// for (Iterator<?> iterator = fields.iterator();
-						// iterator.hasNext();) {
-						// String string = (String) iterator.next();
-						// fieldsString += string + ",";
-						// }
-						// if (fieldsString.length() > 0) {
-						// fieldsString = fieldsString.substring(0,
-						// fieldsString.length() - 1);
-						// }
-						String quote = ((FreemarkerCSVTemplateCreationWizard) currentWizard).getQuote();
-						String seperator = ((FreemarkerCSVTemplateCreationWizard) currentWizard).getSeprator();
-
-						Freemarker freemarker = FreemarkerFactory.eINSTANCE.createFreemarker();
-
-						ParamType messageTypeParam = SmooksFactory.eINSTANCE.createParamType();
-						messageTypeParam.setName(SmooksModelUtils.KEY_TEMPLATE_TYPE);
-						messageTypeParam.setStringValue(SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV);
-
-						ParamType quoteParam = SmooksFactory.eINSTANCE.createParamType();
-						quoteParam.setName(SmooksModelUtils.KEY_CSV_QUOTE);
-						quoteParam.setStringValue(quote);
-
-						ParamType speratorParam = SmooksFactory.eINSTANCE.createParamType();
-						speratorParam.setName(SmooksModelUtils.KEY_CSV_SEPERATOR);
-						speratorParam.setStringValue(seperator);
-
-						ParamType fieldsParam = SmooksFactory.eINSTANCE.createParamType();
-						fieldsParam.setName(SmooksModelUtils.KEY_CSV_FIELDS);
-						fieldsParam.setStringValue(fieldsString);
-
-						freemarker.getParam().add(messageTypeParam);
-						freemarker.getParam().add(speratorParam);
-						freemarker.getParam().add(quoteParam);
-						freemarker.getParam().add(fieldsParam);
-
-						// SmooksModelUtils.addParam(freemarker.getTemplate(),
-						// messageTypeParam);
-						// SmooksModelUtils.addParam(freemarker.getTemplate(),
-						// quoteParam);
-						// SmooksModelUtils.addParam(freemarker.getTemplate(),
-						// speratorParam);
-						// SmooksModelUtils.addParam(freemarker.getTemplate(),
-						// fieldsParam);
-
-						Command addFreemarkerCommand = AddCommand.create(this.provider.getEditingDomain(),
-								resourceList,
-								SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-								FeatureMapUtil.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER,
-										freemarker));
-
-						if (addFreemarkerCommand.canExecute()) {
-							provider.getEditingDomain().getCommandStack().execute(addFreemarkerCommand);
-							TaskType parentTask = this.getCurrentSelectedTask().get(0);
-							TaskType childTask = ProcessFactory.eINSTANCE.createTemplateTask();
-							childTask.addSmooksModel(freemarker);
-							parentTask.addTask(childTask);
-						}
-
-					}
+					addFreemarkerTemplateTask(currentWizard, resourceList);
 				} else {
 					return;
 				}
@@ -129,22 +112,11 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 				TaskType parentTask = this.getCurrentSelectedTask().get(0);
 				TaskType childTask = ProcessFactory.eINSTANCE.createTaskType();
 				childTask.setId(taskID);
-				childTask.setName(TaskTypeManager.getTaskLabel(taskID));
+				childTask.setName(TaskTypeManager.getTaskLabel(childTask));
 				parentTask.addTask(childTask);
 			}
 		}
 	}
-
-	// private Command createAddTaskCommand() {
-	// TaskType parentTask = this.getCurrentSelectedTask().get(0);
-	// TaskType childTask = GraphFactory.eINSTANCE.createTaskType();
-	// childTask.setId(taskID);
-	// childTask.setName(this.getText());
-	// Command command = AddCommand.create(provider.getEditingDomain(),
-	// parentTask,
-	// GraphPackage.Literals.TASK_TYPE__TASK, childTask);
-	// return command;
-	// }
 
 	protected TaskType createTaskType() {
 		return ProcessFactory.eINSTANCE.createTaskType();

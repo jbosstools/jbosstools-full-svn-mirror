@@ -33,7 +33,6 @@ public class FreemarkerCreationFactory implements CreationFactory{
 	public static FreemarkerCreationFactory newCSVRecordFactory(){
 		CSVNodeModel recordModel = new CSVNodeModel();
 		recordModel.setName("record"); //$NON-NLS-1$
-		recordModel.setRecord(true);
 		recordModel.setSperator(',');
 		recordModel.setQuto('\"');
 		return new FreemarkerCreationFactory(CSV_RECORD, recordModel);
@@ -42,7 +41,6 @@ public class FreemarkerCreationFactory implements CreationFactory{
 	public static FreemarkerCreationFactory newCSVFieldFactory(){
 		CSVNodeModel fieldModel = new CSVNodeModel();
 		fieldModel.setName("field"); //$NON-NLS-1$
-		fieldModel.setRecord(false);
 		return new FreemarkerCreationFactory(CSV_FIELD, fieldModel);
 	}
 

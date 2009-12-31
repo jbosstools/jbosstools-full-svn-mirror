@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jboss.tools.smooks.graphical.wizard.freemarker.FreemarkerCSVTemplateCreationWizard;
+import org.jboss.tools.smooks.graphical.wizard.freemarker.FreemarkerXMLTemplateCreationWizard;
 
 /**
  * @author Dart
@@ -141,12 +142,18 @@ public class TemplateWizardSelectionPage extends WizardSelectionPage {
 		super(pageName);
 		setDescription("Choose \"Message Type\" ."); //$NON-NLS-1$
 		setTitle("Message Type Selection"); //$NON-NLS-1$
-		TemplateMessageTypeWizardNode node = new TemplateMessageTypeWizardNode();
-		node.setName(Messages.TemplateWizardSelectionPage_CSV_Node);
+		TemplateMessageTypeWizardNode csvTypeNode = new TemplateMessageTypeWizardNode();
+		csvTypeNode.setName(Messages.TemplateWizardSelectionPage_CSV_Node);
 //		node.setDescription("CSV");
-		node.setWizard(new FreemarkerCSVTemplateCreationWizard());
+		csvTypeNode.setWizard(new FreemarkerCSVTemplateCreationWizard());
+		registedWizard.add(csvTypeNode);
+		
+		TemplateMessageTypeWizardNode xmlTypeNode = new TemplateMessageTypeWizardNode();
+		xmlTypeNode.setName(Messages.TemplateWizardSelectionPage_XML_Node);
+//		node.setDescription("CSV");
+		xmlTypeNode.setWizard(new FreemarkerXMLTemplateCreationWizard());
 
-		registedWizard.add(node);
+		registedWizard.add(xmlTypeNode);
 	}
 
 	public void activeSelectionWizard() {

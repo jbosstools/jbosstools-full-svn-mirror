@@ -23,14 +23,17 @@ import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
-import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
+import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
+import org.jboss.tools.smooks.model.javabean12.ValueType;
 
 /**
  * @author Dart
@@ -113,28 +116,64 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		AbstractSmooksGraphicalModel gm = (AbstractSmooksGraphicalModel) model;
 		Object m = gm.getData();
 		Object obj = getData();
+		AbstractSmooksGraphicalModel pm = gm;
+		while (pm != null && !(pm instanceof RootModel)) {
+			pm = pm.getParent();
+		}
 		obj = AdapterFactoryEditingDomain.unwrap(obj);
-		if (obj instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
-			if (m instanceof CSVNodeModel) {
-				if (!((CSVNodeModel) m).isRecord()) {
-					List<TreeNodeConnection> exsitingConnection = gm.getTargetConnections();
-					if (!exsitingConnection.isEmpty())
+		if (obj instanceof ValueType) {
+			if (m instanceof IFreemarkerTemplateModel) {
+
+				if (pm instanceof RootModel) {
+					if (((IFreemarkerTemplateModel) m).isHidden((RootModel) pm)) {
 						return false;
-					for (Iterator<?> iterator = exsitingConnection.iterator(); iterator.hasNext();) {
-						TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
-						if (treeNodeConnection.getSourceNode() == this) {
+					}
+				}
+
+				if (m instanceof FreemarkerTemplateXMLModel) {
+					if (!((FreemarkerTemplateXMLModel) m).getXMLNodeChildren().isEmpty()) {
+						return false;
+					}
+				}
+
+				List<TreeNodeConnection> exsitingConnection = gm.getTargetConnections();
+				if (!exsitingConnection.isEmpty())
+					return false;
+				for (Iterator<?> iterator = exsitingConnection.iterator(); iterator.hasNext();) {
+					TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
+					if (treeNodeConnection.getSourceNode() == this) {
+						return false;
+					}
+				}
+
+				AbstractSmooksGraphicalModel pgm = gm;
+				while (pgm != null && pgm instanceof FreemarkerTemplateNodeGraphicalModel) {
+					Object pd = ((FreemarkerTemplateNodeGraphicalModel) pgm).getData();
+					if (pd instanceof IFreemarkerTemplateModel) {
+						if (((IFreemarkerTemplateModel) pd).isManyOccurs() && pgm.getTargetConnections().isEmpty()) {
 							return false;
 						}
 					}
-					AbstractSmooksGraphicalModel parent = gm.getParent();
-					if (parent instanceof FreemarkerCSVNodeGraphicalModel) {
-						List<TreeNodeConnection> connections = parent.getTargetConnections();
-						if (!connections.isEmpty()) {
-							return true;
-						}
-					}
+					pgm = pgm.getParent();
 				}
+
+				// if (m instanceof CSVNodeModel) {
+				// if (!((CSVNodeModel) m).isRecord()) {
+				// AbstractSmooksGraphicalModel parent = gm.getParent();
+				// if (parent instanceof FreemarkerCSVNodeGraphicalModel) {
+				// List<TreeNodeConnection> connections =
+				// parent.getTargetConnections();
+				// if (connections.isEmpty()) {
+				// return false;
+				// }
+				// }
+				// }else{
+				// return false;
+				// }
+				// }
+				return true;
 			}
+
 		}
 		if (!inJavaMapping())
 			return false;

@@ -145,7 +145,7 @@ public class FreemarkerCSVContentGenerator {
 		}
 	}
 
-	protected String generateMappingString(AbstractSmooksGraphicalModel sourceGraphModel,
+	public static String generateMappingString(AbstractSmooksGraphicalModel sourceGraphModel,
 			JavaBeanGraphModel recordRootNode) {
 		AbstractSmooksGraphicalModel parentModel = sourceGraphModel;
 		Object sourceModel = sourceGraphModel.getData();
@@ -174,7 +174,7 @@ public class FreemarkerCSVContentGenerator {
 		return mappingString;
 	}
 
-	private boolean fillParentList(List<Object> list, AbstractSmooksGraphicalModel node,
+	private static boolean fillParentList(List<Object> list, AbstractSmooksGraphicalModel node,
 			JavaBeanGraphModel recordRootNode) {
 		if (node instanceof JavaBeanChildGraphModel) {
 			node = node.getParent();

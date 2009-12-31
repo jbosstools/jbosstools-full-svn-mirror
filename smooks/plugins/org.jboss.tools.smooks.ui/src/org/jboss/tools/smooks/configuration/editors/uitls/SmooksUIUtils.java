@@ -3200,7 +3200,6 @@ public class SmooksUIUtils {
 					return true;
 				}
 			} catch (Throwable t) {
-
 			}
 		}
 

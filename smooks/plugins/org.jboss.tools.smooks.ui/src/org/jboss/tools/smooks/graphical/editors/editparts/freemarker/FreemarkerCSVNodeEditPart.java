@@ -410,7 +410,7 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 		Object data = model.getData();
 		if (data instanceof CSVNodeModel) {
 			if (((CSVNodeModel) data).isRecord()) {
-				figure.getLabel().setForegroundColor(ColorConstants.blue);
+				figure.setNodeLabelForegroundColor(ColorConstants.blue);
 				figure.getLabel().setFont(getCSVRecordLabelFont());
 			}
 		}

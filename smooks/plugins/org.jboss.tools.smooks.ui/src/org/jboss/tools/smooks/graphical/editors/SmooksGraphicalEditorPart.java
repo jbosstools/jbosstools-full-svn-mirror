@@ -95,18 +95,12 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.actions.AutoLayoutAction;
 import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.commands.IgnoreException;
-import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.RightClickSelectMarqueeDragTraker;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataRootModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
-import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
-import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
@@ -1012,21 +1006,22 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	}
 
 	private boolean canCreateConnection(AbstractSmooksGraphicalModel model) {
-		if (model instanceof JavaBeanGraphModel) {
-			return true;
-		}
-		if (model instanceof JavaBeanChildGraphModel) {
-			return true;
-		}
-		if (model instanceof XSLTemplateGraphicalModel) {
-			return true;
-		}
-		if (model instanceof XSLNodeGraphicalModel) {
-			return true;
-		}
-		if (model instanceof FreemarkerCSVNodeGraphicalModel)
-			return true;
-		return false;
+		// if (model instanceof JavaBeanGraphModel) {
+		// return true;
+		// }
+		// if (model instanceof JavaBeanChildGraphModel) {
+		// return true;
+		// }
+		// if (model instanceof XSLTemplateGraphicalModel) {
+		// return true;
+		// }
+		// if (model instanceof XSLNodeGraphicalModel) {
+		// return true;
+		// }
+		// if (model instanceof FreemarkerCSVNodeGraphicalModel)
+		// return true;
+		// return false;
+		return true;
 	}
 
 	protected void initSmooksData() {
@@ -1071,10 +1066,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			List<?> childrenEditPart = rootEditPart.getChildren();
 			for (Iterator<?> iterator = childrenEditPart.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-				Object model = ((EditPart) object).getModel();
-				if (object instanceof InputDataContainerEditPart || model instanceof XSLTemplateGraphicalModel) {
+//				Object model = ((EditPart) object).getModel();
+//				if (object instanceof InputDataContainerEditPart || model instanceof XSLTemplateGraphicalModel) {
 					SmooksUIUtils.expandGraphTree(expanedTreeNodeList, (TreeNodeEditPart) object);
-				}
+//				}
 				// if(model instanceof XSLTemplateGraphicalModel){
 				// ((TreeNodeEditPart) object).expandNode();
 				// if(!((TreeNodeEditPart) object).getChildren().isEmpty()){

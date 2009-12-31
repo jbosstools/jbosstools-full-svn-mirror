@@ -92,10 +92,13 @@ import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
 import org.jboss.tools.smooks.graphical.editors.process.TaskNodeFigure;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
+import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerCSVTemplateGraphicalEditor;
+import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
@@ -231,108 +234,6 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected void hookProcessGraphicalViewer() {
-		// final DropTarget dropTarge = new
-		// DropTarget(getProcessGraphViewer().getControl(), DND.DROP_MOVE |
-		// DND.DROP_COPY);
-		// dropTarge.setTransfer(new Transfer[] { TemplateTransfer.getInstance()
-		// });
-		// dropTarge.addDropListener(new DropTargetListener() {
-		// private TaskType taskType = null;
-		//
-		// private ProcessType process = null;
-		//
-		// public void dropAccept(DropTargetEvent event) {
-		//
-		// }
-		//
-		// public void drop(DropTargetEvent event) {
-		// if (event.detail == DND.DROP_COPY) {
-		// if (this.taskType != null) {
-		// TaskTypeDescriptor des = (TaskTypeDescriptor)
-		// TemplateTransfer.getInstance().getTemplate();
-		// AddNextTaskNodeAction action = new AddNextTaskNodeAction(des.getId(),
-		// des.getLabel(),
-		// smooksModelProvider);
-		// TaskType taskType = this.taskType;
-		// IStructuredSelection selection = new StructuredSelection(taskType);
-		// action.selectionChanged(new
-		// SelectionChangedEvent(getProcessGraphViewer(), selection));
-		// action.run();
-		// return;
-		// }
-		// if (this.process != null) {
-		// AddNextTaskNodeAction action = new
-		// AddInputTaskAction(smooksModelProvider);
-		// // IStructuredSelection selection = new
-		// // StructuredSelection(taskType);
-		// // action.selectionChanged(new
-		// // SelectionChangedEvent(getProcessGraphViewer(),
-		// // selection));
-		// action.run();
-		// return;
-		// }
-		// }
-		// }
-		//
-		// public void dragOver(DropTargetEvent event) {
-		// Control control = getProcessGraphViewer().getControl();
-		// if (control != null && control instanceof Graph) {
-		// Graph graph = (Graph) control;
-		// Point pp = graph.toControl(new Point(event.x, event.y));
-		// TaskTypeDescriptor des = (TaskTypeDescriptor)
-		// TemplateTransfer.getInstance().getTemplate();
-		// TaskType testType = GraphFactory.eINSTANCE.createTaskType();
-		// testType.setId(des.getId());
-		// IFigure figure = graph.getFigureAt(pp.x, pp.y);
-		// if (figure == null) {
-		// if (testType.getId().equals(TaskTypeManager.TASK_ID_INPUT)) {
-		// ProcessType process = (ProcessType)
-		// getProcessGraphViewer().getInput();
-		// if (process.getTask().isEmpty()) {
-		// event.detail = DND.DROP_COPY;
-		// this.process = process;
-		// return;
-		// }
-		// }
-		// event.detail = DND.DROP_NONE;
-		// this.taskType = null;
-		// process = null;
-		// return;
-		// }
-		// List<?> nodes = graph.getNodes();
-		// for (Iterator<?> iterator = nodes.iterator(); iterator.hasNext();) {
-		// Object object = (Object) iterator.next();
-		// if (object instanceof GraphNode) {
-		// IFigure f = ((GraphNode) object).getNodeFigure();
-		// if (figure == f) {
-		// TaskTypeRules rules = new TaskTypeRules();
-		// if (rules.isNextTask((TaskType) ((GraphNode) object).getData(),
-		// testType)) {
-		// event.detail = DND.DROP_COPY;
-		// this.taskType = (TaskType) ((GraphNode) object).getData();
-		// return;
-		// }
-		// }
-		// }
-		// }
-		// event.detail = DND.DROP_NONE;
-		// this.taskType = null;
-		// this.process = null;
-		// }
-		// }
-		//
-		// public void dragOperationChanged(DropTargetEvent event) {
-		// }
-		//
-		// public void dragLeave(DropTargetEvent event) {
-		// }
-		//
-		// public void dragEnter(DropTargetEvent event) {
-		// event.detail = DND.DROP_MOVE;
-		// this.taskType = null;
-		// process = null;
-		// }
-		// });
 		getProcessGraphViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
@@ -518,6 +419,11 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	public void registeTaskDetailsPage(IEditorPart editor, String taskID) {
 		editor.addPropertyListener(this);
 		this.registedTaskPages.put(taskID, editor);
+	}
+
+	public void removeTaskDetailsPage(IEditorPart editor, String taskID) {
+		editor.removePropertyListener(this);
+		this.registedTaskPages.remove(taskID);
 	}
 
 	/*
@@ -782,7 +688,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
 			TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
 			IEditorPart part = createEditorPart(taskTypeDescriptor.getId());
-			if (part != null) {
+			if (part != null && isSingltonEditor(taskTypeDescriptor.getId())) {
 				this.registeTaskDetailsPage(part, taskTypeDescriptor.getId());
 			}
 		}
@@ -796,8 +702,22 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected IEditorPart createEditorPart(Object taskID) {
-		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE)) {
-			SmooksFreemarkerTemplateGraphicalEditor freemarkerPart = new SmooksFreemarkerTemplateGraphicalEditor(
+		if (taskID instanceof TemplateAppyTaskNode) {
+			String type = ((TemplateAppyTaskNode) taskID).getType();
+			SmooksFreemarkerTemplateGraphicalEditor freemarkerPart = new SmooksFreemarkerCSVTemplateGraphicalEditor(
+					smooksModelProvider);
+			if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(type)) {
+				freemarkerPart = new SmooksFreemarkerCSVTemplateGraphicalEditor(smooksModelProvider);
+
+			}
+			if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_XML.equals(type)) {
+				freemarkerPart = new SmooksFreemarkerTemplateGraphicalEditor(smooksModelProvider);
+
+			}
+			return freemarkerPart;
+		}
+		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
+			SmooksFreemarkerTemplateGraphicalEditor freemarkerPart = new SmooksFreemarkerCSVTemplateGraphicalEditor(
 					smooksModelProvider);
 			return freemarkerPart;
 		}
@@ -814,7 +734,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected boolean isSingltonEditor(Object taskID) {
-		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE)) {
+		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
 			return false;
 		}
 		return true;
@@ -951,7 +871,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 						if (idref != null) {
 							// idref = id + "_" + idref;
 							if (getRegisteTaskPage(idref) == null) {
-								IEditorPart editor = createEditorPart(id);
+								IEditorPart editor = createEditorPart(finalModel);
 								registeTaskDetailsPage(editor, idref);
 							}
 							id = idref;
@@ -966,7 +886,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 							if (page != null && page instanceof IEditorPart) {
 								try {
 									parent.setLayout(new FillLayout());
-									
+
 									ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
 											.getAdapter(ITaskNodeProvider.class);
 									if (nodeProvider != null) {
@@ -1178,9 +1098,11 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		}
 	}
 
-	protected void validateTask(TaskType task) {
-		if (task == null)
+	protected void validateTask(TaskType t) {
+		if (t == null)
 			return;
+		final TaskType task = t;
+
 		task.setProblemType(IFieldMarker.TYPE_NONE);
 		task.cleanProblemMessages();
 		String id = task.getId();
@@ -1233,7 +1155,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			}
 		}
 
-		if (TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE.equals(id)) {
+		if (TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(id)) {
 			SmooksResourceListType sr = getSmooksResourceListType();
 			List<AbstractResourceConfig> rcs = sr.getAbstractResourceConfig();
 			boolean correct = false;
@@ -1256,6 +1178,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			return;
 		String name = evt.getPropertyName();
 		Object newtask = evt.getNewValue();
+		Object oldtask = evt.getOldValue();
 		if (ProcessType.PRO_ADD_CHILD.equals(name) || ProcessType.PRO_REMOVE_CHILD.equals(name)) {
 			if (getProcessGraphViewer() != null) {
 				getProcessGraphViewer().refresh();
@@ -1270,8 +1193,45 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		}
 		if (ProcessType.PRO_REMOVE_CHILD.equals(name)) {
 			this.showTaskControl(null);
+			disposeTaskDetails(oldtask);
 		}
 		validateEnd(null);
+	}
+
+	private void disposeTaskDetails(Object deleteTask) {
+		final Object finalModel = deleteTask;
+		pageBook.getShell().getDisplay().syncExec(new Runnable() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see java.lang.Runnable#run()
+			 */
+			public void run() {
+				if (finalModel instanceof TaskType) {
+					String id = ((TaskType) finalModel).getId();
+					if (!isSingltonEditor(id)) {
+						String idref = generateTaskSpecailID((TaskType) finalModel);
+						if (idref != null) {
+							id = idref;
+						} else {
+							id = id + "_unknown"; //$NON-NLS-1$
+						}
+						if (id != null) {
+							if (pageBook.hasPage(id)) {
+								pageBook.removePage(id);
+								Object registPage = getRegisteTaskPage(id);
+								removeTaskDetailsPage((IEditorPart) registPage, id);
+							} else {
+							}
+						}
+					}
+				} else {
+					// pageBook.showEmptyPage();
+				}
+			}
+
+		});
 	}
 
 	public void initFailed(int messageType, String message) {

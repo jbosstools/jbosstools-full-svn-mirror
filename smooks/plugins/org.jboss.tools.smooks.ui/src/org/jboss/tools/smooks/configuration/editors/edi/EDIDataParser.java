@@ -226,7 +226,7 @@ public class EDIDataParser {
 		smooks.filterSource(new StreamSource(ediInputStream), result);
 		Document resultXMLContent = (Document) result.getNode();
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		TagList tagList = analyzer.analyze(resultXMLContent, null);
+		TagList tagList = analyzer.analyze(resultXMLContent, null , null);
 
 		try {
 			if (smooks != null) {

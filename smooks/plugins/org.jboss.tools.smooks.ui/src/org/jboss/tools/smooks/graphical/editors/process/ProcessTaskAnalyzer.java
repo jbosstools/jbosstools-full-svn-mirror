@@ -33,7 +33,7 @@ public class ProcessTaskAnalyzer {
 		// Input task node must be in process:
 		TaskType inputTask = ProcessFactory.eINSTANCE.createTaskType();
 		inputTask.setId(TaskTypeManager.TASK_ID_INPUT);
-		inputTask.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_INPUT));
+		inputTask.setName(TaskTypeManager.getTaskLabel(inputTask));
 
 		process.addTask(inputTask);
 
@@ -46,7 +46,7 @@ public class ProcessTaskAnalyzer {
 			if (abstractResourceConfig instanceof BeanType) {
 				javaMappingTask = ProcessFactory.eINSTANCE.createTaskType();
 				javaMappingTask.setId(TaskTypeManager.TASK_ID_JAVA_MAPPING);
-				javaMappingTask.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_JAVA_MAPPING));
+				javaMappingTask.setName(TaskTypeManager.getTaskLabel(javaMappingTask));
 				inputTask.addTask(javaMappingTask);
 				break;
 			}
@@ -59,11 +59,13 @@ public class ProcessTaskAnalyzer {
 				if (abstractResourceConfig instanceof Freemarker) {
 					String messageType = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig)
 							.getParam(), SmooksModelUtils.KEY_TEMPLATE_TYPE);
-					if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(messageType)) {
+					if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(messageType)
+							|| SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_XML.equals(messageType)) {
 						TemplateAppyTaskNode templateTask = (TemplateAppyTaskNode) ProcessFactory.eINSTANCE
 								.createTemplateTask();
 						templateTask.setType(messageType);
 						templateTask.addSmooksModel(abstractResourceConfig);
+						templateTask.setName(TaskTypeManager.getTaskLabel(templateTask));
 						javaMappingTask.addTask(templateTask);
 					}
 				}

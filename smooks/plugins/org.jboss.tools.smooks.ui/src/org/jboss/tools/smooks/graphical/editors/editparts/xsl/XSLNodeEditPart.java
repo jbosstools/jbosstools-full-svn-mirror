@@ -341,7 +341,7 @@ public class XSLNodeEditPart extends TreeNodeEditPart {
 		Object data = model.getData();
 		if (data instanceof XSLTagObject) {
 			if (XSLModelAnalyzer.isXSLTagObject((XSLTagObject) data)) {
-				figure.getLabel().setForegroundColor(ColorConstants.blue);
+				figure.setNodeLabelForegroundColor(ColorConstants.blue);
 				figure.getLabel().setFont(getXslLabelFont());
 			}
 		}

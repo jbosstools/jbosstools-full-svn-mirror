@@ -173,6 +173,47 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 			disconnectAllConnections(treeNodeModel, deletedConnections);
 		}
 	}
+	
+	public static void disconnectAllConnectionsWithEvent(AbstractSmooksGraphicalModel node,
+			List<TreeNodeConnection> deletedConnections) {
+		List<TreeNodeConnection> sourceConnections = node.getSourceConnections();
+		List<TreeNodeConnection> targetConnections = node.getTargetConnections();
+		List<TreeNodeConnection> tempSourceConnections = new ArrayList<TreeNodeConnection>(sourceConnections);
+		List<TreeNodeConnection> tempTargetConnections = new ArrayList<TreeNodeConnection>(targetConnections);
+
+		for (Iterator<?> iterator2 = tempTargetConnections.iterator(); iterator2.hasNext();) {
+			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
+//			AbstractSmooksGraphicalModel sourceNode = treeNodeConnection.getSourceNode();
+			treeNodeConnection.disconnect();
+//			sourceNode.getSourceConnections().remove(treeNodeConnection);
+//			sourceNode.fireConnectionChanged();
+			if (deletedConnections != null) {
+				deletedConnections.add(treeNodeConnection);
+			}
+		}
+
+		for (Iterator<?> iterator2 = tempSourceConnections.iterator(); iterator2.hasNext();) {
+			TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator2.next();
+			 treeNodeConnection.disconnect();
+//			AbstractSmooksGraphicalModel targetNode = treeNodeConnection.getTargetNode();
+//			targetNode.getTargetConnections().remove(treeNodeConnection);
+//			targetNode.fireConnectionChanged();
+			if (deletedConnections != null) {
+				deletedConnections.add(treeNodeConnection);
+			}
+		}
+
+		tempSourceConnections.clear();
+		tempTargetConnections.clear();
+		tempSourceConnections = null;
+		tempTargetConnections = null;
+
+		List<AbstractSmooksGraphicalModel> children = node.getChildren();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			TreeNodeModel treeNodeModel = (TreeNodeModel) iterator.next();
+			disconnectAllConnectionsWithEvent(treeNodeModel, deletedConnections);
+		}
+	}
 
 	protected boolean graphicalChildExist(Object model, Object[] models) {
 		for (int i = 0; i < models.length; i++) {

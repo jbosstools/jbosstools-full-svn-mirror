@@ -13,52 +13,32 @@ package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
+import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.w3c.dom.Element;
 
 /**
  * @author Dart
  * 
  */
-public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
-	protected IEditingDomainProvider domainProvider = null;
-
-	protected FreemarkerCSVContentGenerator generator;
+public class FreemarkerCSVNodeGraphicalModel extends FreemarkerTemplateNodeGraphicalModel {
 
 	public FreemarkerCSVNodeGraphicalModel(Object data, ITreeContentProvider contentProvider,
 			ILabelProvider labelProvider, IEditingDomainProvider domainProvider) {
-		super(data, contentProvider, labelProvider);
-		this.domainProvider = domainProvider;
-		generator = new FreemarkerCSVContentGenerator();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#getChildren()
-	 */
-	@Override
-	public List<AbstractSmooksGraphicalModel> getChildren() {
-		return getChildrenWithoutDynamic();
-	}
-
-	/**
-	 * @return the domainProvider
-	 */
-	public IEditingDomainProvider getDomainProvider() {
-		return domainProvider;
+		super(data, contentProvider, labelProvider, domainProvider);
+		// TODO Auto-generated constructor stub
 	}
 
 	/*
@@ -104,7 +84,7 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 			}
 			if (param != null) {
 				SmooksModelUtils.setTextToSmooksType(this.domainProvider.getEditingDomain(), param, fieldsString);
-				changeFreemarkerContents();
+				// changeFreemarkerContents();
 			}
 		}
 	}
@@ -133,6 +113,13 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 	@Override
 	public void removeChild(AbstractSmooksGraphicalModel node) {
 		super.removeChild(node);
+		Object data = this.getData();
+		if (data instanceof TagObject) {
+			Object child = node.getData();
+			if (child instanceof TagObject) {
+				((TagObject) data).removeChildTag((TagObject) child);
+			}
+		}
 		resetFieldsList();
 	}
 
@@ -146,67 +133,44 @@ public class FreemarkerCSVNodeGraphicalModel extends TreeNodeModel {
 	@Override
 	public void addChild(AbstractSmooksGraphicalModel node) {
 		super.addChild(node);
+		Object data = this.getData();
+		if (data instanceof TagObject) {
+			Object child = node.getData();
+			if (child instanceof TagObject) {
+				Element element = ((TagObject) child).getReferenceElement();
+				Element parent = ((TagObject) data).getReferenceElement();
+				if (element == null) {
+					element = parent.getOwnerDocument().createElement(((TagObject) child).getName());
+					((TagObject) child).setReferenceElement(element);
+				}
+				((TagObject) data).addChildTag((TagObject) child);
+			}
+		}
 		resetFieldsList();
 	}
 
-	public void changeFreemarkerContents() {
-		AbstractSmooksGraphicalModel parent1 = this;
-		while (!(parent1 instanceof FreemarkerTemplateGraphicalModel)) {
-			parent1 = parent1.getParent();
-		}
-		Object data = parent1.getData();
-		data = AdapterFactoryEditingDomain.unwrap(data);
-		Template template = null;
-		if (data instanceof Freemarker) {
-			template = ((Freemarker) data).getTemplate();
-		}
-		if (template == null)
-			return;
-		String content = null;
-		try {
-			Object parent = this.getParent();
-			if (parent instanceof FreemarkerTemplateGraphicalModel) {
-				content = generator.generateCSVContents(this);
-			}
-			if (parent instanceof FreemarkerCSVNodeGraphicalModel) {
-				content = generator.generateCSVContents((FreemarkerCSVNodeGraphicalModel) parent);
-			}
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-//		String version = SmooksConstants.VERSION_1_2;
-//		if (this.domainProvider instanceof ISmooksModelProvider) {
-//			version = ((ISmooksModelProvider) domainProvider).getPlatformVersion();
-//		}
-		SmooksModelUtils.setCDATAToSmooksType(domainProvider.getEditingDomain(), template, content);
+	protected JavaBeanGraphModel getCollectionRootBeanModel() {
+		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#
-	 * addTargetConnection
-	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
-	 */
-	@Override
-	public void addTargetConnection(TreeNodeConnection connection) {
-		// TODO Auto-generated method stub
-		super.addTargetConnection(connection);
-		changeFreemarkerContents();
+	protected boolean isCollectionConnection(TreeNodeConnection connection) {
+		Object data = this.getData();
+		if (data instanceof CSVNodeModel) {
+			if (((CSVNodeModel) data).isRecord()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#
-	 * removeTargetConnection
-	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
-	 */
-	@Override
-	public void removeTargetConnection(TreeNodeConnection connection) {
-		// TODO Auto-generated method stub
-		super.removeTargetConnection(connection);
-		changeFreemarkerContents();
+	protected boolean isMappingValueConnection(TreeNodeConnection connection) {
+		Object data = this.getData();
+		if (data instanceof CSVNodeModel) {
+			if (!((CSVNodeModel) data).isRecord()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/*

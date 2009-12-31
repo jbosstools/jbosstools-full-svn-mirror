@@ -19,6 +19,7 @@ import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeConnectionEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeEndpointEditPolicy;
@@ -32,6 +33,8 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 	protected int alpha = 255;
 	
 	protected boolean canDelete = true;
+	
+	private Image markerImage = null;
 
 	@Override
 	protected void createEditPolicies() {
@@ -41,6 +44,22 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 
 	public void changeLineAlpha(int alpha) {
 		this.alpha = alpha;
+	}
+	
+	
+
+	/**
+	 * @return the markerImage
+	 */
+	public Image getMarkerImage() {
+		return markerImage;
+	}
+
+	/**
+	 * @param markerImage the markerImage to set
+	 */
+	public void setMarkerImage(Image markerImage) {
+		this.markerImage = markerImage;
 	}
 
 	/**
@@ -168,6 +187,13 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 		};
 		return targetFlagFigure;
 	}
+	
+	protected void drawLineMarkerImage(Graphics graphics){
+		if(getMarkerImage() != null){
+			graphics.drawImage(getMarkerImage(), this.getFigure().getBounds().getCenter().getTranslated(-8, -8));
+		}
+	}
+	
 
 	protected Connection createConnectionFigure() {
 		PolylineConnection connection = new PolylineConnection() {
@@ -177,6 +203,7 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 				graphics.setAlpha(alpha);
 				graphics.setLineWidth(3);
 				super.paintFigure(graphics);
+				drawLineMarkerImage(graphics);
 			}
 
 			public PointList getPoints() {

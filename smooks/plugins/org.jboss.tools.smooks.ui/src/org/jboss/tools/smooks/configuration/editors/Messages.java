@@ -78,6 +78,8 @@ public class Messages extends NLS {
 	public static String SmooksReaderFormPage_PathColumnText;
 	public static String SmooksReaderFormPage_RefreshLinkLabel;
 	public static String SmooksReaderFormPage_TypeColumnText;
+	public static String SmooksReaderFormPage_Warning_Specify_Input_Type;
+	public static String SmooksReaderFormPage_Warning_Specify_Sample_Data;
 	public static String SmooksReaderFormPage_XMLReaderComboText;
 	public static String SmooksReaderFormPage_XSDReaderComboText;
 	static {

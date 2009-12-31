@@ -32,10 +32,11 @@ import org.xml.sax.SAXException;
  * @Date Jul 25, 2008
  */
 public class XMLObjectAnalyzer {
-	public TagList analyze(String xmlFilePath, String[] ignoreNodeNames) throws ParserConfigurationException,
-			SAXException, IOException {
+	public TagList analyze(String xmlFilePath, String[] ignoreNodeNames,
+			Class<? extends AbstractXMLObject> tagObjectClass) throws ParserConfigurationException, SAXException,
+			IOException {
 		FileInputStream stream = new FileInputStream(xmlFilePath);
-		TagList list = this.analyze(stream, ignoreNodeNames);
+		TagList list = this.analyze(stream, ignoreNodeNames, tagObjectClass);
 		try {
 			stream.close();
 		} catch (IOException e) {
@@ -43,33 +44,35 @@ public class XMLObjectAnalyzer {
 		return list;
 	}
 
-	public TagList analyze(Document doc, String[] ignoreNodeNames) {
+	public TagList analyze(Document doc, String[] ignoreNodeNames, Class<? extends AbstractXMLObject> tagObjectClass) {
 		if (doc == null)
 			return null;
 		Element rootElement = doc.getDocumentElement();
 		TagList dco = new TagList();
 		dco.setName("Docuement"); //$NON-NLS-1$
-		dco.addRootTag(parseElement(rootElement, null, ignoreNodeNames));
+		dco.addRootTag(parseElement(rootElement, null, ignoreNodeNames, tagObjectClass));
 		return dco;
 	}
 
-	public TagList analyze(InputStream stream, String[] ignoreNodeNames) throws ParserConfigurationException,
-			SAXException, IOException {
+	public TagList analyze(InputStream stream, String[] ignoreNodeNames,
+			Class<? extends AbstractXMLObject> tagObjectClass) throws ParserConfigurationException, SAXException,
+			IOException {
 		DocumentBuilder builder = createDocumentBuildingFactory();
 		Document doc = builder.parse(stream);
-		return analyze(doc, ignoreNodeNames);
+		return analyze(doc, ignoreNodeNames, tagObjectClass);
 	}
 
 	public DocumentBuilder createDocumentBuildingFactory() throws ParserConfigurationException {
 		return XMLUtils.getDOMBuilder();
 	}
 
-	public TagObject analyzeFregment(InputStream stream, String[] ignoreNodeNames) throws ParserConfigurationException,
-			SAXException, IOException {
+	public TagObject analyzeFregment(InputStream stream, String[] ignoreNodeNames,
+			Class<? extends AbstractXMLObject> tagObjectClass) throws ParserConfigurationException, SAXException,
+			IOException {
 		DocumentBuilder builder = createDocumentBuildingFactory();
 		org.w3c.dom.Document doc = builder.parse(stream);
 		Element rootElement = doc.getDocumentElement();
-		return parseElement(rootElement, null, ignoreNodeNames);
+		return parseElement(rootElement, null, ignoreNodeNames, tagObjectClass);
 	}
 
 	protected TagObject getChildTagByName(String name, TagObject tag, String[] ignoreNodeNames) {
@@ -106,18 +109,36 @@ public class XMLObjectAnalyzer {
 		return false;
 	}
 
-	protected TagObject parseElement(Element element, TagObject parentTag, String[] ignoreNodeNames) {
-
+	protected TagObject parseElement(Element element, TagObject parentTag, String[] ignoreNodeNames,
+			Class<? extends AbstractXMLObject> tagObjectClass) {
 		if (isIgnoreNode(element, ignoreNodeNames))
 			return null;
 		boolean canAdd = false;
 		TagObject tag = getChildTagByName(element.getNodeName(), parentTag, ignoreNodeNames);
 		if (tag == null) {
-			tag = new TagObject();
+			if (tagObjectClass != null) {
+				try {
+					tag = (TagObject) tagObjectClass.newInstance();
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			} else {
+				tag = new TagObject();
+			}
 			canAdd = true;
 		}
+		if (tag == null)
+			return null;
+
 		tag.setReferenceElement(element);
-		tag.setName(element.getNodeName());
+		String localName = element.getLocalName();
+		String nodeName = element.getNodeName();
+		if (localName == null) {
+			localName = nodeName;
+		}
+		tag.setName(localName);
 		fillProperties(element, tag, ignoreNodeNames);
 		tag.setNamespaceURI(element.getNamespaceURI());
 		NodeList nodeList = element.getChildNodes();
@@ -125,10 +146,10 @@ public class XMLObjectAnalyzer {
 			Node node = nodeList.item(i);
 			if (node instanceof Element) {
 				Element childElement = (Element) node;
-				TagObject t = parseElement(childElement, tag, ignoreNodeNames);
+				TagObject t = parseElement(childElement, tag, ignoreNodeNames, tagObjectClass);
 				if (t != null) {
-					t.setReferenceElement(childElement);
 					tag.addChildTag(t);
+					t.setReferenceElement(childElement);
 				}
 			}
 		}
@@ -162,7 +183,12 @@ public class XMLObjectAnalyzer {
 					continue;
 				}
 				TagPropertyObject pro = new TagPropertyObject();
-				pro.setName(attr.getName());
+				String localName = attr.getLocalName();
+				String name = attr.getNodeName();
+				if (localName == null) {
+					localName = name;
+				}
+				pro.setName(localName);
 				pro.setValue(value);
 				pro.setNamespaceURI(attr.getNamespaceURI());
 				tag.addProperty(pro);

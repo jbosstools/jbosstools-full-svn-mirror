@@ -205,7 +205,7 @@ public class JsonInputDataParser {
 		Document document = (Document) result.getNode();
 
 		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
-		TagList tagList = analyzer.analyze(document, null);
+		TagList tagList = analyzer.analyze(document, null , null);
 
 		try {
 			if (smooks != null) {

@@ -13,11 +13,11 @@ package org.jboss.tools.smooks.editor.propertySections;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
-import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigChildNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanChildNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanEditPart;
+import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 
 /**
  * @author Dart

@@ -10,9 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -23,7 +26,12 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
+import org.jboss.tools.smooks.graphical.editors.template.FreemarkerTemplateContentGraphModelProviderImpl;
+import org.jboss.tools.smooks.graphical.editors.template.IFreemarkerTemplateContentGraphModelProvider;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.templating.model.ModelBuilderException;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
+import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -39,58 +47,66 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 	public static final int TYPE_XML = 3;
 
 	public static final int TYPE_XSD = 4;
+	
+	public static final int TYPE_UNKNOWN = -1;
 
 	private ISmooksModelProvider smooksModelProvider;
 
-	private int templateType = TYPE_CSV;
-
 	private boolean firstLoadChildren = true;
+
+	private IFreemarkerTemplateContentGraphModelProvider graphModelProvider = null;
+
+	private TemplateBuilder templateBuilder = null;
 
 	public FreemarkerTemplateGraphicalModel(Object data, ITreeContentProvider contentProvider,
 			ILabelProvider labelProvider, ISmooksModelProvider domainProvider) {
 		super(data, contentProvider, labelProvider, domainProvider);
 		this.smooksModelProvider = domainProvider;
+		graphModelProvider = createFreemarkerTemplateContentGraphModelProvider();
+		try {
+			templateBuilder = graphModelProvider.getTemplateBuilder(this);
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ModelBuilderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TemplateBuilderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private void initChildrenNodes() {
-		Freemarker freemarker = (Freemarker) getData();
-		// Template template = freemarker.getTemplate();
+	/**
+	 * @return the templateBuilder
+	 */
+	public TemplateBuilder getTemplateBuilder() {
+		return templateBuilder;
+	}
+
+	protected IFreemarkerTemplateContentGraphModelProvider createFreemarkerTemplateContentGraphModelProvider() {
+		return new FreemarkerTemplateContentGraphModelProviderImpl();
+	}
+
+	protected void initChildrenNodes() {
+		Object data = getData();
+		data = AdapterFactoryEditingDomain.unwrap(data);
+		Freemarker freemarker = (Freemarker) data;
 		if (freemarker != null) {
-			CSVNodeModel recordModel = new CSVNodeModel();
-			recordModel.setName(Messages.FreemarkerTemplateGraphicalModel_CSV_Record_Name);
-			recordModel.setRecord(true);
-			FreemarkerCSVNodeGraphicalModel recordGraphNode = new FreemarkerCSVNodeGraphicalModel(recordModel,
-					contentProvider, labelProvider, smooksModelProvider);
-			this.getChildrenWithoutDynamic().add(recordGraphNode);
-			recordGraphNode.setParent(this);
-			String[] fields = SmooksModelUtils.getFreemarkerCSVFileds(freemarker);
-			String type = SmooksModelUtils.getTemplateType(freemarker);
-			if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(type)) {
-				if (fields != null) {
-					List<FreemarkerCSVNodeGraphicalModel> fieldsGraphNodeList = new ArrayList<FreemarkerCSVNodeGraphicalModel>();
-					for (int i = 0; i < fields.length; i++) {
-						String field = fields[i];
-						CSVNodeModel fieldNode = new CSVNodeModel();
-						fieldNode.setName(field);
-						FreemarkerCSVNodeGraphicalModel fieldGraphNode = new FreemarkerCSVNodeGraphicalModel(fieldNode,
-								contentProvider, labelProvider, smooksModelProvider);
-						recordGraphNode.getChildrenWithoutDynamic().add(fieldGraphNode);
-						fieldGraphNode.setParent(recordGraphNode);
-						fieldsGraphNodeList.add(fieldGraphNode);
-					}
-				}
+			List<AbstractSmooksGraphicalModel> graphModels = graphModelProvider.getFreemarkerTemplateContentGraphModel(
+					this, getContentProvider(), getLabelProvider(), smooksModelProvider);
+			for (Iterator<?> iterator = graphModels.iterator(); iterator.hasNext();) {
+				AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator
+						.next();
+				this.getChildrenWithoutDynamic().add(abstractSmooksGraphicalModel);
+				abstractSmooksGraphicalModel.setParent(this);
 			}
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.jboss.tools.smooks.graphical.editors.model.
-	 * AbstractResourceConfigGraphModel#createChildModel(java.lang.Object,
-	 * org.eclipse.jface.viewers.ITreeContentProvider,
-	 * org.eclipse.jface.viewers.ILabelProvider)
-	 */
 	@Override
 	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
 			ILabelProvider labelProvider) {
@@ -100,11 +116,6 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#getImage()
-	 */
 	@Override
 	public Image getImage() {
 		ImageRegistry registry = SmooksConfigurationActivator.getDefault().getImageRegistry();
@@ -126,6 +137,9 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 	public String getText() {
 		if (getTemplateType() == TYPE_CSV) {
 			return Messages.FreemarkerTemplateGraphicalModel_CSV_Template_Name;
+		}
+		if (getTemplateType() == TYPE_XML) {
+			return Messages.FreemarkerTemplateGraphicalModel_XML_Template_Name;
 		}
 		return super.getText();
 	}
@@ -202,15 +216,18 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 	 * @return the templateType
 	 */
 	public int getTemplateType() {
-		return templateType;
+		Object data = getData();
+		data = AdapterFactoryEditingDomain.unwrap(data);
+		Freemarker freemarker = (Freemarker) data;
+		if (freemarker != null) {
+			String type = SmooksModelUtils.getTemplateType(freemarker);
+			if(SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(type)){
+				return TYPE_CSV;
+			}
+			if(SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_XML.equals(type)){
+				return TYPE_XML;
+			}
+		}
+		return TYPE_UNKNOWN;
 	}
-
-	/**
-	 * @param templateType
-	 *            the templateType to set
-	 */
-	public void setTemplateType(int templateType) {
-		this.templateType = templateType;
-	}
-
 }

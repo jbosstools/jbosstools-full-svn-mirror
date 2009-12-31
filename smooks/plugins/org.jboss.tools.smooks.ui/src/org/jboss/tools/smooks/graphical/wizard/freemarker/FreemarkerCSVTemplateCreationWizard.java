@@ -10,49 +10,24 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.wizard.freemarker;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.jface.wizard.Wizard;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart
  * 
  */
-public class FreemarkerCSVTemplateCreationWizard extends Wizard {
+public class FreemarkerCSVTemplateCreationWizard extends AbstractFreemarkerTemplateWizard {
 
 	private FreemarkerCSVCreationWizardPage page;
 	private String seprator;
 	private String quote;
 
-	private List<String> fields = new ArrayList<String>();
 	private String fieldsString;
 
 	public FreemarkerCSVTemplateCreationWizard() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	/**
-	 * @return the seprator
-	 */
-	public String getSeprator() {
-		return seprator;
-	}
-
-	/**
-	 * @return the quote
-	 */
-	public String getQuote() {
-		return quote;
-	}
-
-	/**
-	 * @return the fields
-	 */
-//	public List<String> getFields() {
-//		return fields;
-//	}
 
 	/*
 	 * (non-Javadoc)
@@ -67,12 +42,6 @@ public class FreemarkerCSVTemplateCreationWizard extends Wizard {
 		this.addPage(page);
 		super.addPages();
 	}
-	
-	
-
-	public String getFieldsString() {
-		return fieldsString;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -85,6 +54,9 @@ public class FreemarkerCSVTemplateCreationWizard extends Wizard {
 			seprator = page.getSeperatorText().getText();
 			quote = page.getQuoteText().getText();
 			fieldsString = page.getFieldsText().getText();
+			this.addParamter(SmooksModelUtils.KEY_CSV_QUOTE, quote);
+			this.addParamter(SmooksModelUtils.KEY_CSV_SEPERATOR, seprator);
+			this.addParamter(SmooksModelUtils.KEY_CSV_FIELDS, fieldsString);
 //			List<FieldText> fieldList = page.getFieldsList();
 //			for (Iterator<?> iterator = fieldList.iterator(); iterator.hasNext();) {
 //				FieldText fieldText = (FieldText) iterator.next();
@@ -93,6 +65,10 @@ public class FreemarkerCSVTemplateCreationWizard extends Wizard {
 			return true;
 		}
 		return true;
+	}
+
+	public String getTemplateType() {
+		return SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV;
 	}
 
 }
