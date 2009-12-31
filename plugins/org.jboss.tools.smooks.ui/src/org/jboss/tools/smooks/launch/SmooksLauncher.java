@@ -63,7 +63,7 @@ public class SmooksLauncher {
 			assertFile(smooksConfig, "Smooks"); //$NON-NLS-1$
 			assertFile(input, "Input"); //$NON-NLS-1$
 			
-			Smooks smooks = new Smooks(smooksConfig.getAbsolutePath());
+			Smooks smooks = new Smooks(smooksConfig.toURI().getPath());
 			try {
 				Set<ProcessNodeType> processNodeTypes = SmooksLauncher.fromNodeTypeString(args[3]);
 				JavaResult javaResult = new JavaResult();

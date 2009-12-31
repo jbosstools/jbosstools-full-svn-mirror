@@ -108,7 +108,7 @@ public class XSLTemplateCreationWizard extends SmooksCreationModelConfigureWizar
 				XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();
 				try {
 					filePath = SmooksUIUtils.parseFilePath(filePath);
-					TagList list = analyzer.analyze(filePath, null);
+					TagList list = analyzer.analyze(filePath, null , null);
 					if (!list.getRootTagList().isEmpty()) {
 						TagObject rootTag = list.getRootTagList().get(0);
 						String contents = generateXSLContents(rootTag);

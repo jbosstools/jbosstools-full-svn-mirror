@@ -24,9 +24,9 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
-import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigChildNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
+import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
 /**

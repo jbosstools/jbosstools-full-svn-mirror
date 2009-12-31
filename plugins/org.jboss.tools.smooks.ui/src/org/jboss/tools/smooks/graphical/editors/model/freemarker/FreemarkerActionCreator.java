@@ -22,17 +22,17 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
  * 
  */
 public class FreemarkerActionCreator {
-	public void registXSLActions(ActionRegistry actionRegistry, List selectionActions, IEditorPart editorPart,
+	public void registActions(ActionRegistry actionRegistry, List selectionActions, IEditorPart editorPart,
 			ISmooksModelProvider provider) {
 		// add xsl actions
 
-		IAction addFreemarkerNodeAction = new AddFreemarkerAction(editorPart, provider);
-		actionRegistry.registerAction(addFreemarkerNodeAction);
-		selectionActions.add(addFreemarkerNodeAction.getId());
+//		IAction addFreemarkerNodeAction = new AddFreemarkerAction(editorPart, provider);
+//		actionRegistry.registerAction(addFreemarkerNodeAction);
+//		selectionActions.add(addFreemarkerNodeAction.getId());
 
-		IAction addXSLNodeAction = new AddFreemarkerCSVRecordAction(editorPart);
-		actionRegistry.registerAction(addXSLNodeAction);
-		selectionActions.add(addXSLNodeAction.getId());
+//		IAction addXSLNodeAction = new AddFreemarkerCSVRecordAction(editorPart);
+//		actionRegistry.registerAction(addXSLNodeAction);
+//		selectionActions.add(addXSLNodeAction.getId());
 
 		IAction addFieldNodeAction = new AddFreemarkerCSVFieldAction(editorPart);
 		actionRegistry.registerAction(addFieldNodeAction);

@@ -10,14 +10,13 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
-import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
+import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 
 /**
  * @author Dart
  *
  */
-public class CSVNodeModel extends TagObject {
-	private boolean isRecord = false;
+public class CSVNodeModel extends FreemarkerTemplateXMLModel {
 	
 	private char sperator = ',';
 	
@@ -27,15 +26,22 @@ public class CSVNodeModel extends TagObject {
 	 * @return the isRecord
 	 */
 	public boolean isRecord() {
-		return isRecord;
+		Object parent = getParent();
+		if((parent instanceof TagList)){
+			return true;
+		}
+		return false;
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel#isManyOccurs()
+	 */
+	@Override
+	public boolean isManyOccurs() {
+		return super.isManyOccurs();
 	}
 
-	/**
-	 * @param isRecord the isRecord to set
-	 */
-	public void setRecord(boolean isRecord) {
-		this.isRecord = isRecord;
-	}
 
 	/**
 	 * @return the sperator

@@ -24,8 +24,8 @@ import org.eclipse.ui.forms.editor.FormPage;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.LeftOrRightAnchor;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
-import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.SmooksTaskDetailsEditorSite;
+import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 
 /**
  * @author Dart

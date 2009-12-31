@@ -20,8 +20,8 @@ public class TemplateAppyTaskNode extends TaskTypeImpl {
 
 	public TemplateAppyTaskNode() {
 		super();
-		this.setId(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE);
-		this.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE));
+		this.setId(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE);
+		this.setName(TaskTypeManager.getTaskLabel(this));
 	}
 
 	/*
@@ -33,10 +33,7 @@ public class TemplateAppyTaskNode extends TaskTypeImpl {
 	 */
 	@Override
 	public boolean inTheTask(Object smooksModel) {
-		if (this.getSmooksModel().contains(smooksModel)) {
-			return true;
-		}
-		return false;
+		return this.getSmooksModel().contains(smooksModel);
 	}
 
 }

@@ -344,7 +344,7 @@ public class SelectorCreationDialog extends Dialog {
 								// XMLObjectAnalyzer();
 								// TagList doc = analyzer.analyze(path, null);
 
-								AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path, null);
+								AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path, null , null);
 								if (model != null) {
 									if (model instanceof TagList) {
 										list.addAll(((TagList) model).getChildren());

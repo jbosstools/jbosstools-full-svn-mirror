@@ -59,15 +59,15 @@ public class ProcessAnalyzer {
 
 				TaskType task = ProcessFactory.eINSTANCE.createTaskType();
 				task.setId(TaskTypeManager.TASK_ID_JAVA_MAPPING);
-				task.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_JAVA_MAPPING));
+				task.setName(TaskTypeManager.getTaskLabel(task));
 				tasks.add(task);
 			}
 			// for freemarker template
 			if (abstractResourceConfig instanceof Freemarker) {
 
 				TaskType task = ProcessFactory.eINSTANCE.createTaskType();
-				task.setId(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE);
-				task.setName(TaskTypeManager.getTaskLabel(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE));
+				task.setId(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE);
+				task.setName(TaskTypeManager.getTaskLabel(task));
 				tasks.add(task);
 
 				String refid = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig).getParam(),
@@ -86,7 +86,7 @@ public class ProcessAnalyzer {
 //					SmooksModelUtils.addParam(task, idParam);
 				}
 
-				taskIDs.add(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE);
+				taskIDs.add(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE);
 			}
 			// for xsl template
 			if (abstractResourceConfig instanceof Xsl) {

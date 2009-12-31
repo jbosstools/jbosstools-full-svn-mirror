@@ -46,11 +46,23 @@ public class SmooksModelUtils {
 
 	public static final String FREEMARKER_TEMPLATE_TYPE_CSV = "CSV"; //$NON-NLS-1$
 
+	public static final String FREEMARKER_TEMPLATE_TYPE_XML = "XML"; //$NON-NLS-1$
+
 	public static final String KEY_CSV_FIELDS = "csvFields"; //$NON-NLS-1$
 
 	public static final String KEY_TASK_ID_REF = "idref"; //$NON-NLS-1$
 
 	public static final String KEY_OBJECT_ID = "id"; //$NON-NLS-1$
+
+	public static final String KEY_XML_FILE_TYPE = "modelSrcType";
+
+	public static final String KEY_XML_FILE_PATH = "modelSrc";
+
+	public static final String KEY_XML_ROOT_NAME = "rootElementName";
+
+	public static final String KEY_XML_FILE_TYPE_XSD = "XSD";
+
+	public static final String KEY_XML_FILE_TYPE_XML = "XML";
 
 	public static final String KEY_CSV_SEPERATOR = "seperator"; //$NON-NLS-1$
 
@@ -597,6 +609,33 @@ public class SmooksModelUtils {
 			}
 		}
 		return 0;
+	}
+
+	public static String getFreemarkerXMLFileType(Freemarker freemarker) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(freemarker.getParam(), KEY_XML_FILE_TYPE);
+		if (typeParam != null) {
+			String value = typeParam.getStringValue();
+			return value;
+		}
+		return null;
+	}
+
+	public static String getFreemarkerXMLFilePath(Freemarker freemarker) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(freemarker.getParam(), KEY_XML_FILE_PATH);
+		if (typeParam != null) {
+			String value = typeParam.getStringValue();
+			return value;
+		}
+		return null;
+	}
+
+	public static String getFreemarkerXMLRootName(Freemarker freemarker) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(freemarker.getParam(), KEY_XML_ROOT_NAME);
+		if (typeParam != null) {
+			String value = typeParam.getStringValue();
+			return value;
+		}
+		return null;
 	}
 
 	public static String getTemplateType(Freemarker freemarker) {

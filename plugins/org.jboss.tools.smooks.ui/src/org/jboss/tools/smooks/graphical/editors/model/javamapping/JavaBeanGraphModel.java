@@ -19,9 +19,9 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
-import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel;
+import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 
 /**
@@ -80,11 +80,11 @@ public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
 	public boolean canLinkWithTarget(Object model) {
 		AbstractSmooksGraphicalModel gm = (AbstractSmooksGraphicalModel) model;
 		Object m = gm.getData();
-		if (data instanceof BeanType ) {
-			if (m instanceof CSVNodeModel) {
+		if (data instanceof BeanType) {
+			if (m instanceof FreemarkerTemplateXMLModel) {
 				if (data instanceof EObject) {
 					if (SmooksUIUtils.isCollectionJavaGraphModel((EObject) data)) {
-						return ((CSVNodeModel) m).isRecord();
+						return ((FreemarkerTemplateXMLModel) m).isManyOccurs();
 					}
 				}
 			}

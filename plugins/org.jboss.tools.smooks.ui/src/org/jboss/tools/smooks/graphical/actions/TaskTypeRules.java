@@ -49,7 +49,7 @@ public class TaskTypeRules {
 			// if (!SmooksConstants.TASK_ID_JAVA_MAPPING.equals(taskID))
 			return false;
 		}
-		if (parentID.equals(TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE)) {
+		if (parentID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
 			if (!TaskTypeManager.TASK_ID_JAVA_MAPPING.equals(currentTask.getId())) {
 				return false;
 			}

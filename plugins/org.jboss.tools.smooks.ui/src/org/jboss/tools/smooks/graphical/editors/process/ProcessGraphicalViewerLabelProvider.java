@@ -67,15 +67,11 @@ public class ProcessGraphicalViewerLabelProvider extends LabelProvider implement
 	@Override
 	public String getText(Object element) {
 		if (element instanceof TaskType) {
-			String id = ((TaskType) element).getId();
-			String name = ((TaskType) element).getName();
-			if (name == null) {
-				name = id;
+			String label = TaskTypeManager.getTaskLabel((TaskType)element);
+			if(label == null){
+				label =  ((TaskType) element).getId();
 			}
-			if (name == null) {
-				name = "null"; //$NON-NLS-1$
-			}
-			return name;
+			return label;
 		}
 		return ""; //$NON-NLS-1$
 	}

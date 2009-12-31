@@ -41,11 +41,13 @@ import org.xml.sax.SAXException;
  */
 public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage {
 
-	private CheckboxTableViewer tableViewer = null;
+	protected CheckboxTableViewer tableViewer = null;
 
 	private boolean fireEvent = true;
 
 	private String rootElementName = null;
+
+	protected Button loadXSDButton;
 
 	/*
 	 * (non-Javadoc)
@@ -147,7 +149,7 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		});
 		gd.grabExcessHorizontalSpace = true;
 
-		final Button loadXSDButton = new Button(fileTextComposite, SWT.NONE);
+		loadXSDButton = new Button(fileTextComposite, SWT.NONE);
 		loadXSDButton.setText(Messages.XSDStructuredDataWizardPage_Button_Load);
 		loadXSDButton.addSelectionListener(new SelectionAdapter() {
 

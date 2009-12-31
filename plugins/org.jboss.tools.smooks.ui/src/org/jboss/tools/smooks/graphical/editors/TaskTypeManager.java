@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
+import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
@@ -34,7 +35,9 @@ public class TaskTypeManager {
 
 	public static final String TASK_ID_XSL_TEMPLATE = "xsl_template"; //$NON-NLS-1$
 
-	public static final String TASK_ID_FREEMARKER_TEMPLATE = "freemarker_template"; //$NON-NLS-1$
+	public static final String TASK_ID_FREEMARKER_CSV_TEMPLATE = "freemarker_csv_template"; //$NON-NLS-1$
+
+	public static final String TASK_ID_FREEMARKER_XML_TEMPLATE = "freemarker_xml_template"; //$NON-NLS-1$
 
 	private static List<TaskTypeDescriptor> allTaskList = null;
 
@@ -45,7 +48,7 @@ public class TaskTypeManager {
 			return new String[] { TaskTypeManager.TASK_ID_JAVA_MAPPING };
 		}
 		if (parentId.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
-			return new String[] { TaskTypeManager.TASK_ID_FREEMARKER_TEMPLATE };
+			return new String[] { TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE };
 		}
 		return null;
 	}
@@ -58,11 +61,12 @@ public class TaskTypeManager {
 			allTaskList = new ArrayList<TaskTypeDescriptor>();
 
 			// init
-			allTaskList.add(new TaskTypeDescriptor(TASK_ID_INPUT, Messages.TaskTypeManager_Input, GraphicsConstants.IMAGE_INPUT_TASK));
+			allTaskList.add(new TaskTypeDescriptor(TASK_ID_INPUT, Messages.TaskTypeManager_Input,
+					GraphicsConstants.IMAGE_INPUT_TASK));
 			allTaskList.add(new TaskTypeDescriptor(TASK_ID_JAVA_MAPPING, Messages.TaskTypeManager_JavaMappingTaskLabel,
 					GraphicsConstants.IMAGE_JAVA_AMPPING_TASK));
-			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_TEMPLATE, Messages.TaskTypeManager_ApplyTemplateTaskLabel,
-					GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
+			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_CSV_TEMPLATE,
+					Messages.TaskTypeManager_ApplyTemplateTaskLabel, GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
 		}
 		return allTaskList;
 	}
@@ -78,7 +82,7 @@ public class TaskTypeManager {
 		if (TASK_ID_JAVA_MAPPING.equals(taskID)) {
 			elementsType.add(BeanType.class);
 		}
-		if (TASK_ID_FREEMARKER_TEMPLATE.equals(taskID)) {
+		if (TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskID)) {
 			elementsType.add(Freemarker.class);
 		}
 		if (TASK_ID_XSL_TEMPLATE.equals(taskID)) {
@@ -87,19 +91,32 @@ public class TaskTypeManager {
 		return elementsType;
 	}
 
-	public static String getTaskLabel(String taskId) {
-		if (taskId != null) {
-			if (taskId.equals(TASK_ID_FREEMARKER_TEMPLATE)) {
-				return Messages.TaskTypeManager_ApplyTemplateTaskLabel;
-			}
-			if (taskId.equals(TASK_ID_INPUT)) {
-				return Messages.TaskTypeManager_InputTaskLabel;
-			}
-			if (taskId.equals(TASK_ID_JAVA_MAPPING)) {
-				return Messages.TaskTypeManager_JavaMappingTaskLabel;
-			}
-			if (taskId.equals(TASK_ID_XSL_TEMPLATE)) {
-				return Messages.TaskTypeManager_ApplyXSLTemplateTaskLabel;
+	public static String getTaskLabel(TaskType task) {
+		if (task != null) {
+			String taskId = task.getId();
+			if (taskId != null) {
+				if (taskId.equals(TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
+					String messageType = "";
+					if (task instanceof TemplateAppyTaskNode) {
+						messageType = ((TemplateAppyTaskNode) task).getType();
+					}
+					if (messageType == null)
+						messageType = "";
+					if (messageType.length() > 0){
+						return Messages.TaskTypeManager_ApplyTemplateTaskLabel + " (" + messageType +")";
+					}else{
+						return  Messages.TaskTypeManager_ApplyTemplateTaskLabel;
+					}
+				}
+				if (taskId.equals(TASK_ID_INPUT)) {
+					return Messages.TaskTypeManager_InputTaskLabel;
+				}
+				if (taskId.equals(TASK_ID_JAVA_MAPPING)) {
+					return Messages.TaskTypeManager_JavaMappingTaskLabel;
+				}
+				if (taskId.equals(TASK_ID_XSL_TEMPLATE)) {
+					return Messages.TaskTypeManager_ApplyXSLTemplateTaskLabel;
+				}
 			}
 		}
 		return ""; //$NON-NLS-1$

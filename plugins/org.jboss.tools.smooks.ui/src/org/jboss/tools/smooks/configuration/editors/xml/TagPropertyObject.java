@@ -107,7 +107,7 @@ public class TagPropertyObject extends AbstractXMLObject {
 	 */
 	@Override
 	public void setName(String name) {
-		if(name.equals(getName())){
+		if(name != null && name.equals(getName())){
 			return;
 		}
 		super.setName(name);

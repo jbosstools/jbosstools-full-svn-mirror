@@ -59,8 +59,8 @@ public class DeleteSmooksGraphicalModelCommand extends Command {
 			deletedConnections = new ArrayList<TreeNodeConnection>();
 		}
 		oldIndex = parentModel.getChildrenWithoutDynamic().indexOf(graphModel);
+		AbstractSmooksGraphicalModel.disconnectAllConnectionsWithEvent(graphModel, deletedConnections);
 		parentModel.removeChild(graphModel);
-		AbstractSmooksGraphicalModel.disconnectAllConnections(graphModel, deletedConnections);
 	}
 
 	/* (non-Javadoc)

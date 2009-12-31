@@ -74,6 +74,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -729,6 +730,21 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				compoundCommand.append(command);
 			}
 
+		} else {
+			Label formText = this.getManagedForm().getToolkit().createLabel(readerConfigComposite, ""); //$NON-NLS-1$
+			GridData gd = new GridData(GridData.FILL_BOTH);
+			gd.heightHint = 50;
+			gd.horizontalSpan = 2;
+			formText.setLayoutData(gd);
+			if (reader instanceof XMLReader || reader instanceof JavaReader || reader instanceof XSDReader) {
+				formText.setText(Messages.SmooksReaderFormPage_Warning_Specify_Sample_Data);
+			}
+
+			if (reader instanceof NullReader) {
+				formText.setText(Messages.SmooksReaderFormPage_Warning_Specify_Input_Type);
+			}
+			readerConfigComposite.layout();
+			scrolledPageBook.reflow(false);
 		}
 		deactiveAllInputFile(compoundCommand);
 		if (!compoundCommand.isEmpty() && compoundCommand.canExecute()) {
@@ -765,11 +781,11 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			modelPanelCreator.createModelPanel(reader, getManagedForm().getToolkit(), readerConfigComposite, ps,
 					(ISmooksModelProvider) getEditor(), getEditor());
 			Composite parentPage = readerConfigComposite.getParent();
-			if(parentPage  != null){
+			if (parentPage != null) {
 				parentPage.layout();
 			}
 			scrolledPageBook.reflow(true);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1221,10 +1237,11 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 						if (t instanceof SmooksException && t.getCause() != null) {
 							t = t.getCause();
 						}
-						this.getManagedForm().getMessageManager().addMessage(
-								Messages.SmooksReaderFormPage_Input_Error,
-								Messages.SmooksReaderFormPage_Error_Creating_Input_Model
-										+ t.getMessage() + "\"", null, IMessageProvider.ERROR); //$NON-NLS-1$
+						this.getManagedForm().getMessageManager()
+								.addMessage(
+										Messages.SmooksReaderFormPage_Input_Error,
+										Messages.SmooksReaderFormPage_Error_Creating_Input_Model + t.getMessage()
+												+ "\"", null, IMessageProvider.ERROR); //$NON-NLS-1$
 					}
 				}
 			}
@@ -1286,7 +1303,8 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 	}
 
 	public void validateEnd(List<Diagnostic> diagnosticResult) {
-		if(diagnosticResult == null) return;
+		if (diagnosticResult == null)
+			return;
 		Object model = getCurrentReaderModel();
 		if (model == null)
 			return;

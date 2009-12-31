@@ -11,6 +11,8 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
  * 
  */
 public class TreeNodeConnection {
+	
+	private Object data;
 
 	private AbstractSmooksGraphicalModel sourceNode;
 
@@ -19,6 +21,22 @@ public class TreeNodeConnection {
 	public TreeNodeConnection() {
 
 	}
+
+	/**
+	 * @return the data
+	 */
+	public Object getData() {
+		return data;
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	public void setData(Object data) {
+		this.data = data;
+	}
+
+
 
 	public TreeNodeConnection(AbstractSmooksGraphicalModel sourceNode, AbstractSmooksGraphicalModel targetNode) {
 		this.sourceNode = sourceNode;

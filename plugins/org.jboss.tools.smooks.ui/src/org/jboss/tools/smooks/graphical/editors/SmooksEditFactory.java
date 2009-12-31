@@ -28,7 +28,6 @@ import org.jboss.tools.smooks.graphical.editors.editparts.InputDataTreeNodeEditP
 import org.jboss.tools.smooks.graphical.editors.editparts.ResourceConfigEditFactory;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksRootEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.TriggerConnectionEditPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerCSVNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.BeanReferenceConnectionEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.ValueBindingConnectionEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.xsl.XSLNodeEditPart;
@@ -36,7 +35,6 @@ import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChil
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
 
 /**
@@ -92,10 +90,6 @@ public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartF
 
 		if (model.getClass() == XSLNodeGraphicalModel.class ) {
 			editPart = new XSLNodeEditPart();
-		}
-		
-		if (model.getClass() == FreemarkerCSVNodeGraphicalModel.class) {
-			editPart = new FreemarkerCSVNodeEditPart();
 		}
 		
 		if (model instanceof AbstractResourceConfigGraphModel

@@ -23,8 +23,8 @@ import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
-import org.jboss.tools.smooks.graphical.editors.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfigEditPart;
+import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 
