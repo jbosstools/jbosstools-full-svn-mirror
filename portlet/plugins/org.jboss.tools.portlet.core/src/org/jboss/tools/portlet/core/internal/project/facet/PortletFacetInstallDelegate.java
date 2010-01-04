@@ -130,7 +130,6 @@ public class PortletFacetInstallDelegate implements IDelegate {
 
 	private void copyLibraries(IProgressMonitor monitor,
 			IJavaProject javaProject, IDataModel config) {
-		// TODO Auto-generated method stub
 		
 	}
 

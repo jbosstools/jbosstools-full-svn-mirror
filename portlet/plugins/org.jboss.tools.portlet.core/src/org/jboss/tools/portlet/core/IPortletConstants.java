@@ -74,6 +74,8 @@ public interface IPortletConstants {
 	static final String SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_HA_SAR = "deploy/jboss-portal-ha.sar"; //$NON-NLS-1$
 
 	static final String SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL = "deploy/simple-portal"; //$NON-NLS-1$
+	
+	static final String SERVER_DEFAULT_DEPLOY_GATEIN = "deploy/gatein.ear"; //$NON-NLS-1$
 
 	static final String TOMCAT_LIB = "lib"; //$NON-NLS-1$
 

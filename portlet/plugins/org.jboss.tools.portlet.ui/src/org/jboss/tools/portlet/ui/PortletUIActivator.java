@@ -2,10 +2,14 @@ package org.jboss.tools.portlet.ui;
 
 import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties.PROJECT_NAME;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jem.util.emf.workbench.ProjectUtilities;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -16,6 +20,9 @@ import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IFacetedProject;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
+import org.eclipse.wst.server.core.IRuntime;
+import org.jboss.ide.eclipse.as.core.server.IJBossServerConstants;
+import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 import org.osgi.framework.BundleContext;
@@ -100,7 +107,67 @@ public class PortletUIActivator extends AbstractUIPlugin {
 			}
 		}
 		return false;
-		
+	}
+	
+	private static IPath getJBossConfigPath(IDataModel model) {
+		String projectName = model.getStringProperty(PROJECT_NAME);
+		if(projectName != null && !"".equals(projectName.trim())) { //$NON-NLS-1$
+			IProject project = ProjectUtilities.getProject(projectName);
+			try {
+				IFacetedProject facetedProject = ProjectFacetsManager.create(project);
+				if (facetedProject != null) {
+					org.eclipse.wst.common.project.facet.core.runtime.IRuntime facetRuntime = facetedProject.getPrimaryRuntime();
+					if (facetRuntime == null) {
+						return null;
+					}
+					IRuntime runtime = PortletCoreActivator.getRuntime(facetRuntime);
+					if (runtime == null) {
+						return null;
+					}
+					IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
+					if (jbossRuntime == null) {
+						return null;
+					}
+					IPath jbossLocation = runtime.getLocation();
+					IPath configPath = jbossLocation.append(IJBossServerConstants.SERVER).append(jbossRuntime.getJBossConfiguration());
+					return configPath;
+				}
+			} catch (CoreException e) {
+				PortletUIActivator.log(e);
+			}
+		}
+		return null;
+	}
+	
+	public static boolean isJBossPortalRuntime(IDataModel model) {
+		IPath configPath = getJBossConfigPath(model);
+		if (configPath == null) {
+			return false;
+		}
+		IPath portalPath = configPath.append(IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_SAR);
+		File portalFile = portalPath.toFile();
+		if (portalFile != null && portalFile.exists()) {
+			return true;
+		}
+		portalPath = configPath.append(IPortletConstants.SERVER_DEFAULT_DEPLOY_JBOSS_PORTAL_HA_SAR);
+		portalFile = portalPath.toFile();
+		if (portalFile != null && portalFile.exists()) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isGateIn(IDataModel model) {
+		IPath configPath = getJBossConfigPath(model);
+		if (configPath == null) {
+			return false;
+		}
+		IPath portalPath = configPath.append(IPortletConstants.SERVER_DEFAULT_DEPLOY_GATEIN);
+		File portalFile = portalPath.toFile();
+		if (portalFile != null && portalFile.exists()) {
+			return true;
+		}
+		return false;
 	}
 	
 	private static IProjectFacet getPortletFacet() {

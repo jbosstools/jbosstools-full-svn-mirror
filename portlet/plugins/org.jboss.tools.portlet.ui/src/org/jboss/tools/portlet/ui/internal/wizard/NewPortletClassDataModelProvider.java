@@ -139,6 +139,7 @@ public class NewPortletClassDataModelProvider extends
 		propertyNames.add(IS_JSF_PORTLET);
 		propertyNames.add(IS_SEAM_PORTLET);
 		propertyNames.add(COPY_JSF_TEMPLATES);
+		propertyNames.add(CONFIGURE_GATEIN_PARAMETERS);
 		
 		return propertyNames;
 	}
@@ -179,16 +180,19 @@ public class NewPortletClassDataModelProvider extends
 			return Boolean.FALSE;
 		}
 		if (propertyName.equals(COPY_JSF_TEMPLATES)) {
+			return Boolean.TRUE;
+		}
+		if (propertyName.equals(CONFIGURE_GATEIN_PARAMETERS)) {
 			return Boolean.FALSE;
 		}
 		if (propertyName.equals(ADD_PORTLET)) {
 			return Boolean.TRUE;
 		}
 		if (propertyName.equals(ADD_JBOSS_APP)) {
-			return Boolean.TRUE;
+			return getBooleanProperty(ADD_PORTLET);
 		}
 		if (propertyName.equals(ADD_JBOSS_PORTLET)) {
-			return Boolean.TRUE;
+			return getBooleanProperty(ADD_PORTLET);
 		}
 		if (propertyName.equals(DO_VIEW)) {
 			return Boolean.TRUE;

@@ -58,4 +58,6 @@ public interface INewPortletClassDataModelProperties extends
 	static final String IS_SEAM_PORTLET = "NewPortletClassDataModel.IS_SEAM_PORTLET"; //$NON-NLS-1$
 	
 	static final String COPY_JSF_TEMPLATES = "NewPortletClassDataModel.COPY_JSF_TEMPLATES"; //$NON-NLS-1$
+	
+	static final String CONFIGURE_GATEIN_PARAMETERS = "NewPortletClassDataModel.CONFIGURE_GATEIN_PARAMETERS"; //$NON-NLS-1$
 }

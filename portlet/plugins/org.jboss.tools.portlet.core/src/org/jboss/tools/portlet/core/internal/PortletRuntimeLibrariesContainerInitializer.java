@@ -84,47 +84,27 @@ public class PortletRuntimeLibrariesContainerInitializer extends
 							File location = runtime.getLocation().toFile();
 							File libDir = getLibDirectory(location);
 							if (libDir != null) {
-								File[] jars = libDir
-										.listFiles(new FileFilter() {
+								File[] jars = libDir.listFiles(new FileFilter() {
 											public boolean accept(File file) {
 												String name = file.getName();
-												return (name.startsWith(IPortletConstants.PORTLET_API) && name
-														.endsWith(IPortletConstants.JAR));
+												return (name.startsWith(IPortletConstants.PORTLET_API) && name.endsWith(IPortletConstants.JAR));
 											}
 										});
-
 								if (jars != null) {
 									for (int i = 0; i < jars.length; i++) {
 										File jarFile = jars[i];
-
-										IPath entryPath = new Path(jarFile
-												.toString());
-
+										IPath entryPath = new Path(jarFile.toString());
 										IPath sourceAttachementPath = null;
 										IPath sourceAttachementRootPath = null;
-
-										final ClasspathDecorations dec = decorations
-												.getDecorations(
-														getDecorationManagerKey(getPath()
-																.toString()),
-														entryPath.toString());
-
+										final ClasspathDecorations dec = decorations.getDecorations(getDecorationManagerKey(getPath().toString()),entryPath.toString());
 										IClasspathAttribute[] attrs = {};
 										if (dec != null) {
-											sourceAttachementPath = dec
-													.getSourceAttachmentPath();
-											sourceAttachementRootPath = dec
-													.getSourceAttachmentRootPath();
+											sourceAttachementPath = dec.getSourceAttachmentPath();
+											sourceAttachementRootPath = dec.getSourceAttachmentRootPath();
 											attrs = dec.getExtraAttributes();
 										}
-
 										IAccessRule[] access = {};
-										IClasspathEntry entry = JavaCore
-												.newLibraryEntry(
-														entryPath,
-														sourceAttachementPath,
-														sourceAttachementRootPath,
-														access, attrs, false);
+										IClasspathEntry entry = JavaCore.newLibraryEntry(entryPath,sourceAttachementPath,sourceAttachementRootPath,access, attrs, false);
 										entries.add(entry);
 									}
 								}
@@ -177,16 +157,18 @@ public class PortletRuntimeLibrariesContainerInitializer extends
 						if (libDirectory != null) {
 							libDirectory = new File(libDirectory, "lib"); //$NON-NLS-1$
 						} else {
-							// Tomcat adds portlet-api.jat automatically
-							/*File tomcatLib = new File(location,
-							IPortletConstants.TOMCAT_LIB);
-							if (tomcatLib != null && tomcatLib.isDirectory()) {
-							libDirectory = tomcatLib;
-							}*/
+							libDirectory = getDirectory(location,
+									IPortletConstants.SERVER_DEFAULT_DEPLOY_GATEIN);
+							if (libDirectory != null) {
+								libDirectory = new File(libDirectory, "lib"); //$NON-NLS-1$
+							} else {
+								// Tomcat adds portlet-api.jar automatically
+							}
 						}
 					}
 				}
 			}
+				
 			return libDirectory;
 		}
 

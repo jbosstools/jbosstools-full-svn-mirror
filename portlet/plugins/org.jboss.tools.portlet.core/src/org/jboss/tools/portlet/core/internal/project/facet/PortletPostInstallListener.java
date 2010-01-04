@@ -1,6 +1,7 @@
 package org.jboss.tools.portlet.core.internal.project.facet;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -387,7 +388,7 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 			PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Cannot_find_the_examples_directory);
 			return;
 		}
-		File richFacesPortletZip = new File(examplesHome,"RichFacesPortlet.war"); //$NON-NLS-1$
+		File richFacesPortletZip = getRichFacesExamples(examplesHome);
 		if (!richFacesPortletZip.exists() || !richFacesPortletZip.isFile()) {
 			PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Cannot_find_the_RichFacesPortlet_war_file);
 			return;
@@ -440,6 +441,26 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 		} catch (Exception e) {
 			PortletCoreActivator.log(e);
 		} 
+	}
+
+	private File getRichFacesExamples(File examplesHome) {
+		File file = new File(examplesHome,"RichFacesPortlet.war"); //$NON-NLS-1$
+		if (file.exists() && file.isFile()) {
+			return file;
+		}
+		File[] listFiles = examplesHome.listFiles(new FilenameFilter() {
+			
+			public boolean accept(File dir, String name) {
+				if (name.startsWith("seamPortlet") && name.endsWith(".war")) { //$NON-NLS-1$ //$NON-NLS-2$
+					return true;
+				}
+				return false;
+			}
+		});
+		if (listFiles.length > 0) {
+			return listFiles[0];
+		}
+		return null;
 	}
 
 	private void deleteOldRichFacesApi(IContainer folder) throws CoreException {

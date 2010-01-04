@@ -79,6 +79,10 @@ public class PortletRuntimeComponentProvider extends
 					IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL)) {
 				return true;
 			}
+			// GateIn Portal Server
+			if (exists(configFile, IPortletConstants.SERVER_DEFAULT_DEPLOY_GATEIN)) {
+				return true;
+			}
 			return false;
 		}
 		// Tomcat portletcontainer

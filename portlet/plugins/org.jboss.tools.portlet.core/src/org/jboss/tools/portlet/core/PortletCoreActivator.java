@@ -108,6 +108,12 @@ public class PortletCoreActivator extends Plugin {
 		IPath portletXmlPath = ComponentCore.createComponent(project)
 				.getRootFolder().getUnderlyingFolder().getRawLocation().append(
 						new Path(IPortletConstants.CONFIG_PATH));
+		IPath directory = portletXmlPath.removeLastSegments(1);
+		directory.toFile().mkdirs();
+		File file = portletXmlPath.toFile();
+		if (file != null && file.exists()) {
+			return;
+		}
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
 
@@ -138,18 +144,18 @@ public class PortletCoreActivator extends Plugin {
 		buffer.append("</portlet-app>"); //$NON-NLS-1$
 		buffer.append("\n"); //$NON-NLS-1$
 		OutputStream outputStream = null;
+		PrintWriter printWriter = null;
 		try {
-			IPath directory = portletXmlPath.removeLastSegments(1);
-			directory.toFile().mkdirs();
-			File file = portletXmlPath.toFile();
 			file.createNewFile();
 			outputStream = new FileOutputStream(file);
-			PrintWriter printWriter = new PrintWriter(outputStream);
+			printWriter = new PrintWriter(outputStream);
 			printWriter.write(buffer.toString());
-			printWriter.close();
 		} catch (Exception e) {
 			log(e);
 		} finally {
+			if (printWriter != null) {
+				printWriter.close();
+			}
 			if (outputStream != null) {
 				try {
 					outputStream.close();
@@ -157,7 +163,6 @@ public class PortletCoreActivator extends Plugin {
 				}
 			}
 		}
-
 	}
 
 	public static void log(Exception e, String message) {

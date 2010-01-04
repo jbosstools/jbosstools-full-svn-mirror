@@ -73,6 +73,7 @@ public interface IPortletUIConstants {
 	static final String ADD_JBOSS_APP_LABEL = Messages.IPortletUIConstants_Create_JBoss_Application;
 	static final String ADD_JBOSS_PORTLET_LABEL = Messages.IPortletUIConstants_Add_the_jboss_portlet_xml_file;
 	static final String COPY_JSF_TEMPLATES_LABEL = Messages.IPortletUIConstants_Copy_JSF_Templates;
+	static final String CONFIGURE_GATEIN_PARAMETERS_LABEL = "Configure GateIn parameters";
 	
 	
 }

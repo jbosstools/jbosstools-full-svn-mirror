@@ -7,6 +7,7 @@ import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD_JBOSS_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.ADD_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.COPY_JSF_TEMPLATES;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.CONFIGURE_GATEIN_PARAMETERS;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.EDIT_MODE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.HELP_MODE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IF_EXISTS;
@@ -39,13 +40,18 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jst.j2ee.internal.common.operations.NewJavaEEArtifactClassOperation;
+import org.eclipse.jst.j2ee.model.IModelProvider;
+import org.eclipse.jst.javaee.web.WebApp;
+import org.eclipse.jst.javaee.web.WebAppVersionType;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider;
 import org.eclipse.ui.wizards.datatransfer.ImportOperation;
@@ -59,7 +65,10 @@ import org.eclipse.wst.common.frameworks.internal.enablement.nonui.WFTWrappedExc
 import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.format.FormatProcessorXML;
+import org.jboss.tools.portlet.core.IJBossWebUtil;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.JBossWebUtil;
+import org.jboss.tools.portlet.core.JBossWebUtil25;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
 import org.jboss.tools.portlet.ui.Messages;
@@ -144,13 +153,16 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 		if (!isJSFPortlet && !isSeamPortlet) {
 			return;
 		}
-		boolean addJBossApp = model.getBooleanProperty(ADD_JBOSS_APP);
-		if (addJBossApp) {
-			updateJBossApp(aModel);
-		}
-		boolean addJBossPortlet = model.getBooleanProperty(ADD_JBOSS_PORTLET);
-		if (addJBossPortlet) {
-			updateJBossPortlet(aModel);
+		if (addPortlet) {
+			boolean addJBossApp = model.getBooleanProperty(ADD_JBOSS_APP);
+			if (addJBossApp) {
+				updateJBossApp(aModel);
+			}
+			boolean addJBossPortlet = model
+					.getBooleanProperty(ADD_JBOSS_PORTLET);
+			if (addJBossPortlet) {
+				updateJBossPortlet(aModel);
+			}
 		}
 		
 		boolean copyJSFTemplates = model.getBooleanProperty(COPY_JSF_TEMPLATES);
@@ -161,8 +173,46 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 				PortletUIActivator.log(e);
 			}
 		}
+		boolean configureGateIn = model.getBooleanProperty(CONFIGURE_GATEIN_PARAMETERS);
+		if (configureGateIn) {
+			configureGateInParameters(aModel);
+		}
 	}
 
+	private void configureGateInParameters(IDataModel aModel) {
+		final IProject project = getTargetProject();
+		final IModelProvider provider = PortletCoreActivator
+		.getModelProvider(project);
+		IPath modelPath = new Path("WEB-INF").append("web.xml"); //$NON-NLS-1$ //$NON-NLS-2$
+		boolean exists = project.getProjectRelativePath().append(modelPath).toFile().exists();
+		if (isWebApp25(provider.getModelObject()) && !exists) {
+			modelPath = IModelProvider.FORCESAVE;
+		}
+		provider.modify(new Runnable() {
+			public void run() {
+				IJBossWebUtil util = null;
+
+				if (isWebApp25(provider.getModelObject())) {
+					util = new JBossWebUtil25();
+				} else {
+					util = new JBossWebUtil();
+				}
+				String name = "org.jboss.portletbridge.WRAP_SCRIPTS"; //$NON-NLS-1$
+				String value = "true"; //$NON-NLS-1$
+				String description = null;
+				util.configureContextParam(project, new NullProgressMonitor(), name, value, description);
+
+			}
+		}, modelPath);
+	}
+
+	private boolean isWebApp25(final Object webApp) {
+		if (webApp instanceof WebApp
+				&& ((WebApp) webApp).getVersion() == WebAppVersionType._25_LITERAL)
+			return true;
+		return false;
+	}
+	
 	private void updateJBossPortlet(IDataModel model) {
 		IProject project = getTargetProject();
 		IVirtualComponent component = ComponentCore.createComponent(project);
