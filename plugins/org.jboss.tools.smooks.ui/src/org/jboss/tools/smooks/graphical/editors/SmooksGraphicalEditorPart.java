@@ -434,7 +434,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			for (Iterator<?> iterator = temp.iterator(); iterator.hasNext();) {
 				TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
 				AbstractSmooksGraphicalModel target = treeNodeConnection.getTargetNode();
-				String refID = command.getValue().toString();
+				Object refValue = command.getValue();
+				if(refValue == null) continue;
+				String refID = refValue.toString();
 				Object targetModel = AdapterFactoryEditingDomain.unwrap(target.getData());
 				if (targetModel instanceof EObject) {
 					EStructuralFeature idfeature = SmooksUIUtils.getBeanIDFeature((EObject) targetModel);

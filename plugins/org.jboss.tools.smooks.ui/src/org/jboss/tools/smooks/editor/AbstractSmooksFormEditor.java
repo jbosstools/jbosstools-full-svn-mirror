@@ -652,6 +652,10 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			monitor.done();
 		}
 	}
+	
+	public void setPartName(String partName){
+		super.setPartName(partName);
+	}
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
