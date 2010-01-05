@@ -11,26 +11,25 @@
 package org.jboss.tools.smooks.configuration.editors;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.resources.IResourceStatus;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.content.IContentDescription;
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.jboss.tools.smooks.configuration.SmooksConstants;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -38,6 +37,7 @@ import org.jboss.tools.smooks.configuration.SmooksConstants;
  *         Apr 12, 2009
  */
 public class SmooksResourceChangeListener implements IResourceChangeListener {
+	public static final String SMOOKS_CONTENTTYPE_ID = "org.jboss.tools.smooks.ui.smooks.contentType";
 
 	/*
 	 * (non-Javadoc)
@@ -50,7 +50,7 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 		try {
 			switch (event.getType()) {
 			case IResourceChangeEvent.POST_CHANGE:
-				event.getDelta().accept(new DeltaPrinter());
+				event.getDelta().accept(new ChangePartNameVisitor());
 				break;
 			}
 		} catch (Exception e) {
@@ -59,110 +59,104 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 
 	}
 
-	private void deleteFile(IPath path) {
-		final IPath path1 = path;
-		WorkspaceJob job = new WorkspaceJob("Delete file") { //$NON-NLS-1$
 
-			public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
-				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path1);
-				if (file.exists()) {
-					file.delete(true, monitor);
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		job.schedule();
-	}
+	class ChangePartNameVisitor implements IResourceDeltaVisitor {
 
-	private void newFile(IPath path, IPath newPath) {
-		final IPath path1 = path;
-		final IPath newPath1 = newPath;
-		WorkspaceJob job = new WorkspaceJob("New file and delete old file") { //$NON-NLS-1$
-			public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
-				IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path1);
-				if (file.exists()) {
-					IFile newFile = ResourcesPlugin.getWorkspace().getRoot().getFile(newPath1);
-					if (newFile.exists()) {
-						if (MessageDialog.openQuestion(new Shell(Display.getDefault()),
-								"Cover File?", "Do you want to cover " //$NON-NLS-1$ //$NON-NLS-2$
-										+ newFile.getFullPath())) { //$NON-NLS-1$
-							newFile.setContents(file.getContents(), true, true, monitor);
-						}
-					} else {
-						newFile.create(file.getContents(), true, monitor);
-					}
-					file.delete(true, monitor);
-				}
-				return Status.OK_STATUS;
-			}
-
-		};
-		job.schedule();
-	}
-
-	class DeltaPrinter implements IResourceDeltaVisitor {
-
-		int count = 0;
+//		int count = 0;
 
 		public boolean visit(IResourceDelta delta) {
 			IResource res = delta.getResource();
-			String fileExtension = res.getFileExtension();
-			if (!SmooksConstants.SMOOKS_EXTENTION_NAME.equals(fileExtension)) { //$NON-NLS-1$
-				return true;
-			}
-			int flags = delta.getFlags();
-			switch (delta.getKind()) {
-			case IResourceDelta.ADDED:
-				if (flags == IResourceDelta.MOVED_FROM) {
-					IPath path = delta.getMovedFromPath();
-					String fileName = ""; //$NON-NLS-1$
-					if (path != null) {
-						fileName = path.lastSegment();
-						int dotIndex = fileName.lastIndexOf("."); //$NON-NLS-1$
-						if (dotIndex != -1) {
-							fileExtension = fileName.substring(dotIndex + 1, fileName.length());
+			if (res instanceof IFile) {
+				IFile file = (IFile) res;
+				IContentDescription contentDescription;
+				IContentType contentType = null;
+				try {
+					contentDescription = file.getContentDescription();
+					if (contentDescription == null) {
+						return true;
+					}
+					contentType = contentDescription.getContentType();
+
+				} catch (CoreException e) {
+					if (e.getStatus().getCode() == IResourceStatus.OUT_OF_SYNC_LOCAL) {
+						// Determine the content type from the file name.
+						contentType = Platform.getContentTypeManager().findContentTypeFor(file.getName());
+					}
+				}
+				if (contentType == null || !SMOOKS_CONTENTTYPE_ID.equals(contentType.getId())) {
+					return true;
+				}
+				int flags = delta.getFlags();
+				switch (delta.getKind()) {
+				case IResourceDelta.ADDED:
+					if (flags == IResourceDelta.MOVED_FROM) {
+						IPath path = delta.getMovedFromPath();
+						String fileName = ""; //$NON-NLS-1$
+						if (path != null) {
+							fileName = path.lastSegment();
 						}
-						if (!SmooksConstants.SMOOKS_EXTENTION_NAME.equals(fileExtension)) { //$NON-NLS-1$
+
+						IPath newPath = res.getFullPath();
+						String newfileName = newPath.lastSegment();
+						if (newfileName.equals(fileName)) {
 							return true;
 						}
-						fileName += SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT; //$NON-NLS-1$
-						path = path.removeLastSegments(1);
-						path = path.append(fileName);
-					}
+						final String newPartName = newfileName;
+						final IPath fOldPath = path;
+						Display.getDefault().syncExec(new Runnable() {
 
-					IPath newPath = res.getFullPath();
-					fileName = newPath.lastSegment();
-					fileName += SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT; //$NON-NLS-1$
-					newPath = newPath.removeLastSegments(1).append(fileName);
-					newFile(path, newPath);
-				}
-				break;
-			case IResourceDelta.REMOVED:
-				if (flags == IResourceDelta.MOVED_TO) {
+							public void run() {
+								IWorkbenchWindow window = SmooksConfigurationActivator.getDefault().getWorkbench()
+										.getActiveWorkbenchWindow();
+								if (window != null) {
+									IEditorReference[] editorReferences = window.getActivePage().getEditorReferences();
+									for (int i = 0; i < editorReferences.length; i++) {
+										IEditorReference iEditorReference = editorReferences[i];
+										IEditorPart editorPart = iEditorReference.getEditor(false);
+										IEditorInput editorInput = editorPart.getEditorInput();
+										if (editorInput instanceof IFileEditorInput) {
+											IFile relatedFile = ((IFileEditorInput) editorInput).getFile();
+											if (relatedFile != null && relatedFile.getFullPath().equals(fOldPath)) {
+												if (editorPart instanceof AbstractSmooksFormEditor) {
+													((AbstractSmooksFormEditor) editorPart).setPartName(newPartName);
+													break;
+												}
+											}
+										}
+									}
+								}
+							}
+						});
+					}
+					break;
+				case IResourceDelta.REMOVED:
+					// if (flags == IResourceDelta.MOVED_TO) {
+					// break;
+					// }
+					// IProject project = res.getProject();
+					// try {
+					// if (project.isOpen()) {
+					// IProjectNature nature =
+					// project.getNature(JavaCore.NATURE_ID);
+					// if (nature != null) {
+					// IJavaProject javaProject = JavaCore.create(project);
+					// IPath outPut = javaProject.getOutputLocation();
+					// IPath removeRes = res.getFullPath();
+					// if (outPut.isPrefixOf(removeRes)) {
+					// break;
+					// }
+					// }
+					// }
+					// } catch (CoreException e) {
+					// e.printStackTrace();
+					// }
+					// IPath path = res.getFullPath();
+					// String fileName = path.lastSegment();
+					//					fileName += SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT; //$NON-NLS-1$
+					// path = path.removeLastSegments(1).append(fileName);
+					// deleteFile(path);
 					break;
 				}
-				IProject project = res.getProject();
-				try {
-					if (project.isOpen()) {
-						IProjectNature nature = project.getNature(JavaCore.NATURE_ID);
-						if (nature != null) {
-							IJavaProject javaProject = JavaCore.create(project);
-							IPath outPut = javaProject.getOutputLocation();
-							IPath removeRes = res.getFullPath();
-							if (outPut.isPrefixOf(removeRes)) {
-								break;
-							}
-						}
-					}
-				} catch (CoreException e) {
-					e.printStackTrace();
-				}
-				IPath path = res.getFullPath();
-				String fileName = path.lastSegment();
-				fileName += SmooksConstants.SMOOKS_GRAPHICSEXT_EXTENTION_NAME_WITHDOT; //$NON-NLS-1$
-				path = path.removeLastSegments(1).append(fileName);
-				deleteFile(path);
-				break;
 			}
 			return true; // visit the children
 		}
