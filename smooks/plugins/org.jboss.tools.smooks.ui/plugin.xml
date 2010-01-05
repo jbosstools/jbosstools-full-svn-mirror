@@ -44,12 +44,6 @@
       
    </extension>
     <extension
-          point="org.eclipse.ui.startup">
-       <startup
-             class="org.jboss.tools.smooks.configuration.editors.SmooksToolsStartup">
-       </startup>
-    </extension>
-    <extension
           point="org.eclipse.ui.decorators">
        <decorator
              adaptable="false"

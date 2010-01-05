@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 
 /**
@@ -17,5 +19,14 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
  * Date Apr 1, 2009
  */
 public class SmooksXMLEditor extends StructuredTextEditor {
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.wst.sse.ui.StructuredTextEditor#doSetInput(org.eclipse.ui.IEditorInput)
+	 */
+	@Override
+	public void doSetInput(IEditorInput input) throws CoreException {
+		// TODO Auto-generated method stub
+		super.doSetInput(input);
+	}
 
 }

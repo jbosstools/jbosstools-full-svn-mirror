@@ -17,9 +17,13 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.xml.serialize.OutputFormat;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -47,7 +51,9 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
+import org.eclipse.jface.text.TextViewer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -55,6 +61,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.ide.FileStoreEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.smooks.configuration.RuntimeDependency;
@@ -103,6 +110,10 @@ import org.w3c.dom.Node;
 public class AbstractSmooksFormEditor extends FormEditor implements IEditingDomainProvider,
 		ISmooksModelValidateListener, ISmooksModelProvider {
 
+	private IResourceChangeListener resourceChangeListener = null;
+
+	private IDocumentListener xmlDocumentTraker = null;
+
 	private Exception initSmooksModelException = null;
 
 	protected String platformVersion = SmooksConstants.VERSION_1_2;
@@ -139,6 +150,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	public AbstractSmooksFormEditor() {
 		super();
+		resourceChangeListener = new SmooksResourceTraker();
+		xmlDocumentTraker = new SmooksXMLEditorDocumentListener();
 		initEditingDomain();
 	}
 
@@ -239,7 +252,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			EObject rootModel = this.getSmooksModel();
 			fillComments(doc, rootModel);
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			
+
 			XMLUtils.outDOMNode(doc, stream);
 			return stream;
 		} catch (Throwable t) {
@@ -462,48 +475,35 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	protected StructuredTextEditor createTextEditor() {
 		SmooksXMLEditor xmlEditor = new SmooksXMLEditor() {
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.jboss.tools.smooks.configuration.editors.SmooksXMLEditor#
+			 * doSetInput(org.eclipse.ui.IEditorInput)
+			 */
+			@Override
+			public void doSetInput(IEditorInput input) throws CoreException {
+				TextViewer viewer = getTextViewer();
+				if (viewer != null) {
+					IDocument document = viewer.getDocument();
+					if (document != null) {
+						document.removeDocumentListener(xmlDocumentTraker);
+					}
+				}
+				super.doSetInput(input);
+				viewer = getTextViewer();
+				if (viewer != null) {
+					IDocument document = viewer.getDocument();
+					if (document != null) {
+						document.addDocumentListener(xmlDocumentTraker);
+					}
+				}
+			}
+
 			public void createPartControl(Composite parent) {
 				super.createPartControl(parent);
-				getTextViewer().getDocument().addDocumentListener(new IDocumentListener() {
-
-					protected Timer timer = new Timer();
-					protected TimerTask timerTask;
-
-					public void documentAboutToBeChanged(DocumentEvent documentEvent) {
-						// Ingore
-					}
-
-					public void documentChanged(final DocumentEvent documentEvent) {
-						try {
-							// This is need for the Properties view.
-							//
-							// setSelection(StructuredSelection.EMPTY);
-
-							if (timerTask != null) {
-								timerTask.cancel();
-							}
-
-							if (handleEMFModelChange) {
-								handleEMFModelChange = false;
-							} else {
-								timerTask = new TimerTask() {
-									@Override
-									public void run() {
-										getSite().getShell().getDisplay().asyncExec(new Runnable() {
-											public void run() {
-												handleDocumentChange();
-											}
-										});
-									}
-								};
-
-								timer.schedule(timerTask, 1000);
-							}
-						} catch (Exception exception) {
-							SmooksConfigurationActivator.getDefault().log(exception);
-						}
-					}
-				});
+				getTextViewer().getDocument().addDocumentListener(xmlDocumentTraker);
 
 			}
 
@@ -647,24 +647,73 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 				validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
 			}
 		} catch (IOException e) {
-			SmooksConfigurationActivator.getDefault().log(e);
+			SmooksConfigurationActivator.log(e);
 		} finally {
 			monitor.done();
 		}
 	}
-	
-	public void setPartName(String partName){
-		super.setPartName(partName);
+
+	public void setInput(IEditorInput input) {
+		if (getEditorInput() != null) {
+			IFile file = ((IFileEditorInput) getEditorInput()).getFile();
+			file.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+		}
+
+		super.setInput(input);
+
+		if (getEditorInput() != null) {
+			IFile file = ((IFileEditorInput) getEditorInput()).getFile();
+			file.getWorkspace().addResourceChangeListener(resourceChangeListener);
+			setPartName(file.getName());
+		}
+
+		String filePath = null;
+
+		IFile file = null;
+
+		if (input instanceof IFileEditorInput) {
+			file = ((IFileEditorInput) input).getFile();
+			filePath = file.getFullPath().toPortableString();
+		}
+
+		editingDomain.getResourceSet().getResources().clear();
+		// create EMF resource
+		Resource smooksResource = null;
+		if (file != null) {
+			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(filePath,
+					false));
+		} else {
+			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createFileURI(filePath));
+		}
+		editingDomain.getResourceSet().getResources().add(smooksResource);
+
+		Exception ex = checkSmooksConfigContents(null);
+		if (ex == null) {
+			if (smooksModel == null) {
+				try {
+					smooksResource.load(Collections.emptyMap());
+					smooksModel = smooksResource.getContents().get(0);
+				} catch (IOException e) {
+					initSmooksModelException = e;
+				}
+			} else {
+				smooksResource.getContents().add(smooksModel);
+			}
+		}
 	}
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
-		super.init(site, input);
-		String filePath = null;
-		String partName = "smooks editor"; //$NON-NLS-1$
-		IFile file = null;
-		RuntimeMetadata runtimeMetadata = new RuntimeMetadata();
 
+		// create Smooks validator
+		if (validator == null) {
+			validator = new SmooksModelValidator();
+			addValidateListener(this);
+		}
+
+		RuntimeMetadata runtimeMetadata = new RuntimeMetadata();
+		String filePath = null;
+		IFile file = null;
 		if (input instanceof FileStoreEditorInput) {
 			try {
 				filePath = ((FileStoreEditorInput) input).getURI().toURL().getFile();
@@ -677,47 +726,22 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			file = ((IFileEditorInput) input).getFile();
 			runtimeMetadata.setSmooksConfig(file);
 			filePath = file.getFullPath().toPortableString();
-			partName = file.getName();
 		}
 
 		if (filePath == null)
 			throw new PartInitException(Messages.AbstractSmooksFormEditor_Exception_Cannot_Get_Input_File);
 
-		// create EMF resource
-		Resource smooksResource = null;
-		if (file != null) {
-			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createPlatformResourceURI(filePath,
-					false));
-		} else {
-			smooksResource = new SmooksResourceFactoryImpl().createResource(URI.createFileURI(filePath));
-		}
-		editingDomain.getResourceSet().getResources().add(smooksResource);
-		setPartName(partName);
+		super.init(site, input);
 
-		// create Smooks validator
-		validator = new SmooksModelValidator();
-		addValidateListener(this);
-
-		Exception ex = checkSmooksConfigContents(null);
-		if (ex == null) {
-			try {
-				smooksResource.load(Collections.emptyMap());
-				smooksModel = smooksResource.getContents().get(0);
-			} catch (IOException e) {
-				initSmooksModelException = e;
-				// throw new PartInitException(e.getMessage());
-			}
-
-			if (smooksModel != null) {
-				setDiagnosticList(validator.validate(smooksModel.eResource().getContents(), editingDomain));
-				// if success to open editor , check if there isn't ext element
-				// in
-				// smooks config file
-				// create new one for it
-				String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
-				this.setPlatformVersion(version);
-				judgeInputReader();
-			}
+		if (smooksModel != null) {
+			setDiagnosticList(validator.validate(smooksModel.eResource().getContents(), editingDomain));
+			// if success to open editor , check if there isn't ext element
+			// in
+			// smooks config file
+			// create new one for it
+			String version = SmooksUIUtils.judgeSmooksPlatformVersion(smooksModel);
+			this.setPlatformVersion(version);
+			judgeInputReader();
 		}
 	}
 
@@ -727,8 +751,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		for (RuntimeDependency dependency : dependencies) {
 			if (!dependency.isSupportedByEditor()) {
 				java.net.URI changeToNS = dependency.getChangeToNS();
-				String errorMsg = Messages.AbstractSmooksFormEditor_Error_Unsupported
-						+ dependency.getNamespaceURI()
+				String errorMsg = Messages.AbstractSmooksFormEditor_Error_Unsupported + dependency.getNamespaceURI()
 						+ Messages.AbstractSmooksFormEditor_Error_Unsupported2;
 
 				if (changeToNS != null) {
@@ -909,5 +932,107 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		// graphChanged = true;
 		// firePropertyChange(PROP_DIRTY);
 		// }
+	}
+
+	public class SmooksXMLEditorDocumentListener implements IDocumentListener {
+		protected Timer timer = new Timer();
+		protected TimerTask timerTask;
+
+		public void documentAboutToBeChanged(DocumentEvent documentEvent) {
+			// Ingore
+		}
+
+		public void documentChanged(final DocumentEvent documentEvent) {
+			try {
+				// This is need for the Properties view.
+				//
+				// setSelection(StructuredSelection.EMPTY);
+
+				if (timerTask != null) {
+					timerTask.cancel();
+				}
+
+				if (handleEMFModelChange) {
+					handleEMFModelChange = false;
+				} else {
+					timerTask = new TimerTask() {
+						@Override
+						public void run() {
+							getSite().getShell().getDisplay().asyncExec(new Runnable() {
+								public void run() {
+									handleDocumentChange();
+								}
+							});
+						}
+					};
+
+					timer.schedule(timerTask, 1000);
+				}
+			} catch (Exception exception) {
+				SmooksConfigurationActivator.log(exception);
+			}
+		}
+	}
+
+	public class SmooksResourceTraker implements IResourceChangeListener, IResourceDeltaVisitor {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * org.eclipse.core.resources.IResourceChangeListener#resourceChanged
+		 * (org.eclipse.core.resources.IResourceChangeEvent)
+		 */
+		public void resourceChanged(IResourceChangeEvent event) {
+			IResourceDelta delta = event.getDelta();
+			try {
+				if (delta != null)
+					delta.accept(this);
+			} catch (CoreException exception) {
+			}
+		}
+
+		public boolean visit(IResourceDelta delta) throws CoreException {
+			if (delta == null || !delta.getResource().equals(((IFileEditorInput) getEditorInput()).getFile()))
+				return true;
+
+			if (delta.getKind() == IResourceDelta.REMOVED) {
+				Display display = getSite().getShell().getDisplay();
+				if ((IResourceDelta.MOVED_TO & delta.getFlags()) == 0) { // if
+					// the
+					// file
+					// was
+					// deleted
+					// NOTE: The case where an open, unsaved file is deleted is
+					// being handled by the
+					// PartListener added to the Workbench in the initialize()
+					// method.
+					display.asyncExec(new Runnable() {
+						public void run() {
+							// if (!isDirty())
+							closeEditor(false);
+						}
+					});
+				} else { // else if it was moved or renamed
+					final IFile newFile = ResourcesPlugin.getWorkspace().getRoot().getFile(delta.getMovedToPath());
+					display.asyncExec(new Runnable() {
+						public void run() {
+							// try {
+							// ((SmooksXMLEditor) textEditor).doSetInput(new
+							// FileEditorInput(newFile));
+							// } catch (CoreException e) {
+							// e.printStackTrace();
+							// }
+							setInput(new FileEditorInput(newFile));
+						}
+					});
+				}
+			}
+			return false;
+		}
+	}
+
+	private void closeEditor(boolean forceSave) {
+		this.close(forceSave);
 	}
 }

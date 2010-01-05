@@ -39,6 +39,12 @@ import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 public class SmooksResourceChangeListener implements IResourceChangeListener {
 	public static final String SMOOKS_CONTENTTYPE_ID = "org.jboss.tools.smooks.ui.smooks.contentType";
 
+	private IEditorPart currentEditPart = null;
+
+	public SmooksResourceChangeListener(IEditorPart editorPart) {
+		this.currentEditPart = editorPart;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -59,12 +65,14 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 
 	}
 
-
 	class ChangePartNameVisitor implements IResourceDeltaVisitor {
 
-//		int count = 0;
+		// int count = 0;
 
 		public boolean visit(IResourceDelta delta) {
+			if (delta == null
+					|| !delta.getResource().equals(((IFileEditorInput) currentEditPart.getEditorInput()).getFile()))
+				return true;
 			IResource res = delta.getResource();
 			if (res instanceof IFile) {
 				IFile file = (IFile) res;
@@ -98,7 +106,7 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 
 						IPath newPath = res.getFullPath();
 						String newfileName = newPath.lastSegment();
-						if (newfileName.equals(fileName)) {
+						if (fileName.equals(newfileName)) {
 							return true;
 						}
 						final String newPartName = newfileName;
@@ -113,12 +121,15 @@ public class SmooksResourceChangeListener implements IResourceChangeListener {
 									for (int i = 0; i < editorReferences.length; i++) {
 										IEditorReference iEditorReference = editorReferences[i];
 										IEditorPart editorPart = iEditorReference.getEditor(false);
+										if (editorPart != currentEditPart)
+											continue;
+
 										IEditorInput editorInput = editorPart.getEditorInput();
 										if (editorInput instanceof IFileEditorInput) {
 											IFile relatedFile = ((IFileEditorInput) editorInput).getFile();
 											if (relatedFile != null && relatedFile.getFullPath().equals(fOldPath)) {
 												if (editorPart instanceof AbstractSmooksFormEditor) {
-													((AbstractSmooksFormEditor) editorPart).setPartName(newPartName);
+//													((AbstractSmooksFormEditor) editorPart).setPartName(newPartName);
 													break;
 												}
 											}

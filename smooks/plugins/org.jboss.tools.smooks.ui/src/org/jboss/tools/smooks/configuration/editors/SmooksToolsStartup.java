@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.ui.IStartup;
 
 /**
@@ -23,7 +22,7 @@ public class SmooksToolsStartup implements IStartup {
 	 * @see org.eclipse.ui.IStartup#earlyStartup()
 	 */
 	public void earlyStartup() {
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(new SmooksResourceChangeListener());
+//		ResourcesPlugin.getWorkspace().addResourceChangeListener(new SmooksResourceChangeListener());
 	}
 
 
