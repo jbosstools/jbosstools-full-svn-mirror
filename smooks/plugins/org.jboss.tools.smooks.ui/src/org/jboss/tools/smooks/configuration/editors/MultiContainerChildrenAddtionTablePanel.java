@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -39,21 +40,30 @@ public class MultiContainerChildrenAddtionTablePanel extends ContainerChildrenTa
 	private EStructuralFeature feature;
 
 	private EObject newChild = null;
+	
+	private  ILabelProvider cutomeChildrenSelectionViewerLabelProvider;
 
 	public MultiContainerChildrenAddtionTablePanel(Shell shell, Collection<?> children,
 			AdapterFactoryEditingDomain editingDomain, ISmooksModelProvider smooksModelProvider, EObject rootModel,
-			FormToolkit toolkit, IEditorPart editorPart) {
+			FormToolkit toolkit, IEditorPart editorPart , ILabelProvider cutomeChildrenSelectionViewerLabelProvider) {
 		super(smooksModelProvider, rootModel, toolkit, editorPart);
 		this.shell = shell;
 		this.children = children;
 		this.editingDomain = editingDomain;
+		this.cutomeChildrenSelectionViewerLabelProvider = cutomeChildrenSelectionViewerLabelProvider;
+	}
+	
+	public MultiContainerChildrenAddtionTablePanel(Shell shell, Collection<?> children,
+			AdapterFactoryEditingDomain editingDomain, ISmooksModelProvider smooksModelProvider, EObject rootModel,
+			FormToolkit toolkit, IEditorPart editorPart){
+		this(shell, children, editingDomain, smooksModelProvider, rootModel, toolkit, editorPart, null);
 	}
 
 	@Override
 	protected boolean performNewChild() {
 		List<Object> cloneChildren = new ArrayList<Object>();
 		cloneChildren.addAll(children);
-		ChildrenSelectionWizard wizard = new ChildrenSelectionWizard(shell, cloneChildren, editingDomain);
+		ChildrenSelectionWizard wizard = new ChildrenSelectionWizard(shell, cloneChildren, editingDomain , cutomeChildrenSelectionViewerLabelProvider);
 		if (wizard.open() == Dialog.OK) {
 			CommandParameter param = wizard.getChildDescriptor();
 			if (param != null) {

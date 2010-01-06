@@ -16,9 +16,11 @@ import java.util.Collection;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -39,6 +41,8 @@ import org.jboss.tools.smooks.configuration.editors.ChildrenSelectionWizard.Priv
  * 
  */
 public class ChildrenSelectionWizardPage extends WizardPage {
+	
+	private ILabelProvider customeLabelProvider = null;
 
 	private Collection<?> childrenDescriptor = new ArrayList<CommandParameter>();
 
@@ -77,12 +81,12 @@ public class ChildrenSelectionWizardPage extends WizardPage {
 			}
 		});
 		tableViewer.addDoubleClickListener(new IDoubleClickListener() {
-			
+
 			public void doubleClick(DoubleClickEvent event) {
 				dialog.close();
 			}
 		});
-		if(childrenDescriptor != null){
+		if (childrenDescriptor != null) {
 			tableViewer.setInput(childrenDescriptor);
 		}
 		updatePage();
@@ -91,6 +95,14 @@ public class ChildrenSelectionWizardPage extends WizardPage {
 
 	public Object getChild() {
 		return child;
+	}
+	
+
+	/**
+	 * @param customeLabelProvider the customeLabelProvider to set
+	 */
+	public void setCustomeLabelProvider(ILabelProvider customeLabelProvider) {
+		this.customeLabelProvider = customeLabelProvider;
 	}
 
 	protected void updatePage() {
@@ -103,8 +115,8 @@ public class ChildrenSelectionWizardPage extends WizardPage {
 		this.setPageComplete(error == null);
 	}
 
-	public ChildrenSelectionWizardPage(Collection<?> childrenDescriptor,
-			AdapterFactoryEditingDomain editingDomain, String pageName, String title, ImageDescriptor titleImage) {
+	public ChildrenSelectionWizardPage(Collection<?> childrenDescriptor, AdapterFactoryEditingDomain editingDomain,
+			String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 		this.childrenDescriptor = childrenDescriptor;
 		this.editingDomain = editingDomain;
@@ -112,8 +124,8 @@ public class ChildrenSelectionWizardPage extends WizardPage {
 		this.setDescription(Messages.ChildrenSelectionWizardPage_wizardtitle);
 	}
 
-	public ChildrenSelectionWizardPage(Collection<?> childrenDescriptor,
-			AdapterFactoryEditingDomain editingDomain,String pageName) {
+	public ChildrenSelectionWizardPage(Collection<?> childrenDescriptor, AdapterFactoryEditingDomain editingDomain,
+			String pageName) {
 		super(pageName);
 		this.childrenDescriptor = childrenDescriptor;
 		this.editingDomain = editingDomain;
@@ -155,19 +167,31 @@ public class ChildrenSelectionWizardPage extends WizardPage {
 
 		@Override
 		public Image getImage(Object element) {
+			Image image = null;
+			if(customeLabelProvider != null){
+				image = customeLabelProvider.getImage(element);
+			}
+			if(image != null){
+				return image;
+			}
 			element = getValue(element);
 			IItemLabelProvider provider = (IItemLabelProvider) editingDomain.getAdapterFactory().adapt(element,
 					IItemLabelProvider.class);
 			Object img = provider.getImage(element);
-			if(img instanceof Image){
-				return ((Image)img);
-			}
-			return null;
+			image = ExtendedImageRegistry.getInstance().getImage(img);
+			return image;
 
 		}
 
 		@Override
 		public String getText(Object element) {
+			String label = null;
+			if(customeLabelProvider != null){
+				label = customeLabelProvider.getText(element);
+			}
+			if(label != null){
+				return label;
+			}
 			element = getValue(element);
 			IItemLabelProvider provider = (IItemLabelProvider) editingDomain.getAdapterFactory().adapt(element,
 					IItemLabelProvider.class);
