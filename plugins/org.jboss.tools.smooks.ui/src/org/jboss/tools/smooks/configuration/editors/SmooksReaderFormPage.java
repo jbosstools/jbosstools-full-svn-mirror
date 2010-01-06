@@ -442,6 +442,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			createReaderPanel((EObject) list.getAbstractReader().get(0));
 		} else {
 			disposeCompositeControls(readerConfigComposite, null);
+			createSimpleReaderPanel(reader);
 		}
 	}
 
@@ -731,20 +732,7 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 			}
 
 		} else {
-			Label formText = this.getManagedForm().getToolkit().createLabel(readerConfigComposite, ""); //$NON-NLS-1$
-			GridData gd = new GridData(GridData.FILL_BOTH);
-			gd.heightHint = 50;
-			gd.horizontalSpan = 2;
-			formText.setLayoutData(gd);
-			if (reader instanceof XMLReader || reader instanceof JavaReader || reader instanceof XSDReader) {
-				formText.setText(Messages.SmooksReaderFormPage_Warning_Specify_Sample_Data);
-			}
-
-			if (reader instanceof NullReader) {
-				formText.setText(Messages.SmooksReaderFormPage_Warning_Specify_Input_Type);
-			}
-			readerConfigComposite.layout();
-			scrolledPageBook.reflow(false);
+			createSimpleReaderPanel(reader);
 		}
 		deactiveAllInputFile(compoundCommand);
 		if (!compoundCommand.isEmpty() && compoundCommand.canExecute()) {
@@ -770,6 +758,23 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				setInputDataActiveStatus(false, inputType, command);
 			}
 		}
+	}
+	
+	private void createSimpleReaderPanel(Object reader){
+		Label formText = this.getManagedForm().getToolkit().createLabel(readerConfigComposite, ""); //$NON-NLS-1$
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		gd.heightHint = 50;
+		gd.horizontalSpan = 2;
+		formText.setLayoutData(gd);
+		if (reader instanceof XMLReader || reader instanceof JavaReader || reader instanceof XSDReader) {
+			formText.setText(Messages.SmooksReaderFormPage_Warning_Specify_Sample_Data);
+		}
+
+		if (reader instanceof NullReader) {
+			formText.setText(Messages.SmooksReaderFormPage_Warning_Specify_Input_Type);
+		}
+		readerConfigComposite.layout();
+		scrolledPageBook.reflow(false);
 	}
 
 	private void createReaderPanel(EObject reader) {

@@ -15,10 +15,13 @@ import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -37,8 +40,10 @@ import org.jboss.tools.smooks.configuration.editors.PropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.wizard.freemarker.Messages;
+import org.jboss.tools.smooks.model.csv12.Binding;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
+import org.jboss.tools.smooks.model.csv12.MapBinding;
 
 /**
  * @author Dart Peng (dpeng@redhat.com) Date Apr 10, 2009
@@ -113,21 +118,7 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 		final Collection<?> children = p.getNewChildDescriptors(reader, editingDomain, null);
 
 		ModelMultiChildrenTabelPanelCreator creator = new ModelMultiChildrenTabelPanelCreator(shell, children,
-				editingDomain, modelProvider, reader, toolkit, editorPart) {
-			//
-			// @Override
-			// protected EStructuralFeature getChildFeature(CommandParameter
-			// model) {
-			// return model.getEStructuralFeature();
-			// }
-			//
-			// @Override
-			// protected EObject getNewChildInstance(CommandParameter feature2)
-			// {
-			// return feature2.getEValue();
-			// }
-
-		};
+				editingDomain, modelProvider, reader, toolkit, editorPart, new ReaderBindingLabelProvider());
 
 		creator.createChildrenTablePanel(group);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -156,7 +147,8 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 		final IItemPropertyDescriptor descriptor = propertySource.getPropertyDescriptor(model,
 				Csv12Package.Literals.CSV12_READER__SEPARATOR);
 
-		final AttributeFieldEditPart separatorEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Separator_Char,
+		final AttributeFieldEditPart separatorEditPart = SmooksUIUtils.createStringFieldEditor(
+				org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Separator_Char,
 				parent, editingdomain, toolkit, descriptor, model, false, false, false, null, 0, null,
 				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
 		Text separateText = (Text) separatorEditPart.getContentControl();
@@ -165,7 +157,8 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 		final IItemPropertyDescriptor quotedescriptor = propertySource.getPropertyDescriptor(model,
 				Csv12Package.Literals.CSV12_READER__QUOTE);
 
-		final AttributeFieldEditPart quoteEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Quote_Char, parent,
+		final AttributeFieldEditPart quoteEditPart = SmooksUIUtils.createStringFieldEditor(
+				org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Quote_Char, parent,
 				editingdomain, toolkit, quotedescriptor, model, false, false, false, null, 0, null,
 				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
 		Text quoteText = (Text) quoteEditPart.getContentControl();
@@ -176,7 +169,8 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 
 		String fields = (String) SmooksUIUtils.getEditValue(fieldsDescriptor, model);
 
-		final AttributeFieldEditPart fieldsEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Fields, parent,
+		final AttributeFieldEditPart fieldsEditPart = SmooksUIUtils.createStringFieldEditor(
+				org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Fields, parent,
 				editingdomain, toolkit, fieldsDescriptor, model, false, false, false, null, 0, null,
 				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
 		Text text = (Text) fieldsEditPart.getContentControl();
@@ -191,14 +185,16 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 		final IItemPropertyDescriptor recorddescriptor = propertySource.getPropertyDescriptor(model,
 				Csv12Package.Literals.CSV12_READER__RECORD_ELEMENT_NAME);
 
-		final AttributeFieldEditPart recordEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Record_Name, parent,
+		final AttributeFieldEditPart recordEditPart = SmooksUIUtils.createStringFieldEditor(
+				org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Record_Name, parent,
 				editingdomain, toolkit, recorddescriptor, model, false, false, false, null, 0, null,
 				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
 
 		final IItemPropertyDescriptor rootdescriptor = propertySource.getPropertyDescriptor(model,
 				Csv12Package.Literals.CSV12_READER__ROOT_ELEMENT_NAME);
 
-		final AttributeFieldEditPart rootEditPart = SmooksUIUtils.createStringFieldEditor(org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Root_Name, parent,
+		final AttributeFieldEditPart rootEditPart = SmooksUIUtils.createStringFieldEditor(
+				org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_Root_Name, parent,
 				editingdomain, toolkit, rootdescriptor, model, false, false, false, null, 0, null,
 				SmooksUIUtils.VALUE_TYPE_VALUE, null, false);
 
@@ -246,5 +242,69 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 			editPart.getFieldMarker().setMarkerType(IFieldMarker.TYPE_ERROR);
 			editPart.getFieldMarker().setMessage(error);
 		}
+	}
+
+	/**
+	 * newChildDescriptors.add (createChildParameter
+	 * (Csv12Package.Literals.CSV12_READER__SINGLE_BINDING,
+	 * Csv12Factory.eINSTANCE.createBinding()));
+	 * 
+	 * newChildDescriptors.add (createChildParameter
+	 * (Csv12Package.Literals.CSV12_READER__SINGLE_BINDING,
+	 * Csv12Factory.eINSTANCE.createMapBinding()));
+	 * 
+	 * newChildDescriptors.add (createChildParameter
+	 * (Csv12Package.Literals.CSV12_READER__LIST_BINDING,
+	 * Csv12Factory.eINSTANCE.createBinding()));
+	 * 
+	 * newChildDescriptors.add (createChildParameter
+	 * (Csv12Package.Literals.CSV12_READER__LIST_BINDING,
+	 * Csv12Factory.eINSTANCE.createMapBinding()));
+	 * 
+	 * newChildDescriptors.add (createChildParameter
+	 * (Csv12Package.Literals.CSV12_READER__MAP_BINDING,
+	 * Csv12Factory.eINSTANCE.createMapBinding()));
+	 * 
+	 * @author Dart
+	 * 
+	 */
+
+	private class ReaderBindingLabelProvider extends LabelProvider {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
+		 */
+		@Override
+		public String getText(Object element) {
+			if (element instanceof CommandParameter) {
+				Object v = ((CommandParameter) element).getValue();
+				v = AdapterFactoryEditingDomain.unwrap(v);
+				EStructuralFeature feature = ((CommandParameter) element).getEStructuralFeature();
+				if (v instanceof MapBinding) {
+					if (feature == Csv12Package.Literals.CSV12_READER__MAP_BINDING) {
+						return "Map MapBinding";
+					}
+					if (feature == Csv12Package.Literals.CSV12_READER__SINGLE_BINDING) {
+						return "Single MapBinding";
+					}
+					if (feature == Csv12Package.Literals.CSV12_READER__LIST_BINDING) {
+						return "List MapBinding";
+					}
+				}
+				if (v instanceof Binding) {
+					if (feature == Csv12Package.Literals.CSV12_READER__SINGLE_BINDING) {
+						return "Single Binding";
+					}
+					if (feature == Csv12Package.Literals.CSV12_READER__LIST_BINDING) {
+						return "List Binding";
+					}
+				}
+			}
+			return super.getText(element);
+		}
+
 	}
 }

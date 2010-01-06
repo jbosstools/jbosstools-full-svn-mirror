@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -30,7 +31,7 @@ public class ChildrenSelectionWizard extends Wizard {
 	private PrivateWizardDialog dialog;
 
 	public ChildrenSelectionWizard(Shell shell, Collection<?> childrenDescriptor,
-			AdapterFactoryEditingDomain editingDomain) {
+			AdapterFactoryEditingDomain editingDomain , ILabelProvider customeLabelProvider) {
 		super();
 		dialog = new PrivateWizardDialog(shell, this){
 			
@@ -38,6 +39,7 @@ public class ChildrenSelectionWizard extends Wizard {
 		page = new ChildrenSelectionWizardPage(childrenDescriptor, editingDomain, "children selection", //$NON-NLS-1$
 				"Select children", null); //$NON-NLS-1$
 		page.setWizardDialog(dialog);
+		page.setCustomeLabelProvider(customeLabelProvider);
 	}
 	
 	public CommandParameter getChildDescriptor(){
