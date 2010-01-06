@@ -34,6 +34,7 @@ public class Messages extends NLS {
 	public static String SmooksProcessGraphicalEditor_No_Input_File_Active;
 	public static String SmooksProcessGraphicalEditor_No_Input_Specified;
 	public static String SmooksProcessGraphicalEditor_No_Input_Task_Found;
+	public static String SmooksProcessGraphicalEditor_ValidationError_MultipleTemplate;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
