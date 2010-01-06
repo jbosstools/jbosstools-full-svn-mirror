@@ -94,6 +94,7 @@ import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerCSVTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
+import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
@@ -1142,6 +1143,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			SmooksResourceListType sr = getSmooksResourceListType();
 			List<AbstractResourceConfig> rcs = sr.getAbstractResourceConfig();
 			boolean correct = false;
+
 			for (Iterator<?> iterator = rcs.iterator(); iterator.hasNext();) {
 				AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
 				if (abstractResourceConfig instanceof BeanType) {
@@ -1159,16 +1161,32 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			SmooksResourceListType sr = getSmooksResourceListType();
 			List<AbstractResourceConfig> rcs = sr.getAbstractResourceConfig();
 			boolean correct = false;
+			boolean multipleTemplate = false;
+			int freemarkerCount = 0;
 			for (Iterator<?> iterator = rcs.iterator(); iterator.hasNext();) {
 				AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
 				if (abstractResourceConfig instanceof BeanType) {
 					correct = true;
+					// break;
+				}
+				if (abstractResourceConfig instanceof Freemarker) {
+					freemarkerCount++;
+				}
+				if (freemarkerCount > 1) {
+					multipleTemplate = true;
+					// break;
+				}
+				if (!correct && multipleTemplate) {
 					break;
 				}
 			}
 			if (!correct) {
 				task.setProblemType(IFieldMarker.TYPE_WARINING);
 				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_4);
+			}
+			if (multipleTemplate) {
+				task.setProblemType(IFieldMarker.TYPE_ERROR);
+				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_ValidationError_MultipleTemplate);
 			}
 		}
 	}

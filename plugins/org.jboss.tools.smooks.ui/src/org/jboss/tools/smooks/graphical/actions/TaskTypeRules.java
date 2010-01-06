@@ -52,8 +52,15 @@ public class TaskTypeRules {
 		if (parentID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
 			if (!TaskTypeManager.TASK_ID_JAVA_MAPPING.equals(currentTask.getId())) {
 				return false;
+			}else{
+				for (Iterator<?> iterator = taskList.iterator(); iterator.hasNext();) {
+					TaskType taskType = (TaskType) iterator.next();
+					if (TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskType.getId())) {
+						return false;
+					}
+				}
+				return true;
 			}
-			return true;
 		}
 
 		if (parentID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
