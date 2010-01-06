@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.gef.EditPartFactory;
+import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.ConnectionModelFactory;
@@ -90,21 +91,60 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
 			Object data = abstractSmooksGraphicalModel.getData();
 			if (data instanceof IFreemarkerTemplateModel) {
-				if (((IFreemarkerTemplateModel) data).isRequired() && !((IFreemarkerTemplateModel) data).isHidden(root)) {
-					if (abstractSmooksGraphicalModel.getTargetConnections().isEmpty()) {
-						abstractSmooksGraphicalModel.addMessage("This node must be linked with source node");
-						abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
-					}
+				AbstractSmooksGraphicalModel requiredCollectionLinkParent = parentIsRequriedCollectionNode(abstractSmooksGraphicalModel);
+				if(requiredCollectionLinkParent != null){
+					AbstractXMLObject parentNode = (AbstractXMLObject)requiredCollectionLinkParent.getData();
+					abstractSmooksGraphicalModel.addMessage("Its parent node '" + parentNode.getName() + "' should be connected first.");
+					abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
 				}
-				if (((IFreemarkerTemplateModel) data).isManyOccurs()) {
-					if (abstractSmooksGraphicalModel.getTargetConnections().isEmpty()) {
-						abstractSmooksGraphicalModel.addMessage("This node must be linked with collection java node");
-						abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
-					}
+				if (isRequiredNode(abstractSmooksGraphicalModel)) {
+					abstractSmooksGraphicalModel.addMessage("This node must be linked with source node");
+					abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
+				}
+				if (isRequiredCollectionNode(abstractSmooksGraphicalModel)) {
+					abstractSmooksGraphicalModel.addMessage("This node must be linked with collection java node");
+					abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
 				}
 			}
 			validateTemplateContentsModel(type, abstractSmooksGraphicalModel.getChildren());
 		}
+	}
+	
+
+	public static AbstractSmooksGraphicalModel parentIsRequriedCollectionNode(AbstractSmooksGraphicalModel abstractSmooksGraphicalModel) {
+		AbstractSmooksGraphicalModel parent = abstractSmooksGraphicalModel.getParent();
+		Object data = abstractSmooksGraphicalModel.getData();
+		if (data instanceof IFreemarkerTemplateModel) {
+			if (isRequiredCollectionNode(parent)) {
+				return parent;
+			}
+			return parentIsRequriedCollectionNode(parent);
+		}
+		return null;
+	}
+
+	private boolean isRequiredNode(AbstractSmooksGraphicalModel abstractSmooksGraphicalModel) {
+		Object data = abstractSmooksGraphicalModel.getData();
+		if (data instanceof IFreemarkerTemplateModel) {
+			if (((IFreemarkerTemplateModel) data).isRequired() && !((IFreemarkerTemplateModel) data).isHidden(root)) {
+				if (abstractSmooksGraphicalModel.getTargetConnections().isEmpty()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean isRequiredCollectionNode(AbstractSmooksGraphicalModel abstractSmooksGraphicalModel) {
+		Object data = abstractSmooksGraphicalModel.getData();
+		if (data instanceof IFreemarkerTemplateModel) {
+			if (((IFreemarkerTemplateModel) data).isManyOccurs()) {
+				if (abstractSmooksGraphicalModel.getTargetConnections().isEmpty()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/*

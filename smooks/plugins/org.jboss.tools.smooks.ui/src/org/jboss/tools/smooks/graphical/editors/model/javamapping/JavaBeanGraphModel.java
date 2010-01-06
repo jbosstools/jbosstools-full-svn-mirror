@@ -84,7 +84,14 @@ public class JavaBeanGraphModel extends AbstractResourceConfigGraphModel {
 			if (m instanceof FreemarkerTemplateXMLModel) {
 				if (data instanceof EObject) {
 					if (SmooksUIUtils.isCollectionJavaGraphModel((EObject) data)) {
-						return ((FreemarkerTemplateXMLModel) m).isManyOccurs();
+						boolean flag = ((FreemarkerTemplateXMLModel) m).isManyOccurs()
+								&& gm.getTargetConnections().isEmpty();
+						Object p = SmooksFreemarkerTemplateGraphicalEditor.parentIsRequriedCollectionNode(gm);
+						if(p != null) {
+							return false;
+						}else{
+							return flag;
+						}
 					}
 				}
 			}
