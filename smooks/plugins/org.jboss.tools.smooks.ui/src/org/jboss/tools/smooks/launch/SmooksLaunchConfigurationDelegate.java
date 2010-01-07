@@ -20,13 +20,18 @@
 package org.jboss.tools.smooks.launch;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -43,6 +48,7 @@ import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -120,17 +126,9 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 	private VMRunnerConfiguration buildRunnerConfig(ILaunchConfiguration launchConfig) throws CoreException {
 		List<String> classpath = new ArrayList<String>(Arrays.asList(getClasspath(launchConfig)));
 
-		File wsRootDir = ResourcesPlugin.getWorkspace().getRoot().getRawLocation().toFile();
-		File wsTempClasses = new File(wsRootDir, "temp/classes"); //$NON-NLS-1$
-		
 		// We need to add the SmooksLauncher to the launch classpath because it will not be part of the projects
 		// classpath.  Bit of a hack... there's probably a nicer way of doing this!!!
-		addToCP(wsTempClasses, SmooksLauncher.class);
-		addToCP(wsTempClasses, SmooksInputType.class);
-		addToCP(wsTempClasses, ProcessNodeType.class);
-		addToCP(wsTempClasses, ObjectSerializer.class);
-		addToCP(wsTempClasses, MarshallingStrategy.class);
-		addToCP(wsTempClasses, XPathMarshaller.class);
+		File wsTempClasses = copyLauncherResourcesToFilesys();
 		classpath.add(wsTempClasses.getAbsolutePath());
 		
 		VMRunnerConfiguration runConfig= new VMRunnerConfiguration(SmooksLauncher.class.getName(), classpath.toArray(new String[classpath.size()]));
@@ -152,48 +150,98 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		return runConfig;
 	}
 
-	private void addToCP(File wsTempClasses, Class<?> theClass) throws CoreException {
-		String className = theClass.getName().replace(".", "/") + ".class"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		URL classURI = getClass().getResource("/" + className); //$NON-NLS-1$
+	private File copyLauncherResourcesToFilesys() throws CoreException {
+		File wsRootDir = ResourcesPlugin.getWorkspace().getRoot().getRawLocation().toFile();
+		File wsTempClasses = new File(wsRootDir, "temp/launcher/classes"); //$NON-NLS-1$		
 		
-		if(classURI != null) {
+		writeClassToFilesys(SmooksLauncher.class, wsTempClasses);
+		writeClassToFilesys(SmooksInputType.class, wsTempClasses);
+		writeClassToFilesys(ProcessNodeType.class, wsTempClasses);
+		writeClassToFilesys(ObjectSerializer.class, wsTempClasses);
+		writeClassToFilesys(MarshallingStrategy.class, wsTempClasses);
+		writeClassToFilesys(XPathMarshaller.class, wsTempClasses);
+		
+		// Need to send the localized message strings to the launcher... 
+		Properties localizedMessages = new Properties();
+		localizedMessages.setProperty("SmooksLauncher_Error_Do_Not_Support_Java_Inputs", Messages.SmooksLauncher_Error_Do_Not_Support_Java_Inputs);		
+		localizedMessages.setProperty("SmooksLauncher_Error_Expected_Four_Args", Messages.SmooksLauncher_Error_Expected_Four_Args);		
+		localizedMessages.setProperty("SmooksLauncher_Java_Mapping_Results", Messages.SmooksLauncher_Java_Mapping_Results);		
+		localizedMessages.setProperty("SmooksLauncher_Templating_To_StreamResult", Messages.SmooksLauncher_Templating_To_StreamResult);
+		localizedMessages.setProperty("SmooksLauncher_Nothing_To_Display", Messages.SmooksLauncher_Nothing_To_Display);
+		
+		try {
+			FileOutputStream messagesOutStream = getFilesysOutStream(SmooksLauncher.LOCALIZED_FILE_NAME, SmooksLauncher.class, wsTempClasses);
 			try {
-				InputStream classStream = classURI.openStream();
+				localizedMessages.store(messagesOutStream, "Localized messages...");
+			} finally {
+				messagesOutStream.close();
+			}			
+		} catch (IOException e) {
+			new CoreException(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, Messages.SmooksLaunchConfigurationDelegate_Error_Copying_Smooks_Launcher, e));
+		}
+		
+		return wsTempClasses;
+	}
+
+	private void writeClassToFilesys(Class<?> theClass, File toDir) throws CoreException {
+		String className = theClass.getSimpleName() + ".class"; //$NON-NLS-1$
+		writeResourceToFilesys(className, theClass, toDir);
+	}
+
+	private void writeResourceToFilesys(String resource, Class<?> refClass, File toDir) {
+		String packagePath = refClass.getPackage().getName().replace(".", "/");
+		String resourcePath = "/" + packagePath + "/" + resource;
+		URL resourceURI = refClass.getResource(resourcePath);
+		
+		if(resourceURI != null) {
+			try {
+				InputStream resourceStream = resourceURI.openStream();
 				
-				if(classStream != null) {
+				if(resourceStream != null) {
 					try {
-						File classOutFile = new File(wsTempClasses, className);
-						File classPackage = classOutFile.getParentFile();
+						File resourceOutFile = new File(toDir, resourcePath);
+						File resourcePackage = resourceOutFile.getParentFile();
 						
-						classPackage.mkdirs();
-						if(classPackage.exists()) {
-							FileOutputStream classOutStream = new FileOutputStream(classOutFile);
+						resourcePackage.mkdirs();
+						if(resourcePackage.exists()) {
+							FileOutputStream resourceOutStream = new FileOutputStream(resourceOutFile);
 							
 							try {
 								byte[] readBuf = new byte[100];
 								int readCount = 0;
 								
 								while(readCount != -1) {
-									readCount = classStream.read(readBuf);
+									readCount = resourceStream.read(readBuf);
 									if(readCount != -1) {
-										classOutStream.write(readBuf, 0, readCount);
+										resourceOutStream.write(readBuf, 0, readCount);
 									}
 								}
 							} finally {
 								try {
-									classOutStream.flush();
+									resourceOutStream.flush();
 								} finally {									
-									classOutStream.close();
+									resourceOutStream.close();
 								}
 							}
 						}
 					} finally {
-						classStream.close();
+						resourceStream.close();
 					}
 				}
 			} catch (IOException e) {
 				new CoreException(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, Messages.SmooksLaunchConfigurationDelegate_Error_Copying_Smooks_Launcher, e));
 			}
 		}
+	}
+
+	private FileOutputStream getFilesysOutStream(String resource, Class<?> refClass, File toDir) throws FileNotFoundException {
+		String packagePath = refClass.getPackage().getName().replace(".", "/");
+		String resourcePath = "/" + packagePath + "/" + resource;
+		File resourceOutFile = new File(toDir, resourcePath);
+		File resourcePackage = resourceOutFile.getParentFile();
+		
+		resourcePackage.mkdirs();
+
+		return new FileOutputStream(resourceOutFile);
 	}
 }
