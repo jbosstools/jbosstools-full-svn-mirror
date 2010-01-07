@@ -75,7 +75,7 @@ public class TemplateWizardSelectionPage extends WizardSelectionPage {
 
 		initInputTypeCombo(combo);
 
-		GridData gd = new GridData(GridData.FILL_BOTH);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		combo.setLayoutData(gd);
 
 		Composite separatorComposite = new Composite(main, SWT.NONE);
