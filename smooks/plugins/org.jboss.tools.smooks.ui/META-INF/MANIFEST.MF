@@ -42,9 +42,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
-Bundle-ClassPath: libs/dom4j-1.6.1.jar,
- .,
- libs/xstream-1.2.2.jar
+Bundle-ClassPath: .
 Export-Package: org.jboss.tools.smooks.configuration,
  org.jboss.tools.smooks.configuration.editors,
  org.jboss.tools.smooks.configuration.editors.csv,
