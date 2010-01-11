@@ -83,6 +83,7 @@ public class SetupTemplateAction extends Action {
 		} else {
 			MessageBox message = new MessageBox(shell, SWT.ICON_WARNING | SWT.OK);
 			message.setMessage(VpeUIMessages.NAMESPACE_NOT_DEFINED);
+			message.setText("Warning"); //$NON-NLS-1$
 			message.open();
 		}
 		if (data != null && data.isChanged())
