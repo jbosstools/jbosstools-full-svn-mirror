@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
-import org.jboss.tools.smooks.gef.common.RootModel;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 
 /**
  * @author Dart
@@ -19,5 +19,5 @@ import org.jboss.tools.smooks.gef.common.RootModel;
 public interface IFreemarkerTemplateModel {
 	public boolean isRequired();
 	public boolean isManyOccurs();
-	public boolean isHidden(RootModel graphRoot);
+	public boolean isHidden(TemplateBuilder builder);
 }

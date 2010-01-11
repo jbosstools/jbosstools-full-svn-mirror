@@ -23,17 +23,18 @@ import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 
 /**
  * @author Dart
@@ -117,17 +118,15 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		Object m = gm.getData();
 		Object obj = getData();
 		AbstractSmooksGraphicalModel pm = gm;
-		while (pm != null && !(pm instanceof RootModel)) {
+		while (pm != null && !(pm instanceof FreemarkerTemplateGraphicalModel)) {
 			pm = pm.getParent();
 		}
 		obj = AdapterFactoryEditingDomain.unwrap(obj);
 		if (obj instanceof ValueType) {
-			if (m instanceof IFreemarkerTemplateModel) {
-
-				if (pm instanceof RootModel) {
-					if (((IFreemarkerTemplateModel) m).isHidden((RootModel) pm)) {
-						return false;
-					}
+			if (m instanceof IFreemarkerTemplateModel && pm instanceof FreemarkerTemplateGraphicalModel) {
+				TemplateBuilder builder = ((FreemarkerTemplateGraphicalModel) pm).getTemplateBuilder();
+				if (((IFreemarkerTemplateModel) m).isHidden(builder)) {
+					return false;
 				}
 
 				if (m instanceof FreemarkerTemplateXMLModel) {
@@ -156,21 +155,6 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 					}
 					pgm = pgm.getParent();
 				}
-
-				// if (m instanceof CSVNodeModel) {
-				// if (!((CSVNodeModel) m).isRecord()) {
-				// AbstractSmooksGraphicalModel parent = gm.getParent();
-				// if (parent instanceof FreemarkerCSVNodeGraphicalModel) {
-				// List<TreeNodeConnection> connections =
-				// parent.getTargetConnections();
-				// if (connections.isEmpty()) {
-				// return false;
-				// }
-				// }
-				// }else{
-				// return false;
-				// }
-				// }
 				return true;
 			}
 

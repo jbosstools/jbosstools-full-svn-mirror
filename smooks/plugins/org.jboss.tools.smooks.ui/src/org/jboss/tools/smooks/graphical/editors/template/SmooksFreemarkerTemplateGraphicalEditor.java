@@ -29,6 +29,7 @@ import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -92,9 +93,10 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 			Object data = abstractSmooksGraphicalModel.getData();
 			if (data instanceof IFreemarkerTemplateModel) {
 				AbstractSmooksGraphicalModel requiredCollectionLinkParent = parentIsRequriedCollectionNode(abstractSmooksGraphicalModel);
-				if(requiredCollectionLinkParent != null){
-					AbstractXMLObject parentNode = (AbstractXMLObject)requiredCollectionLinkParent.getData();
-					abstractSmooksGraphicalModel.addMessage("Its parent node '" + parentNode.getName() + "' should be connected first.");
+				if (requiredCollectionLinkParent != null) {
+					AbstractXMLObject parentNode = (AbstractXMLObject) requiredCollectionLinkParent.getData();
+					abstractSmooksGraphicalModel.addMessage("Its parent node '" + parentNode.getName()
+							+ "' should be connected first.");
 					abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
 				}
 				if (isRequiredNode(abstractSmooksGraphicalModel)) {
@@ -109,9 +111,9 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 			validateTemplateContentsModel(type, abstractSmooksGraphicalModel.getChildren());
 		}
 	}
-	
 
-	public static AbstractSmooksGraphicalModel parentIsRequriedCollectionNode(AbstractSmooksGraphicalModel abstractSmooksGraphicalModel) {
+	public static AbstractSmooksGraphicalModel parentIsRequriedCollectionNode(
+			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel) {
 		AbstractSmooksGraphicalModel parent = abstractSmooksGraphicalModel.getParent();
 		Object data = abstractSmooksGraphicalModel.getData();
 		if (data instanceof IFreemarkerTemplateModel) {
@@ -125,8 +127,14 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 
 	private boolean isRequiredNode(AbstractSmooksGraphicalModel abstractSmooksGraphicalModel) {
 		Object data = abstractSmooksGraphicalModel.getData();
-		if (data instanceof IFreemarkerTemplateModel) {
-			if (((IFreemarkerTemplateModel) data).isRequired() && !((IFreemarkerTemplateModel) data).isHidden(root)) {
+		AbstractSmooksGraphicalModel pm = abstractSmooksGraphicalModel;
+		while (pm != null && !(pm instanceof FreemarkerTemplateGraphicalModel)) {
+			pm = pm.getParent();
+		}
+
+		if (data instanceof IFreemarkerTemplateModel && pm instanceof FreemarkerTemplateGraphicalModel) {
+			TemplateBuilder builder = ((FreemarkerTemplateGraphicalModel) pm).getTemplateBuilder();
+			if (((IFreemarkerTemplateModel) data).isRequired() && !((IFreemarkerTemplateModel) data).isHidden(builder)) {
 				if (abstractSmooksGraphicalModel.getTargetConnections().isEmpty()) {
 					return true;
 				}

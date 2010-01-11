@@ -156,7 +156,6 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 	 * .Composite)
 	 */
 	public void createControl(Composite parent) {
-
 		Composite mainComposite = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 1;
@@ -195,6 +194,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		changeWizardPageStatus();
 		// don't show the error message when first open the dialog
 		this.setErrorMessage(null);
+		parent.getShell().setText("Select File");
 	}
 
 	protected void hookFileTextModifyListener() {

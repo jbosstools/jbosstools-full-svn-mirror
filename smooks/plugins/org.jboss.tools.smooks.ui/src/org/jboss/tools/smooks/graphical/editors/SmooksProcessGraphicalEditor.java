@@ -849,6 +849,14 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		}
 		return null;
 	}
+	
+	public Object getActiveEditorPage(){
+		if(pageBook != null){
+			Control control = pageBook.getCurrentPage();
+			return control.getData();
+		}
+		return null;
+	}
 
 	protected void showTaskControl(Object model) {
 		if (pageBook == null)

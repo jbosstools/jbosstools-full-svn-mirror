@@ -29,6 +29,7 @@ public class XSDListLabelProvider extends LabelProvider {
 		if (element instanceof XSDElementDeclaration) {
 			return ((XSDElementDeclaration) element).getAliasName();
 		}
+		if(element instanceof String) return (String)element;
 		return super.getText(element);
 	}
 

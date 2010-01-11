@@ -39,7 +39,15 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 	private String[] extensionNames = null;
 	
 	private boolean processFilePath = true;
+
 	
+
+	public FileSelectionWizard() {
+		super();
+		this.setWindowTitle("File Selection");
+	}
+
+
 
 	@Override
 	public void addPages() {
