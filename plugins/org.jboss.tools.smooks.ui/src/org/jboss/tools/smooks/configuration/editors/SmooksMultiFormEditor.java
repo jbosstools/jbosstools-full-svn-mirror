@@ -16,10 +16,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.gef.GraphicalViewer;
+import org.eclipse.gef.ui.parts.GraphicalEditor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
@@ -126,6 +129,17 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		if (adapter == IPropertySheetPage.class) {
 			tabbedPropertySheetPage = new TabbedPropertySheetPage(this);
 			return tabbedPropertySheetPage;
+		}
+		
+		if(adapter == GraphicalViewer.class){
+			if(this.processPage != null){
+				Object activeEditorPart = processPage.getActiveEditorPage();
+				if(activeEditorPart != null && activeEditorPart instanceof IEditorPart){
+					if(activeEditorPart instanceof GraphicalEditor){
+						return ((IEditorPart)activeEditorPart).getAdapter(adapter);
+					}
+				}
+			}
 		}
 		return super.getAdapter(adapter);
 	}

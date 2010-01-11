@@ -29,6 +29,7 @@ public class FileSelectionWizardPage extends AbstractFileSelectionWizardPage {
 		setTitle(Messages.FileSelectionWizardPage_PageTitle);
 		setDescription(Messages.FileSelectionWizardPage_PageDescription);
 		this.processFilePath = processFilePath;
+//		this.getShell().setText("Select Files");
 	}
 
 	/*

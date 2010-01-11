@@ -10,41 +10,72 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
-import org.jboss.tools.smooks.gef.common.RootModel;
+import org.jboss.tools.smooks.templating.template.Mapping;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Node;
 
 /**
  * @author Dart
- *
+ * 
  */
 public class FreemarkerAttrModel extends TagPropertyObject implements IFreemarkerTemplateModel {
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel#isManyOccurs()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.model.freemarker.
+	 * IFreemarkerTemplateModel#isManyOccurs()
 	 */
 	public boolean isManyOccurs() {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel#isRequired()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.model.freemarker.
+	 * IFreemarkerTemplateModel#isRequired()
 	 */
 	public boolean isRequired() {
 		Attr element = this.getReferenceAttibute();
 		if (element != null) {
 			String value = element.getValue();
-			if(value != null){
+			if (value != null) {
 				value = value.trim();
 			}
-			if(FreemarkerModelAnalyzer.REQUIRED.equals(value)){
+			if (FreemarkerModelAnalyzer.REQUIRED.equals(value)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public boolean isHidden(RootModel graphRoot) {
+	public boolean isHidden(TemplateBuilder builder) {
+		AbstractXMLObject parent = this.getParent();
+		if (parent instanceof FreemarkerTemplateXMLModel) {
+			if (((FreemarkerTemplateXMLModel) parent).isHidden(builder)) {
+				return true;
+			}
+		}
+		List<Mapping> mappings = builder.getMappings();
+		for (Iterator<?> iterator = mappings.iterator(); iterator.hasNext();) {
+			Mapping mapping = (Mapping) iterator.next();
+			List<Node> hiddenNodes = mapping.getHideNodes();
+			if (hiddenNodes != null) {
+				for (Iterator<?> iterator2 = hiddenNodes.iterator(); iterator2.hasNext();) {
+					Node node = (Node) iterator2.next();
+					if (node == this.getReferenceElement()) {
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 

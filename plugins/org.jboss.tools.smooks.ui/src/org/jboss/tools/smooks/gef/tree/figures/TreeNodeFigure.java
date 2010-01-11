@@ -204,6 +204,15 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 			// return super.getPreferredSize(hint, hint2);
 		}
 	}
+	
+	
+
+	/**
+	 * @return the clickNode
+	 */
+	public Figure getClickNode() {
+		return clickNode;
+	}
 
 	protected void createLabelContainer() {
 		labelContainer = new Figure() {

@@ -43,6 +43,13 @@ public class EDIDataWizard extends Wizard implements IStructuredDataSelectionWiz
 	private EditingDomain editingDomain;
 
 	private IContainer folder = null;
+	
+	
+
+	public EDIDataWizard() {
+		super();
+		this.setWindowTitle("EDI File Selection");
+	}
 
 	@Override
 	public void addPages() {

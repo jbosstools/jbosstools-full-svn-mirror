@@ -12,11 +12,15 @@ package org.jboss.tools.smooks.configuration.editors.xml;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -33,6 +37,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.xsd.XSDElementDeclaration;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.templating.model.ModelBuilderException;
+import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
 import org.xml.sax.SAXException;
 
 /**
@@ -40,6 +47,8 @@ import org.xml.sax.SAXException;
  * 
  */
 public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage {
+
+	private Throwable parsingError = null;
 
 	protected CheckboxTableViewer tableViewer = null;
 
@@ -85,12 +94,16 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		super.changeWizardPageStatus();
 		String errorMessage = this.getErrorMessage();
 		if (errorMessage == null) {
+			
 			if (reasourceLoaded) {
-				if(tableViewer.getCheckedElements() == null || tableViewer.getCheckedElements().length == 0){
+				if (tableViewer.getCheckedElements() == null || tableViewer.getCheckedElements().length == 0) {
 					errorMessage = Messages.XSDStructuredDataWizardPage_Error_Must_Select_Root;
 				}
 			} else {
 				errorMessage = Messages.XSDStructuredDataWizardPage_Error_Must_Click_Load;
+			}
+			if(parsingError != null){
+				errorMessage = parsingError.getLocalizedMessage();
 			}
 			setErrorMessage(errorMessage);
 			setPageComplete(errorMessage == null);
@@ -134,18 +147,22 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		final Text fileText = new Text(fileTextComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		fileText.setLayoutData(gd);
-		fileText.addModifyListener(new ModifyListener(){
+		fileText.addModifyListener(new ModifyListener() {
 
-			/* (non-Javadoc)
-			 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.
+			 * swt.events.ModifyEvent)
 			 */
 			public void modifyText(ModifyEvent e) {
 				reasourceLoaded = false;
-				if(tableViewer != null){
+				if (tableViewer != null) {
 					tableViewer.setInput(Collections.emptyList());
 				}
 			}
-			
+
 		});
 		gd.grabExcessHorizontalSpace = true;
 
@@ -156,17 +173,31 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				if(fileText.getText() == null || fileText.getText().length() == 0){
+				parsingError = null;
+				reasourceLoaded = false;
+				if (fileText.getText() == null || fileText.getText().length() == 0) {
 					changeWizardPageStatus();
 					return;
 				}
-				reasourceLoaded = false;
+				
+				List<String> list;
 				try {
-					List<?> list = loadElement(fileText.getText());
-					tableViewer.setInput(list);
-					reasourceLoaded = true;
-				} catch (Throwable e2) {
-					e2.printStackTrace();
+					list = loadElement(fileText.getText());
+					if (list == null || list.isEmpty()) {
+						setErrorMessage("Can't get the elements in the XSD file.");
+					} else {
+						tableViewer.setInput(list);
+						reasourceLoaded = true;
+					}
+				} catch (InvocationTargetException e1) {
+					parsingError = e1.getTargetException();
+					while(parsingError instanceof InvocationTargetException){
+						parsingError = ((InvocationTargetException)parsingError).getTargetException();
+					}
+				} catch (IOException e1) {
+					parsingError = e1;
+				} catch (ModelBuilderException e1) {
+					parsingError = e1;
 				}
 				changeWizardPageStatus();
 			}
@@ -175,20 +206,34 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		return fileText;
 	}
 
-	private List<XSDElementDeclaration> loadElement(String path) throws InvocationTargetException, IOException {
+	private List<String> loadElement(String path) throws InvocationTargetException, IOException, ModelBuilderException {
+		List<String> elements = new ArrayList<String>();
 		if (path == null)
 			return null;
 		String pp = path.toLowerCase();
 		if (pp.endsWith(".wsdl")) { //$NON-NLS-1$
 			try {
-				return WSDLObjectAnalyzer.loadAllElement(path);
+				List<XSDElementDeclaration> xsdDec = WSDLObjectAnalyzer.loadAllElement(path);
+				for (Iterator<?> iterator = xsdDec.iterator(); iterator.hasNext();) {
+					XSDElementDeclaration xsdElementDeclaration = (XSDElementDeclaration) iterator.next();
+					elements.add(xsdElementDeclaration.getAliasName());
+				}
 			} catch (ParserConfigurationException e) {
 				throw new InvocationTargetException(e);
 			} catch (SAXException e) {
 				throw new InvocationTargetException(e);
 			}
 		}
-		return XSDObjectAnalyzer.loadAllElement(path);
+		String file = null;
+		file = SmooksUIUtils.parseFilePath(path);
+		XSDModelBuilder xsdModelBuilder = new XSDModelBuilder(URI.createFileURI(file));
+		Set<String> elementNames = xsdModelBuilder.getRootElementNames();
+		Iterator<String> it = elementNames.iterator();
+		while (it.hasNext()) {
+			String name = it.next();
+			elements.add(name);
+		}
+		return elements;
 	}
 
 	public void createControl(Composite parent) {
@@ -222,7 +267,10 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 				tableViewer.setAllChecked(false);
 				if (event.getChecked()) {
 					tableViewer.setChecked(event.getElement(), true);
-					rootElementName = ((XSDElementDeclaration) event.getElement()).getAliasName();
+					Object checkElement = event.getElement();
+					if (checkElement instanceof String) {
+						rootElementName = (String) checkElement;
+					}
 				}
 				fireEvent = true;
 				changeWizardPageStatus();

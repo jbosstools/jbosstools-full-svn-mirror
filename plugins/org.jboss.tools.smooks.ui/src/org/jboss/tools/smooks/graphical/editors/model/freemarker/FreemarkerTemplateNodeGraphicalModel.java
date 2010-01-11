@@ -110,7 +110,6 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 	 */
 	@Override
 	public void addTargetConnection(TreeNodeConnection connection) {
-		super.addTargetConnection(connection);
 		TemplateBuilder builder = getTemplateBuilder();
 		Object obj = this.getData();
 		Node node = null;
@@ -123,7 +122,7 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 		if (builder == null || node == null)
 			return;
 		if (connection.getData() != null) {
-
+			// ignore
 		}
 		try {
 			if (isCollectionConnection(connection)) {
@@ -156,6 +155,7 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 				connection.setData(mapping);
 			}
 			changeFreemarkerContents();
+			super.addTargetConnection(connection);
 		} catch (InvalidMappingException e) {
 			e.printStackTrace();
 		}
@@ -239,7 +239,6 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 	 */
 	@Override
 	public void removeTargetConnection(TreeNodeConnection connection) {
-		super.removeTargetConnection(connection);
 		try {
 			TemplateBuilder builder = getTemplateBuilder();
 			Object mapping = connection.getData();
@@ -249,6 +248,7 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 				builder.removeMapping((Mapping) mapping);
 				changeFreemarkerContents();
 			}
+			super.removeTargetConnection(connection);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

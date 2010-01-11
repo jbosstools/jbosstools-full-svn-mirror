@@ -17,14 +17,12 @@ import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
-import org.jboss.tools.smooks.gef.common.RootModel;
-import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
-import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
+import org.jboss.tools.smooks.templating.template.Mapping;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * @author Dart
@@ -126,49 +124,73 @@ public class FreemarkerTemplateXMLModel extends TagObject implements IFreemarker
 		return false;
 	}
 
-	public boolean isHidden(RootModel graphRoot) {
-		Element refElement = this.getReferenceElement();
-		if (refElement != null) {
-			NamedNodeMap nodeMap = refElement.getAttributes();
-			for (int i = 0; i < nodeMap.getLength(); i++) {
-				Attr attr = (Attr) nodeMap.item(i);
-				if (attr != null) {
-					if (FreemarkerModelAnalyzer.SPECIAL_ELEMENT_UIR.equals(attr.getNamespaceURI())) {
-						String name = attr.getLocalName();
-						if (name == null) {
-							name = attr.getNodeName();
-						}
-						if (FreemarkerModelAnalyzer.HIDDEN.equals(name)) {
-							String value = attr.getValue();
-							try {
-								boolean booleanValue = Boolean.parseBoolean(value);
-								return booleanValue;
-							} catch (Exception e) {
-								return false;
-							}
-						}
-					}
-				}
+	public boolean isHidden(TemplateBuilder builder) {
+		AbstractXMLObject parent = this.getParent();
+		if (parent instanceof FreemarkerTemplateXMLModel) {
+			if (((FreemarkerTemplateXMLModel) parent).isHidden(builder)) {
+				return true;
 			}
-
-			if (graphRoot != null && FreemarkerModelAnalyzer.isChoiceElement(refElement)) {
-				Node parent = refElement.getParentNode();
-				NodeList nodeList = parent.getChildNodes();
-				for (int i = 0; i < nodeList.getLength(); i++) {
-					Node child = nodeList.item(i);
-					if (child == refElement)
-						continue;
-					FreemarkerTemplateXMLModel model = localBrotherModel(child);
-					if (model != null) {
-						AbstractSmooksGraphicalModel cgm = SmooksGraphUtil.findSmooksGraphModel(graphRoot, model);
-						if (!cgm.getTargetConnections().isEmpty()) {
-							return true;
-						}
+		}
+		List<Mapping> mappings = builder.getMappings();
+		for (Iterator<?> iterator = mappings.iterator(); iterator.hasNext();) {
+			Mapping mapping = (Mapping) iterator.next();
+			List<Node> hiddenNodes = mapping.getHideNodes();
+			if (hiddenNodes != null) {
+				for (Iterator<?> iterator2 = hiddenNodes.iterator(); iterator2.hasNext();) {
+					Node node = (Node) iterator2.next();
+					if (node == this.getReferenceElement()) {
+						return true;
 					}
 				}
 			}
 		}
 		return false;
+		// Element refElement = this.getReferenceElement();
+		// if (refElement != null) {
+		// NamedNodeMap nodeMap = refElement.getAttributes();
+		// for (int i = 0; i < nodeMap.getLength(); i++) {
+		// Attr attr = (Attr) nodeMap.item(i);
+		// if (attr != null) {
+		// if
+		// (FreemarkerModelAnalyzer.SPECIAL_ELEMENT_UIR.equals(attr.getNamespaceURI()))
+		// {
+		// String name = attr.getLocalName();
+		// if (name == null) {
+		// name = attr.getNodeName();
+		// }
+		// if (FreemarkerModelAnalyzer.HIDDEN.equals(name)) {
+		// String value = attr.getValue();
+		// try {
+		// boolean booleanValue = Boolean.parseBoolean(value);
+		// return booleanValue;
+		// } catch (Exception e) {
+		// return false;
+		// }
+		// }
+		// }
+		// }
+		// }
+		//
+		// if (graphRoot != null &&
+		// FreemarkerModelAnalyzer.isChoiceElement(refElement)) {
+		// Node parent = refElement.getParentNode();
+		// NodeList nodeList = parent.getChildNodes();
+		// for (int i = 0; i < nodeList.getLength(); i++) {
+		// Node child = nodeList.item(i);
+		// if (child == refElement)
+		// continue;
+		// FreemarkerTemplateXMLModel model = localBrotherModel(child);
+		// if (model != null) {
+		// AbstractSmooksGraphicalModel cgm =
+		// SmooksGraphUtil.findSmooksGraphModel(graphRoot, model);
+		// if (!cgm.getTargetConnections().isEmpty()) {
+		// return true;
+		// }
+		// }
+		// }
+		// }
+		// }
+		// return false;
 	}
 
 	private FreemarkerTemplateXMLModel localBrotherModel(Node refNode) {

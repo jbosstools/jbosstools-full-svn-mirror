@@ -10,17 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.editparts.freemarker;
 
+import java.beans.PropertyChangeEvent;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 
 /**
  * @author Dart
@@ -100,29 +106,63 @@ public class FreemarkerXMLNodeEditPart extends TreeNodeEditPart {
 		AbstractSmooksGraphicalModel model = (AbstractSmooksGraphicalModel) getModel();
 		TreeNodeFigure figure = (TreeNodeFigure) getFigure();
 		Object data = model.getData();
-		AbstractSmooksGraphicalModel parent = model;
-		while (parent != null && !(parent instanceof RootModel)) {
-			parent = parent.getParent();
-		}
 		if (oldFont != null && oldColor != null) {
 			figure.getLabel().setFont(oldFont);
 			figure.setNodeLabelForegroundColor(oldColor);
 		}
-		Object rmodel = parent;
 		super.refreshVisuals();
-		if (data instanceof IFreemarkerTemplateModel && rmodel instanceof RootModel) {
-			if (((IFreemarkerTemplateModel) data).isHidden((RootModel) rmodel)) {
+		if (data instanceof IFreemarkerTemplateModel ) {
+			AbstractSmooksGraphicalModel pm = (AbstractSmooksGraphicalModel) model;
+			while (pm != null && !(pm instanceof FreemarkerTemplateGraphicalModel)) {
+				pm = pm.getParent();
+			}
+			TemplateBuilder builder = ((FreemarkerTemplateGraphicalModel) pm).getTemplateBuilder();
+			if (((IFreemarkerTemplateModel) data).isHidden(builder)) {
 				if (oldFont == null) {
 					oldFont = figure.getLabel().getFont();
 				}
 				if (oldColor == null) {
 					oldColor = figure.getLabel().getForegroundColor();
 				}
-				figure.getLabel().setFont(getHiddenLabelFont());
+//				figure.getLabel().setFont(getHiddenLabelFont());
 				figure.setNodeLabelForegroundColor(ColorConstants.lightGray);
 				figure.getLabel().repaint();
 			}
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart#propertyChange
+	 * (java.beans.PropertyChangeEvent)
+	 */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
+		String proName = evt.getPropertyName();
+		if (TreeNodeModel.PRO_ADD_SOURCE_CONNECTION.equals(proName)
+				|| TreeNodeModel.PRO_ADD_TARGET_CONNECTION.equals(proName)
+				|| TreeNodeModel.PRO_REMOVE_SOURCE_CONNECTION.equals(proName)
+				|| TreeNodeModel.PRO_REMOVE_TARGET_CONNECTION.equals(proName)) {
+			AbstractSmooksGraphicalModel pm = (AbstractSmooksGraphicalModel) this.getModel();
+			while (pm != null && !(pm instanceof FreemarkerTemplateGraphicalModel)) {
+				pm = pm.getParent();
+			}
+			if (pm != null && pm instanceof FreemarkerTemplateGraphicalModel) {
+				List<AbstractSmooksGraphicalModel> children = pm.getChildrenWithoutDynamic();
+				refreshAllChildren(children);
+			}
+		}
+	}
+	
+	private void refreshAllChildren(List<AbstractSmooksGraphicalModel> children){
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator
+					.next();
+			abstractSmooksGraphicalModel.fireVisualChanged();
+			refreshAllChildren(abstractSmooksGraphicalModel.getChildrenWithoutDynamic());
+		}
+	}
 }
