@@ -29,7 +29,7 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.ConnectionModelFactoryImpl;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateNodeGraphicalModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
@@ -151,7 +151,7 @@ public class FreemarkerTemplateConnectionModelFactory extends ConnectionModelFac
 						}
 
 						if (sourceNode != null && targetNode != null) {
-							TreeNodeConnection connection = new CSVLinkConnection();
+							TreeNodeConnection connection = new FreemarkerTemplateConnection();
 							connection.setSourceNode(sourceNode);
 							connection.setTargetNode(targetNode);
 							connection.connectSource();

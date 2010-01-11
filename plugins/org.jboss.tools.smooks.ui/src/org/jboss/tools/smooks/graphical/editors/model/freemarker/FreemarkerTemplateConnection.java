@@ -16,6 +16,6 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
  * @author Dart
  *
  */
-public class CSVLinkConnection extends TreeNodeConnection {
+public class FreemarkerTemplateConnection extends TreeNodeConnection {
 
 }

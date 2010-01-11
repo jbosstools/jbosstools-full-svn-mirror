@@ -12,10 +12,10 @@ package org.jboss.tools.smooks.graphical.editors.template;
 
 import org.eclipse.gef.EditPart;
 import org.jboss.tools.smooks.graphical.editors.SmooksEditFactory;
-import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.CSVLinkConnectionEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerTemplateConnectionEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerCSVNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerXMLNodeEditPart;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerXMLNodeGraphicalModel;
 
@@ -33,8 +33,8 @@ public class FreemarkerTemplateEditFactory extends SmooksEditFactory {
 			editPart = new FreemarkerXMLNodeEditPart();
 		}
 
-		if (model instanceof CSVLinkConnection) {
-			editPart = new CSVLinkConnectionEditPart();
+		if (model instanceof FreemarkerTemplateConnection) {
+			editPart = new FreemarkerTemplateConnectionEditPart();
 		}
 
 		if (editPart == null) {

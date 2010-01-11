@@ -10,7 +10,7 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
 import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerXMLNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
@@ -45,7 +45,7 @@ public class CreateConnectionCommand extends Command {
 			}
 			
 			if(target instanceof FreemarkerXMLNodeGraphicalModel){
-				connection = new CSVLinkConnection();
+				connection = new FreemarkerTemplateConnection();
 				connection.setSourceNode(source);
 				connection.setTargetNode(target);
 			}

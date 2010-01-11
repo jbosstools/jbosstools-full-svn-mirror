@@ -22,9 +22,9 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerModel
  * @author Dart
  * 
  */
-public class CSVLinkConnectionEditPart extends TreeNodeConnectionEditPart {
+public class FreemarkerTemplateConnectionEditPart extends TreeNodeConnectionEditPart {
 
-	public CSVLinkConnectionEditPart() {
+	public FreemarkerTemplateConnectionEditPart() {
 		super();
 	}
 
