@@ -155,7 +155,7 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		IModule last = moduleTree[moduleTree.length-1];
 		Calendar cal = Calendar.getInstance();
 		StringBuffer lastSeg = new StringBuffer(formatString(cal.get(Calendar.YEAR)));
-		lastSeg.append(formatString(cal.get(Calendar.MONTH)));
+		lastSeg.append(formatString(cal.get(Calendar.MONTH) + 1));
 		lastSeg.append(formatString(cal.get(Calendar.DAY_OF_MONTH)));
 		lastSeg.append(formatString(cal.get(Calendar.HOUR_OF_DAY)));
 		lastSeg.append(formatString(cal.get(Calendar.MINUTE)));
