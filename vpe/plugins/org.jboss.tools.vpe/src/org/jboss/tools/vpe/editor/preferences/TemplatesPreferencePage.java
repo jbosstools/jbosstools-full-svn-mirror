@@ -232,6 +232,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 	
 	public void handleEvent(Event event) {
 		Widget source = event.widget;
+		int selectIndex = tagsTable.getSelectionIndex();
 		if (source == addButton) {
 			/*
 			 * Handle add event
@@ -250,18 +251,23 @@ public class TemplatesPreferencePage extends PreferencePage implements
 			/*
 			 * Handle edit event
 			 */
-			VpeAnyData data = (VpeAnyData) tagsList.get(tagsTable.getSelectionIndex());
-			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
-			editDialog.open();
-			if(data.isChanged()) {
-				tagListWasChanged = true;
+			if (selectIndex > -1) {
+				VpeAnyData data = (VpeAnyData) tagsList.get(selectIndex);
+				VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
+				editDialog.open();
+				if(data.isChanged()) {
+					tagListWasChanged = true;
+				}
 			}
 		} else if (source == removeButton) {
 			/*
 			 * Handle remove event
 			 */
-			tagsList.remove(tagsTable.getSelectionIndex());
-			tagListWasChanged = true;
+			if (selectIndex > -1) {
+				tagsTable.remove(selectIndex);
+				tagsList.remove(selectIndex);
+				tagListWasChanged = true;
+			}
 		} else {
 			/*
 			 * Handle default event
