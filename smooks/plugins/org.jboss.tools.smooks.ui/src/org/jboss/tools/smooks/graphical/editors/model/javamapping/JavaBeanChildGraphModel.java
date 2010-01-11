@@ -27,7 +27,7 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.IGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVLinkConnection;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel;
@@ -70,7 +70,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 			}
 		}
 		if (data instanceof org.jboss.tools.smooks.model.javabean12.ValueType
-				|| connectionType == CSVLinkConnection.class) {
+				|| connectionType == FreemarkerTemplateConnection.class) {
 			return true;
 		}
 		// if (connectionType == ValueBindingConnection.class) {
