@@ -202,6 +202,8 @@ public final class Messages extends NLS {
 	public static String BPELPasteAction_Paste_1;
 	public static String BPELPasteAction_Paste_2;
 	public static String BPELPasteAction_Paste_3;
+	public static String BPELPreferencePage_HomePage_Description;
+	public static String BPELPreferencePage_ExpressionEditorPage_Description;
 	public static String BPELPreferencePage_0;
 	public static String BPELPreferencePage_0TT;
 	public static String BPELPreferencePage_1;

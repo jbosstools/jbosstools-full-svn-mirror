@@ -4,6 +4,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.bpel.ui.BPELUIPlugin;
+import org.eclipse.bpel.ui.Messages;
 
 /**
  * This class represents a preference page that
@@ -26,7 +27,7 @@ public class BPELHomePreferencePage
 	public BPELHomePreferencePage() {
 		super(GRID);
 		setPreferenceStore(BPELUIPlugin.INSTANCE.getPreferenceStore());
-		//setDescription("A demonstration of a preference page implementation");
+		setDescription(Messages.BPELPreferencePage_HomePage_Description);
 	}
 	
 	/**
