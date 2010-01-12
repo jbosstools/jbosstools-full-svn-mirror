@@ -26,7 +26,7 @@ public class ExpressionEditorsPreferencePage
 	public ExpressionEditorsPreferencePage() {
 		super(GRID);
 		setPreferenceStore(BPELUIPlugin.INSTANCE.getPreferenceStore());
-		setDescription("Expand the tree to edit preferences for the Expression Editor.");
+		//setDescription("A demonstration of a preference page implementation");
 	}
 	
 	/**
