@@ -27,6 +27,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -595,6 +596,9 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
+		if(monitor == null){
+			monitor = new NullProgressMonitor();
+		}
 		try {
 			IEditorPart activeEditor = getActiveEditor();
 			if (this.smooksModel == null || (activeEditor != null && activeEditor == textEditor)) {
