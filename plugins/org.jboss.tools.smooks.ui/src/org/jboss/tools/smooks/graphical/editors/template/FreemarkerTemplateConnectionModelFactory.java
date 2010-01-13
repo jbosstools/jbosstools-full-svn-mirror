@@ -112,7 +112,7 @@ public class FreemarkerTemplateConnectionModelFactory extends ConnectionModelFac
 				freemarkerGraphModel = freemarkerGraphModel.getParent();
 			}
 
-			if (freemarkerGraphModel instanceof FreemarkerTemplateGraphicalModel) {
+			if (mappingList == null && freemarkerGraphModel instanceof FreemarkerTemplateGraphicalModel) {
 				fillMapping((FreemarkerTemplateGraphicalModel) freemarkerGraphModel);
 			}
 			AbstractSmooksGraphicalModel sourceNode = null;

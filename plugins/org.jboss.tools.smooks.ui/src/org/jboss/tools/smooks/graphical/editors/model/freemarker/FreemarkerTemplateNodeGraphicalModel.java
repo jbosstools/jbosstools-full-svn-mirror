@@ -148,9 +148,23 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 				connection.setData(mapping);
 			}
 			if (isMappingValueConnection(connection)) {
-				JavaBeanGraphModel collectionJavaBean = getCollectionRootBeanModel(connection.getSourceNode());
-				String mappingString = FreemarkerCSVContentGenerator.generateMappingString(connection.getSourceNode(),
-						collectionJavaBean);
+				AbstractSmooksGraphicalModel mappingSourceNode = connection.getSourceNode();
+				JavaBeanGraphModel collectionJavaBean = getCollectionRootBeanModel(mappingSourceNode);
+				String mappingString = null;
+				if (collectionJavaBean == null) {
+					// if there isn't collection bean , get the node's parent as
+					// the top level bean
+					AbstractSmooksGraphicalModel parentSourceNode = mappingSourceNode;
+					while (parentSourceNode != null && !(parentSourceNode instanceof JavaBeanGraphModel)) {
+						parentSourceNode = parentSourceNode.getParent();
+					}
+					collectionJavaBean = (JavaBeanGraphModel) parentSourceNode;
+					mappingString = FreemarkerCSVContentGenerator.generateFullJavaSourcePathString(mappingSourceNode,
+							collectionJavaBean);
+				} else {
+					mappingString = FreemarkerCSVContentGenerator.generateJavaSourcePathWithoutRootNode(
+							mappingSourceNode, collectionJavaBean);
+				}
 				Mapping mapping = builder.addValueMapping(mappingString, node);
 				connection.setData(mapping);
 			}
@@ -181,21 +195,30 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 					if (data != null && data instanceof EObject) {
 						if (SmooksUIUtils.isCollectionJavaGraphModel((EObject) data)) {
 							return (JavaBeanGraphModel) collectionJavaBean;
-							// check if it was linked with the "many" template node
-//							List<TreeNodeConnection> collectionLinks = collectionJavaBean.getSourceConnections();
-//							for (Iterator<?> iterator2 = collectionLinks.iterator(); iterator2.hasNext();) {
-//								TreeNodeConnection treeNodeConnection2 = (TreeNodeConnection) iterator2.next();
-//								AbstractSmooksGraphicalModel templateNode = treeNodeConnection2.getTargetNode();
-//								if(templateNode instanceof FreemarkerTemplateNodeGraphicalModel){
-//									Object templateData = ((FreemarkerTemplateNodeGraphicalModel)templateNode).getData();
-//									if(templateData instanceof IFreemarkerTemplateModel){
-//										if(((IFreemarkerTemplateModel)templateData).isManyOccurs()){
-//											return (JavaBeanGraphModel) collectionJavaBean;
-//										}
-//									}
-//								}
-//							}
-							
+							// check if it was linked with the "many" template
+							// node
+							// List<TreeNodeConnection> collectionLinks =
+							// collectionJavaBean.getSourceConnections();
+							// for (Iterator<?> iterator2 =
+							// collectionLinks.iterator(); iterator2.hasNext();)
+							// {
+							// TreeNodeConnection treeNodeConnection2 =
+							// (TreeNodeConnection) iterator2.next();
+							// AbstractSmooksGraphicalModel templateNode =
+							// treeNodeConnection2.getTargetNode();
+							// if(templateNode instanceof
+							// FreemarkerTemplateNodeGraphicalModel){
+							// Object templateData =
+							// ((FreemarkerTemplateNodeGraphicalModel)templateNode).getData();
+							// if(templateData instanceof
+							// IFreemarkerTemplateModel){
+							// if(((IFreemarkerTemplateModel)templateData).isManyOccurs()){
+							// return (JavaBeanGraphModel) collectionJavaBean;
+							// }
+							// }
+							// }
+							// }
+
 						}
 					}
 				}
