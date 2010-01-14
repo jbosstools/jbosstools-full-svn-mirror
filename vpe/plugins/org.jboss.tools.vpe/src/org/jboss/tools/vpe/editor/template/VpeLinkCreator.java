@@ -29,9 +29,6 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 	private boolean caseSensitive;
 	private VpeExpression hrefExpr;
 
-	private String hrefStr;
-
-
 	VpeLinkCreator(Element taglibElement, VpeDependencyMap dependencyMap, boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
 		build(taglibElement, dependencyMap);
@@ -41,7 +38,7 @@ public class VpeLinkCreator extends VpeAbstractCreator {
 		Attr hrefAttr = element.getAttributeNode(VpeTemplateManager.ATTR_LINK_HREF);
 		if (hrefAttr != null) {
 			try {
-				hrefStr = hrefAttr.getValue();
+				String hrefStr = hrefAttr.getValue();
 				VpeExpressionInfo info = VpeExpressionBuilder.buildCompletedExpression(hrefStr, caseSensitive);
 				hrefExpr = info.getExpression();
 				dependencyMap.setCreator(this, info.getDependencySet());

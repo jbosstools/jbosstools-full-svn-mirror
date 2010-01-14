@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -54,20 +55,49 @@ import org.jboss.tools.vpe.resref.core.RelativeFolderReferenceList;
 public class FileUtil {
 
 	private static final String JSF2_RESOURCES = "/resources/"; //$NON-NLS-1$
-    /**
-     * See JBIDE-2550
-     * @author mareshkau
-     * @param matcher
-     * @return
-     */
-    public static final String processJSF2Resource(VpePageContext pageContext, String resStr){
-    	String tempString = resStr;
-    	tempString=tempString.replaceAll(":", "/");  //$NON-NLS-1$//$NON-NLS-2$
-    	tempString = FileUtil.JSF2_RESOURCES+tempString;
+	/**
+	 * Returns the path to the resource {@code #{resource[resourceStr]}, where
+	 * {@code resourceStr} is in the form {@code 'library:name'}.
+	 *  
+	 * See JBIDE-2550
+	 * 
+	 * @author mareshkau
+	 * @author yradtsevich
+	 */
+    public static final String getJSF2ResourcePath(VpePageContext pageContext,
+    		String resourceStr) {
+		if (resourceStr.contains(":")) {					//$NON-NLS-1$
+				String[] parts = resourceStr.split(":");	//$NON-NLS-1$
+				return getJSF2ResourcePath(pageContext, parts[0], parts[1]);
+		} else {
+			return getJSF2ResourcePath(pageContext, null, resourceStr);
+		}
+    }
+
+	/**
+	 * Returns the path to the resource specified by the {@code library}
+	 * and the {@code name}.
+	 * 
+	 * See JBIDE-5638
+	 *
+	 * @param library may be {@code null}
+	 * 
+	 * @author mareshkau
+	 * @author yradtsevich
+	 * 
+	 * @see <a href="http://java.sun.com/javaee/javaserverfaces/2.0/docs/api/javax/faces/application/ResourceHandler.html">javax.faces.application.ResourceHandler</a>
+	 */
+    public static final String getJSF2ResourcePath(VpePageContext pageContext,
+    		String library, String name) {
+    	String tempString = library == null ? name 
+    										: library + '/' + name;
+
+    	tempString = FileUtil.JSF2_RESOURCES + tempString;
     	String result = ""; //$NON-NLS-1$
     	// if file not accessible and try to search in jar files
     	if(VpeCreatorUtil.getFile(tempString, pageContext)==null) {
-    		String tempEntryPath =seachResourceInClassPath(pageContext, "META-INF"+tempString); //$NON-NLS-1$
+    		String tempEntryPath =seachResourceInClassPath(pageContext,
+    				"META-INF" + tempString); //$NON-NLS-1$
     		if(tempEntryPath!=null) {
     			result = tempEntryPath;
     		}
@@ -75,7 +105,7 @@ public class FileUtil {
     		result = tempString;
     	}
     	return result;
-    }
+	}
 
     public static boolean isExistsInJSF2Resources(VpePageContext pageContext, String resStr) {
     	String resourceString = resStr;

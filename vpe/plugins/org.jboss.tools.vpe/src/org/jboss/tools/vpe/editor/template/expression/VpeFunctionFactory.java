@@ -16,6 +16,7 @@ import org.jboss.tools.vpe.VpePlugin;
 
 public class VpeFunctionFactory {
 	private static final String FUNC_JSF_VALUE = "jsfvalue";//$NON-NLS-1$
+	private static final String FUNC_JSF2_RESOURCE = "jsf2resource";//$NON-NLS-1$
 	private static final String FUNC_NAME = "name";//$NON-NLS-1$
 	private static final String FUNC_NOT = "not";//$NON-NLS-1$
 	private static final String FUNC_IIF = "iif";//$NON-NLS-1$
@@ -55,6 +56,8 @@ public class VpeFunctionFactory {
 	private static Class<?> createCls(String name) {
 		if (FUNC_JSF_VALUE.equals(name)) {
 			return VpeFunctionJsfValue.class;
+		} else if (FUNC_JSF2_RESOURCE.equals(name)) {
+			return VpeFunctionJsf2Resource.class;
 		} else if (FUNC_NAME.equals(name)) {
 			return VpeFunctionName.class;
 		} else if (FUNC_NOT.equals(name)) {

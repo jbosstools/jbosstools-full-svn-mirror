@@ -71,9 +71,9 @@ public class Jsf2ResourceUtil {
         Matcher singleCoatMatcher = resourcePatternWithSinglCoat.matcher(value);
         Matcher doubleCoatMatcher = resourcePatternWithDoableCoat.matcher(value);
         if(doubleCoatMatcher.find()) {
-      	  result = FileUtil.processJSF2Resource(pageContext, doubleCoatMatcher.group(1));      	  
+      	  result = FileUtil.getJSF2ResourcePath(pageContext, doubleCoatMatcher.group(1));      	  
         }else if(singleCoatMatcher.find()){
-          result = FileUtil.processJSF2Resource(pageContext, singleCoatMatcher.group(1));
+          result = FileUtil.getJSF2ResourcePath(pageContext, singleCoatMatcher.group(1));
         }
 
         return result;

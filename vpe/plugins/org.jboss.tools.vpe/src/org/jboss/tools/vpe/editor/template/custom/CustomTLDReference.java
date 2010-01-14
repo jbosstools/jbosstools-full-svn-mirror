@@ -160,7 +160,7 @@ public class CustomTLDReference {
 					jsfComponentExtension = fileExtension;
 				}
 				jsfComponentResourcePath=jsfComponentResourcePath+'/'+sourceNodeName+jsfComponentExtension;
-				String fullResourcePath = FileUtil.processJSF2Resource(pageContext, jsfComponentResourcePath);
+				String fullResourcePath = FileUtil.getJSF2ResourcePath(pageContext, jsfComponentResourcePath);
 				result = FileUtil.getFile(pageContext.getEditPart().getEditorInput(), fullResourcePath); 
 				if(result!=null) {
 					return result;
