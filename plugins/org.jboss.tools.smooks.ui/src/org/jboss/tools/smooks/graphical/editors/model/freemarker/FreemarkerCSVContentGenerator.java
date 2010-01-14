@@ -80,6 +80,7 @@ public class FreemarkerCSVContentGenerator {
 
 		char sperator = SmooksModelUtils.getFreemarkerCSVSeperator((Freemarker) freemarker);
 		char quote = SmooksModelUtils.getFreemarkerCSVQuote((Freemarker) freemarker);
+		boolean includeFieldNames = SmooksModelUtils.getFreemarkerCSVIncludeFieldNames((Freemarker) freemarker);
 
 		List<AbstractSmooksGraphicalModel> childrenGraphModel = csvRecordGraphicalModel.getChildren();
 		List<String> fieldsName = new ArrayList<String>();
@@ -96,7 +97,7 @@ public class FreemarkerCSVContentGenerator {
 		CSVFreeMarkerTemplateBuilder builder;
 		Document model;
 
-		builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, sperator, quote);
+		builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, sperator, quote, includeFieldNames);
 		model = builder.getModel();
 
 		List<TreeNodeConnection> connections = csvRecordGraphicalModel.getTargetConnections();

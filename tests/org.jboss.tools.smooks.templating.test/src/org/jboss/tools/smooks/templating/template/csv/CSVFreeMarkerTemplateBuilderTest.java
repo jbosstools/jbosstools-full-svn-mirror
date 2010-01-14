@@ -37,7 +37,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
 
     public void test_all_fields_mapped_01() throws TemplateBuilderException, IOException, ModelBuilderException {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
-        CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"');
+        CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', false);
 
         //System.out.println(XmlUtil.serialize(model, true));
         
@@ -53,10 +53,39 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
                 "</#list>",
                 template);
 
-        CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', template);
+        CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', false, template);
         template = builder2.buildTemplate();
-        System.out.println(template);
+        //System.out.println(template);
         assertEquals("<#list people as person>\n" +
+                "\"${person.fname?string}\",\"${person.lname?string}\",\"${person.address.country?string}\"\n" +
+                "</#list>",
+                template);
+    }
+
+    public void test_all_fields_mapped_01_includingFieldNames() throws TemplateBuilderException, IOException, ModelBuilderException {
+        CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
+        CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', true);
+
+        //System.out.println(XmlUtil.serialize(model, true));
+        
+        builder1.addCollectionMapping("people", getRecordElement(builder1.getModel()), "person");
+        builder1.addValueMapping("person.fname", getFieldElement(builder1.getModel(), "firstname"));
+        builder1.addValueMapping("person.lname", getFieldElement(builder1.getModel(), "lastname"));
+        builder1.addValueMapping("person.address.country", getFieldElement(builder1.getModel(), "country"));
+
+        String template = builder1.buildTemplate();
+        //System.out.println(template);
+        assertEquals("\"firstname\",\"lastname\",\"country\"\n" +
+        		"<#list people as person>\n" +
+                "\"${person.fname?string}\",\"${person.lname?string}\",\"${person.address.country?string}\"\n" +
+                "</#list>",
+                template);
+
+        CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', true, template);
+        template = builder2.buildTemplate();
+        //System.out.println(template);
+        assertEquals("\"firstname\",\"lastname\",\"country\"\n" +
+        		"<#list people as person>\n" +
                 "\"${person.fname?string}\",\"${person.lname?string}\",\"${person.address.country?string}\"\n" +
                 "</#list>",
                 template);
@@ -68,7 +97,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
      */
     public void test_all_fields_mapped_02() throws TemplateBuilderException, IOException, ModelBuilderException {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
-        CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, '|', '\'');
+        CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, '|', '\'', false);
 
         builder1.addCollectionMapping("people", getRecordElement(builder1.getModel()), "person");
         builder1.addValueMapping("person.fname", getFieldElement(builder1.getModel(), "firstname"));
@@ -82,7 +111,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
                 "</#list>",
                 template);
 
-        CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(modelBuilder, '|', '\'', template);
+        CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(modelBuilder, '|', '\'', false, template);
         template = builder2.buildTemplate();
         //System.out.println(template);
         assertEquals("<#list people as person>\n" +
@@ -95,7 +124,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder;
 
-        builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"');
+        builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', false);
         
         builder.addCollectionMapping("people", getRecordElement(builder.getModel()), "person");
         builder.addValueMapping("person.fname", getFieldElement(builder.getModel(), "firstname"));
@@ -108,7 +137,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
                 "</#list>",
                 template);
 
-        CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', template);
+        CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', false, template);
         template = builder2.buildTemplate();
         //System.out.println(template);
         assertEquals("<#list people as person>\n" +
@@ -117,7 +146,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
                 template);
 
         try {
-        	new CSVFreeMarkerTemplateBuilder(modelBuilder, ';', '\"', template);
+        	new CSVFreeMarkerTemplateBuilder(modelBuilder, ';', '\"', false, template);
         	fail("Expected TemplateBuilderException");
         } catch(TemplateBuilderException e) {
         	assertEquals("CSV Template fieldset size does not match that of the specified message model.  Check the supplied fieldset.  Check the specified 'separator' and 'quote' characters match those used in the template.", e.getMessage());
@@ -128,7 +157,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder;
 
-        builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"');
+        builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', false);
 
         try {
             // Shouldn't be able to add a value binding where the model target is inside
@@ -144,7 +173,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder;
 
-        builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"');
+        builder = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', false);
 
         try {
             // For CSV, you need to have at least mapped the collection...

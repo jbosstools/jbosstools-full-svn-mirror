@@ -50,6 +50,8 @@ public class SmooksModelUtils {
 
 	public static final String KEY_CSV_FIELDS = "csvFields"; //$NON-NLS-1$
 
+	public static final String KEY_INCLUDE_FIELD_NAMES = "includeFieldNames"; //$NON-NLS-1$
+
 	public static final String KEY_TASK_ID_REF = "idref"; //$NON-NLS-1$
 
 	public static final String KEY_OBJECT_ID = "id"; //$NON-NLS-1$
@@ -609,6 +611,18 @@ public class SmooksModelUtils {
 			}
 		}
 		return 0;
+	}
+
+	public static boolean getFreemarkerCSVIncludeFieldNames(Freemarker freemarker) {
+		org.jboss.tools.smooks.model.smooks.ParamType typeParam = getParam(freemarker.getParam(), KEY_INCLUDE_FIELD_NAMES);
+		if (typeParam != null) {
+			String value = typeParam.getStringValue();
+			if (value != null) {
+				return value.equals("true");
+			}
+		}
+		
+		return false;
 	}
 
 	public static String getFreemarkerXMLFileType(Freemarker freemarker) {

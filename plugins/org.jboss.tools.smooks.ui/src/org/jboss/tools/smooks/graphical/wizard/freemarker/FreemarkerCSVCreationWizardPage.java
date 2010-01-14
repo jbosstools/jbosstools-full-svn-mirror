@@ -23,6 +23,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -37,8 +38,7 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 	private Text seperatorText;
 	private Text quoteText;
 	private Text fieldsText;
-
-	
+	private Button includeFieldNames;	
 
 	public FreemarkerCSVCreationWizardPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
@@ -79,6 +79,10 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 		return quoteText;
 	}
 
+	public Button getIncludeFieldNames() {
+		return includeFieldNames;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -96,26 +100,32 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 		layout.numColumns = 2;
 		mainComposite.setLayout(layout);
 
-		Label seperatorLabel = new Label(mainComposite, SWT.NONE);
-		seperatorLabel.setText(Messages.FreemarkerCSVCreationWizardPage_SeperatorCharLabel);
-		seperatorText = new Text(mainComposite, SWT.BORDER);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		seperatorText.setLayoutData(gd);
-		seperatorText.setTextLimit(1);
-
-		Label quoteLabel = new Label(mainComposite, SWT.NONE);
-		quoteLabel.setText(Messages.FreemarkerCSVCreationWizardPage_QuoteCharLabel);
-		quoteText = new Text(mainComposite, SWT.BORDER);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		quoteText.setLayoutData(gd);
-		quoteText.setTextLimit(1);
-
 		Label filedsLabel = new Label(mainComposite, SWT.NONE);
 		filedsLabel.setText(Messages.FreemarkerCSVCreationWizardPage_FieldsGroupText);
 		fieldsText = new Text(mainComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		fieldsText.setLayoutData(gd);
 
+		Label seperatorLabel = new Label(mainComposite, SWT.NONE);
+		seperatorLabel.setText(Messages.FreemarkerCSVCreationWizardPage_SeperatorCharLabel);
+		seperatorText = new Text(mainComposite, SWT.BORDER);
+		gd = new GridData(GridData.BEGINNING);
+		seperatorText.setLayoutData(gd);
+		seperatorText.setTextLimit(1);
+
+		Label quoteLabel = new Label(mainComposite, SWT.NONE);
+		quoteLabel.setText(Messages.FreemarkerCSVCreationWizardPage_QuoteCharLabel);
+		quoteText = new Text(mainComposite, SWT.BORDER);
+		gd = new GridData(GridData.BEGINNING);
+		quoteText.setLayoutData(gd);
+		quoteText.setTextLimit(1);
+		
+		Label includeFieldNamesLabel = new Label(mainComposite, SWT.NONE);
+		includeFieldNamesLabel.setText(Messages.FreemarkerCSVCreationWizardPage_IncludeFieldNamesLabel);
+		includeFieldNames = new Button(mainComposite, SWT.CHECK | SWT.CENTER | SWT.BORDER); 
+		gd = new GridData(GridData.BEGINNING);
+		includeFieldNames.setLayoutData(gd);
+		
 		// gd = new GridData(GridData.FILL_HORIZONTAL);
 		// gd.heightHint = 200;
 		// gd.horizontalSpan = 2;
@@ -271,7 +281,7 @@ public class FreemarkerCSVCreationWizardPage extends WizardPage {
 				updatePage();
 			}
 		});
-
+		
 		this.setPageComplete(false);
 	}
 

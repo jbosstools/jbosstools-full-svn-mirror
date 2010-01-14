@@ -11,6 +11,7 @@ public class Messages extends NLS {
 /*	public static String FreemarkerCSVCreationWizardPage_FieldEmptyErrorMessage; */
 	public static String FreemarkerCSVCreationWizardPage_FieldsGroupText;
 	public static String FreemarkerCSVCreationWizardPage_QuoteCharLabel;
+	public static String FreemarkerCSVCreationWizardPage_IncludeFieldNamesLabel;
 	public static String FreemarkerCSVCreationWizardPage_QuoteEmptyErrorMessage;
 /*	public static String FreemarkerCSVCreationWizardPage_RemoveFieldButtonLabel; */
 	public static String FreemarkerCSVCreationWizardPage_SeperatorCharLabel;

@@ -57,6 +57,7 @@ public class FreemarkerCSVTemplateCreationWizard extends AbstractFreemarkerTempl
 			this.addParamter(SmooksModelUtils.KEY_CSV_QUOTE, quote);
 			this.addParamter(SmooksModelUtils.KEY_CSV_SEPERATOR, seprator);
 			this.addParamter(SmooksModelUtils.KEY_CSV_FIELDS, fieldsString);
+			this.addParamter(SmooksModelUtils.KEY_INCLUDE_FIELD_NAMES, Boolean.toString(page.getIncludeFieldNames().getSelection()));
 //			List<FieldText> fieldList = page.getFieldsList();
 //			for (Iterator<?> iterator = fieldList.iterator(); iterator.hasNext();) {
 //				FieldText fieldText = (FieldText) iterator.next();

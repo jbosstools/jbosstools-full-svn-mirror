@@ -32,6 +32,7 @@ import org.jboss.tools.smooks.templating.template.*;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
 import org.jboss.tools.smooks.templating.template.exception.UnmappedCollectionNodeException;
 import org.jboss.tools.smooks.templating.template.util.FreeMarkerUtil;
+import org.milyn.xml.DomUtils;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -47,19 +48,22 @@ import freemarker.template.Template;
 public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
 
     private char separatorChar;
-    private char quoteChar;    
+    private char quoteChar;
+	private boolean includeFieldNames;    
 
     /**
      * Construct a new FreeMarker Template Builder with no mappings.
      * @param model The model.
      * @param separatorChar The CSV field separator character.
      * @param quoteChar The CSV field quote character.
+     * @param includeFieldNames True if field names are to be added at the start of the generated message, otherwise false.
      * @throws ModelBuilderException Error building model.
      */
-    public CSVFreeMarkerTemplateBuilder(ModelBuilder modelBuilder, char separatorChar, char quoteChar) throws ModelBuilderException {
+    public CSVFreeMarkerTemplateBuilder(ModelBuilder modelBuilder, char separatorChar, char quoteChar, boolean includeFieldNames) throws ModelBuilderException {
         super(modelBuilder);
         this.separatorChar = separatorChar;
         this.quoteChar = quoteChar;
+        this.includeFieldNames = includeFieldNames;
     }
 
     /**
@@ -68,12 +72,13 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
      * @param model The model.
      * @param separatorChar The CSV field separator character.
      * @param quoteChar The CSV field quote character.
+     * @param includeFieldNames True if field names are to be added at the start of the generated message, otherwise false.
      * @param ftlTemplate The FreeMarker Template from which the mappings are to be extracted.
      * @throws ModelBuilderException Error building model.
      * @throws TemplateBuilderException Error adding mappings extracted from template. 
      */
-    public CSVFreeMarkerTemplateBuilder(ModelBuilder modelBuilder, char separatorChar, char quoteChar, String ftlTemplate) throws ModelBuilderException, TemplateBuilderException {
-        this(modelBuilder, separatorChar, quoteChar);
+    public CSVFreeMarkerTemplateBuilder(ModelBuilder modelBuilder, char separatorChar, char quoteChar, boolean includeFieldNames, String ftlTemplate) throws ModelBuilderException, TemplateBuilderException {
+        this(modelBuilder, separatorChar, quoteChar, includeFieldNames);
         addMappings(ftlTemplate);
     }
 
@@ -86,17 +91,40 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
 			throw new TemplateBuilderException ("Failed to parse the Supplied FreeMarker template.", e); //$NON-NLS-1$
 		}
 
-		TemplateElement listElement = template.getRootTreeNode();
-		if(!listElement.getNodeName().equals("IteratorBlock") || !listElement.getDescription().startsWith("list")) { //$NON-NLS-1$
-			throw new TemplateBuilderException ("Unable to recognize template as being a CSV template.  Expecting first template token to be a 'list' IteratorBlock node."); //$NON-NLS-1$
+		TemplateElement listNode = findListNode(template.getRootTreeNode());
+		if(listNode == null) { //$NON-NLS-1$
+			throw new TemplateBuilderException ("Unable to recognize template as being a CSV template"); //$NON-NLS-1$
 		}
 		
 		// Add the mapping for the list itself...
-		addCSVListMapping(listElement.getDescription());
+		addCSVListMapping(listNode.getDescription());
 		
 		// Add the mappings for the individual fields...
-		addCSVFieldMappings(listElement);
+		addCSVFieldMappings(listNode);
     }
+
+	private TemplateElement findListNode(TemplateElement templateNode) throws TemplateBuilderException {
+		if(templateNode.getNodeName().equals("IteratorBlock")) {
+			String description = templateNode.getDescription();
+			if(!description.startsWith("list")) { //$NON-NLS-1$
+				throw new TemplateBuilderException ("Unsupported CSV template IteratorBlock type '" + description + "'.  Currently only support 'list' IteratorBlock nodes."); //$NON-NLS-1$
+			}
+			return templateNode;
+		} else {
+			Enumeration<TemplateElement> children = templateNode.children();
+			
+			if(children != null && children.hasMoreElements()) {
+				while(children.hasMoreElements()) {
+					TemplateElement listNode = findListNode(children.nextElement());
+					if(listNode != null) {
+						return listNode;
+					}
+				}				
+			}
+		}
+		
+		return null;
+	}
 
 	private void addCSVListMapping(String description) throws TemplateBuilderException {
 		String[] tokens = description.split(" +?"); //$NON-NLS-1$
@@ -149,9 +177,27 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
         } else {
             StringBuilder template = new StringBuilder();
             NodeList nodeList = recordElement.getChildNodes();
-            int fieldIndex = 0;
+            
+            if(includeFieldNames) {
+                int fieldIndex = 0;
+                for(int i = 0; i < nodeList.getLength(); i++) {
+                    Node node = nodeList.item(i);
+                    if(node.getNodeType() == Node.ELEMENT_NODE) {
+                        if(fieldIndex > 0) {
+                            template.append(separatorChar);
+                        }
+                        template.append(quoteChar);
+                        template.append(DomUtils.getName((Element) node));
+                        template.append(quoteChar);
+
+                        fieldIndex++;
+                    }
+                }
+                template.append('\n');
+            }
 
             template.append("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$
+            int fieldIndex = 0;
             for(int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
