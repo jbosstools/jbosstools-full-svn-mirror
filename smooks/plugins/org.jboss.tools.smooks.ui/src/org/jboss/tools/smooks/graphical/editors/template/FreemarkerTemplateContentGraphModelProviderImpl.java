@@ -131,10 +131,12 @@ public class FreemarkerTemplateContentGraphModelProviderImpl implements IFreemar
 				try {
 					builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, SmooksModelUtils
 							.getFreemarkerCSVSeperator(freemarker), SmooksModelUtils.getFreemarkerCSVQuote(freemarker),
+							SmooksModelUtils.getFreemarkerCSVIncludeFieldNames(freemarker),							
 							contents);
 				} catch (Exception e) {
 					builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, SmooksModelUtils
-							.getFreemarkerCSVSeperator(freemarker), SmooksModelUtils.getFreemarkerCSVQuote(freemarker));
+							.getFreemarkerCSVSeperator(freemarker), SmooksModelUtils.getFreemarkerCSVQuote(freemarker),
+							SmooksModelUtils.getFreemarkerCSVIncludeFieldNames(freemarker));
 				}
 				templateBuilder = builder1;
 			}

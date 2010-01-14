@@ -79,7 +79,7 @@ public class SmooksLauncher {
 					StringResult stringResult = new StringResult();
 					
 					smooks.filterSource(new StreamSource(new FileInputStream(input)), stringResult, javaResult);
-					System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Templating_To_StreamResult") + " ...]\n"); //$NON-NLS-1$
+					System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Templating_To_StreamResult") + " ...]"); //$NON-NLS-1$
 					System.out.println("    |--"); //$NON-NLS-1$
 					System.out.println(indent(stringResult.toString()));
 					System.out.println("    |--\n"); //$NON-NLS-1$
