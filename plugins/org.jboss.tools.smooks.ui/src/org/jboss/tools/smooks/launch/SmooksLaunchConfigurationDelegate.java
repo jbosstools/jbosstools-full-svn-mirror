@@ -22,12 +22,11 @@ package org.jboss.tools.smooks.launch;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,14 +47,12 @@ import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.smooks.configuration.ProcessNodeType;
 import org.jboss.tools.smooks.configuration.RuntimeDependency;
 import org.jboss.tools.smooks.configuration.RuntimeMetadata;
-import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.core.SmooksInputType;
 import org.jboss.tools.smooks.launch.serialize.MarshallingStrategy;
 import org.jboss.tools.smooks.launch.serialize.ObjectSerializer;
@@ -77,6 +74,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		IJavaProject javaProject = getJavaProject(launchConfig);
 		IProject project = javaProject.getProject();
 		final String smooksConfigName = launchConfig.getAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, ""); //$NON-NLS-1$
+		String[] baseClasspath = getClasspath(launchConfig);
 		final RuntimeMetadata launchMetadata = new RuntimeMetadata();
 
 		launchMetadata.setSmooksConfig(project.findMember(smooksConfigName));
@@ -86,7 +84,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 			return;
 		} else {
 			List<RuntimeDependency> dependencies = launchMetadata.getDependencies();
-			ProjectClassLoader projectClassLoader = new ProjectClassLoader(javaProject);
+			URLClassLoader projectClassLoader = toURLClassLoader(baseClasspath);
 			
 			for(RuntimeDependency dependency : dependencies) {
 				if(!dependency.isOnProjectClasspath(projectClassLoader)) {
@@ -97,7 +95,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		}
 
 		IVMRunner runner= getVMRunner(launchConfig, mode);		
-		VMRunnerConfiguration runConfig = buildRunnerConfig(launchConfig);
+		VMRunnerConfiguration runConfig = buildRunnerConfig(launchConfig, baseClasspath);
 		
 		// check for cancellation
 		if (monitor.isCanceled()) {
@@ -123,8 +121,8 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		});
 	}
 
-	private VMRunnerConfiguration buildRunnerConfig(ILaunchConfiguration launchConfig) throws CoreException {
-		List<String> classpath = new ArrayList<String>(Arrays.asList(getClasspath(launchConfig)));
+	private VMRunnerConfiguration buildRunnerConfig(ILaunchConfiguration launchConfig, String[] baseClasspath) throws CoreException {
+		List<String> classpath = new ArrayList<String>(Arrays.asList(baseClasspath));
 
 		// We need to add the SmooksLauncher to the launch classpath because it will not be part of the projects
 		// classpath.  Bit of a hack... there's probably a nicer way of doing this!!!
@@ -243,5 +241,20 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		resourcePackage.mkdirs();
 
 		return new FileOutputStream(resourceOutFile);
+	}
+
+	private URLClassLoader toURLClassLoader(String[]  baseClasspath) {
+		URL[] classPathURLs = new URL[baseClasspath.length];
+		
+		for(int i = 0; i < baseClasspath.length; i++) {
+			try {
+				File cpEntry = new File(baseClasspath[i]);				
+				classPathURLs[i] = cpEntry.toURL();
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return new URLClassLoader(classPathURLs);
 	}
 }
