@@ -70,7 +70,7 @@ public class BundleMap {
 	private BundleEntry[] bundles = new BundleEntry[0];
     private Map<String,UsedKey> usedKeys = new HashMap<String,UsedKey>();
     
-    boolean isShowBundleUsageAsEL = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+    boolean showBundleUsageAsEL = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 			IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL); 
 
 	XModelTreeListener modelListener = new ML();
@@ -141,7 +141,7 @@ public class BundleMap {
 	}	
 
 	public boolean isShowBundleUsageAsEL() {
-		return isShowBundleUsageAsEL;
+		return showBundleUsageAsEL;
 	}
 
 	private static final String[] JSF_PROJECT_NATURES = {
@@ -398,7 +398,7 @@ public class BundleMap {
 	}
 	
 	public String getBundleValue(String name){
-		if(isShowBundleUsageAsEL) {
+		if(showBundleUsageAsEL) {
 			return name;
 		}
 		List<ELInstance> is = parseJSFExpression(name);
@@ -506,8 +506,8 @@ public class BundleMap {
 	}
 	
 	public void updateShowBundleUsageAsEL(boolean showBundlesAsEL) {
-		if(isShowBundleUsageAsEL != showBundlesAsEL) {
-			isShowBundleUsageAsEL = showBundlesAsEL;
+		if(showBundleUsageAsEL != showBundlesAsEL) {
+			showBundleUsageAsEL = showBundlesAsEL;
 			refresh();
 		}	
 	}
@@ -572,6 +572,13 @@ public class BundleMap {
 		public void structureChanged(XModelTreeEvent event) {
 		}
 		
+	}
+
+	/**
+	 * @param showBundleUsageAsEL the showBundleUsageAsEL to set
+	 */
+	public void setShowBundleUsageAsEL(boolean showBundleUsageAsEL) {
+		this.showBundleUsageAsEL = showBundleUsageAsEL;
 	}
 
 }

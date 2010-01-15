@@ -120,6 +120,10 @@ public class MozillaPreview extends MozillaEditor {
 	public void buildDom() {
 		BundleMap bundle = new BundleMap();
 		bundle.init(getSourceEditor());
+		//Fix for https://jira.jboss.org/jira/browse/JBIDE-5639 - mareshkau
+		// in preview should be closer to view in browser. So all
+		// bundles should be showed as messages, no as el.
+		bundle.setShowBundleUsageAsEL(false);
 		
 		setPageContext(new VpePageContext(bundle, getEditPart()));
 		
