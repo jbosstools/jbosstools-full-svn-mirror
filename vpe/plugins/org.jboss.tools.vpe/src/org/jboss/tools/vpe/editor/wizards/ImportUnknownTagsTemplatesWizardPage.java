@@ -268,6 +268,10 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		  */
 		 List<VpeAnyData>  currentList = VpeTemplateManager.getInstance().getAnyTemplates();
 		 
+		 /*
+		  * Uploading will add only missing templates.
+		  * So here all duplicated templates will be deleted from the tagsList.
+		  */
 		 Iterator<VpeAnyData> iterator = tagsList.iterator();
 		 while (iterator.hasNext()) {
 			VpeAnyData loadedTemplate = (VpeAnyData) iterator.next();
@@ -278,11 +282,17 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 			}
 		}
 		 /*
-		  * Store loaded templates to the default auto-templates location.
+		  * Add unique templates to the current list.
 		  */
 		 if (currentList.addAll(tagsList)) {
+			 /*
+			  * Store loaded templates to the default auto-templates location.
+			  */
 			VpeTemplateManager.getInstance().setAnyTemplates(currentList);
 		} else {
+			/*
+			 * Log error if the operation could not be performed.
+			 */
 			VpePlugin.getDefault().logError(VpeUIMessages.ERROR_ON_IMPORT_TAG_TEMPLATES);
 		}
 		 return true;
