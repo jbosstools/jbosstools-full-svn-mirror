@@ -85,4 +85,51 @@ public class VpeAnyData extends VpeTemplateData {
 		
 		this.style = style;
 	}
+	
+	@Override
+	public String toString() {
+		return "VpeAnyData [name=" + super.getName() + ", uri=" + uri //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", tagForDisplay=" + tagForDisplay + ", value=" + value //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", style=" + style + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((tagForDisplay == null) ? 0 : tagForDisplay.hashCode());
+		result = prime * result + ((uri == null) ? 0 : uri.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		VpeAnyData other = (VpeAnyData) obj;
+		if (tagForDisplay == null) {
+			if (other.tagForDisplay != null) {
+				return false;
+			}
+		} else if (!tagForDisplay.equals(other.tagForDisplay)) {
+			return false;
+		}
+		if (uri == null) {
+			if (other.uri != null) {
+				return false;
+			}
+		} else if (!uri.equals(other.uri)) {
+			return false;
+		}
+		return true;
+	}
+	
 }

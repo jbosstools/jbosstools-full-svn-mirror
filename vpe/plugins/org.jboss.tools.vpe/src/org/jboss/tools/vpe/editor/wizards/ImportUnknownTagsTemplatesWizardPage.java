@@ -11,9 +11,9 @@
 package org.jboss.tools.vpe.editor.wizards;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ColumnLayoutData;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -39,8 +39,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardResourceImportPage;
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.ReferenceWizardPage;
 
@@ -54,21 +56,17 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		WizardResourceImportPage {
 
 	private static final String[] COLUMNS_NAMES = new String[] {
-		"", //$NON-NLS-1$
 		VpeUIMessages.TemplatesTableProvider_TagName, 
 		VpeUIMessages.TemplatesTableProvider_TagForDisplay,
 		VpeUIMessages.TemplatesTableProvider_URI,
 		VpeUIMessages.TemplatesTableProvider_Children};
 	private static final int[] COLUMNS_WIDTHS = new int[] {
-		15, 50, 50, 90, 30
+		50, 50, 90, 40
 	};
 	
 	private String pathString;
 	private Table tagsTable;
-//	private TableViewer tableViewer;
 	private List<VpeAnyData> tagsList;
-	private Button selectAllButton;
-	private Button deselectAllButton;
 	
 	
 	/**
@@ -104,7 +102,7 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		 */
 		final Text pathText = new Text(composite, SWT.BORDER);
 		pathText.setEditable(false);
-		pathText.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+		pathText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		pathText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				pathString = ((Text)e.getSource()).getText();
@@ -114,7 +112,7 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		
 		Button browseButton = new Button(composite, SWT.NONE);
 		browseButton.setText(VpeUIMessages.BROWSE_BUTTON_TEXT);
-		browseButton.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 1, 1));
+		browseButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		browseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(PlatformUI.getWorkbench()
@@ -133,10 +131,6 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 					 */
 					updateTagsTable();
 					/*
-					 * Store loaded templates to the default auto-templates location.
-					 */
-					VpeTemplateManager.getInstance().setAnyTemplates(tagsList);
-					/*
 					 * Check if the page is complete.
 					 */
 					setPageComplete(isPageComplete());
@@ -150,7 +144,7 @@ public class ImportUnknownTagsTemplatesWizardPage extends
         tagsTable = new Table(composite, SWT.BORDER);
         TableLayout layout = new TableLayout();
         tagsTable.setLayout(layout);
-        tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
+        tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 2));
         tagsTable.setHeaderVisible(true);
         tagsTable.setLinesVisible(true);
         
@@ -164,25 +158,6 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 			columnLayoutData = new ColumnWeightData(COLUMNS_WIDTHS[i], true);
 			layout.addColumnData(columnLayoutData);
 		}
-		
-		/*
-		 * Add buttons
-		 */
-		selectAllButton = new Button(composite, SWT.NONE);
-		selectAllButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		selectAllButton.setText(VpeUIMessages.SELECT_ALL);
-		
-		deselectAllButton = new Button(composite, SWT.NONE);
-		deselectAllButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		deselectAllButton.setText(VpeUIMessages.DESELECT_ALL);
-		
-		/*
-		 * Adding event listeners to the buttons
-		 */
-		selectAllButton.addListener(SWT.Modify, this);
-		selectAllButton.addListener(SWT.Selection, this);
-		deselectAllButton.addListener(SWT.Modify, this);
-		deselectAllButton.addListener(SWT.Selection, this);
 		
 		/*
 		 * Finishing the initialization
@@ -212,29 +187,18 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 			}
 			/*
 			 * Fill in columns.
-			 * Tags table has 5 columns with checkbox in the first column.
 			 */
 			String[] itemColumnsData = new String[tagsTable.getColumnCount()];
-			itemColumnsData[0] = ""; //$NON-NLS-1$
-			for (int j = 1; j < itemColumnsData.length; j++) {
+			for (int j = 0; j < itemColumnsData.length; j++) {
 				/*
 				 * Getting values from tagList
 				 */
-				itemColumnsData[j] = toVisualValue(getValueAt(i, (j-1)));
+				itemColumnsData[j] = toVisualValue(getValueAt(i, j));
 			}
 			/*
 			 * Set cells text
 			 */
 			tableItem.setText(itemColumnsData);
-			/*
-			 * Adding checkbox to the first column 
-		 	*/
-//			TableEditor editor = new TableEditor(tagsTable);
-//			Button check = new Button(tagsTable, SWT.CHECK);
-//			check.setBackground(tagsTable.getBackground());
-//			editor.minimumWidth = check.getSize().x;
-//			editor.grabHorizontal = true;
-//			editor.setEditor(check, tableItem, 0);
 		}
 		
 		/*
@@ -285,33 +249,13 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		return v;
 	}
 	
-	public void handleEvent(Event event) {
-		Widget source = event.widget;
-		if (source == selectAllButton) {
-			/*
-			 * Handle select all event
-			 */
-			
-		} else if (source == deselectAllButton) {
-			/*
-			 * Handle deselect all event
-			 */
-			
-		} else {
-			/*
-			 * Handle chekbox event
-			 */
-
-		}
-	}
-	
 	@Override
 	public boolean isPageComplete() {
 		/*
 		 * Later page should be complete some tags are selected.
 		 */
 		boolean isPageComplete = false;
-		if ((pathString != null) && !"".equalsIgnoreCase(pathString)) { //$NON-NLS-1$
+		if ((pathString != null) && !Constants.EMPTY.equalsIgnoreCase(pathString)) {
 			isPageComplete = true;
 		}
 		return isPageComplete;
@@ -319,9 +263,28 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 
 
 	 public boolean finish() {
-		 List<VpeAnyData> templates = VpeTemplateManager.getInstance().getAnyTemplates();
-		 IPath path = new Path(pathString);
-		 VpeTemplateManager.getInstance().setAnyTemplates(templates, path);
+		 /*
+		  * Currently used templates list 
+		  */
+		 List<VpeAnyData>  currentList = VpeTemplateManager.getInstance().getAnyTemplates();
+		 
+		 Iterator<VpeAnyData> iterator = tagsList.iterator();
+		 while (iterator.hasNext()) {
+			VpeAnyData loadedTemplate = (VpeAnyData) iterator.next();
+			for (VpeAnyData currentTemplate : currentList) {
+				if (loadedTemplate.equals(currentTemplate)) {
+					iterator.remove();
+				}
+			}
+		}
+		 /*
+		  * Store loaded templates to the default auto-templates location.
+		  */
+		 if (currentList.addAll(tagsList)) {
+			VpeTemplateManager.getInstance().setAnyTemplates(currentList);
+		} else {
+			VpePlugin.getDefault().logError(VpeUIMessages.ERROR_ON_IMPORT_TAG_TEMPLATES);
+		}
 		 return true;
 	 }
 	
@@ -341,7 +304,5 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 	protected ITreeContentProvider getFolderProvider() {
 		return null;
 	}
-
-	
 
 }

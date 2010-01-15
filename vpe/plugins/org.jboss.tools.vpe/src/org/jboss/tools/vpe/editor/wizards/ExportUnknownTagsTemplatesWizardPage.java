@@ -47,6 +47,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardExportResourcesPage;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.ReferenceWizardPage;
 
@@ -58,21 +59,17 @@ import org.jboss.tools.vpe.resref.core.ReferenceWizardPage;
 public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesPage {
 
 	private static final String[] COLUMNS_NAMES = new String[] {
-		"", //$NON-NLS-1$
 		VpeUIMessages.TemplatesTableProvider_TagName, 
 		VpeUIMessages.TemplatesTableProvider_TagForDisplay,
 		VpeUIMessages.TemplatesTableProvider_URI,
 		VpeUIMessages.TemplatesTableProvider_Children};
 	private static final int[] COLUMNS_WIDTHS = new int[] {
-		15, 50, 50, 90, 30
+		50, 50, 90, 40
 	};
 	
 	private String pathString;
 	private Table tagsTable;
-//	private TableViewer tableViewer;
 	private List<VpeAnyData> tagsList;
-	private Button selectAllButton;
-	private Button deselectAllButton;
 	
 	/**
 	 * Constructor
@@ -109,11 +106,10 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
         tagsTable = new Table(composite, SWT.BORDER);
         TableLayout layout = new TableLayout();
         tagsTable.setLayout(layout);
-        tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
+        tagsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
         tagsTable.setHeaderVisible(true);
         tagsTable.setLinesVisible(true);
-//        tableViewer = new TableViewer(tagsTable, SWT.MULTI | SWT.H_SCROLL
-//        		| SWT.V_SCROLL | SWT.FULL_SELECTION);
+        
         /*
          * Create columns in the table
          */
@@ -128,44 +124,12 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 		 * Fill the table with stored tags
 		 */
 		updateTagsTable();
-		/*
-		 * Adding checkbox to the first column 
-		 */
-//		CellEditor[] cellEditors = { new CheckboxCellEditor(tagsTable),
-//				new TextCellEditor(tagsTable), new TextCellEditor(tagsTable),
-//				new TextCellEditor(tagsTable), new TextCellEditor(tagsTable) };
-//		tableViewer.setCellEditors(cellEditors);
-//		tableViewer.refresh();
-		
-		/*
-		 * Add buttons
-		 */
-		selectAllButton = new Button(composite, SWT.NONE);
-		selectAllButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		selectAllButton.setText(VpeUIMessages.SELECT_ALL);
-		
-		deselectAllButton = new Button(composite, SWT.NONE);
-		deselectAllButton.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		deselectAllButton.setText(VpeUIMessages.DESELECT_ALL);
-		
-		/*
-		 * Make buttons equal size
-		 */
-//		selectAllButton.setSize(deselectAllButton.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-		/*
-		 * Adding event listeners to the buttons
-		 */
-		selectAllButton.addListener(SWT.Modify, this);
-		selectAllButton.addListener(SWT.Selection, this);
-		deselectAllButton.addListener(SWT.Modify, this);
-		deselectAllButton.addListener(SWT.Selection, this);
 		
 		/*
 		 * Add path output and browse button 
 		 */
 		final Text pathText = new Text(composite, SWT.BORDER);
-		pathText.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+		pathText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		pathText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				pathString = ((Text)e.getSource()).getText();
@@ -175,7 +139,7 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 		
 		Button browseButton = new Button(composite, SWT.NONE);
 		browseButton.setText(VpeUIMessages.BROWSE_BUTTON_TEXT);
-		browseButton.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 1, 1));
+		browseButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		browseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(PlatformUI.getWorkbench()
@@ -227,29 +191,19 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 			}
 			/*
 			 * Fill in columns.
-			 * Tags table has 5 columns with checkbox in the first column.
 			 */
 			String[] itemColumnsData = new String[tagsTable.getColumnCount()];
-			itemColumnsData[0] = ""; //$NON-NLS-1$
-			for (int j = 1; j < itemColumnsData.length; j++) {
+			for (int j = 0; j < itemColumnsData.length; j++) {
 				/*
 				 * Getting values from tagList
 				 */
-				itemColumnsData[j] = toVisualValue(getValueAt(i, (j-1)));
+				itemColumnsData[j] = toVisualValue(getValueAt(i, j));
 			}
 			/*
 			 * Set cells text
 			 */
 			tableItem.setText(itemColumnsData);
-			/*
-			 * Adding checkbox to the first column 
-		 	*/
-//			TableEditor editor = new TableEditor(tagsTable);
-//			Button check = new Button(tagsTable, SWT.CHECK);
-//			check.setBackground(tagsTable.getBackground());
-//			editor.minimumWidth = check.getSize().x;
-//			editor.grabHorizontal = true;
-//			editor.setEditor(check, tableItem, 0);
+
 		}
 		
 		/*
@@ -301,23 +255,9 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 	}
 	
 	public void handleEvent(Event event) {
-		Widget source = event.widget;
-		if (source == selectAllButton) {
-			/*
-			 * Handle select all event
-			 */
-			
-		} else if (source == deselectAllButton) {
-			/*
-			 * Handle deselect all event
-			 */
-			
-		} else {
-			/*
-			 * Handle chekbox event
-			 */
-
-		}
+		/*
+		 * Do nothing
+		 */
 	}
 
 	@Override
@@ -326,7 +266,7 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 		 * Later page should be complete some tags are selected.
 		 */
 		boolean isPageComplete = false;
-		if ((pathString != null) && !"".equalsIgnoreCase(pathString)) { //$NON-NLS-1$
+		if ((pathString != null) && !Constants.EMPTY.equalsIgnoreCase(pathString)) {
 			isPageComplete = true;
 		}
 		return isPageComplete;
