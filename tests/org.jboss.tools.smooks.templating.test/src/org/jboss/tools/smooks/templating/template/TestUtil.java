@@ -33,6 +33,7 @@ import org.custommonkey.xmlunit.XMLAssert;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.eclipse.emf.common.util.URI;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
+import org.jboss.tools.smooks.templating.model.xml.XMLSampleModelBuilder;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
 import org.jboss.tools.smooks.templating.template.xml.XMLFreeMarkerTemplateBuilder;
 import org.milyn.io.StreamUtils;
@@ -86,5 +87,15 @@ public abstract class TestUtil {
 	    XSDModelBuilder modelBuilder = new XSDModelBuilder(fileURI);
 	    modelBuilder.setRootElementName(rootElementName);
 	    return new XMLFreeMarkerTemplateBuilder(modelBuilder);
+	}
+
+	public static TemplateBuilder createXMLSampleFreeMarkerTemplateBuilder(File xmlSampleFile) throws IOException, ModelBuilderException {
+	    if(!xmlSampleFile.exists()) {
+	        throw new RuntimeException("Unknown: " + xmlSampleFile.getAbsolutePath());
+	    }
+	
+	    URI fileURI = URI.createFileURI(xmlSampleFile.getCanonicalFile().toString());
+	
+	    return new XMLFreeMarkerTemplateBuilder(new XMLSampleModelBuilder(fileURI));
 	}
 }
