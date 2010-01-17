@@ -17,11 +17,10 @@ import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
+import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.template.Mapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
@@ -67,29 +66,7 @@ public class FreemarkerTemplateXMLModel extends TagObject implements IFreemarker
 			return false;
 		}
 		if (element != null) {
-			NamedNodeMap nodeMap = element.getAttributes();
-			for (int i = 0; i < nodeMap.getLength(); i++) {
-				Attr attr = (Attr) nodeMap.item(i);
-				if (attr != null) {
-					if (FreemarkerModelAnalyzer.SPECIAL_ELEMENT_UIR.equals(attr.getNamespaceURI())) {
-						String name = attr.getLocalName();
-						if (name == null) {
-							name = attr.getNodeName();
-						}
-						if (FreemarkerModelAnalyzer.MINOCCURS.equals(name)) {
-							String value = attr.getValue();
-							try {
-								int intValue = Integer.parseInt(value);
-								if (intValue > 0) {
-									return true;
-								}
-							} catch (Exception e) {
-								return false;
-							}
-						}
-					}
-				}
-			}
+			return ModelBuilder.isRequired(element);
 		}
 		return false;
 	}
@@ -97,29 +74,7 @@ public class FreemarkerTemplateXMLModel extends TagObject implements IFreemarker
 	public boolean isManyOccurs() {
 		Element refElement = this.getReferenceElement();
 		if (refElement != null) {
-			NamedNodeMap nodeMap = refElement.getAttributes();
-			for (int i = 0; i < nodeMap.getLength(); i++) {
-				Attr attr = (Attr) nodeMap.item(i);
-				if (attr != null) {
-					if (FreemarkerModelAnalyzer.SPECIAL_ELEMENT_UIR.equals(attr.getNamespaceURI())) {
-						String name = attr.getLocalName();
-						if (name == null) {
-							name = attr.getNodeName();
-						}
-						if (FreemarkerModelAnalyzer.MAXOCCURS.equals(name)) {
-							String value = attr.getValue();
-							try {
-								int intValue = Integer.parseInt(value);
-								if (intValue == -1 || intValue > 1) {
-									return true;
-								}
-							} catch (Exception e) {
-								return false;
-							}
-						}
-					}
-				}
-			}
+			return ModelBuilder.isCollection(refElement);
 		}
 		return false;
 	}
@@ -191,6 +146,10 @@ public class FreemarkerTemplateXMLModel extends TagObject implements IFreemarker
 		// }
 		// }
 		// return false;
+	}
+	
+	public Node getModelNode() {
+		return getReferenceElement();
 	}
 
 	private FreemarkerTemplateXMLModel localBrotherModel(Node refNode) {

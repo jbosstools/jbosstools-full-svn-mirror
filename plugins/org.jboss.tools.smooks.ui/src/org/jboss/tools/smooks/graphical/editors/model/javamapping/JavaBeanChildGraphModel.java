@@ -34,7 +34,10 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTempl
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
+import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * @author Dart
@@ -149,8 +152,14 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 				while (pgm != null && pgm instanceof FreemarkerTemplateNodeGraphicalModel) {
 					Object pd = ((FreemarkerTemplateNodeGraphicalModel) pgm).getData();
 					if (pd instanceof IFreemarkerTemplateModel) {
-						if (((IFreemarkerTemplateModel) pd).isManyOccurs() && pgm.getTargetConnections().isEmpty()) {
-							return false;
+						IFreemarkerTemplateModel iFreemarkerTemplateModel = (IFreemarkerTemplateModel) pd;
+						if (iFreemarkerTemplateModel.isManyOccurs() && pgm.getTargetConnections().isEmpty()) {
+							Node modelNode = iFreemarkerTemplateModel.getModelNode();
+							if(modelNode instanceof Element) {
+								return !ModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode);
+							} else {
+								return false;
+							}
 						}
 					}
 					pgm = pgm.getParent();

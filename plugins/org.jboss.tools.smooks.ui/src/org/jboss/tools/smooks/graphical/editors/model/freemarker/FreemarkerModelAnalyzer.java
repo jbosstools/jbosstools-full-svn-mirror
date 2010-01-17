@@ -24,6 +24,7 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLUtils;
+import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,22 +38,6 @@ import org.xml.sax.SAXException;
  * 
  */
 public class FreemarkerModelAnalyzer {
-
-	public static final String SPECIAL_ELEMENT_UIR = "http://www.jboss.org/xsd/tools/smooks";
-	
-	private static final String[] SPECIAL_ELEMENT_NAMES = new String[] { "compositor" };
-	
-	public static final String MAXOCCURS = "maxOccurs";
-	
-	public static final String TYPE = "type";
-	
-	public static final String HIDDEN = "hidden";
-	
-	public static final String MINOCCURS = "minOccurs";
-	
-	public static final String REQUIRED = "#required";
-	
-	private static final String[] SPECIAL_ATTR_NAMES = new String[] { MAXOCCURS, MINOCCURS, "elementType", TYPE ,HIDDEN };
 
 	public TagList analyze(String xmlFilePath, String[] ignoreNodeNames,
 			Class<? extends AbstractXMLObject> tagObjectClass) throws ParserConfigurationException, SAXException,
@@ -135,27 +120,8 @@ public class FreemarkerModelAnalyzer {
 		if (element != null) {
 			Node parentNode = element.getParentNode();
 			if (parentNode instanceof Element) {
-				if (isCompositorElement((Element) parentNode)) {
+				if (ModelBuilder.isCompositor(parentNode)) {
 					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public static boolean isCompositorElement(Element element) {
-		if (element != null) {
-			String uri = element.getNamespaceURI();
-			String name = element.getLocalName();
-			if (name == null) {
-				name = element.getNodeName();
-			}
-			if (SPECIAL_ELEMENT_UIR.equals(uri)) {
-				for (int i = 0; i < SPECIAL_ELEMENT_NAMES.length; i++) {
-					String sen = SPECIAL_ELEMENT_NAMES[i];
-					if(sen.equals(name)){
-						return true;
-					}
 				}
 			}
 		}
@@ -168,7 +134,7 @@ public class FreemarkerModelAnalyzer {
 			return null;
 		boolean canAdd = false;
 		TagObject tag = null;
-		if (isCompositorElement(element)) {
+		if (ModelBuilder.isCompositor(element)) {
 			tag = parentTag;
 		} else {
 			tag = getChildTagByName(element.getNodeName(), parentTag, ignoreNodeNames);
@@ -227,15 +193,6 @@ public class FreemarkerModelAnalyzer {
 		return false;
 	}
 
-	private boolean isSpecailPropertyName(String attrName) {
-		for (int i = 0; i < SPECIAL_ATTR_NAMES.length; i++) {
-			String name = SPECIAL_ATTR_NAMES[i];
-			if (name.equals(attrName))
-				return true;
-		}
-		return false;
-	}
-
 	protected void fillProperties(Element element, TagObject tag, String[] ignoreNodeNames) {
 		NamedNodeMap attrMap = element.getAttributes();
 
@@ -249,13 +206,12 @@ public class FreemarkerModelAnalyzer {
 				if (localName == null) {
 					localName = name;
 				}
-				String value = attr.getValue();
-				String uri = attr.getNamespaceURI();
-				if (SPECIAL_ELEMENT_UIR.equals(uri)) {
-					if (isSpecailPropertyName(localName)) {
-						continue;
-					}
+				
+				if(ModelBuilder.isInReservedNamespace(attr)) {
+					continue;
 				}
+				
+				String value = attr.getValue();
 
 				if (isIgnoreNode(localName, ignoreNodeNames))
 					continue;

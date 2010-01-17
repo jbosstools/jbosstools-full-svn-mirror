@@ -113,8 +113,8 @@ public class TemplateWizardSelectionPage extends WizardSelectionPage {
 	}
 
 	private void initInputTypeCombo(Combo combo) {
-		for (Iterator<?> iterator = this.registedWizard.iterator(); iterator.hasNext();) {
-			TemplateMessageTypeWizardNode type = (TemplateMessageTypeWizardNode) iterator.next();
+		for(int i = 0; i < registedWizard.size(); i++) {
+			TemplateMessageTypeWizardNode type = registedWizard.get(i);
 			combo.add(type.getName());
 		}
 	}
@@ -142,18 +142,17 @@ public class TemplateWizardSelectionPage extends WizardSelectionPage {
 		super(pageName);
 		setDescription("Choose \"Message Type\" ."); //$NON-NLS-1$
 		setTitle("Message Type Selection"); //$NON-NLS-1$
+		
 		TemplateMessageTypeWizardNode csvTypeNode = new TemplateMessageTypeWizardNode();
 		csvTypeNode.setName(Messages.TemplateWizardSelectionPage_CSV_Node);
-//		node.setDescription("CSV");
 		csvTypeNode.setWizard(new FreemarkerCSVTemplateCreationWizard());
-		registedWizard.add(csvTypeNode);
 		
 		TemplateMessageTypeWizardNode xmlTypeNode = new TemplateMessageTypeWizardNode();
 		xmlTypeNode.setName(Messages.TemplateWizardSelectionPage_XML_Node);
-//		node.setDescription("CSV");
 		xmlTypeNode.setWizard(new FreemarkerXMLTemplateCreationWizard());
 
 		registedWizard.add(xmlTypeNode);
+		registedWizard.add(csvTypeNode);
 	}
 
 	public void activeSelectionWizard() {

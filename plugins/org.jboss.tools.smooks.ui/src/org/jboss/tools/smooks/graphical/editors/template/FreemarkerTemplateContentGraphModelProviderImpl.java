@@ -33,8 +33,10 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTempl
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerXMLNodeGraphicalModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.model.csv.CSVModelBuilder;
+import org.jboss.tools.smooks.templating.model.xml.XMLSampleModelBuilder;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.csv.CSVFreeMarkerTemplateBuilder;
@@ -144,15 +146,22 @@ public class FreemarkerTemplateContentGraphModelProviderImpl implements IFreemar
 				String fileType = SmooksModelUtils.getFreemarkerXMLFileType(freemarker);
 				String filePath = SmooksModelUtils.getFreemarkerXMLFilePath(freemarker);
 				String rootName = SmooksModelUtils.getFreemarkerXMLRootName(freemarker);
+				String newFilePath = SmooksUIUtils.parseFilePath(filePath);
+				ModelBuilder builder;
+				
 				if (SmooksModelUtils.KEY_XML_FILE_TYPE_XSD.equals(fileType)) {
-					String newFilePath = SmooksUIUtils.parseFilePath(filePath);
-					XSDModelBuilder builder = new XSDModelBuilder(URI.createFileURI(newFilePath));
-					builder.setRootElementName(rootName);
-					try {
-						templateBuilder = new XMLFreeMarkerTemplateBuilder(builder, contents);
-					} catch (Exception e) {
-						templateBuilder = new XMLFreeMarkerTemplateBuilder(builder);
-					}
+					builder = new XSDModelBuilder(URI.createFileURI(newFilePath));
+					((XSDModelBuilder)builder).setRootElementName(rootName);
+				} else if (SmooksModelUtils.KEY_XML_FILE_TYPE_XML.equals(fileType)) {
+					builder = new XMLSampleModelBuilder(URI.createFileURI(newFilePath));
+				} else {
+					throw new IOException("Unable to process XML template type '" + fileType + "'.");
+				}
+
+				try {
+					templateBuilder = new XMLFreeMarkerTemplateBuilder(builder, contents);
+				} catch (Exception e) {
+					templateBuilder = new XMLFreeMarkerTemplateBuilder(builder);
 				}
 			}
 		}

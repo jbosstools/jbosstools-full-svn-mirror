@@ -300,8 +300,7 @@ public abstract class TemplateBuilder {
 
 		while (nextNode != null) {
 			if (nextNode.getNodeType() == Node.ELEMENT_NODE) {
-				int maxOccurs = ModelBuilder.getMaxOccurs((Element) nextNode);
-				if (maxOccurs > 1 || maxOccurs == -1) {
+				if(ModelBuilder.isCollection((Element) nextNode)) {					
 					return (Element) nextNode;
 				}
 			}

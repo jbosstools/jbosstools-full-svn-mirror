@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
+import org.w3c.dom.Node;
 
 /**
  * @author Dart
@@ -19,5 +20,6 @@ import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 public interface IFreemarkerTemplateModel {
 	public boolean isRequired();
 	public boolean isManyOccurs();
+	public Node getModelNode();
 	public boolean isHidden(TemplateBuilder builder);
 }

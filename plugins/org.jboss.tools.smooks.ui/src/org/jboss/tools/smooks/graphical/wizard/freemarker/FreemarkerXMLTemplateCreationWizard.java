@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.wizard.freemarker;
 
+import org.jboss.tools.smooks.configuration.editors.xml.XMLTemplateCreationWizardPage;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -18,7 +19,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  */
 public class FreemarkerXMLTemplateCreationWizard extends AbstractFreemarkerTemplateWizard {
 
-	private FreemarkerXMLTemplateCreationWizardPage page;
+	private XMLTemplateCreationWizardPage page;
 	private String filePath;
 	private String rootElementName;
 	private String xmlInputFileType;
@@ -36,7 +37,7 @@ public class FreemarkerXMLTemplateCreationWizard extends AbstractFreemarkerTempl
 	@Override
 	public void addPages() {
 		if (page == null) {
-			page = new FreemarkerXMLTemplateCreationWizardPage("XML"); //$NON-NLS-1$
+			page = new XMLTemplateCreationWizardPage("XML"); //$NON-NLS-1$
 		}
 		this.addPage(page);
 		super.addPages();

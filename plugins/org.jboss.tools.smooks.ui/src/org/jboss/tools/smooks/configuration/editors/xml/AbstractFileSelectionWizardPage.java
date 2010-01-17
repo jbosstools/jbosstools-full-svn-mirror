@@ -436,7 +436,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		String text = this.fileText.getText();
 		String error = null;
 		if (text == null || "".equals(text)) //$NON-NLS-1$
-			error = "File's name can be null"; //$NON-NLS-1$
+			error = "File name cannot be null"; //$NON-NLS-1$
 
 		// File tempFile = new File(text);
 		// if(!tempFile.exists()){

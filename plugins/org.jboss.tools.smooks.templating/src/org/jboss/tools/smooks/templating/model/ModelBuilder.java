@@ -195,6 +195,12 @@ public abstract class ModelBuilder {
 
         return Integer.parseInt(maxOccurs);
     }
+
+    public static boolean isCollection(Element element) {
+    	int maxOccurs = getMaxOccurs(element);
+
+        return (maxOccurs > 1 || maxOccurs == -1);
+    }
     
     public static void setElementType(Element element, ElementType type) {
         element.setAttributeNS(NAMESPACE, "smk:elementType", type.toString()); //$NON-NLS-1$    	

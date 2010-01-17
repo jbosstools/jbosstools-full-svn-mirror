@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
-import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -33,6 +32,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -40,23 +40,36 @@ import org.eclipse.xsd.XSDElementDeclaration;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
+import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.xml.sax.SAXException;
 
 /**
  * @author Dart (dpeng@redhat.com)
  * 
  */
-public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage {
+public class XMLTemplateCreationWizardPage extends AbstractFileSelectionWizardPage {
 
 	private Throwable parsingError = null;
 
+	protected Combo createFromDropdown = null;
+
 	protected CheckboxTableViewer tableViewer = null;
+	protected Label tableViewerLabel;
 
 	private boolean fireEvent = true;
 
 	private String rootElementName = null;
 
 	protected Button loadXSDButton;
+	
+	private TemplateSourceType templateSourceType = TemplateSourceType.xsd;
+
+	public static enum TemplateSourceType {
+		// Template from XML Schema
+		xsd,
+		// Template from an XML Sample
+		xml
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -70,17 +83,16 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		return null;
 	}
 
-	public XSDStructuredDataWizardPage(String pageName, boolean multiSelect, Object[] initSelections,
-			List<ViewerFilter> filters) {
-		super(pageName, multiSelect, initSelections, filters);
-		this.setTitle(Messages.XSDStructuredDataWizardPage_Page_Title);
-		this.setDescription(Messages.XSDStructuredDataWizardPage_page_description);
+	public XMLTemplateCreationWizardPage(String pageName) {
+		super(pageName, new String[] { "xsd" }); //$NON-NLS-1$
+		this.setTitle(Messages.XMLTemplateCreationWizardPage_Page_Title);
+		this.setDescription(Messages.XMLTemplateCreationWizardPage_page_description);
+		
+		this.templateSourceType = TemplateSourceType.xsd;
 	}
-
-	public XSDStructuredDataWizardPage(String pageName) {
-		super(pageName, new String[] { "xsd", "wsdl" }); //$NON-NLS-1$ //$NON-NLS-2$
-		this.setTitle(Messages.XSDStructuredDataWizardPage_Page_Title);
-		this.setDescription(Messages.XSDStructuredDataWizardPage_page_description);
+	
+	public TemplateSourceType getTemplateSourceType() {
+		return templateSourceType;
 	}
 
 	/*
@@ -93,14 +105,14 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 	protected void changeWizardPageStatus() {
 		super.changeWizardPageStatus();
 		String errorMessage = this.getErrorMessage();
-		if (errorMessage == null) {
+		if (errorMessage == null && templateSourceType == TemplateSourceType.xsd) {
 			
 			if (reasourceLoaded) {
 				if (tableViewer.getCheckedElements() == null || tableViewer.getCheckedElements().length == 0) {
-					errorMessage = Messages.XSDStructuredDataWizardPage_Error_Must_Select_Root;
+					errorMessage = Messages.XMLTemplateCreationWizardPage_Error_Must_Select_Root;
 				}
 			} else {
-				errorMessage = Messages.XSDStructuredDataWizardPage_Error_Must_Click_Load;
+				errorMessage = Messages.XMLTemplateCreationWizardPage_Error_Must_Click_Load;
 			}
 			if(parsingError != null){
 				errorMessage = parsingError.getLocalizedMessage();
@@ -167,7 +179,7 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 		gd.grabExcessHorizontalSpace = true;
 
 		loadXSDButton = new Button(fileTextComposite, SWT.NONE);
-		loadXSDButton.setText(Messages.XSDStructuredDataWizardPage_Button_Load);
+		loadXSDButton.setText(Messages.XMLTemplateCreationWizardPage_Button_Load);
 		loadXSDButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -237,12 +249,38 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 	}
 
 	public void createControl(Composite parent) {
-		super.createControl(parent);
-		Composite mainComposite = (Composite) getControl();
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		Label label = new Label(mainComposite, SWT.NONE);
-		label.setLayoutData(gd);
-		label.setText(Messages.XSDStructuredDataWizardPage_Label_Select_Root);
+		Composite mainComposite = new Composite(parent, SWT.NONE);
+		GridLayout gl = new GridLayout();
+		mainComposite.setLayout(gl);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		mainComposite.setLayoutData(gd);
+
+		Label fileTypeLabel = new Label(mainComposite, SWT.NONE);
+		fileTypeLabel.setText("Create Template From:");
+
+		createFromDropdown = new Combo(mainComposite, SWT.READ_ONLY | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		initCombo(createFromDropdown);
+		createFromDropdown.setLayoutData(gd);
+		createFromDropdown.select(0);
+
+		createFromDropdown.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateTemplateSourceType();
+			}
+		});
+		
+		Label separator = new Label(mainComposite, SWT.SEPARATOR | SWT.HORIZONTAL);
+		separator.setLayoutData(gd);
+		
+		super.createControl(mainComposite);
+
+		mainComposite = (Composite) getControl();
+        gd = new GridData(GridData.FILL_HORIZONTAL);
+		tableViewerLabel = new Label(mainComposite, SWT.NONE);
+		tableViewerLabel.setLayoutData(gd);
+		tableViewerLabel.setText(Messages.XMLTemplateCreationWizardPage_Label_Select_Root);
 		tableViewer = CheckboxTableViewer.newCheckList(mainComposite, SWT.BORDER);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = 250;
@@ -278,6 +316,46 @@ public class XSDStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 
 		});
 
+		this.setControl(mainComposite);
+	}
+	
+	public Combo getCombo() {
+		return createFromDropdown;
 	}
 
+	protected void updateTemplateSourceType() {
+		switch (createFromDropdown.getSelectionIndex()) {
+		case 0 :
+			templateSourceType = TemplateSourceType.xsd;
+			break;
+		case 1 :
+			templateSourceType = TemplateSourceType.xml;
+			break;
+		default :
+			throw new IllegalStateException("Unexpected XML Template source selection.  Code must be updated to accomodate new source type.");
+		}
+
+		// Table should only be visible for XSD template sources...
+		tableViewer.getTable().setVisible(templateSourceType == TemplateSourceType.xsd);
+		tableViewerLabel.setVisible(templateSourceType == TemplateSourceType.xsd);
+		loadXSDButton.setEnabled(templateSourceType == TemplateSourceType.xsd);
+		
+		// Reset the file browse filter...
+		setFileExtensionNames(new String[] {templateSourceType.toString()});
+	}
+
+	private void initCombo(Combo combo2) {
+		combo2.add("XSD");
+		combo2.add("Sample XML");
+	}
+
+	public String getInputType(){
+		if(createFromDropdown.getSelectionIndex() == 0){
+			return SmooksModelUtils.KEY_XML_FILE_TYPE_XSD;
+		}
+		if(createFromDropdown.getSelectionIndex() == 1){
+			return SmooksModelUtils.KEY_XML_FILE_TYPE_XML;
+		}
+		return null;
+	}
 }
