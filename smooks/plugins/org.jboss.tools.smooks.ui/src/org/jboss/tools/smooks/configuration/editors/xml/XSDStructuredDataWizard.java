@@ -33,7 +33,7 @@ public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
 	@Override
 	protected AbstractFileSelectionWizardPage createAbstractFileSelectionWizardPage() {
 		// TODO Auto-generated method stub
-		return new XSDStructuredDataWizardPage("XSD"); //$NON-NLS-1$
+		return new XMLTemplateCreationWizardPage("XSD"); //$NON-NLS-1$
 	}
 
 	/* (non-Javadoc)
@@ -48,7 +48,7 @@ public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
 	 */
 	public Properties getProperties() {
 		Properties pro = new Properties();
-		pro.setProperty("rootElement", ((XSDStructuredDataWizardPage)page).getRootElementName()); //$NON-NLS-1$
+		pro.setProperty("rootElement", ((XMLTemplateCreationWizardPage)page).getRootElementName()); //$NON-NLS-1$
 		return pro;
 	}
 

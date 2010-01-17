@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
+import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.template.Mapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.w3c.dom.Attr;
@@ -45,13 +46,7 @@ public class FreemarkerAttrModel extends TagPropertyObject implements IFreemarke
 	public boolean isRequired() {
 		Attr element = this.getReferenceAttibute();
 		if (element != null) {
-			String value = element.getValue();
-			if (value != null) {
-				value = value.trim();
-			}
-			if (FreemarkerModelAnalyzer.REQUIRED.equals(value)) {
-				return true;
-			}
+			return ModelBuilder.isRequired(element);
 		}
 		return false;
 	}
@@ -79,4 +74,7 @@ public class FreemarkerAttrModel extends TagPropertyObject implements IFreemarke
 		return false;
 	}
 
+	public Node getModelNode() {
+		return getReferenceAttibute();
+	}
 }
