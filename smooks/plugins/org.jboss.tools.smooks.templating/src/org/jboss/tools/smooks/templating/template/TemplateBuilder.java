@@ -279,7 +279,7 @@ public abstract class TemplateBuilder {
 		Element collectionElement = getNearestCollectionElement(mappingNode);
 		if (collectionElement != null) {
 			CollectionMapping parentCollectionMapping = getCollectionMapping(collectionElement);
-			if (parentCollectionMapping == null) {
+			if (parentCollectionMapping == null && ModelBuilder.getEnforceCollectionSubMappingRules(collectionElement)) {
 				throw new UnmappedCollectionNodeException(collectionElement);
 			}
 		}

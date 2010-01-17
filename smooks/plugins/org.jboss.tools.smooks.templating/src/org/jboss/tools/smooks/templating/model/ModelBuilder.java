@@ -163,7 +163,7 @@ public abstract class ModelBuilder {
         return builder.newDocument();
     }
 
-    protected void setMinMax(Element element, int minOccurs, int maxOccurs) {
+    public static void setMinMax(Element element, int minOccurs, int maxOccurs) {
         element.setAttributeNS(NAMESPACE, "smk:minOccurs", Integer.toString(minOccurs)); //$NON-NLS-1$
         element.setAttributeNS(NAMESPACE, "smk:maxOccurs", Integer.toString(maxOccurs)); //$NON-NLS-1$
     }
@@ -234,4 +234,33 @@ public abstract class ModelBuilder {
 		}
 		return false;
 	}
+
+	/**
+	 * Turn on/off enforcement of collection sub-mapping rules.
+	 * <p/>
+	 * If turned on, the collection mapping must be made on the model collection element (having maxOccurs > 1)
+	 * before mappings can be made on sub elements.
+	 * 
+	 * @param element The model element.
+	 * @param enforce True if enforcement is to be turned on, otherwise false.
+	 */
+	public static void setEnforceCollectionSubMappingRules(Element element, boolean enforce) {
+        element.setAttributeNS(NAMESPACE, "smk:enforceCollectionSubMappingRules", Boolean.toString(enforce)); //$NON-NLS-1$    	
+	}
+
+	/**
+	 * Is collection sub-mapping rules turned on for the supplied model element.
+	 * @param element The model element.
+	 * @return True if enforcement is turned on, otherwise false.
+	 * @see #setEnforceCollectionSubMappingRules(Element, boolean)
+	 */
+	public static boolean getEnforceCollectionSubMappingRules(Element element) {
+        String enforce = element.getAttributeNS(NAMESPACE, "enforceCollectionSubMappingRules"); //$NON-NLS-1$
+        
+        if(enforce == null || enforce.length() == 0) {
+        	return true;
+        }
+
+        return !enforce.equals("false"); //$NON-NLS-1$
+    }
 }

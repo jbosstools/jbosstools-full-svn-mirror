@@ -51,7 +51,7 @@ import org.xml.sax.SAXException;
 /**
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class XMLFreeMarkerTemplateBuilderTest extends TestCase {
+public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 
 	public void test_SimplePerson_01() throws IOException, ParserConfigurationException, TemplateBuilderException,
 			SAXException, ModelBuilderException {
