@@ -84,15 +84,15 @@ public class OpenOnUtil {
 				.openEditor(editorInput, editorId);
 		StructuredTextEditor textEditor = null;
 		if(editorPart instanceof MultiPageEditorPart){
-			IEditorPart[] editorParts = ((MultiPageEditorPart)editorPart).findEditors(editorInput);
-			((MultiPageEditorPart)editorPart).setActiveEditor(editorParts[0]);
-			textEditor = (StructuredTextEditor) editorParts[0];
+			StructuredTextEditor structuredTextEditor = findStructEditor((MultiPageEditorPart)editorPart, editorInput);
+			((MultiPageEditorPart)editorPart).setActiveEditor(structuredTextEditor);
+			textEditor = structuredTextEditor;
 		} else if(editorPart instanceof JSPMultiPageEditor) {
 			textEditor = ((JSPMultiPageEditor)editorPart).getSourceEditor();
 		} else if(editorPart instanceof EditorPartWrapper) {
-			IEditorPart[] editorParts = ((MultiPageEditorPart)((EditorPartWrapper)editorPart).getEditor()).findEditors(editorInput);
-			((MultiPageEditorPart)((EditorPartWrapper)editorPart).getEditor()).setActiveEditor(editorParts[1]);
-			textEditor = (StructuredTextEditor) editorParts[1];
+			StructuredTextEditor structuredTextEditor = findStructEditor((MultiPageEditorPart)((EditorPartWrapper)editorPart).getEditor(), editorInput);
+			((MultiPageEditorPart)((EditorPartWrapper)editorPart).getEditor()).setActiveEditor(structuredTextEditor);
+			textEditor = structuredTextEditor;
 		}
 		int openOnPosition = TestUtil.getLinePositionOffcet(textEditor
 				.getTextViewer(),lineNumber, lineOffset);
@@ -122,4 +122,14 @@ public class OpenOnUtil {
 
 	}
 
+	private static StructuredTextEditor findStructEditor (MultiPageEditorPart part, IEditorInput input){
+		IEditorPart[] editorParts = part.findEditors(input);
+		for (int i = 0; i < editorParts.length; i++) {
+			if (editorParts[i] instanceof StructuredTextEditor) {
+				return (StructuredTextEditor) editorParts[i];
+			}
+		}
+		return null;
+	}
+	
 }
