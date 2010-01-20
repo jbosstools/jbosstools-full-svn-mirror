@@ -330,7 +330,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * to redraw CustomSashForm with new layout.
 				 */
 				getController().getPageContext().getEditPart().fillContainer(true, newOrientation);
-		  
+				JspEditorPlugin.getDefault().getPreferenceStore().
+					setValue(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING, newOrientation);
 			}
 		};
 		rotateEditorsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
@@ -354,6 +355,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * Update VPE
 				 */
 		        controller.visualRefresh();
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS, this.isChecked());
 		    }
 		};
 		showBorderAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
@@ -378,6 +381,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * Update VPE
 				 */
 				controller.visualRefresh();
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS, this.isChecked());
 			}
 		};
 		showNonVisualTagsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
@@ -396,6 +401,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * Update Selection Bar 
 				 */
 				controller.getPageContext().getEditPart().updateSelectionBar(this.isChecked());
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_SELECTION_TAG_BAR, this.isChecked());
 			}
 		};
 		showSelectionBarAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
@@ -414,6 +421,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * Update Text Formatting Bar 
 				 */
 				vpeToolBarManager.setToolbarVisibility(this.isChecked());
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_TEXT_FORMATTING, this.isChecked());
 			}
 		};
 		showTextFormattingAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
@@ -433,6 +442,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 */
 				controller.getPageContext().getBundle().updateShowBundleUsageAsEL(this.isChecked());
 				controller.visualRefresh();
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL, this.isChecked());
 			}
 		};
 		showBundleAsELAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,

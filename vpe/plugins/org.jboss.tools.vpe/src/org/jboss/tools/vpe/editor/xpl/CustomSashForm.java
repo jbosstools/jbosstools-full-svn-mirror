@@ -1131,7 +1131,7 @@ public class CustomSashForm extends SashForm {
 	protected void fireDividerMoved(){
 		if(customSashFormListeners!=null && customSashFormListeners.size()>0){
 			int[] weights = getWeights();
-			if(weights!=null && weights.length==2){
+			if(weights!=null && weights.length==3){
 				int firstControlWeight = weights[0];
 				int secondControlWeight = weights[1];
 				for (Iterator<ICustomSashFormListener> listenerItr = customSashFormListeners.iterator(); listenerItr.hasNext();) {

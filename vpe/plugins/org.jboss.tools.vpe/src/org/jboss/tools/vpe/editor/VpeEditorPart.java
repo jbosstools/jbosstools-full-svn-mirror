@@ -87,6 +87,7 @@ import org.jboss.tools.vpe.editor.mozilla.MozillaPreview;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.editor.xpl.EditorSettings;
 import org.jboss.tools.vpe.editor.xpl.SashSetting;
+import org.jboss.tools.vpe.editor.xpl.CustomSashForm.ICustomSashFormListener;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.selbar.SelectionBar;
 import org.jboss.tools.vpe.selbar.VisibilityEvent;
@@ -321,39 +322,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 	}
 
-	protected int[] loadSplitterPosition() {
-		int[] sizes = new int[3];
-		try {
-			IEditorInput input = getEditorInput();
-			if (!(input instanceof IFileEditorInput))
-				return null;
-
-			IFile file = ((IFileEditorInput) input).getFile();
-			String s = file.getPersistentProperty(SPLITTER_POSITION_KEY1);
-			if (s != null) {
-				sizes[0] = Integer.parseInt(s);
-			} else
-				return null;
-
-			s = file.getPersistentProperty(SPLITTER_POSITION_KEY2);
-			if (s != null) {
-				sizes[1] = Integer.parseInt(s);
-			} else
-				return null;
-
-			s = file.getPersistentProperty(SPLITTER_POSITION_KEY3);
-			if (s != null) {
-				sizes[2] = Integer.parseInt(s);
-			} else
-				return null;
-
-		} catch (CoreException e) {
-			VpePlugin.getPluginLog().logError(e);
-			return null;
-		}
-		return sizes;
-	}
-
 	public void setVisualMode(int type) {
 		switch (type) {
 		case VISUALSOURCE_MODE:
@@ -576,10 +544,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 					super.safelySanityCheckState(input);
 				}
 			};
-		int[] weights = loadSplitterPosition();
-		if (weights != null) {
-			container.setWeights(weights);
-		}
 		container.setSashBorders(new boolean[] { true, true, true });
 
 		controlListener = new ControlListener() {
@@ -768,6 +732,12 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				return null;
 			}
 		};
+		container.addCustomSashFormListener(new ICustomSashFormListener() {
+			public void dividerMoved(int firstControlWeight, int secondControlWeight) {
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_WEIGHTS, secondControlWeight);
+			}
+		});
 	}
 	
 	/**
@@ -1209,12 +1179,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				selectionBar.setVisible(presfShowSelectionBar);
 				doVisualRefresh = true;
 			}
-			/*
-			 * Commented to fix https://jira.jboss.org/jira/browse/JBIDE-4941 Do
-			 * not update VPE splitting, weights, tabs for current page, do it
-			 * for newly opened ones only.
-			 */
-//			fillContainer(false, null);
+	
 			boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault()
 					.getPreferenceStore().getBoolean(
 							IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
@@ -1224,6 +1189,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 						prefsShowNonVisualTags);
 				doVisualRefresh = true;
 			}
+			
 			boolean prefsShowBundlesAsEL = JspEditorPlugin
 					.getDefault()
 					.getPreferenceStore()
@@ -1241,6 +1207,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			if (doVisualRefresh) {
 				getController().visualRefresh();
 			}
+			fillContainer(false, null);
 		}
 	}
 	
