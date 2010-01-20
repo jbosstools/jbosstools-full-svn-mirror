@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3CR3/docbookx.dtd"
+
+[<!ENTITY  Preface SYSTEM "Preface.xml">
+<!ENTITY Introduction SYSTEM "Introduction.xml">
+<!ENTITY The_interface SYSTEM "The_interface.xml">
+<!ENTITY Java_EE_and_SE SYSTEM "Java_Web_(EE)_and_Standard_Edition_(SE).xml">
+<!ENTITY Service-Oriented_Architecture_Development SYSTEM "Service-Oriented_Architecture_Development.xml">
+<!ENTITY Where_to_go_from_here SYSTEM "Where_to_go_from_here.xml">
+<!ENTITY Revision_History SYSTEM "Revision_History.xml">
+]>
+
+<book>
+    
+     <bookinfo>
+         <title>Beginners Guide</title>
+             <corpauthor>
+                 <inlinemediaobject>
+                     <imageobject role="fo">
+                         <imagedata format="PNG" fileref="images/jbosstools_logo.png" />
+                     </imageobject>	
+                     <imageobject role="html">
+                         <imagedata/>
+                     </imageobject>	
+                 </inlinemediaobject>           
+             </corpauthor>
+         
+         <author>
+		<firstname>Isaac</firstname>
+		<surname>Rooskov</surname>
+		<email>irooskov@redhat.com</email>
+	</author>
+	<author>
+		<firstname>Sean</firstname>
+		<surname>Rogers</surname>
+		<email>serogers@redhat.com</email>
+	</author>
+	<editor>
+		<firstname>Andrew</firstname>
+		<surname>Ross</surname>
+		<email>anross@redhat.com</email>
+	</editor>
+	<editor>
+		<firstname>Max</firstname>
+		<surname>Andersen</surname>
+		<email>max.andersen@redhat.com</email>
+	</editor>          
+      
+	     <copyright>
+	          <year>2010</year>
+	          <holder>JBoss by Red Hat</holder>
+	     </copyright>
+         <releaseinfo>
+             Version: 1.0
+         </releaseinfo>
+<!--<abstract>
+   <title/>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/jboss_bpmn_convert_ref_guide/pdf/Converter_Reference_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract> -->
+
+
+    </bookinfo>
+    
+    <toc/> 
+ <!--   &Preface; -->
+    &Introduction; 
+    &The_interface;
+    &Java_EE_and_SE;
+    &Service-Oriented_Architecture_Development;
+    &Where_to_go_from_here;
+    &Revision_History;
+
+</book> 
