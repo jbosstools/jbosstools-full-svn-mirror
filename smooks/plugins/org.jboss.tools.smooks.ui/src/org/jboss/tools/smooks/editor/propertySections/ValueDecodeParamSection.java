@@ -10,23 +10,24 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.editor.propertySections;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ICellModifier;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -34,13 +35,13 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -49,11 +50,13 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
-import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
+import org.jboss.tools.smooks.model.javabean12.ValueType;
+import org.milyn.javabean.DataDecoder;
 
 /**
  * @author Dart
@@ -63,6 +66,27 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 	private Composite controlComposite;
 	private TableViewer paramterViewer;
+	private CCombo decoderCombo;
+
+	private static List<String> DECODERS = new ArrayList<String>();
+
+	static {
+		Map<Class, Class<? extends DataDecoder>> map = DataDecoder.Factory.getInstalledDecoders();
+		Collection<Class<? extends DataDecoder>> decoders = map.values();
+		for (Iterator<Class<? extends DataDecoder>> iterator = decoders.iterator(); iterator.hasNext();) {
+			Class<? extends DataDecoder> dataDecoderClass = iterator.next();
+			if (dataDecoderClass != null) {
+				String name = dataDecoderClass.getSimpleName();
+				if (name.endsWith("Decoder")) {
+					name = name.substring(0, name.length() - "Decoder".length());
+				}
+				if (!DECODERS.contains(name)) {
+					DECODERS.add(name);
+				}
+			}
+		}
+		Collections.sort(DECODERS);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -82,19 +106,82 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 		controlComposite = factory.createComposite(section, SWT.NONE);
 
-		controlComposite.setLayout(new FillLayout());
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+
+		controlComposite.setLayout(gridLayout);
 
 		section.setClient(controlComposite);
+
+		createDecoderCombo(factory, controlComposite);
 
 		createDecodeParamViewer(factory, controlComposite);
 	}
 
-	private void createDecodeParamViewer(TabbedPropertySheetWidgetFactory factory, Composite sashForm) {
-		ISmooksModelProvider provider = getSmooksModelProvider();
+	private void createDecoderCombo(TabbedPropertySheetWidgetFactory factory, Composite parent) {
+		factory.createLabel(controlComposite, "Decoder :");
+		decoderCombo = factory.createCCombo(parent, SWT.READ_ONLY);
+		// decoderCombo.setEditable(false);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		decoderCombo.setLayoutData(gd);
 
+		for (Iterator<?> iterator = DECODERS.iterator(); iterator.hasNext();) {
+			String decoderName = (String) iterator.next();
+			decoderCombo.add(decoderName);
+		}
+
+		decoderCombo.addSelectionListener(new SelectionListener() {
+
+			public void widgetSelected(SelectionEvent e) {
+				changeDecoder();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+	}
+
+	private void changeDecoder() {
+		ISmooksModelProvider provider = getSmooksModelProvider();
+		if (provider != null) {
+			AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) provider.getEditingDomain();
+			String newDecoder = decoderCombo.getText();
+			Object model = getPresentSelectedModel();
+			model = AdapterFactoryEditingDomain.unwrap(model);
+			if (model != null && model instanceof ValueType) {
+				String decoder = ((ValueType) model).getDecoder();
+				if (newDecoder.equals(decoder)) {
+					// same decoder
+					return;
+				}
+				Command setCommand = SetCommand.create(editingDomain, model,
+						Javabean12Package.Literals.VALUE_TYPE__DECODER, newDecoder);
+				editingDomain.getCommandStack().execute(setCommand);
+				initDecodeParamViewer();
+			}
+		}
+	}
+
+	private String[] getDecoderParametersName(String decoder) {
+		if (decoder != null) {
+			if ("Date".equals(decoder)) {
+				return new String[] { "format", "locale-language", "locale-country" };
+			}
+		}
+		return null;
+	}
+
+	private void createDecodeParamViewer(TabbedPropertySheetWidgetFactory factory, Composite sashForm) {
 		GridData gd = new GridData(GridData.FILL_BOTH);
 
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		factory.createLabel(sashForm, "Decoder Parameters :").setLayoutData(gd);
+
 		Composite viewerComposite = factory.createComposite(sashForm, SWT.NONE);
+		gd = new GridData(GridData.FILL_BOTH);
+		gd.horizontalSpan = 2;
+		viewerComposite.setLayoutData(gd);
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
 		viewerComposite.setLayout(gridLayout);
@@ -111,74 +198,8 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		viewerContianer.setLayout(layout);
 
 		paramterViewer = new TableViewer(viewerContianer, SWT.FULL_SELECTION);
-		if (provider != null) {
-			AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) provider.getEditingDomain();
-
-			paramterViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()));
-
-			paramterViewer.setLabelProvider(new DecoratingLabelProvider(new AdapterFactoryLabelProvider(editingDomain
-					.getAdapterFactory()) {
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see
-				 * org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider#
-				 * getText(java.lang.Object)
-				 */
-				@Override
-				public String getText(Object object) {
-					Object obj = AdapterFactoryEditingDomain.unwrap(object);
-					if (obj instanceof EObject) {
-						return super.getText(obj);
-					}
-					return super.getText(object);
-				}
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see
-				 * org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
-				 * #getColumnText(java.lang.Object, int)
-				 */
-				@Override
-				public String getColumnText(Object object, int columnIndex) {
-					Object obj = AdapterFactoryEditingDomain.unwrap(object);
-					if (columnIndex == 0) {
-						// if (obj instanceof DecodeParamType) {
-						// String name = ((DecodeParamType) obj).getName();
-						// if (name == null)
-						//								name = ""; //$NON-NLS-1$
-						// return name;
-						// }
-						if (obj instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
-							String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) obj).getName();
-							if (name == null)
-								name = ""; //$NON-NLS-1$
-							return name;
-						}
-					}
-
-					if (columnIndex == 1) {
-						// if (obj instanceof DecodeParamType) {
-						// String value = ((DecodeParamType) obj).getValue();
-						// if (value == null)
-						//								value = ""; //$NON-NLS-1$
-						// return value;
-						// }
-						if (obj instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
-							String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) obj).getValue();
-							if (name == null)
-								name = ""; //$NON-NLS-1$
-							return name;
-						}
-					}
-					return super.getColumnText(object, columnIndex);
-				}
-
-			}, SmooksConfigurationActivator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator()));
-		}
+		paramterViewer.setContentProvider(new DecodeParamViewerContentProvider());
+		paramterViewer.setLabelProvider(new DecodeParamTypeLabelProvider());
 
 		paramterViewer.setFilters(new ViewerFilter[] { new DecodeParamTypeFilter() });
 
@@ -197,180 +218,131 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 			public void modify(Object element, String property, Object value) {
 				if (element instanceof TableItem) {
-					element = ((TableItem) element).getData();
-					element = AdapterFactoryEditingDomain.unwrap(element);
-					if (element == null)
-						return;
-					EStructuralFeature feature = null;
-					if (property.equals("name")) { //$NON-NLS-1$
-					// if (element instanceof DecodeParamType) {
-					// feature =
-					// JavabeanPackage.Literals.DECODE_PARAM_TYPE__NAME;
-					// }
-						if (element instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
-							feature = Javabean12Package.Literals.DECODE_PARAM_TYPE__NAME;
+					Object currentElement = ((TableItem) element).getData();
+					Object model = getPresentSelectedModel();
+					model = AdapterFactoryEditingDomain.unwrap(model);
+					if (model != null && model instanceof ValueType && currentElement instanceof DecodeParam) {
+						String pname = ((DecodeParam) currentElement).getName();
+						DecodeParamType paramType = findDecodeParamType(pname, (ValueType) model);
+						Command command = null;
+						EditingDomain editingDomain = getSmooksModelProvider().getEditingDomain();
+						if (property.equals("value")) {
+							if (value != null) {
+								String svalue = ((String) value).trim();
+								if ("".equals(svalue)) {
+									if(paramType != null){
+										command = RemoveCommand.create(editingDomain, paramType);
+									}
+								} else {
+									// if param is empty , add it
+									if (paramType == null) {
+										paramType = Javabean12Factory.eINSTANCE.createDecodeParamType();
+										paramType.setName(pname);
+										paramType.setValue((String) value);
+										command = AddCommand.create(editingDomain, (ValueType) model,
+												Javabean12Package.Literals.VALUE_TYPE__DECODE_PARAM, paramType);
+									} else {
+										command = SetCommand.create(editingDomain, paramType,
+												Javabean12Package.Literals.DECODE_PARAM_TYPE__VALUE, value);
+									}
+								}
+							}
 						}
-					}
-					if (property.equals("value")) { //$NON-NLS-1$
-					// if (element instanceof DecodeParamType) {
-					// feature =
-					// JavabeanPackage.Literals.DECODE_PARAM_TYPE__VALUE;
-					// }
-						if (element instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
-							feature = Javabean12Package.Literals.DECODE_PARAM_TYPE__VALUE;
+						if (command != null) {
+							editingDomain.getCommandStack().execute(command);
+							((DecodeParam) currentElement).setValue((String) value);
+							paramterViewer.update(currentElement, new String[] { property });
 						}
-					}
-
-					if (feature != null) {
-						Command c = SetCommand.create(getSmooksModelProvider().getEditingDomain(), element, feature,
-								value);
-						getSmooksModelProvider().getEditingDomain().getCommandStack().execute(c);
 					}
 				}
 			}
 
 			public Object getValue(Object element, String property) {
 				element = AdapterFactoryEditingDomain.unwrap(element);
-				if (property.equals("name")) { //$NON-NLS-1$
-				// if (element instanceof DecodeParamType) {
-				// String name = ((DecodeParamType) element).getName();
-				// if (name == null)
-				//							name = ""; //$NON-NLS-1$
-				// return name;
-				// }
-					if (element instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
-						String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) element).getName();
+				if (property.equals("value")) { //$NON-NLS-1$
+					if (element instanceof DecodeParam) {
+						String name = ((DecodeParam) element).getValue();
 						if (name == null)
 							name = ""; //$NON-NLS-1$
 						return name;
-					}
-				}
-				if (property.equals("value")) { //$NON-NLS-1$
-				// if (element instanceof DecodeParamType) {
-				// String value = ((DecodeParamType) element).getValue();
-				// if (value == null)
-				//							value = ""; //$NON-NLS-1$
-				// return value;
-				// }
-					if (element instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
-						String value = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) element).getValue();
-						if (value == null)
-							value = ""; //$NON-NLS-1$
-						return value;
 					}
 				}
 				return null;
 			}
 
 			public boolean canModify(Object element, String property) {
-				return true;
+				if (property.equals("value")) { //$NON-NLS-1$
+					if (element instanceof DecodeParam) {
+						return true;
+					}
+				}
+				return false;
 			}
 		});
 
 		paramterViewer.getTable().setHeaderVisible(true);
 		paramterViewer.getTable().setLinesVisible(true);
 
-		Composite buttonComposite = factory.createComposite(viewerComposite, SWT.NONE);
-		gd = new GridData(GridData.FILL_VERTICAL);
-		gd.widthHint = 130;
-		buttonComposite.setLayoutData(gd);
-		GridLayout gl2 = new GridLayout();
-		buttonComposite.setLayout(gl2);
+	}
 
-		Button newRuleButton = factory.createButton(buttonComposite,
-				Messages.ValueDecodeParamSection_NewParamButtonText, SWT.NONE);
-		newRuleButton.addSelectionListener(new SelectionAdapter() {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse
-			 * .swt.events.SelectionEvent)
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				Object model = null;
-				EStructuralFeature feature = null;
-				Object element = getPresentSelectedModel();
-				element = AdapterFactoryEditingDomain.unwrap(element);
-				if (element == null)
-					return;
-				// if (element instanceof ValueType) {
-				// model = JavabeanFactory.eINSTANCE.createDecodeParamType();
-				// ((DecodeParamType)
-				// model).setName(Messages.ValueDecodeParamSection_NullText);
-				// ((DecodeParamType)
-				// model).setValue(Messages.ValueDecodeParamSection_NullText);
-				// feature = JavabeanPackage.Literals.VALUE_TYPE__DECODE_PARAM;
-				// }
-				if (element instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
-					model = Javabean12Factory.eINSTANCE.createDecodeParamType();
-					((org.jboss.tools.smooks.model.javabean12.DecodeParamType) model)
-							.setName(Messages.ValueDecodeParamSection_NullText);
-					((org.jboss.tools.smooks.model.javabean12.DecodeParamType) model)
-							.setValue(Messages.ValueDecodeParamSection_NullText);
-					feature = Javabean12Package.Literals.VALUE_TYPE__DECODE_PARAM;
-				}
-				if (model != null && feature != null && element != null) {
-					EditingDomain domain = getSmooksModelProvider().getEditingDomain();
-					Command command = AddCommand.create(domain, element, feature, model);
-					domain.getCommandStack().execute(command);
-					paramterViewer.refresh();
-				}
-
-				super.widgetSelected(e);
+	private void initDecoderCombo() {
+		decoderCombo.select(-1);
+		Object model = getPresentSelectedModel();
+		model = AdapterFactoryEditingDomain.unwrap(model);
+		if (model != null && model instanceof ValueType) {
+			String decoder = ((ValueType) model).getDecoder();
+			if (decoder != null) {
+				decoder = decoder.trim();
+				int index = DECODERS.indexOf(decoder);
+				decoderCombo.select(index);
 			}
-
-		});
-		Button deleteRuleButton = factory.createButton(buttonComposite,
-				Messages.ValueDecodeParamSection_DeleteButtonText, SWT.NONE);
-		deleteRuleButton.addSelectionListener(new SelectionAdapter() {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse
-			 * .swt.events.SelectionEvent)
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) paramterViewer.getSelection();
-				List<?> selectedRules = selection.toList();
-				ISmooksModelProvider provider = getSmooksModelProvider();
-				if (provider != null) {
-					EditingDomain domain = provider.getEditingDomain();
-					Command command = RemoveCommand.create(domain, selectedRules);
-					domain.getCommandStack().execute(command);
-				}
-				super.widgetSelected(e);
-			}
-
-		});
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		newRuleButton.setLayoutData(gd);
-
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		deleteRuleButton.setLayoutData(gd);
+		}
 	}
 
 	private void initDecodeParamViewer() {
-		ISmooksModelProvider provider = getSmooksModelProvider();
-		if (provider != null) {
-			AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) provider.getEditingDomain();
-
-			paramterViewer.setContentProvider(new AdapterFactoryContentProvider(editingDomain.getAdapterFactory()));
-
-			paramterViewer.setLabelProvider(new DecodeParamTypeLabelProvider(new AdapterFactoryLabelProvider(
-					editingDomain.getAdapterFactory())));
-
-			Object model = getPresentSelectedModel();
-			model = AdapterFactoryEditingDomain.unwrap(model);
-			if (model != null) {
-				paramterViewer.setInput(model);
+		paramterViewer.setInput("NULL");
+		Object model = getPresentSelectedModel();
+		model = AdapterFactoryEditingDomain.unwrap(model);
+		if (model != null && model instanceof ValueType) {
+			String decoder = ((ValueType) model).getDecoder();
+			String[] params = getDecoderParametersName(decoder);
+			if (params != null) {
+				paramterViewer.setInput(newDecodeParam(params, ((ValueType) model)));
 			}
 		}
+	}
+
+	private DecodeParamType findDecodeParamType(String name, ValueType valueType) {
+		List<?> ps = valueType.getDecodeParam();
+		for (Iterator<?> iterator = ps.iterator(); iterator.hasNext();) {
+			DecodeParamType dp = (DecodeParamType) iterator.next();
+			String dpn = dp.getName();
+			if (dpn != null)
+				dpn = dpn.trim();
+
+			if (name.equals(dpn)) {
+				return dp;
+			}
+		}
+		return null;
+	}
+
+	private List<DecodeParam> newDecodeParam(String[] params, ValueType valueType) {
+		List<DecodeParam> list = new ArrayList<DecodeParam>();
+		for (int i = 0; i < params.length; i++) {
+			String name = params[i];
+			DecodeParam p = new DecodeParam();
+			p.setName(name);
+			DecodeParamType dp = findDecodeParamType(name, valueType);
+			if (dp != null) {
+				String dpv = dp.getValue();
+				if (dpv != null)
+					dpv = dpv.trim();
+				p.setValue(dpv);
+			}
+			list.add(p);
+		}
+		return list;
 	}
 
 	protected void createDecodeParamGUIContents(Object model, ISmooksModelProvider provider, IEditorPart part,
@@ -399,14 +371,69 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	@Override
 	public void refresh() {
 		super.refresh();
+		initDecoderCombo();
 		initDecodeParamViewer();
 	}
 
-	private class DecodeParamTypeLabelProvider extends LabelProvider implements ITableLabelProvider {
-		private AdapterFactoryLabelProvider labelProvider = null;
+	private class DecodeParamViewerContentProvider implements IStructuredContentProvider {
 
-		public DecodeParamTypeLabelProvider(AdapterFactoryLabelProvider labelProvider) {
-			this.labelProvider = labelProvider;
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void dispose() {
+			// TODO Auto-generated method stub
+
+		}
+
+		public Object[] getElements(Object inputElement) {
+			if (inputElement instanceof Collection<?>) {
+				return ((Collection<?>) inputElement).toArray();
+			}
+			return new Object[] {};
+		}
+	}
+
+	private class DecodeParam {
+		String name;
+		String value;
+
+		/**
+		 * @return the name
+		 */
+		public String getName() {
+			return name;
+		}
+
+		/**
+		 * @param name
+		 *            the name to set
+		 */
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		/**
+		 * @return the value
+		 */
+		public String getValue() {
+			return value;
+		}
+
+		/**
+		 * @param value
+		 *            the value to set
+		 */
+		public void setValue(String value) {
+			this.value = value;
+		}
+
+	}
+
+	private class DecodeParamTypeLabelProvider extends LabelProvider implements ITableLabelProvider {
+
+		public DecodeParamTypeLabelProvider() {
 		}
 
 		/*
@@ -417,9 +444,9 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		 * .lang.Object, int)
 		 */
 		public Image getColumnImage(Object element, int columnIndex) {
-			if (labelProvider != null && columnIndex == 0) {
-				return labelProvider.getImage(element);
-			}
+			// if (labelProvider != null && columnIndex == 0) {
+			// return labelProvider.getImage(element);
+			// }
 			return null;
 		}
 
@@ -432,8 +459,8 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 				//						name = ""; //$NON-NLS-1$
 				// return name;
 				// }
-				if (obj instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
-					String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) obj).getName();
+				if (obj instanceof DecodeParam) {
+					String name = ((DecodeParam) obj).getName();
 					if (name == null)
 						name = ""; //$NON-NLS-1$
 					return name;
@@ -447,11 +474,11 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 				//						value = ""; //$NON-NLS-1$
 				// return value;
 				// }
-				if (obj instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
-					String name = ((org.jboss.tools.smooks.model.javabean12.DecodeParamType) obj).getValue();
-					if (name == null)
-						name = ""; //$NON-NLS-1$
-					return name;
+				if (obj instanceof DecodeParam) {
+					String value = ((DecodeParam) obj).getValue();
+					if (value == null)
+						value = ""; //$NON-NLS-1$
+					return value;
 				}
 			}
 			return ""; //$NON-NLS-1$
@@ -471,7 +498,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
 			element = AdapterFactoryEditingDomain.unwrap(element);
-			if (element instanceof org.jboss.tools.smooks.model.javabean12.DecodeParamType) {
+			if (element instanceof DecodeParam) {
 				return true;
 			}
 			return false;

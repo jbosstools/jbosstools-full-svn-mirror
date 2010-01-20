@@ -11,12 +11,15 @@
 package org.jboss.tools.smooks.graphical.editors.editparts.javamapping;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.ui.IEditorPart;
@@ -27,6 +30,8 @@ import org.jboss.tools.smooks.graphical.editors.editparts.AbstractResourceConfig
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
+import org.jboss.tools.smooks.model.javabean12.WiringType;
+import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart
@@ -54,6 +59,53 @@ public class JavaBeanEditPart extends AbstractResourceConfigEditPart {
 		}
 		return null;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.editparts.
+	 * AbstractResourceConfigEditPart
+	 * #getDeleteCommand(org.eclipse.emf.edit.domain.EditingDomain,
+	 * java.lang.Object, org.eclipse.emf.ecore.EStructuralFeature)
+	 */
+	@Override
+	protected Command getDeleteEMFCommand(EditingDomain domain, Object data, EStructuralFeature feature) {
+		CompoundCommand compoundCommand = new CompoundCommand();
+		Command deleteCommand = super.getDeleteEMFCommand(domain, data, feature);
+		if (data instanceof BeanType) {
+			String beanId = ((BeanType) data).getBeanId();
+			Object container = ((BeanType) data).eContainer();
+			if (beanId != null && container != null && container instanceof SmooksResourceListType) {
+				List<?> children = ((SmooksResourceListType) container).getAbstractResourceConfig();
+				for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+					Object child = (Object) iterator.next();
+					child = AdapterFactoryEditingDomain.unwrap(child);
+					if (child instanceof BeanType && child != data) {
+						List<?> wirings = ((BeanType) child).getWiring();
+						for (Iterator<?> iterator2 = wirings.iterator(); iterator2.hasNext();) {
+							WiringType wiring = (WiringType) iterator2.next();
+							String refId = wiring.getBeanIdRef();
+							if (refId != null)
+								refId = refId.trim();
+							if (beanId.equals(refId)) {
+								Command setCommand = SetCommand.create(domain, wiring,
+										Javabean12Package.Literals.WIRING_TYPE__BEAN_ID_REF, null);
+								compoundCommand.append(setCommand);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if(compoundCommand.isEmpty()){
+			return deleteCommand;
+		}else{
+			compoundCommand.append(deleteCommand);
+			return compoundCommand;
+		}
+	}
+
 
 	/*
 	 * (non-Javadoc)

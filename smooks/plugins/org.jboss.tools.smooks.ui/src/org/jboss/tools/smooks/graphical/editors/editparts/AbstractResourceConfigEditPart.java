@@ -46,28 +46,37 @@ import org.jboss.tools.smooks.model.smooks.SmooksPackage;
  * 
  */
 public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
-	
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart#createFigure()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.gef.tree.editparts.TreeContainerEditPart#createFigure
+	 * ()
 	 */
 	@Override
 	protected IFigure createFigure() {
-		IFigure figure =  super.createFigure();
-		if(figure instanceof TreeContainerFigure){
-			((TreeContainerFigure)figure).setSource(isSource());
+		IFigure figure = super.createFigure();
+		if (figure instanceof TreeContainerFigure) {
+			((TreeContainerFigure) figure).setSource(isSource());
 		}
 		return figure;
 	}
-	
-	protected boolean isSource(){
+
+	protected boolean isSource() {
 		return true;
 	}
-
 
 	@Override
 	protected String generateFigureID() {
 		return SmooksGraphUtil.generateFigureID((TreeNodeModel) getModel());
+	}
+
+	protected org.eclipse.emf.common.command.Command getDeleteEMFCommand(EditingDomain domain, Object data,
+			EStructuralFeature feature) {
+		return RemoveCommand.create(domain, ((EObject) data).eContainer(),
+				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+						.createEntry(feature, data));
 	}
 
 	@Override
@@ -91,14 +100,7 @@ public class AbstractResourceConfigEditPart extends TreeContainerEditPart {
 
 							EStructuralFeature feature = getHostFeature((EObject) data);
 							if (feature != null) {
-								// FeatureMapUtil
-								// .createEntry(Javabean12Package.Literals.JAVABEAN12_DOCUMENT_ROOT__BEAN,data);
-								org.eclipse.emf.common.command.Command c = RemoveCommand
-										.create(
-												domain,
-												((EObject) data).eContainer(),
-												SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP,
-												FeatureMapUtil.createEntry(feature, data));
+								org.eclipse.emf.common.command.Command c = getDeleteEMFCommand(domain, data, feature);
 								if (c != null && c.canExecute()) {
 									GEFAdapterCommand rc = new GEFAdapterCommand(domain, c);
 									command.add(rc);

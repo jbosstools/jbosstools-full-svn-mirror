@@ -146,6 +146,7 @@
        <propertyTabs
              contributorId="org.jboss.tools.smooks.configuration.editors.MultiPageEditor">
           <propertyTab
+                afterTab="org.jboss.tools.smooks.ui.propertySection.decodeParamTab"
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.propertiesTab"
                 label="Properties">
@@ -162,13 +163,12 @@
                 label="Rule Bases">
           </propertyTab>
           <propertyTab
-                afterTab="org.jboss.tools.smooks.ui.propertySection.propertiesTab"
+                afterTab="org.jboss.tools.smooks.ui.propertySection.csvrecordTab"
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.decodeParamTab"
-                label="Decode Parameter">
+                label="Decode">
           </propertyTab>
           <propertyTab
-                afterTab="org.jboss.tools.smooks.ui.propertySection.propertiesTab"
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.csvrecordTab"
                 label="CSV Record Properties">
