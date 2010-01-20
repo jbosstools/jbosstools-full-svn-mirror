@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<article>
+	<xi:include href="Article_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="Overview.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="New_Features.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="Component_Versions.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="Fixed_Issues.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="Known_Issues.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+</article>

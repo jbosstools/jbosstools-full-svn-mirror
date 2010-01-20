@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Component_Versions">
+		<title>Component Versions</title>
+		<para>
+			This section details the versions of the components which create the JBoss Developer Studio that can be found in this release.
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Eclipse 3.5 (Galileo)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JBoss Tools 3.1.0
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JBoss Enterprise Application Platform 5.0
+				</para>
+			</listitem> 
+		</itemizedlist>
+		<note>
+			<para>
+				The Enterprise Application Platform Server has been redefined for the enterprise market to a level where direct association to a community release can no longer be drawn.
+			</para>
+		</note>
+</section>

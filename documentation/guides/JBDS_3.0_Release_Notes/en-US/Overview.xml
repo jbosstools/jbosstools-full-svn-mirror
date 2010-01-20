@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Overview">
+		<title>Overview</title>
+		<para>
+			JBoss Developer Studio provides an integrated development environment for developers to build rich Web and enterprise applications, and SOA services. The technologies used include:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Hibernate
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JBoss Seam
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					RichFaces
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JBoss jBPM
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JBoss ESB
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JBoss Portal
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JBoss Drools
+				</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			JBoss Developer Studio includes both certified visual tooling and a runtime platform that Red Hat supports for 5 years, ensuring developers of a stable, upgradable, deployable and supportable platform.
+		</para>
+		<para>
+			JBoss Developer Studio is available for Windows, Linux and MacOS.
+		</para>
+	</section>

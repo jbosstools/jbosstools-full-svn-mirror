@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Issues-fixed-in-this-release">
+		<title>
+			Issues fixed in this release
+		</title>
+		
+		<para>
+			Following is a list of issues fixed in this release:
+		</para>
+		<formalpara>
+			<title>ESB Editor</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5548">JBIDE-5548</ulink>: In the ESB Configuration Editor, when selecting a JBR Listener, JBR Bus or JBR Provider, new functionality has been added to allow a user to configure the properties: <property>synchronous</property>, <property>serviceInvokerTimeout</property> and <property>asyncResponse</property> through the new child object <property>Config</property>. These new configurable properties allow a user increased control over the execution of the JBR components.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5547">JBIDE-5547</ulink>: In the ESB Configuration Editor, when selecting a FTP Listener in read-only mode new functionality has been added to allow a user to configure the properties: <property>maxNodes</property>, <property>timeToLiveSeconds</property> and <property>maxAgeSeconds</property> through the new child object <property>Cache</property>. In addition the following properties have been added to allow a user to select their own values for the: <property>Class</property>, <property>Config File</property> and <property>Cache Listener</property> available through the new child object <property>Remote Filesystem Strategy</property>. These new configurable properties allow a user increased control over the execution of the FTP Listener.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>Hibernate</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5499">JBIDE-5499</ulink>: 
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>XML Structured Editor</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5521">JBIDE-5521</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+	</section>
