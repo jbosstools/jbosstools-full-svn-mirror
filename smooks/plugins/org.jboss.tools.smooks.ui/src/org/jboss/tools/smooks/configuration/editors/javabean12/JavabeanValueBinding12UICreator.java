@@ -95,8 +95,8 @@ public class JavabeanValueBinding12UICreator extends PropertiesAndSetterMethodSe
 		list.add(SmooksUIUtils.createStringFieldEditor(groupParent, toolkit, getPropertyDescriptor(editingdomain,
 				Javabean12Package.Literals.VALUE_TYPE__DEFAULT, model), model, false, false, null));
 
-		list.add(SmooksUIUtils.createStringFieldEditor(groupParent, toolkit, getPropertyDescriptor(editingdomain,
-				Javabean12Package.Literals.VALUE_TYPE__DECODER, model), model, false, false, null));
+//		list.add(SmooksUIUtils.createStringFieldEditor(groupParent, toolkit, getPropertyDescriptor(editingdomain,
+//				Javabean12Package.Literals.VALUE_TYPE__DECODER, model), model, false, false, null));
 		return list;
 	}
 

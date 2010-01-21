@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.editor.propertySections;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +18,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -25,6 +28,8 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -46,11 +51,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
+import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
+import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
+import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
@@ -73,6 +83,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	static {
 		Map<Class, Class<? extends DataDecoder>> map = DataDecoder.Factory.getInstalledDecoders();
 		Collection<Class<? extends DataDecoder>> decoders = map.values();
+		DECODERS.add("");
 		for (Iterator<Class<? extends DataDecoder>> iterator = decoders.iterator(); iterator.hasNext();) {
 			Class<? extends DataDecoder> dataDecoderClass = iterator.next();
 			if (dataDecoderClass != null) {
@@ -154,9 +165,24 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 					// same decoder
 					return;
 				}
+				CompoundCommand command = new CompoundCommand();
+
 				Command setCommand = SetCommand.create(editingDomain, model,
 						Javabean12Package.Literals.VALUE_TYPE__DECODER, newDecoder);
-				editingDomain.getCommandStack().execute(setCommand);
+				if (((ValueType) model).getDecodeParam().isEmpty()) {
+
+				} else {
+					Command removeCommand = RemoveCommand.create(editingDomain, ((ValueType) model).getDecodeParam());
+					command.append(setCommand);
+					command.append(removeCommand);
+				}
+
+				if (command.isEmpty()) {
+					editingDomain.getCommandStack().execute(setCommand);
+				} else {
+					editingDomain.getCommandStack().execute(command);
+				}
+
 				initDecodeParamViewer();
 			}
 		}
@@ -166,6 +192,64 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		if (decoder != null) {
 			if ("Date".equals(decoder)) {
 				return new String[] { "format", "locale-language", "locale-country" };
+			}
+
+			if ("Enum".equals(decoder)) {
+				Object model = getPresentSelectedModel();
+				model = AdapterFactoryEditingDomain.unwrap(model);
+				if (model != null && model instanceof ValueType) {
+					String[] enumFieldsString = null;
+					List<Object> inputs = SelectorCreationDialog.generateInputData(SmooksUIUtils
+							.getSmooks11ResourceListType(getSmooksModelProvider().getSmooksModel()));
+					if (inputs != null && !inputs.isEmpty()) {
+						Object input = inputs.get(0);
+						if (input instanceof JavaBeanModel) {
+							String path = ((ValueType) model).getData();
+							JavaBeanModel beanModel = (JavaBeanModel) SmooksUIUtils.localXMLNodeWithPath(path,
+									(JavaBeanModel) input);
+							if (beanModel != null) {
+								String clazz = beanModel.getBeanClassString();
+								if (clazz != null) {
+									clazz = clazz.trim();
+									IProject project = ((IFileEditorInput) getEditorPart().getEditorInput()).getFile()
+											.getProject();
+									try {
+										ProjectClassLoader classLoader = new ProjectClassLoader(JavaCore
+												.create(project));
+										Class<?> enumType = classLoader.loadClass(clazz);
+										if (enumType.isEnum()) {
+											Field[] fields = enumType.getDeclaredFields();
+											if (fields != null) {
+												List<String> enumList = new ArrayList<String>();
+												enumFieldsString = new String[fields.length + 1];
+												for (int i = 0; i < fields.length; i++) {
+													Field enumField = fields[i];
+													if (enumField.isEnumConstant()) {
+														enumList.add(enumField.getName());
+													}
+												}
+												enumFieldsString = new String[enumList.size() + 1];
+												System.arraycopy(enumList.toArray(new String[] {}), 0,
+														enumFieldsString, 1, enumList.size());
+												enumList.clear();
+											}
+										}
+									} catch (JavaModelException e) {
+									} catch (ClassNotFoundException e) {
+									} catch (SecurityException e) {
+									}
+								}
+							}
+						}
+					}
+					String[] result = new String[] { "enumType" };
+					if (enumFieldsString != null) {
+						enumFieldsString[0] = result[0];
+						return enumFieldsString;
+					} else {
+						return result;
+					}
+				}
 			}
 		}
 		return null;
@@ -230,7 +314,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 							if (value != null) {
 								String svalue = ((String) value).trim();
 								if ("".equals(svalue)) {
-									if(paramType != null){
+									if (paramType != null) {
 										command = RemoveCommand.create(editingDomain, paramType);
 									}
 								} else {
