@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<chapter id="chap-Beginners_Guide-Introduction">
+	<title>Introduction</title>
+	<para>
+		The <application>JBoss Tools</application> and <application>JBoss Developer Studio</application> tools suites are designed to assist with the development of applications and services for JBoss Middleware software. These tools have been developed and are used by developers to increase their efficiency and productivity with JBoss software offerings (be it community or enterprise offerings).
+	</para>
+	<para>
+		This beginners guide covers the basics of the interface you will be working with and the tools within it, assuming as little knowledge on your side as possible. If you are not familiar with <application>JBoss Tools</application> or <application>JBoss Developer Studio</application> then this guide provides the best place to begin.
+	</para>
+</chapter>
+

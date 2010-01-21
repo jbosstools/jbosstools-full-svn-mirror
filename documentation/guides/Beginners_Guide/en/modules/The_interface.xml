@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<chapter id="chap-Beginners_Guide-The_interface">
+	<title>The interface</title>
+	<para>
+		This chapter discusses the interfaces that the <application>JBoss Tools</application> and the <application>JBoss Developer Studio</application> plug-ins are built for.
+	</para>
+	<section id="sect-Beginners_Guide-The_interface-Eclipse">
+		<title>Eclipse</title>
+		<para>
+			Eclipse is the container for all development work in <application>JBoss Tools</application> and the <application>JBoss Developer Studio</application>. It allows for control over the running of the application server, the applications on it and provides an interface for developing your own applications.
+		</para>
+		<para>
+			Eclipse is started by double-clicking on the <filename>eclipse</filename> executeable in your installation directory.
+		</para>
+		<para>
+			Following this you will be asked to specify a workspace for your Eclipse session. A workspace is the location on your computer where your files will be stored relating to the session. If you wish to change your workspace location after this step you can do so by following the menu items <guimenuitem>File</guimenuitem>, <guimenuitem>Switch Workspace</guimenuitem>, <guimenuitem>Other...</guimenuitem>.
+		</para>
+		<figure id="figu-Beginners_Guide-Eclipse-Eclipse_Workspace_launcher">
+			<title>Eclipse Workspace launcher</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Eclipse_workspace.png" format="PNG" width="444" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			After selecting a workspace location, you will be greeted with the <guilabel>Welcome</guilabel> screen. This screen provides a few pathway options, including a <guilabel>Getting Started</guilabel> link to a selection of documentation, an option to create a new project with the <guilabel>Create New...</guilabel> option and an option to skip straight to your <guilabel>Workbench</guilabel>.
+		</para>
+		<figure id="figu-Beginners_Guide-Eclipse-Eclipse_welcome_screen">
+			<title>Eclipse welcome screen</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Eclipse_welcome_screen.png" format="PNG" width="444" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Skipping straight to your workbench, you will see a screen with a few sections and the JBoss Application Server listed in the bottom area of the interface.
+		</para>
+		<figure id="figu-Beginners_Guide-Eclipse-Eclipse_Workbench">
+			<title>Eclipse Workbench</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Eclipse_main.png" format="PNG" width="444" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			In the bottom left hand corner of the screen is a picture of a white column with a blue bar and a yellow plus sign beside it. Clicking on this button will open a menu of different views and windows.
+		</para>
+		<figure id="figu-Beginners_Guide-Eclipse-Views_button">
+			<title>Views button</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/View_Button.png" format="PNG" width="444" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The window that may be of most use to you can be found by following: <menuchoice><guimenuitem>Other...</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>JBoss Tools Palette</guimenuitem></menuchoice>. This window opens an interface to the tools included with <application>JBoss Tools</application> and the <application>JBoss Developer Studio</application>.
+		</para>
+		<para>
+			Refer to the <citetitle pubwork="section">Welcome to JBoss Developer Studio</citetitle> section of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-The_interface-JBoss_Application_Server">
+		<title>JBoss Application Server</title>
+		<para>
+			The JBoss Application Server provides the full range of Java EE 5 features as well as extended enterprise services including clustering, caching, and persistence.
+		</para>
+		<section id="sect-Beginners_Guide-JBoss_Application_Server-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio">
+			<title>Use of the application server shipped with JBoss Tools or JBoss Developer Studio</title>
+			<para>
+				This section discusses the JBoss Application Server with regards to its use through Eclipse. Once you have started the Eclipse interface for <application>JBoss Tools</application> or the <application>JBoss Developer Studio</application>, the JBoss Application Server can be started by clicking on its name in the lower part of the window and then clicking the green arrow to the right.
+			</para>
+			<figure id="figu-Beginners_Guide-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio-Starting_and_stopping_the_server">
+				<title>Starting and stopping the server</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/Start_Stop_Server.png" format="PNG" width="444" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<note>
+				<para>
+					If the <guimenu>Servers</guimenu> view is not displayed at the bottom of your Workbench, you can activate it through <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice> and then click the <guibutton>OK</guibutton> button.
+				</para>
+			</note>
+			<para>
+				After the server has been successfully started the status next to the server name will change from displaying <emphasis>Stopped</emphasis> to displaying <emphasis>Started, Synchronized</emphasis>.
+			</para>
+			<figure id="figu-Beginners_Guide-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio-Server_started_successfully">
+				<title>Server started successfully</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/Server_Started.png" format="PNG" width="444" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				Once Eclipse and the server are started, double click on the server name in Eclipse to see an <guilabel>Overview</guilabel> screen in the center.
+			</para>
+			<figure id="figu-Beginners_Guide-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio-JBoss_Application_Server_overview">
+				<title>JBoss Application Server overview</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/JBoss_AS_Overview.png" format="PNG" width="444" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				From this <guilabel>Overview</guilabel> section there are six subsections consisting of: <guilabel>General Information</guilabel>, <guilabel>Login Credentials</guilabel>, <guilabel>Publishing</guilabel>, <guilabel>Timeouts</guilabel>, <guilabel>Server Polling</guilabel> and <guilabel>Server Ports</guilabel>.
+			</para>
+			<para>
+				The <guilabel>General Information</guilabel> subsection allows you to change the <guilabel>Server name</guilabel> and <guilabel>Host name</guilabel> to your own preferences. By clicking on the <guilabel>Runtime Environment</guilabel> label a dialog box with options to change the name of the server runtime, the home directory, the Java compiler and which server configuration should be used when running the application server. The <guibutton>Open launch configuration</guibutton> button displays a dialog box for configuring the technical details of the application server instance.
+			</para>
+			<para>
+				Below the <guilabel>General Information</guilabel> subsection is the <guilabel>Login Credentials</guilabel> subsection. This allows you to set the <guilabel>User Name</guilabel> and <guilabel>Password</guilabel> for your server.
+			</para>
+			<para>
+				The <guilabel>Publishing</guilabel> subsection at the top right of the <guilabel>Overview</guilabel> section allows you to set when applications should be made available through the application server. You can select to either never have an application be published automatically or for a check of new applications yet to be published to occur at a certain timed interval.
+			</para>
+			<para>
+				The <guilabel>Timeouts</guilabel> subsection below <guilabel>Publishing</guilabel> allows you to set the start and stop time (in seconds) for the server to complete all of its operations. This setting is made available in order to decrease the chance of the server freezing or hanging.
+			</para>
+			<para>
+				Below the <guilabel>Timeouts</guilabel> subsection is the <guilabel>Server Polling</guilabel> subsection. A server poller gathers information about the server at certain points in time, capturing information about processes and applications. This section allows you to select between either the <literal>JMX Poller</literal> or <literal>Timeout Poller</literal> for startup and the <literal>Process Terminated Poller</literal> or <literal>Timeout Poller</literal> for shutdown.
+			</para>
+			<para>
+				The final subsection is <guilabel>Server Ports</guilabel>, below <guilabel>Server Polling</guilabel>. This section allows you to alter the port numbers that the server pollers gather their information from. The two settings of <guilabel>JNDI Port</guilabel> and <guilabel>Web Port</guilabel> are set to be automatically detected by default; normally there should be no reason to manually select the port numbers.
+			</para>
+			<note>
+				<para>
+					Changing the <guilabel>Server Ports</guilabel> subsection configuration will not alter which ports the server itself listens on.
+				</para>
+			</note>
+			<para>
+				Default access to the server can be achieved by typing the address <ulink url="http://localhost:8080">http://localhost:8080</ulink> into your Internet browser address bar.
+			</para>
+			<figure id="figu-Beginners_Guide-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio-Server_access">
+				<title>Server access</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/JBoss_AS_localhost.png" format="PNG" width="444" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				Refer to the <citetitle pubwork="chapter">Manage JBoss AS from JBoss Developer Studio</citetitle> chapter of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
+			</para>
+		</section>
+		
+		<section id="sect-Beginners_Guide-JBoss_Application_Server-Adding_a_new_application_server_for_use_with_JBoss_Tools_or_JBoss_Developer_Studio">
+			<title>Adding a new application server for use with JBoss Tools or JBoss Developer Studio</title>
+			<para>
+				Though JBoss Tools and JBoss Developer Studio may come with a pre-configured application server, you can still add your own servers. This section details how to add additional servers for use with JBoss Tools and the JBoss Developer Studio.
+			</para>
+			<para>
+				To add a new server runtime follow these steps:
+			</para>
+			<orderedlist>
+				<listitem>
+					<para>
+						In the Eclipse interface click on <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Runtime Environments</guimenuitem></menuchoice>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click on the <guibutton>Add...</guibutton> button
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Select the type of runtime environment your application server is from the list provided
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Tick the box for <guilabel>Create a new local server</guilabel>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click on the <guibutton>Next &gt;</guibutton> button
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Name your server runtime and then click on the <guibutton>Browse...</guibutton> button next to the <guilabel>Home Directory</guilabel> location space
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Navigate to the directory where the server you wish to add is installed and click on the <guibutton>OK</guibutton> button
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Select the Java Runtime Environment (JRE) you wish to use for this server from the drop-down menu. If the required JRE is not listed, click on the <guibutton>JRE</guibutton> button beside the list and then select the <guibutton>Add...</guibutton> button in the <guimenuitem>Installed JREs</guimenuitem> <guilabel>Preferences</guilabel> dialog box and follow the prompts to install the correct JRE
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						The <guilabel>Configuration</guilabel> section should automatically list the available profiles available for your server. Select the server configuration you wish to use by clicking on its name in the list
+					</para>
+					<para>
+						If the profile you wish to use is not listed click on the <guibutton>Browse...</guibutton> button, navigate to the profile location and click the <guibutton>OK</guibutton> button
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click the <guibutton>Next &gt;</guibutton> button to display the <guilabel>Runtime Information</guilabel> for the server you are about to add. If all the information is correct click the <guibutton>Finish</guibutton> button.
+					</para>
+					<para>
+						If you need to change any information click the <guibutton>&lt; Back</guibutton> button until you reach the screen with the information that needs to be altered and then navigate back to the <guilabel>Runtime Information</guilabel> screen and click the <guibutton>Finish</guibutton> button.
+					</para>
+				</listitem>
+			</orderedlist>
+			<para>
+				Once the new sever has been added, you can select it for use by clicking on its name in the <guilabel>Server Runtime Environment</guilabel> list and then clicking the <guibutton>OK</guibutton> button that will then take you back to the main Eclipse interface.
+			</para>
+			<para>
+				To start your new server, select it from those available through the <guimenu>Servers</guimenu> view and click the white arrow in a green circle.
+			</para>
+			<note>
+				<para>
+					If the <guimenu>Servers</guimenu> view is not displayed at the bottom of your Workbench, you can activate it through <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>JBoss Server View</guimenuitem></menuchoice> and then click the <guibutton>OK</guibutton> button.
+				</para>
+			</note>
+		</section>
+
+	</section>
+
+</chapter>
+
