@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  ~ ModeShape (http://www.modeshape.org)
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - Distributed under license by Red Hat, Inc. All rights reserved.
+  - This program is made available under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution, and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<feature
+      id="org.jboss.tools.modeshape.rest.feature"
+      label="%featureName"
+      version="1.0.0.v20091216"
+      provider-name="%featureProvider"
+      plugin="org.jboss.tools.modeshape.rest"
+      image="feature.png">
+
+   <description url="http://www.modeshape.org/">
+      %description
+   </description>
+
+   <copyright url="http://www.modeshape.org/copyright/">
+      %copyright
+   </copyright>
+
+   <license url="http://www.modeshape.org/license/">
+      %license
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+   </requires>
+
+   <plugin
+         id="org.jboss.tools.modeshape.rest"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>
