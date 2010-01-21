@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
-"http://www.docbook.org/xml/4.3/docbookx.dtd"
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3CR3/docbookx.dtd"
 
-[<!ENTITY  Preface SYSTEM "modules/Preface.xml">
-<!ENTITY Introduction SYSTEM "modules/Introduction.xml">
-<!ENTITY The_interface SYSTEM "modules/The_interface.xml">
-<!ENTITY Java_EE_and_SE SYSTEM "modules/Java_Web_(EE)_and_Standard_Edition_(SE).xml">
-<!ENTITY Service-Oriented_Architecture_Development SYSTEM "modules/Service-Oriented_Architecture_Development.xml">
-<!ENTITY Where_to_go_from_here SYSTEM "modules/Where_to_go_from_here.xml">
-<!ENTITY Revision_History SYSTEM "modules/Revision_History.xml">
+[<!ENTITY  Preface SYSTEM "Preface.xml">
+<!ENTITY Introduction SYSTEM "Introduction.xml">
+<!ENTITY The_interface SYSTEM "The_interface.xml">
+<!ENTITY Java_EE_and_SE SYSTEM "Java_Web_(EE)_and_Standard_Edition_(SE).xml">
+<!ENTITY Service-Oriented_Architecture_Development SYSTEM "Service-Oriented_Architecture_Development.xml">
+<!ENTITY Where_to_go_from_here SYSTEM "Where_to_go_from_here.xml">
+<!ENTITY Revision_History SYSTEM "Revision_History.xml">
 ]>
 
 <book>
