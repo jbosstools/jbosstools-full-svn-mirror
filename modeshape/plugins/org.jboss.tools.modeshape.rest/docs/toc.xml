@@ -1,0 +1,22 @@
+<!-- 
+  ~ ModeShape (http://www.modeshape.org)
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - Distributed under license by Red Hat, Inc. All rights reserved.
+  - This program is made available under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution, and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<toc label="ModeShape Publishing">
+   <topic label="Publishing/Unpublishing Dialog" href="docs/PublishDialog.html"/>
+   <topic label="Server View" href="docs/ServerView.html"/>
+   <topic label="Server Dialog" href="docs/ServerDialog.html"/>
+   <topic label="Publishing Message Console" href="docs/PublishingMessageConsole.html"/>
+   <topic label="Published Locations Dialog" href="docs/PublishedLocationsDialog.html"/>
+   <topic label="Resource Context Menu" href="docs/ResourceContextMenu.html"/>
+   <topic label="Publishing Preferences Dialog" href="docs/PublishingPreferencesDialog.html"/>
+</toc>

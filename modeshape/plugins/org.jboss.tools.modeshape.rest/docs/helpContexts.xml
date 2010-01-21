@@ -1,0 +1,40 @@
+<!-- 
+  ~ ModeShape (http://www.modeshape.org)
+  - See the COPYRIGHT.txt file distributed with this work for information
+  - regarding copyright ownership.
+  -
+  - Distributed under license by Red Hat, Inc. All rights reserved.
+  - This program is made available under the terms of the
+  - Eclipse Public License v1.0 which accompanies this distribution, and is
+  - available at http://www.eclipse.org/legal/epl-v10.html.
+  -
+  - See the AUTHORS.txt file in the distribution for a full listing of
+  - individual contributors.
+  -->
+<contexts>
+ <context id="serverViewHelpContext" title="ModeShape Server View">
+    <description>The ModeShape Server View shows all registered servers and their repositories and workspaces.</description>
+    <topic href="docs/ServerView.html"  label="Server View"/>
+    <topic href="docs/ServerDialog.html"  label="Server Dialog"/>
+ </context>
+ <context id="serverDialogHelpContext" title="Server Dialog">
+    <description>The ModeShape Server Dialog allows you to edit or create a server that hosts one or more repositories.</description>
+    <topic href="docs/ServerDialog.html"  label="Server Dialog"/>
+    <topic href="docs/ServerView.html"  label="Server View"/>
+ </context>
+ <context id="publishDialogHelpContext" title="ModeShape Publish and Unpublish Dialog Help">
+    <description>The Publish/Unpublish Dialog uploads or removes selected resources from the selected server.</description>
+    <topic href="docs/PublishDialog.html"  label="Publish/Unpublish Dialog"/>
+    <topic href="docs/ServerDialog.html"  label="Create a new server"/>
+    <topic href="docs/PublishingPreferencesDialog.html"  label="Publishing Preferences"/>
+ </context>
+ <context id="preferencesHelpContext" title="Publishing Preferences Dialog Help">
+    <description>The Publishing Preferences Dialog allows you to identify file extensions and folder names that should not be involved in publishing operations.</description>
+    <topic href="docs/PublishingPreferencesDialog.html"  label="Publishing Preferences"/>
+    <topic href="docs/PublishDialog.html"  label="Publish/Unpublish Dialog"/>
+ </context>
+ <context id="messageConsoleHelpContext" title="Publishing Message Console">
+    <description>The ModeShape Publishing Message Console contains the output from the publishing and unpublishing operations.</description>
+    <topic href="docs/PublishingMessageConsole.html"  label="Publishing Message Console"/>
+ </context>
+</contexts>
