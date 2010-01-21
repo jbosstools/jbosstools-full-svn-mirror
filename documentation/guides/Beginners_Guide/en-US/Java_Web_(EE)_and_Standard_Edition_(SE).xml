@@ -93,9 +93,9 @@
 								<imagedata fileref="images/figu-Beginners_Guide-Visual_Web_Tools-JBoss_Tools_Palette.png" format="PNG" />
 							</imageobject>
 							<textobject>
-								<para>
+								<phrase>
 									The JBoss Tools Palette, with a number of standard libraries loaded.
-								</para>
+								</phrase>
 							</textobject>
 						</mediaobject>
 					</figure>
@@ -176,9 +176,9 @@
 								<imagedata fileref="images/figu-Beginners_Guide-Visual_Web_Tools-Web_Projects_View_for_JSF_left_and_Struts_right_projects.png" format="PNG" width="444" />
 							</imageobject>
 							<textobject>
-								<para>
+								<phrase>
 									The Web Projects View, showing a <acronym>JSF</acronym> project on the left and a Struts project on the right.
-								</para>
+								</phrase>
 							</textobject>
 						</mediaobject>
 					</figure>
@@ -214,9 +214,9 @@
 								<imagedata fileref="images/figu-Beginners_Guide-Visual_Web_Tools-Content_Assist.png" format="PNG" width="444" />
 							</imageobject>
 							<textobject>
-								<para>
+								<phrase>
 									Content Assist with <acronym>JSF</acronym> code completion suggestions.
-								</para>
+								</phrase>
 							</textobject>
 						</mediaobject>
 					</figure>
@@ -302,9 +302,9 @@
 								<imagedata fileref="images/figu-Beginners_Guide-Seam_Development_Tools-New_Seam_Project_wizard.png" format="PNG" />
 							</imageobject>
 							<textobject>
-								<para>
+								<phrase>
 									The New Seam Project wizard, used to configure a Seam project.
-								</para>
+								</phrase>
 							</textobject>
 						</mediaobject>
 					</figure>
@@ -363,9 +363,9 @@
 											<imagedata fileref="images/figu-Beginners_Guide-Seam_Development_Tools-Seam_Pages_Editor_graphical_view.png" format="PNG" width="444" />
 										</imageobject>
 										<textobject>
-											<para>
+										<phrase>
 												The graphical view of the Seam Pages Editor, representing the project page-flow and exception handling.
-											</para>
+										</phrase>
 										</textobject>
 									</mediaobject>
 								</figure>
@@ -384,9 +384,9 @@
 											<imagedata fileref="images/figu-Beginners_Guide-Seam_Development_Tools-Seam_Components_Editor.png" format="PNG" width="444" />
 										</imageobject>
 										<textobject>
-											<para>
+										<phrase>
 												The Seam Components Editor, displaying the components in a hierarchical tree.
-											</para>
+										</phrase>
 										</textobject>
 									</mediaobject>
 								</figure>
@@ -453,9 +453,9 @@
 								<imagedata fileref="images/figu-Beginners_Guide-Hibernate_Tools-Hibernate_Console.png" format="PNG" width="444" />
 							</imageobject>
 							<textobject>
-								<para>
+								<phrase>
 									The Hibernate Console consists of multiple panels representing the database.
-								</para>
+								</phrase>
 							</textobject>
 						</mediaobject>
 					</figure>
@@ -506,9 +506,9 @@
 					<imagedata fileref="images/figu-Beginners_Guide-Portal_Tools-Dynamic_Web_Project_wizard.png" format="PNG" width="444" />
 				</imageobject>
 				<textobject>
-					<para>
+					<phrase>
 						The Dynamic Web Project wizard streamlines the creation of a <application>JBoss Portal</application> application.
-					</para>
+					</phrase>
 				</textobject>
 			</mediaobject>
 		</figure>
@@ -539,9 +539,9 @@
 								<imagedata fileref="images/figu-Beginners_Guide-JMX_Tools-MBean_Explorer.png" format="PNG" />
 							</imageobject>
 							<textobject>
-								<para>
+								<phrase>
 									The MBean Explorer lists a connection's Managed Beans, domains, attributes, and operations in a hierarchical tree.
-								</para>
+								</phrase>
 							</textobject>
 						</mediaobject>
 					</figure>
@@ -582,9 +582,9 @@
 								<imagedata fileref="images/figu-Beginners_Guide-JMX_Tools-MBean_Editor.png" format="PNG" width="444" />
 							</imageobject>
 							<textobject>
-								<para>
+								<phrase>
 									The MBean Editor is a property editor for Managed Beans.
-								</para>
+								</phrase>
 							</textobject>
 						</mediaobject>
 					</figure>
@@ -608,9 +608,9 @@
 					<imagedata fileref="images/figu-Beginners_Guide-JBoss_AS_Tools-JBoss_Server_View.png" format="PNG" width="444" />
 				</imageobject>
 				<textobject>
-					<para>
+					<phrase>
 						The Servers view shows the installed servers and their current states.
-					</para>
+					</phrase>
 				</textobject>
 			</mediaobject>
 		</figure>
@@ -631,9 +631,9 @@
 					<imagedata fileref="images/figu-Beginners_Guide-Archive_Tools-Archive_Tools.png" format="PNG" width="444" />
 				</imageobject>
 				<textobject>
-					<para>
+					<phrase>
 						Project archives can be managed with the Archive Tools.
-					</para>
+					</phrase>
 				</textobject>
 			</mediaobject>
 		</figure>
