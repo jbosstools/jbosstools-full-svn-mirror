@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ColumnLayoutData;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -101,12 +102,40 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		 * Add path output and browse button 
 		 */
 		final Text pathText = new Text(composite, SWT.BORDER);
-		pathText.setEditable(false);
+		pathText.setEditable(true);
 		pathText.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		pathText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				pathString = ((Text)e.getSource()).getText();
-				setPageComplete(isPageComplete());
+				IPath enteredPath = null;
+				/*
+				 * Load templates if the path is valid
+				 */
+				if ((Path.ROOT.isValidPath(pathString))
+						&& (enteredPath = Path.fromOSString(pathString)).toFile().exists()) {
+					/*
+					 * Load tags list from the specified location.
+					 */
+					tagsList = VpeTemplateManager.getInstance()
+							.getAnyTemplates(enteredPath);
+					/*
+					 * Update table tags list based on the loaded file.
+					 */
+					updateTagsTable();
+					/*
+					 * Check if the page is complete.
+					 */
+					setPageComplete(isPageComplete());
+				} else {
+					/*
+					 * Reset taglist, show empty table
+					 */
+					if (tagsList != null) {
+						tagsList.clear();
+						updateTagsTable();
+						setPageComplete(isPageComplete());
+					}
+				}
 			}
 		});
 		
@@ -122,18 +151,6 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 					File file = new File(path);
 					pathString = file.toString();
 					pathText.setText(pathString);
-					/*
-					 * Load tags list from the specified location.
-					 */
-					tagsList = VpeTemplateManager.getInstance().getAnyTemplates(new Path(pathString));
-					/*
-					 * Update table tags list based on the loaded file.
-					 */
-					updateTagsTable();
-					/*
-					 * Check if the page is complete.
-					 */
-					setPageComplete(isPageComplete());
 				}
 			}
 		});
