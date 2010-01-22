@@ -40,6 +40,7 @@ import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
+import org.jboss.tools.smooks.configuration.editors.uitls.INumberParser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
@@ -367,7 +368,13 @@ public class SmooksStuffPropertyDetailPage implements IDetailsPage, ISmooksModel
 			FormToolkit formToolKit, final IItemPropertyDescriptor itemPropertyDescriptor) {
 
 		return SmooksUIUtils.createNumberFieldEditor(null, propertyComposite, formToolKit, itemPropertyDescriptor,
-				getModel());
+				getModel(), new INumberParser() {
+					
+					public Object transformText(String text) {
+						
+						return Integer.parseInt(text);
+					}
+				} );
 	}
 
 	/*

@@ -101,6 +101,20 @@ public class PropertyUICreator implements IPropertyUICreator {
 		if (feature == SmooksPackage.eINSTANCE.getAbstractReader_TargetProfile()) {
 
 		}
+//		EClassifier typeClazz = feature.getEType();
+//		if (typeClazz instanceof EEnum) {
+//			return createEnumFieldEditor(detailsComposite, feature, (EEnum) typeClazz, formToolkit,
+//					itemPropertyDescriptor);
+//		}
+//		if (typeClazz.getInstanceClass() == String.class) {
+//			return createStringFieldEditor(detailsComposite, feature, formToolkit, itemPropertyDescriptor);
+//		}
+//		if (typeClazz.getInstanceClass() == Boolean.class || typeClazz.getInstanceClass() == boolean.class) {
+//			return createBooleanFieldEditor(detailsComposite, feature, formToolkit, itemPropertyDescriptor);
+//		}
+//		if (typeClazz.getInstanceClass() == Integer.class || typeClazz.getInstanceClass() == int.class) {
+//			return createIntegerFieldEditor(detailsComposite, feature, formToolkit, itemPropertyDescriptor);
+//		}
 		return null;
 	}
 
