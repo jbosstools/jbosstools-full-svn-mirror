@@ -15,9 +15,9 @@ package org.jboss.tools.modeshape.rest.preferences;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
 import static org.jboss.tools.modeshape.rest.IUiConstants.PREFERENCE_PAGE_HELP_CONTEXT;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.publishingPreferencePageDescription;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.publishingPreferencePageMessage;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.publishingPreferencePageTitle;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageDescription;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageMessage;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageTitle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
@@ -32,9 +32,9 @@ import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.rest.Activator;
 
 /**
- * The <code>PublishingPreferencePage</code> is the UI for managing all ModeShape-related preferences.
+ * The <code>ModeShapePreferencePage</code> is the UI for managing all ModeShape-related preferences.
  */
-public final class PublishingPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
+public final class ModeShapePreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
     // ===========================================================================================================================
     // Fields
@@ -95,7 +95,7 @@ public final class PublishingPreferencePage extends PreferencePage implements IW
      */
     @Override
     public String getDescription() {
-        return publishingPreferencePageDescription.text();
+        return preferencePageDescription.text();
     }
 
     /**
@@ -115,7 +115,7 @@ public final class PublishingPreferencePage extends PreferencePage implements IW
      */
     @Override
     public String getMessage() {
-        return publishingPreferencePageMessage.text();
+        return preferencePageMessage.text();
     }
 
     /**
@@ -135,7 +135,7 @@ public final class PublishingPreferencePage extends PreferencePage implements IW
      */
     @Override
     public String getTitle() {
-        return publishingPreferencePageTitle.text();
+        return preferencePageTitle.text();
     }
 
     /**

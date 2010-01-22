@@ -71,11 +71,11 @@ public final class RestClientI18n {
     public static I18n publishingConsoleProblemCreatingHyperlinkMsg;
     public static I18n publishingConsoleFilePathNotFoundMsg;
 
-    public static I18n publishingPreferencePageDescription;
-    public static I18n publishingPreferencePageFilteredFileExtensionsLabel;
-    public static I18n publishingPreferencePageFilteredFolderNamesLabel;
-    public static I18n publishingPreferencePageMessage;
-    public static I18n publishingPreferencePageTitle;
+    public static I18n preferencePageDescription;
+    public static I18n preferencePageFilteredFileExtensionsLabel;
+    public static I18n preferencePageFilteredFolderNamesLabel;
+    public static I18n preferencePageMessage;
+    public static I18n preferencePageTitle;
 
     public static I18n publishJobCanceled;
     public static I18n publishJobDurationMsg;

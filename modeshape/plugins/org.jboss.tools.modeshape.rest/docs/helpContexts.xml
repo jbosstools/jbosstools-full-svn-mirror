@@ -26,15 +26,15 @@
     <description>The Publish/Unpublish Dialog uploads or removes selected resources from the selected server.</description>
     <topic href="docs/PublishDialog.html"  label="Publish/Unpublish Dialog"/>
     <topic href="docs/ServerDialog.html"  label="Create a new server"/>
-    <topic href="docs/PublishingPreferencesDialog.html"  label="Publishing Preferences"/>
+    <topic href="docs/ModeShapePreferencesDialog.html"  label="ModeShape Preferences"/>
  </context>
- <context id="preferencesHelpContext" title="Publishing Preferences Dialog Help">
-    <description>The Publishing Preferences Dialog allows you to identify file extensions and folder names that should not be involved in publishing operations.</description>
-    <topic href="docs/PublishingPreferencesDialog.html"  label="Publishing Preferences"/>
+ <context id="preferencesHelpContext" title="ModeShape Preferences Dialog Help">
+    <description>The ModeShape Preferences Dialog allows you to identify file extensions and folder names that should not be involved in publishing operations.</description>
+    <topic href="docs/ModeShapePreferencesDialog.html"  label="ModeShape Preferences"/>
     <topic href="docs/PublishDialog.html"  label="Publish/Unpublish Dialog"/>
  </context>
- <context id="messageConsoleHelpContext" title="Publishing Message Console">
-    <description>The ModeShape Publishing Message Console contains the output from the publishing and unpublishing operations.</description>
-    <topic href="docs/PublishingMessageConsole.html"  label="Publishing Message Console"/>
+ <context id="messageConsoleHelpContext" title="ModeShape Message Console">
+    <description>The ModeShape Message Console contains the output from the publishing and unpublishing operations.</description>
+    <topic href="docs/ModeShapeMessageConsole.html"  label="ModeShape Message Console"/>
  </context>
 </contexts>

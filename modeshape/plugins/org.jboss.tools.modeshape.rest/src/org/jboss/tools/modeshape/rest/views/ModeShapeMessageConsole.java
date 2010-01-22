@@ -37,10 +37,10 @@ import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
 
 /**
- * The <code>PublishingMessageConsole</code> is a message console view where status of publishing operations are logged. This class
+ * The <code>ModeShapeMessageConsole</code> is a message console view where status of publishing operations are logged. This class
  * ensures all writes to the console are done in the UI thread.
  */
-public final class PublishingMessageConsole extends MessageConsole {
+public final class ModeShapeMessageConsole extends MessageConsole {
 
     // =======================================================================================================================
     // Constants
@@ -59,7 +59,7 @@ public final class PublishingMessageConsole extends MessageConsole {
     /**
      * The identifier and type of the Message Console.
      */
-    private static final String ID = "org.jboss.tools.modeshape.rest.views.PublishingMessageConsole";
+    private static final String ID = "org.jboss.tools.modeshape.rest.views.ModeShapeMessageConsole";
 
     /**
      * The message console name.
@@ -71,26 +71,26 @@ public final class PublishingMessageConsole extends MessageConsole {
     // =======================================================================================================================
 
     /**
-     * Note: The <code>PublishingMessageConsole</code> should <strong>NOT</strong> be cached as the user can open/close/create instances.
+     * Note: The <code>ModeShapeMessageConsole</code> should <strong>NOT</strong> be cached as the user can open/close/create instances.
      * 
      * @return the Message Console if available or a new one (never <code>null</code>)
      */
-    private static PublishingMessageConsole getMessageConsole() {
-        PublishingMessageConsole console = null;
+    private static ModeShapeMessageConsole getMessageConsole() {
+        ModeShapeMessageConsole console = null;
         IConsoleManager consoleMgr = ConsolePlugin.getDefault().getConsoleManager();
         IConsole[] consoles = consoleMgr.getConsoles();
 
         // see if console is open
         for (int i = 0; i < consoles.length; ++i) {
             if (NAME.equals(consoles[i].getName())) {
-                console = (PublishingMessageConsole)consoles[i];
+                console = (ModeShapeMessageConsole)consoles[i];
                 break;
             }
         }
 
         // create console if necessary
         if (console == null) {
-            console = new PublishingMessageConsole();
+            console = new ModeShapeMessageConsole();
             consoleMgr.addConsoles(new IConsole[] {console});
         }
 
@@ -118,7 +118,7 @@ public final class PublishingMessageConsole extends MessageConsole {
                                 IFile file ) {
         CheckArg.isNotNull(message, "message");
 
-        PublishingMessageConsole console = getMessageConsole();
+        ModeShapeMessageConsole console = getMessageConsole();
         console.print(message, true, file);
     }
 
@@ -129,7 +129,7 @@ public final class PublishingMessageConsole extends MessageConsole {
     /**
      * Prevent construction.
      */
-    private PublishingMessageConsole() {
+    private ModeShapeMessageConsole() {
         super(NAME, Activator.getDefault().getImageDescriptor(ModeShape_IMAGE_16x));
     }
 
@@ -252,7 +252,7 @@ public final class PublishingMessageConsole extends MessageConsole {
         /**
          * The console where the message is printed to and the hyperlink will be created.
          */
-        private final PublishingMessageConsole console;
+        private final ModeShapeMessageConsole console;
 
         /**
          * The file whose full path will become a hyperlink.
@@ -274,7 +274,7 @@ public final class PublishingMessageConsole extends MessageConsole {
          * @param file the file whose full path appears in the message and will become a hyperlink
          */
         public HyperlinkCreator( String message,
-                                 PublishingMessageConsole console,
+                                 ModeShapeMessageConsole console,
                                  IFile file ) {
             this.message = message.replaceAll("<em>", "").replaceAll("\\Q</em>\\E", "");
             this.console = console;

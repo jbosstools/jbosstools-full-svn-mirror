@@ -45,10 +45,10 @@ import org.modeshape.web.jcr.rest.client.domain.Server;
 import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
- * The <code>PublishingContentProvider</code> is a content and label provider for the repositories. This class
+ * The <code>ModeShapeContentProvider</code> is a content and label provider for the repositories. This class
  * <strong>MUST</strong> be registered, and then unregistered, to receive server registry events.
  */
-public final class PublishingContentProvider extends ColumnLabelProvider
+public final class ModeShapeContentProvider extends ColumnLabelProvider
     implements ILightweightLabelDecorator, IServerRegistryListener, ITreeContentProvider {
 
     // ===========================================================================================================================
@@ -72,11 +72,11 @@ public final class PublishingContentProvider extends ColumnLabelProvider
     /**
      * @return the decorator
      */
-    public static PublishingContentProvider getDecorator() {
+    public static ModeShapeContentProvider getDecorator() {
         IDecoratorManager decoratorMgr = Activator.getDefault().getWorkbench().getDecoratorManager();
 
         if (decoratorMgr.getEnabled(ID)) {
-            return (PublishingContentProvider)decoratorMgr.getBaseLabelProvider(ID);
+            return (ModeShapeContentProvider)decoratorMgr.getBaseLabelProvider(ID);
         }
 
         return null;
@@ -342,7 +342,7 @@ public final class PublishingContentProvider extends ColumnLabelProvider
             @SuppressWarnings( "synthetic-access" )
             @Override
             public void run() {
-                fireLabelProviderChanged(new LabelProviderChangedEvent(PublishingContentProvider.this, element));
+                fireLabelProviderChanged(new LabelProviderChangedEvent(ModeShapeContentProvider.this, element));
             }
         });
     }

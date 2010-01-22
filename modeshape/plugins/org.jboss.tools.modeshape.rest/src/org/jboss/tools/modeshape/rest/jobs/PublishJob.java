@@ -27,8 +27,8 @@ import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.PublishedResourceHelper;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
-import org.jboss.tools.modeshape.rest.views.PublishingContentProvider;
-import org.jboss.tools.modeshape.rest.views.PublishingMessageConsole;
+import org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider;
+import org.jboss.tools.modeshape.rest.views.ModeShapeMessageConsole;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.domain.Workspace;
@@ -185,13 +185,13 @@ public final class PublishJob extends Job {
 
             // write initial message to console
             if (isPublishing()) {
-                PublishingMessageConsole.writeln(RestClientI18n.publishJobPublish.text(this.jobId,
+                ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublish.text(this.jobId,
                                                                                 serverUrl,
                                                                                 repositoryName,
                                                                                 workspaceName,
                                                                                 fileCount));
             } else {
-                PublishingMessageConsole.writeln(RestClientI18n.publishJobUnpublish.text(this.jobId,
+                ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublish.text(this.jobId,
                                                                                   serverUrl,
                                                                                   repositoryName,
                                                                                   workspaceName,
@@ -231,7 +231,7 @@ public final class PublishJob extends Job {
                 monitor.worked(1);
 
                 // let decorator know publishing state has changed on this file
-                PublishingContentProvider decorator = PublishingContentProvider.getDecorator();
+                ModeShapeContentProvider decorator = ModeShapeContentProvider.getDecorator();
 
                 if (decorator != null) {
                     decorator.refresh(eclipseFile);
@@ -279,21 +279,21 @@ public final class PublishJob extends Job {
 
             if (canceled) {
                 if (isPublishing()) {
-                    PublishingMessageConsole.writeln(RestClientI18n.publishJobPublishCanceledMsg.text(this.jobId,
+                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublishCanceledMsg.text(this.jobId,
                                                                                                numProcessed,
                                                                                                this.files.size(),
                                                                                                duration));
                 } else {
-                    PublishingMessageConsole.writeln(RestClientI18n.publishJobUnpublishCanceledMsg.text(this.jobId,
+                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublishCanceledMsg.text(this.jobId,
                                                                                                  numProcessed,
                                                                                                  this.files.size(),
                                                                                                  duration));
                 }
             } else {
                 if (isPublishing()) {
-                    PublishingMessageConsole.writeln(RestClientI18n.publishJobPublishFinishedMsg.text(this.jobId, duration));
+                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublishFinishedMsg.text(this.jobId, duration));
                 } else {
-                    PublishingMessageConsole.writeln(RestClientI18n.publishJobUnpublishFinishedMsg.text(this.jobId, duration));
+                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublishFinishedMsg.text(this.jobId, duration));
                 }
             }
         }
@@ -347,7 +347,7 @@ public final class PublishJob extends Job {
         }
 
         // write to console creating a hyperlink
-        PublishingMessageConsole.writeln(message, file);
+        ModeShapeMessageConsole.writeln(message, file);
     }
 
 }

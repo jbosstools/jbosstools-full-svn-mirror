@@ -16,7 +16,7 @@ package org.jboss.tools.modeshape.rest.preferences;
 import static org.jboss.tools.modeshape.rest.IUiConstants.FILTERED_FOLDER_NAMES_PREFERENCE;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.newFilteredFolderNameDialogLabel;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.newFilteredFolderNameDialogTitle;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.publishingPreferencePageFilteredFolderNamesLabel;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageFilteredFolderNamesLabel;
 import static org.jboss.tools.modeshape.rest.preferences.PrefUtils.FOLDER_NAME_DELIMITER;
 import static org.jboss.tools.modeshape.rest.preferences.PrefUtils.FOLDER_NAME_INVALID_CHARS;
 import java.util.Arrays;
@@ -51,7 +51,7 @@ public final class FilteredFoldersEditor extends ListEditor implements VerifyLis
      * @param parent the parent control
      */
     public FilteredFoldersEditor( Composite parent ) {
-        super(FILTERED_FOLDER_NAMES_PREFERENCE, publishingPreferencePageFilteredFolderNamesLabel.text(), parent);
+        super(FILTERED_FOLDER_NAMES_PREFERENCE, preferencePageFilteredFolderNamesLabel.text(), parent);
         this.folderNames = new TreeSet<String>();
     }
 

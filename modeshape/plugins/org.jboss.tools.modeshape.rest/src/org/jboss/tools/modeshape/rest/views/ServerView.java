@@ -82,7 +82,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
     /**
      * The viewer's content and label provider.
      */
-    private PublishingContentProvider provider;
+    private ModeShapeContentProvider provider;
 
     /**
      * Refreshes the server connections.
@@ -156,7 +156,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
      * @param parent the viewer's parent
      */
     private void constructTreeViewer( Composite parent ) {
-        this.provider = new PublishingContentProvider();
+        this.provider = new ModeShapeContentProvider();
         this.viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
 
         this.viewer.setContentProvider(this.provider);

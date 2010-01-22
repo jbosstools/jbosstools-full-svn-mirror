@@ -16,7 +16,7 @@ package org.jboss.tools.modeshape.rest.preferences;
 import static org.jboss.tools.modeshape.rest.IUiConstants.FILTERED_FILE_EXTENSIONS_PREFERENCE;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.newFilteredFileExtensionDialogLabel;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.newFilteredFileExtensionDialogTitle;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.publishingPreferencePageFilteredFileExtensionsLabel;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageFilteredFileExtensionsLabel;
 import static org.jboss.tools.modeshape.rest.preferences.PrefUtils.FILE_EXT_DELIMITER;
 import static org.jboss.tools.modeshape.rest.preferences.PrefUtils.FILE_EXT_INVALID_CHARS;
 import java.util.Arrays;
@@ -51,7 +51,7 @@ public final class FilteredFileExtensionEditor extends ListEditor implements Ver
      * @param parent the parent control
      */
     public FilteredFileExtensionEditor( Composite parent ) {
-        super(FILTERED_FILE_EXTENSIONS_PREFERENCE, publishingPreferencePageFilteredFileExtensionsLabel.text(), parent);
+        super(FILTERED_FILE_EXTENSIONS_PREFERENCE, preferencePageFilteredFileExtensionsLabel.text(), parent);
         this.extensions = new TreeSet<String>();
     }
 

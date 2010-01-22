@@ -116,7 +116,7 @@
             adaptable="true"
             label="%decorator.label"
             state="true"
-            class="org.jboss.tools.modeshape.rest.views.PublishingContentProvider"
+            class="org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider"
             id="org.jboss.tools.modeshape.rest.decorator">
          <description>
             %decorator.description
@@ -149,8 +149,8 @@
          point="org.eclipse.ui.preferencePages">
       <page
             name="%modeShapeCategory"
-            class="org.jboss.tools.modeshape.rest.preferences.PublishingPreferencePage"
-            id="publishingPreferencePage">
+            class="org.jboss.tools.modeshape.rest.preferences.ModeShapePreferencePage"
+            id="modeShapePreferencePage">
       </page>
    </extension>
 </plugin>
