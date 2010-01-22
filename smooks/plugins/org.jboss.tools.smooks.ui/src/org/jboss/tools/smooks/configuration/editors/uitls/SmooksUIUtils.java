@@ -613,7 +613,7 @@ public class SmooksUIUtils {
 	}
 
 	public static AttributeFieldEditPart createNumberFieldEditor(String label, final Composite parent,
-			FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor, Object model) {
+			FormToolkit toolkit, final IItemPropertyDescriptor itemPropertyDescriptor, Object model ,final INumberParser numberParser) {
 		AttributeFieldEditPart fieldEditPart = new AttributeFieldEditPart();
 		GridData gd = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		Section section = null;
@@ -663,22 +663,23 @@ public class SmooksUIUtils {
 
 		toolkit.paintBordersFor(textContainer);
 
-		boolean valueIsSet = true;
-		if (model != null && model instanceof EObject && itemPropertyDescriptor != null) {
-			valueIsSet = ((EObject) model).eIsSet((EAttribute) itemPropertyDescriptor.getFeature(model));
-		}
-		if (editValue != null && valueIsSet && editValue instanceof Integer) {
+//		boolean valueIsSet = true;
+//		if (model != null && model instanceof EObject && itemPropertyDescriptor != null) {
+//			valueIsSet = ((EObject) model).eIsSet((EAttribute) itemPropertyDescriptor.getFeature(model));
+//		}
+		if (editValue != null ) {
 			valueText.setText(editValue.toString());
 		}
 		if (itemPropertyDescriptor != null) {
 			valueText.addModifyListener(new ModifyListener() {
 				public void modifyText(ModifyEvent e) {
+					if(numberParser == null) return;
 					Object editValue = getEditValue(itemPropertyDescriptor, fm);
 					if (editValue != null) {
 						String vt = valueText.getText();
-						Integer newValue = null;
+						Object newValue = null;
 						try {
-							newValue = Integer.parseInt(vt);
+							newValue = numberParser.transformText(vt);
 						} catch (Throwable t) {
 							return;
 						}
@@ -691,9 +692,9 @@ public class SmooksUIUtils {
 						}
 					} else {
 						String vt = valueText.getText();
-						Integer newValue = null;
+						Object newValue = null;
 						try {
-							newValue = Integer.parseInt(vt);
+							newValue =  numberParser.transformText(vt);
 						} catch (Throwable t) {
 							return;
 						}

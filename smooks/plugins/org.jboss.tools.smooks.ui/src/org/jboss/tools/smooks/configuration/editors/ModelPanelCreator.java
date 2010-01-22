@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.configuration.editors;
 
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +31,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.uitls.IModelProcsser;
+import org.jboss.tools.smooks.configuration.editors.uitls.INumberParser;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
@@ -202,23 +204,29 @@ public class ModelPanelCreator {
 		if (createDefault) {
 			EClassifier typeClazz = feature.getEType();
 			boolean hasCreated = false;
+			Class<?> instanceClass = typeClazz.getInstanceClass();
 			if (typeClazz instanceof EEnum) {
 				editPart = createEnumFieldEditor(formToolkit, model, detailsComposite, feature, (EEnum) typeClazz,
 						formToolkit, itemPropertyDescriptor);
 				hasCreated = true;
 			}
-			if (typeClazz.getInstanceClass() == String.class) {
+			if (instanceClass == String.class) {
 				editPart = createStringFieldEditor(model, detailsComposite, feature, formToolkit,
 						itemPropertyDescriptor);
 				hasCreated = true;
 			}
-			if (typeClazz.getInstanceClass() == Boolean.class || typeClazz.getInstanceClass() == boolean.class) {
+			if (instanceClass == Boolean.class || instanceClass == boolean.class) {
 				editPart = createBooleanFieldEditor(model, detailsComposite, feature, formToolkit,
 						itemPropertyDescriptor);
 				hasCreated = true;
 			}
-			if (typeClazz.getInstanceClass() == Integer.class || typeClazz.getInstanceClass() == int.class) {
+			if (instanceClass == Integer.class || instanceClass == int.class) {
 				editPart = createIntegerFieldEditor(model, detailsComposite, feature, formToolkit,
+						itemPropertyDescriptor);
+				hasCreated = true;
+			}
+			if(Number.class.isAssignableFrom(instanceClass)){
+				editPart = createBigIntegerFieldEditor(model, detailsComposite, feature, formToolkit,
 						itemPropertyDescriptor);
 				hasCreated = true;
 			}
@@ -232,10 +240,27 @@ public class ModelPanelCreator {
 		return editPart;
 	}
 
+	protected AttributeFieldEditPart createBigIntegerFieldEditor(Object model, final Composite propertyComposite,
+			EAttribute feature, FormToolkit formToolKit, final IItemPropertyDescriptor itemPropertyDescriptor) {
+		return SmooksUIUtils.createNumberFieldEditor(null, propertyComposite, formToolKit, itemPropertyDescriptor,
+				model , new INumberParser() {
+					
+					public Object transformText(String text) {
+						return BigInteger.valueOf(Long.parseLong(text));
+					}
+				});
+	}
+
 	protected AttributeFieldEditPart createIntegerFieldEditor(Object model, final Composite propertyComposite,
 			EAttribute feature, FormToolkit formToolKit, final IItemPropertyDescriptor itemPropertyDescriptor) {
 		return SmooksUIUtils.createNumberFieldEditor(null, propertyComposite, formToolKit, itemPropertyDescriptor,
-				model);
+				model , new INumberParser() {
+					
+					public Object transformText(String text) {
+						
+						return Integer.parseInt(text);
+					}
+				});
 	}
 
 	protected AttributeFieldEditPart createEnumFieldEditor(FormToolkit formToolkit, final EObject model,
