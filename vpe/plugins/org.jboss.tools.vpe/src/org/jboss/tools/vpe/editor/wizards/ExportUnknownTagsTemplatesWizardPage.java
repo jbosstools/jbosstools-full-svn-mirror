@@ -123,7 +123,7 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 		/*
 		 * Fill the table with stored tags
 		 */
-		updateTagsTable();
+		updateTagsTable(true);
 		
 		/*
 		 * Add path output and browse button 
@@ -148,8 +148,10 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 				if (path != null) {
 					File file = new File(path);
 					pathString = file.toString();
+					/*
+					 * Then modifyText event will be dispatched.
+					 */
 					pathText.setText(pathString);
-					setPageComplete(isPageComplete());
 				}
 			}
 		});
@@ -171,10 +173,34 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 		 */
 	}
 
-	private void updateTagsTable() {
+	/**
+	 * Updates visual table with tags templates.
+	 * 
+	 * @param clearTagsTable clears current tags table
+	 */
+	private void updateTagsTable(boolean clearTagsTable) {
+		/*
+		 * Return when visual table hasn't been initialized.
+		 */
 		if(tagsTable == null || tagsTable.isDisposed()) {
 			return;
 		}
+		/*
+		 * Clear current visual table.
+		 */
+		if (clearTagsTable) {
+			tagsTable.clearAll();
+		}
+		/*
+		 * Return when tags templates list hasn't been initialized.
+		 */
+		if (tagsList == null) {
+			return;
+		}
+		/*
+		 * Remember current selection index 
+		 * and restore it at the end.
+		 */
 		int selectionIndex = tagsTable.getSelectionIndex();
 		TableItem tableItem = null;
 		for (int i = 0; i < tagsList.size(); i++) {
@@ -262,11 +288,10 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 
 	@Override
 	public boolean isPageComplete() {
-		/*
-		 * Later page should be complete some tags are selected.
-		 */
 		boolean isPageComplete = false;
-		if ((pathString != null) && !Constants.EMPTY.equalsIgnoreCase(pathString)) {
+		if ((pathString != null) 
+				&& !Constants.EMPTY.equalsIgnoreCase(pathString)
+				&& (Path.ROOT.isValidPath(pathString))) {
 			isPageComplete = true;
 		}
 		return isPageComplete;

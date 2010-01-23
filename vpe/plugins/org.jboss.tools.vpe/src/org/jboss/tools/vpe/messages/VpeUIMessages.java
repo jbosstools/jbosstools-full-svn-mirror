@@ -151,6 +151,7 @@ public final class VpeUIMessages extends NLS {
 	public static String SELECT_ALL;
 	public static String DESELECT_ALL;
 	public static String BROWSE_BUTTON_TEXT;
-	public static String ERROR_ON_IMPORT_TAG_TEMPLATES;
+	public static String NONE_TEMPLATES_WERE_ADDED;
+	public static String COULD_NOT_SET_TABLE_SELECTION;
 	
 }

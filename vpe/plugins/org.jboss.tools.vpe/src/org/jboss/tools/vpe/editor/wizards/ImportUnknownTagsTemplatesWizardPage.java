@@ -118,24 +118,23 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 					 */
 					tagsList = VpeTemplateManager.getInstance()
 							.getAnyTemplates(enteredPath);
-					/*
-					 * Update table tags list based on the loaded file.
-					 */
-					updateTagsTable();
-					/*
-					 * Check if the page is complete.
-					 */
-					setPageComplete(isPageComplete());
+					
 				} else {
 					/*
 					 * Reset taglist, show empty table
 					 */
 					if (tagsList != null) {
 						tagsList.clear();
-						updateTagsTable();
-						setPageComplete(isPageComplete());
 					}
 				}
+				/*
+				 * Update table tags list based on the loaded file.
+				 */
+				updateTagsTable(true);
+				/*
+				 * Check if the page is complete.
+				 */
+				setPageComplete(isPageComplete());
 			}
 		});
 		
@@ -150,6 +149,9 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 				if (path != null) {
 					File file = new File(path);
 					pathString = file.toString();
+					/*
+					 * Then modifyText event will be dispatched.
+					 */
 					pathText.setText(pathString);
 				}
 			}
@@ -184,10 +186,34 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		
 	}
 
-	private void updateTagsTable() {
+	/**
+	 * Updates visual table with tags templates.
+	 * 
+	 * @param clearTagsTable clears current tags table
+	 */
+	private void updateTagsTable(boolean clearTagsTable) {
+		/*
+		 * Return when visual table hasn't been initialized.
+		 */
 		if(tagsTable == null || tagsTable.isDisposed()) {
 			return;
 		}
+		/*
+		 * Clear current visual table.
+		 */
+		if (clearTagsTable) {
+			tagsTable.clearAll();
+		}
+		/*
+		 * Return when tags templates list hasn't been initialized.
+		 */
+		if (tagsList == null) {
+			return;
+		}
+		/*
+		 * Remember current selection index 
+		 * and restore it at the end.
+		 */
 		int selectionIndex = tagsTable.getSelectionIndex();
 		TableItem tableItem = null;
 		for (int i = 0; i < tagsList.size(); i++) {
@@ -198,7 +224,7 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 				tableItem = tagsTable.getItem(i);
 			} else {
 				/*
-				 * Add necessary item
+				 * Add new item
 				 */
 				tableItem = new TableItem(tagsTable, SWT.BORDER, i);
 			}
@@ -217,7 +243,6 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 			 */
 			tableItem.setText(itemColumnsData);
 		}
-		
 		/*
 		 * Restoring selection index
 		 */
@@ -225,9 +250,8 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 			 try {
 					tagsTable.setSelection(selectionIndex);
 				} catch (SWTException e) {
-					/*
-					 * Do nothing
-					 */
+				VpePlugin.getDefault().logError(
+						VpeUIMessages.COULD_NOT_SET_TABLE_SELECTION, e);
 				}
 		}
 	}
@@ -268,11 +292,11 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 	
 	@Override
 	public boolean isPageComplete() {
-		/*
-		 * Later page should be complete some tags are selected.
-		 */
 		boolean isPageComplete = false;
-		if ((pathString != null) && !Constants.EMPTY.equalsIgnoreCase(pathString)) {
+		if ((pathString != null)
+				&& !Constants.EMPTY.equalsIgnoreCase(pathString)
+				&& (Path.ROOT.isValidPath(pathString))
+				&& ((Path.fromOSString(pathString)).toFile().exists())) {
 			isPageComplete = true;
 		}
 		return isPageComplete;
@@ -308,9 +332,9 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 			VpeTemplateManager.getInstance().setAnyTemplates(currentList);
 		} else {
 			/*
-			 * Log error if the operation could not be performed.
+			 * Log WARNING if the operation could not be performed.
 			 */
-			VpePlugin.getDefault().logError(VpeUIMessages.ERROR_ON_IMPORT_TAG_TEMPLATES);
+			VpePlugin.getDefault().logWarning(VpeUIMessages.NONE_TEMPLATES_WERE_ADDED);
 		}
 		 return true;
 	 }
