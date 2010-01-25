@@ -3,7 +3,7 @@
     <ns0:OrderStatusResultHeader>
         <ns0:BuyerParty>
             <ns1:PartyID xmlns:ns1="rrn:org.xcbl:schemas/xcbl/v4_0/core/core.xsd">
-                <ns1:Ident>${order.status.id?string}</ns1:Ident>                
+                <ns1:Ident>${order.status.id!?string}</ns1:Ident>                
             </ns1:PartyID>            
         </ns0:BuyerParty>        
     </ns0:OrderStatusResultHeader>    
@@ -11,7 +11,7 @@
         <#list order.orderItemsStatusList as itemStatus>
         <ns0:OrderStatusResultDetail>
             <ns0:OrderStatusResultReference>
-                <ns0:BuyerReferenceNumber>${itemStatus.buyerRefNumber?string}</ns0:BuyerReferenceNumber>                
+                <ns0:BuyerReferenceNumber>${itemStatus.buyerRefNumber!?string}</ns0:BuyerReferenceNumber>                
             </ns0:OrderStatusResultReference>            
         </ns0:OrderStatusResultDetail>
         </#list>        

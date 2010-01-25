@@ -24,12 +24,15 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
+import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
 import org.jboss.tools.smooks.templating.template.Mapping;
+import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
@@ -109,7 +112,7 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
 	 */
 	@Override
-	public void addTargetConnection(TreeNodeConnection connection) {
+	public void addTargetConnection(TreeNodeConnection connection, AbstractSmooksGraphicalModel sourceNode) {
 		TemplateBuilder builder = getTemplateBuilder();
 		Object obj = this.getData();
 		Node node = null;
@@ -165,11 +168,16 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 					mappingString = FreemarkerCSVContentGenerator.generateJavaSourcePathWithoutRootNode(
 							mappingSourceNode, collectionJavaBean);
 				}
-				Mapping mapping = builder.addValueMapping(mappingString, node);
+				
+				ValueMapping mapping = builder.addValueMapping(mappingString, node);
+				if(sourceNode instanceof AbstractResourceConfigChildNodeGraphModel) {
+					((AbstractResourceConfigChildNodeGraphModel)sourceNode).addMappingTypeInfo(mapping);
+				}
+				
 				connection.setData(mapping);
 			}
 			changeFreemarkerContents();
-			super.addTargetConnection(connection);
+			super.addTargetConnection(connection, sourceNode);
 		} catch (InvalidMappingException e) {
 			e.printStackTrace();
 		}
@@ -267,7 +275,7 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 			Object mapping = connection.getData();
 			if (builder == null || mapping == null)
 				return;
-			if (mapping instanceof Mapping) {
+			if (mapping instanceof ValueMapping) {
 				builder.removeMapping((Mapping) mapping);
 				changeFreemarkerContents();
 			}

@@ -3,7 +3,7 @@
     <ns0:OrderStatusResultHeader>
         <ns0:BuyerParty>
             <ns1:PartyID xmlns:ns1="rrn:org.xcbl:schemas/xcbl/v4_0/core/core.xsd">
-                <ns1:Ident>${order.status.id?string}</ns1:Ident>                
+                <ns1:Ident>${order.status.id!?string}</ns1:Ident>                
             </ns1:PartyID>            
         </ns0:BuyerParty>        
     </ns0:OrderStatusResultHeader>    

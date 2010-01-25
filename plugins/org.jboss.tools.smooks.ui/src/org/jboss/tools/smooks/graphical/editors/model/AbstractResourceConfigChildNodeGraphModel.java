@@ -23,6 +23,7 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.templating.template.ValueMapping;
 
 /**
  * @author Dart
@@ -141,8 +142,8 @@ public class AbstractResourceConfigChildNodeGraphModel extends TreeNodeModel {
 	}
 
 	@Override
-	public void addTargetConnection(TreeNodeConnection connection) {
-		super.addTargetConnection(connection);
+	public void addTargetConnection(TreeNodeConnection connection, AbstractSmooksGraphicalModel sourceNode) {
+		super.addTargetConnection(connection, sourceNode);
 		Object model = getData();
 		model = AdapterFactoryEditingDomain.unwrap(model);
 		if (model instanceof EObject) {
@@ -175,5 +176,13 @@ public class AbstractResourceConfigChildNodeGraphModel extends TreeNodeModel {
 			Command command = SetCommand.create(domainProvider.getEditingDomain(), owner, feature, null);
 			domainProvider.getEditingDomain().getCommandStack().execute(command);
 		}
+	}
+
+	/**
+	 * Add the resource type info to Value Mapping instance.
+	 * @param mapping The Value Mapping instance.
+	 */
+	public void addMappingTypeInfo(ValueMapping mapping) {
+		// Override in implementation to add typing info associated with implementation type.
 	}
 }

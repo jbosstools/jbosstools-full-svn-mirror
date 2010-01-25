@@ -19,7 +19,11 @@
  */
 package org.jboss.tools.smooks.templating.template.util;
 
+import java.util.Properties;
+
+import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
+import org.milyn.javabean.decoders.DateDecoder;
 
 /**
  * FreeMarker utility methods.
@@ -29,6 +33,16 @@ import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderExcep
 public class FreeMarkerUtil {
 
 	public static String extractJavaPath(String dollarVariable) throws TemplateBuilderException {
+		return splitDollarVariable(dollarVariable)[0];
+	}
+
+	public static String extractRawFormatting(String dollarVariable) throws TemplateBuilderException {
+		return splitDollarVariable(dollarVariable)[1];
+	}
+
+	public static String[] splitDollarVariable(String dollarVariable) throws TemplateBuilderException {
+		String[] splitTokens = new String[2];
+		
 		dollarVariable = dollarVariable.trim();
 		
 		if(isDollarVariable(dollarVariable)) {
@@ -36,16 +50,65 @@ public class FreeMarkerUtil {
 			int questionMarkIdx = withoutDollarBrace.indexOf('?'); //$NON-NLS-1$
 			
 			if(questionMarkIdx != -1) {
-				return withoutDollarBrace.substring(0, questionMarkIdx);
+				splitTokens[0] = withoutDollarBrace.substring(0, questionMarkIdx);
+				splitTokens[1] = withoutDollarBrace.substring(questionMarkIdx + 1); // the raw formatting
 			} else {				
-				return withoutDollarBrace;
+				splitTokens[0] = withoutDollarBrace;
+				splitTokens[1] = null; // no formatting
+			}
+			
+			if(splitTokens[0].endsWith("!")) { //$NON-NLS-1$
+				splitTokens[0] = splitTokens[0].substring(0, splitTokens[0].length() - 1);
 			}
 		} else {
 			throw new TemplateBuilderException("Unsupported FreeMarker variable syntax '" + dollarVariable + "'."); //$NON-NLS-1$
 		}
+		
+		return splitTokens;
 	}
 
 	public static boolean isDollarVariable(String variable) {
 		return (variable.startsWith("${") && variable.endsWith("}")); //$NON-NLS-1$
+	}
+	
+	public static String toFreeMarkerVariable(ValueMapping mapping) {
+		StringBuilder builder = new StringBuilder();
+		Properties encodeProperties = mapping.getEncodeProperties();
+		String rawFormatting;
+		
+		if(encodeProperties == null) {
+			encodeProperties = new Properties();
+		}
+				
+		builder.append("${" + mapping.getSrcPath() + "!?");
+		
+		rawFormatting = encodeProperties.getProperty(ValueMapping.RAW_FORMATING_KEY);
+		if(rawFormatting != null) {
+			builder.append(rawFormatting);			
+			builder.append("}");			
+		} else {
+			Class<?> valueType = mapping.getValueType();
+			if(valueType != null) {
+				
+				if(valueType == java.util.Date.class) {
+					String format = encodeProperties.getProperty(DateDecoder.FORMAT);
+					if(format != null) {					
+						builder.append("string('" + format + "')}");								
+					} else {
+						builder.append("string.medium}");								
+					}
+				} else if(Number.class.isAssignableFrom(valueType)) {
+					builder.append("c}");								
+				} else if(valueType == Double.TYPE || valueType == Float.TYPE || valueType == Integer.TYPE || valueType == Long.TYPE || valueType == Short.TYPE) {
+					builder.append("c}");								
+				} else {
+					builder.append("string}");			
+				}
+			} else {
+				builder.append("string}");			
+			}
+		}
+		
+		return builder.toString();
 	}
 }

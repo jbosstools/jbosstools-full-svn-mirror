@@ -23,7 +23,7 @@ import org.w3c.dom.Node;
 import org.eclipse.core.runtime.Assert;
 
 /**
- * Collection {@link Mapping}.
+ * Collection {@link ValueMapping}.
  * 
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */

@@ -60,7 +60,7 @@ public class TreeNodeConnection {
 	}
 
 	public void connectTarget() {
-		targetNode.addTargetConnection(this);
+		targetNode.addTargetConnection(this, sourceNode);
 	}
 
 	public void disconnectSource() {

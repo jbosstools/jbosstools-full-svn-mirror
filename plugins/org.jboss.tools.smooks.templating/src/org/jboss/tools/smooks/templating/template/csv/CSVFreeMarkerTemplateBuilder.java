@@ -158,7 +158,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
 					}
 					
 					if(FreeMarkerUtil.isDollarVariable(fields[fieldIndex])) {
-						addValueMapping(FreeMarkerUtil.extractJavaPath(fields[fieldIndex]), node);
+						addValueMapping(node, fields[fieldIndex]);
 					}					
 					fieldIndex++;
 				}
@@ -209,7 +209,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
 
                     if(fieldMapping != null) {
                         template.append(quoteChar);
-                        template.append("${" + fieldMapping.getSrcPath() + "?string}"); //$NON-NLS-1$
+                        template.append(FreeMarkerUtil.toFreeMarkerVariable((ValueMapping) fieldMapping)); //$NON-NLS-1$
                         template.append(quoteChar);
                     }
 
