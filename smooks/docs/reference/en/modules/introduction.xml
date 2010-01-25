@@ -37,7 +37,7 @@
 						<entry><para>Smooks Configuration File Wizard</para></entry>
 						<entry><para>Smooks tools allows to create/edit the Smooks configuration file for Java2Java data transformation.</para></entry>
 						<entry>
-							<link linkend="config_file_wizzard">Smooks Configuration File Wizard</link>
+							<!--<link linkend="config_file_wizzard">-->Smooks Configuration File Wizard<!--</link>-->
 						</entry>
 					</row>
 					
@@ -45,7 +45,7 @@
 						<entry><para>Smooks Editor</para></entry>
 						<entry><para>Smooks Editor helps configure the created Smooks configuration file.</para></entry>
 						<entry>
-							<link linkend="quickstart_formeditor">Smooks Editor</link>
+							<!--<link linkend="quickstart_formeditor">-->Smooks Editor<!--</link>-->
 						</entry>
 					</row>
 					
@@ -105,7 +105,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para> For More informations about <property>Smooks</property>, please visit <ulink
+		<para> For more informations about <property>Smooks</property>, please visit <ulink
 				url="http://www.smooks.org">Smooks official site</ulink>.</para>
 	</section>
 	<section>
@@ -121,6 +121,11 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<para>The easiest way to use the Smooks Configuration Editor is to create a project
+			(Java project, an ESB project, etc.), right-click on it and select <property>New -> Other</property>
+			to open the New wizard. Drill into <property>Smooks -> Smooks Configuration File</property>
+			and continue through the wizard. We recommend using a minimum Smooks level of 1.1 or 1.2, but if you're using it in a deployed service, it depends on what version your runtime supports.
+			Once the file is created, it will open in the Smooks Configuration Editor.</para>
 	</section>
 	<section>
 		<title>How to install Smooks dev tools?</title>
@@ -133,7 +138,24 @@
 		<para> You should download the latest IDE for Java EE developers from <ulink
 				url="http://www.eclipse.org/downloads/"> Eclipse site</ulink>. It contains many plug-ins (
 				GEF, EMF, etc. ) required by Smooks dev tools. </para>
-		
+		<para>The Smooks Configuration depends on having all of the appropriate Smooks runtime jars in the path of the Eclipse Plug-in or Java Project in the Eclipse workspace.
+			
+			The easiest solution is to do the following:
+			<itemizedlist>
+				<listitem><para>1) Download the Smooks distribution from here: http://www.smooks.org/mediawiki/index.php?title=Downloads .
+					Grab the latest "ALL" distribution (as of today, it is the Smooks v.1.2.2 "ALL" distribution) and it will include binaries, examples, etc.</para></listitem>
+				<listitem><para>2) Extract files from the archive somewhere on your machine.</para></listitem>
+				<listitem><para>3) In your Eclipse workspace, copy the Smooks jars into a directory of your Eclipse plug-in or Java project named "lib".</para></listitem>
+				<listitem><para>4) For your Eclipse Plug-in or Java Project, right-click on the project and select Properties.</para></listitem>
+				<listitem><para>5) Select the "Java Build Path" item in the Properties list, select the Libraries tab, and click "Add JARs"
+				</para></listitem>
+				<listitem><para>6) In the Jar Selection dialog, select all the jars in the "lib" directory mentioned in step 3 and click <property>OK</property>.
+				</para></listitem>
+				<listitem><para>7) Click <property>OK</property> to close the Properties dialog. Now you should see a "Referenced Libraries" node that appeared in your project hierarchy in Eclipse.
+				</para></listitem>
+			</itemizedlist>
+	
+		</para>
 		<para>Now let's progress to more advanced topics.</para>
 	</section>
 
