@@ -21,13 +21,11 @@ import java.util.Map;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.viewers.CellEditor;
@@ -48,20 +46,22 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
-import org.jboss.tools.smooks.configuration.editors.ModelPanelCreator;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
@@ -130,7 +130,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	}
 
 	private void createDecoderCombo(TabbedPropertySheetWidgetFactory factory, Composite parent) {
-		factory.createLabel(controlComposite, "Decoder :");
+		factory.createLabel(controlComposite, "Decoder :").setForeground(factory.getColors().getColor(IFormColors.TITLE));
 		decoderCombo = factory.createCCombo(parent, SWT.READ_ONLY);
 		// decoderCombo.setEditable(false);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -157,7 +157,8 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		if (provider != null) {
 			AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) provider.getEditingDomain();
 			String newDecoder = decoderCombo.getText();
-			Object model = getPresentSelectedModel();
+			TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
+			Object model = lineModel.getTargetNode().getData();
 			model = AdapterFactoryEditingDomain.unwrap(model);
 			if (model != null && model instanceof ValueType) {
 				String decoder = ((ValueType) model).getDecoder();
@@ -195,7 +196,8 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 			}
 
 			if ("Enum".equals(decoder)) {
-				Object model = getPresentSelectedModel();
+				TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
+				Object model = lineModel.getTargetNode().getData();
 				model = AdapterFactoryEditingDomain.unwrap(model);
 				if (model != null && model instanceof ValueType) {
 					String[] enumFieldsString = null;
@@ -260,28 +262,28 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
-		factory.createLabel(sashForm, "Decoder Parameters :").setLayoutData(gd);
+		Label label = factory.createLabel(sashForm, "Decoder Parameters :");
+		label.setLayoutData(gd);
+		label.setForeground(factory.getColors().getColor(IFormColors.TITLE));
 
 		Composite viewerComposite = factory.createComposite(sashForm, SWT.NONE);
 		gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 2;
-		viewerComposite.setLayoutData(gd);
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		viewerComposite.setLayout(gridLayout);
-
-		Composite viewerContianer = factory.createComposite(viewerComposite, SWT.NONE);
-		gd = new GridData(GridData.FILL_BOTH);
 		gd.heightHint = 150;
-		viewerContianer.setLayoutData(gd);
-		viewerContianer.setBackground(factory.getColors().getBorderColor());
+		viewerComposite.setLayoutData(gd);
+		viewerComposite.setBackground(factory.getColors().getBorderColor());
+//		Composite viewerContianer = factory.createComposite(viewerComposite, SWT.NONE);
+//		gd = new GridData(GridData.FILL_BOTH);
+//		gd.heightHint = 150;
+//		viewerContianer.setLayoutData(gd);
+		
 
 		FillLayout layout = new FillLayout();
 		layout.marginHeight = 1;
 		layout.marginWidth = 1;
-		viewerContianer.setLayout(layout);
+		viewerComposite.setLayout(layout);
 
-		paramterViewer = new TableViewer(viewerContianer, SWT.FULL_SELECTION);
+		paramterViewer = new TableViewer(viewerComposite, SWT.FULL_SELECTION);
 		paramterViewer.setContentProvider(new DecodeParamViewerContentProvider());
 		paramterViewer.setLabelProvider(new DecodeParamTypeLabelProvider());
 
@@ -303,7 +305,8 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 			public void modify(Object element, String property, Object value) {
 				if (element instanceof TableItem) {
 					Object currentElement = ((TableItem) element).getData();
-					Object model = getPresentSelectedModel();
+					TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
+					Object model = lineModel.getTargetNode().getData();
 					model = AdapterFactoryEditingDomain.unwrap(model);
 					if (model != null && model instanceof ValueType && currentElement instanceof DecodeParam) {
 						String pname = ((DecodeParam) currentElement).getName();
@@ -371,7 +374,8 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 	private void initDecoderCombo() {
 		decoderCombo.select(-1);
-		Object model = getPresentSelectedModel();
+		TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
+		Object model = lineModel.getTargetNode().getData();
 		model = AdapterFactoryEditingDomain.unwrap(model);
 		if (model != null && model instanceof ValueType) {
 			String decoder = ((ValueType) model).getDecoder();
@@ -385,7 +389,8 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 	private void initDecodeParamViewer() {
 		paramterViewer.setInput("NULL");
-		Object model = getPresentSelectedModel();
+		TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
+		Object model = lineModel.getTargetNode().getData();
 		model = AdapterFactoryEditingDomain.unwrap(model);
 		if (model != null && model instanceof ValueType) {
 			String decoder = ((ValueType) model).getDecoder();
@@ -431,18 +436,18 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 	protected void createDecodeParamGUIContents(Object model, ISmooksModelProvider provider, IEditorPart part,
 			FormToolkit factory, Composite controlComposite) {
-		ModelPanelCreator creator = new ModelPanelCreator();
-		model = AdapterFactoryEditingDomain.unwrap(model);
-		if (model != null && model instanceof EObject && provider != null && part != null) {
-			AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) provider.getEditingDomain();
-			IItemPropertySource itemPropertySource = (IItemPropertySource) domain.getAdapterFactory().adapt(model,
-					IItemPropertySource.class);
-			if (itemPropertySource != null) {
-				creator
-						.createModelPanel((EObject) model, factory, controlComposite, itemPropertySource, provider,
-								part);
-			}
-		}
+//		ModelPanelCreator creator = new ModelPanelCreator();
+//		model = AdapterFactoryEditingDomain.unwrap(model);
+//		if (model != null && model instanceof EObject && provider != null && part != null) {
+//			AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) provider.getEditingDomain();
+//			IItemPropertySource itemPropertySource = (IItemPropertySource) domain.getAdapterFactory().adapt(model,
+//					IItemPropertySource.class);
+//			if (itemPropertySource != null) {
+//				creator
+//						.createModelPanel((EObject) model, factory, controlComposite, itemPropertySource, provider,
+//								part);
+//			}
+//		}
 	}
 
 	/*

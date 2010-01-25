@@ -69,9 +69,9 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 
 	protected List<AbstractSmooksGraphicalModel> children = null;
 
-	private List<TreeNodeConnection> sourceConnections = new ArrayList<TreeNodeConnection>();
+	protected List<TreeNodeConnection> sourceConnections = new ArrayList<TreeNodeConnection>();
 
-	private List<TreeNodeConnection> targetConnections = new ArrayList<TreeNodeConnection>();
+	protected List<TreeNodeConnection> targetConnections = new ArrayList<TreeNodeConnection>();
 
 	public AbstractSmooksGraphicalModel(Object data) {
 		setData(data);
