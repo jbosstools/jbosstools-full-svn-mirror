@@ -10,11 +10,25 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -22,6 +36,8 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
+import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
@@ -33,6 +49,9 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTempl
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
+import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
@@ -155,7 +174,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 						IFreemarkerTemplateModel iFreemarkerTemplateModel = (IFreemarkerTemplateModel) pd;
 						if (iFreemarkerTemplateModel.isManyOccurs() && pgm.getTargetConnections().isEmpty()) {
 							Node modelNode = iFreemarkerTemplateModel.getModelNode();
-							if(modelNode instanceof Element) {
+							if (modelNode instanceof Element) {
 								return !ModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode);
 							} else {
 								return false;
@@ -224,6 +243,118 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.model.
+	 * AbstractResourceConfigChildNodeGraphModel
+	 * #addTargetConnection(org.jboss.tools
+	 * .smooks.gef.tree.model.TreeNodeConnection)
+	 */
+	@Override
+	public void addTargetConnection(TreeNodeConnection connection) {
+		Object model = getData();
+		model = AdapterFactoryEditingDomain.unwrap(model);
+		if (model instanceof ValueType) {
+			EObject owner = (EObject) model;
+			AbstractSmooksGraphicalModel targetGraphModel = connection.getSourceNode();
+			Object tm = targetGraphModel.getData();
+			if (tm instanceof IXMLStructuredObject) {
+				
+				CompoundCommand compoundCommand = new CompoundCommand();
+				
+				String selector = SmooksUIUtils.generateFullPath((IXMLStructuredObject) tm, "/"); //$NON-NLS-1$
+				Command command = SetCommand.create(domainProvider.getEditingDomain(), owner,
+						Javabean12Package.Literals.VALUE_TYPE__DATA, selector);
+				compoundCommand.append(command);
+				
+				DecoderRecorder recoder = (DecoderRecorder) connection.getData();
+				
+				String dataDecoder = getDataDecoder(connection);
+				List<?> oldParameters = null;
+				if(recoder != null){
+					dataDecoder = recoder.getDecoder();
+					oldParameters = recoder.getDecoderParameters();
+				}
+				
+				if(oldParameters != null){
+					Command addParamsCommand = AddCommand.create(domainProvider.getEditingDomain(), owner,
+							Javabean12Package.Literals.VALUE_TYPE__DECODE_PARAM, oldParameters);
+					compoundCommand.append(addParamsCommand);
+				}
+				
+				if (dataDecoder != null) {
+					Command decoderSetCommand = SetCommand.create(domainProvider.getEditingDomain(), owner,
+							Javabean12Package.Literals.VALUE_TYPE__DECODER, dataDecoder);
+					compoundCommand.append(decoderSetCommand);
+				}
+				
+				domainProvider.getEditingDomain().getCommandStack().execute(compoundCommand);
+				
+				if (this.targetConnections.indexOf(connection) == -1) {
+					this.targetConnections.add(connection);
+					support.firePropertyChange(PRO_ADD_TARGET_CONNECTION, null, connection);
+				}
+			}
+		} else {
+			super.addTargetConnection(connection);
+		}
+	}
+
+	protected String getDataDecoder(TreeNodeConnection connection) {
+		Object data = getData();
+		data = AdapterFactoryEditingDomain.unwrap(data);
+		if(((ValueType)data).getDecoder() != null) return null;
+		return SmooksUIUtils.getDefualtDecoder((ValueType)data);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.jboss.tools.smooks.graphical.editors.model.
+	 * AbstractResourceConfigChildNodeGraphModel
+	 * #removeTargetConnection(org.jboss
+	 * .tools.smooks.gef.tree.model.TreeNodeConnection)
+	 */
+	@Override
+	public void removeTargetConnection(TreeNodeConnection connection) {
+		Object model = getData();
+		model = AdapterFactoryEditingDomain.unwrap(model);
+		if (model instanceof ValueType) {
+			EObject owner = (EObject) model;
+			
+			DecoderRecorder recorder = new DecoderRecorder();
+			
+			CompoundCommand compoundCommand = new CompoundCommand();
+			
+			Command deleteDataCommand = SetCommand.create(domainProvider.getEditingDomain(), owner, Javabean12Package.Literals.VALUE_TYPE__DATA, null);
+			compoundCommand.append(deleteDataCommand);
+			
+			String decoder = ((ValueType)model).getDecoder();
+			if(decoder != null){
+				Command deleteDecoderCommand = SetCommand.create(domainProvider.getEditingDomain(), owner, Javabean12Package.Literals.VALUE_TYPE__DECODER, null);
+				compoundCommand.append(deleteDecoderCommand);
+				recorder.setDecoder( decoder);
+			}
+			
+			if(!((ValueType)model).getDecodeParam().isEmpty()){
+				List<DecodeParamType> tempList = new ArrayList<DecodeParamType>();
+				tempList.addAll(((ValueType)model).getDecodeParam());
+				recorder.setDecoderParameters(tempList);
+				Command remvoeParameterCommand = DeleteCommand.create(domainProvider.getEditingDomain(), ((ValueType)model).getDecodeParam());
+				compoundCommand.append(remvoeParameterCommand);
+			}
+			domainProvider.getEditingDomain().getCommandStack().execute(compoundCommand);
+			connection.setData(recorder);
+			if (this.targetConnections.indexOf(connection) != -1) {
+				this.targetConnections.remove(connection);
+				support.firePropertyChange(PRO_REMOVE_TARGET_CONNECTION, connection, null);
+			}
+		} else {
+			super.removeTargetConnection(connection);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#getText()
 	 */
 	@Override
@@ -236,6 +367,36 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 			return Messages.JavaBeanChildGraphModel_Collection_Entry;
 		}
 		return super.getText();
+	}
+	
+	private class DecoderRecorder{
+		private String decoder=null;
+		private List<?> decoderParameters = null;
+		/**
+		 * @return the decoder
+		 */
+		public String getDecoder() {
+			return decoder;
+		}
+		/**
+		 * @param decoder the decoder to set
+		 */
+		public void setDecoder(String decoder) {
+			this.decoder = decoder;
+		}
+		/**
+		 * @return the decoderParameters
+		 */
+		public List<?> getDecoderParameters() {
+			return decoderParameters;
+		}
+		/**
+		 * @param decoderParameters the decoderParameters to set
+		 */
+		public void setDecoderParameters(List<?> decoderParameters) {
+			this.decoderParameters = decoderParameters;
+		}
+		
 	}
 
 }

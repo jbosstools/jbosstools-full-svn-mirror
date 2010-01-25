@@ -12,9 +12,16 @@ package org.jboss.tools.smooks.configuration.editors.uitls;
 
 import java.io.File;
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -162,6 +169,7 @@ import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
+import org.jboss.tools.smooks.model.javabean12.ValueType;
 import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
 import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
@@ -464,6 +472,82 @@ public class SmooksUIUtils {
 	public static void createFilePathFieldEditor(AdapterFactoryEditingDomain editingdomain, FormToolkit toolkit,
 			Composite parent, Object model) {
 		// IHyperlinkListener link
+	}
+	
+	public static String getDefualtDecoder(ValueType value){
+		BeanType bean= (BeanType)((EObject)value).eContainer();
+		String clazzString = bean.getClass_();
+		try {
+			ProjectClassLoader loader = new ProjectClassLoader(SmooksUIUtils.getJavaProject(bean));
+			Class<?> clazz = loader.loadClass(clazzString);
+			Field field = clazz.getDeclaredField(((ValueType)value).getProperty());
+			if(field != null){
+				Class<?> fieldType = field.getType();
+				if(fieldType.isEnum()){
+					return "Enum";
+				}
+				if(fieldType == Integer.class || fieldType == int.class){
+					return "Integer";
+				}
+				if(fieldType == Float.class || fieldType == float.class){
+					return "Float";
+				}
+				if(fieldType == Double.class || fieldType == double.class){
+					return "Double";
+				}
+				if(fieldType == BigInteger.class ){
+					return "BigInteger";
+				}
+				if(fieldType == BigDecimal.class ){
+					return "BigDecimal";
+				}
+				if(fieldType == Long.class || fieldType == long.class){
+					return "Long";
+				}
+				if(fieldType == Boolean.class|| fieldType == boolean.class){
+					return "Boolean";
+				}
+				if(fieldType == Short.class|| fieldType == short.class){
+					return "Short";
+				}
+				if(fieldType == Byte.class|| fieldType == byte.class){
+					return "Byte";
+				}
+				if(fieldType == Short.class|| fieldType == short.class){
+					return "Short";
+				}
+				if(Calendar.class.isAssignableFrom(fieldType)){
+					return "Calendar";
+				}
+				if(fieldType == Class.class){
+					return "Class";
+				}
+				if(fieldType == Date.class){
+					return "Date";
+				}
+				if(fieldType == Character.class){
+					return "Character";
+				}
+				if(Charset.class.isAssignableFrom(fieldType)){
+					return "Charset";
+				}
+				if(fieldType == java.sql.Date.class){
+					return "SqlDate";
+				}
+				if(fieldType == java.sql.Time.class){
+					return "SqlTime";
+				}
+				if(fieldType == URI.class){
+					return "URI";
+				}
+				if(fieldType == URL.class){
+					return "URL";
+				}
+			}
+		} catch (Throwable e) {
+			// ignore
+		}
+		return null;
 	}
 
 	public static void createLinkMixedTextFieldEditor(String label, AdapterFactoryEditingDomain editingdomain,
