@@ -3,19 +3,13 @@
 <chapter id="chap-Beginners_Guide-Where_to_go_from_here">
 	<title>Where to go from here</title>
 	<para>
-		For information pertaining to Eclipse visit <ulink url="http://www.eclipse.org/">www.eclipse.org</ulink>.
-	</para>
-	<para>
-		For information about the JBoss Application Server visit <ulink url="http://www.jboss.org/jbossas/">http://www.jboss.org/jbossas/</ulink>.
+		For documentation on the plugins available as part of the JBoss Developer Studio visit <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/">http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/</ulink>.
 	</para>
 	<para>
 		For documentation about the JBoss Enterprise Application Platform visit <ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/">http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/</ulink>.
 	</para>
 	<para>
-		For documentation on the plugins available as part of JBoss Tools visit <ulink url="http://www.jboss.org/tools/docs.html">http://www.jboss.org/tools/docs.html</ulink>.
-	</para>
-	<para>
-		For documentation on the plugins available as part of the JBoss Developer Studio visit <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/">http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/</ulink>.
+		For information pertaining to Eclipse visit <ulink url="http://www.eclipse.org/">www.eclipse.org</ulink>.
 	</para>
 </chapter>
 

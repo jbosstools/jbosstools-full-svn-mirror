@@ -7,7 +7,7 @@
 		<secondary>contact information for this manual</secondary>
 	</indexterm>
 	<para>
-		If you find a typographical error in this manual, or if you have thought of a way to make this manual better, we would love to hear from you! Please submit a report in JIRA agaist JBoss Tools for the community: <ulink url="https://jira.jboss.org/jira/browse/JBIDE">https://jira.jboss.org/jira/browse/JBIDE</ulink> or JBoss Developer Studio for the enterprise: <ulink url="https://jira.jboss.org/jira/browse/JBDS">https://jira.jboss.org/jira/browse/JBDS</ulink>
+		If you find a typographical error in this manual, or if you have thought of a way to make this manual better, we would love to hear from you! Please submit a report in JIRA against JBoss Developer Studio: <ulink url="https://jira.jboss.org/jira/browse/JBDS">https://jira.jboss.org/jira/browse/JBDS</ulink>
 	</para>
 	<para>
 		When submitting a bug report, be sure to mention the manual's name.
