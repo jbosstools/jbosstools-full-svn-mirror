@@ -138,8 +138,8 @@ public class EDIMappingNodeGraphModel extends TreeNodeModel {
 	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
 	 */
 	@Override
-	public void addTargetConnection(TreeNodeConnection connection) {
-		super.addTargetConnection(connection);
+	public void addTargetConnection(TreeNodeConnection connection, AbstractSmooksGraphicalModel sourceNode) {
+		super.addTargetConnection(connection, sourceNode);
 	}
 
 	/*

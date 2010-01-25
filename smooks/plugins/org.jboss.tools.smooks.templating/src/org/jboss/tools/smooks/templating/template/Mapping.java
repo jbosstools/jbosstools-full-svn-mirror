@@ -1,6 +1,6 @@
-/*
+/**
  * JBoss, Home of Professional Open Source
- * Copyright 2006, JBoss Inc., and others contributors as indicated
+ * Copyright 2009, JBoss Inc., and others contributors as indicated
  * by the @authors tag. All rights reserved.
  * See the copyright.txt in the distribution for a
  * full listing of individual contributors.
@@ -15,29 +15,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA  02110-1301, USA.
  *
- * (C) 2005-2006, JBoss Inc.
+ * (C) 2009, JBoss Inc.
  */
 package org.jboss.tools.smooks.templating.template;
 
-import org.w3c.dom.Node;
-import org.eclipse.core.runtime.Assert;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.runtime.Assert;
+import org.w3c.dom.Node;
 
 /**
- * Model template mapping.
+ * Abstract Mapping.
  * <p/>
  * Represents a successful mapping. It also tells if the mapping requires
  * other model nodes to be hidden in the Editor view, so as to restrict mappings to these nodes.
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class Mapping {
+public abstract class Mapping {
 
-    private String srcPath;
-    private Node mappingNode;
-    private List<Node> hideNodes;
+	private String srcPath;
+	private Node mappingNode;
+	private List<Node> hideNodes;
 
     /**
      * Public constructor.
@@ -51,25 +51,26 @@ public class Mapping {
         this.mappingNode = mappingNode;
     }
 
-    public String getSrcPath() {
-        return srcPath;
-    }
+	public String getSrcPath() {
+	    return srcPath;
+	}
 
-    public Node getMappingNode() {
-        return mappingNode;
-    }
+	public Node getMappingNode() {
+	    return mappingNode;
+	}
 
-    public List<Node> getHideNodes() {
-        return hideNodes;
-    }
+	public List<Node> getHideNodes() {
+	    return hideNodes;
+	}
 
-    public void addHideNode(Node node) {
-        Assert.isNotNull(node, "node"); //$NON-NLS-1$
+	public void addHideNode(Node node) {
+	    Assert.isNotNull(node, "node"); //$NON-NLS-1$
+	
+	    if(hideNodes == null) {
+	        hideNodes = new ArrayList<Node>();
+	    }
+	
+	    hideNodes.add(node);
+	}
 
-        if(hideNodes == null) {
-            hideNodes = new ArrayList<Node>();
-        }
-
-        hideNodes.add(node);
-    }
 }

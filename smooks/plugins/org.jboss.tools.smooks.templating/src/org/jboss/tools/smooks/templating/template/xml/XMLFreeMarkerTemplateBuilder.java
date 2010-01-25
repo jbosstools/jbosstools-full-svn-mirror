@@ -39,6 +39,7 @@ import org.jboss.tools.smooks.templating.model.ModelNodeResolver;
 import org.jboss.tools.smooks.templating.model.ModelBuilder.ElementType;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
 import org.jboss.tools.smooks.templating.template.*;
+import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
 import org.jboss.tools.smooks.templating.template.util.FreeMarkerUtil;
 import org.milyn.xml.DomUtils;
@@ -79,7 +80,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 	 * existing FreeMarker template.
 	 * 
 	 * @param modelBuilder The {@link ModelBuilder} instance that describes the XML model (e.g. {@link XSDModelBuilder}).
-	 * @param ftlTemplate FreeMarker template from which to extract existing {@link Mapping mappings}.
+	 * @param ftlTemplate FreeMarker template from which to extract existing {@link ValueMapping mappings}.
 	 * @throws ModelBuilderException Invalid {@link ModelBuilder} instance. 
 	 * @throws TemplateBuilderException Error processing FreeMarker template.
 	 */
@@ -174,7 +175,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 				Mapping mapping = getMapping(attribute);
 				
 				if(mapping != null) {
-					writeAttribute(attribute.getNodeName(), "${" + mapping.getSrcPath() + "?string}", templateWriter); //$NON-NLS-1$
+					writeAttribute(attribute.getNodeName(), FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping), templateWriter); //$NON-NLS-1$
 				} else if(ModelBuilder.isRequired(attribute)) {
 					writeAttribute(attribute.getNodeName(), attribute.getValue(), templateWriter);
 				}
@@ -196,11 +197,13 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 	}
 
 	private void writeAttribute(String name, String value, Writer templateWriter) throws IOException {
+		char quoteChar = (value.indexOf('\"') != -1) ? '\'' : '\"';
+		
 		templateWriter.write(' '); //$NON-NLS-1$
 		templateWriter.write(name);
-		templateWriter.write("=\""); //$NON-NLS-1$
+		templateWriter.write("=" + quoteChar); //$NON-NLS-1$
 		templateWriter.write(value);
-		templateWriter.write("\""); //$NON-NLS-1$
+		templateWriter.write(quoteChar); //$NON-NLS-1$
 	}
 
 	private int writeElementChildren(Element element, int indent, Writer templateWriter) throws IOException {
@@ -213,7 +216,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 			if(ModelBuilder.getElementType(element) == ElementType.simple) {
 				templateWriter.write(">"); //$NON-NLS-1$
 				if(mapping != null) {
-					templateWriter.write("${" + mapping.getSrcPath() + "?string}"); //$NON-NLS-1$
+					templateWriter.write(FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping));
 				} else {
 					templateWriter.write(ModelBuilder.REQUIRED);
 				}
@@ -297,10 +300,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 			
 			// Handle the element itself...		
 			if(FreeMarkerUtil.isDollarVariable(elementText)) {
-				String srcPath = FreeMarkerUtil.extractJavaPath(elementText);
-				Node targetModelNode = modelNodeResolver.resolveNodeMapping(element);
-				
-				addValueMapping(srcPath, targetModelNode);
+				addValueMapping(element, modelNodeResolver, elementText);
 			}
 			
 			// Add mappings for the attributes...
@@ -313,10 +313,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 					String attrValue = attribute.getValue();
 					
 					if(FreeMarkerUtil.isDollarVariable(attrValue)) {
-						String srcPath = FreeMarkerUtil.extractJavaPath(attrValue);
-						Node targetModelNode = modelNodeResolver.resolveNodeMapping(attribute);
-						
-						addValueMapping(srcPath, targetModelNode);
+						addValueMapping(attribute, modelNodeResolver, attrValue);
 					}
 				}
 			}
@@ -361,7 +358,11 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 					rewriteTemplateElement(children.nextElement(), templateRewriteBuffer);
 				}				
 			} else {
-				templateRewriteBuffer.append(element.getCanonicalForm());
+				if(element.getClass().getSimpleName().equals("DollarVariable")) {
+					templateRewriteBuffer.append(element.toString());
+				} else {
+					templateRewriteBuffer.append(element.getCanonicalForm());
+				}
 			}
 		}
 	}

@@ -258,7 +258,7 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 		}
 	}
 
-	public void addTargetConnection(TreeNodeConnection connection) {
+	public void addTargetConnection(TreeNodeConnection connection, AbstractSmooksGraphicalModel sourceNode) {
 		if (this.targetConnections.indexOf(connection) == -1) {
 			this.targetConnections.add(connection);
 			support.firePropertyChange(PRO_ADD_TARGET_CONNECTION, null, connection);

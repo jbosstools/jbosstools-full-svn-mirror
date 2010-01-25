@@ -23,6 +23,7 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.templating.template.ValueMapping;
 
 /**
  * @author Dart
@@ -57,8 +58,8 @@ public abstract class AbstractResourceConfigGraphModel extends TreeContainerMode
 			ILabelProvider labelProvider);
 
 	@Override
-	public void addTargetConnection(TreeNodeConnection connection) {
-		super.addTargetConnection(connection);
+	public void addTargetConnection(TreeNodeConnection connection, AbstractSmooksGraphicalModel sourceNode) {
+		super.addTargetConnection(connection, sourceNode);
 		Object model = getData();
 		if (model instanceof EObject) {
 			EStructuralFeature feature = null;
@@ -141,5 +142,4 @@ public abstract class AbstractResourceConfigGraphModel extends TreeContainerMode
 			// }
 		}
 	}
-
 }

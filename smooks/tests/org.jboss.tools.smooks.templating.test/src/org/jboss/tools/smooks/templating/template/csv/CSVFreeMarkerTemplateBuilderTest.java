@@ -47,17 +47,17 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         builder1.addValueMapping("person.address.country", getFieldElement(builder1.getModel(), "country"));
 
         String template = builder1.buildTemplate();
-        //System.out.println(template);
+        System.out.println(template);
         assertEquals("<#list people as person>\n" +
-                "\"${person.fname?string}\",\"${person.lname?string}\",\"${person.address.country?string}\"\n" +
+                "\"${person.fname!?string}\",\"${person.lname!?string}\",\"${person.address.country!?string}\"\n" +
                 "</#list>",
                 template);
 
         CSVFreeMarkerTemplateBuilder builder2 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', false, template);
         template = builder2.buildTemplate();
-        //System.out.println(template);
+        System.out.println(template);
         assertEquals("<#list people as person>\n" +
-                "\"${person.fname?string}\",\"${person.lname?string}\",\"${person.address.country?string}\"\n" +
+                "\"${person.fname!?string}\",\"${person.lname!?string}\",\"${person.address.country!?string}\"\n" +
                 "</#list>",
                 template);
     }
@@ -77,7 +77,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         //System.out.println(template);
         assertEquals("\"firstname\",\"lastname\",\"country\"\n" +
         		"<#list people as person>\n" +
-                "\"${person.fname?string}\",\"${person.lname?string}\",\"${person.address.country?string}\"\n" +
+                "\"${person.fname!?string}\",\"${person.lname!?string}\",\"${person.address.country!?string}\"\n" +
                 "</#list>",
                 template);
 
@@ -86,7 +86,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         //System.out.println(template);
         assertEquals("\"firstname\",\"lastname\",\"country\"\n" +
         		"<#list people as person>\n" +
-                "\"${person.fname?string}\",\"${person.lname?string}\",\"${person.address.country?string}\"\n" +
+                "\"${person.fname!?string}\",\"${person.lname!?string}\",\"${person.address.country!?string}\"\n" +
                 "</#list>",
                 template);
     }
@@ -107,7 +107,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         String template = builder1.buildTemplate();
         //System.out.println(template);
         assertEquals("<#list people as person>\n" +
-                "'${person.fname?string}'|'${person.lname?string}'|'${person.address.country?string}'\n" +
+                "'${person.fname!?string}'|'${person.lname!?string}'|'${person.address.country!?string}'\n" +
                 "</#list>",
                 template);
 
@@ -115,7 +115,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         template = builder2.buildTemplate();
         //System.out.println(template);
         assertEquals("<#list people as person>\n" +
-                "'${person.fname?string}'|'${person.lname?string}'|'${person.address.country?string}'\n" +
+                "'${person.fname!?string}'|'${person.lname!?string}'|'${person.address.country!?string}'\n" +
                 "</#list>",
                 template);
     }
@@ -133,7 +133,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         String template = builder.buildTemplate();
         //System.out.println(template);
         assertEquals("<#list people as person>\n" +
-                "\"${person.fname?string}\",,\"${person.address.country?string}\"\n" +
+                "\"${person.fname!?string}\",,\"${person.address.country!?string}\"\n" +
                 "</#list>",
                 template);
 
@@ -141,7 +141,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         template = builder2.buildTemplate();
         //System.out.println(template);
         assertEquals("<#list people as person>\n" +
-                "\"${person.fname?string}\",,\"${person.address.country?string}\"\n" +
+                "\"${person.fname!?string}\",,\"${person.address.country!?string}\"\n" +
                 "</#list>",
                 template);
 

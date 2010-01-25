@@ -40,6 +40,7 @@ import org.jboss.tools.smooks.templating.model.ModelNodeResolver;
 import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
 import org.jboss.tools.smooks.templating.template.exception.UnmappedCollectionNodeException;
+import org.jboss.tools.smooks.templating.template.util.FreeMarkerUtil;
 import org.milyn.xml.DomUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -49,9 +50,7 @@ import org.w3c.dom.NodeList;
 /**
  * Abstract Template Builder.
  * <p/>
- * See <a
- * href="http://www.jboss.org/community/wiki/SmooksEditorTemplateGeneration"
- * >Wiki Docs</a>.
+ * See <a href="http://www.jboss.org/community/wiki/SmooksEditorTemplateGeneration">Wiki Docs</a>.
  * 
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
@@ -136,11 +135,11 @@ public abstract class TemplateBuilder {
 	 * @throws InvalidMappingException
 	 *             Invalid mapping.
 	 */
-	public Mapping addValueMapping(String srcPath, Node modelPath) throws InvalidMappingException {
+	public ValueMapping addValueMapping(String srcPath, Node modelPath) throws InvalidMappingException {
 		asserValidMappingNode(modelPath);
 		assertCollectionsMapped(modelPath);
 
-		Mapping mapping = new Mapping(srcPath, modelPath);
+		ValueMapping mapping = new ValueMapping(srcPath, modelPath);
 		mappings.add(mapping);
 		addHideNodes(modelPath, mapping);
 
@@ -160,12 +159,12 @@ public abstract class TemplateBuilder {
 	 * @throws InvalidMappingException
 	 *             Invalid mapping.
 	 */
-	public Mapping addCollectionMapping(String srcCollectionPath, Element modelCollectionPath, String collectionItemName)
+	public CollectionMapping addCollectionMapping(String srcCollectionPath, Element modelCollectionPath, String collectionItemName)
 			throws InvalidMappingException {
 		asserValidMappingNode(modelCollectionPath);
 		assertCollectionsMapped(modelCollectionPath.getParentNode());
 
-		Mapping mapping = new CollectionMapping(srcCollectionPath, modelCollectionPath, collectionItemName);
+		CollectionMapping mapping = new CollectionMapping(srcCollectionPath, modelCollectionPath, collectionItemName);
 		mappings.add(mapping);
 		addHideNodes(modelCollectionPath, mapping);
 
@@ -418,9 +417,25 @@ public abstract class TemplateBuilder {
 				"Unexpected Exception.  Invalid <smk:list> collection node.  Has no child elements!");
 	}
 
+	protected void addValueMapping(Node modelNode, ModelNodeResolver modelNodeResolver, String dollarVariable) throws TemplateBuilderException, InvalidMappingException {
+		Node targetModelNode = modelNodeResolver.resolveNodeMapping(modelNode);
+		addValueMapping(targetModelNode, dollarVariable);
+	}
+
+	protected void addValueMapping(Node modelNode, String dollarVariable) throws TemplateBuilderException, InvalidMappingException {
+		String srcPath = FreeMarkerUtil.extractJavaPath(dollarVariable);
+		String rawFormatting = FreeMarkerUtil.extractRawFormatting(dollarVariable);
+		
+		ValueMapping mapping = addValueMapping(srcPath, modelNode);
+		if(rawFormatting != null) {
+			Properties encodeProperties = new Properties();
+			encodeProperties.setProperty(ValueMapping.RAW_FORMATING_KEY, rawFormatting);
+			mapping.setEncodeProperties(encodeProperties);
+		}
+	}
+
 	public static void writeListStart(StringWriter writer, String srcPath, String collectionItemName) {
-		writer
-				.write("<smk:list smk:srcPath=\"" + srcPath + "\" smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + ModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$
+		writer.write("<smk:list smk:srcPath=\"" + srcPath + "\" smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + ModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$
 	}
 
 	public static void writeListEnd(StringWriter writer) {

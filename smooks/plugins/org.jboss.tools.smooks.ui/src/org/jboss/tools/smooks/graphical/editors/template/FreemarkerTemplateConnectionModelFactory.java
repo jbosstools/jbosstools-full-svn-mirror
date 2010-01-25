@@ -29,6 +29,7 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.graphical.editors.ConnectionModelFactoryImpl;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
+import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateNodeGraphicalModel;
@@ -37,6 +38,7 @@ import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.templating.template.Mapping;
+import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.w3c.dom.Node;
@@ -159,6 +161,11 @@ public class FreemarkerTemplateConnectionModelFactory extends ConnectionModelFac
 							targetNode.fireConnectionChanged();
 							collections.add(connection);
 							connection.setData(mapping);
+							
+							if(sourceNode instanceof AbstractResourceConfigChildNodeGraphModel && mapping instanceof ValueMapping) {
+								((AbstractResourceConfigChildNodeGraphModel)sourceNode).addMappingTypeInfo((ValueMapping) mapping);
+							}
+							
 							break;
 						}
 					}

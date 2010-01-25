@@ -10,34 +10,33 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.net.URI;
-import java.net.URL;
-import java.nio.charset.Charset;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl.ContainmentUpdatingFeatureMapEntry;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.edit.provider.WrapperItemProvider;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
-import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
+import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
@@ -55,6 +54,7 @@ import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
+import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -249,7 +249,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 	 * .smooks.gef.tree.model.TreeNodeConnection)
 	 */
 	@Override
-	public void addTargetConnection(TreeNodeConnection connection) {
+	public void addTargetConnection(TreeNodeConnection connection, AbstractSmooksGraphicalModel sourceNode) {
 		Object model = getData();
 		model = AdapterFactoryEditingDomain.unwrap(model);
 		if (model instanceof ValueType) {
@@ -294,7 +294,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 				}
 			}
 		} else {
-			super.addTargetConnection(connection);
+			super.addTargetConnection(connection, sourceNode);
 		}
 	}
 
@@ -399,4 +399,62 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel#addMappingTypeInfo(org.jboss.tools.smooks.templating.template.ValueMapping)
+	 */
+	@Override
+	public void addMappingTypeInfo(ValueMapping mapping) {
+		if(getData() instanceof WrapperItemProvider) {
+			WrapperItemProvider sourceData = (WrapperItemProvider) getData();
+			BeanType bean = (BeanType) sourceData.getOwner();
+			ValueType valueBinding = (ValueType) ((ContainmentUpdatingFeatureMapEntry)sourceData.getValue()).getValue();
+			
+			mapping.setValueType(getPropertyType(bean, valueBinding));
+			if(mapping.getEncodeProperties() == null) {
+				mapping.setEncodeProperties(getDecoderParams(valueBinding));
+			}
+		}				
+	}
+	
+	private Class<?> getPropertyType(BeanType bean, ValueType valueBinding) {
+		try {
+			IJavaProject project = SmooksUIUtils.getJavaProject(bean);
+			ProjectClassLoader classLoader = new ProjectClassLoader(project);
+			Class<?> beanClass = classLoader.loadClass(bean.getClass_());
+			String targetProperty = valueBinding.getProperty();
+			
+			if(targetProperty != null && !targetProperty.trim().equals("")) {
+				StringBuilder getterNameBuilder = new StringBuilder();
+				
+				getterNameBuilder.append(targetProperty);
+				getterNameBuilder.setCharAt(0, Character.toUpperCase(targetProperty.charAt(0)));
+				getterNameBuilder.insert(0, "get");
+				
+				try {
+					Method getterMethod = beanClass.getMethod(getterNameBuilder.toString(), new Class[] {});
+					return getterMethod.getReturnType();
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+				}
+			}			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (JavaModelException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private Properties getDecoderParams(ValueType valueBinding) {
+		Properties decodeParams = new Properties();
+		EList decodeParamsList = valueBinding.getDecodeParam();
+		
+		for(int i = 0; i < decodeParamsList.size(); i++) {
+			DecodeParamType decodeParamObj = (DecodeParamType) decodeParamsList.get(i);
+			decodeParams.setProperty(decodeParamObj.getName(), decodeParamObj.getValue());
+		}
+		
+		return decodeParams;
+	}
 }

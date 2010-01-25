@@ -197,7 +197,7 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 	 * (org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection)
 	 */
 	@Override
-	public void addTargetConnection(TreeNodeConnection connection) {
+	public void addTargetConnection(TreeNodeConnection connection, AbstractSmooksGraphicalModel sourceNode) {
 		AbstractSmooksGraphicalModel sourceModel = connection.getSourceNode();
 		Object source = sourceModel.getData();
 		String selectorString = null;
@@ -242,7 +242,7 @@ public class XSLNodeGraphicalModel extends TreeNodeModel {
 			}
 		}
 
-		super.addTargetConnection(connection);
+		super.addTargetConnection(connection, sourceNode);
 		setXSLContents(getXSLContents());
 
 	}
