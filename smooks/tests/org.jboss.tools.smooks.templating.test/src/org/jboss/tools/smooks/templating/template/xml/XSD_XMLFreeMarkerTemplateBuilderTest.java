@@ -52,7 +52,7 @@ import org.xml.sax.SAXException;
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
 public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
-
+	
 	public void test_SimplePerson_01() throws IOException, ParserConfigurationException, TemplateBuilderException,
 			SAXException, ModelBuilderException {
 		TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new File(
@@ -156,19 +156,6 @@ public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		//checkNodeName(document.getDocumentElement());
 	}
 
-	private void checkNodeName(Node node) {
-		if (node instanceof Element) {
-			assertNotNull(((Element)node).getTagName());
-		}
-		System.out.println(node.getNodeName());
-		assertTrue(node.getNodeName().indexOf("null") == -1);
-		NodeList nodeList = node.getChildNodes();
-		int length = nodeList.getLength();
-		for (int i = 0; i < length; i++) {
-			checkNodeName(nodeList.item(i));
-		}
-	}
-
 	public void test_creature_01() throws IOException, ParserConfigurationException, TemplateBuilderException,
 			SAXException, ModelBuilderException, XPathExpressionException {
 		TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new File(
@@ -251,17 +238,14 @@ public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		assertEquals(theTemplate, builder2.buildTemplate());
 	}
 
-	// public void test_OrderStatusRequest() throws IOException,
-	// ParserConfigurationException, ModelBuilderException, SAXException,
-	// TemplateBuilderException {
-	// TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new
-	// File("resources/xcbl40/schema/org/xcbl/path_delim/schemas/xcbl/v4_0/ordermanagement/v1_0/ordermanagement.xsd"),
-	// "OrderStatusResult");
-	// String theTemplate = builder.buildTemplate();
-	//
-	// TestUtil.assertXMLEquals(theTemplate, "expected/order-status-01.xml",
-	// getClass());
-	// }
+	 public void test_OrderStatusRequest() throws IOException, ParserConfigurationException, ModelBuilderException, SAXException, TemplateBuilderException {
+		 TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new
+		 File("resources/xcbl40/schema/org/xcbl/path_delim/schemas/xcbl/v4_0/ordermanagement/v1_0/ordermanagement.xsd"), "OrderStatusResult");
+		 String theTemplate = builder.buildTemplate();
+		
+		 System.out.println(theTemplate);
+		 TestUtil.assertXMLEquals(theTemplate, "expected/order-status-01.xml", getClass());
+	 }
 
 	private Map createPersonObj(String first, String last, String address, int age) {
 		Map javaCtx = new HashMap();

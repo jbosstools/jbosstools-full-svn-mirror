@@ -22,6 +22,8 @@ package org.jboss.tools.smooks.templating.model.xml;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.xsd.util.XSDResourceFactoryImpl;
 import org.eclipse.xsd.util.XSDResourceImpl;
 import org.eclipse.xsd.*;
@@ -128,24 +130,14 @@ public class XSDModelBuilder extends ModelBuilder {
         }
     }    
 
-    private void loadSchema(URI baseURI, String schemaLocation) throws IOException, ModelBuilderException {
-        File baseFile = new File(baseURI.toFileString());
-        java.net.URI resolvedURI = baseFile.toURI().resolve(schemaLocation);
-        File schemaFile = new File(resolvedURI);
-
-        loadSchema(URI.createFileURI(schemaFile.getAbsolutePath()));
-    }
-
     private void loadSchema(URI schemaURI) throws IOException, ModelBuilderException {
-        if(loadedSchemas.contains(schemaURI.toFileString())) {
-            return;
-        }
+		ResourceSet resourceSet = new ResourceSetImpl();
+		Resource resource;
+		
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xsd", new XSDResourceFactoryImpl());
+		resource = resourceSet.getResource(schemaURI, true);
 
-        loadedSchemas.add(schemaURI.toFileString());
-
-        Resource resource = new XSDResourceFactoryImpl().createResource(schemaURI);
         Map<String, Object> options = new HashMap<String, Object>();
-
         options.put(XSDResourceImpl.XSD_TRACK_LOCATION, true);
 
         resource.load(options);
@@ -168,20 +160,10 @@ public class XSDModelBuilder extends ModelBuilder {
             XSDTypeDefinition type = (XSDTypeDefinition) typeDefs.get(i);
             types.put(type.getName(), type);
         }
-
-        // Load includes and imports types...
-        List contents = schema.getContents();
-        for(Object schemaComponentObj : contents) {
-        	
-        	// TODO: We need to sort this out properly i.e. handle schema <import> and <include> properly!!! 
-        	
-            if(schemaComponentObj instanceof XSDImport) {
-                XSDImport xsdImport = (XSDImport) schemaComponentObj;
-                loadSchema(schemaURI, xsdImport.getSchemaLocation());
-            } else if(schemaComponentObj instanceof XSDInclude) {
-                XSDInclude xsdInclude = (XSDInclude) schemaComponentObj;
-                loadSchema(schemaURI, xsdInclude.getSchemaLocation());
-            }
+        
+        EList<Resource> schemaResources = resourceSet.getResources();
+        for(Resource schemaRes : schemaResources) {
+        	loadedSchemas.add(schemaRes.getURI().toFileString());
         }
     }
 
