@@ -78,11 +78,7 @@ public abstract class TestUtil {
 	}
 
 	public static TemplateBuilder createXSDFreeMarkerTemplateBuilder(File xsdFile, String rootElementName) throws IOException, ModelBuilderException {
-	    if(!xsdFile.exists()) {
-	        throw new RuntimeException("Unknown: " + xsdFile.getAbsolutePath());
-	    }
-	
-	    URI fileURI = URI.createFileURI(xsdFile.getCanonicalFile().toString());
+	    URI fileURI = fileToURI(xsdFile);
 	
 	    XSDModelBuilder modelBuilder = new XSDModelBuilder(fileURI);
 	    modelBuilder.setRootElementName(rootElementName);
@@ -90,12 +86,16 @@ public abstract class TestUtil {
 	}
 
 	public static TemplateBuilder createXMLSampleFreeMarkerTemplateBuilder(File xmlSampleFile) throws IOException, ModelBuilderException {
-	    if(!xmlSampleFile.exists()) {
-	        throw new RuntimeException("Unknown: " + xmlSampleFile.getAbsolutePath());
-	    }
-	
-	    URI fileURI = URI.createFileURI(xmlSampleFile.getCanonicalFile().toString());
+	    URI fileURI = fileToURI(xmlSampleFile);
 	
 	    return new XMLFreeMarkerTemplateBuilder(new XMLSampleModelBuilder(fileURI));
+	}
+
+	public static URI fileToURI(File file) throws IOException {
+		if(!file.exists()) {
+	        throw new RuntimeException("Unknown: " + file.getAbsolutePath());
+	    }
+	
+	    return URI.createFileURI(file.getCanonicalFile().toString());
 	}
 }
