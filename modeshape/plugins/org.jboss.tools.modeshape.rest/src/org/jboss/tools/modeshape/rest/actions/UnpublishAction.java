@@ -1,5 +1,4 @@
 /*
- * ModeShape (http://www.modeshape.org)
  * See the COPYRIGHT.txt file distributed with this work for information
  * regarding copyright ownership.
  *

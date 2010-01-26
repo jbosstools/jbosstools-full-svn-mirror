@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-  ~ ModeShape (http://www.modeshape.org)
   - See the COPYRIGHT.txt file distributed with this work for information
   - regarding copyright ownership.
   -
@@ -15,22 +14,26 @@
 <feature
       id="org.jboss.tools.modeshape.rest.feature"
       label="%featureName"
-      version="1.0.0.v20091216"
+      version="1.0.0"
       provider-name="%featureProvider"
       plugin="org.jboss.tools.modeshape.rest"
       image="feature.png">
 
-   <description url="http://www.modeshape.org/">
+   <description>
       %description
    </description>
 
-   <copyright url="http://www.modeshape.org/copyright/">
+   <copyright>
       %copyright
    </copyright>
 
-   <license url="http://www.modeshape.org/license/">
+   <license url="%licenseUrl">
       %license
    </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://download.jboss.org/jbosstools/updates/stable"/>
+   </url>
 
    <requires>
       <import plugin="org.eclipse.ui"/>
