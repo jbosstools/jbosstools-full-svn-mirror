@@ -37,7 +37,7 @@ import org.jboss.tools.vpe.VpePlugin;
 
 public class ProjectNaturesChecker implements IResourceChangeListener {
 
-	private static final String SEARCH_CLASS = "javax.faces.context.FacesContext"; //$NON-NLS-1$
+	private static final String SEARCH_CLASS = "javax.faces.webapp.FacesServlet"; //$NON-NLS-1$
 	public static final QualifiedName IS_NATURES_CHECK_NEED = new QualifiedName(
 			"", "Is natures check"); //$NON-NLS-1$ //$NON-NLS-2$
 	public static final QualifiedName IS_JSF_CHECK_NEED = new QualifiedName(
