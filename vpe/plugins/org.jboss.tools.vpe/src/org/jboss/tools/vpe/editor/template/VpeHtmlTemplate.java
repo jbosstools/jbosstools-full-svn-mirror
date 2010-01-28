@@ -565,8 +565,9 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 			    file = sourceElement.getAttributeNode("page"); //$NON-NLS-1$
 		    } else if (HTML.TAG_A.equalsIgnoreCase(templateName)) {
 		    	file = sourceElement.getAttributeNode(HTML.ATTR_HREF);
-		    } else if ("h:outputStylesheet".equals(templateName)) { //$NON-NLS-1$
-		    	file = sourceElement.getAttributeNode("name"); //$NON-NLS-1$
+		    } else if ("h:outputStylesheet".equals(templateName)//$NON-NLS-1$
+		    		|| "h:graphicImage".equals(templateName)) { //$NON-NLS-1$
+		    	file = sourceElement.getAttributeNode("name");  //$NON-NLS-1$
 		    }
 
 		    if(file != null) {
