@@ -3,6 +3,11 @@
  */
 package org.jboss.tools.smooks.gef.tree.editparts;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.draw2d.BendpointConnectionRouter;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Connection;
@@ -11,6 +16,7 @@ import org.eclipse.draw2d.ConnectionLocator;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.ManhattanConnectionRouter;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.geometry.Point;
@@ -21,20 +27,53 @@ import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
+import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeConnectionEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeEndpointEditPolicy;
 import org.jboss.tools.smooks.gef.tree.figures.LeftOrRightAnchor;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 
 /**
  * @author DartPeng
  * 
  */
-public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
+public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart implements PropertyChangeListener {
 	protected int alpha = 255;
-	
+
 	protected boolean canDelete = true;
-	
+
 	private Image markerImage = null;
+
+	protected Label errorLabel = new Label();
+
+	protected Label warningLabel = new Label();
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#activate()
+	 */
+	@Override
+	public void activate() {
+		super.activate();
+		TreeNodeConnection connection = (TreeNodeConnection) getModel();
+		connection.addPropertyChangeListener(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.editparts.AbstractGraphicalEditPart#deactivate()
+	 */
+	@Override
+	public void deactivate() {
+		TreeNodeConnection connection = (TreeNodeConnection) getModel();
+		connection.removePropertyChangeListener(this);
+		super.deactivate();
+	}
 
 	@Override
 	protected void createEditPolicies() {
@@ -45,8 +84,6 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 	public void changeLineAlpha(int alpha) {
 		this.alpha = alpha;
 	}
-	
-	
 
 	/**
 	 * @return the markerImage
@@ -56,7 +93,8 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 	}
 
 	/**
-	 * @param markerImage the markerImage to set
+	 * @param markerImage
+	 *            the markerImage to set
 	 */
 	public void setMarkerImage(Image markerImage) {
 		this.markerImage = markerImage;
@@ -70,16 +108,70 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 	}
 
 	/**
-	 * @param canDelete the canDelete to set
+	 * @param canDelete
+	 *            the canDelete to set
 	 */
 	public void setCanDelete(boolean canDelete) {
 		this.canDelete = canDelete;
 	}
-	
-	protected IEditorPart getEditorPart(){
+
+	protected IEditorPart getEditorPart() {
 		GraphicalViewer viewer = (GraphicalViewer) this.getViewer();
-		DefaultEditDomain domain =  (DefaultEditDomain)viewer.getEditDomain();
+		DefaultEditDomain domain = (DefaultEditDomain) viewer.getEditDomain();
 		return domain.getEditorPart();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gef.editparts.AbstractEditPart#refreshVisuals()
+	 */
+	@Override
+	protected void refreshVisuals() {
+
+		Label tooltip = null;
+		this.setMarkerImage(null);
+		Object connection = getModel();
+
+		if (connection instanceof IValidatableModel) {
+			int serverity = ((IValidatableModel) connection).getSeverity();
+			String message = getSeverityMessage((IValidatableModel) connection);
+			Image image = null;
+			if (serverity == IValidatableModel.NONE) {
+				image = null;
+			}
+			if (serverity == IValidatableModel.ERROR) {
+				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(GraphicsConstants.IMAGE_ERROR);
+				tooltip = errorLabel;
+				tooltip.setText(message);
+			}
+			if (serverity == IValidatableModel.WARNING) {
+				image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
+						GraphicsConstants.IMAGE_WARNING);
+				tooltip = warningLabel;
+				tooltip.setText(message);
+			}
+			if (image != null) {
+				this.setMarkerImage(image);
+				getFigure().repaint();
+				// ((TreeNodeFigure) getFigure()).setLabelImage(image);
+			}
+			getFigure().setToolTip(tooltip);
+		}
+	}
+
+	protected String getSeverityMessage(IValidatableModel model) {
+		List<String> messages = model.getMessage();
+		String message = null;
+		for (Iterator<?> iterator = messages.iterator(); iterator.hasNext();) {
+			String string = (String) iterator.next();
+			if (message == null) {
+				message = " - " + string; //$NON-NLS-1$
+			} else {
+				message = message + "\n" + " - " + string; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		}
+		return message;
 	}
 
 	protected IFigure createSourceFlagFigure() {
@@ -187,13 +279,13 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 		};
 		return targetFlagFigure;
 	}
-	
-	protected void drawLineMarkerImage(Graphics graphics){
-		if(getMarkerImage() != null){
-			graphics.drawImage(getMarkerImage(), this.getFigure().getBounds().getCenter().getTranslated(-8, -8));
-		}
+
+	protected void drawLineMarkerImage(Graphics graphics) {
+		if (getMarkerImage() != null) {
+			graphics.drawImage(getMarkerImage(), this.getFigure().getBounds().getCenter().getTranslated(
+					-getMarkerImage().getBounds().width / 2, -getMarkerImage().getBounds().height / 2));
+		} 
 	}
-	
 
 	protected Connection createConnectionFigure() {
 		PolylineConnection connection = new PolylineConnection() {
@@ -202,6 +294,10 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 			public void paintFigure(Graphics graphics) {
 				graphics.setAlpha(alpha);
 				graphics.setLineWidth(3);
+//				if (getMarkerImage() == null) {
+//					Point p = getBounds().getCenter().getTranslated(-8, -8);
+//					graphics.fillRectangle(p.x, p.y, 16, 16);
+//				} 
 				super.paintFigure(graphics);
 				drawLineMarkerImage(graphics);
 			}
@@ -261,5 +357,12 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart {
 		connection.add(sourceFlagFigure, sourceLocator);
 		connection.setConnectionRouter(new BendpointConnectionRouter());
 		return connection;
+	}
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		String event = evt.getPropertyName();
+		if (AbstractSmooksGraphicalModel.PRO_SEVERITY_CHANGED.equals(event)) {
+			refreshVisuals();
+		}
 	}
 }
