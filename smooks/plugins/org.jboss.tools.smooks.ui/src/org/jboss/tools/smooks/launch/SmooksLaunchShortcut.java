@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.debug.core.DebugPlugin;
@@ -21,11 +22,14 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
+import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
+import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 
 public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
 
@@ -187,5 +191,51 @@ public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
 		
 		return null;
 
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jdt.junit.launcher.JUnitLaunchShortcut#getLaunchableResource(org.eclipse.ui.IEditorPart)
+	 */
+	@Override
+	public IResource getLaunchableResource(IEditorPart editor) {
+		if (editor instanceof AbstractSmooksFormEditor) {
+			IEditorInput editorInput = editor.getEditorInput();
+			if (editorInput instanceof FileEditorInput) {
+				return ((FileEditorInput)editorInput).getFile();
+			}
+		}
+		
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.jdt.junit.launcher.JUnitLaunchShortcut#getLaunchConfigurations(org.eclipse.ui.IEditorPart)
+	 */
+	@Override
+	public ILaunchConfiguration[] getLaunchConfigurations(IEditorPart editor) {
+		if (editor instanceof AbstractSmooksFormEditor) {
+			IEditorInput editorInput = editor.getEditorInput();
+			if (editorInput instanceof FileEditorInput) {
+				ILaunchConfigurationWorkingCopy temparary;
+				try {
+					temparary = createLaunchConfiguration(((FileEditorInput)editorInput).getFile());
+					
+					ILaunchConfiguration existingConfig = findExistingLaunchConfiguration(temparary, ILaunchManager.RUN_MODE);
+					if(existingConfig == null) {
+						existingConfig = temparary.doSave();
+					}
+					
+					return new ILaunchConfiguration[] {existingConfig};
+				} catch (CoreException e) {
+					ExceptionHandler.handle(e, getShell(), 
+							Messages.SmooksLaunchShortcut_Title_Launch_Failed, 
+							Messages.SmooksLaunchShortcut_Exception_Occurred);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return null;
 	}
 }
