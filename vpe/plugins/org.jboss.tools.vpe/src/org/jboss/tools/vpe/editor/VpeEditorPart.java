@@ -15,10 +15,8 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.text.IRegion;
@@ -29,8 +27,6 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Point;
@@ -40,7 +36,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IEditorInput;
@@ -84,15 +79,14 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaPreview;
+import org.jboss.tools.vpe.editor.util.ProjectNaturesChecker;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.editor.xpl.EditorSettings;
 import org.jboss.tools.vpe.editor.xpl.SashSetting;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm.ICustomSashFormListener;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.selbar.SelectionBar;
-import org.jboss.tools.vpe.selbar.VisibilityEvent;
-import org.jboss.tools.vpe.selbar.VisibilityListener;
 
+@SuppressWarnings("restriction")
 public class VpeEditorPart extends EditorPart implements ITextEditor,
 		ITextEditorExtension, IReusableEditor, IVisualEditor {
 	private IContextActivation fContextActivation;
@@ -112,12 +106,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private ActivationListener activationListener = new ActivationListener();
 	private int visualMode = 0;
 	private EditorPart multiPageEditor;
-	private static final QualifiedName SPLITTER_POSITION_KEY1 = new QualifiedName(
-			"", "splitter_position1"); //$NON-NLS-1$ //$NON-NLS-2$
-	private static final QualifiedName SPLITTER_POSITION_KEY2 = new QualifiedName(
-			"", "splitter_position2"); //$NON-NLS-1$ //$NON-NLS-2$
-	private static final QualifiedName SPLITTER_POSITION_KEY3 = new QualifiedName(
-			"", "splitter_position3"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private int controlCount = 0;
 
@@ -133,6 +121,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private Splitter verticalToolbarSplitter = null;
 	private Composite verticalToolbarEmpty = null;
 	private ToolBar toolBar = null;
+	private ProjectNaturesChecker naturesChecker;
 
 	public StructuredTextEditor getSourceEditor() {
 		return sourceEditor;
@@ -264,6 +253,14 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		sourceEditor = textEditor;
 		// this.visualMode = visualMode;
 		this.multiPageEditor = multiPageEditor;
+		naturesChecker = VpePlugin.getDefault().getProjectNaturesChecker();
+		if (naturesChecker == null) {
+			naturesChecker = new ProjectNaturesChecker();
+			VpePlugin.getDefault().setProjectNaturesChecker(naturesChecker);
+		}
+		naturesChecker.addProject(
+				(((IFileEditorInput) multiPageEditor.getEditorInput())
+						.getFile().getProject()));
 	}
 
 	public IAction getAction(String actionID) {
@@ -1020,6 +1017,14 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 
 		public void partOpened(IWorkbenchPart part) {
+			if (part == multiPageEditor) {
+				try {
+					naturesChecker.checkNatures(((IFileEditorInput)multiPageEditor.
+							getEditorInput()).getFile().getProject());
+				} catch (CoreException e) {
+					VpePlugin.getPluginLog().logError(e);
+				}
+			}
 		}
 
 		@Override
