@@ -12,7 +12,8 @@ version=1.0.0
 mainFeatureToBuildID=org.jboss.tools.bpel.sdk.feature
 testFeatureToBuildID=org.jboss.tools.bpel.tests.feature
 
-build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
+# on windows or mac, use testLocal; on linux can use test if Xvnc or Xvfb installed; use testLocal if run from Hudson job w/ Xvnc enabled
+build.steps=buildUpdate,buildTests,generateDigests,testLocal,publish,cleanup
 
 # Re-use local sources?
 # note: to run tests locally, these plugins must be pre-checked out into the local source folder:
@@ -41,14 +42,6 @@ http://download.eclipse.org/releases/galileo/
 #http://repository.jboss.org/eclipse/galileo/repos/emf-xsd-Update-2.5.0.zip,\
 #http://repository.jboss.org/eclipse/galileo/repos/jst-buildrepo-R-3.1.1-20090917225226.zip,\
 #http://repository.jboss.org/eclipse/galileo/repos/wst-buildrepo-R-3.1.1-20090917225226.zip
-# Alt location for repos: mirror_id=581 = Amazon AWS mirror
-#http://www.eclipse.org/downloads/download.php?mirror_id=581&r=1&file=/athena/repos/eclipse-Update-R-3.5.1-200909170800.zip,\
-#http://www.eclipse.org/downloads/download.php?mirror_id=581&r=1&file=/athena/repos/GEF-Update-3.5.1.zip,\
-#http://www.eclipse.org/downloads/download.php?mirror_id=581&r=1&file=/athena/repos/dtp-Updates-1.7-20090908.zip,\
-#http://www.eclipse.org/downloads/download.php?mirror_id=581&r=1&file=/athena/repos/emf-xsd-Update-2.5.0.zip,\
-#http://www.eclipse.org/downloads/download.php?mirror_id=581&r=1&file=/athena/repos/jst-buildrepo-R-3.1.1-20090917225226.zip,\
-#http://www.eclipse.org/downloads/download.php?mirror_id=581&r=1&file=/athena/repos/wst-buildrepo-R-3.1.1-20090917225226.zip
-# alternative locations from which to fetch IUs
 
 # required if building bpel.compare.ui: org.eclipse.gmf.runtime.diagram.ui+org.eclipse.emf.compare.match+org.eclipse.emf.compare.diff+org.eclipse.emf.compare.ui+\
 IUsToInstall=org.eclipse.sdk.feature.group+org.eclipse.sdk.ide+org.eclipse.core.net+org.eclipse.equinox.common+org.eclipse.core.runtime+org.eclipse.debug.core+org.eclipse.rcp.feature.group+\
