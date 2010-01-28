@@ -96,7 +96,7 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 		validatorList.add(new SelectorValidator());
 		validatorList.add(new PropertyValidator());
 		validatorList.add(new SetterMethodValidator());
-		validatorList.add(new DecoderTypeValidator());
+//		validatorList.add(new DecoderTypeValidator());
 		innerEditingDomain = newEditingDomain();
 	}
 
