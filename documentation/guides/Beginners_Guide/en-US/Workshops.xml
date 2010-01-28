@@ -1,0 +1,322 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter id="chap-Beginners_Guide-Worshops">
+	<title>Workshops</title>
+	<para>
+		Follow the instructions in these workshops to broaden your knowledge and understanding of the <application>JBoss Developer Studio</application>.
+	</para>
+	<section id="sect-Beginners_Guide-Workshops-RESTEasy_workshop">
+		<title>RESTEasy workshop</title>
+		<para>
+			In this RESTEasy workshop we will provide an example of how to solve the problem of creating new customers for an online store. This will be achieved through the creation of a shopping application and adding customer records through a web browser. 
+		</para>
+		<formalpara>
+			<title>Prerequisites</title>
+			<para>
+				The following technologies are necessary for this workshop:
+				<itemizedlist>
+					<listitem>
+						<para>
+							<application>JBoss Developer Studio 3.0</application>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<application>JBoss Enterprise Application Platform 5</application> or <application>JBoss Service Orientated Architecture Platform 5</application>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<application>Firefox 2.0</application> or higher web browser
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<application>REST Client</application> <application>Firefox</application> plug-in available from <ulink url="https://addons.mozilla.org/en-US/firefox/addon/9780">https://addons.mozilla.org/en-US/firefox/addon/9780</ulink>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<para>
+			Make sure the <application>JBoss Developer Studio</application> is open with the application server running. For the purpose of simplicity it will be assumed for the rest of the workshop that you are running the <application>JBoss Enterprise Application Platform 5</application>, however the steps will be the same if you are using the <application>JBoss Service Orientated Architecture Platform 5</application>.
+		</para>
+		<para>
+			In the <application>JBoss Developer Studio</application> navigate to <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Project Example</guimenuitem></menuchoice>.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Project_Example_Menu">
+			<title>Project Example Menu</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_menu.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						The Project Example menu being selected through the JBoss Developer Studio GUI.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			In the <guimenuitem>Project Example</guimenuitem> menu dialog box, scroll to <menuchoice><guimenuitem>RESTEasy</guimenuitem><guimenuitem>RESTEasy Simple Example</guimenuitem></menuchoice> and click <guibutton>Finish</guibutton>.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-RESTEasy_Simple_Example">
+			<title>RESTEasy Simple Example</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_RESTEasy.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						Selecting to create the RESTEasy Simple Example.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			There will be two issues to fix before you can continue.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Quick_Fixes">
+			<title>Quick Fixes</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_Quick_Fix.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						Displaying the two issues that will need to be fixed; detailed after this image.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To fix the first issue with the description <guilabel>Target runtime JBoss 4.2.2 Runtime is not defined.</guilabel> click on this description and then click the <guibutton>Quick Fix</guibutton> button.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Fixing_the_first_issue">
+			<title>Fixing the first issue</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_Quick_Fix_2.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						The description of the first issue is highlighted, waiting for the user to click the Quick Fix button.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The next dialog box will display two runtime issues to fix, however by fixing the second one labeled as <guilabel>Configure Targeted Runtimes</guilabel> both issues will be corrected.
+		</para>
+		<para>
+			Select the issue called <guilabel>Configure Targeted Runtimes</guilabel> and click the <guibutton>Finish</guibutton> button.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Runtime_issues">
+			<title>Runtime issues</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_Quick_Fix_Runtime.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						Outlining the two runtime issues.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			A large dialog box will open with a long list of property categories on the left hand side. Navigate down to and click on the <guimenuitem>Targeted Runtimes</guimenuitem> property title. To the right of the menu where the <guilabel>JBoss 4.2.2 Runtime</guilabel> box is selected, deselect it and then select the name of your <application>JBoss Enterprise Application Platform 5</application> runtime. 
+		</para>
+		<para>
+			Once the <application>JBoss Enterprise Application Platform 5</application> is selected and the old runtime deselected, click the <guibutton>Apply</guibutton> button and then the <guibutton>OK</guibutton> button.
+		</para>
+		<note>
+			<para>
+				In <xref linkend="figu-Beginners_Guide-Workshops-Selecting_the_correct_runtime"/>, the runtime that will be used is the one called <guilabel>JBoss EAP 5.0 Runtime Server</guilabel>, though the name will depend on what you called it when you configured the server for use with the <application>JBoss Developer Studio</application>.
+			</para>
+		</note>
+		<figure id="figu-Beginners_Guide-Workshops-Selecting_the_correct_runtime">
+			<title>Selecting the correct runtime</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_Quick_Fix_Targeted_Runtimes.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						The JBoss 4.2.2 Runtime is displayed as selected to show how the user will be greeted by this property window.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To fix the second issue with the description <guilabel>Java compiler level does not match the version of the installed Java project facet.</guilabel> click on this description and then click the <guibutton>Quick Fix</guibutton> button.
+		</para>
+		<para>
+			After clicking the <guibutton>Quick Fix</guibutton> button the Java compiler issue should disappear because the <application>JBoss Developer Studio</application> has made the necessary changes in the background to fix it.
+		</para>
+		<para>
+			The <guilabel>Quick Fix</guilabel> dialog box should now be empty. Click the <guibutton>Finish</guibutton> button.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Completed_fixing_the_issues">
+			<title>Completed fixing the issues</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_Quick_Fix_Finish.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						The Quick Fix dialog box is displayed without any remaining issues.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To add the project to the <application>JBoss Enterprise Application Platform 5</application> server right click on the server name in the <guimenuitem>Servers</guimenuitem> tab in the bottom section of your workbench. Click on the <guimenuitem>Add and Remove...</guimenuitem> option.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-About_to_add_the_project_to_the_server">
+			<title>About to add the project to the server</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_Add_to_Server.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						The servers right-click menu is displayed with the Add and Remove option highlighted for selection.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			From the <guilabel>Add and Remove</guilabel> dialog box ensure the box labeled <guilabel>If server is started, publish changes immediately</guilabel> is ticked. In the left-hand menu, highlight the project you just created called <guilabel>simple</guilabel> by clicking on it. 
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Add_project_to_server">
+			<title>Add project to server</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_Add_simple_to_server.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						The simple project is highlighted about the Add button about to be pressed to configure it for the server.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Click the <guibutton>Add &gt;</guibutton> button to move it from the left-hand menu labeled <guilabel>Available</guilabel> to the right-hand menu labeled <guilabel>Configured</guilabel>. Once this is completed click the <guibutton>Finish</guibutton> button.
+		</para>
+		<para>
+			Your RESTEasy project has now been deployed onto your server. We will now test the application by using the REST Client plug-in within the Firefox web browser.
+		</para>
+		<para>
+			Open your Firefox web browser and navigate to <menuchoice><guimenuitem>Tools</guimenuitem><guimenuitem>REST Client</guimenuitem></menuchoice>.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Selecting_the_REST_Client">
+			<title>Selecting the REST Client</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_selection.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						Selecting the REST Client from the Firefox menu.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			In the REST Client click on the <guibutton>Add Request Header</guibutton> button and type <property>content-type</property> for the <guilabel>Name</guilabel> and <property>application/xml</property> for the <guilabel>Value</guilabel>. This will ensure that the content will be consumable by the Plain Old Java Object (POJO) service at the server.
+		</para>
+		<para>
+			Select <guimenuitem>POST</guimenuitem> from the <guilabel>Method</guilabel> drop-down menu, copy <ulink url="http://localhost:8080/simple/rest-services/customers">http://localhost:8080/simple/rest-services/customers</ulink> into the drop-down menu beside the <guilabel>Method</guilabel> and paste the following into the <guilabel>Request Body</guilabel>:
+		</para>
+<screen>&lt;customer&gt;&lt;first-name&gt;Bill&lt;/first-name&gt;&lt;last-name&gt;Burke&lt;/last-name&gt;&lt;street&gt;256 Clarendon Street&lt;/street&gt;&lt;city&gt;Boston&lt;/city&gt;&lt;state&gt;MA&lt;/state&gt;&lt;zip&gt;02115&lt;/zip&gt;&lt;country&gt;USA&lt;/country&gt;&lt;/customer&gt;</screen>
+		<para>
+			The XML for the <guilabel>Request Body</guilabel> must not contain any spaces between XML tags to avoid exceptions occurring at the server end.
+		</para>
+		<para>
+			Click the <guibutton>Send</guibutton> button to add the customer information.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Adding_a_customer">
+			<title>Adding a customer</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_Input.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						REST Client displays a green bar in the Response Header to signify a successful customer addition.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To ensure the customer details were added, change the <guilabel>Method</guilabel> type to <guimenuitem>GET</guimenuitem> and the URL address to <ulink url="http://localhost:8080/simple/rest-services/customers/1">http://localhost:8080/simple/rest-services/customers/1</ulink>. The <emphasis>/1</emphasis> is added to the URL to select the customer with the <varname>customer id</varname> of 1, since that is the number that was given to the customer.
+		</para>
+		<para>
+			Click the <guibutton>Send</guibutton> button to retrieve the information. Select the <guilabel>Response Body</guilabel> tab beneath the <guilabel>Request Body</guilabel> section to view the returned information. 
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Retrieving_customer_information">
+			<title>Retrieving customer information</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_GET_1.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						The customer information is displayed in the Response Body tab of the REST Client. 
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			We have added a customer and retrieved their information, now we will update their information. To achieve this change the <guilabel>Method</guilabel> to being <guimenuitem>PUT</guimenuitem> and copy the following into the <guilabel>Request Body</guilabel> (overwriting anything that may be in the <guilabel>Request Body</guilabel> already):
+		</para>
+		<screen>&lt;customer&gt;&lt;first-name&gt;Gary&lt;/first-name&gt;&lt;last-name&gt;Lamperillo&lt;/last-name&gt;&lt;street&gt;256 Clarendon Street&lt;/street&gt;&lt;city&gt;Venice&lt;/city&gt;&lt;state&gt;CA&lt;/state&gt;&lt;zip&gt;90291&lt;/zip&gt;&lt;country&gt;USA&lt;/country&gt;&lt;/customer&gt;</screen>
+		<para>
+			Remember to make sure there are no spaces between the XML tags when you copy the information into the <guilabel>Request Body</guilabel>.
+		</para>
+		<para>
+			Check to make sure the URL still reads <ulink url="http://localhost:8080/simple/rest-services/customers/1">http://localhost:8080/simple/rest-services/customers/1</ulink> from when you retrieved the customer information. By using the URL that references the ID of the customer you are updating that customer's record.
+		</para>
+		<para>
+			Click the <guibutton>Send</guibutton> button to update the information.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Updating_customer_information">
+			<title>Updating customer information</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_PUT.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						REST Client displays a green bar in the Response Header to signify a successful update.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To verify that the record has been updated change the <guilabel>Method</guilabel> type to <guimenuitem>GET</guimenuitem>, ensure the URL still references customer ID 1 and click the <guibutton>Send</guibutton> button.
+		</para>
+		<para>
+			Select the <guilabel>Response Body</guilabel> tab beneath the <guilabel>Request Body</guilabel> section to view the returned information. 
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Retreiving_updated_customer_information">
+			<title>Retrieving updated customer information</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_GET_2.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						REST Client displays a green bar in the Response Header to signify a successful update.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The RESTEasy workshop is now complete.
+		</para>
+	</section>
+</chapter>
+

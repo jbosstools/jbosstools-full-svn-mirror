@@ -8,6 +8,7 @@
 <!ENTITY Java_EE_and_SE SYSTEM "Java_Web_(EE)_and_Standard_Edition_(SE).xml">
 <!ENTITY Service-Oriented_Architecture_Development SYSTEM "Service-Oriented_Architecture_Development.xml">
 <!ENTITY Where_to_go_from_here SYSTEM "Where_to_go_from_here.xml">
+<!ENTITY Workshops SYSTEM "Workshops.xml">
 <!ENTITY Revision_History SYSTEM "Revision_History.xml">
 ]>
 
@@ -71,6 +72,7 @@
     &Java_EE_and_SE;
     &Service-Oriented_Architecture_Development;
     &Where_to_go_from_here;
+    &Workshops;
     &Revision_History;
 
 </book> 
