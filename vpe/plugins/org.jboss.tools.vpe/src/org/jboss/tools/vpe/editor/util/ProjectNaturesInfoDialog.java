@@ -129,6 +129,7 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 		});
 	}
 
+	@SuppressWarnings("unused")
 	private String arrayToString(String[] strings){
 		StringBuilder builder = new StringBuilder(""); //$NON-NLS-1$
 		for (int i = 0; i < strings.length; i++) {
@@ -138,9 +139,10 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 	}
 	
 	private String getMessageInfo(String[] missingNatures, IProject project){
-		String dialogMessage = "The project \"" + project.getName() +  //$NON-NLS-1$
-		"\" doesn't contain following natures:\n" +  //$NON-NLS-1$
-		arrayToString(missingNatures)+"\n"+"Visual Editor may not work properly."; //$NON-NLS-1$ //$NON-NLS-2$
+		String dialogMessage = "JBoss Tools Visual Editor might not fully work in project \"" + project.getName() +  //$NON-NLS-1$
+				"\" because it does not have JSF and code completion enabled completely.\n\n" + //$NON-NLS-1$
+				"Please use the Configure menu on the project to enable JSF if " + //$NON-NLS-1$
+				"you want all features of the editor working."; //$NON-NLS-1$
 		return dialogMessage;
 	}
 		

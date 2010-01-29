@@ -43,6 +43,8 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 	public static final QualifiedName IS_JSF_CHECK_NEED = new QualifiedName(
 			"", "Is JSF check"); //$NON-NLS-1$ //$NON-NLS-2$
 	private Set<IProject> projectsCollection;
+	private static final String JSF_NATURE = "JavaServer Faces Nature"; //$NON-NLS-1$
+	private static final String KB_NATURE = "Knowledge Base Nature"; //$NON-NLS-1$
 
 	public ProjectNaturesChecker() {
 		projectsCollection = new HashSet<IProject>(0);
@@ -62,6 +64,9 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 	}
 
 	public void checkNatures(IProject project) throws CoreException {
+		if (project == null) {
+			return;
+		}
 		addProject(project);
 		KbProject.checkKBBuilderInstalled(project);
 		boolean isJSFCheck = true;
@@ -86,10 +91,10 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 	private String[] getMissingNatures(IProject project) throws CoreException {
 		List<String> missimgNatures = new ArrayList<String>(0);
 		if (project.getNature(IKbProject.NATURE_ID) == null) {
-			missimgNatures.add(IKbProject.NATURE_ID);
+			missimgNatures.add(JSF_NATURE);
 		}
 		if (project.getNature(WebProject.JSF_NATURE_ID) == null) {
-			missimgNatures.add(WebProject.JSF_NATURE_ID);
+			missimgNatures.add(KB_NATURE);
 		}
 		if (missimgNatures.size() == 0) {
 			return null;
