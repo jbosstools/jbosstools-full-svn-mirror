@@ -83,8 +83,9 @@
 		    <arg line="-ws ${ws}"/>
 		    <arg line="-arch ${arch}"/>
 		    <arg line="-consolelog"/>
-			<arg line="-vmargs ${vmargs} ${extraVMargs} ${Xflags} ${Dflags} -DPLUGIN_PATH=${plugin-path}"/>
-			<jvmarg line="${vmargs} ${extraVMargs} ${Xflags} ${Dflags} -DPLUGIN_PATH=${plugin-path}" />
+		    <arg line="-vmargs ${vmargs} ${extraVMargs} ${Xflags} ${Dflags} -DPLUGIN_PATH=${plugin-path}"/>
+		    <jvmarg line="${vmargs} ${extraVMargs} ${Xflags} ${Dflags} -DPLUGIN_PATH=${plugin-path}" />
+		    <sysproperty key="PLUGIN_PATH" value="${plugin-path}"/> 
 		</java>
 		<antcall target="collect-results" />
 	</target>
