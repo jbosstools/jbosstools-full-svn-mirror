@@ -21,6 +21,13 @@ build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
 #org.jboss.tools.common -> /path/to/common/plugins/org.jboss.tools.common/
 #org.jboss.tools.tests -> /path/to/tests/tests/org.jboss.tools.tests/
 
+# to (re)generate map and psfs, use these settings
+#build.steps=dir2svnmap,map2psf
+#dir2map.reporoot = http://anonsvn.jboss.org/repos
+#dir2map.repopath = jbosstools/trunk/bpel
+#dir2map.dir = /home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel
+#dir2map.map = /home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel/releng/maps/project.map
+
 localSourceCheckoutDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel
 relengBuilderDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/bpel/releng
 relengBaseBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.releng.basebuilder
@@ -31,17 +38,16 @@ JAVA14_HOME=/usr/lib/jvm/java
 JAVA50_HOME=/usr/lib/jvm/java
 JAVA60_HOME=/usr/lib/jvm/java
 
-# To make the build go faster, input a local update site zip (or use locally cached zips instead of galileo site) 
-# jar:file:/tmp/build/downloads/JBossTools-Update-3.1.0.v200912081204N-H34-GA.zip!/,
+# To make the build go faster, use locally cached zips instead of galileo site 
 repositoryURLs=\
 http://download.jboss.org/jbosstools/updates/nightly/trunk/,\
-http://download.eclipse.org/releases/galileo/
-#http://repository.jboss.org/eclipse/galileo/repos/eclipse-Update-R-3.5.1-200909170800.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/GEF-Update-3.5.1.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/dtp-Updates-1.7-20090908.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/emf-xsd-Update-2.5.0.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/jst-buildrepo-R-3.1.1-20090917225226.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/wst-buildrepo-R-3.1.1-20090917225226.zip
+http://download.eclipse.org/releases/galileo/,\
+http://repository.jboss.org/eclipse/galileo/repos/eclipse-Update-R-3.5.1-200909170800.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/GEF-Update-3.5.1.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/dtp-Updates-1.7-20090908.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/emf-xsd-Update-2.5.0.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/jst-buildrepo-R-3.1.1-20090917225226.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/wst-buildrepo-R-3.1.1-20090917225226.zip
 
 # required if building bpel.compare.ui: org.eclipse.gmf.runtime.diagram.ui+org.eclipse.emf.compare.match+org.eclipse.emf.compare.diff+org.eclipse.emf.compare.ui+\
 IUsToInstall=org.eclipse.sdk.feature.group+org.eclipse.sdk.ide+org.eclipse.core.net+org.eclipse.equinox.common+org.eclipse.core.runtime+org.eclipse.debug.core+org.eclipse.rcp.feature.group+\

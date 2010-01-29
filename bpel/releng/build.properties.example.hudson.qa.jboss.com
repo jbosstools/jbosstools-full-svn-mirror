@@ -13,23 +13,22 @@ mainFeatureToBuildID=org.jboss.tools.bpel.sdk.feature
 testFeatureToBuildID=org.jboss.tools.bpel.tests.feature
 
 # on windows or mac, use testLocal; on linux use test (requires Xvnc or Xvfb)
-build.steps=buildUpdate,buildTests,generateDigests,testLocal,publish,cleanup
+build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
 
 JAVA14_HOME=${JAVA_HOME}
 JAVA50_HOME=${JAVA_HOME}
 JAVA60_HOME=${JAVA_HOME}
 
-# To make the build go faster, input a local update site zip (or use locally cached zips instead of galileo site) 
-# jar:file:/tmp/build/downloads/JBossTools-Update-3.1.0.v200912081204N-H34-GA.zip!/,
+# To make the build go faster, use locally cached zips instead of galileo site 
 repositoryURLs=\
 http://download.jboss.org/jbosstools/updates/nightly/trunk/,\
-http://download.eclipse.org/releases/galileo/
-#http://repository.jboss.org/eclipse/galileo/repos/eclipse-Update-R-3.5.1-200909170800.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/GEF-Update-3.5.1.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/dtp-Updates-1.7-20090908.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/emf-xsd-Update-2.5.0.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/jst-buildrepo-R-3.1.1-20090917225226.zip,\
-#http://repository.jboss.org/eclipse/galileo/repos/wst-buildrepo-R-3.1.1-20090917225226.zip
+http://download.eclipse.org/releases/galileo/,\
+http://repository.jboss.org/eclipse/galileo/repos/eclipse-Update-R-3.5.1-200909170800.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/GEF-Update-3.5.1.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/dtp-Updates-1.7-20090908.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/emf-xsd-Update-2.5.0.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/jst-buildrepo-R-3.1.1-20090917225226.zip,\
+http://repository.jboss.org/eclipse/galileo/repos/wst-buildrepo-R-3.1.1-20090917225226.zip
 
 # required if building bpel.compare.ui: org.eclipse.gmf.runtime.diagram.ui+org.eclipse.emf.compare.match+org.eclipse.emf.compare.diff+org.eclipse.emf.compare.ui+\
 IUsToInstall=org.eclipse.sdk.feature.group+org.eclipse.sdk.ide+org.eclipse.core.net+org.eclipse.equinox.common+org.eclipse.core.runtime+org.eclipse.debug.core+org.eclipse.rcp.feature.group+\
