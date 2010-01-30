@@ -22,6 +22,8 @@ public class Messages extends NLS {
 	public static String ValueDecodeParamSection_NullText;
 	public static String ValueDecodeParamSection_ParamNameColumnText;
 	public static String ValueDecodeParamSection_ParamValueColumnText;
+	public static String ValueDecodeParamSection_EnumParamNameColumnText;
+	public static String ValueDecodeParamSection_EnumParamValueColumnText;
 	public static String ValueDecodeParamSection_SectionTitle;
 	static {
 		// initialize resource bundle

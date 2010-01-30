@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.javamapping;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,8 +51,11 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemp
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
+import org.jboss.tools.smooks.model.javabean12.ExpressionType;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
+import org.jboss.tools.smooks.model.javabean12.WiringType;
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.ValueMapping;
@@ -62,7 +66,7 @@ import org.w3c.dom.Node;
  * @author Dart
  * 
  */
-public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGraphModel {
+public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGraphModel implements JavaNode {
 
 	private IGraphicalEditorPart editorPart;
 
@@ -278,6 +282,15 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 					Command addParamsCommand = AddCommand.create(domainProvider.getEditingDomain(), owner,
 							Javabean12Package.Literals.VALUE_TYPE__DECODE_PARAM, oldParameters);
 					compoundCommand.append(addParamsCommand);
+				} else {
+					// If the target is an Enum type, we want to configure the decode parameters...
+					Class<?> targetType = getJavaType();
+					if(targetType.isEnum()) {
+						if(dataDecoder == null) {
+							dataDecoder = "Enum";
+						}
+						compoundCommand.append(_newEnumDecodeParamSet(targetType, (ValueType) model));
+					}
 				}
 				
 				if (dataDecoder != null) {
@@ -296,6 +309,34 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		} else {
 			super.addTargetConnection(connection, sourceNode);
 		}
+	}
+
+	public void newEnumDecodeParamSet(Class<?> enumType, ValueType valueType) {
+		Command compoundCommand = _newEnumDecodeParamSet(enumType, valueType);
+		domainProvider.getEditingDomain().getCommandStack().execute(compoundCommand);
+	}
+	
+	private Command _newEnumDecodeParamSet(Class<?> enumType, ValueType valueType) {
+		CompoundCommand compoundCommand = new CompoundCommand();
+		Field[] enumFields = enumType.getDeclaredFields();
+
+		compoundCommand.append(addDecodeParam("enumType", enumType.getName(), valueType));
+		for(Field enumField : enumFields) {
+			if(enumField.isEnumConstant()) {
+				compoundCommand.append(addDecodeParam(enumField.getName(), enumField.getName(), valueType));
+			}
+		}
+		
+		return compoundCommand;
+	}
+
+	public Command addDecodeParam(String paramName, String paramValue, ValueType valueType) {		
+		DecodeParamType paramType = Javabean12Factory.eINSTANCE.createDecodeParamType();
+		
+		paramType.setName(paramName);
+		paramType.setValue(paramValue);
+		
+		return AddCommand.create(domainProvider.getEditingDomain(), valueType, Javabean12Package.Literals.VALUE_TYPE__DECODE_PARAM, paramType);
 	}
 
 	protected String getDataDecoder(TreeNodeConnection connection) {
@@ -398,6 +439,41 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		}
 		
 	}
+	
+	public Class<?> getJavaType() {
+		if(getData() instanceof WrapperItemProvider) {
+			WrapperItemProvider sourceData = (WrapperItemProvider) getData();
+			Object binding = ((ContainmentUpdatingFeatureMapEntry)sourceData.getValue()).getValue();
+			
+			if(binding instanceof ValueType) {				
+				return getPropertyType(getParentBean(), ((ValueType)binding).getProperty());
+			} else if(binding instanceof WiringType) {				
+				return getPropertyType(getParentBean(), ((WiringType)binding).getProperty());
+			} else if(binding instanceof ExpressionType) {				
+				return getPropertyType(getParentBean(), ((ExpressionType)binding).getProperty());
+			}
+		}				
+
+		throw new IllegalStateException("Unexpected error.  GraphModel data expected to implement WrapperItemProvider.");
+	}
+	
+	public BeanType getParentBean() {
+		if(getData() instanceof WrapperItemProvider) {
+			WrapperItemProvider sourceData = (WrapperItemProvider) getData();
+			return (BeanType) sourceData.getOwner();						
+		}
+		
+		throw new IllegalStateException("Unexpected error.  GraphModel data expected to implement WrapperItemProvider.");
+	}
+		
+	public Object getBindingTypeObj() {
+		if(getData() instanceof WrapperItemProvider) {
+			WrapperItemProvider sourceData = (WrapperItemProvider) getData();
+			return ((ContainmentUpdatingFeatureMapEntry) sourceData.getValue()).getValue();
+		}
+		
+		throw new IllegalStateException("Unexpected error.  GraphModel data expected to implement WrapperItemProvider.");
+	}
 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel#addMappingTypeInfo(org.jboss.tools.smooks.templating.template.ValueMapping)
@@ -406,22 +482,22 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 	public void addMappingTypeInfo(ValueMapping mapping) {
 		if(getData() instanceof WrapperItemProvider) {
 			WrapperItemProvider sourceData = (WrapperItemProvider) getData();
-			BeanType bean = (BeanType) sourceData.getOwner();
-			ValueType valueBinding = (ValueType) ((ContainmentUpdatingFeatureMapEntry)sourceData.getValue()).getValue();
+			Object binding = ((ContainmentUpdatingFeatureMapEntry)sourceData.getValue()).getValue();
 			
-			mapping.setValueType(getPropertyType(bean, valueBinding));
-			if(mapping.getEncodeProperties() == null) {
-				mapping.setEncodeProperties(getDecoderParams(valueBinding));
+			if(binding instanceof ValueType) {				
+				mapping.setValueType(getJavaType());
+				if(mapping.getEncodeProperties() == null) {
+					mapping.setEncodeProperties(getDecoderParams((ValueType) binding));
+				}
 			}
 		}				
 	}
 	
-	private Class<?> getPropertyType(BeanType bean, ValueType valueBinding) {
+	private Class<?> getPropertyType(BeanType bean, String targetProperty) {
 		try {
 			IJavaProject project = SmooksUIUtils.getJavaProject(bean);
 			ProjectClassLoader classLoader = new ProjectClassLoader(project);
 			Class<?> beanClass = classLoader.loadClass(bean.getClass_());
-			String targetProperty = valueBinding.getProperty();
 			
 			if(targetProperty != null && !targetProperty.trim().equals("")) {
 				StringBuilder getterNameBuilder = new StringBuilder();
@@ -446,7 +522,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		return null;
 	}
 
-	private Properties getDecoderParams(ValueType valueBinding) {
+	public static Properties getDecoderParams(ValueType valueBinding) {
 		Properties decodeParams = new Properties();
 		EList decodeParamsList = valueBinding.getDecodeParam();
 		

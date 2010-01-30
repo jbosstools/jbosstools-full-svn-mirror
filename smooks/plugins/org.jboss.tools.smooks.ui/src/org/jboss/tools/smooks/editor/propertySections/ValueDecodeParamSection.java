@@ -17,17 +17,16 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.Map.Entry;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -50,23 +49,21 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
-import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
-import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.model.javabean12.DecodeParamType;
-import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
 import org.milyn.javabean.DataDecoder;
+import org.milyn.javabean.decoders.EnumDecoder;
+import org.milyn.javabean.decoders.IntegerDecoder;
 
 /**
  * @author Dart
@@ -77,6 +74,9 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	private Composite controlComposite;
 	private TableViewer paramterViewer;
 	private CCombo decoderCombo;
+	boolean isEnumTarget;
+	private TableColumn nameColumn;
+	private TableColumn valueColumn;
 
 	private static List<String> DECODERS = new ArrayList<String>();
 
@@ -189,74 +189,6 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		}
 	}
 
-	private String[] getDecoderParametersName(String decoder) {
-		if (decoder != null) {
-			if ("Date".equals(decoder)) {
-				return new String[] { "format", "locale-language", "locale-country" };
-			}
-
-			if ("Enum".equals(decoder)) {
-				TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
-				Object model = lineModel.getTargetNode().getData();
-				model = AdapterFactoryEditingDomain.unwrap(model);
-				if (model != null && model instanceof ValueType) {
-					String[] enumFieldsString = null;
-					List<Object> inputs = SelectorCreationDialog.generateInputData(SmooksUIUtils
-							.getSmooks11ResourceListType(getSmooksModelProvider().getSmooksModel()));
-					if (inputs != null && !inputs.isEmpty()) {
-						Object input = inputs.get(0);
-						if (input instanceof JavaBeanModel) {
-							String path = ((ValueType) model).getData();
-							JavaBeanModel beanModel = (JavaBeanModel) SmooksUIUtils.localXMLNodeWithPath(path,
-									(JavaBeanModel) input);
-							if (beanModel != null) {
-								String clazz = beanModel.getBeanClassString();
-								if (clazz != null) {
-									clazz = clazz.trim();
-									IProject project = ((IFileEditorInput) getEditorPart().getEditorInput()).getFile()
-											.getProject();
-									try {
-										ProjectClassLoader classLoader = new ProjectClassLoader(JavaCore
-												.create(project));
-										Class<?> enumType = classLoader.loadClass(clazz);
-										if (enumType.isEnum()) {
-											Field[] fields = enumType.getDeclaredFields();
-											if (fields != null) {
-												List<String> enumList = new ArrayList<String>();
-												enumFieldsString = new String[fields.length + 1];
-												for (int i = 0; i < fields.length; i++) {
-													Field enumField = fields[i];
-													if (enumField.isEnumConstant()) {
-														enumList.add(enumField.getName());
-													}
-												}
-												enumFieldsString = new String[enumList.size() + 1];
-												System.arraycopy(enumList.toArray(new String[] {}), 0,
-														enumFieldsString, 1, enumList.size());
-												enumList.clear();
-											}
-										}
-									} catch (JavaModelException e) {
-									} catch (ClassNotFoundException e) {
-									} catch (SecurityException e) {
-									}
-								}
-							}
-						}
-					}
-					String[] result = new String[] { "enumType" };
-					if (enumFieldsString != null) {
-						enumFieldsString[0] = result[0];
-						return enumFieldsString;
-					} else {
-						return result;
-					}
-				}
-			}
-		}
-		return null;
-	}
-
 	private void createDecodeParamViewer(TabbedPropertySheetWidgetFactory factory, Composite sashForm) {
 		GridData gd = new GridData(GridData.FILL_BOTH);
 
@@ -279,6 +211,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		
 
 		FillLayout layout = new FillLayout();
+		
 		layout.marginHeight = 1;
 		layout.marginWidth = 1;
 		viewerComposite.setLayout(layout);
@@ -289,83 +222,17 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 		paramterViewer.setFilters(new ViewerFilter[] { new DecodeParamTypeFilter() });
 
-		TableColumn nameColumn = new TableColumn(paramterViewer.getTable(), SWT.NONE);
-		nameColumn.setWidth(150);
+		nameColumn = new TableColumn(paramterViewer.getTable(), SWT.NONE);
+		valueColumn = new TableColumn(paramterViewer.getTable(), SWT.NONE);
 		nameColumn.setText(Messages.ValueDecodeParamSection_ParamNameColumnText);
-		TableColumn valueColumn = new TableColumn(paramterViewer.getTable(), SWT.NONE);
-		valueColumn.setWidth(150);
 		valueColumn.setText(Messages.ValueDecodeParamSection_ParamValueColumnText);
+		nameColumn.setWidth(150);
+		valueColumn.setWidth(150);
 
-		paramterViewer.setCellEditors(new CellEditor[] { new TextCellEditor(paramterViewer.getTable()),
-				new TextCellEditor(paramterViewer.getTable()) });
+		paramterViewer.setCellEditors(new CellEditor[] { new TextCellEditor(paramterViewer.getTable()), new TextCellEditor(paramterViewer.getTable()) });
 		paramterViewer.setColumnProperties(new String[] { "name", "value" }); //$NON-NLS-1$ //$NON-NLS-2$
 
-		paramterViewer.setCellModifier(new ICellModifier() {
-
-			public void modify(Object element, String property, Object value) {
-				if (element instanceof TableItem) {
-					Object currentElement = ((TableItem) element).getData();
-					TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
-					Object model = lineModel.getTargetNode().getData();
-					model = AdapterFactoryEditingDomain.unwrap(model);
-					if (model != null && model instanceof ValueType && currentElement instanceof DecodeParam) {
-						String pname = ((DecodeParam) currentElement).getName();
-						DecodeParamType paramType = findDecodeParamType(pname, (ValueType) model);
-						Command command = null;
-						EditingDomain editingDomain = getSmooksModelProvider().getEditingDomain();
-						if (property.equals("value")) {
-							if (value != null) {
-								String svalue = ((String) value).trim();
-								if ("".equals(svalue)) {
-									if (paramType != null) {
-										command = RemoveCommand.create(editingDomain, paramType);
-									}
-								} else {
-									// if param is empty , add it
-									if (paramType == null) {
-										paramType = Javabean12Factory.eINSTANCE.createDecodeParamType();
-										paramType.setName(pname);
-										paramType.setValue((String) value);
-										command = AddCommand.create(editingDomain, (ValueType) model,
-												Javabean12Package.Literals.VALUE_TYPE__DECODE_PARAM, paramType);
-									} else {
-										command = SetCommand.create(editingDomain, paramType,
-												Javabean12Package.Literals.DECODE_PARAM_TYPE__VALUE, value);
-									}
-								}
-							}
-						}
-						if (command != null) {
-							editingDomain.getCommandStack().execute(command);
-							((DecodeParam) currentElement).setValue((String) value);
-							paramterViewer.update(currentElement, new String[] { property });
-						}
-					}
-				}
-			}
-
-			public Object getValue(Object element, String property) {
-				element = AdapterFactoryEditingDomain.unwrap(element);
-				if (property.equals("value")) { //$NON-NLS-1$
-					if (element instanceof DecodeParam) {
-						String name = ((DecodeParam) element).getValue();
-						if (name == null)
-							name = ""; //$NON-NLS-1$
-						return name;
-					}
-				}
-				return null;
-			}
-
-			public boolean canModify(Object element, String property) {
-				if (property.equals("value")) { //$NON-NLS-1$
-					if (element instanceof DecodeParam) {
-						return true;
-					}
-				}
-				return false;
-			}
-		});
+		paramterViewer.setCellModifier(new DecodeParamCellModifier());
 
 		paramterViewer.getTable().setHeaderVisible(true);
 		paramterViewer.getTable().setLinesVisible(true);
@@ -375,14 +242,32 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	private void initDecoderCombo() {
 		decoderCombo.select(-1);
 		TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
-		Object model = lineModel.getTargetNode().getData();
-		model = AdapterFactoryEditingDomain.unwrap(model);
-		if (model != null && model instanceof ValueType) {
-			String decoder = ((ValueType) model).getDecoder();
-			if (decoder != null) {
-				decoder = decoder.trim();
-				int index = DECODERS.indexOf(decoder);
-				decoderCombo.select(index);
+		AbstractSmooksGraphicalModel targetNode = lineModel.getTargetNode();
+		
+		if(targetNode instanceof JavaBeanChildGraphModel) {
+			JavaBeanChildGraphModel javaBeanChildGraphModel = (JavaBeanChildGraphModel)targetNode;
+			Object bindingTypeObj = javaBeanChildGraphModel.getBindingTypeObj();
+			
+			if (bindingTypeObj != null && bindingTypeObj instanceof ValueType) {
+				Class<?> targetPropertyType = javaBeanChildGraphModel.getJavaType();
+				String decoderAlias = ((ValueType) bindingTypeObj).getDecoder();
+				
+				if(decoderAlias != null) {
+					// The decoder is configured...
+					int index = DECODERS.indexOf(decoderAlias.trim());
+					decoderCombo.select(index);
+				} else {
+					// Try work out the decoder based on the target property type...
+					DataDecoder decoder = DataDecoder.Factory.create(targetPropertyType);
+					if(decoder.getClass().getPackage() == IntegerDecoder.class.getPackage()) {
+						String decoderName = decoder.getClass().getSimpleName();
+						if(decoderName.endsWith("Decoder")) {
+							decoderAlias = decoderName.substring(0, decoderName.length() - "Decoder".length());
+							int index = DECODERS.indexOf(decoderAlias);
+							decoderCombo.select(index);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -390,15 +275,104 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	private void initDecodeParamViewer() {
 		paramterViewer.setInput("NULL");
 		TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
-		Object model = lineModel.getTargetNode().getData();
-		model = AdapterFactoryEditingDomain.unwrap(model);
-		if (model != null && model instanceof ValueType) {
-			String decoder = ((ValueType) model).getDecoder();
-			String[] params = getDecoderParametersName(decoder);
-			if (params != null) {
-				paramterViewer.setInput(newDecodeParam(params, ((ValueType) model)));
+		AbstractSmooksGraphicalModel targetNode = lineModel.getTargetNode();
+		
+		if(targetNode instanceof JavaBeanChildGraphModel) {
+			JavaBeanChildGraphModel javaBeanChildGraphModel = (JavaBeanChildGraphModel)targetNode;
+			Object bindingTypeObj = javaBeanChildGraphModel.getBindingTypeObj();
+			
+			if (bindingTypeObj != null && bindingTypeObj instanceof ValueType) {
+				Class<?> targetPropertyType = javaBeanChildGraphModel.getJavaType();
+				String decoderAlias = ((ValueType) bindingTypeObj).getDecoder();
+				DataDecoder decoder;
+				DecodeParamMetaData[] decodeParamMetaData;
+				
+				if(decoderAlias != null) {
+					// The decoder is configured...
+					decoder = DataDecoder.Factory.create(decoderAlias);
+				} else {
+					// Try work out the decoder based on the target property type...
+					decoder = DataDecoder.Factory.create(targetPropertyType);
+				}
+				
+				if(decoder instanceof EnumDecoder) {
+					// Get the enum values based on the targetPropertyType enum etc...
+					isEnumTarget = true;
+					paramterViewer.setInput(newEnumDecodeParamSet(targetPropertyType, (ValueType) bindingTypeObj, javaBeanChildGraphModel));
+					nameColumn.setText(Messages.ValueDecodeParamSection_EnumParamNameColumnText);
+					valueColumn.setText(Messages.ValueDecodeParamSection_EnumParamValueColumnText);
+				} else {
+					isEnumTarget = false;
+					nameColumn.setText(Messages.ValueDecodeParamSection_ParamNameColumnText);
+					valueColumn.setText(Messages.ValueDecodeParamSection_ParamValueColumnText);
+					decodeParamMetaData = DecodeParamMetaDataFactory.getDecodeParamMetaData(decoder.getClass());					
+					if(decodeParamMetaData != null) {
+						paramterViewer.setInput(newDecodeParam(decodeParamMetaData, ((ValueType) bindingTypeObj)));
+					}
+				}
 			}
 		}
+	}
+
+	private List<DecodeParam> newDecodeParam(DecodeParamMetaData[] decodeParamMetaData, ValueType valueType) {
+		List<DecodeParam> list = new ArrayList<DecodeParam>();
+		for (int i = 0; i < decodeParamMetaData.length; i++) {
+			DecodeParamMetaData decodeParamMD = decodeParamMetaData[i];
+			DecodeParam p = new DecodeParam();
+			DecodeParamType dp = findDecodeParamType(decodeParamMD.getName(), valueType);
+
+			p.setName(decodeParamMD.getName());
+			if (dp != null) {
+				String dpv = dp.getValue();
+				if (dpv != null) {
+					dpv = dpv.trim();
+				}
+				p.setValue(dpv);				
+			} else if(decodeParamMD.getDefaultVal() != null) {
+				p.setValue(decodeParamMD.getDefaultVal());
+			} else if(decodeParamMD.isRequiresConfiguration()) {
+				// TODO: We need to raise a warning...
+			}
+			
+			list.add(p);
+		}
+		return list;
+	}
+
+	private List<DecodeParam> newEnumDecodeParamSet(Class<?> enumType, ValueType valueType, JavaBeanChildGraphModel enumValueModelNode) {
+		List<DecodeParam> list = new ArrayList<DecodeParam>();
+		Properties configuredParams = JavaBeanChildGraphModel.getDecoderParams(valueType);
+
+		if(!configuredParams.isEmpty()) {
+			// Already configured...
+			Set<Entry<Object, Object>> paramSet = configuredParams.entrySet();
+			for(Entry<Object, Object> param : paramSet) {
+				String paramName = param.getKey().toString();
+				
+				if(!paramName.equals("enumType")) {
+					DecodeParam p = new DecodeParam();
+					p.setName(paramName);
+					p.setValue(param.getValue().toString());
+					list.add(p);
+				}
+			}			
+		} else {
+			Field[] enumFields = enumType.getDeclaredFields();
+
+			for(Field enumField : enumFields) {
+				if(enumField.isEnumConstant()) {
+					DecodeParam p = new DecodeParam();
+					p.setName(enumField.getName());
+					p.setValue(enumField.getName());
+					list.add(p);
+				}
+			}
+
+			// And add them to the model...
+			enumValueModelNode.newEnumDecodeParamSet(enumType, valueType);
+		}
+
+		return list;
 	}
 
 	private DecodeParamType findDecodeParamType(String name, ValueType valueType) {
@@ -414,24 +388,6 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 			}
 		}
 		return null;
-	}
-
-	private List<DecodeParam> newDecodeParam(String[] params, ValueType valueType) {
-		List<DecodeParam> list = new ArrayList<DecodeParam>();
-		for (int i = 0; i < params.length; i++) {
-			String name = params[i];
-			DecodeParam p = new DecodeParam();
-			p.setName(name);
-			DecodeParamType dp = findDecodeParamType(name, valueType);
-			if (dp != null) {
-				String dpv = dp.getValue();
-				if (dpv != null)
-					dpv = dpv.trim();
-				p.setValue(dpv);
-			}
-			list.add(p);
-		}
-		return list;
 	}
 
 	protected void createDecodeParamGUIContents(Object model, ISmooksModelProvider provider, IEditorPart part,
@@ -594,4 +550,91 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 		}
 	}
 
+	
+	private class DecodeParamCellModifier implements ICellModifier {
+
+		public void modify(Object element, String property, Object value) {
+			if (element instanceof TableItem) {
+				Object currentElement = ((TableItem) element).getData();
+				TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
+				EditingDomain editingDomain = getSmooksModelProvider().getEditingDomain();
+				Object model = lineModel.getTargetNode().getData();
+
+				model = AdapterFactoryEditingDomain.unwrap(model);
+				if (model != null && model instanceof ValueType && currentElement instanceof DecodeParam) {
+					String pname = ((DecodeParam) currentElement).getName();
+					DecodeParamType paramType = findDecodeParamType(pname, (ValueType) model);
+					Command command = null;
+					if (!isEnumTarget && property.equals("value")) {
+						if (value != null) {
+							String svalue = ((String) value).trim();
+							if ("".equals(svalue)) {
+								if (paramType != null) {
+									command = RemoveCommand.create(editingDomain, paramType);
+								}
+							} else {
+								// if param is empty , add it
+								if (paramType == null) {
+									AbstractSmooksGraphicalModel targetNode = lineModel.getTargetNode();										
+									if(targetNode instanceof JavaBeanChildGraphModel) {
+										command = ((JavaBeanChildGraphModel)targetNode).addDecodeParam(pname, (String) value, (ValueType) model);
+									}
+								} else {
+									command = SetCommand.create(editingDomain, paramType,
+											Javabean12Package.Literals.DECODE_PARAM_TYPE__VALUE, value);
+								}
+							}
+						}
+						if (command != null) {
+							editingDomain.getCommandStack().execute(command);
+							((DecodeParam) currentElement).setValue((String) value);
+							paramterViewer.update(currentElement, new String[] { property });
+						}
+					} else if (isEnumTarget && property.equals("name")) {
+						if (value != null) {
+							String svalue = ((String) value).trim();
+							if ("".equals(svalue)) {
+								// Can't blank it for an enum... ignore...
+							} else {
+								command = SetCommand.create(editingDomain, paramType,
+										Javabean12Package.Literals.DECODE_PARAM_TYPE__NAME, value);
+								editingDomain.getCommandStack().execute(command);
+								((DecodeParam) currentElement).setName((String) value);
+								paramterViewer.update(currentElement, new String[] { property });
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public Object getValue(Object element, String property) {
+			element = AdapterFactoryEditingDomain.unwrap(element);
+			if (!isEnumTarget && property.equals("value")) { //$NON-NLS-1$
+				if (element instanceof DecodeParam) {
+					String name = ((DecodeParam) element).getValue();
+					if (name == null)
+						name = ""; //$NON-NLS-1$
+					return name;
+				}
+			} else if (isEnumTarget && property.equals("name")) { //$NON-NLS-1$
+				if (element instanceof DecodeParam) {
+					String name = ((DecodeParam) element).getName();
+					if (name == null)
+						name = ""; //$NON-NLS-1$
+					return name;
+				}
+			}
+			return null;
+		}
+
+		public boolean canModify(Object element, String property) {
+			if (property.equals(isEnumTarget?"name":"value")) { //$NON-NLS-1$ //$NON-NLS-2$
+				if (element instanceof DecodeParam) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}	
 }
