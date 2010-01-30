@@ -106,11 +106,7 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 						connection.setSeverity(IFieldMarker.TYPE_NONE);
 						continue;
 					}
-					if (decoder == null) {
-						connection.addMessage("Decoder is required.");
-						connection.setSeverity(IFieldMarker.TYPE_WARINING);
-						changed = true;
-					} else {
+					if (decoder != null) {
 						if (!decoder.equals(defaultDecoder)) {
 							connection.addMessage("Decoder should be '" + defaultDecoder + "'.");
 							connection.setSeverity(IFieldMarker.TYPE_WARINING);
