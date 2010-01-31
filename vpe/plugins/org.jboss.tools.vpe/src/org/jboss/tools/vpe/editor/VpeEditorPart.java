@@ -913,10 +913,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	@Override
 	public void dispose() {
 		deactivateServices();
-		if (naturesChecker != null) {
-			naturesChecker.dispose();
-			naturesChecker = null;
-		}
 		sourceActivation = null;
 		sourceMaxmin = null;
 		visualActivation = null;
