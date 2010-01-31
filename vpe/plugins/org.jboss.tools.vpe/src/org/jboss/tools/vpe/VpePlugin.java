@@ -12,14 +12,12 @@ package org.jboss.tools.vpe;
 
 import java.io.IOException;
 import java.net.URL;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IStartup;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
-import org.jboss.tools.vpe.editor.util.ProjectNaturesChecker;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -35,7 +33,6 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	
 	//The shared instance.
 	private static VpePlugin plugin;
-	private ProjectNaturesChecker projectNaturesChecker;
 	
 	/**
 	 * The constructor.
@@ -56,10 +53,6 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	 * This method is called when the plug-in is stopped
 	 */
 	public void stop(BundleContext context) throws Exception {
-		if (projectNaturesChecker != null) {
-			projectNaturesChecker.dispose();
-			projectNaturesChecker = null;
-		}
 		super.stop(context);
 	}
 
@@ -122,11 +115,4 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 		return (url == null) ? null : url.getPath();
 	}
 
-	public ProjectNaturesChecker getProjectNaturesChecker() {
-		return projectNaturesChecker;
-	}
-
-	public void setProjectNaturesChecker(ProjectNaturesChecker naturesChecker) {
-		this.projectNaturesChecker = naturesChecker;
-	}
 }

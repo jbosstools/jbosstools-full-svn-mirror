@@ -46,7 +46,16 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 	private static final String JSF_NATURE = "JavaServer Faces Nature"; //$NON-NLS-1$
 	private static final String KB_NATURE = "Knowledge Base Nature"; //$NON-NLS-1$
 
-	public ProjectNaturesChecker() {
+	private static ProjectNaturesChecker checker;
+	
+	public static ProjectNaturesChecker getInstance(){
+		if (checker == null) {
+			checker = new ProjectNaturesChecker();
+		}
+		return checker;
+	}
+	
+	private ProjectNaturesChecker() {
 		projectsCollection = new HashSet<IProject>(0);
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this,
 				IResourceChangeEvent.POST_CHANGE);

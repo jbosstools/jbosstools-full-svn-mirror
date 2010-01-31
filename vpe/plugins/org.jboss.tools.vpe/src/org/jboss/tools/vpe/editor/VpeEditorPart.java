@@ -913,6 +913,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	@Override
 	public void dispose() {
 		deactivateServices();
+		if (naturesChecker != null) {
+			naturesChecker.dispose();
+			naturesChecker = null;
+		}
 		sourceActivation = null;
 		sourceMaxmin = null;
 		visualActivation = null;
@@ -1013,11 +1017,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				try {
 					IEditorInput editorInput = multiPageEditor.getEditorInput();
 					if (editorInput instanceof IFileEditorInput) {
-						naturesChecker = VpePlugin.getDefault().getProjectNaturesChecker();
-						if (naturesChecker == null) {
-							naturesChecker = new ProjectNaturesChecker();
-							VpePlugin.getDefault().setProjectNaturesChecker(naturesChecker);
-						}
+						naturesChecker = ProjectNaturesChecker.getInstance();
 						naturesChecker.checkNatures(((IFileEditorInput)editorInput).getFile().getProject());
 					}
 				} catch (CoreException e) {
