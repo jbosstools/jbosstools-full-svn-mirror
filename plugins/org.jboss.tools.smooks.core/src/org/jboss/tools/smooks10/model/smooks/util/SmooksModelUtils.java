@@ -56,15 +56,15 @@ public class SmooksModelUtils {
 
 	public static final String KEY_OBJECT_ID = "id"; //$NON-NLS-1$
 
-	public static final String KEY_XML_FILE_TYPE = "modelSrcType";
+	public static final String KEY_XML_FILE_TYPE = "modelSrcType"; //$NON-NLS-1$
 
-	public static final String KEY_XML_FILE_PATH = "modelSrc";
+	public static final String KEY_XML_FILE_PATH = "modelSrc"; //$NON-NLS-1$
 
-	public static final String KEY_XML_ROOT_NAME = "rootElementName";
+	public static final String KEY_XML_ROOT_NAME = "rootElementName"; //$NON-NLS-1$
 
-	public static final String KEY_XML_FILE_TYPE_XSD = "XSD";
+	public static final String KEY_XML_FILE_TYPE_XSD = "XSD"; //$NON-NLS-1$
 
-	public static final String KEY_XML_FILE_TYPE_XML = "XML";
+	public static final String KEY_XML_FILE_TYPE_XML = "XML"; //$NON-NLS-1$
 
 	public static final String KEY_CSV_SEPERATOR = "seperator"; //$NON-NLS-1$
 
@@ -618,7 +618,7 @@ public class SmooksModelUtils {
 		if (typeParam != null) {
 			String value = typeParam.getStringValue();
 			if (value != null) {
-				return value.equals("true");
+				return value.equals("true"); //$NON-NLS-1$
 			}
 		}
 		

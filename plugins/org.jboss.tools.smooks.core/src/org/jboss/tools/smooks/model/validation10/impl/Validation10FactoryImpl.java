@@ -126,7 +126,7 @@ public class Validation10FactoryImpl extends EFactoryImpl implements Validation1
 	 */
 	public OnFail createOnFailFromString(EDataType eDataType, String initialValue) {
 		OnFail result = OnFail.get(initialValue);
-		if (result == null) throw new IllegalArgumentException(Messages.Validation10FactoryImpl_Error_Value_Not_Valid + initialValue + Messages.Validation10FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$
+		if (result == null) throw new IllegalArgumentException(Messages.Validation10FactoryImpl_Error_Value_Not_Valid + initialValue + Messages.Validation10FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 

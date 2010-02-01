@@ -184,7 +184,7 @@ public class FreemarkerFactoryImpl extends EFactoryImpl implements FreemarkerFac
 	 */
 	public InlineDirective createInlineDirectiveFromString(EDataType eDataType, String initialValue) {
 		InlineDirective result = InlineDirective.get(initialValue);
-		if (result == null) throw new IllegalArgumentException(Messages.FreemarkerFactoryImpl_Error_Value_Not_Valid + initialValue + Messages.FreemarkerFactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+		if (result == null) throw new IllegalArgumentException(Messages.FreemarkerFactoryImpl_Error_Value_Not_Valid + initialValue + Messages.FreemarkerFactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
