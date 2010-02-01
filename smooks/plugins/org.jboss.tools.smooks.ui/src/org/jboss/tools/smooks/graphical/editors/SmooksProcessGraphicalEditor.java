@@ -40,6 +40,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -258,6 +259,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 					highlightGraphNode(item);
 				}
 				showTaskControl(firstElement);
+				SmooksProcessGraphicalEditor.this.selectionChanged(event);
 			}
 		});
 	}
@@ -790,6 +792,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	public void selectionChanged(SelectionChangedEvent event) {
+		ISelectionProvider provider = getEditor().getSite().getSelectionProvider();
+		if(provider != null){
+			provider.setSelection(event.getSelection());
+		}
 	}
 
 	protected Control createTaskPanel(Composite parent, FormToolkit toolkit, String taskID) {
