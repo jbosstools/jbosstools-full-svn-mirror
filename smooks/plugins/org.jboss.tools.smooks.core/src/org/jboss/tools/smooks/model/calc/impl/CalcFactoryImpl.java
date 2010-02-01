@@ -129,7 +129,7 @@ public class CalcFactoryImpl extends EFactoryImpl implements CalcFactory {
 	 */
 	public CountDirection createCountDirectionFromString(EDataType eDataType, String initialValue) {
 		CountDirection result = CountDirection.get(initialValue);
-		if (result == null) throw new IllegalArgumentException(Messages.CalcFactoryImpl_Error_Invalid_Enumerator + initialValue + Messages.CalcFactoryImpl_Error_Invalid_Enumerator2 + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+		if (result == null) throw new IllegalArgumentException(Messages.CalcFactoryImpl_Error_Invalid_Enumerator + initialValue + Messages.CalcFactoryImpl_Error_Invalid_Enumerator2 + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 

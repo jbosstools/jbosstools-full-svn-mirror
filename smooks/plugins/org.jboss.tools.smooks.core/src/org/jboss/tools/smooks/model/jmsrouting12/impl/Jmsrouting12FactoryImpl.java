@@ -197,7 +197,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 	 */
 	public AcknowledgeMode createAcknowledgeModeFromString(EDataType eDataType, String initialValue) {
 		AcknowledgeMode result = AcknowledgeMode.get(initialValue);
-		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
+		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
@@ -217,7 +217,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 	 */
 	public DeliveryMode createDeliveryModeFromString(EDataType eDataType, String initialValue) {
 		DeliveryMode result = DeliveryMode.get(initialValue);
-		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
+		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
@@ -237,7 +237,7 @@ public class Jmsrouting12FactoryImpl extends EFactoryImpl implements Jmsrouting1
 	 */
 	public MessageType createMessageTypeFromString(EDataType eDataType, String initialValue) {
 		MessageType result = MessageType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
+		if (result == null) throw new IllegalArgumentException(Messages.Jmsrouting12FactoryImpl_Error_Value + initialValue + Messages.Jmsrouting12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 

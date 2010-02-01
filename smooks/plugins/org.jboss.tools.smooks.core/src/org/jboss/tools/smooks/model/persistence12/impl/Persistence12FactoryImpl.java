@@ -233,7 +233,7 @@ public class Persistence12FactoryImpl extends EFactoryImpl implements Persistenc
 	 */
 	public OnNoResult createOnNoResultFromString(EDataType eDataType, String initialValue) {
 		OnNoResult result = OnNoResult.get(initialValue);
-		if (result == null) throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Value + initialValue + Messages.Persistence12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$
+		if (result == null) throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Value + initialValue + Messages.Persistence12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
@@ -253,7 +253,7 @@ public class Persistence12FactoryImpl extends EFactoryImpl implements Persistenc
 	 */
 	public ParameterType createParameterTypeFromString(EDataType eDataType, String initialValue) {
 		ParameterType result = ParameterType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Value + initialValue + Messages.Persistence12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$
+		if (result == null) throw new IllegalArgumentException(Messages.Persistence12FactoryImpl_Error_Value + initialValue + Messages.Persistence12FactoryImpl_Error_Not_Valid_Enumerator + eDataType.getName() + "'"); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$
 		return result;
 	}
 
