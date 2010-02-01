@@ -44,7 +44,7 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 	private Button button;
 	private Link link;
 	private boolean isRemember = false;
-	private static final String QUESTION = "Don't show this dialog again!"; //$NON-NLS-1$
+	private static final String QUESTION = "Do not show this dialog again!"; //$NON-NLS-1$
 	private static final String TITLE = "Missing Natures"; //$NON-NLS-1$
 	private IProject project;
 
