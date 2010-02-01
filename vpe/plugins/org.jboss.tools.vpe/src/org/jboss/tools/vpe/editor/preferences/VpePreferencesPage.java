@@ -150,8 +150,9 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 				ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
 				VpeUIMessages.ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
 				confirmationGroup));
-		addField(new BooleanFieldEditor(IGNORE_VPE_WARNINGS,
-				VpeUIMessages.IGNORE_VPE_WARNINGS, confirmationGroup));
+		addField(new BooleanFieldEditor(INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
+				VpeUIMessages.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
+				confirmationGroup));
 		addField(new VpeComboFieldEditor(DEFAULT_VPE_TAB,
 				VpeUIMessages.DEFAULT_VPE_TAB,
 				DEFAULT_VPE_TAB_COMBO_BOX_VALUES, tabsGroup));

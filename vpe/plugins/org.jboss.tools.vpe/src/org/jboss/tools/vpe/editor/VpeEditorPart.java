@@ -1009,8 +1009,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 
 		public void partOpened(IWorkbenchPart part) {
-			if (!JspEditorPlugin.getDefault().getPreferenceStore().
-					getBoolean(IVpePreferencesPage.IGNORE_VPE_WARNINGS)) {
+			if (JspEditorPlugin.getDefault().getPreferenceStore().
+					getBoolean(IVpePreferencesPage.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE)) {
 				try {
 					checkNaturesFromPart(part);
 				} catch (CoreException e) {
