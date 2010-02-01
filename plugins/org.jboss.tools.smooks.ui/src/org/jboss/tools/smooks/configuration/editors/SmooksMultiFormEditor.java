@@ -22,7 +22,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
@@ -107,12 +109,14 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 		addValidateListener(processPage);
 		addSmooksEditorInitListener(processPage);
 		try {
-			int index = this.addPage(processPage);
+			int index = this.addPage(processPage );
 			setPageText(index, Messages.SmooksMultiFormEditor_processtabel_label);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	// private void addSmooksGraphicalEditor() {
 	// graphicalPage = new SmooksGraphicalEditorPart(this);
@@ -124,6 +128,36 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	// e.printStackTrace();
 	// }
 	// }
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.ui.forms.editor.FormEditor#getActiveEditor()
+	 */
+	@Override
+	public IEditorPart getActiveEditor() {
+		int index = getActivePage();
+		if (index != -1) {
+			IEditorPart part =  getEditor(index);
+			if(part == null){
+//				if(index == 0){
+//					part = processPage;
+//				}
+//				if(index == 1){
+//					part = configurationPage;
+//				}
+			}
+			return part;
+		}
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
+	 */
+	@Override
+	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
+		super.init(site, input);
+//		site.setSelectionProvider(this);
+	}
 
 	public Object getAdapter(Class adapter) {
 		if (adapter == IPropertySheetPage.class) {

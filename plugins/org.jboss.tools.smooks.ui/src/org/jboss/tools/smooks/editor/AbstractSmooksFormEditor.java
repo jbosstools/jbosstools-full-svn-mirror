@@ -714,7 +714,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 			validator = new SmooksModelValidator();
 			addValidateListener(this);
 		}
-
+		
 		RuntimeMetadata runtimeMetadata = new RuntimeMetadata();
 		String filePath = null;
 		IFile file = null;

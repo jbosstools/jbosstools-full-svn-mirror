@@ -60,6 +60,7 @@ import org.eclipse.jface.util.TransferDropTargetListener;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -802,7 +803,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 	@Override
 	protected void hookGraphicalViewer() {
-		super.hookGraphicalViewer();
+		getSelectionSynchronizer().addViewer(getGraphicalViewer());
 		getGraphicalViewer().addSelectionChangedListener(getSelectionSynchronizer());
 		getGraphicalViewer().addSelectionChangedListener(this);
 	}
@@ -1340,6 +1341,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 	public void selectionChanged(SelectionChangedEvent event) {
 		updateActions(getSelectionActions());
+		ISelectionProvider provider = ((SmooksTaskDetailsEditorSite)getSite()).getMultiPageEditor().getSite().getSelectionProvider();
+		if(provider != null){
+			provider.setSelection(event.getSelection());
+		}
 	}
 
 	public void sourceChange(Object model) {
