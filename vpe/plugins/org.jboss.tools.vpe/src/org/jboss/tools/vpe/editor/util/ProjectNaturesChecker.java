@@ -77,7 +77,6 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 			return;
 		}
 		addProject(project);
-		KbProject.checkKBBuilderInstalled(project);
 		boolean isJSFCheck = true;
 		boolean isNaturesCheck = true;
 		updateProjectPersistentProperties(project);
@@ -89,6 +88,7 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 			if (isNaturesCheck) {
 				String[] missingNatures = getMissingNatures(project);
 				if (missingNatures != null) {
+					KbProject.checkKBBuilderInstalled(project);
 					ProjectNaturesInfoDialog dialog = new ProjectNaturesInfoDialog(
 							missingNatures, project);
 					dialog.open();
@@ -196,5 +196,5 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 			}
 		}
 	}
-
+	
 }
