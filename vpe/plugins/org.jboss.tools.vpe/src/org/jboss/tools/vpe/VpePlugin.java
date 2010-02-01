@@ -55,10 +55,8 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		ProjectNaturesChecker naturesChecker = ProjectNaturesChecker.getInstance();
-		if (naturesChecker != null) {
-			naturesChecker.dispose();
-			naturesChecker = null;
-		}
+		naturesChecker.dispose();
+		naturesChecker = null;
 		super.stop(context);
 	}
 

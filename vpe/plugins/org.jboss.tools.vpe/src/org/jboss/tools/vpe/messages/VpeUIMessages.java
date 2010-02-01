@@ -129,6 +129,7 @@ public final class VpeUIMessages extends NLS {
 	public static String SHOW_BUNDLES_AS_MESSAGES;
 	public static String ASK_TAG_ATTRIBUTES_ON_TAG_INSERT;
 	public static String ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR;
+	public static String IGNORE_VPE_WARNINGS;
 	public static String DEFAULT_VPE_TAB;
 	public static String VISUAL_SOURCE_EDITORS_SPLITTING;
 	public static String VISUAL_SOURCE_EDITORS_WEIGHTS;

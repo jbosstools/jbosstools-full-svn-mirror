@@ -1009,13 +1009,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 
 		public void partOpened(IWorkbenchPart part) {
-			if (part == multiPageEditor) {
+			if (!JspEditorPlugin.getDefault().getPreferenceStore().
+					getBoolean(IVpePreferencesPage.IGNORE_VPE_WARNINGS)) {
 				try {
-					IEditorInput editorInput = multiPageEditor.getEditorInput();
-					if (editorInput instanceof IFileEditorInput) {
-						naturesChecker = ProjectNaturesChecker.getInstance();
-						naturesChecker.checkNatures(((IFileEditorInput)editorInput).getFile().getProject());
-					}
+					checkNaturesFromPart(part);
 				} catch (CoreException e) {
 					VpePlugin.getPluginLog().logError(e);
 				}
@@ -1236,6 +1233,16 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				handlerService.deactivateHandler(visualActivation);
 			if (jumpingActivation != null)
 				handlerService.deactivateHandler(jumpingActivation);
+		}
+	}
+	
+	private void checkNaturesFromPart(IWorkbenchPart part) throws CoreException{
+		if (part == multiPageEditor) {
+			IEditorInput editorInput = multiPageEditor.getEditorInput();
+			if (editorInput instanceof IFileEditorInput) {
+				naturesChecker = ProjectNaturesChecker.getInstance();
+				naturesChecker.checkNatures(((IFileEditorInput)editorInput).getFile().getProject());
+			}
 		}
 	}
 	
