@@ -83,13 +83,13 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	static {
 		Map<Class, Class<? extends DataDecoder>> map = DataDecoder.Factory.getInstalledDecoders();
 		Collection<Class<? extends DataDecoder>> decoders = map.values();
-		DECODERS.add("");
+		DECODERS.add(""); //$NON-NLS-1$
 		for (Iterator<Class<? extends DataDecoder>> iterator = decoders.iterator(); iterator.hasNext();) {
 			Class<? extends DataDecoder> dataDecoderClass = iterator.next();
 			if (dataDecoderClass != null) {
 				String name = dataDecoderClass.getSimpleName();
-				if (name.endsWith("Decoder")) {
-					name = name.substring(0, name.length() - "Decoder".length());
+				if (name.endsWith("Decoder")) { //$NON-NLS-1$
+					name = name.substring(0, name.length() - "Decoder".length()); //$NON-NLS-1$
 				}
 				if (!DECODERS.contains(name)) {
 					DECODERS.add(name);
@@ -130,7 +130,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	}
 
 	private void createDecoderCombo(TabbedPropertySheetWidgetFactory factory, Composite parent) {
-		factory.createLabel(controlComposite, "Decoder :").setForeground(factory.getColors().getColor(IFormColors.TITLE));
+		factory.createLabel(controlComposite, Messages.ValueDecodeParamSection_DecoderLabel).setForeground(factory.getColors().getColor(IFormColors.TITLE));
 		decoderCombo = factory.createCCombo(parent, SWT.READ_ONLY);
 		// decoderCombo.setEditable(false);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -194,7 +194,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
-		Label label = factory.createLabel(sashForm, "Decoder Parameters :");
+		Label label = factory.createLabel(sashForm, Messages.ValueDecodeParamSection_DecoderParamLabel);
 		label.setLayoutData(gd);
 		label.setForeground(factory.getColors().getColor(IFormColors.TITLE));
 
@@ -261,8 +261,8 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 					DataDecoder decoder = DataDecoder.Factory.create(targetPropertyType);
 					if(decoder.getClass().getPackage() == IntegerDecoder.class.getPackage()) {
 						String decoderName = decoder.getClass().getSimpleName();
-						if(decoderName.endsWith("Decoder")) {
-							decoderAlias = decoderName.substring(0, decoderName.length() - "Decoder".length());
+						if(decoderName.endsWith("Decoder")) { //$NON-NLS-1$
+							decoderAlias = decoderName.substring(0, decoderName.length() - "Decoder".length()); //$NON-NLS-1$
 							int index = DECODERS.indexOf(decoderAlias);
 							decoderCombo.select(index);
 						}
@@ -273,7 +273,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 	}
 
 	private void initDecodeParamViewer() {
-		paramterViewer.setInput("NULL");
+		paramterViewer.setInput("NULL"); //$NON-NLS-1$
 		TreeNodeConnection lineModel = (TreeNodeConnection) getPresentSelectedGraphModel();
 		AbstractSmooksGraphicalModel targetNode = lineModel.getTargetNode();
 		
@@ -349,7 +349,7 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 			for(Entry<Object, Object> param : paramSet) {
 				String paramName = param.getKey().toString();
 				
-				if(!paramName.equals("enumType")) {
+				if(!paramName.equals("enumType")) { //$NON-NLS-1$
 					DecodeParam p = new DecodeParam();
 					p.setName(paramName);
 					p.setValue(param.getValue().toString());
@@ -565,10 +565,10 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 					String pname = ((DecodeParam) currentElement).getName();
 					DecodeParamType paramType = findDecodeParamType(pname, (ValueType) model);
 					Command command = null;
-					if (!isEnumTarget && property.equals("value")) {
+					if (!isEnumTarget && property.equals("value")) { //$NON-NLS-1$
 						if (value != null) {
 							String svalue = ((String) value).trim();
-							if ("".equals(svalue)) {
+							if ("".equals(svalue)) { //$NON-NLS-1$
 								if (paramType != null) {
 									command = RemoveCommand.create(editingDomain, paramType);
 								}
@@ -590,10 +590,10 @@ public class ValueDecodeParamSection extends AbstractSmooksPropertySection {
 							((DecodeParam) currentElement).setValue((String) value);
 							paramterViewer.update(currentElement, new String[] { property });
 						}
-					} else if (isEnumTarget && property.equals("name")) {
+					} else if (isEnumTarget && property.equals("name")) { //$NON-NLS-1$
 						if (value != null) {
 							String svalue = ((String) value).trim();
-							if ("".equals(svalue)) {
+							if ("".equals(svalue)) { //$NON-NLS-1$
 								// Can't blank it for an enum... ignore...
 							} else {
 								command = SetCommand.create(editingDomain, paramType,

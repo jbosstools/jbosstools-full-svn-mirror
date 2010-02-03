@@ -4,6 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.graphical.wizards.messages"; //$NON-NLS-1$
+	public static String JavaBeanCreationWizard_WizardTitle;
 	public static String JavaBeanCreationWizardPage_27;
 	public static String JavaBeanCreationWizardPage_ArrayButtonText;
 	public static String JavaBeanCreationWizardPage_BeanClassEmptyErrorMessage;

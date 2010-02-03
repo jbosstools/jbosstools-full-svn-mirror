@@ -47,7 +47,7 @@ import org.xml.sax.SAXException;
  */
 public class SmooksLauncher {
 	
-	public static final String LOCALIZED_FILE_NAME = "localizedMessage.properties";
+	public static final String LOCALIZED_FILE_NAME = "localizedMessage.properties"; //$NON-NLS-1$
 
 	/**
 	 * Launcher Main.
@@ -57,11 +57,11 @@ public class SmooksLauncher {
 		Properties localizedMessages = loadLocalizedMessages();
 
 		if(args.length != 4) {
-			throw new RuntimeException(localizedMessages.getProperty("SmooksLauncher_Error_Expected_Four_Args"));
+			throw new RuntimeException(localizedMessages.getProperty("SmooksLauncher_Error_Expected_Four_Args")); //$NON-NLS-1$
 		}
 		
 		if(args[1].equals(SmooksInputType.INPUT_TYPE_JAVA)) {
-			System.out.println(localizedMessages.getProperty("SmooksLauncher_Error_Do_Not_Support_Java_Inputs"));
+			System.out.println(localizedMessages.getProperty("SmooksLauncher_Error_Do_Not_Support_Java_Inputs")); //$NON-NLS-1$
 		} else {
 			File smooksConfig = new File(args[0]);
 			File input = new File(args[2]);
@@ -79,7 +79,7 @@ public class SmooksLauncher {
 					StringResult stringResult = new StringResult();
 					
 					smooks.filterSource(new StreamSource(new FileInputStream(input)), stringResult, javaResult);
-					System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Templating_To_StreamResult") + " ...]"); //$NON-NLS-1$
+					System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Templating_To_StreamResult") + " ...]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					System.out.println("    |--"); //$NON-NLS-1$
 					System.out.println(indent(stringResult.toString()));
 					System.out.println("    |--\n"); //$NON-NLS-1$
@@ -90,7 +90,7 @@ public class SmooksLauncher {
 
 				Collection<ObjectSerializer> serializedJavaResults = ObjectSerializer.serialize(javaResult);
 				if(!serializedJavaResults.isEmpty()) {
-					System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Java_Mapping_Results") + "...]"); //$NON-NLS-1$
+					System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Java_Mapping_Results") + "...]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					
 					for(ObjectSerializer serializedJavaResult : serializedJavaResults) {
 						System.out.println("    |--"); //$NON-NLS-1$
@@ -101,7 +101,7 @@ public class SmooksLauncher {
 				}
 				
 				if(nothingDisplayed) {
-					System.out.println(localizedMessages.getProperty("SmooksLauncher_Nothing_To_Display"));
+					System.out.println(localizedMessages.getProperty("SmooksLauncher_Nothing_To_Display")); //$NON-NLS-1$
 				}
 			} finally {
 				smooks.close();
@@ -117,14 +117,14 @@ public class SmooksLauncher {
 			try {
 				messages.load(messageStream);
 			} catch (IOException e) {
-				System.out.println("Unexpected IOException reading classpath resource stream for '" + LOCALIZED_FILE_NAME + "'. " + e.getMessage());
+				System.out.println("Unexpected IOException reading classpath resource stream for '" + LOCALIZED_FILE_NAME + "'. " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 				e.printStackTrace();
 			}
 		} finally {
 			try {
 				messageStream.close();
 			} catch (IOException e) {
-				System.out.println("Unexpected IOException closing classpath resource stream for '" + LOCALIZED_FILE_NAME + "'.");
+				System.out.println("Unexpected IOException closing classpath resource stream for '" + LOCALIZED_FILE_NAME + "'."); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 		

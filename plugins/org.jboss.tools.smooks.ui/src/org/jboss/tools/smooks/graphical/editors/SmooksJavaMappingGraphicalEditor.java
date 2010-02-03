@@ -108,7 +108,7 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 					}
 					if (decoder != null) {
 						if (!decoder.equals(defaultDecoder)) {
-							connection.addMessage("Decoder should be '" + defaultDecoder + "'.");
+							connection.addMessage(Messages.SmooksJavaMappingGraphicalEditor_WarningMessage1 + defaultDecoder + "'."); //$NON-NLS-1$
 							connection.setSeverity(IFieldMarker.TYPE_WARINING);
 							changed = true;
 						}

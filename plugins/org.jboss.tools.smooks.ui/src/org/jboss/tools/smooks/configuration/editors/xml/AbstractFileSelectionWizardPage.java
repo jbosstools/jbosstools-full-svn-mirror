@@ -194,7 +194,7 @@ public abstract class AbstractFileSelectionWizardPage extends WizardPage impleme
 		changeWizardPageStatus();
 		// don't show the error message when first open the dialog
 		this.setErrorMessage(null);
-		parent.getShell().setText("Select File");
+		parent.getShell().setText(Messages.AbstractFileSelectionWizardPage_WizardTitle);
 	}
 
 	protected void hookFileTextModifyListener() {

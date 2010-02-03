@@ -53,9 +53,9 @@ public class ObjectSerializer extends AbstractXmlWriter {
 	private StringWriter writer;
 	
 	public ObjectSerializer(Object object, String beanId, Map<String, Object> beanMap) {
-		assertNotNull(object, "object");
-		assertNotNull(beanId, "beanId");
-		assertNotNull(beanMap, "beanMap");
+		assertNotNull(object, "object"); //$NON-NLS-1$
+		assertNotNull(beanId, "beanId"); //$NON-NLS-1$
+		assertNotNull(beanMap, "beanMap"); //$NON-NLS-1$
 		this.rootObject = object;
 		this.rootBeanId = beanId;
 		this.beanContext = beanMap;
@@ -129,15 +129,15 @@ public class ObjectSerializer extends AbstractXmlWriter {
 	@Override
 	public void startNode(String name, Class clazz) {		
 		if(writeNL) {
-			writer.write("\n");			
+			writer.write("\n");			 //$NON-NLS-1$
 		}
 
 		if(indent == 0) {
 			// Root object...
-			writer.write("> " + rootBeanId);			
+			writer.write("> " + rootBeanId);			 //$NON-NLS-1$
 		} else {
 			writeIndent(indent);
-			writer.write("> " + name);			
+			writer.write("> " + name);			 //$NON-NLS-1$
 		}
 		
 		writeNL = true;
@@ -150,7 +150,7 @@ public class ObjectSerializer extends AbstractXmlWriter {
 
 		String beanId = getBeanId(item, true);
 		if(beanId != null) {
-			writer.write(" (beanId = \"" + beanId + "\")");
+			writer.write(" (beanId = \"" + beanId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
 			if(!beanId.equals(rootBeanId)) {
 				referencedBeans.add(beanId);
 			}
@@ -209,19 +209,19 @@ public class ObjectSerializer extends AbstractXmlWriter {
 		Object currentItem = items.get(items.size() - 1);
 		
 		if((currentItem instanceof String || containsNonNumeric(text)) && !(currentItem instanceof Number)) {
-			writer.write(" = \"" + text + "\"");
+			writer.write(" = \"" + text + "\""); //$NON-NLS-1$ //$NON-NLS-2$
 		} else if(currentItem instanceof Number) {
 			Class<? extends Object> itemClass = currentItem.getClass();
 			if(itemClass.getPackage() == Integer.class.getPackage()) {				
-				writer.write(" = " + text + itemClass.getSimpleName().charAt(0));
+				writer.write(" = " + text + itemClass.getSimpleName().charAt(0)); //$NON-NLS-1$
 			} else {
-				writer.write(" = " + text);
+				writer.write(" = " + text); //$NON-NLS-1$
 			}
 		} else {
-			writer.write(" = " + text);
+			writer.write(" = " + text); //$NON-NLS-1$
 		}
 		
-		writer.write("\n");			
+		writer.write("\n");			 //$NON-NLS-1$
 		writeNL = false;
 	}
 
@@ -275,7 +275,7 @@ public class ObjectSerializer extends AbstractXmlWriter {
 	
 	private void assertNotNull(Object object, String name) {
 		if(object == null) {
-			throw new IllegalArgumentException("ObjectSerializer argument '" + name + "' is null.");
+			throw new IllegalArgumentException("ObjectSerializer argument '" + name + "' is null."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 }

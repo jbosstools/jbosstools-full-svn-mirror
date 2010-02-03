@@ -287,7 +287,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 					Class<?> targetType = getJavaType();
 					if(targetType.isEnum()) {
 						if(dataDecoder == null) {
-							dataDecoder = "Enum";
+							dataDecoder = "Enum"; //$NON-NLS-1$
 						}
 						compoundCommand.append(_newEnumDecodeParamSet(targetType, (ValueType) model));
 					}
@@ -320,7 +320,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 		CompoundCommand compoundCommand = new CompoundCommand();
 		Field[] enumFields = enumType.getDeclaredFields();
 
-		compoundCommand.append(addDecodeParam("enumType", enumType.getName(), valueType));
+		compoundCommand.append(addDecodeParam("enumType", enumType.getName(), valueType)); //$NON-NLS-1$
 		for(Field enumField : enumFields) {
 			if(enumField.isEnumConstant()) {
 				compoundCommand.append(addDecodeParam(enumField.getName(), enumField.getName(), valueType));
@@ -454,7 +454,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 			}
 		}				
 
-		throw new IllegalStateException("Unexpected error.  GraphModel data expected to implement WrapperItemProvider.");
+		throw new IllegalStateException(Messages.JavaBeanChildGraphModel_Error);
 	}
 	
 	public BeanType getParentBean() {
@@ -463,7 +463,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 			return (BeanType) sourceData.getOwner();						
 		}
 		
-		throw new IllegalStateException("Unexpected error.  GraphModel data expected to implement WrapperItemProvider.");
+		throw new IllegalStateException(Messages.JavaBeanChildGraphModel_Error);
 	}
 		
 	public Object getBindingTypeObj() {
@@ -472,7 +472,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 			return ((ContainmentUpdatingFeatureMapEntry) sourceData.getValue()).getValue();
 		}
 		
-		throw new IllegalStateException("Unexpected error.  GraphModel data expected to implement WrapperItemProvider.");
+		throw new IllegalStateException(Messages.JavaBeanChildGraphModel_Error);
 	}
 
 	/* (non-Javadoc)
@@ -499,12 +499,12 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 			ProjectClassLoader classLoader = new ProjectClassLoader(project);
 			Class<?> beanClass = classLoader.loadClass(bean.getClass_());
 			
-			if(targetProperty != null && !targetProperty.trim().equals("")) {
+			if(targetProperty != null && !targetProperty.trim().equals("")) { //$NON-NLS-1$
 				StringBuilder getterNameBuilder = new StringBuilder();
 				
 				getterNameBuilder.append(targetProperty);
 				getterNameBuilder.setCharAt(0, Character.toUpperCase(targetProperty.charAt(0)));
-				getterNameBuilder.insert(0, "get");
+				getterNameBuilder.insert(0, "get"); //$NON-NLS-1$
 				
 				try {
 					Method getterMethod = beanClass.getMethod(getterNameBuilder.toString(), new Class[] {});

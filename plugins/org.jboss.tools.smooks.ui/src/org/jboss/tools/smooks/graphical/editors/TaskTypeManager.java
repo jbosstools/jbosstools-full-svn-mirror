@@ -96,14 +96,14 @@ public class TaskTypeManager {
 			String taskId = task.getId();
 			if (taskId != null) {
 				if (taskId.equals(TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
-					String messageType = "";
+					String messageType = ""; //$NON-NLS-1$
 					if (task instanceof TemplateAppyTaskNode) {
 						messageType = ((TemplateAppyTaskNode) task).getType();
 					}
 					if (messageType == null)
-						messageType = "";
+						messageType = ""; //$NON-NLS-1$
 					if (messageType.length() > 0){
-						return Messages.TaskTypeManager_ApplyTemplateTaskLabel + " (" + messageType +")";
+						return Messages.TaskTypeManager_ApplyTemplateTaskLabel + " (" + messageType +")"; //$NON-NLS-1$ //$NON-NLS-2$
 					}else{
 						return  Messages.TaskTypeManager_ApplyTemplateTaskLabel;
 					}

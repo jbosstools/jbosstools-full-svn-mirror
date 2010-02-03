@@ -7,6 +7,7 @@ public class Messages extends NLS {
 	public static String ChildrenSelectionWizardPage_selectchilderror;
 	public static String ChildrenSelectionWizardPage_wizardtitle;
 	public static String FileSelectionWizard_WizardPageName;
+	public static String FileSelectionWizard_WizardTitle;
 	public static String FileSelectionWizardPage_PageDescription;
 	public static String FileSelectionWizardPage_PageTitle;
 	public static String ModelChildrenTablePanelCreator_DownButtonLable;

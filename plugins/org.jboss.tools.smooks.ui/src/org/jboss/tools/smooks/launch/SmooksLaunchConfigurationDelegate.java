@@ -88,7 +88,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 			
 			for(RuntimeDependency dependency : dependencies) {
 				if(!dependency.isOnProjectClasspath(projectClassLoader)) {
-					displayError(smooksConfigName, Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact + dependency.getGroupId() + ":" + dependency.getArtifactId() + Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact2); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+					displayError(smooksConfigName, Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact + dependency.getGroupId() + ":" + dependency.getArtifactId() + Messages.SmooksLaunchConfigurationDelegate_Error_missing_artifact2); //$NON-NLS-1$
 					return;
 				}
 			}
@@ -116,7 +116,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		display.syncExec(new Runnable() {
 		    public void run(){
 				Shell shell = display.getActiveShell();
-				ErrorDialog.openError(shell, Messages.SmooksLaunchConfigurationDelegate_Error_Title, Messages.SmooksLaunchConfigurationDelegate_Error_launching + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, errorMessage, new Exception())); //$NON-NLS-3$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+				ErrorDialog.openError(shell, Messages.SmooksLaunchConfigurationDelegate_Error_Title, Messages.SmooksLaunchConfigurationDelegate_Error_launching + smooksConfigName + "'.", new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, errorMessage, new Exception())); //$NON-NLS-1$ 
 		    }
 		});
 	}
@@ -161,16 +161,16 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		
 		// Need to send the localized message strings to the launcher... 
 		Properties localizedMessages = new Properties();
-		localizedMessages.setProperty("SmooksLauncher_Error_Do_Not_Support_Java_Inputs", Messages.SmooksLauncher_Error_Do_Not_Support_Java_Inputs);		
-		localizedMessages.setProperty("SmooksLauncher_Error_Expected_Four_Args", Messages.SmooksLauncher_Error_Expected_Four_Args);		
-		localizedMessages.setProperty("SmooksLauncher_Java_Mapping_Results", Messages.SmooksLauncher_Java_Mapping_Results);		
-		localizedMessages.setProperty("SmooksLauncher_Templating_To_StreamResult", Messages.SmooksLauncher_Templating_To_StreamResult);
-		localizedMessages.setProperty("SmooksLauncher_Nothing_To_Display", Messages.SmooksLauncher_Nothing_To_Display);
+		localizedMessages.setProperty("SmooksLauncher_Error_Do_Not_Support_Java_Inputs", Messages.SmooksLauncher_Error_Do_Not_Support_Java_Inputs);		 //$NON-NLS-1$
+		localizedMessages.setProperty("SmooksLauncher_Error_Expected_Four_Args", Messages.SmooksLauncher_Error_Expected_Four_Args);		 //$NON-NLS-1$
+		localizedMessages.setProperty("SmooksLauncher_Java_Mapping_Results", Messages.SmooksLauncher_Java_Mapping_Results);		 //$NON-NLS-1$
+		localizedMessages.setProperty("SmooksLauncher_Templating_To_StreamResult", Messages.SmooksLauncher_Templating_To_StreamResult); //$NON-NLS-1$
+		localizedMessages.setProperty("SmooksLauncher_Nothing_To_Display", Messages.SmooksLauncher_Nothing_To_Display); //$NON-NLS-1$
 		
 		try {
 			FileOutputStream messagesOutStream = getFilesysOutStream(SmooksLauncher.LOCALIZED_FILE_NAME, SmooksLauncher.class, wsTempClasses);
 			try {
-				localizedMessages.store(messagesOutStream, "Localized messages...");
+				localizedMessages.store(messagesOutStream, "Localized messages..."); //$NON-NLS-1$
 			} finally {
 				messagesOutStream.close();
 			}			
@@ -187,8 +187,8 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 	}
 
 	private void writeResourceToFilesys(String resource, Class<?> refClass, File toDir) {
-		String packagePath = refClass.getPackage().getName().replace(".", "/");
-		String resourcePath = "/" + packagePath + "/" + resource;
+		String packagePath = refClass.getPackage().getName().replace(".", "/"); //$NON-NLS-1$ //$NON-NLS-2$
+		String resourcePath = "/" + packagePath + Messages.SmooksLaunchConfigurationDelegate_11 + resource; //$NON-NLS-1$
 		URL resourceURI = refClass.getResource(resourcePath);
 		
 		if(resourceURI != null) {
@@ -233,8 +233,8 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 	}
 
 	private FileOutputStream getFilesysOutStream(String resource, Class<?> refClass, File toDir) throws FileNotFoundException {
-		String packagePath = refClass.getPackage().getName().replace(".", "/");
-		String resourcePath = "/" + packagePath + "/" + resource;
+		String packagePath = refClass.getPackage().getName().replace(".", "/"); //$NON-NLS-1$ //$NON-NLS-2$
+		String resourcePath = "/" + packagePath + "/" + resource; //$NON-NLS-1$ //$NON-NLS-2$
 		File resourceOutFile = new File(toDir, resourcePath);
 		File resourcePackage = resourceOutFile.getParentFile();
 		

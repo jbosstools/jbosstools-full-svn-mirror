@@ -17,6 +17,8 @@ public class Messages extends NLS {
 	public static String ValidationSection_Button_Delete_Rule;
 	public static String ValidationSection_Button_New_Rule;
 	public static String ValidationSection_Section_Validation;
+	public static String ValueDecodeParamSection_DecoderLabel;
+	public static String ValueDecodeParamSection_DecoderParamLabel;
 	public static String ValueDecodeParamSection_DeleteButtonText;
 	public static String ValueDecodeParamSection_NewParamButtonText;
 	public static String ValueDecodeParamSection_NullText;
