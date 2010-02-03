@@ -8,9 +8,26 @@
 			Following is a list of issues fixed in this release:
 		</para>
 		<formalpara>
+			<title>Contexts and Dependency Injection (CDI)</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5770">JBIDE-5770</ulink>: The EL code completion icon has been updated to use the <application>JBoss Weld</application> icon.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
 			<title>ESB Editor</title>
 			<para>
 				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5653">JBIDE-5653</ulink>: 
+						</para>
+					</listitem>
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5548">JBIDE-5548</ulink>: In the ESB Configuration Editor, when selecting a JBR Listener, JBR Bus or JBR Provider, new functionality has been added to allow a user to configure the properties: <property>synchronous</property>, <property>serviceInvokerTimeout</property> and <property>asyncResponse</property> through the new child object <property>Config</property>. These new configurable properties allow a user increased control over the execution of the JBR components.
@@ -30,7 +47,46 @@
 				<itemizedlist>
 					<listitem>
 						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5643">JBIDE-5643</ulink>: Within the <guilabel>Hibernate</guilabel> tab of the <filename>persistence.xml</filename> editor, the button beside the <guilabel>Configuration file</guilabel> line was labeled <guibutton>Browse</guibutton>. This was misleading as upon clicking the button the user would be asked setup a configuration file. To provide an improved user experience, the button has now been altered to be called <guibutton>Setup</guibutton> and correctly guides the user through configuration file creation.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5641">JBIDE-5641</ulink>: When specifying the persistence property: <property>&lt;property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"/&gt;</property>, an error could display saying that the <filename>hibernate.cfg.xml</filename> file could not be found. This occured because the validator only considered full paths and not relative path naming. This has since been corrected through the modification of the <classname>HibernatePersistenceUnit</classname> class. 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5499">JBIDE-5499</ulink>: 
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>JavaServer Faces (JSF)</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5670">JBIDE-5670</ulink>: The <filename>faceleted-taglib</filename> tag library was not supported in <filename>*taglib.xml</filename> with XML Schema Definition (XSD). Support for this library has been added to this release of the <application>JBoss Developers Studio</application>, allowing for support of <application>JavaServer Faces 2</application>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5660">JBIDE-5660</ulink>: When setting the location of an <property>&lt;error-page&gt;</property> within <filename>web.xml</filename>, the location would not be recognized if it included a query string. For example the location <filename>views/error/error.xhtml</filename> would be valid, whereas the location <filename>/views/error/error.xhtml?statusCode=403</filename> would not be valid. This has been corrected by adding a test for a query string into the <filename>CheckResource.java</filename> file, allowing for locations to be specified that include a query string.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>RichFaces</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5743</ulink>: Content assistance in coding did not show anything for the tag <property>&lt;rich:menuItem ... icon="|" /&gt;</property>. The content assistance has been corrected by adding the <property>icon</property> attribute to the <filename>RichFaces.xml</filename> tag library.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -43,6 +99,23 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5521">JBIDE-5521</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>General Issues</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5743</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5690">JBIDE-5690</ulink>: The <guibutton>Full-Publish</guibutton> hotkey would only accept the first module and re-deploy it to the first server the module is deployed on. For the user this meant that if the module was already deployed on several servers, using <guibutton>Full-Publish</guibutton> would only re-deploy it to the first server returned in the list. To solve this issue a user interface has been added for the <guibutton>Full-Publish</guibutton> hotkey that allows for the selection of the server to re-deploy to. During the implementation of this fix, the package has been renamed to XPL.
 						</para>
 					</listitem>
 				</itemizedlist>
