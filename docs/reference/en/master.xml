@@ -4,11 +4,9 @@
 
 [
 <!ENTITY introduction SYSTEM "modules/introduction.xml">  
-<!ENTITY process_page SYSTEM "modules/process_page.xml">
-<!ENTITY quickstart SYSTEM "modules/quick_start.xml">
-<!ENTITY smooksformeditor_graphicaltab SYSTEM "modules/smooksformeditor_graphicalpage.xml"> 
-<!ENTITY smooksformeditor_configurationtab SYSTEM "modules/smooksformeditor_configurationpage.xml"> 
-<!ENTITY smooksformeditor_sourcetab SYSTEM "modules/smooksformeditor_sourcepage.xml"> 
+<!ENTITY tasks SYSTEM "modules/tasks.xml">
+<!ENTITY references SYSTEM "modules/references.xml">
+<!ENTITY summary SYSTEM "modules/summary.xml">
 ]>
 <book>
 
@@ -51,10 +49,7 @@
 	</bookinfo>
 	<toc/>
 	&introduction;
-	&process_page;
-	<!--&quickstart;
-		
-		&smooksformeditor_graphicaltab;
-		&smooksformeditor_configurationtab;-->
-	&smooksformeditor_sourcetab;
+	&tasks;
+	&references;
+	&summary;
 </book>    

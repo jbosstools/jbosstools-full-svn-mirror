@@ -37,7 +37,7 @@
 						<entry><para>Smooks Configuration File Wizard</para></entry>
 						<entry><para>Smooks tools allows to create/edit the Smooks configuration file for Java2Java data transformation.</para></entry>
 						<entry>
-							<!--<link linkend="config_file_wizzard">-->Smooks Configuration File Wizard<!--</link>-->
+							<link linkend="config_file_wizzard">Smooks Configuration File Wizard</link>
 						</entry>
 					</row>
 					
@@ -45,7 +45,7 @@
 						<entry><para>Smooks Editor</para></entry>
 						<entry><para>Smooks Editor helps configure the created Smooks configuration file.</para></entry>
 						<entry>
-							<!--<link linkend="quickstart_formeditor">-->Smooks Editor<!--</link>-->
+							<link linkend="quickstart_formeditor">Smooks Editor</link>
 						</entry>
 					</row>
 					
