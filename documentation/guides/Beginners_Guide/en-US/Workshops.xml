@@ -318,5 +318,63 @@
 			The RESTEasy workshop is now complete.
 		</para>
 	</section>
+<!--	<section id="sect-Beginners_Guide-Workshops-RESTEasy_workshop">
+		<title>Web Service using JSR 181 workshop</title>
+		<para>
+			The Web Service workshop uses JSR 181 to provide an example of how to solve the problem of 
+		</para>
+		<formalpara>
+			<title>Prerequisites</title>
+			<para>
+				The following technologies are necessary for this workshop:
+				<itemizedlist>
+					<listitem>
+						<para>
+							<application>JBoss Developer Studio 3.0</application>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<application>JBoss Enterprise Application Platform 5</application> or <application>JBoss Service Orientated Architecture Platform 5</application>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<para>
+			Make sure the <application>JBoss Developer Studio</application> is open with the application server running. For the purpose of simplicity it will be assumed for the rest of the workshop that you are running the <application>JBoss Enterprise Application Platform 5</application>, however the steps will be the same if you are using the <application>JBoss Service Orientated Architecture Platform 5</application>.
+		</para>
+		<para>
+			Begin by creating a new <emphasis>Dynamic Web Project</emphasis> in the <application>JBoss Developer Studio</application>. To create the project select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Project...</guimenuitem></menuchoice>.
+		</para>
+		<para>
+			The <guilabel>New Project</guilabel> dialogue box will open and you can either navigate to <menuchoice><guimenuitem>Web</guimenuitem><guimenuitem>Dynamic Web Project</guimenuitem></menuchoice> or start to type <guimenuitem>Dynamic Web Project</guimenuitem> into the search bar under the <guilabel>Wizards:</guilabel> label.
+		</para>
+		<para>
+			Once you have found the <guimenuitem>Dynamic Web Project</guimenuitem> option, click on it to highlight it and click the <guibutton>Next &gt;</guibutton> button.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Selecting_to_create_a_Dynamic_Web_Project">
+			<title>Selecting to create a Dynamic Web Project</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Web_Service_Select_Dynamic_Web_Project.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						Selecting the Dynamic Web Project option from the New Project dialogue box.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			In the <guilabel>New Dynamic Web Project</guilabel> dialogue box that has opened type the name of the project as <emphasis>MyWebServiceProject</emphasis>.
+		</para>
+	</section> -->
+	<section id="sect-Beginners_Guide-Workshops-Seam_workshop">
+		<title>Seam workshop</title>
+		<para>
+			The <application>JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with the <application>JBoss Developer Studio</application>. This workshop can be found here: <ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5.0.0/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>.
+		</para>
+	</section>
 </chapter>
 

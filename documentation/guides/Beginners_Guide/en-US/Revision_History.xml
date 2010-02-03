@@ -5,20 +5,6 @@
 	<simpara>
 		<revhistory>
 			<revision>
-				<revnumber>0</revnumber>
-				<date>Thu Nov 26 2009</date>
-				<author>
-					<firstname>Isaac</firstname>
-					<surname>Rooskov</surname>
-					<email>irooskov@redhat.com</email>
-				</author>
-				<revdescription>
-					<simplelist>
-						<member>Initial creation of book by publican</member>
-					</simplelist>
-				</revdescription>
-			</revision>
-			<revision>
 				<revnumber>1</revnumber>
 				<date>Mon Jan 26 2010</date>
 				<author>
@@ -29,6 +15,20 @@
 				<revdescription>
 					<simplelist>
 						<member>Review and editing</member>
+					</simplelist>
+				</revdescription>
+			</revision>
+			<revision>
+				<revnumber>0</revnumber>
+				<date>Thu Nov 26 2009</date>
+				<author>
+					<firstname>Isaac</firstname>
+					<surname>Rooskov</surname>
+					<email>irooskov@redhat.com</email>
+				</author>
+				<revdescription>
+					<simplelist>
+						<member>Initial creation of book by publican</member>
 					</simplelist>
 				</revdescription>
 			</revision>
