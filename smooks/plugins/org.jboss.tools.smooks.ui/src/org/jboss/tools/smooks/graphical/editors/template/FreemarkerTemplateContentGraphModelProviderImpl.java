@@ -155,7 +155,7 @@ public class FreemarkerTemplateContentGraphModelProviderImpl implements IFreemar
 				} else if (SmooksModelUtils.KEY_XML_FILE_TYPE_XML.equals(fileType)) {
 					builder = new XMLSampleModelBuilder(URI.createFileURI(newFilePath));
 				} else {
-					throw new IOException("Unable to process XML template type '" + fileType + "'.");
+					throw new IOException(Messages.FreemarkerTemplateContentGraphModelProviderImpl_IOExceptionMessage + fileType + "'."); //$NON-NLS-1$
 				}
 
 				try {

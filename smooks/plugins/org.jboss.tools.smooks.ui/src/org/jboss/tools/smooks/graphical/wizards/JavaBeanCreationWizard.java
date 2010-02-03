@@ -38,7 +38,7 @@ public class JavaBeanCreationWizard extends SmooksCreationModelConfigureWizard {
 
 	public JavaBeanCreationWizard(ISmooksModelProvider modelProvider, Object model) {
 		super(modelProvider, model);
-		this.setWindowTitle("New Java Class Model");
+		this.setWindowTitle(Messages.JavaBeanCreationWizard_WizardTitle);
 	}
 
 	public Object[] getBindings() {

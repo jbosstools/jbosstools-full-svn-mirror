@@ -17,6 +17,7 @@ public class Messages extends NLS {
 	public static String SmooksJavaMappingGraphicalEditor_NodeMustLinkWithJavaBean;
 	public static String SmooksJavaMappingGraphicalEditor_NodeMustLinkWithSource;
 	public static String SmooksJavaMappingGraphicalEditor_NullLabel;
+	public static String SmooksJavaMappingGraphicalEditor_WarningMessage1;
 	public static String SmooksProcessGraphicalEditor_4;
 	public static String SmooksProcessGraphicalEditor_AddTaskActionText;
 	public static String SmooksProcessGraphicalEditor_FormText;

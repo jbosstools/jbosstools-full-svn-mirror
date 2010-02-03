@@ -37,7 +37,7 @@ import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
  *         Apr 12, 2009
  */
 public class SmooksResourceChangeListener implements IResourceChangeListener {
-	public static final String SMOOKS_CONTENTTYPE_ID = "org.jboss.tools.smooks.ui.smooks.contentType";
+	public static final String SMOOKS_CONTENTTYPE_ID = "org.jboss.tools.smooks.ui.smooks.contentType"; //$NON-NLS-1$
 
 	private IEditorPart currentEditPart = null;
 

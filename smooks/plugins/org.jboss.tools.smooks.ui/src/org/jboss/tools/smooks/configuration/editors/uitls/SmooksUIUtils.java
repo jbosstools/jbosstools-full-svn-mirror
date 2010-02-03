@@ -484,64 +484,64 @@ public class SmooksUIUtils {
 			if(field != null){
 				Class<?> fieldType = field.getType();
 				if(fieldType.isEnum()){
-					return "Enum";
+					return Messages.SmooksUIUtils_Enum;
 				}
 				if(fieldType == Integer.class || fieldType == int.class){
-					return "Integer";
+					return Messages.SmooksUIUtils_Integer;
 				}
 				if(fieldType == Float.class || fieldType == float.class){
-					return "Float";
+					return Messages.SmooksUIUtils_Float;
 				}
 				if(fieldType == Double.class || fieldType == double.class){
-					return "Double";
+					return Messages.SmooksUIUtils_Double;
 				}
 				if(fieldType == BigInteger.class ){
-					return "BigInteger";
+					return Messages.SmooksUIUtils_BigInteger;
 				}
 				if(fieldType == BigDecimal.class ){
-					return "BigDecimal";
+					return Messages.SmooksUIUtils_BigDecimal;
 				}
 				if(fieldType == Long.class || fieldType == long.class){
-					return "Long";
+					return Messages.SmooksUIUtils_Long;
 				}
 				if(fieldType == Boolean.class|| fieldType == boolean.class){
-					return "Boolean";
+					return Messages.SmooksUIUtils_Boolean;
 				}
 				if(fieldType == Short.class|| fieldType == short.class){
-					return "Short";
+					return Messages.SmooksUIUtils_Short;
 				}
 				if(fieldType == Byte.class|| fieldType == byte.class){
-					return "Byte";
+					return Messages.SmooksUIUtils_Byte;
 				}
 				if(fieldType == Short.class|| fieldType == short.class){
-					return "Short";
+					return Messages.SmooksUIUtils_Short;
 				}
 				if(Calendar.class.isAssignableFrom(fieldType)){
-					return "Calendar";
+					return Messages.SmooksUIUtils_Calendar;
 				}
 				if(fieldType == Class.class){
-					return "Class";
+					return Messages.SmooksUIUtils_Class;
 				}
 				if(fieldType == Date.class){
-					return "Date";
+					return Messages.SmooksUIUtils_Date;
 				}
 				if(fieldType == Character.class){
-					return "Character";
+					return Messages.SmooksUIUtils_Char;
 				}
 				if(Charset.class.isAssignableFrom(fieldType)){
-					return "Charset";
+					return Messages.SmooksUIUtils_Charset;
 				}
 				if(fieldType == java.sql.Date.class){
-					return "SqlDate";
+					return Messages.SmooksUIUtils_SqlDate;
 				}
 				if(fieldType == java.sql.Time.class){
-					return "SqlTime";
+					return Messages.SmooksUIUtils_SqlTiem;
 				}
 				if(fieldType == URI.class){
-					return "URI";
+					return Messages.SmooksUIUtils_URI;
 				}
 				if(fieldType == URL.class){
-					return "URL";
+					return Messages.SmooksUIUtils_URL;
 				}
 			}
 		} catch (Throwable e) {

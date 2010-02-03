@@ -98,16 +98,16 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 				AbstractSmooksGraphicalModel requiredCollectionLinkParent = parentIsRequriedCollectionNode(abstractSmooksGraphicalModel);
 				if (requiredCollectionLinkParent != null && enforceCollectionSubMappingRules(abstractSmooksGraphicalModel)) {
 					AbstractXMLObject parentNode = (AbstractXMLObject) requiredCollectionLinkParent.getData();
-					abstractSmooksGraphicalModel.addMessage("Its parent node '" + parentNode.getName()
-							+ "' should be connected first.");
+					abstractSmooksGraphicalModel.addMessage(Messages.SmooksFreemarkerTemplateGraphicalEditor_WarningMessage1 + parentNode.getName()
+							+ Messages.SmooksFreemarkerTemplateGraphicalEditor_WarningMessage2);
 					abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
 				}
 				if (isRequiredNode(abstractSmooksGraphicalModel)) {
-					abstractSmooksGraphicalModel.addMessage("This node must be linked to a Source data node");
+					abstractSmooksGraphicalModel.addMessage(Messages.SmooksFreemarkerTemplateGraphicalEditor_WarningMessage3);
 					abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
 				}
 				if (isRequiredCollectionNode(abstractSmooksGraphicalModel)) {
-					abstractSmooksGraphicalModel.addMessage("This node must be linked to a Source Collection node");
+					abstractSmooksGraphicalModel.addMessage(Messages.SmooksFreemarkerTemplateGraphicalEditor_WarningMessage4);
 					abstractSmooksGraphicalModel.setSeverity(IValidatableModel.ERROR);
 				}
 			}

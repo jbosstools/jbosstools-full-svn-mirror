@@ -8,6 +8,7 @@ public class Messages extends NLS {
 	public static String CSVDataPathWizardPage_ErrorPathErrorMessage;
 	public static String CSVDataPathWizardPage_WizardDes;
 	public static String CSVDataPathWizardPage_WizardTitle;
+	public static String CSVInputDataWizard_ExtensionName;
 	public static String CSVInputDataWizard_WizardPageText;
 	public static String CSVInputDataWizard_WizardTitle;
 	public static String CsvReaderUICreator_AddButtonLabel;

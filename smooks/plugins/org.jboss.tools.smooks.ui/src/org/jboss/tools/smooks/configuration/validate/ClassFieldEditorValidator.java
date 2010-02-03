@@ -52,7 +52,8 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 			return classLoader;
 		}
 		IResource resource = SmooksUIUtils.getResource(obj);
-		if(resource == null) return null;
+		if (resource == null)
+			return null;
 		try {
 			classLoader = new ProjectClassLoader(JavaCore.create(resource.getProject()));
 		} catch (JavaModelException e) {
@@ -73,7 +74,7 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 		target2.setFeature(Csv12Package.Literals.BINDING__CLASS);
 		target2.setTarget(Binding.class);
 		validationTargetList.add(target2);
-		
+
 		ClassValidationTarget target3 = new ClassValidationTarget();
 		target3.setFeature(Rules10Package.Literals.RULE_BASE__PROVIDER);
 		target3.setTarget(RuleBase.class);
@@ -124,23 +125,27 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 						}
 						String message = null;
 						if (clazz1 == null) {
-							message = Messages.ClassFieldEditorValidator_Warning_Cannot_Find_Class + classString + "\""; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
-						}else{
-							if(Modifier.isAbstract(clazz1.getModifiers())){
+							message = Messages.ClassFieldEditorValidator_Warning_Cannot_Find_Class + classString + "\""; //$NON-NLS-1$
+						} else {
+							if (Modifier.isAbstract(clazz1.getModifiers())) {
 								message = Messages.ClassFieldEditorValidator_Warning_Abstract_Class;
-							}else{
+							} else {
 								try {
 									Constructor<?> constructor = clazz1.getConstructor(null);
 								} catch (SecurityException e) {
-									message = Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced+classString+Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced2;
+									message = Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced
+											+ classString
+											+ Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced2;
 								} catch (NoSuchMethodException e) {
-									message = Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced+classString+Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced2;
+									message = Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced
+											+ classString
+											+ Messages.ClassFieldEditorValidator_Warning_Class_Cannot_Be_Instanced2;
 								}
 							}
-							
+
 						}
-						if(message != null){
-							list.add(newWaringDiagnostic(message, object,(EAttribute) feature));
+						if (message != null) {
+							list.add(newWaringDiagnostic(message, object, (EAttribute) feature));
 						}
 						break;
 					}

@@ -17,6 +17,7 @@ public class Messages extends NLS {
 	public static String JavaBeanSelectionWizardPage_CollectionClassLabel;
 	public static String JavaBeanSelectionWizardPage_CollectionComponentClassEmptyErrorMessage;
 	public static String JavaBeanSelectionWizardPage_CollectionLabel;
+	public static String JavaBeanSelectionWizardPage_QuoteChar;
 	public static String JavaBeanSelectionWizardPage_WizardDes;
 	public static String JavaBeanSelectionWizardPage_WizardTitle;
 /*	public static String JavabeanExpressionUICreator_ExecuteOngroupname;

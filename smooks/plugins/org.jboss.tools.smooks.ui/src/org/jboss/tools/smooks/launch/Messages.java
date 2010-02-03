@@ -5,6 +5,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jboss.tools.smooks.launch.messages"; //$NON-NLS-1$
 	public static String ExceptionHandler_Exception_Msg;
+	public static String SmooksLaunchConfigurationDelegate_11;
 	public static String SmooksLaunchConfigurationDelegate_Error_Copying_Smooks_Launcher;
 	public static String SmooksLaunchConfigurationDelegate_Error_launching;
 	public static String SmooksLaunchConfigurationDelegate_Error_missing_artifact;

@@ -199,11 +199,11 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 		editPart.getFieldMarker().clean();
 		String error = null;
 		if (fields == null) {
-			error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
+			error = ""; //$NON-NLS-1$
 		} else {
 			fields = fields.trim();
 			if ("".equals(fields)) { //$NON-NLS-1$
-				error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
+				error = ""; //$NON-NLS-1$
 			} else {
 				char[] chars = fields.toCharArray();
 				for (int i = 0; i < chars.length; i++) {
@@ -214,20 +214,20 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 					if (Character.isLetterOrDigit(c)) {
 
 					} else {
-						error = Messages.FreemarkerCSVCreationWizardPage_Error_Incorrect + c
-								+ Messages.FreemarkerCSVCreationWizardPage_Error_Incorrect2;
+						error = "" + c //$NON-NLS-1$
+								+ ""; //$NON-NLS-1$
 						break;
 					}
 				}
 
 				String[] fieldsArray = fields.split(","); //$NON-NLS-1$
 				if (fieldsArray.length == 0) {
-					error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
+					error = ""; //$NON-NLS-1$
 				}
 				for (int i = 0; i < fieldsArray.length; i++) {
 					String f = fieldsArray[i];
 					if (f == null || "".equals(f.trim())) { //$NON-NLS-1$
-						error = Messages.FreemarkerCSVCreationWizardPage_Error_Fields_Empty;
+						error = ""; //$NON-NLS-1$
 						break;
 					}
 				}
@@ -280,21 +280,21 @@ public class Csv12ReaderUICreator extends PropertyUICreator {
 				EStructuralFeature feature = ((CommandParameter) element).getEStructuralFeature();
 				if (v instanceof MapBinding) {
 					if (feature == Csv12Package.Literals.CSV12_READER__MAP_BINDING) {
-						return "Map MapBinding";
+						return org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_MapBinding;
 					}
 					if (feature == Csv12Package.Literals.CSV12_READER__SINGLE_BINDING) {
-						return "Single MapBinding";
+						return org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_SingleMapBinding;
 					}
 					if (feature == Csv12Package.Literals.CSV12_READER__LIST_BINDING) {
-						return "List MapBinding";
+						return org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_ListMapBinding;
 					}
 				}
 				if (v instanceof Binding) {
 					if (feature == Csv12Package.Literals.CSV12_READER__SINGLE_BINDING) {
-						return "Single Binding";
+						return org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_SingleBinding;
 					}
 					if (feature == Csv12Package.Literals.CSV12_READER__LIST_BINDING) {
-						return "List Binding";
+						return org.jboss.tools.smooks.configuration.editors.csv12.Messages.Csv12ReaderUICreator_ListBinding;
 					}
 				}
 			}

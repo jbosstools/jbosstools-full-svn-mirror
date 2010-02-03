@@ -44,7 +44,7 @@ public class FileSelectionWizard extends Wizard implements INewWizard {
 
 	public FileSelectionWizard() {
 		super();
-		this.setWindowTitle("File Selection");
+		this.setWindowTitle(Messages.FileSelectionWizard_WizardTitle);
 	}
 
 

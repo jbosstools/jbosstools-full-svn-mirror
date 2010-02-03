@@ -196,7 +196,7 @@ public class XMLTemplateCreationWizardPage extends AbstractFileSelectionWizardPa
 				try {
 					list = loadElement(fileText.getText());
 					if (list == null || list.isEmpty()) {
-						setErrorMessage("Can't get the elements in the XSD file.");
+						setErrorMessage(Messages.XMLTemplateCreationWizardPage_XSDParsingError1);
 					} else {
 						tableViewer.setInput(list);
 						reasourceLoaded = true;
@@ -256,7 +256,7 @@ public class XMLTemplateCreationWizardPage extends AbstractFileSelectionWizardPa
 		mainComposite.setLayoutData(gd);
 
 		Label fileTypeLabel = new Label(mainComposite, SWT.NONE);
-		fileTypeLabel.setText("Create Template From:");
+		fileTypeLabel.setText(Messages.XMLTemplateCreationWizardPage_FileLabel);
 
 		createFromDropdown = new Combo(mainComposite, SWT.READ_ONLY | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -332,7 +332,7 @@ public class XMLTemplateCreationWizardPage extends AbstractFileSelectionWizardPa
 			templateSourceType = TemplateSourceType.xml;
 			break;
 		default :
-			throw new IllegalStateException("Unexpected XML Template source selection.  Code must be updated to accomodate new source type.");
+			throw new IllegalStateException(Messages.XMLTemplateCreationWizardPage_XMLTemplateLoadError);
 		}
 
 		// Table should only be visible for XSD template sources...
@@ -345,8 +345,8 @@ public class XMLTemplateCreationWizardPage extends AbstractFileSelectionWizardPa
 	}
 
 	private void initCombo(Combo combo2) {
-		combo2.add("XSD");
-		combo2.add("Sample XML");
+		combo2.add(Messages.XMLTemplateCreationWizardPage_XSDType);
+		combo2.add(Messages.XMLTemplateCreationWizardPage_XMLSampleType);
 	}
 
 	public String getInputType(){
