@@ -104,10 +104,10 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
     }
 
 	private TemplateElement findListNode(TemplateElement templateNode) throws TemplateBuilderException {
-		if(templateNode.getNodeName().equals("IteratorBlock")) {
+		if(templateNode.getNodeName().equals("IteratorBlock")) { //$NON-NLS-1$
 			String description = templateNode.getDescription();
 			if(!description.startsWith("list")) { //$NON-NLS-1$
-				throw new TemplateBuilderException ("Unsupported CSV template IteratorBlock type '" + description + "'.  Currently only support 'list' IteratorBlock nodes."); //$NON-NLS-1$
+				throw new TemplateBuilderException ("Unsupported CSV template IteratorBlock type '" + description + "'.  Currently only support 'list' IteratorBlock nodes."); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			return templateNode;
 		} else {
@@ -196,7 +196,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
                 template.append('\n');
             }
 
-            template.append("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$
+            template.append("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             int fieldIndex = 0;
             for(int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);

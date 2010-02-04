@@ -179,7 +179,7 @@ public abstract class ModelBuilder {
 	public static int getMinOccurs(Element element) {
         String minOccurs = element.getAttributeNS(NAMESPACE, "minOccurs"); //$NON-NLS-1$
 
-        if(minOccurs.equals("")) {
+        if(minOccurs.equals("")) { //$NON-NLS-1$
             return 1;
         }
 
@@ -189,7 +189,7 @@ public abstract class ModelBuilder {
     public static int getMaxOccurs(Element element) {
         String maxOccurs = element.getAttributeNS(NAMESPACE, "maxOccurs"); //$NON-NLS-1$
 
-        if(maxOccurs.equals("")) {
+        if(maxOccurs.equals("")) { //$NON-NLS-1$
             return 1;
         }
 

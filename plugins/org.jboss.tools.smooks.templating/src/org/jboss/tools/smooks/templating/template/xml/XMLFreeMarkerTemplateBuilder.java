@@ -138,7 +138,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 				if(mapping instanceof CollectionMapping) {
 					collectionMapping = (CollectionMapping) mapping;
 					TemplateBuilder.writeIndent(indent, templateWriter);			
-					templateWriter.write("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$
+					templateWriter.write("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 				
 				TemplateBuilder.writeIndent(indent, templateWriter);			
@@ -334,11 +334,11 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 		// We need to rewrite the FreeMarker template so as to get rid of the FreeMarker constructs,
 		// such as <#list> etc.  We convert these to XML elements in the ModelBuilder.NAMESPACE namespace.
 		
-		if(element.getNodeName().equals("IteratorBlock")) {
+		if(element.getNodeName().equals("IteratorBlock")) { //$NON-NLS-1$
 			String description = element.getDescription();
 
 			if(!description.startsWith("list")) { //$NON-NLS-1$
-				throw new TemplateBuilderException ("Unsupported XML template IteratorBlock type '" + description + "'.  Currently only support 'list' IteratorBlock nodes."); //$NON-NLS-1$
+				throw new TemplateBuilderException ("Unsupported XML template IteratorBlock type '" + description + "'.  Currently only support 'list' IteratorBlock nodes."); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 			String[] tokens = description.split(" +?"); //$NON-NLS-1$
@@ -358,7 +358,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 					rewriteTemplateElement(children.nextElement(), templateRewriteBuffer);
 				}				
 			} else {
-				if(element.getClass().getSimpleName().equals("DollarVariable")) {
+				if(element.getClass().getSimpleName().equals("DollarVariable")) { //$NON-NLS-1$
 					templateRewriteBuffer.append(element.toString());
 				} else {
 					templateRewriteBuffer.append(element.getCanonicalForm());
