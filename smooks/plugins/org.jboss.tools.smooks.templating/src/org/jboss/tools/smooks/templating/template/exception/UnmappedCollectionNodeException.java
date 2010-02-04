@@ -31,7 +31,7 @@ public class UnmappedCollectionNodeException extends InvalidMappingException {
     private Element unmappedCollectionNode;
 
     public UnmappedCollectionNodeException(Element unmappedCollectionNode) {
-        super("Unmapped collection node '" + DomUtils.getName(unmappedCollectionNode) + Messages.UnmappedCollectionNodeException_0); //$NON-NLS-1$
+        super("Unmapped collection node '" + DomUtils.getName(unmappedCollectionNode) + "'."); //$NON-NLS-1$
         this.unmappedCollectionNode = unmappedCollectionNode;
     }
 
