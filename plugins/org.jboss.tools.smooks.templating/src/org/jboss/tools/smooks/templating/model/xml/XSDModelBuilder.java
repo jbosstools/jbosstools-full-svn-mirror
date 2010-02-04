@@ -85,7 +85,7 @@ public class XSDModelBuilder extends ModelBuilder {
         XSDElementDeclaration rootElement = elements.get(rootElementName);
 
         if(rootElement == null) {
-            throw new IllegalArgumentException("Unknown root element '" + rootElementName + Messages.XSDModelBuilder_0); //$NON-NLS-1$
+            throw new IllegalArgumentException("Unknown root element '" + rootElementName + "'."); //$NON-NLS-1$
         }
 
         Document model = createModelInstance();
@@ -108,7 +108,7 @@ public class XSDModelBuilder extends ModelBuilder {
 	        	File schemaFile = new File(schemaPath);
 	        	
 	        	if(!schemaFile.exists()) {
-	        		throw new IOException("XSD '" + schemaFile.getAbsolutePath() + Messages.XSDModelBuilder_1); //$NON-NLS-1$
+	        		throw new IOException("XSD '" + schemaFile.getAbsolutePath() + "' not found."); //$NON-NLS-1$
 	        	}
 	        	xsdSources[i] = new StreamSource(new FileInputStream(schemaFile));
 	        	i++;
@@ -134,7 +134,7 @@ public class XSDModelBuilder extends ModelBuilder {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		Resource resource;
 		
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Messages.XSDModelBuilder_2, new XSDResourceFactoryImpl());
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xsd", new XSDResourceFactoryImpl());
 		resource = resourceSet.getResource(schemaURI, true);
 
         Map<String, Object> options = new HashMap<String, Object>();
@@ -143,7 +143,7 @@ public class XSDModelBuilder extends ModelBuilder {
         resource.load(options);
 
         if(resource.getContents().isEmpty()) {
-            throw new ModelBuilderException("Failed to load schema '" + schemaURI + Messages.XSDModelBuilder_3); //$NON-NLS-1$
+            throw new ModelBuilderException("Failed to load schema '" + schemaURI + "'."); //$NON-NLS-1$
         }
 
         XSDSchema schema = (XSDSchema) resource.getContents().get(0);
@@ -230,7 +230,7 @@ public class XSDModelBuilder extends ModelBuilder {
 	private String getPrefix(String elementNS) {
 		String nsPrefix = nsPrefixes.getProperty(elementNS);
 		if(nsPrefix == null) {
-			nsPrefix = Messages.XSDModelBuilder_4 + nsPrefixes.size();
+			nsPrefix = "ns" + nsPrefixes.size();
 			nsPrefixes.setProperty(elementNS, nsPrefix);
 		}
 		return nsPrefix;
@@ -296,13 +296,13 @@ public class XSDModelBuilder extends ModelBuilder {
                 XSDSimpleTypeDefinition typeDef = attributeDecl.getTypeDefinition();
                 String name = attributeDecl.getName();
                 String attributeNS = attributeDecl.getTargetNamespace();
-                String value = Messages.XSDModelBuilder_5;
+                String value = "";
                 XSDAttributeUseCategory use = attributeUse.getUse();
 
                 if(use == XSDAttributeUseCategory.REQUIRED_LITERAL) {
                     value = REQUIRED;
                 } else if(attributeUse.getValue() != null) {
-                    value = OPTIONAL + Messages.XSDModelBuilder_6 + attributeUse.getValue().toString();
+                    value = OPTIONAL + "=" + attributeUse.getValue().toString();
                 } else {
                     value = OPTIONAL;
                 }

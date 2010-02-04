@@ -138,7 +138,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 				if(mapping instanceof CollectionMapping) {
 					collectionMapping = (CollectionMapping) mapping;
 					TemplateBuilder.writeIndent(indent, templateWriter);			
-					templateWriter.write("<#list " + collectionMapping.getSrcPath() + Messages.XMLFreeMarkerTemplateBuilder_0 + collectionMapping.getCollectionItemName() + Messages.XMLFreeMarkerTemplateBuilder_1); //$NON-NLS-1$
+					templateWriter.write("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$
 				}
 				
 				TemplateBuilder.writeIndent(indent, templateWriter);			
@@ -334,11 +334,11 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 		// We need to rewrite the FreeMarker template so as to get rid of the FreeMarker constructs,
 		// such as <#list> etc.  We convert these to XML elements in the ModelBuilder.NAMESPACE namespace.
 		
-		if(element.getNodeName().equals(Messages.XMLFreeMarkerTemplateBuilder_2)) {
+		if(element.getNodeName().equals("IteratorBlock")) {
 			String description = element.getDescription();
 
 			if(!description.startsWith("list")) { //$NON-NLS-1$
-				throw new TemplateBuilderException ("Unsupported XML template IteratorBlock type '" + description + Messages.XMLFreeMarkerTemplateBuilder_3); //$NON-NLS-1$
+				throw new TemplateBuilderException ("Unsupported XML template IteratorBlock type '" + description + "'.  Currently only support 'list' IteratorBlock nodes."); //$NON-NLS-1$
 			}
 
 			String[] tokens = description.split(" +?"); //$NON-NLS-1$
@@ -358,7 +358,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 					rewriteTemplateElement(children.nextElement(), templateRewriteBuffer);
 				}				
 			} else {
-				if(element.getClass().getSimpleName().equals(Messages.XMLFreeMarkerTemplateBuilder_4)) {
+				if(element.getClass().getSimpleName().equals("DollarVariable")) {
 					templateRewriteBuffer.append(element.toString());
 				} else {
 					templateRewriteBuffer.append(element.getCanonicalForm());

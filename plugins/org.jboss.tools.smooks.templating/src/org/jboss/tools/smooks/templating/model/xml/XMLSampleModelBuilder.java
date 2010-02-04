@@ -61,19 +61,19 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 		try {
 			docBuilder = docBuilderFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
-			throw new RuntimeException(Messages.XMLSampleModelBuilder_0, e);
+			throw new RuntimeException("Unexpectd XML exception.  Unable to create DocumentBuilder instance.", e);
 		}
 	}
 
     public XMLSampleModelBuilder(URI xmlSampleURI) throws IOException, ModelBuilderException {
-    	Assert.isNotNull(xmlSampleURI, Messages.XMLSampleModelBuilder_1);
+    	Assert.isNotNull(xmlSampleURI, "Null 'xmlSampleURI' arg in method call.");
     	
     	File xmlSampleFile =  new File(xmlSampleURI.toFileString());
     	
     	if(!xmlSampleFile.exists()) {
-    		throw new IOException("XML Sample '" + xmlSampleFile.getAbsolutePath() + Messages.XMLSampleModelBuilder_2); //$NON-NLS-1$    		
+    		throw new IOException("XML Sample '" + xmlSampleFile.getAbsolutePath() + "' not found."); //$NON-NLS-1$    		
     	} else if(!xmlSampleFile.isFile()) {
-    		throw new IOException("XML Sample '" + xmlSampleFile.getAbsolutePath() + Messages.XMLSampleModelBuilder_3); //$NON-NLS-1$    		
+    		throw new IOException("XML Sample '" + xmlSampleFile.getAbsolutePath() + "' is not a normal file.  Might be a directory etc."); //$NON-NLS-1$    		
     	}
     	
     	try {
@@ -123,7 +123,7 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 				if(child.getNodeType() == Node.ELEMENT_NODE) {
 					configureModelElementTypes((Element) child);
 				} else {
-					throw new IllegalStateException(Messages.XMLSampleModelBuilder_4);
+					throw new IllegalStateException("The configureModelElementTypes method can only be called after the model has been trimed of non-model Nodes.  Call trimNonModelNodes() before calling configureModelElementTypes().");
 				}
 			}
 		} else {
@@ -143,7 +143,7 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 
 			if(child.getNodeType() == Node.ELEMENT_NODE) {
 				Element childElement = (Element) child;
-				String elementName = DomUtils.getName(childElement) + Messages.XMLSampleModelBuilder_5 + childElement.getNamespaceURI(); // Yes, namespace can be null, but that's OK.
+				String elementName = DomUtils.getName(childElement) + ":" + childElement.getNamespaceURI(); // Yes, namespace can be null, but that's OK.
 				Element earlierOccurance = childElementByNames.get(elementName);
 
 				// Mark every element as being optional and possibly being multiple...
@@ -164,7 +164,7 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 				
 				configureModelElementCardinality(childElement);
 			} else {
-				throw new IllegalStateException(Messages.XMLSampleModelBuilder_6);
+				throw new IllegalStateException("The configureModelElementTypes method can only be called after the model has been trimed of non-model Nodes.  Call trimNonModelNodes() before calling configureModelElementTypes().");
 			}
 		}
 		
