@@ -17,14 +17,15 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -145,19 +146,26 @@ public abstract class FolderReferenceComposite implements ModifyListener {
 		/*
 		 * Create scope combobox.
 		 */
-		CCombo combobox = new CCombo(groupControl, SWT.BORDER);
+		final Combo scopeCombo
+				= new Combo(groupControl, SWT.BORDER | SWT.READ_ONLY);
 		String[] items = { Messages.SCOPE_PAGE_SHORT,
 				Messages.SCOPE_FOLDER_SHORT, Messages.SCOPE_PROJECT_SHORT };
-		combobox.setItems(items);
-		combobox.setText(Messages.SCOPE_PAGE_SHORT);
+		scopeCombo.setItems(items);
+		scopeCombo.select(current.getScope());
 		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1);
-		combobox.setLayoutData(gd);
+		scopeCombo.setLayoutData(gd);
+
+		scopeCombo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				current.setScope(scopeCombo.getSelectionIndex());
+			}
+		});
 		
 		return groupControl;
 	}
 	
 	public void commit() {
-		current.setScope(getNewScope());
 		List l = new ArrayList();
 		for (int i = rs.length - 2; i >= 0; i--) {
 			if(rs[i].getLocation().equals(current.getLocation())) {
@@ -177,10 +185,6 @@ public abstract class FolderReferenceComposite implements ModifyListener {
 				getReferenceList().setAllResources((IPath) fileLocation, rs);
 			}
 		}
-	}
-	
-	int getNewScope() {
-		return ResourceReference.FILE_SCOPE;
 	}
 
 	public void setFileLocation(Object fileLocation) {
