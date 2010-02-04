@@ -7,6 +7,10 @@ public class Messages extends NLS {
 	public static String CSVRecordSection_Label_Quote;
 	public static String CSVRecordSection_Label_Separator;
 	public static String CSVRecordSection_Section_Title;
+	public static String JavaMappingPathSection_DefaultLabel;
+	public static String JavaMappingPathSection_MappingPath;
+	public static String JavaMappingPathSection_NamespaceLabel;
+	public static String JavaMappingPathSection_PathLabel;
 	public static String RuleBaseSection_Action_Test;
 	public static String RuleBaseSection_Button_Add;
 	public static String RuleBaseSection_Button_Delete;

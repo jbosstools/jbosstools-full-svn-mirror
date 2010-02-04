@@ -121,9 +121,7 @@ public class JavaBean12PropertyUICreator extends PropertyUICreator {
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnTop(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		return createElementSelectionSection(Messages.JavaBean12PropertyUICreator_CreateOnElementGroupText, editingdomain, toolkit, parent, model, formEditor,
-				part, Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT,
-				Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT_NS);
+		return super.createExtendUIOnTop(editingdomain, toolkit, parent, model, formEditor, part);
 	}
 
 	/*

@@ -139,6 +139,12 @@
                 id="org.jboss.tools.smooks.ui.propertySection.csvrecord"
                 tab="org.jboss.tools.smooks.ui.propertySection.csvrecordTab">
           </propertySection>
+          <propertySection
+                class="org.jboss.tools.smooks.editor.propertySections.JavaMappingPathSection"
+                filter="org.jboss.tools.smooks.editor.propertySections.JavaMappingPathSectionFilter"
+                id="org.jboss.tools.smooks.ui.propertySection.mappingPath"
+                tab="org.jboss.tools.smooks.ui.propertySection.mappingPathTab">
+          </propertySection>
        </propertySections>
     </extension>
     <extension
@@ -172,6 +178,12 @@
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.csvrecordTab"
                 label="CSV Record Properties">
+          </propertyTab>
+          <propertyTab
+                afterTab="org.jboss.tools.smooks.ui.propertySection.decodeParamTab"
+                category="properties"
+                id="org.jboss.tools.smooks.ui.propertySection.mappingPathTab"
+                label="Mapping Path">
           </propertyTab>
        </propertyTabs>
     </extension>

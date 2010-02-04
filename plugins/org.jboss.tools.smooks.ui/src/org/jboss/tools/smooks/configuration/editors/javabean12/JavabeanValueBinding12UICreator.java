@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.javabean12;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -22,7 +21,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
 import org.jboss.tools.smooks.configuration.editors.javabean.PropertiesAndSetterMethodSearchFieldEditorCreator;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
@@ -81,23 +79,24 @@ public class JavabeanValueBinding12UICreator extends PropertiesAndSetterMethodSe
 	@Override
 	public List<AttributeFieldEditPart> createExtendUIOnBottom(AdapterFactoryEditingDomain editingdomain,
 			FormToolkit toolkit, Composite parent, Object model, ISmooksModelProvider formEditor, IEditorPart part) {
-		List<AttributeFieldEditPart> list = createElementSelectionSection(Messages.JavabeanValueBinding12UICreator_DataGroupText, editingdomain, toolkit, parent,
-				model, formEditor, part, Javabean12Package.eINSTANCE.getValueType_Data(), Javabean12Package.eINSTANCE
-						.getValueType_DataNS());
-		Composite groupParent = parent;
-		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-			AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
-			if (attributeFieldEditPart.getAttribute() == null) {
-				groupParent = (Composite) attributeFieldEditPart.getContentControl();
-				break;
-			}
-		}
-		list.add(SmooksUIUtils.createStringFieldEditor(groupParent, toolkit, getPropertyDescriptor(editingdomain,
-				Javabean12Package.Literals.VALUE_TYPE__DEFAULT, model), model, false, false, null));
-
+//		List<AttributeFieldEditPart> list = createElementSelectionSection(Messages.JavabeanValueBinding12UICreator_DataGroupText, editingdomain, toolkit, parent,
+//				model, formEditor, part, Javabean12Package.eINSTANCE.getValueType_Data(), Javabean12Package.eINSTANCE
+//						.getValueType_DataNS());
+//		Composite groupParent = parent;
+//		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
+//			AttributeFieldEditPart attributeFieldEditPart = (AttributeFieldEditPart) iterator.next();
+//			if (attributeFieldEditPart.getAttribute() == null) {
+//				groupParent = (Composite) attributeFieldEditPart.getContentControl();
+//				break;
+//			}
+//		}
 //		list.add(SmooksUIUtils.createStringFieldEditor(groupParent, toolkit, getPropertyDescriptor(editingdomain,
-//				Javabean12Package.Literals.VALUE_TYPE__DECODER, model), model, false, false, null));
-		return list;
+//				Javabean12Package.Literals.VALUE_TYPE__DEFAULT, model), model, false, false, null));
+//
+////		list.add(SmooksUIUtils.createStringFieldEditor(groupParent, toolkit, getPropertyDescriptor(editingdomain,
+////				Javabean12Package.Literals.VALUE_TYPE__DECODER, model), model, false, false, null));
+//		return list;
+		return super.createExtendUIOnBottom(editingdomain, toolkit, parent, model, formEditor, part);
 	}
 
 	/*

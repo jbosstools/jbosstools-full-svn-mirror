@@ -94,9 +94,9 @@ public class Javabean12ExpressionUICreator extends PropertiesAndSetterMethodSear
 				editingdomain, Javabean12Package.Literals.EXPRESSION_TYPE__SETTER_METHOD, model), model);
 		list.add(pEditPart);
 		list.add(mEditPart);
-		list.addAll(createElementSelectionSection(Messages.Javabean12ExpressionUICreator_ExecuteOnGroupText, editingdomain, toolkit, parent, model,
-				formEditor, part,Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
-				Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS));
+//		list.addAll(createElementSelectionSection(Messages.Javabean12ExpressionUICreator_ExecuteOnGroupText, editingdomain, toolkit, parent, model,
+//				formEditor, part,Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT,
+//				Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS));
 
 		return list;
 	}
