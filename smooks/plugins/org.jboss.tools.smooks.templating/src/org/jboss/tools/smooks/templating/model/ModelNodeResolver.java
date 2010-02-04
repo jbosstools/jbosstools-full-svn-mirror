@@ -43,7 +43,7 @@ public class ModelNodeResolver {
 	private Map<String, String> prefixMap = new HashMap<String, String>();
 
 	public ModelNodeResolver(Document model) {
-		buildModelNodeMap(model.getDocumentElement(), "");
+		buildModelNodeMap(model.getDocumentElement(), Messages.ModelNodeResolver_0);
 	}
 	
 	public Node resolveNodeMapping(Node node) {
@@ -62,7 +62,7 @@ public class ModelNodeResolver {
 				String nodeNS = node.getNamespaceURI();
 				if(nodeNS != null && nodeNS.length() > 0) {
 					if(node.getNodeType() == Node.ATTRIBUTE_NODE) {
-						pathBuilder.insert(0, "@" + getPrefix(nodeNS) + ":" + ((Attr)node).getName()); //$NON-NLS-1$
+						pathBuilder.insert(0, "@" + getPrefix(nodeNS) + Messages.ModelNodeResolver_1 + ((Attr)node).getName()); //$NON-NLS-1$
 					} else {
 						pathBuilder.insert(0, getPrefix(nodeNS) + ":" + DomUtils.getName((Element) node)); //$NON-NLS-1$
 					}				
@@ -89,7 +89,7 @@ public class ModelNodeResolver {
 			String elNS = element.getNamespaceURI();
 			
 			if(parentPath.length() > 0) {
-				parentPath += "/";
+				parentPath += Messages.ModelNodeResolver_2;
 			}
 			
 			if(elNS != null && elNS.length() > 0) {
@@ -107,7 +107,7 @@ public class ModelNodeResolver {
 				if(!ModelBuilder.isInReservedNamespace(attribute)) {
 					String attrNS = attribute.getNamespaceURI();
 					if(attrNS != null && attrNS.length() > 0) {
-						modelNodeMap.put(elementPath + "/@" + getPrefix(attrNS) + ":" + attribute.getName(), attribute); //$NON-NLS-1$					
+						modelNodeMap.put(elementPath + "/@" + getPrefix(attrNS) + Messages.ModelNodeResolver_3 + attribute.getName(), attribute); //$NON-NLS-1$					
 					} else {
 						modelNodeMap.put(elementPath + "/@" + attribute.getName(), attribute); //$NON-NLS-1$				
 					}

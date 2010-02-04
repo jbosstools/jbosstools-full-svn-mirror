@@ -61,14 +61,14 @@ public class FreeMarkerUtil {
 				splitTokens[0] = splitTokens[0].substring(0, splitTokens[0].length() - 1);
 			}
 		} else {
-			throw new TemplateBuilderException("Unsupported FreeMarker variable syntax '" + dollarVariable + "'."); //$NON-NLS-1$
+			throw new TemplateBuilderException("Unsupported FreeMarker variable syntax '" + dollarVariable + Messages.FreeMarkerUtil_0); //$NON-NLS-1$
 		}
 		
 		return splitTokens;
 	}
 
 	public static boolean isDollarVariable(String variable) {
-		return (variable.startsWith("${") && variable.endsWith("}")); //$NON-NLS-1$
+		return (variable.startsWith("${") && variable.endsWith(Messages.FreeMarkerUtil_1)); //$NON-NLS-1$
 	}
 	
 	public static String toFreeMarkerVariable(ValueMapping mapping) {
@@ -80,12 +80,12 @@ public class FreeMarkerUtil {
 			encodeProperties = new Properties();
 		}
 				
-		builder.append("${" + mapping.getSrcPath() + "!?");
+		builder.append(Messages.FreeMarkerUtil_2 + mapping.getSrcPath() + Messages.FreeMarkerUtil_3);
 		
 		rawFormatting = encodeProperties.getProperty(ValueMapping.RAW_FORMATING_KEY);
 		if(rawFormatting != null) {
 			builder.append(rawFormatting);			
-			builder.append("}");			
+			builder.append(Messages.FreeMarkerUtil_4);			
 		} else {
 			Class<?> valueType = mapping.getValueType();
 			if(valueType != null) {
@@ -93,19 +93,19 @@ public class FreeMarkerUtil {
 				if(valueType == java.util.Date.class) {
 					String format = encodeProperties.getProperty(DateDecoder.FORMAT);
 					if(format != null) {					
-						builder.append("string('" + format + "')}");								
+						builder.append(Messages.FreeMarkerUtil_5 + format + Messages.FreeMarkerUtil_6);								
 					} else {
-						builder.append("string.medium}");								
+						builder.append(Messages.FreeMarkerUtil_7);								
 					}
 				} else if(Number.class.isAssignableFrom(valueType)) {
-					builder.append("c}");								
+					builder.append(Messages.FreeMarkerUtil_8);								
 				} else if(valueType == Double.TYPE || valueType == Float.TYPE || valueType == Integer.TYPE || valueType == Long.TYPE || valueType == Short.TYPE) {
-					builder.append("c}");								
+					builder.append(Messages.FreeMarkerUtil_9);								
 				} else {
-					builder.append("string}");			
+					builder.append(Messages.FreeMarkerUtil_10);			
 				}
 			} else {
-				builder.append("string}");			
+				builder.append(Messages.FreeMarkerUtil_11);			
 			}
 		}
 		
