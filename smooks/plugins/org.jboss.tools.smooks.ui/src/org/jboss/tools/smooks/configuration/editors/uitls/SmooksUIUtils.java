@@ -3000,13 +3000,58 @@ public class SmooksUIUtils {
 		}
 		return null;
 	}
-
+	
+	public static EStructuralFeature getSelectorNamespaceFeature(EObject model) {
+		if (model == null)
+			return null;
+		if (model instanceof Counter) {
+			return CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT_NS;
+		}
+		if (model instanceof Direct) {
+			return DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT_NS;
+		}
+		if (model instanceof RouteBean) {
+			return EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT_NS;
+		}
+		if (model instanceof OutputStream) {
+			return FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT_NS;
+		}
+		if (model instanceof Freemarker) {
+			return FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT_NS;
+		}
+		if (model instanceof Xsl) {
+			return XslPackage.Literals.XSL__APPLY_ON_ELEMENT_NS;
+		}
+		if (model instanceof GroovyUICreator) {
+			return GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT_NS;
+		}
+		if (model instanceof JmsRouter) {
+			return JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT_NS;
+		}
+		if (model instanceof ResourceConfigType) {
+			return SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR_NAMESPACE;
+		}
+		if (model instanceof SmooksResourceListType) {
+			return SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR_NAMESPACE;
+		}
+		if (model instanceof BeanType) {
+			return Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT_NS;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.WiringType) {
+			return Javabean12Package.Literals.WIRING_TYPE__WIRE_ON_ELEMENT_NS;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.ExpressionType) {
+			return Javabean12Package.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT_NS;
+		}
+		if (model instanceof org.jboss.tools.smooks.model.javabean12.ValueType) {
+			return Javabean12Package.Literals.VALUE_TYPE__DATA_NS;
+		}
+		return null;
+	}
+	
 	public static EStructuralFeature getSelectorFeature(EObject model) {
 		if (model == null)
 			return null;
-		// if (model instanceof BindingsType) {
-		// return JavabeanPackage.Literals.BINDINGS_TYPE__CREATE_ON_ELEMENT;
-		// }
 		if (model instanceof Counter) {
 			return CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT;
 		}
@@ -3039,17 +3084,6 @@ public class SmooksUIUtils {
 		if (model instanceof SmooksResourceListType) {
 			return SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__DEFAULT_SELECTOR;
 		}
-
-		// if (model instanceof WiringType) {
-		// return JavabeanPackage.Literals.WIRING_TYPE__WIRE_ON_ELEMENT;
-		// }
-		// if (model instanceof ExpressionType) {
-		// return JavabeanPackage.Literals.EXPRESSION_TYPE__EXEC_ON_ELEMENT;
-		// }
-		// if (model instanceof ValueType) {
-		// return JavabeanPackage.Literals.VALUE_TYPE__DATA;
-		// }
-
 		if (model instanceof BeanType) {
 			return Javabean12Package.Literals.BEAN_TYPE__CREATE_ON_ELEMENT;
 		}
