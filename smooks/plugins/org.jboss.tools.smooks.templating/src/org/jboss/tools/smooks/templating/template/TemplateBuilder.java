@@ -266,11 +266,11 @@ public abstract class TemplateBuilder {
 		}
 		if (ModelBuilder.NAMESPACE.equals(mappingNode.getNamespaceURI())) {
 			throw new InvalidMappingException(
-					"Unsupported XML target node mapping.  Cannot map to a reserved model node from the '" + ModelBuilder.NAMESPACE + "' namespace."); //$NON-NLS-1$
+					"Unsupported XML target node mapping.  Cannot map to a reserved model node from the '" + ModelBuilder.NAMESPACE + "' namespace."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (ModelBuilder.isHidden(mappingNode)) {
 			throw new InvalidMappingException(
-					"Illegal XML target node mapping for node '" + mappingNode + "'.  This node (or one of it's ancestors) is hidden."); //$NON-NLS-1$
+					"Illegal XML target node mapping for node '" + mappingNode + "'.  This node (or one of it's ancestors) is hidden."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -414,7 +414,7 @@ public abstract class TemplateBuilder {
 		}
 
 		throw new TemplateBuilderException(
-				"Unexpected Exception.  Invalid <smk:list> collection node.  Has no child elements!");
+				"Unexpected Exception.  Invalid <smk:list> collection node.  Has no child elements!"); //$NON-NLS-1$
 	}
 
 	protected void addValueMapping(Node modelNode, ModelNodeResolver modelNodeResolver, String dollarVariable) throws TemplateBuilderException, InvalidMappingException {
@@ -435,7 +435,7 @@ public abstract class TemplateBuilder {
 	}
 
 	public static void writeListStart(StringWriter writer, String srcPath, String collectionItemName) {
-		writer.write("<smk:list smk:srcPath=\"" + srcPath + "\" smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + ModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$
+		writer.write("<smk:list smk:srcPath=\"" + srcPath + "\" smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + ModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	public static void writeListEnd(StringWriter writer) {

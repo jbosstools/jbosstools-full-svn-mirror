@@ -30,7 +30,7 @@ import org.w3c.dom.Node;
  */
 public class ValueMapping extends Mapping {
 	
-	public static final String RAW_FORMATING_KEY = ValueMapping.class.getName() + "#RAW_FORMATING_KEY";
+	public static final String RAW_FORMATING_KEY = ValueMapping.class.getName() + "#RAW_FORMATING_KEY"; //$NON-NLS-1$
 	
 	private Class<?> valueType;
 	private Properties encodeProperties;
