@@ -67,6 +67,8 @@ public class JavaMappingPathSection extends AbstractSmooksPropertySection {
 
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 2;
+		gridLayout.horizontalSpacing = 13;
+		gridLayout.verticalSpacing = 20;
 
 		controlComposite.setLayout(gridLayout);
 
