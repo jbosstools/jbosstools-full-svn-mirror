@@ -12,6 +12,7 @@ import org.hibernate.util.StringHelper;
  *  In here to simplify migration from 3.2 to 3.3 where this class changed.
  *   
  */
+@SuppressWarnings({ "unchecked", "nls" })
 public class Formatter {
 	
 	private static final Set BEGIN_CLAUSES = new HashSet();
