@@ -8,7 +8,128 @@
     </chapterinfo>
 
     <title>Editors</title>
+    <section>
+        <title>DSL Editor</title>
+        <para>A domain-specific language is a set of custom rules,
+            that is created specifically to solve problems in a particular domain 
+            and is not intended to be able to solve problems outside it.
+            A DSL's configuration is stored in plain text. 
+        </para>
+        <para>In Drools this configuration is presented by <property>.dsl</property>
+            files that can be created by <emphasis>right click on the project->New->Other->Drools->Domain Specific Language</emphasis>.</para>
+        <para>DSL Editor is a default editor for <property>.dsl</property> files:</para>
+        <figure>
+            <title>DSL Editor</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1a.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>In the table below all the components of the DSL Editor page are described:</para>
+        <table>
+            <title>DSL Editor Components.</title>   
+            <tgroup cols="2">
+                <colspec colnum="1" align="left" colwidth="1*"/>
+                <colspec colnum="2" align="left" colwidth="3*"/>
+                
+                <thead>
+                    <row>
+                        <entry>Components</entry>									
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Description</entry>
+                        <entry>User's comments on a certain language message mapping</entry>
+                    </row> 
+                    <row>
+                        <entry>Table of language message mappings</entry>
+                        <entry>The table is divided into 4 rows:
+                        <itemizedlist id="rows">
+                            <listitem><para><emphasis>Language Expression</emphasis> :expression you want to use as a rule</para></listitem>
+                            <listitem><para><emphasis>Rule Language Mapping</emphasis> :the implementation of the rules.This means that to this language expression the rule will be compiled 
+                                by the rule engine compiler.</para></listitem>
+                            <listitem><para><emphasis>Object</emphasis> :name of the object</para></listitem>
+                            <listitem><para><emphasis>Scope</emphasis> :indicates where the expression is
+                                targeted: is it for the "condition" part of the rule ,"consequence" part, etc.</para></listitem>
+                        </itemizedlist>
+                         By clicking on some row's header you can sort the lines in the table according to the clicked row.
+                         By double clicking on the line <link linkend="edit_wizard">Edit language mapping Wizard</link> will be open. 
+                        </entry>
+                    </row> 
+                    <row>
+                        <entry>Expression</entry>
+                        <entry>Shows the language expression of the selected table line(language message mapping).</entry>
+                     </row> 
+                    
+                    <row>
+                        <entry>Mapping</entry>
+                        <entry>Shows the rule of language mapping for the selected table line(language message mapping).</entry>
+                    </row> 
+                    <row>
+                        <entry>Object</entry>
+                        <entry>Shows the object for the selected table line(language message mapping)</entry>
+                    </row> 
 
+                    <row>
+                        <entry id="sort">Sort By</entry>
+                        <entry>Using this option you can change the type of lines sorting 
+                            in the table of language message mappings.To do this select from the drop down lins the method
+                            of sorting you want and click <emphasis>Sort</emphasis> button.</entry>
+                    </row>
+                    <row>
+                        <entry>Buttons</entry>
+                        <entry><itemizedlist>
+                            <listitem><para><emphasis>Edit</emphasis> :by clicking the button users can edit
+                                selected in the table of language message mappings lines.For more information look
+                                 <link linkend="edit_wizard">Edit language mapping Wizard</link>section.</para></listitem>
+                            <listitem><para><emphasis>Remove</emphasis> :if you click the button the selected mapping line will be deleted. </para></listitem>
+                            <listitem><para><emphasis>Add</emphasis> :with this button you can add new mapping lines to the table.For more information look 
+                                 <link linkend="add_wizard">Add language mapping Wizard</link>section. </para></listitem>
+                            <listitem><para><emphasis>Sort</emphasis> : please, for more information go <link linkend="sort">here</link></para></listitem>
+                            <listitem><para><emphasis>Copy</emphasis> :with this button you can add new mapping lines to the table
+                                in which all the information will be copied from the selected mapping line.</para></listitem>
+                        </itemizedlist>
+                        </entry>
+                    </row> 
+                </tbody>
+            </tgroup>
+        </table>
+        <section id="edit_wizard">
+            <title>Edit language mapping Wizard</title>
+            <para>This wizard can be opened by double clicking  some line 
+                in the table of language message mappings or by clicking the <emphasis>Edit</emphasis>button.</para>
+            <para>On the picture below you can see all the options,Edit language mapping Wizard allow to change.</para>
+            <para>Their names as well as the meaning of the options are correspond to the <link linkend="rows">rows</link> of the table.</para>
+            <figure>
+                <title>Edit language mapping Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors1c.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>To change the mapping a user should edit the otions he want and finally click <emphasis>Ok</emphasis>.</para>
+        </section>
+        <section id="add_wizard">
+            <title>Add language mapping Wizard</title>
+            <para>This wizard is equal to <link linkend="edit_wizard">Edit language mapping Wizard</link>.
+            It can be opened by clicking the <emphasis>Add</emphasis> button.
+            </para>
+            <para>The only difference is that instead of editing the information you should enter new one.</para>
+            <figure>
+                <title>Add language mapping Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors1b.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+          </section> 
+    </section>
+        
     <section id="textual_rule_editor">
         <title>The Rule Editor</title>
 
