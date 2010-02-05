@@ -13,7 +13,9 @@ package org.jboss.tools.smooks.configuration.editors.javabean;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.jboss.tools.smooks.configuration.editors.AttributeFieldEditPart;
@@ -63,8 +65,18 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 			EObject container = ((EObject) model).eContainer();
 			String classString = getClassString(model);
 			if (classString != null) {
-				return SmooksUIUtils.createJavaPropertySearchFieldEditor(classString, container, parent, toolkit,
+				AttributeFieldEditPart editPart = SmooksUIUtils.createJavaPropertySearchFieldEditor(classString, container, parent, toolkit,
 						propertyDescriptor, getPropertiesSearchButtonName(), (EObject) model);
+				Composite composite = (Composite) editPart.getContentControl();
+				Control[] children = composite.getChildren();
+				for (int i = 0; i < children.length; i++) {
+					Control child = children[i];
+					if(child instanceof Button){
+						child.setEnabled(false);
+					}
+				}
+				editPart.getContentControl().setEnabled(false);
+				return editPart;
 			}
 		}
 		return null;
@@ -80,8 +92,18 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 			EObject container = ((EObject) model).eContainer();
 			String classString = getClassString(model);
 			if (classString != null) {
-				return SmooksUIUtils.createJavaMethodSearchFieldEditor(classString, container, parent, toolkit,
+				AttributeFieldEditPart editPart = SmooksUIUtils.createJavaMethodSearchFieldEditor(classString, container, parent, toolkit,
 						propertyDescriptor, getMethodsSearchButtonName(), (EObject) model);
+				Composite composite = (Composite) editPart.getContentControl();
+				Control[] children = composite.getChildren();
+				for (int i = 0; i < children.length; i++) {
+					Control child = children[i];
+					if(child instanceof Button){
+						child.setEnabled(false);
+					}
+				}
+				editPart.getContentControl().setEnabled(false);
+				return editPart;
 			}
 		}
 		return null;
