@@ -16,16 +16,37 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5770">JBIDE-5770</ulink>: The EL code completion icon has been updated to use the <application>JBoss Weld</application> icon.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5355">JBIDE-5355</ulink>: A Contexts and Dependency Injection Project Facet has been added to <application>JBoss Developer Studio</application>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5276">JBIDE-5276</ulink>: The <guimenuitem>Add CDI Support</guimenuitem> and <guimenuitem>Remove CDI Support</guimenuitem> items have been added to the Project menu. 
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
 		<formalpara>
-			<title>ESB Editor</title>
+			<title>ESB</title>
 			<para>
 				<itemizedlist>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5653">JBIDE-5653</ulink>: 
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5653">JBIDE-5653</ulink>: The <guilabel>ESB Content Based Router </guilabel> dialog box has been modified so that the <guilabel>CBR Alias</guilabel> field is now mondatory, allowing the value of it to determine what other fields are available. The <guilabel>Rule Set</guilabel> field is now not required when a <guilabel>CBR Alias</guilabel> of Regex or XPath is provided, since with these alias the rules can be specified inline and the <guilabel>Rule Language</guilabel> field is now set to apply only when the <guilabel>CBR Alias</guilabel> is Drools. The <guilabel>Rules Reload</guilabel> field will only apply when a <guilabel>Rule Set</guilabel> has been specified.
+						</para>
+						<para>
+							The table <guilabel>Route List</guilabel> found in the <guilabel>JBoss ESB Editor</guilabel> now lists the <emphasis>expression</emphasis> since this is a common undertaking by users.
+						</para>
+						<para>
+							In the <guilabel> Add Route To</guilabel> dialog box, the <guilabel>Service Category</guilabel> field has been made mandatory. Other changes to this dialog box include the <guilabel>Desitination name</guilabel> only being required if the previous CBR action contained a <guilabel>Rule Set</guilabel> and if the CBR action did not contain a <guilabel>Rule Set</guilabel>, an <guilabel>Expression</guilabel> field is included.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5627">JBIDE-5627</ulink>: For this release of the <application>JBoss Developer Studio</application> variations of the <guilabel>Content Based Router</guilabel> menu have been added to the ESB editor for Drools, Drools XPath, Generic, XPath and Regex.
 						</para>
 					</listitem>
 					<listitem>
@@ -36,6 +57,21 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5547">JBIDE-5547</ulink>: In the ESB Configuration Editor, when selecting a FTP Listener in read-only mode new functionality has been added to allow a user to configure the properties: <property>maxNodes</property>, <property>timeToLiveSeconds</property> and <property>maxAgeSeconds</property> through the new child object <property>Cache</property>. In addition the following properties have been added to allow a user to select their own values for the: <property>Class</property>, <property>Config File</property> and <property>Cache Listener</property> available through the new child object <property>Remote Filesystem Strategy</property>. These new configurable properties allow a user increased control over the execution of the FTP Listener.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5489">JBIDE-5489</ulink>: For the <guilabel>BPMProcessor</guilabel> within the ESB Editor, the <property>Command</property> property has been modified to include possible values of <emphasis>NewProcessInstanceCommand</emphasis>, <emphasis>StartProcessCommand</emphasis> and <emphasis>CancelProcessInstanceCommand</emphasis> in a drop-down box.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5486">JBIDE-5486</ulink>: When a user would try to open an editor for a property that didn't exist nothing would occur. With this update, a <guilabel>New File</guilabel> wizard opens to guide the user through the creation of the property they were attempting to open. Once this is completed, the ESB Editor fields are then populated with the new file name and path for the property.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5427">JBIDE-5427</ulink>: In the ESB Editor, the items that displayed when right clicking and going to <menuchoice><guimenuitem>Provider</guimenuitem><guimenuitem>New</guimenuitem></menuchoice> were presented in a different order to those of the <menuchoice><guimenuitem>Listner</guimenuitem><guimenuitem>New</guimenuitem></menuchoice> list. To ensure consistency the <guimenuitem>Provider</guimenuitem> list of items has been reordered to match the <guimenuitem>Listner</guimenuitem> menu.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -57,7 +93,34 @@
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5499">JBIDE-5499</ulink>: 
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5499">JBIDE-5499</ulink>: Refactoring support has been added to <guilabel>Hibernate Code Generation Configurations</guilabel>. 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5411">JBIDE-5411</ulink>: The <guilabel>New Hibernate XML Mapping file</guilabel> wizard used to show all available packages. This update ensures that only packages containing java classes are shown.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5408">JBIDE-5408</ulink>: Three issues are fixed:
+							<itemizedlist>
+								<listitem>
+									<para>
+										The new Hibernate XML Mapping file (<filename>hbm.xml</filename>) would rewrite all <filename>hbm.xml</filename> files without warning. To correct this the entire result is written into the systems' temporary directory and then the merge of results is conducted.
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										After the merge of results is conducted, clicking the <guibutton>Finish without Preview</guibutton> button should change the page, however this did not work. The <guibutton>Finish without Preview</guibutton> now works as expected.
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										After the merge, following the button clicks <guibutton>GoTo</guibutton>, <guibutton>Next</guibutton>, <guibutton>Back</guibutton> and then <guibutton>Finish</guibutton> would not work correctly. This method of steps now functions as users would expect.
+									</para>
+								</listitem>
+							</itemizedlist>
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -77,6 +140,21 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5660">JBIDE-5660</ulink>: When setting the location of an <property>&lt;error-page&gt;</property> within <filename>web.xml</filename>, the location would not be recognized if it included a query string. For example the location <filename>views/error/error.xhtml</filename> would be valid, whereas the location <filename>/views/error/error.xhtml?statusCode=403</filename> would not be valid. This has been corrected by adding a test for a query string into the <filename>CheckResource.java</filename> file, allowing for locations to be specified that include a query string.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5471">JBIDE-5471</ulink>: <filename>web-facesconfig_2_0.xsd</filename> support has been added to the <guilabel>JavaServer Faces Configuration</guilabel> editor. This file provides the XML Schema for the JavaServer Faces Application Configuration File Version 2.0.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5381">JBIDE-5381</ulink>: Content Assist has been added for use with the elements defined using the default namespace.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5277">JBIDE-5277</ulink>: The options to Add and Remove JSF support have been added to the project menu.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -93,12 +171,41 @@
 			</para>
 		</formalpara>
 		<formalpara>
+			<title>Seam</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5275">JBIDE-5275</ulink>: The <guimenuitem>Add Seam Support</guimenuitem> and <guimenuitem>Remove Seam Support</guimenuitem> items have been added to the Project menu. 
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>Struts</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5278">JBIDE-5278</ulink>: The options to Add and Remove Struts support have been added to the project menu.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
 			<title>XML Structured Editor</title>
 			<para>
 				<itemizedlist>
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5521">JBIDE-5521</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5426">JBIDE-5426</ulink>: The Servlet Mapping Editor <guilabel>Servlet-Name</guilabel> field has been improved with a drop-down menu to fill it in.
 						</para>
 					</listitem>
 				</itemizedlist>
