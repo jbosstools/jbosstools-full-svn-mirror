@@ -83,9 +83,6 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		setDescription(VpeUIMessages.IMPORT_UNKNOWN_TAGS_PAGE_DESCRIPTION);
 		setImageDescriptor(ReferenceWizardPage.getImageDescriptor());
 	}
-
-	
-	
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -258,7 +255,7 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 	
 	public String getValueAt(int row, int column) {
 		String result = "List is empty"; //$NON-NLS-1$
-		if (null != tagsList) {
+		if ((null != tagsList) && ((row >= 0) && (tagsList.size() > 0) && (row < tagsList.size()))) {
 			VpeAnyData tagItem = (VpeAnyData)tagsList.get(row);
 			switch(column){
 			case 0:
@@ -301,7 +298,6 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		}
 		return isPageComplete;
 	}
-
 
 	 public boolean finish() {
 		 /*

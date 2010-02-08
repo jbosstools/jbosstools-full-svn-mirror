@@ -35,6 +35,7 @@ Export-Package:
  org.jboss.tools.vpe.editor.toolbar.format.css,
  org.jboss.tools.vpe.editor.toolbar.format.handler,
  org.jboss.tools.vpe.editor.util,
+ org.jboss.tools.vpe.editor.wizards,
  org.jboss.tools.vpe.editor.xpl,
  org.jboss.tools.vpe.messages,
  org.jboss.tools.vpe.selbar

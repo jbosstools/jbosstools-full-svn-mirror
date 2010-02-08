@@ -248,7 +248,7 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 	
 	public String getValueAt(int row, int column) {
 		String result = "List is empty"; //$NON-NLS-1$
-		if (null != tagsList) {
+		if ((null != tagsList) && ((row >= 0) && (tagsList.size() > 0) && (row < tagsList.size()))) {
 			VpeAnyData tagItem = (VpeAnyData)tagsList.get(row);
 			switch(column){
 			case 0:
