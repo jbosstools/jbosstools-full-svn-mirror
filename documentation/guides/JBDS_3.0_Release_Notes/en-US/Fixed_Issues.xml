@@ -74,6 +74,16 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5427">JBIDE-5427</ulink>: In the ESB Editor, the items that displayed when right clicking and going to <menuchoice><guimenuitem>Provider</guimenuitem><guimenuitem>New</guimenuitem></menuchoice> were presented in a different order to those of the <menuchoice><guimenuitem>Listner</guimenuitem><guimenuitem>New</guimenuitem></menuchoice> list. To ensure consistency the <guimenuitem>Provider</guimenuitem> list of items has been reordered to match the <guimenuitem>Listner</guimenuitem> menu.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5229">JBIDE-5229</ulink>: ESB 4.7 that is contained within <application>JBoss SOA Platform 5.0</application> is now offically supported in this version of the <application>JBoss Developer Studio</application>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5191">JBIDE-5191</ulink>: The Smooks, Drools, jPDL, XSLT and Groovy editors have been linked to the ESB Editor, providing an improved user experience. <guibutton>Browse</guibutton> buttons that allow for file association and use have been added to the <property>Smooks Transformer</property>, <property>GroovyActionProcessor</property>, <property>Rule Set</property> and <property>Rule Language</property> properties.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -123,6 +133,11 @@
 							</itemizedlist>
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5222">JBIDE-5222</ulink>: A new feature as been added that allows for support of <guilabel>filter configurations in closed porjects</guilabel> for console configuration. This option is available through <menuchoice><guimenuitem>Preferences</guimenuitem><guimenuitem>Run/Debug</guimenuitem><guimenuitem>Launching</guimenuitem><guimenuitem>Launch Configurations</guimenuitem></menuchoice>.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -155,6 +170,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5277">JBIDE-5277</ulink>: The options to Add and Remove JSF support have been added to the project menu.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5670">JBIDE-5237</ulink>: CSS Class Hyperlink for the <property>class</property> attribute of HTML tags would not search through CSS loaded using JSF tags (for example: &lt;a:loadStyle /&gt;). This has now been fixed so that the searching of CSS classes returns the correct user expected results.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -179,6 +199,50 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5275">JBIDE-5275</ulink>: The <guimenuitem>Add Seam Support</guimenuitem> and <guimenuitem>Remove Seam Support</guimenuitem> items have been added to the Project menu. 
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5221">JBIDE-5221</ulink>: The <guilabel>JBoss Server View</guilabel> has now been replaced with the <guilabel>Server View</guilabel> in the Seam perspective. This has occured out of the <guilabel>JBoss Server View</guilabel> being depricated.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5192">JBIDE-5192</ulink>: The name of the editor when using the <guilabel>Diagram Viewer</guilabel> was a concatenation of the names of the diagram entities, leading to a long name in some cases. This issue has been corrected by modifying the <filename>OrmDiagram.java</filename> and <filename>DiagramViewer.java</filename> files to display a name from the following three options (based on the number of entities):
+							<itemizedlist>
+								<listitem>
+									<para>
+										Console name: Entity name 
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										Console name: First Entity name and Second Entity name 
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										Console name: First Entity name and &lt;number of other entities&gt; others
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5170">JBIDE-5170</ulink>: When changing, adding or removing a Seam runtime from within <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>Seam</guimenuitem></menuchoice>, Seam projects would not be built or validated. The behavior has been changed to build and validate Seam projects upon changes in the <guimenuitem>Preferences</guimenuitem> section to ensure correct functioning of the project. The <filename>SeamRuntimeManager.java</filename> file was updated to correct this.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>Smooks</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5275">JBIDE-5259</ulink>: The Smooks configuration has received a test facility through the modification of the <guibutton>Run</guibutton> button to output a java result to the <guilabel>Console</guilabel>. This allows a user to test Smooks projects in a simplified way.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -190,6 +254,60 @@
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5278">JBIDE-5278</ulink>: The options to Add and Remove Struts support have been added to the project menu.
 						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>Visual Page Editor</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5184">JBIDE-5184</ulink>: A memory leak existed in the Visual Page Editor. To fix this leak, the following plug-ins have been modified:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<filename>org.jboss.tools.vpe</filename>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<filename>org.jboss.tools.vpe.xulrunner</filename>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<filename>org.jboss.tools.jst.jsp</filename>
+								</para>
+							</listitem>
+						</itemizedlist>
+						<para>
+							The issues that caused the memory leak were:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>JSPMultiPageEditorSite</emphasis>: The constructor created the <classname>serviceLocator</classname> that wasn't disposed of after use. 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The <methodname>XulRunnerBrowser.dispose()</methodname> method would remove the <classname>progressListener</classname>, however this would only be done after all SWT objects and controls were already disposed. This meant the method had no effect. The dispose method is now called before the SWT objects and controls are disposed.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The <methodname>MozillaEditor.getEditor()</methodname> madethe Mozilla window editable using <methodname>nsIEditingSession.setupEditorOnWindow()</methodname>. To counteract this the objects created are now removed by using <methodname>nsIEditingSession.tearDownEditorOnWindow()</methodname>. 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The <methodname>createPartControl()</methodname> method in the <classname>MozillaEditor</classname> and <classname>MozillaPreview</classname> classes create <classname>XullRunnerEditor</classname> as an inner class. The issue was that the <classname>XullRunnerEditor</classname> class retained a reference to <classname>MozillaEditor(MozillaPreview)</classname> that caused it not to be released and instead retain references to WST and EMF classes. This has now been corrected so that classname>MozillaEditor(MozillaPreview)</classname> is now released after use and referecnes are not retained.
+								</para>
+							</listitem>
+						</itemizedlist>
 					</listitem>
 				</itemizedlist>
 			</para>
@@ -223,6 +341,16 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5690">JBIDE-5690</ulink>: The <guibutton>Full-Publish</guibutton> hotkey would only accept the first module and re-deploy it to the first server the module is deployed on. For the user this meant that if the module was already deployed on several servers, using <guibutton>Full-Publish</guibutton> would only re-deploy it to the first server returned in the list. To solve this issue a user interface has been added for the <guibutton>Full-Publish</guibutton> hotkey that allows for the selection of the server to re-deploy to. During the implementation of this fix, the package has been renamed to XPL.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5267</ulink>: The <application>JBoss Enterprise Application Platform</application> server would start correctly, however the <application>JBoss Developer Studio</application> would not acknowledge that it had started. To counteract this the <filename>JMXPoller.java</filename> timeout behaviour has been modified to always return that the server succeeded in starting instead of ignoring the timeout. This fix ensures that a user is not informed that the server did not start correctly when it did.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5153">JBIDE-5153</ulink>: A <guilabel>JavaMain</guilabel> tab has been added to the tab group to allow for customization of the main class of the server. The changes to the main class are verified to persist by server startup checks.
 						</para>
 					</listitem>
 				</itemizedlist>
