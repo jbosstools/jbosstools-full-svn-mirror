@@ -15,19 +15,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.sql.Driver;
 import java.security.PrivilegedAction;
-import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -49,8 +45,6 @@ import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.eclipse.console.test.HibernateConsoleTestPlugin;
 import org.hibernate.eclipse.console.test.utils.GarbageCollectionUtil;
 import org.hibernate.util.ReflectHelper;
-
-import com.mysql.jdbc.Messages;
 
 //import sun.reflect.FieldAccessor;
 
