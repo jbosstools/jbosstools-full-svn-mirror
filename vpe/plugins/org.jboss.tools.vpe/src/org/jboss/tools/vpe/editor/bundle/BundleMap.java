@@ -97,7 +97,11 @@ public class BundleMap {
 		}
 		IProject project = ((IFileEditorInput) editor.getEditorInput())
 				.getFile().getProject();
-		XModel model = EclipseResourceUtil.getModelNature(project).getModel();
+		IModelNature modelNature = EclipseResourceUtil.getModelNature(project);
+		if (modelNature == null) {
+			return;
+		}
+		XModel model = modelNature.getModel();
 		List<Object> l = WebPromptingProvider.getInstance().getList(model,
 				WebPromptingProvider.JSF_REGISTERED_BUNDLES, null, null);
 		if (l == null || l.size() < 2 || !(l.get(1) instanceof Map)) {
