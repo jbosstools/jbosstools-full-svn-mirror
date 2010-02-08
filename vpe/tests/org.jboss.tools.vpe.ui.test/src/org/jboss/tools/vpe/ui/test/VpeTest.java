@@ -35,7 +35,9 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.ui.internal.reconcile.StructuredRegionProcessor;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.jboss.tools.common.model.util.ClassLoaderUtil;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
@@ -64,12 +66,13 @@ public class VpeTest extends TestCase implements ILogListener {
 
     /** check warning log. */
     private boolean checkWarning = false;
-
+  
     // FIX for JBIDE-1628
     static {
         ClassLoaderUtil.init();
         // wait for initialization
         TestUtil.delay(3000);
+        JspEditorPlugin.getDefault().getPreferenceStore().setValue(IVpePreferencesPage.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE, false);
     }
 
     /**
@@ -93,7 +96,6 @@ public class VpeTest extends TestCase implements ILogListener {
     @Override
 	protected void setUp() throws Exception {
         super.setUp();
-
         Platform.addLogListener(this);
         // String jbossPath = System.getProperty(
         // "jbosstools.test.jboss.home.4.2", "C:\\java\\jboss-4.2.2.GA");
