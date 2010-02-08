@@ -526,6 +526,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 									// refresh job in time, so we just ignore
 									// this exception
 								}
+							} catch(ClassCastException ex) {
+								VpePlugin.getDefault().reportProblem(ex);
 							}
 							getChangeEvents().remove(eventBean);
 						}
@@ -652,7 +654,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				 * comment node adding, it is already updated in {@code
 				 * INodeNotifier.REMOVE} case.
 				 */
-				if (Node.COMMENT_NODE != ((Node) newValue).getNodeType()) {
+				if (newValue instanceof Node && Node.COMMENT_NODE != ((Node) newValue).getNodeType()) {
 					/*
 					 * we should remove all parent nodes from vpe cash
 					 */
