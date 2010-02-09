@@ -84,6 +84,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5191">JBIDE-5191</ulink>: The Smooks, Drools, jPDL, XSLT and Groovy editors have been linked to the ESB Editor, providing an improved user experience. <guibutton>Browse</guibutton> buttons that allow for file association and use have been added to the <property>Smooks Transformer</property>, <property>GroovyActionProcessor</property>, <property>Rule Set</property> and <property>Rule Language</property> properties.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5108">JBIDE-5108</ulink>: The JBoss Runtime Manager was setup to search for ESB Runtime files from a specified location reguardless of how it was installed. This caused issue when the ESB Runtime was installed as a user defined runtime. The issue has been rectified by adding a <guilabel>Configuration</guilabel> field to the <guilabel>Preference</guilabel> page.  If the user sets the <guilabel>Configuration</guilabel> field to the home location of the <application>JBoss Enterprise Application Platform</application> or <application>JBoss SOA Platform</application>, there configuration combination will list all available configurations. If the user selects a standalone ESB Runtime location, the configuration combination will be empty and the user should ignore the field. The ESB runtime classpath container now gathers configuration information from the selected server runtime and then selects JARs accordingly or the  standalone ESB Runtime.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -138,6 +143,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5222">JBIDE-5222</ulink>: A new feature as been added that allows for support of <guilabel>filter configurations in closed porjects</guilabel> for console configuration. This option is available through <menuchoice><guimenuitem>Preferences</guimenuitem><guimenuitem>Run/Debug</guimenuitem><guimenuitem>Launching</guimenuitem><guimenuitem>Launch Configurations</guimenuitem></menuchoice>.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5124">JBIDE-5124</ulink>: In the Hibernate Diagram Viewer new functionality has been added that allows a user to choose between two different connection routers: Manhattan connection router for small diagrams and Fan connection router for larger diagrams.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -173,6 +183,21 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5670">JBIDE-5237</ulink>: CSS Class Hyperlink for the <property>class</property> attribute of HTML tags would not search through CSS loaded using JSF tags (for example: &lt;a:loadStyle /&gt;). This has now been fixed so that the searching of CSS classes returns the correct user expected results.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5099">JBIDE-5099</ulink>: OpenOn support has been added for custom JSF 2.0 components.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5097">JBIDE-5097</ulink>: Content Assist did not support multiple namespaces with the same Uniform Resource Identifier (URI).This issue has been fixed by modifying <classname>XmlContextImpl</classname> class within the <filename>XmlContextImpl.java</filename> file from: <code>nameSpaces.get(region).put(nameSpace.getURI(), nameSpace);</code> to <code>nameSpaces.get(region).put(nameSpace.getPrefix(), nameSpace);</code>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5089">JBIDE-5089</ulink>: JSF Expression Language (EL) validation has been added for message bundles. This improves the performance of the <classname>PageContextFactory</classname>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -243,6 +268,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5275">JBIDE-5259</ulink>: The Smooks configuration has received a test facility through the modification of the <guibutton>Run</guibutton> button to output a java result to the <guilabel>Console</guilabel>. This allows a user to test Smooks projects in a simplified way.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5088">JBIDE-5088</ulink>: 
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -309,6 +339,16 @@
 							</listitem>
 						</itemizedlist>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5100">JBIDE-5100</ulink>: Support for JSF 2.0 attributes have been added to the Visual Page Editor.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5091">JBIDE-5091</ulink>: Support for JSF 2.0 Composition components that come packaged into the Web Application Root has been added to the Visual Page Editor.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -351,6 +391,16 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5153">JBIDE-5153</ulink>: A <guilabel>JavaMain</guilabel> tab has been added to the tab group to allow for customization of the main class of the server. The changes to the main class are verified to persist by server startup checks.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5122">JBIDE-5122</ulink>: <guilabel>JBoss Servers View</guilabel> has been removed with this release. All the functionality provided by this view can be found in the <guilabel>Servers View</guilabel>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5041">JBIDE-5041</ulink>: The <keycap>menu</keycap> key on the keyboard would not work in the <guilabel>Web Projects</guilabel> view, <guilabel>Seam Components</guilabel> view or JBoss Tools XML Editor. The functioning of this key has now been corrected so it behaves as a user would expect.
 						</para>
 					</listitem>
 				</itemizedlist>
