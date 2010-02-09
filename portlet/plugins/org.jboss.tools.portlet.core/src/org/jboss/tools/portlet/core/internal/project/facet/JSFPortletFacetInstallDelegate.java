@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -137,66 +138,50 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 			IProgressMonitor monitor, IDataModel config) {
 
 		String facesConfigString = getFacesConfigFile(project, monitor);
+		if (facesConfigString == null || facesConfigString.trim().length() <= 0) {
+			return;
+		}
+		StringTokenizer tokenizer = new StringTokenizer(facesConfigString, ","); //$NON-NLS-1$
+		List<String> facesConfigs = new ArrayList<String>();
+		while (tokenizer.hasMoreTokens()) {
+			facesConfigs.add(tokenizer.nextToken().trim());
+		}
+		FacesState state = checkState(project, facesConfigs);
+		if (state.applicationExists && state.viewHandlerExists && state.stateManagerExists) {
+			return;
+		}
+		if (!state.applicationExists) {
+			FacesConfigArtifactEdit facesConfigEdit = null;
+			try {
+				facesConfigEdit = FacesConfigArtifactEdit
+						.getFacesConfigArtifactEditForWrite(project,
+								facesConfigs.get(0));
+				FacesConfigType facesConfig = facesConfigEdit.getFacesConfig();
+				EList applications = facesConfig.getApplication();
+				ApplicationType application = FacesConfigFactory.eINSTANCE.createApplicationType();
+				state.application = application;
+				state.facesConfigString = facesConfigs.get(0);
+				facesConfig.getApplication().add(application);
+				facesConfigEdit.save(monitor);
+			} finally {
+				if (facesConfigEdit != null) {
+					facesConfigEdit.dispose();
+				}
+			}
+		}
 		FacesConfigArtifactEdit facesConfigEdit = null;
 		try {
-			facesConfigEdit = FacesConfigArtifactEdit
-					.getFacesConfigArtifactEditForWrite(project,
-							facesConfigString);
+			facesConfigEdit = FacesConfigArtifactEdit.getFacesConfigArtifactEditForWrite(project,state.facesConfigString);
 			FacesConfigType facesConfig = facesConfigEdit.getFacesConfig();
-			EList applications = facesConfig.getApplication();
-			ApplicationType applicationType = null;
-			boolean applicationExists = false;
-			if (applications.size() <= 0) {
-				applicationType = FacesConfigFactory.eINSTANCE
-						.createApplicationType();
-			} else {
-				applicationType = (ApplicationType) applications.get(0);
-				applicationExists = true;
-			}
-			boolean viewHandlerExists = false;
-			for (Iterator iterator = applications.iterator(); iterator
-					.hasNext();) {
-				ApplicationType application = (ApplicationType) iterator.next();
-				EList viewHandlers = applicationType.getViewHandler();
-				for (Iterator iterator2 = viewHandlers.iterator(); iterator2
-						.hasNext();) {
-					ViewHandlerType viewHandler = (ViewHandlerType) iterator2
-							.next();
-					if (ORG_JBOSS_PORTLET_VIEW_HANDLER.equals(viewHandler
-							.getTextContent())) {
-						viewHandlerExists = true;
-					}
-				}
-			}
-			if (!viewHandlerExists) {
-				ViewHandlerType viewHandler = FacesConfigFactory.eINSTANCE
-						.createViewHandlerType();
+			if (!state.viewHandlerExists) {
+				ViewHandlerType viewHandler = FacesConfigFactory.eINSTANCE.createViewHandlerType();
 				viewHandler.setTextContent(ORG_JBOSS_PORTLET_VIEW_HANDLER);
-				applicationType.getViewHandler().add(viewHandler);
+				state.application.getViewHandler().add(viewHandler);
 			}
-			boolean stateManagerExists = false;
-			for (Iterator iterator = applications.iterator(); iterator
-					.hasNext();) {
-				ApplicationType application = (ApplicationType) iterator.next();
-				EList stateManagers = applicationType.getStateManager();
-				for (Iterator iterator2 = stateManagers.iterator(); iterator2
-						.hasNext();) {
-					StateManagerType stateManager = (StateManagerType) iterator2
-							.next();
-					if (ORG_JBOSS_PORTLET_STATE_MANAGER.equals(stateManager
-							.getTextContent())) {
-						stateManagerExists = true;
-					}
-				}
-			}
-			if (!stateManagerExists) {
-				StateManagerType stateManager = FacesConfigFactory.eINSTANCE
-						.createStateManagerType();
+			if (!state.stateManagerExists) {
+				StateManagerType stateManager = FacesConfigFactory.eINSTANCE.createStateManagerType();
 				stateManager.setTextContent(ORG_JBOSS_PORTLET_STATE_MANAGER);
-				applicationType.getStateManager().add(stateManager);
-			}
-			if (!applicationExists) {
-				facesConfig.getApplication().add(applicationType);
+				state.application.getStateManager().add(stateManager);
 			}
 			facesConfigEdit.save(monitor);
 
@@ -207,6 +192,53 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 		}
 	}
 
+	private FacesState checkState(IProject project, List<String> facesConfigs) {
+		FacesState facesState = new FacesState();
+		for (String facesConfigString : facesConfigs) {
+			FacesConfigArtifactEdit facesConfigEdit = null;
+			try {
+				facesConfigEdit = FacesConfigArtifactEdit.getFacesConfigArtifactEditForRead(project,facesConfigString);
+				FacesConfigType facesConfig = facesConfigEdit.getFacesConfig();
+				EList applications = facesConfig.getApplication();
+				if (applications.size() <= 0) {
+					continue;
+				} else {
+					facesState.applicationExists = true;
+					facesState.application = (ApplicationType) applications.get(0);
+					facesState.facesConfigString = facesConfigString;
+				}
+				for (Iterator iterator = applications.iterator(); iterator.hasNext();) {
+					ApplicationType application = (ApplicationType) iterator.next();
+					EList viewHandlers = application.getViewHandler();
+					for (Iterator iterator2 = viewHandlers.iterator(); iterator2.hasNext();) {
+						ViewHandlerType viewHandler = (ViewHandlerType) iterator2.next();
+						if (ORG_JBOSS_PORTLET_VIEW_HANDLER.equals(viewHandler.getTextContent())) {
+							facesState.viewHandlerExists = true;
+						}
+					}	
+				}
+				for (Iterator iterator = applications.iterator(); iterator.hasNext();) {
+					ApplicationType application = (ApplicationType) iterator.next();
+					EList stateManagers = application.getStateManager();
+					for (Iterator iterator2 = stateManagers.iterator(); iterator2.hasNext();) {
+						StateManagerType stateManager = (StateManagerType) iterator2.next();
+						if (ORG_JBOSS_PORTLET_STATE_MANAGER.equals(stateManager.getTextContent())) {
+							facesState.stateManagerExists = true;
+						}
+					}
+				}
+				if (facesState.applicationExists && facesState.viewHandlerExists && facesState.stateManagerExists) {
+					break;
+				}
+			} finally {
+				if (facesConfigEdit != null) {
+					facesConfigEdit.dispose();
+				}
+			}
+		}
+		return facesState;
+	}
+	
 	private String getFacesConfigFile(IProject project, IProgressMonitor monitor) {
 		final IModelProvider provider = PortletCoreActivator
 				.getModelProvider(project);
@@ -460,5 +492,13 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 				&& ((WebApp) webApp).getVersion() == WebAppVersionType._25_LITERAL)
 			return true;
 		return false;
+	}
+	
+	private class FacesState {
+		private boolean applicationExists = false;
+		private boolean viewHandlerExists = false;
+		private boolean stateManagerExists = false;
+		private ApplicationType application = null;
+		private String facesConfigString = null;
 	}
 }

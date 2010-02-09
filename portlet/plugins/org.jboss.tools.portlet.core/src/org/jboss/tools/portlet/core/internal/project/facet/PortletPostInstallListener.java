@@ -1,7 +1,6 @@
 package org.jboss.tools.portlet.core.internal.project.facet;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProvid
 
 public class PortletPostInstallListener implements IFacetedProjectListener {
 
-	private static final String JSFPORTLET_LIBRARY_PROVIDER = "jsfportlet-library-provider";
+	private static final String JSFPORTLET_LIBRARY_PROVIDER = "jsfportlet-library-provider"; //$NON-NLS-1$
 	private static final String JSFPORTLETBRIDGE_LIBRARY_PROVIDER = "jsfportletbridge-library-provider"; //$NON-NLS-1$
 	private static final IProjectFacet seamFacet = ProjectFacetsManager.getProjectFacet("jst.seam"); //$NON-NLS-1$
 	private static final IOverwriteQuery OVERWRITE_NONE_QUERY = new IOverwriteQuery()
