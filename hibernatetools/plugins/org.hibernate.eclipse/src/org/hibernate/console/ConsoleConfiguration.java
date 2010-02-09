@@ -28,11 +28,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -639,6 +640,34 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 
 	public ConsoleConfigurationPreferences getPreferences() {
 		return prefs;
+	}
+	
+	public File getConfigXMLFile() {
+		File configXMLFile = null;
+		if (prefs != null) {
+			configXMLFile = prefs.getConfigXMLFile();
+		}
+		if (configXMLFile == null && classLoader != null) {
+			URL url = classLoader.findResource("hibernate.cfg.xml"); //$NON-NLS-1$
+			URI uri = null;
+			try {
+				uri = url.toURI();
+				configXMLFile = new File(uri);
+			} catch (URISyntaxException e) {
+				// ignore
+			}
+		}
+		if (configXMLFile == null) {
+			URL url = Environment.class.getClassLoader().getResource("hibernate.cfg.xml"); //$NON-NLS-1$
+			URI uri = null;
+			try {
+				uri = url.toURI();
+				configXMLFile = new File(uri);
+			} catch (URISyntaxException e) {
+				// ignore
+			}
+		}
+		return configXMLFile;
 	}
 
 	public String toString() {
