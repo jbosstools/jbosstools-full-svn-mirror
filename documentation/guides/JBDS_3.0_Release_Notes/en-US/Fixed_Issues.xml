@@ -148,6 +148,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5124">JBIDE-5124</ulink>: In the Hibernate Diagram Viewer new functionality has been added that allows a user to choose between two different connection routers: Manhattan connection router for small diagrams and Fan connection router for larger diagrams.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5031">JBIDE-5031</ulink>: To close a database connection a user would have to close the <application>JBoss Developer Studio</application> and then restart the application to continue work without the connection. The database connection can now be closed from within the <application>JBoss Developer Studio</application> by choosing the <guimenuitem>Close Configuration</guimenuitem> menu item from the right-click menu in <guilabel>Hibernate Configurations</guilabel> tab.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -200,6 +205,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5089">JBIDE-5089</ulink>: JSF Expression Language (EL) validation has been added for message bundles. This improves the performance of the <classname>PageContextFactory</classname>.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5015">JBIDE-5015</ulink>: Support for JSF 2.0 composition components has been added in this update. 
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -210,6 +220,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5743</ulink>: Content assistance in coding did not show anything for the tag <property>&lt;rich:menuItem ... icon="|" /&gt;</property>. The content assistance has been corrected by adding the <property>icon</property> attribute to the <filename>RichFaces.xml</filename> tag library.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5025">JBIDE-5025</ulink>: The RichFaces libraries have been updated to version 3.3.2.SR1.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -256,6 +271,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5170">JBIDE-5170</ulink>: When changing, adding or removing a Seam runtime from within <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>Seam</guimenuitem></menuchoice>, Seam projects would not be built or validated. The behavior has been changed to build and validate Seam projects upon changes in the <guimenuitem>Preferences</guimenuitem> section to ensure correct functioning of the project. The <filename>SeamRuntimeManager.java</filename> file was updated to correct this.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5012">JBIDE-5012</ulink>: The Booking and DVDStore Seam examples have been updated for Seam 2.2 within the <application>JBoss Enterprise Application Platform</application>. 
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -270,7 +290,12 @@
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5088">JBIDE-5088</ulink>: 
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5088">JBIDE-5088</ulink>: When opening an existing Smooks configuration file it wouldn't contain any process information. To correct this an input task is automatically created and the Smooks configuration file is analyzed to add any missing task types if necessary. During the course of this update a <exceptionname>NullPointerException</exceptionname> was also fixed.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5086">JBIDE-5086</ulink>: A default layout is added in the Java-Mapping viewer. This allows for the layout of the information in the Smooks editor to be rearranged into a predefined default layout.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -334,7 +359,7 @@
 							</listitem>
 							<listitem>
 								<para>
-									The <methodname>createPartControl()</methodname> method in the <classname>MozillaEditor</classname> and <classname>MozillaPreview</classname> classes create <classname>XullRunnerEditor</classname> as an inner class. The issue was that the <classname>XullRunnerEditor</classname> class retained a reference to <classname>MozillaEditor(MozillaPreview)</classname> that caused it not to be released and instead retain references to WST and EMF classes. This has now been corrected so that classname>MozillaEditor(MozillaPreview)</classname> is now released after use and referecnes are not retained.
+									The <methodname>createPartControl()</methodname> method in the <classname>MozillaEditor</classname> and <classname>MozillaPreview</classname> classes create <classname>XullRunnerEditor</classname> as an inner class. The issue was that the <classname>XullRunnerEditor</classname> class retained a reference to <classname>MozillaEditor(MozillaPreview)</classname> that caused it not to be released and instead retain references to WST and EMF classes. This has now been corrected so that <classname>MozillaEditor(MozillaPreview)</classname> is now released after use and referecnes are not retained.
 								</para>
 							</listitem>
 						</itemizedlist>
@@ -347,6 +372,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5091">JBIDE-5091</ulink>: Support for JSF 2.0 Composition components that come packaged into the Web Application Root has been added to the Visual Page Editor.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5065">JBIDE-5065</ulink>: The icons in the Visual Page Editor have been redesigned for improved aesthetic appearance.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -400,7 +430,39 @@
 					</listitem>
 					<listitem>
 						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5048">JBIDE-5048</ulink>: SSH deployment has been added to the <application>JBoss Developer Studio</application> with this update. Specifically the following improvements have been made:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									A server type has been created that accepts SSH deployment for Eclipse Web Tools Platform (WTP) archives
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									WTP, single-file and project archives can now be published
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Java Secure Channel (JSch) errors are now verified
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									All situations return IStatus objects and their associated user interface (an IStatus object represents the outcome of an operation)
+								</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+					<listitem>
+						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5041">JBIDE-5041</ulink>: The <keycap>menu</keycap> key on the keyboard would not work in the <guilabel>Web Projects</guilabel> view, <guilabel>Seam Components</guilabel> view or JBoss Tools XML Editor. The functioning of this key has now been corrected so it behaves as a user would expect.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5005">JBIDE-5005</ulink>: A new export wizard has been added to the <application>JBoss Developer Studio</application>. The new wizard allows the export operation to utilize IModule objects. This added feature reduces redundancy and inconsistancy for the export operation.
 						</para>
 					</listitem>
 				</itemizedlist>
