@@ -104,7 +104,7 @@
                                 language to the rule language</para>
                         </entry>
                         <entry>
-                            <!--link linkend="dsl_editor">The Domain Specific Language Editor</link-->
+                            <link linkend="dsl_editor">The Domain Specific Language Editor</link>
                         </entry>
                     </row>
 
@@ -130,7 +130,7 @@
                                 process (a rule flow)</para>
                         </entry>
                         <entry>
-                            <!--link linkend="ruleflow_editor">The Rule Flow Graphical Editor</link-->
+                            <link linkend="ruleflow_editor">The Rule Flow Graphical Editor</link>
                         </entry>
                     </row>
 

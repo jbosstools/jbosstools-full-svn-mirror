@@ -8,7 +8,7 @@
     </chapterinfo>
 
     <title>Editors</title>
-    <section>
+    <section id="dsl_editor">
         <title>DSL Editor</title>
         <para>A domain-specific language is a set of custom rules,
             that is created specifically to solve problems in a particular domain 
@@ -129,7 +129,229 @@
             </figure>
           </section> 
     </section>
+    <section id="ruleflow_editor">
+        <title>Flow Editor</title>
+        <para>Drools tools also provide some functionality to define the order in 
+            which rules should be executed.Ruleflow file allows you to specify 
+            the order in which rule sets should be evaluated using a flow chart.
+            So you can define which rule sets should be evaluated in sequence or in parallel as well as
+            specify conditions under which rule sets should be evaluated.</para>
+        <para>Ruleflows can be set only by using the graphical flow editor which is part of the Drools plugin for Eclipse.
+            Once you have set up a Drools project,you can start adding ruleflows.
+            Add a ruleflow file(.rf) by clicking on the project and selecting "<emphasis>New -> Other...->Flow File</emphasis>":</para> 
+        <figure>
+            <title>RuleFlow file creation</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1f.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>By default these ruleflow files (.rf) are opened in the graphical Flow editor.
+            You can see it on the picture below.</para>
+        <figure>
+            <title>Flow Editor</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1g.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>The Flow editor consists of a <emphasis>palette</emphasis>, a <emphasis>canvas</emphasis>
+            and an <emphasis>outline</emphasis> view. To add new elements to the canvas, select the 
+            element you would like to create in the palette and then add it to the canvas by clicking on the preferred location.
+        </para>
+        <figure>
+            <title>Adding an element to the canvas</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1e.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>Clicking on the Select option in the palette and
+            then on the element in your ruleflow allows you to 
+            view and set the properties of that element in the properies view.</para>
+        <figure>
+            <title>Properties view</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1d.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>Outline View is useful for big complex schemata where not all nodes are seen at one time.
+        So using your Outline view you can easly navigate between parts of a schema.  </para>
+        <figure>
+            <title>Outline view usage</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors9.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <section>
+            <title>Different types of control elements in Flow Palette</title>
+            <para>Flow editor supports three types of control elements.
+            They are:</para>
+            <table> <title>Flow Palette Components.Part 1</title>   
+                <tgroup cols="3">
+                    <colspec colnum="1" align="left" colwidth="1*"/>
+                    <colspec colnum="2" align="left" colwidth="1*"/>
+                    <colspec colnum="3" align="left" colwidth="3*"/>
+                    
+                    <thead>
+                        <row>
+                            <entry>Component Picture</entry>
+                            <entry>Component Name</entry>									
+                            <entry>Description</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/editors/icon7.png"/>
+                                </imageobject></inlinemediaobject></entry>
+                            <entry>Select</entry>
+                            <entry>Select a node on the canvas</entry>
+                        </row>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/editors/icon8.png"/>
+                                </imageobject></inlinemediaobject></entry>
+                            <entry>Marquee</entry>
+                            <entry>Is used for selecting a group of elements</entry>
+                        </row>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/editors/icon9.png"/>
+                                </imageobject></inlinemediaobject></entry>
+                            <entry>Sequence Flow</entry>
+                            <entry>Use this element to join two elements on the canvas</entry>
+                        </row>
+                    </tbody>
+                    
+                </tgroup>
+            </table>
+        </section>
         
+        <section>
+            <title>Different types of nodes in Flow Palette</title>
+            
+            <para>Currently, ruleflow supports seven types of nodes.
+            In the table below you can find information about them:</para>
+            <table> <title>Flow Palette Components.Part 2.</title>   
+                <tgroup cols="3">
+                    <colspec colnum="1" align="left" colwidth="1*"/>
+                    <colspec colnum="2" align="left" colwidth="1*"/>
+                    <colspec colnum="3" align="left" colwidth="3*"/>
+                    
+                    <thead>
+                        <row>
+                            <entry>Component Picture</entry>
+                            <entry>Component Name</entry>									
+                            <entry>Description</entry>
+                        </row>
+                        
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon1.png"/>
+                            </imageobject></inlinemediaobject></entry>
+                            <entry>Start Event</entry>
+                            <entry>The start of the ruleflow. A ruleflow should have exactly 
+                                one start node. The <property>Start Event</property> can not have incoming
+                                connections and should have one outgoing connection. Whenever the ruleflow process is started, 
+                                the executing is started here and is automatically proceeded to the first node 
+                                linked to this  <property>Start Event</property></entry>
+                        </row>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon2.png"/>
+                            </imageobject></inlinemediaobject></entry>
+                            <entry>End Event</entry>
+                            <entry>A ruleflow file can have one or more  <property>End Events</property>.
+                                The <property>End Event</property> node should have one incoming connection
+                                and can not have outgoing connections. When an end node is reached in the ruleflow,
+                                the ruleflow is terminated (including other remaining active nodes when parallelism
+                                is used).</entry>
+                        </row> 
+                        <row>
+                            <entry><inlinemediaobject>               
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon3.png"/>
+                            </imageobject></inlinemediaobject></entry>
+                            <entry>Rule Task</entry>
+                            <entry>represents a set of rules. A <emphasis>Rule Task</emphasis> node should have one
+                                incoming connection and one outgoing connection. 
+                                The <property>RuleFlowGroup</property> property which is used to specify the name of the
+                                ruleflow-group that represents the set of rules of this <emphasis>Rule Task</emphasis> node.
+                                When a <emphasis>Rule Task</emphasis> node is reached in the ruleflow, the engine will start
+                                executing rules that are a part of the corresponding ruleflow-group.
+                                Execution automatically continues to the next node when there are no
+                                more active rules in this ruleflow-group. 
+                                </entry>
+                        </row>
+                        <row>
+                            <entry><inlinemediaobject>                
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon4.png"/>
+                            </imageobject></inlinemediaobject></entry>
+                            <entry>Gateway[diverge]</entry>
+                            <entry>allows you to create branches in your ruleflow.
+                                A <property>Gateway[diverge]</property> node should have one incoming connection and two or more
+                                outgoing connections.</entry>
+                        </row>
+                        <row>
+                            <entry><inlinemediaobject>               
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon4.png"/>
+                            </imageobject></inlinemediaobject></entry>
+                            <entry>Gateway[converge]</entry>
+                            <entry>allows you to synchronize multiple branches.
+                                A <property>Gateway[diverge]</property>node should have two or more incoming connections and one
+                                outgoing connection.</entry>
+                        </row> 
+                        <row>
+                            <entry><inlinemediaobject>                
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon5.png"/>
+                            </imageobject></inlinemediaobject></entry>
+                            <entry>Reusable Sup-Process</entry>
+                            <entry>represents the invocation of another ruleflow from this ruleflow.
+                                A subflow node should have one incoming connection and one outgoing connection. 
+                                It contains the property "processId" which specifies the id of the process that should be executed. 
+                                When a <property>Reusable Sup-Process</property> node is reached in the ruleflow, the engine will start the process with the given id.
+                                The subflow node will only continue if that subflow process has terminated its execution.
+                                Note that the subflow process is started as an independent process, 
+                                which means that the subflow process will not be terminated if this process reaches an end node.</entry>
+                        </row>
+                        <row>
+                            <entry><inlinemediaobject>               
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon6.png"/>
+                            </imageobject></inlinemediaobject></entry>
+                            <entry>Script Task</entry>
+                            <entry>represents an action that should be executed in this ruleflow.
+                                An <property>Script Task</property> node should have one incoming connection and one outgoing
+                                connection. It contains the property "action" which specifies the action that should be executed.
+                                When a <property>Script Task</property> node is reached in the ruleflow, it will execute the action and 
+                                continue with the next node. An action should be specified as a piece of (valid)
+                                MVEL code. </entry>
+                        </row>
+
+                   </tbody>
+                </tgroup>
+            </table>
+        </section>
+    </section>
+    
     <section id="textual_rule_editor">
         <title>The Rule Editor</title>
 
