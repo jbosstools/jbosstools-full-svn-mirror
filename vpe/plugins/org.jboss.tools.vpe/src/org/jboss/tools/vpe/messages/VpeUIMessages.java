@@ -99,7 +99,7 @@ public final class VpeUIMessages extends NLS {
 	public static String MAX_SOURCE_PANE;
 	public static String MAX_VISUAL_PANE;
 	public static String RESTORE_PREVIOUS_LOCATION;
-	public static String BACKGROUND_COLOR_TIP;
+	public static String EDIT_STYLE_TIP;
 	public static String BaseActionManager_InsertAfter;
 	public static String BaseActionManager_InsertAround;
 	public static String BaseActionManager_InsertBefore;

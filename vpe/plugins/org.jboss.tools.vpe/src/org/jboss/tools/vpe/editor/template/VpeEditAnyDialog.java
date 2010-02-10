@@ -239,7 +239,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		 */
 		Button button = new Button(composite, SWT.PUSH);
 		button.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
-		button.setToolTipText(VpeUIMessages.BACKGROUND_COLOR_TIP);
+		button.setToolTipText(VpeUIMessages.EDIT_STYLE_TIP);
 		ImageDescriptor colorDesc = JspEditorPlugin
 			.getImageDescriptor(Constants.IMAGE_COLORLARGE_FILE_LOCATION);
 		Image im = colorDesc.createImage();
