@@ -98,6 +98,11 @@
 				<itemizedlist>
 					<listitem>
 						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5824">JBIDE-5824</ulink>: The <filename>reveng.xml</filename> editor provided an option to <guilabel>Exclude column from reverse engineering</guilabel>. Selecting this option did not change any functioning of the column and the specified option should not have been part of the interface. This update removes the unnecessary option as to not confuse users.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5643">JBIDE-5643</ulink>: Within the <guilabel>Hibernate</guilabel> tab of the <filename>persistence.xml</filename> editor, the button beside the <guilabel>Configuration file</guilabel> line was labeled <guibutton>Browse</guibutton>. This was misleading as upon clicking the button the user would be asked setup a configuration file. To provide an improved user experience, the button has now been altered to be called <guibutton>Setup</guibutton> and correctly guides the user through configuration file creation.
 						</para>
 					</listitem>
@@ -151,6 +156,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5031">JBIDE-5031</ulink>: To close a database connection a user would have to close the <application>JBoss Developer Studio</application> and then restart the application to continue work without the connection. The database connection can now be closed from within the <application>JBoss Developer Studio</application> by choosing the <guimenuitem>Close Configuration</guimenuitem> menu item from the right-click menu in <guilabel>Hibernate Configurations</guilabel> tab.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4956">JBIDE-4956</ulink>: A feature has been added to the <guilabel>Mapping Diagram</guilabel> viewer so that it now displays relationships between database tables.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -208,6 +218,16 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5015">JBIDE-5015</ulink>: Support for JSF 2.0 composition components has been added in this update. 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4978">JBIDE-4978</ulink>: JSF has been upgraded with the addition of Seam Expression Language (EL) support. This now allows for JSF EL validation to use all available EL resolvers, providing increased validation over past releases.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4978">JBIDE-4970</ulink>: <application>KBbuilder</application> now loads composite components from the JSF resource folders and adds them to the KB module. This allows for the components to be available for code assistance.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -274,6 +294,16 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5012">JBIDE-5012</ulink>: The Booking and DVDStore Seam examples have been updated for Seam 2.2 within the <application>JBoss Enterprise Application Platform</application>. 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4987">JBIDE-4987</ulink>: 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4944">JBIDE-4944</ulink>: The Seam wizards <guilabel>Action</guilabel>, <guilabel>Entity</guilabel> and <guilabel>Conversation</guilabel> had the ability to overwrite resources when they generated code. The wizards would warn the user that some resources already existed and yet overwrite them. This has been corrected through the modification of the <filename>SeamBaseOperation.java</filename> file.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -379,6 +409,28 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5065">JBIDE-5065</ulink>: The icons in the Visual Page Editor have been redesigned for improved aesthetic appearance.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4945">JBIDE-4945</ulink>: A new feature has been added to the Visual Page Editor that allows a user to select both the element before and the element after a central element. This has been achieved through the modification of the <filename>SelectionBar.java</filename> file. 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4934">JBIDE-4934</ulink>: Facelets tag librarys support has been added to the <guilabel>Palette</guilabel> for the Visual Page Editor.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>XHTML Editor</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4946">JBIDE-4946</ulink>: Tool tips for tags and attributes in the XHTML Editor have been added.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -463,6 +515,34 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5005">JBIDE-5005</ulink>: A new export wizard has been added to the <application>JBoss Developer Studio</application>. The new wizard allows the export operation to utilize IModule objects. This added feature reduces redundancy and inconsistancy for the export operation.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4976">JBIDE-4976</ulink>: The <guilabel>JBoss Tools Palette</guilabel> has been intergrated into the standard Eclipse GEF <guilabel>Palette</guilabel> view. The standard <guilabel>Palette</guilabel> view, accessible at <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Others</guimenuitem><guimenuitem>General</guimenuitem><guimenuitem>Palette</guimenuitem></menuchoice> is now shown in the right top part of the <guilabel>Web Development</guilabel> and <guilabel>Seam</guilabel> perspectives. The <guilabel>JBoss Tools Palette</guilabel> remains at <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Others</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>JBoss Tools Palette</guimenuitem></menuchoice>.
+						</para>
+						<para>
+							The differences in behaviour between the paletts are:
+						</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										The new <guilabel>Palette</guilabel> is filled only when the <guilabel>Visual Page Editor</guilabel> is open and activated. The old palette remains static.
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										The expanded and collapsed state of tabs in the new palette is associated with the opened instance of the <guilabel>Visual Page Editor</guilabel> and not globally set as they were in the old palette. This allows for the state of tabs to be different for individual files. Each new file opened in the <guilabel>Visual Page Editor</guilabel> will have the default <guilabel>Palette</guilabel> state with all tabs collapsed.	
+									</para>
+								</listitem>
+							</itemizedlist>
+							<para>
+								Though the behaviour of the new palette is standard for Eclipse, for customers used to the globally set state of tabs and perfer to customize the palette before opening the <guilabel>Visual Page Editor</guilabel>, the old palette will remain accessible.
+							</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4955">JBIDE-4955</ulink>: BPEL and ESB projects can now be excluded from deployment through the addition of new fileset capability. When the fileset is referenced the includes, excludes and root folder layout is implemented just as it is for archives.
 						</para>
 					</listitem>
 				</itemizedlist>
