@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -363,9 +364,15 @@ public class BundleMap {
 	
 	private void refreshUsedKeys(){
 		UsedKey keyValue;
-		Set<String> usedKeysSet  = this.usedKeys.keySet();
 		
-		for(String key:usedKeysSet){
+		
+		/* yradtsevich: Fix of JBIDE-5818. The map usedKey cannot be modified
+		 * in the following foreach loop. Therefore the keys to remove
+		 * are marked and removed after the loop. */
+		List<String> keysToBeRemoved = new ArrayList<String>(0);
+
+		Set<String> usedKeysSet  = this.usedKeys.keySet();
+		for(String key : usedKeysSet){
 			keyValue =this.usedKeys.get(key);
 			BundleEntry entry = getBundle(keyValue.prefix);
 			if(entry != null){
@@ -375,7 +382,8 @@ public class BundleMap {
 				}catch(MissingResourceException ex){
 					value = null;
 					fireBundleKeyChanged(keyValue.prefix, keyValue.key, value);
-					this.usedKeys.remove(key);
+					// Fix of JBIDE-5818
+					keysToBeRemoved.add(key);
 					continue;
 				}
 				if((value == null && keyValue.value != null) || (value != null && keyValue.value == null)){
@@ -391,6 +399,11 @@ public class BundleMap {
 				keyValue.value = null;
 				fireBundleKeyChanged(keyValue.prefix, keyValue.key, null);
 			}
+		}
+
+		// Fix of JBIDE-5818
+		for (String key : keysToBeRemoved) {
+			this.usedKeys.remove(key);
 		}
 	}
 	

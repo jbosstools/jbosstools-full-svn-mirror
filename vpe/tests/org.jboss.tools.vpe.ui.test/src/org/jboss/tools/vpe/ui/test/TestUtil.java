@@ -96,6 +96,17 @@ public class TestUtil {
 
 		return null;
 	}
+	
+	public static IResource getResource(String path,
+			String projectName) throws CoreException {
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
+				projectName);
+		if (project != null) {
+			return project.findMember(path);
+		}
+
+		return null;
+	}
 
 	/**
 	 * Gets the web content path.
