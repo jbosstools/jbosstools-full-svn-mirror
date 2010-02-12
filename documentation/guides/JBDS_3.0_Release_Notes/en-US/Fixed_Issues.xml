@@ -163,6 +163,16 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4956">JBIDE-4956</ulink>: A feature has been added to the <guilabel>Mapping Diagram</guilabel> viewer so that it now displays relationships between database tables.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4916">JBIDE-4916</ulink>: An editor for the <filename>hibernate.properties</filename> file has been added to the <application>JBoss Developer Studio</application>. The editor supports content assist authoring.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4899">JBIDE-4899</ulink>: The <guilabel>Hibernate Configurations</guilabel> view was not updated after a hibernate console enabled project with console configuration was deleted from the workspace. This meant that the console configuration was not removed along with the project. This bug is rectified with this update.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -328,6 +338,28 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5086">JBIDE-5086</ulink>: A default layout is added in the Java-Mapping viewer. This allows for the layout of the information in the Smooks editor to be rearranged into a predefined default layout.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4878">JBIDE-4878</ulink>: The Smooks <guilabel>Reader</guilabel> page has been replaced with a new <guilabel>Input</guilabel> page. While the <guilabel>Input</guilabel> page inherits many functions from the <guilabel>Reader</guilabel> page there are some differences as follows:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									The <guilabel>Reader</guilabel> page allowed for multiple Readers to be created. <guilabel>Input</guilabel> page only allows for one Reader. 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The <guilabel>Reader</guilabel> page supported the addition of multiple input data , where each was usable. The <guilabel>Input</guilabel> page only allows for one piece of input data to be used, while still allowing for multiple pieces of input data.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The <guilabel>Reader</guilabel> page could view the transformation results of the Reader. The new <guilabel>Input</guilabel> page utilizes an input model view to check the transform result. 
+								</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -417,6 +449,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4934">JBIDE-4934</ulink>: Facelets tag librarys support has been added to the <guilabel>Palette</guilabel> for the Visual Page Editor.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4914">JBIDE-4914</ulink>: The Visual Page Editor has been redesigned so that all drop-down menu items are placed in the toolbar as buttons.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -543,6 +580,38 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4955">JBIDE-4955</ulink>: BPEL and ESB projects can now be excluded from deployment through the addition of new fileset capability. When the fileset is referenced the includes, excludes and root folder layout is implemented just as it is for archives.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4922">JBIDE-4922</ulink>: Seam and RichFaces portletbridge archetypes have been added to the <application>JBoss Developer Studio</application> foruse with the Maven plug-in <application>m2eclipse</application>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4888">JBIDE-4888</ulink>: The porlet facets configuration utility has been added for m2eclipse. This configuration utility allows for the following:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									If the <filename>pom.xml</filename> file contains a <property>portlet-api</property> dependency, the JBoss Core Portlet facet is added. 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									If the <filename>pom.xml</filename> file contains portletbridge dependencies, the JBoss JSF Portlet facet is added. 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									If the project contains Seam, JBoss Core Portlet and JBoss JSF Portlet facet, the JBoss Seam Portlet facet is added.
+								</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4877">JBIDE-4877</ulink>: Tag completion has been upgraded so that partial matches are displayed and selectable following direct tag matches.
 						</para>
 					</listitem>
 				</itemizedlist>
