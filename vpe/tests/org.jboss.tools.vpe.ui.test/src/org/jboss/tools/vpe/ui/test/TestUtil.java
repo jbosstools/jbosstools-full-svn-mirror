@@ -190,8 +190,13 @@ public class TestUtil {
 	 * Wait until all background tasks are complete.
 	 */
 	public static void waitForJobs() {
-		while (Job.getJobManager().currentJob() != null)
-			delay(100);
+		//commented by Maksim Areshkau
+		//because this method wait only for jobs which has been runned in current thread,
+		//and don't wait for others. It can cause https://jira.jboss.org/jira/browse/JBIDE-5820 
+		//https://jira.jboss.org/jira/browse/JBIDE-5821 
+//		while (Job.getJobManager().currentJob() != null)
+//				delay(100);	
+		waitForIdle();
 	}
 	
 	/**
