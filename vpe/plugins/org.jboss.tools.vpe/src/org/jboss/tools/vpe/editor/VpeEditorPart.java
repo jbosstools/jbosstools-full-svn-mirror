@@ -442,7 +442,14 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		/*
 		 * Container composite for editor part
 		 */
-		cmpEdTl = new Composite(parent, SWT.NONE);
+		/*
+		 *  Fix for https://jira.jboss.org/jira/browse/JBIDE-5744
+		 *  Where is a problem with composite parent redrawing in a case
+		 *  cmpEdTl = new Composite (parent, SWT.NONE)
+		 *  P. S.: Reproducible under Win x64 on Eclipse 32
+		 *  see https://bugs.eclipse.org/bugs/show_bug.cgi?id=302950
+		 */
+		cmpEdTl =  parent;
 		GridLayout layoutEdTl = new GridLayout(2, false);
 		layoutEdTl.verticalSpacing = 0;
 		layoutEdTl.marginHeight = 0;
