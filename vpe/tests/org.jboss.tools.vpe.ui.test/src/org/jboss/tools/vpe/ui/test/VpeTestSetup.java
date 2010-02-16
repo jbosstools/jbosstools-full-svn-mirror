@@ -17,6 +17,8 @@ import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.test.util.ResourcesUtils;
 import org.jboss.tools.tests.ImportBean;
 
@@ -34,6 +36,8 @@ public class VpeTestSetup extends TestSetup {
 	 */
 	private List<ImportBean> testProjectNames;
 	
+	private static final String CONTENT_OUTLINE_VIEW_ID = "org.eclipse.ui.views.ContentOutline"; //$NON-NLS-1$
+	
 	public VpeTestSetup(TestSuite test, List<ImportBean> testProjectNames) {
 		super(test);
 		setTestProjects(testProjectNames);
@@ -50,6 +54,14 @@ public class VpeTestSetup extends TestSetup {
 				ResourcesUtils.importProjectIntoWorkspace((importBean.getImportProjectPath()
 						+ File.separator+importBean.getImportProjectName()),importBean.getImportProjectName());
 			}		
+		}
+		//added by Maksim Areshkau, Fix for https://jira.jboss.org/jira/browse/JBIDE-5820 https://jira.jboss.org/jira/browse/JBIDE-5821
+        //remove this code when we will move on wtp 3.2
+		IViewReference[] iviewReferences= PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViewReferences();
+        for (IViewReference iViewReference : iviewReferences) {
+        	if(VpeTestSetup.CONTENT_OUTLINE_VIEW_ID.equalsIgnoreCase(iViewReference.getId())){
+        		 PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(iViewReference);
+        	}
 		}
 	}
 
