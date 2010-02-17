@@ -35,13 +35,15 @@
 ]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
  <bookinfo>
   <title>Getting Started with JBoss Developer Studio</title>
-  <pubdate>April 2008</pubdate>
+  
   <copyright>
    <year>2007</year>
-   <year>2009</year>
+   <year><diffmk:wrapper diffmk:change="added">2008</diffmk:wrapper></year>
+   <year diffmk:change="added">2009</year>
+   <year diffmk:change="added"><diffmk:wrapper diffmk:change="added">2010</diffmk:wrapper></year>
    <holder>JBoss by Red Hat</holder>
   </copyright>
-  <releaseinfo><diffmk:wrapper diffmk:change="changed">Version: 3.1.0.CR1</diffmk:wrapper></releaseinfo>
+  <releaseinfo><diffmk:wrapper diffmk:change="changed">Version: 3.0.0.GA</diffmk:wrapper></releaseinfo>
  <abstract>
    <title></title>
        <para>
@@ -56,7 +58,7 @@
 
 
 
-<chapter id="getting_started" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/documentation/guides/GettingStartedGuide/en/modules/getting_started.xml" xreflabel="getting_started">
+<chapter id="getting_started" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/getting_started.xml" xreflabel="getting_started">
  <?dbhtml filename="getting_started.html"?>
  <chapterinfo>
   <keywordset>
@@ -83,7 +85,7 @@
  </section>
 
 <section>
-	<title><diffmk:wrapper diffmk:change="changed">Key Features of JBoss Developer Studio  and Requirements</diffmk:wrapper></title>
+	<title>Key Features of JBoss Developer Studio  and Requirements</title>
  <para>For a start, we propose you to look through the table of main features of JBoss Developer Studio:</para>
 
  <table>
@@ -156,8 +158,8 @@
     </row>
     
     <row>
-     <entry><para><diffmk:wrapper diffmk:change="changed"> Project Examples</diffmk:wrapper></para></entry>
-     <entry><para><diffmk:wrapper diffmk:change="changed"> Tooling for easy installation of Examples.</diffmk:wrapper></para></entry>
+     <entry><para> Project Examples</para></entry>
+     <entry><para> Tooling for easy installation of Examples.</para></entry>
     </row>
     
     <row>
@@ -168,27 +170,27 @@
   </tgroup>
  </table>
  
- <para diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> requires JDK 5+ (JDK 6 in case of EAP 5.0). Also it's important that 
- 	the JVM's architecture matches the particular </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> build, i.e. if you're on a 
- 	64-bit system and use the 64-bit JVM, you need the 64-bit JBDS.</diffmk:wrapper></para>
+ <para><property moreinfo="none">JBDS</property> requires JDK 5+ (JDK 6 in case of EAP 5.0). Also it's important that 
+ 	the JVM's architecture matches the particular <property moreinfo="none">JBDS</property> build, i.e. if you're on a 
+ 	64-bit system and use the 64-bit JVM, you need the 64-bit JBDS.</para>
  	
-	<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For the 32-bit version of JBDS use the 32-bit JVM or just use </diffmk:wrapper><literal diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">-vm</diffmk:wrapper></literal><diffmk:wrapper diffmk:change="added"> flag to 
-	tell JBDS to use 32-bit java if the 64-bit one is found as the default.</diffmk:wrapper></para>
+	<para>For the 32-bit version of JBDS use the 32-bit JVM or just use <literal moreinfo="none">-vm</literal> flag to 
+	tell JBDS to use 32-bit java if the 64-bit one is found as the default.</para>
 	
-	<note diffmk:change="added">
-		<title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
-		<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On Linux system with 64-bit JVM the visual editor may fail to start. In this case you need the </diffmk:wrapper><literal diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">libstdc++.so.5</diffmk:wrapper></literal><diffmk:wrapper diffmk:change="added"> library.
-			See also the </diffmk:wrapper><link diffmk:change="added" linkend="question_1"><diffmk:wrapper diffmk:change="added">FAQ</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+	<note>
+		<title>Note:</title>
+		<para>On Linux system with 64-bit JVM the visual editor may fail to start. In this case you need the <literal moreinfo="none">libstdc++.so.5</literal> library.
+			See also the <link linkend="question_1">FAQ</link>.</para>
 	</note>
 </section>
  
  <section id="ConfigJavaEnvironment">
   <?dbhtml filename="ConfigJavaEnvironment.html"?>
   <title>Configuring Your Java Environment</title>
-  <para><diffmk:wrapper diffmk:change="changed">You must have a working installation of JDK before you install </diffmk:wrapper><property moreinfo="none">JBoss Developer
-    Studio</property><diffmk:wrapper diffmk:change="changed">. Thus in this
+  <para>You must have a working installation of JDK before you install <property moreinfo="none">JBoss Developer
+    Studio</property>. Thus in this
    guide we will show you how to install a 32-bit Sun JDK 5.0 on a Linux Platform and Microsoft
-   Windows Platform.</diffmk:wrapper></para>
+   Windows Platform.</para>
 
   <section id="InstallJDK50onLinux">
    <title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
@@ -604,8 +606,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <itemizedlist>
     <listitem>
-    	<para><diffmk:wrapper diffmk:change="added">Get Eclipse and Web Tools (make sure you have the 
-    		</diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS"><diffmk:wrapper diffmk:change="added">appropriate version of Eclipse</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">)</diffmk:wrapper></para>
+    	<para>Get Eclipse and Web Tools (make sure you have the 
+    		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">appropriate version of Eclipse</ulink>)</para>
     </listitem>
    </itemizedlist>
   	<para>The current version of JBoss Tools (3.1.M2) targets at Eclipse 3.5/Galileo which is available from <ulink url="http://www.eclipse.org/downloads/">eclipse.org</ulink></para>
@@ -804,7 +806,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Support">
   <?dbhtml filename="Support.html"?>
   <title>Support</title>
-  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+  <para>If you have comments or questions, you can discuss them at our 
+      <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
     Developer Studio Forum</ulink>.</para>
   <para>When writing to the forum for questions, please include the following information:</para>
   <orderedlist continuation="restarts" inheritnum="ignore">
@@ -828,8 +831,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <title>Other relevant resources on the topic</title>
   <para>JBDS on RedHat: <ulink url="http://www.redhat.com/developer_studio">JBoss Developer
    Studio</ulink></para>
-  <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
-   Forum</ulink></para>
+  <para>Forum: 
+      <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+          Forum</ulink></para>
 	<para>
 	Wiki: <ulink url="http://www.jboss.org/community/wiki/JBossTools">  JBossToolsWiki </ulink>  
    </para>  
@@ -838,14 +842,14 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    
   <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
  	
- 	<para diffmk:change="added">
- 		<ulink diffmk:change="added" url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS"><diffmk:wrapper diffmk:change="added">Matrix of supported platforms, runtimes and technologies in JBossTools/JBDS</diffmk:wrapper></ulink></para>
+ 	<para>
+ 		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">Matrix of supported platforms, runtimes and technologies in JBossTools/JBDS</ulink></para>
  </section>
 
 </chapter>
 
  
-<chapter id="manage" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/documentation/guides/GettingStartedGuide/en/modules/manage.xml" xreflabel="manage">
+<chapter id="manage" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/manage.xml" xreflabel="manage">
     <?dbhtml filename="manage.html"?>
     <chapterinfo>
         <keywordset>
@@ -1153,7 +1157,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 </chapter>
  
  
-<chapter id="first_seam" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/documentation/guides/GettingStartedGuide/en/modules/first_seam.xml" xreflabel="first_seam">
+<chapter id="first_seam" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/first_seam.xml" xreflabel="first_seam">
   <?dbhtml filename="first_seam.html"?>
   <chapterinfo>
     <keywordset>
@@ -2159,7 +2163,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 </chapter>
  
  
-<chapter id="jsp_application" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/documentation/guides/GettingStartedGuide/en/modules/jsp_application.xml" xreflabel="jsp_application">
+<chapter id="jsp_application" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/jsp_application.xml" xreflabel="jsp_application">
 	<?dbhtml filename="jsp_application.html"?>
 	<chapterinfo>
 		<keywordset>
@@ -2593,7 +2597,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 </chapter>
 
  
-<chapter id="rad_jsf_application" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/documentation/guides/GettingStartedGuide/en/modules/rad_jsf_application.xml" xreflabel="rad_jsf_application">
+<chapter id="rad_jsf_application" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/rad_jsf_application.xml" xreflabel="rad_jsf_application">
     <?dbhtml filename="rad_jsf_application.html"?>
     <chapterinfo>
         <keywordset>
@@ -3703,7 +3707,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
  
  
 
-<chapter id="project_examples" role="new" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/documentation/guides/GettingStartedGuide/en/modules/project_examples.xml" xreflabel="project_examples">
+<chapter id="project_examples" role="new" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/project_examples.xml" xreflabel="project_examples">
     <?dbhtml filename="project_examples.html"?>
     <chapterinfo>
         <keywordset>
@@ -3791,7 +3795,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                 <para>Go to the menu bar and select <emphasis><property moreinfo="none">File &gt; New &gt; Other...</property></emphasis>
                 </para></listitem>
             
-            <listitem><para>Select <emphasis><property moreinfo="none">Jboss Tools &gt; Project Examples</property></emphasis><diffmk:wrapper diffmk:change="changed"> (You can also call the </diffmk:wrapper><emphasis><property moreinfo="none">Project Examples</property></emphasis> from menu bar: <property moreinfo="none">Help &gt; Project Examples...</property><diffmk:wrapper diffmk:change="added"> or directly from </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">File &gt; New &gt; Example...</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> menu )</diffmk:wrapper></para></listitem>
+            <listitem><para>Select <emphasis><property moreinfo="none">Jboss Tools &gt; Project Examples</property></emphasis> (You can also call the <emphasis><property moreinfo="none">Project Examples</property></emphasis> from menu bar: <property moreinfo="none">Help &gt; Project Examples...</property> or directly from <emphasis><property moreinfo="none">File &gt; New &gt; Example...</property></emphasis> menu )</para></listitem>
             
             
         </itemizedlist>
@@ -3915,7 +3919,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 
  
 
-<chapter id="gsg_faq" role="updated" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
+<chapter id="gsg_faq" role="updated" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
     <?dbhtml filename="gsg_faq.html"?>
     <chapterinfo>
         <keywordset>
@@ -4136,7 +4140,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 </chapter>
 
  
-<chapter id="further_reading" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/documentation/guides/GettingStartedGuide/en/modules/further_reading.xml" xreflabel="further_reading">
+<chapter id="further_reading" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/further_reading.xml" xreflabel="further_reading">
   <?dbhtml filename="further_reading.html"?>
   <chapterinfo>
     <keywordset>
@@ -4311,9 +4315,12 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
   from Exadel Studio into JBoss Developer Studio. </para>
     </listitem>
-  
-  <para>If there's anything we didn't cover in this guide, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
-    your suggestions and comments.</para>
+    <para>If there&apos;s anything we didn&apos;t cover in this guide, please feel free to visit our <ulink
+        url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258"
+        >JBoss Developer Studio Users Forum</ulink> or <ulink
+            url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+            >JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
+        your suggestions and comments.</para>
 </itemizedlist>
 
 </chapter>
