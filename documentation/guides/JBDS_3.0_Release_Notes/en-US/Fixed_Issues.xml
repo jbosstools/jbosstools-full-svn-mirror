@@ -89,6 +89,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5108">JBIDE-5108</ulink>: The JBoss Runtime Manager was setup to search for ESB Runtime files from a specified location reguardless of how it was installed. This caused issue when the ESB Runtime was installed as a user defined runtime. The issue has been rectified by adding a <guilabel>Configuration</guilabel> field to the <guilabel>Preference</guilabel> page.  If the user sets the <guilabel>Configuration</guilabel> field to the home location of the <application>JBoss Enterprise Application Platform</application> or <application>JBoss SOA Platform</application>, there configuration combination will list all available configurations. If the user selects a standalone ESB Runtime location, the configuration combination will be empty and the user should ignore the field. The ESB runtime classpath container now gathers configuration information from the selected server runtime and then selects JARs accordingly or the  standalone ESB Runtime.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4730">JBIDE-4730</ulink>: The ESB project creation wizard receives a new logo following this update. Instead of using the generic <application>JBoss Developer Studio</application> logo within the ESB project wizard, a new ESB wizard logo is displayed.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -173,6 +178,21 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4899">JBIDE-4899</ulink>: The <guilabel>Hibernate Configurations</guilabel> view was not updated after a hibernate console enabled project with console configuration was deleted from the workspace. This meant that the console configuration was not removed along with the project. This bug is rectified with this update.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4780">JBIDE-4780</ulink>: The <guilabel>Options</guilabel> tab now allows you to browse and set the <property>NamingStrategy</property> and <property>EntityResolver</property>. The console configuration option has also been updated to react when one of the packages of a referenced class changes.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4733">JBIDE-4733</ulink>: A new feature has been added that allows a user to select wheather JPA-Generate DDL should be executed in the database. Before this update this feature was automatic, always executing JPA-Generate in the database.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4715">JBIDE-4715</ulink>: A toggle button has been added to the Hibernate Mapping diagram to allow the outline view to be ordered either alphabetically or by the structure outlined in the file. The toggle button interface ensures the experience remains consistent across all tools included within the <application>JBoss Developer Studio</application>.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -238,6 +258,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4978">JBIDE-4970</ulink>: <application>KBbuilder</application> now loads composite components from the JSF resource folders and adds them to the KB module. This allows for the components to be available for code assistance.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4771">JBIDE-4771</ulink>: The <property>Find Usages</property> function has been improved to provide information about methods when inside an EL expression. 
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -613,6 +638,89 @@
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4877">JBIDE-4877</ulink>: Tag completion has been upgraded so that partial matches are displayed and selectable following direct tag matches.
 						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4850">JBIDE-4850</ulink>: A new feature has been added to the CSS Views with this release that allows a user to edit styles inside html and xhtm.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4690">JBIDE-4690</ulink>: The Maven Portlet library provider has been added to the <application>JBoss Developer Studio</application> with this release.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4689">JBIDE-4689</ulink>: The portlet libraries engine has been updated to use the WTP 3.1 Library Framework. This framework is implemented in the Portlet Core and JSF Portlet installation page. The following library providers are now available to the user:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									Library provider:
+								</para>
+								<itemizedlist>
+									<listitem>
+										
+										<para>
+										User Library
+									</para>									</listitem>
+								<listitem>
+									
+									<para>
+										Library provided by Target Runtime
+									</para>									</listitem>
+								<listitem>
+									
+									<para>
+										Disable Library Configuration
+									</para>									</listitem>
+									</itemizedlist>
+							</listitem>
+							<listitem>
+								<para>
+									Portlet Core Facet library providers:
+								</para>
+								<itemizedlist>
+									<listitem>
+										
+										<para>
+										Portlet Target Runtime Provider
+									</para>									</listitem>
+								<listitem>
+									
+									<para>
+										Maven Portlet 1.0 and 2.0 Libraries
+									</para>									</listitem>
+									</itemizedlist>
+							</listitem>
+							<listitem>
+								<para>
+									JSF Portlet Facet library providers:
+									<itemizedlist>
+										<listitem>
+										
+		<para>
+			JSF Portletbridge Runtime provider
+		</para>									</listitem>
+	<listitem>
+		
+		<para>
+			JSF Portlet Target Runtime Provider
+		</para>									</listitem>
+	<listitem>
+		
+		<para>
+			Maven Portletbridge 2.0.0 ALPHA Libraries
+		</para>									</listitem>
+	<listitem>
+		
+		<para>
+			Maven Portletbridge 2.0.0 ALPHA Libraries with dependencies
+		</para>									</listitem>
+									</itemizedlist>
+								</para>
+							</listitem>
+						</itemizedlist>
 					</listitem>
 				</itemizedlist>
 			</para>
