@@ -37,9 +37,9 @@
          <author><firstname>John</firstname><surname>Graham</surname><email>jgraham@redhat.com</email></author> 
             <author><firstname>Olga</firstname><surname>Chikvina</surname></author>    
          
-         <pubdate>April 2008</pubdate>
 	                       <copyright>
 	                           <year>2009</year>
+	                           <year diffmk:change="added"><diffmk:wrapper diffmk:change="added">2010</diffmk:wrapper></year>
 	                           <holder>JBoss by Red Hat</holder>
 	                       </copyright>
           <releaseinfo>
@@ -58,7 +58,7 @@
     <toc></toc> 
     
 
-<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/drools/docs/guvnor_ref/en/modules/introduction.xml" xreflabel="introduction">
+<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/guvnor_ref/en/modules/introduction.xml" xreflabel="introduction">
     <title>Introduction</title>
 
     <para>The purpose of this document is to describe briefly the functionality present in the
@@ -234,7 +234,7 @@
 </chapter>
 
     
-<chapter id="functionality_overview" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/drools/docs/guvnor_ref/en/modules/functionality_overview.xml" xreflabel="functionality_overview">
+<chapter id="functionality_overview" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/guvnor_ref/en/modules/functionality_overview.xml" xreflabel="functionality_overview">
     <?dbhtml filename="functionality_overview.html"?>
     <chapterinfo>
         <keywordset>
@@ -961,7 +961,7 @@ the Guvnor repository causes the Eclipse <property moreinfo="none">Properties vi
 </chapter>
 
     
-<chapter id="guvnor_preferences" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/drools/docs/guvnor_ref/en/modules/guvnor_preferences.xml" xreflabel="guvnor_preferences">
+<chapter id="guvnor_preferences" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/guvnor_ref/en/modules/guvnor_preferences.xml" xreflabel="guvnor_preferences">
     <?dbhtml filename="guvnor_preferences.html"?>
     <chapterinfo>
         <keywordset>
@@ -1052,7 +1052,7 @@ the Guvnor repository causes the Eclipse <property moreinfo="none">Properties vi
 </chapter>
 
     
-<chapter id="conclusion" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/drools/docs/guvnor_ref/en/modules/conclusion.xml" xreflabel="conclusion">
+<chapter id="conclusion" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/guvnor_ref/en/modules/conclusion.xml" xreflabel="conclusion">
     <?dbhtml filename="conclusion.html"?>
     <chapterinfo>
         <keywordset>
@@ -1070,7 +1070,7 @@ the Guvnor repository causes the Eclipse <property moreinfo="none">Properties vi
         state of the <property moreinfo="none">EGT</property> is sufficient for the major use cases.</para>
 
     <para>If you have some questions, comments or suggestions on the topic, please feel free to ask in the
-            <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">Jboss Tools Forum</ulink>.</para>
+        <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">Jboss Tools Forum</ulink>.</para>
 </chapter>
 
 
