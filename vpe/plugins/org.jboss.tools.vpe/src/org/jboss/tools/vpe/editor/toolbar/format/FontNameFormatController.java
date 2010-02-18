@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.jboss.tools.vpe.editor.template.textformating.FormatAttributeData;
 import org.jboss.tools.vpe.editor.toolbar.format.css.StyleAttribute;
 import org.jboss.tools.vpe.editor.toolbar.format.css.StyleProperty;
+import org.jboss.tools.vpe.editor.toolbar.format.css.Token;
 import org.w3c.dom.Attr;
 
 /**
@@ -80,33 +81,34 @@ public class FontNameFormatController extends ComboFormatController {
      *      enabled)
      */
     public void setToolbarItemEnabled(boolean enabled) {
-	comboBlockFormat.setEnabled(enabled);
-	if (enabled) {
-	    Attr style = getStyleAttributeFromSelectedNode(true);
-	    if (style != null) {
-		StyleAttribute styleAttribute = new StyleAttribute(style);
-		StyleProperty fontProperty = styleAttribute
-			.getProperty(STYLE_PROPERTY_NAME);
-		if (fontProperty != null) {
-		    String fontName = fontProperty.getPropertyValue()
-			    .getDirtyValue().trim();
-		    if (fontName != null) {
-			fontName = fontName.replaceAll(REPLACE_VALUE, EMPTY);
-			if (getComboBlockFormat().getText().equalsIgnoreCase(
-				fontName)) {
-			    return;
-			}
-			String[] items = this.getComboBlockFormat().getItems();
-			for (int i = 0; i < items.length; i++) {
-			    if (items[i].equalsIgnoreCase(fontName)) {
-				this.getComboBlockFormat().select(i);
-				return;
-			    }
-			}
+		comboBlockFormat.setEnabled(enabled);
+		if (enabled) {
+		    Attr style = getStyleAttributeFromSelectedNode(true);
+		    if (style != null) {
+				StyleAttribute styleAttribute = new StyleAttribute(style);
+				StyleProperty fontProperty
+						= styleAttribute.getProperty(STYLE_PROPERTY_NAME);
+				if (fontProperty != null) {
+					Token fontPropertyValue = fontProperty.getPropertyValue();
+				    if (fontPropertyValue != null) {
+						String fontName
+								= fontPropertyValue.getDirtyValue().trim();
+						fontName = fontName.replaceAll(REPLACE_VALUE, EMPTY);
+						if (getComboBlockFormat().getText().equalsIgnoreCase(
+							fontName)) {
+						    return;
+						}
+						String[] items = this.getComboBlockFormat().getItems();
+						for (int i = 0; i < items.length; i++) {
+						    if (items[i].equalsIgnoreCase(fontName)) {
+								this.getComboBlockFormat().select(i);
+								return;
+						    }
+						}
+				    }
+				}
 		    }
 		}
-	    }
-	}
-	getComboBlockFormat().select(0);
+		getComboBlockFormat().select(0);
     }
 }
