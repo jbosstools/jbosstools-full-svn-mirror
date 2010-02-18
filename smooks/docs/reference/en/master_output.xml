@@ -3,11 +3,10 @@
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
 [
-<!ENTITY introduction SYSTEM "modules/introduction.xml">    
-<!ENTITY quickstart SYSTEM "modules/quick_start.xml">
-<!ENTITY smooksformeditor_graphicaltab SYSTEM "modules/smooksformeditor_graphicalpage.xml"> 
-<!ENTITY smooksformeditor_configurationtab SYSTEM "modules/smooksformeditor_configurationpage.xml"> 
-<!ENTITY smooksformeditor_sourcetab SYSTEM "modules/smooksformeditor_sourcepage.xml"> 
+<!ENTITY introduction SYSTEM "modules/introduction.xml">  
+<!ENTITY tasks SYSTEM "modules/tasks.xml">
+<!ENTITY references SYSTEM "modules/references.xml">
+<!ENTITY summary SYSTEM "modules/summary.xml">
 ]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
 
 	<bookinfo>
@@ -27,14 +26,12 @@
 			<firstname>Xue(Dart)</firstname>
 			<surname>Peng</surname>
 		</author>
-
-		<pubdate>November 2008</pubdate>
 		<copyright>
-			<year>2009</year>
+			<year><diffmk:wrapper diffmk:change="changed">2009,2010</diffmk:wrapper></year>
 			<holder>JBoss by Red Hat</holder>
 		</copyright>
 		<releaseinfo><diffmk:wrapper diffmk:change="changed">
-			Version: 1.1.0.CR1
+			Version: 1.1.0.CR2 
          </diffmk:wrapper></releaseinfo>
 
 		<abstract>
@@ -48,7 +45,7 @@
 	</bookinfo>
 	<toc></toc>
 	
-<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/smooks/docs/reference/en/modules/introduction.xml">
+<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/smooks/docs/reference/en/modules/introduction.xml">
 	<?dbhtml filename="introduction.html"?>
 	<chapterinfo>
 		<keywordset>
@@ -94,7 +91,7 @@
 						<entry><para>Smooks Editor</para></entry>
 						<entry><para>Smooks Editor helps configure the created Smooks configuration file.</para></entry>
 						<entry>
-							<link linkend="quickstart_formeditor">Smooks Editor</link>
+						    <link linkend="process_tab">Smooks Editor</link>
 						</entry>
 					</row>
 					
@@ -154,7 +151,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para> For More informations about <property moreinfo="none">Smooks</property>, please visit <ulink url="http://www.smooks.org">Smooks official site</ulink>.</para>
+		<para><diffmk:wrapper diffmk:change="changed"> For more informations about </diffmk:wrapper><property moreinfo="none">Smooks</property>, please visit <ulink url="http://www.smooks.org">Smooks official site</ulink>.</para>
 	</section>
 	<section>
 		<title>What is Smooks Tools?</title>
@@ -169,6 +166,11 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The easiest way to use the Smooks Configuration Editor is to create a project
+			(Java project, an ESB project, etc.), right-click on it and select </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New -&gt; Other</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+			to open the New wizard. Drill into </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Smooks -&gt; Smooks Configuration File</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+			and continue through the wizard. We recommend using a minimum Smooks level of 1.1 or 1.2, but if you're using it in a deployed service, it depends on what version your runtime supports.
+			Once the file is created, it will open in the Smooks Configuration Editor.</diffmk:wrapper></para>
 	</section>
 	<section>
 		<title>How to install Smooks dev tools?</title>
@@ -179,954 +181,755 @@
 			other required plug-ins (GEF, EMF, etc.).</para>
 		<para> You should download the latest IDE for Java EE developers from <ulink url="http://www.eclipse.org/downloads/"> Eclipse site</ulink>. It contains many plug-ins (
 				GEF, EMF, etc. ) required by Smooks dev tools. </para>
-		
-		<para>Now let's progress to more advanced topics.</para>
-	</section>
-
-</chapter>
-
-	
-<chapter id="quickstart" role="updated" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/smooks/docs/reference/en/modules/quick_start.xml" xreflabel="Quick Start">
-	<?dbhtml filename="quick_start.html"?>
-	<chapterinfo>
-		<keywordset>
-			<keyword>JBoss Tools</keyword>
-			<keyword>Smooks</keyword>
-			<keyword>JBDS</keyword>
-			<keyword>java</keyword>
-		</keywordset>
-	</chapterinfo>
-	<title>Quick Start</title>
-	<para> This "Quick Start" will show how to use the <property moreinfo="none">Smooks tools</property> to create/edit the Smooks
-		configuration file for Java2Java data transformation.</para>
-	<para> This chapter gives you a brief understanding of the <property moreinfo="none">Smooks tools</property>.</para>
-	<section>
-		<title>Download Smooks Java-to-Java Example</title>
-		<para> Visit <ulink url="http://www.blogjava.net/Files/reloadcn/smooks_java_java.zip">smooks examples page</ulink> to download the "java-to-java" example project. </para>
-		<tip>
-			<title>Tip:</title>
-
-			<para> The example project is based on Maven, we suggest you to create a new eclipse
-				Java project, copy the example code and .jar files from the example project and paste
-				them into the eclipse Java project. </para>
-		</tip>
-	</section>
-	<section>
-		<title>Mapping rules</title>
-		<para>At the begining of working with Smooks tools,
-			we need to understand the Java-to-Java mapping rules of this example.
-			The transform input Java class is <emphasis><property moreinfo="none">example.sourcemodel.Order</property></emphasis> , its structure looks like this :
-		</para>
-		<figure float="0">
-			<title>Order class</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/sourcemodel_structured.jpg"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>Let's describe the structure of <emphasis><property moreinfo="none">example.sourcemodel.Order</property></emphasis> in short:</para>
-		<itemizedlist>
-			<listitem><para>Order class contains a <property moreinfo="none">Header</property> class and a <property moreinfo="none">List</property> class.</para></listitem>
-			<listitem><para>The  <property moreinfo="none">Header</property> class has <property moreinfo="none">customerName</property>,<property moreinfo="none">customerNumber</property>,<property moreinfo="none">priority</property> as properties.</para></listitem>
-			<listitem><para>In Order class the objects of the OrderItem class are stored in the List.</para></listitem>
-			<listitem><para>OrderItem has <property moreinfo="none">price</property>,<property moreinfo="none">productId</property>,<property moreinfo="none">quantity</property> as its properties.</para></listitem>
-		</itemizedlist>
-		<para>Let's look at the transform target Java class : <emphasis><property moreinfo="none">LineOrder</property></emphasis>.</para>
-		<para>On the screen below you can see its structure:</para>
-		<figure float="0">
-			<title>LineOrder class</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/targetmodel_structured.jpg"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<itemizedlist>
-			<listitem><para><property moreinfo="none">LineOrder</property> class contains 3 properties:<property moreinfo="none">customerId</property>,<property moreinfo="none">customerName</property>,<property moreinfo="none">priority</property> and an array of lineItems.</para></listitem>
-			<listitem><para>The <property moreinfo="none">Header</property> class has <property moreinfo="none">customerName</property>,<property moreinfo="none">customerNumber</property>,<property moreinfo="none">priority</property> as its properties.</para></listitem>
-			<listitem><para>OrderItem objects are stored in a List.</para></listitem>
-		</itemizedlist>
-		<para>Now it's the time to define the mapping rules to transform the input source java class to the target java class:</para>
-		<itemizedlist>
-			<listitem><para>Each instance of the Order class should be mapped with an instance of the LineOrder class.</para></listitem>
-			<listitem><para>The value of <property moreinfo="none">customerName</property> of the Header class should be assigned to the <property moreinfo="none">customerName</property> property of a LineOrder instance.</para></listitem>
-			<listitem><para>The value of <property moreinfo="none">customerNumber</property> of the Header class should be assigned to the <property moreinfo="none">customerId</property> property of a LineOrder instance.</para></listitem>
-			<listitem><para>The value of <property moreinfo="none">priority</property> of the Header class should be assigned to the <property moreinfo="none">priority</property> property of LineOrder instance.</para></listitem>
-			<listitem><para>For the <property moreinfo="none">orderitems</property> List of the Order instance, it's necessary to map a new lineItems array instance of LineOrder ,
-			and each OrderItem instance in the orderItems List should be transformed to a LineItem instance,
-			those instances will be put into the lineItems array.</para></listitem>
-			<listitem><para>The value of <property moreinfo="none">productId</property> of the OrderItem instance should be assigned to the 'productCode' of LineItem.</para></listitem>
-			<listitem><para>The value of <property moreinfo="none">price</property> of  OrderItem should be assigned to the <property moreinfo="none">unitPrice</property> of LineItem.</para></listitem>
+		<para><diffmk:wrapper diffmk:change="added">The Smooks Configuration depends on having all of the appropriate Smooks runtime jars in the path of the Eclipse Plug-in or Java Project in the Eclipse workspace.
 			
-		</itemizedlist>
-	</section>
-	
-	<section id="config_file_wizzard">
-		<title>Smooks Configuration File Wizard</title>
-		<para>Select the Smooks Java-to-Java example project that you created and right-click,
-			select the menu <emphasis><property moreinfo="none">New &gt; Other</property>,</emphasis> then find
-					<emphasis><property moreinfo="none">Smooks &gt; Smooks Configuration File</property>.</emphasis>
-			Click the <emphasis>
-				<property moreinfo="none">Next</property>
-			</emphasis> button. </para>
-		<figure float="0">
-			<title>Selecting Smooks Configuration File Wizard</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start1.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>The first wizard page is a file path creation page. Select the <emphasis>
-				<property moreinfo="none">src</property>
-			</emphasis> folder to be the files container, and input the name
-					<emphasis><property moreinfo="none">smooks-config.xml</property>.</emphasis> Click
-					<emphasis><property moreinfo="none">Next</property>.</emphasis></para>
-		<figure float="0">
-			<title>Choosing the configuration file container and the file name</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start2.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para><diffmk:wrapper diffmk:change="changed">The second wizard page is  allows you to select Smooks configuration file version. Select the appropriate one and click </diffmk:wrapper><emphasis><property moreinfo="none">Finish</property></emphasis><diffmk:wrapper diffmk:change="changed"> to complete the wizard.</diffmk:wrapper></para>
-		
-		
-		
-		<!--<para> As the quick start introduces how to create/edit the Java-to-Java Smooks
-			configuration file, let&apos;s select the<emphasis>
-				<property>Java-to-Java</property>
-			</emphasis> type as the source/target transform data type. </para>
-
-		<figure>
-			<title>Selecting Data Type</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start3.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<para>On the next page you are prompted to choose the source data for transformation.
-			Let&apos;s select the <property>Order</property> class from the example project as
-			the source JavaBean class.</para>
-
-		<figure>
-			<title>Selecting the Source Data</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start4.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<para>Then the wizard page asks you to choose the target data for transformation. We select
-			the <property>ListOrder</property> class as the target JavaBean class.</para>
-		<figure>
-			<title>Selecting the Target Data</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start5.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<para/>
-
-		<tip>
-			<title>Tip:</title>
-			<para>You can omit two these steps and just press
-					<emphasis><property>Finish</property>.</emphasis> This will open the empty
-				Smooks Configuration file. It&apos;s possible to <link
-					linkend="graphicaleditor_datalink">select source/target data</link> afterwards
-				in the Smooks Graph editor.</para>
-		</tip>-->
-	</section>
-	<section id="quickstart_formeditor">
-		<title>Smooks Editor</title>
-
-		<para>When all the wizard steps are passed, a new Smooks Configuration file is created and
-			the <property moreinfo="none">Smooks Configuration  Editor</property> will be opened automatically:</para>
-		<figure float="0">
-			<title>Smooks Editor</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start6.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>On the bottom of this editor there are 5  tabs, they are :
-			
-			Overview, Reader, Message Filter, Graph, Source.</para>
-		<section id="graphicaleditor_datalink">
-			<title>Adding the input data</title>
-			<para>At first, we need to add the Order class as the input data.
-				To do this, click the Reader tab, swich to the Reader/Input editor page</para>
-			
-		<!--<para> This editor contains several parts: <table>
-				<title>The Smooks Editor Parts</title>
-				<tgroup cols="2">
-
-					<colspec colnum="1" align="left" colwidth="1*"/>
-					<colspec colnum="2" colwidth="5*"/>
-
-					<thead>
-						<row>
-							<entry>Editor feature</entry>
-							<entry>Functionality</entry>
-						</row>
-					</thead>
-
-					<tbody>
-
-						<row>
-							<entry>
-								<para>Problems area</para>
-							</entry>
-							<entry>
-								<para>If there are any errors when you are editing the file, the
-									Problems area displays them</para>
-							</entry>
-						</row>
-
-						<row>
-							<entry>
-								<para>Source data tree</para>
-							</entry>
-							<entry>
-								<para>The tree displays a structure of the transformed source
-									data</para>
-							</entry>
-						</row>
-
-						<row>
-							<entry>
-								<para>Target data tree</para>
-							</entry>
-							<entry>
-								<para>The tree displays a structure of the transformed target
-									data</para>
-							</entry>
-						</row>
-
-						<row>
-							<entry>
-								<para>Mapping graphical area</para>
-							</entry>
-							<entry>
-								<para>Show the data mapping connection lines</para>
-							</entry>
-						</row>
-
-						<row>
-							<entry>
-								<para>Source/Target data selection links</para>
-							</entry>
-							<entry>
-								<para>Click the link, and <link linkend="graphicaleditor_datalink"
-										>Data Selection wizard</link> is opened helping you to
-									choose the source/target data</para>
-							</entry>
-						</row>
-					</tbody>
-				</tgroup>
-			</table>
-		</para>-->
-	
-
-		<para>To choose the transform data you should open <emphasis>
-			<property moreinfo="none">Reader</property></emphasis> tab and click <emphasis>
-			<property moreinfo="none">Add</property></emphasis> button in the Input Data section.</para>
-		<figure float="0">
-			<title>Input Data section</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start_6a.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>After clicking the button the <property moreinfo="none">Data Type Selection wizard</property> is
-			opened, and there are many data types in the list: Java, XML etc.</para>
-		<note>
-			<title>Note</title>
-			<para> There will become more and more data types on the list as the development goes on.
-			</para>
-		</note>
-
-		<figure float="0">
-			<title>Data Type Wizard</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start7.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<para>Select the <emphasis>
-				<property moreinfo="none">Java</property>
-			</emphasis> data type and click <emphasis><property moreinfo="none">Next</property>,</emphasis> you will
-			see the JavaBean class selection page:</para>
-
-		<figure float="0">
-			<title>JavaBean Data Selection</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start8.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<para> Let's select the Order class from the example project as the source JavaBean class.After that click <emphasis>
-				<property moreinfo="none">Finish</property>
-			</emphasis> and you should see the just added java class,  being displayed in the Input Data Section.
-			</para>
-		<figure float="0">
-			<title>Displaying the Structure of the Transformed Data</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start9.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		</section>
-		<section>
-			<title>Adding the target Bean</title>
-			<para>After adding the input data, let's switch to the Message Filter page:</para>
-			<figure float="0">
-				<title>Displaying the Structure of the Transformed Data</title>
-				<mediaobject>
-					<imageobject>
-						<imagedata fileref="images/quick_start/quick_start9a.png" scale="90"></imagedata>
-					</imageobject>
-				</mediaobject>
-			</figure>
-			<para>Click the <property moreinfo="none">Add</property> button, the <property moreinfo="none">Add Child</property> wizard page will be shown, let's select the <property moreinfo="none">Java Binding v1.2 -&gt; Bean v1.2</property> and click <emphasis><property moreinfo="none">OK</property></emphasis> to add the Bean :
-			</para>
-			<figure float="0">
-				<title>Add Child wizard</title>
-				<mediaobject>
-					<imageobject>
-						<imagedata fileref="images/quick_start/quick_start9b.png" scale="90"></imagedata>
-					</imageobject>
-				</mediaobject>
-			</figure>
-			<para>Then we can find on the Message Filter page the <property moreinfo="none">Bean v1.2</property> item  added, click on it ,a Bean v1.2 section should appear to the right of the page.
-				The section represents a GUI for editing <property moreinfo="none">Bean v1.2</property> properties:</para>
-			<figure float="0">
-				<title>Bean v1.2 section</title>
-				<mediaobject>
-					<imageobject>
-						<imagedata fileref="images/quick_start/quick_start9c.png" scale="90"></imagedata>
-					</imageobject>
-				</mediaobject>
-			</figure>
-			<para>You should input <property moreinfo="none">
-				lineOrder</property> as the Bean's id in the "Bean Id" field.Then you should click  <property moreinfo="none">Browse</property> button
-				near the <property moreinfo="none">Class</property> textfield and select LineOrder as the Bean's class.</para>
-			<note>
-				<para>
-					When you enter a value for the <property moreinfo="none">Class</property> text field,
-					you can type 'Alt + /' and the content assist pop dialog will be shown,
-					so it's will increase the efficiency. If 'Alt + /' doesn't work,
-					try to use the 'Ctrl + space'('Key Assist' of Eclipse).
-				</para>
-			</note>
-			<para>Let's click the <property moreinfo="none">Add Binding</property> link at the bottom of this page,
-				it will show a dialog to ask the binding of what Bean properties you will prefer to add.
-				Select all and click OK, you will see a list of Binding elements added under the Bean item.</para>
-			<para>Then you should add an array of beans called <property moreinfo="none">lineItems</property> and a Bean LineItem.These two classes and Id values are:</para>
-			<para>Array Bean:</para>
-				<itemizedlist>
-					<listitem><para>BeanId : lineItems;</para></listitem>
-					<listitem><para>Class : example.trgmodel.LineItem[]</para></listitem>
-				</itemizedlist>
-			<para>LineItem Bean :</para>
-			<itemizedlist>
-				<listitem><para>BeanId : lineItem;</para></listitem>
-				<listitem><para>Class : example.trgmodel.LineItem</para></listitem>
+			The easiest solution is to do the following:
+			</diffmk:wrapper><itemizedlist>
+				<listitem><para><diffmk:wrapper diffmk:change="added">1) Download the Smooks distribution from here: http://www.smooks.org/mediawiki/index.php?title=Downloads .
+					Grab the latest "ALL" distribution (as of today, it is the Smooks v.1.2.2 "ALL" distribution) and it will include binaries, examples, etc.</diffmk:wrapper></para></listitem>
+				<listitem><para><diffmk:wrapper diffmk:change="changed">2) Extract files from the archive somewhere on your machine.</diffmk:wrapper></para></listitem>
+				<listitem><para><diffmk:wrapper diffmk:change="changed">3) In your Eclipse workspace, copy the Smooks jars into a directory of your Eclipse plug-in or Java project named "lib".</diffmk:wrapper></para></listitem>
+				<listitem><para><diffmk:wrapper diffmk:change="added">4) For your Eclipse Plug-in or Java Project, right-click on the project and select Properties.</diffmk:wrapper></para></listitem>
+				<listitem><para><diffmk:wrapper diffmk:change="added">5) Select the "Java Build Path" item in the Properties list, select the Libraries tab, and click "Add JARs"
+				</diffmk:wrapper></para></listitem>
+				<listitem><para><diffmk:wrapper diffmk:change="changed">6) In the Jar Selection dialog, select all the jars in the "lib" directory mentioned in step 3 and click </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="added">OK</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">.
+				</diffmk:wrapper></para></listitem>
+				<listitem><para><diffmk:wrapper diffmk:change="changed">7) Click </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">OK</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> to close the Properties dialog. Now you should see a "Referenced Libraries" node that appeared in your project hierarchy in Eclipse.
+				</diffmk:wrapper></para></listitem>
 			</itemizedlist>
-		<note>
-			<para>
-				In Smooks , to be an array of Beans , the class value should end with '[]'. This means that this bean is an array type.
 	
-			</para>
-		</note>
-			<para>To finish this work, use the <property moreinfo="none">Add Binding</property> link to add  all the bindings for the Bean.</para>
-		</section>
-	
-		
+		</para>
+		<para><diffmk:wrapper diffmk:change="added">Now let's progress to more advanced topics.</diffmk:wrapper></para>
 	</section>
-	<section id="quickstart_mapping">
-		<title>Mapping</title>
 
-
-		<para>How to map the java class just added?</para>
-		
-		<para>First, you should know what to transform:</para>
-
-		<orderedlist continuation="restarts" inheritnum="inherit" numeration="loweralpha">
-			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"customerName"</property>
-					</emphasis> property of the <property moreinfo="none">Order#header</property> to the <emphasis>
-						<property moreinfo="none">"customerName"</property>
-					</emphasis> property of <property moreinfo="none">LineOrder</property>.</para>
-			</listitem>
-			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"customerNumber"</property>
-					</emphasis> property of the <property moreinfo="none">Order#header</property> to the <emphasis>
-						<property moreinfo="none">"customerId"</property>
-					</emphasis> property of <property moreinfo="none">LineOrder</property>.</para>
-			</listitem>
-			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"price"</property>
-					</emphasis> property of the <property moreinfo="none">OrderItem</property> to the <emphasis>
-						<property moreinfo="none">"unitPrice"</property>
-					</emphasis> property of <property moreinfo="none">LineItem</property>.</para>
-			</listitem>
-			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"productId"</property>
-					</emphasis> property of the <property moreinfo="none">OrderItem</property> to the <emphasis>
-						<property moreinfo="none">"productCode"</property>
-					</emphasis> property of <property moreinfo="none">LineItem</property>.</para>
-			</listitem>
-			<listitem>
-				<para>Bind the <emphasis>
-						<property moreinfo="none">"quantity"</property>
-					</emphasis> property of the <property moreinfo="none">OrderItem</property> to the <emphasis>
-						<property moreinfo="none">"unitQuantity"</property>
-					</emphasis> property of <property moreinfo="none">LineItem</property>.</para>
-			</listitem>
-		</orderedlist>
-
-		<para> Make sense?
-			You should open Design tab and click Add button. In opened Add Child Wizard,please, select <emphasis>
-				<property moreinfo="none">Add Smooks Resource&gt;Java Binding&gt;Bindings</property></emphasis>.  
-			</para>
-		<para>First of all, you should bind <emphasis>
-			<property moreinfo="none">Order</property></emphasis> to <emphasis>
-				<property moreinfo="none">LineOrder</property></emphasis>. To do this one <emphasis>
-					<property moreinfo="none">Bindings</property></emphasis> Item should be added to the Resource List.</para>
-			<figure float="0">
-				<title>Mapping</title>
-				<mediaobject>
-					<imageobject>
-						<imagedata fileref="images/quick_start/quick_start10.png" scale="90"></imagedata>
-					</imageobject>
-				</mediaobject>
-			</figure><para>Click on it and you should see <emphasis>
-				<property moreinfo="none">Bindings</property></emphasis> Section to the right of <emphasis>
-					<property moreinfo="none">Message Filtering Resources</property></emphasis>.Write <emphasis> <property moreinfo="none">lineOrder</property></emphasis> in the <emphasis>
-						<property moreinfo="none">Bean id</property></emphasis> field.</para>
-		<para>Select <emphasis>
-			<property moreinfo="none">example.trgmodel.LineOrder</property></emphasis> in the <emphasis>
-				<property moreinfo="none">Class</property></emphasis> field and <emphasis>
-					<property moreinfo="none">example.srcmodel.Order</property></emphasis> in the <emphasis>
-						<property moreinfo="none">Name</property></emphasis> field.Your <emphasis> <property moreinfo="none">Smooks Configuration Editor</property></emphasis> should look like this: </para>
-		<figure float="0">
-			<title>Mapping</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start11.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		
-		<para>Now you should bind two values <emphasis> <property moreinfo="none">"customerNumber"</property>
-		</emphasis> property of the <property moreinfo="none">Order#header</property> to the <emphasis>
-			<property moreinfo="none">"customerId"</property>
-		</emphasis> property of <property moreinfo="none">LineOrder</property>.To do this  right click your just created <emphasis>
-			<property moreinfo="none">Bindings Item &gt;Add Smooks Resource&gt;Value</property></emphasis>
-		.</para>
-		
-		<figure float="0">
-			<title> Mapping Editor</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start12.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure><note>
-			<title>Note:</title>
-			<para>Please, remember that the root nodes of the source data and target data *MUST* be
-				connected.</para>
-			<para>This rule is not only for Java-to-Java, but also is relevant for
-				XML-to-Java </para>
-		</note>
-		<para> Do the same operation with the 
-		other properties in this and other classes.</para>
-		<para>It's also  necessary to bind  <emphasis>
-			<property moreinfo="none">orderItems</property></emphasis> property of the <emphasis>
-				<property moreinfo="none">Order</property></emphasis> to <emphasis>
-					<property moreinfo="none">lineItems</property></emphasis> property of <emphasis>
-						<property moreinfo="none">LineOrder</property></emphasis>.The difference from the previous steps is that the  <emphasis>
-							<property moreinfo="none">orderItems</property></emphasis> is presented by the list of <emphasis>
-								<property moreinfo="none">Order</property></emphasis> and <emphasis>
-									<property moreinfo="none">lineItems</property></emphasis> is the massive of <emphasis>
-										<property moreinfo="none">LineItem</property></emphasis> .To do the binding,you should use <emphasis>
-										<property moreinfo="none">Wiring Item</property></emphasis>.First you should create a new Binding item.   This is a configuration that allows you to construct an object graph .Select <emphasis>
-												<property moreinfo="none">example.trgmodel.LineItem[]</property></emphasis> in the Class field and orderItems in the Name field,in bean Id write lineItems.
-			Your Smooks Configuration Editor should look like this: 
-		</para>
-		<figure float="0">
-			<title> Creating Wiring Item</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start13a.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para> Then you should right click <emphasis>
-			<property moreinfo="none">lineOrder</property></emphasis> binding item<emphasis>
-				<property moreinfo="none">&gt;Add Smooks Resource&gt;Wiring</property></emphasis>.Select <emphasis>
-					<property moreinfo="none">lineItem</property></emphasis> in <emphasis>
-						<property moreinfo="none">Bean id Ref</property></emphasis>.
-		</para>
-		<para>The final step is to add new Wiring item to lineOrder <property moreinfo="none">Binding</property>.In the <property moreinfo="none">Bean id Ref</property> select <emphasis>
-			<property moreinfo="none">lineItems</property></emphasis> and in <emphasis>
-				<property moreinfo="none">Property</property></emphasis> select <emphasis>
-			<property moreinfo="none">lineItems</property></emphasis>.</para>
-<!--
-		<para>Next, you are going to bind the properties of the <property>OrderItem</property> to
-			the properties of the <property>LineItem</property>.</paa>
-		<para>Select the <emphasis>
-				<property>&quot;price&quot;</property>
-			</emphasis> and drag it onto the <emphasis>
-				<property>&quot;unitPrice&quot;</property>
-			</emphasis> of the other side tree viewer. The Problems area shows an
-			error:</para>
-		<figure>
-			<title>Connection Error 1</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start12.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>How to deal with the error?</para>
-		<para>Please click the <emphasis>
-			<property>Fix it</property></emphasis> link, a menu is popped-up with several
-			resolve methods on it.</para>
-		<figure>
-			<title>Fixing the Connection Error</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start13.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para> Select the first resolve method: <emphasis>
-			'Connect the &quot;OrderItem&quot; to the
-			&quot;LineItem&quot; '.</emphasis> As the result the <emphasis>
-				<property>&quot;OrderItem&quot;</property></emphasis> is connected with
-			the <emphasis>
-				<property>&quot;LineItem&quot;</property>.</emphasis></para>
-		<para>But the notify message area still shows some other errors:</para>
-		<figure>
-			<title>Connection Error 2</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start14.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>OK, let&apos;s deal with the fire error. Click the <emphasis>
-			<property>Fix it</property></emphasis> link and
-			select the first resolve method. The <emphasis>
-				<property>&quot;orderItems&quot;</property></emphasis> is connected with
-			the <emphasis>
-				<property>&quot;lineItems&quot;</property>.</emphasis></para>
-		
-		<tip>
-			<title>Tip:</title>
-			<para> Why does the error occur?</para>
-			<para> You will find that, if you only connect the property node without connecting the
-				parent node of the property, the &quot;connection error&quot; occurs.</para>
-			<para>The connection of the &quot;price-to-unitPrice&quot; is the
-				&quot;Binding Connection&quot;, but it needs an &quot;Instance Creation
-				Connection&quot; - the connection of the
-				&quot;OrderItem-to-LineItem&quot;.</para>
-		</tip>
-		<para> After that, connect <emphasis>
-			<property>&quot;quantity&quot;</property></emphasis> to the <emphasis>
-				<property>&quot;unitQuantity&quot;</property></emphasis> and <emphasis>
-					<property>&quot;productId&quot;</property></emphasis> to the
-			<emphasis>
-				<property>&quot;productCode&quot;</property>:</emphasis></para>
-		<figure>
-			<title>Complete Mapping</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/quick_start/quick_start15.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>-->
-		<para>Now, you should save the file and the <property moreinfo="none">Smooks tools</property> generate the correct
-			configuration file content.</para>
-		<para>OK, let run the test class: <property moreinfo="none">example.Main</property>. (Please, make sure that the Smooks engine
-			loads the correct configuration file).</para>
-		<para>Success!</para>
-	</section>
-</chapter>
-
-	<!--&smooksformeditor_graphicaltab;-->
-	
-<chapter id="smooksformeditor_configurationtab" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/smooks/docs/reference/en/modules/smooksformeditor_configurationpage.xml" xreflabel="Smooks Configuration Editor Page">
-	<?dbhtml filename="smooks_form_editor_configurationtab.html"?>
-	<chapterinfo>
-		<keywordset>
-			<keyword>JBoss Tools</keyword>
-			<keyword>Smooks</keyword>
-			<keyword>JBDS</keyword>
-		</keywordset>
-	</chapterinfo>
-	<title>Smooks Design Page</title>
-	<para>In this section you will explore the details of Smooks Design Page usage.</para>
-	<para><property moreinfo="none">Smooks Design Page</property> is one tab of the <property moreinfo="none">Smooks Editor</property>. </para>
-	<figure float="0">
-		<title>Design Page</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/config_page/config_page1.png" scale="90"></imagedata>
-			</imageobject>
-		</mediaobject>
-	</figure>
-	<para>This page consists of 3 sections: Message Filtering Resources, Input Data and the section devoted to the configurations of a selected in a Message Filtering Resources section Item.</para>
-	<para> You can bind classes <link linkend="quickstart_mapping">using Bindings item
-			</link> on the Design page of the <property moreinfo="none">Smooks Editor</property>. </para>
-	<para><emphasis>
-		<property moreinfo="none">Resource list</property></emphasis> item in <emphasis>
-			<property moreinfo="none">Message Filtering Resources</property></emphasis> corresponds to the root element of the <emphasis>
-				<property moreinfo="none">smooks-config.xml</property></emphasis> file.You can configurate  the next four  properties using corresponding fields:</para>
-	<itemizedlist>
-		<listitem><para><emphasis>
-			<property moreinfo="none">default-selector</property></emphasis>:Defines the selector that will be applied to all resource-config elements in the <emphasis>
-				<property moreinfo="none">smooks-config.xml</property></emphasis>, where  a selector is not defined. </para></listitem>
-		<listitem><para><emphasis>
-			<property moreinfo="none">default-selector-namespace</property></emphasis>:Defines the default selector namespace.  </para></listitem>
-		<listitem><para><emphasis>
-			<property moreinfo="none">default-target-profile</property></emphasis>: Defines the default target profile that will be applied to all resources in the smooks-config.xml. </para></listitem>
-		<listitem><para><emphasis>
-			<property moreinfo="none">default-condition-ref</property></emphasis>:The condition is applied to resources where an empty "condition" element (i.e. <code>&lt;condition/&gt;</code>)is defined.The condition element does not reference a globally defined condition. </para></listitem>
-	</itemizedlist>
-	<para> The configuration editor also edits the <link linkend="configurationpage_parsetype">Smooks parse
-			type</link> and manages the <link linkend="configurationpage_importfile">Import
-			Files</link>.</para>
-	<section id="selector-dialog">
-		<title>Selector generate dialog</title>
-		<para>Using <emphasis>
-			<property moreinfo="none">Selector generate dialog</property></emphasis> you can allow the user to select a node for generation <property moreinfo="none">"selector"</property> for smooks-config file.
-			To open the dialog you should left click <property moreinfo="none">Browse</property> button in <emphasis>
-				<property moreinfo="none">Default Selector</property></emphasis> section.
-		</para>
-		<figure float="0">
-			<title>Selector generate dialog</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/config_page/config_page2a.png" scale="90"></imagedata>
-			</imageobject>
-		</mediaobject>
-		</figure>
-		<para>	When the dialog is opened  you should click <property moreinfo="none">"Click to add input data"</property>to set the selector.
-			In the opened  <emphasis>
-				<property moreinfo="none">Data Type Selection</property></emphasis> Wizard you should choose the type of the file and the file itself you want to load to the <emphasis>
-					<property moreinfo="none">Selector generate dialog</property></emphasis>.After that your dialog should look nearly like that:</para>
-		<figure float="0">
-			<title>Selector generate dialog after adding Input Data</title>
-			<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/config_page/config_page2b.png" scale="90"></imagedata>
-			</imageobject>
-			</mediaobject>
-		</figure>
-		<para>The final step is to choose the node you want to make a selector for <emphasis>
-			<property moreinfo="none">smooks-config.xml</property></emphasis>.</para>	
-	</section>	
-	<section id="configurationpage_parsetype">
-
-		<title>Smooks Parse Type</title>
-		<para>If your config file doesn't contain <emphasis>
-			<property moreinfo="none">Global Parametres</property></emphasis> item yet, you should add it by right click <emphasis>
-				<property moreinfo="none">Resource List&gt;Add Smooks Resource&gt;Global Parametres</property></emphasis>.After this step you should add <emphasis>
-					<property moreinfo="none">Param</property></emphasis> to just created <emphasis>
-						<property moreinfo="none">Global Parametres</property></emphasis>. </para>
-		<figure float="0">
-			<title>Adding Param to created  Global Parametres</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page2.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>Then left click  <emphasis>
-				<property moreinfo="none">Param</property>
-		</emphasis>and in the Param section, you will see  a set of text fields: <emphasis>
-			<property moreinfo="none">Name</property></emphasis>,<emphasis>
-				<property moreinfo="none">Type</property></emphasis> and <emphasis>
-					<property moreinfo="none">Text</property></emphasis>.<emphasis>
-						<property moreinfo="none">Name</property></emphasis> value is required. To set a parse type you should write SAX/DOM to the 
-			<emphasis>
-			<property moreinfo="none">Text</property></emphasis> field.</para>
-
-		<figure float="0">
-			<title>Filling Param section field Name and Text Value for set a Parse Type</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page3.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>To apply changes to the <emphasis>
-			<property moreinfo="none">smooks-config.xml</property></emphasis> click <emphasis>
-			<property moreinfo="none">Save</property></emphasis> button (<emphasis>
-				<property moreinfo="none">Ctrl+S</property></emphasis>). </para>
-	</section>
-	<section id="configurationpage_importfile">
-
-		<title>Import Smooks Configuration page</title>
-		<para> Right click <emphasis>
-			<property moreinfo="none">Resource List&gt;Add Smooks Resource&gt;Import Smooks Configuration</property>
-			</emphasis>, then you should see a new  <emphasis>
-				<property moreinfo="none">Import Smooks Configuration</property>
-			</emphasis>item in the  list  (see the figure below).</para>
-		
-		<figure float="0">
-			<title>Import Data</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page3a.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>Left click the added item and to the left of <emphasis>
-			<property moreinfo="none">Message Filtering Resources  Import Smooks Configuration </property></emphasis> section should appear. Click the  <emphasis>
-				<property moreinfo="none">Browse</property>
-			</emphasis> button and select the file you want to import(see <link linkend="file_selection">File selection</link> section). </para>
-		<para>Click <emphasis>
-			<property moreinfo="none">Save</property></emphasis> and the <code>&lt;import&gt;</code> tag with the corresponding file path as a <emphasis>
-				<property moreinfo="none">file</property></emphasis> property will be added to the <emphasis>
-					<property moreinfo="none">smooks-config.xml</property></emphasis>.</para>
-	</section>
-	<section id="file_selection">
-		<title>File selection</title>
-		<para>Some attributes in Smooks elements should store path to a file as a value
-			(e.g. attribute <emphasis><property moreinfo="none">"mappingModel"</property></emphasis> of the element <emphasis><property moreinfo="none">"edi:reader"</property></emphasis>).
-			You can see a Browse button near the fields, that  set such a value to the attribute
-			(e.g. <emphasis><property moreinfo="none">"Mapping Model"</property></emphasis> field set a value to the <emphasis><property moreinfo="none">"mappingModel"</property></emphasis> attribute).
-		</para>
-		<figure float="0">
-			<title>EDI:Reader element</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page6.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-	<para>	
-		When you click <emphasis><property moreinfo="none">Browse</property></emphasis>, the  dialog prompts you click one of two buttons:
-		<emphasis><property moreinfo="none">Browse File System</property></emphasis> and <emphasis><property moreinfo="none">Browse WorkSpace</property></emphasis>. 
-	</para>
-		<figure float="0">
-			<title>Browse dialog</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page7.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>Using the buttons  you can locate the file you need. If you click <emphasis>
-			<property moreinfo="none">Browse File System</property></emphasis> button you specify the path of, or browse to, a file system directory.
-		</para>
-		<figure float="0">
-			<title>Browse file system</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page8.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>
-			If you click <emphasis><property moreinfo="none">Browse WorkSpace</property></emphasis> button, you specify the path of, or browse to, a workspace relative working directory.
-		</para>
-		<figure float="0">
-			<title>Browse Workspace</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page9.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-	</section>
-	<!--<section id="configurationpage_datedecoder">
-		<title>Date Decoder Detail Page</title>
-
-		<para>Date Decoder is a resourceConfig element in the Smooks configuration file. It
-			describes how to transform the &quot;Date&quot; type.</para>
-		<para> Click the <emphasis>
-				<property>New</property>
-			</emphasis> button to open the <property>New Resource Type wizard</property>
-			dialog.</para>
-		<figure>
-			<title>Resource Type Selection Wizard</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page4.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<para>There are several resource type on the list. Select the <emphasis>
-				<property>Date Decoder</property>
-			</emphasis> and click the <emphasis>
-				<property>Finish</property>
-			</emphasis> button, a new <emphasis>
-				<property>Date Decoder</property>
-			</emphasis> item was added and shown on the resource type list.</para>
-		<para> There are several parameters in the <emphasis>
-				<property>Date Decoder</property>
-			</emphasis> resourceConfig element:</para>
-
-		<para>
-
-			<itemizedlist>
-				<listitem>
-					<para>Format</para>
-				</listitem>
-				
-				<listitem>
-					<para>Locale-Language</para>
-					
-				</listitem>
-
-				<listitem>
-					<para>Locale-Country</para>
-
-				</listitem>
-			</itemizedlist>
-		</para>
-
-		<para> You can modify the parameters of the <emphasis>
-			<property>Date Decoder</property></emphasis> item with the left detail page.</para>
-
-		<figure>
-			<title>Date Decoder Detail Page</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/config_page/config_page1.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<para> When you defined a new <emphasis>
-			<property>Date Decoder</property></emphasis>, then you can use the <link
-				linkend="graphicalpage_propertiesview">JavaBean Properties</link> GUI to set
-				it to be the &quot;Java type&quot;.</para>
-		<para>Now when we've learnt Smooks Configuration Editor Page, let's have a look at one more Smooks Editor Page -  Smooks Source Editor Page and investigate its functionality</para>
-
-		
-			<para> The XML fragment generated by Smooks tools for the "Date
-			Decoder": </para> <para> <programlisting> <![CDATA[<resource-config
-			selector="decoder:DateLong">
-			<resource>org.milyn.javabean.decoders.DateDecoder</resource> <param
-			name="locale-language">en</param> <param name="format">yyy-MM-dd
-			HH:mm:ss</param> <param name="locale-country">IE</param>
-			</resource-config>]]> </programlisting> </para>
-		
-	</section>
-	
-		<section id="configurationpage_documenttype"> <title>Document Type
-		Detail Page</title> <para> </para> </section> <section
-		id="configurationpage_unhandleresourceconfig"> <title>Unhandle
-		ResourceConfig</title> </section>
-	-->
 </chapter>
 
 	
-<chapter id="smooksformeditor_sourcetab" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/smooks/docs/reference/en/modules/smooksformeditor_sourcepage.xml" xreflabel="Smooks Source Editor Page">
-	<?dbhtml filename="smooks_form_editor_sourcetab.html"?>
-	<chapterinfo>
-		<keywordset>
-			<keyword>JBoss Tools</keyword>
-			<keyword>Smooks</keyword>
-			<keyword>JBDS</keyword>
-		</keywordset>
-	</chapterinfo>
-	<title>Smooks Source Editor Page</title>
-	<para>This section provides information about Smooks Source Editor Page.</para>
-	<section>
-		<title>XML Source Editor</title>
-		<para>You can use this editor to edit the Smooks Configuration file directly. </para>
-		<figure float="0">
-			<title>Graphical Editor</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/source_editor/source_editor1.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-	</section>
-	<section>
-		<title>Error underlining in Graphical Editor</title>
-		<para>If the <property moreinfo="none">Smooks tools</property> can't understand the configuration
-			file or the configuration file is illegal (XML structure isn't right for Smooks
-			Configuration file, etc.), the error is underlined.</para>
-		<figure float="0">
-			<title>Graphical Editor</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/source_editor/source_editor2.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<!--note>
-			<title>Tip:</title>
-			<para> When the error message panel is displayed, other editors ( Graphical Editor,
-				Configuration Editor ) are disabled. </para>
-			<para> You can't edit the configuration file with other editors until file becomes
-				valid. </para>
-		</note-->
-		
-		
-		
-	</section>
-	
-	<section>
-		<title>Smooks Configuration File Validator</title>
-		<para>Smooks configuration file validator will validate your Smooks configuration file. Just  right-click on the file and then click on the <property moreinfo="none">Validate</property> button. The validator can be enabled/disabled in <emphasis><property moreinfo="none">Window -&gt; Preferences -&gt; Validation</property></emphasis>:</para>
-	
-		<figure float="0">
-			<title>Validation: Smooks Configuration File Validator</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/source_editor/smooks_conf_validator.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
+<chapter diffmk:change="added" id="process_page" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/smooks/docs/reference/en/modules/tasks.xml">
+    <?dbhtml filename="tasks.html"?>
+    <chapterinfo diffmk:change="added">
+        <keywordset diffmk:change="added">
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">Smooks</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBDS</diffmk:wrapper></keyword>
+        </keywordset>
+    </chapterinfo>
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Tasks</diffmk:wrapper></title>
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">This chapter describes the main tasks a user can be faced during Smooks tools usage.</diffmk:wrapper></para>
+    <section id="config_file_wizzard">
+        <title><diffmk:wrapper diffmk:change="changed">New Smooks Configuration File Creation</diffmk:wrapper></title>
+        <para><diffmk:wrapper diffmk:change="changed">Select the  project where you want to create new Smooks Configuration File  and right-click on it,
+            select in the menu </diffmk:wrapper><emphasis><property moreinfo="none">New &gt; Other</property>,</emphasis><diffmk:wrapper diffmk:change="changed"> then find
+            </diffmk:wrapper><emphasis><property moreinfo="none">Smooks &gt; Smooks Configuration File</property>.</emphasis><diffmk:wrapper diffmk:change="changed">
+            Click the </diffmk:wrapper><emphasis>
+                <property moreinfo="none">Next</property>
+            </emphasis> button. </para>
+        <figure float="0">
+            <title>Selecting Smooks Configuration File Wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/quick_start/quick_start1.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>The first wizard page is a file path creation page. Select the <emphasis>
+            <property moreinfo="none">src</property>
+        </emphasis><diffmk:wrapper diffmk:change="changed"> folder to be the files container, and input the name
+            </diffmk:wrapper><emphasis><property moreinfo="none">smooks-config.xml</property>.</emphasis><diffmk:wrapper diffmk:change="changed"> Click
+            </diffmk:wrapper><emphasis><property moreinfo="none">Next</property>.</emphasis></para>
+        <figure float="0">
+            <title>Choosing the configuration file container and the file name</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/quick_start/quick_start2.png" scale="90"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para><diffmk:wrapper diffmk:change="changed">The second wizard page allow you to select Smooks configuration file version. Select the appropriate one and click </diffmk:wrapper><emphasis><property moreinfo="none">Finish</property></emphasis> to complete the wizard.</para>
+        </section>
+    <section diffmk:change="added">
+        <title><diffmk:wrapper diffmk:change="changed">Input Task Configuring</diffmk:wrapper></title>
+        <para> 
+            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Input task configuring</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> is an obligatory step for your smooks project creation.
+            You can configure it on the Process page of the editor: look for the "Input Task" in the Process Map at the top of the page.
+        </diffmk:wrapper></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Input Task Configuring</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process1.png" scale="90"/> 
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para><diffmk:wrapper diffmk:change="added">Select it and you will see all the properties to set for the Input reader of your Smooks configuration.
+            "Input type" corresponds to the type of data that you will be working with. 
+            For example, to work with incoming CSV (Comma-separated Values) data, you would specify "CSV" in the drop-down list.
+            Each reader type has slightly different configuration details that must be set in the "Input configuration" area.
+            For instance, the CSV reader requires you to specify details such as the encoding, quote character, separator character, and the list of incoming fields. 
+            The EDI reader requires the encoding and the path to the Mapping Model describing the incoming data.            
+            In the </diffmk:wrapper><emphasis><diffmk:wrapper diffmk:change="added">Input data</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> section, you specify some sample data that conforms to your reader configuration. 
+        </diffmk:wrapper></para>
+        
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+            Once you've specified your reader configuration and sample data, you can see the input model rendered in a tree form in the </diffmk:wrapper><emphasis><diffmk:wrapper diffmk:change="added">Input model</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="changed"> section.
+            On the picture below you can see the correct configuration of some XML input task.
+        </diffmk:wrapper></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Input Task Configuring</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process2.png" scale="90"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    <section diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">"Java Mapping" or "Apply Template"?</diffmk:wrapper></title>
+        
+        <para><diffmk:wrapper diffmk:change="added">Though there are many options in Smooks as far as what you can do with input 
+            data such as transformation, routing, and persistence, this version 
+            of the Smooks Configuration Editor focuses only on these areas: 
+            mapping to java and applying templates to create different output formats.       
+            If you have a set of Java classes you want to use the incoming data for, 
+            you can use the "Java Mapping" task to specify those classes and use drag and
+            drop to map between the input model generated by the reader and elements in the output model.
+            Or if you simply want to transform your output to one or more formats, you can use the "Apply Template" 
+            task to map it to a CSV file, XML or XSD file (and other formats in the future).
+            </diffmk:wrapper><note><title>Note</title>
+                <para><diffmk:wrapper diffmk:change="changed">Now you can't transform your output directly,
+                    using only Input and Template tasks.
+                    You should use Mapping as an interagent between these tasks.</diffmk:wrapper></para>
+             </note>
+        </para>
+    </section>
+    <section diffmk:change="added" id="mapping">
+        <title><diffmk:wrapper diffmk:change="changed">Java Mapping Task</diffmk:wrapper></title>
+        
+        <para><diffmk:wrapper diffmk:change="changed">
+            If you decide to do Java Mapping, you need to make sure that your Input reader has been set up and you have some sample data specified.
+            Then you should select </diffmk:wrapper><emphasis><diffmk:wrapper diffmk:change="added">Input Task</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="changed"> in the Process tab and click the plus (+) sign to the right of the icon.
+            Select </diffmk:wrapper><emphasis><diffmk:wrapper diffmk:change="added">Java Mapping</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> from the popup menu and it will appear to the right, connected to </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Input Task</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">. Then select </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Java Mapping</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="changed"> task.
+        </diffmk:wrapper></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Java Mapping configuration</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para><diffmk:wrapper diffmk:change="changed">Another method of adding </diffmk:wrapper><emphasis><diffmk:wrapper diffmk:change="added">Java Mapping</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> element 
+            to the canvas in the Processing Tasks section is to right click Input Task
+            element and select </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Java Mapping</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="changed"> in the popup menu </diffmk:wrapper></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Java Mapping configuration</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process4.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>  
+        <para><diffmk:wrapper diffmk:change="changed">
+            Right-click on the canvas in an empty space and select "Add -&gt;Java Class".
+        </diffmk:wrapper></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Java Mapping configuration</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process5.png"/>  
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>
+            <emphasis><diffmk:wrapper diffmk:change="added">Java Bean Creation</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> wizard appears.
+            Specify a unique identifier for the new class, the class path, 
+            whether it's an array or not, and if it is a collection, also specify the collection class.
+            If the Java class is specified, you'll see a list of the properties in the box below.
+            Click </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Finish</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="changed"> when you're done.
+            Now with the input and output models on the canvas, you can click and drag 
+            from the various input elements to corresponding output elements. 
+            Make sure to connect collection elements to corresponding collection elements.
+            Finally your mapping should look nearly like the one on the picture below.
+        </diffmk:wrapper></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Final Mapping schema</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process6.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    <section diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Apply Template Task</diffmk:wrapper></title>
+        
+        <para><diffmk:wrapper diffmk:change="added">The "Apply Template" task works very similarly to the </diffmk:wrapper><link diffmk:change="added" linkend="mapping"><diffmk:wrapper diffmk:change="added">"Java Mapping" task</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">, where you map between an input model and an output model.
+            Select the </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Java Mapping</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> task you want to use as the input model in the Process Map pane and click the plus (+) sign to the right of the icon.
+        </diffmk:wrapper></para>
+        <figure float="0">
+            <title><diffmk:wrapper diffmk:change="changed">Apply Template configuration</diffmk:wrapper></title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process7.png"/> 
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para><diffmk:wrapper diffmk:change="added">
+            Select "Apply Template" from the popup menu and it will appear to the right, connected to the task you created it from. Then select the "Apply Template" task.
+            Once you've defined your template model, you can click and drag from the various input elements to corresponding output elements in the template. Make sure to connect collection elements to corresponding collection elements
+        </diffmk:wrapper></para>
+    </section>
+    <section diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Smooks Configuration testing using Smooks Run Configuration</diffmk:wrapper></title>
+        
+        <para><diffmk:wrapper diffmk:change="added">This option is intended to view the results of Smooks transforming procedure.
+            For more detailed information about this option please go </diffmk:wrapper><ulink diffmk:change="added" url="http://community.jboss.org/wiki/UsingtheSmooksRunConfigurationtotestSmooksConfigurations"><diffmk:wrapper diffmk:change="added">here</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+    </section>
+</chapter>
+<chapter id="reference" diffmk:change="added" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/smooks/docs/reference/en/modules/references.xml">
+    <?dbhtml filename="reference.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Smooks</keyword>
+            <keyword>JBDS</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>Reference</title>
+    <para>This chapter includes detailed reference information about Smooks Tools.</para>
+    <section>
+        <title>Smooks Configuration Editor</title>
+    <para>This chapter describes the following tabs of the Smooks Configuration Editor:</para>
 
-	<para>You can set up your Smooks validator to include, exclude groups to validate and specify rules for validation. Just click on the <property moreinfo="none">Settings</property> button and use the options provided:</para>
-	
-		<figure float="0">
-			<title>Smooks Configuration File Validator Settings</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/source_editor/smooks_conf_validator_settings.png" scale="90"></imagedata>
-				</imageobject>
-			</mediaobject>
-		</figure>
-	
-	
-		<para>We hope, our guide will help you to get started with JBoss Smooks Tools. Besides, for additional information you are welcome on <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss forum</ulink>.</para>
-		
-	</section>
-	
-	
-	
-	
+    <itemizedlist>
+        <listitem><para><link linkend="process_tab">Process tab</link></para></listitem>
+        <listitem><para><link linkend="options_tab">Options tab</link></para></listitem>
+        <listitem><para><link linkend="smooksformeditor_sourcetab">Source tab</link></para></listitem>
+    </itemizedlist>
+   <section id="process_tab">
+       <title>Process tab</title>
+       <para>The Process tab of the Smooks Configuration Editor helps to configure different types of transformations.
+           By default smooks configuration file is opened in this editor.If you have another default settings for editor opening
+           you should left click smooks configuration file and select:<emphasis>Open With->Smooks Configuration Editor</emphasis>.</para>
+       <para>The Process tab has two sections:</para>
+       <itemizedlist>
+           <listitem><para><link linkend="processing_task_section">Processing Task section</link></para></listitem>
+           <listitem><para><link linkend="selected_task_details">Selected Task Details section</link></para></listitem>
+       </itemizedlist>
+       <para>You can see them on the picture below.</para>
+       <figure>
+           <title>Two Sections of the Process tab.</title>
+           <mediaobject>
+               <imageobject>
+                   <imagedata fileref="images/reference/reference_1.png" scale="90"/>
+               </imageobject>
+           </mediaobject>
+       </figure>
+       <section id="processing_task_section">
+           <title>Processing Task section</title>
+           <para>Using the popup menu in the Processing Task section you
+           can select which types of technologies(templating or mapping ones) you will use for transofmation: </para>
+           <para>The descriptions of the popup menu options are in the following table.</para>
+           <table>
+               <title>Process Tab. Processing Task section.</title>   
+               <tgroup cols="3">
+                   <colspec colnum="1" align="left" colwidth="1*"/>
+                   <colspec colnum="2" align="left" colwidth="3*"/>
+                   <colspec colnum="3" align="left" colwidth="1*"/>
+                   
+                   <thead>
+                       <row>
+                           <entry>Option</entry>									
+                           <entry>Description</entry>
+                           <entry>Default</entry>
+                       </row>
+                   </thead>
+                   <tbody>
+                       <row>
+                           <entry>Add Task</entry>
+                           <entry>Select one of the following tasks according to the necessary type of Source and Result types of the files:
+                               <itemizedlist>
+                                   <listitem><para><emphasis>Input</emphasis> -this task is required and
+                                       appears automatically when Smooks config file is created.
+                                       You should just configure it properly.</para></listitem>
+                                   <listitem><para><emphasis>Java Mapping</emphasis></para></listitem>
+                                   <listitem><para><emphasis>Apply Template</emphasis></para></listitem>
+                               </itemizedlist>
+                           </entry>
+                          <entry></entry>
+                       </row> 
+                       
+                       <row>
+                           <entry>Delete</entry>
+                           <entry>Click this option if you want to delete some task from the section.
+                           Note:you can't delete input task because it's required.</entry>
+                           <entry></entry>
+                           
+                       </row> 
+                       
+                       <row>
+                           <entry>Input Methods</entry>
+                           <entry>Choose one of the following methods:
+                               <itemizedlist>
+                                   <listitem><para>System</para></listitem>
+                                   <listitem><para>Simple</para></listitem>
+                                   <listitem><para>Amharic(EZ+)</para></listitem>
+                                   <listitem><para>Cedilla</para></listitem>
+                                   <listitem><para>Cyrillic</para></listitem>
+                                   <listitem><para>Inuktitut</para></listitem>
+                                   <listitem><para>IPA</para></listitem>
+                                   <listitem><para>Multipress</para></listitem>
+                                   <listitem><para>SCIM Bridge Input Method</para></listitem>
+                                   <listitem><para>SCIM Input Method</para></listitem>
+                                   <listitem><para>Thai-Lio</para></listitem>
+                                   <listitem><para>Tigrigna-Eritrean(EZ+)</para></listitem>
+                                   <listitem><para>Tigrigna-Ethiopian(EZ+)</para></listitem>
+                                   <listitem><para>Vietnamese</para></listitem>
+                                   <listitem><para>X input Method</para></listitem>
+                               </itemizedlist>
+                           </entry>
+                           <entry>System</entry>
+                        </row> 
+                   </tbody>
+               </tgroup>
+           </table>
+     </section>
+  <section id="selected_task_details">
+      <title>Selected Task Details Section</title>
+      <para>The options of this section depends on the selected task in the Processing Task section.
+          Because there are 3 types of tasks there are 3 different sets of its options in the Selected Task Details Section.
+          They will be described one by one. </para>
+      <section>
+          <title>Selected Task Details Section for Input Task.</title>
+              <para>On the picture below you can find an example of Selected Task Details Section view
+              if XML is selected as input type.</para>
+              
+              <figure>
+                  <title>Selected Task Details Section for Input XML Task.</title>
+                  <mediaobject>
+                      <imageobject>
+                          <imagedata fileref="images/reference/reference_2.png" scale="90"/>
+                      </imageobject>
+                  </mediaobject>
+              </figure>
+              <para>As you can see on the picture above Input Configuration section is empty for XML input file.
+                  But this section has special configuration options for CSV,EDI,JSON,Custom input files.</para>
+      
+              <para>Here are the screens of these configuration options:</para>
+              <itemizedlist>
+                  <listitem><para>CSV:</para>
+                      <figure>
+                          <title>Selected Task Details Section for Input CSV Task.</title>
+                          <mediaobject>
+                              <imageobject>
+                                  <imagedata fileref="images/reference/reference_3.png" />
+                              </imageobject>
+                          </mediaobject>
+                      </figure>
+                  </listitem>
+                  <listitem><para>EDI:</para>
+                      <figure>
+                          <title>Selected Task Details Section for Input EDI Task.</title>
+                          <mediaobject>
+                              <imageobject>
+                                  <imagedata fileref="images/reference/reference_4.png"/>
+                              </imageobject>
+                          </mediaobject>
+                      </figure>
+                  </listitem>
+                  <listitem><para>JSON:</para>
+                      <figure>
+                          <title>Selected Task Details Section for Input JSON Task.</title>
+                          <mediaobject>
+                              <imageobject>
+                                  <imagedata fileref="images/reference/reference_5.png"/>
+                              </imageobject>
+                          </mediaobject>
+                      </figure>
+                  </listitem>
+                  <listitem><para>Custom:</para>
+                      <figure>
+                          <title>Selected Task Details Section for Input Custom Task.</title>
+                          <mediaobject>
+                              <imageobject>
+                                  <imagedata fileref="images/reference/reference_6.png"/>
+                              </imageobject>
+                          </mediaobject>
+                      </figure>
+                  </listitem>
+              </itemizedlist>
+           <para>All the input task configuration positions can be found in the table below:</para>   
+              <table>
+          <title>Selected Task Details Section. Options for Input Task.</title>   
+          <tgroup cols="3">
+              <colspec colnum="1" align="left" colwidth="1*"/>
+              <colspec colnum="2" align="left" colwidth="3*"/>
+              <colspec colnum="3" align="left" colwidth="1*"/>           
+              <thead>
+                  <row>
+                      <entry>Option</entry>									
+                      <entry>Description</entry>
+                      <entry>Default</entry>
+                  </row>
+              </thead>
+              <tbody>
+                  <row>
+                      <entry>Input type</entry>
+                      <entry>Select your type of input file.
+                          If don't find your type in the list,you should use Custom type:
+                          <itemizedlist>
+                              <listitem><para>No Input</para></listitem>
+                              <listitem><para>XML</para></listitem>
+                              <listitem><para>Java</para></listitem>
+                              <listitem><para>XSD/WSDL</para></listitem>
+                              <listitem><para>CSV</para></listitem>
+                              <listitem><para>EDI</para></listitem>
+                              <listitem><para>JSON</para></listitem>
+                              <listitem><para>Custom</para></listitem>
+                          </itemizedlist>
+                      </entry>
+                      <entry>XML</entry>
+                  </row> 
+                 
+                  <row>
+                      <entry>Input configuration
+
+                      </entry>
+                      <entry>
+                      <itemizedlist>
+                          <listitem><para><emphasis>No Input</emphasis> -no info required</para></listitem>
+                          <listitem><para><emphasis>XML</emphasis> -no info required</para></listitem>
+                          <listitem><para><emphasis>Java</emphasis> -no info required</para></listitem>
+                          <listitem><para><emphasis>XSD/WSDL</emphasis> -no info required</para></listitem>
+                          <listitem><para><emphasis>CSV</emphasis></para><itemizedlist>
+                              <listitem><para><emphasis>Fields</emphasis> -Comma separated list of CSV record field names
+                              </para></listitem>
+                              <listitem><para><emphasis>Separator Character</emphasis> -Field separator character.  Default of ','.
+                              </para></listitem>
+                              <listitem><para><emphasis>Quote Character</emphasis> -Quote character.  Default of '"'.
+                              </para></listitem>
+                              <listitem><para><emphasis>Record Name</emphasis> -Name of csv record element.Default:csv-record</para></listitem>
+                              <listitem><para><emphasis>Root Name</emphasis> -Name of csv root element.Default:csv-set</para></listitem>
+                              <listitem><para><emphasis>indent</emphasis> -Add indentation character data to the generated event stream.  This simply makes
+                                  the generated event stream easier to read in its serialized form.  Useful for
+                                  testing etc.Default:true
+                              </para></listitem>
+                              <listitem><para><emphasis>Skip Lines</emphasis> -Number of lines to skip before processing starts. Default of 0.
+                                  
+                              </para></listitem>
+                          </itemizedlist>
+                          </listitem>
+                          <listitem><para><emphasis>EDI</emphasis></para>
+                           <itemizedlist>
+                               <listitem><para><emphasis>Target Profile</emphasis> -Defines the target profile
+                               </para></listitem>
+                               <listitem><para><emphasis>Encoding</emphasis> -The character encoding. Default "UTF-8"</para></listitem>
+                               <listitem><para><emphasis>Mapping Model</emphasis> -Defines the EDI Mapping Model configuration for processing the 
+                                   EDI message stream to a stream of SAX events that can be processed by Smooks.</para></listitem>
+                               <listitem><para><emphasis>Validate</emphasis> -This attribute turns on/off datatype validation in the EDI Parser.
+                                   Validation is on by default.
+                                   It makes sense to turn datatype validation off on the EDI Reader 
+                                   if the EDI data is being bound into a Java Object model.
+                                   </para></listitem>
+                          </itemizedlist>
+                          </listitem>
+                          <listitem><para><emphasis>JSON</emphasis></para>
+                              <itemizedlist>
+                                  <listitem><para><emphasis>Target Profile</emphasis> -Defines the target profile</para></listitem>
+                                  <listitem><para><emphasis>Array Element Name</emphasis> -The element name of a array element. Default of 'element'.
+                                  </para></listitem>
+                                  <listitem><para><emphasis>Encoding</emphasis> -encoding: The default encoding of any JSON message 
+                                      InputStream processed by this Reader. Default of 'UTF-8'.</para></listitem>
+                                  <listitem><para><emphasis>Illegal Element Name Char Replacement</emphasis> -If illegal characters are encountered in a JSON element name then they are replaced with this value.
+                                      By default this is not defined, so that the reader doesn't doesn't search for illegal characters.
+                                  </para></listitem>
+                                  <listitem><para><emphasis>Indent</emphasis> -Add indentation character data to the generated event stream.  This simply makes
+                                      the generated event stream easier to read in its serialized form.  Useful for
+                                      testing etc.Default:false.
+                                  </para></listitem>
+                                  <listitem><para><emphasis>Key Prefix on Numeric</emphasis> -The prefix character to add if the JSON node name starts with a number.
+                                      By default this is not defined, so that the reader doesn't search for element names that start with a number.
+                                  </para></listitem>
+                                  <listitem><para><emphasis>Key Whitespace Replacement</emphasis> -The replacement character for whitespaces in a JSON map key.
+                                      By default this not defined, so that the reader doesn't search for whitespaces.
+                                  </para></listitem>
+                                  <listitem><para><emphasis>Null Value Replacement</emphasis> -The replacement string for JSON NULL values. Default is ""(an empty string). </para></listitem>
+                                  <listitem><para><emphasis>Root Name</emphasis> -The element name of the document root. Default of 'json'.
+                                  </para></listitem>
+                                  <listitem><para><emphasis>Key Maps</emphasis> -Defines a JSON element name mapping
+                                      The "from" key will be replaced with the "to" key or the contents of the element.
+                                  </para></listitem>                        
+                              </itemizedlist>
+                          </listitem>
+                          <listitem><para><emphasis>Custom</emphasis></para>
+                              <itemizedlist>
+                                  <listitem><para><emphasis>Target Profile</emphasis> -</para></listitem>
+                                  <listitem><para><emphasis>Class</emphasis> -Custom reader class.</para></listitem>
+                                  <listitem><para><emphasis>Handlers</emphasis> -Set a handler on the reader instance e.g. an EntityResolver, ErrorHandler etc.
+                                  </para></listitem>
+                                  <listitem><para><emphasis>Features</emphasis> -Reader Features List</para></listitem>
+                                  <listitem><para><emphasis>Parametres</emphasis> -Resource Parameters</para></listitem>
+                                         
+                              </itemizedlist>
+                          </listitem>
+                      </itemizedlist></entry>
+                      <entry><itemizedlist>
+                          <listitem><para><emphasis>CSV</emphasis></para><itemizedlist>
+                              <listitem><para>not defined</para></listitem>
+                              <listitem><para>','</para></listitem>
+                              <listitem><para>'"'</para></listitem>
+                              <listitem><para>csv-record</para></listitem>
+                              <listitem><para>csv-set</para></listitem>
+                              <listitem><para>true</para></listitem>
+                              <listitem><para>0</para></listitem>
+                          </itemizedlist>
+                          </listitem>
+                          <listitem><para><emphasis>EDI</emphasis></para>
+                              <itemizedlist>
+                                  <listitem><para>not defined</para></listitem>
+                                  <listitem><para>UTF-8</para></listitem>
+                                  <listitem><para>not defined</para></listitem>
+                                  <listitem><para>true</para></listitem>
+                              </itemizedlist>
+                          </listitem>
+                          <listitem><para><emphasis>JSON</emphasis></para>
+                              <itemizedlist>
+                                  <listitem><para>not defined</para></listitem>
+                                  <listitem><para>element</para></listitem>
+                                  <listitem><para>UTF-8</para></listitem>
+                                  <listitem><para>not defined</para></listitem>
+                                  <listitem><para>false</para></listitem>
+                                  <listitem><para>not defined</para></listitem>
+                                  <listitem><para>not defined</para></listitem>
+                                  <listitem><para>""(an empty string)</para></listitem>
+                                  <listitem><para>'json'</para></listitem>
+                                  <listitem><para>not defined</para></listitem>                        
+                              </itemizedlist>
+                          </listitem>
+                          <listitem><para><emphasis>Custom</emphasis></para>
+                              <itemizedlist>
+                                  <listitem><para>no defaults</para></listitem>
+                                       
+                              </itemizedlist>
+                          </listitem>
+                      </itemizedlist></entry>
+                  </row> 
+                  <row>
+                      <entry>Input Data</entry>
+                      <entry>You should select a data file using <emphasis>Add</emphasis> and <emphasis>Delete</emphasis> buttons</entry>
+                      <entry></entry>
+                  </row>
+                  <row>
+                      <entry>Input Model View</entry>
+                      <entry>Using this view you can see the structure of your input file.If  the file has been changed, to see the changes
+                          click <emphasis>Refresh</emphasis>link.</entry>
+                      <entry></entry>
+                  </row>
+              </tbody>
+          </tgroup>
+              </table>
+      </section>
+           <section id="mapping_task"><title>Selected Task Details section for Java Mapping Task.</title>
+              <para>Selected Task Details section for this task is presented by the graf,
+              that lighten the process of java mapping. </para>
+              <figure>
+                  <title>Selected Task Details Section for Mapping Task.</title>
+                  <mediaobject>
+                      <imageobject>
+                          <imagedata fileref="images/reference/reference_7.png" scale="90"/>
+                      </imageobject>
+                  </mediaobject>
+              </figure>
+              <para> This graphical editor allow you to perform drug/drop operations with the nodes of transform data to map the source data to target data.
+              When you save the changes in the graphical editor the correct Smooks configuration file content will be generated. </para>
+              
+           </section>
+      <section><title>Selected Task Details section for Template Task.</title>
+          <para>Selected Task Details section for this task is presented by the graf,
+              that is similar to the one in the <link linkend="mapping_task">previous section</link>.
+               </para>
+          <figure>
+              <title>Selected Task Details Section for Template Task.</title>
+              <mediaobject>
+                  <imageobject>
+                      <imagedata fileref="images/reference/reference_7a.png" scale="90"/>
+                  </imageobject>
+              </mediaobject>
+          </figure>
+        </section>
+  </section>
+
+   </section>
+    <section id="options_tab">
+            <title>Options Tab</title>
+            <para>This section describes Options tab of the Smooks Configuration File editor, gives short recommendations how this tab can be used during the project configuring.</para>
+            <figure>
+                <title> Options tab of the Smooks Configuration File editor</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/reference/reference_8.png" scale="90"/>
+                    </imageobject>
+                </mediaobject>
+            </figure> 
+            <section>
+                <title>Smooks Configuration section</title>
+                <para> 
+                    In the <property>Smooks Configuration</property> section of <property>Options Tab</property>
+                    only one  element is availible:Smooks Platform Version
+                </para>
+                <figure>
+                    <title>Smooks Configuration section of Options tab</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/reference/reference_9.png" scale="90"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para>This parameter is not rechangable,
+                    and is set according to the vesion of the Smooks libraries that are added to the project.
+                </para>
+            </section>
+        
+        <section>
+            <title>Filter Settings Filter section</title>
+            <para> 
+                In Filter Settings section you can set
+                the following global options responsible for Smooks filtering configuring:</para>
+            <figure>
+                <title>Filter Settings section of Options tab</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/reference/reference_10.png" scale="90"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>This behavior can be turned off using this global configuration parameter and can be overriden on a per fragment basis by targetting a Visitor implementation at that fragment that takes ownership of the Result writer (in the case of SAX filtering), or simply modifies the DOM (in the case of DOM filtering). As an example of this, see the FreeMarkerTemplateProcessor. 
+            </para>
+            <table>
+                <title>Options Tab. Filter Settings section.</title>   
+                <tgroup cols="3">
+                    <colspec colnum="1" align="left" colwidth="1*"/>
+                    <colspec colnum="2" align="left" colwidth="3*"/>
+                    <colspec colnum="3" align="left" colwidth="1*"/>
+                    
+                    <thead>
+                        <row>
+                            <entry>Option</entry>									
+                            <entry>Description</entry>
+                            <entry>Default</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>Stream Filter Type</entry>
+                            <entry>Determines the type of processing model that will be used.
+                                Please refer to <ulink url="http://www.smooks.org/mediawiki/index.php?title=V1.2:Smooks_v1.2_User_Guide#Filtering_Process_Selection_.28DOM_or_SAX.3F.29">
+                                    Filtering Process Selection section</ulink>
+                                of the official Smooks User Guide for more information about these models:
+                                <itemizedlist>
+                                    <listitem><para><emphasis>SAX</emphasis></para></listitem>
+                                    <listitem><para><emphasis>DOM</emphasis></para></listitem>
+                                </itemizedlist>
+                            </entry>
+                            <entry>DOM</entry>
+                        </row> 
+                        
+                        <row>
+                            <entry>Default Serialization is On</entry>
+                            <entry>Defines whether default serialization should be switched on.
+                                Default serialization being turned on leads to locating StreamResult/DOMResult
+                                to the Result objects provided to the Smooks.filterSource method and to
+                                serialization all the events to that Result.</entry>
+                            <entry>true</entry>
+                            
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </section> 
+    </section>
+   <section id="smooksformeditor_sourcetab" xreflabel="Smooks Source Tab">
+
+            <title>Source Tab</title>
+            <para>This section provides information about Smooks Source Editor Page.</para>
+            <section>
+                <title>XML Source Editor</title>
+                <para>You can use this editor to edit the Smooks Configuration file directly. </para>
+                <figure>
+                    <title>Graphical Editor</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/source_editor/source_editor1.png" scale="90"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+            </section>
+            <section>
+                <title>Error underlining in Graphical Editor</title>
+                <para>If the <property>Smooks tools</property> can&apos;t understand the configuration
+                    file or the configuration file is illegal (XML structure isn&apos;t right for Smooks
+                    Configuration file, etc.), the error is underlined.</para>
+                <figure>
+                    <title>Graphical Editor</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/reference/reference_11.png" scale="90"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+
+            </section>
+     
+            <section>
+                <title>Smooks Configuration File Validator</title>
+                <para>Smooks configuration file validator will validate your Smooks configuration file. Just  right-click on the file and then click on the <property>Validate</property> button. The validator can be enabled/disabled in <emphasis><property>Window -> Preferences -> Validation</property></emphasis>:</para>
+                
+                <figure>
+                    <title>Validation: Smooks Configuration File Validator</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/source_editor/smooks_conf_validator.png" scale="90"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                
+                <para>You can set up your Smooks validator to include, exclude groups to validate and specify rules for validation. Just click on the <property>Settings</property> button and use the options provided:</para>
+         
+                <figure>
+                    <title>Smooks Configuration File Validator Settings</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/source_editor/smooks_conf_validator_settings.png" scale="90"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+
+               
+            </section>
+ </section>
+ </section>
+</chapter>
+
+<chapter diffmk:change="added" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/smooks/docs/reference/en/modules/summary.xml">
+    <?dbhtml filename="summary.html"?>
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Summary</diffmk:wrapper></title>
+    <para><diffmk:wrapper diffmk:change="added">In conclusion, with this document you know all the capabilities of Smooks Tools and could easily start with them.
+        The chapters above walked you through the steps on how to create and configure some XML to JAVA mapping project.     
+        If you have questions or suggestions concerned both the documentation and tools behavior,
+        you are welcome to JBoss Tools Users forum.
+        Please, use Jira to report bugs and requests on documentation.</diffmk:wrapper></para>
+    
+    <section diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Other relevant resources on the topic</diffmk:wrapper></title>
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">All JBoss Developer Studio/JBoss Tools release documentation you can find at
+            </diffmk:wrapper><ulink diffmk:change="added" url="http://docs.jboss.org/tools"><diffmk:wrapper diffmk:change="added">http://docs.jboss.org/tools</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> in the corresponding release directory.
+        </diffmk:wrapper></para>   
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The latest documentation builds are available at </diffmk:wrapper><ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/nightly-docs"><diffmk:wrapper diffmk:change="added">http://download.jboss.org/jbosstools/nightly-docs</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></para>
+<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For more information about Smooks technology please visit
+                </diffmk:wrapper><ulink diffmk:change="added" url="http://www.smooks.org/mediawiki/index.php?title=Main_Page"><diffmk:wrapper diffmk:change="added">
+                    Smooks Technology Home Page</diffmk:wrapper></ulink></para>
+     
+    </section>
 </chapter>
 
 </book>
