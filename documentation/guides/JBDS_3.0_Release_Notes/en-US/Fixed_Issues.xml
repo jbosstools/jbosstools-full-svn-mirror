@@ -94,6 +94,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4730">JBIDE-4730</ulink>: The ESB project creation wizard receives a new logo following this update. Instead of using the generic <application>JBoss Developer Studio</application> logo within the ESB project wizard, a new ESB wizard logo is displayed.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4168">JBIDE-4168</ulink>: The ability to select a directory using a browser window has been added for the FS Message Filter and the FTP Message filter attributes of <property>directory</property>, <property>post-directory</property> and <property>error-directory</property>. This added feature ensures that a user does not need to manually type the entire path to a directory but instead they just select the path from a browser.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -191,6 +196,26 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4715">JBIDE-4715</ulink>: A toggle button has been added to the Hibernate Mapping diagram to allow the outline view to be ordered either alphabetically or by the structure outlined in the file. The toggle button interface ensures the experience remains consistent across all tools included within the <application>JBoss Developer Studio</application>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4666">JBIDE-4662</ulink>: Annotations support has been added to Hibernate Tools. The addittion of annotations support allows for interaction with the Eclipse Dali Java Persistence Tools Project plug-in.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4451">JBIDE-4451</ulink>: The option is now given to the user to enable the <guilabel>HQL Editor</guilabel> and <guilabel>Hibernate Criteria Editor</guilabel> to be dynamicly updated when opening a new query instead of opening an instance of each editor for each query. This can be achieved by clicking the button of a tack  to the right of the <guilabel>Max resutls:</guilabel> drop-won box in the editor.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4450">JBIDE-4450</ulink>: The <guilabel>Properties</guilabel> view has been updated with a new property called <property>Tab name</property>. The addition of this property allows for a user to individually name each query tab, allowing for improved tab management.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4227">JBIDE-4227</ulink>: The <guimenuitem>Open Mapping File</guimenuitem> option now supports all possible configuration files. In the past only files called <filename>orm.xml</filename> have been supported and this update now provides increased user functionality.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -479,6 +504,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4914">JBIDE-4914</ulink>: The Visual Page Editor has been redesigned so that all drop-down menu items are placed in the toolbar as buttons.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4323">JBIDE-4323</ulink>: Zoom actions have been added to the visual context menu so that a user can now resize the content of the Visual Page Editor to make it easier to read and manage.
 						</para>
 					</listitem>
 				</itemizedlist>
