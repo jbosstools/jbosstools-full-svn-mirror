@@ -18,12 +18,6 @@
       %license
    </license>
 
-   <!-- <url>
-      <update label="%updateSiteName" url="http://download.jboss.org/jbosstools/updates/stable/galileo/"/>
-   </url> -->
-   <!-- this is a DEPENDENCY SITE, not a DISCOVERY SITE, so there's no point having it be discovered AFTER the feature's already installed 
-      <discovery label="Business Intelligence and Reporting Tools (BIRT) Updates" url="http://download.eclipse.org/birt/update-site/2.5/"/>
-	-->
    <requires>
       <import feature="org.eclipse.birt" version="2.5.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.birt.integration.wtp" version="2.5.0" match="greaterOrEqual"/>
@@ -49,11 +43,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipse.birt.integration.wtp.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
 </feature>
