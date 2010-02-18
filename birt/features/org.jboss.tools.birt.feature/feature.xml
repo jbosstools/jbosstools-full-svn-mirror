@@ -25,8 +25,8 @@
       <discovery label="Business Intelligence and Reporting Tools (BIRT) Updates" url="http://download.eclipse.org/birt/update-site/2.5/"/>
 	-->
    <requires>
-      <import feature="org.eclipse.birt" version="2.3.1"/>
-      <import feature="org.eclipse.birt.integration.wtp" version="2.3.1"/>
+      <import feature="org.eclipse.birt" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.birt.integration.wtp" version="2.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
