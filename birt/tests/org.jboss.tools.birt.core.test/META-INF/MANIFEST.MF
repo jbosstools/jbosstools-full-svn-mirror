@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: BIRT Core Tests
 Bundle-SymbolicName: org.jboss.tools.birt.core.test
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: JBoss by RedHat
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.jboss.tools.tests,
