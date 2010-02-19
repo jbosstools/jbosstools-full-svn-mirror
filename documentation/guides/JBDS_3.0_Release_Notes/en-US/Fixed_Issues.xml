@@ -366,6 +366,16 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4944">JBIDE-4944</ulink>: The Seam wizards <guilabel>Action</guilabel>, <guilabel>Entity</guilabel> and <guilabel>Conversation</guilabel> had the ability to overwrite resources when they generated code. The wizards would warn the user that some resources already existed and yet overwrite them. This has been corrected through the modification of the <filename>SeamBaseOperation.java</filename> file.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4136">JBIDE-4136</ulink>: Classloading issues were being faced by users of Seam Tools because the <application>JBoss Developer Studio</application> used the <filename>MANIFEST.MF</filename> file for creating an arifact classpath instead of using the EAR <filename>lib/</filename> directory that is recommended by Seam. Until now the <application>JBoss Developer Studio</application> has not been able to use the EAR <filename>lib/</filename> directory because this functionality has not been supported by Eclipse. With the introduction of Eclipse 3.5 in this release the use of the EAR <filename>lib/</filename> directory is now supported and the process of creating an artifact classpath has been updated.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2807">JBIDE-2807</ulink>: An option is now provided when creating a <guilabel>New Seam Project</guilabel>, to not create a test project. This has become an option since the Seam model does not require the test project to exist and so allows the user to decide if it is of importance. Selecting to create or not create a test project is achieved through the ticking of a <guilabel>Create Test Project</guilabel> check box within the <guilabel>New Seam Project</guilabel> wizard.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -510,6 +520,73 @@
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4323">JBIDE-4323</ulink>: Zoom actions have been added to the visual context menu so that a user can now resize the content of the Visual Page Editor to make it easier to read and manage.
 						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2820">JBIDE-2820</ulink>: Support for new JSF 2.0 elements has been added to the Visual Page Editor. The tags that are newly supported are:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									h:head
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									h:body
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									h:outputscript
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									h:outputstyle
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									h:button 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									h:link 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									f:ajax 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									f:event 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									f:validateBean
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									f:validateRequired 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									f:viewParam 
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									f:metadata 
+								</para>
+							</listitem>
+						</itemizedlist>
 					</listitem>
 				</itemizedlist>
 			</para>
@@ -748,6 +825,31 @@
 			Maven Portletbridge 2.0.0 ALPHA Libraries with dependencies
 		</para>									</listitem>
 									</itemizedlist>
+								</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3563">JBIDE-3563</ulink>: Code assist has been added for classes that are defined in linked CSS. The schema for included page contexts has been added. This has occured as it is needed to create the contexts for all the pages included in the source. It allows for the gathering of information on bundles declared in included pages.
+						</para>
+						<para>
+							The included page contexts are created and the following information is collected within the included contexts:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									Namespaces are declared within the included pages
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Tag labraries are used in the included pages
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Resource bundles are declared within the included pages 
 								</para>
 							</listitem>
 						</itemizedlist>
