@@ -1016,12 +1016,19 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 
 		public void partOpened(IWorkbenchPart part) {
-			if (JspEditorPlugin.getDefault().getPreferenceStore().
-					getBoolean(IVpePreferencesPage.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE)) {
-				try {
-					checkNaturesFromPart(part);
-				} catch (CoreException e) {
-					VpePlugin.getPluginLog().logError(e);
+			boolean isCheck = true;
+			String isCheckString = System.getProperty("org.jboss.tools.vpe.ENABLE_PROJECT_NATURES_CHECKER"); //$NON-NLS-1$
+			if (isCheckString != null) {
+				isCheck = Boolean.parseBoolean(isCheckString);
+			}
+			if (isCheck) {
+				if (JspEditorPlugin.getDefault().getPreferenceStore().
+						getBoolean(IVpePreferencesPage.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE)) {
+					try {
+						checkNaturesFromPart(part);
+					} catch (CoreException e) {
+						VpePlugin.getPluginLog().logError(e);
+					}
 				}
 			}
 		}
