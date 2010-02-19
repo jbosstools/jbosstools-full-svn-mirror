@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="issues" xreflabel="issues">
+    <?dbhtml filename="introduction.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>JBDS</keyword>
+            <keyword>Exadel Studio Pro</keyword>
+        </keywordset>
+    </chapterinfo>
+    
+    <title>Possible issues</title>
+    <para>In this chapter you will find a list of most popular 
+       issues that can appear while the process of migration,
+        </para>
+    
+    
+    <section>
+        <title>Visual Editor starts with "Missing Natures" message dialog</title>
+        <para>While opening existing projects or creating new ones 
+        with some standard eclipse wizards this message can appear:</para>
+        <figure>
+            <title>"Missing Natures" message</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/jdbs4.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>This message shows that some functionality of Visual Editor may not work if a project 
+            doesn't have org.jboss.tools.jsf.jsfnature or org.jboss.tools.jst.web.kb.kbnature
+            in .project configuration. To fix this problem and turn off the message box execute the following steps:</para>
+    <itemizedlist>
+        <listitem><para>Right click the project in Package Explorer.</para></listitem>
+        <listitem><para>Select <property>Configure -> Add JSF Capabilities</property> from the context menu.</para></listitem>
+        <listitem><para>Configure your project using Add JSF Capabilities wizard and press <property>Finish</property></para></listitem>
+    </itemizedlist>
+   </section>
+    
+    
+</chapter>
