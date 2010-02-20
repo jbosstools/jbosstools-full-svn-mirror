@@ -1,0 +1,460 @@
+<projects>
+
+    <project>
+		<category>Seam</category>
+		<name>dvdstoreall</name>
+		<included-projects>
+		dvdstore,dvdstore-ear,dvdstore-ejb 
+		</included-projects>
+		<shortDescription>Seam DVD Store Example - EAR</shortDescription>
+
+		<description>This example demonstrates the use of Seam with jBPM pageflow and business process management. It includes the dvdstore,dvdstore-ear and dvdstore-ejb projects.
+		</description>
+		<size>6926336</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/dvdstoreall.zip
+		</url>
+	</project>
+	
+	<project>
+		<category>Seam</category>
+
+		<name>dvdstoreall2</name>
+		<included-projects>
+		dvdstore,dvdstore-ear,dvdstore-ejb,dvdstore-test
+		</included-projects>
+		<shortDescription>Seam DVD Store Example - EAR (including a test project)</shortDescription>
+		<description>This example demonstrates the use of Seam with jBPM pageflow and business process management. It includes the dvdstore,dvdstore-ear,dvdstore-test and dvdstore-ejb projects.
+		</description>
+		<size>30380032</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/dvdstoreall2.zip
+		</url>
+	</project>
+	
+	<project>
+		<category>Seam</category>
+		<name>booking</name>
+		<included-projects>
+
+		booking,booking-ear,booking-ejb
+		</included-projects>
+		<shortDescription>Seam Booking Example - EAR</shortDescription>
+		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
+Transaction and persistence context management is handled by the EJB container.
+This example can also run in Tomcat with JBoss Embedded.
+It includes the booking, booking-ear and booking-ejb projects.
+</description>
+		<size>8127000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/bookingall.zip
+		</url>
+
+	</project>
+	
+	<project>
+		<category>Seam</category>
+		<name>booking2</name>
+		<included-projects>
+		booking,booking-ear,booking-ejb,booking-test
+		</included-projects>
+		<shortDescription>Seam Booking Example - EAR (including a test project)</shortDescription>
+
+		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
+Transaction and persistence context management is handled by the EJB container.
+This example can also run in Tomcat with JBoss Embedded.
+It includes the booking, booking-ear,booking-test and booking-ejb projects.
+</description>
+		<size>36036608</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/bookingall2.zip
+		</url>
+	</project>
+	
+	<project>
+		<category>Seam</category>
+
+		<name>booking2</name>
+		<included-projects>
+		booking,booking-ear,booking-ejb,booking-parent,booking-test
+		</included-projects>
+		<shortDescription>Seam Booking Example - EAR mavenized</shortDescription>
+		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
+Transaction and persistence context management is handled by the EJB container.
+It includes the booking, booking-ear, booking-ejb,booking-test and booking-parent projects.
+Requires the m2eclipse and testng plugins
+</description>
+		<size>203639</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/booking-mavenized.zip
+		</url>
+	</project>
+	
+	<project>
+		<category>Seam</category>
+		<name>booking3</name>
+		<included-projects>
+
+		booking,booking-ear,booking-ejb,booking-parent,booking-test
+		</included-projects>
+		<shortDescription>Seam Booking Example - EAR mavenized - Seam 2.1.1.GA</shortDescription>
+		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
+Transaction and persistence context management is handled by the EJB container.
+It includes the booking, booking-ear, booking-ejb, booking-test and booking-parent projects.
+Requires the m2eclipse and testng plugins
+</description>
+		<size>196608</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/booking-mavenized-2.1.1.zip
+		</url>
+
+	</project>
+	
+	<project>
+		<category>Seam</category>
+		<name>jboss-seam-jpa</name>
+		<shortDescription>Seam Booking Example - WAR Standalone</shortDescription>
+		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
+Transaction and persistence context management is handled by the EJB container.
+This example can also run in Tomcat with JBoss Embedded.
+</description>
+		<size>5595136</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/jboss-seam-jpa.zip
+		</url>
+	</project>	
+	
+	<project>
+		<category>Seam</category>
+		<name>jboss-seam-jpa2</name>
+		<included-projects>
+		jboss-seam-jpa,jboss-seam-jpa-test
+		</included-projects>
+
+		<shortDescription>Seam Booking Example - WAR Standalone (including a test project)</shortDescription>
+		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
+Transaction and persistence context management is handled by the EJB container.
+This example can also run in Tomcat with JBoss Embedded.
+It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
+</description>
+		<size>33357824</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/jboss-seam-jpa2.zip
+		</url>
+	</project>
+	
+	<project>
+
+		<category>Portlet</category>
+		<name>testjavaportlet</name>
+		<shortDescription>JBoss Java Portlet Example</shortDescription>
+		<description>This example demonstrates the use of JBoss Java Portlet. It runs on JBoss Portal 2.7.0.</description>
+		<size>10000</size>
+		<url>
+
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testjavaportlet.zip
+		</url>
+		<welcome type="cheatsheets" url="/testjavaportlet/javaportletcs.xml"/>
+	</project>
+	
+	<project>
+		<category>Portlet</category>
+		<name>testjsfportlet</name>
+		<shortDescription>JBoss JSF Portlet Example</shortDescription>
+
+		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss Portal 2.7.0.</description>
+		<size>4000000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testjsfportlet.zip
+		</url>
+	</project>
+
+	<project>
+		<category>Portlet</category>
+
+		<name>testseamportlet</name>
+		<shortDescription>JBoss Seam Portlet Example</shortDescription>
+		<description>This example demonstrates the use of JBoss Seam Portlet. It runs on JBoss Portal 2.7.0.</description>
+		<size>10000000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testseamportlet.zip
+		</url>
+
+	</project>
+	
+	<project>
+		<category>ESB</category>
+		<name>helloworld</name>
+		<shortDescription>JBoss ESB HelloWorld Example - ESB</shortDescription>
+		<description>This example is to prove that the ESB is is properly configured and happy.  
+As well as to demonstrate the needed  minimal files to make a basic ESB component execute.</description>
+		<size>59000</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld.zip
+		</url>
+	</project>	
+	
+	<project>
+		<category>ESB</category>
+		<name>helloworld_testclient</name>
+		<shortDescription>JBoss ESB HelloWorld Example - Client</shortDescription>
+
+		<description>This example is to demonstrate how to invoke the deployed HelloWorld ESB. It requires the helloworld project.</description>
+		<size>1000000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld_testclient.zip
+		</url>
+	</project>
+	
+	<project>
+		<category>ESB</category>
+
+		<name>helloworld_action</name>
+		<shortDescription>JBoss ESB HelloWorld Action Example - ESB</shortDescription>
+		<description>This example is to demonstrate the use of multiple action invocations from a single configuration.  You can use  a single Action class and make multiple method calls or use multiple Action
+  classes.</description>
+		<size>7100</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld_action.zip
+		</url>
+
+	</project>
+	
+	<project>
+		<category>ESB</category>
+		<name>helloworld_action_client</name>
+		<shortDescription>JBoss ESB HelloWorld Action Example - Client</shortDescription>
+		<description>This example is to test the deployed helloworld_action ESB. It requires the helloworld_action project.</description>
+		<size>18694</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld_action_client.zip
+		</url>
+	</project>	
+	
+	<project>
+		<category>ESB</category>
+		<name>helloworld_file_action</name>
+		<shortDescription>JBoss ESB HelloWorld File Action Example - ESB</shortDescription>
+
+		<description>This is a basic example of using the File gateway feature of the JBoss ESB.
+  Files that are found in a particular directory with a particular extension
+  are sent to a JMS queue with actions for processing. Before deploy the project, please change some properties according to the readme.txt file.</description>
+		<size>7920</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld_file_action.zip
+		</url>
+	</project>	
+	
+	<project>
+		<category>ESB</category>
+
+		<name>helloworld_file_action_client</name>
+		<shortDescription>JBoss ESB HelloWorld File Action Example - Client</shortDescription>
+		<description>This example is to test the deployed helloworld_file_action ESB. It requires the helloworld_file_action project.</description>
+		<size>18694</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld_file_action_client.zip
+		</url>
+
+	</project>	
+	<project>
+		<category>ESB</category>
+		<name>webservice_consumer1</name>
+		<shortDescription>JBoss ESB Web Service consumer1 Example</shortDescription>
+		<description>This example demonstrates how to consume a 181 Web Service in an ESB action.
+    This ESB will make a webservice request that requires a single "toWhom" string parameter.
+    The webservice will return a greeting response. The ESB simply displays the response on the console.
+    </description>
+		<size>22500</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/webservice_consumer1.zip
+		</url>
+	</project>
+
+	<project>
+		<category>ESB</category>
+		<name>webservice_consumer1_client</name>
+		<shortDescription>JBoss ESB Web Service consumer1 Example - Client</shortDescription>
+
+		<description>This example is to test the deployed a consumer web service.It requires the webservice_consumer1 project.</description>
+		<size>1000000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/webservice_consumer1_client.zip
+		</url>
+	</project>
+
+	<project>
+		<category>ESB</category>
+
+		<name>webservice_producer</name>
+		<shortDescription>JBoss ESB Web Service producer Example</shortDescription>
+		<description>This sample demonstrates how to deploy a JSR181 Webservice endpoint on
+  JBossESB using the SOAPProcessor action.</description>
+		<size>53000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/webservice_producer.zip
+		</url>
+
+	</project>
+
+	<project>
+		<category>ESB</category>
+		<name>webservice_producer_client</name>
+		<shortDescription>JBoss ESB Web Service producer Example - Client</shortDescription>
+		<description>This sample is to test the deployed a web service endpoint.It requires the webservice_producer project.</description>
+
+		<size>14200</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/webservice_producer_client.zip
+		</url>
+	</project>
+
+	<project>
+		<category>ESB</category>
+		<name>transform_CSV2XML</name>
+
+		<shortDescription>JBoss ESB Smooks CSV->XML Example</shortDescription>
+		<description>This sample demonstrates how to transform a comma separated value (CSV) file to an xml.
+  The tranformation is done by configuring Smooks and performing two transformation, one transformation from CSV to an intermediate xml format, and a second transformation from the intermediate xml format to the target xml.</description>
+		<size>7200</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/transform_CSV2XML.zip
+		</url>
+	</project>
+
+	<project>
+		<category>ESB</category>
+		<name>transform_CSV2XML_client</name>
+		<shortDescription>JBoss ESB Smooks CSV->XML Example - Client</shortDescription>
+		<description>This sample is to test the JBoss ESB smooks CSV->XML transformation.It requires the transform_CSV2XML project.</description>
+		<size>16600</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/transform_CSV2XML_client.zip
+		</url>
+	</project>	
+
+	<project>
+		<category>ESB</category>
+		<name>transform_XML2POJO</name>
+		<shortDescription>JBoss ESB Smooks XML->POJO Example</shortDescription>
+
+		<description>The purpose of the simple_transformation sample is to illustrate the
+use of Smooks performing a simple transformation by converting a XML file into
+Java POJOs.</description>
+		<size>26600</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/transform_XML2POJO.zip
+		</url>
+	</project>
+
+	<project>
+		<category>ESB</category>
+
+		<name>transform_XML2POJO_client</name>
+		<shortDescription>JBoss ESB Smooks XML->POJO Example - Client</shortDescription>
+		<description>This sample is to test the JBoss ESB smooks XML->POJO transformation.It requires the transform_XML2POJO project.</description>
+		<size>22400</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/transform_XML2POJO_client.zip
+		</url>
+
+	</project>
+
+	<project>
+		<category>ESB</category>
+		<name>transform_XML2XML_date_manipulation</name>
+		<shortDescription>JBoss ESB Smooks XML->XML date-manipulation Example</shortDescription>
+		<description>This is another simple sample of how to manually define and apply a Message
+  Transformation within JBoss ESB.  
+
+  This sample is an extension of the "transformation_XML2XML_simple"
+  Quickstart, demonstrating how  JBoss ESB Transformations can simplify your
+  XSLT transformations by combining the power of XSLT with Java.  In this
+  Quickstart, we use Java to perform the ugly string manipulation on the
+  SampleOrder date field (see OrderDate.java) and use XSLT for what it's good at
+  i.e. Templating.  Again, the transformed SampleOrder.xml message is just
+  printed to the Java console (message before and after).</description>
+
+		<size>13600</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/transform_XML2XML_date_manipulation.zip
+		</url>
+	</project>
+
+	<project>
+		<category>ESB</category>
+		<name>transform_XML2XML_date_manipulation_client</name>
+
+		<shortDescription>JBoss ESB Smooks XML->XML date-manipulation Example - Client</shortDescription>
+		<description>This sample is to test the JBoss ESB XML->XML date-manipulation transformation.It requires the transform_XML2XML_date_manipulation project.</description>
+		<size>18600</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/transform_XML2XML_date_manipulation_client.zip
+		</url>
+	</project>
+
+	<project>
+		<category>ESB</category>
+		<name>transform_XML2XML_simple</name>
+		<shortDescription>JBoss ESB Smooks XML->XML Example</shortDescription>
+		<description>This is a very basic sample of how to manually define and apply a Message
+  Transformation within JBoss ESB.  It applies a very simple XSLT to a
+  SampleOrder.xml message and prints the before and after XML to the console.</description>
+		<size>6700</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/transform_XML2XML_simple.zip
+		</url>
+	</project>
+
+	<project>
+		<category>ESB</category>
+		<name>transform_XML2XML_simple_client</name>
+		<shortDescription>JBoss ESB Smooks XML->XML Example - Client</shortDescription>
+
+		<description>This sample is to test the JBoss ESB XML->XML transformation.It requires the transform_XML2XML_simple project.</description>
+		<size>17800</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/esb-example/transform_XML2XML_simple_client.zip
+		</url>
+	</project>
+	<project>
+		<category>RichFaces</category>
+
+		<name>RichFaces 3.2.2.SP1 Demo Application for JBoss AS 4.2.X</name>
+		<included-projects>richfaces-demo</included-projects>
+		<shortDescription>RichFaces 3.2.2.SP1 Demo Application - WAR</shortDescription>
+		<description>This example contains RichFaces 3.2.2.SP1 Demo Application</description>
+		<size>10640749</size>
+		<url>
+
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/dgolovin/examples/rf/richfaces-demo.zip
+		</url>
+	</project>
+	
+	<project>
+		<category>RESTEasy</category>
+		<name>simple</name>
+		<included-projects>
+		simple
+		</included-projects>
+
+		<shortDescription>RESTEasy Simple Example</shortDescription>
+		<description>This project is a simple example showing usage of @Path, @GET, PUT, POST, and @PathParam. It uses pure streaming output and includes the 'simple' project. 
+Requires m2eclipse >= 0.9.7.20081001-2217. You can install it using the following update site: http://m2eclipse.sonatype.org/update-dev/
+		</description>
+		<size>16939</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/resteasy-examples/resteasySimple.zip
+		</url>
+	</project>
+
+</projects>
+
