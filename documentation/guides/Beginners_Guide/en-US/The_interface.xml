@@ -70,8 +70,8 @@
 		<para>
 			The JBoss Application Server provides the full range of Java EE 5 features as well as extended enterprise services including clustering, caching, and persistence.
 		</para>
-		<section id="sect-Beginners_Guide-JBoss_Application_Server-Use_of_the_application_server_shipped_with_the_JBoss_Developer_Studio">
-			<title>Use of the application server shipped with the JBoss Developer Studio</title>
+		<section id="sect-Beginners_Guide-JBoss_Application_Server-Using_the_application_server_shipped_with_the_JBoss_Developer_Studio">
+			<title>Using the application server shipped with the JBoss Developer Studio</title>
 			<para>
 				This section discusses the JBoss Application Server with regards to its use through Eclipse. Once you have started the Eclipse interface for the <application>JBoss Developer Studio</application>, the JBoss Application Server can be started by clicking on its name in the lower part of the window and then clicking the green arrow to the right.
 			</para>
