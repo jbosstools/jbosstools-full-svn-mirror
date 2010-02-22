@@ -128,7 +128,7 @@
            id="org.jboss.tools.vpe.editor.wizards.ExportUnknownTagsTemplatesWizard"
            class="org.jboss.tools.vpe.editor.wizards.ExportUnknownTagsTemplatesWizard"
            name="%exportUnknownTagsTemplatesWizardName"
-           icon="icons/">
+           icon="$nl$/resources/org/jboss/tools/vpe/wizards/icons/export_wizard.gif">
         <description>
               %exportUnknownTagsTemplatesWizardDescription
         </description>
@@ -141,7 +141,7 @@
            id="org.jboss.tools.vpe.editor.wizards.ImportUnknownTagsTemplatesWizard"
            class="org.jboss.tools.vpe.editor.wizards.ImportUnknownTagsTemplatesWizard"
            name="%importUnknownTagsTemplatesWizardName"
-           icon="icons/">
+           icon="resources/org/jboss/tools/vpe/wizards/icons/import_wizard.gif">
         <description>
               %importUnknownTagsTemplatesWizardDescription
         </description>
