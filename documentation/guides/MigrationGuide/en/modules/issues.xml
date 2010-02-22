@@ -39,7 +39,7 @@
     
     
     <section>
-        <title>Visual Part doesn't start and "XPCOM error -2147467259" appears</title>
+        <title>Visual Editor doesn't start and "XPCOM error -2147467259" appears</title>
         <para>This error shows that you have problems with your buildin XULRunner plugin.To resolve the issue,please: </para>
             <itemizedlist>
                 <listitem><para>Open <property>Help -> About JBoss Developer Studio-> Installation Details... ->  Configuration</property></para></listitem>
