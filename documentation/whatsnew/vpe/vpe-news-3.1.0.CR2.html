@@ -12,7 +12,7 @@
 <h1>What's New Visual Page Editor 3.1.0.CR2</h1>
 
 <p align="right"><a href="../index.html">&lt; Main Index</a> <a
-	href="../jst/jst-news-3.1.0.CR1.html">JST/JSF Tools &gt;</a></p>
+	href="../cdi/cdi-news-3.1.0.CR2.html">CDI Tools &gt;</a></p>
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 	<tr>
 		<td colspan="2">
@@ -25,7 +25,7 @@
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Visual Page Editor on RHEL5 x64</b></td>
 		<td valign="top">
-		<p>Xulrunner has been recompiled to support RHEL5 x64. So Visual Page Editor is available on this platform now.</p>
+		<p>Visual Page Editor now works on Red Hat Enterprise Linux 5 x64 after XULRunner now have been compiled for this platform.</p>
 
 
 		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5033">Related
@@ -40,8 +40,10 @@
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Missing Natures Dialog</b></td>
 		<td valign="top">
-		<p>Dialog checks project configuration for kbnature, jsfnature and jsf classes.</p>
-		<p>If this natures are missing and user refers on jsf classes, the dialog will be shown.</p>
+		<p>When opening the visual page editor we now checks if the project is configured to use JSF and scan for resources needed in some of the code completion and rendering. If we find something missing we show a dialog informing about it.</p>
+
+		<p>If you don't want this warning just check the "Don't show this dialog again!".</p>
+
 		<p><img src="images/3.0.0.CR2/missing-natures-dialog.png" alt="VPE Missing Natures Dialog" /></p>
 		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5701">Related
 			Jira</a></small></p>
@@ -55,7 +57,7 @@
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Possibility to add templates for unknown tags</b></td>
 		<td valign="top">
-		<p>It is possible to add new template for unknown tags via VPE Preferences now.
+		<p>It is now possible to add new template for unknown tags via VPE Preferences now.
 		In addition you can edit tag name and tag URI in the Edit dialog</p>
 		<p><img src="images/3.0.0.CR2/add-unknown-tag-template.png" alt="VPE Unknow Tags Add Dialog" /></p>
 		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5470">Related
@@ -103,8 +105,8 @@
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>OpenOn on param 'name'</b></td>
 		<td valign="top">
-		<p>Possibility open by click jsf2 resources which specified in parameter 'name' for 
-		h:outputStylesheet, h:outputScript, h:graphicImage has been added</p>
+		<p>OpenOn now also works for JSF2 resources which are specified in parameter 'name' for 
+		h:outputStylesheet, h:outputScript and h:graphicImage.</p>
 		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5382">Related
 			Jira</a></small></p>
 		</td>

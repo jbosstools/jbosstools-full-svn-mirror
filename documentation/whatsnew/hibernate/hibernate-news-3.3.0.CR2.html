@@ -11,14 +11,133 @@
 <body>
 <h1>Hibernate tools 3.3.0.CR2 What's New</h1>
 
-<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../maven/maven-news-1.0.0.CR1.html">Maven Tools &gt;</a></p>
+<p align="right"><a href="../index.html">&lt; Main
+Index</a> <a href="../vpe/vpe-news-3.1.0.CR2.html">Visual Page Editor
+&gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
+
 
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Source Editing</h3>
+      <h3>General</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Hibernate Tools are using Hibernate 3.3.2</b></td>
+    <td valign="top">
+
+    <p>Hibernate Tools where moved to use Hibernate 3.3.2 instead of Hibernate 3.1.2.</p>
+
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5706">Releated jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Ability to close Hibernate Console Configuration</b></td>
+    <td valign="top">
+
+    <p>When console configuration are open with a SessionFactory it
+	can keep a connection open and on Windows it can cause lock on
+	jar files if you use the Sun JDK. Previously only a restart
+	would release these properly, now there is a "Close
+	Configuration" option to release the connection and unlock
+	jars explicitely.</p>
+	<img src="images/close_console_config.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5031">Releated jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Wizards</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Unify interface</b></td>
+    <td valign="top">
+
+    <p>Now "Generate Hibernate/JPA annotations" refactoring and
+    "Hibernate XML Mapping file (hbm.xml)" wizard uses the same UI and
+    search mechanism to find which classes to generate annotations or
+    hbm.xml files for.
+    </p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Preview of hbm.xml</b></td>
+    <td valign="top">
+
+    <p>Because of the UI unification you can now preview what files will be generated for the hbm.xml to be generated.</p>  
+
+    <p>"Hibernate XML Mapping file (hbm.xml)" wizard page 3</p>
+	<img src="images/generate_hbm_xml_page_3.png" />
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Depth Control</b></td>
+    <td valign="top">
+  
+      <p>There is now a "depth control" when selecting classes/packages to specify how deep the wizard should follow associations.</p>
+      <p>By default there is no maximum set, but if that gathers too
+much you can set it to the wished depth or simply set it to 0 (zero)
+to only include the classes or package you explicitly selected.</p>
+
+	<img src="images/generate_jpa_page_1.png" />
+	
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5330">Releated jira</a></small></p>
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5408">Releated jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Filter empty packages</b></td>
+    <td valign="top">
+
+    <p>'Add Package' dialog no longer show empty packages.</p>
+	<img src="images/removed_empty_packages.png" />
+    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5411">Releated jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>JPA Projects</h3>
 	<hr/>
     </td>
   </tr>
@@ -32,58 +151,7 @@
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5643">Releated jira</a></small></p>
     </td>
   </tr>
-  <tr>
-    <td colspan="2">
-      <hr/>
-    </td>
-  </tr>
 
-  <tr>
-    <td valign="top" align="right"><a name="itemname3"
-    id="itemname3"></a><b>Validator problem</b></td>
-    <td valign="top">
-
-    <p>Configuration file location validated by a validator. The validator checks the configuration file's path specified in persistence.xml is valid. It showed an error when relative path was used.</p>
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5641">Releated jira</a></small></p>
-    </td>
-  </tr>
-  
-  <tr>
-    <td colspan="2">
-      <hr/>
-    </td>
-  </tr>  
-  
-  <tr>
-    <td valign="top" align="right"><a name="itemname3"
-    id="itemname3"></a><b>Reverse engineering editor</b></td>
-    <td valign="top">
-
-    <p>At the 'Table & Columns' tab was a checkbox 'Exclude column from reverse engineering'
-    which added the attribute 'exclude' to 'key-column' element. But according to DTD the element
-    doesn't have the attribute. Wrong ui was removed.</p>
-    <img src="images/removed_ui.png" />
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5824">Releated jira</a></small></p>
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="2">
-      <hr/>
-      <h3>Hibernate Mapping Wizard</h3>
-	<hr/>
-    </td>
-  </tr>
-
-  <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Filter empty packages</b></td>
-    <td valign="top">
-
-    <p>At New Hibernate Mapping Wizard in 'Add Package' dialog empty packages(without java classes) are not shown now.</p>
-	<img src="images/removed_empty_packages.png" />
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5411">Releated jira</a></small></p>
-    </td>
-  </tr>
   
   <tr>
     <td colspan="2">
@@ -97,55 +165,21 @@
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Code Generation Configurations</b></td>
     <td valign="top">
 
-    <p>The code generation configurations now listen to the Refactoring changes.
-    Allowing to output directory, template directory, reverse engineering file paths
-    to be changed automatically.</p>
+    <p>The code generation configurations are now updated when you rename related folders/files.
+    Output directory, Template directory, and reverse engineering file paths will updated when the refactoring/renaming occur.</p>
 	<img src="images/main_tab.png" />
-	<p>Also output directory set for each exporter are updated automatically.</p>
+	<p>The optional output directory set for an exporter are also updated.</p>
 	<img src="images/exporters_tab.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5499">Releated jira</a></small></p>
     </td>
   </tr>
 
-  <tr>
-    <td colspan="2">
-      <hr/>
-      <h3>Move to Hibernate 3.3.2</h3>
-	<hr/>
-    </td>
-  </tr>
 
-  <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Hibernate Tools are using Hibernate 3.3.2</b></td>
-    <td valign="top">
-
-    <p>Hibernate Tools where moved to use Hibernate 3.3.2 instead of Hibernate 3.2.x.</p>
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5706">Releated jira</a></small></p>
-    </td>
-  </tr>
 
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Close console configuration</h3>
-	<hr/>
-    </td>
-  </tr>
-
-  <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Ability to close Hibernate Console Configuration</b></td>
-    <td valign="top">
-
-    <p>The ability to explicitly close the database connection and unlock all jars which are used by Hibernate Console Configuration.</p>
-	<img src="images/close_console_config.png" />
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5031">Releated jira</a></small></p>
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="2">
-      <hr/>
-      <h3>"HQL Editor" and "Hibernate Criteria Editor"</h3>
+      <h3>Query Editing</h3>
 	<hr/>
     </td>
   </tr>
@@ -154,9 +188,15 @@
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Stick results to one tab</b></td>
     <td valign="top">
 
-    <p>Make "HQL Editor" & "Hibernate Criteria Editor" "sticky" with respect to some tab in "Hibernate Query Result" view</p>
+    <p>You can now make the query editors reuse the same query result tab (be "sticky") "sticky" with respect to some tab in "Hibernate Query Result" view</p>
 	<img src="images/stick_results_to_one_tab.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4451">Releated jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
     </td>
   </tr>
 
@@ -164,51 +204,17 @@
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Rename query result tab</b></td>
     <td valign="top">
 
-    <p>In case of too long query - add possibility to rename query tabs</p>
+    <p>You can now set the tab name for a query result.</p>
 	<img src="images/rename_query_result_tab.png" />
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4450">Releated jira</a></small></p>
     </td>
   </tr>
 
-  <tr>
-    <td colspan="2">
-      <hr/>
-      <h3>Unify interface for "Generate Hibernate/JPA annotations" refactoring and "Hibernate XML Mapping file (hbm.xml)" wizard</h3>
-	<hr/>
-    </td>
-  </tr>
-
-  <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Unify interface</b></td>
-    <td valign="top">
-
-    <p>Now "Generate Hibernate/JPA annotations" refactoring and "Hibernate XML Mapping file (hbm.xml)" wizard
-    has similar UI. Possible to view changes for existing hbm.xml files.
-    </p>
-
-    <p>"Generate Hibernate/JPA annotations" refactoring page 1</p>
-	<img src="images/generate_jpa_page_1.png" />
-    <p>"Generate Hibernate/JPA annotations" refactoring page 2</p>
-	<img src="images/generate_jpa_page_2.png" />
-    <p>"Generate Hibernate/JPA annotations" refactoring page 3</p>
-	<img src="images/generate_jpa_page_3.png" />
-
-    <p>"Hibernate XML Mapping file (hbm.xml)" wizard page 1</p>
-	<img src="images/generate_hbm_xml_page_1.png" />
-    <p>"Hibernate XML Mapping file (hbm.xml)" wizard page 2</p>
-	<img src="images/generate_hbm_xml_page_2.png" />
-    <p>"Hibernate XML Mapping file (hbm.xml)" wizard page 3</p>
-	<img src="images/generate_hbm_xml_page_3.png" />
-	
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5330">Releated jira</a></small></p>
-    <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5408">Releated jira</a></small></p>
-    </td>
-  </tr>
 
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Diagram Viewer show properties for selected item</h3>
+      <h3>Diagram Viewer</h3>
 	<hr/>
     </td>
   </tr>

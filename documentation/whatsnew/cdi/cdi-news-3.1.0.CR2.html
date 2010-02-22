@@ -12,7 +12,7 @@
 <h1>CDI tools 3.1.0.CR2 What's New</h1>
 
 <p align="right"><a href="../index.html">&lt; Main Index</a> <a
-	href="../vpe/vpe-news-3.1.0.CR2.html">Visual Page Editor News &gt;</a></p>
+	href="../bpel/bpel-news-1.0.0.CR2.html">BPEL Tools &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 	<tr>
@@ -24,12 +24,16 @@
 	</tr>
 	<tr>
 		<td valign="top" align="left">
-		<p><b>New CDI Web Project Facet</b></p>
+		<p><b>CDI Support Settings Page</b></p>
 		</td>
 		<td valign="top">
-		<p>Now it's possible to enable CDI support for a project via <i><b>New Dynamic Web Project</b></i> wizard or <i><b>Project Facets</b></i> settings page (<i><b>Project->Properties->Project Facets</b></i>).</p>
-		<img src="images/facet.png"/>
-		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5355">Related Jira</a></small></p>
+		<p>You can enable or disable CDI support for a
+		non-faceted project via <i><b>Configure...->Add CDI
+		Support or Project Settings</b></i> page
+		(<i><b>Project->Properties->CDI</b></i>).</p>
+		<img src="images/configure.png"/><br/><br/>
+		<img src="images/settings.png"/>
+		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5276">Related Jira</a></small></p>
 		</td>
 	</tr>
 	<tr>
@@ -39,18 +43,15 @@
 	</tr>
 	<tr>
 		<td valign="top" align="left">
-		<p><b>CDI Support Settings Page</b></p>
+		<p><b>CDI Web Project Facet</b></p>
 		</td>
 		<td valign="top">
-		<p>Also you can enable or disable CDI support for a project via <i><b>Configure...->Add CDI Support or Project Settings</b></i> page (<i><b>Project->Properties->CDI</b></i>).</p>
-		<img src="images/configure.png"/><br/><br/>
-		<img src="images/settings.png"/>
-		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5276">Related Jira</a></small></p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr />
+		<p>It's possible to enable CDI support for a
+		faceted project via <i><b>New Dynamic Web Project</b></i>
+		wizard or <i><b>Project Facets</b></i> settings page
+		(<i><b>Project->Properties->Project
+		Facets</b></i>).</p>  <img src="images/facet.png"/>
+		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5355">Related Jira</a></small></p>
 		</td>
 	</tr>
 	<tr>
@@ -65,7 +66,7 @@
 		<p><b>EL Validation</b></p>
 		</td>
 		<td valign="top">
-		<p>EL validator now is aware of CDI @Named beans for projects with enabled CDI support.</p>
+		<p>EL validator now is aware of CDI @Named beans for CDI and JSF enabled projects.</p>
 		<img src="images/elvalidation.png"/>
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-5383">Related Jira</a></small></p>
@@ -81,16 +82,11 @@
 		<p><b>Core Validation</b></p>
 		</td>
 		<td valign="top">
-		<p>CDI Validation rules can be set via Preference page.</p>
+		<p>As part of the CDI tooling validation of certain CDI rules are now validated during project build. You can configure the severity of the CDI Validation rules on the CDI Preference page.</p>
 		<img src="images/corevalidation.png"/><br/><br/>
 		<img src="images/preferences_validation.png"/>
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-2708">Related Jira</a></small></p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr />
 		</td>
 	</tr>
 
@@ -106,9 +102,10 @@
 		<p><b>EL Code Completion</b></p>
 		</td>
 		<td valign="top">
-		<p>EC Code Completion now works for @Named beans.</p>
+		<p>EL Code Completion now works for @Named beans and it uses the Weld icon to allow you to see they are CDI beans.</p>
 		<img src="images/elca.png"/>
 		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5383">Related Jira</a></small></p>
+		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-5770">Related Jira</a></small></p>
 		</td>
 	</tr>
 
@@ -139,15 +136,10 @@
 		<p><b>Hyperlinks to injected CDI bean.</b></p>
 		</td>
 		<td valign="top">
-		<p>Hiperlinks also works now for injection points. Just Ctrl+Click on an @Inject to open the injected class.</p>
+		<p>Hyperlinks also works now for injection points. Just Ctrl+Click on an @Inject to open the injected class.</p>
 		<p>See <a href="http://screencast.com/t/ODRkZDliMWI">demo movie</a>.</p>
 		<img src="images/injected.png"/>
 		<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-3125">Related Jira</a></small></p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr />
 		</td>
 	</tr>
 
