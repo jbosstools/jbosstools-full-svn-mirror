@@ -24,11 +24,11 @@
             
             <mediaobject>
                 <imageobject>
-                    <imagedata fileref="images/jdbs2.png" />
+                    <imagedata fileref="images/jbds2.png" />
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Now you can not update your JBDS 2.X to 3.0.0 using update site(https://devstudio.jboss.com/updates/3.0/ ), as it was available in previous versions:</para>
+        <para>Now you can not update your JBDS 2.X to 3.0.0 using update site (https://devstudio.jboss.com/updates/3.0/ ), as it was available in previous versions:</para>
         <figure>
             <title>Installation from the update site</title>
             
@@ -39,14 +39,14 @@
             </mediaobject>
         </figure>
         <para>The reason is that JBDS 3.0 uses Eclipse 3.5, whereas JBDS 2.x uses Eclipse 3.4.
-        Because of this platform change, a full install is required to migrate. </para>
+        Because of this platform change, a full installation is required to migrate. </para>
         <para>When the installation process is complete you can point your JBDS 3.0.0 at your old workspace directory and continue working with your projects created using previous 
             JBDS/Tools versions, or create a new one and import old projects into the new workspace.
         </para>
         
         <note>
             <title>Note:</title>
-            <para>In JBDS 3.0.0 Lunux users no longer need to install the library libstdc+.so.5 on their mashines.
+            <para>In JBDS 3.0.0 Linux users no longer need to install the library libstdc+.so.5 on their mashines.
                 Now this library is not required and can be removed from the system. 
             </para>
         </note>
