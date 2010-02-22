@@ -99,6 +99,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4168">JBIDE-4168</ulink>: The ability to select a directory using a browser window has been added for the FS Message Filter and the FTP Message filter attributes of <property>directory</property>, <property>post-directory</property> and <property>error-directory</property>. This added feature ensures that a user does not need to manually type the entire path to a directory but instead they just select the path from a browser.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2024">JBIDE-2024</ulink>: A new process field editor has been added to the ESB Editor that provides a list of available methods a user can choose from in order to create a new process.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -290,6 +295,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4771">JBIDE-4771</ulink>: The <property>Find Usages</property> function has been improved to provide information about methods when inside an EL expression. 
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2806">JBIDE-2806</ulink>: The Eclipse OpenOn feature that allows a user to click any reference to a template as if it was a hyperlink did not work if the template path was set using an EL variable. This limitation has now been corrected so that OpenOn works with all paths, including those set using the EL variable. This is a great advantage to users as the Expression Language variable is a frequently used feature.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -374,6 +384,16 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2807">JBIDE-2807</ulink>: An option is now provided when creating a <guilabel>New Seam Project</guilabel>, to not create a test project. This has become an option since the Seam model does not require the test project to exist and so allows the user to decide if it is of importance. Selecting to create or not create a test project is achieved through the ticking of a <guilabel>Create Test Project</guilabel> check box within the <guilabel>New Seam Project</guilabel> wizard.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1452">JBIDE-1452</ulink>: Support has been added for the Seam PDF Facelet tag library. This Facelet library allows for PDF creation from within Seam.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1451">JBIDE-1451</ulink>: Support has been added for the Seam Mail Facelet tag library. This Facelet library allows for email forms to be created from within Seam. All components of the Facelet have been included except <property>mail:message</property> and <property>mail:body</property> as these components are rendered as divisions (using the &lt;div&gt; tag).
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -587,6 +607,16 @@
 								</para>
 							</listitem>
 						</itemizedlist>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2571">JBIDE-2571</ulink>: Selection of the <property>&lt;h:selectOneMenu&gt;</property> did not function correctly. Instead of being selected with one mouse click, two clicks were necessary. A bug was also present that made the nested components <property>&lt;f:selectItem&gt;</property> and <property>&lt;f:selectItems&gt;</property> unable to be selected from within the Visual Page Editor. Correction of the two clicks necessary to select the <property>&lt;h:selectOneMenu&gt;</property> component has been completed by removing the check within <filename>VpeController.java</filename> that ensures the node is of type text. The issue that did not allow for the selection of the <property>&lt;f:selectItem&gt;</property> and <property>&lt;f:selectItems&gt;</property> components was found to be a bug in XULRunner. To correct this the XULRunner component has been updated to version 1.9, which corrects this error and provides numerious other small bug fixes (<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2248">JBIDE-2248</ulink>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1592">JBIDE-1592</ulink>: A new feature has been added that allows for Facelets tag libraries from <filename>file.jar/META-INF/*.tablib.xml</filename> or those that are registered within <filename>web.xml</filename> by the <filename>facelets.LIBRARIES</filename> context parameter to now be used within content assist for source editing in the Visual Page Editor.
+						</para>
 					</listitem>
 				</itemizedlist>
 			</para>
@@ -853,6 +883,11 @@
 								</para>
 							</listitem>
 						</itemizedlist>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2541">JBIDE-2541</ulink>: A new feature has been added to this release that allows for the JavaDoc documentation to be available for the EL proposals as it is for Java methods. The JavaDoc comments are also available if they originated from a projects source folders.
+						</para>
 					</listitem>
 				</itemizedlist>
 			</para>
