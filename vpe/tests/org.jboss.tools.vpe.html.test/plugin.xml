@@ -6,8 +6,10 @@
       <tests
             description="Tests for Html templates"
             name="Tests for Html templates"
-            testSuite="org.jboss.tools.vpe.html.test.HtmlAllTests">
-      </tests>
+            testSuite="org.jboss.tools.vpe.html.test.HtmlAllTests"/>
+      <testProject
+            name="htmlTest"
+            path="resources/htmlTest"/>
    </extension>
 
 </plugin>

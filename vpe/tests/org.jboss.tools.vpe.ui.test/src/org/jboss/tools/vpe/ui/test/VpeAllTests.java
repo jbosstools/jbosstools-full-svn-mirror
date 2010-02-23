@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.ui.test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import junit.framework.Test;
@@ -30,10 +29,9 @@ import org.osgi.framework.Bundle;
  */
 public class VpeAllTests {
 
+	public static final String TESTS_ELEMENT = "tests";
 	public static final String VPE_TEST_EXTENTION_POINT_ID = "org.jboss.tools.vpe.ui.tests"; //$NON-NLS-1$
-
-	public static final String TEST_SUITE_PARAM = "testSuite"; //$NON-NLS-1$
-	
+	public static final String TEST_SUITE_PARAM = "testSuite"; //$NON-NLS-1$	
 	public static final String METHOD_SUITE_NAME = "suite"; //$NON-NLS-1$
 	public static final String VPE_TEST_PROJECT_NAME = "vpeTest"; //$NON-NLS-1$
 
@@ -52,29 +50,21 @@ public class VpeAllTests {
 			for (IConfigurationElement configurationElement : confElements) {
 				String clazz = configurationElement
 						.getAttribute(TEST_SUITE_PARAM);
-				try {
-					Bundle bundle = Platform.getBundle(configurationElement
-							.getNamespaceIdentifier());
-					Class<?> testObject = bundle.loadClass(clazz);
-					Method method = testObject.getMethod(METHOD_SUITE_NAME, null);
-					// null -because static method
-					Object res = method.invoke(null, null);
-					if (res instanceof Test) {
-						Test testSuite = (Test) res;
-						result.addTest(testSuite);
+				if (TESTS_ELEMENT.equals(configurationElement.getName())) {
+					try {
+						Bundle bundle = Platform.getBundle(configurationElement
+								.getNamespaceIdentifier());
+						Class<?> testObject = bundle.loadClass(clazz);
+						Method method = testObject.getMethod(METHOD_SUITE_NAME, null);
+						// null -because static method
+						Object res = method.invoke(null, null);
+						if (res instanceof Test) {
+							Test testSuite = (Test) res;
+							result.addTest(testSuite);
+						}
+					} catch (Exception e) {
+						VPETestPlugin.getDefault().logError(e);
 					}
-				} catch (ClassNotFoundException e) {
-					VPETestPlugin.getDefault().logError(e);
-				} catch (SecurityException e) {
-					VPETestPlugin.getDefault().logError(e);
-				} catch (NoSuchMethodException e) {
-					VPETestPlugin.getDefault().logError(e);
-				} catch (IllegalArgumentException e) {
-					VPETestPlugin.getDefault().logError(e);
-				} catch (IllegalAccessException e) {
-					VPETestPlugin.getDefault().logError(e);
-				} catch (InvocationTargetException e) {
-					VPETestPlugin.getDefault().logError(e);
 				}
 			}
 		}

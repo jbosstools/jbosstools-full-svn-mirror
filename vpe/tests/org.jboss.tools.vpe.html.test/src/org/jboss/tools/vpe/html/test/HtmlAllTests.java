@@ -10,13 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.html.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.jboss.tools.tests.ImportBean;
 import org.jboss.tools.vpe.html.test.jbide.JBIDE3280Test;
 import org.jboss.tools.vpe.ui.test.VpeTestSetup;
 
@@ -40,13 +36,8 @@ public class HtmlAllTests {
 		suite.addTestSuite(JBIDE3280Test.class);
 		suite.addTestSuite(HtmlComponentTest.class);
 		suite.addTestSuite(HtmlComponentContentTest.class);
-		
-		List<ImportBean> projectToImport = new ArrayList<ImportBean>();
-		ImportBean importBean = new ImportBean();
-		importBean.setImportProjectName(IMPORT_PROJECT_NAME);
- 		importBean.setImportProjectPath(HtmlTestPlugin.getPluginResourcePath());
- 		projectToImport.add(importBean);
-		return new VpeTestSetup(suite,projectToImport);
+
+		return new VpeTestSetup(suite);
 	}
 
 }

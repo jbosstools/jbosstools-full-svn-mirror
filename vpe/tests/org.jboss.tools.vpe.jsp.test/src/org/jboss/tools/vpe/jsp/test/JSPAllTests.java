@@ -10,30 +10,19 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.jsp.test;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jboss.tools.vpe.ui.test.VpeTestSetup;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.jboss.tools.tests.ImportBean;
-import org.jboss.tools.vpe.ui.test.VpeTestSetup;
-
 public class JSPAllTests {
     public static Test suite() {
-
-	TestSuite suite = new TestSuite("Tests for Vpe JSP components"); //$NON-NLS-1$
-	// $JUnit-BEGIN$
-
-	suite.addTestSuite(JSPComponentTest.class);
-
-	// $JUnit-END$
-	List<ImportBean> importProjects = new ArrayList<ImportBean>();
-	ImportBean importBean = new ImportBean();
-	importBean.setImportProjectName(JSPComponentTest.IMPORT_PROJECT_NAME);
-	importBean.setImportProjectPath(JSPTestPlugin.getPluginResourcePath());
-	importProjects.add(importBean);
-	return new VpeTestSetup(suite,importProjects);
-
+		TestSuite suite = new TestSuite("Tests for Vpe JSP components"); //$NON-NLS-1$
+		// $JUnit-BEGIN$
+	
+		suite.addTestSuite(JSPComponentTest.class);
+	
+		// $JUnit-END$
+		return new VpeTestSetup(suite);
     }
 }

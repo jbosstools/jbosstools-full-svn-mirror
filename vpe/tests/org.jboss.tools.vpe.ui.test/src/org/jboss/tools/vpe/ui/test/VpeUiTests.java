@@ -10,19 +10,15 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.ui.test;
 
-import java.util.ArrayList;
-import java.util.List;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
-import org.jboss.tools.tests.ImportBean;
 import org.jboss.tools.vpe.editor.menu.VpePopupMenuTest;
 import org.jboss.tools.vpe.ui.test.dialog.VpeEditAnyDialogTest;
 import org.jboss.tools.vpe.ui.test.dialog.VpeResourcesDialogTest;
 import org.jboss.tools.vpe.ui.test.editor.CustomSashFormTest;
 import org.jboss.tools.vpe.ui.test.preferences.VpeEditorPreferencesPageTest;
 import org.jboss.tools.vpe.ui.test.wizard.VpeImportExportUnknownTagsWizardsTest;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 /**
  * @author mareshkau
@@ -39,15 +35,6 @@ public class VpeUiTests {
 		suite.addTestSuite(VpeEditAnyDialogTest.class);
 		suite.addTestSuite(VpeImportExportUnknownTagsWizardsTest.class);
 		
-		/*
-		 * Add projects that will be used in junit tests.
-		 */
-		List<ImportBean> projectToImport = new ArrayList<ImportBean>();
-		ImportBean importBean = new ImportBean();
-		importBean.setImportProjectName(VpeUiTests.IMPORT_PROJECT_NAME);
-		importBean.setImportProjectPath(VPETestPlugin.getPluginResourcePath());
-		projectToImport.add(importBean);
-		
-		return new VpeTestSetup(suite, projectToImport);
+		return new VpeTestSetup(suite);
 	}
 }

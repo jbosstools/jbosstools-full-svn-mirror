@@ -11,7 +11,6 @@
 package org.jboss.tools.vpe.ui.test;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -19,9 +18,7 @@ import junit.framework.Assert;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.widgets.Display;
@@ -31,9 +28,6 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.internal.contentassist.ContentAssistUtils;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
-import org.jboss.tools.test.util.JobUtils;
-import org.jboss.tools.test.util.ResourcesUtils;
-import org.jboss.tools.tests.ImportBean;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -63,18 +57,6 @@ public class TestUtil {
 	/** The Constant MAX_IDLE. */
 	public static final long MAX_IDLE = 15*1000L;
 
-
-	/**
-	 * Import project into workspace.
-	 * 
-	 * @param path the path
-	 * @param projectName the project name
-	 * @deprecated Use {@link ResourcesUtils#importProjectIntoWorkspace(String,String)} instead
-	 */
-	static public void importProjectIntoWorkspace(String path, String projectName) {
-		ResourcesUtils.importProjectIntoWorkspace(path, projectName);
-	}
-
 	/**
 	 * Gets the component path.
 	 * 
@@ -87,8 +69,7 @@ public class TestUtil {
 	 */
 	public static IResource getComponentPath(String componentPage,
 			String projectName) throws CoreException {
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
-				projectName);
+		IProject project = ProjectsLoader.getInstance().getProject(projectName);
 		if (project != null) {
 			return project.getFolder(COMPONENTS_PATH).findMember(componentPage);
 
@@ -99,8 +80,7 @@ public class TestUtil {
 	
 	public static IResource getResource(String path,
 			String projectName) throws CoreException {
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
-				projectName);
+		IProject project = ProjectsLoader.getInstance().getProject(projectName);
 		if (project != null) {
 			return project.findMember(path);
 		}
@@ -120,8 +100,7 @@ public class TestUtil {
 	 */
 	public static IResource getWebContentPath(String componentPage,
 			String projectName) throws CoreException {
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
-				projectName);
+		IProject project = ProjectsLoader.getInstance().getProject(projectName);
 		if (project != null) {
 			return project.getFolder(WEBCONTENT_PATH).findMember(componentPage);
 		}
@@ -137,28 +116,6 @@ public class TestUtil {
 	 */
 	public static File getXmlTestFile(String xmlTestPath, String xmlTestsRoot) {
 		return new File(xmlTestsRoot + File.separator + xmlTestPath);
-	}
-
-	/**
-	 * Removes the project.
-	 * 
-	 * @param projectName the project name
-	 * 
-	 * @throws CoreException the core exception
-	 */
-	static public void removeProject(String projectName) throws CoreException {
-		boolean saveAutoBuild = ResourcesUtils.setBuildAutomatically(false);
-		try {
-			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(
-					projectName);
-			if (project != null) {
-				project.delete(IResource.ALWAYS_DELETE_PROJECT_CONTENT,
-						new NullProgressMonitor());
-				JobUtils.waitForIdle();
-			}
-		} finally {
-			ResourcesUtils.setBuildAutomatically(saveAutoBuild);
-		}
 	}
 
 	/**
@@ -274,37 +231,6 @@ public class TestUtil {
 		}
 	}
 
-	/**
-	 * Creates the import bean list.
-	 * 
-	 * @param projectName the project name
-	 * @param resourcePath the resource path
-	 * 
-	 * @return the list< import bean>
-	 */
-	static public List<ImportBean> createImportBeanList(String projectName,
-			String resourcePath) {
-		List<ImportBean> projectToImport = new ArrayList<ImportBean>();
-		projectToImport.add(createImportBean(projectName, resourcePath));
-		return projectToImport;
-	}
-
-	/**
-	 * Creates the import bean.
-	 * 
-	 * @param projectName the project name
-	 * @param resourcePath the resource path
-	 * 
-	 * @return the import bean
-	 */
-	static public ImportBean createImportBean(String projectName,
-			String resourcePath) {
-		ImportBean importBean = new ImportBean();
-		importBean.setImportProjectName(projectName);
-		importBean.setImportProjectPath(resourcePath);
-		return importBean;
-	}
-	
 	/**
 	 * Utility function which returns node mapping by source position(line and position in line).
 	 * 

@@ -9,5 +9,8 @@
            name="UI tests of VPE"
            testSuite="org.jboss.tools.vpe.ui.test.VpeUiTests">
      </tests>
+     <testProject
+           name="TestProject"
+           path="resources/TestProject"/>
   </extension>
 </plugin>

@@ -6,8 +6,10 @@
       <tests
             description="JSP Tests"
             name="JSP Tests"
-            testSuite="org.jboss.tools.vpe.jsp.test.JSPAllTests">
-      </tests>
+            testSuite="org.jboss.tools.vpe.jsp.test.JSPAllTests"/>
+      <testProject
+            name="jspTest"
+            path="resources/jspTest"/>
    </extension>
 
 </plugin>

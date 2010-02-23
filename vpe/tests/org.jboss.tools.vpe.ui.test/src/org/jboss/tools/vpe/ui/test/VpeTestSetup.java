@@ -1,5 +1,5 @@
 /******************************************************************************* 
-* Copyright (c) 2007 Red Hat, Inc.
+* Copyright (c) 2007-2010 Red Hat, Inc.
 * Distributed under license by Red Hat, Inc. All rights reserved.
 * This program is made available under the terms of the
 * Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,37 +10,24 @@
 ******************************************************************************/
 package org.jboss.tools.vpe.ui.test;
 
-import java.io.File;
-import java.util.List;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.PlatformUI;
 
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.test.util.ResourcesUtils;
-import org.jboss.tools.tests.ImportBean;
-
 /**
  * @author Max Areshkau
+ * @author Yahor Radtsevich (yradtsevich)
  * 
- * Class for setup-tear down junit tests(import project 
- * into workspace and remove project from workspace)
+ * Class for tear down JUnit tests (remove projects from workspace)
+ * 
  */
 public class VpeTestSetup extends TestSetup {
+	private static final String CONTENT_OUTLINE_VIEW_ID = "org.eclipse.ui.views.ContentOutline";
 	
-	/**
-	 * Contains test project names, which will be imported 
-	 * in setUp method and removed in tear down method
-	 */
-	private List<ImportBean> testProjectNames;
-	
-	private static final String CONTENT_OUTLINE_VIEW_ID = "org.eclipse.ui.views.ContentOutline"; //$NON-NLS-1$
-	
-	public VpeTestSetup(TestSuite test, List<ImportBean> testProjectNames) {
+	public VpeTestSetup(TestSuite test) {
 		super(test);
-		setTestProjects(testProjectNames);
 	}
 
 	/* (non-Javadoc)
@@ -48,13 +35,6 @@ public class VpeTestSetup extends TestSetup {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		super.setUp();
-		for (ImportBean importBean : getTestProjects()) {			
-			if (ResourcesPlugin.getWorkspace().getRoot().findMember(importBean.getImportProjectName()) == null) {
-				ResourcesUtils.importProjectIntoWorkspace((importBean.getImportProjectPath()
-						+ File.separator+importBean.getImportProjectName()),importBean.getImportProjectName());
-			}		
-		}
 		//added by Maksim Areshkau, Fix for https://jira.jboss.org/jira/browse/JBIDE-5820 https://jira.jboss.org/jira/browse/JBIDE-5821
         //remove this code when we will move on wtp 3.2
 		IViewReference[] iviewReferences= PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViewReferences();
@@ -70,25 +50,6 @@ public class VpeTestSetup extends TestSetup {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-		
-		for(ImportBean importBean:getTestProjects()) {
-			TestUtil.removeProject(importBean.getImportProjectName());
-		}
-		super.tearDown();
+		ProjectsLoader.removeAllProjects();
 	}
-
-	/**
-	 * @return the testProjectNames
-	 */
-	private List<ImportBean> getTestProjects() {
-		return testProjectNames;
-	}
-
-	/**
-	 * @param testProjectNames the testProjectNames to set
-	 */
-	private void setTestProjects(List<ImportBean> testProjectNames) {
-		this.testProjectNames = testProjectNames;
-	}
-
 }
