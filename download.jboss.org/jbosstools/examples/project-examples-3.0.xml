@@ -9,11 +9,26 @@
 		<shortDescription>Seam DVD Store Example - EAR</shortDescription>
 
 		<description>This example demonstrates the use of Seam with jBPM pageflow and business process management. It includes the dvdstore,dvdstore-ear and dvdstore-ejb projects.
+It requires JBoss EAP 4.3/JBoss AS 4.2.x and Seam 2.0.		
 		</description>
 		<size>6926336</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/dvdstoreall.zip
 		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">dvdstore,dvdstore-ejb,dvdstore-ear</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
+				<property name="eclipse-projects">dvdstore</property>
+				<property name="description">This project example requires Seam version 2.0</property>
+			</fix>
+			
+		</fixes>
 	</project>
 	
 	<project>
@@ -25,12 +40,32 @@
 		</included-projects>
 		<shortDescription>Seam DVD Store Example - EAR (including a test project)</shortDescription>
 		<description>This example demonstrates the use of Seam with jBPM pageflow and business process management. It includes the dvdstore,dvdstore-ear,dvdstore-test and dvdstore-ejb projects.
+It requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.0 and TestNG plugin.		
 		</description>
 		<size>30380032</size>
 
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/dvdstoreall2.zip
 		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">dvdstore,dvdstore-ejb,dvdstore-ear</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
+				<property name="eclipse-projects">dvdstore</property>
+				<property name="description">This project example requires Seam version 2.0</property>
+			</fix>
+			
+			<fix type="plugin">
+				<property name="id">org.testng.eclipse</property>
+				<property name="versions">5.8.0, 5.9.0</property>
+				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
+			</fix>
+		</fixes>
 	</project>
 	
 	<project>
@@ -43,14 +78,27 @@
 		<shortDescription>Seam Booking Example - EAR</shortDescription>
 		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
 Transaction and persistence context management is handled by the EJB container.
-This example can also run in Tomcat with JBoss Embedded.
+This example requires JBoss EAP 4.3/JBoss AS 4.2.x and Seam 2.0.
 It includes the booking, booking-ear and booking-ejb projects.
 </description>
 		<size>8127000</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/bookingall.zip
 		</url>
-
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">booking,booking-ejb,booking-ear</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.0.0</property>
+				<property name="eclipse-projects">booking</property>
+				<property name="description">This project example requires Seam version 2.0</property>
+			</fix>
+			
+		</fixes>
 	</project>
 	
 	<project>
@@ -63,13 +111,31 @@ It includes the booking, booking-ear and booking-ejb projects.
 
 		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
 Transaction and persistence context management is handled by the EJB container.
-This example can also run in Tomcat with JBoss Embedded.
+This example requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.0 and TestNG plugin.
 It includes the booking, booking-ear,booking-test and booking-ejb projects.
 </description>
 		<size>36036608</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/bookingall2.zip
 		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">booking,booking-ejb,booking-ear</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.0.0</property>
+				<property name="eclipse-projects">booking</property>
+				<property name="description">This project example requires Seam version 2.0</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.testng.eclipse</property>
+				<property name="versions">5.8.0, 5.9.0</property>
+				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
+			</fix>
+		</fixes>
 	</project>
 	
 	<project>
@@ -83,33 +149,81 @@ It includes the booking, booking-ear,booking-test and booking-ejb projects.
 		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
 Transaction and persistence context management is handled by the EJB container.
 It includes the booking, booking-ear, booking-ejb,booking-test and booking-parent projects.
-Requires the m2eclipse and testng plugins
+Requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.0, m2eclipse and testng plugins.
 </description>
 		<size>203639</size>
 
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/booking-mavenized.zip
 		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">booking,booking-ejb,booking-ear</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
+				<property name="eclipse-projects">booking</property>
+				<property name="description">This project example requires Seam version 2.0</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.testng.eclipse</property>
+				<property name="versions">5.8.0, 5.9.0</property>
+				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
+			</fix>
+			
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">0.9.9, 0.10.0</property>
+				<property name="description">This project example requires m2eclipse. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
+			</fix>
+			
+		</fixes>
 	</project>
 	
 	<project>
 		<category>Seam</category>
 		<name>booking3</name>
 		<included-projects>
-
 		booking,booking-ear,booking-ejb,booking-parent,booking-test
 		</included-projects>
 		<shortDescription>Seam Booking Example - EAR mavenized - Seam 2.1.1.GA</shortDescription>
 		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
 Transaction and persistence context management is handled by the EJB container.
 It includes the booking, booking-ear, booking-ejb, booking-test and booking-parent projects.
-Requires the m2eclipse and testng plugins
+Requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.1, m2eclipse and testng plugins.
 </description>
 		<size>196608</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/booking-mavenized-2.1.1.zip
 		</url>
 
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">booking,booking-ejb,booking-ear</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.1.0, 2.1.1, 2.1.2</property>
+				<property name="eclipse-projects">booking</property>
+				<property name="description">This project example requires Seam version 2.1</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.testng.eclipse</property>
+				<property name="versions">5.8.0, 5.9.0</property>
+				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">0.9.9, 0.10.0</property>
+				<property name="description">This project example requires m2eclipse. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
+			</fix>
+			
+		</fixes>
 	</project>
 	
 	<project>
@@ -118,13 +232,27 @@ Requires the m2eclipse and testng plugins
 		<shortDescription>Seam Booking Example - WAR Standalone</shortDescription>
 		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
 Transaction and persistence context management is handled by the EJB container.
-This example can also run in Tomcat with JBoss Embedded.
+This example requires JBoss EAP 4.3/JBoss AS 4.2.x and Seam 2.0.
 </description>
 		<size>5595136</size>
 
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/jboss-seam-jpa.zip
 		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">jboss-seam-jpa</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
+				<property name="eclipse-projects">jboss-seam-jpa</property>
+				<property name="description">This project example requires Seam version 2.0</property>
+			</fix>
+			
+		</fixes>
 	</project>	
 	
 	<project>
@@ -137,13 +265,32 @@ This example can also run in Tomcat with JBoss Embedded.
 		<shortDescription>Seam Booking Example - WAR Standalone (including a test project)</shortDescription>
 		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
 Transaction and persistence context management is handled by the EJB container.
-This example can also run in Tomcat with JBoss Embedded.
+Requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.0 and testng plugins.
 It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 </description>
 		<size>33357824</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/jboss-seam-jpa2.zip
 		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">jboss-seam-jpa</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
+				<property name="eclipse-projects">jboss-seam-jpa</property>
+				<property name="description">This project example requires Seam version 2.0</property>
+			</fix>
+			
+			<fix type="plugin">
+				<property name="id">org.testng.eclipse</property>
+				<property name="versions">5.8.0, 5.9.0</property>
+				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
+			</fix>
+		</fixes>
 	</project>
 	
 	<project>
@@ -151,13 +298,21 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 		<category>Portlet</category>
 		<name>testjavaportlet</name>
 		<shortDescription>JBoss Java Portlet Example</shortDescription>
-		<description>This example demonstrates the use of JBoss Java Portlet. It runs on JBoss Portal 2.7.0.</description>
+		<description>This example demonstrates the use of JBoss Java Portlet. It runs on JBoss EPP 4.3 or JBoss Portal 2.7.x.</description>
 		<size>10000</size>
 		<url>
 
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testjavaportlet.zip
 		</url>
 		<welcome type="cheatsheets" url="/testjavaportlet/javaportletcs.xml"/>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">testjavaportlet</property>
+				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+			</fix>
+			
+		</fixes>
 	</project>
 	
 	<project>
@@ -165,11 +320,19 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 		<name>testjsfportlet</name>
 		<shortDescription>JBoss JSF Portlet Example</shortDescription>
 
-		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss Portal 2.7.0.</description>
+		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss EPP 4.3 or JBoss Portal 2.7.x.</description>
 		<size>4000000</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testjsfportlet.zip
 		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">testjsfportlet</property>
+				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+			</fix>
+			
+		</fixes>
 	</project>
 
 	<project>
@@ -177,12 +340,23 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 
 		<name>testseamportlet</name>
 		<shortDescription>JBoss Seam Portlet Example</shortDescription>
-		<description>This example demonstrates the use of JBoss Seam Portlet. It runs on JBoss Portal 2.7.0.</description>
+		<description>This example demonstrates the use of JBoss Seam Portlet. It runs on JBoss EPP 4.3/JBoss Portal 2.7.x and Seam 2.0.</description>
 		<size>10000000</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testseamportlet.zip
 		</url>
-
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">testseamportlet</property>
+				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+			</fix>
+			<fix type="seam">
+				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
+				<property name="eclipse-projects">testseamportlet</property>
+				<property name="description">This project example requires Seam version 2.0</property>
+			</fix>
+		</fixes>
 	</project>
 	
 	<project>
@@ -427,33 +601,20 @@ Java POJOs.</description>
 	</project>
 	<project>
 		<category>RichFaces</category>
-
 		<name>RichFaces 3.2.2.SP1 Demo Application for JBoss AS 4.2.X</name>
 		<included-projects>richfaces-demo</included-projects>
 		<shortDescription>RichFaces 3.2.2.SP1 Demo Application - WAR</shortDescription>
-		<description>This example contains RichFaces 3.2.2.SP1 Demo Application</description>
+		<description>This example contains RichFaces 3.2.2.SP1 Demo Application. It requires JBoss EAP 4.3 or JBoss AS 4.2.x.</description>
 		<size>10640749</size>
 		<url>
-
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/dgolovin/examples/rf/richfaces-demo.zip
 		</url>
-	</project>
-	
-	<project>
-		<category>RESTEasy</category>
-		<name>simple</name>
-		<included-projects>
-		simple
-		</included-projects>
-
-		<shortDescription>RESTEasy Simple Example</shortDescription>
-		<description>This project is a simple example showing usage of @Path, @GET, PUT, POST, and @PathParam. It uses pure streaming output and includes the 'simple' project. 
-Requires m2eclipse >= 0.9.7.20081001-2217. You can install it using the following update site: http://m2eclipse.sonatype.org/update-dev/
-		</description>
-		<size>16939</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/resteasy-examples/resteasySimple.zip
-		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+			</fix>
+		</fixes>
 	</project>
 
 </projects>
