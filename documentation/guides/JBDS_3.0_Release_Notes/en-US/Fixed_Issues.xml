@@ -300,6 +300,36 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2806">JBIDE-2806</ulink>: The Eclipse OpenOn feature that allows a user to click any reference to a template as if it was a hyperlink did not work if the template path was set using an EL variable. This limitation has now been corrected so that OpenOn works with all paths, including those set using the EL variable. This is a great advantage to users as the Expression Language variable is a frequently used feature.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-816">JBIDE-816</ulink>:  A bug existed within the JSF component of the <application>JBoss Developer Studio</application> where if a resource bundle is defined in a template page code completion for the bundle would not be available within the file that includes the template with the loadbundles. The workaround for this was to also define the resource bundle in this template client file, however that meant the same component was defined twice in the component tree. 
+						</para>
+						<para>
+							The bug has since been fixed by adding a schema for included page contexts. This schema enables the creation of contexts for all the pages included in the source and for the gathering of information on bundles delared in the included pages. The information collected is as follows:
+						</para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									Namespaces that are declared
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Tag labraries that are used
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Resource bundles that are declared
+								</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-512">JBIDE-512</ulink>: The drop-down box for context variable code completion has been upgraded for enhanced usability. The source of the variable is now outlined during code completion and the code is highlighted in a different colour for improved reading and overall understanding of each file.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -368,12 +398,17 @@
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4987">JBIDE-4987</ulink>: 
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4987">JBIDE-4987</ulink>: Seam and JPA Connection Profiles have been synchronized for this release.  The <filename>jpa-connection</filename> profile is used in the launch configuration instead of <filename>hibernate.properties</filename> if the JPA facet is installed.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4944">JBIDE-4944</ulink>: The Seam wizards <guilabel>Action</guilabel>, <guilabel>Entity</guilabel> and <guilabel>Conversation</guilabel> had the ability to overwrite resources when they generated code. The wizards would warn the user that some resources already existed and yet overwrite them. This has been corrected through the modification of the <filename>SeamBaseOperation.java</filename> file.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4856">JBIDE-4856</ulink>: Seam component methods and properties used in the Expression Language (EL) have been refactored. This has caused the internal structure of the components to be modified so that the <classname>Query Participant</classname> works with the JDT Java Search to find usages and append them to search results. The <classname>Rename Participant</classname> has also been modified to work with the JDT Java Refactor to rename usages and apply changes to the Java Refactor, allowing for a user to rename a <emphasis>setter</emphasis> or <emphasis>getter</emphasis> method and have the <classname>Rename Participant</classname> warn the user of the consequences of renaming a paired method.
 						</para>
 					</listitem>
 					<listitem>
@@ -394,6 +429,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1451">JBIDE-1451</ulink>: Support has been added for the Seam Mail Facelet tag library. This Facelet library allows for email forms to be created from within Seam. All components of the Facelet have been included except <property>mail:message</property> and <property>mail:body</property> as these components are rendered as divisions (using the &lt;div&gt; tag).
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1176">JBIDE-1176</ulink>: The Seam Web Project now supports the JPA facet. Addition of the Java Persistence API allows for the management of relational data within applications.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -618,6 +658,11 @@
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1592">JBIDE-1592</ulink>: A new feature has been added that allows for Facelets tag libraries from <filename>file.jar/META-INF/*.tablib.xml</filename> or those that are registered within <filename>web.xml</filename> by the <filename>facelets.LIBRARIES</filename> context parameter to now be used within content assist for source editing in the Visual Page Editor.
 						</para>
 					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-527">JBIDE-527</ulink>: A bug existed within the Visual Page Editor that enhibited the <guibutton>Previous</guibutton> and <guibutton>Next</guibutton> buttons for detected occurances of searched annotations to not function correctly. The action of these buttons has now been corrected so that a user can navigate their way through all found occurances of a searched annotation. This functionality works in the Visual Page Editor as it would work in a text editor.
+						</para>
+					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
@@ -662,6 +707,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5690">JBIDE-5690</ulink>: The <guibutton>Full-Publish</guibutton> hotkey would only accept the first module and re-deploy it to the first server the module is deployed on. For the user this meant that if the module was already deployed on several servers, using <guibutton>Full-Publish</guibutton> would only re-deploy it to the first server returned in the list. To solve this issue a user interface has been added for the <guibutton>Full-Publish</guibutton> hotkey that allows for the selection of the server to re-deploy to. During the implementation of this fix, the package has been renamed to XPL.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2541">JBIDE-5383</ulink>: Expression Language Code Assistance has been added for the <property>@Name</property> beans. This allows for users to begin typing code and for suggestions of automatic completion to be suggested, improving user efficiency.
 						</para>
 					</listitem>
 					<listitem>
