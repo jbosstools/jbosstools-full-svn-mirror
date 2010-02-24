@@ -96,12 +96,22 @@
 					</listitem>
 					<listitem>
 						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4320">JBIDE-4320</ulink>: ESB projects are now Web Tools Platform (WTP) modules. This ensures that it is possible to use an ESB module inside a WAR or EAR archive within WTP. ESB project deployment has not been limited though and they can still be deployed as an individual module.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4168">JBIDE-4168</ulink>: The ability to select a directory using a browser window has been added for the FS Message Filter and the FTP Message filter attributes of <property>directory</property>, <property>post-directory</property> and <property>error-directory</property>. This added feature ensures that a user does not need to manually type the entire path to a directory but instead they just select the path from a browser.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2024">JBIDE-2024</ulink>: A new process field editor has been added to the ESB Editor that provides a list of available methods a user can choose from in order to create a new process.
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2024">JBIDE-2024</ulink>: The <guilabel>Process</guilabel> field f the <guilabel>Action</guilabel> tab in the ESB now includes a <guibutton>Browse</guibutton> button that allows a user to select which method of the <classname>Action</classname> class should be used for the proces. The list in the dialog will show all public methods that has a <property>Message</property> parameter. Multiple methods can be selected if necessary.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2023">JBIDE-2023</ulink>: The <guilabel>Class</guilabel> field of the <guilabel>Action</guilabel> tab now includes a <guibutton>Browse</guibutton> button that displays the possible classes that extend from the <classname>AbstractActionLifecycle</classname> class.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -403,6 +413,11 @@
 					</listitem>
 					<listitem>
 						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4985">JBIDE-4985</ulink>: Seam projects now create a Hibernate configuration that uses the selected connection profile directly (without copying its settings into the <filename>hibernate.properties</filename> file).
+						</para>
+					</listitem>
+					<listitem>
+						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4944">JBIDE-4944</ulink>: The Seam wizards <guilabel>Action</guilabel>, <guilabel>Entity</guilabel> and <guilabel>Conversation</guilabel> had the ability to overwrite resources when they generated code. The wizards would warn the user that some resources already existed and yet overwrite them. This has been corrected through the modification of the <filename>SeamBaseOperation.java</filename> file.
 						</para>
 					</listitem>
@@ -655,6 +670,11 @@
 					</listitem>
 					<listitem>
 						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2248">JBIDE-2248</ulink>: The XULRunner component has been upgraded to version 1.9. This new version of XULRunner adds support for the newest HTML and CSS features to the Visual Page Editor. Inlcuded in this is support for CSS3.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1592">JBIDE-1592</ulink>: A new feature has been added that allows for Facelets tag libraries from <filename>file.jar/META-INF/*.tablib.xml</filename> or those that are registered within <filename>web.xml</filename> by the <filename>facelets.LIBRARIES</filename> context parameter to now be used within content assist for source editing in the Visual Page Editor.
 						</para>
 					</listitem>
@@ -702,6 +722,11 @@
 					<listitem>
 						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5743</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5734">JBIDE-5734</ulink>: The shortcut keys for full pubilshing a project to the server and building a full archive have been combined under then shortcut key menu accessed with <keycombo><keycap>Alt</keycap><keycap>Shift</keycap><keycap>Y</keycap></keycombo>. From this menu press <keycap>F</keycap> to full pubilsh the project or <keycap>B</keycap> to build the full archive.
 						</para>
 					</listitem>
 					<listitem>
@@ -933,6 +958,11 @@
 								</para>
 							</listitem>
 						</itemizedlist>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3125">JBIDE-3125</ulink>: Exadel OpenOn support has been added to the code editors. This new functionality allows for a user to open a file that is being referenced within the code, in a new editor window. Related CDI Beans will also appear from a search of references to an object within the code, allowing for a user to quickly see where else an object is referenced.
+						</para>
 					</listitem>
 					<listitem>
 						<para>
