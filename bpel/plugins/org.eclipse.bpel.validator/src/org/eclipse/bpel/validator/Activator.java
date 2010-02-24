@@ -133,7 +133,6 @@ public class Activator extends Plugin {
 		IStatus	status = new Status(IStatus.INFO, PLUGIN_ID, 0,
 				"Validator Startup " + (end - start) + "ms"
 				,null); 
-		getLog().log(status);
 		return status;
 	}
 	
