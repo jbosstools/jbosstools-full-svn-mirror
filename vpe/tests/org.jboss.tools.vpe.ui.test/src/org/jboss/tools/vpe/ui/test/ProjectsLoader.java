@@ -168,4 +168,13 @@ public class ProjectsLoader {
 			removeProject(project);
 		}
 	}
+	
+	/*
+	 * XXX This temporary method is used to debug Struts tests on Hudson.
+	 * It must be removed when the problem with the failing tests is resolved.
+	 */
+	@Deprecated
+	public Map<String, String> getProjectNameToPath() {
+		return projectNameToPath;
+	}
 }
