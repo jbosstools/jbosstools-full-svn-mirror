@@ -10,8 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.ui.test;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import junit.framework.Assert;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -20,8 +24,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.test.util.JobUtils;
@@ -38,11 +40,35 @@ public class ProjectsLoader {
 	private static final String TEST_PROJECT_ELEMENT = "testProject";
 	private static final String TEST_PROJECT_PATH_ATTRIBUTE = "path";
 	private static final String TEST_PROJECT_NAME_ATTRIBUTE = "name";
-	private Map<String, String> projectNameToPath;
+	private Map<String, ProjectLocation> projectNameToLocation;
 	private static ProjectsLoader instance = null;
 
 	private ProjectsLoader() {
-		loadProjectPaths();
+		/*
+		 * Load project names and paths to them from the extensions of
+		 * {@link VpeAllTests#VPE_TEST_EXTENTION_POINT_ID}. And store
+		 * loaded data in {@link #projectNameToLocation}.
+		 */
+		projectNameToLocation = new HashMap<String, ProjectLocation>();
+		IExtension[] extensions = VPETestPlugin.getDefault().getVpeTestExtensions();
+		for (IExtension extension : extensions) {
+			IConfigurationElement[] confElements = extension
+					.getConfigurationElements();
+			for (IConfigurationElement configurationElement : confElements) {
+				if (TEST_PROJECT_ELEMENT.equals(
+						configurationElement.getName())) {
+					Bundle bundle = Platform.getBundle(
+							configurationElement.getNamespaceIdentifier());
+					String name = configurationElement.getAttribute(
+							TEST_PROJECT_NAME_ATTRIBUTE);
+					String path = configurationElement.getAttribute(
+							TEST_PROJECT_PATH_ATTRIBUTE);
+
+					projectNameToLocation.put(name,
+							new ProjectLocation(bundle, path));
+				}
+			}
+		}
 	}
 
 	/**
@@ -60,17 +86,48 @@ public class ProjectsLoader {
 	 * Returns instance of {@link IProject} by {@code projectName}.
 	 * If the project does not exist in the workspace, imports it from the
 	 * resources specified by extensions of {@code org.jboss.tools.vpe.ui.tests}
-	 * extension point. Returns {@code null} if the project is not declared in
-	 * the extensions.
+	 * extension point.
+	 * <p>
+	 * This method has <i>fail-fast</i> behavior. It never returns {@code null}.
+	 * It throws exceptions in the cases if the project is not defined,
+	 * can not be opened, etc.
 	 */
-	public IProject getProject(String projectName) {
+	public IProject getProject(String projectName) throws IOException {
 		IProject project = getExistingProject(projectName);
 
 		if (project == null) {
-			String projectPath = projectNameToPath.get(projectName);
-			if (projectPath != null) {
-				project = ResourcesUtils.importProjectIntoWorkspace(
+			ProjectLocation location = projectNameToLocation.get(projectName);
+			if (location == null) {
+				throw new RuntimeException(
+						"Project '" + project + "' is not defined.");
+			}
+			
+			Bundle bundle = location.getBundle();
+			if (bundle == null) {
+				throw new NullPointerException(
+						"Owning bundle of '" + project + "' is null.");
+			}
+			
+			URL rootEntry = bundle.getEntry("/");
+			if (rootEntry == null) {
+				throw new NullPointerException(
+						"Root entry to the bundle with id='"
+						+ bundle.getBundleId() + "' cannot be resolved.");
+			}
+			
+			URL resolvedRootEntry = FileLocator.resolve(rootEntry);
+			String pluginRoot = resolvedRootEntry.getPath();
+			if (pluginRoot.equals("")) {
+				throw new RuntimeException("Path to '" + resolvedRootEntry 
+						+ "' does not exist.");
+			}
+
+			String projectPath = pluginRoot + location.getPath();
+			project = ResourcesUtils.importProjectIntoWorkspace(
 						projectPath, projectName);
+			if (project == null) {
+				throw new RuntimeException("Project by the path='" + projectPath
+						+ "' cannot be imported.");
 			}
 		}
 
@@ -91,41 +148,6 @@ public class ProjectsLoader {
 		}
 	}
 
-	/**
-	 * Loads project names and paths to them from the extensions of
-	 * {@link VpeAllTests#VPE_TEST_EXTENTION_POINT_ID}. And stores
-	 * loaded data in {@link #projectNameToPath}.
-	 */
-	private void loadProjectPaths() {
-		projectNameToPath = new HashMap<String, String>();
-		IExtensionRegistry extensionRepository = Platform
-				.getExtensionRegistry();
-
-		IExtensionPoint extensionPoint = extensionRepository
-				.getExtensionPoint(VpeAllTests.VPE_TEST_EXTENTION_POINT_ID);
-		IExtension[] extensions = extensionPoint.getExtensions();
-		for (IExtension extension : extensions) {
-			IConfigurationElement[] confElements = extension
-					.getConfigurationElements();
-			for (IConfigurationElement configurationElement : confElements) {
-				if (TEST_PROJECT_ELEMENT.equals(configurationElement.getName())) {
-					try {
-						Bundle bundle = Platform.getBundle(configurationElement
-								.getNamespaceIdentifier());
-
-						String pluginRoot = FileLocator
-								.resolve(bundle.getEntry("/")).getPath();
-						String name = configurationElement.getAttribute(TEST_PROJECT_NAME_ATTRIBUTE);
-						String path = configurationElement.getAttribute(TEST_PROJECT_PATH_ATTRIBUTE);
-						projectNameToPath.put(name, pluginRoot + path);
-					} catch (Exception e) {
-						VPETestPlugin.getDefault().logError(e);
-					}
-				}
-			}
-		}
-	}
-	
 	/**
 	 * Removes the project with the {@code projectName} from the workspace.
 	 * 
@@ -168,13 +190,30 @@ public class ProjectsLoader {
 			removeProject(project);
 		}
 	}
-	
-	/*
-	 * XXX This temporary method is used to debug Struts tests on Hudson.
-	 * It must be removed when the problem with the failing tests is resolved.
+
+	/**
+	 * Stores the {@code path} to a project and the owning {@code bundle}.
+	 * 
+	 * @author Yahor Radtsevich (yradtsevich)
 	 */
-	@Deprecated
-	public Map<String, String> getProjectNameToPath() {
-		return projectNameToPath;
+	private class ProjectLocation {
+		private Bundle bundle;
+		private String path;
+		
+		public ProjectLocation(Bundle bundle, String path) {
+			this.bundle = bundle;
+			this.path = path;
+		}
+		public Bundle getBundle() {
+			return bundle;
+		}
+		public String getPath() {
+			return path;
+		}
+
+		public String toString() {
+			return String.format("(%s, %s)",
+					bundle == null ? null : bundle.getLocation(), path);
+		}
 	}
 }

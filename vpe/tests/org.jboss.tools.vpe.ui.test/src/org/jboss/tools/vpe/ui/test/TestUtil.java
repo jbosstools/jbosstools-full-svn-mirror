@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.ui.test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -66,20 +67,20 @@ public class TestUtil {
 	 * @return the component path
 	 * 
 	 * @throws CoreException the core exception
+	 * @throws IOException 
 	 */
 	public static IResource getComponentPath(String componentPage,
-			String projectName) throws CoreException {
+			String projectName) throws CoreException, IOException {
 		IProject project = ProjectsLoader.getInstance().getProject(projectName);
 		if (project != null) {
 			return project.getFolder(COMPONENTS_PATH).findMember(componentPage);
-
 		}
 
 		return null;
 	}
 	
 	public static IResource getResource(String path,
-			String projectName) throws CoreException {
+			String projectName) throws CoreException, IOException {
 		IProject project = ProjectsLoader.getInstance().getProject(projectName);
 		if (project != null) {
 			return project.findMember(path);
@@ -97,9 +98,10 @@ public class TestUtil {
 	 * @return the web content path
 	 * 
 	 * @throws CoreException the core exception
+	 * @throws IOException 
 	 */
 	public static IResource getWebContentPath(String componentPage,
-			String projectName) throws CoreException {
+			String projectName) throws CoreException, IOException {
 		IProject project = ProjectsLoader.getInstance().getProject(projectName);
 		if (project != null) {
 			return project.getFolder(WEBCONTENT_PATH).findMember(componentPage);

@@ -17,8 +17,6 @@ import junit.framework.TestSuite;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
@@ -30,7 +28,6 @@ import org.osgi.framework.Bundle;
 public class VpeAllTests {
 
 	public static final String TESTS_ELEMENT = "tests";
-	public static final String VPE_TEST_EXTENTION_POINT_ID = "org.jboss.tools.vpe.ui.tests"; //$NON-NLS-1$
 	public static final String TEST_SUITE_PARAM = "testSuite"; //$NON-NLS-1$	
 	public static final String METHOD_SUITE_NAME = "suite"; //$NON-NLS-1$
 	public static final String VPE_TEST_PROJECT_NAME = "vpeTest"; //$NON-NLS-1$
@@ -38,12 +35,7 @@ public class VpeAllTests {
 	public static Test suite() {
 
 		TestSuite result = new TestSuite();
-		IExtensionRegistry extensionRepository = Platform
-				.getExtensionRegistry();
-
-		IExtensionPoint extensionPoint = extensionRepository
-				.getExtensionPoint(VPE_TEST_EXTENTION_POINT_ID);
-		IExtension[] extensions = extensionPoint.getExtensions();
+		IExtension[] extensions = VPETestPlugin.getDefault().getVpeTestExtensions();
 		for (IExtension extension : extensions) {
 			IConfigurationElement[] confElements = extension
 					.getConfigurationElements();
@@ -71,5 +63,4 @@ public class VpeAllTests {
 		return result;
 
 	}
-
 }

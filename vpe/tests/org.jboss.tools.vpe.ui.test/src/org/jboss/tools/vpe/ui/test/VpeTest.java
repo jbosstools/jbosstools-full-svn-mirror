@@ -13,6 +13,7 @@
 package org.jboss.tools.vpe.ui.test;
 
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -350,9 +351,10 @@ public class VpeTest extends TestCase implements ILogListener {
 	 * 
 	 * @return VpeController
 	 * @throws CoreException 
+	 * @throws IOException 
 	 */
-	protected VpeController openInVpe(String projectName, String fileName) throws CoreException
-				 {
+	protected VpeController openInVpe(String projectName, String fileName)
+			throws CoreException, IOException {
 		// get test page path
 		final IFile file =
 			(IFile) TestUtil.getComponentPath(fileName, projectName);
