@@ -238,5 +238,135 @@ Java POJOs.</description>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/transform_XML2XML_simple_client.zip
 		</url>
 	</project>
+	
+	<project>
+		<category>Seam</category>
+		<name>booking22</name>
+		<included-projects>
+		booking22,booking22-ear,booking22-ejb,booking22-test
+		</included-projects>
+		<shortDescription>Seam 2.2 Booking Example - EAR (including a tutorial)</shortDescription>
+		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
+Transaction and persistence context management is handled by the EJB container.
+This example has been tested on JBoss EAP 5.0.
+It includes the booking22, booking22-ear,booking22-test and booking22-ejb projects.
+</description>
+		<size>38203392</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/booking22.zip
+		</url>
+		<welcome type="cheatsheets" url="/booking22/cheatsheets/booking.xml"/>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="eclipse-projects">booking22,booking22-ejb,booking22-ear</property>
+				<property name="description">This project example requires the JBoss EAP 5.0</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.2.0</property>
+				<property name="eclipse-projects">booking22</property>
+				<property name="description">This project example requires Seam version 2.2.0</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.testng.eclipse</property>
+				<property name="versions">5.8.0, 5.9.0</property>
+				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
+			</fix>
+		</fixes>
+	</project>
+	
+	<project>
+		<category>Seam</category>
+		<name>photoalbum</name>
+		<included-projects>
+		photoalbum,photoalbum-ear,photoalbum-ejb
+		</included-projects>
+		<shortDescription>PhotoAlbum - EAR (RichFaces 3.3.1.GA, Seam 2.2.0.GA)</shortDescription>
+		<description>This example demonstrates the use of RichFaces components. It includes the photoalbum,photoalbum-ear and photoalbum-ejb projects.
+The example requires Seam 2.2 and JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x.	
+		</description>
+		<size>25833472</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/photoalbum.zip
+		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.51, org.jboss.ide.eclipse.as.runtime.50, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">photoalbum,photoalbum-ear,photoalbum-ejb</property>
+				<property name="description">This project example requires JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.2.0</property>
+				<property name="eclipse-projects">photoalbum</property>
+				<property name="description">This project example requires Seam version 2.2.0</property>
+			</fix>
+		</fixes>
+	</project>
+	
+	<project>
+		<category>Seam</category>
+
+		<name>dvdstore22</name>
+		<included-projects>
+		dvdstore22,dvdstore22-ear,dvdstore22-ejb,dvdstore22-test
+		</included-projects>
+		<shortDescription>Seam 2.2 DVD Store Example - EAR (including a test project)</shortDescription>
+		<description>This example demonstrates the use of Seam with jBPM pageflow and business process management. It includes the dvdstore22,dvdstore22-ear,dvdstore22-test and dvdstore22-ejb projects.
+		</description>
+		<size>35225600</size>
+
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/dvdstore22.zip
+		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="eclipse-projects">dvdstore22,dvdstore22-ejb,dvdstore22-ear</property>
+				<property name="description">This project example requires the JBoss EAP 5.0</property>
+			</fix>
+			
+			<fix type="seam">
+				<property name="allowed-versions">2.2.0</property>
+				<property name="eclipse-projects">dvdstore22</property>
+				<property name="description">This project example requires Seam version 2.2.0</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.testng.eclipse</property>
+				<property name="versions">5.8.0, 5.9.0</property>
+				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
+			</fix>
+		</fixes>
+	</project>
+	
+	<project>
+		<category>RESTEasy</category>
+		<name>simple</name>
+		<included-projects>
+		simple
+		</included-projects>
+
+		<shortDescription>RESTEasy Simple Example</shortDescription>
+		<description>This project is a simple example showing usage of @Path, @GET, PUT, POST, and @PathParam. It uses pure streaming output and includes the 'simple' project. 
+Requires m2eclipse and JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x.
+		</description>
+		<size>16939</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/resteasy-examples/resteasySimple.zip
+		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.51, org.jboss.ide.eclipse.as.runtime.50, org.jboss.ide.eclipse.as.runtime.42</property>
+				<property name="eclipse-projects">photoalbum,photoalbum-ear,photoalbum-ejb</property>
+				<property name="description">This project example requires JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions"> 0.10.0</property>
+				<property name="description">This project example requires m2eclipse. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
+			</fix>
+		</fixes>
+	</project>
 </projects>
 
