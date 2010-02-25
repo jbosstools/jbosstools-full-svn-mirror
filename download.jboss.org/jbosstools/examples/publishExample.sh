@@ -7,7 +7,7 @@ fi
 
 filename="$1"; filename=${filename##*/}
 wget -N "$1" 
-svn ci -m "getExample.sh automated check-in for $1"
+svn ci -m "$0 $1"
 
 # Push to sftp://jbossqa@filemgmt.jboss.org/htdocs/jbosstools/examples
 scp $filename jbossqa@filemgmt.jboss.org:/htdocs/jbosstools/examples/
