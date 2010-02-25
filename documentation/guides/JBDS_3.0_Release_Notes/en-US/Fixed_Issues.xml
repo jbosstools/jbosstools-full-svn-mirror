@@ -18,7 +18,7 @@
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5355">JBIDE-5355</ulink>: A Contexts and Dependency Injection Project Facet has been added to <application>JBoss Developer Studio</application>.
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5355">JBIDE-5355</ulink>: A Contexts and Dependency Injection Project Facet has been added to <application>JBoss Developer Studio</application>. This makes it possible to enable CDI support for a faceted project via the <guilabel>New Dynamic Web Project</guilabel> wizard or the <guilabel>Project Facets</guilabel> setting page available at <menuchoice><guimenuitem>Project</guimenuitem><guimenuitem>Properties</guimenuitem><guimenuitem>Project Facets</guimenuitem></menuchoice>.
 						</para>
 					</listitem>
 					<listitem>
