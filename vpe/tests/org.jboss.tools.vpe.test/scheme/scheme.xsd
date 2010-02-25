@@ -101,6 +101,7 @@
         </xsd:choice>
         <xsd:attribute name="children" type="vpe:VPE-BOOLEAN"/>
         <xsd:attribute name="modify" type="vpe:VPE-BOOLEAN"/>
+        <xsd:attribute name="defineElementName" type="xsd:string" use="optional"/>
         <xsd:attribute name="class" type="xsd:string" use="optional" />
         <xsd:attribute name="file" type="xsd:string" use="optional"/>
         <xsd:attribute name="namespaceIdentifier" type="xsd:string" use="optional"/>
