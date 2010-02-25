@@ -578,8 +578,15 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <para>Some of our newer plugins, like TPTP and BIRT, need additional drivers. On the left side of
     the download page you can find all of the required drivers for chosen build and their versions.</para>
-   <para>Instead of downloading the nightly build version manually, it&apos;s also possible to
-    get the latest release of <property>JBoss Tools</property> from one of our update sites: <itemizedlist>
+   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
+    about dependencies between standalone plug-ins.</para>  
+   <section>
+    <title>Installation From Update Site</title>
+   
+   
+   <para>Instead of downloading installation/updating manually, it&apos;s also possible to
+    get the latest release of <property>JBoss Tools</property> from one of our update sites: 
+    <itemizedlist id="sites">
      <listitem>
       <para>Stable Updates: <ulink url="http://download.jboss.org/jbosstools/updates/stable"
         >http://download.jboss.org/jbosstools/updates/stable</ulink></para>
@@ -588,55 +595,132 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
       <para> Development Updates: <ulink url="http://download.jboss.org/jbosstools/updates/development"
         >http://download.jboss.org/jbosstools/updates/development</ulink></para>
      </listitem>
+     <listitem>
+      <para> Nightly Builds: <ulink url="http://download.jboss.org/jbosstools/updates/nightly/trunk/"
+       >http://download.jboss.org/jbosstools/updates/nightly/trunk/</ulink></para>
+     </listitem>
     </itemizedlist>
    </para>
+<itemizedlist>
+ <para>To install/update Jboss Tools from one of the update sites you should follow the steps:</para>
+ <listitem><para>First, download the correct version of Eclipse 
+  for your platform which is compatible with the version of JBoss
+  Tools you plan to install.For example if you want to install
+  3.1.0.GA Eclipse 3.5 is required.</para></listitem>
+ <listitem><para>If you do not already have Java 5 or 6 installed and in your path,
+  download and install it.</para></listitem>
+ <listitem><para>When Eclipse is started, go to <itemizedlist>
+  <listitem><para>Help->Software Updates... ->Available Software->Manage Sites...->Add...<emphasis>(Eclipse 3.4)</emphasis></para></listitem>
+  <listitem><para>Help->Install New Software->Add..<emphasis>(Eclipse 3.5)</emphasis></para></listitem>
+ </itemizedlist>
+ </para></listitem>
+ <listitem><para>After clicking <emphasis>Add</emphasis> button <property>Add Site</property> View should appear.
+  In the <property>Location</property> field you should paste one of the update sites described
+  <link linkend="sites">above</link>.In <property>Name</property> you can write any name you like.
+  In the end press the <property>Ok</property> button.</para>
+  <figure>
+   <title>Add Update Site</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4a.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ </listitem>
+ <listitem id="from_point"><para>In the <property>Install</property> View select features to install, then click <emphasis>Next</emphasis>.</para>
+  <figure>
+   <title>Jboss Tools installation</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4b.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ </listitem>
+ <listitem> <para>If Jboss Tools are already installed on your Eclipse and you are doing updating but not 
+  installation the following messages will appear in your <emphasis>Details</emphasis> section.
+  Ignore them and press <emphasis>Next.</emphasis></para>
+  <figure>
+   <title>Possible messages</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4c.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ </listitem>
+ <listitem><para>When you click Finish the prosses of Installation/Updating starts up. </para></listitem>
+ <listitem><para>Install. Restart when prompted.</para>
+  <figure>
+   <title>Message dialog</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4d.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure> 
+ </listitem>
+ <listitem><para>After fetching all the features and plugins for installation,
+  you may be prompted that your selection contains unsigned jars.
+  This is normal,simply accept the warning and continue. </para>
+  <figure>
+   <title>Warning Message</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4e.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure> 
+ </listitem>
+</itemizedlist>
 
-   <itemizedlist>
-    <listitem>
-     <para>Finally, install the build</para>
-    </listitem>
-   </itemizedlist>
-
-   <para>Unzip the file(s) directly into your Eclipse <emphasis>
-     <property>plugins/features</property>
-    </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
-    with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
-
-   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
-   about dependencies between standalone plug-ins.</para>
-   
-   <para>You can update Jboss Tools and install a new version with the help of "Install" wizard (Help > Install New Software...)</para>
-   
-   <figure>
-    <title>Updating Jboss Tools</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="images/getting_started/update_wizard_1.png"/>
-     </imageobject>
-    </mediaobject>
-   </figure>
-  
-   <para>In "Work with" field add the path to the source to update from (e.g. http://download.jboss.org/jbosstools/updates/development), check the necessary software to install, more information about chosen software can be found in "Details" section.</para>
-<para>Follow "Available Software Sites" link to find more site to update from</para>
-     
-   <figure>
-    <title>Available Software Sites</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="images/getting_started/update_wizard_2.png"/>
-     </imageobject>
-    </mediaobject>
-   </figure>
-     
-     <note>
+    <note>
      	<title>Note:</title>
   	<para>While installing JBoss Tools on GNU/Linux (64-bit) through the eclipse installation manager you may run into some problems which can interrupt your installation process.
   		Please, read the 
   		<ulink url="http://www.jboss.org/community/wiki/ManualinstallationofJBossTools31xonEclipse35onGNULinux64-bit">Manual installation of JBoss Tools 3.1.x on Eclipse 3.5 on GNU/Linux (64-bit)</ulink> 
   		wiki article which provides you with the necessary steps to do it correct.</para>
      </note>
+ </section>
+ <section>
+  <title>Installation From Zip file</title>
+   <para>You can download Jboss tools in a zip file from one of the pages below:</para>
+  <itemizedlist id="zip_sites">
+   <listitem>
+    <para>Stable Releases: <ulink url="http://www.jboss.org/tools/download/stable.html"
+     >http://www.jboss.org/tools/download/stable.html</ulink></para>
+   </listitem>
+   <listitem>
+    <para> Development Updates: <ulink url="http://www.jboss.org/tools/download/dev.html"
+     >http://www.jboss.org/tools/download/dev.html</ulink></para>
+   </listitem>
+   <listitem>
+    <para> Nightly Builds: <ulink url="http://download.jboss.org/jbosstools/updates/nightly/"
+     >http://download.jboss.org/jbosstools/updates/nightly/</ulink></para>
+   </listitem>
+  </itemizedlist>
+  <para>When you downloaded Jboss Tools Zip please <emphasis>DO NOT UNZIP IT</emphasis> and follow the steps described below:</para>
+ <itemizedlist>
+  <listitem><para>When Eclipse is started, go to <property>Help -> Install New Software... -> Add... -> Archive...</property></para></listitem>
+  <listitem><para>Browse for the update site zip.In the <emphasis>Name</emphasis> field you can write any name you like.
+   In the end press <property>Ok</property> button.</para>
+   <figure>
+    <title>Installation from a zip file</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="images/getting_started/getting_started_4f.png"/>
+     </imageobject>
+    </mediaobject>
+   </figure> 
+  </listitem>
+  <listitem><para>All the other steps are the same as it was described in the <link linkend="from_point">
+   Installation From Update Site section</link>. </para>
+  </listitem> 
+ </itemizedlist>
+  
+ </section>
+   
   </section>
-
  </section>
 
  <section id="Welcome">
@@ -732,6 +816,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  	<para>Now it&apos;s possible to upgrade from JBDS 2.0 to 2.1 using the update site which is available at 
  		<ulink url="is available at http://devstudio.jboss.com/updates/2.1">http://devstudio.jboss.com/updates/2.1</ulink>. 
  		This is described more fully in the <ulink url="http://www.jboss.com/products/devstudio/update/">JBDS Update Guide</ulink>.</para>
+  <note>
+   <title>Note:</title>
+   <para>You <emphasis><property>CAN NOT</property></emphasis> upgrade from 2.1 to 3.0 using update site because of some platform change.Full installation is required.</para>
+  </note>
  </section>
 
  <section id="Uninstalling">
