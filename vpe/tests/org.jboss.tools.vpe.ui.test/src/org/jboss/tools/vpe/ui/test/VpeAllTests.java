@@ -27,7 +27,7 @@ import org.osgi.framework.Bundle;
  */
 public class VpeAllTests {
 
-	public static final String TESTS_ELEMENT = "tests";
+	public static final String TESTS_ELEMENT = "tests"; //$NON-NLS-1$
 	public static final String TEST_SUITE_PARAM = "testSuite"; //$NON-NLS-1$	
 	public static final String METHOD_SUITE_NAME = "suite"; //$NON-NLS-1$
 	public static final String VPE_TEST_PROJECT_NAME = "vpeTest"; //$NON-NLS-1$
