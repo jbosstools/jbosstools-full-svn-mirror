@@ -39,9 +39,9 @@
          
 	                       <copyright>
 			             <year>2007</year>
-			             <year diffmk:change="added"><diffmk:wrapper diffmk:change="added">2008</diffmk:wrapper></year>
+			             <year>2008</year>
 	                           <year>2009</year>
-	                           <year diffmk:change="added"><diffmk:wrapper diffmk:change="added">2010</diffmk:wrapper></year>
+	                           <year>2010</year>
 	                           <holder>JBoss by Red Hat</holder>
 	                       </copyright>
           <releaseinfo>
@@ -162,7 +162,7 @@
                                 language to the rule language</para>
                         </entry>
                         <entry>
-                            <link diffmk:change="added" linkend="dsl_editor"><diffmk:wrapper diffmk:change="added">The Domain Specific Language Editor</diffmk:wrapper></link>
+                            <link linkend="dsl_editor">The Domain Specific Language Editor</link>
                         </entry>
                     </row>
 
@@ -188,7 +188,7 @@
                                 process (a rule flow)</para>
                         </entry>
                         <entry>
-                            <link diffmk:change="added" linkend="ruleflow_editor"><diffmk:wrapper diffmk:change="added">The Rule Flow Graphical Editor</diffmk:wrapper></link>
+                            <link linkend="ruleflow_editor">The Rule Flow Graphical Editor</link>
                         </entry>
                     </row>
 
@@ -593,229 +593,229 @@
     </chapterinfo>
 
     <title>Editors</title>
-    <section diffmk:change="added" id="dsl_editor">
-        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">DSL Editor</diffmk:wrapper></title>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">A domain-specific language is a set of custom rules,
+    <section id="dsl_editor">
+        <title>DSL Editor</title>
+        <para>A domain-specific language is a set of custom rules,
             that is created specifically to solve problems in a particular domain 
             and is not intended to be able to solve problems outside it.
             A DSL's configuration is stored in plain text. 
-        </diffmk:wrapper></para>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">In Drools this configuration is presented by </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">.dsl</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
-            files that can be created by </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">right click on the project-&gt;New-&gt;Other-&gt;Drools-&gt;Domain Specific Language</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">DSL Editor is a default editor for </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">.dsl</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> files:</diffmk:wrapper></para>
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">DSL Editor</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/editors/editors1a.png"></imagedata>
+        </para>
+        <para>In Drools this configuration is presented by <property moreinfo="none">.dsl</property>
+            files that can be created by <emphasis>right click on the project-&gt;New-&gt;Other-&gt;Drools-&gt;Domain Specific Language</emphasis>.</para>
+        <para>DSL Editor is a default editor for <property moreinfo="none">.dsl</property> files:</para>
+        <figure float="0">
+            <title>DSL Editor</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1a.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">In the table below all the components of the DSL Editor page are described:</diffmk:wrapper></para>
-        <table diffmk:change="added">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">DSL Editor Components.</diffmk:wrapper></title>   
-            <tgroup cols="2" diffmk:change="added">
-                <colspec align="left" colnum="1" colwidth="1*" diffmk:change="added"></colspec>
-                <colspec align="left" colnum="2" colwidth="3*" diffmk:change="added"></colspec>
+        <para>In the table below all the components of the DSL Editor page are described:</para>
+        <table>
+            <title>DSL Editor Components.</title>   
+            <tgroup cols="2">
+                <colspec align="left" colnum="1" colwidth="1*"></colspec>
+                <colspec align="left" colnum="2" colwidth="3*"></colspec>
                 
-                <thead diffmk:change="added">
-                    <row diffmk:change="added">
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Components</diffmk:wrapper></entry>									
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Description</diffmk:wrapper></entry>
+                <thead>
+                    <row>
+                        <entry>Components</entry>									
+                        <entry>Description</entry>
                     </row>
                 </thead>
-                <tbody diffmk:change="added">
-                    <row diffmk:change="added">
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Description</diffmk:wrapper></entry>
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">User's comments on a certain language message mapping</diffmk:wrapper></entry>
+                <tbody>
+                    <row>
+                        <entry>Description</entry>
+                        <entry>User's comments on a certain language message mapping</entry>
                     </row> 
-                    <row diffmk:change="added">
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Table of language message mappings</diffmk:wrapper></entry>
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">The table is divided into 4 rows:
-                        </diffmk:wrapper><itemizedlist diffmk:change="added" id="rows">
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Language Expression</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> :expression you want to use as a rule</diffmk:wrapper></para></listitem>
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Rule Language Mapping</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> :the implementation of the rules.This means that to this language expression the rule will be compiled 
-                                by the rule engine compiler.</diffmk:wrapper></para></listitem>
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Object</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> :name of the object</diffmk:wrapper></para></listitem>
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Scope</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> :indicates where the expression is
-                                targeted: is it for the "condition" part of the rule ,"consequence" part, etc.</diffmk:wrapper></para></listitem>
-                        </itemizedlist><diffmk:wrapper diffmk:change="added">
+                    <row>
+                        <entry>Table of language message mappings</entry>
+                        <entry>The table is divided into 4 rows:
+                        <itemizedlist id="rows">
+                            <listitem><para><emphasis>Language Expression</emphasis> :expression you want to use as a rule</para></listitem>
+                            <listitem><para><emphasis>Rule Language Mapping</emphasis> :the implementation of the rules.This means that to this language expression the rule will be compiled 
+                                by the rule engine compiler.</para></listitem>
+                            <listitem><para><emphasis>Object</emphasis> :name of the object</para></listitem>
+                            <listitem><para><emphasis>Scope</emphasis> :indicates where the expression is
+                                targeted: is it for the "condition" part of the rule ,"consequence" part, etc.</para></listitem>
+                        </itemizedlist>
                          By clicking on some row's header you can sort the lines in the table according to the clicked row.
-                         By double clicking on the line </diffmk:wrapper><link diffmk:change="added" linkend="edit_wizard"><diffmk:wrapper diffmk:change="added">Edit language mapping Wizard</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> will be open. 
-                        </diffmk:wrapper></entry>
+                         By double clicking on the line <link linkend="edit_wizard">Edit language mapping Wizard</link> will be open. 
+                        </entry>
                     </row> 
-                    <row diffmk:change="added">
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Expression</diffmk:wrapper></entry>
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Shows the language expression of the selected table line(language message mapping).</diffmk:wrapper></entry>
+                    <row>
+                        <entry>Expression</entry>
+                        <entry>Shows the language expression of the selected table line(language message mapping).</entry>
                      </row> 
                     
-                    <row diffmk:change="added">
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Mapping</diffmk:wrapper></entry>
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Shows the rule of language mapping for the selected table line(language message mapping).</diffmk:wrapper></entry>
+                    <row>
+                        <entry>Mapping</entry>
+                        <entry>Shows the rule of language mapping for the selected table line(language message mapping).</entry>
                     </row> 
-                    <row diffmk:change="added">
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Object</diffmk:wrapper></entry>
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Shows the object for the selected table line(language message mapping)</diffmk:wrapper></entry>
+                    <row>
+                        <entry>Object</entry>
+                        <entry>Shows the object for the selected table line(language message mapping)</entry>
                     </row> 
 
-                    <row diffmk:change="added">
-                        <entry diffmk:change="added" id="sort"><diffmk:wrapper diffmk:change="added">Sort By</diffmk:wrapper></entry>
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Using this option you can change the type of lines sorting 
+                    <row>
+                        <entry id="sort">Sort By</entry>
+                        <entry>Using this option you can change the type of lines sorting 
                             in the table of language message mappings.To do this select from the drop down lins the method
-                            of sorting you want and click </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Sort</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> button.</diffmk:wrapper></entry>
+                            of sorting you want and click <emphasis>Sort</emphasis> button.</entry>
                     </row>
-                    <row diffmk:change="added">
-                        <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Buttons</diffmk:wrapper></entry>
-                        <entry diffmk:change="added"><itemizedlist diffmk:change="added">
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Edit</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> :by clicking the button users can edit
+                    <row>
+                        <entry>Buttons</entry>
+                        <entry><itemizedlist>
+                            <listitem><para><emphasis>Edit</emphasis> :by clicking the button users can edit
                                 selected in the table of language message mappings lines.For more information look
-                                 </diffmk:wrapper><link diffmk:change="added" linkend="edit_wizard"><diffmk:wrapper diffmk:change="added">Edit language mapping Wizard</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">section.</diffmk:wrapper></para></listitem>
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Remove</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> :if you click the button the selected mapping line will be deleted. </diffmk:wrapper></para></listitem>
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Add</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> :with this button you can add new mapping lines to the table.For more information look 
-                                 </diffmk:wrapper><link diffmk:change="added" linkend="add_wizard"><diffmk:wrapper diffmk:change="added">Add language mapping Wizard</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">section. </diffmk:wrapper></para></listitem>
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Sort</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> : please, for more information go </diffmk:wrapper><link diffmk:change="added" linkend="sort"><diffmk:wrapper diffmk:change="added">here</diffmk:wrapper></link></para></listitem>
-                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Copy</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> :with this button you can add new mapping lines to the table
-                                in which all the information will be copied from the selected mapping line.</diffmk:wrapper></para></listitem>
+                                 <link linkend="edit_wizard">Edit language mapping Wizard</link>section.</para></listitem>
+                            <listitem><para><emphasis>Remove</emphasis> :if you click the button the selected mapping line will be deleted. </para></listitem>
+                            <listitem><para><emphasis>Add</emphasis> :with this button you can add new mapping lines to the table.For more information look 
+                                 <link linkend="add_wizard">Add language mapping Wizard</link>section. </para></listitem>
+                            <listitem><para><emphasis>Sort</emphasis> : please, for more information go <link linkend="sort">here</link></para></listitem>
+                            <listitem><para><emphasis>Copy</emphasis> :with this button you can add new mapping lines to the table
+                                in which all the information will be copied from the selected mapping line.</para></listitem>
                         </itemizedlist>
                         </entry>
                     </row> 
                 </tbody>
             </tgroup>
         </table>
-        <section diffmk:change="added" id="edit_wizard">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Edit language mapping Wizard</diffmk:wrapper></title>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">This wizard can be opened by double clicking  some line 
-                in the table of language message mappings or by clicking the </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Edit</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">button.</diffmk:wrapper></para>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the picture below you can see all the options,Edit language mapping Wizard allow to change.</diffmk:wrapper></para>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Their names as well as the meaning of the options are correspond to the </diffmk:wrapper><link diffmk:change="added" linkend="rows"><diffmk:wrapper diffmk:change="added">rows</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> of the table.</diffmk:wrapper></para>
-            <figure diffmk:change="added" float="0">
-                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Edit language mapping Wizard</diffmk:wrapper></title>
-                <mediaobject diffmk:change="added">
-                    <imageobject diffmk:change="added">
-                        <imagedata diffmk:change="added" fileref="images/editors/editors1c.png"></imagedata>
+        <section id="edit_wizard">
+            <title>Edit language mapping Wizard</title>
+            <para>This wizard can be opened by double clicking  some line 
+                in the table of language message mappings or by clicking the <emphasis>Edit</emphasis>button.</para>
+            <para>On the picture below you can see all the options,Edit language mapping Wizard allow to change.</para>
+            <para>Their names as well as the meaning of the options are correspond to the <link linkend="rows">rows</link> of the table.</para>
+            <figure float="0">
+                <title>Edit language mapping Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors1c.png"></imagedata>
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To change the mapping a user should edit the otions he want and finally click </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Ok</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+            <para>To change the mapping a user should edit the otions he want and finally click <emphasis>Ok</emphasis>.</para>
         </section>
-        <section diffmk:change="added" id="add_wizard">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Add language mapping Wizard</diffmk:wrapper></title>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">This wizard is equal to </diffmk:wrapper><link diffmk:change="added" linkend="edit_wizard"><diffmk:wrapper diffmk:change="added">Edit language mapping Wizard</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">.
-            It can be opened by clicking the </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Add</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> button.
-            </diffmk:wrapper></para>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The only difference is that instead of editing the information you should enter new one.</diffmk:wrapper></para>
-            <figure diffmk:change="added" float="0">
-                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Add language mapping Wizard</diffmk:wrapper></title>
-                <mediaobject diffmk:change="added">
-                    <imageobject diffmk:change="added">
-                        <imagedata diffmk:change="added" fileref="images/editors/editors1b.png"></imagedata>
+        <section id="add_wizard">
+            <title>Add language mapping Wizard</title>
+            <para>This wizard is equal to <link linkend="edit_wizard">Edit language mapping Wizard</link>.
+            It can be opened by clicking the <emphasis>Add</emphasis> button.
+            </para>
+            <para>The only difference is that instead of editing the information you should enter new one.</para>
+            <figure float="0">
+                <title>Add language mapping Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors1b.png"></imagedata>
                     </imageobject>
                 </mediaobject>
             </figure>
           </section> 
     </section>
-    <section diffmk:change="added" id="ruleflow_editor">
-        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Flow Editor</diffmk:wrapper></title>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Drools tools also provide some functionality to define the order in 
+    <section id="ruleflow_editor">
+        <title>Flow Editor</title>
+        <para>Drools tools also provide some functionality to define the order in 
             which rules should be executed.Ruleflow file allows you to specify 
             the order in which rule sets should be evaluated using a flow chart.
             So you can define which rule sets should be evaluated in sequence or in parallel as well as
-            specify conditions under which rule sets should be evaluated.</diffmk:wrapper></para>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Ruleflows can be set only by using the graphical flow editor which is part of the Drools plugin for Eclipse.
+            specify conditions under which rule sets should be evaluated.</para>
+        <para>Ruleflows can be set only by using the graphical flow editor which is part of the Drools plugin for Eclipse.
             Once you have set up a Drools project,you can start adding ruleflows.
-            Add a ruleflow file(.rf) by clicking on the project and selecting "</diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">New -&gt; Other...-&gt;Flow File</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">":</diffmk:wrapper></para> 
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">RuleFlow file creation</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/editors/editors1f.png"></imagedata>
+            Add a ruleflow file(.rf) by clicking on the project and selecting "<emphasis>New -&gt; Other...-&gt;Flow File</emphasis>":</para> 
+        <figure float="0">
+            <title>RuleFlow file creation</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1f.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">By default these ruleflow files (.rf) are opened in the graphical Flow editor.
-            You can see it on the picture below.</diffmk:wrapper></para>
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Flow Editor</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/editors/editors1g.png"></imagedata>
+        <para>By default these ruleflow files (.rf) are opened in the graphical Flow editor.
+            You can see it on the picture below.</para>
+        <figure float="0">
+            <title>Flow Editor</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1g.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The Flow editor consists of a </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">palette</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">, a </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">canvas</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">
-            and an </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">outline</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> view. To add new elements to the canvas, select the 
+        <para>The Flow editor consists of a <emphasis>palette</emphasis>, a <emphasis>canvas</emphasis>
+            and an <emphasis>outline</emphasis> view. To add new elements to the canvas, select the 
             element you would like to create in the palette and then add it to the canvas by clicking on the preferred location.
-        </diffmk:wrapper></para>
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Adding an element to the canvas</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/editors/editors1e.png"></imagedata>
+        </para>
+        <figure float="0">
+            <title>Adding an element to the canvas</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1e.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Clicking on the Select option in the palette and
+        <para>Clicking on the Select option in the palette and
             then on the element in your ruleflow allows you to 
-            view and set the properties of that element in the properies view.</diffmk:wrapper></para>
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Properties view</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/editors/editors1d.png"></imagedata>
+            view and set the properties of that element in the properies view.</para>
+        <figure float="0">
+            <title>Properties view</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1d.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Outline View is useful for big complex schemata where not all nodes are seen at one time.
-        So using your Outline view you can easly navigate between parts of a schema.  </diffmk:wrapper></para>
-        <figure diffmk:change="added" float="0">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Outline view usage</diffmk:wrapper></title>
-            <mediaobject diffmk:change="added">
-                <imageobject diffmk:change="added">
-                    <imagedata diffmk:change="added" fileref="images/editors/editors9.png"></imagedata>
+        <para>Outline View is useful for big complex schemata where not all nodes are seen at one time.
+        So using your Outline view you can easly navigate between parts of a schema.  </para>
+        <figure float="0">
+            <title>Outline view usage</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors9.png"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
-        <section diffmk:change="added">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Different types of control elements in Flow Palette</diffmk:wrapper></title>
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Flow editor supports three types of control elements.
-            They are:</diffmk:wrapper></para>
-            <table diffmk:change="added"> <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Flow Palette Components.Part 1</diffmk:wrapper></title>   
-                <tgroup cols="3" diffmk:change="added">
-                    <colspec align="left" colnum="1" colwidth="1*" diffmk:change="added"></colspec>
-                    <colspec align="left" colnum="2" colwidth="1*" diffmk:change="added"></colspec>
-                    <colspec align="left" colnum="3" colwidth="3*" diffmk:change="added"></colspec>
+        <section>
+            <title>Different types of control elements in Flow Palette</title>
+            <para>Flow editor supports three types of control elements.
+            They are:</para>
+            <table> <title>Flow Palette Components.Part 1</title>   
+                <tgroup cols="3">
+                    <colspec align="left" colnum="1" colwidth="1*"></colspec>
+                    <colspec align="left" colnum="2" colwidth="1*"></colspec>
+                    <colspec align="left" colnum="3" colwidth="3*"></colspec>
                     
-                    <thead diffmk:change="added">
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Component Picture</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Component Name</diffmk:wrapper></entry>									
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Description</diffmk:wrapper></entry>
+                    <thead>
+                        <row>
+                            <entry>Component Picture</entry>
+                            <entry>Component Name</entry>									
+                            <entry>Description</entry>
                         </row>
                     </thead>
-                    <tbody diffmk:change="added">
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">
-                                <imageobject diffmk:change="added">
-                                    <imagedata diffmk:change="added" fileref="images/editors/icon7.png"></imagedata>
+                    <tbody>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/editors/icon7.png"></imagedata>
                                 </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Select</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Select a node on the canvas</diffmk:wrapper></entry>
+                            <entry>Select</entry>
+                            <entry>Select a node on the canvas</entry>
                         </row>
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">
-                                <imageobject diffmk:change="added">
-                                    <imagedata diffmk:change="added" fileref="images/editors/icon8.png"></imagedata>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/editors/icon8.png"></imagedata>
                                 </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Marquee</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Is used for selecting a group of elements</diffmk:wrapper></entry>
+                            <entry>Marquee</entry>
+                            <entry>Is used for selecting a group of elements</entry>
                         </row>
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">
-                                <imageobject diffmk:change="added">
-                                    <imagedata diffmk:change="added" fileref="images/editors/icon9.png"></imagedata>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/editors/icon9.png"></imagedata>
                                 </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Sequence Flow</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Use this element to join two elements on the canvas</diffmk:wrapper></entry>
+                            <entry>Sequence Flow</entry>
+                            <entry>Use this element to join two elements on the canvas</entry>
                         </row>
                     </tbody>
                     
@@ -823,112 +823,112 @@
             </table>
         </section>
         
-        <section diffmk:change="added">
-            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Different types of nodes in Flow Palette</diffmk:wrapper></title>
+        <section>
+            <title>Different types of nodes in Flow Palette</title>
             
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Currently, ruleflow supports seven types of nodes.
-            In the table below you can find information about them:</diffmk:wrapper></para>
-            <table diffmk:change="added"> <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Flow Palette Components.Part 2.</diffmk:wrapper></title>   
-                <tgroup cols="3" diffmk:change="added">
-                    <colspec align="left" colnum="1" colwidth="1*" diffmk:change="added"></colspec>
-                    <colspec align="left" colnum="2" colwidth="1*" diffmk:change="added"></colspec>
-                    <colspec align="left" colnum="3" colwidth="3*" diffmk:change="added"></colspec>
+            <para>Currently, ruleflow supports seven types of nodes.
+            In the table below you can find information about them:</para>
+            <table> <title>Flow Palette Components.Part 2.</title>   
+                <tgroup cols="3">
+                    <colspec align="left" colnum="1" colwidth="1*"></colspec>
+                    <colspec align="left" colnum="2" colwidth="1*"></colspec>
+                    <colspec align="left" colnum="3" colwidth="3*"></colspec>
                     
-                    <thead diffmk:change="added">
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Component Picture</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Component Name</diffmk:wrapper></entry>									
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Description</diffmk:wrapper></entry>
+                    <thead>
+                        <row>
+                            <entry>Component Picture</entry>
+                            <entry>Component Name</entry>									
+                            <entry>Description</entry>
                         </row>
                         
                     </thead>
-                    <tbody diffmk:change="added">
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">
-                                <imageobject diffmk:change="added">
-                                <imagedata diffmk:change="added" fileref="images/editors/icon1.png"></imagedata>
+                    <tbody>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon1.png"></imagedata>
                             </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Start Event</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">The start of the ruleflow. A ruleflow should have exactly 
-                                one start node. The </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Start Event</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> can not have incoming
+                            <entry>Start Event</entry>
+                            <entry>The start of the ruleflow. A ruleflow should have exactly 
+                                one start node. The <property moreinfo="none">Start Event</property> can not have incoming
                                 connections and should have one outgoing connection. Whenever the ruleflow process is started, 
                                 the executing is started here and is automatically proceeded to the first node 
-                                linked to this  </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Start Event</diffmk:wrapper></property></entry>
+                                linked to this  <property moreinfo="none">Start Event</property></entry>
                         </row>
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">
-                                <imageobject diffmk:change="added">
-                                <imagedata diffmk:change="added" fileref="images/editors/icon2.png"></imagedata>
+                        <row>
+                            <entry><inlinemediaobject>
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon2.png"></imagedata>
                             </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">End Event</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">A ruleflow file can have one or more  </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">End Events</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.
-                                The </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">End Event</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> node should have one incoming connection
+                            <entry>End Event</entry>
+                            <entry>A ruleflow file can have one or more  <property moreinfo="none">End Events</property>.
+                                The <property moreinfo="none">End Event</property> node should have one incoming connection
                                 and can not have outgoing connections. When an end node is reached in the ruleflow,
                                 the ruleflow is terminated (including other remaining active nodes when parallelism
-                                is used).</diffmk:wrapper></entry>
+                                is used).</entry>
                         </row> 
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">               
-                                <imageobject diffmk:change="added">
-                                <imagedata diffmk:change="added" fileref="images/editors/icon3.png"></imagedata>
+                        <row>
+                            <entry><inlinemediaobject>               
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon3.png"></imagedata>
                             </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Rule Task</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">represents a set of rules. A </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Rule Task</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> node should have one
+                            <entry>Rule Task</entry>
+                            <entry>represents a set of rules. A <emphasis>Rule Task</emphasis> node should have one
                                 incoming connection and one outgoing connection. 
-                                The </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">RuleFlowGroup</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> property which is used to specify the name of the
-                                ruleflow-group that represents the set of rules of this </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Rule Task</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> node.
-                                When a </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Rule Task</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> node is reached in the ruleflow, the engine will start
+                                The <property moreinfo="none">RuleFlowGroup</property> property which is used to specify the name of the
+                                ruleflow-group that represents the set of rules of this <emphasis>Rule Task</emphasis> node.
+                                When a <emphasis>Rule Task</emphasis> node is reached in the ruleflow, the engine will start
                                 executing rules that are a part of the corresponding ruleflow-group.
                                 Execution automatically continues to the next node when there are no
                                 more active rules in this ruleflow-group. 
-                                </diffmk:wrapper></entry>
+                                </entry>
                         </row>
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">                
-                                <imageobject diffmk:change="added">
-                                <imagedata diffmk:change="added" fileref="images/editors/icon4.png"></imagedata>
+                        <row>
+                            <entry><inlinemediaobject>                
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon4.png"></imagedata>
                             </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Gateway[diverge]</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">allows you to create branches in your ruleflow.
-                                A </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Gateway[diverge]</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> node should have one incoming connection and two or more
-                                outgoing connections.</diffmk:wrapper></entry>
+                            <entry>Gateway[diverge]</entry>
+                            <entry>allows you to create branches in your ruleflow.
+                                A <property moreinfo="none">Gateway[diverge]</property> node should have one incoming connection and two or more
+                                outgoing connections.</entry>
                         </row>
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">               
-                                <imageobject diffmk:change="added">
-                                <imagedata diffmk:change="added" fileref="images/editors/icon4.png"></imagedata>
+                        <row>
+                            <entry><inlinemediaobject>               
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon4.png"></imagedata>
                             </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Gateway[converge]</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">allows you to synchronize multiple branches.
-                                A </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Gateway[diverge]</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">node should have two or more incoming connections and one
-                                outgoing connection.</diffmk:wrapper></entry>
+                            <entry>Gateway[converge]</entry>
+                            <entry>allows you to synchronize multiple branches.
+                                A <property moreinfo="none">Gateway[diverge]</property>node should have two or more incoming connections and one
+                                outgoing connection.</entry>
                         </row> 
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">                
-                                <imageobject diffmk:change="added">
-                                <imagedata diffmk:change="added" fileref="images/editors/icon5.png"></imagedata>
+                        <row>
+                            <entry><inlinemediaobject>                
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon5.png"></imagedata>
                             </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Reusable Sup-Process</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">represents the invocation of another ruleflow from this ruleflow.
+                            <entry>Reusable Sup-Process</entry>
+                            <entry>represents the invocation of another ruleflow from this ruleflow.
                                 A subflow node should have one incoming connection and one outgoing connection. 
                                 It contains the property "processId" which specifies the id of the process that should be executed. 
-                                When a </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Reusable Sup-Process</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> node is reached in the ruleflow, the engine will start the process with the given id.
+                                When a <property moreinfo="none">Reusable Sup-Process</property> node is reached in the ruleflow, the engine will start the process with the given id.
                                 The subflow node will only continue if that subflow process has terminated its execution.
                                 Note that the subflow process is started as an independent process, 
-                                which means that the subflow process will not be terminated if this process reaches an end node.</diffmk:wrapper></entry>
+                                which means that the subflow process will not be terminated if this process reaches an end node.</entry>
                         </row>
-                        <row diffmk:change="added">
-                            <entry diffmk:change="added"><inlinemediaobject diffmk:change="added">               
-                                <imageobject diffmk:change="added">
-                                <imagedata diffmk:change="added" fileref="images/editors/icon6.png"></imagedata>
+                        <row>
+                            <entry><inlinemediaobject>               
+                                <imageobject>
+                                <imagedata fileref="images/editors/icon6.png"></imagedata>
                             </imageobject></inlinemediaobject></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Script Task</diffmk:wrapper></entry>
-                            <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">represents an action that should be executed in this ruleflow.
-                                An </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Script Task</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> node should have one incoming connection and one outgoing
+                            <entry>Script Task</entry>
+                            <entry>represents an action that should be executed in this ruleflow.
+                                An <property moreinfo="none">Script Task</property> node should have one incoming connection and one outgoing
                                 connection. It contains the property "action" which specifies the action that should be executed.
-                                When a </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Script Task</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> node is reached in the ruleflow, it will execute the action and 
+                                When a <property moreinfo="none">Script Task</property> node is reached in the ruleflow, it will execute the action and 
                                 continue with the next node. An action should be specified as a piece of (valid)
-                                MVEL code. </diffmk:wrapper></entry>
+                                MVEL code. </entry>
                         </row>
 
                    </tbody>
@@ -1113,8 +1113,8 @@
                 <para>The <property moreinfo="none">Rete Tree view</property> works only in Drools Rule Projects,
                     where the Drools Builder is set in the project properties.</para>
             </note>
-            <para>We hope, this guide helped you to get started with the JBoss BPMN Convert module.
-                Besides, for additional information you are welcome on
+            <para>We hope, this guide helped you to get started with the JBoss BPMN 
+                Convert module. Besides, for additional information you are welcome on 
                 <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss forum</ulink>.</para>
         </section>
         
