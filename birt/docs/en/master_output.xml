@@ -52,13 +52,13 @@
         <copyright xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
                      <year xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2008</year>
                      <year xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2009</year>
-                     <year diffmk:change="added" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><diffmk:wrapper diffmk:change="added">2010</diffmk:wrapper></year>
+                     <year xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2010</year>
             <holder xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss by Red Hat</holder>
         </copyright>
      
         
         <releaseinfo xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><diffmk:wrapper diffmk:change="changed">
-            Version: 1.1.0.CR2
+            Version: 1.1.0.GA
         </diffmk:wrapper></releaseinfo>
   
 
@@ -214,7 +214,6 @@
         JBoss Application Server from <ulink url="http://jboss.org/jbossas/downloads/">JBoss Application Server</ulink> official site.
     
     </para>
-
 
     <tip>
         <title>Tip:</title>
@@ -876,15 +875,14 @@ this.queryText = this.queryText+queryString;
             </emphasis> file.</para>
     </note>
     
-    <para>In conclusion, the main goal of this document is to get you to know with a full feature set
-        that <property>JBoss BIRT Tools</property> provide. Thus if you have some questions,
-        comments or suggestions on the topic, please feel free to ask in the <ulink
-            url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In conclusion, the main goal of this document is to get you to know with a full feature set
+        that <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Tools</property> provide. Thus if you have some questions,
+        comments or suggestions on the topic, please feel free to ask in the 
+        <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
             Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs in
         future leaving your vote on the article <ulink
             url="http://www.jboss.org/community/docs/DOC-10795">Overview of the improvements required by JBossTools/JBDS Docs users</ulink>.</para>
-    
-    
+
 </section>
 
 
