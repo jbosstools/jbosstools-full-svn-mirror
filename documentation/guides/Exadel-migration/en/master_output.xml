@@ -27,14 +27,14 @@
         
         <copyright>
             <year>2007</year>
-            <year><diffmk:wrapper diffmk:change="added">2008</diffmk:wrapper></year>
-            <year diffmk:change="added">2009</year>
-            <year diffmk:change="added"><diffmk:wrapper diffmk:change="added">2010</diffmk:wrapper></year>
+            <year>2008</year>
+            <year>2009</year>
+            <year>2010</year>
             <holder>JBoss by Red Hat</holder>
 	    </copyright>
-          <releaseinfo><diffmk:wrapper diffmk:change="changed">
+          <releaseinfo>
 Version: 3.0.0.GA
-</diffmk:wrapper></releaseinfo>
+</releaseinfo>
 
 <abstract>
    <title></title>
@@ -465,13 +465,12 @@ Version: 3.0.0.GA
     </itemizedlist>
 	<para>The migration process is completed</para>
     
-   <para>If there&apos;s anything we didn&apos;t cover or you can&apos;t figure
-    out, please feel free to visit our <ulink
-     url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258"
-     >JBoss Developer Studio Users Forum</ulink> or <ulink
-      url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
-      >JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
-    your suggestions and comments.</para>
+    <para>If there's anything we didn't cover or you can't figure
+      out, please feel free to visit our 
+     <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">
+     JBoss Developer Studio Users Forum</ulink> or
+     <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
+      your suggestions and comments.</para>
   </section>
    
 </chapter>   

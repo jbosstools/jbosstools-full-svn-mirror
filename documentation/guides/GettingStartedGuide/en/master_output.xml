@@ -38,12 +38,12 @@
   
   <copyright>
    <year>2007</year>
-   <year><diffmk:wrapper diffmk:change="added">2008</diffmk:wrapper></year>
-   <year diffmk:change="added">2009</year>
-   <year diffmk:change="added"><diffmk:wrapper diffmk:change="added">2010</diffmk:wrapper></year>
+   <year>2008</year>
+   <year>2009</year>
+   <year>2010</year>
    <holder>JBoss by Red Hat</holder>
   </copyright>
-  <releaseinfo><diffmk:wrapper diffmk:change="changed">Version: 3.0.0.GA</diffmk:wrapper></releaseinfo>
+  <releaseinfo>Version: 3.0.0.GA</releaseinfo>
  <abstract>
    <title></title>
        <para>
@@ -635,63 +635,143 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <para>Some of our newer plugins, like TPTP and BIRT, need additional drivers. On the left side of
     the download page you can find all of the required drivers for chosen build and their versions.</para>
-   <para>Instead of downloading the nightly build version manually, it's also possible to
-    get the latest release of <property moreinfo="none">JBoss Tools</property> from one of our update sites: <itemizedlist>
+   <para><diffmk:wrapper diffmk:change="added">If you need to install any standalone plug-in from JBoss Tools visit a </diffmk:wrapper><ulink diffmk:change="added" url="http://labs.jboss.com/wiki/InstallingJBossTools"><diffmk:wrapper diffmk:change="added">JBoss Tools Wiki</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> page to read
+    about dependencies between standalone plug-ins.</diffmk:wrapper></para>  
+   <section diffmk:change="added">
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Installation From Update Site</diffmk:wrapper></title>
+   
+   
+   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Instead of downloading installation/updating manually, it's also possible to
+    get the latest release of </diffmk:wrapper><property moreinfo="none">JBoss Tools</property><diffmk:wrapper diffmk:change="changed"> from one of our update sites: 
+    </diffmk:wrapper><itemizedlist id="sites">
      <listitem>
       <para>Stable Updates: <ulink url="http://download.jboss.org/jbosstools/updates/stable">http://download.jboss.org/jbosstools/updates/stable</ulink></para>
      </listitem>
      <listitem>
       <para> Development Updates: <ulink url="http://download.jboss.org/jbosstools/updates/development">http://download.jboss.org/jbosstools/updates/development</ulink></para>
      </listitem>
+     <listitem diffmk:change="added">
+      <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> Nightly Builds: </diffmk:wrapper><ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/updates/nightly/trunk/"><diffmk:wrapper diffmk:change="added">http://download.jboss.org/jbosstools/updates/nightly/trunk/</diffmk:wrapper></ulink></para>
+     </listitem>
     </itemizedlist>
    </para>
+<itemizedlist>
+ <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To install/update Jboss Tools from one of the update sites you should follow the steps:</diffmk:wrapper></para>
+ <listitem><para><diffmk:wrapper diffmk:change="changed">First, download the correct version of Eclipse 
+  for your platform which is compatible with the version of JBoss
+  Tools you plan to install.For example if you want to install
+  3.1.0.GA Eclipse 3.5 is required.</diffmk:wrapper></para></listitem>
+ <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If you do not already have Java 5 or 6 installed and in your path,
+  download and install it.</diffmk:wrapper></para></listitem>
+ <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">When Eclipse is started, go to </diffmk:wrapper><itemizedlist diffmk:change="added">
+  <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="changed">Help-&gt;Software Updates... -&gt;Available Software-&gt;Manage Sites...-&gt;Add...</diffmk:wrapper><emphasis><diffmk:wrapper diffmk:change="added">(Eclipse 3.4)</diffmk:wrapper></emphasis></para></listitem>
+  <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="added">Help-&gt;Install New Software-&gt;Add..</diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">(Eclipse 3.5)</diffmk:wrapper></emphasis></para></listitem>
+ </itemizedlist>
+ </para></listitem>
+ <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="added">After clicking </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Add</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> button </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Add Site</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> View should appear.
+  In the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Location</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> field you should paste one of the update sites described
+  </diffmk:wrapper><link diffmk:change="added" linkend="sites"><diffmk:wrapper diffmk:change="added">above</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">.In </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Name</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> you can write any name you like.
+  In the end press the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Ok</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button.</diffmk:wrapper></para>
+  <figure float="0">
+   <title><diffmk:wrapper diffmk:change="changed">Add Update Site</diffmk:wrapper></title>
+   <mediaobject>
+    <imageobject>
+     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4a.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ </listitem>
+ <listitem diffmk:change="added" id="from_point"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">In the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Install</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> View select features to install, then click </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Next</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+  <figure diffmk:change="added" float="0">
+   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Jboss Tools installation</diffmk:wrapper></title>
+   <mediaobject diffmk:change="added">
+    <imageobject diffmk:change="added">
+     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4b.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ </listitem>
+ <listitem diffmk:change="added"> <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If Jboss Tools are already installed on your Eclipse and you are doing updating but not 
+  installation the following messages will appear in your </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Details</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> section.
+  Ignore them and press </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Next.</diffmk:wrapper></emphasis></para>
+  <figure diffmk:change="added" float="0">
+   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Possible messages</diffmk:wrapper></title>
+   <mediaobject diffmk:change="added">
+    <imageobject diffmk:change="added">
+     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4c.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ </listitem>
+ <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="changed">When you click Finish the prosses of Installation/Updating starts up. </diffmk:wrapper></para></listitem>
+ <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="changed">Install. Restart when prompted.</diffmk:wrapper></para>
+  <figure float="0">
+   <title><diffmk:wrapper diffmk:change="changed">Message dialog</diffmk:wrapper></title>
+   <mediaobject>
+    <imageobject>
+     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4d.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure> 
+ </listitem>
+ <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">After fetching all the features and plugins for installation,
+  you may be prompted that your selection contains unsigned jars.
+  This is normal,simply accept the warning and continue. </diffmk:wrapper></para>
+  <figure diffmk:change="added" float="0">
+   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Warning Message</diffmk:wrapper></title>
+   <mediaobject diffmk:change="added">
+    <imageobject diffmk:change="added">
+     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4e.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure> 
+ </listitem>
+</itemizedlist>
 
-   <itemizedlist>
-    <listitem>
-     <para>Finally, install the build</para>
-    </listitem>
-   </itemizedlist>
-
-   <para>Unzip the file(s) directly into your Eclipse <emphasis>
-     <property moreinfo="none">plugins/features</property>
-    </emphasis> directory and it will be readily available. It might be necessary to start Eclipse
-    with eclipse -clean to make sure it starts clean and rereads the new list of plugins.</para>
-
-   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
-   about dependencies between standalone plug-ins.</para>
-   
-   <para>You can update Jboss Tools and install a new version with the help of "Install" wizard (Help &gt; Install New Software...)</para>
-   
-   <figure float="0">
-    <title>Updating Jboss Tools</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="images/getting_started/update_wizard_1.png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-  
-   <para>In "Work with" field add the path to the source to update from (e.g. http://download.jboss.org/jbosstools/updates/development), check the necessary software to install, more information about chosen software can be found in "Details" section.</para>
-<para>Follow "Available Software Sites" link to find more site to update from</para>
-     
-   <figure float="0">
-    <title>Available Software Sites</title>
-    <mediaobject>
-     <imageobject>
-      <imagedata fileref="images/getting_started/update_wizard_2.png"></imagedata>
-     </imageobject>
-    </mediaobject>
-   </figure>
-     
-     <note>
+    <note>
      	<title>Note:</title>
   	<para>While installing JBoss Tools on GNU/Linux (64-bit) through the eclipse installation manager you may run into some problems which can interrupt your installation process.
   		Please, read the 
   		<ulink url="http://www.jboss.org/community/wiki/ManualinstallationofJBossTools31xonEclipse35onGNULinux64-bit">Manual installation of JBoss Tools 3.1.x on Eclipse 3.5 on GNU/Linux (64-bit)</ulink> 
   		wiki article which provides you with the necessary steps to do it correct.</para>
      </note>
+ </section>
+ <section diffmk:change="added">
+  <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Installation From Zip file</diffmk:wrapper></title>
+   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You can download Jboss tools in a zip file from one of the pages below:</diffmk:wrapper></para>
+  <itemizedlist diffmk:change="added" id="zip_sites">
+   <listitem diffmk:change="added">
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Stable Releases: </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.org/tools/download/stable.html"><diffmk:wrapper diffmk:change="added">http://www.jboss.org/tools/download/stable.html</diffmk:wrapper></ulink></para>
+   </listitem>
+   <listitem diffmk:change="added">
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> Development Updates: </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.org/tools/download/dev.html"><diffmk:wrapper diffmk:change="added">http://www.jboss.org/tools/download/dev.html</diffmk:wrapper></ulink></para>
+   </listitem>
+   <listitem diffmk:change="added">
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> Nightly Builds: </diffmk:wrapper><ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/updates/nightly/"><diffmk:wrapper diffmk:change="added">http://download.jboss.org/jbosstools/updates/nightly/</diffmk:wrapper></ulink></para>
+   </listitem>
+  </itemizedlist>
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">When you downloaded Jboss Tools Zip please </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">DO NOT UNZIP IT</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> and follow the steps described below:</diffmk:wrapper></para>
+ <itemizedlist diffmk:change="added">
+  <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">When Eclipse is started, go to </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Help -&gt; Install New Software... -&gt; Add... -&gt; Archive...</diffmk:wrapper></property></para></listitem>
+  <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Browse for the update site zip.In the </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Name</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> field you can write any name you like.
+   In the end press </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Ok</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button.</diffmk:wrapper></para>
+   <figure diffmk:change="added" float="0">
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Installation from a zip file</diffmk:wrapper></title>
+    <mediaobject diffmk:change="added">
+     <imageobject diffmk:change="added">
+      <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4f.png"></imagedata>
+     </imageobject>
+    </mediaobject>
+   </figure> 
+  </listitem>
+  <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">All the other steps are the same as it was described in the </diffmk:wrapper><link diffmk:change="added" linkend="from_point"><diffmk:wrapper diffmk:change="added">
+   Installation From Update Site section</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></para>
+  </listitem> 
+ </itemizedlist>
+  
+ </section>
+   
   </section>
-
  </section>
 
  <section id="Welcome">
@@ -787,6 +867,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  	<para>Now it's possible to upgrade from JBDS 2.0 to 2.1 using the update site which is available at 
  		<ulink url="is available at http://devstudio.jboss.com/updates/2.1">http://devstudio.jboss.com/updates/2.1</ulink>. 
  		This is described more fully in the <ulink url="http://www.jboss.com/products/devstudio/update/">JBDS Update Guide</ulink>.</para>
+  <note diffmk:change="added">
+   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
+   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">CAN NOT</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> upgrade from 2.1 to 3.0 using update site because of some platform change.Full installation is required.</diffmk:wrapper></para>
+  </note>
  </section>
 
  <section id="Uninstalling">
@@ -831,9 +915,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <title>Other relevant resources on the topic</title>
   <para>JBDS on RedHat: <ulink url="http://www.redhat.com/developer_studio">JBoss Developer
    Studio</ulink></para>
-  <para>Forum: 
-      <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
-          Forum</ulink></para>
+     <para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+         Forum</ulink></para>
 	<para>
 	Wiki: <ulink url="http://www.jboss.org/community/wiki/JBossTools">  JBossToolsWiki </ulink>  
    </para>  
@@ -4315,12 +4398,14 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
   from Exadel Studio into JBoss Developer Studio. </para>
     </listitem>
-    <para>If there&apos;s anything we didn&apos;t cover in this guide, please feel free to visit our <ulink
-        url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258"
-        >JBoss Developer Studio Users Forum</ulink> or <ulink
-            url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
-            >JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
-        your suggestions and comments.</para>
+  
+  <para>If there's anything we didn't cover in this guide, 
+      please feel free to visit our
+      <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">
+      JBoss Developer Studio Users Forum</ulink> or
+      <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">
+          JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
+    your suggestions and comments.</para>
 </itemizedlist>
 
 </chapter>
