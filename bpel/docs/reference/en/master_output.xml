@@ -27,11 +27,11 @@
          <author><firstname>Grid</firstname><surname>Qian</surname><email>fqian@redhat.com</email></author>           
        	     <copyright>
 	          <year>2009</year>
-	           <year diffmk:change="added"><diffmk:wrapper diffmk:change="added">2010</diffmk:wrapper></year>
+	           <year>2010</year>
 	          <holder>JBoss by Red Hat</holder>
 	     </copyright>
          <releaseinfo><diffmk:wrapper diffmk:change="changed">
-           Version: 1.0.0.CR2
+           Version: 1.0.0.trunk
          </diffmk:wrapper></releaseinfo>
 <abstract>
    <title></title>
@@ -503,10 +503,12 @@
                 </figure>                 
             </listitem>            
         </itemizedlist>  
-        <para>If there's anything we didn't cover or you can't figure out, please feel free to visit our <ulink
-            url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
-            >JBoss Tools Users Forum</ulink> to ask questions.
-            There we are also waiting for your suggestions and comments.</para>    
+        <para>If there's anything we didn't cover or you can't figure out,
+            please feel free to visit our 
+            <ulink
+                url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+                >JBoss Tools Users Forum</ulink> to ask questions.
+            There we are also waiting for your suggestions and comments.</para>      
     </section>
 </chapter>
 </book>
