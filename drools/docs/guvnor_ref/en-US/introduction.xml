@@ -124,9 +124,7 @@
         <itemizedlist>
             <listitem>
                 <para>Eclipse 3.4.x with Jboss Tools bundle of Eclipse plugins installed. How to
-                    install JBoss Tools onto Eclipse you can find in the <ulink
-                        url="&gsglink;#JBossToolsInstall">&quot;JBoss Tools
-                        Installation&quot;</ulink> section.</para>
+                    install JBoss Tools onto Eclipse you can find in the JBoss Tools Installation section.</para>
             </listitem>
 
             <listitem>

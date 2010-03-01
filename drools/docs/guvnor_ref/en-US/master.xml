@@ -2,10 +2,10 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
-[<!ENTITY introduction SYSTEM "modules/introduction.xml">
-<!ENTITY functionality_overview SYSTEM "modules/functionality_overview.xml">
-<!ENTITY guvnor_preferences SYSTEM "modules/guvnor_preferences.xml">
-<!ENTITY conclusion SYSTEM "modules/conclusion.xml">
+[<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY functionality_overview SYSTEM "functionality_overview.xml">
+<!ENTITY guvnor_preferences SYSTEM "guvnor_preferences.xml">
+<!ENTITY conclusion SYSTEM "conclusion.xml">
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">
