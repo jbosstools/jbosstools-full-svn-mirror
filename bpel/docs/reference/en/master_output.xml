@@ -25,13 +25,13 @@
          </corpauthor>
          <author><firstname>Denny</firstname><surname>Xu</surname><email>dxu@redhat.com</email></author>
          <author><firstname>Grid</firstname><surname>Qian</surname><email>fqian@redhat.com</email></author>           
-         <pubdate>August 2009</pubdate>
-	     <copyright>
+       	     <copyright>
 	          <year>2009</year>
+	           <year>2010</year>
 	          <holder>JBoss by Red Hat</holder>
 	     </copyright>
          <releaseinfo><diffmk:wrapper diffmk:change="changed">
-           Version: 1.0.0.CR1
+           Version: 1.0.0.trunk
          </diffmk:wrapper></releaseinfo>
 <abstract>
    <title></title>
@@ -45,7 +45,7 @@
     
     <toc></toc> 
     
-<chapter id="overview" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/bpel/docs/reference/en/modules/overview.xml">
+<chapter id="overview" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en/modules/overview.xml">
    <title>JBoss BPEL project Overview</title>
 
    <para>JBoss BPEL project is a WS-BPEL 2.0 project that gives a way to create, edit, validate and deploy BPEL files to JBoss BPEL runtime. It is based on Eclipse 
@@ -112,7 +112,7 @@
 
 </chapter>
     
-<chapter id="install" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/bpel/docs/reference/en/modules/install.xml">
+<chapter id="install" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en/modules/install.xml">
     <title>Installation JBoss BPEL Tools</title>
     <section id="installeclipse">
         <title>Installation JBoss BPEL editor</title>
@@ -134,7 +134,7 @@
     </section>
 </chapter>
     
-<chapter id="detail" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/bpel/docs/reference/en/modules/detail.xml">
+<chapter id="detail" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en/modules/detail.xml">
     <title>Creating and editing a BPEL project</title>
     <para>In the chapter we describe the necessary steps to create a new BPEL project and edit the BPEL files.
           First of all, you should create a BPEL project.
@@ -227,11 +227,11 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Click the <property moreinfo="none">Next</property> button. On the second page make sure that the folder <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">HelloWorld/bpelContent</diffmk:wrapper></property> is selected.
+        <para>Click the <property moreinfo="none">Next</property> button. On the second page make sure that the folder <property moreinfo="none">HelloWorld/bpelContent</property> is selected.
               Click <property moreinfo="none">Finish</property>.
         </para>
         <note>
-            <para>All of your files that are used in your BPEL project must be under the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">bpelContent</diffmk:wrapper></property> folder. Only in this case 
+            <para>All of your files that are used in your BPEL project must be under the <property moreinfo="none">bpelContent</property> folder. Only in this case 
             these files can be deployed to JBoss server.
             </para>
         </note>
@@ -378,7 +378,7 @@
 </chapter>
 
     
-<chapter id="deploy" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/bpel/docs/reference/en/modules/deploy.xml">
+<chapter id="deploy" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en/modules/deploy.xml">
     <title>Deploy a JBoss BPEL project to JBoss BPEL Runtime</title>
     <section id="createdeploy">
         <title>Creating a bpel-deploy.xml file</title>
@@ -402,7 +402,7 @@
             <listitem>
                 <para>On the next wizard page you should enter the following information:</para>
                 <para><emphasis><property moreinfo="none">BPEL Project</property></emphasis>: Click  the <property moreinfo="none">Browse...</property> button to select the BPEL project in your workspace which you want to deploy to the runtime.
-                    Please note, that you should select the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">bpelContent</diffmk:wrapper></property> folder in your new BPEL project as a value of <property moreinfo="none">BPEL Project</property> field because the bpel-deploy.xml should be created in this place.
+                    Please note, that you should select the <property moreinfo="none">bpelContent</property> folder in your new BPEL project as a value of <property moreinfo="none">BPEL Project</property> field because the bpel-deploy.xml should be created in this place.
                 </para>
                 <para><emphasis><property moreinfo="none">File name</property></emphasis>: The default value is bpel-deploy.xml. Please, don't change it.</para>
                 <para>Click on <property moreinfo="none">Finish</property> button to close the wizard and a new bpel-deploy.xml file will be created.</para>
@@ -503,7 +503,11 @@
                 </figure>                 
             </listitem>            
         </itemizedlist>  
-        <para>If there's anything we didn't cover or you can't figure out, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions.
+        <para>If there's anything we didn't cover or you can't figure out,
+            please feel free to visit our 
+            <ulink
+                url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+                >JBoss Tools Users Forum</ulink> to ask questions.
             There we are also waiting for your suggestions and comments.</para>      
     </section>
 </chapter>
