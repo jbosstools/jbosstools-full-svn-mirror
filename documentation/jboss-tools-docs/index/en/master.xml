@@ -21,7 +21,14 @@
                 >(pdf)</ulink>
             </primaryie>
         </indexentry>
-
+        <indexentry>
+            <primaryie>Beginners Guide <ulink
+                    url="en/beginners_guide/html/index.html">(html)</ulink>
+                <ulink url="en/beginners_guide/html_single/index.html">(html single)</ulink>
+                <ulink url="en/beginners_guide/pdf/Beginners_Guide.pdf"
+                >(pdf)</ulink>
+            </primaryie>
+        </indexentry>
         <indexentry>
             <primaryie>Seam Dev Tools Reference Guide <ulink url="en/seam/html/index.html"
                     >(html)</ulink>
