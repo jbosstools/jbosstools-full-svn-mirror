@@ -2,12 +2,12 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
-[<!ENTITY introduction SYSTEM "modules/introduction.xml">
-<!ENTITY create_new_project SYSTEM "modules/create_new_project.xml">
-<!ENTITY create_new SYSTEM "modules/create_new.xml">
-<!ENTITY debugging_rules SYSTEM "modules/debugging_rules.xml">
-<!ENTITY views SYSTEM "modules/views.xml">
-<!ENTITY editors SYSTEM "modules/editors.xml">
+[<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY create_new_project SYSTEM "create_new_project.xml">
+<!ENTITY create_new SYSTEM "create_new.xml">
+<!ENTITY debugging_rules SYSTEM "debugging_rules.xml">
+<!ENTITY views SYSTEM "views.xml">
+<!ENTITY editors SYSTEM "editors.xml">
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">
