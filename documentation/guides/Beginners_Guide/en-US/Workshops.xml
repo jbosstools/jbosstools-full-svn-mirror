@@ -5,8 +5,8 @@
 	<para>
 		Follow the instructions in these workshops to broaden your knowledge and understanding of the <application>JBoss Developer Studio</application>.
 	</para>
-	<section id="sect-Beginners_Guide-Workshops-RESTEasy_workshop">
-		<title>RESTEasy workshop</title>
+	<section id="sect-Beginners_Guide-Workshops-RESTEasy">
+		<title>RESTEasy</title>
 		<para>
 			In this RESTEasy workshop we will provide an example of how to solve the problem of creating new customers for an online store. This will be achieved through the creation of a shopping application and adding customer records through a web browser. 
 		</para>
@@ -370,8 +370,8 @@
 			In the <guilabel>New Dynamic Web Project</guilabel> dialogue box that has opened type the name of the project as <emphasis>MyWebServiceProject</emphasis>.
 		</para>
 	</section> -->
-	<section id="sect-Beginners_Guide-Workshops-Seam_workshop">
-		<title>Seam workshop</title>
+	<section id="sect-Beginners_Guide-Workshops-Seam">
+		<title>Seam</title>
 		<para>
 			The <application>JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with the <application>JBoss Developer Studio</application>. This workshop can be found here: <ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5.0.0/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>.
 		</para>
