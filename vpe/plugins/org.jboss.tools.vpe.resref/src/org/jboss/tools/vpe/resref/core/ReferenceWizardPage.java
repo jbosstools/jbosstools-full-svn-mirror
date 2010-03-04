@@ -1,13 +1,7 @@
 package org.jboss.tools.vpe.resref.core;
 
-import java.io.IOException;
-import java.net.URL;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -18,10 +12,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Listener;
-import org.jboss.tools.common.model.ui.ModelUIPlugin;
+import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.common.resref.core.ResourceReference;
-import org.jboss.tools.vpe.resref.Activator;
-import org.osgi.framework.Bundle;
 
 public abstract class ReferenceWizardPage extends WizardPage 
 implements SelectionListener, Listener {
@@ -31,7 +23,6 @@ implements SelectionListener, Listener {
 	protected Object fileLocation = null;
 	protected ResourceReferenceValidator validator = null;
 	
-	private static final String PAGE_TITLE_IMAGE_PATH = "/images/xstudio/wizards/EclipseDefault.png"; //$NON-NLS-1$
 	private Button pageRadioButton;
 	private Button folderRadioButton;
 	private Button projectRadioButton;
@@ -45,22 +36,7 @@ implements SelectionListener, Listener {
 	}
 	
 	public static ImageDescriptor getImageDescriptor() {
-		Bundle bundle = Platform.getBundle(ModelUIPlugin.PLUGIN_ID);
-		URL url = null;
-		ImageDescriptor image = null;
-		if (null != bundle) {
-			try {
-				url = FileLocator.resolve(bundle.getEntry(PAGE_TITLE_IMAGE_PATH));
-			} catch (IOException e) {
-				Activator.getDefault().logError(
-						NLS.bind(Messages.VRD_TITLE_IMAGE_CANNOT_BE_RESOLVED,
-								url), e);
-			}
-		}
-		if (null != url) {
-			image = ImageDescriptor.createFromURL(url);
-		}
-		return image;
+		return ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_DEFAULT);
 	}
 	
 	/**

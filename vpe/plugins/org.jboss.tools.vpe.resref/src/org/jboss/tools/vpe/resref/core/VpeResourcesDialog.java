@@ -29,10 +29,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.jboss.tools.common.model.ui.ModelUIPlugin;
+import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.common.model.ui.action.CommandBar;
-import org.jboss.tools.vpe.resref.Activator;
-import org.osgi.framework.Bundle;
 
 public class VpeResourcesDialog extends TitleAreaDialog {
 
@@ -44,7 +42,6 @@ public class VpeResourcesDialog extends TitleAreaDialog {
     RelativeFolderReferenceComposite relFolder = null;
     CommandBar commandBar = new CommandBar();
     
-    private final String DIALOG_TITLE_IMAGE_PATH = "/images/xstudio/wizards/EclipseDefault.png"; //$NON-NLS-1$
     private final int DIALOG_WIDTH = 400;
 	private final int DIALOG_HEIGHT = 300;
     
@@ -71,24 +68,10 @@ public class VpeResourcesDialog extends TitleAreaDialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		
-		Bundle bundle = Platform.getBundle(ModelUIPlugin.PLUGIN_ID);
-		URL url = null;
-		if (null != bundle) {
-			try {
-				url = FileLocator.resolve(bundle.getEntry(DIALOG_TITLE_IMAGE_PATH));
-			} catch (IOException e) {
-				Activator.getDefault().logError(
-						NLS.bind(Messages.VRD_TITLE_IMAGE_CANNOT_BE_RESOLVED,
-								url), e);
-			}
-		}
-		if (null != url) {
-			ImageDescriptor image = ImageDescriptor.createFromURL(url);
-			setTitleImage(image.createImage(null));
-		}
 		getShell().setText(Messages.VRD_DEFAULT_WINDOW_TITLE);
 		setTitle(Messages.VRD_DEFAULT_TITLE);
+		setTitleImage(ModelUIImages.getImageDescriptor(
+				ModelUIImages.WIZARD_DEFAULT).createImage(null));
 		setMessage(Messages.VRD_PAGE_DESIGN_OPTIONS_ABOUT);
 		
 		Composite composite = new Composite(parent, SWT.NONE);

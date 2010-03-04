@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.jboss.tools.common.model.ui.ModelUIPlugin;
+import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.outline.cssdialog.CSSStyleDialog;
 import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
@@ -50,9 +50,6 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.Message;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
-import org.jboss.tools.vpe.resref.Activator;
-import org.jboss.tools.vpe.resref.core.Messages;
-import org.osgi.framework.Bundle;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 
@@ -71,7 +68,6 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 	private Text txtValue;
 	private Text txtStyle;
     private VpeEditAnyDialogValidator templateVerifier;
-    private final String DIALOG_TITLE_IMAGE_PATH = "/images/xstudio/wizards/EclipseDefault.png"; //$NON-NLS-1$
 
 	public VpeEditAnyDialog(Shell shell, VpeAnyData data) {
 		super(shell);
@@ -84,23 +80,10 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		/*
 		 * Setting dialog Title, Message, Image.
 		 */
-		Bundle bundle = Platform.getBundle(ModelUIPlugin.PLUGIN_ID);
-		URL url = null;
-		if (null != bundle) {
-			try {
-				url = FileLocator.resolve(bundle.getEntry(DIALOG_TITLE_IMAGE_PATH));
-			} catch (IOException e) {
-				Activator.getDefault().logError(
-						NLS.bind(Messages.VRD_TITLE_IMAGE_CANNOT_BE_RESOLVED,
-								url), e);
-			}
-		}
-		if (null != url) {
-			ImageDescriptor image = ImageDescriptor.createFromURL(url);
-			setTitleImage(image.createImage(null));
-		}
 		getShell().setText(VpeUIMessages.TEMPLATE);
 		setTitle(VpeUIMessages.TAG_ATTRIBUTES);
+		setTitleImage(ModelUIImages.getImageDescriptor(
+				ModelUIImages.WIZARD_DEFAULT).createImage(null));
 		setMessage(VpeUIMessages.UNKNOWN_TAGS_DIALOG_DESCRIPTION);
 		
 		/*
