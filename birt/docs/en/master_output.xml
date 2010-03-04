@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
-"http://www.docbook.org/xml/4.3/docbookx.dtd"
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V5.0//EN"
+"http://www.docbook.org/xml/5.0/dtd/docbook.dtd"
 
 [
 <!ENTITY introduction SYSTEM "modules/introduction.xml">
@@ -9,162 +9,170 @@
 <!ENTITY birt_reports_deployment SYSTEM "modules/birt_reports_deployment.xml">    
 <!ENTITY framework SYSTEM "modules/framework.xml">  
 <!ENTITY tasks SYSTEM "modules/tasks.xml"> 
-<!ENTITY links SYSTEM "modules/links.xml">
-
-<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
-]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+<!ENTITY links SYSTEM "modules/links.xml"> 
+]><book xmlns="http://docbook.org/ns/docbook" xmlns:diffmk="http://diffmk.sf.net/ns/diff" xmlns:xlink="http://www.w3.org/1999/xlink">
     <bookinfo>
-        <title><diffmk:wrapper diffmk:change="changed">JBoss BIRT Integration User Guide</diffmk:wrapper></title>
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Integration User Guide</title>
 
         <corpauthor>
-            <inlinemediaobject>
-                <imageobject role="fo">
-                    <imagedata fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+            <inlinemediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imageobject role="fo" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <imagedata fileref="images/jbosstools_logo.png" format="PNG" xmlns="http://docbook.org/ns/docbook"></imagedata>
                 </imageobject>	
-                <imageobject role="html">
-                    <imagedata></imagedata>
+                <imageobject role="html" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <imagedata xmlns="http://docbook.org/ns/docbook"></imagedata>
                 </imageobject>	
             </inlinemediaobject>           
         </corpauthor>
     
-        <author diffmk:change="added"><firstname diffmk:change="added"><diffmk:wrapper diffmk:change="added">Michael</diffmk:wrapper></firstname><surname diffmk:change="added"><diffmk:wrapper diffmk:change="added">Sorokin</diffmk:wrapper></surname><email diffmk:change="added"><diffmk:wrapper diffmk:change="added">msorokin@exadel.com</diffmk:wrapper></email></author>      
-        <author><firstname>Anastasiya</firstname><surname>Bogachuk</surname><email>abogachuk@exadel.com</email></author> 
-        <author><firstname>Olga</firstname><surname>Chikvina</surname></author> 
+        <author xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><firstname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Michael</firstname><surname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Sorokin</surname><email xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">msorokin@exadel.com</email></author>      
+        <author xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><firstname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Anastasiya</firstname><surname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Bogachuk</surname><email xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">abogachuk@exadel.com</email></author> 
+        <author xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><firstname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Olga</firstname><surname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Chikvina</surname></author> 
         
-    <othercredit diffmk:change="added">  
+    <othercredit xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">  
           
-        <contrib diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+        <contrib xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
             Special thanks to Snjezana Peco
-        </diffmk:wrapper></contrib>
+        </contrib>
         
        
         
         
     </othercredit>   
+
+
+
+
+           
+            
+            
+      
+        
     
-        <copyright>
-                     <year>2008</year>
-                     <year>2009</year>
-            <holder>JBoss by Red Hat</holder>
+        <copyright xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                     <year xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2008</year>
+                     <year xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2009</year>
+                     <year xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2010</year>
+            <holder xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss by Red Hat</holder>
         </copyright>
      
         
-        <releaseinfo><diffmk:wrapper diffmk:change="changed">
-            Version: 1.1.0.CR1
+        <releaseinfo xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><diffmk:wrapper diffmk:change="changed">
+            Version: 1.1.0.GA
         </diffmk:wrapper></releaseinfo>
   
 
-<abstract>
-   <title></title>
-       <para>
+<abstract xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"></title>
+       <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
            <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/jboss_birt_plugin_ref_guide/pdf/Birt_Reference_Guide.pdf">PDF version</ulink>
        </para>
 </abstract>
 
     
     </bookinfo>
- <toc></toc> 
+ <toc xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"></toc> 
     
     
-<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/introduction.xml">
+<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/introduction.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
     <?dbhtml filename="introduction.html"?>
 
     <chapterinfo>
-        <keywordset>
-            <keyword>JBoss Developer Studio</keyword>
-            <keyword>Eclipse</keyword>
-            <keyword>JBoss</keyword>
-            <keyword>JBoss Tools</keyword>
-            <keyword>JBDS</keyword>
-            <keyword>BIRT Plugin</keyword>
+        <keywordset xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Developer Studio</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Eclipse</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBDS</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Plugin</keyword>
         </keywordset>
     </chapterinfo>
 
-    <title>Introduction</title>
+    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Introduction</title>
     
     
     
 
-    <section>
+    <section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 
-        <title>What is BIRT?</title>
-        <para>BIRT plugin is an Eclipse-based open source reporting system for web applications
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">What is BIRT?</title>
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT plugin is an Eclipse-based open source reporting system for web applications
             based on Java and J2EE. BIRT consists of two main components: a report designer based on
             Eclipse, and a runtime component that can be added to your app server. BIRT also offers
             a charting engine that lets you add charts to your own Web application.</para>
-        <para>With the help of BIRT you can generate a great number of reports to be used in your
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">With the help of BIRT you can generate a great number of reports to be used in your
             application:</para>
 
-        <itemizedlist>
-            <listitem>
-                <para>Lists</para>
+        <itemizedlist xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Lists</para>
             </listitem>
-            <listitem>
-                <para>Charts</para>
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Charts</para>
             </listitem>
-            <listitem>
-                <para>Crosstabs, or cross-tabulation, or matrix</para>
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Crosstabs, or cross-tabulation, or matrix</para>
             </listitem>
-            <listitem>
-                <para>Letters and Documents</para>
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Letters and Documents</para>
             </listitem>
-            <listitem>
-                <para>Compound Reports</para>
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Compound Reports</para>
             </listitem>
         </itemizedlist>
 
-        <para>You can find more detailed information on the BIRT plugin, its report types and
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You can find more detailed information on the BIRT plugin, its report types and
             anatomy on the <ulink url="http://www.eclipse.org/birt/phoenix/intro/">BIRT Homepage</ulink>.</para>
 
-        <para>To understand the basic BIRT concepts and to know how to create a basic BIRT report,
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">To understand the basic BIRT concepts and to know how to create a basic BIRT report,
             refer to the <ulink url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT
-                Tutorials</ulink>. What extensions <property moreinfo="none">JBoss Tools</property> provides for
+                Tutorials</ulink>. What extensions <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</property> provides for
             Eclipse BIRT you'll find out in the next sections.</para>
     </section>
 
 
     
-    <section>
-        <title>JBoss BIRT Integration Functionality Overview</title>
+    <section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Integration Functionality Overview</title>
         
-        <para><diffmk:wrapper diffmk:change="added">
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
             The key feature of JBoss BIRT Integration  is the JBoss BIRT Integration Framework, which allows to integrate a BIRT report into Seam/JSF container.
             The framework API reference is in the 
-            </diffmk:wrapper><link diffmk:change="added" linkend="framework"><diffmk:wrapper diffmk:change="added">JBoss BIRT Integraion Framework API Reference</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> chapter of the guide.
-        </diffmk:wrapper></para>     
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+            <link linkend="framework" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Integraion Framework API Reference</link> chapter of the guide.
+        </para>     
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
             
-            This  guide also covers functionality of </diffmk:wrapper><property moreinfo="none">JBoss Tools</property><diffmk:wrapper diffmk:change="added"> module  which assists in  
+            This  guide also covers functionality of <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</property> module  which assists in  
             integration with BIRT.
-            The integration plug-in allows you to visually configure </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Hibernate Data Source</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> (specify a Hibernate configuration or JNDI URL),  
+            The integration plug-in allows you to visually configure <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Hibernate Data Source</property> (specify a Hibernate configuration or JNDI URL),  
             compose HQL queries with syntax-highlighting, content-assist, formatting as well as other functionalities available in the HQL editor. 
            
            
-          </diffmk:wrapper></para>
+          </para>
 
-        <para><diffmk:wrapper diffmk:change="changed">
-            To enable </diffmk:wrapper><property moreinfo="none">JBoss Tools</property><diffmk:wrapper diffmk:change="changed"> integration with BIRT you are intended to
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            To enable <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</property> integration with BIRT you are intended to
             have the next:
-        </diffmk:wrapper></para>
-        <itemizedlist>
-            <listitem>
-                <para>Eclipse with <property moreinfo="none">JBoss Tools</property>
-                    installed (how to install <property moreinfo="none">JBoss Tools</property> on Eclipse, what
-                    dependences and versions requirements are needed reed in the <ulink diffmk:change="added" url="../../GettingStartedGuide/html_single/index.html#JBossToolsInstall">JBoss Tools Installation</ulink> section)</para>
+        </para>
+        <itemizedlist xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Eclipse with <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</property>
+                    installed (how to install <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</property> on Eclipse, what
+                    dependences and versions requirements are needed reed in the <ulink url="#JBossToolsInstall">JBoss Tools Installation</ulink> section)</para>
             </listitem>
-            <listitem>
-                <para>BIRT Report Designer (BIRT Report Designer 2.3.2 
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Report Designer (BIRT Report Designer 2.3.2 
                     you can download from <ulink url="http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-2_3_2-200902181355/birt-report-framework-2_3_2.zip">Eclipse downloads site</ulink>)</para>
             </listitem>
-            <listitem>
-                <para>BIRT Web Tools Integration ( BIRT WTP Integration 2.3.2 you can download from
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Web Tools Integration ( BIRT WTP Integration 2.3.2 you can download from
                         <ulink url="http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-2_3_2-200902181355/birt-wtp-integration-sdk-2_3_2.zip">Eclipse downloads site</ulink>)</para>
             </listitem>
         </itemizedlist>
 
-        <note>
-            <title>Note:</title>
-            <para>Versions of BIRT framework and BIRT WTP integration should be no less than RC4 in
+        <note xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Note:</title>
+            <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Versions of BIRT framework and BIRT WTP integration should be no less than RC4 in
                 order to the BIRT facet works correctly.</para>
         </note>
     </section>
@@ -175,101 +183,105 @@
 
     
  
-<chapter diffmk:change="added" id="tasks" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/tasks.xml" xreflabel="tasks">
+<chapter id="tasks" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/tasks.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xreflabel="tasks">
     <?dbhtml filename="tasks.html"?>
     <chapterinfo>
-        <keywordset>
+        <keywordset xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 
-            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">Eclipse</diffmk:wrapper></keyword>
-            <keyword>JBoss</keyword>
-            <keyword><diffmk:wrapper diffmk:change="changed">JBoss Tools</diffmk:wrapper></keyword>
-                   <keyword><diffmk:wrapper diffmk:change="changed">BIRT Integration</diffmk:wrapper></keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Eclipse</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</keyword>
+                   <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Integration</keyword>
         </keywordset>
     </chapterinfo>
 
-    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Tasks</diffmk:wrapper></title>
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> In this chapter of the guide you will find information on the tasks that you can perform integrating BIRT. The required version of BIRT is 2.3.2 or greater.</diffmk:wrapper></para>
+    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Tasks</title>
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> In this chapter of the guide you will find information on the tasks that you can perform integrating BIRT. The required version of BIRT is 2.3.2 or greater.</para>
 
     
     
    
    
-<section diffmk:change="added" id="birt_integration_with_seam" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/birt_integration_with_seam.xml">
-    <title>Adding BIRT Functionality to Standard Seam Web Project</title>
+<section id="birt_integration_with_seam" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/birt_integration_with_seam.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Adding BIRT Functionality to Standard Seam Web Project</title>
 
-    <para><diffmk:wrapper diffmk:change="changed">In this section you'll know how to integrate BIRT into a Seam web project. </diffmk:wrapper></para>
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In this section you'll know how to integrate BIRT into a Seam web project. </para>
 
-    <para><diffmk:wrapper diffmk:change="added">You are supposed to have Seam runtime and JBoss Application Server downloaded and
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You are supposed to have Seam runtime and JBoss Application Server downloaded and
         extracted on your hard drive. 
         You can download Seam from the
-        </diffmk:wrapper><ulink diffmk:change="added" url="http://seamframework.org/Download"><diffmk:wrapper diffmk:change="added">Seam Framework</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> web page and 
-        JBoss Application Server from </diffmk:wrapper><ulink diffmk:change="added" url="http://jboss.org/jbossas/downloads/"><diffmk:wrapper diffmk:change="added">JBoss Application Server</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> official site.
+        <ulink url="http://seamframework.org/Download">Seam Framework</ulink> web page and 
+        JBoss Application Server from <ulink url="http://jboss.org/jbossas/downloads/">JBoss Application Server</ulink> official site.
     
-    </diffmk:wrapper></para>
+    </para>
 
     <tip>
         <title>Tip:</title>
-        <para><diffmk:wrapper diffmk:change="changed">We used </diffmk:wrapper><ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Seam 2.0.1 GA</ulink> and <ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Application Server 4.2.2 GA</ulink> in examples of this guide.</para>
+        <para>We used <ulink
+            url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777"
+            >JBoss Seam 2.0.1 GA</ulink> and <ulink
+                url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777"
+                >JBoss Application Server 4.2.2 GA</ulink> in examples of this guide.</para>
     </tip>
 
-    <section id="creatin_project_with_birt">
-        <title>Creating Seam Web Project with Birt Facet</title>
+    <section id="creatin_project_with_birt" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Creating Seam Web Project with Birt Facet</title>
 
-        <para><diffmk:wrapper diffmk:change="changed">We recommend to open </diffmk:wrapper><property moreinfo="none">Seam perspective</property> by going to <emphasis>
-            <property moreinfo="none">Window &gt; Open Perspective &gt; Other &gt; Seam</property></emphasis><diffmk:wrapper diffmk:change="changed"> , this way you will have all the tools to work with Seam at hand.
-             To create a new Seam Web project navigate to </diffmk:wrapper><emphasis>
-                <property moreinfo="none">File &gt; New &gt; Seam Web Project</property>
-             </emphasis><diffmk:wrapper diffmk:change="changed">. Otherwise you should go to </diffmk:wrapper><emphasis> 
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">We recommend to open <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Seam perspective</property> by going to <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Window &gt; Open Perspective &gt; Other &gt; Seam</property></emphasis> , this way you will have all the tools to work with Seam at hand.
+             To create a new Seam Web project navigate to <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">File &gt; New &gt; Seam Web Project</property>
+             </emphasis>. Otherwise you should go to <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> 
                  
-                <property moreinfo="none">File &gt; New &gt; Other &gt; Seam &gt; Seam Web
+                <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">File &gt; New &gt; Other &gt; Seam &gt; Seam Web
                     Project</property>
-            </emphasis><diffmk:wrapper diffmk:change="changed"> if  </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Seam</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> perspective is not active.</diffmk:wrapper></para>
+            </emphasis> if  <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Seam</property> perspective is not active.</para>
 
-        <orderedlist continuation="restarts" diffmk:change="added" inheritnum="ignore">   
+        <orderedlist xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">   
          
-         <listitem diffmk:change="added">
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the first wizard page enter the project name, then specify the target runtime and
+         <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">On the first wizard page enter the project name, then specify the target runtime and
             target server. We recommend to use JBoss AS server and runtime environment to ensure best performance.
- </diffmk:wrapper></para>
+ </para>
         
             
-        <figure float="0" id="CreatingSeamWebProject">
-            <title>Creating Seam Web Project</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/testBirtProject.png"></imagedata>
+        <figure id="CreatingSeamWebProject" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Creating Seam Web Project</title>
+            <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <imagedata fileref="images/birt_integration_with_seam/testBirtProject.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
          </listitem>
-            <listitem diffmk:change="added">
-        <para><diffmk:wrapper diffmk:change="added">In the </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Configuration</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> group choose the version of  </diffmk:wrapper><emphasis>
-                <property moreinfo="none">Seam</property>
-        </emphasis><diffmk:wrapper diffmk:change="added"> framework you are planning to use in your application. In this guide we used Seam 2.2. </diffmk:wrapper></para>
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Configuration</property></emphasis> group choose the version of  <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Seam</property>
+        </emphasis> framework you are planning to use in your application. In this guide we used Seam 2.2. </para>
             </listitem>
-            <listitem diffmk:change="added">
-            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Click the </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Modify</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="changed"> button
-        and enable the </diffmk:wrapper><emphasis>
-                <property moreinfo="none">Birt Reporting Runtime Component</property>
-            </emphasis><diffmk:wrapper diffmk:change="changed"> facet by checking the appropriate option.</diffmk:wrapper></para>
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Click the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Modify</property></emphasis> button
+        and enable the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Birt Reporting Runtime Component</property>
+            </emphasis> facet by checking the appropriate option.</para>
 
-        <figure float="0">
-            <title>Adding the Birt Reporting Runtime Component Facet </title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/birt_integration_with_seam/addingBirtFacet.png"></imagedata>
+        <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Adding the Birt Reporting Runtime Component Facet </title>
+            <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <imagedata fileref="images/birt_integration_with_seam/addingBirtFacet.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
                 </imageobject>
             </mediaobject>
         </figure>
-                <para><diffmk:wrapper diffmk:change="changed">Alternatively you can just choose the </diffmk:wrapper><emphasis>
-                    <property moreinfo="none">JBoss BIRT Integration Web Project</property>
-                </emphasis><diffmk:wrapper diffmk:change="added"> configuration from the drop-down list in the </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Configuration</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="changed"> group </diffmk:wrapper></para>
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Alternatively you can just choose the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Integration Web Project</property>
+                </emphasis> configuration from the drop-down list in the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Configuration</property></emphasis> group </para>
                 
-                <figure float="0">
-                    <title>Choosing the JBoss BIRT Integration Web Project Configuration</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="images/birt_integration_with_seam/projectBirtConfiguration.png"></imagedata>
+                <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Choosing the JBoss BIRT Integration Web Project Configuration</title>
+                    <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <imagedata fileref="images/birt_integration_with_seam/projectBirtConfiguration.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -277,21 +289,21 @@
                 </listitem>
        
         
-     <listitem diffmk:change="added">   
-         <para><diffmk:wrapper diffmk:change="changed">You may leave the next two pages with default values, just press </diffmk:wrapper><emphasis><property moreinfo="none">Next</property></emphasis><diffmk:wrapper diffmk:change="added"> to proceed.
-    </diffmk:wrapper></para>
+     <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">   
+         <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You may leave the next two pages with default values, just press <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Next</property></emphasis> to proceed.
+    </para>
      </listitem> 
             
-            <listitem diffmk:change="added">
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
                 
-                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the </diffmk:wrapper><emphasis><property moreinfo="none">Birt Configuration</property></emphasis><diffmk:wrapper diffmk:change="changed"> page you can modify the BIRT deployment settings, which you can edit afterwards  in the web.xml of the generated project. Let's keep the default values for now.
-                </diffmk:wrapper></para>
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">On the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Birt Configuration</property></emphasis> page you can modify the BIRT deployment settings, which you can edit afterwards  in the web.xml of the generated project. Let's keep the default values for now.
+                </para>
                
-                <figure float="0">
-                    <title>Configuring BIRT Deployment Settings</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="images/birt_integration_with_seam/birtDeploymentSettings.png"></imagedata>
+                <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Configuring BIRT Deployment Settings</title>
+                    <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <imagedata fileref="images/birt_integration_with_seam/birtDeploymentSettings.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -300,23 +312,23 @@
                 
             </listitem>
        
-        <listitem diffmk:change="added">		
-            <para><diffmk:wrapper diffmk:change="changed">You can also leave the </diffmk:wrapper><emphasis><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JSF Capabilities</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> page with default values.     </diffmk:wrapper></para>         
+        <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">		
+            <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You can also leave the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JSF Capabilities</property></emphasis> page with default values.     </para>         
         </listitem>
           
-          <listitem diffmk:change="added">
-             <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the </diffmk:wrapper><emphasis diffmk:change="added">
-                  <property moreinfo="none">Seam Facet</property>
-              </emphasis><diffmk:wrapper diffmk:change="added"> page you should specify the Seam runtime and Connection profile. Please note, that the Seam runtime must be of the version you initially specified in the project settings (See the </diffmk:wrapper><link diffmk:change="added" linkend="CreatingSeamWebProject"><diffmk:wrapper diffmk:change="added">Creating Seam Web Project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> figure).  </diffmk:wrapper></para>
-              <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> When creating a Seam project with BIRT capabilities you can use the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">BIRT Classic Models Sample Database</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> connection profile  to work with the BIRT sample database.</diffmk:wrapper></para>
+          <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+             <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">On the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Seam Facet</property>
+              </emphasis> page you should specify the Seam runtime and Connection profile. Please note, that the Seam runtime must be of the version you initially specified in the project settings (See the <link linkend="CreatingSeamWebProject" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Creating Seam Web Project</link> figure).  </para>
+              <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> When creating a Seam project with BIRT capabilities you can use the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Classic Models Sample Database</property> connection profile  to work with the BIRT sample database.</para>
        
-              <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For more details on how to configure database connection for a Seam project please read the  
-                  </diffmk:wrapper><ulink diffmk:change="added" url="http://docs.jboss.org/tools/3.0.0.GA/en/seam/html_single/index.html#seamFacet"><diffmk:wrapper diffmk:change="added">Configure Seam Facet Settings</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> chapter of Seam Dev Tools Reference Guide.</diffmk:wrapper></para>
-              <figure float="0">
-                  <title>Configuring the Seam Facet settings</title>
-                  <mediaobject>
-                      <imageobject>
-                          <imagedata fileref="images/birt_integration_with_seam/seamFacet.png"></imagedata>
+              <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">For more details on how to configure database connection for a Seam project please read the  
+                  <ulink url="http://docs.jboss.org/tools/3.0.0.GA/en/seam/html_single/index.html#seamFacet">Configure Seam Facet Settings</ulink> chapter of Seam Dev Tools Reference Guide.</para>
+              <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Configuring the Seam Facet settings</title>
+                  <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                      <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                          <imagedata fileref="images/birt_integration_with_seam/seamFacet.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
                       </imageobject>
                   </mediaobject>
               </figure>
@@ -324,75 +336,75 @@
           </listitem>
      
 	
-      <listitem diffmk:change="added"> 
-        <para>Hit <emphasis>
-                <property moreinfo="none">Finish</property>
-        </emphasis><diffmk:wrapper diffmk:change="changed"> to create the project with BIRT functionality enabled.</diffmk:wrapper></para>
+      <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Hit <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Finish</property>
+        </emphasis> to create the project with BIRT functionality enabled.</para>
       </listitem>
         </orderedlist>
     </section>
 
-    <section id="integration">
-        <title>Integration with Seam</title>
-<para><diffmk:wrapper diffmk:change="changed">
+    <section id="integration" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Integration with Seam</title>
+<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
     In the previous section you have created a Seam project with BIRT capabilities. 
     Now you can create a simple kick start project to see that everything is configured correctly. 
-</diffmk:wrapper></para>
+</para>
         
         
-        <orderedlist continuation="restarts" diffmk:change="added" inheritnum="ignore">
-            <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="added">Now create a BIRT report file and insert  test data into the file.
-                Name the report file </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.rptdesign</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">, the report should print the data from the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> table of the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">BIRT Classic Models Sample Database</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">, namely: customer number (</diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS.CUSTOMERNAME</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">), 
-                contact person  first name ( </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS.CONTACTFIRSTNAME</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">) ,
-                contact person last name (</diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS.CONTACTLASTNAME</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">) and 
-                contact person phone number(</diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">CLASSICMODELS.CUSTOMERS.PHONE</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">).  
-            </diffmk:wrapper></para>
-             <para><diffmk:wrapper diffmk:change="added">The title of the report should be set via </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">reportTitle</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> parameter</diffmk:wrapper></para>  
-                <para><diffmk:wrapper diffmk:change="added">
-                    As this guide is primarily focused on the BIRT integration and not the BIRT technology itself we will not show the steps required to make the report. If you do not feel strong about creating a BIRT report file please read </diffmk:wrapper><ulink diffmk:change="added" url="http://eclipse.org/birt/phoenix/tutorial/"><diffmk:wrapper diffmk:change="added">BIRT documentation</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.
-                  </diffmk:wrapper></para>  
-                <para><diffmk:wrapper diffmk:change="added">You can download  the file </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.rptdesign</diffmk:wrapper></property> <ulink diffmk:change="added" url="files/helloBirt.rptdesign"><diffmk:wrapper diffmk:change="added">here</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> and copy it to the WebContent folder of your Seam project.</diffmk:wrapper></para>      
+        <orderedlist xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Now create a BIRT report file and insert  test data into the file.
+                Name the report file <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">helloBirt.rptdesign</property>, the report should print the data from the <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CLASSICMODELS.CUSTOMERS</code> table of the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Classic Models Sample Database</property>, namely: customer number (<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CLASSICMODELS.CUSTOMERS.CUSTOMERNAME</code>), 
+                contact person  first name ( <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CLASSICMODELS.CUSTOMERS.CONTACTFIRSTNAME</code>) ,
+                contact person last name (<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CLASSICMODELS.CUSTOMERS.CONTACTLASTNAME</code>) and 
+                contact person phone number(<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CLASSICMODELS.CUSTOMERS.PHONE</code>).  
+            </para>
+             <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The title of the report should be set via <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">reportTitle</code> parameter</para>  
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    As this guide is primarily focused on the BIRT integration and not the BIRT technology itself we will not show the steps required to make the report. If you do not feel strong about creating a BIRT report file please read <ulink url="http://eclipse.org/birt/phoenix/tutorial/">BIRT documentation</ulink>.
+                  </para>  
+                <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You can download  the file <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">helloBirt.rptdesign</property> <ulink url="files/helloBirt.rptdesign">here</ulink> and copy it to the WebContent folder of your Seam project.</para>      
                 
             </listitem>
      
-        <listitem diffmk:change="added">
-        <para><diffmk:wrapper diffmk:change="added">
-            When you are done with the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.rptdesign</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file, you should create a </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file that will contain the BIRT report you have just created.
-        </diffmk:wrapper></para>   
+        <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            When you are done with the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">helloBirt.rptdesign</property> file, you should create a <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">.xhtml</property> file that will contain the BIRT report you have just created.
+        </para>   
         
    
-        <para><diffmk:wrapper diffmk:change="added">                 
-          The JBoss BIRT Integration framework provides 2 components represented as </diffmk:wrapper><emphasis diffmk:change="added" role="bold"> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:birt&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> and </diffmk:wrapper><emphasis diffmk:change="added" role="bold"> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:param&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> tags. The jboss-seam-birt.jar library implements the functionality of the components. To find more information about the framework pleas read the  </diffmk:wrapper><link diffmk:change="added" linkend="framework"><diffmk:wrapper diffmk:change="added">JBoss BIRT Integraion Framework API Reference</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> chapter.
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">                 
+          The JBoss BIRT Integration framework provides 2 components represented as <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:birt&gt;</property></emphasis> and <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:param&gt;</property></emphasis> tags. The jboss-seam-birt.jar library implements the functionality of the components. To find more information about the framework pleas read the  <link linkend="framework" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Integraion Framework API Reference</link> chapter.
               To use that tags on the page you need to declare the tag library and define the name space like this: 
-      </diffmk:wrapper></para>
+      </para>
 
         
-            <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[         
+            <programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[         
             xmlns:b="http://jboss.com/products/seam/birt" 
- ]]></diffmk:wrapper></programlisting>     
+ ]]></programlisting>     
 
-      <para><diffmk:wrapper diffmk:change="changed">
-          The </diffmk:wrapper> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:birt&gt;</diffmk:wrapper></property></para><diffmk:wrapper diffmk:change="added"> is a container for a BIRT report, that helps you integrate the report into Seam environment. 
-          You can manage the properties of the report using the attributes of the </diffmk:wrapper><emphasis diffmk:change="added" role="bold"> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:birt&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> tag.
-      </diffmk:wrapper></listitem>
+      <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+          The <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:birt&gt;</property></emphasis> is a container for a BIRT report, that helps you integrate the report into Seam environment. 
+          You can manage the properties of the report using the attributes of the <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:birt&gt;</property></emphasis> tag.
+      </para>
     
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
             
-            The </diffmk:wrapper><emphasis diffmk:change="added" role="bold"> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:param&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> tag describes report parameters.  To set a parameter you need to specify it's name the value you want to pass. 
+            The <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:param&gt;</property></emphasis> tag describes report parameters.  To set a parameter you need to specify it's name the value you want to pass. 
             You can use EL expressions to bind the representation layer with back-end logic.
-        </diffmk:wrapper></para>
+        </para>
      
-        </orderedlist>
+        </listitem>
 
     
             
             
-             <listitem diffmk:change="added">
+             <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
                  
                  
-                 <para><diffmk:wrapper diffmk:change="added">Create the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file  in the WebContent with the following content: </diffmk:wrapper></para>
+                 <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Create the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">helloBirt.xhtml</property> file  in the WebContent with the following content: </para>
              
-                 <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[...
+                 <programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[...
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
@@ -410,315 +422,321 @@
 		</rich:panel>
 	</ui:define>
 </ui:composition>            
-...]]></diffmk:wrapper></programlisting> 
+...]]></programlisting> 
                  
-                 <para><diffmk:wrapper diffmk:change="changed">From this listing above you see that the title of the report is set via </diffmk:wrapper> <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:param&gt;</diffmk:wrapper></property></para><diffmk:wrapper diffmk:change="added"> by setting the parameter name and defining the </diffmk:wrapper><emphasis><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">"value"</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="changed"> attribute with the "Customers Contacts" value.</diffmk:wrapper></listitem>
-                <listitem>
-        <para><diffmk:wrapper diffmk:change="added">We have created a Seam  project and inserted the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> report into the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">helloBirt.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> view file.</diffmk:wrapper></para>
-
-
-<para><diffmk:wrapper diffmk:change="added">To see that the application works correctly and as you expect, you need to launch it on the server.</diffmk:wrapper></para>
+                 <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">From this listing above you see that the title of the report is set via <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:param&gt;</property></emphasis> by setting the parameter name and defining the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">"value"</property></emphasis> attribute with the "Customers Contacts" value.</para>
+                 
+          </listitem>
+         
+        
+  
+         
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">We have created a Seam  project and inserted the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">helloBirt</property> report into the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">helloBirt.xhtml</property> view file.</para>      
+        
+        
+<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">To see that the application works correctly and as you expect, you need to launch it on the server.</para>
     </listitem>
-    <listitem><para><diffmk:wrapper diffmk:change="added">In the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Server View </diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> (If it is not open navigate to </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Windows &gt; Show View &gt; Other &gt; JBoss Server View </diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">), select the server the application is deployed to and hit the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Start</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button. </diffmk:wrapper></para></listitem>
-    <listitem diffmk:change="added">
-        <para><diffmk:wrapper diffmk:change="added">When the server is started, open your favourite browser and point it to </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">http://localhost:8080/HelloBirt/helloBirt.seam</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> .</diffmk:wrapper></para>
-
-
-<figure float="0">
-    <title><diffmk:wrapper diffmk:change="changed">Integrating BIRT into Seam Project</diffmk:wrapper></title>
-    <mediaobject>
-        <imageobject>
-            <imagedata diffmk:change="added" fileref="images/birt_integration_with_seam/helloBirtproject.png"></imagedata>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Server View </property> (If it is not open navigate to <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Windows &gt; Show View &gt; Other &gt; JBoss Server View </property>), select the server the application is deployed to and hit the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Start</property> button. </para></listitem>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">When the server is started, open your favourite browser and point it to <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">http://localhost:8080/HelloBirt/helloBirt.seam</code> .</para>
+    
+    
+<figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Integrating BIRT into Seam Project</title>
+    <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <imagedata fileref="images/birt_integration_with_seam/helloBirtproject.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
         </imageobject>
     </mediaobject>
-</figure>
+</figure>   
     </listitem>
-          </section>
-        </section>
-        <section id="hibernate_datasource">
+        </orderedlist>
+        
+    </section>
+</section>
+   
+<section id="hibernate_datasource" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/hibernate_datasource.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 
-    <title>Using Hibernate ODA Data Source</title>
+    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Using Hibernate ODA Data Source</title>
 
-    <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source which is  completely
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The JBoss BIRT Integration feature includes the Hibernate ODA Data Source which is  completely
         integrated with Hibernate Tools. You can use it the way as you would use any of BIRT ODA drivers.
 
     </para>
 
-<orderedlist>
-    <listitem>
-    <para>First, you need to reverse engineer from the database to generate Seam entities. You can perform this operation going to  <emphasis>
-            <property>File &gt; New &gt; Seam Generate Entities</property>
-        </emphasis> in the <property>Seam perspective</property>. More details on the Seam Generate
-        Entities please read <ulink
-            url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#generate_entities"
-            >Seam Dev Tools Reference guide</ulink>).
-        In this guide we will use the <property>Employees</property> table of the <property>DATAMODELS</property> database.
+<orderedlist xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">First, you need to reverse engineer from the database to generate Seam entities. You can perform this operation going to  <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">File &gt; New &gt; Seam Generate Entities</property>
+        </emphasis> in the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Seam perspective</property>. More details on the Seam Generate
+        Entities please read <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#generate_entities">Seam Dev Tools Reference guide</ulink>). 
+        In this guide we will use the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Employees</property> table of the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DATAMODELS</property> database.      
 </para>
 
-    <tip>
-        <title>Tip:</title>
-        <para>Before performing Seam Generate Entities, you should have a connection profile
-            adjusted and connected to a database. How to do this see in the <ulink
-                url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#d0e2725"
-                >CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
+    <tip xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Tip:</title>
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Before performing Seam Generate Entities, you should have a connection profile
+            adjusted and connected to a database. How to do this see in the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#d0e2725">CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
                 guide.</para>
-        <para>
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
             If you followed the steps described in the
-            <link linkend="birt_integration_with_seam">Adding BIRT Functionality to Standard Seam Web Project</link> chapter,
-            you would have a connection profile already configured.
+            <link linkend="birt_integration_with_seam" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Adding BIRT Functionality to Standard Seam Web Project</link> chapter,
+            you would have a connection profile already configured.        
                 </para>
     </tip>
     </listitem>
-    <listitem>
-<para>
-    Next you should create a new BIRT report file ( <emphasis>><property>File &gt; New &gt; Other &gt; Business Intelligence and Reporting
-        Tools &gt; Report</property></emphasis>) to represent the data from the <property>Employees</property> table. Call the file <property>employees.rptdesign</property>.
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    Next you should create a new BIRT report file ( <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&gt;<property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">File &gt; New &gt; Other &gt; Business Intelligence and Reporting
+        Tools &gt; Report</property></emphasis>) to represent the data from the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Employees</property> table. Call the file <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">employees.rptdesign</property>.
 </para>
     </listitem>
 
-<listitem>
-
-
-    <para>Now switch to the <property>BIRT Report Design</property> perspective.</para>
+<listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+   
+    
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Now switch to the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Report Design</property> perspective.</para>
 </listitem>
-    <listitem>
-    <para>In the <property>Data Explorer</property> view right-click the <emphasis>
-            <property>Data Source</property>
-        </emphasis> node and choose <emphasis>
-            <property>New Data Source</property>.</emphasis></para>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Data Explorer</property> view right-click the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Data Source</property>
+        </emphasis> node and choose <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">New Data Source</property>.</emphasis></para>
 
-    <figure>
-        <title>Creating a New Data Source</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/creatingDataSource.png"/>
+    <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Creating a New Data Source</title>
+        <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imagedata fileref="images/hibernate_datasource/creatingDataSource.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
             </imageobject>
         </mediaobject>
     </figure>
 </listitem>
-    <listitem>
-    <para>The wizard will prompt you to select data source type.  Choose <emphasis>
-            <property>Hibernate Data Source</property>
-        </emphasis> and give it a meaningful name, for instance <emphasis>
-            <property>HibernateDataSource</property>
-        </emphasis>. Hit <emphasis>
-            <property>Next</property> to proceed.</emphasis></para>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The wizard will prompt you to select data source type.  Choose <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Hibernate Data Source</property>
+        </emphasis> and give it a meaningful name, for instance <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">HibernateDataSource</property>
+        </emphasis>. Hit <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Next</property> to proceed.</emphasis></para>
 
-    <figure>
-        <title>Creating Hibernate Data Source</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/hibernateDataSource.png"/>
+    <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Creating Hibernate Data Source</title>
+        <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imagedata fileref="images/hibernate_datasource/hibernateDataSource.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
             </imageobject>
         </mediaobject>
     </figure>
     </listitem>
-    <listitem>
-    <para>On the next wizard's dialog you can leave the everything with default values, press the <emphasis>
-            <property>Test Connection</property>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">On the next wizard's dialog you can leave the everything with default values, press the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Test Connection</property>
     </emphasis> button to verify  that the connection is established successfully.</para>
-
-    <para>
-        The <property>Hibernate Data Source</property> enables you to specify a Hibernate Configuration or JNDI URL.
-
+    
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        The <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Hibernate Data Source</property> enables you to specify a Hibernate Configuration or JNDI URL. 
+        
     </para>
 
-    <figure>
-        <title>Hibernate Data Source Profile</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/connectionSuccessful.png"/>
+    <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Hibernate Data Source Profile</title>
+        <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imagedata fileref="images/hibernate_datasource/connectionSuccessful.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
             </imageobject>
         </mediaobject>
     </figure>
     </listitem>
-    <listitem>
-    <para>Press  <emphasis>
-            <property>Finish</property>
-        </emphasis> to complete <property>New Data Source</property> wizard.</para>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Press  <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Finish</property>
+        </emphasis> to complete <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">New Data Source</property> wizard.</para>
     </listitem>
-
-    <listitem>
-    <para>Now you need to configure a new Hibernate ODA data set. Launch the
-        <property>New Data Set</property> wizard. In the <property>Data Explorer View</property>
-        right-click the <emphasis>
-            <property>Data Set</property>
-        </emphasis> node and select <emphasis>
-            <property>New Data Set</property>.</emphasis></para>
+    
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Now you need to configure a new Hibernate ODA data set. Launch the
+        <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">New Data Set</property> wizard. In the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Data Explorer View</property>
+        right-click the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Data Set</property>
+        </emphasis> node and select <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">New Data Set</property>.</emphasis></para>
 
     </listitem>
-    <listitem>
-    <para>Select <property>HibernateDataSource</property> as target data source and type in the new data set name.
-        Call it <property>HibernateDataSet</property>.</para>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Select <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">HibernateDataSource</property> as target data source and type in the new data set name.
+        Call it <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">HibernateDataSet</property>.</para>
 
 
 
 
-    <figure>
-        <title>Creating a Hibernate ODA Data Set</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/addingHibernateODADataset.png"/>
+    <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Creating a Hibernate ODA Data Set</title>
+        <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imagedata fileref="images/hibernate_datasource/addingHibernateODADataset.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
             </imageobject>
         </mediaobject>
     </figure>
     </listitem>
-    <listitem>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 
-    <para>The next dialog of the wizard will help you compose a query for the new data set.</para>
-    <para>We will make a report that will print all employees in the database who has Sales Rep job title.</para>
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The next dialog of the wizard will help you compose a query for the new data set.</para>
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">We will make a report that will print all employees in the database who has Sales Rep job title.</para>
 
-       <programlisting role="SQL"><![CDATA[...
+       <programlisting role="SQL" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[...
 select jobtitle, firstname, lastname, email
 from Employees as employees where employees.jobtitle = 'Sales Rep'
-...]]></programlisting>
-
-
-
- <para>
-
+...]]></programlisting>  
+        
+    
+    
+ <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">       
+        
         To validate the
-        entered query you can press the <emphasis>
-            <property>Test query</property>
+        entered query you can press the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Test query</property>
         </emphasis> button. All the HQL features like syntax highlighting, content assist,
         formatting, drag-and-drop, etc., are available to facilitate query composing.</para>
 
-    <figure>
-        <title>Composing query for Data Set</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/testingQuery.png"/>
+    <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Composing query for Data Set</title>
+        <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imagedata fileref="images/hibernate_datasource/testingQuery.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
             </imageobject>
         </mediaobject>
     </figure>
     </listitem>
-    <listitem>
-
-    <para>Pressing <property>Finish</property> will call the <property>Edit Data Set</property>  dialog where you can adjust the parameters of the data set and preview the resulted set.
-        If everything looks good, hit <property>Ok</property> to generate a new data set.
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Pressing <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Finish</property> will call the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Edit Data Set</property>  dialog where you can adjust the parameters of the data set and preview the resulted set.
+        If everything looks good, hit <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Ok</property> to generate a new data set.
      </para>
     </listitem>
-    <listitem>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Now you can insert the  data set items of <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">HibernateDataSet</property> into the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">employees.rptdesign</property>.</para>
+    
 
-    <para>Now you can insert the  data set items of <property>HibernateDataSet</property> into the <property>employees.rptdesign</property>.</para>
-
-
-    <tip>
-        <title>Tip:</title>
-        <para>If you don&apos;t know how to do this we suggest that you refer to the <ulink
-                url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT Tutorial</ulink>.</para>
+    <tip xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Tip:</title>
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">If you don't know how to do this we suggest that you refer to the <ulink url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT Tutorial</ulink>.</para>
     </tip>
+  
 
-
-<para>You can also use parameters in the query to add  dynamics to your report. In the previous example we hardcoded the selection criterion in the <code>where</code> clause. </para>
-    <para>To specify the job title on-the-fly your query should look like this:</para>
-    <programlisting role="XML"><![CDATA[
+<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You can also use parameters in the query to add  dynamics to your report. In the previous example we hardcoded the selection criterion in the <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">where</code> clause. </para>
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">To specify the job title on-the-fly your query should look like this:</para>
+    <programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[
 select jobtitle,firstname, lastname,email
 from Employees as employees where employees.jobtitle = ?
-]]></programlisting>
-
-    <para>The question mark represents a data set input parameter, which is not the same as a report parameter.
-        Now you need to define an new report parameter to pass the data to the report, call it <code>JobTitle</code>.
-
-
-
+]]></programlisting> 
+    
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The question mark represents a data set input parameter, which is not the same as a report parameter.
+        Now you need to define an new report parameter to pass the data to the report, call it <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JobTitle</code>.
+        
+        
+        
         The dataset parameter can be linked to a report parameter.
-        In the <property>Data Explorer</property> view click the Data Set node to open it and right-click
-        on the data set you created previously( in our case it is <property>HibernateDataSet</property>),
-        choose <property>Edit</property> and navigate to the <property>Parameters</property> section.
-        Declare a new data set parameter, name it <code>jobtitle</code> and map it to the already existing <code>JobTitle</code> report parameter.
+        In the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Data Explorer</property> view click the Data Set node to open it and right-click
+        on the data set you created previously( in our case it is <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">HibernateDataSet</property>),
+        choose <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Edit</property> and navigate to the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Parameters</property> section.  
+        Declare a new data set parameter, name it <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">jobtitle</code> and map it to the already existing <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JobTitle</code> report parameter.
         </para>
     </listitem>
-    <listitem>
-    <para>You report is ready, you can view it by clicking on  the <property>Preview</property> tab of the <property>BIRT Report Designer</property> editor. </para>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You report is ready, you can view it by clicking on  the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Preview</property> tab of the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Report Designer</property> editor. </para>
 
+    
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You will be prompted to assign a value to the report parameter. For instance you can enter "Sales Rep". </para>
 
-        <para>You will be prompted to assign a value to the report parameter. For instance you can enter &quot;Sales Rep&quot;. </para>
-
-    <figure>
-        <title>Resulted Dynamic Report</title>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="images/hibernate_datasource/finalReport.png"/>
+    <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Resulted Dynamic Report</title>
+        <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <imagedata fileref="images/hibernate_datasource/finalReport.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
             </imageobject>
         </mediaobject>
     </figure>
     </listitem>
 </orderedlist>
 </section>
-        <section diffmk:change="added" id="birt_reports_deployment" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/birt_reports_deployment.xml">
-    <title><diffmk:wrapper diffmk:change="changed">Creating a Dynamic BIRT Report</diffmk:wrapper></title>
 
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The </diffmk:wrapper><link diffmk:change="added" linkend="birt_integration_with_seam"><diffmk:wrapper diffmk:change="added">Adding BIRT Functionality to Standard Seam Web Project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">
-        and </diffmk:wrapper><link diffmk:change="added" linkend="hibernate_datasource"><diffmk:wrapper diffmk:change="added">Using Hibernate ODA Data Sourc</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> sections tell how to integrate a BIRT report into
+   
+<section id="birt_reports_deployment" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/birt_reports_deployment.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Creating a Dynamic BIRT Report</title>
+    
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The <link linkend="birt_integration_with_seam" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Adding BIRT Functionality to Standard Seam Web Project</link> 
+        and <link linkend="hibernate_datasource" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Using Hibernate ODA Data Sourc</link> sections tell how to integrate a BIRT report into 
         a Seam web project and how to use Hibernate data source to generate a dynamic report.
-        In this section we will create a Seam web project that can make a dynamic report using the parameters that are defined on a web page.</diffmk:wrapper></para>
+        In this section we will create a Seam web project that can make a dynamic report using the parameters that are defined on a web page.</para>
 
 
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">We will use the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">PRODUCTS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> table of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">DATAMODELS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> database for the purpose of this demo project.
-        In the first place, you need to generate Seam entities like we did in the previous chapter (</diffmk:wrapper><link diffmk:change="added" linkend="hibernate_datasource"><diffmk:wrapper diffmk:change="added">Hibernate ODA Data Source</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added"> ). The demo application will generate a report about the company's products, whereas it will allow to specify a product line. </diffmk:wrapper></para>
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">We will use the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">PRODUCTS</property> table of <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DATAMODELS</property> database for the purpose of this demo project.
+        In the first place, you need to generate Seam entities like we did in the previous chapter (<link linkend="hibernate_datasource" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Hibernate ODA Data Source</link> ). The demo application will generate a report about the company's products, whereas it will allow to specify a product line. </para>
 
-<orderedlist continuation="restarts" diffmk:change="added" inheritnum="ignore">
-    <listitem diffmk:change="added">
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The next step is to create a Java class that will store the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> variable and its assessors, register the class in faces.config.xml.
-    The variable will be needed to pass dynamic data to the report via report parameters, therefore it has to be of session scope.</diffmk:wrapper></para>
+<orderedlist xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The next step is to create a Java class that will store the <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">sortOrder</code> variable and its assessors, register the class in faces.config.xml.  
+    The variable will be needed to pass dynamic data to the report via report parameters, therefore it has to be of session scope.</para>
     </listitem>
 
-    <listitem diffmk:change="added">
-    <para><diffmk:wrapper diffmk:change="added">
-
-
-    The report will print the data from the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">Products</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> table, hence you need to create a report file first.
-    You can use either the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">BIRT JDBC Data Source</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> or </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Hibernate Data Source</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> data source to create the  data set for this project. If you want to use the latter please read the previous chapter </diffmk:wrapper><link diffmk:change="added" linkend="hibernate_datasource"><diffmk:wrapper diffmk:change="added">Hibernate ODA Data Source</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">.
-</diffmk:wrapper></para>
-
-
-  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    
+    The report will print the data from the <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Products</code> table, hence you need to create a report file first. 
+    You can use either the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT JDBC Data Source</property> or <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Hibernate Data Source</property> data source to create the  data set for this project. If you want to use the latter please read the previous chapter <link linkend="hibernate_datasource" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Hibernate ODA Data Source</link>.
+</para>    
+   
+    
+  <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
       The data set should have at least the following data set items: product vendor, product name, quantity in stock and buy price. The data is retrieved from the database with this query :
-  </diffmk:wrapper></para>
-
-
-    <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[
+  </para>
+   
+    
+    <programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[      
 SELECT  productvedor,
 productname,
 quantityinstock,
 buyprice
-FROM Products as products
+FROM Products as products        
 
-]]></diffmk:wrapper></programlisting>
+]]></programlisting> 
     </listitem>
-    <listitem diffmk:change="added">
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Make a table in the report and put each data set item into a column.</diffmk:wrapper></para>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Make a table in the report and put each data set item into a column.</para>
     </listitem>
-     <listitem diffmk:change="added">
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">As it was stated in the beginning of the chapter the report will be dynamic, therefore you need to declare a report parameter first, let it be </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> and to add the parameter to the query. BIRT offers rich JavaScript API, so you can modify the query programmatically like this:</diffmk:wrapper></para>
-<programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added">
+     <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">   
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">As it was stated in the beginning of the chapter the report will be dynamic, therefore you need to declare a report parameter first, let it be <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">sortOrder</code> and to add the parameter to the query. BIRT offers rich JavaScript API, so you can modify the query programmatically like this:</para>
+<programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 &lt;xml-property name="queryText"&gt;&lt;![CDATA[
 SELECT  productvedor,
 productname,
 quantityinstock,
 buyprice
-FROM Products as products
+FROM Products as products 
 ]]&gt;&lt;/xml-property&gt;
     &lt;method name="beforeOpen"&gt;&lt;![CDATA[
 queryString = " ORDER BY products."+reportContext.getParameterValue("sortOrder")+" "+"DESC";
 this.queryText = this.queryText+queryString;
 ]]&gt;&lt;/method&gt;
-
-</diffmk:wrapper></programlisting>
+    
+</programlisting>    
      </listitem>
-    <listitem diffmk:change="added">
-<para><diffmk:wrapper diffmk:change="changed">The report is ready. You can preview it to make sure it works properly. </diffmk:wrapper></para>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The report is ready. You can preview it to make sure it works properly. </para>
     </listitem>
-        <listitem diffmk:change="added">        <para><diffmk:wrapper diffmk:change="added">To set the report parameter you should create an </diffmk:wrapper><property moreinfo="none">.xhtml</property><diffmk:wrapper diffmk:change="added"> view page, call it </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Products.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. On the page you can set the value of the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> Java bean variable and press the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Generate Report</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button to open another view page that will display the resulted report.
-        </diffmk:wrapper></para>
-
-
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The source code of the  </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Products.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> should be the following:</diffmk:wrapper></para>
-
-   <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[
+        <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">To set the report parameter you should create an <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">.xhtml</property> view page, call it <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Products.xhtml</property>. On the page you can set the value of the <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">sortOrder</code> Java bean variable and press the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Generate Report</property> button to open another view page that will display the resulted report.
+        </para>
+     
+    
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The source code of the  <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Products.xhtml</property> should be the following:</para>
+   
+   <programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
@@ -731,7 +749,7 @@ this.queryText = this.queryText+queryString;
 	<ui:define name="body">
 		<rich:panel>
 			<f:facet name="header">BIRT Report Generator</f:facet>
-			<a4j:form ajaxSubmit="true" reRender="criterion">
+			<a4j:form ajaxSubmit="true" reRender="criterion"> 
 				<table>
 					<tr>
 						<td>Select sort order criterion:</td>
@@ -742,384 +760,417 @@ this.queryText = this.queryText+queryString;
 						</h:selectOneMenu>
 						</td>
 					</tr>
-				</table>
+				</table>		
 				</a4j:form>
 			<s:button
 				view="/#{!empty reportParameters.order ? 'Products' : 'ProductsReport'}.xhtml" id="generate" value="Generate Report" /> <!-- If the sertOrder variable is not set the button won't work -->
 		</rich:panel>
 	</ui:define>
-</ui:composition>
-]]></diffmk:wrapper></programlisting>
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The logic of the file is quite simple, when the sort order criterion is select the value of  </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">yourJavaBean.sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added">
-    is set automatically via Ajax and the report is ready to be generated.</diffmk:wrapper></para>
+</ui:composition>       
+]]></programlisting> 
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The logic of the file is quite simple, when the sort order criterion is select the value of  <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">yourJavaBean.sortOrder</code>
+    is set automatically via Ajax and the report is ready to be generated.</para>  
         </listitem>
-    <listitem diffmk:change="added">
-    <para><diffmk:wrapper diffmk:change="added">Now you need to create the web page that will print the report, name the file </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">ProductsReport.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.
-        The file to output the report should have the following content:</diffmk:wrapper></para>
-
-
-  <para><diffmk:wrapper diffmk:change="added">
-      As you know from the  </diffmk:wrapper><link diffmk:change="added" linkend="birt_integration_with_seam"><diffmk:wrapper diffmk:change="added">Adding BIRT Functionality to Standard Seam Web Project</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">  chapter, before using the BIRT Integration framework tags on the page you need to declare the tag library and specify the name space with this line:
-   </diffmk:wrapper></para>
-
-      <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Now you need to create the web page that will print the report, name the file <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ProductsReport.xhtml</property>.
+        The file to output the report should have the following content:</para>
+   
+<programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:b="http://jboss.com/products/seam/birt"
-]]></diffmk:wrapper></programlisting>
-      <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
- The dynamics to the report adds this line:
-  </diffmk:wrapper></para>
-   <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[
+	xmlns:rich="http://richfaces.org/rich" template="layout/template.xhtml">
+	<ui:define name="body">
+		<rich:panel>
+			<f:facet name="header">Products Report</f:facet>
+			<b:birt designType="embed" designName="products.rptdesign"
+				embeddable="true" masterpage="true">
+				<b:param name="sortOrder" value="#{yourJavaBean.sortOrder}" />
+			</b:birt>
+		</rich:panel>
+</ui:define>
+</ui:composition>
+]]></programlisting> 
+  <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+      As you know from the  <link linkend="birt_integration_with_seam" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Adding BIRT Functionality to Standard Seam Web Project</link>  chapter, before using the BIRT Integration framework tags on the page you need to declare the tag library and specify the name space with this line:
+   </para>   
+      
+      <programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[
+	xmlns:b="http://jboss.com/products/seam/birt"
+]]></programlisting> 
+      <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ The dynamics to the report adds this line:     
+  </para>  
+   <programlisting role="XML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[
 <b:param name="sortOrder" value="#{yourJavaBean.sortOrder}" />
-]]></diffmk:wrapper></programlisting>
-
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">We bound the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">sortOrder</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> report parameter to Java Bean variable </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">value="#{yourJavaBean.sortOrder}"</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> using EL expression, and the value to the variable is assigned in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Products.xhtml</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file. </diffmk:wrapper></para>
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">By default if you embed a report into HTML page the HTML-format report contains  the &lt;html&gt;,
-        &lt;head&gt;, &lt;body&gt; etc., tags. However if your HTML page already has those tags, you can rid of them using the </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">embeddable="true"</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> attribute of
-
-       the </diffmk:wrapper><emphasis diffmk:change="added" role="bold"><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">&lt;b:birt&gt;</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added">  component.</diffmk:wrapper></para>
+]]></programlisting> 
+  
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">We bound the <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">sortOrder</code> report parameter to Java Bean variable <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">value="#{yourJavaBean.sortOrder}"</code> using EL expression, and the value to the variable is assigned in the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Products.xhtml</property> file. </para>
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">By default if you embed a report into HTML page the HTML-format report contains  the &lt;html&gt;,
+        &lt;head&gt;, &lt;body&gt; etc., tags. However if your HTML page already has those tags, you can rid of them using the <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">embeddable="true"</code> attribute of 
+       
+       the <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:birt&gt;</property></emphasis>  component.</para>
     </listitem>
-        <listitem diffmk:change="added">
-        <para><diffmk:wrapper diffmk:change="added">Deploy the project onto the server and open your browser to see the report is successfully generated. You should navigate to
-
-       </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">http://localhost:8080/yourProjectName/Products.seam</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> to select the criterion and press the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Generate Report</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button. You will be redirected to the  </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">http://localhost:8080/HelloBirt/ProductsReport.seam</diffmk:wrapper></code>
-
-   </para>
-   <figure float="0">
-       <title><diffmk:wrapper diffmk:change="changed">Dynamic Report</diffmk:wrapper></title>
-       <mediaobject>
-           <imageobject>
-                <imagedata fileref="images/hibernate_datasource/finalReport.png"/>
+        <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Deploy the project onto the server and open your browser to see the report is successfully generated. You should navigate to 
+   
+       <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">http://localhost:8080/yourProjectName/Products.seam</code> to select the criterion and press the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Generate Report</property> button. You will be redirected to the  <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">http://localhost:8080/HelloBirt/ProductsReport.seam</code>
+   
+   </para>  
+   <figure xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+       <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Dynamic Report</title>
+       <mediaobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+           <imageobject xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+               <imagedata fileref="images/birt_reports_deployment/productReport.png" xmlns="http://docbook.org/ns/docbook"></imagedata>
            </imageobject>
        </mediaobject>
    </figure>
         </listitem>
 </orderedlist>
-     <para><diffmk:wrapper diffmk:change="changed">Thus, a Seam project that includes the BIRT facet can be deployed as any project. If you
+     <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Thus, a Seam project that includes the BIRT facet can be deployed as any project. If you
         define the Hibernate ODA driver, the JBoss BIRT engine will use JNDI URL that has to be bound
         to either Hibernate Session Factory or Hibernate Entity Manager Factory. If you
         don't specify the JNDI URL property, our engine will try the following JNDI
-        URLs:</diffmk:wrapper></para>
-    <itemizedlist>
-        <listitem>
-            <para>
-                <emphasis>java:/&lt;project_name&gt;</emphasis>
+        URLs:</para>
+    <itemizedlist xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">java:/&lt;project_name&gt;</emphasis>
             </para>
         </listitem>
-        <listitem>
-            <para>
-                <emphasis>java:/&lt;project_name&gt;EntityManagerFactory</emphasis>
+        <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">java:/&lt;project_name&gt;EntityManagerFactory</emphasis>
             </para>
         </listitem>
     </itemizedlist>
 
-    <para>When creating a Seam EAR project, Hibernate Entity Manager Factory is bound to
-            <emphasis>java:/{projectName}EntityManagerFactory</emphasis><diffmk:wrapper diffmk:change="changed">. All you need to do is
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">When creating a Seam EAR project, Hibernate Entity Manager Factory is bound to
+            <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">java:/{projectName}EntityManagerFactory</emphasis>. All you need to do is
         to use the Hibernate Configuration created automatically. You can use default values for the
-        Hibernate Configuration and JNDI URL within the BIRT Hibernate Data Source.</diffmk:wrapper></para>
+        Hibernate Configuration and JNDI URL within the BIRT Hibernate Data Source.</para>
 
-    <para><diffmk:wrapper diffmk:change="changed">When using a Seam WAR project, neither HSF nor HEMF aren't bound to JNDI by
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">When using a Seam WAR project, neither HSF nor HEMF aren't bound to JNDI by
         default. You have to do this manually. For instance, HSF can be bound to JNDI by adding the
-        following property to the </diffmk:wrapper><emphasis>
-            <property moreinfo="none">persistence.xml</property></emphasis> file:</para>
+        following property to the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">persistence.xml</property></emphasis> file:</para>
 
-    <programlisting format="linespecific" role="XHTML"><![CDATA[<property name="hibernate.session_factory_name" value="java:/projectname"/>
+    <programlisting role="XHTML" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><![CDATA[<property name="hibernate.session_factory_name" value="java:/projectname"/>
     ]]></programlisting>
 
-    <para>And you can use <emphasis>java:/projectname</emphasis> as the JNDI URL property when creating a BIRT
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">And you can use <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">java:/projectname</emphasis> as the JNDI URL property when creating a BIRT
         Hibernate Data Source.</para>
 
-    <note>
-        <title>Note:</title>
-        <para>If you want to test this feature using PDE Runtime, you need to add <emphasis>
-                <property moreinfo="none">osgi.dev=bin</property>
-            </emphasis> to the <emphasis>
-                <property moreinfo="none">WebContent/WEB-INF/platform/configuration/config.ini</property>
+    <note xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Note:</title>
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">If you want to test this feature using PDE Runtime, you need to add <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">osgi.dev=bin</property>
+            </emphasis> to the <emphasis xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">WebContent/WEB-INF/platform/configuration/config.ini</property>
             </emphasis> file.</para>
     </note>
-
-    <para><diffmk:wrapper diffmk:change="changed">In conclusion, the main goal of this document is to get you to know with a full feature set
-        that </diffmk:wrapper><property moreinfo="none">JBoss BIRT Tools</property> provide. Thus if you have some questions,
-        comments or suggestions on the topic, please feel free to ask in the <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
+    
+    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In conclusion, the main goal of this document is to get you to know with a full feature set
+        that <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Tools</property> provide. Thus if you have some questions,
+        comments or suggestions on the topic, please feel free to ask in the 
+        <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
             Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs in
-        future leaving your vote on the article <ulink url="http://www.jboss.org/community/docs/DOC-10795">Overview of the improvements required by JBossTools/JBDS Docs users</ulink>.</para>
-
-</section>
-    </chapter>
-
-
-<chapter diffmk:change="added" id="framework" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/tasks.xml" xreflabel="framework">
-    <?dbhtml filename="framework.html"?>
-
-    <chapterinfo>
-        <keywordset>
-
-            <keyword>Eclipse</keyword>
-            <keyword>JBoss</keyword>
-            <keyword>JBoss Tools</keyword>
-                   <keyword>BIRT Integration</keyword>
-        </keywordset>
-    </chapterinfo>
-
-    <title>JBoss BIRT Integraion Framework API Reference</title>
-
-
-<section>
-
-    <title>
-        <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> Component
-    </title>
-
-
-
-<para>
-    The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> component servers to integrate a BIRT report into Seam/JSF  container.
-    The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> tag recognizes most of the parameters described on the BIRT
-    <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">Report Viewer Parameters</ulink> page, though it has attributes of its own.
-
-</para>
-
-
-    <table>
-        <title><emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> Component Reference</title>
-    <tgroup cols="3">
-        <thead>
-            <row>
-                <entry>Attribute</entry>
-                <entry>Correspondance to BIRT Report Viewer parameters</entry>
-                <entry>Description/</entry>
-
-            </row>
-        </thead>
-        <tbody>
-            <row>
-                <entry>designType</entry>
-                <entry> - </entry>
-                <entry>Corresponds to the BIRT servlet mappings. Possible values are run, frameset, preview and embed.
-                If the attribute is set to  embed the component is used for
-                embeddable html. This type ignores all the attributes except designName
-                and masterpage.
-               </entry>
-            </row>
-            <row>
-                <entry>embeddable</entry>
-                <entry> - </entry>
-                <entry>A BIRT report occupies the whole page by default. It contains the &lt;html&gt;,
-                    &lt;head&gt;, &lt;body&gt; etc., tags. Embedded report can be a part of another page.
-                    It doesn't contain the above mentioned tags. Only HTML report can be embedded.</entry>
-            </row>
-            <row>
-                <entry>designName</entry>
-                <entry>__report</entry>
-                <entry>Sets the name of the report design to process. This can be an absolute path or relative to the working folder. Valid values are  run, frameset and preview</entry>
-            </row>
-
-            <row>
-                <entry>format</entry>
-                <entry>__format</entry>
-                <entry>Specifies the desired output format, such as pdf, html, doc, ppt, or xls.</entry>
-            </row>
-
-            <row>
-                <entry>title</entry>
-                <entry>__title</entry>
-                <entry>Sets the report title.</entry>
-            </row>
-
-            <row>
-                <entry>showtitle</entry>
-                <entry>__showtitle</entry>
-                <entry>Determines if the report title is shown in the frameset viewer. Defaults to true.</entry>
-            </row>
-
-            <row>
-                <entry>toolbar</entry>
-                <entry>__toolbar</entry>
-                <entry>
-
-                    Determines if the report toolbar is shown in the frameset viewer.Defaults to true. Valid values are true and false.</entry>
-            </row>
-
-
-
-            <row>
-                <entry>navigationbar</entry>
-                <entry>__navigationbar</entry>
-                <entry>
-
-                    Determines if the navigation bar is shown in the frameset viewer. Defaults to true. Valid values are true and false.</entry>
-            </row>
-
-
-            <row>
-                <entry>document</entry>
-                <entry>__document</entry>
-                <entry>
-                    Sets the name for the rptdocument. The document is created when the report engine separates run and render tasks, and
-                    is used to support features like table of contents and pagination.
-                    This setting can be an absolute path or relative to the working folder. If no document parameter is used, a unique document is created in the document folder.
-                    </entry>
-            </row>
-
-            <row>
-                <entry>locale</entry>
-                <entry>__locale</entry>
-                <entry>
-     Specifies the locale for the specific operation. Note that this will override the default locale.
-                </entry>
-            </row>
-            <row>
-                <entry>svg</entry>
-                <entry>__svg</entry>
-                <entry>
-             Specifies whether SVG is supported.
-                </entry>
-            </row>
-
-
-
-            <row>
-                <entry>page</entry>
-                <entry>__page</entry>
-                <entry>
-                  Specifies specific page to render.
-                </entry>
-            </row>
-
-
-            <row>
-                <entry>pagerange</entry>
-                <entry>__pagerange</entry>
-                <entry>
-                    Specifies page range to render. Eg 1-4,7.
-                </entry>
-            </row>
-
-
-            <row>
-                <entry>masterpage</entry>
-                <entry>__masterpage</entry>
-                <entry>
-
-                    Indicates that the report master page should be used or not. Validvalues are true and false.
-                </entry>
-            </row>
-
-
-            <row>
-                <entry>overwrite</entry>
-                <entry>__overwrite</entry>
-                <entry>
-
-                    This setting if set to true will force an overwrite of the existing report document.
-                </entry>
-            </row>
-
-            <row>
-                <entry>bookmark</entry>
-                <entry>__bookmark</entry>
-                <entry>
-
-                    Specifies a specific bookmark within the report to load. The viewer will automatically load the appropriate page.
-                </entry>
-            </row>
-
-
-
-            <row>
-                <entry>rtl</entry>
-                <entry>__rtl</entry>
-                <entry>
-                    Specifies whether to display the report in right to left format. This setting defaults to false.
-                </entry>
-            </row>
-
-
-
-            <row>
-                <entry>fittopage</entry>
-                <entry>__fittopage</entry>
-                <entry>
-                Specifies whether PDF generation should fit content to a page. Valid values are true and false.
-                </entry>
-            </row>
-
-
-            <row>
-                <entry>resourceFolder</entry>
-                <entry>__resourceFolder</entry>
-                <entry>
-                Specifies the resource folder to use. This setting will override the default setting in the web.xml. The resource folder is used to locate libraries, images, and resource files.
-                </entry>
-            </row>
-
-        </tbody>
-    </tgroup>
-    </table>
+        future leaving your vote on the article <ulink
+            url="http://www.jboss.org/community/docs/DOC-10795">Overview of the improvements required by JBossTools/JBDS Docs users</ulink>.</para>
 
 </section>
 
-    <section>
-        <title><emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> Component</title>
-        <para>
-            The <emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> tag describes report parameter.
-        </para>
 
-        <table>
-            <title><emphasis role="bold"> <property>&lt;b:param&gt;</property></emphasis> Component</title>
-            <tgroup cols="2">
-                <thead>
-                    <row>
-                        <entry>Attribute</entry>
-
-                        <entry>Description</entry>
-                    </row>
-                </thead>
-                <tbody>
-                    <row>
-                        <entry>name</entry>
-                        <entry>The parameter name. Required.</entry>
-                    </row>
-                    <row>
-                        <entry>value</entry>
-                        <entry>The parameter value. Required.</entry>
-                    </row>
-
-                    <row>
-                        <entry>isnull</entry>
-                        <entry>Specifies that a report parameter has a null value</entry>
-                    </row>
-                    <row>
-                        <entry>islocale</entry>
-                        <entry>Specifies whether the parameter is localized</entry>
-                    </row>
-
-                </tbody>
-
-            </tgroup>
-        </table>
-    </section>
 
 </chapter>
 
-<chapter diffmk:change="added" id="birt_plugin_rel_resources" xml:base="file:///home/ochikvina/WORK/for_compare/jbosstools-3.1.0.CR1/birt/docs/en/modules/links.xml" xreflabel="birt_plugin_rel_resources">
-    <?dbhtml filename="links.html"?>
-    <chapterinfo diffmk:change="added">
-        <keywordset diffmk:change="added">
+    
+<chapter id="framework" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/framework.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <?dbhtml filename="framework.html"?>
 
-            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">Eclipse</diffmk:wrapper></keyword>
-            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss</diffmk:wrapper></keyword>
-            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></keyword>
-                   <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">BIRT Integration</diffmk:wrapper></keyword>
+    <chapterinfo>
+        <keywordset xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Eclipse</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</keyword>
+                   <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Integration</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Integraion Framework API Reference</title>
+
+
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:birt&gt;</property></emphasis> Component
+    </title>
+    
+    
+   
+<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+    The <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:birt&gt;</property></emphasis> component servers to integrate a BIRT report into Seam/JSF  container. 
+    The <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:birt&gt;</property></emphasis> tag recognizes most of the parameters described on the BIRT 
+    <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">Report Viewer Parameters</ulink> page, though it has attributes of its own.
+    
+</para>
+        
+        
+    <table xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:birt&gt;</property></emphasis> Component Reference</title>   
+    <tgroup cols="3" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <thead xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Attribute</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Correspondance to BIRT Report Viewer parameters</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Description/</entry>
+                
+            </row>
+        </thead>
+        <tbody xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">designType</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> - </entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Corresponds to the BIRT servlet mappings. Possible values are run, frameset, preview and embed. 
+                If the attribute is set to  embed the component is used for 
+                embeddable html. This type ignores all the attributes except designName 
+                and masterpage.
+               </entry>
+            </row> 
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">embeddable</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> - </entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">A BIRT report occupies the whole page by default. It contains the &lt;html&gt;,
+                    &lt;head&gt;, &lt;body&gt; etc., tags. Embedded report can be a part of another page.
+                    It doesn't contain the above mentioned tags. Only HTML report can be embedded.</entry>
+            </row> 
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">designName</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__report</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Sets the name of the report design to process. This can be an absolute path or relative to the working folder. Valid values are  run, frameset and preview</entry>
+            </row> 
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">format</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__format</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Specifies the desired output format, such as pdf, html, doc, ppt, or xls.</entry>
+            </row> 
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">title</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__title</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Sets the report title.</entry>
+            </row> 
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">showtitle</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__showtitle</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Determines if the report title is shown in the frameset viewer. Defaults to true.</entry>
+            </row> 
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">toolbar</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__toolbar</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">                    
+                    
+                    Determines if the report toolbar is shown in the frameset viewer.Defaults to true. Valid values are true and false.</entry>
+            </row> 
+            
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">navigationbar</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__navigationbar</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">                    
+       
+                    Determines if the navigation bar is shown in the frameset viewer. Defaults to true. Valid values are true and false.</entry>
+            </row> 
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">document</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__document</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">                    
+                    Sets the name for the rptdocument. The document is created when the report engine separates run and render tasks, and
+                    is used to support features like table of contents and pagination. 
+                    This setting can be an absolute path or relative to the working folder. If no document parameter is used, a unique document is created in the document folder.
+                    </entry>
+            </row> 
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">locale</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__locale</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">                    
+     Specifies the locale for the specific operation. Note that this will override the default locale.
+                </entry>
+            </row> 
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">svg</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__svg</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">                    
+             Specifies whether SVG is supported.
+                </entry>
+            </row> 
+            
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">page</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__page</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">                    
+                  Specifies specific page to render.
+                </entry>
+            </row> 
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">pagerange</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__pagerange</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">                    
+                    Specifies page range to render. Eg 1-4,7.
+                </entry>
+            </row> 
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">masterpage</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__masterpage</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+                    
+                    Indicates that the report master page should be used or not. Validvalues are true and false.
+                </entry>
+            </row>
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">overwrite</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__overwrite</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+                    
+                    This setting if set to true will force an overwrite of the existing report document. 
+                </entry>
+            </row>
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">bookmark</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__bookmark</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+                    
+                    Specifies a specific bookmark within the report to load. The viewer will automatically load the appropriate page.
+                </entry>
+            </row>
+            
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">rtl</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__rtl</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+                    Specifies whether to display the report in right to left format. This setting defaults to false.
+                </entry>
+            </row>
+            
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">fittopage</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__fittopage</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+                Specifies whether PDF generation should fit content to a page. Valid values are true and false.
+                </entry>
+            </row>
+            
+            
+            <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">resourceFolder</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">__resourceFolder</entry>
+                <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+                Specifies the resource folder to use. This setting will override the default setting in the web.xml. The resource folder is used to locate libraries, images, and resource files.
+                </entry>
+            </row>
+            
+        </tbody>
+    </tgroup>
+    </table>
+    
+</section>
+    
+    <section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:param&gt;</property></emphasis> Component</title>   
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            The <emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:param&gt;</property></emphasis> tag describes report parameter.
+        </para>
+        
+        <table xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><emphasis role="bold" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"> <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&lt;b:param&gt;</property></emphasis> Component</title>   
+            <tgroup cols="2" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <thead xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Attribute</entry>
+                        
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Description</entry>
+                    </row>
+                </thead>
+                <tbody xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">name</entry>
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The parameter name. Required.</entry>
+                    </row> 
+                    <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">value</entry>
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The parameter value. Required.</entry>
+                    </row> 
+                    
+                    <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">isnull</entry>
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Specifies that a report parameter has a null value</entry>
+                    </row> 
+                    <row xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">islocale</entry>
+                        <entry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Specifies whether the parameter is localized</entry>
+                    </row> 
+                    
+                </tbody>
+                
+            </tgroup>
+        </table>
+    </section>
+    
+    
+    
+   
+      
+
+
+</chapter>
+
+    
+ 
+<chapter id="birt_plugin_rel_resources" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/links.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xreflabel="birt_plugin_rel_resources">
+    <?dbhtml filename="links.html"?>
+    <chapterinfo>
+        <keywordset xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Eclipse</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss</keyword>
+            <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss Tools</keyword>
+                   <keyword xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIRT Integration</keyword>
         </keywordset>
     </chapterinfo>
 
 
-        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Other Relevant Resources on the Topic</diffmk:wrapper></title>
+        <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Other Relevant Resources on the Topic</title>
 
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">All JBoss Developer Studio/JBoss Tools release documentation you can find at </diffmk:wrapper><ulink diffmk:change="added" url="http://docs.jboss.org/tools/"><diffmk:wrapper diffmk:change="added">http://docs.jboss.org/tools</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> in the corresponding release directory.</diffmk:wrapper></para>
-        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The latest documentation builds are available at </diffmk:wrapper><ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/nightly-docs/"><diffmk:wrapper diffmk:change="added">http://download.jboss.org/jbosstools/nightly-docs</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">All JBoss Developer Studio/JBoss Tools release documentation you can find at <ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>
+        <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">http://download.jboss.org/jbosstools/nightly-docs</ulink>.
 
-</diffmk:wrapper></para>
+</para>
 
 </chapter>
 
