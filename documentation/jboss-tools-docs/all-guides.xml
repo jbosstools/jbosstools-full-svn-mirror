@@ -33,7 +33,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			<fileSet>
+			<!--fileSet>
 				<directory>index/target/docbook/publish/en-US/html_single/</directory>
 				<outputDirectory>../</outputDirectory>
 				<filtered>false</filtered>
@@ -45,7 +45,7 @@
 				<useDefaultExcludes>true</useDefaultExcludes>
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
-			</fileSet>
+			</fileSet-->
 			<fileSet>
 				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
 				<outputDirectory>/Exadel-migration</outputDirectory>
@@ -62,6 +62,19 @@
 			<fileSet>
 				<directory>../guides/GettingStartedGuide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/GettingStartedGuide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
+				<directory>../guides/Beginners_Guide/target/docbook/publish/en-US</directory>
+				<outputDirectory>/beginners_guide</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>

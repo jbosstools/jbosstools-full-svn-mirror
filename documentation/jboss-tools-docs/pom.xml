@@ -11,10 +11,11 @@
 	<name>All_Userguides</name>
 
 	<modules>
-                <!--module>../jbosstools-docbook-xslt</module>
-		<module>../jbosstools-jdocbook-style</module-->
+                <!--<module>../jbosstools-docbook-xslt</module>
+		<module>../jbosstools-jdocbook-style</module>-->
 		<module>../guides/Exadel-migration</module>
 		<module>../guides/GettingStartedGuide</module>
+		<module>../guides/Beginners_Guide</module>
 		<module>../../as/docs/reference</module>
 		<module>../../hibernatetools/docs/reference</module>
 		<module>../../jbpm/docs/reference</module>
@@ -50,7 +51,7 @@
 						<descriptor>all-guides.xml</descriptor>
 					</descriptors>
 					<finalName>en</finalName>
-					<outputDirectory>nightly-docs</outputDirectory>
+					<outputDirectory>${pom.basedir}/nightly-docs</outputDirectory>
 					<appendAssemblyId>false</appendAssemblyId>
 					<ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
 				</configuration>
