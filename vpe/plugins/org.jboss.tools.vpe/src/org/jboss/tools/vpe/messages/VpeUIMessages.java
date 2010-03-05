@@ -154,5 +154,6 @@ public final class VpeUIMessages extends NLS {
 	public static String BROWSE_BUTTON_TEXT;
 	public static String NONE_TEMPLATES_WERE_ADDED;
 	public static String COULD_NOT_SET_TABLE_SELECTION;
+	public static String CANNOT_LOAD_TAGLIBS_FROM_PAGE_CONTEXT;
 	
 }
