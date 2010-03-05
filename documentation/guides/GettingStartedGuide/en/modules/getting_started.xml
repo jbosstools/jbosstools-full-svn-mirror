@@ -637,7 +637,29 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </mediaobject>
   </figure>
  </listitem>
- <listitem> <para>If Jboss Tools are already installed on your Eclipse and you are doing updating but not 
+ <listitem> 
+  <para>And the system checks whether all necessary requirements and
+  dependencies are installed on your Eclipse.</para>
+  <figure>
+   <title>Requirements and
+    dependencies check</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_10.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure> 
+  <para>If some of them are missing an error message will appear and
+   the installation process will be terminated.
+  </para>
+  <note>
+   <title>Note:</title>
+   <para>Sometimes when a user changes the list of plugins for download and clicks
+    <emphasis>Next</emphasis>, after required dependences check, 
+    the list of missing dependencies of the previous attempt is showed. 
+    In this case the completely close of the <emphasis>Install New Software</emphasis> dialog can help.</para>
+  </note>
+  <para>If Jboss Tools are already installed on your Eclipse and you are doing updating but not 
   installation the following messages will appear in your <emphasis>Details</emphasis> section.
   Ignore them and press <emphasis>Next.</emphasis></para>
   <figure>
