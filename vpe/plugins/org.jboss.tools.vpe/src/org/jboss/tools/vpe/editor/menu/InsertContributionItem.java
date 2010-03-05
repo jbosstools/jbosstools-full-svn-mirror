@@ -111,8 +111,6 @@ public class InsertContributionItem extends ContributionItem {
 				paletteManuManager.fill(menu, index);
 				index++;
 			}
-		} else {
-//			menu.setVisible(false);
 		}
 	}
 
