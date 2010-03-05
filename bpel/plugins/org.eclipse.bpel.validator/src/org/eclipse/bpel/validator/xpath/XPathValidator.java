@@ -407,28 +407,37 @@ public class XPathValidator extends Validator {
 			mVisitor.visit((EqualityExpr) expr);
 		} else if (expr instanceof RelationalExpr) {
 			mVisitor.visit((RelationalExpr) expr);
-		} else if (expr instanceof FunctionCallExpr) {
-			FunctionCallExpr fce = (FunctionCallExpr) expr;
-
-			if (isBooleanFunction(fce) == false) {
-
-				problem = createWarning();
-				problem.fill("XPATH_EXPRESSION_TYPE", toString(mNode.nodeName()),
-						exprStringTrimmed, fExprByNode);
-				repointOffsets(problem, fce);
-			}
-
-			mVisitor.visit(fce);
-
 		} else {
-			problem = createError();
-			problem.fill("XPATH_EXPRESSION_TYPE", toString(mNode.nodeName()), exprStringTrimmed,
-					fExprByNode
-
-			);
-			repointOffsets(problem, expr);
+			FunctionCallExpr fce = null;
+			// JBIDE-5999
+			// apparently XPath functions are Unary expressions first
+			if (expr instanceof UnaryExpr && ((UnaryExpr)expr).getExpr() instanceof FunctionCallExpr) {
+				fce = (FunctionCallExpr) ((UnaryExpr)expr).getExpr();
+			} else if (expr instanceof FunctionCallExpr) {
+				fce = (FunctionCallExpr) expr;
+			}
+			
+			if (fce!=null ) {
+				if (isBooleanFunction(fce) == false) {
+	
+					problem = createWarning();
+					problem.fill("XPATH_EXPRESSION_TYPE", toString(mNode.nodeName()),
+							exprStringTrimmed, fExprByNode);
+					repointOffsets(problem, fce);
+				}
+	
+				mVisitor.visit(fce);
+	
+			} else {
+				problem = createError();
+				problem.fill("XPATH_EXPRESSION_TYPE", toString(mNode.nodeName()), exprStringTrimmed,
+						fExprByNode
+	
+				);
+				repointOffsets(problem, expr);
+			}
 		}
-
+		
 		// Once validated this type of expression we are done.
 
 		disableRules();
