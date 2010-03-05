@@ -26,6 +26,7 @@ import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.jst.web.tld.URIConstants;
+import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.menu.action.ComplexAction;
@@ -42,19 +43,22 @@ import org.w3c.dom.Node;
  */
 public class InsertContributionItem extends ContributionItem {
 
-	private final Node node;
-	private final StructuredTextEditor sourceEditor;
-	private final VpePageContext pageContext;
 	private final static String NAME_PROPERTY = "name";			//$NON-NLS-1$
 	private final static String HIDDEN_PROPERTY = "hidden"; 	//$NON-NLS-1$
 	private final static String ELEMENT_TYPE_PROPERTY 
-			= "element type"; //$NON-NLS-1$
+	= "element type"; //$NON-NLS-1$
 	private final static String END_TEXT_PROPERTY = "end text";	//$NON-NLS-1$
 	private final static String TAG_ELEMENT_TYPE = "macro";		//$NON-NLS-1$
 	private final static String TAGLIB_ELEMENT_TYPE = "sub-group"; //$NON-NLS-1$
 	private final static String LEFT_ANGLE_BRACKET = "<";		//$NON-NLS-1$
 	private final static String RIGHT_ANGLE_BRACKET = ">";		//$NON-NLS-1$
-
+	
+	private final Node node;
+	private final StructuredTextEditor sourceEditor;
+	private final VpePageContext pageContext;
+	private final JSPMultiPageEditor editor;
+	private final VpeController vpeController;
+	
 	/**
 	 * Creates an {@code InsertContributionItem}
 	 * to make insert actions on the currently selected node.
@@ -70,32 +74,45 @@ public class InsertContributionItem extends ContributionItem {
 	public InsertContributionItem(final Node node) {
 		this.node = node;
 
-		final JSPMultiPageEditor editor = (JSPMultiPageEditor)
+		editor = (JSPMultiPageEditor)
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 				.getActivePage().getActiveEditor();
 		this.sourceEditor = editor.getSourceEditor();
-		this.pageContext = ((VpeEditorPart) editor.getVisualEditor())
-				.getController().getPageContext();
+		/*
+		 * Fixes https://jira.jboss.org/jira/browse/JBIDE-5996
+		 * When VisualEditor is not initialized it is impossible
+		 * to fill this menu item.
+		 */
+		this.vpeController = ((VpeEditorPart) editor.getVisualEditor()).getController();
+		if (null != vpeController) {
+			this.pageContext = vpeController.getPageContext();
+		} else {
+			this.pageContext = null;
+		}
 	}
 
 	@Override
 	public void fill(Menu menu, int index) {
-		/*
-		 * Setting each InsertType to correct position in the menu
-		 */
-		for (final InsertType insertItem : InsertType.values()) {
+		if (null != vpeController) {
 			/*
-			 * Use MenuManager to create submenu.
+			 * Setting each InsertType to correct position in the menu
 			 */
-			final MenuManager paletteManuManager = new MenuManager(
-					insertItem.getMessage());
-			final XModelObject model = ModelUtilities.getPreferenceModel()
+			for (final InsertType insertItem : InsertType.values()) {
+				/*
+				 * Use MenuManager to create submenu.
+				 */
+				final MenuManager paletteManuManager = new MenuManager(
+						insertItem.getMessage());
+				final XModelObject model = ModelUtilities.getPreferenceModel()
 				.getByPath("%Palette%"); //$NON-NLS-1$
-			paletteManuManager.addMenuListener(new InsertMenuListener(
-					model, insertItem));
-			paletteManuManager.setRemoveAllWhenShown(true);
-			paletteManuManager.fill(menu, index);
-			index++;
+				paletteManuManager.addMenuListener(new InsertMenuListener(
+						model, insertItem));
+				paletteManuManager.setRemoveAllWhenShown(true);
+				paletteManuManager.fill(menu, index);
+				index++;
+			}
+		} else {
+//			menu.setVisible(false);
 		}
 	}
 
