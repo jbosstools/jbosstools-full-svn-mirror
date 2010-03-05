@@ -58,7 +58,7 @@ public class XulRunnerEditor2 extends XulRunnerEditor {
 	public void onDispose() {
 		if (mozillaEditor != null) {
 			mozillaEditor.tearDownEditor();
-			mozillaEditor.removeDomEventListeners();
+			mozillaEditor.removeListeners();
 			mozillaEditor = null;
 		}
 		super.onDispose();

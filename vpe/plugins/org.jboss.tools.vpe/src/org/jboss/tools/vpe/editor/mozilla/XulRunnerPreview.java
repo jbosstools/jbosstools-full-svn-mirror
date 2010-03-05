@@ -41,7 +41,7 @@ public class XulRunnerPreview extends XulRunnerEditor {
 	
 	public void onDispose() {
 		if (mozillaPreview != null) {
-			mozillaPreview.removeDomEventListeners();
+			mozillaPreview.removeListeners();
 			mozillaPreview = null;
 		}
 		super.onDispose();

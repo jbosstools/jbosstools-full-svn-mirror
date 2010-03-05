@@ -43,7 +43,6 @@ import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsIInterfaceRequestor;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionListener;
-import org.mozilla.interfaces.nsISelectionPrivate;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITooltipListener;
@@ -165,7 +164,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				getWebBrowser().removeWebBrowserListener(XulRunnerEditor.this,
 						nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
 				removeProgressListener(XulRunnerEditor.this);
-				removeSelectionListener();
+
 				if (resizeListener != null)
 					getIXulRunnerVpeResizer().removeResizeListener(
 							resizeListener);
@@ -678,43 +677,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	private void scrollToElement(nsIDOMElement element) {
 
 		getIFlasher().scrollElementIntoView(element);
-	}
-
-	/**
-	 * Adds selection listener
-	 * 
-	 * @param selectionListener
-	 */
-	public void addSelectionListener(nsISelectionListener selectionListener) {
-		nsISelection selection = getSelection();
-		nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection
-				.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
-		selectionPrivate.addSelectionListener(selectionListener);
-		this.selectionListener = selectionListener;
-	}
-
-	/**
-	 * Removes selection listener
-	 */
-	public void removeSelectionListener() {
-		if (this.selectionListener != null) {
-			nsISelection selection = getSelection();
-			nsISelectionPrivate selectionPrivate = (nsISelectionPrivate) selection
-					.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
-			try {
-				selectionPrivate
-						.removeSelectionListener(this.selectionListener);
-			} catch (XPCOMException xpcomException) {
-				// this exception throws when progress listener already has been
-				// deleted,
-				// so just ignore if error code NS_ERROR_FAILURE
-				// mareshkau fix for jbide-3155
-				if (xpcomException.errorcode != XulRunnerBrowser.NS_ERROR_FAILURE) {
-					throw xpcomException;
-				}
-			}
-		}
-		this.selectionListener = null;
 	}
 
 	/**

@@ -69,8 +69,8 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private static final Mozilla mozilla;
 	private Browser browser = null;
 	private nsIWebBrowser webBrowser = null;
-	private long chrome_flags = nsIWebBrowserChrome.CHROME_ALL;
-	protected static final long NS_ERROR_FAILURE = 0x80004005L; 
+	private long chrome_flags = nsIWebBrowserChrome.CHROME_ALL; 
+	public static final long NS_ERROR_FAILURE = 0x80004005L;
 	
 	static {
 		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) //$NON-NLS-1$

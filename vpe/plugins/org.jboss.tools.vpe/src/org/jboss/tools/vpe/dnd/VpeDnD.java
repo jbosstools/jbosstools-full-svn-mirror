@@ -13,8 +13,9 @@ package org.jboss.tools.vpe.dnd;
 
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeVisualCaretInfo;
-import org.jboss.tools.vpe.editor.mozilla.EditorDomEventListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaEventListener;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -145,31 +146,31 @@ public class VpeDnD {
 	 * Calls when drag over event ocure
 	 * @param event
 	 */
-	public void dragOver(nsIDOMEvent event, EditorDomEventListener editorDomEventListener) {
+	public void dragOver(nsIDOMEvent event, MozillaEventListener mozillaEventListener) {
 		final nsIDOMMouseEvent mouseEvent =
 			(nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-		final XulRunnerEditor editor = ((VpeController) editorDomEventListener).getXulRunnerEditor();
+		final XulRunnerEditor editor = ((VpeController) mozillaEventListener).getXulRunnerEditor();
 		new ScrollingSupport(editor).scroll(mouseEvent);
-		refreshCanDrop(event, editorDomEventListener);
+		refreshCanDrop(event, mozillaEventListener);
 	}
 
 	private void refreshCanDrop(nsIDOMEvent event,
-			EditorDomEventListener editorDomEventListener) {
+			MozillaEventListener mozillaEventListener) {
 		boolean canDrop = true;
 
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 		//in this condition  early was check for xulelement
-		if (editorDomEventListener != null) {
+		if (mozillaEventListener != null) {
 			if (getDragService().getCurrentSession().isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
 
 				MozillaDropInfo info;
 
 				if(getDragService().getCurrentSession().getSourceNode()==null){
 					//external drag 
-					  info = editorDomEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
+					  info = mozillaEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
 				} else {
 				    //internal drag
-					 info = editorDomEventListener.canInnerDrop(mouseEvent);
+					 info = mozillaEventListener.canInnerDrop(mouseEvent);
 				}
 				if (info != null) {
 					canDrop = info.canDrop();
@@ -178,7 +179,7 @@ public class VpeDnD {
 		}
       //sets possability to drop current element here
 		//Added by estherbin fix jbide-1046
-		VpeController controller = (VpeController) editorDomEventListener;
+		VpeController controller = (VpeController) mozillaEventListener;
 
         VpeSelectionController selectionController = controller.getVisualSelectionController();
         final VpeVisualCaretInfo visualCaretInfo = controller.getSelectionBuilder().getVisualCaretInfo(event);
@@ -208,7 +209,7 @@ public class VpeDnD {
 	 * @param domEvent
 	 * @param editorDomEventListener
 	 */
-	public void dragDrop(nsIDOMEvent domEvent, EditorDomEventListener editorDomEventListener) {
+	public void dragDrop(nsIDOMEvent domEvent, MozillaDndListener editorDomEventListener) {
 		
 		if(editorDomEventListener!=null) {
 		

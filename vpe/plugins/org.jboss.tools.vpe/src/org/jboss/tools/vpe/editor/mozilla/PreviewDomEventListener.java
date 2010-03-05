@@ -16,7 +16,7 @@ import org.mozilla.interfaces.nsIDOMEvent;
  * @author mareshkau
  *
  */
-public class PreviewDomEventListener extends MozillaDomEventListener {
+public class PreviewDomEventListener extends MozillaEventAdapter {
 
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.vpe.editor.mozilla.MozillaDomEventListener#handleEvent(org.mozilla.interfaces.nsIDOMEvent)

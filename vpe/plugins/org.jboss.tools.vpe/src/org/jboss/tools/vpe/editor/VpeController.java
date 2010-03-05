@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -86,7 +87,6 @@ import org.jboss.tools.common.model.ui.editors.dnd.DropUtils;
 import org.jboss.tools.common.model.ui.editors.dnd.IDropCommand;
 import org.jboss.tools.common.model.ui.editors.dnd.context.InnerDragBuffer;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
-import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.common.resref.core.ResourceReferenceListListener;
@@ -111,9 +111,9 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.VpeMenuCreator;
-import org.jboss.tools.vpe.editor.mozilla.EditorDomEventListener;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaEventListener;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.IKeyEventHandler;
@@ -152,7 +152,6 @@ import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsISupportsCString;
 import org.mozilla.interfaces.nsISupportsString;
-import org.mozilla.xpcom.Mozilla;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -160,7 +159,7 @@ import org.w3c.dom.Node;
 
 public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		INodeSelectionListener, ITextSelectionListener, SelectionListener,
-		EditorDomEventListener, VpeTemplateListener, XModelTreeListener,
+		MozillaEventListener, VpeTemplateListener, XModelTreeListener,
 		ResourceReferenceListListener, ISelectionChangedListener,
 		IVisualController {
 
@@ -951,58 +950,61 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	}
 
 	// EditorDomEventListener implementation
-	public void subtreeModified(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-				printVisualEvent(mutationEvent);
-			}
-		} finally {
-			switcher.stopActiveEditor();
-		}
-	}
+//	this method is never used
+//	public void subtreeModified(nsIDOMMutationEvent mutationEvent) {
+//		if (!switcher
+//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+//			return;
+//		}
+//		try {
+//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+//				printVisualEvent(mutationEvent);
+//			}
+//		} finally {
+//			switcher.stopActiveEditor();
+//		}
+//	}
 
-	public void nodeInserted(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-				printVisualEvent(mutationEvent);
-			}
-			nsIDOMNode targetNode = mutationEvent.getRelatedNode();
-			if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
-				sourceBuilder.addNode(targetNode);
-				visualBuilder.resetPseudoElement(targetNode);
-			}
-		} finally {
-			switcher.stopActiveEditor();
-		}
-	}
+//	this method is never used
+//	public void nodeInserted(nsIDOMMutationEvent mutationEvent) {
+//		if (!switcher
+//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+//			return;
+//		}
+//		try {
+//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+//				printVisualEvent(mutationEvent);
+//			}
+//			nsIDOMNode targetNode = mutationEvent.getRelatedNode();
+//			if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
+//				sourceBuilder.addNode(targetNode);
+//				visualBuilder.resetPseudoElement(targetNode);
+//			}
+//		} finally {
+//			switcher.stopActiveEditor();
+//		}
+//	}
 
-	public void nodeRemoved(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-				printVisualEvent(mutationEvent);
-			}
-			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
-			if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
-				visualBuilder.setSelectionRectangle(null);
-				sourceBuilder.removeNode(targetNode);
-				visualBuilder.resetPseudoElement(targetNode);
-			}
-		} finally {
-			switcher.stopActiveEditor();
-		}
-	}
+//	this method is never used
+//	public void nodeRemoved(nsIDOMMutationEvent mutationEvent) {
+//		if (!switcher
+//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+//			return;
+//		}
+//		try {
+//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+//				printVisualEvent(mutationEvent);
+//			}
+//			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
+//			if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
+//				visualBuilder.setSelectionRectangle(null);
+//				sourceBuilder.removeNode(targetNode);
+//				visualBuilder.resetPseudoElement(targetNode);
+//			}
+//		} finally {
+//			switcher.stopActiveEditor();
+//		}
+//	}
 
 	public void nodeRemovedFromDocument(nsIDOMMutationEvent mutationEvent) {
 		if (!switcher
@@ -1017,51 +1019,53 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			switcher.stopActiveEditor();
 		}
 	}
+//	this method is never used
+//	public void nodeInsertedIntoDocument(nsIDOMMutationEvent mutationEvent) {
+//		if (!switcher
+//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+//			return;
+//		}
+//		try {
+//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+//				printVisualEvent(mutationEvent);
+//			}
+//		} finally {
+//			switcher.stopActiveEditor();
+//		}
+//	}
 
-	public void nodeInsertedIntoDocument(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-				printVisualEvent(mutationEvent);
-			}
-		} finally {
-			switcher.stopActiveEditor();
-		}
-	}
+//	this method is never used
+//	public void attrModified(nsIDOMMutationEvent mutationEvent) {
+//		if (!switcher
+//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+//			return;
+//		}
+//		try {
+//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+//				printVisualEvent(mutationEvent);
+//			}
+//		} finally {
+//			switcher.stopActiveEditor();
+//		}
+//	}
 
-	public void attrModified(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-				printVisualEvent(mutationEvent);
-			}
-		} finally {
-			switcher.stopActiveEditor();
-		}
-	}
-
-	public void characterDataModified(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-				printVisualEvent(mutationEvent);
-			}
-			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
-			sourceBuilder.setText(targetNode);
-			visualBuilder.resetPseudoElement(targetNode);
-		} finally {
-			switcher.stopActiveEditor();
-		}
-	}
+//	this method is never used
+//	public void characterDataModified(nsIDOMMutationEvent mutationEvent) {
+//		if (!switcher
+//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
+//			return;
+//		}
+//		try {
+//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
+//				printVisualEvent(mutationEvent);
+//			}
+//			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
+//			sourceBuilder.setText(targetNode);
+//			visualBuilder.resetPseudoElement(targetNode);
+//		} finally {
+//			switcher.stopActiveEditor();
+//		}
+//	}
 
 	public void notifySelectionChanged(nsIDOMDocument doc,
 			nsISelection selection, short reason) {
@@ -1383,6 +1387,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				// }
 			}
 		}
+		onRefresh();
 	}
 
 	private boolean isZoomEvent(nsIDOMKeyEvent keyEvent) {
@@ -1469,6 +1474,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		// true);
 		new VpeMenuCreator(menuManager, selectedSourceNode).createMenu();
 		contextMenu.setVisible(true);
+		onRefresh();
 	}
 
 	// VpeTemplateListener implementation
@@ -1985,22 +1991,25 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 	}
 
-	public void dragEnter(nsIDOMEvent event) {
-		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
-			System.out.println("<<<<<<<<<<<<<<<<<<<< DragEnter"); //$NON-NLS-1$
-		}
-	}
+// this method is never used	
+//	public void dragEnter(nsIDOMEvent event) {
+//		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
+//			System.out.println("<<<<<<<<<<<<<<<<<<<< DragEnter"); //$NON-NLS-1$
+//		}
+//	}
 
-	public void dragExit(nsIDOMEvent event) {
-		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
-			System.out.println("<<<<<<<<<<<<<<<<<<<< dragExit"); //$NON-NLS-1$
-		}
-		// TODO Sergey Vasilyev figure out with drag caret
-		// xulRunnerEditor.hideDragCaret();
-	}
+// this method is never used
+//	public void dragExit(nsIDOMEvent event) {
+//		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
+//			System.out.println("<<<<<<<<<<<<<<<<<<<< dragExit"); //$NON-NLS-1$
+//		}
+//		// TODO Sergey Vasilyev figure out with drag caret
+//		// xulRunnerEditor.hideDragCaret();
+//	}
 
 	public void dragOver(nsIDOMEvent event) {
 		visualBuilder.getDnd().dragOver(event, this);
+		onRefresh();
 	}
 
 	public void _dragOver(nsIDOMEvent event) {
@@ -2042,12 +2051,13 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 	}
 
-	public void drop(nsIDOMEvent event) {
-		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
-			System.out.println("<<< outerDrop"); //$NON-NLS-1$
-		}
-		event.preventDefault();
-	}
+// this method is never used
+//	public void drop(nsIDOMEvent event) {
+//		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
+//			System.out.println("<<< outerDrop"); //$NON-NLS-1$
+//		}
+//		event.preventDefault();
+//	}
 
 	public boolean canInnerDrag(nsIDOMMouseEvent event) {
 		onHideTooltip();
@@ -2677,68 +2687,71 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		}
 	}
 
-	// nsIClipboardDragDropHooks implementation
-	public void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor,
-			String data) {
-		onHideTooltip();
-
-		VpeVisualInnerDropInfo visualDropInfo = selectionBuilder
-				.getInnerDropInfo(mouseEvent);
-		Point range = selectionBuilder.getSourceSelectionRangeAtVisualNode(
-				visualDropInfo.getDropContainer(), (int) visualDropInfo
-						.getDropOffset());
-		VpeSourceInnerDropInfo sourceDropInfo = null;
-
-		XModelObject object = PreferenceModelUtilities.getPreferenceModel()
-				.getModelBuffer().source();
-
-		String tagname = getTagName(object);
-		if (tagname.indexOf("taglib") >= 0)tagname = "taglib"; //$NON-NLS-1$ //$NON-NLS-2$
-		Node sourceDragNode = ((Document) getModel().getAdapter(Document.class))
-				.createElement(tagname);
-		if (visualDropInfo.getDropContainer() != null) {
-			sourceDropInfo = visualBuilder.getSourceInnerDropInfo(
-					sourceDragNode, visualDropInfo, true);
-			range = selectionBuilder.getSourceSelectionRange(sourceDropInfo
-					.getContainer(), sourceDropInfo.getOffset());
-		}
-
-		if (visualDropInfo.getDropContainer() != null) {
-			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-				System.out
-						.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
-			}
-			final String finalFlavor = flavor;
-			final String finalData = data;
-			final Point finalRange = range;
-			final Node finalDropContainer = sourceDropInfo == null ? null
-					: sourceDropInfo.getContainer();
-			Display.getDefault().asyncExec(new Runnable() {
-				public void run() {
-					externalDropAny(finalFlavor, finalData, finalRange,
-							finalDropContainer);
-				}
-			});
-		}
-	}
+// this method is never used	
+//	// nsIClipboardDragDropHooks implementation
+//	public void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor,
+//			String data) {
+//		onHideTooltip();
+//
+//		VpeVisualInnerDropInfo visualDropInfo = selectionBuilder
+//				.getInnerDropInfo(mouseEvent);
+//		Point range = selectionBuilder.getSourceSelectionRangeAtVisualNode(
+//				visualDropInfo.getDropContainer(), (int) visualDropInfo
+//						.getDropOffset());
+//		VpeSourceInnerDropInfo sourceDropInfo = null;
+//
+//		XModelObject object = PreferenceModelUtilities.getPreferenceModel()
+//				.getModelBuffer().source();
+//
+//		String tagname = getTagName(object);
+//		if (tagname.indexOf("taglib") >= 0)tagname = "taglib"; //$NON-NLS-1$ //$NON-NLS-2$
+//		Node sourceDragNode = ((Document) getModel().getAdapter(Document.class))
+//				.createElement(tagname);
+//		if (visualDropInfo.getDropContainer() != null) {
+//			sourceDropInfo = visualBuilder.getSourceInnerDropInfo(
+//					sourceDragNode, visualDropInfo, true);
+//			range = selectionBuilder.getSourceSelectionRange(sourceDropInfo
+//					.getContainer(), sourceDropInfo.getOffset());
+//		}
+//
+//		if (visualDropInfo.getDropContainer() != null) {
+//			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
+//				System.out
+//						.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
+//			}
+//			final String finalFlavor = flavor;
+//			final String finalData = data;
+//			final Point finalRange = range;
+//			final Node finalDropContainer = sourceDropInfo == null ? null
+//					: sourceDropInfo.getContainer();
+//			Display.getDefault().asyncExec(new Runnable() {
+//				public void run() {
+//					externalDropAny(finalFlavor, finalData, finalRange,
+//							finalDropContainer);
+//				}
+//			});
+//		}
+//	}
 
 	public void drop(Node node, Node parentNode, int offset) {
 		visualBuilder.innerDrop(node, parentNode, offset);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mozilla.interfaces.nsISupports#queryInterface(java.lang.String)
-	 */
-	public nsISupports queryInterface(String arg0) {
-		return Mozilla.getInstance().queryInterface(this, arg0);
-	}
+//	this method is never used
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see org.mozilla.interfaces.nsISupports#queryInterface(java.lang.String)
+//	 */
+//	public nsISupports queryInterface(String arg0) {
+//		return Mozilla.getInstance().queryInterface(this, arg0);
+//	}
+
 
 	/**
-	 * Calls when editor content should be refreshed
+	 * Calls when editor content changed, and we should highlight selected element.
 	 */
-	public void onRefresh() {
+	private void onRefresh() {
 		// when we using separate thread to display selection rectangle
 		// it's working better than without
 		/*
@@ -2753,7 +2766,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					getXulRunnerEditor().showSelectionRectangle();
 			}
 		});
-
 	}
 
 	/**
@@ -2781,6 +2793,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 
 	public void dragDrop(nsIDOMEvent domEvent) {
 		visualBuilder.getDnd().dragDrop(domEvent, this);
+		onRefresh();
 	}
 
 	/**

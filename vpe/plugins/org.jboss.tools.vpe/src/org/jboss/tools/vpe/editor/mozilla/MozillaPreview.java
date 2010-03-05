@@ -23,6 +23,8 @@ import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 
@@ -33,7 +35,7 @@ import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 public class MozillaPreview extends MozillaEditor {
 
 	private EditorLoadWindowListener editorLoadWindowListener;
-	private EditorDomEventListener editorDomEventListener;
+	private MozillaDndListener editorDomEventListener;
 	private VpeTemplateManager templateManager;	
 	private VpePageContext pageContext;
 	private StructuredTextEditor sourceEditor;
@@ -95,7 +97,7 @@ public class MozillaPreview extends MozillaEditor {
 	 */
 	public void onLoadWindow() {
 		setContentArea(findContentArea());
-		addDomEventListeners();
+		addListeners();
 		if (editorLoadWindowListener != null) {
 			editorLoadWindowListener.load();
 		}
@@ -228,7 +230,7 @@ public class MozillaPreview extends MozillaEditor {
 	public void dispose() {
 		setEditorDomEventListener(null);
 		setEditorLoadWindowListener(null);
-		setContentAreaEventListener(null);
+		contentAreaEventListener = null;
 		if (pageContext != null) {
 			pageContext.dispose();
 			pageContext=null;
@@ -244,35 +246,15 @@ public class MozillaPreview extends MozillaEditor {
 		//super.dispose();
 	}
 
-
-
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.vpe.editor.mozilla.MozillaEditor#getContentAreaEventListener()
 	 */
 	@Override
-	public MozillaDomEventListener getContentAreaEventListener() {
-		
+	protected PreviewDomEventListener getMozillaEventAdapter() {
 		if(this.contentAreaEventListener==null){
-			
 			contentAreaEventListener = new PreviewDomEventListener();
 		}
-		
+
 		return contentAreaEventListener;
 	}
-
-
-
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.vpe.editor.mozilla.MozillaEditor#setContentAreaEventListener(org.jboss.tools.vpe.editor.mozilla.MozillaDomEventListener)
-	 */
-	@Override
-	public void setContentAreaEventListener(
-			MozillaDomEventListener contentAreaEventListener) {
-		
-		if(contentAreaEventListener instanceof PreviewDomEventListener) {
-		
-			this.contentAreaEventListener = (PreviewDomEventListener) contentAreaEventListener;
-		}
-	}
-
 }
