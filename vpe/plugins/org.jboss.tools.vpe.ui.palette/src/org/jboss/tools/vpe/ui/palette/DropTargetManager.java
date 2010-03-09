@@ -120,7 +120,7 @@ public class DropTargetManager extends DropTargetAdapter {
 				DnDUtil.copy(fo, null);
 				o = getModelObject(event.x, event.y);
 			}
-		} else if(event.currentDataType.type != ModelTransfer.MODEL_ID) {
+		} else if(!ModelTransfer.getInstance().isSupportedType(event.currentDataType)) {
 			o = null;
 		} else {
 			o = getModelObject(event.x, event.y);
