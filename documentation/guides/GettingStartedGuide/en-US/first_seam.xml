@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <chapter id="first_seam" xreflabel="first_seam">
   <?dbhtml filename="first_seam.html"?>
   <chapterinfo>
@@ -140,8 +140,8 @@
         <listitem>
           <para>Check <emphasis>
               <property>Server Supplied JSF Implementation</property>
-            </emphasis>. We will use <ulink url="&seamlink;#addJSFCapab">JSF
-              implementation</ulink> that comes with JBoss server</para>
+            </emphasis>. We will use the JSF
+              implementation that comes with JBoss server</para>
         </listitem>
         <listitem>
           <para>Click <emphasis>

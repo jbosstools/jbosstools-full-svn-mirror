@@ -17,7 +17,6 @@
   <listitem>
     <para>
       <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis>
-      <ulink url="&seamlink;">(html)</ulink>
     </para>
     <para> This guide helps you to understand what Seam is and how to install Seam plug-in into
       Eclipse. It tells you the necessary steps to start working with Seam Framework and assists in a
@@ -28,14 +27,15 @@
   <listitem>
     <para>
       <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
-      <ulink url="&jsflink;">(html)</ulink> provides general orientation and an overview of JBDS visual web tools functionality. This guide discusses the following topics: editors, palette, web properties view, openOn, content assist, RichFaces support.  
+</para>
+<para>
+	provides general orientation and an overview of JBDS visual web tools functionality. This guide discusses the following topics: editors, palette, web properties view, openOn, content assist, RichFaces support.  
     </para>
   </listitem>
   
   <listitem>
     <para>
       <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis>
-      <ulink url="&aslink;">(html)</ulink>
     </para>
     <para> This guide covers the basics of working with the JBoss server manager. You will read how to
       install runtimes and servers and quickly learn how to configure, start, stop the server and know
@@ -46,7 +46,6 @@
   <listitem>
     <para>
       <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
-      <ulink url="&jbpmlink;">(html)</ulink>
     </para>
     <para>With jBPM Tools Reference Guide we&apos;ll help you to facilitate a cross-product
       learning and know how you can speed your development using special editors and visual designers.
@@ -57,7 +56,6 @@
   <listitem>
     <para>
       <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
-      <ulink url="&hibernatelink;">(html)</ulink>
     </para>
     <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
       through Eclipse. We&apos;ll supply you with the information on how to create mapping files,
@@ -69,7 +67,6 @@
   <listitem>
     <para>
       <emphasis role="bold">ESB Editor Reference Guide</emphasis>
-      <ulink url="&esblink;">(html)</ulink>
     </para>
     <para>This guide provides you with the information on ESB Editor and all necessary wizards for ESB
       files development.</para>
@@ -78,7 +75,6 @@
   <listitem>
     <para>
       <emphasis role="bold">JBoss Portal Tools Reference Guide</emphasis>
-      <ulink url="&jbossportallink;">(html)</ulink>
     </para>
     <para>The guide gives a detail look at how you can easily build a Portlet Web Application with
       JBoss Tools and deploy it onto JBoss Portal.</para>
@@ -87,7 +83,6 @@
   <listitem>
     <para>
       <emphasis role="bold">JBoss WS User Guide</emphasis>
-      <ulink url="&wslink;">(html)</ulink>
     </para>
     <para>This guide gives you practical help on JBossWS usage. You will learn how to create a web service using JBossWS runtime, find out how to create a web service client from a WSDL document using JBoss WS and also see how to set your development environment.</para>
   </listitem>
@@ -95,7 +90,6 @@
   <listitem>
     <para>
       <emphasis role="bold">Smooks Tools Reference Guide</emphasis>
-      <ulink url="&smookslink;">(html)</ulink>
     </para>
     <para>This guide is packed with useful and easy-to-understand information about graphical, configuration and source editor pages.</para>
   </listitem>
@@ -103,7 +97,6 @@
   <listitem>
     <para>
       <emphasis role="bold">Drools Tools Reference Guide</emphasis>
-      <ulink url="&droolslink;">(html)</ulink>
     </para>
     <para>The guide help you to discover how to create a new Drools project, use debugging rules and work with different editors.</para>
   </listitem>
@@ -111,7 +104,6 @@
   <listitem>
     <para>
       <emphasis role="bold">JMX Tools Reference Guide</emphasis>
-      <ulink url="&jmxlink;">(html)</ulink>
     </para>
     <para>With the help of this guide you'll explore the best practices to follow when working with MBean Explorer, MBean Editor, Connections and etc.</para>
   </listitem>
@@ -119,7 +111,6 @@
   <listitem>
     <para>
       <emphasis role="bold">Eclipse Guvnor Tools Reference Guide</emphasis>
-      <ulink url="&guvnorlink;">(html)</ulink>
     </para>
     <para>The purpose of this guide is to describe briefly the functionality present in the Eclipse Guvnor Tools (EGT) for Drools 5.</para>
   </listitem>
@@ -129,7 +120,6 @@
   <listitem>
   <para>
     <emphasis role="bold">JSF Tools Tutorial</emphasis>
-    <ulink url="&jsftutoriallink;">(html)</ulink>
   </para>
   <para> This tutorial will describe how to deal with classic/old style of JSF development and how
     to create a simple JSF application using the JBoss Developer Studio. </para>
@@ -137,7 +127,6 @@
   
   <listitem> <para>
     <emphasis role="bold">JSF Tools Reference Guide</emphasis>
-    <ulink url="&jsfreflink;">(html)</ulink>
     
   </para>
     <para> From this guide you'll discover all peculiarities of work at a JSF project. You&apos;ll
@@ -149,7 +138,6 @@
   
   <listitem> <para>
     <emphasis role="bold">Struts Tools Reference Guide</emphasis>
-    <ulink url="&strutsreflink;">(html)</ulink>
   </para>
   <para> In Struts Tools Reference Guide you will learn how to create and work with a new struts
     project. This guide also provides information about graphical editor for struts configuration
@@ -159,7 +147,6 @@
 <listitem>
   <para>
     <emphasis role="bold">Struts Tools Tutorial</emphasis>
-    <ulink url="&strutstutoriallink;">(html)</ulink>
   </para>
   <para> This tutorial will describe the classical style of Struts development, and will
   step-by-step show you how to create a simple Struts application in JBoss Developer Studio.</para>
@@ -169,18 +156,11 @@
     <listitem> 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
-    <ulink url="&migrationlink;">(html)</ulink>
   </para>
   <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
   from Exadel Studio into JBoss Developer Studio. </para>
     </listitem>
-  
-  <para>If there&apos;s anything we didn&apos;t cover in this guide, please feel free to visit our <ulink
-      url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258"
-      >JBoss Developer Studio Users Forum</ulink> or <ulink
-        url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
-        >JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
-    your suggestions and comments.</para>
 </itemizedlist>
+<para>If there&apos;s anything we didn&apos;t cover in this guide, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for your suggestions and comments.</para>
 
 </chapter>

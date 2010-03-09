@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <chapter id="jsp_application" xreflabel="jsp_application">
 	<?dbhtml filename="jsp_application.html"?>
 	<chapterinfo>
@@ -222,14 +222,12 @@
 				<property>JBoss Developer Studio</property> you are saved from such a pain. All
 				you need is to start <property>JBoss Server</property> and launch your application
 				in your favorite browser.</para>
-			<para>You can also create a war archive with <ulink
-				url="&aslink;#Project_archivesView">JBDS&apos;s Archive Tools</ulink>
+			<para>You can also create a war archive with JBDS&apos;s Archive Tools
 				and export it to any web server.</para>
 			<section id="WarConfig">
 				<?dbhtml filename="WarConfig.html"?>
 				<title>WAR Config</title>
-				<para>Project archives managing is available through <ulink
-					url="&aslink;#Project_archivesView">Project Archives view</ulink>.</para>
+				<para>Project archives managing is available through Project Archives view.</para>
 				<itemizedlist>
 					<listitem>
 						<para>Select <emphasis>
@@ -354,8 +352,8 @@
 			<title>JSP Page Preview</title>
 			<para><property>JBDS</property> comes with JSP design-time preview features. When
 				designing JSP pages you can easily preview how they will look during runtime. You
-				can even <ulink url="&jsflink;#el_exp_para">attach your stylesheet to the
-					Preview</ulink>.</para>
+				can even attach your stylesheet to the
+					Preview.</para>
 			<itemizedlist>
 				<listitem>
 					<para>Make a little change to <emphasis>
@@ -394,8 +392,8 @@
 					Studio</property>. You can do it by performing one of the following actions:</para>
 			<itemizedlist>
 				<listitem>
-					<para>Start JBoss Server from <ulink url="&aslink;#JBossServerView">JBoss
-						Server view</ulink> by clicking the Start the server icon (
+					<para>Start JBoss Server from JBoss
+						Server view by clicking the Start the server icon (
 						<inlinemediaobject>
 							<imageobject>
 								<imagedata fileref="images/jsp_application/jsp_application_18.png"/>
