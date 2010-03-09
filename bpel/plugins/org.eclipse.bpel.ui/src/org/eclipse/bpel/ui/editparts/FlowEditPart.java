@@ -235,6 +235,9 @@ public class FlowEditPart extends CollapsableEditPart {
 		IFigure child = ((GraphicalEditPart) childEditPart).getFigure();
 		getContentPane().add(child,
 				getFigure().getLayoutManager().getConstraint(child), index);
+		// JBIDE-6032: force an auto layout at startup
+		if (getShowFreeformFlow() && getAutoLayout())
+			doAutoLayout(false);
 	}
 
 	protected void setFlowEditPolicies() {
