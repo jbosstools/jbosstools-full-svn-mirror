@@ -9,17 +9,8 @@
         </keywordset>
     </chapterinfo>
     <title>Reference</title>
-    <para>This chapter includes detailed reference information about Smooks Tools.</para>
-    <section>
-        <title>Smooks Configuration Editor</title>
-    <para>This chapter describes the following tabs of the Smooks Configuration Editor:</para>
-
-    <itemizedlist>
-        <listitem><para><link linkend="process_tab">Process tab</link></para></listitem>
-        <listitem><para><link linkend="options_tab">Options tab</link></para></listitem>
-        <listitem><para><link linkend="smooksformeditor_sourcetab">Source tab</link></para></listitem>
-    </itemizedlist>
-   <section id="process_tab">
+    <para>This chapter includes detailed reference information about all tabs of the Smooks Configuration Editor.</para>
+    <section id="process_tab">
        <title>Process tab</title>
        <para>The Process tab of the Smooks Configuration Editor helps to configure different types of transformations.
            By default smooks configuration file is opened in this editor.If you have another default settings for editor opening
@@ -62,7 +53,7 @@
                            <entry>Add Task</entry>
                            <entry>Select one of the following tasks according to the necessary type of Source and Result types of the files:
                                <itemizedlist>
-                                   <listitem><para><emphasis>Input</emphasis> -this task is required and
+                                   <listitem><para><emphasis>Input</emphasis> - this task is required and
                                        appears automatically when Smooks config file is created.
                                        You should just configure it properly.</para></listitem>
                                    <listitem><para><emphasis>Java Mapping</emphasis></para></listitem>
@@ -210,36 +201,36 @@
                       </entry>
                       <entry>
                       <itemizedlist>
-                          <listitem><para><emphasis>No Input</emphasis> -no info required</para></listitem>
-                          <listitem><para><emphasis>XML</emphasis> -no info required</para></listitem>
-                          <listitem><para><emphasis>Java</emphasis> -no info required</para></listitem>
-                          <listitem><para><emphasis>XSD/WSDL</emphasis> -no info required</para></listitem>
+                          <listitem><para><emphasis>No Input</emphasis> - no info required</para></listitem>
+                          <listitem><para><emphasis>XML</emphasis> - no info required</para></listitem>
+                          <listitem><para><emphasis>Java</emphasis> - no info required</para></listitem>
+                          <listitem><para><emphasis>XSD/WSDL</emphasis> - no info required</para></listitem>
                           <listitem><para><emphasis>CSV</emphasis></para><itemizedlist>
-                              <listitem><para><emphasis>Fields</emphasis> -Comma separated list of CSV record field names
+                              <listitem><para><emphasis>Fields</emphasis> - Comma separated list of CSV record field names
                               </para></listitem>
-                              <listitem><para><emphasis>Separator Character</emphasis> -Field separator character.  Default of ','.
+                              <listitem><para><emphasis>Separator Character</emphasis> - Field separator character.  Default of ','.
                               </para></listitem>
-                              <listitem><para><emphasis>Quote Character</emphasis> -Quote character.  Default of '"'.
+                              <listitem><para><emphasis>Quote Character</emphasis> - Quote character.  Default of '"'.
                               </para></listitem>
-                              <listitem><para><emphasis>Record Name</emphasis> -Name of csv record element.Default:csv-record</para></listitem>
-                              <listitem><para><emphasis>Root Name</emphasis> -Name of csv root element.Default:csv-set</para></listitem>
-                              <listitem><para><emphasis>indent</emphasis> -Add indentation character data to the generated event stream.  This simply makes
+                              <listitem><para><emphasis>Record Name</emphasis> - Name of csv record element.Default:csv-record</para></listitem>
+                              <listitem><para><emphasis>Root Name</emphasis> - Name of csv root element.Default:csv-set</para></listitem>
+                              <listitem><para><emphasis>indent</emphasis> - Add indentation character data to the generated event stream.  This simply makes
                                   the generated event stream easier to read in its serialized form.  Useful for
                                   testing etc.Default:true
                               </para></listitem>
-                              <listitem><para><emphasis>Skip Lines</emphasis> -Number of lines to skip before processing starts. Default of 0.
+                              <listitem><para><emphasis>Skip Lines</emphasis> - Number of lines to skip before processing starts. Default of 0.
                                   
                               </para></listitem>
                           </itemizedlist>
                           </listitem>
                           <listitem><para><emphasis>EDI</emphasis></para>
                            <itemizedlist>
-                               <listitem><para><emphasis>Target Profile</emphasis> -Defines the target profile
+                               <listitem><para><emphasis>Target Profile</emphasis> - Defines the target profile
                                </para></listitem>
-                               <listitem><para><emphasis>Encoding</emphasis> -The character encoding. Default "UTF-8"</para></listitem>
-                               <listitem><para><emphasis>Mapping Model</emphasis> -Defines the EDI Mapping Model configuration for processing the 
+                               <listitem><para><emphasis>Encoding</emphasis> - The character encoding. Default "UTF-8"</para></listitem>
+                               <listitem><para><emphasis>Mapping Model</emphasis> - Defines the EDI Mapping Model configuration for processing the 
                                    EDI message stream to a stream of SAX events that can be processed by Smooks.</para></listitem>
-                               <listitem><para><emphasis>Validate</emphasis> -This attribute turns on/off datatype validation in the EDI Parser.
+                               <listitem><para><emphasis>Validate</emphasis> - This attribute turns on/off datatype validation in the EDI Parser.
                                    Validation is on by default.
                                    It makes sense to turn datatype validation off on the EDI Reader 
                                    if the EDI data is being bound into a Java Object model.
@@ -248,40 +239,40 @@
                           </listitem>
                           <listitem><para><emphasis>JSON</emphasis></para>
                               <itemizedlist>
-                                  <listitem><para><emphasis>Target Profile</emphasis> -Defines the target profile</para></listitem>
-                                  <listitem><para><emphasis>Array Element Name</emphasis> -The element name of a array element. Default of 'element'.
+                                  <listitem><para><emphasis>Target Profile</emphasis> - Defines the output transformation profile</para></listitem>
+                                  <listitem><para><emphasis>Array Element Name</emphasis> - The element name of a array element. Default of 'element'.
                                   </para></listitem>
-                                  <listitem><para><emphasis>Encoding</emphasis> -encoding: The default encoding of any JSON message 
+                                  <listitem><para><emphasis>Encoding</emphasis> - encoding: The default encoding of any JSON message 
                                       InputStream processed by this Reader. Default of 'UTF-8'.</para></listitem>
-                                  <listitem><para><emphasis>Illegal Element Name Char Replacement</emphasis> -If illegal characters are encountered in a JSON element name then they are replaced with this value.
+                                  <listitem><para><emphasis>Illegal Element Name Char Replacement</emphasis> - If illegal characters are encountered in a JSON element name then they are replaced with this value.
                                       By default this is not defined, so that the reader doesn't doesn't search for illegal characters.
                                   </para></listitem>
-                                  <listitem><para><emphasis>Indent</emphasis> -Add indentation character data to the generated event stream.  This simply makes
+                                  <listitem><para><emphasis>Indent</emphasis> - Add indentation character data to the generated event stream.  This simply makes
                                       the generated event stream easier to read in its serialized form.  Useful for
                                       testing etc.Default:false.
                                   </para></listitem>
-                                  <listitem><para><emphasis>Key Prefix on Numeric</emphasis> -The prefix character to add if the JSON node name starts with a number.
+                                  <listitem><para><emphasis>Key Prefix on Numeric</emphasis> - The prefix character to add if the JSON node name starts with a number.
                                       By default this is not defined, so that the reader doesn't search for element names that start with a number.
                                   </para></listitem>
-                                  <listitem><para><emphasis>Key Whitespace Replacement</emphasis> -The replacement character for whitespaces in a JSON map key.
+                                  <listitem><para><emphasis>Key Whitespace Replacement</emphasis> - The replacement character for whitespaces in a JSON map key.
                                       By default this not defined, so that the reader doesn't search for whitespaces.
                                   </para></listitem>
-                                  <listitem><para><emphasis>Null Value Replacement</emphasis> -The replacement string for JSON NULL values. Default is ""(an empty string). </para></listitem>
-                                  <listitem><para><emphasis>Root Name</emphasis> -The element name of the document root. Default of 'json'.
+                                  <listitem><para><emphasis>Null Value Replacement</emphasis> - The replacement string for JSON NULL values. Default is ""(an empty string). </para></listitem>
+                                  <listitem><para><emphasis>Root Name</emphasis> - The element name of the document root. Default of 'json'.
                                   </para></listitem>
-                                  <listitem><para><emphasis>Key Maps</emphasis> -Defines a JSON element name mapping
+                                  <listitem><para><emphasis>Key Maps</emphasis> - Defines a JSON element name mapping
                                       The "from" key will be replaced with the "to" key or the contents of the element.
                                   </para></listitem>                        
                               </itemizedlist>
                           </listitem>
                           <listitem><para><emphasis>Custom</emphasis></para>
                               <itemizedlist>
-                                  <listitem><para><emphasis>Target Profile</emphasis> -</para></listitem>
-                                  <listitem><para><emphasis>Class</emphasis> -Custom reader class.</para></listitem>
-                                  <listitem><para><emphasis>Handlers</emphasis> -Set a handler on the reader instance e.g. an EntityResolver, ErrorHandler etc.
+                                  <listitem><para><emphasis>Target Profile</emphasis> - Defines the output transformation profile</para></listitem>
+                                  <listitem><para><emphasis>Class</emphasis> - Custom reader class.</para></listitem>
+                                  <listitem><para><emphasis>Handlers</emphasis> - Set a handler on the reader instance e.g. an EntityResolver, ErrorHandler etc.
                                   </para></listitem>
-                                  <listitem><para><emphasis>Features</emphasis> -Reader Features List</para></listitem>
-                                  <listitem><para><emphasis>Parametres</emphasis> -Resource Parameters</para></listitem>
+                                  <listitem><para><emphasis>Features</emphasis> - Reader Features List</para></listitem>
+                                  <listitem><para><emphasis>Parametres</emphasis> - Resource Parameters</para></listitem>
                                          
                               </itemizedlist>
                           </listitem>
@@ -353,7 +344,7 @@
                       </imageobject>
                   </mediaobject>
               </figure>
-              <para> This graphical editor allow you to perform drug/drop operations with the nodes of transform data to map the source data to target data.
+               <para>This graphical editor allows you to perform drag&amp;drop operation with the nodes of transformed data to map the source data to target data.
               When you save the changes in the graphical editor the correct Smooks configuration file content will be generated. </para>
               
            </section>
@@ -444,7 +435,7 @@
                                     <listitem><para><emphasis>DOM</emphasis></para></listitem>
                                 </itemizedlist>
                             </entry>
-                            <entry>DOM</entry>
+                            <entry>SAX</entry>
                         </row> 
                         
                         <row>
@@ -453,7 +444,7 @@
                                 Default serialization being turned on leads to locating StreamResult/DOMResult
                                 to the Result objects provided to the Smooks.filterSource method and to
                                 serialization all the events to that Result.</entry>
-                            <entry>true</entry>
+                            <entry>false</entry>
                             
                         </row>
                     </tbody>
@@ -520,5 +511,5 @@
                
             </section>
  </section>
- </section>
+
 </chapter>

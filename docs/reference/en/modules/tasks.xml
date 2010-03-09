@@ -9,7 +9,8 @@
         </keywordset>
     </chapterinfo>
     <title>Tasks</title>
-    <para>This chapter describes the main tasks a user can be faced during Smooks tools usage.</para>
+    <para>This chapter describes the main tasks a user can be faced during Smooks tools usage.
+        Here we use the example that can be downloaded from <ulink url="http://sourceforge.net/projects/smooks/files/Smooks%20v1.2/Smooks%20v1.2/smooks-examples-1.2.4.zip/download">here</ulink> </para>
     <section id="config_file_wizzard">
         <title>New Smooks Configuration File Creation</title>
         <para>Select the  project where you want to create new Smooks Configuration File  and right-click on it,
@@ -26,7 +27,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>The first wizard page is a file path creation page. Select the <emphasis>
+        <para>The wizard page is a file path creation page. Select the <emphasis>
             <property>src</property>
         </emphasis> folder to be the files container, and input the name
             <emphasis><property>smooks-config.xml</property>.</emphasis> Click
@@ -39,7 +40,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>The second wizard page allow you to select Smooks configuration file version. Select the appropriate one and click <emphasis><property>Finish</property></emphasis> to complete the wizard.</para>
+       
         </section>
     <section>
         <title>Input Task Configuring</title>
@@ -66,7 +67,7 @@
         
         <para>
             Once you've specified your reader configuration and sample data, you can see the input model rendered in a tree form in the <emphasis>Input model</emphasis> section.
-            On the picture below you can see the correct configuration of some XML input task.
+            On the picture below you can see the correct configuration of some XML input task where <emphasis><property>input-message.xml</property></emphasis> is set as an input data file.
         </para>
         <figure>
             <title>Input Task Configuring</title>
@@ -114,7 +115,7 @@
         </figure>
         <para>Another method of adding <emphasis>Java Mapping</emphasis> element 
             to the canvas in the Processing Tasks section is to right click Input Task
-            element and select <emphasis>Java Mapping</emphasis> in the popup menu </para>
+            element and select <emphasis>Java Mapping</emphasis> in the popup menu. </para>
         <figure>
             <title>Java Mapping configuration</title>
             <mediaobject>
@@ -136,8 +137,7 @@
         </figure>
         <para>
             <emphasis>Java Bean Creation</emphasis> wizard appears.
-            Specify a unique identifier for the new class, the class path, 
-            whether it's an array or not, and if it is a collection, also specify the collection class.
+            Specify a unique identifier for the new class, the class path. 
             If the Java class is specified, you'll see a list of the properties in the box below.
             Click <emphasis>Finish</emphasis> when you're done.
             Now with the input and output models on the canvas, you can click and drag 
@@ -169,15 +169,94 @@
             </mediaobject>
         </figure>
         <para>
-            Select "Apply Template" from the popup menu and it will appear to the right, connected to the task you created it from. Then select the "Apply Template" task.
-            Once you've defined your template model, you can click and drag from the various input elements to corresponding output elements in the template. Make sure to connect collection elements to corresponding collection elements
+            The <property>Message Type Selection</property> wizard will appear.
+            In our example we will transfer our data to csv output format,so you should select <emphasis><property>CSV</property></emphasis> and click <property>Next</property>.</para>
+        <figure>
+            <title>Message Type Selection</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process7a.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>
+            On the next wizard page put the following string into the Fields,select Output fields Names and click <property>Finish</property>.</para>
+        <figure>
+            <title>CSV output message configuration</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process7b.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>     
+        <para>
+            After these steps "Apply Template" task will appear to the right, connected to the task you created it from.
+            To continue the process of configuration you should click on it and find <emphasis>CSV Template</emphasis> 
+            item with entered fields on the canvas.Now  you can click and drag from various input elements to corresponding output elements
+            in the template. Make sure to connect collection elements to corresponding <emphasis>csv-record</emphasis>
+            In our example we transfer into CSV output only the elements of orderItems collection(see picture below) 
         </para>
+        <figure>
+            <title>Relations between input and output models</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process7c.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>  
     </section>
     <section>
         <title>Smooks Configuration testing using Smooks Run Configuration</title>
         
         <para>This option is intended to view the results of Smooks transforming procedure.
-            For more detailed information about this option please go <ulink url="http://community.jboss.org/wiki/UsingtheSmooksRunConfigurationtotestSmooksConfigurations">here</ulink>.</para>
+            To do the testing you should select your <emphasis>Smooks Configuration file</emphasis> you want to transfer in the Project Navigator or open it in 
+            the Smooks Configuration Editor and then select "Run As..." from the <emphasis><property>Run</property></emphasis>
+            toolbar button
+            or <emphasis><property>Run->Smooks Run Configuration</property></emphasis> option in the top menu bar. And Smooks Configuration file will be run automatically. 
+        </para>
+        <figure>
+            <title>Smooks Configuration testing</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/process_page/process8.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>If any errors or warnings appear, they will pop up in a dialog.
+            The output of the test will appear in the Console view.
+                 In our case the following streaming output will appear:</para>
+        <programlisting role="JAVA"><![CDATA[[Stream Templating Result ...]
+    |--
+    |"productId","quantity","price"
+    |"111","2","8.9"
+    |"222","7","5.2"
+    |--
+
+[Java Mapping Results...]
+    |--
+    |> order (beanId = "order")
+    |    > header (beanId = "header")
+    |        > date = "2006-11-15 20:45:28.0 EET"
+    |        > customerNumber = 123123L
+    |        > customerName = "Joe"
+    |    > orderItems (beanId = "orderItems")
+    |        > example.model.OrderItem (beanId = "orderItem")
+    |            > productId = 111L
+    |            > quantity = 2I
+    |            > price = 8.9D
+    |        > example.model.OrderItem (beanId = "orderItem")
+    |            > productId = 222L
+    |            > quantity = 7I
+    |            > price = 5.2D
+    |--
+]]></programlisting>  
+        <para>If the test runs but doesn't generate any streaming output the Console output will be the following:
+        </para>
+        <programlisting role="JAVA"><![CDATA[ Nothing to Display:
+            - No Java Mappings.
+            - No Templates Applied.]]>
+            </programlisting>
+            
     </section>
 </chapter>
 

@@ -45,7 +45,7 @@
 						<entry><para>Smooks Editor</para></entry>
 						<entry><para>Smooks Editor helps configure the created Smooks configuration file.</para></entry>
 						<entry>
-							<link linkend="quickstart_formeditor">Smooks Editor</link>
+							<link linkend="process_tab">Smooks Editor</link>
 						</entry>
 					</row>
 					
@@ -64,7 +64,7 @@
 		<title>What is Smooks?</title>
 
 		<para><property>Smooks</property> is a Java Framework/Engine for processing XML and non XML
-			data (CSV, EDI, Java, JSON etc).</para>
+			data (CSV, EDI, Java, JSON etc).It provides: </para>
 		<para/>
 		<para>
 			<orderedlist numeration="upperroman" inheritnum="inherit">
@@ -121,13 +121,46 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-		<para>The easiest way to use the Smooks Configuration Editor is to create a project
+		<!-- <para>The easiest way to use the Smooks Configuration Editor is to create a project
 			(Java project, an ESB project, etc.), right-click on it and select <property>New -> Other</property>
 			to open the New wizard. Drill into <property>Smooks -> Smooks Configuration File</property>
-			and continue through the wizard. We recommend using a minimum Smooks level of 1.1 or 1.2, but if you're using it in a deployed service, it depends on what version your runtime supports.
-			Once the file is created, it will open in the Smooks Configuration Editor.</para>
+			and continue through the wizard.
+			Once the file is created, it will open in the Smooks Configuration Editor.</para> -->
 	</section>
 	<section>
+		<title>Adding Smooks jars</title>
+		
+		<para>During your development, you probably will be faced with the 
+			necessity to include some additional Smooks jars to your project.
+			This problem can be solved in such a way:</para>
+		<itemizedlist>
+		<listitem><para>Create the folder named "lib" inside your project,if it doesn't exist yet.
+				Copy all the Smooks jars you need to include into the <emphasis><property>lib</property></emphasis> directory.
+			</para></listitem>
+			<listitem><para>Right-click on the project and select Properties.</para></listitem>
+			<listitem><para>Select the "Java Build Path" item in the Properties list, then the Libraries tab, and click "Add JARs".
+					</para></listitem>
+			<listitem><para>In the Jar Selection dialog, select all the jars in the "lib" directory you want to include and click OK.</para></listitem>
+			<listitem><para>
+				Now you should see all the jars  
+				included to your project hierarchy. </para></listitem>
+		</itemizedlist>
+		
+		<figure>
+			<title>Smooks Form editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/introduction/introduction2.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<!-- <para>The easiest way to use the Smooks Configuration Editor is to create a project
+			(Java project, an ESB project, etc.), right-click on it and select <property>New -> Other</property>
+			to open the New wizard. Drill into <property>Smooks -> Smooks Configuration File</property>
+			and continue through the wizard.
+			Once the file is created, it will open in the Smooks Configuration Editor.</para> -->
+	</section>
+	<!-- <section>
 		<title>How to install Smooks dev tools?</title>
 
 		<para> The Smooks tools was included by the <property>JBoss Tools</property> since 3.0.0
@@ -158,5 +191,5 @@
 		</para>
 		<para>Now let's progress to more advanced topics.</para>
 	</section>
-
+	-->
 </chapter>
