@@ -2,10 +2,10 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
-[<!ENTITY  jsf_struts SYSTEM "modules/jsf_struts.xml">
-<!ENTITY  jsf_struts_war SYSTEM "modules/jsf_struts_war.xml">
-<!ENTITY introduction SYSTEM "modules/introduction.xml">
-<!ENTITY workspace SYSTEM "modules/workspace.xml">
+[<!ENTITY  jsf_struts SYSTEM "jsf_struts.xml">
+<!ENTITY  jsf_struts_war SYSTEM "jsf_struts_war.xml">
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY workspace SYSTEM "workspace.xml">
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">
