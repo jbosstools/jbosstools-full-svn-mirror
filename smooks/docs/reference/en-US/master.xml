@@ -3,16 +3,16 @@
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
 [
-<!ENTITY introduction SYSTEM "modules/introduction.xml">  
-<!ENTITY tasks SYSTEM "modules/tasks.xml">
-<!ENTITY references SYSTEM "modules/references.xml">
-<!ENTITY summary SYSTEM "modules/summary.xml">
+<!ENTITY introduction SYSTEM "introduction.xml">  
+<!ENTITY tasks SYSTEM "tasks.xml">
+<!ENTITY references SYSTEM "references.xml">
+<!ENTITY summary SYSTEM "summary.xml">
 ]>
 <book>
 
 	<bookinfo>
 
-		<title>Smooks Dev Tools Reference Guide</title>
+		<title>Smooks Developer Tools Reference Guide</title>
 			<corpauthor>
 				<inlinemediaobject>
 					<imageobject role="fo">
