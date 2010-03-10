@@ -208,27 +208,29 @@
                           <listitem><para><emphasis>CSV</emphasis></para><itemizedlist>
                               <listitem><para><emphasis>Fields</emphasis> - Comma separated list of CSV record field names
                               </para></listitem>
-                              <listitem><para><emphasis>Separator Character</emphasis> - Field separator character.  Default of ','.
+                              <listitem><para><emphasis>Separator Character</emphasis> - Field separator character.
                               </para></listitem>
-                              <listitem><para><emphasis>Quote Character</emphasis> - Quote character.  Default of '"'.
+                              <listitem><para><emphasis>Quote Character</emphasis> - Quote character.
                               </para></listitem>
-                              <listitem><para><emphasis>Record Name</emphasis> - Name of csv record element.Default:csv-record</para></listitem>
-                              <listitem><para><emphasis>Root Name</emphasis> - Name of csv root element.Default:csv-set</para></listitem>
-                              <listitem><para><emphasis>indent</emphasis> - Add indentation character data to the generated event stream.  This simply makes
+                              <listitem><para><emphasis>Record Name</emphasis> - Name of csv record element.</para></listitem>
+                              <listitem><para><emphasis>Root Name</emphasis> - Name of csv root element.</para></listitem>
+                              <listitem><para><emphasis>indent</emphasis> - Add indentation character data to
+                                  the generated event stream.  This simply makes
                                   the generated event stream easier to read in its serialized form.  Useful for
-                                  testing etc.Default:true
+                                  testing etc.
                               </para></listitem>
-                              <listitem><para><emphasis>Skip Lines</emphasis> - Number of lines to skip before processing starts. Default of 0.
-                                  
+                              <listitem><para><emphasis>Skip Lines</emphasis> - Number of lines to skip before processing starts.                                   
                               </para></listitem>
                           </itemizedlist>
                           </listitem>
                           <listitem><para><emphasis>EDI</emphasis></para>
                            <itemizedlist>
-                               <listitem><para><emphasis>Target Profile</emphasis> - Defines the target profile
+                               <listitem><para><emphasis>Target Profile</emphasis> - Defines the output
+                                   transformation profile
                                </para></listitem>
-                               <listitem><para><emphasis>Encoding</emphasis> - The character encoding. Default "UTF-8"</para></listitem>
-                               <listitem><para><emphasis>Mapping Model</emphasis> - Defines the EDI Mapping Model configuration for processing the 
+                               <listitem><para><emphasis>Encoding</emphasis> - The character encoding.</para></listitem>
+                               <listitem><para><emphasis>Mapping Model</emphasis> - Defines the EDI Mapping Model
+                                   configuration for processing the 
                                    EDI message stream to a stream of SAX events that can be processed by Smooks.</para></listitem>
                                <listitem><para><emphasis>Validate</emphasis> - This attribute turns on/off datatype validation in the EDI Parser.
                                    Validation is on by default.
@@ -240,16 +242,16 @@
                           <listitem><para><emphasis>JSON</emphasis></para>
                               <itemizedlist>
                                   <listitem><para><emphasis>Target Profile</emphasis> - Defines the output transformation profile</para></listitem>
-                                  <listitem><para><emphasis>Array Element Name</emphasis> - The element name of a array element. Default of 'element'.
+                                  <listitem><para><emphasis>Array Element Name</emphasis> - The element name of an array element.
                                   </para></listitem>
                                   <listitem><para><emphasis>Encoding</emphasis> - encoding: The default encoding of any JSON message 
-                                      InputStream processed by this Reader. Default of 'UTF-8'.</para></listitem>
+                                      InputStream processed by this Reader.</para></listitem>
                                   <listitem><para><emphasis>Illegal Element Name Char Replacement</emphasis> - If illegal characters are encountered in a JSON element name then they are replaced with this value.
                                       By default this is not defined, so that the reader doesn't doesn't search for illegal characters.
                                   </para></listitem>
                                   <listitem><para><emphasis>Indent</emphasis> - Add indentation character data to the generated event stream.  This simply makes
                                       the generated event stream easier to read in its serialized form.  Useful for
-                                      testing etc.Default:false.
+                                      testing etc.
                                   </para></listitem>
                                   <listitem><para><emphasis>Key Prefix on Numeric</emphasis> - The prefix character to add if the JSON node name starts with a number.
                                       By default this is not defined, so that the reader doesn't search for element names that start with a number.
@@ -257,8 +259,8 @@
                                   <listitem><para><emphasis>Key Whitespace Replacement</emphasis> - The replacement character for whitespaces in a JSON map key.
                                       By default this not defined, so that the reader doesn't search for whitespaces.
                                   </para></listitem>
-                                  <listitem><para><emphasis>Null Value Replacement</emphasis> - The replacement string for JSON NULL values. Default is ""(an empty string). </para></listitem>
-                                  <listitem><para><emphasis>Root Name</emphasis> - The element name of the document root. Default of 'json'.
+                                  <listitem><para><emphasis>Null Value Replacement</emphasis> - The replacement string for JSON NULL values.</para></listitem>
+                                  <listitem><para><emphasis>Root Name</emphasis> - The element name of the document root.
                                   </para></listitem>
                                   <listitem><para><emphasis>Key Maps</emphasis> - Defines a JSON element name mapping
                                       The "from" key will be replaced with the "to" key or the contents of the element.

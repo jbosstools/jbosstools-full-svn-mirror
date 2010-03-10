@@ -10,7 +10,9 @@
     </chapterinfo>
     <title>Tasks</title>
     <para>This chapter describes the main tasks a user can be faced during Smooks tools usage.
-        Here we use the example that can be downloaded from <ulink url="http://sourceforge.net/projects/smooks/files/Smooks%20v1.2/Smooks%20v1.2/smooks-examples-1.2.4.zip/download">here</ulink> </para>
+        In this chapter we use the example that can be downloaded from
+        <ulink url="http://anonsvn.jboss.org/repos/jbosstools/trunk/smooks/docs/reference/xml-to-java.zip">
+            here</ulink>. </para>
     <section id="config_file_wizzard">
         <title>New Smooks Configuration File Creation</title>
         <para>Select the  project where you want to create new Smooks Configuration File  and right-click on it,
@@ -180,7 +182,7 @@
             </mediaobject>
         </figure>
         <para>
-            On the next wizard page put the following string into the Fields,select Output fields Names and click <property>Finish</property>.</para>
+            On the next wizard page put the following string into the Fields,select <property>Output Fields Names</property> and click <property>Finish</property>.</para>
         <figure>
             <title>CSV output message configuration</title>
             <mediaobject>
@@ -190,11 +192,15 @@
             </mediaobject>
         </figure>     
         <para>
-            After these steps "Apply Template" task will appear to the right, connected to the task you created it from.
+            After these steps <property>"Apply Template"</property>
+            task will appear to the right, connected to the task you created it from.
             To continue the process of configuration you should click on it and find <emphasis>CSV Template</emphasis> 
-            item with entered fields on the canvas.Now  you can click and drag from various input elements to corresponding output elements
-            in the template. Make sure to connect collection elements to corresponding <emphasis>csv-record</emphasis>
-            In our example we transfer into CSV output only the elements of orderItems collection(see picture below) 
+            item with entered fields on the canvas.Now  you can click and drag from various 
+            input elements to corresponding output elements
+            in the template. Make sure to connect collection elements to the c
+            orresponding <emphasis>csv-record</emphasis>.
+            In our example we transfer into CSV output only the elements 
+            of <property>orderItems</property> collection (see the picture below): 
         </para>
         <figure>
             <title>Relations between input and output models</title>
