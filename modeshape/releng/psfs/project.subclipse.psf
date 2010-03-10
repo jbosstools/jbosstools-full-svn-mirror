@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.tigris.subversion.subclipse.core.svnnature">
+
+  <!-- !*** Generated with org.eclipse.dash.common.releng/tools/scripts/buildAllHelper.xml#dir2svnmap task -->
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/modeshape/features/org.jboss.tools.modeshape.rest.feature,org.jboss.tools.modeshape.rest.feature"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/modeshape/features/org.jboss.tools.modeshape.rest.test.feature,org.jboss.tools.modeshape.rest.test.feature"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/modeshape/plugins/org.jboss.tools.modeshape.rest,org.jboss.tools.modeshape.rest"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/modeshape/tests/org.jboss.tools.modeshape.rest.test,org.jboss.tools.modeshape.rest.test"/>
+
+</provider>
+</psf>

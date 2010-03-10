@@ -1,0 +1,5 @@
+!*** Generated with org.eclipse.dash.common.releng/tools/scripts/buildAllHelper.xml#dir2svnmap task
+feature@org.jboss.tools.modeshape.rest.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/modeshape/features/org.jboss.tools.modeshape.rest.feature
+feature@org.jboss.tools.modeshape.rest.test.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/modeshape/features/org.jboss.tools.modeshape.rest.test.feature
+plugin@org.jboss.tools.modeshape.rest=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/modeshape/plugins/org.jboss.tools.modeshape.rest
+plugin@org.jboss.tools.modeshape.rest.test=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/modeshape/tests/org.jboss.tools.modeshape.rest.test
