@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: modeshape-web-jcr-rest-client-1.0.0-SNAPSHOT-jar-with-dependencies.jar,
- jcrRestClient.jar
+ .
 Export-Package: org.jboss.tools.modeshape.rest,
  org.modeshape.web.jcr.rest.client,
  org.modeshape.web.jcr.rest.client.domain
