@@ -14,8 +14,6 @@ package org.jboss.tools.vpe.dnd;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeVisualCaretInfo;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
-import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
-import org.jboss.tools.vpe.editor.mozilla.listener.MozillaEventListener;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -146,31 +144,31 @@ public class VpeDnD {
 	 * Calls when drag over event ocure
 	 * @param event
 	 */
-	public void dragOver(nsIDOMEvent event, MozillaEventListener mozillaEventListener) {
+	public void dragOver(nsIDOMEvent event, VpeController vpeController) {
 		final nsIDOMMouseEvent mouseEvent =
 			(nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-		final XulRunnerEditor editor = ((VpeController) mozillaEventListener).getXulRunnerEditor();
+		final XulRunnerEditor editor = vpeController.getXulRunnerEditor();
 		new ScrollingSupport(editor).scroll(mouseEvent);
-		refreshCanDrop(event, mozillaEventListener);
+		refreshCanDrop(event, vpeController);
 	}
 
 	private void refreshCanDrop(nsIDOMEvent event,
-			MozillaEventListener mozillaEventListener) {
+			VpeController vpeController) {
 		boolean canDrop = true;
 
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 		//in this condition  early was check for xulelement
-		if (mozillaEventListener != null) {
+		if (vpeController != null) {
 			if (getDragService().getCurrentSession().isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
 
 				MozillaDropInfo info;
 
 				if(getDragService().getCurrentSession().getSourceNode()==null){
 					//external drag 
-					  info = mozillaEventListener.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
+					  info = vpeController.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
 				} else {
 				    //internal drag
-					 info = mozillaEventListener.canInnerDrop(mouseEvent);
+					 info = vpeController.canInnerDrop(mouseEvent);
 				}
 				if (info != null) {
 					canDrop = info.canDrop();
@@ -179,10 +177,8 @@ public class VpeDnD {
 		}
       //sets possability to drop current element here
 		//Added by estherbin fix jbide-1046
-		VpeController controller = (VpeController) mozillaEventListener;
-
-        VpeSelectionController selectionController = controller.getVisualSelectionController();
-        final VpeVisualCaretInfo visualCaretInfo = controller.getSelectionBuilder().getVisualCaretInfo(event);
+        VpeSelectionController selectionController = vpeController.getVisualSelectionController();
+        final VpeVisualCaretInfo visualCaretInfo = vpeController.getSelectionBuilder().getVisualCaretInfo(event);
 
         final nsIDOMEventTarget target = event.getTarget();
         final nsIDOMNode targetDomNode = (nsIDOMNode) target.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
@@ -207,18 +203,17 @@ public class VpeDnD {
 	/**
 	 * Drop Event handler
 	 * @param domEvent
-	 * @param editorDomEventListener
+	 * @param vpeController
 	 */
-	public void dragDrop(nsIDOMEvent domEvent, MozillaDndListener editorDomEventListener) {
-		
-		if(editorDomEventListener!=null) {
+	public void dragDrop(nsIDOMEvent domEvent, VpeController vpeController) {
+		if(vpeController!=null) {
 		
 			if(getDragService().getCurrentSession().getSourceDocument()==null) {
 				//in this case it's is  external drag
-				editorDomEventListener.externalDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID), VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
+				vpeController.externalDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID), VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
 			} else {
 				// in this case it's is an internal drag
-				editorDomEventListener.innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
+				vpeController.innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
 			}
 		}
 	}
