@@ -156,8 +156,8 @@
     <section id="question_7">
         <title>How can I add my own tag library to the JBoss Tools Palette?</title>
 
-        <para>See <ulink url="&jsflink;#AddingCustomJSFTagsToTheRedHatPalette7433">Adding Tag
-                Libraries</ulink> in Visual Web Tools Guide.</para>
+        <para>See the Adding Tag
+                Libraries section in Visual Web Tools Guide.</para>
     </section>
 
     <section id="question_8">
@@ -169,8 +169,8 @@
             navigate <emphasis>
                 <property>Properties > Seam Settings</property>.</emphasis> Check <emphasis>
                 <property>Seam support</property>
-            </emphasis> box to enable all available <ulink url="&seamlink;#project_pref">Seam
-                Settings</ulink>.</para>
+            </emphasis> box to enable all available Seam
+                Settings.</para>
     </section>
 
     <section id="question_9">

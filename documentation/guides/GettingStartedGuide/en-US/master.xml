@@ -2,14 +2,14 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 [
-<!ENTITY getting_started SYSTEM "modules/getting_started.xml">
-<!ENTITY  manage SYSTEM "modules/manage.xml">
-<!ENTITY first_seam  SYSTEM "modules/first_seam.xml">
-<!ENTITY jsp_application  SYSTEM "modules/jsp_application.xml">
-<!ENTITY rad_jsf_application  SYSTEM "modules/rad_jsf_application.xml">
-<!ENTITY gsg_faq  SYSTEM "modules/gsg_faq.xml">
-<!ENTITY further_reading  SYSTEM "modules/further_reading.xml">
-<!ENTITY project_examples  SYSTEM "modules/project_examples.xml">
+<!ENTITY getting_started SYSTEM "getting_started.xml">
+<!ENTITY  manage SYSTEM "manage.xml">
+<!ENTITY first_seam  SYSTEM "first_seam.xml">
+<!ENTITY jsp_application  SYSTEM "jsp_application.xml">
+<!ENTITY rad_jsf_application  SYSTEM "rad_jsf_application.xml">
+<!ENTITY gsg_faq  SYSTEM "gsg_faq.xml">
+<!ENTITY further_reading  SYSTEM "further_reading.xml">
+<!ENTITY project_examples  SYSTEM "project_examples.xml">
 
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
@@ -36,7 +36,7 @@
 
 <book>
  <bookinfo>
-  <title>Getting Started with JBoss Developer Studio</title>
+  <title>Getting Started Guide</title>
   
   <copyright>
    <year>2007</year>
