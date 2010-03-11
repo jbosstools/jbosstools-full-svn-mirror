@@ -12,7 +12,23 @@
 				<itemizedlist>
 					<listitem>
 						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3623">JBIDE-3623</ulink>: If you use the community Seam versions 2.1.0.SP1 or 2.1.1 TestNG for WAR projects they will fail with the error <errorname>Two components with the same name and precedence</errorname>. There is no known workaround, however all other Seam releases work correctly and all Seam 2.1 EAR projects are successful.
 						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2700">JBIDE-2700</ulink>: The functionality of the <guilabel>Console</guilabel> view is dependant on the Debug-UI plug-in being loaded. Starting a server does not ensure the running of the Debug-UI plug-in and without it started the <guilabel>Console</guilabel> view will not show any output. When accessing the <guilabel>Console</guilabel> tab, if no data is shown, right-click with your mouse and select <menuchoice><guimenuitem>Show In</guimenuitem><guimenuitem>Console</guimenuitem></menuchoice>.  
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-779">JBIDE-779</ulink>: Currently Facelet pages contain false warnings.This has occured due to Eclipse WTP's HTML Syntax Validation not allowing for Facelet specific attributes. These warnings can be stopped by disabling validation. To disable validation follow <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>Validation</guimenuitem><guimenuitem>HTML Syntax Validation</guimenuitem></menuchoice> . 
+						</para>
+						<caution>
+							<para>
+								Disabling validation has the potential to remove usefull warning information.
+							</para>
+						</caution>
 					</listitem>
 				</itemizedlist>
 			</para>
