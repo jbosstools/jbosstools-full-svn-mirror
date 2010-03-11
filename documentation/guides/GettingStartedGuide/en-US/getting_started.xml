@@ -542,6 +542,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <listitem>
      <para>JBPM Tools</para>
     </listitem>
+    <listitem>
+     <para>Smooks Tools</para>
+    </listitem>
    </itemizedlist>
 
    <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
@@ -549,10 +552,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <itemizedlist>
     <listitem>
     	<para>Get Eclipse and Web Tools (make sure you have the 
-    		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">appropriate version of Eclipse</ulink>)</para>
+    		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">appropriate version of Eclipse</ulink>).</para>
     </listitem>
    </itemizedlist>
-  	<para>The current version of JBoss Tools (3.1.M2) targets at Eclipse 3.5/Galileo which is available from <ulink url="http://www.eclipse.org/downloads/">eclipse.org</ulink></para>
+   <para>The current version of JBoss Tools (3.1.0.GA) targets at Eclipse 3.5.2 Galileo JEE Bundle which is available from <ulink url="http://www.eclipse.org/downloads/">eclipse.org</ulink>.</para>
 
    <tip>
     <title>Tip:</title>
@@ -568,18 +571,15 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <para>Remember to choose the download that matches your OS and use Java 5 when you run
     it.</para>
    </note>
-
-   <itemizedlist>
-    <listitem>
-     <para>Get the <ulink url="http://download.jboss.org/jbosstools/builds/nightly/latestBuild.html"
-       >latest JBoss Tools build</ulink></para>
-    </listitem>
-   </itemizedlist>
-
-   <para>Some of our newer plugins, like TPTP and BIRT, need additional drivers. On the left side of
-    the download page you can find all of the required drivers for chosen build and their versions.</para>
-   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
+    <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
     about dependencies between standalone plug-ins.</para>  
+   <para>For more information about how to install JBoss Tools 3.0 and JBoss Tools 3.1 please read the following docs:
+   </para>
+   <itemizedlist>
+    <listitem><para><ulink url="https://www.jboss.org/tools/download/installation/update_3_0.html">JBoss Tools 3.0 Installation</ulink></para></listitem>
+    <listitem><para><ulink url="https://www.jboss.org/tools/download/installation/update_3_1.html">JBoss Tools 3.1 Installation</ulink></para></listitem>
+   </itemizedlist>
+   
    <section>
     <title>Installation From Update Site</title>
    
@@ -606,7 +606,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <listitem><para>First, download the correct version of Eclipse 
   for your platform which is compatible with the version of JBoss
   Tools you plan to install.For example if you want to install
-  3.1.0.GA Eclipse 3.5 is required.</para></listitem>
+  3.1.0.GA Eclipse 3.5.2 Galileo JEE Bundle is required.</para></listitem>
  <listitem><para>If you do not already have Java 5 or 6 installed and in your path,
   download and install it.</para></listitem>
  <listitem><para>When Eclipse is started, go to <itemizedlist>
@@ -616,7 +616,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  </para></listitem>
  <listitem><para>After clicking <emphasis>Add</emphasis> button <property>Add Site</property> View should appear.
   In the <property>Location</property> field you should paste one of the update sites described
-  <link linkend="sites">above</link>.In <property>Name</property> you can write any name you like.
+  <link linkend="sites">above</link>.On some platforms,
+  you can also drag and drop the link from your browser directly into Eclipse.In <property>Name</property> you can write any name you like.
   In the end press the <property>Ok</property> button.</para>
   <figure>
    <title>Add Update Site</title>
