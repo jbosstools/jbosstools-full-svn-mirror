@@ -23,10 +23,9 @@ import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
-import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 
 /**
  * a class implementation of mozilla preview 
@@ -228,7 +227,6 @@ public class MozillaPreview extends MozillaEditor {
 	}
 
 	public void dispose() {
-		setEditorDomEventListener(null);
 		setEditorLoadWindowListener(null);
 		contentAreaEventListener = null;
 		if (pageContext != null) {
@@ -243,7 +241,7 @@ public class MozillaPreview extends MozillaEditor {
 		sourceEditor=null;
 		editPart=null;
 		
-		//super.dispose();
+		super.dispose();
 	}
 
 	/* (non-Javadoc)
