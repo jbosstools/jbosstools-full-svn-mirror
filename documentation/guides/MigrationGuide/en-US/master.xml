@@ -2,11 +2,11 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
-[<!ENTITY introduction SYSTEM "modules/introduction.xml">
-<!ENTITY migration SYSTEM "modules/migration.xml">
-<!ENTITY issues SYSTEM "modules/issues.xml">
-             
-<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">
+[<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY migration SYSTEM "migration.xml">
+<!ENTITY issues SYSTEM "issues.xml">
+<!ENTITY gsglink "../../GettingStartedGuide/html_single/index.html">                  
+
 ]>
 
 <book>
