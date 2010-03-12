@@ -41,18 +41,18 @@ public class XulRunnerEditor2 extends XulRunnerEditor {
 
 	}
 	public void onElementResize(nsIDOMElement element, int constrains, int top, int left, int width, int height) {
-		if (mozillaEditor != null && mozillaEditor.getEditorDomEventListener() != null) {
-			mozillaEditor.getEditorDomEventListener().elementResized(element, constrains, top, left, width, height);
+		if (mozillaEditor != null && mozillaEditor.getResizeListener() != null) {
+			mozillaEditor.getResizeListener().elementResized(element, constrains, top, left, width, height);
 		}
 	}
 	public void onShowTooltip(int x, int y, String text) {
-		if (mozillaEditor != null && mozillaEditor.getEditorDomEventListener() != null) {
-			mozillaEditor.getEditorDomEventListener().onShowTooltip(x, y, text);
+		if (mozillaEditor != null && mozillaEditor.getTooltipListener() != null) {
+			mozillaEditor.getTooltipListener().onShowTooltip(x, y, text);
 		}
 	}
 	public void onHideTooltip() {
-		if (mozillaEditor != null && mozillaEditor.getEditorDomEventListener() != null) {
-			mozillaEditor.getEditorDomEventListener().onHideTooltip();
+		if (mozillaEditor != null && mozillaEditor.getTooltipListener() != null) {
+			mozillaEditor.getTooltipListener().onHideTooltip();
 		}
 	}
 	public void onDispose() {

@@ -63,6 +63,8 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaEventListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
@@ -1097,7 +1099,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		showSelectionBarAction.setChecked(checked);
 	}
 
-	public MozillaEventListener getEditorDomEventListener() {
+	public MozillaResizeListener getResizeListener() {
+		return mozillaEventListener;
+	}
+	
+	public MozillaTooltipListener getTooltipListener() {
 		return mozillaEventListener;
 	}
 }

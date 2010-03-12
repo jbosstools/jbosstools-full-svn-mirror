@@ -874,11 +874,11 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		visualEditor.setEditorLoadWindowListener(new EditorLoadWindowListener() {
 			public void load() {
 				visualEditor.setEditorLoadWindowListener(null);
-				visualEditor.setController(new VpeController(
-						VpeEditorPart.this));
-				selectionBar.setVpeController(visualEditor.getController());
-				visualEditor.getController().setSelectionBarController(selectionBar);
-				visualEditor.getController().init(sourceEditor, visualEditor);
+				VpeController vpeController = new VpeController(
+						VpeEditorPart.this);
+				selectionBar.setVpeController(vpeController);
+				vpeController.setSelectionBarController(selectionBar);
+				vpeController.init(sourceEditor, visualEditor);
 			}
 		});
 		

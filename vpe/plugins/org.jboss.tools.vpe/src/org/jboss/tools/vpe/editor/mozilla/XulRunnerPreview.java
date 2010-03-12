@@ -29,13 +29,13 @@ public class XulRunnerPreview extends XulRunnerEditor {
 	}
 	
 	public void onShowTooltip(int x, int y, String text) {
-		if (mozillaPreview != null && mozillaPreview.getEditorDomEventListener() != null) {
-			mozillaPreview.getEditorDomEventListener().onShowTooltip(x, y, text);
+		if (mozillaPreview != null && mozillaPreview.getTooltipListener() != null) {
+			mozillaPreview.getTooltipListener().onShowTooltip(x, y, text);
 		}
 	}
 	public void onHideTooltip() {
-		if (mozillaPreview != null && mozillaPreview.getEditorDomEventListener() != null) {
-			mozillaPreview.getEditorDomEventListener().onHideTooltip();
+		if (mozillaPreview != null && mozillaPreview.getTooltipListener() != null) {
+			mozillaPreview.getTooltipListener().onHideTooltip();
 		}
 	}
 	
