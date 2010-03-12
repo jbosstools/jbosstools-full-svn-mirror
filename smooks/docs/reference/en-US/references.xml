@@ -509,9 +509,45 @@
                         </imageobject>
                     </mediaobject>
                 </figure>
-
-               
+            
             </section>
  </section>
-
+<section>
+    <title>Properties View</title>
+    <para><emphasis><property>Properties View</property></emphasis> is available for some
+        elements on the canvas of Java Mapping and Apply Template Tasks,like:</para>
+    <itemizedlist>
+        <listitem><para><emphasis><property>Java mapping</property></emphasis>:java class members,its fields,
+            links between input values and the class members;</para></listitem>
+        <listitem><para><emphasis><property>Apply Template</property></emphasis>:output template.</para></listitem>
+    </itemizedlist>
+    <para>To add <emphasis><property>Properties View</property></emphasis> 
+        to the opened perspective the user can either open <property>Window->Show View->Preferences</property> 
+        in the toolbar or right click the element which properties he wants to inspect and select <property>Properties</property>
+        in the popup menu.On the picture below you can see how this view looks like when some csv template is selected.
+    </para>
+    <figure>
+        <title>Properties View</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/reference/reference_12.png" scale="90"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    <para>
+        This view is fully syncronized with the canvas of <emphasis><property>Smooks Configuration Editor</property></emphasis>.
+        This means that when you change selected element by click,the properties of a new element are immmediatly displayed in it. 
+        Using <emphasis><property>Properties View</property></emphasis> you can edit all the properties of the selected item.
+    </para>
+    <figure>
+        <title>Synchronization between Properties View and the canvas</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/reference/reference_13.png" scale="90"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    
+</section>
+    
 </chapter>
