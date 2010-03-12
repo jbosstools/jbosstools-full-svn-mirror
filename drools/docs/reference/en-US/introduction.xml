@@ -23,7 +23,7 @@
 
         <para><property>Drools Tools</property> come bundled with <property>JBoss Tools</property>
             set of Eclipse plugins. How to install <property>JBoss Tools</property> you can find in
-            the <ulink url="&gsglink;#JBossToolsInstall">Getting Started Guide</ulink>.</para>
+            the Getting Started Guide.</para>
     </section>
 
     <section id="drools_key_features">
