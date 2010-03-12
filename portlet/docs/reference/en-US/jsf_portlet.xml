@@ -146,8 +146,7 @@
     	<section id="create_jsf_proj">
     		<title>Creating a JSF Project and adding the JBoss Portlet Capabilities</title>
     		
-    		<para>How to organize a JSF project you can find out in the <ulink
-    			url="&jsfreflink;#new_jsf_project">JSF Tools User Guide</ulink>. Just
+    		<para>How to organize a JSF project you can find out in the JSF Tools User Guide. Just
     			remember to point the target runtime to <property>JBoss Portal</property> directory location (see 
     			how it is done for a dynamic Web project: steps 3, 4 and 5 in the 
     			<link linkend="jboss_core_portlet">&quot;Creating a Web Project with JBoss Portlet Capabilities&quot;</link> procedure).</para>

@@ -95,8 +95,8 @@
     				<tip>
     					<title>Tip:</title>
     					<para>For details about how to set a Seam runtime and a connection profile, see 
-    						<ulink url="&seamlink;#seamFacet">&quot;Configure Seam Facet Settings&quot;</ulink> in the Chapter 2, 
-    						<ulink url="&seamlink;">&quot;Seam Dev Tools Reference Guide&quot;</ulink>.</para>
+    						Configure Seam Facet Settings in the Chapter 2, 
+    						Seam Dev Tools Reference Guide.</para>
     				</tip>
     				
     				<figure>
