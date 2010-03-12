@@ -56,6 +56,12 @@ public class VpeDnD {
 	 */
 	private nsIDragService dragService;
 
+	private VpeController vpeController;
+
+
+	public VpeDnD(VpeController vpeController) {
+		this.vpeController = vpeController;
+	}
 	
 	/**
 	 * Starts drag session
@@ -144,35 +150,31 @@ public class VpeDnD {
 	 * Calls when drag over event ocure
 	 * @param event
 	 */
-	public void dragOver(nsIDOMEvent event, VpeController vpeController) {
+	public void dragOver(nsIDOMEvent event) {
 		final nsIDOMMouseEvent mouseEvent =
 			(nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 		final XulRunnerEditor editor = vpeController.getXulRunnerEditor();
 		new ScrollingSupport(editor).scroll(mouseEvent);
-		refreshCanDrop(event, vpeController);
+		refreshCanDrop(event);
 	}
 
-	private void refreshCanDrop(nsIDOMEvent event,
-			VpeController vpeController) {
+	private void refreshCanDrop(nsIDOMEvent event) {
 		boolean canDrop = true;
 
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 		//in this condition  early was check for xulelement
-		if (vpeController != null) {
-			if (getDragService().getCurrentSession().isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
+		if (getDragService().getCurrentSession().isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
+			MozillaDropInfo info;
 
-				MozillaDropInfo info;
-
-				if(getDragService().getCurrentSession().getSourceNode()==null){
-					//external drag 
-					  info = vpeController.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
-				} else {
-				    //internal drag
-					 info = vpeController.canInnerDrop(mouseEvent);
-				}
-				if (info != null) {
-					canDrop = info.canDrop();
-				}
+			if(getDragService().getCurrentSession().getSourceNode()==null){
+				//external drag 
+				  info = vpeController.canExternalDrop(mouseEvent, VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
+			} else {
+			    //internal drag
+				 info = vpeController.canInnerDrop(mouseEvent);
+			}
+			if (info != null) {
+				canDrop = info.canDrop();
 			}
 		}
       //sets possability to drop current element here
@@ -205,17 +207,13 @@ public class VpeDnD {
 	 * @param domEvent
 	 * @param vpeController
 	 */
-	public void dragDrop(nsIDOMEvent domEvent, VpeController vpeController) {
-		if(vpeController!=null) {
-		
-			if(getDragService().getCurrentSession().getSourceDocument()==null) {
-				//in this case it's is  external drag
-				vpeController.externalDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID), VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
-			} else {
-				// in this case it's is an internal drag
-				vpeController.innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
-			}
+	public void dragDrop(nsIDOMEvent domEvent) {
+		if(getDragService().getCurrentSession().getSourceDocument()==null) {
+			//in this case it's is  external drag
+			vpeController.externalDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID), VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
+		} else {
+			// in this case it's is an internal drag
+			vpeController.innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
 		}
 	}
-
 }

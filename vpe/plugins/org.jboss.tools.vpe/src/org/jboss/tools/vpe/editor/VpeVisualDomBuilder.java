@@ -114,7 +114,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	// JBIDE-2170 Sergey Dzmitrovich
 	// private nsIDOMElement visualContentArea;
 	private VpePageContext pageContext;
-	private VpeDnD dnd;
 	// JBIDE-2170 Sergey Dzmitrovich
 	// private nsIDOMNode headNode;
 	private List includeStack;
@@ -174,7 +173,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
 
 		// this.visualContentArea = visualEditor.getContentArea();
-		this.dnd = new VpeDnD();
 		this.pageContext = pageContext;
 		// this.headNode = visualEditor.getHeadNode();
 		dropper = new VpeDnd();
@@ -2206,22 +2204,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			VpeCreatorUtil.releaseDocumentFromRead(document);
 		}
 		includeDocuments.clear();
-	}
-
-	/**
-	 * @return the dnd
-	 */
-	public VpeDnD getDnd() {
-
-		return dnd;
-	}
-
-	/**
-	 * @param dnd
-	 *            the dnd to set
-	 */
-	public void setDnd(VpeDnD dnd) {
-		this.dnd = dnd;
 	}
 
 	/**

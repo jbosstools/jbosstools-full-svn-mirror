@@ -14,8 +14,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -107,6 +105,7 @@ import org.jboss.tools.jst.web.tld.model.TLDUtil;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.DndUtil;
+import org.jboss.tools.vpe.dnd.VpeDnD;
 import org.jboss.tools.vpe.dnd.DndUtil.DragTransferData;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -116,7 +115,13 @@ import org.jboss.tools.vpe.editor.menu.VpeMenuCreator;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEventAdapter;
-import org.jboss.tools.vpe.editor.mozilla.listener.MozillaEventListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaContextMenuListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaKeyListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaMouseListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.IKeyEventHandler;
@@ -162,9 +167,12 @@ import org.w3c.dom.Node;
 
 public class VpeController implements INodeAdapter, IModelLifecycleListener,
 		INodeSelectionListener, ITextSelectionListener, SelectionListener,
-		MozillaEventListener, VpeTemplateListener, XModelTreeListener,
+		VpeTemplateListener, XModelTreeListener,
 		ResourceReferenceListListener, ISelectionChangedListener,
-		IVisualController {
+		IVisualController, MozillaDndListener,
+		MozillaMouseListener, MozillaKeyListener,
+		MozillaTooltipListener, MozillaSelectionListener,
+		MozillaContextMenuListener, MozillaResizeListener {
 
 	private boolean visualEditorVisible = true;
 	private boolean synced = true;
@@ -178,6 +186,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	VpeDomMapping domMapping;
 	private VpeSourceDomBuilder sourceBuilder;
 	private VpeVisualDomBuilder visualBuilder;
+	private VpeDnD dnd;
 	/** @deprecated */
 	private VpeSelectionBuilder selectionBuilder;
 	// private VpeVisualKeyHandler visualKeyHandler;
@@ -255,6 +264,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				VpeTemplateManager.getInstance(), sourceEditor, pageContext);
 		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor,
 				pageContext);
+		dnd = new VpeDnD(this);
 		pageContext.setSourceDomBuilder(sourceBuilder);
 		pageContext.setVisualDomBuilder(visualBuilder);
 		IDOMModel sourceModel = (IDOMModel) getModel();
@@ -2045,7 +2055,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 //	}
 
 	public void dragOver(nsIDOMEvent event) {
-		visualBuilder.getDnd().dragOver(event, this);
+		dnd.dragOver(event);
 		onRefresh();
 	}
 
@@ -2824,12 +2834,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	 * Start drag session
 	 */
 	public void startDragSession(nsIDOMEvent domEvent) {
-
-		visualBuilder.getDnd().startDragSession(domEvent);
+		dnd.startDragSession(domEvent);
 	}
 
 	public void dragDrop(nsIDOMEvent domEvent) {
-		visualBuilder.getDnd().dragDrop(domEvent, this);
+		dnd.dragDrop(domEvent);
 		onRefresh();
 	}
 
