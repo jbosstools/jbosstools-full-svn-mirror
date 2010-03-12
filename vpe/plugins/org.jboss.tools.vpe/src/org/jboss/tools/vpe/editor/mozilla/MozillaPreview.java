@@ -40,7 +40,6 @@ public class MozillaPreview extends MozillaEditor {
 	private StructuredTextEditor sourceEditor;
 	private VpeEditorPart editPart;
 	private IDOMDocument sourceDocument;
-	private PreviewDomEventListener contentAreaEventListener;
 
 	public MozillaPreview(VpeEditorPart editPart, StructuredTextEditor sourceEditor) {
 		setTemplateManager(VpeTemplateManager.getInstance());
@@ -96,7 +95,7 @@ public class MozillaPreview extends MozillaEditor {
 	 */
 	public void onLoadWindow() {
 		setContentArea(findContentArea());
-		addListeners();
+		attachMozillaEventAdapter();
 		if (editorLoadWindowListener != null) {
 			editorLoadWindowListener.load();
 		}
@@ -228,7 +227,6 @@ public class MozillaPreview extends MozillaEditor {
 
 	public void dispose() {
 		setEditorLoadWindowListener(null);
-		contentAreaEventListener = null;
 		if (pageContext != null) {
 			pageContext.dispose();
 			pageContext=null;
@@ -244,15 +242,8 @@ public class MozillaPreview extends MozillaEditor {
 		super.dispose();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.vpe.editor.mozilla.MozillaEditor#getContentAreaEventListener()
-	 */
 	@Override
-	protected PreviewDomEventListener getMozillaEventAdapter() {
-		if(this.contentAreaEventListener==null){
-			contentAreaEventListener = new PreviewDomEventListener();
-		}
-
-		return contentAreaEventListener;
+	protected MozillaEventAdapter createMozillaEventAdapter() {
+		return new PreviewDomEventListener();
 	}
 }

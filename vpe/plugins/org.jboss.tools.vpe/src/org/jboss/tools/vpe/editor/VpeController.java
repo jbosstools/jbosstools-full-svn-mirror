@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -113,6 +115,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.VpeMenuCreator;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.mozilla.MozillaEventAdapter;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaEventListener;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
@@ -329,7 +332,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			textWidget.addSelectionListener(this);
 		}
 
-		visualEditor.setEditorDomEventListener(this);
+		registerEventTargets();
 		switcher.initActiveEditor();
 
 		if (optionsListener == null) {
@@ -424,7 +427,7 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			dropWindow.setEditor(null);
 		}
 		if (visualEditor != null) {
-			visualEditor.setEditorDomEventListener(null);
+			unregisterEventTargets();
 			if (visualSelectionController != null) {
 				// visualSelectionController.Release();
 				visualSelectionController = null;
@@ -453,6 +456,40 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			relativeFolderReferenceListListener.removeChangeListener(this);
 		}
 		toolbarFormatControllerManager = null;
+	}
+
+	private void registerEventTargets() {
+		if (visualEditor != null) {
+			visualEditor.setResizeListener(this);
+			visualEditor.setTooltipListener(this);
+
+			MozillaEventAdapter mozillaEventAdapter
+					= visualEditor.getMozillaEventAdapter();
+			if (mozillaEventAdapter != null) {
+				mozillaEventAdapter.addContextMenuListener(this);
+				mozillaEventAdapter.addDndListener(this);
+				mozillaEventAdapter.addKeyListener(this);
+				mozillaEventAdapter.addMouseListener(this);
+				mozillaEventAdapter.addSelectionListener(this);
+			}
+		}
+	}
+
+	private void unregisterEventTargets() {
+		if (visualEditor != null) {
+			visualEditor.setResizeListener(null);
+			visualEditor.setTooltipListener(null);
+			
+			MozillaEventAdapter mozillaEventAdapter
+					= visualEditor.getMozillaEventAdapter();
+			if (mozillaEventAdapter != null) {
+				mozillaEventAdapter.removeContextMenuListener(this);
+				mozillaEventAdapter.removeDndListener(this);
+				mozillaEventAdapter.removeKeyListener(this);
+				mozillaEventAdapter.removeMouseListener(this);
+				mozillaEventAdapter.removeSelectionListener(this);
+			}
+		}
 	}
 
 	// INodeAdapter implementation
@@ -2870,7 +2907,6 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 			visualEditor.reinitDesignMode();
 
 			visualBuilder.setSelectionRectangle(null);
-			visualEditor.setEditorDomEventListener(this);
 			IDOMModel sourceModel = (IDOMModel) getModel();
 			if (sourceModel != null) {
 				IDOMDocument sourceDocument = sourceModel.getDocument();

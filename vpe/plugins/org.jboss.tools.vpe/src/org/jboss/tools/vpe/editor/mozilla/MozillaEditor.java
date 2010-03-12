@@ -61,7 +61,6 @@ import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
-import org.jboss.tools.vpe.editor.mozilla.listener.MozillaEventListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
@@ -118,13 +117,13 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
-	private nsIDOMEventTarget documentEventTarget;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
-	private MozillaEventAdapter mozillaEventAdapter;
+	private MozillaEventAdapter mozillaEventAdapter
+			= createMozillaEventAdapter();
 
 	private EditorLoadWindowListener editorLoadWindowListener;
-	private MozillaEventListener mozillaEventListener;
+
 	private IVpeToolBarManager vpeToolBarManager;
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
 	private VpeController controller;
@@ -178,6 +177,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private nsIEditor editor;
 	private VpeDropDownMenu dropDownMenu = null;
 	private ToolBar verBar = null;
+	private MozillaResizeListener resizeListener;
+	private MozillaTooltipListener tooltipListener;
 
 	public void doSave(IProgressMonitor monitor) {
 	}
@@ -751,51 +752,27 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 //		removeDomEventListeners();
 		if(getController()!=null) {
 			controller.dispose();
-			controller=null;
+			controller = null;
 		}
 		if (xulRunnerEditor != null) {
 			xulRunnerEditor.dispose();
 			xulRunnerEditor = null;
 		}
 
-		this.controller = null;
 		formatControllerManager.setVpeController(null);
 		formatControllerManager=null;
 		headNode = null;
 		contentArea = null;
 		super.dispose();
-		
 	}
 
 	public void setEditorLoadWindowListener(EditorLoadWindowListener listener) {
 		editorLoadWindowListener = listener;
 	}
 
-	public void setEditorDomEventListener(MozillaEventListener listener) {
-		if (mozillaEventAdapter != null) {
-			if (mozillaEventListener != null) {
-				mozillaEventAdapter.removeContextMenuListener(mozillaEventListener);
-				mozillaEventAdapter.removeDndListener(mozillaEventListener);
-				mozillaEventAdapter.removeKeyListener(mozillaEventListener);
-				mozillaEventAdapter.removeMouseListener(mozillaEventListener);
-				mozillaEventAdapter.removeContextMenuListener(mozillaEventListener);
-			}
-
-			mozillaEventListener = listener;
-			if (mozillaEventListener != null) {
-				mozillaEventAdapter.addContextMenuListener(mozillaEventListener);
-				mozillaEventAdapter.addDndListener(mozillaEventListener);
-				mozillaEventAdapter.addKeyListener(mozillaEventListener);
-				mozillaEventAdapter.addMouseListener(mozillaEventListener);
-				mozillaEventAdapter.addSelectionListener(mozillaEventListener);
-			}
-		}
-	}
-
 	public nsIDOMDocument getDomDocument() {
 			return xulRunnerEditor.getDOMDocument();
 	}
-	
 
 	public nsIDOMElement getContentArea() {
 		return contentArea;
@@ -887,25 +864,27 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	private void onLoadWindow() {
 		contentArea = findContentArea();
-		addListeners();
+		attachMozillaEventAdapter();
 		if (editorLoadWindowListener != null) {
 			editorLoadWindowListener.load();
 		}
 	}
+	
+	protected MozillaEventAdapter createMozillaEventAdapter() {
+		return new MozillaEventAdapter();
+	}
 
-	protected void addListeners() {
+	protected void attachMozillaEventAdapter() {
 		if (contentArea != null) {
 //			getContentAreaEventListener().setVisualEditor(xulRunnerEditor);
 			nsIDOMWindow window = xulRunnerEditor.getWebBrowser().getContentDOMWindow();
-			getMozillaEventAdapter().attach(window, (nsIDOMEventTarget) contentArea.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID));
+			mozillaEventAdapter.attach(window, (nsIDOMEventTarget) contentArea.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID));
 		}
 	}
 
-	protected void removeListeners() {
-		getMozillaEventAdapter().detach();
+	void detachMozillaEventAdapter() {
+		mozillaEventAdapter.detach();
 //		getContentAreaEventListener().setVisualEditor(null);
-		mozillaEventAdapter = null;
-		documentEventTarget = null;
 	}
 
 	public void setSelectionRectangle(/*nsIDOMElement*/nsIDOMNode element, int resizerConstrains, boolean scroll) {
@@ -947,13 +926,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return controller;
 	}
 
-	/**
-	 * @return the contentAreaEventListener
-	 */
-	protected MozillaEventAdapter getMozillaEventAdapter() {
-		if(mozillaEventAdapter == null) {
-			mozillaEventAdapter = new MozillaEventAdapter();
-		}
+	public MozillaEventAdapter getMozillaEventAdapter() {
 		return mozillaEventAdapter;
 	}
 	
@@ -961,10 +934,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 * 
 	 */
 	public void onReloadWindow() {
-		removeListeners();
+		detachMozillaEventAdapter();
 		xulRunnerEditor.removeResizerListener();
 		contentArea = findContentArea();
-		addListeners();
+		attachMozillaEventAdapter();
 		xulRunnerEditor.addResizerListener();
 		controller.reinit();
 	}
@@ -1094,16 +1067,24 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			rotateEditorsAction.setToolTipText(layoutNames.get(prefsOrientation));
 		}
 	}
-	
+
 	public void updateShowSelectionBarItem(boolean checked) {
 		showSelectionBarAction.setChecked(checked);
 	}
 
-	public MozillaResizeListener getResizeListener() {
-		return mozillaEventListener;
+	public void setResizeListener(MozillaResizeListener resizeListener) {
+		this.resizeListener = resizeListener;
 	}
-	
+
+	public void setTooltipListener(MozillaTooltipListener tooltipListener) {
+		this.tooltipListener = tooltipListener;
+	}
+
+	public MozillaResizeListener getResizeListener() {
+		return resizeListener;
+	}
+
 	public MozillaTooltipListener getTooltipListener() {
-		return mozillaEventListener;
+		return tooltipListener;
 	}
 }
