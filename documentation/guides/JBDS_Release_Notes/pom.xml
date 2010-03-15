@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.tools</groupId>
-    <artifactId>converter-ref-guide${translation}</artifactId>
+    <artifactId>release_notes${translation}</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jdocbook</packaging>
     <name>Release_Notes</name>
