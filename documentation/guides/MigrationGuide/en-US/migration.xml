@@ -11,16 +11,16 @@
     </chapterinfo>
     
     <title>Migration Process</title>
-    <para>In this chapter you can find concise description of JBoss Developer Studio migration from
-        2.1.0 to 3.0.0 version.</para>
+    <para>This chapter describes the JBoss Developer Studio migration from version
+        2.1 to 3.0.</para>
     <section id="migration">  
-        <title>How to migrate from 2.1 to 3.0.0 JBoss Developer Studio</title> 
+	    <title>How to migrate the JBoss Developer Studio from 2.1 to 3.0</title> 
         <para></para>
-        <para>To migrate from 2.1 to 3.0.0 you have to install a fresh JBDS 3.0.0 and go through all the steps of
+        <para>To migrate from 2.1 to 3.0 you have to perform a new install of the JBoss Developer Studio 3.0 and undertake all the steps of the
             installation process that is fully described in 
-            <ulink url="gsglink">Getting Started with JBoss Developer Studio</ulink> guide.</para>
+	    <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/Getting_Started_Guide/html_single/index.html">Getting Started with JBoss Developer Studio</ulink> guide.</para>
         <figure>
-            <title>Process of JBDS 3.0.0 installation </title>
+            <title>Process of JBDS 3.0 installation </title>
             
             <mediaobject>
                 <imageobject>
@@ -28,26 +28,13 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Now you can not update your JBDS 2.X to 3.0.0 using update site (https://devstudio.jboss.com/updates/3.0/ ), as it was available in previous versions:</para>
-        <figure>
-            <title>Installation from the update site</title>
-            
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/migration-guide-step-1.png" />
-                </imageobject>
-            </mediaobject>
-        </figure>
-        <para>The reason is that JBDS 3.0 uses Eclipse 3.5, whereas JBDS 2.x uses Eclipse 3.4.
-        Because of this platform change, a full installation is required to migrate. </para>
-        <para>When the installation process is complete you can point your JBDS 3.0.0 at your old workspace directory and continue working with your projects created using previous 
-            JBDS/Tools versions, or create a new one and import old projects into the new workspace.
+        <para>Since JBoss Developer Studio 3.0 uses a new version of Eclipse, an update from within Eclipse cannot be performed as it was when upgrading from JBoss Developer Studio 2.0 to 2.1.</para>
+        <para>When the installation process is complete you can point to your old workspace directory and continue working with your projects created using previous JBoss Developer Studio versions, or create a new one and import old projects into the new workspace.
         </para>
         
         <note>
             <title>Note:</title>
-            <para>In JBDS 3.0.0 Linux users no longer need to install the library libstdc+.so.5 on their mashines.
-                Now this library is not required and can be removed from the system. 
+            <para>In JBDS 3.0, Linux users no longer need to install the library <filename>libstdc+.so.5</filename>. This library is no longer required and can be removed from the system. 
             </para>
         </note>
     </section>
