@@ -13,9 +13,9 @@
 		<para>
 			jBPM supports the jBPM Process Definition Language (jPDL) and includes a perspective for easy creation and manipulation using the jPDL. Through this view you can add states, transitions and other processes and waypoints in order to create your own business workflow. Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/jBPM_Tools_Reference_Guide/html_single/index.html#minimal_process_definition">A Minimal Process Definition</ulink> section of the <citetitle pubwork="chapter">Creating an Empty Process Definition</citetitle> chapter within the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for more details.
 		</para>
-		<para>
+	<!--	<para>
 			Refer to the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for further details.
-		</para>
+		</para> -->
 	</section>
 	
 	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-ESB_Editor">
@@ -59,7 +59,7 @@
 			</para>
 		</formalpara>
 		<para>
-			Refer to the <citetitle pubwork="chapter">ESB Editor</citetitle> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle> for further information.
+			Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#esb_editor">ESB Editor</citetitle> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle> for further information.
 		</para>
 		<para>
 			JBoss ESB intergrates component messaging into the JBoss Service-Oriented Architecture, serving as an integral part of JBoss middleware suite. For information on how to use and configure JBoss ESB with the JBoss Service-Oriented Architecture refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#using_SOA">Using and Configuring SOA Platform</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle>.
