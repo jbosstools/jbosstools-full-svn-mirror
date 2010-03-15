@@ -74,7 +74,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			There will be two issues to fix before you can continue.
+			There may be two issues to fix before you can continue. The description for each of these will be  <guilabel>Target runtime JBoss 4.2.2 Runtime is not defined</guilabel> and <guilabel>Java compiler level does not match the version of the installed Java project facet</guilabel>. If they do not appear skip to <xref linkend="figu-Beginners_Guide-Workshops-Completed_fixing_the_issues"/>. If they do appear, the following steps will resolve these issues.  
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Quick_Fixes">
 			<title>Quick Fixes</title> 
@@ -90,7 +90,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			To fix the first issue with the description <guilabel>Target runtime JBoss 4.2.2 Runtime is not defined.</guilabel> click on this description and then click the <guibutton>Quick Fix</guibutton> button.
+			To fix the first issue with the description <guilabel>Target runtime JBoss 4.2.2 Runtime is not defined</guilabel> click on this description and then click the <guibutton>Quick Fix</guibutton> button.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Fixing_the_first_issue">
 			<title>Fixing the first issue</title> 
@@ -149,7 +149,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			To fix the second issue with the description <guilabel>Java compiler level does not match the version of the installed Java project facet.</guilabel> click on this description and then click the <guibutton>Quick Fix</guibutton> button.
+			To fix the second issue with the description <guilabel>Java compiler level does not match the version of the installed Java project facet</guilabel> click on this description and then click the <guibutton>Quick Fix</guibutton> button.
 		</para>
 		<para>
 			After clicking the <guibutton>Quick Fix</guibutton> button the Java compiler issue should disappear because the <application>JBoss Developer Studio</application> has made the necessary changes in the background to fix it.

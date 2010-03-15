@@ -31,7 +31,7 @@
 						</mediaobject>
 					</figure>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+						Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/Visual_Web_Tools_Reference_Guide/html_single/index.html#jbds_editors">Editors</ulink> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
 					</para>
 				</listitem>
 			</varlistentry>
