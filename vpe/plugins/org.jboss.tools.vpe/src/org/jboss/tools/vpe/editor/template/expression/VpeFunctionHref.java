@@ -36,7 +36,7 @@ public class VpeFunctionHref extends VpeFunctionSrc {
 	public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 	String tagValue = getParameter(0).exec(pageContext, sourceNode).stringValue();
 
-	tagValue = resolveEL(pageContext,tagValue);
+	//tagValue = resolveEL(pageContext,tagValue);
 	
 	IPath tagPath = new Path(tagValue);
 	if (tagPath.isEmpty()) {
