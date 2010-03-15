@@ -11,7 +11,7 @@
 			jBPM is a workflow tool for framework control over business processes and languages.
 		</para>
 		<para>
-			jBPM supports the jBPM Process Definition Language (jPDL) and includes a perspective for easy creation and manipulation using the jPDL. Through this view you can add states, transitions and other processes and waypoints in order to create your own business workflow. Refer to the <citetitle pubwork="section">A Minimal Process Definition</citetitle> section of the <citetitle pubwork="chapter">Creating an Empty Process Definition</citetitle> chapter within the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for more details.
+			jBPM supports the jBPM Process Definition Language (jPDL) and includes a perspective for easy creation and manipulation using the jPDL. Through this view you can add states, transitions and other processes and waypoints in order to create your own business workflow. Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/jBPM_Tools_Reference_Guide/html_single/index.html#minimal_process_definition">A Minimal Process Definition</ulink> section of the <citetitle pubwork="chapter">Creating an Empty Process Definition</citetitle> chapter within the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for more details.
 		</para>
 		<para>
 			Refer to the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for further details.
@@ -62,7 +62,7 @@
 			Refer to the <citetitle pubwork="chapter">ESB Editor</citetitle> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle> for further information.
 		</para>
 		<para>
-			Allowing for the value of messaging between middleware components to be used and intergrated into the JBoss Service-Oriented Architecture, the JBoss ESB is an integral part of JBoss middleware integration. For information on how to use and configure JBoss ESB with the JBoss Service-Oriented Architecture refer to the <citetitle pubwork="chapter">Using and Configuring SOA Platform</citetitle> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle>.
+			JBoss ESB intergrates component messaging into the JBoss Service-Oriented Architecture, serving as an integral part of JBoss middleware suite. For information on how to use and configure JBoss ESB with the JBoss Service-Oriented Architecture refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#using_SOA">Using and Configuring SOA Platform</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle>.
 		</para>
 	</section>
 	
@@ -72,7 +72,7 @@
 			JBoss Web Services is an integral part of the JBoss Application Server and JBoss Enterprise Application Platform, providing a standard means of working reliably between different software applications.
 		</para>
 		<para>
-			A Web Service defines a collection of technologies that provide protocols and standards for the exchange of data between applications. You can create a Web Service for your application server through the use of wizards in the <application>JBoss Developer Studio</application>. For further details refer to the <citetitle pubwork="chapter">Creating a Web Service using JBossWS runtime</citetitle> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle>
+			A Web Service defines a collection of technologies that provide protocols and standards for the exchange of data between applications. You can create a Web Service for your application server through the use of wizards in the <application>JBoss Developer Studio</application>. For further details refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/JBoss_Web_Services_User_Guide/html_single/index.html#topdownwebservice">Creating a Web Service using JBossWS runtime</ulink> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle>
 		</para>
 		<figure id="figu-Beginners_Guide-Web_Services_Tools-Example_of_a_Web_Services_wizard">
 			<title>Example of a Web Services wizard</title>
@@ -101,7 +101,7 @@
 			Drools is a Business Rule Management System (BRMS) that uses an enhanced implementation of the Rete algorithm to become a forward chaining inference based rules engine (production rule system). Refer to the <citetitle pubwork="chapter">The Rule Engine</citetitle> chapter of the JBoss Enterprise SOA <citetitle pubwork="book">JBoss Rules Reference Guide</citetitle> for more details.
 		</para>
 		<para>
-			Drools Tools includes wizards for creating new Drools projects and resources. The resources that can be created include a new rule, domain specific language, decision table and business rule. After these have been created there are numerous editors included to assist you with the rest of the development. Included editors are The Rule editor, The Domain Specific Language editor, The Rule Flow graphical editor and The Guided editor that provides a Graphical User Interface (GUI). Refer to the <citetitle pubwork="book">Drools Tools Reference Guide</citetitle> for more details.
+			Drools Tools includes wizards for creating new Drools projects and resources. The resources that can be created include a new rule, domain specific language, decision table and business rule. After these have been created there are numerous editors included to assist you with the rest of the development. Included editors are The Rule editor, The Domain Specific Language editor, The Rule Flow graphical editor and The Guided editor that provides a Graphical User Interface (GUI). Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/Drools_Tools_Reference_Guide/html_single/index.html">Drools Tools Reference Guide</ulink> for more details.
 		</para>
 		<figure id="figu-Beginners_Guide-Drools_Tools-Rule_text_editor">
 			<title>Rule text editor</title>
