@@ -129,8 +129,12 @@ public class VpeTest extends TestCase implements ILogListener {
 		}
    
         closeEditors();
-
+	    
         Platform.removeLogListener(this);
+    
+    	if (getException() != null) {
+			throw new Exception(getException());
+		}
         
         super.tearDown();
 
