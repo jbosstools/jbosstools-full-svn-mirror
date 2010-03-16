@@ -51,6 +51,6 @@
  <!--  	&NewFeatures; -->
 	&ComponentVersions;
 	&FixedIssues;
-<!--	&KnownIssues; -->
+    &KnownIssues;
 
 </article> 

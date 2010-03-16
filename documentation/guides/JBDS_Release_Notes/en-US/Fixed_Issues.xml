@@ -175,7 +175,12 @@
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5124">JBIDE-5124</ulink>: In the Hibernate Diagram Viewer new functionality has been added that allows a user to choose between two different connection routers: Manhattan connection router for small diagrams and Fan connection router for larger diagrams.
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5124">
+							JBIDE-5124</ulink>: In the Hibernate Diagram Viewer new 
+							functionality has been added that allows a user to choose between 
+							two different connection routers: Manhattan connection router for 
+							small diagrams and Fan connection router for larger diagrams
+							(<guimenuitem>View -> Show connections as routed, Show Connections</guimenuitem> as streight lines).
 						</para>
 					</listitem>
 					<listitem>
