@@ -180,7 +180,14 @@
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5031">JBIDE-5031</ulink>: To close a database connection a user would have to close the <application>JBoss Developer Studio</application> and then restart the application to continue work without the connection. The database connection can now be closed from within the <application>JBoss Developer Studio</application> by choosing the <guimenuitem>Close Configuration</guimenuitem> menu item from the right-click menu in <guilabel>Hibernate Configurations</guilabel> tab.
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5031">JBIDE-5031</ulink>:
+							To close a database connection a user would have to close the
+							<application>JBoss Developer Studio</application> and then restart the application 
+							to continue work without the connection.
+							The database connection can now be closed from within the 
+							<application>JBoss Developer Studio</application> by choosing the
+							<guimenuitem>Close Configuration</guimenuitem> menu item 
+							in <guilabel>Hibernate Console context menu</guilabel> located in Hibernate Configurations View.
 						</para>
 					</listitem>
 					<listitem>
@@ -460,7 +467,7 @@
 				<itemizedlist>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5275">JBIDE-5259</ulink>: The Smooks configuration has received a test facility through the modification of the <guibutton>Run</guibutton> button to output a java result to the <guilabel>Console</guilabel>. This allows a user to test Smooks projects in a simplified way.
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5259">JBIDE-5259</ulink>: The Smooks configuration has received a test facility through the modification of the <guibutton>Run</guibutton> button to output a java result to the <guilabel>Console</guilabel>. This allows a user to test Smooks projects in a simplified way.
 						</para>
 					</listitem>
 					<listitem>
