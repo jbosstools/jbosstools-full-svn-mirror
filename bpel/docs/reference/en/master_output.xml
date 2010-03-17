@@ -438,12 +438,12 @@
         <para>Suppose you have installed the <property moreinfo="none">JBoss BPEL Runtime-RiftSaw</property>, now you can create a server for JBoss BPEL runtime.</para>
         <itemizedlist>
             <listitem>
-                <para>Open the <property moreinfo="none">JBoss Server view</property> by selecting 
-                    <emphasis><property moreinfo="none">Windows &gt; Show View &gt; Other... &gt; Server &gt; JBoss Server view</property></emphasis>.
+                <para>Open the <property moreinfo="none">Servers</property> view by selecting 
+                    <emphasis><property moreinfo="none">Windows &gt; Show View &gt; Other... &gt; Server &gt; Servers</property></emphasis>.
                 </para>                
             </listitem>
             <listitem>
-                <para>Right-click the JBoss Server view and select  
+                <para>Right-click the Servers view and select  
                     <emphasis><property moreinfo="none">New &gt; Server</property></emphasis> to open the New Server Wizard: 
                 </para>
                 <figure float="0">
