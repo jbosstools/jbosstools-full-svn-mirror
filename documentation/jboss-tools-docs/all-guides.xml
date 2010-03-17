@@ -33,7 +33,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			<!--fileSet>
+			<fileSet>
 				<directory>index/target/docbook/publish/en-US/html_single/</directory>
 				<outputDirectory>../</outputDirectory>
 				<filtered>false</filtered>
@@ -45,7 +45,7 @@
 				<useDefaultExcludes>true</useDefaultExcludes>
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
-			</fileSet-->
+			</fileSet>
 			<fileSet>
 				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
 				<outputDirectory>/Exadel-migration</outputDirectory>
