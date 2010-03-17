@@ -9,7 +9,7 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.common.el.ui;
+package org.jboss.tools.vpe.editor.preferences;
 
 import java.util.List;
 
