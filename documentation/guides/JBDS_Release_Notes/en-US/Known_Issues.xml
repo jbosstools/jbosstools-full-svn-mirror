@@ -12,6 +12,11 @@
 				<itemizedlist>
 					<listitem>
 						<para>
+							<ulink url="https://jira.jboss.org/jira/browse/JBDS-1155">JBDS-1155</ulink>: EAR projects that use classpath variable references to JAR files get packaged in <filename>/lib/lib</filename> instead of <filename>/lib</filename>. This is due to a bug in Eclipse WTP, for which a bug fix will be released shortly. Until the bug fix is made available, it is possible to avoid this issue by editing the <filename>.settings/org.eclipse.wst.common.component</filename> file and removing the <property>archiveName</property> attributes.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
 							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3623">JBIDE-3623</ulink>: If you use the community Seam versions 2.1.0.SP1 or 2.1.1 TestNG for WAR projects they will fail with the error <errorname>Two components with the same name and precedence</errorname>. There is no known workaround, however all other Seam releases work correctly and all Seam 2.1 EAR projects are successful.
 						</para>
 					</listitem>
@@ -24,11 +29,6 @@
 								Disabling validation has the potential to remove useful warning information.
 							</para>
 						</important>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="https://jira.jboss.org/jira/browse/JBDS-1155">JBDS-1155</ulink>: EAR projects that use classpath variable references to JAR files get packaged in <filename>/lib/lib</filename> instead of <filename>/lib</filename>. This is due to a bug in Eclipse WTP, for which a bug fix will be released shortly. Until the bug fix is made available, it is possible to avoid this issue by editing the <filename>.settings/org.eclipse.wst.common.component</filename> file and removing the <property>archiveName</property> attributes.
-						</para>
 					</listitem>
 				</itemizedlist>
 			</para>
