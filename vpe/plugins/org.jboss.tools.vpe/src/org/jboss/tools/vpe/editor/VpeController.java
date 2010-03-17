@@ -197,6 +197,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 	private boolean mouseDownSelectionFlag;
 	private boolean sourceChangeFlag;
 	private boolean commentNodeChanged;
+	private int commentRemoveCount = 0;
+	private int commentAddCount = 0;
 	private VpePageContext pageContext;
 	private BundleMap bundle;
 	private VpeEditorPart editPart;
@@ -705,6 +707,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 					 * we should remove all parent nodes from vpe cash
 					 */
 					visualBuilder.removeNode((Node) newValue);
+					commentAddCount--;
+				} else if (newValue instanceof Node && Node.COMMENT_NODE == ((Node) newValue).getNodeType()) {
+					commentAddCount++;
 				}
 				break;
 
@@ -715,9 +720,11 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				 * structure, only the comment node should be updated.
 				 */
 				if (Node.COMMENT_NODE == ((Node) feature).getNodeType()) {
+					commentRemoveCount++;
 					visualBuilder.updateNode((Node) feature);
 					commentNodeChanged = true;
 				} else {
+					commentRemoveCount--;
 					visualBuilder.stopToggle((Node) feature);
 					visualBuilder.removeNode((Node) feature);
 				}
@@ -728,13 +735,20 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 				 * https://jira.jboss.org/jira/browse/JBIDE-4102 Do not update
 				 * parent tag when a comment was changed,
 				 */
-				if (!commentNodeChanged) {
+				
+				/*
+				 * https://jira.jboss.org/jira/browse/JBIDE-6067 Update if action
+				 * is connected with add or remove comment
+				 */
+				if (!commentNodeChanged ||(commentNodeChanged && (commentAddCount != 1 || commentRemoveCount != 1))) {
 					visualEditor.hideResizer();
 					visualBuilder.setSelectionRectangle(null);
 					visualBuilder.updateNode((Node) notifier);
 				} else {
 					commentNodeChanged = false;
 				}
+				commentAddCount = 0;
+				commentRemoveCount = 0;
 				break;
 			case INodeNotifier.CONTENT_CHANGED:
 				if (!sourceChangeFlag) {
