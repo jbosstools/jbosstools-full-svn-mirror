@@ -8,7 +8,6 @@ import java.util.Properties;
 
 import junit.framework.TestCase;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.KnownConfigurationsAdapter;
