@@ -1,879 +1,920 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <section id="Issues-fixed-in-this-release">
-		<title>
-			Features added and issues fixed in this release
-		</title>
-		
+	<title>
+		Features added and issues fixed in this release
+	</title>
+	
+	<para>
+		Following is a list of new and noteworthy features and bug fixes in this release:
+	</para>
+	<formalpara>
+		<title>Contexts and Dependency Injection (CDI)</title>
 		<para>
-			Following is a list of new and noteworthy features and bug fixes in this release:
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5770">JBIDE-5770</ulink>: The EL code completion icon has been updated to use the <application>JBoss Weld</application> icon.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5355">JBIDE-5355</ulink>: A Contexts and Dependency Injection Project Facet has been added to <application>JBoss Developer Studio</application>. This makes it possible to enable CDI support for a faceted project via the <guilabel>New Dynamic Web Project</guilabel> wizard or the <guilabel>Project Facets</guilabel> setting page available at <menuchoice><guimenuitem>Project</guimenuitem><guimenuitem>Properties</guimenuitem><guimenuitem>Project Facets</guimenuitem></menuchoice>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5276">JBIDE-5276</ulink>: The <guimenuitem>Add CDI Support</guimenuitem> and <guimenuitem>Remove CDI Support</guimenuitem> items have been added to the Project menu. 
+					</para>
+				</listitem>
+			</itemizedlist>
 		</para>
-		<formalpara>
-			<title>Contexts and Dependency Injection (CDI)</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5770">JBIDE-5770</ulink>: The EL code completion icon has been updated to use the <application>JBoss Weld</application> icon.
+	</formalpara>
+	<formalpara>
+		<title>ESB</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5653">JBIDE-5653</ulink>: The <guilabel>ESB Content Based Router </guilabel> dialog box has been modified so that the <guilabel>CBR Alias</guilabel> field is now mandatory, allowing the value of it to determine what other fields are available. The <guilabel>Rule Set</guilabel> field is now not required when a <guilabel>CBR Alias</guilabel> of Regex or XPath is provided, since with these alias the rules can be specified in-line and the <guilabel>Rule Language</guilabel> field is now set to apply only when the <guilabel>CBR Alias</guilabel> is Drools. The <guilabel>Rules Reload</guilabel> field will only apply when a <guilabel>Rule Set</guilabel> has been specified.
+					</para>
+					<para>
+						The table <guilabel>Route List</guilabel> found in the <guilabel>JBoss ESB Editor</guilabel> now lists the <emphasis>expression</emphasis> since this is a common undertaking by users.
+					</para>
+					<para>
+						In the <guilabel> Add Route To</guilabel> dialog box, the <guilabel>Service Category</guilabel> field has been made mandatory. Other changes to this dialog box include the <guilabel>Destination name</guilabel> only being required if the previous CBR action contained a <guilabel>Rule Set</guilabel> and if the CBR action did not contain a <guilabel>Rule Set</guilabel>, an <guilabel>Expression</guilabel> field is included.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5627">JBIDE-5627</ulink>: For this release of the <application>JBoss Developer Studio</application> variations of the <guilabel>Content Based Router</guilabel> menu have been added to the ESB editor for Drools, Drools XPath, Generic, XPath and Regex.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5548">JBIDE-5548</ulink>: In the ESB Configuration Editor, when selecting a JBR Listener, JBR Bus or JBR Provider, new functionality has been added to allow a user to configure the properties: <property>synchronous</property>, <property>serviceInvokerTimeout</property> and <property>asyncResponse</property> through the new child object <property>Config</property>. These new configurable properties allow a user increased control over the execution of the JBR components.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5547">JBIDE-5547</ulink>: In the ESB Configuration Editor, when selecting a FTP Listener in read-only mode new functionality has been added to allow a user to configure the properties: <property>maxNodes</property>, <property>timeToLiveSeconds</property> and <property>maxAgeSeconds</property> through the new child object <property>Cache</property>. In addition the following properties have been added to allow a user to select their own values for the: <property>Class</property>, <property>Config File</property> and <property>Cache Listener</property> available through the new child object <property>Remote Filesystem Strategy</property>. These new configurable properties allow a user increased control over the execution of the FTP Listener.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5489">JBIDE-5489</ulink>: For the <guilabel>BPMProcessor</guilabel> within the ESB Editor, the <property>Command</property> property has been modified to include possible values of <emphasis>NewProcessInstanceCommand</emphasis>, <emphasis>StartProcessCommand</emphasis> and <emphasis>CancelProcessInstanceCommand</emphasis> in a drop-down box.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5486">JBIDE-5486</ulink>: When a user would try to open an editor for a property that didn't exist nothing would occur. With this update, a <guilabel>New File</guilabel> wizard opens to guide the user through the creation of the property they were attempting to open. Once this is completed, the ESB Editor fields are then populated with the new file name and path for the property.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5427">JBIDE-5427</ulink>: In the ESB Editor, the items that displayed when right clicking and going to <menuchoice><guimenuitem>Provider</guimenuitem><guimenuitem>New</guimenuitem></menuchoice> were presented in a different order to those of the <menuchoice><guimenuitem>Listener</guimenuitem><guimenuitem>New</guimenuitem></menuchoice> list. To ensure consistency the <guimenuitem>Provider</guimenuitem> list of items has been reordered to match the <guimenuitem>Listener</guimenuitem> menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5229">JBIDE-5229</ulink>: ESB 4.7 that is contained within <application>JBoss SOA Platform 5.0</application> is now officially supported in this version of the <application>JBoss Developer Studio</application>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5191">JBIDE-5191</ulink>: The Smooks, Drools, jPDL, XSLT and Groovy editors have been linked to the ESB Editor, providing an improved user experience. <guibutton>Browse</guibutton> buttons that allow for file association and use have been added to the <property>Smooks Transformer</property>, <property>GroovyActionProcessor</property>, <property>Rule Set</property> and <property>Rule Language</property> properties.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5108">JBIDE-5108</ulink>: The JBoss Runtime Manager was setup to search for ESB Runtime files from a specified location regardless of how it was installed. This caused issue when the ESB Runtime was installed as a user defined runtime. The issue has been rectified by adding a <guilabel>Configuration</guilabel> field to the <guilabel>Preference</guilabel> page.  If the user sets the <guilabel>Configuration</guilabel> field to the home location of the <application>JBoss Enterprise Application Platform</application> or <application>JBoss SOA Platform</application>, there configuration combination will list all available configurations. If the user selects a standalone ESB Runtime location, the configuration combination will be empty and the user should ignore the field. The ESB runtime classpath container now gathers configuration information from the selected server runtime and then selects JARs accordingly or the  standalone ESB Runtime.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4730">JBIDE-4730</ulink>: The ESB project creation wizard receives a new logo following this update. Instead of using the generic <application>JBoss Developer Studio</application> logo within the ESB project wizard, a new ESB wizard logo is displayed.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4320">JBIDE-4320</ulink>: ESB projects are now Web Tools Platform (WTP) modules. This ensures that it is possible to use an ESB module inside a WAR or EAR archive within WTP. ESB project deployment has not been limited though and they can still be deployed as an individual module.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4168">JBIDE-4168</ulink>: The ability to select a directory using a browser window has been added for the FS Message Filter and the FTP Message filter attributes of <property>directory</property>, <property>post-directory</property> and <property>error-directory</property>. This added feature ensures that a user does not need to manually type the entire path to a directory but instead they just select the path from a browser.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2024">JBIDE-2024</ulink>: The <guilabel>Process</guilabel> field f the <guilabel>Action</guilabel> tab in the ESB now includes a <guibutton>Browse</guibutton> button that allows a user to select which method of the <classname>Action</classname> class should be used for the process. The list in the dialog will show all public methods that has a <property>Message</property> parameter. Multiple methods can be selected if necessary.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2023">JBIDE-2023</ulink>: The <guilabel>Class</guilabel> field of the <guilabel>Action</guilabel> tab now includes a <guibutton>Browse</guibutton> button that displays the possible classes that extend from the <classname>AbstractActionLifecycle</classname> class.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>jBPM</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5719">JBIDE-5719</ulink>:
+						Now users can create a new jBPM action by right clicking the source directory 
+						in Package Explorer and selecting <guilabel>New ->Other -> JBoss jBPM-> jBPM 3 Action Handler</guilabel>
+						.
+					</para>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4904">JBIDE-4904</ulink>:
+						The runtime preference pages of jBPM 3 and jBPM 4 started to be unified.	
+					</para>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5622">JBIDE-5622</ulink>:
+						Resolved the bug connected with the problem that  <guilabel>Generate
+						Task View</guilabel> did not remember the state of some edited fields. 
 						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5355">JBIDE-5355</ulink>: A Contexts and Dependency Injection Project Facet has been added to <application>JBoss Developer Studio</application>. This makes it possible to enable CDI support for a faceted project via the <guilabel>New Dynamic Web Project</guilabel> wizard or the <guilabel>Project Facets</guilabel> setting page available at <menuchoice><guimenuitem>Project</guimenuitem><guimenuitem>Properties</guimenuitem><guimenuitem>Project Facets</guimenuitem></menuchoice>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5276">JBIDE-5276</ulink>: The <guimenuitem>Add CDI Support</guimenuitem> and <guimenuitem>Remove CDI Support</guimenuitem> items have been added to the Project menu. 
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>ESB</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5653">JBIDE-5653</ulink>: The <guilabel>ESB Content Based Router </guilabel> dialog box has been modified so that the <guilabel>CBR Alias</guilabel> field is now mandatory, allowing the value of it to determine what other fields are available. The <guilabel>Rule Set</guilabel> field is now not required when a <guilabel>CBR Alias</guilabel> of Regex or XPath is provided, since with these alias the rules can be specified in-line and the <guilabel>Rule Language</guilabel> field is now set to apply only when the <guilabel>CBR Alias</guilabel> is Drools. The <guilabel>Rules Reload</guilabel> field will only apply when a <guilabel>Rule Set</guilabel> has been specified.
-						</para>
-						<para>
-							The table <guilabel>Route List</guilabel> found in the <guilabel>JBoss ESB Editor</guilabel> now lists the <emphasis>expression</emphasis> since this is a common undertaking by users.
-						</para>
-						<para>
-							In the <guilabel> Add Route To</guilabel> dialog box, the <guilabel>Service Category</guilabel> field has been made mandatory. Other changes to this dialog box include the <guilabel>Destination name</guilabel> only being required if the previous CBR action contained a <guilabel>Rule Set</guilabel> and if the CBR action did not contain a <guilabel>Rule Set</guilabel>, an <guilabel>Expression</guilabel> field is included.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5627">JBIDE-5627</ulink>: For this release of the <application>JBoss Developer Studio</application> variations of the <guilabel>Content Based Router</guilabel> menu have been added to the ESB editor for Drools, Drools XPath, Generic, XPath and Regex.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5548">JBIDE-5548</ulink>: In the ESB Configuration Editor, when selecting a JBR Listener, JBR Bus or JBR Provider, new functionality has been added to allow a user to configure the properties: <property>synchronous</property>, <property>serviceInvokerTimeout</property> and <property>asyncResponse</property> through the new child object <property>Config</property>. These new configurable properties allow a user increased control over the execution of the JBR components.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5547">JBIDE-5547</ulink>: In the ESB Configuration Editor, when selecting a FTP Listener in read-only mode new functionality has been added to allow a user to configure the properties: <property>maxNodes</property>, <property>timeToLiveSeconds</property> and <property>maxAgeSeconds</property> through the new child object <property>Cache</property>. In addition the following properties have been added to allow a user to select their own values for the: <property>Class</property>, <property>Config File</property> and <property>Cache Listener</property> available through the new child object <property>Remote Filesystem Strategy</property>. These new configurable properties allow a user increased control over the execution of the FTP Listener.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5489">JBIDE-5489</ulink>: For the <guilabel>BPMProcessor</guilabel> within the ESB Editor, the <property>Command</property> property has been modified to include possible values of <emphasis>NewProcessInstanceCommand</emphasis>, <emphasis>StartProcessCommand</emphasis> and <emphasis>CancelProcessInstanceCommand</emphasis> in a drop-down box.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5486">JBIDE-5486</ulink>: When a user would try to open an editor for a property that didn't exist nothing would occur. With this update, a <guilabel>New File</guilabel> wizard opens to guide the user through the creation of the property they were attempting to open. Once this is completed, the ESB Editor fields are then populated with the new file name and path for the property.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5427">JBIDE-5427</ulink>: In the ESB Editor, the items that displayed when right clicking and going to <menuchoice><guimenuitem>Provider</guimenuitem><guimenuitem>New</guimenuitem></menuchoice> were presented in a different order to those of the <menuchoice><guimenuitem>Listener</guimenuitem><guimenuitem>New</guimenuitem></menuchoice> list. To ensure consistency the <guimenuitem>Provider</guimenuitem> list of items has been reordered to match the <guimenuitem>Listener</guimenuitem> menu.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5229">JBIDE-5229</ulink>: ESB 4.7 that is contained within <application>JBoss SOA Platform 5.0</application> is now officially supported in this version of the <application>JBoss Developer Studio</application>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5191">JBIDE-5191</ulink>: The Smooks, Drools, jPDL, XSLT and Groovy editors have been linked to the ESB Editor, providing an improved user experience. <guibutton>Browse</guibutton> buttons that allow for file association and use have been added to the <property>Smooks Transformer</property>, <property>GroovyActionProcessor</property>, <property>Rule Set</property> and <property>Rule Language</property> properties.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5108">JBIDE-5108</ulink>: The JBoss Runtime Manager was setup to search for ESB Runtime files from a specified location regardless of how it was installed. This caused issue when the ESB Runtime was installed as a user defined runtime. The issue has been rectified by adding a <guilabel>Configuration</guilabel> field to the <guilabel>Preference</guilabel> page.  If the user sets the <guilabel>Configuration</guilabel> field to the home location of the <application>JBoss Enterprise Application Platform</application> or <application>JBoss SOA Platform</application>, there configuration combination will list all available configurations. If the user selects a standalone ESB Runtime location, the configuration combination will be empty and the user should ignore the field. The ESB runtime classpath container now gathers configuration information from the selected server runtime and then selects JARs accordingly or the  standalone ESB Runtime.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4730">JBIDE-4730</ulink>: The ESB project creation wizard receives a new logo following this update. Instead of using the generic <application>JBoss Developer Studio</application> logo within the ESB project wizard, a new ESB wizard logo is displayed.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4320">JBIDE-4320</ulink>: ESB projects are now Web Tools Platform (WTP) modules. This ensures that it is possible to use an ESB module inside a WAR or EAR archive within WTP. ESB project deployment has not been limited though and they can still be deployed as an individual module.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4168">JBIDE-4168</ulink>: The ability to select a directory using a browser window has been added for the FS Message Filter and the FTP Message filter attributes of <property>directory</property>, <property>post-directory</property> and <property>error-directory</property>. This added feature ensures that a user does not need to manually type the entire path to a directory but instead they just select the path from a browser.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2024">JBIDE-2024</ulink>: The <guilabel>Process</guilabel> field f the <guilabel>Action</guilabel> tab in the ESB now includes a <guibutton>Browse</guibutton> button that allows a user to select which method of the <classname>Action</classname> class should be used for the process. The list in the dialog will show all public methods that has a <property>Message</property> parameter. Multiple methods can be selected if necessary.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2023">JBIDE-2023</ulink>: The <guilabel>Class</guilabel> field of the <guilabel>Action</guilabel> tab now includes a <guibutton>Browse</guibutton> button that displays the possible classes that extend from the <classname>AbstractActionLifecycle</classname> class.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>Hibernate</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5824">JBIDE-5824</ulink>: The <filename>reveng.xml</filename> editor provided an option to <guilabel>Exclude column from reverse engineering</guilabel>. Selecting this option did not change any functioning of the column and the specified option should not have been part of the interface. This update removes the unnecessary option as to not confuse users.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5643">JBIDE-5643</ulink>: Within the <guilabel>Hibernate</guilabel> tab of the <filename>persistence.xml</filename> editor, the button beside the <guilabel>Configuration file</guilabel> line was labeled <guibutton>Browse</guibutton>. This was misleading as upon clicking the button the user would be asked setup a configuration file. To provide an improved user experience, the button has now been altered to be called <guibutton>Setup</guibutton> and correctly guides the user through configuration file creation.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5641">JBIDE-5641</ulink>: When specifying the persistence property: <property>&lt;property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"/&gt;</property>, an error could display saying that the <filename>hibernate.cfg.xml</filename> file could not be found. This occurred because the validator only considered full paths and not relative path naming. This has since been corrected through the modification of the <classname>HibernatePersistenceUnit</classname> class. 
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5499">JBIDE-5499</ulink>: Refactoring support has been added to <guilabel>Hibernate Code Generation Configurations</guilabel>. 
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5411">JBIDE-5411</ulink>: The <guilabel>New Hibernate XML Mapping file</guilabel> wizard used to show all available packages. This update ensures that only packages containing java classes are shown.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5408">JBIDE-5408</ulink>: Three issues are fixed:
-							<itemizedlist>
-								<listitem>
-									<para>
-										The new Hibernate XML Mapping file (<filename>hbm.xml</filename>) would rewrite all <filename>hbm.xml</filename> files without warning. To correct this the entire result is written into the systems' temporary directory and then the merge of results is conducted.
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										After the merge of results is conducted, clicking the <guibutton>Finish without Preview</guibutton> button should change the page, however this did not work. The <guibutton>Finish without Preview</guibutton> now works as expected.
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										After the merge, following the button clicks <guibutton>GoTo</guibutton>, <guibutton>Next</guibutton>, <guibutton>Back</guibutton> and then <guibutton>Finish</guibutton> would not work correctly. This method of steps now functions as users would expect.
-									</para>
-								</listitem>
-							</itemizedlist>
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5222">JBIDE-5222</ulink>: A new feature as been added that allows for support of <guilabel>filter configurations in closed projects</guilabel> for console configuration. This option is available through <menuchoice><guimenuitem>Preferences</guimenuitem><guimenuitem>Run/Debug</guimenuitem><guimenuitem>Launching</guimenuitem><guimenuitem>Launch Configurations</guimenuitem></menuchoice>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5124">JBIDE-5124</ulink>: In the Hibernate Diagram Viewer new functionality has been added that allows a user to choose between two different connection routers: Manhattan connection router for small diagrams and Fan connection router for larger diagrams.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5031">JBIDE-5031</ulink>: To close a database connection a user would have to close the <application>JBoss Developer Studio</application> and then restart the application to continue work without the connection. The database connection can now be closed from within the <application>JBoss Developer Studio</application> by choosing the <guimenuitem>Close Configuration</guimenuitem> menu item from the right-click menu in <guilabel>Hibernate Configurations</guilabel> tab.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4956">JBIDE-4956</ulink>: A feature has been added to the <guilabel>Mapping Diagram</guilabel> viewer so that it now displays relationships between database tables.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4916">JBIDE-4916</ulink>: An editor for the <filename>hibernate.properties</filename> file has been added to the <application>JBoss Developer Studio</application>. The editor supports content assist authoring.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4899">JBIDE-4899</ulink>: The <guilabel>Hibernate Configurations</guilabel> view was not updated after a hibernate console enabled project with console configuration was deleted from the workspace. This meant that the console configuration was not removed along with the project. This bug is rectified with this update.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4780">JBIDE-4780</ulink>: The <guilabel>Options</guilabel> tab now allows you to browse and set the <property>NamingStrategy</property> and <property>EntityResolver</property>. The console configuration option has also been updated to react when one of the packages of a referenced class changes.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4733">JBIDE-4733</ulink>: A new feature has been added that allows a user to select wheather JPA-Generate DDL should be executed in the database. Before this update this feature was automatic, always executing JPA-Generate in the database.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4715">JBIDE-4715</ulink>: A toggle button has been added to the Hibernate Mapping diagram to allow the outline view to be ordered either alphabetically or by the structure outlined in the file. The toggle button interface ensures the experience remains consistent across all tools included within the <application>JBoss Developer Studio</application>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4666">JBIDE-4662</ulink>: Annotations support has been added to Hibernate Tools. The addition of annotations support allows for interaction with the Eclipse Dali Java Persistence Tools Project plug-in.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4451">JBIDE-4451</ulink>: The option is now given to the user to enable the <guilabel>HQL Editor</guilabel> and <guilabel>Hibernate Criteria Editor</guilabel> to be dynamically updated when opening a new query instead of opening an instance of each editor for each query. This can be achieved by clicking the button of a tack  to the right of the <guilabel>Max results:</guilabel> drop-won box in the editor.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4450">JBIDE-4450</ulink>: The <guilabel>Properties</guilabel> view has been updated with a new property called <property>Tab name</property>. The addition of this property allows for a user to individually name each query tab, allowing for improved tab management.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4227">JBIDE-4227</ulink>: The <guimenuitem>Open Mapping File</guimenuitem> option now supports all possible configuration files. In the past only files called <filename>orm.xml</filename> have been supported and this update now provides increased user functionality.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>JavaServer Faces (JSF)</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5670">JBIDE-5670</ulink>: The <filename>faceleted-taglib</filename> tag library was not supported in <filename>*taglib.xml</filename> with XML Schema Definition (XSD). Support for this library has been added to this release of the <application>JBoss Developers Studio</application>, allowing for support of <application>JavaServer Faces 2</application>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5660">JBIDE-5660</ulink>: When setting the location of an <property>&lt;error-page&gt;</property> within <filename>web.xml</filename>, the location would not be recognized if it included a query string. For example the location <filename>views/error/error.xhtml</filename> would be valid, whereas the location <filename>/views/error/error.xhtml?statusCode=403</filename> would not be valid. This has been corrected by adding a test for a query string into the <filename>CheckResource.java</filename> file, allowing for locations to be specified that include a query string.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5471">JBIDE-5471</ulink>: <filename>web-facesconfig_2_0.xsd</filename> support has been added to the <guilabel>JavaServer Faces Configuration</guilabel> editor. This file provides the XML Schema for the JavaServer Faces Application Configuration File Version 2.0.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5381">JBIDE-5381</ulink>: Content Assist has been added for use with the elements defined using the default namespace.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5277">JBIDE-5277</ulink>: The options to Add and Remove JSF support have been added to the project menu.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5670">JBIDE-5237</ulink>: CSS Class Hyperlink for the <property>class</property> attribute of HTML tags would not search through CSS loaded using JSF tags (for example: &lt;a:loadStyle /&gt;). This has now been fixed so that the searching of CSS classes returns the correct user expected results.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5099">JBIDE-5099</ulink>: OpenOn support has been added for custom JSF 2.0 components.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5097">JBIDE-5097</ulink>: Content Assist did not support multiple namespaces with the same Uniform Resource Identifier (URI).This issue has been fixed by modifying <classname>XmlContextImpl</classname> class within the <filename>XmlContextImpl.java</filename> file from: <code>nameSpaces.get(region).put(nameSpace.getURI(), nameSpace);</code> to <code>nameSpaces.get(region).put(nameSpace.getPrefix(), nameSpace);</code>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5089">JBIDE-5089</ulink>: JSF Expression Language (EL) validation has been added for message bundles. This improves the performance of the <classname>PageContextFactory</classname>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5015">JBIDE-5015</ulink>: Support for JSF 2.0 composition components has been added in this update. 
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4978">JBIDE-4978</ulink>: JSF has been upgraded with the addition of Seam Expression Language (EL) support. This now allows for JSF EL validation to use all available EL resolvers, providing increased validation over past releases.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4978">JBIDE-4970</ulink>: <application>KBbuilder</application> now loads composite components from the JSF resource folders and adds them to the KB module. This allows for the components to be available for code assistance.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4771">JBIDE-4771</ulink>: The <property>Find Usages</property> function has been improved to provide information about methods when inside an EL expression. 
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2806">JBIDE-2806</ulink>: The Eclipse OpenOn feature that allows a user to click any reference to a template as if it was a hyperlink did not work if the template path was set using an EL variable. This limitation has now been corrected so that OpenOn works with all paths, including those set using the EL variable. This is a great advantage to users as the Expression Language variable is a frequently used feature.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-816">JBIDE-816</ulink>:  A bug existed within the JSF component of the <application>JBoss Developer Studio</application> where if a resource bundle is defined in a template page code completion for the bundle would not be available within the file that includes the template with the loadbundles. The workaround for this was to also define the resource bundle in this template client file, however that meant the same component was defined twice in the component tree. 
-						</para>
-						<para>
-							The bug has since been fixed by adding a schema for included page contexts. This schema enables the creation of contexts for all the pages included in the source and for the gathering of information on bundles declared in the included pages. The information collected is as follows:
-						</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Hibernate</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5824">JBIDE-5824</ulink>: The <filename>reveng.xml</filename> editor provided an option to <guilabel>Exclude column from reverse engineering</guilabel>. Selecting this option did not change any functioning of the column and the specified option should not have been part of the interface. This update removes the unnecessary option as to not confuse users.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5643">JBIDE-5643</ulink>: Within the <guilabel>Hibernate</guilabel> tab of the <filename>persistence.xml</filename> editor, the button beside the <guilabel>Configuration file</guilabel> line was labeled <guibutton>Browse</guibutton>. This was misleading as upon clicking the button the user would be asked setup a configuration file. To provide an improved user experience, the button has now been altered to be called <guibutton>Setup</guibutton> and correctly guides the user through configuration file creation.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5641">JBIDE-5641</ulink>: When specifying the persistence property: <property>&lt;property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"/&gt;</property>, an error could display saying that the <filename>hibernate.cfg.xml</filename> file could not be found. This occurred because the validator only considered full paths and not relative path naming. This has since been corrected through the modification of the <classname>HibernatePersistenceUnit</classname> class. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5499">JBIDE-5499</ulink>: Refactoring support has been added to <guilabel>Hibernate Code Generation Configurations</guilabel>. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5411">JBIDE-5411</ulink>: The <guilabel>New Hibernate XML Mapping file</guilabel> wizard used to show all available packages. This update ensures that only packages containing java classes are shown.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5408">JBIDE-5408</ulink>: Three issues are fixed:
 						<itemizedlist>
 							<listitem>
 								<para>
-									Namespaces that are declared
+									The new Hibernate XML Mapping file (<filename>hbm.xml</filename>) would rewrite all <filename>hbm.xml</filename> files without warning. To correct this the entire result is written into the systems' temporary directory and then the merge of results is conducted.
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									Tag libraries that are used
+									After the merge of results is conducted, clicking the <guibutton>Finish without Preview</guibutton> button should change the page, however this did not work. The <guibutton>Finish without Preview</guibutton> now works as expected.
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									Resource bundles that are declared
+									After the merge, following the button clicks <guibutton>GoTo</guibutton>, <guibutton>Next</guibutton>, <guibutton>Back</guibutton> and then <guibutton>Finish</guibutton> would not work correctly. This method of steps now functions as users would expect.
 								</para>
 							</listitem>
 						</itemizedlist>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-512">JBIDE-512</ulink>: The drop-down box for context variable code completion has been upgraded for enhanced usability. The source of the variable is now outlined during code completion and the code is highlighted in a different colour for improved reading and overall understanding of each file.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>RichFaces</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5743</ulink>: Content assistance in coding did not show anything for the tag <property>&lt;rich:menuItem ... icon="|" /&gt;</property>. The content assistance has been corrected by adding the <property>icon</property> attribute to the <filename>RichFaces.xml</filename> tag library.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5025">JBIDE-5025</ulink>: The RichFaces libraries have been updated to version 3.3.2.SR1.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>Seam</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5275">JBIDE-5275</ulink>: The <guimenuitem>Add Seam Support</guimenuitem> and <guimenuitem>Remove Seam Support</guimenuitem> items have been added to the Project menu. 
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5221">JBIDE-5221</ulink>: The <guilabel>JBoss Server View</guilabel> has now been replaced with the <guilabel>Server View</guilabel> in the Seam perspective. This has occurred out of the <guilabel>JBoss Server View</guilabel> being deprecated.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5192">JBIDE-5192</ulink>: The name of the editor when using the <guilabel>Diagram Viewer</guilabel> was a concatenation of the names of the diagram entities, leading to a long name in some cases. This issue has been corrected by modifying the <filename>OrmDiagram.java</filename> and <filename>DiagramViewer.java</filename> files to display a name from the following three options (based on the number of entities):
-							<itemizedlist>
-								<listitem>
-									<para>
-										Console name: Entity name 
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										Console name: First Entity name and Second Entity name 
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										Console name: First Entity name and &lt;number of other entities&gt; others
-									</para>
-								</listitem>
-							</itemizedlist>
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5170">JBIDE-5170</ulink>: When changing, adding or removing a Seam runtime from within <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>Seam</guimenuitem></menuchoice>, Seam projects would not be built or validated. The behavior has been changed to build and validate Seam projects upon changes in the <guimenuitem>Preferences</guimenuitem> section to ensure correct functioning of the project. The <filename>SeamRuntimeManager.java</filename> file was updated to correct this.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5012">JBIDE-5012</ulink>: The Booking and DVDStore Seam examples have been updated for Seam 2.2 within the <application>JBoss Enterprise Application Platform</application>. 
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4987">JBIDE-4987</ulink>: Seam and JPA Connection Profiles have been synchronized for this release.  The <filename>jpa-connection</filename> profile is used in the launch configuration instead of <filename>hibernate.properties</filename> if the JPA facet is installed.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4985">JBIDE-4985</ulink>: Seam projects now create a Hibernate configuration that uses the selected connection profile directly (without copying its settings into the <filename>hibernate.properties</filename> file).
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4944">JBIDE-4944</ulink>: The Seam wizards <guilabel>Action</guilabel>, <guilabel>Entity</guilabel> and <guilabel>Conversation</guilabel> had the ability to overwrite resources when they generated code. The wizards would warn the user that some resources already existed and yet overwrite them. This has been corrected through the modification of the <filename>SeamBaseOperation.java</filename> file.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4856">JBIDE-4856</ulink>: Seam component methods and properties used in the Expression Language (EL) have been refactored. This has caused the internal structure of the components to be modified so that the <classname>Query Participant</classname> works with the JDT Java Search to find usages and append them to search results. The <classname>Rename Participant</classname> has also been modified to work with the JDT Java Refactor to rename usages and apply changes to the Java Refactor, allowing for a user to rename a <emphasis>setter</emphasis> or <emphasis>getter</emphasis> method and have the <classname>Rename Participant</classname> warn the user of the consequences of renaming a paired method.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4136">JBIDE-4136</ulink>: Classloading issues were being faced by users of Seam Tools because the <application>JBoss Developer Studio</application> used the <filename>MANIFEST.MF</filename> file for creating an artifact classpath instead of using the EAR <filename>lib/</filename> directory that is recommended by Seam. Until now the <application>JBoss Developer Studio</application> has not been able to use the EAR <filename>lib/</filename> directory because this functionality has not been supported by Eclipse. With the introduction of Eclipse 3.5 in this release the use of the EAR <filename>lib/</filename> directory is now supported and the process of creating an artifact classpath has been updated.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2807">JBIDE-2807</ulink>: An option is now provided when creating a <guilabel>New Seam Project</guilabel>, to not create a test project. This has become an option since the Seam model does not require the test project to exist and so allows the user to decide if it is of importance. Selecting to create or not create a test project is achieved through the ticking of a <guilabel>Create Test Project</guilabel> check box within the <guilabel>New Seam Project</guilabel> wizard.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1452">JBIDE-1452</ulink>: Support has been added for the Seam PDF Facelet tag library. This Facelet library allows for PDF creation from within Seam.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1451">JBIDE-1451</ulink>: Support has been added for the Seam Mail Facelet tag library. This Facelet library allows for email forms to be created from within Seam. All components of the Facelet have been included except <property>mail:message</property> and <property>mail:body</property> as these components are rendered as divisions (using the &lt;div&gt; tag).
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1176">JBIDE-1176</ulink>: The Seam Web Project now supports the JPA facet. Addition of the Java Persistence API allows for the management of relational data within applications.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>Smooks</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5275">JBIDE-5259</ulink>: The Smooks configuration has received a test facility through the modification of the <guibutton>Run</guibutton> button to output a java result to the <guilabel>Console</guilabel>. This allows a user to test Smooks projects in a simplified way.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5088">JBIDE-5088</ulink>: When opening an existing Smooks configuration file it wouldn't contain any process information. To correct this an input task is automatically created and the Smooks configuration file is analyzed to add any missing task types if necessary. During the course of this update a <exceptionname>NullPointerException</exceptionname> was also fixed.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5086">JBIDE-5086</ulink>: A default layout is added in the Java-Mapping viewer. This allows for the layout of the information in the Smooks editor to be rearranged into a predefined default layout.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4878">JBIDE-4878</ulink>: The Smooks <guilabel>Reader</guilabel> page has been replaced with a new <guilabel>Input</guilabel> page. While the <guilabel>Input</guilabel> page inherits many functions from the <guilabel>Reader</guilabel> page there are some differences as follows:
-						</para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									The <guilabel>Reader</guilabel> page allowed for multiple Readers to be created. <guilabel>Input</guilabel> page only allows for one Reader. 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									The <guilabel>Reader</guilabel> page supported the addition of multiple input data , where each was usable. The <guilabel>Input</guilabel> page only allows for one piece of input data to be used, while still allowing for multiple pieces of input data.
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									The <guilabel>Reader</guilabel> page could view the transformation results of the Reader. The new <guilabel>Input</guilabel> page utilizes an input model view to check the transform result. 
-								</para>
-							</listitem>
-						</itemizedlist>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>Struts</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5278">JBIDE-5278</ulink>: The options to Add and Remove Struts support have been added to the project menu.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>Visual Page Editor</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5184">JBIDE-5184</ulink>: A memory leak existed in the Visual Page Editor. To fix this leak, the following plug-ins have been modified:
-						</para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									<filename>org.jboss.tools.vpe</filename>
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									<filename>org.jboss.tools.vpe.xulrunner</filename>
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									<filename>org.jboss.tools.jst.jsp</filename>
-								</para>
-							</listitem>
-						</itemizedlist>
-						<para>
-							The issues that caused the memory leak were:
-						</para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									<emphasis>JSPMultiPageEditorSite</emphasis>: The constructor created the <classname>serviceLocator</classname> that wasn't disposed of after use. 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									The <methodname>XulRunnerBrowser.dispose()</methodname> method would remove the <classname>progressListener</classname>, however this would only be done after all SWT objects and controls were already disposed. This meant the method had no effect. The dispose method is now called before the SWT objects and controls are disposed.
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									The <methodname>MozillaEditor.getEditor()</methodname> madethe Mozilla window editable using <methodname>nsIEditingSession.setupEditorOnWindow()</methodname>. To counteract this the objects created are now removed by using <methodname>nsIEditingSession.tearDownEditorOnWindow()</methodname>. 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									The <methodname>createPartControl()</methodname> method in the <classname>MozillaEditor</classname> and <classname>MozillaPreview</classname> classes create <classname>XullRunnerEditor</classname> as an inner class. The issue was that the <classname>XullRunnerEditor</classname> class retained a reference to <classname>MozillaEditor(MozillaPreview)</classname> that caused it not to be released and instead retain references to WST and EMF classes. This has now been corrected so that <classname>MozillaEditor(MozillaPreview)</classname> is now released after use and references are not retained.
-								</para>
-							</listitem>
-						</itemizedlist>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5100">JBIDE-5100</ulink>: Support for JSF 2.0 attributes have been added to the Visual Page Editor.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5091">JBIDE-5091</ulink>: Support for JSF 2.0 Composition components that come packaged into the Web Application Root has been added to the Visual Page Editor.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5065">JBIDE-5065</ulink>: The icons in the Visual Page Editor have been redesigned for improved aesthetic appearance.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4945">JBIDE-4945</ulink>: A new feature has been added to the Visual Page Editor that allows a user to select both the element before and the element after a central element. This has been achieved through the modification of the <filename>SelectionBar.java</filename> file. 
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4934">JBIDE-4934</ulink>: Facelets tag library support has been added to the <guilabel>Palette</guilabel> for the Visual Page Editor.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4914">JBIDE-4914</ulink>: The Visual Page Editor has been redesigned so that all drop-down menu items are placed in the toolbar as buttons.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4323">JBIDE-4323</ulink>: Zoom actions have been added to the visual context menu so that a user can now resize the content of the Visual Page Editor to make it easier to read and manage.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2820">JBIDE-2820</ulink>: Support for new JSF 2.0 elements has been added to the Visual Page Editor. The tags that are newly supported are:
-						</para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									h:head
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									h:body
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									h:outputscript
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									h:outputstyle
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									h:button 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									h:link 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									f:ajax 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									f:event 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									f:validateBean
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									f:validateRequired 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									f:viewParam 
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									f:metadata 
-								</para>
-							</listitem>
-						</itemizedlist>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2571">JBIDE-2571</ulink>: Selection of the <property>&lt;h:selectOneMenu&gt;</property> did not function correctly. Instead of being selected with one mouse click, two clicks were necessary. A bug was also present that made the nested components <property>&lt;f:selectItem&gt;</property> and <property>&lt;f:selectItems&gt;</property> unable to be selected from within the Visual Page Editor. Correction of the two clicks necessary to select the <property>&lt;h:selectOneMenu&gt;</property> component has been completed by removing the check within <filename>VpeController.java</filename> that ensures the node is of type text. The issue that did not allow for the selection of the <property>&lt;f:selectItem&gt;</property> and <property>&lt;f:selectItems&gt;</property> components was found to be a bug in XULRunner. To correct this the XULRunner component has been updated to version 1.9, which corrects this error and provides numerous other small bug fixes (<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2248">JBIDE-2248</ulink>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2248">JBIDE-2248</ulink>: The XULRunner component has been upgraded to version 1.9. This new version of XULRunner adds support for the newest HTML and CSS features to the Visual Page Editor. Included in this is support for CSS3.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1592">JBIDE-1592</ulink>: A new feature has been added that allows for Facelets tag libraries from <filename>file.jar/META-INF/*.tablib.xml</filename> or those that are registered within <filename>web.xml</filename> by the <filename>facelets.LIBRARIES</filename> context parameter to now be used within content assist for source editing in the Visual Page Editor.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-527">JBIDE-527</ulink>: A bug existed within the Visual Page Editor that inhibited the <guibutton>Previous</guibutton> and <guibutton>Next</guibutton> buttons for detected occurrences of searched annotations to not function correctly. The action of these buttons has now been corrected so that a user can navigate their way through all found occurrences of a searched annotation. This functionality works in the Visual Page Editor as it would work in a text editor.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>XHTML Editor</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4946">JBIDE-4946</ulink>: Tool tips for tags and attributes in the XHTML Editor have been added.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>XML Structured Editor</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5521">JBIDE-5521</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5426">JBIDE-5426</ulink>: The Servlet Mapping Editor <guilabel>Servlet-Name</guilabel> field has been improved with a drop-down menu to fill it in.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-		<formalpara>
-			<title>General Issues</title>
-			<para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5743</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5734">JBIDE-5734</ulink>: The shortcut keys for full publishing a project to the server and building a full archive have been combined under then shortcut key menu accessed with <keycombo><keycap>Alt</keycap><keycap>Shift</keycap><keycap>Y</keycap></keycombo>. From this menu press <keycap>F</keycap> to full publish the project or <keycap>B</keycap> to build the full archive.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5690">JBIDE-5690</ulink>: The <guibutton>Full-Publish</guibutton> hotkey would only accept the first module and re-deploy it to the first server the module is deployed on. For the user this meant that if the module was already deployed on several servers, using <guibutton>Full-Publish</guibutton> would only re-deploy it to the first server returned in the list. To solve this issue a user interface has been added for the <guibutton>Full-Publish</guibutton> hotkey that allows for the selection of the server to re-deploy to. During the implementation of this fix, the package has been renamed to XPL.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2541">JBIDE-5383</ulink>: Expression Language Code Assistance has been added for the <property>@Name</property> beans. This allows for users to begin typing code and for suggestions of automatic completion to be suggested, improving user efficiency.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5267</ulink>: The <application>JBoss Enterprise Application Platform</application> server would start correctly, however the <application>JBoss Developer Studio</application> would not acknowledge that it had started. To counteract this the <filename>JMXPoller.java</filename> timeout behavior has been modified to always return that the server succeeded in starting instead of ignoring the timeout. This fix ensures that a user is not informed that the server did not start correctly when it did.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5153">JBIDE-5153</ulink>: A <guilabel>JavaMain</guilabel> tab has been added to the tab group to allow for customization of the main class of the server. The changes to the main class are verified to persist by server startup checks.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5122">JBIDE-5122</ulink>: <guilabel>JBoss Servers View</guilabel> has been removed with this release. All the functionality provided by this view can be found in the <guilabel>Servers View</guilabel>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5048">JBIDE-5048</ulink>: SSH deployment has been added to the <application>JBoss Developer Studio</application> with this update. Specifically the following improvements have been made:
-						</para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									A server type has been created that accepts SSH deployment for Eclipse Web Tools Platform (WTP) archives
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									WTP, single-file and project archives can now be published
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									Java Secure Channel (JSch) errors are now verified
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									All situations return IStatus objects and their associated user interface (an IStatus object represents the outcome of an operation)
-								</para>
-							</listitem>
-						</itemizedlist>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5041">JBIDE-5041</ulink>: The <keycap>menu</keycap> key on the keyboard would not work in the <guilabel>Web Projects</guilabel> view, <guilabel>Seam Components</guilabel> view or JBoss Tools XML Editor. The functioning of this key has now been corrected so it behaves as a user would expect.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5005">JBIDE-5005</ulink>: A new export wizard has been added to the <application>JBoss Developer Studio</application>. The new wizard allows the export operation to utilize IModule objects. This added feature reduces redundancy and inconsistency for the export operation.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4976">JBIDE-4976</ulink>: The <guilabel>JBoss Tools Palette</guilabel> has been intergrated into the standard Eclipse GEF <guilabel>Palette</guilabel> view. The standard <guilabel>Palette</guilabel> view, accessible at <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Others</guimenuitem><guimenuitem>General</guimenuitem><guimenuitem>Palette</guimenuitem></menuchoice> is now shown in the right top part of the <guilabel>Web Development</guilabel> and <guilabel>Seam</guilabel> perspectives. The <guilabel>JBoss Tools Palette</guilabel> remains at <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Others</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>JBoss Tools Palette</guimenuitem></menuchoice>.
-						</para>
-						<para>
-							The differences in behavior between the palettes are:
-						</para>
-							<itemizedlist>
-								<listitem>
-									<para>
-										The new <guilabel>Palette</guilabel> is filled only when the <guilabel>Visual Page Editor</guilabel> is open and activated. The old palette remains static.
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-										The expanded and collapsed state of tabs in the new palette is associated with the opened instance of the <guilabel>Visual Page Editor</guilabel> and not globally set as they were in the old palette. This allows for the state of tabs to be different for individual files. Each new file opened in the <guilabel>Visual Page Editor</guilabel> will have the default <guilabel>Palette</guilabel> state with all tabs collapsed.	
-									</para>
-								</listitem>
-							</itemizedlist>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5222">JBIDE-5222</ulink>: A new feature as been added that allows for support of <guilabel>filter configurations in closed projects</guilabel> for console configuration. This option is available through <menuchoice><guimenuitem>Preferences</guimenuitem><guimenuitem>Run/Debug</guimenuitem><guimenuitem>Launching</guimenuitem><guimenuitem>Launch Configurations</guimenuitem></menuchoice>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5124">
+							JBIDE-5124</ulink>: In the Hibernate Diagram Viewer new 
+						functionality has been added that allows a user to choose between 
+						two different connection routers: Manhattan connection router for 
+						small diagrams and Fan connection router for larger diagrams
+						(<guimenuitem>View -> Show connections as routed, Show Connections</guimenuitem> as streight lines).
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5031">JBIDE-5031</ulink>:
+						To close a database connection a user would have to close the
+						<application>JBoss Developer Studio</application> and then restart the application 
+						to continue work without the connection.
+						The database connection can now be closed from within the 
+						<application>JBoss Developer Studio</application> by choosing the
+						<guimenuitem>Close Configuration</guimenuitem> menu item 
+						in <guilabel>Hibernate Console context menu</guilabel> located in Hibernate Configurations View.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4956">JBIDE-4956</ulink>: A feature has been added to the <guilabel>Mapping Diagram</guilabel> viewer so that it now displays relationships between database tables.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4916">JBIDE-4916</ulink>: An editor for the <filename>hibernate.properties</filename> file has been added to the <application>JBoss Developer Studio</application>. The editor supports content assist authoring.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4899">JBIDE-4899</ulink>: The <guilabel>Hibernate Configurations</guilabel> view was not updated after a hibernate console enabled project with console configuration was deleted from the workspace. This meant that the console configuration was not removed along with the project. This bug is rectified with this update.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4780">JBIDE-4780</ulink>: The <guilabel>Options</guilabel> tab now allows you to browse and set the <property>NamingStrategy</property> and <property>EntityResolver</property>. The console configuration option has also been updated to react when one of the packages of a referenced class changes.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4733">JBIDE-4733</ulink>: A new feature has been added that allows a user to select wheather JPA-Generate DDL should be executed in the database. Before this update this feature was automatic, always executing JPA-Generate in the database.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4715">JBIDE-4715</ulink>: A toggle button has been added to the Hibernate Mapping diagram to allow the outline view to be ordered either alphabetically or by the structure outlined in the file. The toggle button interface ensures the experience remains consistent across all tools included within the <application>JBoss Developer Studio</application>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4666">JBIDE-4662</ulink>: Annotations support has been added to Hibernate Tools. The addition of annotations support allows for interaction with the Eclipse Dali Java Persistence Tools Project plug-in.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4451">JBIDE-4451</ulink>: The option is now given to the user to enable the <guilabel>HQL Editor</guilabel> and <guilabel>Hibernate Criteria Editor</guilabel> to be dynamically updated when opening a new query instead of opening an instance of each editor for each query. This can be achieved by clicking the button of a tack  to the right of the <guilabel>Max results:</guilabel> drop-won box in the editor.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4450">JBIDE-4450</ulink>: The <guilabel>Properties</guilabel> view has been updated with a new property called <property>Tab name</property>. The addition of this property allows for a user to individually name each query tab, allowing for improved tab management.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4227">JBIDE-4227</ulink>: The <guimenuitem>Open Mapping File</guimenuitem> option now supports all possible configuration files. In the past only files called <filename>orm.xml</filename> have been supported and this update now provides increased user functionality.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>JavaServer Faces (JSF)</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5670">JBIDE-5670</ulink>: The <filename>faceleted-taglib</filename> tag library was not supported in <filename>*taglib.xml</filename> with XML Schema Definition (XSD). Support for this library has been added to this release of the <application>JBoss Developers Studio</application>, allowing for support of <application>JavaServer Faces 2</application>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5660">JBIDE-5660</ulink>: When setting the location of an <property>&lt;error-page&gt;</property> within <filename>web.xml</filename>, the location would not be recognized if it included a query string. For example the location <filename>views/error/error.xhtml</filename> would be valid, whereas the location <filename>/views/error/error.xhtml?statusCode=403</filename> would not be valid. This has been corrected by adding a test for a query string into the <filename>CheckResource.java</filename> file, allowing for locations to be specified that include a query string.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5471">JBIDE-5471</ulink>: <filename>web-facesconfig_2_0.xsd</filename> support has been added to the <guilabel>JavaServer Faces Configuration</guilabel> editor. This file provides the XML Schema for the JavaServer Faces Application Configuration File Version 2.0.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5381">JBIDE-5381</ulink>: Content Assist has been added for use with the elements defined using the default namespace.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5277">JBIDE-5277</ulink>: The options to Add and Remove JSF support have been added to the project menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5670">JBIDE-5237</ulink>: CSS Class Hyperlink for the <property>class</property> attribute of HTML tags would not search through CSS loaded using JSF tags (for example: &lt;a:loadStyle /&gt;). This has now been fixed so that the searching of CSS classes returns the correct user expected results.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5099">JBIDE-5099</ulink>: OpenOn support has been added for custom JSF 2.0 components.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5097">JBIDE-5097</ulink>: Content Assist did not support multiple namespaces with the same Uniform Resource Identifier (URI).This issue has been fixed by modifying <classname>XmlContextImpl</classname> class within the <filename>XmlContextImpl.java</filename> file from: <code>nameSpaces.get(region).put(nameSpace.getURI(), nameSpace);</code> to <code>nameSpaces.get(region).put(nameSpace.getPrefix(), nameSpace);</code>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5089">JBIDE-5089</ulink>: JSF Expression Language (EL) validation has been added for message bundles. This improves the performance of the <classname>PageContextFactory</classname>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5015">JBIDE-5015</ulink>: Support for JSF 2.0 composition components has been added in this update. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4978">JBIDE-4978</ulink>: JSF has been upgraded with the addition of Seam Expression Language (EL) support. This now allows for JSF EL validation to use all available EL resolvers, providing increased validation over past releases.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4978">JBIDE-4970</ulink>: <application>KBbuilder</application> now loads composite components from the JSF resource folders and adds them to the KB module. This allows for the components to be available for code assistance.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4771">JBIDE-4771</ulink>: The <property>Find Usages</property> function has been improved to provide information about methods when inside an EL expression. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2806">JBIDE-2806</ulink>: The Eclipse OpenOn feature that allows a user to click any reference to a template as if it was a hyperlink did not work if the template path was set using an EL variable. This limitation has now been corrected so that OpenOn works with all paths, including those set using the EL variable. This is a great advantage to users as the Expression Language variable is a frequently used feature.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-816">JBIDE-816</ulink>:  A bug existed within the JSF component of the <application>JBoss Developer Studio</application> where if a resource bundle is defined in a template page code completion for the bundle would not be available within the file that includes the template with the loadbundles. The workaround for this was to also define the resource bundle in this template client file, however that meant the same component was defined twice in the component tree. 
+					</para>
+					<para>
+						The bug has since been fixed by adding a schema for included page contexts. This schema enables the creation of contexts for all the pages included in the source and for the gathering of information on bundles declared in the included pages. The information collected is as follows:
+					</para>
+					<itemizedlist>
+						<listitem>
 							<para>
-								Though the behavior of the new palette is standard for Eclipse, for customers used to the globally set state of tabs and perfer to customize the palette before opening the <guilabel>Visual Page Editor</guilabel>, the old palette will remain accessible.
+								Namespaces that are declared
 							</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4955">JBIDE-4955</ulink>: BPEL and ESB projects can now be excluded from deployment through the addition of new fileset capability. When the fileset is referenced the includes, excludes and root folder layout is implemented just as it is for archives.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4922">JBIDE-4922</ulink>: Seam and RichFaces portletbridge archetypes have been added to the <application>JBoss Developer Studio</application> foruse with the Maven plug-in <application>m2eclipse</application>.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4888">JBIDE-4888</ulink>: The portlet facets configuration utility has been added for m2eclipse. This configuration utility allows for the following:
-						</para>
+						</listitem>
+						<listitem>
+							<para>
+								Tag libraries that are used
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Resource bundles that are declared
+							</para>
+						</listitem>
+					</itemizedlist>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-512">JBIDE-512</ulink>: The drop-down box for context variable code completion has been upgraded for enhanced usability. The source of the variable is now outlined during code completion and the code is highlighted in a different colour for improved reading and overall understanding of each file.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>RichFaces</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5743</ulink>: Content assistance in coding did not show anything for the tag <property>&lt;rich:menuItem ... icon="|" /&gt;</property>. The content assistance has been corrected by adding the <property>icon</property> attribute to the <filename>RichFaces.xml</filename> tag library.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5025">JBIDE-5025</ulink>: The RichFaces libraries have been updated to version 3.3.2.SR1.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Seam</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5275">JBIDE-5275</ulink>: The <guimenuitem>Add Seam Support</guimenuitem> and <guimenuitem>Remove Seam Support</guimenuitem> items have been added to the Project menu. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5221">JBIDE-5221</ulink>: The <guilabel>JBoss Server View</guilabel> has now been replaced with the <guilabel>Server View</guilabel> in the Seam perspective. This has occurred out of the <guilabel>JBoss Server View</guilabel> being deprecated.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5192">JBIDE-5192</ulink>: The name of the editor when using the <guilabel>Diagram Viewer</guilabel> was a concatenation of the names of the diagram entities, leading to a long name in some cases. This issue has been corrected by modifying the <filename>OrmDiagram.java</filename> and <filename>DiagramViewer.java</filename> files to display a name from the following three options (based on the number of entities):
 						<itemizedlist>
 							<listitem>
 								<para>
-									If the <filename>pom.xml</filename> file contains a <property>portlet-api</property> dependency, the JBoss Core Portlet facet is added. 
+									Console name: Entity name 
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									If the <filename>pom.xml</filename> file contains portletbridge dependencies, the JBoss JSF Portlet facet is added. 
+									Console name: First Entity name and Second Entity name 
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									If the project contains Seam, JBoss Core Portlet and JBoss JSF Portlet facet, the JBoss Seam Portlet facet is added.
+									Console name: First Entity name and &lt;number of other entities&gt; others
 								</para>
 							</listitem>
 						</itemizedlist>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4877">JBIDE-4877</ulink>: Tag completion has been upgraded so that partial matches are displayed and selectable following direct tag matches.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4850">JBIDE-4850</ulink>: A new feature has been added to the CSS Views with this release that allows a user to edit styles inside HTML and xhtm.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4690">JBIDE-4690</ulink>: The Maven Portlet library provider has been added to the <application>JBoss Developer Studio</application> with this release.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4689">JBIDE-4689</ulink>: The portlet libraries engine has been updated to use the WTP 3.1 Library Framework. This framework is implemented in the Portlet Core and JSF Portlet installation page. The following library providers are now available to the user:
-						</para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									Library provider:
-								</para>
-								<itemizedlist>
-									<listitem>
-										
-										<para>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5170">JBIDE-5170</ulink>: When changing, adding or removing a Seam runtime from within <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>Seam</guimenuitem></menuchoice>, Seam projects would not be built or validated. The behavior has been changed to build and validate Seam projects upon changes in the <guimenuitem>Preferences</guimenuitem> section to ensure correct functioning of the project. The <filename>SeamRuntimeManager.java</filename> file was updated to correct this.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5012">JBIDE-5012</ulink>: The Booking and DVDStore Seam examples have been updated for Seam 2.2 within the <application>JBoss Enterprise Application Platform</application>. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4987">JBIDE-4987</ulink>: Seam and JPA Connection Profiles have been synchronized for this release.  The <filename>jpa-connection</filename> profile is used in the launch configuration instead of <filename>hibernate.properties</filename> if the JPA facet is installed.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4985">JBIDE-4985</ulink>: Seam projects now create a Hibernate configuration that uses the selected connection profile directly (without copying its settings into the <filename>hibernate.properties</filename> file).
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4944">JBIDE-4944</ulink>: The Seam wizards <guilabel>Action</guilabel>, <guilabel>Entity</guilabel> and <guilabel>Conversation</guilabel> had the ability to overwrite resources when they generated code. The wizards would warn the user that some resources already existed and yet overwrite them. This has been corrected through the modification of the <filename>SeamBaseOperation.java</filename> file.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4856">JBIDE-4856</ulink>: Seam component methods and properties used in the Expression Language (EL) have been refactored. This has caused the internal structure of the components to be modified so that the <classname>Query Participant</classname> works with the JDT Java Search to find usages and append them to search results. The <classname>Rename Participant</classname> has also been modified to work with the JDT Java Refactor to rename usages and apply changes to the Java Refactor, allowing for a user to rename a <emphasis>setter</emphasis> or <emphasis>getter</emphasis> method and have the <classname>Rename Participant</classname> warn the user of the consequences of renaming a paired method.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4136">JBIDE-4136</ulink>: Classloading issues were being faced by users of Seam Tools because the <application>JBoss Developer Studio</application> used the <filename>MANIFEST.MF</filename> file for creating an artifact classpath instead of using the EAR <filename>lib/</filename> directory that is recommended by Seam. Until now the <application>JBoss Developer Studio</application> has not been able to use the EAR <filename>lib/</filename> directory because this functionality has not been supported by Eclipse. With the introduction of Eclipse 3.5 in this release the use of the EAR <filename>lib/</filename> directory is now supported and the process of creating an artifact classpath has been updated.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2807">JBIDE-2807</ulink>: An option is now provided when creating a <guilabel>New Seam Project</guilabel>, to not create a test project. This has become an option since the Seam model does not require the test project to exist and so allows the user to decide if it is of importance. Selecting to create or not create a test project is achieved through the ticking of a <guilabel>Create Test Project</guilabel> check box within the <guilabel>New Seam Project</guilabel> wizard.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1452">JBIDE-1452</ulink>: Support has been added for the Seam PDF Facelet tag library. This Facelet library allows for PDF creation from within Seam.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1451">JBIDE-1451</ulink>: Support has been added for the Seam Mail Facelet tag library. This Facelet library allows for email forms to be created from within Seam. All components of the Facelet have been included except <property>mail:message</property> and <property>mail:body</property> as these components are rendered as divisions (using the &lt;div&gt; tag).
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1176">JBIDE-1176</ulink>: The Seam Web Project now supports the JPA facet. Addition of the Java Persistence API allows for the management of relational data within applications.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Smooks</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5259">JBIDE-5259</ulink>: The Smooks configuration has received a test facility through the modification of the <guibutton>Run</guibutton> button to output a java result to the <guilabel>Console</guilabel>. This allows a user to test Smooks projects in a simplified way.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5088">JBIDE-5088</ulink>: When opening an existing Smooks configuration file it wouldn't contain any process information. To correct this an input task is automatically created and the Smooks configuration file is analyzed to add any missing task types if necessary. During the course of this update a <exceptionname>NullPointerException</exceptionname> was also fixed.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5086">JBIDE-5086</ulink>: A default layout is added in the Java-Mapping viewer. This allows for the layout of the information in the Smooks editor to be rearranged into a predefined default layout.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4878">JBIDE-4878</ulink>: The Smooks <guilabel>Reader</guilabel> page has been replaced with a new <guilabel>Input</guilabel> page. While the <guilabel>Input</guilabel> page inherits many functions from the <guilabel>Reader</guilabel> page there are some differences as follows:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								The <guilabel>Reader</guilabel> page allowed for multiple Readers to be created. <guilabel>Input</guilabel> page only allows for one Reader. 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								The <guilabel>Reader</guilabel> page supported the addition of multiple input data , where each was usable. The <guilabel>Input</guilabel> page only allows for one piece of input data to be used, while still allowing for multiple pieces of input data.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								The <guilabel>Reader</guilabel> page could view the transformation results of the Reader. The new <guilabel>Input</guilabel> page utilizes an input model view to check the transform result. 
+							</para>
+						</listitem>
+					</itemizedlist>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Struts</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5278">JBIDE-5278</ulink>: The options to Add and Remove Struts support have been added to the project menu.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Visual Page Editor</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5184">JBIDE-5184</ulink>: A memory leak existed in the Visual Page Editor. To fix this leak, the following plug-ins have been modified:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<filename>org.jboss.tools.vpe</filename>
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<filename>org.jboss.tools.vpe.xulrunner</filename>
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<filename>org.jboss.tools.jst.jsp</filename>
+							</para>
+						</listitem>
+					</itemizedlist>
+					<para>
+						The issues that caused the memory leak were:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<emphasis>JSPMultiPageEditorSite</emphasis>: The constructor created the <classname>serviceLocator</classname> that wasn't disposed of after use. 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								The <methodname>XulRunnerBrowser.dispose()</methodname> method would remove the <classname>progressListener</classname>, however this would only be done after all SWT objects and controls were already disposed. This meant the method had no effect. The dispose method is now called before the SWT objects and controls are disposed.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								The <methodname>MozillaEditor.getEditor()</methodname> madethe Mozilla window editable using <methodname>nsIEditingSession.setupEditorOnWindow()</methodname>. To counteract this the objects created are now removed by using <methodname>nsIEditingSession.tearDownEditorOnWindow()</methodname>. 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								The <methodname>createPartControl()</methodname> method in the <classname>MozillaEditor</classname> and <classname>MozillaPreview</classname> classes create <classname>XullRunnerEditor</classname> as an inner class. The issue was that the <classname>XullRunnerEditor</classname> class retained a reference to <classname>MozillaEditor(MozillaPreview)</classname> that caused it not to be released and instead retain references to WST and EMF classes. This has now been corrected so that <classname>MozillaEditor(MozillaPreview)</classname> is now released after use and references are not retained.
+							</para>
+						</listitem>
+					</itemizedlist>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5100">JBIDE-5100</ulink>: Support for JSF 2.0 attributes have been added to the Visual Page Editor.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5091">JBIDE-5091</ulink>: Support for JSF 2.0 Composition components that come packaged into the Web Application Root has been added to the Visual Page Editor.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5065">JBIDE-5065</ulink>: The icons in the Visual Page Editor have been redesigned for improved aesthetic appearance.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4945">JBIDE-4945</ulink>: A new feature has been added to the Visual Page Editor that allows a user to select both the element before and the element after a central element. This has been achieved through the modification of the <filename>SelectionBar.java</filename> file. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4934">JBIDE-4934</ulink>: Facelets tag library support has been added to the <guilabel>Palette</guilabel> for the Visual Page Editor.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4914">JBIDE-4914</ulink>: The Visual Page Editor has been redesigned so that all drop-down menu items are placed in the toolbar as buttons.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4323">JBIDE-4323</ulink>: Zoom actions have been added to the visual context menu so that a user can now resize the content of the Visual Page Editor to make it easier to read and manage.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2820">JBIDE-2820</ulink>: Support for new JSF 2.0 elements has been added to the Visual Page Editor. The tags that are newly supported are:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								h:head
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								h:body
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								h:outputscript
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								h:outputstyle
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								h:button 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								h:link 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								f:ajax 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								f:event 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								f:validateBean
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								f:validateRequired 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								f:viewParam 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								f:metadata 
+							</para>
+						</listitem>
+					</itemizedlist>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2571">JBIDE-2571</ulink>: Selection of the <property>&lt;h:selectOneMenu&gt;</property> did not function correctly. Instead of being selected with one mouse click, two clicks were necessary. A bug was also present that made the nested components <property>&lt;f:selectItem&gt;</property> and <property>&lt;f:selectItems&gt;</property> unable to be selected from within the Visual Page Editor. Correction of the two clicks necessary to select the <property>&lt;h:selectOneMenu&gt;</property> component has been completed by removing the check within <filename>VpeController.java</filename> that ensures the node is of type text. The issue that did not allow for the selection of the <property>&lt;f:selectItem&gt;</property> and <property>&lt;f:selectItems&gt;</property> components was found to be a bug in XULRunner. To correct this the XULRunner component has been updated to version 1.9, which corrects this error and provides numerous other small bug fixes (<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2248">JBIDE-2248</ulink>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2248">JBIDE-2248</ulink>: The XULRunner component has been upgraded to version 1.9. This new version of XULRunner adds support for the newest HTML and CSS features to the Visual Page Editor. Included in this is support for CSS3.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-1592">JBIDE-1592</ulink>: A new feature has been added that allows for Facelets tag libraries from <filename>file.jar/META-INF/*.tablib.xml</filename> or those that are registered within <filename>web.xml</filename> by the <filename>facelets.LIBRARIES</filename> context parameter to now be used within content assist for source editing in the Visual Page Editor.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-527">JBIDE-527</ulink>: A bug existed within the Visual Page Editor that inhibited the <guibutton>Previous</guibutton> and <guibutton>Next</guibutton> buttons for detected occurrences of searched annotations to not function correctly. The action of these buttons has now been corrected so that a user can navigate their way through all found occurrences of a searched annotation. This functionality works in the Visual Page Editor as it would work in a text editor.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>XHTML Editor</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4946">JBIDE-4946</ulink>: Tool tips for tags and attributes in the XHTML Editor have been added.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>XML Structured Editor</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5521">JBIDE-5521</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5426">JBIDE-5426</ulink>: The Servlet Mapping Editor <guilabel>Servlet-Name</guilabel> field has been improved with a drop-down menu to fill it in.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>General Issues</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5743</ulink>: The Web Servlet Mapping dialog box now contains a drop-down list for the <guilabel>Servlet-Name</guilabel> field so that servlets that have been entered into the <filename>web.xml</filename> file can be selected easily.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5734">JBIDE-5734</ulink>: The shortcut keys for full publishing a project to the server and building a full archive have been combined under then shortcut key menu accessed with <keycombo><keycap>Alt</keycap><keycap>Shift</keycap><keycap>Y</keycap></keycombo>. From this menu press <keycap>F</keycap> to full publish the project or <keycap>B</keycap> to build the full archive.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5690">JBIDE-5690</ulink>: The <guibutton>Full-Publish</guibutton> hotkey would only accept the first module and re-deploy it to the first server the module is deployed on. For the user this meant that if the module was already deployed on several servers, using <guibutton>Full-Publish</guibutton> would only re-deploy it to the first server returned in the list. To solve this issue a user interface has been added for the <guibutton>Full-Publish</guibutton> hotkey that allows for the selection of the server to re-deploy to. During the implementation of this fix, the package has been renamed to XPL.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2541">JBIDE-5383</ulink>: Expression Language Code Assistance has been added for the <property>@Name</property> beans. This allows for users to begin typing code and for suggestions of automatic completion to be suggested, improving user efficiency.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5743">JBIDE-5267</ulink>: The <application>JBoss Enterprise Application Platform</application> server would start correctly, however the <application>JBoss Developer Studio</application> would not acknowledge that it had started. To counteract this the <filename>JMXPoller.java</filename> timeout behavior has been modified to always return that the server succeeded in starting instead of ignoring the timeout. This fix ensures that a user is not informed that the server did not start correctly when it did.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5153">JBIDE-5153</ulink>: A <guilabel>JavaMain</guilabel> tab has been added to the tab group to allow for customization of the main class of the server. The changes to the main class are verified to persist by server startup checks.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5122">JBIDE-5122</ulink>: <guilabel>JBoss Servers View</guilabel> has been removed with this release. All the functionality provided by this view can be found in the <guilabel>Servers View</guilabel>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5048">JBIDE-5048</ulink>: SSH deployment has been added to the <application>JBoss Developer Studio</application> with this update. Specifically the following improvements have been made:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								A server type has been created that accepts SSH deployment for Eclipse Web Tools Platform (WTP) archives
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								WTP, single-file and project archives can now be published
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Java Secure Channel (JSch) errors are now verified
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								All situations return IStatus objects and their associated user interface (an IStatus object represents the outcome of an operation)
+							</para>
+						</listitem>
+					</itemizedlist>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5041">JBIDE-5041</ulink>: The <keycap>menu</keycap> key on the keyboard would not work in the <guilabel>Web Projects</guilabel> view, <guilabel>Seam Components</guilabel> view or JBoss Tools XML Editor. The functioning of this key has now been corrected so it behaves as a user would expect.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5005">JBIDE-5005</ulink>: A new export wizard has been added to the <application>JBoss Developer Studio</application>. The new wizard allows the export operation to utilize IModule objects. This added feature reduces redundancy and inconsistency for the export operation.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4976">JBIDE-4976</ulink>: The <guilabel>JBoss Tools Palette</guilabel> has been intergrated into the standard Eclipse GEF <guilabel>Palette</guilabel> view. The standard <guilabel>Palette</guilabel> view, accessible at <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Others</guimenuitem><guimenuitem>General</guimenuitem><guimenuitem>Palette</guimenuitem></menuchoice> is now shown in the right top part of the <guilabel>Web Development</guilabel> and <guilabel>Seam</guilabel> perspectives. The <guilabel>JBoss Tools Palette</guilabel> remains at <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Others</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>JBoss Tools Palette</guimenuitem></menuchoice>.
+					</para>
+					<para>
+						The differences in behavior between the palettes are:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								The new <guilabel>Palette</guilabel> is filled only when the <guilabel>Visual Page Editor</guilabel> is open and activated. The old palette remains static.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								The expanded and collapsed state of tabs in the new palette is associated with the opened instance of the <guilabel>Visual Page Editor</guilabel> and not globally set as they were in the old palette. This allows for the state of tabs to be different for individual files. Each new file opened in the <guilabel>Visual Page Editor</guilabel> will have the default <guilabel>Palette</guilabel> state with all tabs collapsed.	
+							</para>
+						</listitem>
+					</itemizedlist>
+					<para>
+						Though the behavior of the new palette is standard for Eclipse, for customers used to the globally set state of tabs and perfer to customize the palette before opening the <guilabel>Visual Page Editor</guilabel>, the old palette will remain accessible.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4955">JBIDE-4955</ulink>: BPEL and ESB projects can now be excluded from deployment through the addition of new fileset capability. When the fileset is referenced the includes, excludes and root folder layout is implemented just as it is for archives.
+					</para>
+				</listitem>
+				<!--  Commenting out as Maven not supported as yet.
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4922">JBIDE-4922</ulink>: Seam and RichFaces portletbridge archetypes have been added to the <application>JBoss Developer Studio</application> foruse with the Maven plug-in <application>m2eclipse</application>.
+					</para>
+				</listitem>
+				 -->
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4888">JBIDE-4888</ulink>: The portlet facets configuration utility has been added for m2eclipse. This configuration utility allows for the following:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								If the <filename>pom.xml</filename> file contains a <property>portlet-api</property> dependency, the JBoss Core Portlet facet is added. 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								If the <filename>pom.xml</filename> file contains portletbridge dependencies, the JBoss JSF Portlet facet is added. 
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								If the project contains Seam, JBoss Core Portlet and JBoss JSF Portlet facet, the JBoss Seam Portlet facet is added.
+							</para>
+						</listitem>
+					</itemizedlist>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4877">JBIDE-4877</ulink>: Tag completion has been upgraded so that partial matches are displayed and selectable following direct tag matches.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4850">JBIDE-4850</ulink>: A new feature has been added to the CSS Views with this release that allows a user to edit styles inside HTML and xhtm.
+					</para>
+				</listitem>
+				<!--  Commenting out as Maven not supported as yet.
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4690">JBIDE-4690</ulink>: The Maven Portlet library provider has been added to the <application>JBoss Developer Studio</application> with this release.
+					</para>
+				</listitem>
+				-->
+				<!--  Commenting out as Maven not supported as yet.
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4689">JBIDE-4689</ulink>: The portlet libraries engine has been updated to use the WTP 3.1 Library Framework. This framework is implemented in the Portlet Core and JSF Portlet installation page. The following library providers are now available to the user:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								Library provider:
+							</para>
+							<itemizedlist>
+								<listitem>
+									
+									<para>
 										User Library
 									</para>									</listitem>
 								<listitem>
@@ -886,16 +927,16 @@
 									<para>
 										Disable Library Configuration
 									</para>									</listitem>
-									</itemizedlist>
-							</listitem>
-							<listitem>
-								<para>
-									Portlet Core Facet library providers:
-								</para>
-								<itemizedlist>
-									<listitem>
-										
-										<para>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								Portlet Core Facet library providers:
+							</para>
+							<itemizedlist>
+								<listitem>
+									
+									<para>
 										Portlet Target Runtime Provider
 									</para>									</listitem>
 								<listitem>
@@ -903,73 +944,74 @@
 									<para>
 										Maven Portlet 1.0 and 2.0 Libraries
 									</para>									</listitem>
-									</itemizedlist>
-							</listitem>
-							<listitem>
-								<para>
-									JSF Portlet Facet library providers:
-									<itemizedlist>
-										<listitem>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								JSF Portlet Facet library providers:
+								<itemizedlist>
+									<listitem>
 										
-		<para>
-			JSF Portletbridge Runtime provider
-		</para>									</listitem>
-	<listitem>
-		
-		<para>
-			JSF Portlet Target Runtime Provider
-		</para>									</listitem>
-	<listitem>
-		
-		<para>
-			Maven Portletbridge 2.0.0 ALPHA Libraries
-		</para>									</listitem>
-	<listitem>
-		
-		<para>
-			Maven Portletbridge 2.0.0 ALPHA Libraries with dependencies
-		</para>									</listitem>
-									</itemizedlist>
-								</para>
-							</listitem>
-						</itemizedlist>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3563">JBIDE-3563</ulink>: Code assist has been added for classes that are defined in linked CSS. The schema for included page contexts has been added. This has occurred as it is needed to create the contexts for all the pages included in the source. It allows for the gathering of information on bundles declared in included pages.
-						</para>
-						<para>
-							The included page contexts are created and the following information is collected within the included contexts:
-						</para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									Namespaces are declared within the included pages
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									Tag libraries are used in the included pages
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									Resource bundles are declared within the included pages 
-								</para>
-							</listitem>
-						</itemizedlist>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3125">JBIDE-3125</ulink>: Exadel OpenOn support has been added to the code editors. This new functionality allows for a user to open a file that is being referenced within the code, in a new editor window. Related CDI Beans will also appear from a search of references to an object within the code, allowing for a user to quickly see where else an object is referenced.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2541">JBIDE-2541</ulink>: A new feature has been added to this release that allows for the JavaDoc documentation to be available for the EL proposals as it is for Java methods. The JavaDoc comments are also available if they originated from a projects source folders.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</formalpara>
-	</section>
+										<para>
+											JSF Portletbridge Runtime provider
+										</para>									</listitem>
+									<listitem>
+										
+										<para>
+											JSF Portlet Target Runtime Provider
+										</para>									</listitem>
+									<listitem>
+										
+										<para>
+											Maven Portletbridge 2.0.0 ALPHA Libraries
+										</para>									</listitem>
+									<listitem>
+										
+										<para>
+											Maven Portletbridge 2.0.0 ALPHA Libraries with dependencies
+										</para>									</listitem>
+								</itemizedlist>
+							</para>
+						</listi
+					</itemizedlist>
+				</listitem>
+				-->
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3563">JBIDE-3563</ulink>: Code assist has been added for classes that are defined in linked CSS. The schema for included page contexts has been added. This has occurred as it is needed to create the contexts for all the pages included in the source. It allows for the gathering of information on bundles declared in included pages.
+					</para>
+					<para>
+						The included page contexts are created and the following information is collected within the included contexts:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								Namespaces are declared within the included pages
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Tag libraries are used in the included pages
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Resource bundles are declared within the included pages 
+							</para>
+						</listitem>
+					</itemizedlist>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3125">JBIDE-3125</ulink>: OpenOn support has been added to the code editors. This new functionality allows for a user to open a file that is being referenced within the code, in a new editor window. Related CDI Beans will also appear from a search of references to an object within the code, allowing for a user to quickly see where else an object is referenced.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2541">JBIDE-2541</ulink>: A new feature has been added to this release that allows for the JavaDoc documentation to be available for the EL proposals as it is for Java methods. The JavaDoc comments are also available if they originated from a projects source folders.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+</section>
