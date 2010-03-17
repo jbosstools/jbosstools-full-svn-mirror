@@ -348,7 +348,106 @@
               </figure>
                <para>This graphical editor allows you to perform drag&amp;drop operation with the nodes of transformed data to map the source data to target data.
               When you save the changes in the graphical editor the correct Smooks configuration file content will be generated. </para>
-              
+               <para>Using the popup menu in the <emphasis>Selected Task Details</emphasis> section you
+                   can manage the diagram elements on the canvas. </para>
+               <para>The descriptions of the popup menu options are in the following table.</para>
+               <table id="popup">
+                   <title>Popup menu. Selected Task Details section.</title>   
+                   <tgroup cols="3">
+                       <colspec colnum="1" align="left" colwidth="1*"/>
+                       <colspec colnum="2" align="left" colwidth="3*"/>
+                       <colspec colnum="3" align="left" colwidth="1*"/>
+                       
+                       <thead>
+                           <row>
+                               <entry>Option</entry>									
+                               <entry>Description</entry>
+                               <entry>Default</entry>
+                           </row>
+                       </thead>
+                       <tbody>
+                           <row>
+                               <entry>Add</entry>
+                               <entry>Select one of the following tasks:
+                                   <itemizedlist>
+                                       <listitem><para><emphasis>Java Class</emphasis> - adds bean context item to the config file.
+                                           This option is available when no elements are selected and a user right click the canvas.
+                                          </para></listitem>
+                                       <listitem><para><emphasis>Expession Binding</emphasis> - adds expression based 
+                                           binding to selected java binding element.</para></listitem>
+                                       <listitem><para><emphasis>Value Binding</emphasis> - adds Value binding (&lt;jb:value&gt;)
+                                           to the selected java binding element.</para></listitem>
+                                       <listitem><para><emphasis>Bean Binding</emphasis> - adds Wiring binding (&lt;jb:wiring&gt;) 
+                                           to the selected java binding element.</para></listitem>
+                                   </itemizedlist>
+                               </entry>
+                               <entry></entry>
+                           </row> 
+                           <row>
+                               <entry>Undo</entry>
+                               <entry>By this option you can revert the changes made at the previous step.
+                               </entry>
+                               <entry></entry>
+                               
+                           </row> 
+                           <row>
+                               <entry>Redo</entry>
+                               <entry>By this option you can redo the changes made at the previous step.
+                               </entry>
+                               <entry></entry>
+                               
+                           </row> 
+                           <row>
+                               <entry>Delete</entry>
+                               <entry>This option is available only if you select some element on the canvas.
+                                   Click this option if you want to delete the element from it.
+                                  </entry>
+                               <entry></entry>
+                               
+                           </row> 
+                           <row>
+                               <entry>Auto Layout</entry>
+                               <entry>Sets the default layout of the elements on the canvas.</entry>
+                               <entry></entry>
+                               
+                           </row>                          
+                           <row>
+                               <entry>Properties</entry>
+                               <entry>Click this option if you want to add <emphasis>Properties view</emphasis>
+                                   to the current perspective.
+                                   The just opened <emphasis>Properties view</emphasis> 
+                                   will automatically reflect the properties of the selected 
+                                   diagram element.
+                                   </entry>
+                               <entry></entry>
+                           </row> 
+
+                           <row>
+                               <entry>Input Methods</entry>
+                               <entry>Choose one of the following methods:
+                                   <itemizedlist>
+                                       <listitem><para>System</para></listitem>
+                                       <listitem><para>Simple</para></listitem>
+                                       <listitem><para>Amharic(EZ+)</para></listitem>
+                                       <listitem><para>Cedilla</para></listitem>
+                                       <listitem><para>Cyrillic</para></listitem>
+                                       <listitem><para>Inuktitut</para></listitem>
+                                       <listitem><para>IPA</para></listitem>
+                                       <listitem><para>Multipress</para></listitem>
+                                       <listitem><para>SCIM Bridge Input Method</para></listitem>
+                                       <listitem><para>SCIM Input Method</para></listitem>
+                                       <listitem><para>Thai-Lio</para></listitem>
+                                       <listitem><para>Tigrigna-Eritrean(EZ+)</para></listitem>
+                                       <listitem><para>Tigrigna-Ethiopian(EZ+)</para></listitem>
+                                       <listitem><para>Vietnamese</para></listitem>
+                                       <listitem><para>X input Method</para></listitem>
+                                   </itemizedlist>
+                               </entry>
+                               <entry>System</entry>
+                           </row> 
+                       </tbody>
+                   </tgroup>
+               </table> 
            </section>
       <section><title>Selected Task Details section for Template Task.</title>
           <para>Selected Task Details section for this task is presented by the graf,
@@ -362,6 +461,8 @@
                   </imageobject>
               </mediaobject>
           </figure>
+          <para>Popup menu similar to the one in <link linkend="popup">Selected Task Details section
+              for Java Mapping Task</link> is also available here.</para>
         </section>
   </section>
 
