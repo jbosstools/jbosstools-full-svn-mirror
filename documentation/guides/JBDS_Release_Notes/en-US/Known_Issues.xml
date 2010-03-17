@@ -17,18 +17,18 @@
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-2700">JBIDE-2700</ulink>: The functionality of the <guilabel>Console</guilabel> view is dependant on the Debug-UI plug-in being loaded. Starting a server does not ensure the running of the Debug-UI plug-in and without it started the <guilabel>Console</guilabel> view will not show any output. When accessing the <guilabel>Console</guilabel> tab, if no data is shown, right-click with your mouse and select <menuchoice><guimenuitem>Show In</guimenuitem><guimenuitem>Console</guimenuitem></menuchoice>.  
+							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-779">JBIDE-779</ulink>: Currently Facelet pages contain false warnings.This has occured due to Eclipse WTP's HTML Syntax Validation not allowing for Facelet specific attributes. These warnings can be stopped by disabling validation. To disable validation follow <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>Validation</guimenuitem><guimenuitem>HTML Syntax Validation</guimenuitem></menuchoice> . 
 						</para>
+						<important>
+							<para>
+								Disabling validation has the potential to remove useful warning information.
+							</para>
+						</important>
 					</listitem>
 					<listitem>
 						<para>
-							<ulink url="http://jira.jboss.com/jira/browse/JBIDE-779">JBIDE-779</ulink>: Currently Facelet pages contain false warnings.This has occured due to Eclipse WTP's HTML Syntax Validation not allowing for Facelet specific attributes. These warnings can be stopped by disabling validation. To disable validation follow <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>Validation</guimenuitem><guimenuitem>HTML Syntax Validation</guimenuitem></menuchoice> . 
+							<ulink url="https://jira.jboss.org/jira/browse/JBDS-1155">JBDS-1155</ulink>: EAR projects that use classpath variable references to JAR files get packaged in <filename>/lib/lib</filename> instead of <filename>/lib</filename>. This is due to a bug in Eclipse WTP, for which a bug fix will be released shortly. Until the bug fix is made available, it is possible to avoid this issue by editing the <filename>.settings/org.eclipse.wst.common.component</filename> file and removing the <property>archiveName</property> attributes.
 						</para>
-						<caution>
-							<para>
-								Disabling validation has the potential to remove usefull warning information.
-							</para>
-						</caution>
 					</listitem>
 				</itemizedlist>
 			</para>

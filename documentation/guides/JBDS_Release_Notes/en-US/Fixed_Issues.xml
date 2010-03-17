@@ -855,11 +855,13 @@
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4955">JBIDE-4955</ulink>: BPEL and ESB projects can now be excluded from deployment through the addition of new fileset capability. When the fileset is referenced the includes, excludes and root folder layout is implemented just as it is for archives.
 					</para>
 				</listitem>
+				<!--  Commenting out as Maven not supported as yet.
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4922">JBIDE-4922</ulink>: Seam and RichFaces portletbridge archetypes have been added to the <application>JBoss Developer Studio</application> foruse with the Maven plug-in <application>m2eclipse</application>.
 					</para>
 				</listitem>
+				 -->
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4888">JBIDE-4888</ulink>: The portlet facets configuration utility has been added for m2eclipse. This configuration utility allows for the following:
@@ -892,11 +894,14 @@
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4850">JBIDE-4850</ulink>: A new feature has been added to the CSS Views with this release that allows a user to edit styles inside HTML and xhtm.
 					</para>
 				</listitem>
+				<!--  Commenting out as Maven not supported as yet.
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4690">JBIDE-4690</ulink>: The Maven Portlet library provider has been added to the <application>JBoss Developer Studio</application> with this release.
 					</para>
 				</listitem>
+				-->
+				<!--  Commenting out as Maven not supported as yet.
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-4689">JBIDE-4689</ulink>: The portlet libraries engine has been updated to use the WTP 3.1 Library Framework. This framework is implemented in the Portlet Core and JSF Portlet installation page. The following library providers are now available to the user:
@@ -967,9 +972,10 @@
 										</para>									</listitem>
 								</itemizedlist>
 							</para>
-						</listitem>
+						</listi
 					</itemizedlist>
 				</listitem>
+				-->
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3563">JBIDE-3563</ulink>: Code assist has been added for classes that are defined in linked CSS. The schema for included page contexts has been added. This has occurred as it is needed to create the contexts for all the pages included in the source. It allows for the gathering of information on bundles declared in included pages.
@@ -997,7 +1003,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3125">JBIDE-3125</ulink>: Exadel OpenOn support has been added to the code editors. This new functionality allows for a user to open a file that is being referenced within the code, in a new editor window. Related CDI Beans will also appear from a search of references to an object within the code, allowing for a user to quickly see where else an object is referenced.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3125">JBIDE-3125</ulink>: OpenOn support has been added to the code editors. This new functionality allows for a user to open a file that is being referenced within the code, in a new editor window. Related CDI Beans will also appear from a search of references to an object within the code, allowing for a user to quickly see where else an object is referenced.
 					</para>
 				</listitem>
 				<listitem>
