@@ -235,7 +235,7 @@
         
 <para>To see that the application works correctly and as you expect, you need to launch it on the server.</para>
     </listitem>
-    <listitem><para>In the <property>JBoss Server View </property> (If it is not open navigate to <property>Windows > Show View > Other > JBoss Server View </property>), select the server the application is deployed to and hit the <property>Start</property> button. </para></listitem>
+    <listitem><para>In the <property>Servers</property> view (If it is not open navigate to <property>Windows > Show View > Other > Server > Servers</property>), select the server the application is deployed to and hit the <property>Start</property> button. </para></listitem>
     <listitem>
         <para>When the server is started, open your favourite browser and point it to <code>http://localhost:8080/HelloBirt/helloBirt.seam</code> .</para>
     
