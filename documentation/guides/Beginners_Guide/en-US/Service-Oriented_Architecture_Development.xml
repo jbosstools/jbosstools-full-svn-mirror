@@ -59,7 +59,7 @@
 			</para>
 		</formalpara>
 		<para>
-			Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#esb_editor">ESB Editor</citetitle> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle> for further information.
+			Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#esb_editor">ESB Editor</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle> for further information.
 		</para>
 		<para>
 			JBoss ESB intergrates component messaging into the JBoss Service-Oriented Architecture, serving as an integral part of JBoss middleware suite. For information on how to use and configure JBoss ESB with the JBoss Service-Oriented Architecture refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#using_SOA">Using and Configuring SOA Platform</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle>.
