@@ -12,9 +12,7 @@ package org.jboss.tools.vpe.editor.mozilla.listener;
 
 import java.util.EventListener;
 
-import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
 import org.mozilla.interfaces.nsIDOMEvent;
-import org.mozilla.interfaces.nsIDOMMouseEvent;
 
 /**
  * Listener for Drag&Drop events.
@@ -29,22 +27,12 @@ public interface MozillaDndListener extends EventListener {
 	 * @param event xulrunner drag event
 	 */
 	void dragGesture(nsIDOMEvent event);
-	boolean canInnerDrag(nsIDOMMouseEvent mouseEvent);
-	MozillaDropInfo canInnerDrop(nsIDOMMouseEvent mouseEvent);
-	void innerDrop(nsIDOMMouseEvent mouseEvent);
-	void externalDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data);
-	void startDragSession(nsIDOMEvent domEvent);
 
 	/**
 	 * Calls when drop event occurs 
 	 * @param domEvent
 	 */
 	void dragDrop(nsIDOMEvent domEvent);
-	
-	MozillaDropInfo canExternalDrop(nsIDOMMouseEvent mouseEvent,
-			String flavor, String data);
-	
-
 // these methods are never used
 //	void dragEnter(nsIDOMEvent event);
 //	void dragExit(nsIDOMEvent event);

@@ -162,7 +162,7 @@ public class VpeController implements INodeAdapter,
 	VpeDomMapping domMapping;
 	private VpeSourceDomBuilder sourceBuilder;
 	private VpeVisualDomBuilder visualBuilder;
-	private VpeDnD dnd;
+	private MozillaDndListener dndListener;
 	/** @deprecated */
 	private VpeSelectionBuilder selectionBuilder;
 	// private VpeVisualKeyHandler visualKeyHandler;
@@ -242,7 +242,7 @@ public class VpeController implements INodeAdapter,
 				VpeTemplateManager.getInstance(), sourceEditor, pageContext);
 		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor,
 				pageContext);
-		dnd = new VpeDnD(this);
+		dndListener = new VpeDnD(this);
 		pageContext.setSourceDomBuilder(sourceBuilder);
 		pageContext.setVisualDomBuilder(visualBuilder);
 		IDOMModel sourceModel = (IDOMModel) getModel();
@@ -455,7 +455,7 @@ public class VpeController implements INodeAdapter,
 					= visualEditor.getMozillaEventAdapter();
 			if (mozillaEventAdapter != null) {
 				mozillaEventAdapter.addContextMenuListener(this);
-				mozillaEventAdapter.addDndListener(dnd.getDndController());
+				mozillaEventAdapter.addDndListener(dndListener);
 				mozillaEventAdapter.addKeyListener(this);
 				mozillaEventAdapter.addMouseListener(this);
 				mozillaEventAdapter.addSelectionListener(this);
@@ -472,7 +472,7 @@ public class VpeController implements INodeAdapter,
 					= visualEditor.getMozillaEventAdapter();
 			if (mozillaEventAdapter != null) {
 				mozillaEventAdapter.removeContextMenuListener(this);
-				mozillaEventAdapter.removeDndListener(dnd.getDndController());
+				mozillaEventAdapter.removeDndListener(dndListener);
 				mozillaEventAdapter.removeKeyListener(this);
 				mozillaEventAdapter.removeMouseListener(this);
 				mozillaEventAdapter.removeSelectionListener(this);
@@ -1202,7 +1202,7 @@ public class VpeController implements INodeAdapter,
 								XulRunnerVpeUtils.getElementBounds(
 										selectedElement),
 								VisualDomUtil.getMousePoint(mouseEvent))) {
-					dnd.getDndController().dragGesture(mouseEvent);
+					dndListener.dragGesture(mouseEvent);
 				} else {
 					selectionManager.setSelection(mouseEvent);					
 				}
