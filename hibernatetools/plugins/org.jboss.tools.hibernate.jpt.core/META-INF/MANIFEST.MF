@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name.0
+Bundle-SymbolicName: org.jboss.tools.hibernate.jpt.core;singleton:=true
+Bundle-Version: 3.3.0.qualifier
+Require-Bundle: 
+ org.eclipse.core.runtime,
+ org.eclipse.wst.validation,
+ org.hibernate.eclipse.console,
+ org.hibernate.eclipse,
+ org.eclipse.jdt.launching,
+ org.eclipse.debug.core,
+ org.eclipse.emf.ecore,
+ org.eclipse.jdt.core,
+ org.eclipse.wst.common.project.facet.core,
+ org.eclipse.jst.common.project.facet.core,
+ org.eclipse.jpt.core;bundle-version="[2.2.0,2.2.2)",
+ org.eclipse.jpt.utility,
+ org.eclipse.jpt.db
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: %Bundle-Vendor.0
+Export-Package: org.jboss.tools.hibernate.jpt.core.internal,
+ org.jboss.tools.hibernate.jpt.core.internal.context,
+ org.jboss.tools.hibernate.jpt.core.internal.context.basic,
+ org.jboss.tools.hibernate.jpt.core.internal.context.java,
+ org.jboss.tools.hibernate.jpt.core.internal.context.orm
+Bundle-Localization: plugin
+Bundle-Activator: org.jboss.tools.hibernate.jpt.core.internal.HibernateJptPlugin
+Bundle-ActivationPolicy: lazy
+
+

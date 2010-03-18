@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension id="org.jboss.tools.hibernate.jpt.core"
+		point="org.eclipse.jpt.core.jpaPlatforms">
+		<jpaPlatform 
+			factoryClass="org.jboss.tools.hibernate.jpt.core.internal.HibernateJpaPlatformFactory"
+			default="false"
+			id="hibernate"
+			label="Hibernate">
+		</jpaPlatform>		
+	</extension>
+ <extension
+       point="org.eclipse.wst.common.project.facet.core.listeners">
+    <listener
+          class="org.jboss.tools.hibernate.jpt.core.internal.JPAPostInstallFasetListener"
+          eventTypes="POST_INSTALL">
+    </listener>
+ </extension>
+
+ <extension 
+		point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+		
+		<provider id="hibernate-user-library-provider" extends="wtp-user-library-provider">
+			<param name="validator" value="org.eclipse.jst.common.project.facet.core.libprov.user.KeyClassesValidator"/>
+			<param name="validator.param.0" value="javax.persistence.Entity"/>
+			<param name="validator.param.1" value="org.hibernate.SessionFactory"/>
+			<enablement>
+				<and>
+					<with variable="requestingProjectFacet">
+						<test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jpt.jpa" forcePluginActivation="true"/>
+					</with>
+					<with variable="jpaPlatform">
+						<equals value="hibernate"/>
+					</with>
+				</and>
+			</enablement>
+		</provider>
+		
+ </extension>
+ 
+</plugin>
