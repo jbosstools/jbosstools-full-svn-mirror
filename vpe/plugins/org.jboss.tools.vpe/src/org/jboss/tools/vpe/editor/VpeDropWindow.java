@@ -234,5 +234,20 @@ public class VpeDropWindow extends Window {
 		}
 		return fTransferDropTargetListeners;
 	}
-	
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public String getFlavor() {
+		return flavor;
+	}
+
+	public void setFlavor(String flavor) {
+		this.flavor = flavor;
+	}
 }

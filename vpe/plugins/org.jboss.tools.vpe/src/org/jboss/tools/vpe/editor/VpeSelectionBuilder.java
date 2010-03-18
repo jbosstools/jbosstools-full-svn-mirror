@@ -910,7 +910,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		return position;
 	}
 	
-	Point getSourceSelectionRangeAtVisualNode(nsIDOMNode visualInitNode, int visualInitOffset) {
+	public Point getSourceSelectionRangeAtVisualNode(nsIDOMNode visualInitNode, int visualInitOffset) {
 		if (visualInitNode.getNodeType() == Node.TEXT_NODE) {
 			Node sourceNode = domMapping.getSourceNode(visualInitNode);
 			if (sourceNode == null) {
@@ -1208,7 +1208,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		setSelection(selection);
 	}
 	
-	VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMMouseEvent event) {
+	public VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMMouseEvent event) {
 		nsIDOMElement selectedElement
 				= visualBuilder.getXulRunnerEditor().getLastSelectedElement();
 		if (selectedElement == null) {

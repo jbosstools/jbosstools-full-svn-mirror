@@ -1567,7 +1567,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
-	boolean canInnerDrag(nsIDOMElement visualDragElement) {
+	public boolean canInnerDrag(nsIDOMElement visualDragElement) {
 		VpeNodeMapping node = domMapping.getNodeMapping(visualDragElement);
 		if (node instanceof VpeElementMapping) {
 			VpeElementMapping elementMapping = (VpeElementMapping) node;
@@ -1582,7 +1582,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
-	VpeSourceInnerDropInfo getSourceInnerDropInfo(Node sourceDragNode,
+	public VpeSourceInnerDropInfo getSourceInnerDropInfo(Node sourceDragNode,
 			VpeVisualInnerDropInfo visualDropInfo, boolean checkParentTemplates) {
 		nsIDOMNode visualDropContainer = visualDropInfo.getDropContainer();
 		long visualDropOffset = visualDropInfo.getDropOffset();
@@ -1669,7 +1669,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	VpeSourceInnerDropInfo getSourceInnerDropInfo(Node dragNode,
+	public VpeSourceInnerDropInfo getSourceInnerDropInfo(Node dragNode,
 			Node container, int offset, boolean checkParentsTemplates) {
 		// Thread.dumpStack();
 		boolean canDrop = false;
@@ -1746,7 +1746,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	void innerDrop(VpeSourceInnerDragInfo dragInfo,
+	public void innerDrop(VpeSourceInnerDragInfo dragInfo,
 			VpeSourceInnerDropInfo dropInfo) {
 		dropper.drop(pageContext, dragInfo, dropInfo);
 	}
@@ -1806,7 +1806,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return true;
 	}
 
-	VpeVisualInnerDropInfo getInnerDropInfo(Node sourceDropContainer,
+	public VpeVisualInnerDropInfo getInnerDropInfo(Node sourceDropContainer,
 			int sourceDropOffset) {
 		nsIDOMNode visualDropContainer = null;
 		long visualDropOffset = 0;
@@ -1964,7 +1964,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return visualLastChild;
 	}
 
-	void correctVisualDropPosition(VpeVisualInnerDropInfo newVisualDropInfo,
+	public void correctVisualDropPosition(VpeVisualInnerDropInfo newVisualDropInfo,
 			VpeVisualInnerDropInfo oldVisualDropInfo) {
 		nsIDOMNode newVisualDropContainer = newVisualDropInfo
 				.getDropContainer();
@@ -2077,7 +2077,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 
-	VpeSourceInnerDragInfo getSourceInnerDragInfo(
+	public VpeSourceInnerDragInfo getSourceInnerDragInfo(
 			VpeVisualInnerDragInfo visualDragInfo) {
 		nsIDOMNode visualNode = visualDragInfo.getNode();
 		int offset = visualDragInfo.getOffset();
