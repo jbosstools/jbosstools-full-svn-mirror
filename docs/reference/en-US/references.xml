@@ -637,7 +637,7 @@
     </figure>
     <para>
         This view is fully syncronized with the canvas of <emphasis><property>Smooks Configuration Editor</property></emphasis>.
-        This means that when you change selected element by click,the properties of a new element are immmediatly displayed in it. 
+        This means that when you change selected element by click,the properties of a new element are immediatly displayed in it. 
         Using <emphasis><property>Properties View</property></emphasis> you can edit all the properties of the selected item.
     </para>
     <figure>
@@ -648,6 +648,82 @@
             </imageobject>
         </mediaobject>
     </figure>
+    <section>
+        <title>Decode Configuration</title>
+        <para>Smooks tools support decode parameter configuration through the Decode tab in <emphasis>
+            <property>Properties View</property></emphasis> 
+            activated by clicking the connection between input model and bean items. </para>
+        <para>On the picture below you can see an example of decode configurations
+        for mapping some Input Model Item to Date format:</para>
+        <figure>
+            <title>Decode Configuration tab in Properties View</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/reference/reference_14.png" scale="90"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <table>
+            <title>Decode Configuration tab in Properties View</title>   
+            <tgroup cols="3">
+                <colspec colnum="1" align="left" colwidth="1*"/>
+                <colspec colnum="2" align="left" colwidth="3*"/>
+                <colspec colnum="3" align="left" colwidth="1*"/>
+                
+                <thead>
+                    <row>
+                        <entry>Option</entry>									
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Decoder</entry>
+                        <entry>Select from the dropdown list the type of decoder you need.
+                        </entry>
+                    </row> 
+                    
+                    <row>
+                        <entry>Decoder Parameters</entry>
+                        <entry>For most decoders <emphasis><property>Decoder Parametres table</property></emphasis> is empty.
+                            But some of the decoders require configuration
+                            (like Data decoder on the picture above),so you should configure them
+                            by editing corresponding line in the <property>Value</property> row.
+                            For example for data decoder:
+                            <itemizedlist>
+                                <listitem><para><property>format</property> - Date format string</para></listitem>
+                                <listitem><para><property>locale country</property> - ISO Country Code.
+                                    Upper case two-letter code defined by ISO-3166. </para></listitem>
+                                <listitem><para><property>locale language</property> - ISO Language Code.
+                                    Lower case two-letter code defined by ISO-639. </para></listitem>
+                            </itemizedlist>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+        <para>The Decoder Parameters  section for EnumDecoder quite differs from other types of decoders.
+        See the picture below:</para>
+        <figure>
+            <title>EnumDecoder in Properties View</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/reference/reference_15.png" scale="90"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>The Decoder Parameters section in Properties View consists of 2 rows:</para>
+        <itemizedlist>
+            <listitem><para><property>From Data Value</property>  - The lines in this row are editable.
+            You can change them according to the names of enum types you used in input file. 
+            </para></listitem>
+            <listitem><para><property>To Enum Value</property> - The lines in this row are not editable.
+                Here the set of all the constants declared in mapped Enum type is listed.</para></listitem>
+        </itemizedlist>
+        
+        <para>For more information about different decoder parametres read <ulink url="http://www.smooks.org/mediawiki/index.php?title=Main_Page">
+            Smooks Technology Documentation</ulink>.</para>
+    </section>
     
 </section>
     
