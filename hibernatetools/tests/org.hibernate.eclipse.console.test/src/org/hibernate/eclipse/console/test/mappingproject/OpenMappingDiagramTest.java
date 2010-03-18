@@ -21,9 +21,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.hibernate.InvalidMappingException;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.utils.Utils;
 import org.hibernate.eclipse.console.workbench.ConfigurationWorkbenchAdapter;
@@ -68,7 +68,7 @@ public class OpenMappingDiagramTest extends TestCase {
 		Object[] persClasses = null;
 		try {
 			configs = new ConsoleConfigurationWorkbenchAdapter().getChildren(consCFG);
-			assertTrue(configs[0] instanceof Configuration);
+			assertTrue(configs[0] instanceof ConfigurationStub);
 			persClasses = new ConfigurationWorkbenchAdapter().getChildren(configs[0]);
 		} catch (InvalidMappingException ex){
 			String out = NLS.bind(ConsoleTestMessages.OpenMappingDiagramTest_mapping_diagrams_for_package_cannot_be_opened,

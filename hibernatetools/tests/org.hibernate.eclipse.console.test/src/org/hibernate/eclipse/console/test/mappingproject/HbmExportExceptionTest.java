@@ -25,10 +25,10 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.core.PackageFragmentRoot;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.execution.ExecutionContext;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.project.ConfigurableTestProject;
 import org.hibernate.eclipse.console.test.utils.ConsoleConfigUtils;
@@ -36,6 +36,7 @@ import org.hibernate.tool.hbm2x.ArtifactCollector;
 import org.hibernate.tool.hbm2x.ExporterException;
 import org.hibernate.tool.hbm2x.HibernateMappingExporter;
 import org.hibernate.tool.hbm2x.HibernateMappingGlobalSettings;
+import org.hibernate.tool.hbm2x.pojo.POJOClass;
 
 /**
  * @author Dmitry Geraskov
@@ -83,7 +84,7 @@ public class HbmExportExceptionTest extends TestCase {
 					return consCFG;
 				}
 			} );
-			Configuration config = consCFG.getConfiguration();
+			ConfigurationStub config = consCFG.getConfiguration();
 			
 			//delete old hbm files
 			assertNotNull( testPackage );
@@ -101,9 +102,12 @@ public class HbmExportExceptionTest extends TestCase {
 			
 			HibernateMappingGlobalSettings hmgs = new HibernateMappingGlobalSettings();
 			
-			
-			HibernateMappingExporter hce = new HibernateMappingExporter(config, 
-					getSrcFolder());
+			ConfigurationStub.IExporterNewOutputDir nod = new ConfigurationStub.IExporterNewOutputDir() {
+				public File getNewOutputDir(POJOClass element, File outputdir4FileNew) {
+					return outputdir4FileNew;
+				}
+			};
+			HibernateMappingExporter hce = config.createHibernateMappingExporter(getSrcFolder(), nod);
 			
 			hce.setGlobalSettings(hmgs);
 			try {
@@ -120,15 +124,7 @@ public class HbmExportExceptionTest extends TestCase {
 	
 						consCFG.build();
 						assertTrue(consCFG.hasConfiguration());
-						consCFG.execute( new ExecutionContext.Command() {
-
-							public Object execute() {
-								if(consCFG.hasConfiguration()) {
-									consCFG.getConfiguration().buildMappings();
-								}
-								return consCFG;
-							}
-						} );
+						consCFG.buildMappings();
 						config = consCFG.getConfiguration();
 				} catch (CoreException e) {
 					String out = NLS.bind(ConsoleTestMessages.UpdateConfigurationTest_error_customising_file_for_package,

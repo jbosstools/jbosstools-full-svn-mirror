@@ -34,13 +34,11 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContextInformation;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.hqleditor.EclipseHQLCompletionRequestor;
 import org.hibernate.eclipse.hqleditor.HQLCompletionProcessor;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.tool.ide.completion.HQLCodeAssist;
 import org.hibernate.tool.ide.completion.IHQLCodeAssist;
 
 public class HQLJavaCompletionProposalComputer implements IJavaCompletionProposalComputer {
@@ -76,22 +74,18 @@ public class HQLJavaCompletionProposalComputer implements IJavaCompletionProposa
 		JavaContentAssistInvocationContext ctx = (JavaContentAssistInvocationContext)context;
 
 		try {
-				 ConsoleConfiguration consoleConfiguration = getConfiguration( ctx.getProject() );
-				 if(consoleConfiguration!=null) {
-					 Configuration configuration = consoleConfiguration.getConfiguration();
-
-					 IHQLCodeAssist hqlEval = new HQLCodeAssist(configuration);
-
-					 String query = ""; //$NON-NLS-1$
-					 int stringStart = getStringStart( ctx.getDocument(), ctx.getInvocationOffset() );
-					 int stringEnd = getStringEnd( ctx.getDocument(), ctx.getInvocationOffset() );
-					 query = ctx.getDocument().get(stringStart, stringEnd-stringStart );
-					 EclipseHQLCompletionRequestor eclipseHQLCompletionCollector = new EclipseHQLCompletionRequestor(stringStart);
-					 hqlEval.codeComplete(query, ctx.getInvocationOffset()-stringStart, eclipseHQLCompletionCollector);
-					 errorMessage = eclipseHQLCompletionCollector.getLastErrorMessage();
-
-					 proposals = eclipseHQLCompletionCollector.getCompletionProposals();
-				 }
+			ConsoleConfiguration consoleConfig = getConfiguration( ctx.getProject() );
+			if (consoleConfig != null) {
+				IHQLCodeAssist hqlEval = consoleConfig.getHQLCodeAssist();
+				String query = ""; //$NON-NLS-1$
+				int stringStart = getStringStart( ctx.getDocument(), ctx.getInvocationOffset() );
+				int stringEnd = getStringEnd( ctx.getDocument(), ctx.getInvocationOffset() );
+				query = ctx.getDocument().get(stringStart, stringEnd-stringStart );
+				EclipseHQLCompletionRequestor eclipseHQLCompletionCollector = new EclipseHQLCompletionRequestor(stringStart);
+				hqlEval.codeComplete(query, ctx.getInvocationOffset()-stringStart, eclipseHQLCompletionCollector);
+				errorMessage = eclipseHQLCompletionCollector.getLastErrorMessage();
+				proposals = eclipseHQLCompletionCollector.getCompletionProposals();
+			}
 		} catch(RuntimeException re) {
 			HibernateConsolePlugin.getDefault().logErrorMessage( JdtUiMessages.HQLJavaCompletionProposalComputer_errormessage, re );
 		}

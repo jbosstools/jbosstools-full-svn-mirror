@@ -24,9 +24,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.hibernate.InvalidMappingException;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.actions.OpenMappingAction;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.utils.Utils;
@@ -75,7 +75,7 @@ public class OpenMappingFileTest extends TestCase {
 		Object[] props = null;
 		try {
 			configs = new ConsoleConfigurationWorkbenchAdapter().getChildren(consCFG);
-			assertTrue(configs[0] instanceof Configuration);
+			assertTrue(configs[0] instanceof ConfigurationStub);
 			persClasses = new ConfigurationWorkbenchAdapter().getChildren(configs[0]);
 		} catch (InvalidMappingException ex){
 			String out = NLS.bind(ConsoleTestMessages.OpenMappingFileTest_mapping_files_for_package_cannot_be_opened,

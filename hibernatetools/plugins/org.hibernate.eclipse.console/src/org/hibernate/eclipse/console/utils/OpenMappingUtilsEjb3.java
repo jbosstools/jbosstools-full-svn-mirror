@@ -73,7 +73,7 @@ public class OpenMappingUtilsEjb3 {
 			try {
 				metadataFiles = PersistenceXmlLoader.deploy(
 						url, CollectionHelper.EMPTY_MAP,
-						consoleConfiguration.getConfiguration().getEntityResolver(),
+						consoleConfiguration.getEntityResolver(),
 						PersistenceUnitTransactionType.RESOURCE_LOCAL);
 			} catch (Exception e1) {
 				//ignore

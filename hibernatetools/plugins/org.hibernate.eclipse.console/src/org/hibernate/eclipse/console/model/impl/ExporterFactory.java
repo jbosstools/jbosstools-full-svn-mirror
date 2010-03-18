@@ -15,8 +15,8 @@ import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.HibernateConsoleRuntimeException;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.launch.HibernateLaunchConstants;
 import org.hibernate.eclipse.launch.PathHelper;
@@ -166,7 +166,7 @@ public class ExporterFactory {
 	 * @param collector
 	 * @throws CoreException in case of resolve variables issues.
 	 */
-	public Exporter createConfiguredExporter(Configuration cfg, String defaultOutputDirectory,
+	public Exporter createConfiguredExporter(ConfigurationStub cfg, String defaultOutputDirectory,
 			String customTemplatePath, Properties globalProperties, Set<String> outputDirectories, ArtifactCollector collector) throws CoreException {
 
 		Exporter exporter = getExporterDefinition().createExporterInstance();
@@ -199,7 +199,7 @@ public class ExporterFactory {
 			exporter.setOutputDirectory(new File(loc));
 		}
 
-		exporter.setConfiguration(cfg);
+		cfg.updateExporter(exporter);
 
 		List<String> templatePathList = new ArrayList<String>();
 		if(props.containsKey("template_path")) { //$NON-NLS-1$

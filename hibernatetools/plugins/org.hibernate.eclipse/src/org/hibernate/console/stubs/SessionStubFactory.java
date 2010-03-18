@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.util.ELTransformer;
@@ -25,9 +24,9 @@ public class SessionStubFactory {
 	protected ExecutionContext executionContext;
 	protected SessionFactory sessionFactory;
 
-	public SessionStubFactory(ExecutionContext executionContext, Configuration cfg) {
+	public SessionStubFactory(ExecutionContext executionContext, ConfigurationStub configStub) {
 		this.executionContext = executionContext;
-		sessionFactory = cfg.buildSessionFactory();
+		sessionFactory = configStub.buildSessionFactory();
 	}
 
 	public boolean isSessionFactoryCreated() {

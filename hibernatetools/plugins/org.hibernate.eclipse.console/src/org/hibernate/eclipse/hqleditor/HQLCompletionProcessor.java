@@ -34,11 +34,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
-import org.eclipse.osgi.util.NLS;
-import org.hibernate.HibernateException;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.QueryEditor;
@@ -93,7 +89,7 @@ public class HQLCompletionProcessor implements IContentAssistProcessor {
         return result;
     }
 
-    ICompletionProposal[] computeProposals(IDocument doc, int lineStart, final int currentOffset, final ConsoleConfiguration consoleConfiguration) {
+    ICompletionProposal[] computeProposals(IDocument doc, int lineStart, final int currentOffset, final ConsoleConfiguration consoleConfig) {
     	ICompletionProposal[] result = null;
     	errorMessage = null;
     	if (doc != null && currentOffset >= 0) {
@@ -114,26 +110,12 @@ public class HQLCompletionProcessor implements IContentAssistProcessor {
 					errorMessage = HibernateConsoleMessages.HQLCompletionProcessor_could_not_get_document_contents;
 					return result;
 				}
-
-				if(consoleConfiguration != null && consoleConfiguration.getConfiguration()==null) {
-					try{
-					 	consoleConfiguration.build();
-					 	consoleConfiguration.execute( new ExecutionContext.Command() {
-					 		public Object execute() {
-					 			if(consoleConfiguration.hasConfiguration()) {
-					 			consoleConfiguration.getConfiguration().buildMappings();
-					 		}
-					 			return consoleConfiguration;
-					 		}
-						});
-					} catch (HibernateException e){
-						String mess = NLS.bind(HibernateConsoleMessages.CompletionHelper_error_could_not_build_cc, consoleConfiguration.getName());
-						HibernateConsolePlugin.getDefault().logErrorMessage(mess, e);
-					}
+				IHQLCodeAssist hqlEval = null;
+				if (consoleConfig != null) {
+					hqlEval = consoleConfig.getHQLCodeAssist();
+				} else {
+					hqlEval = new HQLCodeAssist(null);
 				}
-				
-				Configuration configuration = consoleConfiguration!=null?consoleConfiguration.getConfiguration():null;
-				IHQLCodeAssist hqlEval = new HQLCodeAssist(configuration);
 				EclipseHQLCompletionRequestor eclipseHQLCompletionCollector = new EclipseHQLCompletionRequestor();
 				hqlEval.codeComplete(doc.get(), currentOffset, eclipseHQLCompletionCollector);
 				proposalList.addAll(eclipseHQLCompletionCollector.getCompletionProposals());

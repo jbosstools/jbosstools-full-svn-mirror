@@ -23,11 +23,11 @@ package org.hibernate.eclipse.console.workbench;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.execution.ExecutionContext;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 
@@ -59,10 +59,10 @@ public class ConsoleConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter 
 		}*/
 
 
-		Configuration configuration = ccfg.getConfiguration();
+		ConfigurationStub configStub = ccfg.getConfiguration();
 		Object o1;
-		if(configuration!=null) {
-			o1 = configuration;
+		if (configStub != null) {
+			o1 = configStub;
 		} else {
 			o1 = HibernateConsoleMessages.ConsoleConfigurationWorkbenchAdapter_empty_configuration;
 		}

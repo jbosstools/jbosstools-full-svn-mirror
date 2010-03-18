@@ -67,39 +67,30 @@ public class SchemaExportAction extends ConsoleConfigurationBasedAction {
 				Object node = i.next();
 				if ( node instanceof ConsoleConfiguration ) {
 				final ConsoleConfiguration config = (ConsoleConfiguration) node;
-				config.execute( new Command() {
-					@SuppressWarnings("unchecked")
-					public Object execute() {
-						String out = NLS.bind(HibernateConsoleMessages.SchemaExportAction_sure_run_schemaexport, config.getName());
-						if ( config.getConfiguration() != null
-								&& MessageDialog.openConfirm( viewer.getControl().getShell(),
-										HibernateConsoleMessages.SchemaExportAction_run_schemaexport,
-										out ) ) {
-							SchemaExport export = new SchemaExport( config
-									.getConfiguration() );
-							export.create( false, true );
-							if ( !export.getExceptions().isEmpty() ) {
-								Iterator<Throwable> iterator = export.getExceptions().iterator();
-								int cnt = 1;
-								while ( iterator.hasNext() ) {
-									Throwable element = iterator.next();
-									String outStr = NLS.bind(HibernateConsoleMessages.SchemaExportAction_errornum_while_performing_schemaexport, cnt++);
-									HibernateConsolePlugin.getDefault().logErrorMessage(outStr, element );
-								}
-								HibernateConsolePlugin.getDefault().showError(viewer.getControl().getShell(),
-															NLS.bind(HibernateConsoleMessages.SchemaExportAction_error_while_performing_schemaexport, cnt - 1),
-															(Throwable)null );
+				if (config.getConfiguration() != null) {
+					String out = NLS.bind(HibernateConsoleMessages.SchemaExportAction_sure_run_schemaexport, config.getName());
+					if (MessageDialog.openConfirm(viewer.getControl().getShell(),
+							HibernateConsoleMessages.SchemaExportAction_run_schemaexport,
+							out)) {
+						Iterator<Throwable> res = config.doSchemaExport();
+						if (res.hasNext()) {
+							int cnt = 1;
+							while (res.hasNext()) {
+								Throwable element = res.next();
+								String outStr = NLS.bind(HibernateConsoleMessages.SchemaExportAction_errornum_while_performing_schemaexport, cnt++);
+								HibernateConsolePlugin.getDefault().logErrorMessage(outStr, element );
 							}
+							HibernateConsolePlugin.getDefault().showError(viewer.getControl().getShell(),
+														NLS.bind(HibernateConsoleMessages.SchemaExportAction_error_while_performing_schemaexport, cnt - 1),
+														(Throwable)null);
 						}
-						return null;
 					}
-				} );
+				}
 				viewer.refresh( node ); // todo: should we do it here or should
 				// the view just react to config being
 				// build ?
 				}
-			}
-			catch (HibernateException he) {
+			} catch (HibernateException he) {
 				HibernateConsolePlugin.getDefault().showError(
 						viewer.getControl().getShell(),
 						HibernateConsoleMessages.SchemaExportAction_exception_running_schemaexport, he );

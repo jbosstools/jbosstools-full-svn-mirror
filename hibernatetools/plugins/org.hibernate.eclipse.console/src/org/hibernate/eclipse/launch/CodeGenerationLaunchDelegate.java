@@ -59,7 +59,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.text.edits.TextEdit;
 import org.hibernate.HibernateException;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.JDBCMetaDataConfiguration;
 import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
 import org.hibernate.cfg.reveng.OverrideRepository;
@@ -69,6 +68,9 @@ import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.HibernateConsoleRuntimeException;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.execution.ExecutionContext.Command;
+import org.hibernate.console.stubs.ConfigStubFactory;
+import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.ConfigurationStubJDBCMetaData;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.model.impl.ExporterFactory;
@@ -211,7 +213,7 @@ public class CodeGenerationLaunchDelegate extends
 			if (attributes.isReverseEngineer()) {
 				monitor.subTask(HibernateConsoleMessages.CodeGenerationLaunchDelegate_reading_jdbc_metadata);
 			}
-			final Configuration cfg = buildConfiguration(attributes, cc, ResourcesPlugin.getWorkspace().getRoot());
+			final ConfigurationStub cfg = buildConfiguration(attributes, cc, ResourcesPlugin.getWorkspace().getRoot());
 
 			monitor.worked(1);
 
@@ -257,21 +259,23 @@ public class CodeGenerationLaunchDelegate extends
 
 		}
 
-	private Configuration buildConfiguration(final ExporterAttributes attributes, ConsoleConfiguration cc, IWorkspaceRoot root) {
+	private ConfigurationStub buildConfiguration(final ExporterAttributes attributes, ConsoleConfiguration cc, IWorkspaceRoot root) {
 		final boolean reveng = attributes.isReverseEngineer();
 		final String reverseEngineeringStrategy = attributes.getRevengStrategy();
 		final boolean preferBasicCompositeids = attributes.isPreferBasicCompositeIds();
 		final IResource revengres = PathHelper.findMember( root, attributes.getRevengSettings());
 		
 		if(reveng) {
-			Configuration configuration = null;
+			ConfigurationStub configuration = null;
 			if(cc.hasConfiguration()) {
 				configuration = cc.getConfiguration();
 			} else {
 				configuration = cc.buildWith( null, false );
 			}
 
-			final JDBCMetaDataConfiguration cfg = new JDBCMetaDataConfiguration();
+			// vitali: TODO: use execution context
+			ConfigStubFactory configStubFactory = new ConfigStubFactory(null);
+			final ConfigurationStubJDBCMetaData cfg = configStubFactory.createConfigurationJDBCMetaData();
 			Properties properties = configuration.getProperties();
 			cfg.setProperties( properties );
 			cc.buildWith(cfg,false);
@@ -319,15 +323,8 @@ public class CodeGenerationLaunchDelegate extends
 			return cfg;
 		} else {
 			cc.build();
-			final Configuration configuration = cc.getConfiguration();
-
-			cc.execute(new Command() {
-				public Object execute() {
-
-					configuration.buildMappings();
-					return configuration;
-				}
-			});
+			cc.buildMappings();
+			final ConfigurationStub configuration = cc.getConfiguration();
 			return configuration;
 		}
 	}

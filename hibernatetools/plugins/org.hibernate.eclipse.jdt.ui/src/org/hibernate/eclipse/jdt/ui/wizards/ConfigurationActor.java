@@ -40,8 +40,9 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 import org.hibernate.FetchMode;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Mappings;
+import org.hibernate.console.stubs.ConfigStubFactory;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.collect.AllEntitiesInfoCollector;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.EntityInfo;
@@ -88,8 +89,8 @@ public class ConfigurationActor {
 	 * 
 	 * @return different configuration for different projects
 	 */
-	public Map<IJavaProject, Configuration> createConfigurations(int processDepth){
-		Map<IJavaProject, Configuration> configs = new HashMap<IJavaProject, Configuration>();
+	public Map<IJavaProject, ConfigurationStub> createConfigurations(int processDepth){
+		Map<IJavaProject, ConfigurationStub> configs = new HashMap<IJavaProject, ConfigurationStub>();
 		if (selectionCU.size() == 0) {
 			return configs;
 		}		
@@ -129,9 +130,7 @@ public class ConfigurationActor {
 		return configs;
 	}
 	
-	protected Configuration createConfiguration(IJavaProject project, Map<String, EntityInfo> entities) {
-		Configuration config = new Configuration();
-		
+	protected ConfigurationStub createConfiguration(IJavaProject project, Map<String, EntityInfo> entities) {
 		ProcessEntityInfo processor = new ProcessEntityInfo();
 		processor.setEntities(entities);
 		
@@ -146,6 +145,10 @@ public class ConfigurationActor {
 			}
 		}
 		
+		// vitali: TODO: should get ConsoleConfig in association with JavaProject
+		// and create Configuration in execution context of it! 
+		ConfigStubFactory configStubFactory = new ConfigStubFactory(null);
+		ConfigurationStub config = configStubFactory.createConfiguration();
 		Mappings mappings = config.createMappings();
 		Collection<PersistentClass> classesCollection = createHierarhyStructure(project, processor.getRootClasses());
 		for (PersistentClass persistentClass : classesCollection) {

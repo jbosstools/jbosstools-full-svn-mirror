@@ -30,10 +30,10 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.progress.IDeferredWorkbenchAdapter;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySource2;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.node.BaseNode;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.PrimaryKey;
@@ -51,7 +51,7 @@ public class ConfigurationAdapterFactory implements IAdapterFactory {
 		Map<Class<?>, IDeferredWorkbenchAdapter> map = new HashMap<Class<?>, IDeferredWorkbenchAdapter>();
 		
 		map.put(ConsoleConfiguration.class, new ConsoleConfigurationWorkbenchAdapter());
-		map.put(Configuration.class, new ConfigurationWorkbenchAdapter());
+		map.put(ConfigurationStub.class, new ConfigurationWorkbenchAdapter());
 		map.put(KnownConfigurations.class, new KnownConfigurationsWorkbenchAdapter());
 		map.put(PersistentClass.class, new PersistentClassWorkbenchAdapter());
 		map.put(Property.class, new PropertyWorkbenchAdapter());

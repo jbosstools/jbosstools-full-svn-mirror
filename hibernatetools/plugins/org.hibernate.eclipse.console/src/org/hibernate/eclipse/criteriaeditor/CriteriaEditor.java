@@ -58,12 +58,11 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.hibernate.HibernateException;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.QueryPage;
-import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.execution.ExecutionContext.Command;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.console.stubs.SessionStub;
 import org.hibernate.eclipse.console.AbstractQueryEditor;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
@@ -145,18 +144,19 @@ public class CriteriaEditor extends AbstractQueryEditor {
 		if (queryPage == null || !getPinToOneResTab()) {
 			queryPage = cfg.executeBSHQuery(getQueryString(), getQueryInputModel().getCopyForQuery() );
 		} else {
+			KnownConfigurations.getInstance().getQueryPageModel().remove(queryPage);
 			final ConsoleConfiguration cfg0 = cfg;
-			cfg.execute(new Command() {
+			SessionStub sessionStub = (SessionStub)cfg.execute(new Command() {
 				public Object execute() {
-					KnownConfigurations.getInstance().getQueryPageModel().remove(queryPage);
+					// vitali TODO: openSession should be executed in context - all other no! 
 					SessionStub sessionStub = cfg0.getSessionStubFactory().openSession();
-					queryPage.setModel(getQueryInputModel().getCopyForQuery());
-					queryPage.setQueryString(getQueryString());
-					queryPage.setSessionStub(sessionStub);
-					KnownConfigurations.getInstance().getQueryPageModel().add(queryPage);
-					return null;
+					return sessionStub;
 				}
 			});
+			queryPage.setModel(getQueryInputModel().getCopyForQuery());
+			queryPage.setQueryString(getQueryString());
+			queryPage.setSessionStub(sessionStub);
+			KnownConfigurations.getInstance().getQueryPageModel().add(queryPage);
 		}
 	}
 
@@ -179,14 +179,7 @@ public class CriteriaEditor extends AbstractQueryEditor {
 		if(consoleConfiguration.getConfiguration()==null) {
 			try {
 			 	consoleConfiguration.build();
-			 	consoleConfiguration.execute( new ExecutionContext.Command() {
-			 		public Object execute() {
-			 			if(consoleConfiguration.hasConfiguration()) {
-			 			consoleConfiguration.getConfiguration().buildMappings();
-			 		}
-			 			return consoleConfiguration;
-			 		}
-				});
+			 	consoleConfiguration.buildMappings();
 			} catch (HibernateException e) {
 				String mess = NLS.bind(HibernateConsoleMessages.CompletionHelper_error_could_not_build_cc, consoleConfiguration.getName());
 				HibernateConsolePlugin.getDefault().logErrorMessage(mess, e);
@@ -194,7 +187,7 @@ public class CriteriaEditor extends AbstractQueryEditor {
 		}
 		
 		Set<String> imports = new HashSet<String>();
-		Configuration configuration = consoleConfiguration.getConfiguration();
+		ConfigurationStub configuration = consoleConfiguration.getConfiguration();
 		if(configuration!=null) {
 			Iterator<PersistentClass> classMappings = configuration.getClassMappings();
 			while ( classMappings.hasNext() ) {

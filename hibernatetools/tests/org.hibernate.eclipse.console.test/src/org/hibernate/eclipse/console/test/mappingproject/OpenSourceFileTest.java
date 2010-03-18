@@ -24,9 +24,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.hibernate.InvalidMappingException;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.actions.OpenSourceAction;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.utils.Utils;
@@ -77,7 +77,7 @@ public class OpenSourceFileTest extends TestCase {
 		Object[] fields = null;
 		try {
 			configs = new ConsoleConfigurationWorkbenchAdapter().getChildren(consCFG);
-			assertTrue(configs[0] instanceof Configuration);
+			assertTrue(configs[0] instanceof ConfigurationStub);
 			persClasses = new ConfigurationWorkbenchAdapter().getChildren(configs[0]);
 		} catch (InvalidMappingException ex) {
 			String out = NLS.bind(ConsoleTestMessages.OpenSourceFileTest_source_files_for_package_cannot_be_opened,

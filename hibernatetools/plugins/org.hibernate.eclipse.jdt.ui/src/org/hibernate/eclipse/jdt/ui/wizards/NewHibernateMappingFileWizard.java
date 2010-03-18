@@ -61,8 +61,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.ide.IDE;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ImageConstants;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
@@ -239,80 +239,67 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 		}
 		this.selection = new StructuredSelection(filteredElements.toArray());
 	}
-	
-	protected class HibernateMappingExporter2 extends HibernateMappingExporter {
-		protected IJavaProject proj;
-		public HibernateMappingExporter2(IJavaProject proj, Configuration cfg, File outputdir) {
-	    	super(cfg, outputdir);
-	    	this.proj = proj;
-	    }
-		/**
-		 * redefine base exportPOJO to setup right output dir in case 
-		 * of several source folders 
-		 */
-		@SuppressWarnings("unchecked")
-		@Override
-		protected void exportPOJO(Map additionalContext, POJOClass element) {
-			File outputdir4FileOld = getOutputDirectory();
-			File outputdir4FileNew = outputdir4FileOld;
-			String fullyQualifiedName = element.getQualifiedDeclarationName();
-			ICompilationUnit icu = Utils.findCompilationUnit(proj, fullyQualifiedName);
-			if (icu != null) {
-				IResource resource = null;
-				try {
-					resource = icu.getCorrespondingResource();
-				} catch (JavaModelException e) {
-					//ignore
-				}
-				String[] aFQName = fullyQualifiedName.split("\\."); //$NON-NLS-1$
-				int n = aFQName.length - 1;
-				for ( ; n >= 0 && resource != null; n--) {
-					if (n == 0 && aFQName[n].length() == 0) {
-						// handle the (default package) case
-						break;
-					}
-					resource = resource.getParent();
-				}
-				if (resource != null) {
-					final IPath projPath = proj.getResource().getLocation();
-					IPath place2Gen = previewPage.getRootPlace2Gen().append(proj.getElementName());
-					//
-					IPath tmpPath = resource.getLocation();
-					tmpPath = tmpPath.makeRelativeTo(projPath);
-					place2Gen = place2Gen.append(tmpPath);
-					outputdir4FileNew = place2Gen.toFile();
-				}
-			}
-			if (!outputdir4FileNew.exists()) {
-				outputdir4FileNew.mkdirs();
-			}
-			setOutputDirectory(outputdir4FileNew);
-			super.exportPOJO(additionalContext, element);
-			setOutputDirectory(outputdir4FileOld);
-		}
-	}
 
 	protected Map<IJavaProject, IPath> getPlaces2Gen() {
 		updateCompilationUnits();
-		Map<IJavaProject, Configuration> configs = createConfigurations();
+		Map<IJavaProject, ConfigurationStub> configs = createConfigurations();
 		Map<IJavaProject, IPath> places2Gen = new HashMap<IJavaProject, IPath>();
-		for (Entry<IJavaProject, Configuration> entry : configs.entrySet()) {
-			Configuration config = entry.getValue();
+		for (Entry<IJavaProject, ConfigurationStub> entry : configs.entrySet()) {
+			ConfigurationStub config = entry.getValue();
 			HibernateMappingGlobalSettings hmgs = new HibernateMappingGlobalSettings();
 			hmgs.setDefaultAccess("field"); //$NON-NLS-1$
 
 			//final IPath projPath = entry.getKey().getProject().getLocation();
-			IPath place2Gen = previewPage.getRootPlace2Gen().append(entry.getKey().getElementName());
-			places2Gen.put(entry.getKey(), place2Gen);
+			IPath place2GenRoot = previewPage.getRootPlace2Gen().append(entry.getKey().getElementName());
+			places2Gen.put(entry.getKey(), place2GenRoot);
 			
-			File folder2Gen = new File(place2Gen.toOSString());
+			File folder2Gen = new File(place2GenRoot.toOSString());
 			FileUtils.delete(folder2Gen); // cleanup folder before gen info
 			if (!folder2Gen.exists()) {
 				folder2Gen.mkdirs();
 			}
-			HibernateMappingExporter2 hce = new HibernateMappingExporter2(
-					entry.getKey(), config, folder2Gen);
+			
+			final IJavaProject proj = entry.getKey();
+			ConfigurationStub.IExporterNewOutputDir nod = new ConfigurationStub.IExporterNewOutputDir() {
+				/**
+				 * redefine base exportPOJO to setup right output dir in case 
+				 * of several source folders 
+				 */
+				public File getNewOutputDir(POJOClass element, File outputdir4FileNew) {
 
+					String fullyQualifiedName = element.getQualifiedDeclarationName();
+					ICompilationUnit icu = Utils.findCompilationUnit(proj, fullyQualifiedName);
+					if (icu != null) {
+						IResource resource = null;
+						try {
+							resource = icu.getCorrespondingResource();
+						} catch (JavaModelException e) {
+							//ignore
+						}
+						String[] aFQName = fullyQualifiedName.split("\\."); //$NON-NLS-1$
+						int n = aFQName.length - 1;
+						for ( ; n >= 0 && resource != null; n--) {
+							if (n == 0 && aFQName[n].length() == 0) {
+								// handle the (default package) case
+								break;
+							}
+							resource = resource.getParent();
+						}
+						if (resource != null) {
+							final IPath projPath = proj.getResource().getLocation();
+							IPath place2Gen = previewPage.getRootPlace2Gen().append(proj.getElementName());
+							//
+							IPath tmpPath = resource.getLocation();
+							tmpPath = tmpPath.makeRelativeTo(projPath);
+							place2Gen = place2Gen.append(tmpPath);
+							outputdir4FileNew = place2Gen.toFile();
+						}
+					}
+					return outputdir4FileNew;
+				}
+			};
+			HibernateMappingExporter hce = config.createHibernateMappingExporter(folder2Gen, nod);
+			
 			hce.setGlobalSettings(hmgs);
 			//hce.setForEach("entity");
 			//hce.setFilePattern(file.getName());
@@ -536,9 +523,9 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 	}
 	
 
-	protected Map<IJavaProject, Configuration> createConfigurations() {
+	protected Map<IJavaProject, ConfigurationStub> createConfigurations() {
 		ConfigurationActor actor = new ConfigurationActor(selectionCU);
-		Map<IJavaProject, Configuration> configs = actor.createConfigurations(processDepth);
+		Map<IJavaProject, ConfigurationStub> configs = actor.createConfigurations(processDepth);
 		return configs;
 	}
 	

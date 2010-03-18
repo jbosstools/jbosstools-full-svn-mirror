@@ -146,7 +146,7 @@ public class OpenMappingUtils {
 		if (configXMLFile == null) {
 			return true;
 		}
-		EntityResolver entityResolver = consoleConfig.getConfiguration().getEntityResolver(); 
+		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(configXMLFile, entityResolver);
 		return getElements(doc, HIBERNATE_TAG_MAPPING, HIBERNATE_TAG_CLASS, getPersistentClassName(rootClass)).hasNext();
 	}
@@ -185,7 +185,7 @@ public class OpenMappingUtils {
 	 * @return
 	 */
 	public static boolean rootClassInFile(ConsoleConfiguration consoleConfig, IFile file, RootClass rootClass) {
-		EntityResolver entityResolver = consoleConfig.getConfiguration().getEntityResolver(); 
+		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(file.getLocation().toFile(), entityResolver);
 		final String clName = getPersistentClassName(rootClass);
 		final String clNameUnq = StringHelper.unqualify(clName);
@@ -219,7 +219,7 @@ public class OpenMappingUtils {
 	 * @return
 	 */
 	public static boolean subclassInFile(ConsoleConfiguration consoleConfig, IFile file, Subclass subclass) {
-		EntityResolver entityResolver = consoleConfig.getConfiguration().getEntityResolver(); 
+		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(file.getLocation().toFile(), entityResolver);
 		final String clName = getPersistentClassName(subclass);
 		final String clNameUnq = StringHelper.unqualify(clName);
@@ -243,7 +243,7 @@ public class OpenMappingUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static boolean tableInFile(ConsoleConfiguration consoleConfig, IFile file, Table table) {
-		EntityResolver entityResolver = consoleConfig.getConfiguration().getEntityResolver(); 
+		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(file.getLocation().toFile(), entityResolver);
 		Iterator<Element> classes = getElements(doc, HIBERNATE_TAG_CLASS);
 		boolean res = false;
@@ -449,11 +449,7 @@ public class OpenMappingUtils {
         	return file;
     	}
 		java.io.File configXMLFile = consoleConfig.getConfigXMLFile();
-		if (!consoleConfig.hasConfiguration()) {
-			consoleConfig.build();
-			consoleConfig.buildSessionFactory();
-		}
-		EntityResolver entityResolver = consoleConfig.getConfiguration().getEntityResolver(); 
+		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(configXMLFile, entityResolver);
 		if (doc == null) {
         	return file;

@@ -25,9 +25,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.mapping.PersistentClass;
@@ -36,7 +36,7 @@ public class ConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	@SuppressWarnings("unchecked")
 	public Object[] getChildren(Object o) {
-		Configuration cfg = (Configuration) o;
+		ConfigurationStub cfg = (ConfigurationStub) o;
 		Iterator<? extends PersistentClass> classMappings = cfg.getClassMappings();
 		return toArray(classMappings, PersistentClass.class, new Comparator<PersistentClass>() {
 
