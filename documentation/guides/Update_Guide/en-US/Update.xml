@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="getting_started" xreflabel="getting_started">
-<?dbhtml filename="getting_started.html"?>
+<chapter id="chap-update_site_configuration">
+<?dbhtml filename="update_site_configuration.html"?>
 	<chapterinfo>
 		<keywordset>
 			<keyword>JBoss Developer Studio</keyword>
@@ -9,9 +9,17 @@
 			<keyword>JBoss</keyword>
 		</keywordset>
 	</chapterinfo>
-	<title>Getting started</title>
+	<title>Update site configuration</title>
 		
-	<section id="sect-getting_started-Upgrading_using_the_update_site">
+	<section id="sect-update_site_configuration-Username_and_password">
+	   <title>Update site username and password</title>
+	   <para>
+	    Updating JBoss Developer Studio using the update site requires a username and password to be
+entered by the user as described in <xref linkend="proc-Adding_Update_Sites"/>. These details, and
+consequently the ability to update using the update site, are provided to customers of JBoss Developer Studio. Information presented here regarding the addition of an update site and configuring automated updates can be applied to the installation of plug-ins in general. 
+       </para>
+	</section>
+	<section id="sect-update_site_configuration-Upgrading_using_the_update_site">
 	<title>Upgrading using the update site</title>
 	<para>
 	    JBoss Developer Studio provides the facility to update from version 3.0.x to the the latest code fixes and enhancements without the need to download a complete installation. Updating can be achieved by adding the relevant remote update site to the list of available software sites then performing manual or scheduled updates. At present, the update site contains the latest 3.0.0.GA build so performing an update at this stage will leave your installation unchanged.
@@ -19,7 +27,7 @@
 	<para>
 	  <xref linkend="proc-Adding_Update_Sites"/> describes how to add the update site to the list of available sites. Configuring JBoss Developer Studio to check for and download updates is outlined in <xref linkend="proc-Configuring_Automatic_Updates"/>. Manual updates can be performed by selecting <menuchoice><guimenu>Help</guimenu><guisubmenu>Check For Updates</guisubmenu></menuchoice>.
 	</para>
-	<section id="sect-getting_started-Upgrading_using_the_update_site-Adding_the_update_site">
+	<section id="sect-update_site_configuration-Upgrading_using_the_update_site-Adding_the_update_site">
 	<title>Adding the update site</title> 
 	
 	<!--  
@@ -175,7 +183,7 @@
         </para>
       </note>
       </section>
-      <section id="sect-getting_started-Upgrading_using_the_update_site-Automatic_updates">
+      <section id="sect-update_site_configuration-Upgrading_using_the_update_site-Automatic_updates">
         <title>Automatic updates</title>
       <procedure id="proc-Configuring_Automatic_Updates">
         <title>Automatic Updates</title>	
