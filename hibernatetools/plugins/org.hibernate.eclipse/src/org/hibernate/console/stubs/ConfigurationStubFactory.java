@@ -42,11 +42,11 @@ import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
-public class ConfigStubFactory {
+public class ConfigurationStubFactory {
 
 	private ConsoleConfigurationPreferences prefs = null;
 	
-	public ConfigStubFactory(ConsoleConfigurationPreferences prefs) {
+	public ConfigurationStubFactory(ConsoleConfigurationPreferences prefs) {
 		this.prefs = prefs;
 	}
 
@@ -157,7 +157,8 @@ public class ConfigStubFactory {
 			}
 
 			method = clazz.getMethod("getHibernateConfiguration", new Class[0]);//$NON-NLS-1$
-			Configuration invoke = (Configuration) method.invoke(ejb3cfg, (Object[]) null);
+			Object obj = method.invoke(ejb3cfg, (Object[]) null);
+			Configuration invoke = (Configuration)obj;
 			invoke = configureConnectionProfile(invoke);
 
 			return invoke;

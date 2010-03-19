@@ -28,7 +28,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/hibernate-jmx.jar" sourcepath="D:/Temp/_hibernate/hibernate-jmx-3.3.2.GA-sources.jar "/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/commons-collections-3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/slf4j-api-1.5.8.jar" sourcepath="D:/Temp/_hibernate/slf4j-api-1.5.8-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/hibernate/cglib-2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate/cglib-2.2.jar" sourcepath="D:/Temp/_hibernate/cglib-src-2.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/annotations/hibernate-commons-annotations.jar" sourcepath="D:/Temp/_hibernate/hibernate-commons-annotations-3.1.0.GA-sources.jar "/>
 	<classpathentry exported="true" kind="lib" path="lib/annotations/ejb3-persistence.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/c3p0-0.9.1.jar"/>

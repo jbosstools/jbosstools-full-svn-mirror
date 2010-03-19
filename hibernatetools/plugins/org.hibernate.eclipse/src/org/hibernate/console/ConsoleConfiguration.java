@@ -22,60 +22,33 @@
 package org.hibernate.console;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
-import org.dom4j.DocumentException;
-import org.dom4j.Node;
-import org.dom4j.io.DOMWriter;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
-import org.eclipse.osgi.util.NLS;
 import org.hibernate.HibernateException;
-import org.hibernate.MappingException;
 import org.hibernate.cfg.Environment;
-import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.cfg.Settings;
 import org.hibernate.console.execution.DefaultExecutionContext;
 import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.execution.ExecutionContextHolder;
 import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
-import org.hibernate.console.stubs.ConfigStubFactory;
+import org.hibernate.console.stubs.ConfigurationStubFactory;
 import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.console.stubs.SessionStub;
 import org.hibernate.console.stubs.SessionStubFactory;
-import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.resolver.DialectFactory;
-import org.hibernate.tool.ide.completion.HQLCodeAssist;
 import org.hibernate.tool.ide.completion.IHQLCodeAssist;
-import org.hibernate.util.ConfigHelper;
-import org.hibernate.util.ReflectHelper;
-import org.hibernate.util.StringHelper;
-import org.hibernate.util.XMLHelper;
-import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
 
 public class ConsoleConfiguration implements ExecutionContextHolder {
 
@@ -98,7 +71,10 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 
 	public Object execute(Command c) {
-		return executionContext.execute(c);
+		if (executionContext != null) {
+			return executionContext.execute(c);
+		}
+		return null;
 	}
 
 	/**
@@ -108,15 +84,12 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	public void reset() {
 		// reseting state
 		closeSessionFactory();
-		if (executionContext != null) {
-			executionContext.execute(new ExecutionContext.Command() {
-	
-				public Object execute() {
-					configStub.cleanUp();
-					return null;
-				}
-			});
-		}
+		execute(new ExecutionContext.Command() {
+			public Object execute() {
+				configStub.cleanUp();
+				return null;
+			}
+		});
 		configStub = null;
 		cleanUpClassLoader();
 		fireConfigurationReset();
@@ -150,7 +123,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		executionContext = new DefaultExecutionContext(getName(), classLoader);
 		ConfigurationStub result = (ConfigurationStub) executionContext.execute(new ExecutionContext.Command() {
 			public Object execute() {
-				ConfigStubFactory csf = new ConfigStubFactory(prefs);
+				ConfigurationStubFactory csf = new ConfigurationStubFactory(prefs);
 				return csf.createConfiguration(cfg, includeMappings);
 			}
 		});
@@ -169,7 +142,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		if (profile == null) {
 			return null;
 		}
-		ConfigStubFactory.refreshProfile(profile);
+		ConfigurationStubFactory.refreshProfile(profile);
 		//
 		Properties cpProperties = profile.getProperties(profile.getProviderId());
 		String driverJarPath = cpProperties.getProperty("jarList"); //$NON-NLS-1$
@@ -249,6 +222,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 
 	protected ClassLoader getParentClassLoader() {
+		//return Thread.currentThread().getContextClassLoader().getParent();
 		return Thread.currentThread().getContextClassLoader();
 	}
 	public ConfigurationStub getConfiguration() {
@@ -300,7 +274,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 
 	public QueryPage executeHQLQuery(final String hql, final QueryInputModel model) {
 
-		return (QueryPage) executionContext.execute(new ExecutionContext.Command() {
+		return (QueryPage)execute(new ExecutionContext.Command() {
 
 			public Object execute() {
 				SessionStub sessionStub = getSessionStubFactory().openSession();
@@ -316,7 +290,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 
 	public QueryPage executeBSHQuery(final String queryString, final QueryInputModel model) {
-		return (QueryPage) executionContext.execute(new ExecutionContext.Command() {
+		return (QueryPage)execute(new ExecutionContext.Command() {
 
 			public Object execute() {
 				SessionStub sessionStub = getSessionStubFactory().openSession();
@@ -380,8 +354,8 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 
 	public String generateSQL(final String query) {
 		String res = ""; //$NON-NLS-1$
-		if (sessionStubFactory != null && executionContext != null) {
-			res = (String)executionContext.execute(new ExecutionContext.Command() {
+		if (sessionStubFactory != null) {
+			res = (String)execute(new ExecutionContext.Command() {
 				public Object execute() {
 					return sessionStubFactory.generateSQL(query);
 				}

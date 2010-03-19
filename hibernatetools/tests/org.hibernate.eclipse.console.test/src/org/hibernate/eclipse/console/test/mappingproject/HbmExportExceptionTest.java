@@ -27,7 +27,6 @@ import org.eclipse.jdt.internal.core.PackageFragmentRoot;
 import org.eclipse.osgi.util.NLS;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.project.ConfigurableTestProject;
@@ -75,15 +74,7 @@ public class HbmExportExceptionTest extends TestCase {
 			consCFG.reset();
 			consCFG.build();
 			assertTrue(consCFG.hasConfiguration());
-			consCFG.execute( new ExecutionContext.Command() {
-
-				public Object execute() {
-					if(consCFG.hasConfiguration()) {
-						consCFG.getConfiguration().buildMappings();
-					}
-					return consCFG;
-				}
-			} );
+			consCFG.buildMappings();
 			ConfigurationStub config = consCFG.getConfiguration();
 			
 			//delete old hbm files

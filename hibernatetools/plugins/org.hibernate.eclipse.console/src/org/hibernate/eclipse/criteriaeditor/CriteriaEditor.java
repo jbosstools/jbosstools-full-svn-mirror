@@ -148,7 +148,6 @@ public class CriteriaEditor extends AbstractQueryEditor {
 			final ConsoleConfiguration cfg0 = cfg;
 			SessionStub sessionStub = (SessionStub)cfg.execute(new Command() {
 				public Object execute() {
-					// vitali TODO: openSession should be executed in context - all other no! 
 					SessionStub sessionStub = cfg0.getSessionStubFactory().openSession();
 					return sessionStub;
 				}

@@ -21,6 +21,7 @@ import org.hibernate.console.ConsoleQueryParameter;
 import org.hibernate.console.QueryInputModel;
 import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.execution.ExecutionContext.Command;
+import org.hibernate.console.util.CollectionPropertySource;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.metadata.CollectionMetadata;

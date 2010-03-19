@@ -41,7 +41,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 import org.hibernate.FetchMode;
 import org.hibernate.cfg.Mappings;
-import org.hibernate.console.stubs.ConfigStubFactory;
+import org.hibernate.console.stubs.ConfigurationStubFactory;
 import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.collect.AllEntitiesInfoCollector;
@@ -147,7 +147,7 @@ public class ConfigurationActor {
 		
 		// vitali: TODO: should get ConsoleConfig in association with JavaProject
 		// and create Configuration in execution context of it! 
-		ConfigStubFactory configStubFactory = new ConfigStubFactory(null);
+		ConfigurationStubFactory configStubFactory = new ConfigurationStubFactory(null);
 		ConfigurationStub config = configStubFactory.createConfiguration();
 		Mappings mappings = config.createMappings();
 		Collection<PersistentClass> classesCollection = createHierarhyStructure(project, processor.getRootClasses());

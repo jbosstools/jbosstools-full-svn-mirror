@@ -59,7 +59,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.text.edits.TextEdit;
 import org.hibernate.HibernateException;
-import org.hibernate.cfg.JDBCMetaDataConfiguration;
 import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
 import org.hibernate.cfg.reveng.OverrideRepository;
 import org.hibernate.cfg.reveng.ReverseEngineeringSettings;
@@ -68,7 +67,7 @@ import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.HibernateConsoleRuntimeException;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.execution.ExecutionContext.Command;
-import org.hibernate.console.stubs.ConfigStubFactory;
+import org.hibernate.console.stubs.ConfigurationStubFactory;
 import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.console.stubs.ConfigurationStubJDBCMetaData;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
@@ -274,7 +273,7 @@ public class CodeGenerationLaunchDelegate extends
 			}
 
 			// vitali: TODO: use execution context
-			ConfigStubFactory configStubFactory = new ConfigStubFactory(null);
+			ConfigurationStubFactory configStubFactory = new ConfigurationStubFactory(null);
 			final ConfigurationStubJDBCMetaData cfg = configStubFactory.createConfigurationJDBCMetaData();
 			Properties properties = configuration.getProperties();
 			cfg.setProperties( properties );

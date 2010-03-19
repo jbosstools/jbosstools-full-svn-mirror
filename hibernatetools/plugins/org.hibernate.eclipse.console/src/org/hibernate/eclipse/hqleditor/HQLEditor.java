@@ -422,18 +422,18 @@ public class HQLEditor extends AbstractQueryEditor {
 		if (queryPage == null || !getPinToOneResTab()) {
 			queryPage = cfg.executeHQLQuery(getQueryString(), getQueryInputModel().getCopyForQuery());
 		} else {
+			KnownConfigurations.getInstance().getQueryPageModel().remove(queryPage);
 			final ConsoleConfiguration cfg0 = cfg;
-			cfg.execute(new Command() {
+			SessionStub sessionStub = (SessionStub)cfg.execute(new Command() {
 				public Object execute() {
-					KnownConfigurations.getInstance().getQueryPageModel().remove(queryPage);
 					SessionStub sessionStub = cfg0.getSessionStubFactory().openSession();
-					queryPage.setModel(getQueryInputModel().getCopyForQuery());
-					queryPage.setQueryString(getQueryString());
-					queryPage.setSessionStub(sessionStub);
-					KnownConfigurations.getInstance().getQueryPageModel().add(queryPage);
-					return null;
+					return sessionStub;
 				}
 			});
+			queryPage.setModel(getQueryInputModel().getCopyForQuery());
+			queryPage.setQueryString(getQueryString());
+			queryPage.setSessionStub(sessionStub);
+			KnownConfigurations.getInstance().getQueryPageModel().add(queryPage);
 		}
 	}
 
