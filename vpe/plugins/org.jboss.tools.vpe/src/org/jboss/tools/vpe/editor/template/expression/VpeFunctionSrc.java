@@ -160,11 +160,12 @@ public class VpeFunctionSrc extends VpeFunction {
     }
 
     protected String getUnresolved() {
-	return IMG_PREFIX + getAbsoluteResourcePath(IMG_UNRESOLVED).replace('\\', '/');
+    	return VpeStyleUtil.getAbsoluteResourcePathUrl(IMG_UNRESOLVED);
     }
 
     protected String getPrefix() {
-	return IMG_PREFIX;
+    	return VpeStyleUtil.FILE_PROTOCOL + VpeStyleUtil.SLASH
+    			+ VpeStyleUtil.SLASH + VpeStyleUtil.SLASH;
     }
 
     private String processValue(VpePageContext pageContext, Node sourceNode,
@@ -270,17 +271,17 @@ public class VpeFunctionSrc extends VpeFunction {
 //        return resolvedValue;
 //    }
     
-    public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
-	String pluginPath = VpePlugin.getPluginResourcePath();
-	IPath pluginFile = new Path(pluginPath);
-	File file = pluginFile.append(resourcePathInPlugin).toFile();
-	if (file.exists()) {
-	    return file.getAbsolutePath();
-	} else {
-	    throw new RuntimeException("Can't get path for " //$NON-NLS-1$
-		    + resourcePathInPlugin);
-	}
-    }
+//    public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
+//	String pluginPath = VpePlugin.getPluginResourcePath();
+//	IPath pluginFile = new Path(pluginPath);
+//	File file = pluginFile.append(resourcePathInPlugin).toFile();
+//	if (file.exists()) {
+//	    return file.getAbsolutePath();
+//	} else {
+//	    throw new RuntimeException("Can't get path for " //$NON-NLS-1$
+//		    + resourcePathInPlugin);
+//	}
+//    }
 
 	protected KbQuery createKbQuery(JspContentAssistProcessor processor, Node fNode, int offset, String attrName) {
 		KbQuery kbQuery = new KbQuery();
