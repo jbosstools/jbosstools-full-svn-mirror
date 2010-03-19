@@ -19,8 +19,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.ConsoleQueryParameter;
 import org.hibernate.console.QueryInputModel;
-import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.util.CollectionPropertySource;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.metadata.ClassMetadata;
@@ -33,11 +31,9 @@ import bsh.Interpreter;
 
 public class SessionStub {
 
-	protected ExecutionContext executionContext;
 	protected Session session;
 
-	protected SessionStub(ExecutionContext executionContext, Session session) {
-		this.executionContext = executionContext;
+	protected SessionStub(Session session) {
 		this.session = session;
 	}
 
@@ -138,23 +134,15 @@ public class SessionStub {
 	}
 
 	public IPropertyDescriptor[] getPropertyDescriptors(final Object obj) {
-		IPropertyDescriptor[] propertyDescriptors = null;
-		if (executionContext != null) {
-			propertyDescriptors = (IPropertyDescriptor[]) executionContext.execute(new Command() {
-				public Object execute() {
-					SessionFactory sf = session.getSessionFactory();
-					ClassMetadata classMetadata;
-					if (session.isOpen()) {
-						classMetadata = sf.getClassMetadata(session.getEntityName(obj));
-					} else {
-						classMetadata = sf.getClassMetadata(HibernateProxyHelper
-								.getClassWithoutInitializingProxy(obj));
-					}
-					return initializePropertyDescriptors(classMetadata);
-				}
-			});
+		SessionFactory sf = session.getSessionFactory();
+		ClassMetadata classMetadata;
+		if (session.isOpen()) {
+			classMetadata = sf.getClassMetadata(session.getEntityName(obj));
+		} else {
+			classMetadata = sf.getClassMetadata(HibernateProxyHelper
+					.getClassWithoutInitializingProxy(obj));
 		}
-		return propertyDescriptors;
+		return initializePropertyDescriptors(classMetadata);
 	}
 
 	protected IPropertyDescriptor[] initializePropertyDescriptors(ClassMetadata classMetadata) {

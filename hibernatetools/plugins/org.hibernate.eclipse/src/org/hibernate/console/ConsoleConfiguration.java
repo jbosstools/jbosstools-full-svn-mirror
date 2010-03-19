@@ -241,7 +241,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 				if (sessionStubFactory != null) {
 					throw new HibernateConsoleRuntimeException(ConsoleMessages.ConsoleConfiguration_factory_not_closed_before_build_new_factory);
 				}
-				sessionStubFactory = new SessionStubFactory(executionContext, configStub);
+				sessionStubFactory = new SessionStubFactory(configStub);
 				fireFactoryBuilt();
 				return null;
 			}

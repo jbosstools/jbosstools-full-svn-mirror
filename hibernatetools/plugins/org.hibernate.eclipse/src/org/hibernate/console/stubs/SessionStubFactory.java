@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.console.ConsoleMessages;
-import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.util.ELTransformer;
 import org.hibernate.console.util.QLFormatHelper;
 import org.hibernate.engine.query.HQLQueryPlan;
@@ -21,11 +20,9 @@ import org.hibernate.type.Type;
 
 public class SessionStubFactory {
 
-	protected ExecutionContext executionContext;
 	protected SessionFactory sessionFactory;
 
-	public SessionStubFactory(ExecutionContext executionContext, ConfigurationStub configStub) {
-		this.executionContext = executionContext;
+	public SessionStubFactory(ConfigurationStub configStub) {
 		sessionFactory = configStub.buildSessionFactory();
 	}
 
@@ -35,7 +32,7 @@ public class SessionStubFactory {
 
 	public SessionStub openSession() {
 		if (sessionFactory != null) {
-			return new SessionStub(executionContext, sessionFactory.openSession());
+			return new SessionStub(sessionFactory.openSession());
 		}
 		return null;
 	}
