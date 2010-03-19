@@ -23,17 +23,19 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 
 /**
+ * Class responsible for showing the place where the node being dragged
+ * could be dropped.
+ * 
  * @author Yahor Radtsevich (yradtsevich)
- *
  */
 public class DropableArea {
 	private boolean visible;
-	private EnumSet<DropSpot> dropSpots;
+	private EnumSet<DropTarget> dropTargets;
 	private final nsIDOMDocument document;
 	private nsIDOMNode node;
 	private nsIDOMElement domArea;
 	private static final String AREA_COLOR = "rgba(166, 202, 240, 0.5)"; //$NON-NLS-1$
-	private DropSpot hightlightedSpot;
+	private DropTarget hightlightedDropTarget;
 	
 	/**
 	 * 
@@ -51,10 +53,10 @@ public class DropableArea {
 	}
 	
 	/**
-	 * @param dropSpots cannot be null
+	 * @param dropTargets cannot be null
 	 */
-	public void setDropSpots(EnumSet<DropSpot> dropSpots) {
-		this.dropSpots = dropSpots;
+	public void setDropTargets(EnumSet<DropTarget> dropTargets) {
+		this.dropTargets = dropTargets;
 	}
 	
 	public void setVisible(boolean visible) {
@@ -62,31 +64,31 @@ public class DropableArea {
 	}
 	
 	public void setHighlightedSpot(int mouseX, int mouseY) {
-		this.hightlightedSpot = getHighlightedSpot(mouseX, mouseY);
+		this.hightlightedDropTarget = getHighlightedDropTarget(mouseX, mouseY);
 	}
 	
-	public DropSpot getHighlightedSpot(int mouseX, int mouseY) {
+	public DropTarget getHighlightedDropTarget(int mouseX, int mouseY) {
 		if (node == null) {
 			return null;
 		}
 		
 		Rectangle bounds = XulRunnerVpeUtils.getElementBounds(node);
-		if (dropSpots.contains(DropSpot.BEFORE)
+		if (dropTargets.contains(DropTarget.BEFORE)
 				&& bounds.x <= mouseX
 				&& mouseX < bounds.x + bounds.width / 5) {
-			return DropSpot.BEFORE; 
-		} else if (dropSpots.contains(DropSpot.AFTER)
+			return DropTarget.BEFORE; 
+		} else if (dropTargets.contains(DropTarget.AFTER)
 				&& bounds.x + bounds.width * 4 / 5 <= mouseX
 				&& mouseX < bounds.x + bounds.width) {
-			return DropSpot.AFTER;
-		} else if (dropSpots.contains(DropSpot.BEGIN)
+			return DropTarget.AFTER;
+		} else if (dropTargets.contains(DropTarget.BEGIN)
 				&& bounds.y <= mouseY
 				&& mouseY < bounds.y + bounds.height / 5) {
-			return DropSpot.BEGIN;
-		} else if (dropSpots.contains(DropSpot.END)
+			return DropTarget.BEGIN;
+		} else if (dropTargets.contains(DropTarget.END)
 				&& bounds.y + bounds.height * 4 / 5 <= mouseY
 				&& mouseY < bounds.y + bounds.height) {
-			return DropSpot.END;
+			return DropTarget.END;
 		} else {
 			return null;
 		}
@@ -112,25 +114,25 @@ public class DropableArea {
 		nsIDOMCSSStyleDeclaration style;
 		nsIDOMElement line;
 		
-		if (dropSpots.contains(DropSpot.BEFORE)) {
-			line = createVerticalLine(bounds.height, getColor(DropSpot.BEFORE));
+		if (dropTargets.contains(DropTarget.BEFORE)) {
+			line = createVerticalLine(bounds.height, getColor(DropTarget.BEFORE));
 			style = VpeStyleUtil.getStyle(line);
 			style.setProperty(HTML.STYLE_PARAMETER_LEFT,
 					VpeStyleUtil.toPxPosition(-6), HTML.STYLE_PRIORITY_DEFAULT);
 			domArea.appendChild(line);
 		}
 		
-		if (dropSpots.contains(DropSpot.AFTER)) {
-			line = createVerticalLine(bounds.height, getColor(DropSpot.AFTER));
+		if (dropTargets.contains(DropTarget.AFTER)) {
+			line = createVerticalLine(bounds.height, getColor(DropTarget.AFTER));
 			style = VpeStyleUtil.getStyle(line);
 			style.setProperty(HTML.STYLE_PARAMETER_RIGHT,
 					VpeStyleUtil.toPxPosition(-6), HTML.STYLE_PRIORITY_DEFAULT);
 			domArea.appendChild(line);
 		}
 		
-		if (dropSpots.contains(DropSpot.BEGIN)) {
+		if (dropTargets.contains(DropTarget.BEGIN)) {
 			line = createHorizontalLine(bounds.width - 4,
-					getColor(DropSpot.BEGIN));
+					getColor(DropTarget.BEGIN));
 			style = VpeStyleUtil.getStyle(line);
 			style.setProperty(HTML.STYLE_PARAMETER_LEFT,
 					VpeStyleUtil.toPxPosition(2), HTML.STYLE_PRIORITY_DEFAULT);
@@ -139,9 +141,9 @@ public class DropableArea {
 			domArea.appendChild(line);
 		}
 		
-		if (dropSpots.contains(DropSpot.END)) {
+		if (dropTargets.contains(DropTarget.END)) {
 			line = createHorizontalLine(bounds.width - 4,
-					getColor(DropSpot.END));
+					getColor(DropTarget.END));
 			style = VpeStyleUtil.getStyle(line);
 			style.setProperty(HTML.STYLE_PARAMETER_LEFT,
 					VpeStyleUtil.toPxPosition(2), HTML.STYLE_PRIORITY_DEFAULT);
@@ -155,8 +157,8 @@ public class DropableArea {
 		}
 	}
 	
-	private String getColor(DropSpot dropSpot) {
-		if (dropSpot == hightlightedSpot) {
+	private String getColor(DropTarget dropTarget) {
+		if (dropTarget == hightlightedDropTarget) {
 			return "red";
 		} else {
 			return "black";

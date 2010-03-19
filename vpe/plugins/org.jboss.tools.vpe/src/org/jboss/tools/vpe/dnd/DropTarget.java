@@ -11,10 +11,11 @@
 package org.jboss.tools.vpe.dnd;
 
 /**
+ * Target of a Drag&Drop action.
+ * 
  * @author Yahor Radtsevich (yradtsevich)
- *
  */
-public enum DropSpot {
+public enum DropTarget {
 	BEFORE,
 	AFTER,
 	BEGIN,

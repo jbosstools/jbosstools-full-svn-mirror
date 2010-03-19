@@ -21,6 +21,8 @@ import org.mozilla.interfaces.nsIDOMElementCSSInlineStyle;
 import org.mozilla.interfaces.nsIDOMNode;
 
 /**
+ * Class responsible for showing the drag icon and the node being dragged. 
+ * 
  * @author Yahor Radtsevich (yradtsevich)
  */
 public class DraggablePattern {
