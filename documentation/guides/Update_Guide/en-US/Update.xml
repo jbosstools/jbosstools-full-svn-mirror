@@ -58,8 +58,20 @@ consequently the ability to update using the update site, are provided to custom
       	    </listitem>
       	    <listitem>
       	      <para>
-      	        Enter the <acronym>url</acronym> of the update site (<ulink url="https://devstudio.jboss.com/updates/3.0/">https://devstudio.jboss.com/updates/3.0/</ulink>) in the <guilabel>Location</guilabel> field.  
-      	      </para>  
+      	        Enter the <acronym>url</acronym> of the update site in the <guilabel>Location</guilabel> field. The user has the option of the following two options:
+      	      </para>
+      	      <itemizedlist>
+      	        <listitem>
+      	          <para>
+      	           https://devstudio.jboss.com/updates/3.0/
+      	          </para>
+      	        </listitem>
+      	        <listitem>
+      	          <para>
+      	           http://devstudio.jboss.com/updates/3.0/
+      	          </para>
+      	        </listitem>
+      	      </itemizedlist>
               <figure id="figure-Add-Site_01">
                 <title>Add Site Dialog</title>
                 <mediaobject>
@@ -71,11 +83,11 @@ consequently the ability to update using the update site, are provided to custom
                   </textobject>
                 </mediaobject>
               </figure>
-      	      <note><title>Note: Update site information</title>
+      	      <warning><title>Use the secure site where possible</title>
       	        <para>
-      	          Information pertaining to the update site can be obtained by entering the url in a browser.
-      	        </para> 
-      	    </note>
+      	         The unsecure site, http://devstudio.jboss.com/updates/3.0/, should only be used if the user is experiencing proxy problems or the user's firewall restricts access to https sites. The password will be sent in plain text if the http site is used.    
+      	        </para>
+      	      </warning>
       	    </listitem>
       	    
       	  </orderedlist>
