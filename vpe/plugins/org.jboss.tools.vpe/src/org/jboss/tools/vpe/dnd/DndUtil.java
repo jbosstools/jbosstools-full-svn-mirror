@@ -14,15 +14,19 @@ package org.jboss.tools.vpe.dnd;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
+import java.util.Map.Entry;
 
 import org.eclipse.swt.events.TypedEvent;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
 import org.jboss.tools.common.model.ui.editors.dnd.context.IDNDTextEditor;
 import org.jboss.tools.vpe.editor.VpeController;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
+import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
-import org.mozilla.interfaces.nsIDOMEvent;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNSDocument;
 import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsIServiceManager;
@@ -208,5 +212,52 @@ public class DndUtil {
 		public long getDataLen() {
 			return dataLen;
 		}
+	}
+	
+	
+	public static void setTemporaryDndElement(nsIDOMElement element,
+			boolean temporary) {
+		if (temporary) {
+			element.setAttribute("vpeTemporaryDndElement",
+					Boolean.TRUE.toString());
+		} else {
+			element.removeAttribute("vpeTemporaryDndElement");
+		}
+	}
+
+	public static boolean isTemporaryDndElement(nsIDOMElement element) {
+		String attribute = element.getAttribute("vpeTemporaryDndElement");
+		if (Boolean.TRUE.toString().equals(attribute)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static nsIDOMElement getElementFromPoint(nsIDOMNSDocument document,
+			int x, int y) {
+		nsIDOMElement element = document.elementFromPoint(x, y);
+
+		Stack<nsIDOMElement> hiddenElements = new Stack<nsIDOMElement>();
+		Stack<String> hiddenElementsStyles = new Stack<String>();
+		while (element != null && isTemporaryDndElement(element)) {
+			hiddenElements.push(element);
+			hiddenElementsStyles.push(element.getAttribute(HTML.ATTR_STYLE));
+
+			element.setAttribute(HTML.ATTR_STYLE, "display:none !important;");
+			element = document.elementFromPoint(x, y);
+		}
+
+		while (!hiddenElements.empty()) {
+			nsIDOMElement element2 = hiddenElements.pop();
+			String style = hiddenElementsStyles.pop();
+			if (style == null) {
+				element2.removeAttribute(HTML.ATTR_STYLE);
+			} else {
+				element2.setAttribute(HTML.ATTR_STYLE, style);
+			}
+		}
+
+		return element;
 	}
 }

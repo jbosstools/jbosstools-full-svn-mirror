@@ -27,6 +27,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
+import org.jboss.tools.common.model.ui.views.navigator.NDeleteAction;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.web.project.WebProject;
@@ -34,8 +35,12 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
+import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMElementCSSInlineStyle;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIDebug;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -69,7 +74,20 @@ public class VpeStyleUtil {
     public static String FILE_PROTOCOL = "file:"; //$NON-NLS-1$
     public static String HTTP_PROTOCOL = "http:"; //$NON-NLS-1$
     public static String SLASH = "/"; //$NON-NLS-1$
-    	
+    
+    /**
+     * Returns CSS style declaration corresponding to the given {@code element}. 
+     */
+    public static nsIDOMCSSStyleDeclaration getStyle(nsIDOMElement element) {
+    	nsIDOMElementCSSInlineStyle inlineStyle = 
+			(nsIDOMElementCSSInlineStyle)
+					element.queryInterface(nsIDOMElementCSSInlineStyle
+							.NS_IDOMELEMENTCSSINLINESTYLE_IID);
+    	return inlineStyle.getStyle();
+    }
+    
+    
+
     // sets parameter position in attribute style to absolute value
     public static void setAbsolute(Element sourceElement) {
 	String style = sourceElement.getAttribute(ATTRIBUTE_STYLE);
@@ -553,6 +571,12 @@ public class VpeStyleUtil {
 		return finalStr;
 	}
     
+    public static String getAbsoluteResourcePathUrl(String resourcePathInPlugin) {
+    	return FILE_PROTOCOL + SLASH + SLASH + SLASH
+    			+ getAbsoluteResourcePath(resourcePathInPlugin)
+    					.replace('\\', '/');
+    }
+
     /**
 	 * Adds the full path to image "src" attribute.
 	 * 
@@ -781,6 +805,14 @@ public class VpeStyleUtil {
 
     	return size;
     }
+    
+    /**
+     * Converts the argument to the form {@code "Xpx"},
+     * where {@code X=position}.
+     */
+    public static String toPxPosition(int position) {
+		return Integer.toString(position) + PX_STRING;
+	}
     
     public static String processUrl(String url, IFile file) {
 

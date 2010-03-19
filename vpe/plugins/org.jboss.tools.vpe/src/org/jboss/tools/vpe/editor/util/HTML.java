@@ -141,9 +141,12 @@ public final class HTML {
 	public static final String STYLE_VALUE_NONE = "none"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_WIDTH = "width"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_TOP = "top"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_BOTTOM = "bottom"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_LEFT = "left"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_RIGHT = "right"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BACKGROUND_IMAGE = "background-image"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_BACKGROUND_COLOR = "background-color"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BORDER_WIDTH = "border-width"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BORDER_STYLE = "border-style"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_MAX_HEIGHT = "max-height"; //$NON-NLS-1$	
@@ -151,6 +154,12 @@ public final class HTML {
 	public static final String STYLE_PARAMETER_CLEAR = "clear"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_OVERFLOW = "overflow"; //$NON-NLS-1$	
 	public static final String STYLE_PARAMETER_TABLE_LAYOUT = "table-layout"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_OPACITY = "opacity"; //$NON-NLS-1$
 	public static final String STYLE_VALUE_FIXED = "fixed"; //$NON-NLS-1$
 	public static final String STYLE_VALUE_MIDDLE = "middle"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_POSITION = "position"; //$NON-NLS-1$;
+	public static final String STYLE_VALUE_ABSOLUTE = "absolute"; //$NON-NLS-1$;
+	
+	public static final String STYLE_PRIORITY_DEFAULT = ""; //$NON-NLS-1$;
+	public static final String STYLE_PRIORITY_IMPORTANT = "important"; //$NON-NLS-1$;
 }
