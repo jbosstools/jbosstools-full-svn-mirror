@@ -654,7 +654,7 @@
                 <property>Properties View</property></emphasis> 
                 activated by clicking the connection between input model and bean items. </para>
             <para>On the picture below you can see an example of decode configurations
-                for mapping some Input Model Item to Date format:</para>
+                for mapping some <property>Input Model</property> Item to <property>Date</property> format:</para>
             <figure>
                 <title>Decode Configuration tab in Properties View</title>
                 <mediaobject>
@@ -663,7 +663,7 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>The descriptions of the Decode Configuration tab options are in the following table:</para>
+            <para>The descriptions of the <property>Decode Configuration</property> tab options are listed in the following table:</para>
             <table>
                 <title>Decode Configuration tab in Properties View</title>   
                 <tgroup cols="3">
@@ -686,13 +686,13 @@
                         
                         <row>
                             <entry>Decoder Parameters</entry>
-                            <entry>For most decoders <emphasis><property>Decoder Parametres table</property></emphasis> is empty.
-                                But some of the decoders require configuration
+                            <entry>For most of decoders <emphasis><property>Decoder Parametres table</property></emphasis> is empty.
+                                But some of the decoders require additional configuration
                                 (like Date decoder on the picture above),so you should configure them
-                                by editing corresponding line in the <property>Value</property> row.
+                                by editing the corresponding line in the <property>Value</property> row.
                                 For example for Date Decoder:
                                 <itemizedlist>
-                                    <listitem><para><property>format</property> - Date format string</para></listitem>
+                                    <listitem><para><property>format</property> - Date format string.</para></listitem>
                                     <listitem><para><property>locale country</property> - ISO Country Code.
                                         Upper case two-letter code defined by ISO-3166. </para></listitem>
                                     <listitem><para><property>locale language</property> - ISO Language Code.
@@ -703,7 +703,8 @@
                     </tbody>
                 </tgroup>
             </table>
-            <para>The Decoder Parameters  section for EnumDecoder quite differs from other types of decoders.
+            <para>The <property>Decoder Parameters</property>  section for <property>EnumDecoder</property>
+                quite differs from other types of decoders.
                 See the picture below:</para>
             <figure>
                 <title>EnumDecoder in Properties View</title>
@@ -713,7 +714,7 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>The Decoder Parameters section in Properties View consists of 2 rows:</para>
+            <para>The Decoder Parameters section for EnumDecoder in Properties View consists of 2 rows:</para>
             <itemizedlist>
                 <listitem><para><property>From Data Value</property>  - The lines in this row are editable.
                     You can change them according to the names of enum types you used in input file. 
@@ -728,17 +729,19 @@
         </section>
         <section>
             <title>Apply Template Wizard</title>
-            <para>The Apply Template Wizard helps you add a new Apply Template Task to 
+            <para>The <property>Apply Template Wizard</property> 
+                helps you to add a new <property>Apply Template Task</property> to 
                 Smooks configuration file.
-                You can call it from the popup menu when Java Mapping Task in Processing
-                Task section is selected by selecting Add Task > Apply Template
+                You can call it from the popup menu when <property>Java Mapping</property> item in Processing
+                Task section is selected by following <emphasis>Add Task > Apply Template</emphasis>
                 (see <link linkend="apply_templ">Apply Template configuration</link> picture).</para>
             <para>The wizard consists of several pages:</para>
             
             <orderedlist>
                 <listitem>
                     <para>The first one includes only one option to adjust.The user should select in
-                        which of the two formats(XML or CSV) he prefer to create an output message:</para>
+                        which of the two formats(<property>XML</property> or <property>CSV</property>) 
+                        he prefers to create an output message:</para>
                     <figure>
                         <title>The first page of Apply Template Wizard</title>
                         <mediaobject>
@@ -751,7 +754,7 @@
                 </listitem>
                 <listitem><para>The second page is specific for each of the output message formats:</para>
                     <itemizedlist>
-                        <listitem><para>If CSV output message type was selected at
+                        <listitem><para>If the <property>CSV</property> output message type was selected at
                             the previous step the second wizard page will be the following :</para>
                             <figure>
                                 <title>CSV:The second page of Apply Template Wizard</title>
@@ -791,7 +794,7 @@
                                         
                                         <row>
                                             <entry>Quote Character</entry>
-                                            <entry>quote character in the output message.</entry>
+                                            <entry>Quote character in the output message.</entry>
                                             <entry>"</entry>
                                         </row> 
                                         
@@ -807,7 +810,7 @@
                         </listitem>
                         <listitem>
                             <para>The following second wizard page will appear 
-                                if XML output message type was selected at
+                                if <property>XML</property> output message type was selected at
                                 the previous step:</para>
                             <figure>
                                 <title>Apply Template Wizard. Second Page Options if XML output format is selected.</title>
@@ -817,10 +820,10 @@
                                     </imageobject>
                                 </mediaobject>
                             </figure>
-                            <para>Here you should firstly select XSD or Simple XML format of output template and then
+                            <para>Here you should firstly select XSD or Sample XML format of output template and then
                                 click <property>Browse File System</property>
-                                or <property>Browse Workspace</property> buttons depending on what 
-                                browse format you want to use.For example, if you click <property>Browse Workspace</property>
+                                or <property>Browse Workspace</property> button depending on what 
+                                browse type you want to use.For example, if you click <property>Browse Workspace</property>
                                 the following view will appear:
                             </para>
                             <figure>
@@ -834,7 +837,7 @@
                             <para>In the workspace you should select the template you 
                                 want to use and click <property>Ok</property>.
                             </para>
-                            <para>If you selected XSD format after selecting the template you should click load button: 
+                            <para>If you selected XSD format after adjusting the template path you should click Load button: 
                             </para> 
                             <figure>
                                 <title>Load Button</title>
@@ -844,10 +847,19 @@
                                     </imageobject>
                                 </mediaobject>
                             </figure>
-                            <para>After that you should select in the <property>Select Root Element
-                            </property> the root node and click Finish.</para>
-                            <para>If you selected Sample XML option after selecting the template you should
-                                only set a xml file destination and click finish: 
+                            <para>After that it is necessary to select in the <property>Select Root Element
+                            </property> the root node for the template and click <property>Finish</property>.</para>
+                            <figure>
+                                <title>Load Button</title>
+                                <mediaobject>
+                                    <imageobject>
+                                        <imagedata fileref="images/reference/reference_20.png"/>
+                                    </imageobject>
+                                </mediaobject>
+                            </figure>                           
+                            <para>If you have chosen Sample XML option after selecting
+                                the template xml file destination you should only
+                                click <property>Finish</property>: 
                             </para>
                             <figure>
                                 <title>Load Button</title>
