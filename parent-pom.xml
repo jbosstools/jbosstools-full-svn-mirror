@@ -8,19 +8,19 @@
   <packaging>pom</packaging>
 
   <properties>
-    <tychoVersion>0.5.0</tychoVersion>
+    <tychoVersion>0.7.0</tychoVersion>
   </properties>
 
   <build>
     <plugins>
       <plugin>
-        <groupId>org.codehaus.tycho</groupId>
+        <groupId>org.sonatype.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tychoVersion}</version>
         <extensions>true</extensions>
       </plugin>    
       <plugin>
-        <groupId>org.codehaus.tycho</groupId>
+        <groupId>org.sonatype.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
 	<version>${tychoVersion}</version>
         <configuration>
@@ -44,16 +44,4 @@
     </repository>
   </repositories>
 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>plugins</id>
-      <url>http://repository.sonatype.org/content/repositories/all-003</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>  
 </project>
