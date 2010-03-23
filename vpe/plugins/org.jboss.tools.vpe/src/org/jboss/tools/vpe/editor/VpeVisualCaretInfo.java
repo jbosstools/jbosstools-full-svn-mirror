@@ -34,14 +34,16 @@ public class VpeVisualCaretInfo {
 	public int getRageOffset(){
 	    return rangeOffset;
 	}
-	
-	public void showCaret() {
-		selectionBuilder.showVisualDragCaret(rangeParent, rangeOffset);
-	}
-	
-	public void hideCaret() {
-		selectionBuilder.hideVisualDragCaret();
-	}
+
+//this method is never used
+//	public void showCaret() {
+//		selectionBuilder.showVisualDragCaret(rangeParent, rangeOffset);
+//	}
+
+//this method is never used
+//	public void hideCaret() {
+//		selectionBuilder.hideVisualDragCaret();
+//	}
 	
 	public int getSourcePosition() {
 		return selectionBuilder.getSourcePosition(rangeParent, rangeOffset);

@@ -12,7 +12,6 @@ package org.jboss.tools.vpe.editor;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.xml.core.internal.document.CommentImpl;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
@@ -23,9 +22,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.template.VpePseudoContentCreator;
-import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.HTML;
-import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -41,7 +38,6 @@ import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionController;
 import org.mozilla.interfaces.nsISelectionDisplay;
-import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -854,13 +850,15 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		return new VpeVisualCaretInfo(this, nsuiEvent.getRangeParent(), nsuiEvent.getRangeOffset());
 	}
 	
-	void showVisualDragCaret(nsIDOMNode node, int offset) {
-		visualBuilder.showDragCaret(node, offset);
-	}
+//this method is never used
+//	void showVisualDragCaret(nsIDOMNode node, int offset) {
+//		visualBuilder.showDragCaret(node, offset);
+//	}
 	
-	void hideVisualDragCaret() {
-		visualBuilder.hideDragCaret();
-	}
+//this method is never used
+//	void hideVisualDragCaret() {
+//		visualBuilder.hideDragCaret();
+//	}
 	
 	int getSourcePosition(nsIDOMNode visualInitNode, int visualInitOffset) {
 		int position = 0;
@@ -964,180 +962,9 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		return new Point(position, offset);
 	}
 	
-	nsIDOMNode getOriginalTargetNode(nsIDOMEvent event) {
-		nsIDOMNode targetNode = VisualDomUtil.getTargetNode(event);
-		if (HTML.TAG_INPUT.equalsIgnoreCase(targetNode.getNodeName())) {
-			return targetNode;
-		}
-		nsIDOMNSEvent nsEvent = (nsIDOMNSEvent) event.queryInterface(nsIDOMNSEvent.NS_IDOMNSEVENT_IID);
-		// TODO Sergey Vasilyev figure out with TmpRealOriginalTarget
-//		nsIDOMEventTarget target = nsEvent.getTmpRealOriginalTarget();	
-		nsIDOMEventTarget target = nsEvent.getOriginalTarget();
-		nsIDOMNode originalNode = (nsIDOMNode) target.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
-		if (VpeVisualDomBuilder.isAnonElement(originalNode)) {
-			originalNode = visualBuilder.getLastSelectedElement(); 
-		}
-		return originalNode;
-	}
-	
-	public VpeVisualInnerDropInfo getInnerDropInfo(nsIDOMEvent event) {
-		nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent) event.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
-		nsIDOMNode dropContainer = null;
-		int dropOffset = 0;
-		int mouseX = nsuiEvent.getPageX();
-		int mouseY = nsuiEvent.getPageY();
-		nsIDOMNode originalNode = getOriginalTargetNode(event);
-		if (originalNode == null || originalNode.getParentNode() == null ||
-				originalNode.getParentNode().getNodeType() == Node.DOCUMENT_NODE) {
-			return  new VpeVisualInnerDropInfo(null, 0, mouseX, mouseY);
-		}
-		if (originalNode.getNodeType() == Node.TEXT_NODE) {
-			dropContainer = nsuiEvent.getRangeParent();
-			nsIDOMNode containerForPseudoContent = VpePseudoContentCreator.getContainerForPseudoContent(dropContainer);
-			if (containerForPseudoContent != null) {
-				dropContainer = containerForPseudoContent;
-				dropOffset = 0;
-			} else {
-				dropOffset = nsuiEvent.getRangeOffset();
-			}
-		} else {
-		    int closestXDistance = HUGE_DISTANCE;
-		    int closestYDistance = HUGE_DISTANCE;
-		    boolean inNodeFlag = false;
-		    nsIDOMNode closestNode = null;
-
-		    nsIDOMNodeList childen = originalNode.getChildNodes();
-			long count = childen.getLength();
-			for (long i = 0; i < count; i++) {
-				nsIDOMNode child = childen.item(i);
-				if (VpeVisualDomBuilder.isPseudoElement(child) || VpeVisualDomBuilder.isAnonElement(child)) {
-					continue;
-				}
-				Rectangle rect = visualBuilder.getNodeBounds(child);
-				int fromTop = mouseY - rect.y;
-				int fromBottom = mouseY - rect.y - rect.height;
-
-				int yDistance;
-				if (fromTop > 0 && fromBottom < 0) {
-					yDistance = 0;
-				} else {
-					yDistance = Math.min(Math.abs(fromTop), Math.abs(fromBottom));
-				}
-			      
-				if (yDistance <= closestYDistance && rect.width > 0 && rect.height > 0) {
-					if (yDistance < closestYDistance) {
-						closestXDistance = HUGE_DISTANCE;
-					}
-					int fromLeft = mouseX - rect.x;
-					int fromRight = mouseX - rect.x - rect.width;
-
-					int xDistance;
-					if (fromLeft > 0 && fromRight < 0) {
-						xDistance = 0;
-					} else {
-						xDistance = Math.min(Math.abs(fromLeft), Math.abs(fromRight));
-					}
-					if (xDistance == 0 && yDistance == 0) {
-						closestNode = child;
-						inNodeFlag = true;
-						break;
-					}
-
-					if (xDistance < closestXDistance || (xDistance == closestXDistance && rect.x <= mouseX)) {
-						closestXDistance = xDistance;
-						closestYDistance = yDistance;
-						closestNode = child;
-					}
-				}
-			}
-			
-			if (closestNode == null) {
-				closestNode = originalNode;
-				inNodeFlag = true;
-			}
-			if (inNodeFlag) {
-				if (closestNode.getNodeType() == Node.TEXT_NODE) {
-					dropContainer = nsuiEvent.getRangeParent();
-					dropOffset = nsuiEvent.getRangeOffset();
-				} else {
-					if (HTML.TAG_COLGROUP.equalsIgnoreCase(closestNode.getNodeName())) {
-						nsIDOMNode nearChild = getNearChild(closestNode, mouseX, mouseY);
-						if (nearChild != null && nearChild.getNodeType() == Node.ELEMENT_NODE) {
-							dropContainer = nearChild;
-						} else {
-							dropContainer = closestNode;
-						}
-					} else {
-						dropContainer = closestNode;
-					}
-					dropOffset = 0;
-				}
-			} else {
-				dropContainer = closestNode.getParentNode();
-				dropOffset = (int)VisualDomUtil.getOffset(closestNode);
-				Rectangle rect = visualBuilder.getNodeBounds(closestNode);
-				if (VpeVisualDomBuilder.canInsertAfter(mouseX, mouseY, rect)) {
-					dropOffset++;
-				}
-			}
-		}
-		VpeVisualInnerDropInfo info = new VpeVisualInnerDropInfo(dropContainer, dropOffset, mouseX, mouseY);
-		return info;
-	}
-	
-	private nsIDOMNode getNearChild(nsIDOMNode container, int x, int y) {
-	    int closestXDistance = HUGE_DISTANCE;
-	    int closestYDistance = HUGE_DISTANCE;
-	    nsIDOMNode closestNode = null;
-
-	    nsIDOMNodeList childen = container.getChildNodes();
-		long count = childen.getLength();
-		for (long i = 0; i < count; i++) {
-			nsIDOMNode child = childen.item(i);
-			if (VpeVisualDomBuilder.isPseudoElement(child) || VpeVisualDomBuilder.isAnonElement(child)) {
-				continue;
-			}
-			Rectangle rect = visualBuilder.getNodeBounds(child);
-			int fromTop = y - rect.y;
-			int fromBottom = y - rect.y - rect.height;
-
-			int yDistance;
-			if (fromTop > 0 && fromBottom < 0) {
-				yDistance = 0;
-			} else {
-				yDistance = Math.min(Math.abs(fromTop), Math.abs(fromBottom));
-			}
-		      
-			if (yDistance <= closestYDistance && rect.width > 0 && rect.height > 0) {
-				if (yDistance < closestYDistance) {
-					closestXDistance = HUGE_DISTANCE;
-				}
-				int fromLeft = x - rect.x;
-				int fromRight = x - rect.x - rect.width;
-
-				int xDistance;
-				if (fromLeft > 0 && fromRight < 0) {
-					xDistance = 0;
-				} else {
-					xDistance = Math.min(Math.abs(fromLeft), Math.abs(fromRight));
-				}
-				if (xDistance == 0 && yDistance == 0) {
-					closestNode = child;
-					break;
-				}
-				if (xDistance < closestXDistance || (xDistance == closestXDistance && rect.x <= x)) {
-					closestXDistance = xDistance;
-					closestYDistance = yDistance;
-					closestNode = child;
-				}
-			}
-		}
-		return closestNode;
-	}
-	
 	void setVisualElementSelection(nsIDOMMouseEvent mouseEvent) {
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
-		nsIDOMNode visualNode = getOriginalTargetNode(mouseEvent);
+		nsIDOMNode visualNode = visualBuilder.getOriginalTargetNode(mouseEvent);
 		if (selection.containsNode(visualNode, false) || VpeVisualDomBuilder.isAnonElement(visualNode)) {
 			return;
 		}
@@ -1154,37 +981,38 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 
 	}
 
-	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
-		nsIDOMElement dragElement = visualBuilder.getDragElement(mouseEvent);
-		if (dragElement != null) {
-			return dragElement;
-		}
-
-		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-		//FIX FOR JBIDE-1468 added by Sergey Dzmitrovich
-		if (visualNode != null
-				&& visualNode.getNodeType() == Node.ELEMENT_NODE
-				&& (HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName())
-						|| HTML.TAG_OPTION.equalsIgnoreCase(visualNode
-								.getNodeName())
-						|| HTML.TAG_BUTTON.equalsIgnoreCase(visualNode
-								.getNodeName()) || HTML.TAG_SELECT
-						.equalsIgnoreCase(visualNode.getNodeName()))
-				/*&& !selection.containsNode(visualNode, false)*/
-				&& visualBuilder.canInnerDrag((nsIDOMElement) visualNode
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))) {
-			return (nsIDOMElement) visualNode
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
-		}
-		return null;
-	}
+//this method is never used
+//	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
+//		nsIDOMElement dragElement = visualBuilder.getDragElement(mouseEvent);
+//		if (dragElement != null) {
+//			return dragElement;
+//		}
+//
+//		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+//		//FIX FOR JBIDE-1468 added by Sergey Dzmitrovich
+//		if (visualNode != null
+//				&& visualNode.getNodeType() == Node.ELEMENT_NODE
+//				&& (HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName())
+//						|| HTML.TAG_OPTION.equalsIgnoreCase(visualNode
+//								.getNodeName())
+//						|| HTML.TAG_BUTTON.equalsIgnoreCase(visualNode
+//								.getNodeName()) || HTML.TAG_SELECT
+//						.equalsIgnoreCase(visualNode.getNodeName()))
+//				/*&& !selection.containsNode(visualNode, false)*/
+//				&& visualBuilder.canInnerDrag((nsIDOMElement) visualNode
+//						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))) {
+//			return (nsIDOMElement) visualNode
+//					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+//		}
+//		return null;
+//	}
 	
 	nsIDOMElement getAppropriateElementForSelection(nsIDOMEvent event) {
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(event);
 		if (visualNode != null) { 
 			if (!HTML.TAG_INPUT.equalsIgnoreCase(visualNode.getNodeName())) {
-				visualNode = getOriginalTargetNode(event);
+				visualNode = visualBuilder.getOriginalTargetNode(event);
 			}
 			if (visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE && !selection.containsNode((nsIDOMNode)visualNode, false)) {
 				VpeElementMapping elementMapping = domMapping.getNearElementMapping(visualNode);
@@ -1206,77 +1034,6 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		selection.extend(visualParent, offset + 1);
 		
 		setSelection(selection);
-	}
-	
-	public VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMMouseEvent event) {
-		nsIDOMElement selectedElement
-				= visualBuilder.getXulRunnerEditor().getLastSelectedElement();
-		if (selectedElement == null) {
-			return null;
-		} else {
-			return new VpeVisualInnerDragInfo(selectedElement);
-		}
-
-		// fix of JBIDE-4998
-//		nsISelection selection = visualSelectionController.getSelection(
-//				nsISelectionController.SELECTION_NORMAL);
-//		nsIDOMNode focusNode = selection.getFocusNode();
-//		nsIDOMNode anchorNode = selection.getAnchorNode();
-//		//when we select input this function return null
-//		//but we select elemnt
-//		if(focusNode==null && anchorNode==null) {
-//			nsIDOMNode  visualNode =(nsIDOMNode) event.getTarget()
-//					.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
-//			//fix of JBIDE-1097
-//			if(HTML.TAG_SPAN.equalsIgnoreCase(visualNode.getNodeName())) {
-//				if(visualBuilder.getXulRunnerEditor().getLastSelectedElement() != null
-//						&& !visualBuilder.getNodeBounds(
-//								visualBuilder.getXulRunnerEditor()
-//										.getLastSelectedElement())
-//								.contains(VisualDomUtil.getMousePoint(event))) {
-//					return null;
-//				}
-//			}
-//			int offset = (int) VisualDomUtil.getOffset(visualNode);
-//			selection.removeAllRanges();
-//			selection.collapse(visualNode.getParentNode(), offset);
-//			try {
-//				selection.extend(visualNode.getParentNode(), offset + 1);
-//			} catch(XPCOMException ex) {
-//				//just ignore exception
-//				// throws when we trying drag element which already resizing
-//				return null;
-//			}
-//			focusNode = selection.getFocusNode();
-//			anchorNode = selection.getAnchorNode();
-//		}
-//		if (focusNode != null && focusNode.equals(anchorNode)) {
-//			int focusOffset = selection.getFocusOffset();
-//			int anchorOffset = selection.getAnchorOffset();
-//			int offset = Math.min(focusOffset, anchorOffset);
-//			int length = Math.max(focusOffset, anchorOffset) - offset;
-//
-//			int focusNodeType = focusNode.getNodeType();
-//			if (focusNodeType == nsIDOMNode.ELEMENT_NODE) {
-//				if (length == 1) {
-//					nsIDOMNodeList children = focusNode.getChildNodes();
-//					nsIDOMNode selectedNode = children.item(
-//							Math.min(focusOffset, anchorOffset));
-//					if (visualBuilder.getNodeBounds(selectedNode).contains(VisualDomUtil.getMousePoint(event))) {
-//						int selectedNodeType = selectedNode.getNodeType();
-//						if (selectedNodeType == nsIDOMNode.ELEMENT_NODE) {
-//							return new VpeVisualInnerDragInfo((nsIDOMElement)selectedNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
-//						} else if (selectedNodeType == nsIDOMNode.TEXT_NODE) {
-//							return new VpeVisualInnerDragInfo(selectedNode, 0, selectedNode.getNodeValue().length());
-//						}
-//					}
-//				}
-//			} else if (focusNodeType == nsIDOMNode.TEXT_NODE) {
-//				return new VpeVisualInnerDragInfo(focusNode, offset, length);
-//			}
-//		}
-//
-//		return null;
 	}
 	
 	void setMouseUpSelection(nsIDOMMouseEvent mouseEvent) {
@@ -1303,35 +1060,36 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		}
 	}
 	
-	void setCaretAtMouse(nsIDOMMouseEvent mouseEvent) {
-		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-		boolean isAnonElement = VpeVisualDomBuilder.isAnonElement(visualNode);
-		if (isAnonElement) return;
-		VpeVisualInnerDropInfo visualDropInfo = getInnerDropInfo(mouseEvent);
-		nsIDOMNode visuaDropContainer = visualDropInfo.getDropContainer();
-		if (visuaDropContainer.getNodeType() == Node.TEXT_NODE) return;
-		int visualDropOffset = (int)visualDropInfo.getDropOffset();
-		if (visualDropOffset > 0) {
-			nsIDOMNodeList visualChildren = visuaDropContainer.getChildNodes();
-			nsIDOMNode visualChild = visualChildren.item(visualDropOffset - 1);
-			boolean isText = visualChild.getNodeType() == Node.TEXT_NODE;
-			if (isText) return;
-		}
-		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
-		if (!VisualDomUtil.isSelectionContains(selection, visuaDropContainer, visualDropOffset)) {
-			setVisualCaret(visuaDropContainer, visualDropOffset);
-			// TODO Sergey Vasilyev figure out with nsIFrameSelection
-//			nsIFrameSelection frameSelection = presShell.getFrameSelection();
-//			if (frameSelection != null) {
-//				frameSelection.setMouseDownState(true);
-//			}
-			
-			// was commented by Max Areshkau (with this  code scrolling doesn't works)
-			// 
-//			mouseEvent.preventDefault();
-//			mouseEvent.stopPropagation();
-		}
-	}
+// this method is never used
+//	void setCaretAtMouse(nsIDOMMouseEvent mouseEvent) {
+//		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+//		boolean isAnonElement = VpeVisualDomBuilder.isAnonElement(visualNode);
+//		if (isAnonElement) return;
+//		VpeVisualInnerDropInfo visualDropInfo = getInnerDropInfo(mouseEvent);
+//		nsIDOMNode visuaDropContainer = visualDropInfo.getDropContainer();
+//		if (visuaDropContainer.getNodeType() == Node.TEXT_NODE) return;
+//		int visualDropOffset = (int)visualDropInfo.getDropOffset();
+//		if (visualDropOffset > 0) {
+//			nsIDOMNodeList visualChildren = visuaDropContainer.getChildNodes();
+//			nsIDOMNode visualChild = visualChildren.item(visualDropOffset - 1);
+//			boolean isText = visualChild.getNodeType() == Node.TEXT_NODE;
+//			if (isText) return;
+//		}
+//		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
+//		if (!VisualDomUtil.isSelectionContains(selection, visuaDropContainer, visualDropOffset)) {
+//			setVisualCaret(visuaDropContainer, visualDropOffset);
+//			// TODO Sergey Vasilyev figure out with nsIFrameSelection
+////			nsIFrameSelection frameSelection = presShell.getFrameSelection();
+////			if (frameSelection != null) {
+////				frameSelection.setMouseDownState(true);
+////			}
+//			
+//			// was commented by Max Areshkau (with this  code scrolling doesn't works)
+//			// 
+////			mouseEvent.preventDefault();
+////			mouseEvent.stopPropagation();
+//		}
+//	}
 	
 	void setVisualCaret(nsIDOMNode visualNode, int offset) {
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);

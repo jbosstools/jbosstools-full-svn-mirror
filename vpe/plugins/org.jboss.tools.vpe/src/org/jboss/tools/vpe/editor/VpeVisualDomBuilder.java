@@ -76,8 +76,11 @@ import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMEvent;
+import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMHTMLDocument;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
+import org.mozilla.interfaces.nsIDOMNSEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMRange;
@@ -891,7 +894,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
-	static boolean isPseudoElement(nsIDOMNode visualNode) {
+	public static boolean isPseudoElement(nsIDOMNode visualNode) {
 		if (visualNode == null) {
 			return false;
 		}
@@ -1554,7 +1557,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	static boolean isAnonElement(nsIDOMNode visualNode) {
+	public static boolean isAnonElement(nsIDOMNode visualNode) {
 		if (visualNode != null
 				&& visualNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 			String attrValue = ((nsIDOMElement) visualNode
@@ -1938,12 +1941,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return buffer.toString();
 	}
 
-	Rectangle getNodeBounds(nsIDOMNode visualNode) {
+	public Rectangle getNodeBounds(nsIDOMNode visualNode) {
 
 		return XulRunnerVpeUtils.getElementBounds(visualNode);
 	}
 
-	static boolean canInsertAfter(int x, int y, Rectangle rect) {
+	public static boolean canInsertAfter(int x, int y, Rectangle rect) {
 		if (y > (rect.y + rect.height) || x > (rect.x + rect.width)) {
 			return true;
 		}
@@ -2075,6 +2078,22 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 		}
 		return null;
+	}
+	
+	public nsIDOMNode getOriginalTargetNode(nsIDOMEvent event) {
+		nsIDOMNode targetNode = VisualDomUtil.getTargetNode(event);
+		if (HTML.TAG_INPUT.equalsIgnoreCase(targetNode.getNodeName())) {
+			return targetNode;
+		}
+		nsIDOMNSEvent nsEvent = (nsIDOMNSEvent) event.queryInterface(nsIDOMNSEvent.NS_IDOMNSEVENT_IID);
+		// TODO Sergey Vasilyev figure out with TmpRealOriginalTarget
+//		nsIDOMEventTarget target = nsEvent.getTmpRealOriginalTarget();	
+		nsIDOMEventTarget target = nsEvent.getOriginalTarget();
+		nsIDOMNode originalNode = (nsIDOMNode) target.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+		if (VpeVisualDomBuilder.isAnonElement(originalNode)) {
+			originalNode = getLastSelectedElement(); 
+		}
+		return originalNode;
 	}
 
 	public VpeSourceInnerDragInfo getSourceInnerDragInfo(
