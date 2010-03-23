@@ -11,7 +11,7 @@ object HelloWorld {
 
   def main(args: Array[String]) {
     
-      generateAggregator(new File("/home/nboldt/11/jbosstools-trunk"), 
+      generateAggregator(new File("."), 
 			 new File("parent-pom.xml"),
 			 GVA("org.jboss.tools", "org.jboss.tools.parent.pom", "0.0.1-SNAPSHOT"),
 			 GVA("org.jboss.tools", "trunk", "0.0.1-SNAPSHOT")
