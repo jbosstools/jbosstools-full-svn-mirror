@@ -8,7 +8,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <tychoVersion>0.7.0</tychoVersion>
+    <tychoVersion>0.8.0</tychoVersion>
   </properties>
 
   <build>
@@ -19,16 +19,27 @@
         <version>${tychoVersion}</version>
         <extensions>true</extensions>
       </plugin>    
-      <plugin>
-        <groupId>org.sonatype.tycho</groupId>
-        <artifactId>target-platform-configuration</artifactId>
-	<version>${tychoVersion}</version>
-        <configuration>
-          <resolver>p2</resolver>
-        </configuration>
-      </plugin>     
+
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<environments>
+					
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+      
     </plugins>      
   </build>
+
 
   <repositories>
     <repository>
@@ -42,6 +53,17 @@
         <enabled>true</enabled>
       </releases>
     </repository>
+
+ 
   </repositories>
 
+<pluginRepositories>
+    <pluginRepository>
+      <id>tycho</id>
+      <url>http://repository.sonatype.org/content/repositories/all-001//</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </pluginRepository> 
+  </pluginRepositories>
 </project>
