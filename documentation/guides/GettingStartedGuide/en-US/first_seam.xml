@@ -278,8 +278,7 @@
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam15.png"/>
           </imageobject>
-        </inlinemediaobject> ) in the
-        JBoss Server View.</para>
+        </inlinemediaobject> ) in the <property>Servers</property>.</para>
 
       <para>Then run the project by selecting the project and use <emphasis><property>Run As... >
             Run on Server</property>.</emphasis></para>

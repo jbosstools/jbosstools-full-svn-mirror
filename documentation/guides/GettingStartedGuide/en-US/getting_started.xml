@@ -303,7 +303,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
    <listitem>
     <para>Then run in console:</para>
-    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-eap-linux-gtk-2.1.0.GA.jar
+    <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-eap-linux-gtk-3.0.0.GA.jar
 ]]></programlisting>
    </listitem>
    <listitem>
@@ -352,7 +352,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <note>
    <title>Note:</title>
-   <para>JBoss Developer Studio needs Java 5 and &quot;gij&quot; isn&apos;t available on
+   <para>JBoss Developer Studio needs Java 6 and &quot;gij&quot; isn&apos;t available on
     every platform.</para>
   </note>
 
@@ -363,8 +363,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     		<property>Yes</property></emphasis>   to use it in JBoss Developer Studio.</para>
     	<note>
     		<title>Note:</title>
-    		<para>JBDS 2.0.0.GA comes integrated with JBoss EAP 4.3, while the current 2.1.0.GA release of JBDS comes with JBoss EAP 5 that support EAP 5 adapter
-    		and Seam 2.2.</para>
+    	 <para>Like in the previous version of JBDS, JBDS 3.0.0.GA comes integrated with JBoss EAP 5.0 
+    	       that supports EAP 5 adapter and Seam 2.2.</para>
     	</note>
     	
     	<para>This step lets you configure locally available JBoss Application Servers: </para> 
@@ -400,7 +400,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </itemizedlist>
   
   <itemizedlist>
-   <listitem> <para>You can also add servers one by one using the <emphasis><property>Add</property></emphasis> button:</para>
+   <listitem><para>You can also add servers one by one using the 
+    <emphasis><property>Add</property></emphasis> button:</para>
    </listitem>
   </itemizedlist>
  
@@ -442,9 +443,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </mediaobject>
   </figure>
   <para/>
-  
-   
-  
+    
   <!--  <note>
    <title>Note:</title>
    <para>The installer installs JBoss Enterprise Application Platform for running your applications
@@ -568,7 +567,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <note>
     <title>Note:</title>
-    <para>Remember to choose the download that matches your OS and use Java 5 when you run
+    <para>Remember to choose the download that matches your OS and use Java 6 when you run
     it.</para>
    </note>
     <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
@@ -835,14 +834,21 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Upgrading">
   <?dbhtml filename="Upgrading.html"?>
   <title>Upgrading</title>
-  <para>To upgrade, of course you can uninstall your current version and install the new one.</para>
- 	<para>Now it&apos;s possible to upgrade from JBDS 2.0 to 2.1 using the update site which is available at 
- 		<ulink url="is available at http://devstudio.jboss.com/updates/2.1">http://devstudio.jboss.com/updates/2.1</ulink>. 
- 		This is described more fully in the <ulink url="http://www.jboss.com/products/devstudio/update/">JBDS Update Guide</ulink>.</para>
+  <para>As opposed to upgrading your JBDS from 2.0 to 2.1 using the update site, 
+        to upgrade your JBDS from 2.1 to 3.0 you have to uninstall your 2.1 version and install the new one
+        because of some platform change.</para>
+<!--
+  <para>Now it&apos;s possible to upgrade from JBDS 2.0 to 2.1 using the update site 
+        which is available at <ulink url="is available at 
+        http://devstudio.jboss.com/updates/2.1">http://devstudio.jboss.com/updates/2.1</ulink>. 
+ 		     This is described more fully in the 
+ 		     <ulink url="http://www.jboss.com/products/devstudio/update/">JBDS Update Guide</ulink>.</para> 
   <note>
    <title>Note:</title>
-   <para>You <emphasis><property>CAN NOT</property></emphasis> upgrade from 2.1 to 3.0 using update site because of some platform change.Full installation is required.</para>
-  </note>
+   <para>You <emphasis><property>CAN NOT</property></emphasis> upgrade from 2.1 to 3.0 using update site because of some platform change. 
+         Full installation is required.</para>
+  </note> 
+-->  
  </section>
 
  <section id="Uninstalling">

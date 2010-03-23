@@ -15,11 +15,10 @@
 
     <para>In this chapter we&apos;ll focus more on how to operate the <property>JBoss
             AS</property> from <property>JBoss Developer Studio</property>.</para>
-    <para><property>JBoss Developer Studio 2.1.0.GA</property> is shipped with <property>JBoss EAP 5
+    <para><property>JBoss Developer Studio 3.0.0.GA</property> is shipped with <property>JBoss EAP 5
          </property>. When you followed the default installation of <property>JBoss
             Developer Studio</property>, you should already have a JBoss EAP 5 Server installed and
-        defined. To run JBoss AS you need JDK 1.5, JDK 6 is not formally supported yet, although
-        you may be able to start the server with it.</para>
+        defined. To run JBoss AS you need JDK 1.6.</para>
 
     <section id="JBossbundled">
         <?dbhtml filename="JBossbundled.html"?>
@@ -49,12 +48,12 @@
             <itemizedlist>
                 <listitem>
                     <para>To launch the server click the green-with-white-arrow icon on the
-                            <property>JBoss Server View </property>or right click server name in
+                            <property>Servers</property> or right click server name in
                         this view and select <emphasis>
                             <property>Start</property>
                         </emphasis>. If this view is not open, select <emphasis>
                             <property>Window &gt; Show View &gt; Other &gt; Server
-                                &gt; JBoss Server View</property>
+                                &gt; Servers</property>
                         </emphasis></para>
                 </listitem>
             </itemizedlist>
@@ -80,8 +79,7 @@
             </figure>
             <para>When the server is started you should see <emphasis>
                     <property>Started</property>
-                </emphasis> in the square brackets right next its name in <property>JBoss Server
-                    View</property>.</para>
+                </emphasis> in the square brackets right next its name in <property>Servers</property>.</para>
 
             <figure>
                 <title>Server is Started</title>
@@ -92,7 +90,7 @@
                 </mediaobject>
             </figure>
             <!--para>To see event log after the server is started, expand <property>Event
-                    Log</property> branch beneath <property>JBoss Server View</property>:</para>
+                    Log</property> branch beneath <property>Servers</property>:</para>
             <figure>
                 <title>Event Log</title>
                 <mediaobject>
@@ -108,7 +106,7 @@
             <title>Stopping JBoss Server</title>
             <para>To stop the server, click the <emphasis>
                     <property>Stop</property>
-                </emphasis> icon in <property>JBoss Server View</property> or right click the server
+                </emphasis> icon in <property>Servers</property> or right click the server
                 name and press <emphasis>
                     <property>Stop</property>. </emphasis></para>
 
@@ -196,9 +194,9 @@
                     Developer Studio</property>.</para>
             <itemizedlist>
                 <listitem>
-                    <para>Open the <property>JBoss Server View</property> by selecting <emphasis>
+                    <para>Open the <property>Servers</property> by selecting <emphasis>
                             <property>Window &gt; Show View &gt; Other &gt; Server
-                                &gt; JBoss Server View</property>
+                                &gt; Servers</property>
                         </emphasis></para>
                 </listitem>
                 <listitem>

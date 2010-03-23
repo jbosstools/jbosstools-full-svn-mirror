@@ -35,9 +35,9 @@
             project wizard and predefined templates. Follow the next steps:</para>
         <itemizedlist>
             <listitem>
-                <para>In Web Projects View (if it is not open select <emphasis>
+                <para>In Web Projects (if it is not open select <emphasis>
                         <property>Window &gt; Show View &gt; Others &gt; JBoss Tools Web
-                            &gt; Web Projects View</property>) </emphasis> click <emphasis>
+                            &gt; Web Projects</property></emphasis>) click <emphasis>
                         <property>Create New JSF Project</property>
                     </emphasis> button. <figure>
                         <title>Create New JSF Project</title>
@@ -60,7 +60,7 @@
                     </emphasis></para>
             </listitem>
         </itemizedlist>
-        <para>Our project will appear in Project Explorer and Web Projects Views. As you can see
+        <para>Our project will appear in Project Explorer and Web Projects. As you can see
             JBoss Developer Studio has created for us the whole skeleton for the project with all
             needed libraries, faces-config.xml and web.xml files.</para>
         <figure>
@@ -1064,7 +1064,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             <listitem>
                 <para>Start up JBoss server by clicking on the <emphasis>
                         <property>Start</property>
-                    </emphasis> icon in JBoss Server view. (If JBoss is already running, stop it by
+                </emphasis> icon in <property>Servers</property>. (If JBoss is already running, stop it by
                     clicking on the red icon and then start it again. After the messages in the
                     Console tabbed view stop scrolling, JBoss is available)</para>
             </listitem>
