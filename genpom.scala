@@ -11,7 +11,7 @@ object HelloWorld {
 
   def main(args: Array[String]) {
     
-      generateAggregator(new File("/Users/max/Documents/code/jbosstools/trunk"), 
+      generateAggregator(new File("/home/nboldt/11/jbosstools-trunk"), 
 			 new File("parent-pom.xml"),
 			 GVA("org.jboss.tools", "org.jboss.tools.parent.pom", "0.0.1-SNAPSHOT"),
 			 GVA("org.jboss.tools", "trunk", "0.0.1-SNAPSHOT")
@@ -69,11 +69,11 @@ object HelloWorld {
     val lines = Source.fromFile(mf).getLines
     for(l <- lines) 
       if(l.contains("Bundle-Version:")) {
-	return l.substring("Bundle-Version:".length()).trim()
+	return l.substring("Bundle-Version:".length()).trim().replaceAll("\\.qualifier","-SNAPSHOT")
       }    
     } else if (featurexml.exists()) {
       val data = XML.loadFile(featurexml)
-      return (data \ "@version").text
+      return (data \ "@version").text.replaceAll("\\.qualifier","-SNAPSHOT")
     }
     return dir + " " + featurexml.exists() + " " + mf.exists()
   }
