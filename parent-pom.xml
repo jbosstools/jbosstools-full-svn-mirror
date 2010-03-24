@@ -67,7 +67,7 @@
 	<repositories>
 		<repository>
 			<id>galileo</id>
-			<url>http://download.eclipse.org/releases/galileo</url>
+			<url>http://download.eclipse.org/releases/galileo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
@@ -89,7 +89,7 @@
 		</repository>
 		<repository>
 			<id>webtools</id>
-			<url>http://download.eclipse.org/webtools/updates</url>
+			<url>http://download.eclipse.org/webtools/updates/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
@@ -169,7 +169,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>tycho</id>
-			<url>http://repository.sonatype.org/content/repositories/all-001//
+			<url>http://repository.sonatype.org/content/repositories/all-001/
 			</url>
 			<releases>
 				<enabled>true</enabled>
