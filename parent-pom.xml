@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.tools</groupId>
-  <artifactId>org.jboss.tools.parent.pom</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>JBoss Tools Parent</name>
-  <packaging>pom</packaging>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>org.jboss.tools.parent.pom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>JBoss Tools Parent</name>
+	<packaging>pom</packaging>
 
-  <properties>
-    <tychoVersion>0.8.0</tychoVersion>
-  </properties>
+	<properties>
+		<tychoVersion>0.8.0</tychoVersion>
+	</properties>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.sonatype.tycho</groupId>
-        <artifactId>tycho-maven-plugin</artifactId>
-        <version>${tychoVersion}</version>
-        <extensions>true</extensions>
-      </plugin>    
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<extensions>true</extensions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
@@ -27,43 +27,153 @@
 				<configuration>
 					<resolver>p2</resolver>
 					<environments>
-					
 						<environment>
 							<os>macosx</os>
 							<ws>cocoa</ws>
 							<arch>x86_64</arch>
 						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>carbon</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
 					</environments>
 				</configuration>
 			</plugin>
-      
-    </plugins>      
-  </build>
 
+		</plugins>
+	</build>
 
-  <repositories>
-    <repository>
-      <id>galileo</id>
-      <url>http://download.eclipse.org/releases/galileo</url>
-      <layout>p2</layout>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
+	<repositories>
+		<repository>
+			<id>galileo</id>
+			<url>http://download.eclipse.org/releases/galileo</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>eclipse35</id>
+			<url>http://download.eclipse.org/eclipse/updates/3.5/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>webtools</id>
+			<url>http://download.eclipse.org/webtools/updates</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>m2eclipse</id>
+			<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>m2eclipse-extras</id>
+			<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>birt25</id>
+			<url>http://download.eclipse.org/birt/update-site/2.5/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>subclipse16</id>
+			<url>http://subclipse.tigris.org/update_1.6.x/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>subversive07</id>
+			<url>http://download.eclipse.org/technology/subversive/0.7/update-site/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>subversive20</id>
+			<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
 
- 
-  </repositories>
-
-<pluginRepositories>
-    <pluginRepository>
-      <id>tycho</id>
-      <url>http://repository.sonatype.org/content/repositories/all-001//</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </pluginRepository> 
-  </pluginRepositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>tycho</id>
+			<url>http://repository.sonatype.org/content/repositories/all-001//
+			</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
