@@ -10,10 +10,10 @@ import junit.framework.TestCase;
 import org.eclipse.core.runtime.FileLocator;
 import org.hibernate.console.ConcoleConfigurationAdapter;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.HibernateConsoleRuntimeException;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.QueryPage;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.Element;
 

@@ -31,7 +31,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.hibernate.console.ConsoleMessages;
-import org.hibernate.console.HibernateConsoleRuntimeException;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

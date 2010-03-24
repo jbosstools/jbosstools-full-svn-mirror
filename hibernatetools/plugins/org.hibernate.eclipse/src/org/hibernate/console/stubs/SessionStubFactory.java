@@ -14,8 +14,6 @@ import org.hibernate.console.util.QLFormatHelper;
 import org.hibernate.engine.query.HQLQueryPlan;
 import org.hibernate.hql.QueryTranslator;
 import org.hibernate.impl.SessionFactoryImpl;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.type.Type;
 
 public class SessionStubFactory {
@@ -55,17 +53,17 @@ public class SessionStubFactory {
 
 	// TODO: get rid of this - ClassMetadata - should not be public
 	@SuppressWarnings("unchecked")
-	public Map<String, ClassMetadata> getClassMetaData() {
+	public Map<String, ClassMetadataStub> getClassMetaData() {
 		if (sessionFactory == null) {
-			return new HashMap<String, ClassMetadata>();
+			return new HashMap<String, ClassMetadataStub>();
 		}
 		return sessionFactory.getAllClassMetadata();
 	}
 	// TODO: get rid of this - ClassMetadata - should not be public
 	@SuppressWarnings("unchecked")
-	public Map<String, CollectionMetadata> getCollectionMetaData() {
+	public Map<String, CollectionMetadataStub> getCollectionMetaData() {
 		if (sessionFactory == null) {
-			return new HashMap<String, CollectionMetadata>();
+			return new HashMap<String, CollectionMetadataStub>();
 		}
 		return sessionFactory.getAllCollectionMetadata();
 	}

@@ -63,13 +63,13 @@ import org.eclipse.ui.part.Page;
 import org.hibernate.console.ConsoleQueryParameter;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.console.QueryInputModel;
+import org.hibernate.console.stubs.NullableTypeStub;
+import org.hibernate.console.stubs.TableStub;
+import org.hibernate.console.stubs.TypeStub;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.QueryEditor;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.hql.classic.ParserHelper;
-import org.hibernate.type.NullableType;
-import org.hibernate.type.Type;
-import org.hibernate.util.StringHelper;
 
 public class QueryParametersPage extends Page implements IQueryParametersPage {
 
@@ -190,10 +190,10 @@ public class QueryParametersPage extends Page implements IQueryParametersPage {
 			}
 
 		});
-		final List<Type> possibleTypes = new ArrayList<Type>(ConsoleQueryParameter.getPossibleTypes());
-		Collections.sort(possibleTypes, new Comparator<Type>() {
+		final List<TypeStub> possibleTypes = new ArrayList<TypeStub>(ConsoleQueryParameter.getPossibleTypes());
+		Collections.sort(possibleTypes, new Comparator<TypeStub>() {
 
-			public int compare(Type t1, Type t2) {
+			public int compare(TypeStub t1, TypeStub t2) {
 				return t1.getName().compareTo(t2.getName());
 			}
 
@@ -209,10 +209,10 @@ public class QueryParametersPage extends Page implements IQueryParametersPage {
 					cqp.setName( (String) value );
 				}
 				if ( TYPE_PROPERTY.equals( property ) ) {
-					Iterator<Type> iterator = possibleTypes.iterator();
+					Iterator<TypeStub> iterator = possibleTypes.iterator();
 					int i = 0;
 					while(iterator.hasNext()) {
-						NullableType type = (NullableType) iterator.next();
+						NullableTypeStub type = (NullableTypeStub) iterator.next();
 						if(i==((Integer)value).intValue()) {
 							if(cqp.getType()!=type) {
 								cqp.setType(type);
@@ -242,8 +242,8 @@ public class QueryParametersPage extends Page implements IQueryParametersPage {
 					return cqp.getName();
 				}
 				if ( TYPE_PROPERTY.equals( property ) ) {
-					Iterator<Type> iterator = possibleTypes.iterator();
-					NullableType type = cqp.getType();
+					Iterator<TypeStub> iterator = possibleTypes.iterator();
+					NullableTypeStub type = cqp.getType();
 					int i = 0;
 					while(iterator.hasNext()) {
 						if (type == iterator.next()) {
@@ -285,10 +285,10 @@ public class QueryParametersPage extends Page implements IQueryParametersPage {
 
 		String[] valueTypes = new String[possibleTypes.size()];
 
-		Iterator<Type> iterator = possibleTypes.iterator();
+		Iterator<TypeStub> iterator = possibleTypes.iterator();
 		int i=0;
 		while ( iterator.hasNext() ) {
-			Type element = iterator.next();
+			TypeStub element = iterator.next();
 			valueTypes[i++] = element.getName();
 		}
 		CellEditor[] editors = new CellEditor[columnProperties.length];

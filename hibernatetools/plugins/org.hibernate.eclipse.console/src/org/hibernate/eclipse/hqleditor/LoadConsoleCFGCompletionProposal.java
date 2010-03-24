@@ -15,7 +15,6 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.hibernate.HibernateException;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
@@ -43,7 +42,7 @@ public class LoadConsoleCFGCompletionProposal implements ICompletionProposal {
 			try {
 				consoleConfiguration.build();
 				consoleConfiguration.buildMappings();
-			} catch (HibernateException he) {
+			} catch (RuntimeException he) {
 				HibernateConsolePlugin.getDefault().showError(HibernateConsolePlugin.getShell(), HibernateConsoleMessages.LoadConsoleCFGCompletionProposal_could_not_load_configuration + ' ' + consoleConfiguration.getName(), he);
 			}
 		}

@@ -18,7 +18,7 @@ import org.eclipse.jpt.db.Column;
 import org.eclipse.jpt.db.Table;
 import org.eclipse.wst.validation.internal.core.Message;
 import org.eclipse.wst.validation.internal.provisional.core.IMessage;
-import org.hibernate.cfg.NamingStrategy;
+import org.hibernate.console.stubs.NamingStrategyStub;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJpaProject;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJptPlugin;
 import org.jboss.tools.hibernate.jpt.core.internal.context.Messages;
@@ -60,7 +60,7 @@ public class HibernateJavaColumnImpl extends GenericJavaColumn implements Hibern
 
 	public String getSpecifiedDBColumnName(){
 		if (getSpecifiedName() == null) return null;
-		NamingStrategy ns = getJpaProject().getNamingStrategy();
+		NamingStrategyStub ns = getJpaProject().getNamingStrategy();
 		if (getJpaProject().isNamingStrategyEnabled() && ns != null){
 			try {
 				return ns.columnName(getSpecifiedName());
@@ -79,7 +79,7 @@ public class HibernateJavaColumnImpl extends GenericJavaColumn implements Hibern
 		
 	@Override
 	protected String buildDefaultName() {
-		NamingStrategy ns = getJpaProject().getNamingStrategy();
+		NamingStrategyStub ns = getJpaProject().getNamingStrategy();
 		if ( getJpaProject().isNamingStrategyEnabled() && ns != null && super.buildDefaultName() != null){
 			try {
 				return ns.propertyToColumnName(super.buildDefaultName());
@@ -105,7 +105,7 @@ public class HibernateJavaColumnImpl extends GenericJavaColumn implements Hibern
 
 	public String getSpecifiedDBTableName() {
 		if (getSpecifiedTable() == null) return null;
-		NamingStrategy ns = getJpaProject().getNamingStrategy();
+		NamingStrategyStub ns = getJpaProject().getNamingStrategy();
 		if (getJpaProject().isNamingStrategyEnabled() && ns != null){
 			try {
 				return ns.tableName(getSpecifiedTable());

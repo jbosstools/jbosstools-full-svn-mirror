@@ -21,11 +21,11 @@
  */
 package org.hibernate.console.node;
 
-import org.hibernate.mapping.Table;
+import org.hibernate.console.stubs.TableStub;
 
 public class TableNode extends BaseNode {
 
-	public TableNode(BaseNode parent, Table table) {
+	public TableNode(BaseNode parent, TableStub table) {
 		super(null, parent);
 		name = table.getName();
 	}

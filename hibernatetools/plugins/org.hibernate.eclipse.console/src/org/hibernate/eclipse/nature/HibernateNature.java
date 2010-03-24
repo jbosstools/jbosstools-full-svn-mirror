@@ -41,17 +41,18 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.hibernate.cfg.JDBCMetaDataConfiguration;
-import org.hibernate.cfg.reveng.TableIdentifier;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.ConfigurationStubFactory;
+import org.hibernate.console.stubs.ConfigurationStubJDBCMetaData;
+import org.hibernate.console.stubs.TableIdentifierStub;
+import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.builder.HibernateBuilder;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.properties.HibernatePropertiesConstants;
-import org.hibernate.mapping.Table;
 import org.osgi.service.prefs.Preferences;
 
 public class HibernateNature implements IProjectNature {
@@ -117,11 +118,11 @@ public class HibernateNature implements IProjectNature {
 		}
 	}
 
-	List<Table> tables = null;
+	List<TableStub> tables = null;
 
 	private ReadDatabaseMetaData job;
 
-	public List<Table> getTables() {
+	public List<TableStub> getTables() {
 		ConsoleConfiguration ccfg = getDefaultConsoleConfiguration();
 		if(ccfg==null) return Collections.emptyList();
 
@@ -148,10 +149,10 @@ public class HibernateNature implements IProjectNature {
 			this.ccfg = ccfg;
 		}
 
-		@SuppressWarnings("unchecked")
 		protected IStatus run(IProgressMonitor monitor) {
 			ConfigurationStub cfg = ccfg.buildWith(null, false);
-			final JDBCMetaDataConfiguration jcfg = new JDBCMetaDataConfiguration();
+			ConfigurationStubFactory csf = new ConfigurationStubFactory(null);
+			final ConfigurationStubJDBCMetaData jcfg = csf.createConfigurationJDBCMetaData();
 			jcfg.setProperties(cfg.getProperties());
 			monitor.beginTask(HibernateConsoleMessages.HibernateNature_reading_database_metadata, IProgressMonitor.UNKNOWN);
 			try {
@@ -161,18 +162,7 @@ public class HibernateNature implements IProjectNature {
 						return null;
 					}
 				});
-
-
-				List<Table> result = new ArrayList<Table>();
-				Iterator<Table> tabs = jcfg.getTableMappings();
-
-				while (tabs.hasNext() ) {
-					Table table = tabs.next();
-					monitor.subTask(table.getName() );
-					result.add(table);
-				}
-
-				tables = result;
+				tables = jcfg.getTableMappingsArr();
 				monitor.done();
 				return Status.OK_STATUS;
 			} catch(Throwable t) {
@@ -182,11 +172,11 @@ public class HibernateNature implements IProjectNature {
 
 	}
 
-	public List<Table> getMatchingTables(String tableName) {
-		List<Table> result = new ArrayList<Table>();
-		Iterator<Table> tableMappings = getTables().iterator();
+	public List<TableStub> getMatchingTables(String tableName) {
+		List<TableStub> result = new ArrayList<TableStub>();
+		Iterator<TableStub> tableMappings = getTables().iterator();
 		while (tableMappings.hasNext() ) {
-			Table table = tableMappings.next();
+			TableStub table = tableMappings.next();
 			if(table.getName().toUpperCase().startsWith(tableName.toUpperCase()) ) {
 				result.add(table);
 			}
@@ -194,10 +184,10 @@ public class HibernateNature implements IProjectNature {
 		return result;
 	}
 
-	public Table getTable(TableIdentifier nearestTableName) {
+	public TableStub getTable(TableIdentifierStub nearestTableName) {
 		// TODO: can be made MUCH more efficient with proper indexing of the tables.
 		// TODO: handle catalog/schema properly
-		for (Table table : getTables()) {
+		for (TableStub table : getTables()) {
 			if(nearestTableName.getName().equals(table.getName())) {
 				return table;
 			}

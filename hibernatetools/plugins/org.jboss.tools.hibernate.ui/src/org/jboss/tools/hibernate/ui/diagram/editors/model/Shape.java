@@ -17,10 +17,10 @@ import java.util.Properties;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Component;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.Value;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.ComponentStub;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.ValueStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection.ConnectionType;
 import org.jboss.tools.hibernate.ui.view.HibernateUtils;
 
@@ -255,9 +255,9 @@ public class Shape extends BaseElement {
 	 */
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
-		if (getOrmElement() instanceof Property) {
+		if (getOrmElement() instanceof PropertyStub) {
 			return descriptors_property;
-		} else if (getOrmElement() instanceof Column) {
+		} else if (getOrmElement() instanceof ColumnStub) {
 			return descriptors_column;
 		}
 		return super.getPropertyDescriptors();
@@ -273,20 +273,20 @@ public class Shape extends BaseElement {
 	@Override
 	public Object getPropertyValue(Object propertyId) {
 		Object res = null;
-		Column col = null;
-		if (getOrmElement() instanceof Column) {
-			col = (Column)getOrmElement();
+		ColumnStub col = null;
+		if (getOrmElement() instanceof ColumnStub) {
+			col = (ColumnStub)getOrmElement();
 		}
-		Property prop = null;
-		if (getOrmElement() instanceof Property) {
-			prop = (Property)getOrmElement();
+		PropertyStub prop = null;
+		if (getOrmElement() instanceof PropertyStub) {
+			prop = (PropertyStub)getOrmElement();
 		}
 		if (prop != null) {
 			if (PROPERTY_NAME.equals(propertyId)) {
 				res = prop.getName();
 			} else if (PROPERTY_TYPE.equals(propertyId)) {
-				Value value = prop.getValue();
-				if (value instanceof Component) {
+				ValueStub value = prop.getValue();
+				if (value instanceof ComponentStub) {
 					res = prop.getValue().toString();
 				} else {
 					res = prop.getType().getReturnedClass().getName();

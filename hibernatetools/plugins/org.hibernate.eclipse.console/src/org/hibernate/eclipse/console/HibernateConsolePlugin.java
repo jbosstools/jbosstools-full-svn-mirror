@@ -53,13 +53,12 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.hibernate.HibernateException;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.HibernateConsoleRuntimeException;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.KnownConfigurationsAdapter;
 import org.hibernate.console.KnownConfigurationsListener;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.eclipse.console.actions.AddConfigurationAction;
 import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.console.workbench.ConfigurationAdapterFactory;
@@ -638,7 +637,7 @@ public class HibernateConsolePlugin extends AbstractUIPlugin implements PluginLo
 		return AbstractUIPlugin.imageDescriptorFromPlugin(ID, path);
 	}
 
-	public void logWarning(HibernateException he) {
+	public void logWarning(HibernateConsoleRuntimeException he) {
 		logMessage(IStatus.WARNING, he==null?null:he.getMessage(), he);
 	}
 

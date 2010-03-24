@@ -19,9 +19,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.internal.ErrorEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.hibernate.console.stubs.PersistentClassStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.utils.OpenMappingUtils;
-import org.hibernate.mapping.PersistentClass;
 
 /**
  * @author Dmitry Geraskov
@@ -31,7 +31,7 @@ import org.hibernate.mapping.PersistentClass;
 public class Utils {
 
 
-	public static String getPersistentClassName(PersistentClass persClass) {
+	public static String getPersistentClassName(PersistentClassStub persClass) {
 		if (persClass == null) {
 			return ""; //$NON-NLS-1$
 		}

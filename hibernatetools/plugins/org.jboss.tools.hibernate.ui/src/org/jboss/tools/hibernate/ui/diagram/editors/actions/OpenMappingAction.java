@@ -20,9 +20,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.hibernate.console.ConsoleConfiguration;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Property;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
 import org.jboss.tools.hibernate.ui.diagram.editors.DiagramViewer;
@@ -59,10 +59,10 @@ public class OpenMappingAction extends SelectionAction {
 		while (iterator.hasNext() && editorPart == null) {
 			Shape shape = iterator.next();
 			Object selection = shape.getOrmElement();
-			if (selection instanceof Property
-					&& ((Property)selection).getPersistentClass() instanceof SpecialRootClass) {
-				Property compositSel = ((Property)selection);
-				Property parentProperty = ((SpecialRootClass)compositSel.getPersistentClass()).getProperty();
+			if (selection instanceof PropertyStub
+					&& ((PropertyStub)selection).getPersistentClass() instanceof SpecialRootClass) {
+				PropertyStub compositSel = ((PropertyStub)selection);
+				PropertyStub parentProperty = ((SpecialRootClass)compositSel.getPersistentClass()).getProperty();
 				try {
 					editorPart = org.hibernate.eclipse.console.actions.OpenMappingAction.run(consoleConfig, compositSel, parentProperty);
 				} catch (CoreException e) {
@@ -77,7 +77,7 @@ public class OpenMappingAction extends SelectionAction {
 			}
 			Shape shapeParent = null;
 			Object selectionParent = null;
-			if (selection instanceof Column) {
+			if (selection instanceof ColumnStub) {
 				shapeParent = (Shape)shape.getParent();
 				selectionParent = shapeParent.getOrmElement();
 			}

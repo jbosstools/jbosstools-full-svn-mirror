@@ -12,21 +12,14 @@ import java.util.Properties;
 import org.eclipse.osgi.util.NLS;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.Mappings;
-import org.hibernate.cfg.NamingStrategy;
-import org.hibernate.cfg.Settings;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.FakeDelegatingDriver;
-import org.hibernate.console.HibernateConsoleRuntimeException;
-import org.hibernate.engine.Mapping;
-import org.hibernate.mapping.PersistentClass;
+import org.hibernate.console.stubs.util.ReflectHelper;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2x.Exporter;
 import org.hibernate.tool.hbm2x.HibernateMappingExporter;
 import org.hibernate.tool.hbm2x.pojo.POJOClass;
 import org.hibernate.tool.ide.completion.HQLCodeAssist;
-import org.hibernate.tool.ide.completion.IHQLCodeAssist;
-import org.hibernate.util.ReflectHelper;
 import org.xml.sax.EntityResolver;
 
 public class ConfigurationStub {
@@ -37,6 +30,9 @@ public class ConfigurationStub {
 	protected Configuration configuration;
 
 	protected ConfigurationStub(Configuration configuration) {
+		//Class.forName(className)
+	    //Method ReflectionUtils.findPublicMethod(Class declaringClass, "isOpen", 
+		//		   new Class[]());
 		this.configuration = configuration;
 	}
 
@@ -61,8 +57,8 @@ public class ConfigurationStub {
 	}
 
 	// TODO: temporary should be protected and/or SettingsStub?
-	public Settings buildSettings() {
-		return configuration.buildSettings();
+	public SettingsStub buildSettings() {
+		return new SettingsStub(configuration.buildSettings());
 	}
 
 	protected SessionFactory buildSessionFactory() {
@@ -73,13 +69,17 @@ public class ConfigurationStub {
 		return configuration.getEntityResolver();
 	}
 
-	public IHQLCodeAssist getHQLCodeAssist() {
-		return new HQLCodeAssist(configuration);
+	public IHQLCodeAssistStub getHQLCodeAssist() {
+		return new IHQLCodeAssistStub(new HQLCodeAssist(configuration));
 	}
 	
 	// TODO: temporary should be protected and/or NamingStrategyStub?
-	public NamingStrategy getNamingStrategy() {
-		return configuration.getNamingStrategy();
+	public NamingStrategyStub getNamingStrategy() {
+		return new NamingStrategyStub(configuration.getNamingStrategy());
+	}
+
+	public boolean hasNamingStrategy() {
+		return (configuration.getNamingStrategy() != null);
 	}
 	
 	// TODO: temporary?
@@ -89,18 +89,18 @@ public class ConfigurationStub {
 	}
 	
 	// TODO: temporary should be protected and/or PersistentClassStub?
-	public PersistentClass getClassMapping(String entityName) {
-		return configuration.getClassMapping(entityName);
+	public PersistentClassStub getClassMapping(String entityName) {
+		return PersistentClassStubFactory.createPersistentClassStub(configuration.getClassMapping(entityName));
 	}
 
 	// TODO: temporary should be protected and/or MappingsStub?
-	public Mappings createMappings() {
-		return configuration.createMappings();
+	public MappingsStub createMappings() {
+		return new MappingsStub(configuration.createMappings());
 	}
 
 	// TODO: temporary should be protected and/or MappingsStub?
-	public Mapping buildMapping() {
-		return configuration.buildMapping();
+	public MappingStub buildMapping() {
+		return new MappingStub(configuration.buildMapping());
 	}
 
 	public static interface IExporterNewOutputDir {

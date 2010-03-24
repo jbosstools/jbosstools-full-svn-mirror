@@ -31,21 +31,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.HibernateException;
-import org.hibernate.cfg.JDBCReaderFactory;
-import org.hibernate.cfg.Settings;
 import org.hibernate.cfg.reveng.DefaultDatabaseCollector;
 import org.hibernate.cfg.reveng.JDBCReader;
 import org.hibernate.cfg.reveng.ReverseEngineeringStrategy;
-import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.ConnectionProviderStub;
+import org.hibernate.console.stubs.SettingsStub;
+import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mapping.Table;
 
 public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 
@@ -64,9 +62,9 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 			List<TableContainer> result = new ArrayList<TableContainer>();
 
-			Iterator<Map.Entry<String, List<Table>>> qualifierEntries = db.getQualifierEntries();
+			Iterator<Map.Entry<String, List<TableStub>>> qualifierEntries = db.getQualifierEntries();
 			while ( qualifierEntries.hasNext() ) {
-				Map.Entry<String, List<Table>> entry = qualifierEntries.next();
+				Map.Entry<String, List<TableStub>> entry = qualifierEntries.next();
 				result.add(new TableContainer(entry.getKey(), entry.getValue()));
 			}
 			return toArray(result.iterator(), TableContainer.class, new Comparator<TableContainer>() {
@@ -107,8 +105,8 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 		consoleConfiguration.execute(new ExecutionContext.Command() {
 
 			public Object execute() {
-				Settings settings = configuration.buildSettings();
-				ConnectionProvider connectionProvider = null;
+				SettingsStub settings = configuration.buildSettings();
+				ConnectionProviderStub connectionProvider = null;
 				try {
 					connectionProvider = settings.getConnectionProvider();
 

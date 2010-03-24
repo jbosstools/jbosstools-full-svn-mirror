@@ -16,10 +16,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.jpt.core.JpaProject;
 import org.eclipse.jpt.core.internal.AbstractJpaProject;
-import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.NamingStrategyStub;
 import org.hibernate.eclipse.console.properties.HibernatePropertiesConstants;
 import org.osgi.service.prefs.Preferences;
 
@@ -36,7 +36,7 @@ public class HibernateJpaProject extends AbstractJpaProject {
 		super(config);
 	}
 
-	public NamingStrategy getNamingStrategy(){
+	public NamingStrategyStub getNamingStrategy(){
 		String ccName = getDefaultConsoleConfigurationName();
 		if (ccName != null || "".equals(ccName)){//$NON-NLS-1$
 			ConsoleConfiguration cc = KnownConfigurations.getInstance().find(ccName);

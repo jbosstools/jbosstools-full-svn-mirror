@@ -34,10 +34,14 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.TableStub;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.model.IReverseEngineeringDefinition;
 import org.hibernate.eclipse.console.model.ITableFilter;
@@ -45,9 +49,6 @@ import org.hibernate.eclipse.console.workbench.DeferredContentProvider;
 import org.hibernate.eclipse.console.workbench.LazyDatabaseSchema;
 import org.hibernate.eclipse.console.workbench.TableContainer;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Table;
-import org.hibernate.util.StringHelper;
 
 public abstract class TableFilterView extends TreeToTableComposite {
 
@@ -140,8 +141,8 @@ public abstract class TableFilterView extends TreeToTableComposite {
 				Object sel = iterator.next();
 				ITableFilter filter = null;
 
-				if ( sel instanceof Table ) {
-					Table table = (Table) sel;
+				if ( sel instanceof TableStub ) {
+					TableStub table = (TableStub) sel;
 					filter = revEngDef.createTableFilter();
 					if ( StringHelper.isNotEmpty( table.getName() ) ) {
 						filter.setMatchName( table.getName() );
@@ -170,7 +171,7 @@ public abstract class TableFilterView extends TreeToTableComposite {
 					}
 					filter.setMatchName(".*"); //$NON-NLS-1$
 					filter.setExclude( Boolean.valueOf( exclude ) );
-				} else if ( sel instanceof Column ) {
+				} else if ( sel instanceof ColumnStub ) {
 					// we ignore column since at the moment we dont know which table is there.
 					return;
 				} else {
@@ -242,7 +243,7 @@ public abstract class TableFilterView extends TreeToTableComposite {
 		}
 	}
 
-	protected void createTableColumns(org.eclipse.swt.widgets.Table table) {
+	protected void createTableColumns(Table table) {
 		TableColumn column = new TableColumn(table, SWT.CENTER, 0);
 		column.setText(HibernateConsoleMessages.TableFilterView_sign);
 		column.setWidth(20);

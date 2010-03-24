@@ -35,11 +35,10 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.hibernate.console.ConsoleConfiguration;
+import org.hibernate.console.stubs.IHQLCodeAssistStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.QueryEditor;
-import org.hibernate.tool.ide.completion.HQLCodeAssist;
-import org.hibernate.tool.ide.completion.IHQLCodeAssist;
 
 /**
  * content assist processor for HQL code.
@@ -110,11 +109,11 @@ public class HQLCompletionProcessor implements IContentAssistProcessor {
 					errorMessage = HibernateConsoleMessages.HQLCompletionProcessor_could_not_get_document_contents;
 					return result;
 				}
-				IHQLCodeAssist hqlEval = null;
+				IHQLCodeAssistStub hqlEval = null;
 				if (consoleConfig != null) {
 					hqlEval = consoleConfig.getHQLCodeAssist();
 				} else {
-					hqlEval = new HQLCodeAssist(null);
+					hqlEval = IHQLCodeAssistStub.createHQLCodeAssist();
 				}
 				EclipseHQLCompletionRequestor eclipseHQLCompletionCollector = new EclipseHQLCompletionRequestor();
 				hqlEval.codeComplete(doc.get(), currentOffset, eclipseHQLCompletionCollector);

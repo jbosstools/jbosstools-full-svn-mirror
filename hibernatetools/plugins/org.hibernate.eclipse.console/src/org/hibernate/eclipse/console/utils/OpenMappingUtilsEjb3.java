@@ -17,6 +17,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.spi.PersistenceUnitTransactionType;
 
 import org.hibernate.console.ConsoleConfiguration;
+import org.hibernate.console.stubs.util.CollectionHelper;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.ejb.Ejb3Configuration;
 import org.hibernate.ejb.HibernatePersistence;
@@ -30,7 +31,6 @@ import org.hibernate.ejb.packaging.NamedInputStream;
 import org.hibernate.ejb.packaging.PackageFilter;
 import org.hibernate.ejb.packaging.PersistenceMetadata;
 import org.hibernate.ejb.packaging.PersistenceXmlLoader;
-import org.hibernate.util.CollectionHelper;
 
 /**
  * Most functions in this utility class are copy of 

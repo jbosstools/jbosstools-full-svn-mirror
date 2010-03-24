@@ -56,7 +56,10 @@ import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
-import org.hibernate.cfg.reveng.TableIdentifier;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.PrimaryKeyStub;
+import org.hibernate.console.stubs.TableIdentifierStub;
+import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.console.model.IRevEngColumn;
 import org.hibernate.eclipse.console.model.IRevEngTable;
 import org.hibernate.eclipse.console.model.IReverseEngineeringDefinition;
@@ -70,9 +73,6 @@ import org.hibernate.eclipse.mapper.model.RevEngGeneratorAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngParamAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngPrimaryKeyAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngTableAdapter;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.PrimaryKey;
-import org.hibernate.mapping.Table;
 
 public class TablePropertiesBlock extends MasterDetailsBlock {
 
@@ -89,6 +89,7 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 
 	protected void createMasterPart(final IManagedForm managedForm,	Composite parent) {
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true));
+		@SuppressWarnings("unused")
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
 		Section section = toolkit.createSection( parent, Section.DESCRIPTION |
@@ -162,15 +163,15 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 
 		LazyDatabaseSchema lds = editor.getLazyDatabaseSchema();
 
-		Map tables = new HashMap();
-		Map columns = new HashMap();
+		Map<TableIdentifierStub, TableStub> tables = new HashMap<TableIdentifierStub, TableStub>();
+		Map<TableIdentifierStub, List<ColumnStub> > columns = new HashMap<TableIdentifierStub, List<ColumnStub> >();
 
 		if (lds == null) {
 			String tableName = "", namePrefix = "TABLE_";  //$NON-NLS-1$  //$NON-NLS-2$
 			IRevEngTable retable = editor.getReverseEngineeringDefinition().createTable();
 			retable.setCatalog(""); //$NON-NLS-1$
 			retable.setSchema(""); //$NON-NLS-1$
-			TreeSet ts = new TreeSet();
+			TreeSet<String> ts = new TreeSet<String>();
 			IRevEngTable[] retables = editor.getReverseEngineeringDefinition().getTables();
 			char separartor = '%';
 			for (int i = 0; i < retables.length; i++) {
@@ -192,36 +193,37 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 			dialog.setContainerMode(true);
 			dialog.open();
 			Object[] result = dialog.getResult();
-			TableIdentifier lastTable = null;
+			TableIdentifierStub lastTable = null;
 			if(result!=null) {
 				for (int i = 0; i < result.length; i++) {
 					Object object = result[i];
-					if(object instanceof Table) {
-						Table table = (Table) object;
-						tables.put(TableIdentifier.create(table), object);
-						lastTable = TableIdentifier.create(table);
-					} else if (object instanceof Column) {
-						List existing = (List) columns.get(lastTable);
+					if(object instanceof TableStub) {
+						TableStub table = (TableStub) object;
+						tables.put(TableIdentifierStub.create(table), table);
+						lastTable = TableIdentifierStub.create(table);
+					} else if (object instanceof ColumnStub) {
+						ColumnStub column = (ColumnStub) object;
+						List<ColumnStub> existing = (List<ColumnStub>)columns.get(lastTable);
 						if(existing==null) {
-							existing = new ArrayList();
+							existing = new ArrayList<ColumnStub>();
 							columns.put(lastTable,existing);
 						}
-						existing.add(object);
-					} else if (object instanceof PrimaryKey) {
-						List existing = (List) columns.get(lastTable);
+						existing.add(column);
+					} else if (object instanceof PrimaryKeyStub) {
+						List<ColumnStub> existing = (List<ColumnStub>) columns.get(lastTable);
 						if(existing==null) {
-							existing = new ArrayList();
+							existing = new ArrayList<ColumnStub>();
 							columns.put(lastTable,existing);
 						}
-						existing.addAll(((PrimaryKey)object).getColumns());
+						existing.addAll(((PrimaryKeyStub)object).getColumns());
 					}
 				}
 			}
 
-			Iterator iterator = tables.entrySet().iterator();
+			Iterator<Map.Entry<TableIdentifierStub, TableStub>> iterator = tables.entrySet().iterator();
 			while ( iterator.hasNext() ) {
-				Map.Entry element = (Map.Entry) iterator.next();
-				Table table = (Table) element.getValue();
+				Map.Entry<TableIdentifierStub, TableStub> element = iterator.next();
+				TableStub table = element.getValue();
 				IRevEngTable retable = null;
 				//	editor.getReverseEngineeringDefinition().findTable(TableIdentifier.create(table));
 				if(retable==null) {
@@ -232,11 +234,11 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 					editor.getReverseEngineeringDefinition().addTable(retable);
 				}
 
-				List columnList = (List) columns.get(element.getKey());
+				List<ColumnStub> columnList = columns.get(element.getKey());
 				if(columnList!=null) {
-					Iterator colIterator = columnList.iterator();
+					Iterator<ColumnStub> colIterator = columnList.iterator();
 					while ( colIterator.hasNext() ) {
-						Column column = (Column) colIterator.next();
+						ColumnStub column = colIterator.next();
 						IRevEngColumn revCol = editor.getReverseEngineeringDefinition().createColumn();
 						revCol.setName(column.getName());
 						if (column.getSqlType() != null){

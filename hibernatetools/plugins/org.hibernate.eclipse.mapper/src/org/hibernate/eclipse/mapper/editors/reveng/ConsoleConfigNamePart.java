@@ -30,12 +30,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.hibernate.console.ConsoleConfiguration;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.model.IReverseEngineeringDefinition;
 import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.mapper.MapperMessages;
 import org.hibernate.eclipse.mapper.MapperPlugin;
 import org.hibernate.eclipse.mapper.editors.ReverseEngineeringEditor;
-import org.hibernate.util.StringHelper;
 
 public class ConsoleConfigNamePart extends RevEngSectionPart {
 

@@ -6,7 +6,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/asm.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/asm-attrs.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/dom4j-1.6.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/hibernate/hibernate3.jar" sourcepath="D:/Temp/_hibernate/hibernate-core-3.3.2.GA-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/jboss-cache.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/jboss-common.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hibernate/jboss-jmx.jar"/>
@@ -40,5 +39,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/tools/freemarker.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/tools/hibernate-tools.jar" sourcepath="C:/RHDS/hibernate/branches/Branch_3_2/HibernateExt_without_changes"/>
 	<classpathentry exported="true" kind="lib" path="lib/tools/jtidy-r8-20060801.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate/hibernate3.jar" sourcepath="D:/Temp/_hibernate/hibernate-core-3.3.2.GA-sources.jar "/>
 	<classpathentry kind="output" path="build/eclipse"/>
 </classpath>

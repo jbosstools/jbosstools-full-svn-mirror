@@ -36,8 +36,6 @@ import java.util.Properties;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
 import org.hibernate.HibernateException;
-import org.hibernate.cfg.Environment;
-import org.hibernate.cfg.Settings;
 import org.hibernate.console.execution.DefaultExecutionContext;
 import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.execution.ExecutionContextHolder;
@@ -45,9 +43,11 @@ import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.stubs.ConfigurationStubFactory;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.console.stubs.IHQLCodeAssistStub;
 import org.hibernate.console.stubs.SessionStub;
 import org.hibernate.console.stubs.SessionStubFactory;
-import org.hibernate.tool.ide.completion.IHQLCodeAssist;
+import org.hibernate.console.stubs.SettingsStub;
 import org.xml.sax.EntityResolver;
 
 public class ConsoleConfiguration implements ExecutionContextHolder {
@@ -86,7 +86,9 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		closeSessionFactory();
 		execute(new ExecutionContext.Command() {
 			public Object execute() {
-				configStub.cleanUp();
+				if (configStub != null) {
+					configStub.cleanUp();
+				}
 				return null;
 			}
 		});
@@ -222,8 +224,9 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 
 	protected ClassLoader getParentClassLoader() {
-		//return Thread.currentThread().getContextClassLoader().getParent();
-		return Thread.currentThread().getContextClassLoader();
+		return ClassLoader.getSystemClassLoader();
+		//return Thread.currentThread().getContextClassLoader().getParent().getParent();
+		//return Thread.currentThread().getContextClassLoader();
 	}
 	public ConfigurationStub getConfiguration() {
 		return configStub;
@@ -239,7 +242,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		execute(new ExecutionContext.Command() {
 			public Object execute() {
 				if (sessionStubFactory != null) {
-					throw new HibernateConsoleRuntimeException(ConsoleMessages.ConsoleConfiguration_factory_not_closed_before_build_new_factory);
+					throw new HibernateConsoleRuntimeException(ConsoleMessages.ConsoleConfiguration_factory_not_closed_before_build_new_factory, null);
 				}
 				sessionStubFactory = new SessionStubFactory(configStub);
 				fireFactoryBuilt();
@@ -386,7 +389,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 			}
 		}
 		if (configXMLFile == null) {
-			URL url = Environment.class.getClassLoader().getResource("hibernate.cfg.xml"); //$NON-NLS-1$
+			URL url = getParentClassLoader().getResource("hibernate.cfg.xml"); //$NON-NLS-1$
 			if (url != null) {
 				URI uri = null;
 				try {
@@ -416,8 +419,8 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		}
 	}
 
-	public Settings getSettings(final ConfigurationStub cfg) {
-		return (Settings) execute(new Command() {
+	public SettingsStub getSettings(final ConfigurationStub cfg) {
+		return (SettingsStub) execute(new Command() {
 
 			public Object execute() {
 				return cfg.buildSettings();
@@ -426,9 +429,9 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		});
 	}
 
-	public Settings getSettings2() {
+	public SettingsStub getSettings2() {
 		ConfigurationStub cfg = buildWith(null, false);
-		Settings settings = getSettings(cfg);
+		SettingsStub settings = getSettings(cfg);
 		return settings;
 	}
 
@@ -440,7 +443,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		return configStub.getEntityResolver();
 	}
 
-	public IHQLCodeAssist getHQLCodeAssist() {
+	public IHQLCodeAssistStub getHQLCodeAssist() {
 		if (configStub == null) {
 			try{
 			 	build();

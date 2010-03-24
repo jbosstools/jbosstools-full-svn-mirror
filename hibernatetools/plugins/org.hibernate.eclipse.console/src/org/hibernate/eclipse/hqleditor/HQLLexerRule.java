@@ -27,8 +27,6 @@ import java.io.Reader;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
-import org.hibernate.hql.antlr.HqlBaseLexer;
-import org.hibernate.hql.antlr.HqlSqlTokenTypes;
 
 import antlr.Token;
 import antlr.TokenStreamException;

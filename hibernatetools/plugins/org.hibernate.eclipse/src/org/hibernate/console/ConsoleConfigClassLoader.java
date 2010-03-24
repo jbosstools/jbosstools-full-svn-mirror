@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.Vector;
 import java.util.jar.JarFile;
 
-import org.hibernate.util.ReflectHelper;
+import org.hibernate.console.stubs.util.ReflectHelper;
 
 /**
  * Workaround for jdk disgrace with open jar files & native libs,

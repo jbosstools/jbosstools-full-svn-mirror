@@ -27,25 +27,24 @@ import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
-import org.hibernate.util.JoinedIterator;
 
 public class PersistentClassWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	@SuppressWarnings("unchecked")
 	public Object[] getChildren(Object o) {
-		PersistentClass pc = (PersistentClass) o;
-		Property identifierProperty = pc.getIdentifierProperty();
-		List<Property> properties = new ArrayList<Property>();
+		PersistentClassStub pc = (PersistentClassStub) o;
+		PropertyStub identifierProperty = pc.getIdentifierProperty();
+		List<PropertyStub> properties = new ArrayList<PropertyStub>();
 		
 		if(identifierProperty!=null) {
 			properties.add(identifierProperty);
 		}
 		
-		Iterator<Property> propertyClosureIterator = new JoinedIterator(properties.iterator(), pc.getPropertyClosureIterator());
-		return toArray(propertyClosureIterator, Property.class, null);
+		Iterator<PropertyStub> propertyClosureIterator = new JoinedIterator(properties.iterator(), pc.getPropertyClosureIterator());
+		return toArray(propertyClosureIterator, PropertyStub.class, null);
 	}
 
 	
@@ -54,7 +53,7 @@ public class PersistentClassWorkbenchAdapter extends BasicWorkbenchAdapter {
 	}
 
 	public String getLabel(Object o) {
-		PersistentClass pc = (PersistentClass) o;
+		PersistentClassStub pc = (PersistentClassStub) o;
 		return HibernateWorkbenchHelper.getLabelForClassName(pc.getEntityName());
 	}
 

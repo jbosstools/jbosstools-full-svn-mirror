@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Observable;
 
 import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.mapping.PersistentClass;
+import org.hibernate.console.stubs.PersistentClassStub;
 
 public class ConfigurationViewAdapter extends Observable {
 
@@ -48,10 +48,10 @@ public class ConfigurationViewAdapter extends Observable {
 
 	public List<PersistentClassViewAdapter> getPersistentClasses() {
 		if(persistentClasses==null) {
-			Iterator<PersistentClass> classMappings = cfg.getClassMappings();
+			Iterator<PersistentClassStub> classMappings = cfg.getClassMappings();
 			persistentClasses = new HashMap<String, PersistentClassViewAdapter>();
 			while ( classMappings.hasNext() ) {
-				PersistentClass clazz = classMappings.next();
+				PersistentClassStub clazz = classMappings.next();
 				persistentClasses.put( clazz.getEntityName(), new PersistentClassViewAdapter(this, clazz) );
 			}
 			

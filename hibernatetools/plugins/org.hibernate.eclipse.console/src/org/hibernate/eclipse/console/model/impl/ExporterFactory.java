@@ -15,15 +15,15 @@ import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.console.HibernateConsoleRuntimeException;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.launch.HibernateLaunchConstants;
 import org.hibernate.eclipse.launch.PathHelper;
 import org.hibernate.tool.hbm2x.ArtifactCollector;
 import org.hibernate.tool.hbm2x.Exporter;
 import org.hibernate.tool.hbm2x.GenericExporter;
-import org.hibernate.util.StringHelper;
 
 /**
  * ExporterFactory is used in UI to hold additional configuration for Exporter definitions

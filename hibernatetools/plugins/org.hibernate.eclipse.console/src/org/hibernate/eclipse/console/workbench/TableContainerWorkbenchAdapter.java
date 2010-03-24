@@ -25,17 +25,17 @@ import java.util.Comparator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
+import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mapping.Table;
 
 public class TableContainerWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	public Object[] getChildren(Object o) {
 		TableContainer tc = getTableContainer( o );
-		return toArray(tc.getTables().iterator(), Table.class, new Comparator<Table>() {
+		return toArray(tc.getTables().iterator(), TableStub.class, new Comparator<TableStub>() {
 
-			public int compare(Table arg0, Table arg1) {
+			public int compare(TableStub arg0, TableStub arg1) {
 
 				return arg0.getName().compareTo(arg1.getName());
 			}

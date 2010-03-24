@@ -48,11 +48,11 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.hibernate.console.HibernateConsoleRuntimeException;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.console.stubs.util.ReflectHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.tool.hbm2x.Exporter;
-import org.hibernate.util.ReflectHelper;
 
 /**
  * Represents what is specified in plugin.xml about possible exporters.

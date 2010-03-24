@@ -20,15 +20,14 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.hibernate.InvalidMappingException;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.PersistentClassStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.utils.Utils;
 import org.hibernate.eclipse.console.workbench.ConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.ConsoleConfigurationWorkbenchAdapter;
-import org.hibernate.mapping.PersistentClass;
 import org.jboss.tools.hibernate.ui.view.OpenDiagramActionDelegate;
 
 /**
@@ -78,8 +77,8 @@ public class OpenMappingDiagramTest extends TestCase {
 
 		if (persClasses.length > 0){
 			for (int i = 0; i < persClasses.length; i++) {
-				assertTrue(persClasses[i] instanceof PersistentClass);
-				PersistentClass persClass = (PersistentClass) persClasses[i];
+				assertTrue(persClasses[i] instanceof PersistentClassStub);
+				PersistentClassStub persClass = (PersistentClassStub) persClasses[i];
 
 				IEditorPart editor = null;
 				Throwable ex = null;

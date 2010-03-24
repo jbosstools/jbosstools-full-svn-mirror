@@ -23,85 +23,85 @@ package org.hibernate.eclipse.console.workbench;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.progress.IDeferredWorkbenchAdapter;
-import org.hibernate.mapping.Any;
-import org.hibernate.mapping.Array;
-import org.hibernate.mapping.Bag;
-import org.hibernate.mapping.Component;
-import org.hibernate.mapping.DependantValue;
-import org.hibernate.mapping.IdentifierBag;
-import org.hibernate.mapping.List;
-import org.hibernate.mapping.ManyToOne;
-import org.hibernate.mapping.Map;
-import org.hibernate.mapping.OneToMany;
-import org.hibernate.mapping.OneToOne;
-import org.hibernate.mapping.PrimitiveArray;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.Set;
-import org.hibernate.mapping.SimpleValue;
-import org.hibernate.mapping.Value;
-import org.hibernate.mapping.ValueVisitor;
+import org.hibernate.console.stubs.AnyStub;
+import org.hibernate.console.stubs.ArrayStub;
+import org.hibernate.console.stubs.BagStub;
+import org.hibernate.console.stubs.ComponentStub;
+import org.hibernate.console.stubs.DependantValueStub;
+import org.hibernate.console.stubs.IdentifierBagStub;
+import org.hibernate.console.stubs.ListStub;
+import org.hibernate.console.stubs.ManyToOneStub;
+import org.hibernate.console.stubs.MapStub;
+import org.hibernate.console.stubs.OneToManyStub;
+import org.hibernate.console.stubs.OneToOneStub;
+import org.hibernate.console.stubs.PrimitiveArrayStub;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.SetStub;
+import org.hibernate.console.stubs.SimpleValueStub;
+import org.hibernate.console.stubs.ValueStub;
+import org.hibernate.console.stubs.ValueVisitorStub;
 
 public class PropertyWorkbenchAdapter extends BasicWorkbenchAdapter implements
 		IDeferredWorkbenchAdapter {
 
 	public Object[] getChildren(Object o) {
-		Property p = (Property) o;
+		PropertyStub p = (PropertyStub) o;
 		
-		Object[] result = (Object[]) p.getValue().accept(new ValueVisitor() {
+		Object[] result = (Object[]) p.getValue().accept(new ValueVisitorStub() {
 		
-			public Object accept(OneToOne oto) {
+			public Object accept(OneToOneStub oto) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(ManyToOne mto) {
+			public Object accept(ManyToOneStub mto) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(Component component) {
-				return toArray(component.getPropertyIterator(), Property.class, null);				
+			public Object accept(ComponentStub component) {
+				return toArray(component.getPropertyIterator(), PropertyStub.class, null);				
 			}
 		
-			public Object accept(DependantValue value) {
+			public Object accept(DependantValueStub value) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(SimpleValue value) {
+			public Object accept(SimpleValueStub value) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(Any any) {
+			public Object accept(AnyStub any) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(Set set) {
+			public Object accept(SetStub set) {
 				return NO_CHILDREN; // should it look up the target entity?
 			}
 					
-			public Object accept(OneToMany many) {
+			public Object accept(OneToManyStub many) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(Map map) {
+			public Object accept(MapStub map) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(Array list) {
+			public Object accept(ArrayStub list) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(PrimitiveArray primitiveArray) {
+			public Object accept(PrimitiveArrayStub primitiveArray) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(List list) {
+			public Object accept(ListStub list) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(IdentifierBag bag) {
+			public Object accept(IdentifierBagStub bag) {
 				return NO_CHILDREN;
 			}
 		
-			public Object accept(Bag bag) {
+			public Object accept(BagStub bag) {
 				return NO_CHILDREN;
 			}		
 		});
@@ -110,14 +110,14 @@ public class PropertyWorkbenchAdapter extends BasicWorkbenchAdapter implements
 	}
 
 	public ImageDescriptor getImageDescriptor(Object object) {
-		Property property = ((Property)object);
+		PropertyStub property = ((PropertyStub)object);
 		
 		return HibernateWorkbenchHelper.getImageDescriptor(property);		 
 	}
 
 	public String getLabel(Object o) {
-		Property property = ((Property)o);
-		Value value = property.getValue();
+		PropertyStub property = ((PropertyStub)o);
+		ValueStub value = property.getValue();
 		String typeName = (String) value.accept(new TypeNameValueVisitor(true));
 		
 		if (typeName!=null) {
@@ -128,7 +128,7 @@ public class PropertyWorkbenchAdapter extends BasicWorkbenchAdapter implements
 	}
 
 	public Object getParent(Object o) {
-		Property p = (Property) o;
+		PropertyStub p = (PropertyStub) o;
 		return p.getPersistentClass();
 	}
 

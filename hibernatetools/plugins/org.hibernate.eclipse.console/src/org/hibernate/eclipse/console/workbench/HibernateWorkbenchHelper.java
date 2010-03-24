@@ -24,14 +24,14 @@ package org.hibernate.eclipse.console.workbench;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.hibernate.console.ImageConstants;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.ValueStub;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.Value;
-import org.hibernate.util.StringHelper;
 
 public class HibernateWorkbenchHelper {
 
-	public static ImageDescriptor getImageDescriptor(Property property) {
+	public static ImageDescriptor getImageDescriptor(PropertyStub property) {
 		if(property==null) return null;
 		if(property.getPersistentClass()!=null) {
 			if(property.getPersistentClass().getIdentifierProperty()==property) {
@@ -43,7 +43,7 @@ public class HibernateWorkbenchHelper {
 		return EclipseImages.getImageDescriptor(iconNameForValue);
 	}
 	
-	public static Image getImage(Property property) {
+	public static Image getImage(PropertyStub property) {
 		if(property==null) return null;
 		if(property.getPersistentClass()!=null) {
 			if(property.getPersistentClass().getIdentifierProperty()==property) {
@@ -55,7 +55,7 @@ public class HibernateWorkbenchHelper {
 		return EclipseImages.getImage(iconNameForValue);
 	}
 	
-	static private String getIconNameForValue(Value value) {
+	static private String getIconNameForValue(ValueStub value) {
 		String result;
 		
 		result = (String) value.accept(new IconNameValueVisitor());

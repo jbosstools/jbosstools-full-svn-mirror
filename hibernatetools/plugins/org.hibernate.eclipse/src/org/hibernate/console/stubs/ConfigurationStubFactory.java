@@ -29,14 +29,13 @@ import org.hibernate.cfg.JDBCMetaDataConfiguration;
 import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ConsoleMessages;
-import org.hibernate.console.HibernateConsoleRuntimeException;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
+import org.hibernate.console.stubs.util.ReflectHelper;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.resolver.DialectFactory;
 import org.hibernate.util.ConfigHelper;
-import org.hibernate.util.ReflectHelper;
-import org.hibernate.util.StringHelper;
 import org.hibernate.util.XMLHelper;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
@@ -108,13 +107,12 @@ public class ConfigurationStubFactory {
 		return res;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Configuration buildAnnotationConfiguration() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
-		Class<Configuration> clazz = ReflectHelper
-				.classForName("org.hibernate.cfg.AnnotationConfiguration"); //$NON-NLS-1$
-		Configuration newInstance = clazz.newInstance();
-		return newInstance;
+		Class<?> clazz = ReflectHelper
+				.classForName("org.hibernate.cfg.AnnotationConfiguration", ConsoleConfiguration.class); //$NON-NLS-1$
+		Configuration annotationConfig = (Configuration)clazz.newInstance();
+		return annotationConfig;
 	}
 
 	private Configuration buildJPAConfiguration(String persistenceUnit, Properties properties,
@@ -153,7 +151,7 @@ public class ConfigurationStubFactory {
 				String out = NLS.bind(
 						ConsoleMessages.ConsoleConfiguration_persistence_unit_not_found,
 						persistenceUnit);
-				throw new HibernateConsoleRuntimeException(out);
+				throw new HibernateConsoleRuntimeException(out, null);
 			}
 
 			method = clazz.getMethod("getHibernateConfiguration", new Class[0]);//$NON-NLS-1$
@@ -374,7 +372,7 @@ public class ConfigurationStubFactory {
 			String out = NLS.bind(
 					ConsoleMessages.ConsoleConfiguration_connection_profile_not_found,
 					connectionProfile);
-			throw new HibernateConsoleRuntimeException(out);
+			throw new HibernateConsoleRuntimeException(out, null);
 		}
 		return localCfg;
 	}

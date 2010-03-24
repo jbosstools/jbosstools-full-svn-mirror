@@ -21,7 +21,7 @@
  */
 package org.hibernate.eclipse.graph.model;
 
-import org.hibernate.util.StringHelper;
+import org.hibernate.console.stubs.util.StringHelper;
 
 public class PropertyAssociationViewAdapter extends AssociationViewAdapter {
 

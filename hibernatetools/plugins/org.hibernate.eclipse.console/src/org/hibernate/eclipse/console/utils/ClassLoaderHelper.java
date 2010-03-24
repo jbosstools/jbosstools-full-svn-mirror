@@ -41,7 +41,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.IRuntimeClasspathEntry;
 import org.eclipse.jdt.launching.JavaRuntime;
-import org.hibernate.console.HibernateConsoleRuntimeException;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 
 /**

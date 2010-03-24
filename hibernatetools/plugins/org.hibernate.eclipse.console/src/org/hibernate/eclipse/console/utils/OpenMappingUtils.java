@@ -47,25 +47,26 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.execution.ExecutionContext;
+import org.hibernate.console.stubs.Cfg2HbmToolStub;
+import org.hibernate.console.stubs.CollectionStub;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.ComponentStub;
+import org.hibernate.console.stubs.ManyToOneStub;
+import org.hibernate.console.stubs.MapStub;
+import org.hibernate.console.stubs.OneToManyStub;
+import org.hibernate.console.stubs.OneToOneStub;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.RootClassStub;
+import org.hibernate.console.stubs.SubclassStub;
+import org.hibernate.console.stubs.TableStub;
+import org.hibernate.console.stubs.ToOneStub;
+import org.hibernate.console.stubs.ValueStub;
+import org.hibernate.console.stubs.util.StringHelper;
+import org.hibernate.console.stubs.util.XMLHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mapping.Collection;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Component;
-import org.hibernate.mapping.ManyToOne;
-import org.hibernate.mapping.Map;
-import org.hibernate.mapping.OneToMany;
-import org.hibernate.mapping.OneToOne;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.RootClass;
-import org.hibernate.mapping.Subclass;
-import org.hibernate.mapping.Table;
-import org.hibernate.mapping.ToOne;
-import org.hibernate.mapping.Value;
 import org.hibernate.tool.hbm2x.Cfg2HbmTool;
-import org.hibernate.util.StringHelper;
-import org.hibernate.util.XMLHelper;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -108,7 +109,7 @@ public class OpenMappingUtils {
 	 * @param rootClass
 	 * @return
 	 */
-	public static String getPersistentClassName(PersistentClass rootClass) {
+	public static String getPersistentClassName(PersistentClassStub rootClass) {
 		if (rootClass == null) {
 			return ""; //$NON-NLS-1$
 		}
@@ -131,7 +132,7 @@ public class OpenMappingUtils {
 	 * @param table
 	 * @return
 	 */
-	public static String getTableName(Table table) {
+	public static String getTableName(TableStub table) {
 		return getTableName(table.getCatalog(), table.getSchema(), table.getName());
 	}
 
@@ -141,7 +142,7 @@ public class OpenMappingUtils {
 	 * @param rootClass
 	 * @return
 	 */
-	public static boolean hasConfigXMLMappingClassAnnotation(ConsoleConfiguration consoleConfig, PersistentClass rootClass) {
+	public static boolean hasConfigXMLMappingClassAnnotation(ConsoleConfiguration consoleConfig, PersistentClassStub rootClass) {
 		java.io.File configXMLFile = consoleConfig.getPreferences().getConfigXMLFile();
 		if (configXMLFile == null) {
 			return true;
@@ -160,12 +161,12 @@ public class OpenMappingUtils {
 	 */
 	public static boolean elementInFile(ConsoleConfiguration consoleConfig, IFile file, Object element) {
 		boolean res = false;
-		if (element instanceof RootClass) {
-			res = rootClassInFile(consoleConfig, file, (RootClass)element);
-		} else if (element instanceof Subclass) {
-			res = subclassInFile(consoleConfig, file, (Subclass)element);
-		} else if (element instanceof Table) {
-			res = tableInFile(consoleConfig, file, (Table)element);
+		if (element instanceof RootClassStub) {
+			res = rootClassInFile(consoleConfig, file, (RootClassStub)element);
+		} else if (element instanceof SubclassStub) {
+			res = subclassInFile(consoleConfig, file, (SubclassStub)element);
+		} else if (element instanceof TableStub) {
+			res = tableInFile(consoleConfig, file, (TableStub)element);
 		}
 		return res;
 	}
@@ -184,7 +185,7 @@ public class OpenMappingUtils {
 	 * @param rootClass
 	 * @return
 	 */
-	public static boolean rootClassInFile(ConsoleConfiguration consoleConfig, IFile file, RootClass rootClass) {
+	public static boolean rootClassInFile(ConsoleConfiguration consoleConfig, IFile file, RootClassStub rootClass) {
 		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(file.getLocation().toFile(), entityResolver);
 		final String clName = getPersistentClassName(rootClass);
@@ -218,7 +219,7 @@ public class OpenMappingUtils {
 	 * @param subclass
 	 * @return
 	 */
-	public static boolean subclassInFile(ConsoleConfiguration consoleConfig, IFile file, Subclass subclass) {
+	public static boolean subclassInFile(ConsoleConfiguration consoleConfig, IFile file, SubclassStub subclass) {
 		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(file.getLocation().toFile(), entityResolver);
 		final String clName = getPersistentClassName(subclass);
@@ -242,7 +243,7 @@ public class OpenMappingUtils {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static boolean tableInFile(ConsoleConfiguration consoleConfig, IFile file, Table table) {
+	public static boolean tableInFile(ConsoleConfiguration consoleConfig, IFile file, TableStub table) {
 		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(file.getLocation().toFile(), entityResolver);
 		Iterator<Element> classes = getElements(doc, HIBERNATE_TAG_CLASS);
@@ -664,14 +665,14 @@ public class OpenMappingUtils {
 	 */
 	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, Object selection) {
 		IRegion selectRegion = null;
-		if (selection instanceof RootClass || selection instanceof Subclass) {
-			selectRegion = findSelectRegion(proj, findAdapter, (PersistentClass)selection);
-		} else if (selection instanceof Property){
-			selectRegion = findSelectRegion(proj, findAdapter, (Property)selection);
-		} else if (selection instanceof Table) {
-			selectRegion = findSelectRegion(proj, findAdapter, (Table)selection);
-		} else if (selection instanceof Column) {
-			selectRegion = findSelectRegion(proj, findAdapter, (Column)selection);
+		if (selection instanceof RootClassStub || selection instanceof SubclassStub) {
+			selectRegion = findSelectRegion(proj, findAdapter, (PersistentClassStub)selection);
+		} else if (selection instanceof PropertyStub){
+			selectRegion = findSelectRegion(proj, findAdapter, (PropertyStub)selection);
+		} else if (selection instanceof TableStub) {
+			selectRegion = findSelectRegion(proj, findAdapter, (TableStub)selection);
+		} else if (selection instanceof ColumnStub) {
+			selectRegion = findSelectRegion(proj, findAdapter, (ColumnStub)selection);
 		}
 		return selectRegion;
 	}
@@ -683,7 +684,7 @@ public class OpenMappingUtils {
 	 * @param property
 	 * @return a proper document region
 	 */
-	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, Property property) {
+	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, PropertyStub property) {
 		Assert.isNotNull(property.getPersistentClass());
 		IRegion classRegion = findSelectRegion(proj, findAdapter, property.getPersistentClass());
 		IRegion res = null;
@@ -692,8 +693,8 @@ public class OpenMappingUtils {
 		}
 		// in case if we could not find property - we select class
 		res = classRegion;
-		final Cfg2HbmTool tool = new Cfg2HbmTool();
-		final PersistentClass persistentClass = property.getPersistentClass();
+		final Cfg2HbmToolStub tool = Cfg2HbmToolStub.newInstance();
+		final PersistentClassStub persistentClass = property.getPersistentClass();
 		final String tagName = tool.getTag(persistentClass);
 		IRegion finalRegion = null;
 		IRegion propRegion = null;
@@ -749,7 +750,7 @@ public class OpenMappingUtils {
 	 * @param persistentClass
 	 * @return a proper document region
 	 */
-	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, PersistentClass persistentClass) {
+	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, PersistentClassStub persistentClass) {
 		IRegion res = null;
 		String[] classPatterns = generatePersistentClassPatterns(persistentClass);
 		IRegion classRegion = null;
@@ -801,7 +802,7 @@ public class OpenMappingUtils {
 	 * @param table
 	 * @return a proper document region
 	 */
-	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, Table table) {
+	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, TableStub table) {
 		IRegion res = null;
 		String[] tablePatterns = generateTablePatterns(table.getName());
 		IRegion tableRegion = null;
@@ -827,7 +828,7 @@ public class OpenMappingUtils {
 	 * @param table
 	 * @return a proper document region
 	 */
-	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, Column column) {
+	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, ColumnStub column) {
 		IRegion res = null;
 		String[] columnPatterns = generateColumnPatterns(column.getName());
 		IRegion columnRegion = null;
@@ -910,7 +911,7 @@ public class OpenMappingUtils {
 	 * @param persClass
 	 * @return an arrays of search patterns
 	 */
-	public static String[] generatePersistentClassPatterns(PersistentClass persClass) {
+	public static String[] generatePersistentClassPatterns(PersistentClassStub persClass) {
 		String fullClassName = null;
 		String shortClassName = null;
 		if (persClass.getEntityName() != null){
@@ -919,7 +920,7 @@ public class OpenMappingUtils {
 			fullClassName = persClass.getClassName();
 		}
 		shortClassName = getShortClassName(fullClassName);
-		final Cfg2HbmTool tool = new Cfg2HbmTool();
+		final Cfg2HbmToolStub tool = Cfg2HbmToolStub.newInstance();
 		final String tagName = tool.getTag(persClass);
 		persistentClassPairs[0][0] = tagName;
 		persistentClassPairs[1][0] = tagName;
@@ -981,10 +982,10 @@ public class OpenMappingUtils {
 	 * @param property
 	 * @return a search patterns
 	 */
-	public static String generateHbmPropertyPattern(Property property) {
-		final Cfg2HbmTool tool = new Cfg2HbmTool();
+	public static String generateHbmPropertyPattern(PropertyStub property) {
+		final Cfg2HbmToolStub tool = Cfg2HbmToolStub.newInstance();
 		String toolTag = ""; //$NON-NLS-1$
-		PersistentClass pc = property.getPersistentClass();
+		PersistentClassStub pc = property.getPersistentClass();
 		if (pc != null && pc.getIdentifierProperty() == property) {
 			if (property.isComposite()) {
 				toolTag = "composite-id"; //$NON-NLS-1$
@@ -1006,9 +1007,9 @@ public class OpenMappingUtils {
 	 * @param property
 	 * @return a search patterns
 	 */
-	public static String generateEjbPropertyPattern(Property property) {
+	public static String generateEjbPropertyPattern(PropertyStub property) {
 		String toolTag = ""; //$NON-NLS-1$
-		PersistentClass pc = property.getPersistentClass();
+		PersistentClassStub pc = property.getPersistentClass();
 		if (pc != null && pc.getIdentifierProperty() == property) {
 			if (property.isComposite()) {
 				toolTag = "embedded-id"; //$NON-NLS-1$
@@ -1016,33 +1017,33 @@ public class OpenMappingUtils {
 				toolTag = "id"; //$NON-NLS-1$
 			}
 		} else {
-			Value value = property.getValue();
+			ValueStub value = property.getValue();
 			toolTag = "basic"; //$NON-NLS-1$
 			if (!value.isSimpleValue()) {
-				if (value instanceof Collection) {
-					value = ((Collection)value).getElement();
+				if (value instanceof CollectionStub) {
+					value = ((CollectionStub)value).getElement();
 				}
 			}
-			if (value instanceof OneToMany) {
+			if (value instanceof OneToManyStub) {
 				toolTag = "one-to-many"; //$NON-NLS-1$
 			}
-			else if (value instanceof ManyToOne) {
+			else if (value instanceof ManyToOneStub) {
 				// could be many-to-one | many-to-many
 				toolTag = "many-to-((one)|(many))"; //$NON-NLS-1$
 			}
-			else if (value instanceof OneToOne) {
+			else if (value instanceof OneToOneStub) {
 				toolTag = "one-to-one"; //$NON-NLS-1$
 			}
-			else if (value instanceof Map) {
+			else if (value instanceof MapStub) {
 				toolTag = "many-to-many"; //$NON-NLS-1$
 			}
-			else if (value instanceof Component) {
-				if (((Component)value).isEmbedded()) {
+			else if (value instanceof ComponentStub) {
+				if (((ComponentStub)value).isEmbedded()) {
 					toolTag = "embedded"; //$NON-NLS-1$
 				}
 			}
-			if (value instanceof ToOne) {
-				if (((ToOne)value).isEmbedded()) {
+			if (value instanceof ToOneStub) {
+				if (((ToOneStub)value).isEmbedded()) {
 					toolTag = "embedded"; //$NON-NLS-1$
 				}
 			}

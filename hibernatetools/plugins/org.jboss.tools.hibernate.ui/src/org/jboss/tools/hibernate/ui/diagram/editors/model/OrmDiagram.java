@@ -46,14 +46,13 @@ import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.XMLMemento;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-import org.hibernate.HibernateException;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.RootClassStub;
+import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.ProjectUtils;
-import org.hibernate.mapping.RootClass;
-import org.hibernate.mapping.Table;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection.ConnectionType;
@@ -75,7 +74,7 @@ public class OrmDiagram extends BaseElement {
 	
 	// hibernate console configuration is the source of diagram elements 
 	protected String consoleConfigName;
-	protected ArrayList<RootClass> roots = new ArrayList<RootClass>();
+	protected ArrayList<RootClassStub> roots = new ArrayList<RootClassStub>();
 	protected ArrayList<String> entityNames = new ArrayList<String>();
 
 	private	boolean dirty = false;
@@ -131,13 +130,13 @@ public class OrmDiagram extends BaseElement {
 		};
 	}
 	
-	public class RootClassComparator implements Comparator<RootClass> {
-		public int compare(RootClass o1, RootClass o2) {
+	public class RootClassComparator implements Comparator<RootClassStub> {
+		public int compare(RootClassStub o1, RootClassStub o2) {
 			return getItemName(o1).compareTo(getItemName(o2));
 		}
 	}
 	
-	public OrmDiagram(String consoleConfigName, ArrayList<RootClass> rts) {
+	public OrmDiagram(String consoleConfigName, ArrayList<RootClassStub> rts) {
 		initFontHeight();
 		createRulers();
 		this.consoleConfigName = consoleConfigName;
@@ -188,7 +187,7 @@ public class OrmDiagram extends BaseElement {
 		return name;
 	}
 	
-	protected String getItemFullName(RootClass rootClass) {
+	protected String getItemFullName(RootClassStub rootClass) {
 		if (rootClass == null) {
 			return ""; //$NON-NLS-1$
 		}
@@ -207,7 +206,7 @@ public class OrmDiagram extends BaseElement {
 		return res.substring(res.lastIndexOf(".") + 1); //$NON-NLS-1$
 	}
 	
-	protected String getItemName(RootClass rootClass) {
+	protected String getItemName(RootClassStub rootClass) {
 		return getItemName(getItemFullName(rootClass));
 	}
 	
@@ -220,7 +219,7 @@ public class OrmDiagram extends BaseElement {
 		final ElementsFactory factory = new ElementsFactory(
 			config, elements, connections);
 		for (int i = 0; i < roots.size(); i++) {
-			RootClass rc = roots.get(i);
+			RootClassStub rc = roots.get(i);
 			if (rc != null) {
 				factory.getOrCreatePersistentClass(rc, null);
 			}
@@ -269,9 +268,9 @@ public class OrmDiagram extends BaseElement {
 		topRuler = new DiagramRuler(true);
 	}
 	
-	protected class OrmElCompare implements Comparator<RootClass> {
+	protected class OrmElCompare implements Comparator<RootClassStub> {
 
-		public int compare(RootClass o1, RootClass o2) {
+		public int compare(RootClassStub o1, RootClassStub o2) {
 			return o1.getNodeName().compareTo(o2.getNodeName());
 		}
 		
@@ -354,7 +353,7 @@ public class OrmDiagram extends BaseElement {
 		return (HashMap<String, OrmShape>)elements.clone();
 	}
 
-	public RootClass getOrmElement(int idx) {
+	public RootClassStub getOrmElement(int idx) {
 		if (0 > idx || idx >= roots.size()) {
 			return null;
 		}
@@ -367,7 +366,7 @@ public class OrmDiagram extends BaseElement {
 			return false;
 		}
 		for (int i = 0; i < roots.size(); i++) {
-			RootClass newOrmElement = (RootClass)config.getClassMapping(entityNames.get(i));
+			RootClassStub newOrmElement = (RootClassStub)config.getClassMapping(entityNames.get(i));
 			if (roots.get(i) == null) {
 				if (newOrmElement == null) {
 					continue;
@@ -915,13 +914,13 @@ public class OrmDiagram extends BaseElement {
 		} else if (!consoleConfigName.equals(od.getConsoleConfigName())) {
 			return res;
 		}
-		final ArrayList<RootClass> rootsOd = od.roots;
+		final ArrayList<RootClassStub> rootsOd = od.roots;
 		if (roots.size() != rootsOd.size()) {
 			return res;
 		}
 		res = true;
 		for (int i = 0; i < roots.size(); i++) {
-			RootClass rc = roots.get(i);
+			RootClassStub rc = roots.get(i);
 			if (rc == null) {
 				if (rc != rootsOd.get(i)) {
 					res = false;
@@ -1027,7 +1026,7 @@ public class OrmDiagram extends BaseElement {
 			while (it.hasNext()) {
 				final OrmShape shape = it.next();
 				Object ormElement = shape.getOrmElement();
-				if (ormElement instanceof RootClass) {
+				if (ormElement instanceof RootClassStub) {
 					nEntities++;
 				}
 			}
@@ -1038,7 +1037,7 @@ public class OrmDiagram extends BaseElement {
 			while (it.hasNext()) {
 				final OrmShape shape = it.next();
 				Object ormElement = shape.getOrmElement();
-				if (ormElement instanceof Table) {
+				if (ormElement instanceof TableStub) {
 					nTables++;
 				}
 			}

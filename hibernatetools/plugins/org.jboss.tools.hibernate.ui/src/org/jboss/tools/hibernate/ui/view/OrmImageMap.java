@@ -11,26 +11,26 @@
 package org.jboss.tools.hibernate.ui.view;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.hibernate.mapping.Any;
-import org.hibernate.mapping.Array;
-import org.hibernate.mapping.Bag;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Component;
-import org.hibernate.mapping.DependantValue;
-import org.hibernate.mapping.IdentifierBag;
-import org.hibernate.mapping.List;
-import org.hibernate.mapping.ManyToOne;
-import org.hibernate.mapping.Map;
-import org.hibernate.mapping.OneToMany;
-import org.hibernate.mapping.OneToOne;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.PrimitiveArray;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.Set;
-import org.hibernate.mapping.SimpleValue;
-import org.hibernate.mapping.Table;
-import org.hibernate.mapping.Value;
-import org.hibernate.type.Type;
+import org.hibernate.console.stubs.AnyStub;
+import org.hibernate.console.stubs.ArrayStub;
+import org.hibernate.console.stubs.BagStub;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.ComponentStub;
+import org.hibernate.console.stubs.DependantValueStub;
+import org.hibernate.console.stubs.IdentifierBagStub;
+import org.hibernate.console.stubs.ListStub;
+import org.hibernate.console.stubs.ManyToOneStub;
+import org.hibernate.console.stubs.MapStub;
+import org.hibernate.console.stubs.OneToManyStub;
+import org.hibernate.console.stubs.OneToOneStub;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PrimitiveArrayStub;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.SetStub;
+import org.hibernate.console.stubs.SimpleValueStub;
+import org.hibernate.console.stubs.TableStub;
+import org.hibernate.console.stubs.TypeStub;
+import org.hibernate.console.stubs.ValueStub;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
 
 /**
@@ -42,18 +42,18 @@ public class OrmImageMap {
 
 	public static ImageDescriptor getImageDescriptor(final Object obj) {
 		String imageName = null;
-		if (obj instanceof Table) {
-			imageName = getImageName((Table)obj);
-		} else if (obj instanceof Column) {
-			imageName = getImageName((Column)obj);
-		} else if (obj instanceof Property) {
-			imageName = getImageName((Property)obj);
-		} else if (obj instanceof OneToMany) {
-			imageName = getImageName((OneToMany)obj);
-		} else if (obj instanceof SimpleValue) {
-			imageName = getImageName((SimpleValue)obj);
-		} else if (obj instanceof PersistentClass) {
-			imageName = getImageName((PersistentClass)obj);
+		if (obj instanceof TableStub) {
+			imageName = getImageName((TableStub)obj);
+		} else if (obj instanceof ColumnStub) {
+			imageName = getImageName((ColumnStub)obj);
+		} else if (obj instanceof PropertyStub) {
+			imageName = getImageName((PropertyStub)obj);
+		} else if (obj instanceof OneToManyStub) {
+			imageName = getImageName((OneToManyStub)obj);
+		} else if (obj instanceof SimpleValueStub) {
+			imageName = getImageName((SimpleValueStub)obj);
+		} else if (obj instanceof PersistentClassStub) {
+			imageName = getImageName((PersistentClassStub)obj);
 		} else if (obj instanceof String) {
 			imageName = "Image_Error"; //$NON-NLS-1$;
 		}
@@ -66,7 +66,7 @@ public class OrmImageMap {
 	 * @param table
 	 * @return
 	 */
-	public static String getImageName(Table table) {
+	public static String getImageName(TableStub table) {
 		return "Image_DatabaseTable"; //$NON-NLS-1$
 	}
 
@@ -76,11 +76,11 @@ public class OrmImageMap {
 	 * @param column
 	 * @return
 	 */
-	public static String getImageName(Column column) {
+	public static String getImageName(ColumnStub column) {
 		String str = "Image_DatabaseColumn"; //$NON-NLS-1$
 		final boolean primaryKey = HibernateUtils.isPrimaryKey(column);
 		final boolean foreignKey = HibernateUtils.isForeignKey(column);
-		final Table table = HibernateUtils.getTable(column);
+		final TableStub table = HibernateUtils.getTable(column);
 		if (column.isUnique()) {
 			str = "Image_DatabaseUniqueKeyColumn"; //$NON-NLS-1$
 		} else if (primaryKey && table != null && foreignKey) {
@@ -100,47 +100,47 @@ public class OrmImageMap {
 	 * @param field
 	 * @return
 	 */
-	public static String getImageName(Property field) {
+	public static String getImageName(PropertyStub field) {
 		String str = "Image_PersistentFieldSimple"; //$NON-NLS-1$
 		if (field == null) {
 			return str;
 		}
-		final PersistentClass persistentClass = field.getPersistentClass(); 
+		final PersistentClassStub persistentClass = field.getPersistentClass(); 
 		if (persistentClass != null && persistentClass.getVersion() == field) {
 			str = "Image_PersistentFieldSimple_version"; //$NON-NLS-1$
 		} else if (persistentClass != null && persistentClass.getIdentifierProperty() == field) {
 			str = "Image_PersistentFieldSimple_id"; //$NON-NLS-1$
 		} else if (field.getValue() != null) {
-			final Value value = field.getValue();
-			if (value instanceof OneToMany) {
+			final ValueStub value = field.getValue();
+			if (value instanceof OneToManyStub) {
 				str = "Image_PersistentFieldOne-to-many"; //$NON-NLS-1$
-			} else if (value instanceof OneToOne) {
+			} else if (value instanceof OneToOneStub) {
 				str = "Image_PersistentFieldOne-to-one"; //$NON-NLS-1$
-			} else if (value instanceof ManyToOne) {
+			} else if (value instanceof ManyToOneStub) {
 				str = "Image_PersistentFieldMany-to-one"; //$NON-NLS-1$
-			} else if (value instanceof Any) {
+			} else if (value instanceof AnyStub) {
 				str = "Image_PersistentFieldAny"; //$NON-NLS-1$
 			} else {
-				Type type = null;
+				TypeStub type = null;
 				try {
 					type = field.getType();
 				} catch (Exception ex) {
 					// ignore it
 				}
 				if (type != null && type.isCollectionType()) {
-					if (value instanceof PrimitiveArray) {
+					if (value instanceof PrimitiveArrayStub) {
 						str = "Image_Collection_primitive_array"; //$NON-NLS-1$
-					} else if (value instanceof Array) {
+					} else if (value instanceof ArrayStub) {
 						str = "Image_Collection_array"; //$NON-NLS-1$
-					} else if (value instanceof List) {
+					} else if (value instanceof ListStub) {
 						str = "Image_Collection_list"; //$NON-NLS-1$
-					} else if (value instanceof Set) {
+					} else if (value instanceof SetStub) {
 						str = "Image_Collection_set"; //$NON-NLS-1$
-					} else if (value instanceof Map) {
+					} else if (value instanceof MapStub) {
 						str = "Image_Collection_map"; //$NON-NLS-1$
-					} else if (value instanceof Bag) {
+					} else if (value instanceof BagStub) {
 						str = "Image_Collection_bag"; //$NON-NLS-1$
-					} else if (value instanceof IdentifierBag) {
+					} else if (value instanceof IdentifierBagStub) {
 						str = "Image_Collection_idbag"; //$NON-NLS-1$
 					} else {
 						str = "Image_Collection"; //$NON-NLS-1$
@@ -159,7 +159,7 @@ public class OrmImageMap {
 	 * @param field
 	 * @return
 	 */
-	public static String getImageName(OneToMany field) {
+	public static String getImageName(OneToManyStub field) {
 		return "Image_PersistentFieldOne-to-many"; //$NON-NLS-1$
 	}
 
@@ -175,18 +175,18 @@ public class OrmImageMap {
 	 * @param field
 	 * @return
 	 */
-	public static String getImageName(SimpleValue field) {
+	public static String getImageName(SimpleValueStub field) {
 		String res = "Image_PersistentFieldSimple"; //$NON-NLS-1$
-		if (field instanceof Any) {
+		if (field instanceof AnyStub) {
 			res = "Image_PersistentFieldMany-to-any"; //$NON-NLS-1$
-		} else if (field instanceof Component) {
+		} else if (field instanceof ComponentStub) {
 			res = "Image_PersistentFieldComponent"; //$NON-NLS-1$
-		} else if (field instanceof DependantValue) {
-			DependantValue mapping = (DependantValue)field;
+		} else if (field instanceof DependantValueStub) {
+			DependantValueStub mapping = (DependantValueStub)field;
 			if (mapping.getTable().getIdentifierValue() == mapping) {
 				res = "Image_PersistentFieldComponent_id"; //$NON-NLS-1$				
 			}
-		} else if (field instanceof ManyToOne) {
+		} else if (field instanceof ManyToOneStub) {
 			res = "Image_PersistentFieldMany-to-many"; //$NON-NLS-1$
 		}
 		return res;
@@ -205,7 +205,7 @@ public class OrmImageMap {
 	 * @param persistentClass
 	 * @return
 	 */
-	public static String getImageName(PersistentClass persistentClass) {
+	public static String getImageName(PersistentClassStub persistentClass) {
 		return "Image_PersistentClass"; //$NON-NLS-1$
 	}
 

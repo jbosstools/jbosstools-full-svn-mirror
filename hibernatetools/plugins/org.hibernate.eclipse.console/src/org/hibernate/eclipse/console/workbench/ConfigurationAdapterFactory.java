@@ -33,13 +33,13 @@ import org.eclipse.ui.views.properties.IPropertySource2;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.node.BaseNode;
+import org.hibernate.console.stubs.ColumnStub;
 import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.PrimaryKey;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.Table;
-import org.hibernate.mapping.Value;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PrimaryKeyStub;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.TableStub;
+import org.hibernate.console.stubs.ValueStub;
 
 public class ConfigurationAdapterFactory implements IAdapterFactory {
 
@@ -53,16 +53,16 @@ public class ConfigurationAdapterFactory implements IAdapterFactory {
 		map.put(ConsoleConfiguration.class, new ConsoleConfigurationWorkbenchAdapter());
 		map.put(ConfigurationStub.class, new ConfigurationWorkbenchAdapter());
 		map.put(KnownConfigurations.class, new KnownConfigurationsWorkbenchAdapter());
-		map.put(PersistentClass.class, new PersistentClassWorkbenchAdapter());
-		map.put(Property.class, new PropertyWorkbenchAdapter());
-		map.put(Value.class, new ValueWorkbenchAdapter());
+		map.put(PersistentClassStub.class, new PersistentClassWorkbenchAdapter());
+		map.put(PropertyStub.class, new PropertyWorkbenchAdapter());
+		map.put(ValueStub.class, new ValueWorkbenchAdapter());
 		map.put(BaseNode.class, new BaseNodeWorkbenchAdapter());
 		map.put(LazyDatabaseSchema.class, new LazyDatabaseSchemaWorkbenchAdapter());
-		map.put( LazySessionFactory.class, new LazySessionFactoryAdapter() );
+		map.put(LazySessionFactory.class, new LazySessionFactoryAdapter());
 		map.put(TableContainer.class, new TableContainerWorkbenchAdapter());
-		map.put(Table.class, new TableWorkbenchAdapter());
-		map.put(PrimaryKey.class, new PrimaryKeyWorkbenchAdapter());
-		map.put(Column.class, new ColumnWorkbenchAdapter());				
+		map.put(TableStub.class, new TableWorkbenchAdapter());
+		map.put(PrimaryKeyStub.class, new PrimaryKeyWorkbenchAdapter());
+		map.put(ColumnStub.class, new ColumnWorkbenchAdapter());				
 		
 		classes = new Class[map.size()];
 		adapters = new IDeferredWorkbenchAdapter[map.size()];

@@ -12,8 +12,8 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 
 import java.util.Properties;
 
-import org.hibernate.mapping.Collection;
-import org.hibernate.mapping.Property;
+import org.hibernate.console.stubs.CollectionStub;
+import org.hibernate.console.stubs.PropertyStub;
 
 /**
  * @author some modifications from Vitali
@@ -30,8 +30,8 @@ public class ComponentShape extends ExpandableShape {
 	 */
 	protected void initModel() {
 		Object ormElement = getOrmElement();
-		if (ormElement instanceof Property) {
-			Collection collection = (Collection)((Property)ormElement).getValue();
+		if (ormElement instanceof PropertyStub) {
+			CollectionStub collection = (CollectionStub)((PropertyStub)ormElement).getValue();
 			Shape bodyOrmShape = new Shape(collection.getKey());
 			bodyOrmShape.setIndent(20);
 			addChild(bodyOrmShape);

@@ -10,17 +10,17 @@
  ******************************************************************************/
 package org.jboss.tools.hibernate.ui.view;
 
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.ComponentStub;
+import org.hibernate.console.stubs.DependantValueStub;
+import org.hibernate.console.stubs.OneToManyStub;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.SimpleValueStub;
+import org.hibernate.console.stubs.TableStub;
+import org.hibernate.console.stubs.TypeStub;
+import org.hibernate.console.stubs.ValueStub;
 import org.hibernate.eclipse.console.workbench.TypeNameValueVisitor;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Component;
-import org.hibernate.mapping.DependantValue;
-import org.hibernate.mapping.OneToMany;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.SimpleValue;
-import org.hibernate.mapping.Table;
-import org.hibernate.mapping.Value;
-import org.hibernate.type.Type;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Utils;
 
 /**
@@ -36,18 +36,18 @@ public class OrmLabelMap {
 
 	public static String getLabel(final Object obj) {
 		String label = null;
-		if (obj instanceof Table) {
-			label = getParticularLabel((Table)obj);
-		} else if (obj instanceof Column) {
-			label = getParticularLabel((Column)obj);
-		} else if (obj instanceof Property) {
-			label = getParticularLabel((Property)obj);
-		} else if (obj instanceof OneToMany) {
-			label = getParticularLabel((OneToMany)obj);
-		} else if (obj instanceof SimpleValue) {
-			label = getParticularLabel((SimpleValue)obj);
-		} else if (obj instanceof PersistentClass) {
-			label = getParticularLabel((PersistentClass)obj);
+		if (obj instanceof TableStub) {
+			label = getParticularLabel((TableStub)obj);
+		} else if (obj instanceof ColumnStub) {
+			label = getParticularLabel((ColumnStub)obj);
+		} else if (obj instanceof PropertyStub) {
+			label = getParticularLabel((PropertyStub)obj);
+		} else if (obj instanceof OneToManyStub) {
+			label = getParticularLabel((OneToManyStub)obj);
+		} else if (obj instanceof SimpleValueStub) {
+			label = getParticularLabel((SimpleValueStub)obj);
+		} else if (obj instanceof PersistentClassStub) {
+			label = getParticularLabel((PersistentClassStub)obj);
 		} else if (obj instanceof String) {
 			label = (String)obj;
 		} else {
@@ -59,11 +59,11 @@ public class OrmLabelMap {
 		return label;
 	}
 
-	public static String getParticularLabel(Table table) {
+	public static String getParticularLabel(TableStub table) {
 		return Utils.getTableName(table);
 	}
 
-	public static String getParticularLabel(Column column) {
+	public static String getParticularLabel(ColumnStub column) {
 		final String sqlType = column.getSqlType();
 		StringBuffer name = new StringBuffer();
 		name.append(column.getName());
@@ -80,12 +80,12 @@ public class OrmLabelMap {
 		return name.toString();
 	}
 
-	public static String getParticularLabel(Property field) {
+	public static String getParticularLabel(PropertyStub field) {
 		StringBuffer name = new StringBuffer();
 		name.append(field.getName());
 		name.append(" :"); //$NON-NLS-1$
 		String typeString = null;
-		Type type = null;
+		TypeStub type = null;
 		try {
 			type = field.getType();
 		} catch (Exception e) {
@@ -94,10 +94,10 @@ public class OrmLabelMap {
 		if (type != null && type.getReturnedClass() != null) {
 			typeString = type.getReturnedClass().getName();
 		} else {
-			if (field.getValue() instanceof Component) {
-				typeString = ((Component)field.getValue()).getComponentClassName();
+			if (field.getValue() instanceof ComponentStub) {
+				typeString = ((ComponentStub)field.getValue()).getComponentClassName();
 			} else if (field.getValue()!= null && field.getValue().isSimpleValue()) {
-				typeString = ((SimpleValue)field.getValue()).getTypeName();
+				typeString = ((SimpleValueStub)field.getValue()).getTypeName();
 			}
 		}
 		if (typeString != null) {
@@ -106,7 +106,7 @@ public class OrmLabelMap {
 			name.append(typeString);
 			return name.toString();
 		}
-		Value value = field.getValue();
+		ValueStub value = field.getValue();
 		String typeName = null;
 		if (value != null) {
 			typeName = (String) value.accept(new TypeNameValueVisitor(false));
@@ -117,7 +117,7 @@ public class OrmLabelMap {
 		return field.getName();
 	}
 
-	public static String getParticularLabel(OneToMany field) {
+	public static String getParticularLabel(OneToManyStub field) {
 		return UIViewMessages.OrmLabelProvider_element;
 	}
 
@@ -133,11 +133,11 @@ public class OrmLabelMap {
 	 * @param field
 	 * @return
 	 */
-	public static String getParticularLabel(SimpleValue field) {
+	public static String getParticularLabel(SimpleValueStub field) {
 		String label = UIViewMessages.OrmLabelProvider_element;
-		if (field instanceof DependantValue) {
+		if (field instanceof DependantValueStub) {
 			label = "key"; //$NON-NLS-1$
-		} else if (field instanceof Component) {
+		} else if (field instanceof ComponentStub) {
 			label = "element"; //$NON-NLS-1$
 		}
 		return label;
@@ -156,11 +156,11 @@ public class OrmLabelMap {
 	 * @param persistentClass
 	 * @return
 	 */
-	public static String getParticularLabel(PersistentClass persistentClass) {
+	public static String getParticularLabel(PersistentClassStub persistentClass) {
 		StringBuffer name = new StringBuffer();
 		name.append(persistentClass.getEntityName() != null ? 
 				persistentClass.getEntityName() : persistentClass.getClassName());
-		Table table = persistentClass.getTable();
+		TableStub table = persistentClass.getTable();
 		if (table != null) {
 			final String tableName = Utils.getTableName(table);
 			if (tableName != null) {

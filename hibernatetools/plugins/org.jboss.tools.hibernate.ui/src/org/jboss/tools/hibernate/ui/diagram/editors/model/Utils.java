@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.ui.IMemento;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.SimpleValue;
-import org.hibernate.mapping.Table;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.SimpleValueStub;
+import org.hibernate.console.stubs.TableStub;
 
 /**
  * Some common model utils.
@@ -46,20 +46,20 @@ public class Utils {
 
 	public static String getName(Object obj) {
 		String res = ""; //$NON-NLS-1$
-		if (obj instanceof PersistentClass) {
-			PersistentClass rootClass = (PersistentClass)obj;
+		if (obj instanceof PersistentClassStub) {
+			PersistentClassStub rootClass = (PersistentClassStub)obj;
 			if (rootClass.getEntityName() != null) {
 				res = rootClass.getEntityName();
 			} else {
 				res = rootClass.getClassName();
 			}
-		} else if (obj instanceof Table) {
-			res = getTableName((Table)obj);
-		} else if (obj instanceof Property) {
-			Property property = (Property)obj;
+		} else if (obj instanceof TableStub) {
+			res = getTableName((TableStub)obj);
+		} else if (obj instanceof PropertyStub) {
+			PropertyStub property = (PropertyStub)obj;
 			res = property.getPersistentClass().getEntityName() + "." + property.getName(); //$NON-NLS-1$
-		} else if (obj instanceof SimpleValue) {
-			SimpleValue sv = (SimpleValue)obj;
+		} else if (obj instanceof SimpleValueStub) {
+			SimpleValueStub sv = (SimpleValueStub)obj;
 			res = getTableName(sv.getTable()) + "." + sv.getForeignKeyName(); //$NON-NLS-1$
 		} else if (obj instanceof String) {
 			res = (String)obj;
@@ -77,7 +77,7 @@ public class Utils {
 		return (catalog != null ? catalog + "." : "") + (schema != null ? schema + "." : "") + name; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
-	public static String getTableName(Table table) {
+	public static String getTableName(TableStub table) {
 		return getTableName(table.getCatalog(), table.getSchema(), table.getName());
 	}
 

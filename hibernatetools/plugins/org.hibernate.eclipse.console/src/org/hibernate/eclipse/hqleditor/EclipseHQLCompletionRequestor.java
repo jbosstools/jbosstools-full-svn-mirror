@@ -27,13 +27,15 @@ import java.util.List;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.swt.graphics.Image;
 import org.hibernate.console.ImageConstants;
+import org.hibernate.console.stubs.HQLCompletionProposalStub;
+import org.hibernate.console.stubs.IHQLCompletionRequestorStub;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.eclipse.console.workbench.HibernateWorkbenchHelper;
 import org.hibernate.tool.ide.completion.HQLCompletionProposal;
 import org.hibernate.tool.ide.completion.IHQLCompletionRequestor;
-import org.hibernate.util.StringHelper;
 
-public class EclipseHQLCompletionRequestor implements IHQLCompletionRequestor {
+public class EclipseHQLCompletionRequestor implements IHQLCompletionRequestorStub {
 
 	private final List<ICompletionProposal> result = new ArrayList<ICompletionProposal>();
 	private String lastErrorMessage;
@@ -51,7 +53,7 @@ public class EclipseHQLCompletionRequestor implements IHQLCompletionRequestor {
 		return result;
 	}
 
-	public boolean accept(HQLCompletionProposal proposal) {
+	public boolean accept(HQLCompletionProposalStub proposal) {
 		result.add(new CompletionProposal(proposal.getCompletion(), // replacementString 
 										  proposal.getReplaceStart()+virtualOffset, // replacementOffset 
 										  proposal.getReplaceEnd()-proposal.getReplaceStart(), // replacementLength
@@ -63,7 +65,7 @@ public class EclipseHQLCompletionRequestor implements IHQLCompletionRequestor {
 		return true;
 	}
 
-	private String getDisplayString(HQLCompletionProposal proposal) {
+	private String getDisplayString(HQLCompletionProposalStub proposal) {
 		StringBuffer buf = new StringBuffer(proposal.getSimpleName());
 		
 		switch(proposal.getCompletionKind()) {
@@ -107,7 +109,7 @@ public class EclipseHQLCompletionRequestor implements IHQLCompletionRequestor {
 		return buf.toString();
 	}
 
-	private Image getImage(HQLCompletionProposal proposal) {
+	private Image getImage(HQLCompletionProposalStub proposal) {
 		String key = null;
 		
 		switch(proposal.getCompletionKind()) {

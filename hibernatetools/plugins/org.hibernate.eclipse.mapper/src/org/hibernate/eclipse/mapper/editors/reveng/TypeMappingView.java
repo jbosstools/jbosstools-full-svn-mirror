@@ -31,11 +31,14 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.cfg.reveng.JDBCToHibernateTypeHelper;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.PrimaryKeyStub;
 import org.hibernate.eclipse.console.model.IReverseEngineeringDefinition;
 import org.hibernate.eclipse.console.model.ITypeMapping;
 import org.hibernate.eclipse.console.wizards.TreeToTableComposite;
@@ -46,8 +49,6 @@ import org.hibernate.eclipse.console.workbench.DeferredContentProvider;
 import org.hibernate.eclipse.console.workbench.LazyDatabaseSchema;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
 import org.hibernate.eclipse.mapper.MapperMessages;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.PrimaryKey;
 
 public abstract class TypeMappingView extends TreeToTableComposite {
 
@@ -123,15 +124,15 @@ public abstract class TypeMappingView extends TreeToTableComposite {
 			Iterator iterator = ss.iterator();
 			while ( iterator.hasNext() ) {
 				Object sel = iterator.next();
-				if(sel instanceof Column) {
-					Column col = (Column) sel;
+				if(sel instanceof ColumnStub) {
+					ColumnStub col = (ColumnStub) sel;
 					Integer sqlTypeCode = col.getSqlTypeCode();
 					createTypeMapping( col, sqlTypeCode );
-				} else if (sel instanceof PrimaryKey) {
-					PrimaryKey pk = (PrimaryKey) sel;
+				} else if (sel instanceof PrimaryKeyStub) {
+					PrimaryKeyStub pk = (PrimaryKeyStub) sel;
 					Iterator iter = pk.columnIterator();
 					while ( iter.hasNext() ) {
-						Column column = (Column) iter.next();
+						ColumnStub column = (ColumnStub) iter.next();
 						createTypeMapping(column, column.getSqlTypeCode());
 					}
 				} else {
@@ -143,7 +144,7 @@ public abstract class TypeMappingView extends TreeToTableComposite {
 		}
 	}
 
-	private void createTypeMapping(Column col, Integer sqlTypeCode) {
+	private void createTypeMapping(ColumnStub col, Integer sqlTypeCode) {
 		if(sqlTypeCode!=null) {
 			ITypeMapping typeMapping = revEngDef.createTypeMapping();
 
@@ -154,15 +155,15 @@ public abstract class TypeMappingView extends TreeToTableComposite {
 			boolean nullability = col.isNullable();
 			typeMapping.setHibernateType(JDBCToHibernateTypeHelper.getPreferredHibernateType(sqlTypeCode.intValue(), length, precision, scale, nullability, false));
 			if(JDBCToHibernateTypeHelper.typeHasLength(sqlTypeCode.intValue())) {
-				if(length!=0 && Column.DEFAULT_LENGTH!=length) {
+				if(length!=0 && ColumnStub.DEFAULT_LENGTH!=length) {
 					typeMapping.setLength(new Integer(length));
 				}
 			}
 			if(JDBCToHibernateTypeHelper.typeHasScaleAndPrecision(sqlTypeCode.intValue())) {
-				if(precision!=0 && Column.DEFAULT_PRECISION!=precision) {
+				if(precision!=0 && ColumnStub.DEFAULT_PRECISION!=precision) {
 					typeMapping.setPrecision(new Integer(precision));
 				}
-				if(scale!=0 && Column.DEFAULT_SCALE!=scale) {
+				if(scale!=0 && ColumnStub.DEFAULT_SCALE!=scale) {
 					typeMapping.setScale(new Integer(scale));
 				}
 			}
@@ -227,7 +228,7 @@ public abstract class TypeMappingView extends TreeToTableComposite {
 		}
 	}
 
-	protected void createTableColumns(org.eclipse.swt.widgets.Table table) {
+	protected void createTableColumns(Table table) {
 		TableColumn column = new TableColumn(table, SWT.CENTER, 0);
 		column.setText(MapperMessages.TypeMappingView_jdbc_type);
 		column.setWidth(100);

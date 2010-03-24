@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.commands.Command;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Table;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.OrmShape;
 
 /**
@@ -46,7 +46,7 @@ public class ToggleShapeVisibleStateCommand extends Command {
 		}
 		for (OrmShape shape : selectedShape) {
 			Object ormElement = shape.getOrmElement();
-			if (ormElement instanceof PersistentClass || ormElement instanceof Table) {
+			if (ormElement instanceof PersistentClassStub || ormElement instanceof TableStub) {
 				shape.setVisible(!visState);
 			}
 		}
@@ -56,7 +56,7 @@ public class ToggleShapeVisibleStateCommand extends Command {
 		for (int i = 0; i < selectedShape.size(); i++) {
 			OrmShape shape = selectedShape.get(i);
 			Object ormElement = shape.getOrmElement();
-			if (ormElement instanceof PersistentClass || ormElement instanceof Table) {
+			if (ormElement instanceof PersistentClassStub || ormElement instanceof TableStub) {
 				shape.setVisible(selectedShapeStates.get(i));
 			}
 		}

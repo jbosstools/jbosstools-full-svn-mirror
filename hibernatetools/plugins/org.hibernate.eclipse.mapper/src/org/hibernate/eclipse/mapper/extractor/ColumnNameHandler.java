@@ -25,16 +25,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.hibernate.cfg.reveng.TableIdentifier;
-import org.hibernate.eclipse.console.HibernateConsolePlugin;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.TableIdentifierStub;
+import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Table;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
@@ -54,13 +52,13 @@ public class ColumnNameHandler implements HBMInfoHandler {
 		
 		HibernateNature nature = HibernateNature.getHibernateNature( javaProject );
 		if(nature!=null) {
-			TableIdentifier nearestTableName = extractor.getNearestTableName(node);
+			TableIdentifierStub nearestTableName = extractor.getNearestTableName(node);
 			if(nearestTableName!=null) {
-				Table table = nature.getTable(nearestTableName);
+				TableStub table = nature.getTable(nearestTableName);
 				if (table!=null) {
 					Iterator tableMappings = table.getColumnIterator();
 					while (tableMappings.hasNext() ) {
-						Column column = (Column) tableMappings.next();
+						ColumnStub column = (ColumnStub) tableMappings.next();
 						if(column.getName().toUpperCase().startsWith(start.toUpperCase()) ) {
 							columns.add(column);
 						}
@@ -71,7 +69,7 @@ public class ColumnNameHandler implements HBMInfoHandler {
 
 		List proposals = new ArrayList();
 		for (Iterator iter = columns.iterator(); iter.hasNext();) {
-			Column element = (Column) iter.next();
+			ColumnStub element = (ColumnStub) iter.next();
 			proposals.add(new CompletionProposal(element.getName(), offset, start.length(), element.getName().length(), null, null, null, null) );
 		}
 		

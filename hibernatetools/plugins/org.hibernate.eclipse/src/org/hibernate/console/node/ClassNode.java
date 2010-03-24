@@ -24,13 +24,13 @@ package org.hibernate.console.node;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.EntityMode;
-import org.hibernate.Hibernate;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.type.CollectionType;
-import org.hibernate.type.Type;
+import org.hibernate.console.stubs.ClassMetadataStub;
+import org.hibernate.console.stubs.CollectionTypeStub;
+import org.hibernate.console.stubs.EntityModeStub;
+import org.hibernate.console.stubs.HibernateStub;
+import org.hibernate.console.stubs.TypeStub;
 
 /**
  * @author MAX
@@ -38,13 +38,13 @@ import org.hibernate.type.Type;
  */
 public class ClassNode extends BaseNode {
 
-	ClassMetadata md;
+	ClassMetadataStub md;
 
 	boolean objectGraph;
 
 	Object baseObject;
 	boolean childrenCreated = false;
-	public ClassNode(NodeFactory factory, BaseNode parent, String name, ClassMetadata metadata, Object baseObject, boolean objectGraph) {
+	public ClassNode(NodeFactory factory, BaseNode parent, String name, ClassMetadataStub metadata, Object baseObject, boolean objectGraph) {
 
 		super(factory, parent);
         this.name = name;
@@ -81,10 +81,10 @@ public class ClassNode extends BaseNode {
 
         String[] names = md.getPropertyNames();
         for (int i = 0; i < names.length; i++) {
-            Type type = md.getPropertyTypes()[i];
+            TypeStub type = md.getPropertyTypes()[i];
 
             if(type.isCollectionType() ) {
-                PersistentCollectionNode tn = factory.createPersistentCollectionNode(this, names[i], md, (CollectionType)type, getValue(), objectGraph);
+                PersistentCollectionNode tn = factory.createPersistentCollectionNode(this, names[i], md, (CollectionTypeStub)type, getValue(), objectGraph);
                 children.add(tn);
             } else {
                 children.add(factory.createPropertyNode(this, i, md, getValue(), objectGraph) );
@@ -107,7 +107,7 @@ public class ClassNode extends BaseNode {
           }
 
         // currentParent is the root
-        String cname = ( (ClassNode)currentParent).md.getMappedClass(EntityMode.POJO).getName();
+        String cname = ( (ClassNode)currentParent).md.getMappedClass(EntityModeStub.POJO).getName();
 
 		if (cname.lastIndexOf(".") != -1) { //$NON-NLS-1$
 			cname = cname.substring(cname.lastIndexOf(".") + 1); //$NON-NLS-1$
@@ -122,14 +122,14 @@ public class ClassNode extends BaseNode {
 		return "select " + alias + path + " from " + cname + " as " + alias; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
-	public ClassMetadata getClassMetadata() {
+	public ClassMetadataStub getClassMetadata() {
 		return md;
 	}
 
 	public String renderLabel(boolean fullyQualifiedNames) {
 		if(objectGraph) {
 			Object o = getValue();
-			if(Hibernate.isInitialized(o) ) {
+			if(HibernateStub.isInitialized(o) ) {
 				return super.renderLabel(fullyQualifiedNames) + " = " + o;	 //$NON-NLS-1$
 			} else {
 				return super.renderLabel(fullyQualifiedNames) + " = " + ConsoleMessages.ClassNode_uninitialized_proxy; //$NON-NLS-1$

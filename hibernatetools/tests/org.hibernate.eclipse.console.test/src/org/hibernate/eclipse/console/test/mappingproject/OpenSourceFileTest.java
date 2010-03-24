@@ -23,10 +23,12 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.hibernate.InvalidMappingException;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.console.stubs.ComponentStub;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.actions.OpenSourceAction;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.utils.Utils;
@@ -34,9 +36,6 @@ import org.hibernate.eclipse.console.workbench.ConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.ConsoleConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.PersistentClassWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.PropertyWorkbenchAdapter;
-import org.hibernate.mapping.Component;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
 
 /**
  * @author Dmitry Geraskov
@@ -86,26 +85,26 @@ public class OpenSourceFileTest extends TestCase {
 		}
 		if (persClasses.length > 0) {
 			for (int i = 0; i < persClasses.length; i++) {
-				assertTrue(persClasses[0] instanceof PersistentClass);
-				PersistentClass persClass = (PersistentClass) persClasses[i];
+				assertTrue(persClasses[0] instanceof PersistentClassStub);
+				PersistentClassStub persClass = (PersistentClassStub) persClasses[i];
 				String fullyQualifiedName = persClass.getClassName();
 				// test PersistentClasses
 				openTest(persClass, consCFG, fullyQualifiedName);
 				fields =  new PersistentClassWorkbenchAdapter().getChildren(persClass);
 				for (int j = 0; j < fields.length; j++) {
-					if (fields[j].getClass() != Property.class) {
+					if (fields[j].getClass() != PropertyStub.class) {
 						continue;
 					}
 					fullyQualifiedName = persClass.getClassName();
 					// test Properties
 					openTest(fields[j], consCFG, fullyQualifiedName);
-					if (fields[j] instanceof Property
-						&& ((Property)fields[j]).isComposite()) {
-						fullyQualifiedName =((Component)((Property) fields[j]).getValue()).getComponentClassName();
+					if (fields[j] instanceof PropertyStub
+						&& ((PropertyStub)fields[j]).isComposite()) {
+						fullyQualifiedName =((ComponentStub)((PropertyStub) fields[j]).getValue()).getComponentClassName();
 
 						Object[] compProperties = new PropertyWorkbenchAdapter().getChildren(fields[j]);
 						for (int k = 0; k < compProperties.length; k++) {
-							if (compProperties[k].getClass() != Property.class) {
+							if (compProperties[k].getClass() != PropertyStub.class) {
 								continue;
 							}
 							//test Composite properties

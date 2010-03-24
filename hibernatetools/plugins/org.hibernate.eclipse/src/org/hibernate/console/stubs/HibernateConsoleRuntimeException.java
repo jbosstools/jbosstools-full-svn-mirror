@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.hibernate.console;
+package org.hibernate.console.stubs;
 
 import org.hibernate.HibernateException;
 
@@ -27,18 +27,24 @@ import org.hibernate.HibernateException;
  * @author max
  *
  */
-public class HibernateConsoleRuntimeException extends HibernateException {
+public class HibernateConsoleRuntimeException extends RuntimeException {
 
+	private static final long serialVersionUID = -9056528343206573782L;
+
+	protected HibernateException he;
 	
-	public HibernateConsoleRuntimeException(String message) {
+	public HibernateConsoleRuntimeException(String message, Object he) {
 		super(message);
+		this.he = (HibernateException)he;
 	}
 
-	public HibernateConsoleRuntimeException(String message, Throwable cause) {
+	public HibernateConsoleRuntimeException(String message, Throwable cause, Object he) {
 		super(message, cause);
+		this.he = (HibernateException)he;
 	}
 
-	public HibernateConsoleRuntimeException(Throwable cause) {
+	public HibernateConsoleRuntimeException(Throwable cause, Object he) {
 		super(cause);
+		this.he = (HibernateException)he;
 	}
 }

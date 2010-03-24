@@ -27,7 +27,7 @@ import org.eclipse.jpt.utility.internal.iterators.EmptyListIterator;
 import org.eclipse.jpt.utility.internal.iterators.TransformationIterator;
 import org.eclipse.wst.validation.internal.core.Message;
 import org.eclipse.wst.validation.internal.provisional.core.IMessage;
-import org.hibernate.cfg.NamingStrategy;
+import org.hibernate.console.stubs.NamingStrategyStub;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJpaProject;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJptPlugin;
 import org.jboss.tools.hibernate.jpt.core.internal.context.GenericGenerator;
@@ -111,7 +111,7 @@ implements HibernateOrmEntity {
 				return null;
 			}
 			Entity parentEntity = HibernateOrmEntityImpl.this.getParentEntity();
-			NamingStrategy ns = HibernateOrmEntityImpl.this.getJpaProject().getNamingStrategy();
+			NamingStrategyStub ns = HibernateOrmEntityImpl.this.getJpaProject().getNamingStrategy();
 			if (getJpaProject().isNamingStrategyEnabled() && ns != null){				
 				try {
 					String name = ns.joinKeyColumnName(parentEntity.getPrimaryKeyColumnName(),

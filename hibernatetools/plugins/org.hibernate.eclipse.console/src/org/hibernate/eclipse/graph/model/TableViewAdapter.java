@@ -25,16 +25,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Table;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.TableStub;
 
 
 public class TableViewAdapter extends GraphNode {
 
-	private Table table;
+	private TableStub table;
 	private final ConfigurationViewAdapter configuration;
 
-	public TableViewAdapter(ConfigurationViewAdapter configuration, Table table) {
+	public TableViewAdapter(ConfigurationViewAdapter configuration, TableStub table) {
 		this.configuration = configuration;
 		this.table = table;
 	}
@@ -44,16 +44,15 @@ public class TableViewAdapter extends GraphNode {
 		
 	}
 
-	public Table getTable() {
+	public TableStub getTable() {
 		return table;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<ColumnViewAdapter> getColumns() {
 		List<ColumnViewAdapter> result = new ArrayList<ColumnViewAdapter>();
-		Iterator<Column> columnIterator = table.getColumnIterator();
+		Iterator<ColumnStub> columnIterator = table.getColumnIterator();
 		while ( columnIterator.hasNext() ) {
-			Column element = columnIterator.next();
+			ColumnStub element = columnIterator.next();
 			result.add(new ColumnViewAdapter(this,element));
 		}
 		

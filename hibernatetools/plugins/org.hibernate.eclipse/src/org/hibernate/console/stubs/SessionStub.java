@@ -281,9 +281,9 @@ public class SessionStub {
 			ConsoleQueryParameter parameter = qp[i];
 			try {
 				int pos = Integer.parseInt(parameter.getName());
-				query.setParameter(pos, calcValue(parameter), parameter.getType());
+				query.setParameter(pos, calcValue(parameter), parameter.getType().type);
 			} catch (NumberFormatException nfe) {
-				query.setParameter(parameter.getName(), calcValue(parameter), parameter.getType());
+				query.setParameter(parameter.getName(), calcValue(parameter), parameter.getType().type);
 			}
 		}
 	}

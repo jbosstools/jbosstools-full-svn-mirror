@@ -23,9 +23,9 @@ package org.hibernate.eclipse.mapper.extractor;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.hqleditor.CompletionHelper;
 import org.hibernate.eclipse.hqleditor.HibernateResultCollector.Settings;
-import org.hibernate.util.StringHelper;
 import org.w3c.dom.Node;
 
 public class PackageHandler extends JavaTypeHandler {

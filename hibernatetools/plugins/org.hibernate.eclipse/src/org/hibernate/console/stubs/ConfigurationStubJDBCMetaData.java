@@ -1,5 +1,7 @@
 package org.hibernate.console.stubs;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 
 import org.hibernate.cfg.JDBCMetaDataConfiguration;
@@ -28,6 +30,20 @@ public class ConfigurationStubJDBCMetaData extends ConfigurationStub {
 
 	public void readFromJDBC() {
 		jdbcMetaDataConfiguration.readFromJDBC();
+	}
+
+	public ArrayList<TableStub> getTableMappingsArr() {
+		ArrayList<TableStub> arr = new ArrayList<TableStub>(); 
+		Iterator<?> it = jdbcMetaDataConfiguration.getTableMappings();
+		while (it.hasNext() ) {
+			Object table = it.next();
+			arr.add(new TableStub(table));
+		}
+		return arr;
+	}
+
+	public Iterator<TableStub> getTableMappingsIt() {
+		return getTableMappingsArr().iterator();
 	}
 
 }

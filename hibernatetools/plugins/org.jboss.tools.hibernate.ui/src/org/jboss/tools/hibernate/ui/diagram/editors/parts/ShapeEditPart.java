@@ -33,14 +33,14 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.Component;
-import org.hibernate.mapping.DependantValue;
-import org.hibernate.mapping.OneToMany;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.SimpleValue;
-import org.hibernate.mapping.Table;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.ComponentStub;
+import org.hibernate.console.stubs.DependantValueStub;
+import org.hibernate.console.stubs.OneToManyStub;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.SimpleValueStub;
+import org.hibernate.console.stubs.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.figures.TitleFigure;
 import org.jboss.tools.hibernate.ui.diagram.editors.figures.TopLineBorder;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection;
@@ -120,7 +120,7 @@ public class ShapeEditPart extends OrmEditPart implements NodeEditPart {
 	@Override
 	public void performRequest(Request req) {
 		if (RequestConstants.REQ_OPEN.equals(req.getType())) {
-			if (getModelShape().getOrmElement() instanceof Column) {
+			if (getModelShape().getOrmElement() instanceof ColumnStub) {
 				if (getModelShape().getTargetConnections().size() > 0) {
 					getModelShape().getTargetConnections().get(0).getSource().setFocus();
 				}
@@ -295,32 +295,33 @@ public class ShapeEditPart extends OrmEditPart implements NodeEditPart {
 
 	protected Color getColor() {
 		final Object el = getElement();
-		if (el instanceof PersistentClass || el instanceof Component)
+		if (el instanceof PersistentClassStub || 
+				el instanceof ComponentStub)
 			return ResourceManager.getInstance().getColor(new RGB(
 					Integer.parseInt(ColorConstants.Colors_PersistentClassR),
 					Integer.parseInt(ColorConstants.Colors_PersistentClassG),
 					Integer.parseInt(ColorConstants.Colors_PersistentClassB)));
-		else if (el instanceof Property || el instanceof SimpleValue)
+		else if (el instanceof PropertyStub || el instanceof SimpleValueStub)
 			return ResourceManager.getInstance().getColor(new RGB(
 					Integer.parseInt(ColorConstants.Colors_PersistentFieldR),
 					Integer.parseInt(ColorConstants.Colors_PersistentFieldG),
 					Integer.parseInt(ColorConstants.Colors_PersistentFieldB)));
-		else if (el instanceof Column)
+		else if (el instanceof ColumnStub)
 			return ResourceManager.getInstance().getColor(new RGB(
 					Integer.parseInt(ColorConstants.Colors_DatabaseColumnR),
 					Integer.parseInt(ColorConstants.Colors_DatabaseColumnG),
 					Integer.parseInt(ColorConstants.Colors_DatabaseColumnB)));
-		else if (el instanceof Table)
+		else if (el instanceof TableStub)
 			return ResourceManager.getInstance().getColor(new RGB(
 					Integer.parseInt(ColorConstants.Colors_DatabaseTableR),
 					Integer.parseInt(ColorConstants.Colors_DatabaseTableG),
 					Integer.parseInt(ColorConstants.Colors_DatabaseTableB)));
-		else if (el instanceof DependantValue)
+		else if (el instanceof DependantValueStub)
 			return ResourceManager.getInstance().getColor(new RGB(
 					Integer.parseInt(ColorConstants.Colors_DatabaseTableR),
 					Integer.parseInt(ColorConstants.Colors_DatabaseTableG),
 					Integer.parseInt(ColorConstants.Colors_DatabaseTableB)));
-		else if (el instanceof OneToMany)
+		else if (el instanceof OneToManyStub)
 			return ResourceManager.getInstance().getColor(new RGB(
 					Integer.parseInt(ColorConstants.Colors_PersistentFieldR),
 					Integer.parseInt(ColorConstants.Colors_PersistentFieldG),
@@ -331,10 +332,10 @@ public class ShapeEditPart extends OrmEditPart implements NodeEditPart {
 
 	protected Color getSelectionColor() {
 		final Object el = getElement();
-		if (el instanceof PersistentClass || el instanceof Property ||
-				el instanceof SimpleValue || el instanceof OneToMany) {
+		if (el instanceof PersistentClassStub || el instanceof PropertyStub ||
+				el instanceof SimpleValueStub || el instanceof OneToManyStub) {
 			return ResourceManager.getInstance().getColor(new RGB(112, 161, 99));
-		} else if (el instanceof Table || el instanceof Column) {
+		} else if (el instanceof TableStub || el instanceof ColumnStub) {
 			return ResourceManager.getInstance().getColor(new RGB(66, 173, 247));
 		}
 		return ResourceManager.getInstance().getColor(new RGB(255, 0, 0));

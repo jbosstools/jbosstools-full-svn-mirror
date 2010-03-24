@@ -122,8 +122,8 @@ public class HibernateJptPlugin extends Plugin {
 			
 			@Override
 			public void configurationBuilt(ConsoleConfiguration ccfg) {
-				if (ccfg.getConfiguration() == null
-						|| ccfg.getConfiguration().getNamingStrategy() == null){
+				if (!ccfg.hasConfiguration()
+						|| !ccfg.getConfiguration().hasNamingStrategy()){
 					return;
 				}
 				revalidateProjects(ccfg);
@@ -132,8 +132,8 @@ public class HibernateJptPlugin extends Plugin {
 			@Override
 			public void configurationRemoved(ConsoleConfiguration root,
 					boolean forUpdate) {
-				if(forUpdate || root.getConfiguration() == null
-						|| root.getConfiguration().getNamingStrategy() == null) {
+				if(forUpdate || !root.hasConfiguration()
+						|| !root.getConfiguration().hasNamingStrategy()) {
 					return;
 				}
 				revalidateProjects(root);

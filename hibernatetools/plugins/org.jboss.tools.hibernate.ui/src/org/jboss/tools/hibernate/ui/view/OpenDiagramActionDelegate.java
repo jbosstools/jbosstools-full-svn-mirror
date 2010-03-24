@@ -26,12 +26,11 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.ObjectPluginAction;
-import org.hibernate.HibernateException;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.RootClassStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.RootClass;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
 
@@ -50,7 +49,7 @@ public class OpenDiagramActionDelegate implements IObjectActionDelegate {
 	@SuppressWarnings("unchecked")
 	public void run(IAction action) {
     	ObjectPluginAction objectPluginAction = (ObjectPluginAction)action;
-    	Map<ConsoleConfiguration, Set<PersistentClass>> mapCC_PCs = new HashMap<ConsoleConfiguration, Set<PersistentClass>>();
+    	Map<ConsoleConfiguration, Set<PersistentClassStub>> mapCC_PCs = new HashMap<ConsoleConfiguration, Set<PersistentClassStub>>();
     	TreePath[] paths = ((TreeSelection)objectPluginAction.getSelection()).getPaths();
     	for (int i = 0; i < paths.length; i++) {
     		final Object firstSegment = paths[i].getFirstSegment();
@@ -58,18 +57,18 @@ public class OpenDiagramActionDelegate implements IObjectActionDelegate {
     			continue;
     		}
     		final ConsoleConfiguration consoleConfig = (ConsoleConfiguration)(firstSegment);
-			Set<PersistentClass> setPC = mapCC_PCs.get(consoleConfig);
+			Set<PersistentClassStub> setPC = mapCC_PCs.get(consoleConfig);
 			if (null == setPC) {
-				setPC = new HashSet<PersistentClass>();
+				setPC = new HashSet<PersistentClassStub>();
 				mapCC_PCs.put(consoleConfig, setPC);
 			}
     		Object last_el = paths[i].getLastSegment();
-        	if (last_el instanceof PersistentClass) {
-    			PersistentClass persClass = (PersistentClass) last_el;
+        	if (last_el instanceof PersistentClassStub) {
+    			PersistentClassStub persClass = (PersistentClassStub) last_el;
     			setPC.add(persClass);
     		} else if (last_el instanceof ConfigurationStub) {
     			ConfigurationStub config = (ConfigurationStub)last_el;
-    			Iterator<PersistentClass> it = (Iterator<PersistentClass>)(config.getClassMappings());
+    			Iterator<PersistentClassStub> it = (Iterator<PersistentClassStub>)(config.getClassMappings());
     			while (it.hasNext()) {
         			setPC.add(it.next());
     			}
@@ -79,7 +78,7 @@ public class OpenDiagramActionDelegate implements IObjectActionDelegate {
     				try {
         				consoleConfig.build();
         				consoleConfig.buildMappings();
-    				} catch (HibernateException he) {
+    				} catch (RuntimeException he) {
     					HibernateConsolePlugin.getDefault().showError(
     						HibernateConsolePlugin.getShell(), 
     						DiagramViewerMessages.OpenDiagramActionDelegate_could_not_load_configuration + 
@@ -88,7 +87,7 @@ public class OpenDiagramActionDelegate implements IObjectActionDelegate {
     				config = consoleConfig.getConfiguration();
     			}
     			if (config != null) {
-	    			Iterator<PersistentClass> it = (Iterator<PersistentClass>)(config.getClassMappings());
+	    			Iterator<PersistentClassStub> it = (Iterator<PersistentClassStub>)(config.getClassMappings());
 	    			while (it.hasNext()) {
 	        			setPC.add(it.next());
 	    			}
@@ -97,7 +96,7 @@ public class OpenDiagramActionDelegate implements IObjectActionDelegate {
 		}    		
     	for (Iterator<ConsoleConfiguration> it = mapCC_PCs.keySet().iterator(); it.hasNext(); ) {
     		ConsoleConfiguration consoleConfiguration = it.next();
-    		Set<PersistentClass> setPC = mapCC_PCs.get(consoleConfiguration);
+    		Set<PersistentClassStub> setPC = mapCC_PCs.get(consoleConfiguration);
 	    	try {
 	    		openEditor(setPC, consoleConfiguration);
 	    	} catch (PartInitException e) {
@@ -106,18 +105,18 @@ public class OpenDiagramActionDelegate implements IObjectActionDelegate {
     	}
 	}
 
-	public IEditorPart openEditor(PersistentClass persClass,
+	public IEditorPart openEditor(PersistentClassStub persClass,
 			ConsoleConfiguration consoleConfig) throws PartInitException {
 		DiagramEditorInput input = new DiagramEditorInput(consoleConfig.getName(), persClass.getRootClass());
 		return IDE.openEditor(UiPlugin.getPage(), input, "org.jboss.tools.hibernate.ui.diagram.editors.DiagramViewer");		//$NON-NLS-1$
 	}
 
-	public IEditorPart openEditor(Set<PersistentClass> setPC, ConsoleConfiguration consoleConfig) throws PartInitException {
+	public IEditorPart openEditor(Set<PersistentClassStub> setPC, ConsoleConfiguration consoleConfig) throws PartInitException {
 		
-		RootClass[] rcArr = new RootClass[setPC.size()];
-		PersistentClass persClass = null;
+		RootClassStub[] rcArr = new RootClassStub[setPC.size()];
+		PersistentClassStub persClass = null;
 		int i = 0;
-    	for (Iterator<PersistentClass> it = setPC.iterator(); it.hasNext(); ) {
+    	for (Iterator<PersistentClassStub> it = setPC.iterator(); it.hasNext(); ) {
     		persClass = it.next();
     		rcArr[i++] = persClass.getRootClass();
     	}

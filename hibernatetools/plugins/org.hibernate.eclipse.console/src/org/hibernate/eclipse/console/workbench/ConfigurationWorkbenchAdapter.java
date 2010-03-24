@@ -28,19 +28,19 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.stubs.ConfigurationStub;
+import org.hibernate.console.stubs.PersistentClassStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mapping.PersistentClass;
 
 public class ConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	@SuppressWarnings("unchecked")
 	public Object[] getChildren(Object o) {
 		ConfigurationStub cfg = (ConfigurationStub) o;
-		Iterator<? extends PersistentClass> classMappings = cfg.getClassMappings();
-		return toArray(classMappings, PersistentClass.class, new Comparator<PersistentClass>() {
+		Iterator<? extends PersistentClassStub> classMappings = cfg.getClassMappings();
+		return toArray(classMappings, PersistentClassStub.class, new Comparator<PersistentClassStub>() {
 
-			public int compare(PersistentClass p0, PersistentClass p1) {
+			public int compare(PersistentClassStub p0, PersistentClassStub p1) {
 				String label0 = HibernateWorkbenchHelper.getLabelForClassName(p0.getEntityName());
 				String label1 = HibernateWorkbenchHelper.getLabelForClassName(p1.getEntityName());
 				return label0.compareTo(label1);

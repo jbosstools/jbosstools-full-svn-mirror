@@ -36,13 +36,13 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.provisional.IXMLPreferenceNames;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
-import org.hibernate.HibernateException;
-import org.hibernate.cfg.Settings;
 import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
 import org.hibernate.cfg.reveng.OverrideRepository;
 import org.hibernate.cfg.reveng.TableFilter;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.console.stubs.SettingsStub;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.model.IReverseEngineeringDefinition;
 import org.hibernate.eclipse.console.model.ITableFilter;
@@ -57,7 +57,6 @@ import org.hibernate.eclipse.mapper.editors.reveng.RevEngTypeMappingPage;
 import org.hibernate.eclipse.mapper.editors.xpl.XMLFormEditorPart;
 import org.hibernate.eclipse.mapper.model.DOMReverseEngineeringDefinition;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.util.StringHelper;
 import org.w3c.dom.Document;
 
 public class ReverseEngineeringEditor extends XMLFormEditorPart {
@@ -198,7 +197,7 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 			}
 
 			ITableFilter[] tableFilters = getReverseEngineeringDefinition().getTableFilters();
-			Settings settings = configuration.getSettings2();
+			SettingsStub settings = configuration.getSettings2();
 			OverrideRepository repository = new OverrideRepository();///*settings.getDefaultCatalogName(),settings.getDefaultSchemaName()*/);
 			boolean hasIncludes = false;
 			for (int i = 0; i < tableFilters.length; i++) {

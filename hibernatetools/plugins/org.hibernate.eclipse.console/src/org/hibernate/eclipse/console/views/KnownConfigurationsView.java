@@ -54,13 +54,13 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.node.BaseNode;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.actions.EditConsoleConfiguration;
 import org.hibernate.eclipse.console.actions.OpenMappingAction;
 import org.hibernate.eclipse.console.viewers.xpl.MTreeViewer;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
 
 
 /**
@@ -197,7 +197,7 @@ public class KnownConfigurationsView extends ViewPart {
 					TreePath path = paths[0];
 					Object last = path.getLastSegment();
 					ConsoleConfiguration consoleConfig = (ConsoleConfiguration)(path.getSegment(0));
-					if (last instanceof PersistentClass || last.getClass() == Property.class){
+					if (last instanceof PersistentClassStub || last.getClass() == PropertyStub.class){
 						try {
 							OpenMappingAction.run(consoleConfig, path);
 						} catch (PartInitException e) {

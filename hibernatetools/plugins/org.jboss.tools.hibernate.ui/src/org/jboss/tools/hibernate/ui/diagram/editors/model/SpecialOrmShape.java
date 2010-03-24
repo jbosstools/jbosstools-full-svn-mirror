@@ -12,13 +12,12 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 
 import java.util.Iterator;
 
-import org.hibernate.MappingException;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.execution.ExecutionContext.Command;
+import org.hibernate.console.stubs.PropertyStub;
+import org.hibernate.console.stubs.RootClassStub;
+import org.hibernate.console.stubs.TypeStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mapping.Property;
-import org.hibernate.mapping.RootClass;
-import org.hibernate.type.Type;
 
 /**
  * 
@@ -37,8 +36,8 @@ public class SpecialOrmShape extends OrmShape {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void initModel() {
-		RootClass rootClass = (RootClass)getOrmElement();
-		Property identifierProperty = rootClass.getIdentifierProperty();
+		RootClassStub rootClass = (RootClassStub)getOrmElement();
+		PropertyStub identifierProperty = rootClass.getIdentifierProperty();
 		if (identifierProperty != null) {
 			addChild(new Shape(identifierProperty));
 		}
@@ -50,14 +49,14 @@ public class SpecialOrmShape extends OrmShape {
 			parentShape = bodyOrmShape;
 		}
 		
-		Iterator<Property> iterator = rootClass.getPropertyIterator();
+		Iterator<PropertyStub> iterator = rootClass.getPropertyIterator();
 		while (iterator.hasNext()) {
-			Property field = iterator.next();
-			Type type = null;
+			PropertyStub field = iterator.next();
+			TypeStub type = null;
 			if (getOrmDiagram() != null) {
 				ConsoleConfiguration cfg = getOrmDiagram().getConsoleConfig();
-				final Property fField = field;
-				type = (Type) cfg.execute(new Command() {
+				final PropertyStub fField = field;
+				type = (TypeStub) cfg.execute(new Command() {
 					public Object execute() {
 						return fField.getValue().getType();
 					}});								

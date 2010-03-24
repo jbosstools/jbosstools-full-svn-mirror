@@ -29,8 +29,8 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.mapping.Table;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
@@ -41,16 +41,16 @@ public class TableNameHandler implements HBMInfoHandler {
 			IJavaProject javaProject, Node node, String attributeName,
 			String start, int offset) {
 
-		List tables = new ArrayList(); 
+		List<TableStub> tables = new ArrayList<TableStub>(); 
 		
 		HibernateNature nature = HibernateNature.getHibernateNature( javaProject );
 		if(nature!=null) {
 			tables = nature.getMatchingTables(start);
 		}
 		
-		List proposals = new ArrayList();
-		for (Iterator iter = tables.iterator(); iter.hasNext();) {
-			Table element = (Table) iter.next();
+		List<ICompletionProposal> proposals = new ArrayList<ICompletionProposal>();
+		for (Iterator<TableStub> iter = tables.iterator(); iter.hasNext();) {
+			TableStub element = iter.next();
 			proposals.add(new CompletionProposal(element.getName(), offset, start.length(), element.getName().length(), null, null, null, null) );
 		}
 		

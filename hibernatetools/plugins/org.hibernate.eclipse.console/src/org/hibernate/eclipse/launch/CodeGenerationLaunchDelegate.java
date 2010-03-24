@@ -58,25 +58,24 @@ import org.eclipse.jface.text.DocumentRewriteSessionType;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.text.edits.TextEdit;
-import org.hibernate.HibernateException;
 import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
 import org.hibernate.cfg.reveng.OverrideRepository;
 import org.hibernate.cfg.reveng.ReverseEngineeringSettings;
 import org.hibernate.cfg.reveng.ReverseEngineeringStrategy;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.HibernateConsoleRuntimeException;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.stubs.ConfigurationStubFactory;
 import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.console.stubs.ConfigurationStubJDBCMetaData;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.console.stubs.util.ReflectHelper;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.model.impl.ExporterFactory;
 import org.hibernate.tool.hbm2x.ArtifactCollector;
 import org.hibernate.tool.hbm2x.Exporter;
-import org.hibernate.util.ReflectHelper;
-import org.hibernate.util.StringHelper;
 
 public class CodeGenerationLaunchDelegate extends
 		LaunchConfigurationDelegate {
@@ -245,7 +244,7 @@ public class CodeGenerationLaunchDelegate extends
 
 					try {
                        exporter.start();
-					} catch(HibernateException he) {
+					} catch(RuntimeException he) {
 						throw new HibernateConsoleRuntimeException(HibernateConsoleMessages.CodeGenerationLaunchDelegate_error_while_running + exporterFactories[i].getExporterDefinition().getDescription(), he);
 					}
                        monitor.worked(1);

@@ -20,8 +20,8 @@ import org.eclipse.gef.editparts.AbstractTreeEditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Table;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.editors.DiagramViewer;
 import org.jboss.tools.hibernate.ui.diagram.editors.command.ToggleShapeVisibleStateCommand;
@@ -109,7 +109,7 @@ public class ShapeShowAction extends SelectionAction {
 			if (null != obj && obj instanceof OrmShape) {
 				OrmShape ormShape = (OrmShape)obj;
 				Object ormElement = ormShape.getOrmElement();
-				if (ormElement instanceof PersistentClass || ormElement instanceof Table) {
+				if (ormElement instanceof PersistentClassStub || ormElement instanceof TableStub) {
 					if (!ormShape.isVisible()) {
 						res = true;
 					}

@@ -33,6 +33,8 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionGroup;
 import org.eclipse.ui.actions.SelectionListenerAction;
 import org.hibernate.console.ConsoleConfiguration;
+import org.hibernate.console.stubs.PersistentClassStub;
+import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.actions.AddConfigurationAction;
 import org.hibernate.eclipse.console.actions.CloseConfigAction;
 import org.hibernate.eclipse.console.actions.CriteriaEditorAction;
@@ -43,8 +45,6 @@ import org.hibernate.eclipse.console.actions.HQLScratchpadAction;
 import org.hibernate.eclipse.console.actions.OpenMappingAction;
 import org.hibernate.eclipse.console.actions.OpenSourceAction;
 import org.hibernate.eclipse.console.actions.RefreshAction;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
 
 /**
  * @author max
@@ -185,7 +185,7 @@ public class ConfigurationsViewActionGroup extends ActionGroup {
 		menu.add(new GroupMarker(GROUP_ADDITION_LAST));
 		menu.add(new Separator(GROUP_OTHER_EDITORS));
 		// TODO: shouldn't these and maybe the others not be defined via menu extension points ?
-		if (first != null && (first instanceof PersistentClass || first.getClass() == Property.class)) {			
+		if (first != null && (first instanceof PersistentClassStub || first.getClass() == PropertyStub.class)) {			
 			menu.appendToGroup(GROUP_OTHER_EDITORS, openSourceAction);
 			menu.appendToGroup(GROUP_OTHER_EDITORS, openMappingAction);
 		}

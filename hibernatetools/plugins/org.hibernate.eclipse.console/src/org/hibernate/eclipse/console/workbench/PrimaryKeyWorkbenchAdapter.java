@@ -23,25 +23,25 @@ package org.hibernate.eclipse.console.workbench;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
+import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.console.stubs.PrimaryKeyStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.PrimaryKey;
 
 public class PrimaryKeyWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	public Object[] getChildren(Object o) {
-		PrimaryKey t = getPrimaryKey( o );
+		PrimaryKeyStub t = getPrimaryKey( o );
 
 		if(t.getColumnSpan()==1) {
 			return NO_CHILDREN;
 		} else {
-			return t.getColumns().toArray(new Column[0]);
+			return t.getColumns().toArray(new ColumnStub[0]);
 		}
 	}
 
-	private PrimaryKey getPrimaryKey(Object o) {
-		return (PrimaryKey)o;
+	private PrimaryKeyStub getPrimaryKey(Object o) {
+		return (PrimaryKeyStub)o;
 	}
 
 	public ImageDescriptor getImageDescriptor(Object object) {
@@ -49,7 +49,7 @@ public class PrimaryKeyWorkbenchAdapter extends BasicWorkbenchAdapter {
 	}
 
 	public String getLabel(Object o) {
-		PrimaryKey table = getPrimaryKey(o);
+		PrimaryKeyStub table = getPrimaryKey(o);
 		if(table.getColumnSpan()==1) {
 			return ColumnWorkbenchAdapter.getColumnLabel(table.getColumn(0));
 		} else {

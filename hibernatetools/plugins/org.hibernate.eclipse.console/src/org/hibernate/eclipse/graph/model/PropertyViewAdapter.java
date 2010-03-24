@@ -27,17 +27,16 @@ import java.util.List;
 import java.util.Observable;
 
 import org.eclipse.swt.graphics.Image;
-import org.hibernate.HibernateException;
+import org.hibernate.console.stubs.CollectionStub;
+import org.hibernate.console.stubs.EntityTypeStub;
+import org.hibernate.console.stubs.OneToManyStub;
+import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.workbench.HibernateWorkbenchHelper;
-import org.hibernate.mapping.Collection;
-import org.hibernate.mapping.OneToMany;
-import org.hibernate.mapping.Property;
-import org.hibernate.type.EntityType;
 
 public class PropertyViewAdapter extends Observable {
 
-	final private Property property;
+	final private PropertyStub property;
 
 	private final ConfigurationViewAdapter configuration;
 
@@ -47,7 +46,7 @@ public class PropertyViewAdapter extends Observable {
 	private List<PropertyViewAdapter> targetAssociations;
 	
 	public PropertyViewAdapter(PersistentClassViewAdapter clazz,
-			Property property) {
+			PropertyStub property) {
 		this.clazz = clazz;
 		this.property = property;
 		this.configuration = clazz.getConfiguration();
@@ -56,7 +55,7 @@ public class PropertyViewAdapter extends Observable {
 		
 	}
 
-	public Property getProperty() {
+	public PropertyStub getProperty() {
 		return property;
 	}
 
@@ -78,10 +77,10 @@ public class PropertyViewAdapter extends Observable {
 	
 	private void createSingleEndedEnityAssociations() {
 		try { //TODO: we need the consoleconfiguration here to know the exact types			
-			if ( property.getValue() instanceof Collection ) {
-				Collection collection = (Collection) property.getValue();
-				if(!collection.isInverse() && collection.getElement() instanceof OneToMany) {
-					OneToMany oneToMany = (OneToMany) collection.getElement();
+			if ( property.getValue() instanceof CollectionStub ) {
+				CollectionStub collection = (CollectionStub) property.getValue();
+				if(!collection.isInverse() && collection.getElement() instanceof OneToManyStub) {
+					OneToManyStub oneToMany = (OneToManyStub) collection.getElement();
 					
 					String entityName = oneToMany.getAssociatedClass().getEntityName();
 					PersistentClassViewAdapter target = configuration
@@ -91,7 +90,7 @@ public class PropertyViewAdapter extends Observable {
 					target.addTargetAssociation( pava );
 				}
 			} else if ( property.getType().isEntityType() ) {
-				EntityType et = (EntityType) property.getType();
+				EntityTypeStub et = (EntityTypeStub) property.getType();
 				PersistentClassViewAdapter target = configuration.getPersistentClassViewAdapter( et.getAssociatedEntityName() );
 				PropertyAssociationViewAdapter pava = new PropertyAssociationViewAdapter( clazz, this, target );
 				this.addSourceAssociation( pava );

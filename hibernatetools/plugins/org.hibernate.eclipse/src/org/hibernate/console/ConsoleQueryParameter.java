@@ -32,50 +32,50 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
-import org.hibernate.Hibernate;
-import org.hibernate.mapping.Table;
-import org.hibernate.type.NullableType;
-import org.hibernate.type.Type;
+import org.hibernate.console.stubs.HibernateStub;
+import org.hibernate.console.stubs.NullableTypeStub;
+import org.hibernate.console.stubs.TableStub;
+import org.hibernate.console.stubs.TypeStub;
 
 
 public class ConsoleQueryParameter {
 
 	static private final Object NULL_MARKER = null; //new Object() { public String toString() { return "[null]"; } };
 	
-	static final Map<Type, String> typeFormats = new HashMap<Type, String>();
+	static final Map<TypeStub, String> typeFormats = new HashMap<TypeStub, String>();
 	static {
-		addTypeFormat(Hibernate.BOOLEAN, Boolean.TRUE );
-		addTypeFormat(Hibernate.BYTE, Byte.valueOf((byte) 42));
-		addTypeFormat(Hibernate.BIG_INTEGER, BigInteger.valueOf(42));
-		addTypeFormat(Hibernate.SHORT, Short.valueOf((short) 42));
-		addTypeFormat(Hibernate.CALENDAR, new GregorianCalendar());
-		addTypeFormat(Hibernate.CALENDAR_DATE, new GregorianCalendar());
-		addTypeFormat(Hibernate.INTEGER, Integer.valueOf(42));
-		addTypeFormat(Hibernate.INTEGER, Integer.valueOf(42));
-		addTypeFormat(Hibernate.BIG_DECIMAL, new BigDecimal(42.0));
-		addTypeFormat(Hibernate.CHARACTER, Character.valueOf('h'));
-		addTypeFormat(Hibernate.CLASS, Table.class);
-		addTypeFormat(Hibernate.CURRENCY, Currency.getInstance(Locale.getDefault()));
-		addTypeFormat(Hibernate.DATE, new Date());
-		addTypeFormat(Hibernate.DOUBLE, Double.valueOf(42.42));
-		addTypeFormat(Hibernate.FLOAT, Float.valueOf((float)42.42));
-		addTypeFormat(Hibernate.LOCALE, Locale.getDefault());
-		addTypeFormat(Hibernate.LONG, Long.valueOf(42));
-		addTypeFormat(Hibernate.STRING, "a string"); //$NON-NLS-1$
-		addTypeFormat(Hibernate.TEXT, "a text"); //$NON-NLS-1$
-		addTypeFormat(Hibernate.TIME, new Date());
-		addTypeFormat(Hibernate.TIMESTAMP, new Date());
-		addTypeFormat(Hibernate.TIMEZONE, TimeZone.getDefault());
-		addTypeFormat(Hibernate.TRUE_FALSE, Boolean.TRUE);
-		addTypeFormat(Hibernate.YES_NO, Boolean.TRUE);
+		addTypeFormat(HibernateStub.BOOLEAN, Boolean.TRUE );
+		addTypeFormat(HibernateStub.BYTE, Byte.valueOf((byte) 42));
+		addTypeFormat(HibernateStub.BIG_INTEGER, BigInteger.valueOf(42));
+		addTypeFormat(HibernateStub.SHORT, Short.valueOf((short) 42));
+		addTypeFormat(HibernateStub.CALENDAR, new GregorianCalendar());
+		addTypeFormat(HibernateStub.CALENDAR_DATE, new GregorianCalendar());
+		addTypeFormat(HibernateStub.INTEGER, Integer.valueOf(42));
+		addTypeFormat(HibernateStub.INTEGER, Integer.valueOf(42));
+		addTypeFormat(HibernateStub.BIG_DECIMAL, new BigDecimal(42.0));
+		addTypeFormat(HibernateStub.CHARACTER, Character.valueOf('h'));
+		addTypeFormat(HibernateStub.CLASS, TableStub.class);
+		addTypeFormat(HibernateStub.CURRENCY, Currency.getInstance(Locale.getDefault()));
+		addTypeFormat(HibernateStub.DATE, new Date());
+		addTypeFormat(HibernateStub.DOUBLE, Double.valueOf(42.42));
+		addTypeFormat(HibernateStub.FLOAT, Float.valueOf((float)42.42));
+		addTypeFormat(HibernateStub.LOCALE, Locale.getDefault());
+		addTypeFormat(HibernateStub.LONG, Long.valueOf(42));
+		addTypeFormat(HibernateStub.STRING, "a string"); //$NON-NLS-1$
+		addTypeFormat(HibernateStub.TEXT, "a text"); //$NON-NLS-1$
+		addTypeFormat(HibernateStub.TIME, new Date());
+		addTypeFormat(HibernateStub.TIMESTAMP, new Date());
+		addTypeFormat(HibernateStub.TIMEZONE, TimeZone.getDefault());
+		addTypeFormat(HibernateStub.TRUE_FALSE, Boolean.TRUE);
+		addTypeFormat(HibernateStub.YES_NO, Boolean.TRUE);
 	}
 
 
-	private static void addTypeFormat(NullableType nullableType, Object value) {
+	private static void addTypeFormat(NullableTypeStub nullableType, Object value) {
 		typeFormats.put(nullableType, nullableType.toString(value));
 	}
 	String name;
-	NullableType type;
+	NullableTypeStub type;
 	Object value;
 	
 	public ConsoleQueryParameter(ConsoleQueryParameter cqp) {
@@ -88,7 +88,7 @@ public class ConsoleQueryParameter {
 		
 	}
 
-	public ConsoleQueryParameter(String name, NullableType type, Object value) {
+	public ConsoleQueryParameter(String name, NullableTypeStub type, Object value) {
 		this.name = name;
 		this.type = type;
 		this.value = value;
@@ -102,11 +102,11 @@ public class ConsoleQueryParameter {
 		this.name = name;
 	}
 	
-	public NullableType getType() {
+	public NullableTypeStub getType() {
 		return type;
 	}
 	
-	public void setType(NullableType type) {
+	public void setType(NullableTypeStub type) {
 		this.type = type;
 	}
 	
@@ -144,7 +144,7 @@ public class ConsoleQueryParameter {
 		return "<unknown>";				 //$NON-NLS-1$
 	}
 
-	public static Set<Type> getPossibleTypes() {
+	public static Set<TypeStub> getPossibleTypes() {
 		return typeFormats.keySet();
 	}
 

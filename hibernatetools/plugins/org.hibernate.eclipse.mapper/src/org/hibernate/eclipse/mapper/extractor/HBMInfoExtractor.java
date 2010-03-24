@@ -21,10 +21,7 @@
  */
 package org.hibernate.eclipse.mapper.extractor;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,10 +37,10 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
 import org.eclipse.wst.sse.ui.internal.contentassist.CustomCompletionProposal;
 import org.eclipse.wst.xml.ui.internal.contentassist.XMLRelevanceConstants;
-import org.hibernate.cfg.Environment;
-import org.hibernate.cfg.reveng.TableIdentifier;
+import org.hibernate.console.stubs.EnvironmentStub;
+import org.hibernate.console.stubs.TableIdentifierStub;
+import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.mapper.MapperMessages;
-import org.hibernate.util.StringHelper;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -178,28 +175,7 @@ public class HBMInfoExtractor {
 	}
 
 	private String[] extractHibernateProperties() {
-		try {
-			// TODO: extract property names from the Environment class in the users hibernate configuration.
-			Class cl = Environment.class;
-			List names = new ArrayList();
-			Field[] fields = cl.getFields();
-			for (int i = 0; i < fields.length; i++) {
-				Field field = fields[i];
-				if(Modifier.isStatic(field.getModifiers() ) &&
-						field.getType().equals(String.class) ) {
-					String str = (String) field.get(cl);
-					if(str.startsWith("hibernate.") ) { //$NON-NLS-1$
-						names.add(str);
-					}
-				}
-			}
-			String[] propertyNames = (String[]) names.toArray(new String[names.size()]);
-			Arrays.sort(propertyNames);
-			return propertyNames;
-		} catch (IllegalAccessException iae) {
-			// ignore
-			return new String[0];
-		}
+		return EnvironmentStub.extractHibernateProperties();
 	}
 
 	private void setupTypeFinder() {
@@ -610,7 +586,7 @@ public class HBMInfoExtractor {
 		return typename;
 	}
 
-	public TableIdentifier getNearestTableName(Node node) {
+	public TableIdentifierStub getNearestTableName(Node node) {
 		Map map = tableProvider;
 
 		if(node==null) return null;
@@ -639,7 +615,7 @@ public class HBMInfoExtractor {
 				schema = namedItem.getNodeValue();
 			}
 
-			return new TableIdentifier(catalog,schema,typename);
+			return TableIdentifierStub.newInstance(catalog,schema,typename);
 		}
 
 		return null;
