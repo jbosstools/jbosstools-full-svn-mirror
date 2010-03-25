@@ -162,7 +162,7 @@ public class VpeController implements INodeAdapter,
 	VpeDomMapping domMapping;
 	private VpeSourceDomBuilder sourceBuilder;
 	private VpeVisualDomBuilder visualBuilder;
-	private MozillaDndListener dndListener;
+	private VpeDnD vpeDnD;
 	/** @deprecated */
 	private VpeSelectionBuilder selectionBuilder;
 	// private VpeVisualKeyHandler visualKeyHandler;
@@ -242,7 +242,7 @@ public class VpeController implements INodeAdapter,
 				VpeTemplateManager.getInstance(), sourceEditor, pageContext);
 		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor,
 				pageContext);
-		dndListener = new VpeDnD(this);
+		vpeDnD = new VpeDnD(this, visualEditor);
 		pageContext.setSourceDomBuilder(sourceBuilder);
 		pageContext.setVisualDomBuilder(visualBuilder);
 		IDOMModel sourceModel = (IDOMModel) getModel();
@@ -455,7 +455,7 @@ public class VpeController implements INodeAdapter,
 					= visualEditor.getMozillaEventAdapter();
 			if (mozillaEventAdapter != null) {
 				mozillaEventAdapter.addContextMenuListener(this);
-				mozillaEventAdapter.addDndListener(dndListener);
+				mozillaEventAdapter.addDndListener(vpeDnD);
 				mozillaEventAdapter.addKeyListener(this);
 				mozillaEventAdapter.addMouseListener(this);
 				mozillaEventAdapter.addSelectionListener(this);
@@ -472,7 +472,7 @@ public class VpeController implements INodeAdapter,
 					= visualEditor.getMozillaEventAdapter();
 			if (mozillaEventAdapter != null) {
 				mozillaEventAdapter.removeContextMenuListener(this);
-				mozillaEventAdapter.removeDndListener(dndListener);
+				mozillaEventAdapter.removeDndListener(vpeDnD);
 				mozillaEventAdapter.removeKeyListener(this);
 				mozillaEventAdapter.removeMouseListener(this);
 				mozillaEventAdapter.removeSelectionListener(this);
@@ -1202,7 +1202,7 @@ public class VpeController implements INodeAdapter,
 								XulRunnerVpeUtils.getElementBounds(
 										selectedElement),
 								VisualDomUtil.getMousePoint(mouseEvent))) {
-					dndListener.dragGesture(mouseEvent);
+					vpeDnD.dragGesture(mouseEvent);
 				} else {
 					selectionManager.setSelection(mouseEvent);					
 				}
@@ -2225,6 +2225,10 @@ public class VpeController implements INodeAdapter,
 			VpePlugin.getPluginLog().logError("includeList - NULL!!!"); //$NON-NLS-1$
 
 		return includeList;
+	}
+
+	public VpeDnD getVpeDnD() {
+		return vpeDnD;
 	}
 
 	/**

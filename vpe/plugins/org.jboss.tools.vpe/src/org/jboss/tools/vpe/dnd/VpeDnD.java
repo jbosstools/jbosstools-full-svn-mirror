@@ -40,6 +40,7 @@ import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.VpeVisualInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeVisualInnerDropInfo;
 import org.jboss.tools.vpe.editor.mozilla.MozillaDropInfo;
+import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.template.VpePseudoContentCreator;
@@ -100,15 +101,19 @@ public class VpeDnD implements MozillaDndListener {
 
 	private VpeController vpeController;
 	private VpeVisualInnerDragInfo innerDragInfo = null;
+	private DraggablePattern draggablePattern;
 
-	public VpeDnD(VpeController vpeController) {
+	public VpeDnD(VpeController vpeController, MozillaEditor mozillaEditor) {
 		this.vpeController = vpeController;
+		this.draggablePattern = new DraggablePattern(mozillaEditor);
 	}
 
 	public void dragGesture(nsIDOMEvent domEvent) {
 		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent
 				.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
-		boolean canDragFlag = canInnerDrag(mouseEvent);
+		nsIDOMElement selectedElement = vpeController.getXulRunnerEditor()
+				.getLastSelectedElement();
+		boolean canDragFlag = isDraggable(selectedElement);
 		// start drag sessionvpe-element
 		if (canDragFlag) {
 			startDragSession(domEvent);
@@ -142,6 +147,10 @@ public class VpeDnD implements MozillaDndListener {
 			innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
 		}
 		vpeController.onRefresh();
+	}
+	
+	public void selectionChanged() {
+		
 	}
 
 	/**
@@ -266,7 +275,7 @@ public class VpeDnD implements MozillaDndListener {
 		dropCommand.execute(dropData);
 	}
 	
-	private boolean canInnerDrag(nsIDOMMouseEvent event) {
+	private boolean isDraggable(nsIDOMElement element) {
 		vpeController.onHideTooltip();
 	
 		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
@@ -277,7 +286,7 @@ public class VpeDnD implements MozillaDndListener {
 			innerDragInfo = null;
 		}
 		boolean canDrag = false;
-		VpeVisualInnerDragInfo dragInfo = getInnerDragInfo(event);
+		VpeVisualInnerDragInfo dragInfo = getInnerDragInfo(element);
 		if (dragInfo != null) {
 			nsIDOMNode dragNode = dragInfo.getNode();
 			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
@@ -609,8 +618,13 @@ public class VpeDnD implements MozillaDndListener {
 	
 		}
 		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-			System.out
-					.println("  canDrop: " + canDrop + (canDrop ? "  container: " + caretParent.getNodeName() + "  offset: " + caretOffset : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			System.out.println("  canDrop: " + canDrop			//$NON-NLS-1$ 
+							+ (canDrop ?
+										"  container: "			//$NON-NLS-1$
+										+ caretParent.getNodeName() 
+										+ "  offset: "			//$NON-NLS-1$
+										+ caretOffset
+									   : ""));					//$NON-NLS-1$
 		}
 		return new MozillaDropInfo(canDrop, caretParent, caretOffset);
 	
@@ -654,12 +668,11 @@ public class VpeDnD implements MozillaDndListener {
 		return dragService;
 	}
 
-	private VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMMouseEvent event) {
-		nsIDOMElement selectedElement = vpeController.getVisualBuilder().getXulRunnerEditor().getLastSelectedElement();
-		if (selectedElement == null) {
+	private VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMElement element) {
+		if (element == null) {
 			return null;
 		} else {
-			return new VpeVisualInnerDragInfo(selectedElement);
+			return new VpeVisualInnerDragInfo(element);
 		}
 
 		// fix of JBIDE-4998
@@ -725,19 +738,23 @@ public class VpeDnD implements MozillaDndListener {
 	}
 	
 	private VpeVisualInnerDropInfo getInnerDropInfo(nsIDOMEvent event) {
-		nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent) event.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
+		nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent)
+				event.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
 		nsIDOMNode dropContainer = null;
 		int dropOffset = 0;
 		int mouseX = nsuiEvent.getPageX();
 		int mouseY = nsuiEvent.getPageY();
-		nsIDOMNode originalNode = vpeController.getVisualBuilder().getOriginalTargetNode(event);
+		System.out.println(String.format("x = %s; y = %s", mouseX, mouseY));
+		nsIDOMNode originalNode = vpeController.getVisualBuilder()
+				.getOriginalTargetNode(event);
 		if (originalNode == null || originalNode.getParentNode() == null ||
 				originalNode.getParentNode().getNodeType() == Node.DOCUMENT_NODE) {
 			return  new VpeVisualInnerDropInfo(null, 0, mouseX, mouseY);
 		}
 		if (originalNode.getNodeType() == Node.TEXT_NODE) {
 			dropContainer = nsuiEvent.getRangeParent();
-			nsIDOMNode containerForPseudoContent = VpePseudoContentCreator.getContainerForPseudoContent(dropContainer);
+			nsIDOMNode containerForPseudoContent = VpePseudoContentCreator
+					.getContainerForPseudoContent(dropContainer);
 			if (containerForPseudoContent != null) {
 				dropContainer = containerForPseudoContent;
 				dropOffset = 0;
@@ -754,7 +771,8 @@ public class VpeDnD implements MozillaDndListener {
 			long count = childen.getLength();
 			for (long i = 0; i < count; i++) {
 				nsIDOMNode child = childen.item(i);
-				if (VpeVisualDomBuilder.isPseudoElement(child) || VpeVisualDomBuilder.isAnonElement(child)) {
+				if (VpeVisualDomBuilder.isPseudoElement(child)
+						|| VpeVisualDomBuilder.isAnonElement(child)) {
 					continue;
 				}
 				Rectangle rect = vpeController.getVisualBuilder().getNodeBounds(child);

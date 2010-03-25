@@ -44,7 +44,6 @@ import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.dnd.VpeDnD;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
@@ -1323,6 +1322,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		int resizerConstrains = getResizerConstrains(visualElement);
 		visualEditor.setSelectionRectangle(visualElement, resizerConstrains,
 				scroll);
+		this.visualEditor.getController().getVpeDnD().selectionChanged();
 	}
 
     /**
