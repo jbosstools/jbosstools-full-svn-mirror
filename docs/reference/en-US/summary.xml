@@ -14,9 +14,11 @@
             <ulink url="http://docs.jboss.org/tools">http://docs.jboss.org/tools</ulink> in the corresponding release directory.
         </para>   
         <para>The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs">http://download.jboss.org/jbosstools/nightly-docs</ulink>. </para>
-<para>For more information about Smooks technology please visit
+<para>
+    For more information about Smooks technology please visit
                 <ulink url="http://www.smooks.org/mediawiki/index.php?title=Main_Page">
-                    Smooks Technology Home Page</ulink></para>
-     
+                Smooks Technology Home Page</ulink>
+</para>
+        <para>You can find a set of screencasts on Smooks tools technology <ulink url="http://community.jboss.org/wiki/JBossTools-SmooksEditor">here</ulink>.</para>
     </section>
 </chapter>
