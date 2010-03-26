@@ -34,7 +34,6 @@ import org.hibernate.console.stubs.TypeStub;
 
 /**
  * @author MAX
- *
  */
 public class ClassNode extends BaseNode {
 
@@ -44,81 +43,76 @@ public class ClassNode extends BaseNode {
 
 	Object baseObject;
 	boolean childrenCreated = false;
-	public ClassNode(NodeFactory factory, BaseNode parent, String name, ClassMetadataStub metadata, Object baseObject, boolean objectGraph) {
+
+	public ClassNode(NodeFactory factory, BaseNode parent, String name, ClassMetadataStub metadata,
+			Object baseObject, boolean objectGraph) {
 
 		super(factory, parent);
-        this.name = name;
-        this.baseObject = baseObject;
-        this.objectGraph  = objectGraph;
+		this.name = name;
+		this.baseObject = baseObject;
+		this.objectGraph = objectGraph;
 
 		md = metadata;
-			if (md != null) { // Don't have any hibernate related info about this one...
-				iconName = ImageConstants.MAPPEDCLASS;
-			} else {
-				iconName = ImageConstants.UNMAPPEDCLASS;
-			}
+		if (md != null) { // Don't have any hibernate related info about this one...
+			iconName = ImageConstants.MAPPEDCLASS;
+		} else {
+			iconName = ImageConstants.UNMAPPEDCLASS;
+		}
 	}
 
 	protected void checkChildren() {
-		if(!childrenCreated) {
+		if (!childrenCreated) {
 			createChildren();
 			childrenCreated = true;
 		}
 	}
 
 	protected void createChildren() {
-		//System.out.println("Creating children for: " + this);
+		// System.out.println("Creating children for: " + this);
 
-		if(objectGraph && getValue()==null || md == null) {
+		if (objectGraph && getValue() == null || md == null) {
 			return;
 		}
-
-
-        // Identifier
-        if(md.getIdentifierPropertyName()!=null) {
-            children.add(0, factory.createIdentifierNode(this, md) );
-        }
-
-        String[] names = md.getPropertyNames();
-        for (int i = 0; i < names.length; i++) {
-            TypeStub type = md.getPropertyTypes()[i];
-
-            if(type.isCollectionType() ) {
-                PersistentCollectionNode tn = factory.createPersistentCollectionNode(this, names[i], md, (CollectionTypeStub)type, getValue(), objectGraph);
-                children.add(tn);
-            } else {
-                children.add(factory.createPropertyNode(this, i, md, getValue(), objectGraph) );
-            }
-        }
+		// Identifier
+		if (md.getIdentifierPropertyName() != null) {
+			children.add(0, factory.createIdentifierNode(this, md));
+		}
+		String[] names = md.getPropertyNames();
+		TypeStub[] types = md.getPropertyTypes();
+		for (int i = 0; i < names.length; i++) {
+			TypeStub type = types[i];
+			if (type.isCollectionType()) {
+				PersistentCollectionNode tn = factory.createPersistentCollectionNode(this,
+						names[i], md, (CollectionTypeStub) type, getValue(), objectGraph);
+				children.add(tn);
+			} else {
+				children.add(factory.createPropertyNode(this, i, md, getValue(), objectGraph));
+			}
+		}
 	}
 
 	public String getHQL() {
 
 		List<BaseNode> parents = new ArrayList<BaseNode>();
 
-        BaseNode currentParent = this;
-          while (currentParent != null && !(currentParent instanceof ConfigurationEntitiesNode) ) {
-                      parents.add(currentParent);
-                      currentParent = currentParent.parent;
-             }
-
-        if(currentParent instanceof ConfigurationEntitiesNode) {
-            currentParent = parents.get(parents.size()-1);
-          }
-
-        // currentParent is the root
-        String cname = ( (ClassNode)currentParent).md.getMappedClass(EntityModeStub.POJO).getName();
-
+		BaseNode currentParent = this;
+		while (currentParent != null && !(currentParent instanceof ConfigurationEntitiesNode)) {
+			parents.add(currentParent);
+			currentParent = currentParent.parent;
+		}
+		if (currentParent instanceof ConfigurationEntitiesNode) {
+			currentParent = parents.get(parents.size() - 1);
+		}
+		// currentParent is the root
+		String cname = ((ClassNode) currentParent).md.getMappedClass(EntityModeStub.POJO).getName();
 		if (cname.lastIndexOf(".") != -1) { //$NON-NLS-1$
 			cname = cname.substring(cname.lastIndexOf(".") + 1); //$NON-NLS-1$
 		}
 		String alias = cname.toLowerCase();
-
 		String path = ""; //$NON-NLS-1$
-		for (int i = parents.size()-2; i >= 0; i--) {
-			path += "." +  parents.get(i).getName(); //$NON-NLS-1$
+		for (int i = parents.size() - 2; i >= 0; i--) {
+			path += "." + parents.get(i).getName(); //$NON-NLS-1$
 		}
-
 		return "select " + alias + path + " from " + cname + " as " + alias; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
@@ -127,24 +121,22 @@ public class ClassNode extends BaseNode {
 	}
 
 	public String renderLabel(boolean fullyQualifiedNames) {
-		if(objectGraph) {
+		if (objectGraph) {
 			Object o = getValue();
-			if(HibernateStub.isInitialized(o) ) {
-				return super.renderLabel(fullyQualifiedNames) + " = " + o;	 //$NON-NLS-1$
+			if (HibernateStub.isInitialized(o)) {
+				return super.renderLabel(fullyQualifiedNames) + " = " + o; //$NON-NLS-1$
 			} else {
-				return super.renderLabel(fullyQualifiedNames) + " = " + ConsoleMessages.ClassNode_uninitialized_proxy; //$NON-NLS-1$
+				return super.renderLabel(fullyQualifiedNames)
+						+ " = " + ConsoleMessages.ClassNode_uninitialized_proxy; //$NON-NLS-1$
 			}
-
-		} else {
-			return super.renderLabel(fullyQualifiedNames);
 		}
+		return super.renderLabel(fullyQualifiedNames);
 	}
 
 	public Object getValue() {
-		if(objectGraph) {
+		if (objectGraph) {
 			return baseObject;
-		} else {
-			return null;
 		}
+		return null;
 	}
 }

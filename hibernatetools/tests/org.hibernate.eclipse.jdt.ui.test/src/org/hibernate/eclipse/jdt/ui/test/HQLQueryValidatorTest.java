@@ -170,8 +170,13 @@ public class HQLQueryValidatorTest extends HibernateConsoleTest {
 		try {
 			ccfg.checkQuery("from TestClass where id = #{some.id.field}", false); //$NON-NLS-1$
 			fail("should have failed with EL expressions!"); //$NON-NLS-1$
-		} catch (HibernateException he) {
-			// ok
+		} catch (RuntimeException he) {
+			// TODO: RuntimeException ? - find correct solution
+			if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+				// ok
+			} else {
+				throw he;
+			}
 		}
 		
 		ccfg.checkQuery("from TestClass where id = #{some.id.field}", true); //$NON-NLS-1$

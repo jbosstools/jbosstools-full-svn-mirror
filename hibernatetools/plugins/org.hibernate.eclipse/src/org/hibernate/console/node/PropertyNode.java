@@ -40,8 +40,13 @@ public class PropertyNode extends TypeNode {
 					return null;
 				}
 				return baseMetaData.getPropertyValue(baseObject, getName(), EntityModeStub.POJO);
-			} catch (HibernateException e) {
-				e.printStackTrace();
+			} catch (RuntimeException he) {
+				// TODO: RuntimeException ? - find correct solution
+				if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+					he.printStackTrace();
+				} else {
+					throw he;
+				}
 				return null;
 			}
 		} else {

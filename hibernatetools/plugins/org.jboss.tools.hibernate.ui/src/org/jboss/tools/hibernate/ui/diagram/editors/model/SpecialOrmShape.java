@@ -17,7 +17,6 @@ import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.console.stubs.RootClassStub;
 import org.hibernate.console.stubs.TypeStub;
-import org.hibernate.eclipse.console.HibernateConsolePlugin;
 
 /**
  * 
@@ -33,7 +32,6 @@ public class SpecialOrmShape extends OrmShape {
 	/**
 	 * creates children of the shape, 
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void initModel() {
 		RootClassStub rootClass = (RootClassStub)getOrmElement();
@@ -61,12 +59,7 @@ public class SpecialOrmShape extends OrmShape {
 						return fField.getValue().getType();
 					}});								
 			} else {
-				try{
-					type = field.getValue().getType();
-				} catch (MappingException e) {
-					//type is not accessible
-					HibernateConsolePlugin.getDefault().logErrorMessage("MappingException: ", e); //$NON-NLS-1$
-				}
+				type = field.getValue().getType();
 			}
 			Shape bodyOrmShape = null;
 			if (type != null && type.isEntityType()) {

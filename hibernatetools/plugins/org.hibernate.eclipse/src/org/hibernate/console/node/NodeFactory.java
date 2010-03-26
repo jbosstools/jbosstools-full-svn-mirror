@@ -66,7 +66,7 @@ public class NodeFactory {
         //return new RootNode(this, classes);
     }
 
-    public BaseNode createObjectNode(SessionStub sessionStub, Object o) throws HibernateException {
+    public BaseNode createObjectNode(SessionStub sessionStub, Object o) {
 		ClassMetadataStub md = getMetaData(sessionStub.getEntityName(o));
 		return internalCreateClassNode(null, md.getEntityName(), md, o, false);
 		//return new ClassNode(this,null,md.getEntityName(),md,o,true);
@@ -154,18 +154,18 @@ public class NodeFactory {
 
 		public String getIconNameForType(TypeStub type) {
 			String result = ImageConstants.UNKNOWNPROPERTY;
-			if(type.isEntityType() ) {
+			if (type.isEntityType()) {
 				EntityTypeStub et = (EntityTypeStub) type;
-				if(!et.isOneToOne() ) {
+				if (!et.isOneToOne()) {
 					result = ImageConstants.MANYTOONE;
 				} else {
 					result = ImageConstants.ONETOONE;
 				}
-			} else if (type.isAnyType() ) {
+			} else if (type.isAnyType()) {
 				result = ImageConstants.ANY;
-			} else if (type.isComponentType() ) {
+			} else if (type.isComponentType()) {
 				result = ImageConstants.COMPONENT;
-			} else if (type.isCollectionType() ) {
+			} else if (type.isCollectionType()) {
 				//CollectionType pct = (CollectionType)type;
 				result = ImageConstants.ONETOMANY; //could also be values/collecionts?
 			} else {

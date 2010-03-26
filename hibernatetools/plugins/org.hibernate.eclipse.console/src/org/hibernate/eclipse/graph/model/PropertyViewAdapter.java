@@ -29,6 +29,7 @@ import java.util.Observable;
 import org.eclipse.swt.graphics.Image;
 import org.hibernate.console.stubs.CollectionStub;
 import org.hibernate.console.stubs.EntityTypeStub;
+import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.console.stubs.OneToManyStub;
 import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
@@ -96,8 +97,13 @@ public class PropertyViewAdapter extends Observable {
 				this.addSourceAssociation( pava );
 				target.addTargetAssociation( pava );
 			}
-		} catch(HibernateException he) {
-			HibernateConsolePlugin.getDefault().logWarning( he );
+		} catch (RuntimeException he) {
+			// TODO: RuntimeException ? - find correct solution
+			if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+				HibernateConsolePlugin.getDefault().logWarning( new HibernateConsoleRuntimeException("", he) ); //$NON-NLS-1$
+			} else {
+				throw he;
+			}
 		}
 		
 		}

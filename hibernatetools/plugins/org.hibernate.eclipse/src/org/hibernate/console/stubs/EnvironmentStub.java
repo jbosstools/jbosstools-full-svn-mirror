@@ -10,6 +10,13 @@ import org.hibernate.cfg.Environment;
 
 public class EnvironmentStub {
 	public static final String DIALECT = Environment.DIALECT;
+	public static final String DEFAULT_CATALOG = Environment.DEFAULT_CATALOG;
+	public static final String DEFAULT_SCHEMA = Environment.DEFAULT_SCHEMA;
+	public static final String DRIVER = Environment.DRIVER;
+	public static final String PASS = Environment.PASS;
+	public static final String SESSION_FACTORY_NAME = Environment.SESSION_FACTORY_NAME;
+	public static final String URL = Environment.URL;
+	public static final String USER = Environment.USER;
 
 	@SuppressWarnings("unchecked")
 	public static String[] extractHibernateProperties() {

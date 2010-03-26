@@ -37,7 +37,7 @@ public class ConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter {
 	@SuppressWarnings("unchecked")
 	public Object[] getChildren(Object o) {
 		ConfigurationStub cfg = (ConfigurationStub) o;
-		Iterator<? extends PersistentClassStub> classMappings = cfg.getClassMappings();
+		Iterator<PersistentClassStub> classMappings = cfg.getClassMappings();
 		return toArray(classMappings, PersistentClassStub.class, new Comparator<PersistentClassStub>() {
 
 			public int compare(PersistentClassStub p0, PersistentClassStub p1) {

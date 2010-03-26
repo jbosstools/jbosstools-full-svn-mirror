@@ -121,8 +121,8 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	public ConfigurationStub buildWith(final ConfigurationStub cfg, final boolean includeMappings) {
 		if (classLoader == null) {
 			classLoader = createClassLoader();
+			executionContext = new DefaultExecutionContext(getName(), classLoader);
 		}
-		executionContext = new DefaultExecutionContext(getName(), classLoader);
 		ConfigurationStub result = (ConfigurationStub) executionContext.execute(new ExecutionContext.Command() {
 			public Object execute() {
 				ConfigurationStubFactory csf = new ConfigurationStubFactory(prefs);
@@ -224,9 +224,9 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 
 	protected ClassLoader getParentClassLoader() {
-		return ClassLoader.getSystemClassLoader();
+		//return ClassLoader.getSystemClassLoader();
 		//return Thread.currentThread().getContextClassLoader().getParent().getParent();
-		//return Thread.currentThread().getContextClassLoader();
+		return Thread.currentThread().getContextClassLoader();
 	}
 	public ConfigurationStub getConfiguration() {
 		return configStub;

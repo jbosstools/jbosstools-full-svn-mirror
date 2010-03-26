@@ -62,9 +62,14 @@ public abstract class ConsoleConfigurationBasedAction extends SelectionListenerA
 
 		try {
 			doRun();
-		} catch(HibernateException he) {
-			String out = NLS.bind(HibernateConsoleMessages.ConsoleConfigurationBasedAction_problem_while_executing, getText(), he);
-			HibernateConsolePlugin.getDefault().showError(null, out, he);
+		} catch (RuntimeException he) {
+			// TODO: RuntimeException ? - find correct solution
+			if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+				String out = NLS.bind(HibernateConsoleMessages.ConsoleConfigurationBasedAction_problem_while_executing, getText(), he);
+				HibernateConsolePlugin.getDefault().showError(null, out, he);
+			} else {
+				throw he;
+			}
 		}
 	}
 

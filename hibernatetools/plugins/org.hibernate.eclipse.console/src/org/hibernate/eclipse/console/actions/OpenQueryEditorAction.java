@@ -35,8 +35,13 @@ public abstract class OpenQueryEditorAction extends SelectionListenerAction {
 			try {
 			  openQueryEditor( config, generateQuery(path) );
 			  showed = true;
-			} catch(HibernateException he) {
-				HibernateConsolePlugin.getDefault().showError(null, HibernateConsoleMessages.OpenQueryEditorAction_exception_open_hql_editor, he);
+			} catch (RuntimeException he) {
+				// TODO: RuntimeException ? - find correct solution
+				if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+					HibernateConsolePlugin.getDefault().showError(null, HibernateConsoleMessages.OpenQueryEditorAction_exception_open_hql_editor, he);
+				} else {
+					throw he;
+				}
 			}
 		}
 		return showed;

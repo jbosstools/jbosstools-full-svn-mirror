@@ -23,7 +23,6 @@ package org.hibernate.eclipse.console.workbench;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
@@ -33,18 +32,18 @@ import org.hibernate.eclipse.console.utils.EclipseImages;
 
 public class PersistentClassWorkbenchAdapter extends BasicWorkbenchAdapter {
 
-	@SuppressWarnings("unchecked")
 	public Object[] getChildren(Object o) {
 		PersistentClassStub pc = (PersistentClassStub) o;
 		PropertyStub identifierProperty = pc.getIdentifierProperty();
-		List<PropertyStub> properties = new ArrayList<PropertyStub>();
-		
-		if(identifierProperty!=null) {
-			properties.add(identifierProperty);
+		ArrayList<PropertyStub> res = new ArrayList<PropertyStub>();
+		Iterator<PropertyStub> it = pc.getPropertyClosureIterator();
+		while (it.hasNext()) {
+			res.add(it.next());
 		}
-		
-		Iterator<PropertyStub> propertyClosureIterator = new JoinedIterator(properties.iterator(), pc.getPropertyClosureIterator());
-		return toArray(propertyClosureIterator, PropertyStub.class, null);
+		if (identifierProperty != null) {
+			res.add(identifierProperty);
+		}
+		return res.toArray();
 	}
 
 	

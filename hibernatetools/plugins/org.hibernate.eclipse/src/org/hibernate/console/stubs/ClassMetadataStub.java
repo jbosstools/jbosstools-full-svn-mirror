@@ -20,7 +20,7 @@ public class ClassMetadataStub {
 		for (int i = 0; i < types.length; i++) {
 			res[i] = TypeStubFactory.createTypeStub(types[i]);
 		}
-		return null;
+		return res;
 	}
 
 	public String getIdentifierPropertyName() {
@@ -39,7 +39,6 @@ public class ClassMetadataStub {
 		return TypeStubFactory.createTypeStub(classMetadata.getIdentifierType());
 	}
 
-	// TODO: should be stub class
 	public Class getMappedClass(EntityModeStub pojo) {
 		return classMetadata.getMappedClass(pojo.entityMode);
 	}

@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.FakeDelegatingDriver;
 import org.hibernate.console.stubs.util.ReflectHelper;
+import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2x.Exporter;
 import org.hibernate.tool.hbm2x.HibernateMappingExporter;
@@ -82,10 +84,14 @@ public class ConfigurationStub {
 		return (configuration.getNamingStrategy() != null);
 	}
 	
-	// TODO: temporary?
 	@SuppressWarnings("unchecked")
-	public Iterator getClassMappings() {
-		return configuration.getClassMappings();
+	public Iterator<PersistentClassStub> getClassMappings() {
+		Iterator<PersistentClass> it = (Iterator<PersistentClass>)configuration.getClassMappings();
+		ArrayList<PersistentClassStub> arr = new ArrayList<PersistentClassStub>();
+		while (it.hasNext()) {
+			arr.add(PersistentClassStubFactory.createPersistentClassStub(it.next()));
+		}
+		return arr.iterator();
 	}
 	
 	// TODO: temporary should be protected and/or PersistentClassStub?

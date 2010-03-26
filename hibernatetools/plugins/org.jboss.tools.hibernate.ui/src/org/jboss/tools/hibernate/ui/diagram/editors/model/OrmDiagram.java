@@ -792,15 +792,20 @@ public class OrmDiagram extends BaseElement {
 				try {
     				consoleConfig.build();
     				consoleConfig.buildMappings();
-				} catch (HibernateException he) {
-					// here just ignore this
-					if (error != null) {
-						error.append(consoleConfigName);
-						error.append(": "); //$NON-NLS-1$
-						error.append(he.getMessage());
-						if (error.length() == 0) {
-							error.append(he.getCause());
+				} catch (RuntimeException he) {
+					// TODO: RuntimeException ? - find correct solution
+					if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+						// here just ignore this
+						if (error != null) {
+							error.append(consoleConfigName);
+							error.append(": "); //$NON-NLS-1$
+							error.append(he.getMessage());
+							if (error.length() == 0) {
+								error.append(he.getCause());
+							}
 						}
+					} else {
+						throw he;
 					}
 				}
 				config = consoleConfig.getConfiguration();

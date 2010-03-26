@@ -14,6 +14,8 @@ import org.hibernate.console.util.QLFormatHelper;
 import org.hibernate.engine.query.HQLQueryPlan;
 import org.hibernate.hql.QueryTranslator;
 import org.hibernate.impl.SessionFactoryImpl;
+import org.hibernate.metadata.ClassMetadata;
+import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.type.Type;
 
 public class SessionStubFactory {
@@ -51,21 +53,34 @@ public class SessionStubFactory {
 		return res;
 	}
 
-	// TODO: get rid of this - ClassMetadata - should not be public
 	@SuppressWarnings("unchecked")
 	public Map<String, ClassMetadataStub> getClassMetaData() {
 		if (sessionFactory == null) {
 			return new HashMap<String, ClassMetadataStub>();
 		}
-		return sessionFactory.getAllClassMetadata();
+		Map<String, ClassMetadata> allClassMetadata = sessionFactory.getAllClassMetadata();
+		Iterator<Map.Entry<String, ClassMetadata>> it = allClassMetadata.entrySet().iterator();
+		Map<String, ClassMetadataStub> res = new HashMap<String, ClassMetadataStub>();
+		while (it.hasNext()) {
+			Map.Entry<String, ClassMetadata> entry = it.next();
+			res.put(entry.getKey(), new ClassMetadataStub(entry.getValue()));
+		}
+		return res;
 	}
-	// TODO: get rid of this - ClassMetadata - should not be public
+
 	@SuppressWarnings("unchecked")
 	public Map<String, CollectionMetadataStub> getCollectionMetaData() {
 		if (sessionFactory == null) {
 			return new HashMap<String, CollectionMetadataStub>();
 		}
-		return sessionFactory.getAllCollectionMetadata();
+		Map<String, CollectionMetadata> allClassMetadata = sessionFactory.getAllCollectionMetadata();
+		Iterator<Map.Entry<String, CollectionMetadata>> it = allClassMetadata.entrySet().iterator();
+		Map<String, CollectionMetadataStub> res = new HashMap<String, CollectionMetadataStub>();
+		while (it.hasNext()) {
+			Map.Entry<String, CollectionMetadata> entry = it.next();
+			res.put(entry.getKey(), new CollectionMetadataStub(entry.getValue()));
+		}
+		return res;
 	}
 	
 	/**

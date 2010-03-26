@@ -67,11 +67,16 @@ public class ExecuteQueryAction extends Action {
 					if (cfg.getConfiguration() == null) {
 	    				try {
 	    					cfg.build();
-	    				} catch (HibernateException he) {
-	    					HibernateConsolePlugin.getDefault().showError(
-	    						HibernateConsolePlugin.getShell(), 
-	    						HibernateConsoleMessages.LoadConsoleCFGCompletionProposal_could_not_load_configuration +
-	    						' ' + cfg.getName(), he);
+	    				} catch (RuntimeException he) {
+	    					// TODO: RuntimeException ? - find correct solution
+	    					if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+		    					HibernateConsolePlugin.getDefault().showError(
+			    						HibernateConsolePlugin.getShell(), 
+			    						HibernateConsoleMessages.LoadConsoleCFGCompletionProposal_could_not_load_configuration +
+			    						' ' + cfg.getName(), he);
+	    					} else {
+	    						throw he;
+	    					}
 	    				}
 					}
 					if (cfg.getConfiguration() != null) {

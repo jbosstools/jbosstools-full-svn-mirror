@@ -2,7 +2,7 @@ package org.hibernate.console.stubs;
 
 import org.hibernate.type.AbstractType;
 
-public abstract class AbstractTypeStub extends TypeStub {
+public class AbstractTypeStub extends TypeStub {
 	protected AbstractType abstractType;
 
 	protected AbstractTypeStub(Object abstractType) {

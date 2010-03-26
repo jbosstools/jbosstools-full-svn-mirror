@@ -178,9 +178,14 @@ public class CriteriaEditor extends AbstractQueryEditor {
 			try {
 			 	consoleConfiguration.build();
 			 	consoleConfiguration.buildMappings();
-			} catch (HibernateException e) {
-				String mess = NLS.bind(HibernateConsoleMessages.CompletionHelper_error_could_not_build_cc, consoleConfiguration.getName());
-				HibernateConsolePlugin.getDefault().logErrorMessage(mess, e);
+			} catch (RuntimeException he) {
+				// TODO: RuntimeException ? - find correct solution
+				if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+					String mess = NLS.bind(HibernateConsoleMessages.CompletionHelper_error_could_not_build_cc, consoleConfiguration.getName());
+					HibernateConsolePlugin.getDefault().logErrorMessage(mess, he);
+				} else {
+					throw he;
+				}
 			}
 		}
 		

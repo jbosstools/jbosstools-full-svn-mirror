@@ -27,7 +27,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.osgi.util.NLS;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.actions.ConsoleConfigurationBasedAction;
@@ -88,10 +87,15 @@ public class SchemaExportAction extends ConsoleConfigurationBasedAction {
 				// the view just react to config being
 				// build ?
 				}
-			} catch (HibernateException he) {
-				HibernateConsolePlugin.getDefault().showError(
-						viewer.getControl().getShell(),
-						HibernateConsoleMessages.SchemaExportAction_exception_running_schemaexport, he );
+			} catch (RuntimeException he) {
+				// TODO: RuntimeException ? - find correct solution
+				if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+					HibernateConsolePlugin.getDefault().showError(
+							viewer.getControl().getShell(),
+							HibernateConsoleMessages.SchemaExportAction_exception_running_schemaexport, he );
+				} else {
+					throw he;
+				}
 			}
 		}
 	}

@@ -71,10 +71,15 @@ public class PersistentCollectionNode extends BaseNode {
 		if(collectionObject!=null) return collectionObject;
 		try {
 			collectionObject = md.getPropertyValue(baseObject, name, EntityModeStub.POJO);
-		} catch (HibernateException e) {
-			IllegalArgumentException iae = new IllegalArgumentException(ConsoleMessages.PersistentCollectionNode_could_not_access_property_value);
-			iae.initCause(e);
-			throw iae;
+		} catch (RuntimeException he) {
+			// TODO: RuntimeException ? - find correct solution
+			if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+				IllegalArgumentException iae = new IllegalArgumentException(ConsoleMessages.PersistentCollectionNode_could_not_access_property_value);
+				iae.initCause(he);
+				throw iae;
+			} else {
+				throw he;
+			}
 		}
 		return collectionObject;
 	}
@@ -120,13 +125,13 @@ public class PersistentCollectionNode extends BaseNode {
 	}
 
 	protected void checkChildren() {
-		if(!childrenCreated && objectGraph) {
+		if (!childrenCreated && objectGraph) {
 			initCollectionObject();
 			int idx = 0;
-			if(!type.isArrayType() ) {
+			if (!type.isArrayType()) {
 				Iterator<?> i = ( (Collection<?>)collectionObject).iterator();
 
-				while (i.hasNext() ) {
+				while (i.hasNext()) {
 					Object element = i.next();
 
 					children.add(createNode(idx++,element, elementType) );

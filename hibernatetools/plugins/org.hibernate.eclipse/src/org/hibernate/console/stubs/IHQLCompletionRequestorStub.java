@@ -1,13 +1,24 @@
 package org.hibernate.console.stubs;
 
+import org.hibernate.tool.ide.completion.HQLCompletionProposal;
 import org.hibernate.tool.ide.completion.IHQLCompletionRequestor;
 
 public abstract class IHQLCompletionRequestorStub {
 
 	protected IHQLCompletionRequestor hqlCompletionRequestor;
 	
-	protected IHQLCompletionRequestorStub(Object hqlCompletionRequestor) {
-		
+	protected IHQLCompletionRequestorStub() {
+		hqlCompletionRequestor = new IHQLCompletionRequestor() {
+
+			public boolean accept(HQLCompletionProposal proposal) {
+				return IHQLCompletionRequestorStub.this.accept(new HQLCompletionProposalStub(proposal));
+			}
+
+			public void completionFailure(String errorMessage) {
+				IHQLCompletionRequestorStub.this.completionFailure(errorMessage);
+			}
+			
+		};
 	}
 	
 	public abstract boolean accept(HQLCompletionProposalStub proposal);

@@ -66,15 +66,25 @@ public class EditConsoleConfiguration extends ConsoleConfigurationBasedAction {
 						final ConsoleConfiguration config = (ConsoleConfiguration) node;
 						edit( config );
 					}
-				} catch(HibernateException he) {
-					HibernateConsolePlugin.getDefault().showError(null, HibernateConsoleMessages.EditConsoleConfiguration_exception_while_edit_config, he);
+				} catch (RuntimeException he) {
+					// TODO: RuntimeException ? - find correct solution
+					if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+						HibernateConsolePlugin.getDefault().showError(null, HibernateConsoleMessages.EditConsoleConfiguration_exception_while_edit_config, he);
+					} else {
+						throw he;
+					}
 				}
 			}
 		} else {
 			try {
 				edit(cfg);
-			} catch(HibernateException he) {
-				HibernateConsolePlugin.getDefault().showError(null, HibernateConsoleMessages.EditConsoleConfiguration_exception_while_edit_config, he);
+			} catch (RuntimeException he) {
+				// TODO: RuntimeException ? - find correct solution
+				if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+					HibernateConsolePlugin.getDefault().showError(null, HibernateConsoleMessages.EditConsoleConfiguration_exception_while_edit_config, he);
+				} else {
+					throw he;
+				}
 			}
 		}
 	}

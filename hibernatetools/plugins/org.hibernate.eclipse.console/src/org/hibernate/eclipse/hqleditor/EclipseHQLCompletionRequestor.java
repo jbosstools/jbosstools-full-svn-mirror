@@ -33,9 +33,8 @@ import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.eclipse.console.workbench.HibernateWorkbenchHelper;
 import org.hibernate.tool.ide.completion.HQLCompletionProposal;
-import org.hibernate.tool.ide.completion.IHQLCompletionRequestor;
 
-public class EclipseHQLCompletionRequestor implements IHQLCompletionRequestorStub {
+public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestorStub {
 
 	private final List<ICompletionProposal> result = new ArrayList<ICompletionProposal>();
 	private String lastErrorMessage;

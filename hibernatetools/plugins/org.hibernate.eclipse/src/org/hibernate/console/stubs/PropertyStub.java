@@ -5,7 +5,7 @@ import org.hibernate.mapping.Property;
 public class PropertyStub {
 	protected Property property;
 
-	protected PropertyStub(Object table) {
+	protected PropertyStub(Object property) {
 		this.property = (Property)property;
 	}
 

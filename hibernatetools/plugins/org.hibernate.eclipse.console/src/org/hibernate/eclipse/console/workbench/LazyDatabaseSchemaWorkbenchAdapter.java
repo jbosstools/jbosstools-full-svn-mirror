@@ -31,14 +31,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.cfg.reveng.DefaultDatabaseCollector;
-import org.hibernate.cfg.reveng.JDBCReader;
 import org.hibernate.cfg.reveng.ReverseEngineeringStrategy;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.console.stubs.ConnectionProviderStub;
+import org.hibernate.console.stubs.DefaultDatabaseCollectorStub;
+import org.hibernate.console.stubs.JDBCReaderStub;
 import org.hibernate.console.stubs.SettingsStub;
 import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
@@ -51,10 +51,9 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 		return getChildren(o, new NullProgressMonitor());
 	}
 
-	@SuppressWarnings("unchecked")
 	public synchronized Object[] getChildren(Object o, final IProgressMonitor monitor) {
 		LazyDatabaseSchema dbs = getLazyDatabaseSchema( o );
-		final DefaultDatabaseCollector db = new DefaultDatabaseCollector();
+		final DefaultDatabaseCollectorStub db = DefaultDatabaseCollectorStub.newInstance();
 
 		ConsoleConfiguration consoleConfiguration = dbs.getConsoleConfiguration();
 		try{
@@ -63,7 +62,7 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 			List<TableContainer> result = new ArrayList<TableContainer>();
 
 			Iterator<Map.Entry<String, List<TableStub>>> qualifierEntries = db.getQualifierEntries();
-			while ( qualifierEntries.hasNext() ) {
+			while (qualifierEntries.hasNext()) {
 				Map.Entry<String, List<TableStub>> entry = qualifierEntries.next();
 				result.add(new TableContainer(entry.getKey(), entry.getValue()));
 			}
@@ -75,10 +74,15 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 				}
 
 			});
-		} catch (HibernateException e){
-			HibernateConsolePlugin.getDefault().logErrorMessage(HibernateConsoleMessages.LazyDatabaseSchemaWorkbenchAdapter_problems_while_reading_database_schema, e);
-			String out = NLS.bind(HibernateConsoleMessages.LazyDatabaseSchemaWorkbenchAdapter_reading_schema_error, e.getMessage());
-			return new Object[]{out};
+		} catch (RuntimeException he) {
+			// TODO: RuntimeException ? - find correct solution
+			if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+				HibernateConsolePlugin.getDefault().logErrorMessage(HibernateConsoleMessages.LazyDatabaseSchemaWorkbenchAdapter_problems_while_reading_database_schema, he);
+				String out = NLS.bind(HibernateConsoleMessages.LazyDatabaseSchemaWorkbenchAdapter_reading_schema_error, he.getMessage());
+				return new Object[]{out};
+			} else {
+				throw he;
+			}
 		}
 
 	}
@@ -99,7 +103,7 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 		return getLazyDatabaseSchema(o).getConsoleConfiguration();
 	}
 
-	protected void readDatabaseSchema(final IProgressMonitor monitor, final DefaultDatabaseCollector db, ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
+	protected void readDatabaseSchema(final IProgressMonitor monitor, final DefaultDatabaseCollectorStub db, ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
 		final ConfigurationStub configuration = consoleConfiguration.buildWith(null, false);
 
 		consoleConfiguration.execute(new ExecutionContext.Command() {
@@ -110,13 +114,17 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 				try {
 					connectionProvider = settings.getConnectionProvider();
 
-					JDBCReader reader = JDBCReaderFactory.newJDBCReader(configuration.getProperties(), settings, strategy);
+					JDBCReaderStub reader = JDBCReaderStub.newInstance(configuration.getProperties(), settings, strategy);
 					reader.readDatabaseSchema(db, settings.getDefaultCatalogName(), settings.getDefaultSchemaName(), new ProgressListenerMonitor(monitor));
-				} catch(HibernateException he) {
-					HibernateConsolePlugin.getDefault().logErrorMessage(HibernateConsoleMessages.LazyDatabaseSchemaWorkbenchAdapter_problem_while_reading_database_schema, he);
-					return new Object[] { HibernateConsoleMessages.LazyDatabaseSchemaWorkbenchAdapter_schema_not_available};
-				}
-			    finally {
+				} catch (RuntimeException he) {
+					// TODO: RuntimeException ? - find correct solution
+					if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+						HibernateConsolePlugin.getDefault().logErrorMessage(HibernateConsoleMessages.LazyDatabaseSchemaWorkbenchAdapter_problem_while_reading_database_schema, he);
+						return new Object[] { HibernateConsoleMessages.LazyDatabaseSchemaWorkbenchAdapter_schema_not_available};
+					} else {
+						throw he;
+					}
+				} finally {
 					if (connectionProvider!=null) {
 						connectionProvider.close();
 					}

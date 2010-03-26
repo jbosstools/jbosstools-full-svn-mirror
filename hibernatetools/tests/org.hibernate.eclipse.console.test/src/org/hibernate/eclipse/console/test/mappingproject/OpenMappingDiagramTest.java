@@ -69,10 +69,15 @@ public class OpenMappingDiagramTest extends TestCase {
 			configs = new ConsoleConfigurationWorkbenchAdapter().getChildren(consCFG);
 			assertTrue(configs[0] instanceof ConfigurationStub);
 			persClasses = new ConfigurationWorkbenchAdapter().getChildren(configs[0]);
-		} catch (InvalidMappingException ex){
-			String out = NLS.bind(ConsoleTestMessages.OpenMappingDiagramTest_mapping_diagrams_for_package_cannot_be_opened,
-					new Object[]{testPackage.getElementName(), ex.getMessage()});
-			fail(out);
+		} catch (RuntimeException ex) {
+			// TODO: RuntimeException ? - find correct solution
+			if (ex.getClass().getName().contains("InvalidMappingException")) { //$NON-NLS-1$
+				String out = NLS.bind(ConsoleTestMessages.OpenMappingDiagramTest_mapping_diagrams_for_package_cannot_be_opened,
+						new Object[]{testPackage.getElementName(), ex.getMessage()});
+				fail(out);
+			} else {
+				throw ex;
+			}
 		}
 
 		if (persClasses.length > 0){

@@ -21,8 +21,6 @@
  */
 package org.hibernate.console.stubs;
 
-import org.hibernate.HibernateException;
-
 /**
  * @author max
  *
@@ -30,21 +28,16 @@ import org.hibernate.HibernateException;
 public class HibernateConsoleRuntimeException extends RuntimeException {
 
 	private static final long serialVersionUID = -9056528343206573782L;
-
-	protected HibernateException he;
 	
-	public HibernateConsoleRuntimeException(String message, Object he) {
+	public HibernateConsoleRuntimeException(Throwable cause) {
+		super("HibernateConsoleRuntimeException", cause); //$NON-NLS-1$
+	}
+	
+	public HibernateConsoleRuntimeException(String message) {
 		super(message);
-		this.he = (HibernateException)he;
 	}
-
-	public HibernateConsoleRuntimeException(String message, Throwable cause, Object he) {
+	
+	public HibernateConsoleRuntimeException(String message, Throwable cause) {
 		super(message, cause);
-		this.he = (HibernateException)he;
-	}
-
-	public HibernateConsoleRuntimeException(Throwable cause, Object he) {
-		super(cause);
-		this.he = (HibernateException)he;
 	}
 }

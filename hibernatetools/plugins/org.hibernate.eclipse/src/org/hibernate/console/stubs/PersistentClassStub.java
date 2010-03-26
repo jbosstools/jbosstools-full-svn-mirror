@@ -85,4 +85,14 @@ public abstract class PersistentClassStub {
 	public String getNodeName() {
 		return persistentClass.getNodeName();
 	}
+
+	@SuppressWarnings("unchecked")
+	public Iterator<PropertyStub> getPropertyClosureIterator() {
+		Iterator<Property> it = (Iterator<Property>)persistentClass.getPropertyClosureIterator();
+		ArrayList<PropertyStub> al = new ArrayList<PropertyStub>();
+		while (it.hasNext()) {
+			al.add(new PropertyStub(it.next()));
+		}
+		return al.iterator();
+	}
 }
