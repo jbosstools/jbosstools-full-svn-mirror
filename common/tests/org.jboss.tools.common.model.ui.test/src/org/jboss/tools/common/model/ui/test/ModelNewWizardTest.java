@@ -15,7 +15,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.model.ui.wizards.standard.DefaultStandardStep;
-import org.jboss.tools.common.util.WorkbenchUtils;
+import org.jboss.tools.test.util.WorkbenchUtils;
 
 import junit.framework.TestCase;
 
