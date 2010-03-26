@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface.text;bundle-version="3.5.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: freemarker-test.jar
+Bundle-ClassPath: .
 Export-Package: org.jboss.ide.eclipse.freemarker.editor.test,
  org.jboss.ide.eclipse.freemarker.preferences.test,
  org.jboss.ide.eclipse.freemarker.test
