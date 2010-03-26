@@ -31,6 +31,7 @@ import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jst.common.project.facet.core.libprov.ILibraryProvider;
 import org.eclipse.jst.common.project.facet.core.libprov.LibraryInstallDelegate;
 import org.eclipse.jst.j2ee.classpathdep.ClasspathDependencyUtil;
 import org.eclipse.jst.j2ee.classpathdep.IClasspathDependencyConstants;
@@ -50,6 +51,7 @@ import org.eclipse.wst.common.componentcore.datamodel.properties.IFacetDataModel
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFile;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IFacetedProjectWorkingCopy;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
@@ -62,6 +64,8 @@ import org.jboss.tools.portlet.core.JBossWebUtil;
 import org.jboss.tools.portlet.core.JBossWebUtil25;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
+import org.jboss.tools.portlet.core.libprov.AbstractLibraryProviderInstallOperationConfig;
+import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig;
 
 /**
  * @author snjeza
@@ -69,6 +73,7 @@ import org.jboss.tools.portlet.core.PortletCoreActivator;
  */
 public class JSFPortletFacetInstallDelegate implements IDelegate {
 
+	private static final String JST_SEAM_FACET = "jst.seam"; //$NON-NLS-1$
 	private static final String ORG_JBOSS_PORTLET_STATE_MANAGER = "org.jboss.portletbridge.application.PortletStateManager"; //$NON-NLS-1$
 	private static final String ORG_JBOSS_PORTLET_VIEW_HANDLER = "org.jboss.portletbridge.application.PortletViewHandler"; //$NON-NLS-1$
 
@@ -249,7 +254,7 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 	}
 
 	private void configureWebApp(final IProject project,
-			final IProgressMonitor monitor, IDataModel config) {
+			final IProgressMonitor monitor, final IDataModel config) {
 		final IModelProvider provider = PortletCoreActivator
 				.getModelProvider(project);
 		IPath modelPath = new Path("WEB-INF").append("web.xml"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -267,55 +272,92 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 				} else {
 					util = new JBossWebUtil();
 				}
-				String name = "org.ajax4jsf.VIEW_HANDLERS"; //$NON-NLS-1$
-				String value = "org.jboss.portletbridge.application.FaceletPortletViewHandler"; //$NON-NLS-1$
-				String description = null;
-				util.configureContextParam(project, monitor, name, value,
+				if (addRichfacesLibraries(config, project)) {
+					
+					String name = "org.ajax4jsf.VIEW_HANDLERS"; //$NON-NLS-1$
+					String value = "org.jboss.portletbridge.application.FaceletPortletViewHandler"; //$NON-NLS-1$
+					String description = null;
+					util.configureContextParam(project, monitor, name, value,
 						description);
 
-				name = "javax.portlet.faces.renderPolicy"; //$NON-NLS-1$
-				value = "ALWAYS_DELEGATE"; //$NON-NLS-1$
-				util.configureContextParam(project, monitor, name, value,
+					name = "javax.portlet.faces.renderPolicy"; //$NON-NLS-1$
+					value = "ALWAYS_DELEGATE"; //$NON-NLS-1$
+					util.configureContextParam(project, monitor, name, value,
 						description);
 
 				// RichFaces settings
 
-				name = "org.richfaces.LoadStyleStrategy"; //$NON-NLS-1$
-				value = "NONE"; //$NON-NLS-1$
-				util.configureContextParam(project, monitor, name, value,
+				
+					name = "org.richfaces.LoadStyleStrategy"; //$NON-NLS-1$
+					value = "NONE"; //$NON-NLS-1$
+					util.configureContextParam(project, monitor, name, value,
 						description);
 
-				name = "org.richfaces.LoadScriptStrategy"; //$NON-NLS-1$
-				value = "NONE"; //$NON-NLS-1$
-				util.configureContextParam(project, monitor, name, value,
+					name = "org.richfaces.LoadScriptStrategy"; //$NON-NLS-1$
+					value = "NONE"; //$NON-NLS-1$
+					util.configureContextParam(project, monitor, name, value,
 						description);
 
-				name = "org.ajax4jsf.RESOURCE_URI_PREFIX"; //$NON-NLS-1$
-				value = "rfRes"; //$NON-NLS-1$
-				util.configureContextParam(project, monitor, name, value,
+					name = "org.ajax4jsf.RESOURCE_URI_PREFIX"; //$NON-NLS-1$
+					value = "rfRes"; //$NON-NLS-1$
+					util.configureContextParam(project, monitor, name, value,
 						description);
 
-				String displayName = "Ajax4jsf Filter"; //$NON-NLS-1$
-				String filterName = "ajax4jsf"; //$NON-NLS-1$
-				String className = "org.ajax4jsf.Filter"; //$NON-NLS-1$
-				util.configureFilter(project, monitor, filterName, className,
+					String displayName = "Ajax4jsf Filter"; //$NON-NLS-1$
+					String filterName = "ajax4jsf"; //$NON-NLS-1$
+					String className = "org.ajax4jsf.Filter"; //$NON-NLS-1$
+					util.configureFilter(project, monitor, filterName, className,
 						displayName, description);
 
-				String servletName = util.findJsfServlet(provider
+					String servletName = util.findJsfServlet(provider
 						.getModelObject());
-				if (servletName == null) {
-					RuntimeException e = new RuntimeException(
+					if (servletName == null) {
+						RuntimeException e = new RuntimeException(
 							Messages.JSFPortletFacetInstallDelegate_Cannot_find_the_JSF_servlet);
-					PortletCoreActivator.log(e);
-					throw e;
-				}
-				util.configureFilterMapping(project, monitor, filterName,
+						PortletCoreActivator.log(e);
+						throw e;
+					}
+					util.configureFilterMapping(project, monitor, filterName,
 						servletName);
-
+				} else {
+					String name = "javax.portlet.faces.renderPolicy"; //$NON-NLS-1$
+					String value = "NEVER_DELEGATE"; //$NON-NLS-1$
+					String description = null;
+					util.configureContextParam(project, monitor, name, value,
+						description);
+				}
 			}
 		}, modelPath);
 	}
 
+	private boolean addRichfacesLibraries(IDataModel config, IProject project) {
+		LibraryInstallDelegate libraryDelegate = ( (LibraryInstallDelegate) config.getProperty( IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE ) );
+		if (libraryDelegate != null) {
+			ILibraryProvider libraryProvider = libraryDelegate
+					.getLibraryProvider();
+			String providerId = libraryProvider.getId();
+			if (PortletCoreActivator.JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)
+					|| PortletCoreActivator.JSFPORTLET_LIBRARY_PROVIDER.equals(providerId)) {
+				AbstractLibraryProviderInstallOperationConfig libraryConfig = (AbstractLibraryProviderInstallOperationConfig) libraryDelegate.getLibraryProviderOperationConfig(libraryProvider);
+				
+				boolean isSeamFacet = false;
+				try {
+					isSeamFacet = FacetedProjectFramework.hasProjectFacet(project, JST_SEAM_FACET);
+				} catch (CoreException e) {
+					PortletCoreActivator.log(e);
+				}
+				if (isSeamFacet) {
+					return true;
+				}
+				if (!libraryConfig.isAddRichfacesCapabilities()) {
+					return false;
+				}
+			}
+			
+		}
+		return false;
+	}
+	
 	private void configureClassPath(final IProject project,
 			final IProgressMonitor monitor, IDataModel config)
 			throws JavaModelException {
