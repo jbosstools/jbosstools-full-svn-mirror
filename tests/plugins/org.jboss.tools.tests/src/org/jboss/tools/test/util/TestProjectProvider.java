@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.jboss.tools.common.util.FileUtil;
 
 /**
  * Test plugins may define test projects to be added 

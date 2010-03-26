@@ -12,7 +12,6 @@ package org.jboss.tools.test.util;
 
 import java.util.Properties;
 
-import org.jboss.tools.common.xml.XMLUtilities;
 import org.w3c.dom.Element;
 
 /**

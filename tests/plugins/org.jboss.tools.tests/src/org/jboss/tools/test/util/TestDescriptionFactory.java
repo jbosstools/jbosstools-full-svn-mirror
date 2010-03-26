@@ -18,8 +18,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
-import org.jboss.tools.common.xml.XMLEntityResolver;
-import org.jboss.tools.common.xml.XMLUtilities;
 import org.w3c.dom.Element;
 
 /**
