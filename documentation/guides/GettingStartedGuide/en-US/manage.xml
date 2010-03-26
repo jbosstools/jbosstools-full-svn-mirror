@@ -18,7 +18,11 @@
     <para><property>JBoss Developer Studio 3.0.0.GA</property> is shipped with <property>JBoss EAP 5
          </property>. When you followed the default installation of <property>JBoss
             Developer Studio</property>, you should already have a JBoss EAP 5 Server installed and
-        defined. To run JBoss AS you need JDK 1.6.</para>
+            defined. To run JBoss AS you need preinstalled JDK 6.</para>
+    <note>
+        <title>Note:</title>
+        <para>You can leave  <property>JDK 1.5</property> configuration for <property>JBDS</property> and set <property>JDK 6</property> as <property>JRE</property> only for <property>JBoss EAP Server</property>. For this you need on <emphasis><property>Windows > Preferences</property></emphasis> menu click <emphasis><property>Server > Runtime Enviroments</property></emphasis>. On the opened preference page you should select <property>JBoss EAP Runtime</property> and click <property>Edit</property>. In <property>Edit Server Runtime Enviroment</property> dialog you can configure <property>Jave Runtime Enviroment</property> by clicking <property>JRE</property> button.   </para>
+    </note>
 
     <section id="JBossbundled">
         <?dbhtml filename="JBossbundled.html"?>
