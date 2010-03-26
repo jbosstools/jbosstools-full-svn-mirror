@@ -105,18 +105,17 @@ public class VpeDnD implements MozillaDndListener {
 
 	public VpeDnD(VpeController vpeController, MozillaEditor mozillaEditor) {
 		this.vpeController = vpeController;
-		this.draggablePattern = new DraggablePattern(mozillaEditor);
+		draggablePattern = new DraggablePattern(mozillaEditor);
 	}
 
 	public void dragGesture(nsIDOMEvent domEvent) {
-		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent
-				.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
 		nsIDOMElement selectedElement = vpeController.getXulRunnerEditor()
 				.getLastSelectedElement();
-		boolean canDragFlag = isDraggable(selectedElement);
 		// start drag sessionvpe-element
-		if (canDragFlag) {
-			startDragSession(domEvent);
+		if (isDraggable(selectedElement)) {
+			startDragSession(selectedElement);
+			domEvent.stopPropagation();
+			domEvent.preventDefault();
 		}
 	}
 
@@ -148,28 +147,34 @@ public class VpeDnD implements MozillaDndListener {
 		}
 		vpeController.onRefresh();
 	}
-	
+
 	public void selectionChanged() {
-		
+		nsIDOMElement selectedElement = vpeController.getXulRunnerEditor()
+				.getLastSelectedElement();
+		if (isDraggable(selectedElement)) {
+			draggablePattern.showDragIcon(selectedElement);
+		} else {
+			draggablePattern.hideDragIcon();
+		}
+	}
+
+	public boolean isDragIconClicked(nsIDOMMouseEvent mouseEvent) {
+		return draggablePattern.isDragIconClicked(mouseEvent);
 	}
 
 	/**
 	 * Starts drag session
 	 * @param dragetElement
 	 */
-	private void startDragSession(nsIDOMEvent  domEvent) {
+	private void startDragSession(nsIDOMNode  node) {
 		nsISupportsArray transArray = (nsISupportsArray) getComponentManager()
-		.createInstanceByContractID(XPCOM.NS_SUPPORTSARRAY_CONTRACTID, null,
-				nsISupportsArray.NS_ISUPPORTSARRAY_IID);
+				.createInstanceByContractID(XPCOM.NS_SUPPORTSARRAY_CONTRACTID, null,
+						nsISupportsArray.NS_ISUPPORTSARRAY_IID);
 		transArray.appendElement(createTransferable());
-		getDragService().invokeDragSession((nsIDOMNode) domEvent.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID), transArray, null,
+		getDragService().invokeDragSession(node, transArray, null,
 				nsIDragService.DRAGDROP_ACTION_MOVE
 						| nsIDragService.DRAGDROP_ACTION_COPY
 						| nsIDragService.DRAGDROP_ACTION_LINK);
-
-		domEvent.stopPropagation();
-		domEvent.preventDefault();
-		
 	}
 
 	/**
@@ -896,7 +901,6 @@ public class VpeDnD implements MozillaDndListener {
 		}
 		return closestNode;
 	}
-	
 // this method is never used
 //	public VpeSourceInnerDropInfo canExternalDropMacro(XModelObject object, Node parentNode, int offset) {
 //		String tagname = vpeController.getTagName(object);

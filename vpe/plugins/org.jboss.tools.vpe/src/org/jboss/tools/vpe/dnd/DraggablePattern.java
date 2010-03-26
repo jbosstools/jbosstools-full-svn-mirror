@@ -18,6 +18,7 @@ import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMElementCSSInlineStyle;
+import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 
 /**
@@ -84,6 +85,12 @@ public class DraggablePattern {
 			dragIconElement.setAttribute(HTML.ATTR_STYLE, DRAG_ICON_STYLE);
 		}
 		return new DragIcon(dragIconElement); 
+	}
+
+	public boolean isDragIconClicked(nsIDOMMouseEvent mouseEvent) {
+		nsIDOMNode targetNode = (nsIDOMNode) mouseEvent.getTarget()
+				.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+		return getDragIcon().getElement().equals(targetNode);
 	}
 
 	public nsIDOMNode getNode() {

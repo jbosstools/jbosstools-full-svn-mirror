@@ -78,7 +78,6 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMHTMLDocument;
-import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNSEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -2044,21 +2043,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	void setMoveCursor(nsIDOMMouseEvent mouseEvent) {
-		nsIDOMElement selectedElement = xulRunnerEditor
-				.getLastSelectedElement();
-		if (selectedElement != null && canInnerDrag(selectedElement)
-					&& inDragArea(getNodeBounds(selectedElement), VisualDomUtil
-							.getMousePoint(mouseEvent))) {
-			// change cursor
-			showMoveCursor(true);
-			//if mouse in drag area, and left button is pressed than we should
-			//start drag session manually.
-		} else {
-			// change cursor style to normal
-			showMoveCursor(false);
-		}
-	}
 
 	public static boolean inDragArea(Rectangle dragArea, Point mousePoint) {
 		// TODO add drag and drop support
@@ -2067,19 +2051,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				&& mousePoint.y < (dragArea.y + DRAG_AREA_HEIGHT);
 	}
 
-	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
-
-		nsIDOMElement selectedElement = xulRunnerEditor
-				.getLastSelectedElement();
-		if (selectedElement != null && canInnerDrag(selectedElement)) {
-			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
-					.getMousePoint(mouseEvent))) {
-				return selectedElement;
-			}
-		}
-		return null;
-	}
-	
 	public nsIDOMNode getOriginalTargetNode(nsIDOMEvent event) {
 		nsIDOMNode targetNode = VisualDomUtil.getTargetNode(event);
 		if (HTML.TAG_INPUT.equalsIgnoreCase(targetNode.getNodeName())) {
@@ -2346,4 +2317,35 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		return span;
 	}
+	
+// this method is never used
+//	void setMoveCursor(nsIDOMMouseEvent mouseEvent) {
+//		nsIDOMElement selectedElement = xulRunnerEditor
+//				.getLastSelectedElement();
+//		if (selectedElement != null && canInnerDrag(selectedElement)
+//					&& inDragArea(getNodeBounds(selectedElement), VisualDomUtil
+//							.getMousePoint(mouseEvent))) {
+//			// change cursor
+//			showMoveCursor(true);
+//			//if mouse in drag area, and left button is pressed than we should
+//			//start drag session manually.
+//		} else {
+//			// change cursor style to normal
+//			showMoveCursor(false);
+//		}
+//	}
+
+// this method is never used
+//	nsIDOMElement getDragElement(nsIDOMMouseEvent mouseEvent) {
+//
+//		nsIDOMElement selectedElement = xulRunnerEditor
+//				.getLastSelectedElement();
+//		if (selectedElement != null && canInnerDrag(selectedElement)) {
+//			if (inDragArea(getNodeBounds(selectedElement), VisualDomUtil
+//					.getMousePoint(mouseEvent))) {
+//				return selectedElement;
+//			}
+//		}
+//		return null;
+//	}
 }

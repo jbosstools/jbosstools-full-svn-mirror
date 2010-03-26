@@ -284,27 +284,6 @@ public abstract class ComponentContentTest extends VpeTest {
 	 * 
 	 * @param controller
 	 * @param elementId
-	 * @return
-	 */
-	protected nsIDOMElement findElementById(VpeController controller,
-			String elementId) {
-
-		Element sourceElement = findSourceElementById(controller, elementId);
-
-		VpeNodeMapping nodeMapping = controller.getDomMapping().getNodeMapping(
-				sourceElement);
-
-		if (nodeMapping == null)
-			return null;
-
-		return (nsIDOMElement) nodeMapping.getVisualNode();
-	}
-
-	/**
-	 * find visual element by "id" entered in source part of vpe
-	 * 
-	 * @param controller
-	 * @param elementId
 	 * @param idle try element for some time period, for example when we need
 	 * to wait for refresh job
 	 * @return
@@ -337,19 +316,6 @@ public abstract class ComponentContentTest extends VpeTest {
 			return null;
 
 		return nodeMapping.getVisualNode();
-	}
-
-	/**
-	 * find source element by "id"
-	 * 
-	 * @param controller
-	 * @param elementId
-	 * @return
-	 */
-	protected Element findSourceElementById(VpeController controller,
-			String elementId) {
-
-		return getSourceDocument(controller).getElementById(elementId);
 	}
 
 	/**

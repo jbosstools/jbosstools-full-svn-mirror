@@ -98,7 +98,6 @@ import org.jboss.tools.vpe.editor.menu.VpeMenuCreator;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEventAdapter;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaContextMenuListener;
-import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaKeyListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaMouseListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
@@ -1195,13 +1194,7 @@ public class VpeController implements INodeAdapter,
 				// drag gesture isn't generated in XR 1.9 for Linux Platforms,
 				// so we start it's manually
 				// mareshkau
-				nsIDOMElement selectedElement = getXulRunnerEditor()
-						.getLastSelectedElement();
-				if (selectedElement != null
-						&& VpeVisualDomBuilder.inDragArea(
-								XulRunnerVpeUtils.getElementBounds(
-										selectedElement),
-								VisualDomUtil.getMousePoint(mouseEvent))) {
+				if (vpeDnD.isDragIconClicked(mouseEvent)) {
 					vpeDnD.dragGesture(mouseEvent);
 				} else {
 					selectionManager.setSelection(mouseEvent);					
@@ -1284,23 +1277,13 @@ public class VpeController implements INodeAdapter,
 	}
 
 	public void mouseMove(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-			if (visualNode != null) {
-				// if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-				// System.out.println("<<< mouseMove  visualNode: "
-				// + visualNode.getNodeName() + " (" + visualNode
-				// + ")");
-				// }
-				visualBuilder.setMoveCursor(mouseEvent);
-			}
-		} finally {
-			switcher.stopActiveEditor();
-		}
+//		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+//		if (visualNode != null) {
+//			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+//				System.out.println("<<< mouseMove  visualNode: "
+//						+ visualNode.getNodeName() + " (" + visualNode + ")");
+//			}
+//		}
 	}
 
 	public void keyPress(nsIDOMKeyEvent keyEvent) {

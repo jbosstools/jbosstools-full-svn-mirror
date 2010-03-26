@@ -45,8 +45,10 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
@@ -374,5 +376,39 @@ public class VpeTest extends TestCase implements ILogListener {
 
 		final VpeController vpeController = TestUtil.getVpeController(part);
 		return vpeController;
+	}
+	
+	/**
+	 * find source element by "id"
+	 * 
+	 * @param controller
+	 * @param elementId
+	 * @return
+	 */
+	protected Element findSourceElementById(VpeController controller,
+			String elementId) {
+
+		return getSourceDocument(controller).getElementById(elementId);
+	}
+	
+	/**
+	 * find visual element by "id" entered in source part of vpe
+	 * 
+	 * @param controller
+	 * @param elementId
+	 * @return
+	 */
+	protected nsIDOMElement findElementById(VpeController controller,
+			String elementId) {
+
+		Element sourceElement = findSourceElementById(controller, elementId);
+
+		VpeNodeMapping nodeMapping = controller.getDomMapping().getNodeMapping(
+				sourceElement);
+
+		if (nodeMapping == null)
+			return null;
+
+		return (nsIDOMElement) nodeMapping.getVisualNode();
 	}
 }
