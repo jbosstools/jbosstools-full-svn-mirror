@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.common.test.util;
+package org.jboss.tools.test.util;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -30,8 +30,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.jboss.tools.common.util.FileUtil;
-import org.jboss.tools.test.util.JobUtils;
-import org.jboss.tools.test.util.ResourcesUtils;
 
 /**
  * Test plugins may define test projects to be added 

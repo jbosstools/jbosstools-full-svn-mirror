@@ -14,8 +14,6 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.common.reporting.test,
  org.jboss.tools.common.test,
- org.jboss.tools.common.test.util,
- org.jboss.tools.common.util,
  org.jboss.tools.common.util.test,
  org.jboss.tools.common.xml.test
 Bundle-ClassPath: .

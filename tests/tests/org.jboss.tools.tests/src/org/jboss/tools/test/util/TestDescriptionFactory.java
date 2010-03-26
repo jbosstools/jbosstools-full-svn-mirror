@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.common.test.util;
+package org.jboss.tools.test.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
