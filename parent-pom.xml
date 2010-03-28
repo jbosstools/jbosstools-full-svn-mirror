@@ -60,6 +60,15 @@
 					</environments>
 				</configuration>
 			</plugin>
+<plugin>
+      <groupId>org.sonatype.tycho</groupId>
+         <artifactId>maven-osgi-test-plugin</artifactId>
+         <version>${tychoVersion}</version>
+         <configuration>
+           <useUIHarness>true</useUIHarness>
+           <useUIThread>true</useUIThread>
+         </configuration>
+      </plugin>
 
 		</plugins>
 	</build>
