@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.KnownConfigurationsAdapter;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
 import org.w3c.dom.Element;
 
 public class KnownConfigurationsTest extends TestCase {

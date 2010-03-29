@@ -19,9 +19,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.internal.ErrorEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.hibernate.console.stubs.PersistentClassStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.utils.OpenMappingUtils;
+import org.hibernate.mediator.stubs.PersistentClassStub;
 
 /**
  * @author Dmitry Geraskov

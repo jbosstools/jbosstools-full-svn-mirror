@@ -25,10 +25,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.stubs.ComponentStub;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.actions.OpenSourceAction;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.utils.Utils;
@@ -36,6 +32,10 @@ import org.hibernate.eclipse.console.workbench.ConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.ConsoleConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.PersistentClassWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.PropertyWorkbenchAdapter;
+import org.hibernate.mediator.stubs.ComponentStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PropertyStub;
 
 /**
  * @author Dmitry Geraskov

@@ -22,12 +22,12 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.PersistentClassStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.utils.Utils;
 import org.hibernate.eclipse.console.workbench.ConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.ConsoleConfigurationWorkbenchAdapter;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
 import org.jboss.tools.hibernate.ui.view.OpenDiagramActionDelegate;
 
 /**

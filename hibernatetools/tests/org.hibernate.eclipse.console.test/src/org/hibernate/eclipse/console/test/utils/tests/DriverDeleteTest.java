@@ -35,12 +35,12 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.apt.core.internal.JarClassLoader;
-import org.hibernate.console.ConsoleConfigClassLoader;
-import org.hibernate.console.execution.DefaultExecutionContext;
-import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.stubs.util.ReflectHelper;
 import org.hibernate.eclipse.console.test.HibernateConsoleTestPlugin;
 import org.hibernate.eclipse.console.test.utils.GarbageCollectionUtil;
+import org.hibernate.mediator.ConsoleConfigClassLoader;
+import org.hibernate.mediator.execution.DefaultExecutionContext;
+import org.hibernate.mediator.execution.ExecutionContext;
+import org.hibernate.mediator.stubs.util.ReflectHelper;
 
 import junit.framework.TestCase;
 

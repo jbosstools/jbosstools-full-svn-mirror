@@ -27,15 +27,14 @@ import org.eclipse.jdt.internal.core.PackageFragmentRoot;
 import org.eclipse.osgi.util.NLS;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.project.ConfigurableTestProject;
 import org.hibernate.eclipse.console.test.utils.ConsoleConfigUtils;
-import org.hibernate.tool.hbm2x.ArtifactCollector;
-import org.hibernate.tool.hbm2x.ExporterException;
-import org.hibernate.tool.hbm2x.HibernateMappingExporter;
-import org.hibernate.tool.hbm2x.HibernateMappingGlobalSettings;
-import org.hibernate.tool.hbm2x.pojo.POJOClass;
+import org.hibernate.mediator.stubs.ArtifactCollectorStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.HibernateMappingExporterStub;
+import org.hibernate.mediator.stubs.HibernateMappingGlobalSettingsStub;
+import org.hibernate.mediator.stubs.POJOClassStub;
 
 /**
  * @author Dmitry Geraskov
@@ -91,19 +90,19 @@ public class HbmExportExceptionTest extends TestCase {
 				}
 			}
 			
-			HibernateMappingGlobalSettings hmgs = new HibernateMappingGlobalSettings();
+			HibernateMappingGlobalSettingsStub hmgs = HibernateMappingGlobalSettingsStub.newInstance();
 			
 			ConfigurationStub.IExporterNewOutputDir nod = new ConfigurationStub.IExporterNewOutputDir() {
-				public File getNewOutputDir(POJOClass element, File outputdir4FileNew) {
+				public File getNewOutputDir(POJOClassStub element, File outputdir4FileNew) {
 					return outputdir4FileNew;
 				}
 			};
-			HibernateMappingExporter hce = config.createHibernateMappingExporter(getSrcFolder(), nod);
+			HibernateMappingExporterStub hce = config.createHibernateMappingExporter(getSrcFolder(), nod);
 			
 			hce.setGlobalSettings(hmgs);
 			try {
 				hce.start();
-				ArtifactCollector collector = hce.getArtifactCollector();
+				ArtifactCollectorStub collector = hce.getArtifactCollector();
 				collector.formatFiles();
 	
 				try {//build generated configuration
@@ -122,8 +121,13 @@ public class HbmExportExceptionTest extends TestCase {
 							new Object[] { ConsoleConfigUtils.CFG_FILE_NAME, testPackage.getPath(), e.getMessage() } );
 					fail(out);
 				}
-			} catch (ExporterException e){
-				throw (Exception)e.getCause();
+			} catch (RuntimeException e) {
+				// TODO: RuntimeException ? - find correct solution
+				if (e.getClass().getName().contains("ExporterException")) { //$NON-NLS-1$
+					throw (Exception)e.getCause();
+				} else {
+					throw e;
+				}
 			}
 		} catch (Exception e){
 			String newMessage = "\nPackage " + testPackage.getElementName() + ":"; //$NON-NLS-1$ //$NON-NLS-2$
