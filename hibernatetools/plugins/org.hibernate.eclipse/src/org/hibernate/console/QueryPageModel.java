@@ -36,6 +36,8 @@ import javax.swing.AbstractListModel;
  */
 public class QueryPageModel extends AbstractListModel {
 
+	private static final long serialVersionUID = 3705805796946900733L;
+	
 	List<QueryPage> pages = new ArrayList<QueryPage>();
 
 	public int getSize() {

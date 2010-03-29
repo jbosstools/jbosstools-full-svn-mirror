@@ -27,8 +27,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.hibernate.console.ConsoleMessages;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.console.stubs.util.StringHelper;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.stubs.util.StringHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

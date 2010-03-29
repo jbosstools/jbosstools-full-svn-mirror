@@ -52,7 +52,8 @@ import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.hibernate.console.node.BaseNode;
 import org.hibernate.console.node.ConfigurationListNode;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.ConsoleQueryParameter;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

@@ -27,7 +27,7 @@ import org.apache.log4j.Layout;
 import org.apache.log4j.RollingFileAppender;
 import org.apache.log4j.spi.LoggingEvent;
 import org.eclipse.core.runtime.IPath;
-import org.hibernate.console.ConsoleMessages;
+import org.hibernate.mediator.Messages;
 
 /**
  * PluginFileAppender
@@ -95,7 +95,7 @@ public class PluginFileAppender extends RollingFileAppender {
 	 * and call activateOptions
 	 * @param stateLocation IPath containing the plug-in state location
 	 */
-	void setStateLocation(IPath stateLocation) {
+	public void setStateLocation(IPath stateLocation) {
 		this.stateLocation = stateLocation;
 		if (this.stateLocation != null && this.activateOptionsPending) {
 			this.activateOptionsPending = false;
@@ -122,7 +122,7 @@ public class PluginFileAppender extends RollingFileAppender {
 	 */
 	public void setFile(String fileName,boolean append,boolean bufferedIO,int bufferSize) throws IOException {
 		if (this.stateLocation == null)
-			throw new IOException(ConsoleMessages.PluginFileAppender_missing_plugin_state_location);
+			throw new IOException(Messages.PluginFileAppender_missing_plugin_state_location);
 
 		fileName = (this.translatePath) ?  getTranslatedFileName(fileName) : fileName;
 		super.setFile(fileName,append,bufferedIO,bufferSize);

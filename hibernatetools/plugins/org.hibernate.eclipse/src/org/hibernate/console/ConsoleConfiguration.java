@@ -35,19 +35,20 @@ import java.util.Properties;
 
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
-import org.hibernate.HibernateException;
-import org.hibernate.console.execution.DefaultExecutionContext;
-import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.execution.ExecutionContextHolder;
-import org.hibernate.console.execution.ExecutionContext.Command;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
-import org.hibernate.console.stubs.ConfigurationStubFactory;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.console.stubs.IHQLCodeAssistStub;
-import org.hibernate.console.stubs.SessionStub;
-import org.hibernate.console.stubs.SessionStubFactory;
-import org.hibernate.console.stubs.SettingsStub;
+import org.hibernate.mediator.ConsoleConfigClassLoader;
+import org.hibernate.mediator.QueryInputModel;
+import org.hibernate.mediator.execution.DefaultExecutionContext;
+import org.hibernate.mediator.execution.ExecutionContext;
+import org.hibernate.mediator.execution.ExecutionContextHolder;
+import org.hibernate.mediator.execution.ExecutionContext.Command;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.ConfigurationStubFactory;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.stubs.IHQLCodeAssistStub;
+import org.hibernate.mediator.stubs.SessionStub;
+import org.hibernate.mediator.stubs.SessionStubFactory;
+import org.hibernate.mediator.stubs.SettingsStub;
 import org.xml.sax.EntityResolver;
 
 public class ConsoleConfiguration implements ExecutionContextHolder {
@@ -448,7 +449,8 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 			try{
 			 	build();
 			 	buildMappings();
-			} catch (HibernateException e){
+			} catch (RuntimeException e) {
+				// TODO: RuntimeException ? - find correct solution
 //				String mess = NLS.bind(HibernateConsoleMessages.CompletionHelper_error_could_not_build_cc, consoleConfiguration.getName());
 				throw e;
 				//HibernateConsolePlugin.getDefault().logErrorMessage(mess, e);

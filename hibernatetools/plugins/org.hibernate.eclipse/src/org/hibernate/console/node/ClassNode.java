@@ -26,11 +26,11 @@ import java.util.List;
 
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.ClassMetadataStub;
-import org.hibernate.console.stubs.CollectionTypeStub;
-import org.hibernate.console.stubs.EntityModeStub;
-import org.hibernate.console.stubs.HibernateStub;
-import org.hibernate.console.stubs.TypeStub;
+import org.hibernate.mediator.stubs.ClassMetadataStub;
+import org.hibernate.mediator.stubs.CollectionTypeStub;
+import org.hibernate.mediator.stubs.EntityModeStub;
+import org.hibernate.mediator.stubs.HibernateStub;
+import org.hibernate.mediator.stubs.TypeStub;
 
 /**
  * @author MAX

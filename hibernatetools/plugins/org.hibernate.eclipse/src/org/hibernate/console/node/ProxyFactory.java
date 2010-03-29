@@ -30,8 +30,8 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import net.sf.cglib.proxy.NoOp;
 
-import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.execution.ExecutionContextHolder;
+import org.hibernate.mediator.execution.ExecutionContext;
+import org.hibernate.mediator.execution.ExecutionContextHolder;
 
 public class ProxyFactory {
 

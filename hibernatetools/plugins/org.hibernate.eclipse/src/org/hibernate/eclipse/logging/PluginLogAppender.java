@@ -23,8 +23,6 @@ package org.hibernate.eclipse.logging;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.ErrorCode;
@@ -34,6 +32,7 @@ import org.eclipse.core.runtime.ILog;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.KnownConfigurations;
+import org.hibernate.mediator.logging.CurrentContext;
 
 /**
  * PluginLogAppender

@@ -22,7 +22,7 @@
 package org.hibernate.console.node;
 
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.ClassMetadataStub;
+import org.hibernate.mediator.stubs.ClassMetadataStub;
 
 /**
  * @author MAX

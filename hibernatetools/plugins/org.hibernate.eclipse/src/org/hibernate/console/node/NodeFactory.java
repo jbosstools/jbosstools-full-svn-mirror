@@ -28,13 +28,13 @@ import net.sf.cglib.proxy.Enhancer;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.ClassMetadataStub;
-import org.hibernate.console.stubs.CollectionMetadataStub;
-import org.hibernate.console.stubs.CollectionTypeStub;
-import org.hibernate.console.stubs.EntityTypeStub;
-import org.hibernate.console.stubs.SessionStub;
-import org.hibernate.console.stubs.TableStub;
-import org.hibernate.console.stubs.TypeStub;
+import org.hibernate.mediator.stubs.ClassMetadataStub;
+import org.hibernate.mediator.stubs.CollectionMetadataStub;
+import org.hibernate.mediator.stubs.CollectionTypeStub;
+import org.hibernate.mediator.stubs.EntityTypeStub;
+import org.hibernate.mediator.stubs.SessionStub;
+import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.stubs.TypeStub;
 
 /**
  * @author MAX

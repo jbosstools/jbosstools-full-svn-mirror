@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.IStatus;
  * and translating plug-in log requests to Logger events.
  * @author Manoel Marques
  */
-class PluginLogListener implements ILogListener {
+public class PluginLogListener implements ILogListener {
 
 	private ILog log;
 	private Logger logger;
@@ -44,7 +44,7 @@ class PluginLogListener implements ILogListener {
 	 * @param plugin the plug-in object
 	 * @param logger logger instance
 	 */
-	PluginLogListener(ILog log,Logger logger) {
+	public PluginLogListener(ILog log,Logger logger) {
 		this.log = log;
 		this.logger = logger;
 		log.addLogListener(this);
@@ -53,7 +53,7 @@ class PluginLogListener implements ILogListener {
 	/**
 	 * Removes itself from the plug-in log, reset instance variables.
 	 */	
-	void dispose() {
+	public void dispose() {
 		if (this.log != null) {
 			this.log.removeLogListener(this);
 			this.log = null;
@@ -80,14 +80,11 @@ class PluginLogListener implements ILogListener {
 		Level level = Level.DEBUG;  
 		if (severity == IStatus.ERROR)
 			level = Level.ERROR;
-		else
-		if (severity == IStatus.WARNING)
+		else if (severity == IStatus.WARNING)
 			level = Level.WARN;
-		else
-		if (severity == IStatus.INFO)
+		else if (severity == IStatus.INFO)
 			level = Level.INFO;
-		else
-		if (severity == IStatus.CANCEL)
+		else if (severity == IStatus.CANCEL)
 			level = Level.FATAL;
 
 		plugin = formatText(plugin);

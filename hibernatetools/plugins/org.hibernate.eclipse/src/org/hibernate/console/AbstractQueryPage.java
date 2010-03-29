@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.console.stubs.SessionStub;
+import org.hibernate.mediator.QueryInputModel;
+import org.hibernate.mediator.stubs.SessionStub;
 
 /**
  * @author MAX

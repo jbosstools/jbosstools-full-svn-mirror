@@ -30,8 +30,8 @@ import javax.swing.tree.TreeNode;
 
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.execution.ExecutionContextHolder;
+import org.hibernate.mediator.execution.ExecutionContext;
+import org.hibernate.mediator.execution.ExecutionContextHolder;
 
 /**
  * @author MAX
