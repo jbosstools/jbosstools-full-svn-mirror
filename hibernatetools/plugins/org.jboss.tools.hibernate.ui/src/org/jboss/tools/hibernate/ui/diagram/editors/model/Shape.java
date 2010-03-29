@@ -17,10 +17,10 @@ import java.util.Properties;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.ComponentStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.ValueStub;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ComponentStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.ValueStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection.ConnectionType;
 import org.jboss.tools.hibernate.ui.view.HibernateUtils;
 

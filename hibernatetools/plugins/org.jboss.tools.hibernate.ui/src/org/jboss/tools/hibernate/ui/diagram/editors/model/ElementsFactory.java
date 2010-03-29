@@ -16,23 +16,23 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.hibernate.console.stubs.CollectionStub;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.ComponentStub;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.DependantValueStub;
-import org.hibernate.console.stubs.EntityTypeStub;
-import org.hibernate.console.stubs.ForeignKeyStub;
-import org.hibernate.console.stubs.JoinStub;
-import org.hibernate.console.stubs.OneToManyStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.RootClassStub;
-import org.hibernate.console.stubs.SimpleValueStub;
-import org.hibernate.console.stubs.SubclassStub;
-import org.hibernate.console.stubs.TableStub;
-import org.hibernate.console.stubs.TypeStub;
-import org.hibernate.console.stubs.ValueStub;
+import org.hibernate.mediator.stubs.CollectionStub;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ComponentStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.DependantValueStub;
+import org.hibernate.mediator.stubs.EntityTypeStub;
+import org.hibernate.mediator.stubs.ForeignKeyStub;
+import org.hibernate.mediator.stubs.JoinStub;
+import org.hibernate.mediator.stubs.OneToManyStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.RootClassStub;
+import org.hibernate.mediator.stubs.SimpleValueStub;
+import org.hibernate.mediator.stubs.SubclassStub;
+import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.stubs.TypeStub;
+import org.hibernate.mediator.stubs.ValueStub;
 
 /**
  * Responsible to create diagram elements for given

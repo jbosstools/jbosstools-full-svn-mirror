@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.ui.IMemento;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.SimpleValueStub;
-import org.hibernate.console.stubs.TableStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.SimpleValueStub;
+import org.hibernate.mediator.stubs.TableStub;
 
 /**
  * Some common model utils.

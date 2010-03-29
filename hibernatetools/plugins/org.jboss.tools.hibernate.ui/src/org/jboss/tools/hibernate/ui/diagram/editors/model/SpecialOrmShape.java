@@ -13,10 +13,10 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 import java.util.Iterator;
 
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.execution.ExecutionContext.Command;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.RootClassStub;
-import org.hibernate.console.stubs.TypeStub;
+import org.hibernate.mediator.execution.ExecutionContext.Command;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.RootClassStub;
+import org.hibernate.mediator.stubs.TypeStub;
 
 /**
  * 

@@ -11,26 +11,26 @@
 package org.jboss.tools.hibernate.ui.view;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.hibernate.console.stubs.AnyStub;
-import org.hibernate.console.stubs.ArrayStub;
-import org.hibernate.console.stubs.BagStub;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.ComponentStub;
-import org.hibernate.console.stubs.DependantValueStub;
-import org.hibernate.console.stubs.IdentifierBagStub;
-import org.hibernate.console.stubs.ListStub;
-import org.hibernate.console.stubs.ManyToOneStub;
-import org.hibernate.console.stubs.MapStub;
-import org.hibernate.console.stubs.OneToManyStub;
-import org.hibernate.console.stubs.OneToOneStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PrimitiveArrayStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.SetStub;
-import org.hibernate.console.stubs.SimpleValueStub;
-import org.hibernate.console.stubs.TableStub;
-import org.hibernate.console.stubs.TypeStub;
-import org.hibernate.console.stubs.ValueStub;
+import org.hibernate.mediator.stubs.AnyStub;
+import org.hibernate.mediator.stubs.ArrayStub;
+import org.hibernate.mediator.stubs.BagStub;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ComponentStub;
+import org.hibernate.mediator.stubs.DependantValueStub;
+import org.hibernate.mediator.stubs.IdentifierBagStub;
+import org.hibernate.mediator.stubs.ListStub;
+import org.hibernate.mediator.stubs.ManyToOneStub;
+import org.hibernate.mediator.stubs.MapStub;
+import org.hibernate.mediator.stubs.OneToManyStub;
+import org.hibernate.mediator.stubs.OneToOneStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PrimitiveArrayStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.SetStub;
+import org.hibernate.mediator.stubs.SimpleValueStub;
+import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.stubs.TypeStub;
+import org.hibernate.mediator.stubs.ValueStub;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
 
 /**

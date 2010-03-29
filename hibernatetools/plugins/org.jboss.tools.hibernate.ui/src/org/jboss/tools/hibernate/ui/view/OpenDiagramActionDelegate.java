@@ -27,10 +27,10 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.ObjectPluginAction;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.RootClassStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.RootClassStub;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
 

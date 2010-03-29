@@ -25,14 +25,14 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.DialectStub;
-import org.hibernate.console.stubs.EnvironmentStub;
-import org.hibernate.console.stubs.MappingStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.RootClassStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.DialectStub;
+import org.hibernate.mediator.stubs.EnvironmentStub;
+import org.hibernate.mediator.stubs.MappingStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.RootClassStub;
 
 /**
  *

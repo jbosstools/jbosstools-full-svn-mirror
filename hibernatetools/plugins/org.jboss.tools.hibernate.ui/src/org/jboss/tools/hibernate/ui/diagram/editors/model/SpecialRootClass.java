@@ -12,11 +12,11 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 
 import java.util.Iterator;
 
-import org.hibernate.console.stubs.CollectionStub;
-import org.hibernate.console.stubs.ComponentStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.RootClassStub;
+import org.hibernate.mediator.stubs.CollectionStub;
+import org.hibernate.mediator.stubs.ComponentStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.RootClassStub;
 
 // TODO: What is this ? And why is it extending mapping classes ?!
 // vitali: it seems this is class to "wrap" properties set to RootClass

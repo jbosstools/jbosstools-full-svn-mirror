@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.jboss.tools.hibernate.jpt.ui;singleton:=true
 Bundle-Version: 3.3.0.qualifier
 Bundle-Activator: org.jboss.tools.hibernate.jpt.ui.HibernateJptUIPlugin
 Require-Bundle: 
+ org.hibernate.mediator,
  org.hibernate.eclipse.console,
  org.hibernate.eclipse,
  org.eclipse.debug.core,
@@ -20,7 +21,8 @@ Require-Bundle:
  org.eclipse.jpt.ui,
  org.eclipse.jpt.utility,
  org.eclipse.jpt.db;bundle-version="1.2.100",
- org.eclipse.ui.views.properties.tabbed;bundle-version="3.5.0"
+ org.eclipse.ui.views.properties.tabbed;bundle-version="3.5.0",
+ org.hibernate.mediator;bundle-version="3.3.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %Bundle-Vendor.0

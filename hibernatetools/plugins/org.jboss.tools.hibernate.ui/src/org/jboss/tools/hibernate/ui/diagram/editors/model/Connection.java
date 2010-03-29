@@ -12,13 +12,13 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.ManyToOneStub;
-import org.hibernate.console.stubs.OneToManyStub;
-import org.hibernate.console.stubs.OneToOneStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.RootClassStub;
-import org.hibernate.console.stubs.TableStub;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ManyToOneStub;
+import org.hibernate.mediator.stubs.OneToManyStub;
+import org.hibernate.mediator.stubs.OneToOneStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.RootClassStub;
+import org.hibernate.mediator.stubs.TableStub;
 
 /**
  * Directed connection between 2 shapes, from source to target. 

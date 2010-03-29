@@ -41,16 +41,15 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.EclipseConsoleConfigurationPreferences;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.DialogSelectionHelper;
 import org.hibernate.eclipse.console.utils.DriverClassHelpers;
 import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.launch.PathHelper;
-import org.hibernate.tool.hbm2x.StringUtils;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
+import org.hibernate.mediator.stubs.util.StringHelper;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJpaProject;
 import org.jboss.tools.hibernate.jpt.ui.HibernateJptUIPlugin;
 
@@ -197,7 +196,7 @@ public abstract class GenerateInitWizardPage extends WizardPage {
 		connectionProfileName.setItems(dtpConnectionProfileNames());
 
 		String connectionName = getProjectConnectionProfileName();
-		if (!StringUtils.isEmpty(connectionName)) {
+		if (!StringHelper.isEmpty(connectionName)) {
 			connectionProfileName.selectItem(connectionName);
 		}
 		connectionProfileName.doFillIntoGrid(dbGroup, numColumns);
