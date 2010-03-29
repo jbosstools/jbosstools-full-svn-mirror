@@ -37,10 +37,10 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
 import org.eclipse.wst.sse.ui.internal.contentassist.CustomCompletionProposal;
 import org.eclipse.wst.xml.ui.internal.contentassist.XMLRelevanceConstants;
-import org.hibernate.console.stubs.EnvironmentStub;
-import org.hibernate.console.stubs.TableIdentifierStub;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.mapper.MapperMessages;
+import org.hibernate.mediator.stubs.EnvironmentStub;
+import org.hibernate.mediator.stubs.TableIdentifierStub;
+import org.hibernate.mediator.stubs.util.StringHelper;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 

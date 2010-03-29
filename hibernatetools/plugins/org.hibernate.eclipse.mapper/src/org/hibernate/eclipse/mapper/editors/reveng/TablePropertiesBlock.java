@@ -56,10 +56,6 @@ import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.PrimaryKeyStub;
-import org.hibernate.console.stubs.TableIdentifierStub;
-import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.console.model.IRevEngColumn;
 import org.hibernate.eclipse.console.model.IRevEngTable;
 import org.hibernate.eclipse.console.model.IReverseEngineeringDefinition;
@@ -73,6 +69,10 @@ import org.hibernate.eclipse.mapper.model.RevEngGeneratorAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngParamAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngPrimaryKeyAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngTableAdapter;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.PrimaryKeyStub;
+import org.hibernate.mediator.stubs.TableIdentifierStub;
+import org.hibernate.mediator.stubs.TableStub;
 
 public class TablePropertiesBlock extends MasterDetailsBlock {
 

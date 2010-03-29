@@ -31,10 +31,10 @@ import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectEvent;
 import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectListener;
 import org.eclipse.wst.common.project.facet.core.events.IProjectFacetActionEvent;
 import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectEvent.Type;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
 import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.console.utils.ProjectUtils;
 import org.hibernate.eclipse.launch.IConsoleConfigurationLaunchConstants;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
 
 /**
  * @author Dmitry Geraskov

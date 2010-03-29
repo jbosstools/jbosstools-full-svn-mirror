@@ -18,9 +18,9 @@ import org.eclipse.jpt.core.JpaProject;
 import org.eclipse.jpt.core.internal.AbstractJpaProject;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.NamingStrategyStub;
 import org.hibernate.eclipse.console.properties.HibernatePropertiesConstants;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.NamingStrategyStub;
 import org.osgi.service.prefs.Preferences;
 
 /**

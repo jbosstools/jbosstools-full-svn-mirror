@@ -36,13 +36,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.provisional.IXMLPreferenceNames;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
-import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
-import org.hibernate.cfg.reveng.OverrideRepository;
-import org.hibernate.cfg.reveng.TableFilter;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.stubs.SettingsStub;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.model.IReverseEngineeringDefinition;
 import org.hibernate.eclipse.console.model.ITableFilter;
@@ -57,6 +52,11 @@ import org.hibernate.eclipse.mapper.editors.reveng.RevEngTypeMappingPage;
 import org.hibernate.eclipse.mapper.editors.xpl.XMLFormEditorPart;
 import org.hibernate.eclipse.mapper.model.DOMReverseEngineeringDefinition;
 import org.hibernate.eclipse.nature.HibernateNature;
+import org.hibernate.mediator.stubs.DefaultReverseEngineeringStrategyStub;
+import org.hibernate.mediator.stubs.OverrideRepositoryStub;
+import org.hibernate.mediator.stubs.SettingsStub;
+import org.hibernate.mediator.stubs.TableFilterStub;
+import org.hibernate.mediator.stubs.util.StringHelper;
 import org.w3c.dom.Document;
 
 public class ReverseEngineeringEditor extends XMLFormEditorPart {
@@ -198,11 +198,11 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 
 			ITableFilter[] tableFilters = getReverseEngineeringDefinition().getTableFilters();
 			SettingsStub settings = configuration.getSettings2();
-			OverrideRepository repository = new OverrideRepository();///*settings.getDefaultCatalogName(),settings.getDefaultSchemaName()*/);
+			OverrideRepositoryStub repository = new OverrideRepositoryStub();///*settings.getDefaultCatalogName(),settings.getDefaultSchemaName()*/);
 			boolean hasIncludes = false;
 			for (int i = 0; i < tableFilters.length; i++) {
 				ITableFilter filter = tableFilters[i];
-				TableFilter tf = new TableFilter();
+				TableFilterStub tf = new TableFilterStub();
 				tf.setExclude(filter.getExclude());
 				if(filter.getExclude()!=null && !filter.getExclude().booleanValue()) {
 					hasIncludes = true;
@@ -212,7 +212,7 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 				tf.setMatchSchema(filter.getMatchSchema());
 				repository.addTableFilter(tf);
 			}
-			TableFilter tf = new TableFilter();
+			TableFilterStub tf = new TableFilterStub();
 			tf.setExclude(Boolean.FALSE);
 			tf.setMatchCatalog(".*"); //$NON-NLS-1$
 			tf.setMatchSchema(".*"); //$NON-NLS-1$
@@ -231,7 +231,7 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 				//}
 			//}
 
-			LazyDatabaseSchema lazyDatabaseSchema = new LazyDatabaseSchema(configuration, repository.getReverseEngineeringStrategy(new DefaultReverseEngineeringStrategy()));
+			LazyDatabaseSchema lazyDatabaseSchema = new LazyDatabaseSchema(configuration, repository.getReverseEngineeringStrategy(DefaultReverseEngineeringStrategyStub.newInstance()));
 
 			return lazyDatabaseSchema;
 		} catch(RuntimeException he) {

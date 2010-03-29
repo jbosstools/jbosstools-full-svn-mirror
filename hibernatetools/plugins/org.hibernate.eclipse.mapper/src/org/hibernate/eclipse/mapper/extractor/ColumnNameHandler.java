@@ -29,10 +29,10 @@ import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.TableIdentifierStub;
-import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.nature.HibernateNature;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.TableIdentifierStub;
+import org.hibernate.mediator.stubs.TableStub;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
