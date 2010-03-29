@@ -23,7 +23,7 @@ package org.hibernate.eclipse.graph.model;
 
 import java.util.Observable;
 
-import org.hibernate.console.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ColumnStub;
 
 public class ColumnViewAdapter extends Observable {
 

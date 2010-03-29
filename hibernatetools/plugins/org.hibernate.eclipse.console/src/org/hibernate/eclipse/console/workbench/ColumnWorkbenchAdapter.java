@@ -22,10 +22,10 @@
 package org.hibernate.eclipse.console.workbench;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.hibernate.cfg.reveng.JDBCToHibernateTypeHelper;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.ColumnStub;
 import org.hibernate.eclipse.console.utils.EclipseImages;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.JDBCToHibernateTypeHelperStub;
 
 public class ColumnWorkbenchAdapter extends BasicWorkbenchAdapter {
 
@@ -45,7 +45,7 @@ public class ColumnWorkbenchAdapter extends BasicWorkbenchAdapter {
 	static String getColumnLabel(ColumnStub c) {
 		String label = c.getName();
 		if(c.getSqlTypeCode()!=null) {
-			label += " : " + JDBCToHibernateTypeHelper.getJDBCTypeName(c.getSqlTypeCode().intValue()); //$NON-NLS-1$
+			label += " : " + JDBCToHibernateTypeHelperStub.getJDBCTypeName(c.getSqlTypeCode().intValue()); //$NON-NLS-1$
 		}
 		return label;
 	}

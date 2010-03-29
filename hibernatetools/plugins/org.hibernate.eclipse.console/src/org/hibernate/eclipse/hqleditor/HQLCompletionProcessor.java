@@ -35,10 +35,10 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.stubs.IHQLCodeAssistStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.QueryEditor;
+import org.hibernate.mediator.stubs.IHQLCodeAssistStub;
 
 /**
  * content assist processor for HQL code.

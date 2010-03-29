@@ -51,12 +51,12 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.eclipse.console.ExtensionManager;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.model.impl.ExporterDefinition;
 import org.hibernate.eclipse.console.model.impl.ExporterFactory;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 
 // This class was created to centralize launch configuration attribute loading/saving
 // (and also to clean up CodeGenerationLaunchDelegate considerably)

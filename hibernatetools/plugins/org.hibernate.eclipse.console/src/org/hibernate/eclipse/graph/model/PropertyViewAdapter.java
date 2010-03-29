@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.Observable;
 
 import org.eclipse.swt.graphics.Image;
-import org.hibernate.console.stubs.CollectionStub;
-import org.hibernate.console.stubs.EntityTypeStub;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.console.stubs.OneToManyStub;
-import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.workbench.HibernateWorkbenchHelper;
+import org.hibernate.mediator.stubs.CollectionStub;
+import org.hibernate.mediator.stubs.EntityTypeStub;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.stubs.OneToManyStub;
+import org.hibernate.mediator.stubs.PropertyStub;
 
 public class PropertyViewAdapter extends Observable {
 

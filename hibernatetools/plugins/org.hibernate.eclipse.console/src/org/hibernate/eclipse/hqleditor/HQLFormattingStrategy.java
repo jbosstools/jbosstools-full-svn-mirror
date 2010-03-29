@@ -22,7 +22,7 @@
 package org.hibernate.eclipse.hqleditor;
 
 import org.eclipse.jface.text.formatter.IFormattingStrategy;
-import org.hibernate.console.util.QLFormatHelper;
+import org.hibernate.mediator.util.QLFormatHelper;
 
 public class HQLFormattingStrategy implements IFormattingStrategy {
 

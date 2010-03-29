@@ -30,11 +30,11 @@ import org.hibernate.console.ImageConstants;
 import org.hibernate.console.node.BaseNode;
 import org.hibernate.console.node.PersistentCollectionNode;
 import org.hibernate.console.node.TypeNode;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PropertyStub;
 
 public class CriteriaEditorAction extends OpenQueryEditorAction {
 	

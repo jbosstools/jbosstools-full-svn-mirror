@@ -26,9 +26,9 @@ import java.util.Iterator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PropertyStub;
 import org.hibernate.eclipse.console.utils.EclipseImages;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PropertyStub;
 
 public class PersistentClassWorkbenchAdapter extends BasicWorkbenchAdapter {
 

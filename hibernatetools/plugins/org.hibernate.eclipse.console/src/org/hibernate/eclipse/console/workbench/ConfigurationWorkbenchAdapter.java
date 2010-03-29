@@ -27,14 +27,13 @@ import java.util.Iterator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.PersistentClassStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
 
 public class ConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter {
 
-	@SuppressWarnings("unchecked")
 	public Object[] getChildren(Object o) {
 		ConfigurationStub cfg = (ConfigurationStub) o;
 		Iterator<PersistentClassStub> classMappings = cfg.getClassMappings();

@@ -22,21 +22,21 @@
 package org.hibernate.eclipse.console.workbench;
 
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.AnyStub;
-import org.hibernate.console.stubs.ArrayStub;
-import org.hibernate.console.stubs.BagStub;
-import org.hibernate.console.stubs.ComponentStub;
-import org.hibernate.console.stubs.DependantValueStub;
-import org.hibernate.console.stubs.IdentifierBagStub;
-import org.hibernate.console.stubs.ListStub;
-import org.hibernate.console.stubs.ManyToOneStub;
-import org.hibernate.console.stubs.MapStub;
-import org.hibernate.console.stubs.OneToManyStub;
-import org.hibernate.console.stubs.OneToOneStub;
-import org.hibernate.console.stubs.PrimitiveArrayStub;
-import org.hibernate.console.stubs.SetStub;
-import org.hibernate.console.stubs.SimpleValueStub;
-import org.hibernate.console.stubs.ValueVisitorStub;
+import org.hibernate.mediator.stubs.AnyStub;
+import org.hibernate.mediator.stubs.ArrayStub;
+import org.hibernate.mediator.stubs.BagStub;
+import org.hibernate.mediator.stubs.ComponentStub;
+import org.hibernate.mediator.stubs.DependantValueStub;
+import org.hibernate.mediator.stubs.IdentifierBagStub;
+import org.hibernate.mediator.stubs.ListStub;
+import org.hibernate.mediator.stubs.ManyToOneStub;
+import org.hibernate.mediator.stubs.MapStub;
+import org.hibernate.mediator.stubs.OneToManyStub;
+import org.hibernate.mediator.stubs.OneToOneStub;
+import org.hibernate.mediator.stubs.PrimitiveArrayStub;
+import org.hibernate.mediator.stubs.SetStub;
+import org.hibernate.mediator.stubs.SimpleValueStub;
+import org.hibernate.mediator.stubs.ValueVisitorStub;
 
 final class IconNameValueVisitor implements ValueVisitorStub {
 	

@@ -22,7 +22,7 @@
 package org.hibernate.eclipse.console;
 
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.QueryInputModel;
+import org.hibernate.mediator.QueryInputModel;
 
 public interface QueryEditor {
 

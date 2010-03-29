@@ -41,12 +41,12 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.hqleditor.HQLEditor;
 import org.hibernate.eclipse.hqleditor.HQLEditorDocumentSetupParticipant;
 import org.hibernate.eclipse.hqleditor.HQLSourceViewer;
 import org.hibernate.eclipse.hqleditor.HQLSourceViewerConfiguration;
+import org.hibernate.mediator.stubs.util.StringHelper;
 
 public class DynamicSQLPreviewView extends ViewPart {
 

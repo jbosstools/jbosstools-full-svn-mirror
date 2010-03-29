@@ -58,24 +58,24 @@ import org.eclipse.jface.text.DocumentRewriteSessionType;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.text.edits.TextEdit;
-import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
-import org.hibernate.cfg.reveng.OverrideRepository;
-import org.hibernate.cfg.reveng.ReverseEngineeringSettings;
-import org.hibernate.cfg.reveng.ReverseEngineeringStrategy;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
-import org.hibernate.console.execution.ExecutionContext.Command;
-import org.hibernate.console.stubs.ConfigurationStubFactory;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.ConfigurationStubJDBCMetaData;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.console.stubs.util.ReflectHelper;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.model.impl.ExporterFactory;
-import org.hibernate.tool.hbm2x.ArtifactCollector;
-import org.hibernate.tool.hbm2x.Exporter;
+import org.hibernate.mediator.execution.ExecutionContext.Command;
+import org.hibernate.mediator.stubs.ArtifactCollectorStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.ConfigurationStubFactory;
+import org.hibernate.mediator.stubs.ConfigurationStubJDBCMetaData;
+import org.hibernate.mediator.stubs.DefaultReverseEngineeringStrategyStub;
+import org.hibernate.mediator.stubs.ExporterStub;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.stubs.OverrideRepositoryStub;
+import org.hibernate.mediator.stubs.ReverseEngineeringSettingsStub;
+import org.hibernate.mediator.stubs.ReverseEngineeringStrategyStub;
+import org.hibernate.mediator.stubs.util.ReflectHelper;
+import org.hibernate.mediator.stubs.util.StringHelper;
 
 public class CodeGenerationLaunchDelegate extends
 		LaunchConfigurationDelegate {
@@ -133,7 +133,7 @@ public class CodeGenerationLaunchDelegate extends
 
 		    Set<String> outputDirectories = new HashSet<String>();
 		    ExporterFactory[] exporters = exporterFactories.toArray( new ExporterFactory[exporterFactories.size()] );
-            ArtifactCollector collector = runExporters(attributes, exporters, outputDirectories, monitor);
+            ArtifactCollectorStub collector = runExporters(attributes, exporters, outputDirectories, monitor);
 
             for (String path : outputDirectories) {
             	refreshOutputDir( path );
@@ -157,7 +157,7 @@ public class CodeGenerationLaunchDelegate extends
 
 	}
 
-	private void formatGeneratedCode(IProgressMonitor monitor, ArtifactCollector collector) {
+	private void formatGeneratedCode(IProgressMonitor monitor, ArtifactCollectorStub collector) {
 		final TextFileBufferOperation operation = new FormatGeneratedCode( HibernateConsoleMessages.CodeGenerationLaunchDelegate_formate_generated_code );
 
 		File[] javaFiles = collector.getFiles("java"); //$NON-NLS-1$
@@ -198,7 +198,7 @@ public class CodeGenerationLaunchDelegate extends
 		}
 	}
 
-	private ArtifactCollector runExporters (final ExporterAttributes attributes, final ExporterFactory[] exporterFactories, final Set<String> outputDirectories, final IProgressMonitor monitor)
+	private ArtifactCollectorStub runExporters (final ExporterAttributes attributes, final ExporterFactory[] exporterFactories, final Set<String> outputDirectories, final IProgressMonitor monitor)
 	   throws CoreException
     {
 
@@ -218,10 +218,10 @@ public class CodeGenerationLaunchDelegate extends
 			if (monitor.isCanceled())
 				return null;
 
-			return (ArtifactCollector) cc.execute(new Command() {
+			return (ArtifactCollectorStub) cc.execute(new Command() {
 
 				public Object execute() {
-					ArtifactCollector artifactCollector = new ArtifactCollector();
+					ArtifactCollectorStub artifactCollector = ArtifactCollectorStub.newInstance();
 
                     // Global properties
 	                Properties props = new Properties();
@@ -235,7 +235,7 @@ public class CodeGenerationLaunchDelegate extends
                        Properties globalProperties = new Properties();
                        globalProperties.putAll(props);
 
-                       Exporter exporter;
+                       ExporterStub exporter;
 					try {
 						exporter = exporterFactories[i].createConfiguredExporter(cfg, attributes.getOutputPath(), attributes.getTemplatePath(), globalProperties, outputDirectories, artifactCollector);
 					} catch (CoreException e) {
@@ -284,13 +284,13 @@ public class CodeGenerationLaunchDelegate extends
 
 				public Object execute() {					
 					//todo: factor this setup of revengstrategy to core		
-					ReverseEngineeringStrategy res = new DefaultReverseEngineeringStrategy();
+					ReverseEngineeringStrategyStub res = DefaultReverseEngineeringStrategyStub.newInstance();
 
-					OverrideRepository repository = null;
+					OverrideRepositoryStub repository = null;
 					
 					if(revengres!=null) {
 						File file = PathHelper.getLocation( revengres ).toFile();
-						repository = new OverrideRepository();
+						repository = new OverrideRepositoryStub();
 						repository.addFile(file);						
 					}
 					
@@ -302,7 +302,7 @@ public class CodeGenerationLaunchDelegate extends
 						res = loadreverseEngineeringStrategy(reverseEngineeringStrategy, res);
 					}
 
-					ReverseEngineeringSettings qqsettings = new ReverseEngineeringSettings(res)
+					ReverseEngineeringSettingsStub qqsettings = ReverseEngineeringSettingsStub.newInstance(res)
 					.setDefaultPackageName(attributes.getPackageName())
 					.setDetectManyToMany( attributes.detectManyToMany() )
 					.setDetectOneToOne( attributes.detectOneToOne() )
@@ -329,16 +329,16 @@ public class CodeGenerationLaunchDelegate extends
 
 	// TODO: merge with revstrategy load in JDBCConfigurationTask
 	@SuppressWarnings("unchecked")
-	private ReverseEngineeringStrategy loadreverseEngineeringStrategy(final String className, ReverseEngineeringStrategy delegate) {
+	private ReverseEngineeringStrategyStub loadreverseEngineeringStrategy(final String className, ReverseEngineeringStrategyStub delegate) {
         try {
-            Class<ReverseEngineeringStrategy> clazz = ReflectHelper.classForName(className);
-			Constructor<ReverseEngineeringStrategy> constructor = clazz.getConstructor(new Class[] { ReverseEngineeringStrategy.class });
+            Class<ReverseEngineeringStrategyStub> clazz = ReflectHelper.classForName(className);
+			Constructor<ReverseEngineeringStrategyStub> constructor = clazz.getConstructor(new Class[] { ReverseEngineeringStrategyStub.class });
             return constructor.newInstance(new Object[] { delegate });
         }
         catch (NoSuchMethodException e) {
 			try {
 				Class<?> clazz = ReflectHelper.classForName(className);
-				ReverseEngineeringStrategy rev = (ReverseEngineeringStrategy) clazz.newInstance();
+				ReverseEngineeringStrategyStub rev = (ReverseEngineeringStrategyStub) clazz.newInstance();
 				return rev;
 			}
 			catch (Exception eq) {

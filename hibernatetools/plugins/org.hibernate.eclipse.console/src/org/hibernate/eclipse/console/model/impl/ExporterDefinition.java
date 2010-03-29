@@ -48,11 +48,11 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.console.stubs.util.ReflectHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.tool.hbm2x.Exporter;
+import org.hibernate.mediator.stubs.ExporterStub;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.stubs.util.ReflectHelper;
 
 /**
  * Represents what is specified in plugin.xml about possible exporters.
@@ -116,11 +116,11 @@ public class ExporterDefinition {
 	}
 
 
-	public Exporter createExporterInstance() {
-	   Exporter exporter = null;
+	public ExporterStub createExporterInstance() {
+	   ExporterStub exporter = null;
 
 	   try {
-		   exporter = (Exporter) ReflectHelper.classForName( classname ).newInstance();
+		   exporter = (ExporterStub) ReflectHelper.classForName( classname ).newInstance();
 	   }
 	   catch (InstantiationException e) {
 		   throw new HibernateConsoleRuntimeException(HibernateConsoleMessages.ExporterDefinition_problem_creating_exporter_class + classname);

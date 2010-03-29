@@ -33,13 +33,13 @@ import org.eclipse.ui.views.properties.IPropertySource2;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.node.BaseNode;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PrimaryKeyStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.TableStub;
-import org.hibernate.console.stubs.ValueStub;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PrimaryKeyStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.stubs.ValueStub;
 
 public class ConfigurationAdapterFactory implements IAdapterFactory {
 

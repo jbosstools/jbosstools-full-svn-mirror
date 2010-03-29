@@ -22,7 +22,7 @@
 package org.hibernate.eclipse.console;
 
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
 
 /**
  * @author max

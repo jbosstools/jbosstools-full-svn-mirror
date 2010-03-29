@@ -23,12 +23,12 @@ package org.hibernate.eclipse.graph;
 
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.ConsolePreferencesConstants;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.views.KnownConfigurationsView;
 import org.hibernate.eclipse.graph.model.ConfigurationViewAdapter;
 import org.hibernate.eclipse.graph.parts.ConfigurationEditPart;
+import org.hibernate.mediator.stubs.ConfigurationStub;
 
 public class EntityGraphView extends AbstractGraphViewPart {
 

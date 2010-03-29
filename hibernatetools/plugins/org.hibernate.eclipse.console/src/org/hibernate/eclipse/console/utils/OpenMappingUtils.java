@@ -46,27 +46,27 @@ import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.stubs.Cfg2HbmToolStub;
-import org.hibernate.console.stubs.CollectionStub;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.ComponentStub;
-import org.hibernate.console.stubs.ManyToOneStub;
-import org.hibernate.console.stubs.MapStub;
-import org.hibernate.console.stubs.OneToManyStub;
-import org.hibernate.console.stubs.OneToOneStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.RootClassStub;
-import org.hibernate.console.stubs.SubclassStub;
-import org.hibernate.console.stubs.TableStub;
-import org.hibernate.console.stubs.ToOneStub;
-import org.hibernate.console.stubs.ValueStub;
-import org.hibernate.console.stubs.util.StringHelper;
-import org.hibernate.console.stubs.util.XMLHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.tool.hbm2x.Cfg2HbmTool;
+import org.hibernate.mediator.execution.ExecutionContext;
+import org.hibernate.mediator.stubs.Cfg2HbmToolStub;
+import org.hibernate.mediator.stubs.CollectionStub;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ComponentStub;
+import org.hibernate.mediator.stubs.ManyToOneStub;
+import org.hibernate.mediator.stubs.MapStub;
+import org.hibernate.mediator.stubs.OneToManyStub;
+import org.hibernate.mediator.stubs.OneToOneStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.RootClassStub;
+import org.hibernate.mediator.stubs.SubclassStub;
+import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.stubs.ToOneStub;
+import org.hibernate.mediator.stubs.ValueStub;
+import org.hibernate.mediator.stubs.util.OpenMappingUtilsEjb3;
+import org.hibernate.mediator.stubs.util.StringHelper;
+import org.hibernate.mediator.stubs.util.XMLHelper;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -538,7 +538,9 @@ public class OpenMappingUtils {
 		final ConsoleConfiguration cc2 = consoleConfig;
 		List<String> documentPaths = (List<String>)consoleConfig.execute(new ExecutionContext.Command() {
 			public Object execute() {
-				return OpenMappingUtilsEjb3.enumDocuments(cc2);
+				return OpenMappingUtilsEjb3.enumDocuments(
+						cc2.getPreferences().getPersistenceUnitName(),
+						cc2.getEntityResolver());
 			}
 		});
     	if (documentPaths == null) {

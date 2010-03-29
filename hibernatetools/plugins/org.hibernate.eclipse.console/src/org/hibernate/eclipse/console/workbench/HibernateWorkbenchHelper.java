@@ -24,10 +24,10 @@ package org.hibernate.eclipse.console.workbench;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.ValueStub;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.utils.EclipseImages;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.ValueStub;
+import org.hibernate.mediator.stubs.util.StringHelper;
 
 public class HibernateWorkbenchHelper {
 

@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.TableStub;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.TableStub;
 
 
 public class TableViewAdapter extends GraphNode {

@@ -31,19 +31,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.cfg.reveng.ReverseEngineeringStrategy;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.ConnectionProviderStub;
-import org.hibernate.console.stubs.DefaultDatabaseCollectorStub;
-import org.hibernate.console.stubs.JDBCReaderStub;
-import org.hibernate.console.stubs.SettingsStub;
-import org.hibernate.console.stubs.TableStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
+import org.hibernate.mediator.execution.ExecutionContext;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.ConnectionProviderStub;
+import org.hibernate.mediator.stubs.DefaultDatabaseCollectorStub;
+import org.hibernate.mediator.stubs.JDBCReaderStub;
+import org.hibernate.mediator.stubs.ReverseEngineeringStrategyStub;
+import org.hibernate.mediator.stubs.SettingsStub;
+import org.hibernate.mediator.stubs.TableStub;
 
 public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 
@@ -103,7 +103,7 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 		return getLazyDatabaseSchema(o).getConsoleConfiguration();
 	}
 
-	protected void readDatabaseSchema(final IProgressMonitor monitor, final DefaultDatabaseCollectorStub db, ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
+	protected void readDatabaseSchema(final IProgressMonitor monitor, final DefaultDatabaseCollectorStub db, ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategyStub strategy) {
 		final ConfigurationStub configuration = consoleConfiguration.buildWith(null, false);
 
 		consoleConfiguration.execute(new ExecutionContext.Command() {

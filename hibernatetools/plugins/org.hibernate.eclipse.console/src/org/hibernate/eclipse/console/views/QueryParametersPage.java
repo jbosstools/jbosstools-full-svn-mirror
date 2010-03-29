@@ -60,16 +60,16 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
-import org.hibernate.console.ConsoleQueryParameter;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.QueryInputModel;
-import org.hibernate.console.stubs.NullableTypeStub;
-import org.hibernate.console.stubs.TypeStub;
-import org.hibernate.console.stubs.util.ParserHelper;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.QueryEditor;
 import org.hibernate.eclipse.console.utils.EclipseImages;
+import org.hibernate.mediator.ConsoleQueryParameter;
+import org.hibernate.mediator.QueryInputModel;
+import org.hibernate.mediator.stubs.NullableTypeStub;
+import org.hibernate.mediator.stubs.TypeStub;
+import org.hibernate.mediator.stubs.util.ParserHelper;
+import org.hibernate.mediator.stubs.util.StringHelper;
 
 public class QueryParametersPage extends Page implements IQueryParametersPage {
 

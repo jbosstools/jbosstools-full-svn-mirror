@@ -42,6 +42,7 @@ Export-Package: org.hibernate.eclipse.builder,
  org.hibernate.eclipse.nature,
  org.hibernate.eclipse.util.xpl
 Require-Bundle: org.hibernate.eclipse,
+ org.hibernate.mediator,
  org.eclipse.jdt.ui,
  org.eclipse.jdt.core,
  org.eclipse.core.runtime,

@@ -67,8 +67,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.EclipseConsoleConfiguration;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
@@ -77,6 +75,8 @@ import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.launch.ConsoleConfigurationMainTab;
 import org.hibernate.eclipse.launch.ConsoleConfigurationTabGroup;
 import org.hibernate.eclipse.launch.IConsoleConfigurationLaunchConstants;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
+import org.hibernate.mediator.stubs.util.StringHelper;
 
 /**
  * This wizardpage wraps the LaunchConfiguration based tabs and thus mimicks the normal launch configuration ui.

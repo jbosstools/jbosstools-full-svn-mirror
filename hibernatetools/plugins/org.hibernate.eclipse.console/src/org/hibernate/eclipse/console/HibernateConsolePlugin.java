@@ -57,8 +57,6 @@ import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.KnownConfigurationsAdapter;
 import org.hibernate.console.KnownConfigurationsListener;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.eclipse.console.actions.AddConfigurationAction;
 import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.console.workbench.ConfigurationAdapterFactory;
@@ -69,6 +67,8 @@ import org.hibernate.eclipse.hqleditor.HQLEditorStorage;
 import org.hibernate.eclipse.launch.ICodeGenerationLaunchConstants;
 import org.hibernate.eclipse.logging.PluginLogger;
 import org.hibernate.eclipse.logging.xpl.EclipseLogger;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.osgi.framework.BundleContext;
 
 /**

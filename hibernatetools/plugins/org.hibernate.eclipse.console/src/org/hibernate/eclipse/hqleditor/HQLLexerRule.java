@@ -27,10 +27,7 @@ import java.io.Reader;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
-import org.hibernate.console.stubs.HqlSqlTokenTypesStub;
-import org.hibernate.console.stubs.util.HqlBaseLexerStub;
-
-import antlr.Token;
+import org.hibernate.mediator.stubs.util.HqlBaseLexerStub;
 
 public class HQLLexerRule implements IRule {
 
@@ -67,8 +64,7 @@ public class HQLLexerRule implements IRule {
 			}
 			
 		});
-		Token token = lexer.nextToken();
-		if (token != null && token.getType() == HqlSqlTokenTypesStub.IDENT) {
+		if (lexer.isNextTokenIdent()) {
 			return hqlToken;
 		} 
 		return org.eclipse.jface.text.rules.Token.UNDEFINED;		

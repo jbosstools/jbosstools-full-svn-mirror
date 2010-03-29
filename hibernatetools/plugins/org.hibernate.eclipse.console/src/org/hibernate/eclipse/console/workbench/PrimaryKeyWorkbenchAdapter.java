@@ -23,10 +23,10 @@ package org.hibernate.eclipse.console.workbench;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.PrimaryKeyStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.PrimaryKeyStub;
 
 public class PrimaryKeyWorkbenchAdapter extends BasicWorkbenchAdapter {
 

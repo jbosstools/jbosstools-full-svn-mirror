@@ -46,11 +46,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.ide.IDE;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.EnvironmentStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.tool.hbm2x.HibernateConfigurationExporter;
+import org.hibernate.mediator.stubs.EnvironmentStub;
+import org.hibernate.mediator.stubs.HibernateConfigurationExporterStub;
 
 /**
  * Creates a new hibernate.cfg.xml
@@ -216,7 +216,7 @@ public class NewConfigurationWizard extends Wizard implements INewWizard {
 	 */
 	private InputStream openContentStream(Properties props) {
         StringWriter stringWriter = new StringWriter();
-        HibernateConfigurationExporter hce = new HibernateConfigurationExporter();
+        HibernateConfigurationExporterStub hce = HibernateConfigurationExporterStub.newInstance();
 		hce.setCustomProperties(props);
 		hce.setOutput(stringWriter);
         hce.start();

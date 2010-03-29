@@ -22,11 +22,11 @@ import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jpt.core.JpaDataSource;
 import org.eclipse.jpt.core.JpaProject;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.eclipse.console.utils.ClassLoaderHelper;
 import org.hibernate.eclipse.console.utils.DriverClassHelpers;
 import org.hibernate.eclipse.launch.IConsoleConfigurationLaunchConstants;
+import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.w3c.dom.Element;
 
 public class EclipseLaunchConsoleConfigurationPreferences implements ConsoleConfigurationPreferences {

@@ -15,15 +15,15 @@ import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.console.stubs.util.StringHelper;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.launch.HibernateLaunchConstants;
 import org.hibernate.eclipse.launch.PathHelper;
-import org.hibernate.tool.hbm2x.ArtifactCollector;
-import org.hibernate.tool.hbm2x.Exporter;
-import org.hibernate.tool.hbm2x.GenericExporter;
+import org.hibernate.mediator.stubs.ArtifactCollectorStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.ExporterStub;
+import org.hibernate.mediator.stubs.GenericExporterStub;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.stubs.util.StringHelper;
 
 /**
  * ExporterFactory is used in UI to hold additional configuration for Exporter definitions
@@ -166,10 +166,10 @@ public class ExporterFactory {
 	 * @param collector
 	 * @throws CoreException in case of resolve variables issues.
 	 */
-	public Exporter createConfiguredExporter(ConfigurationStub cfg, String defaultOutputDirectory,
-			String customTemplatePath, Properties globalProperties, Set<String> outputDirectories, ArtifactCollector collector) throws CoreException {
+	public ExporterStub createConfiguredExporter(ConfigurationStub cfg, String defaultOutputDirectory,
+			String customTemplatePath, Properties globalProperties, Set<String> outputDirectories, ArtifactCollectorStub collector) throws CoreException {
 
-		Exporter exporter = getExporterDefinition().createExporterInstance();
+		ExporterStub exporter = getExporterDefinition().createExporterInstance();
 
 
 		Properties props = new Properties();
@@ -245,7 +245,7 @@ public class ExporterFactory {
 
 		// special handling for GenericExporter (TODO: be delegated via plugin.xml)
 		if(getExporterDefinition().getId().equals("org.hibernate.tools.hbmtemplate")) { //$NON-NLS-1$
-			GenericExporter ge = (GenericExporter) exporter;
+			GenericExporterStub ge = (GenericExporterStub) exporter;
 
 			ge.setFilePattern(props.getProperty("file_pattern", null)); //$NON-NLS-1$
 			props.remove("file_pattern"); //$NON-NLS-1$
