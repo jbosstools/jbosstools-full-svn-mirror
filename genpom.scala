@@ -2,7 +2,7 @@ import java.io.File
 import scala.io.Source
 import scala.xml.XML
 
-object HelloWorld {
+object GenPom {
 
   case class GVA(groupId : String, artifactId : String, version : String)
 
@@ -13,7 +13,7 @@ object HelloWorld {
     
       generateAggregator(new File("."), 
 			 new File("parent-pom.xml"),
-			 GVA("org.jboss.tools", "org.jboss.tools.parent.pom", "0.0.1-SNAPSHOT"),
+			 GVA("org.jboss.tools", "org.jboss.tools.parent.pom", "1.0.0-SNAPSHOT"),
 			 GVA("org.jboss.tools", "trunk", "0.0.1-SNAPSHOT")
 			 )
 
@@ -103,7 +103,7 @@ object HelloWorld {
 
   def dump(dirs : Collection[File], parentPom : File, parent : GVA, me : GVA) {
     for(f <- dirs) {
-      
+      var aggregate = false  
       val manifest = new File(new File(f, "META-INF"), "MANIFEST.MF")
       val plugins = new File(f, "plugins")
       val tests = new File(f, "tests")
@@ -118,32 +118,51 @@ object HelloWorld {
       }      
       
       if(plugins.exists()) {	
-	generateAggregator(plugins, 
+    	  aggregate = true
+    	  generateAggregator(plugins, 
 			   new File("../../" + parentPom.getPath()),
 			   parent,
-			   GVA(me.groupId, f.getName() , "0.0.1-SNAPSHOT")
+			   GVA(me.groupId, f.getName() + ".plugins" , "0.0.1-SNAPSHOT")
 			 )
       }
       
       if(tests.exists()) {
-	generateAggregator(tests, 
+        aggregate = true
+        generateAggregator(tests, 
 			   new File("../../" + parentPom.getPath()),
 			   parent,
-			   GVA(me.groupId, f.getName() , "0.0.1-SNAPSHOT")
+			   GVA(me.groupId, f.getName() + ".tests", "0.0.1-SNAPSHOT")
 			 )
       }
 
       if(features.exists()) {
-	generateAggregator(features, 
+    	  aggregate = true
+    	  generateAggregator(features, 
 			   new File("../../" + parentPom.getPath()),
 			   parent,
-			   GVA(me.groupId, f.getName() , "0.0.1-SNAPSHOT")
+			   GVA(me.groupId, f.getName()+".features" , "0.0.1-SNAPSHOT")
 			 )
       }
 
+      if(aggregate) {
+    	  println("Generate Agg for " + f)
+    	  generateAggregator(f, new File("../" + parentPom.getPath()), parent, GVA(me.groupId, f.getName()+".all", "0.0.1-SNAPSHOT"))
+      }
     }
   }
 
+  def isModule(n : File) : Boolean = {
+    def v = new File(n, "pom.xml").exists() ||
+      (!n.getName().contains(".sdk.") && (new File(new File(n, "META-INF"), "MANIFEST.MF").exists()) || (new File(n, "feature.xml").exists())) || (hasDirectory(n, "features") || hasDirectory(n, "tests")	|| hasDirectory(n, "plugins"))
+    return v
+  }
+  
+  def hasDirectory(parent : File, name : String) : Boolean = {
+   
+    val dir = new File(parent, name)
+    return dir.isDirectory() && dir.exists()
+  }
+  
   def generateAggregator(dir : File, 
 			 parentPom : File, 
 			 parent : GVA,
@@ -152,11 +171,12 @@ object HelloWorld {
     aggregatorcount = aggregatorcount + 1
 
     val	 dirs =  dir.listFiles().filter(
-      (n) => n.isDirectory() && !n.getName().startsWith(".") 
+      (n) => n.isDirectory() && !n.getName().startsWith(".") && !n.getName().contains(".sdk.")
     )
     
     val realModules = dirs.filter(
-      (n) => n.isDirectory() && !n.getName().startsWith(".") && (new File(new File(n, "META-INF"), "MANIFEST.MF").exists() || (new File(n, "feature.xml").exists() && !n.getName().contains(".sdk."))))
+    		(n) => isModule(n))
+    
     var modules =
       <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion> 
@@ -167,7 +187,7 @@ object HelloWorld {
       <version>{parent.version}</version> 
     </parent>
       <groupId>{me.groupId}</groupId> 
-      <artifactId>{me.artifactId}.{dir.getName()}</artifactId> 
+      <artifactId>{me.artifactId}</artifactId> 
       <version>{me.version}</version> 
     <packaging>pom</packaging> 
       <modules>
@@ -191,4 +211,4 @@ object HelloWorld {
 }
 
 
-HelloWorld.main(args)
+GenPom.main(args)
