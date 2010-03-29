@@ -1,6 +1,6 @@
 package org.hibernate.eclipse.jdt.ui.test;
 
-import org.hibernate.console.util.ELTransformer;
+import org.hibernate.mediator.util.ELTransformer;
 
 import junit.framework.TestCase;
 

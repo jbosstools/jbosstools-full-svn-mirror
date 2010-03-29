@@ -20,18 +20,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.console.stubs.ArrayStub;
-import org.hibernate.console.stubs.ConfigurationStub;
-import org.hibernate.console.stubs.IntegerTypeStub;
-import org.hibernate.console.stubs.ListStub;
-import org.hibernate.console.stubs.ManyToOneStub;
-import org.hibernate.console.stubs.MapStub;
-import org.hibernate.console.stubs.OneToManyStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PrimitiveArrayStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.SetStub;
-import org.hibernate.console.stubs.ValueStub;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.project.TestProject;
 import org.hibernate.eclipse.console.test.utils.FilesTransfer;
@@ -41,6 +29,18 @@ import org.hibernate.eclipse.jdt.ui.internal.jpa.common.Utils;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.process.AllEntitiesProcessor;
 import org.hibernate.eclipse.jdt.ui.test.HibernateJDTuiTestPlugin;
 import org.hibernate.eclipse.jdt.ui.wizards.ConfigurationActor;
+import org.hibernate.mediator.stubs.ArrayStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.IntegerTypeStub;
+import org.hibernate.mediator.stubs.ListStub;
+import org.hibernate.mediator.stubs.ManyToOneStub;
+import org.hibernate.mediator.stubs.MapStub;
+import org.hibernate.mediator.stubs.OneToManyStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PrimitiveArrayStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.SetStub;
+import org.hibernate.mediator.stubs.ValueStub;
 
 public class HbmExporterTest extends TestCase {
 	

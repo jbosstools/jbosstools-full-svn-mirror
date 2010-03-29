@@ -39,40 +39,41 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
-import org.hibernate.console.stubs.ConfigurationStubFactory;
-import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.collect.AllEntitiesInfoCollector;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.EntityInfo;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.RefEntityInfo;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.RefType;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.Utils;
-import org.hibernate.console.stubs.ArrayStub;
-import org.hibernate.console.stubs.BagStub;
-import org.hibernate.console.stubs.CollectionStub;
-import org.hibernate.console.stubs.ColumnStub;
-import org.hibernate.console.stubs.FetchModeStub;
-import org.hibernate.console.stubs.IndexedCollectionStub;
-import org.hibernate.console.stubs.JoinedSubclassStub;
-import org.hibernate.console.stubs.KeyValueStub;
-import org.hibernate.console.stubs.ListStub;
-import org.hibernate.console.stubs.ManyToOneStub;
-import org.hibernate.console.stubs.MapStub;
-import org.hibernate.console.stubs.MappingsStub;
-import org.hibernate.console.stubs.OneToManyStub;
-import org.hibernate.console.stubs.OneToOneStub;
-import org.hibernate.console.stubs.PersistentClassStub;
-import org.hibernate.console.stubs.PersistentClassStubFactory;
-import org.hibernate.console.stubs.PrimitiveArrayStub;
-import org.hibernate.console.stubs.PropertyStub;
-import org.hibernate.console.stubs.RootClassStub;
-import org.hibernate.console.stubs.SetStub;
-import org.hibernate.console.stubs.SimpleValueStub;
-import org.hibernate.console.stubs.SubclassStub;
-import org.hibernate.console.stubs.TableStub;
-import org.hibernate.console.stubs.ToOneStub;
-import org.hibernate.console.stubs.ValueStub;
-import org.hibernate.console.stubs.util.StringHelper;
+import org.hibernate.mediator.stubs.ArrayStub;
+import org.hibernate.mediator.stubs.BagStub;
+import org.hibernate.mediator.stubs.CollectionStub;
+import org.hibernate.mediator.stubs.ColumnStub;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.ConfigurationStubFactory;
+import org.hibernate.mediator.stubs.EnumTypeStub;
+import org.hibernate.mediator.stubs.FetchModeStub;
+import org.hibernate.mediator.stubs.IndexedCollectionStub;
+import org.hibernate.mediator.stubs.JoinedSubclassStub;
+import org.hibernate.mediator.stubs.KeyValueStub;
+import org.hibernate.mediator.stubs.ListStub;
+import org.hibernate.mediator.stubs.ManyToOneStub;
+import org.hibernate.mediator.stubs.MapStub;
+import org.hibernate.mediator.stubs.MappingsStub;
+import org.hibernate.mediator.stubs.OneToManyStub;
+import org.hibernate.mediator.stubs.OneToOneStub;
+import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.stubs.PersistentClassStubFactory;
+import org.hibernate.mediator.stubs.PrimitiveArrayStub;
+import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.stubs.RootClassStub;
+import org.hibernate.mediator.stubs.SetStub;
+import org.hibernate.mediator.stubs.SimpleValueStub;
+import org.hibernate.mediator.stubs.SubclassStub;
+import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.stubs.ToOneStub;
+import org.hibernate.mediator.stubs.ValueStub;
+import org.hibernate.mediator.stubs.util.StringHelper;
 
 /**
  * @author Dmitry Geraskov
@@ -576,10 +577,10 @@ class TypeVisitor extends ASTVisitor{
 			}
 			prop.setCascade("none");//$NON-NLS-1$
 		} else if (tb.isEnum()){
-			value = buildSimpleValue(org.hibernate.type.EnumType.class.getName());
+			value = buildSimpleValue(EnumTypeStub.getClassName());
 			Properties typeParameters = new Properties();
-			typeParameters.put(org.hibernate.type.EnumType.ENUM, tb.getBinaryName());
-			typeParameters.put(org.hibernate.type.EnumType.TYPE, java.sql.Types.VARCHAR);
+			typeParameters.put(EnumTypeStub.ENUM, tb.getBinaryName());
+			typeParameters.put(EnumTypeStub.TYPE, java.sql.Types.VARCHAR);
 			((SimpleValueStub)value).setTypeParameters(typeParameters);
 			buildProperty(value);
 		} else if (ref != null){

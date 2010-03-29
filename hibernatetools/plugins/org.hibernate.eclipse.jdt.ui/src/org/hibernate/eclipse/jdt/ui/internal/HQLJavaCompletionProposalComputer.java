@@ -35,11 +35,11 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.console.stubs.IHQLCodeAssistStub;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.hqleditor.EclipseHQLCompletionRequestor;
 import org.hibernate.eclipse.hqleditor.HQLCompletionProcessor;
 import org.hibernate.eclipse.nature.HibernateNature;
+import org.hibernate.mediator.stubs.IHQLCodeAssistStub;
 
 public class HQLJavaCompletionProposalComputer implements IJavaCompletionProposalComputer {
 

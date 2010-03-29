@@ -62,7 +62,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.ide.IDE;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.stubs.ConfigurationStub;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
@@ -71,9 +70,10 @@ import org.hibernate.eclipse.jdt.ui.internal.JdtUiMessages;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.collect.AllEntitiesInfoCollector;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.EntityInfo;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.Utils;
-import org.hibernate.tool.hbm2x.HibernateMappingExporter;
-import org.hibernate.tool.hbm2x.HibernateMappingGlobalSettings;
-import org.hibernate.tool.hbm2x.pojo.POJOClass;
+import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.stubs.HibernateMappingExporterStub;
+import org.hibernate.mediator.stubs.HibernateMappingGlobalSettingsStub;
+import org.hibernate.mediator.stubs.POJOClassStub;
 
 /**
  * @author Dmitry Geraskov
@@ -246,7 +246,7 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 		Map<IJavaProject, IPath> places2Gen = new HashMap<IJavaProject, IPath>();
 		for (Entry<IJavaProject, ConfigurationStub> entry : configs.entrySet()) {
 			ConfigurationStub config = entry.getValue();
-			HibernateMappingGlobalSettings hmgs = new HibernateMappingGlobalSettings();
+			HibernateMappingGlobalSettingsStub hmgs = HibernateMappingGlobalSettingsStub.newInstance();
 			hmgs.setDefaultAccess("field"); //$NON-NLS-1$
 
 			//final IPath projPath = entry.getKey().getProject().getLocation();
@@ -265,7 +265,7 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 				 * redefine base exportPOJO to setup right output dir in case 
 				 * of several source folders 
 				 */
-				public File getNewOutputDir(POJOClass element, File outputdir4FileNew) {
+				public File getNewOutputDir(POJOClassStub element, File outputdir4FileNew) {
 
 					String fullyQualifiedName = element.getQualifiedDeclarationName();
 					ICompilationUnit icu = Utils.findCompilationUnit(proj, fullyQualifiedName);
@@ -298,7 +298,7 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 					return outputdir4FileNew;
 				}
 			};
-			HibernateMappingExporter hce = config.createHibernateMappingExporter(folder2Gen, nod);
+			HibernateMappingExporterStub hce = config.createHibernateMappingExporter(folder2Gen, nod);
 			
 			hce.setGlobalSettings(hmgs);
 			//hce.setForEach("entity");
