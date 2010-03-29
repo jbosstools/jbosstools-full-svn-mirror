@@ -1,0 +1,28 @@
+package org.hibernate.mediator.stubs;
+
+import java.io.File;
+
+import org.hibernate.tool.hbm2x.ArtifactCollector;
+
+public class ArtifactCollectorStub {
+
+	protected ArtifactCollector artifactCollector;
+
+	protected ArtifactCollectorStub(Object artifactCollector) {
+		this.artifactCollector = (ArtifactCollector)artifactCollector;
+	}
+	
+	public static ArtifactCollectorStub newInstance() {
+		return new ArtifactCollectorStub(new ArtifactCollector());
+	}
+
+	public File[] getFiles(String string) {
+		return null;
+	}
+
+	public void formatFiles() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
