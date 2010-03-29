@@ -10,6 +10,7 @@ Require-Bundle: org.junit;bundle-version="3.8.2",
  org.eclipse.ui.ide,
  org.hibernate.eclipse.console.test,
  org.jboss.tools.hibernate.ui,
+ org.hibernate.mediator,
  org.hibernate.eclipse
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.hibernate.ui.test
