@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.hibernate.eclipse.logging;
+package org.hibernate.mediator.logging;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -30,43 +30,42 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.ui.console.MessageConsoleStream;
-import org.hibernate.console.ConsoleMessages;
-import org.hibernate.console.KnownConfigurations;
-import org.hibernate.mediator.logging.CurrentContext;
+import org.hibernate.mediator.Messages;
 
 /**
- * PluginLogAppender
- * This class is a custom Log4J appender that sends Log4J events to
- * the Eclipse plug-in log.
+ * PluginLogAppender This class is a custom Log4J appender that sends Log4J events to the Eclipse
+ * plug-in log.
+ * 
  * @author Manoel Marques
  */
 public class PluginLogAppender extends AppenderSkeleton {
 
+	@SuppressWarnings("unused")
 	private ILog pluginLog;
-
 
 	/**
 	 * Sets the Eclipse log instance
-	 * @param log plug-in log
+	 * 
+	 * @param log
+	 *            plug-in log
 	 */
 	void setLog(ILog pluginLog) {
 		this.pluginLog = pluginLog;
 	}
 
 	/**
-	 * Log event happened.
-	 * Translates level to status instance codes:
-	 * level > Level.ERROR - Status.ERROR
-	 * level > Level.WARN - Status.WARNING
-	 * level > Level.DEBUG - Status.INFO
-	 * default - Status.OK
-	 * @param event LoggingEvent instance
+	 * Log event happened. Translates level to status instance codes: level > Level.ERROR -
+	 * Status.ERROR level > Level.WARN - Status.WARNING level > Level.DEBUG - Status.INFO default -
+	 * Status.OK
+	 * 
+	 * @param event
+	 *            LoggingEvent instance
 	 */
 	public void append(LoggingEvent event) {
 
 		if (this.layout == null) {
-			this.errorHandler.error(ConsoleMessages.PluginLogAppender_missing_layout_for_appender +
-			       this.name,null,ErrorCode.MISSING_LAYOUT);
+			this.errorHandler.error(Messages.PluginLogAppender_missing_layout_for_appender
+					+ this.name, null, ErrorCode.MISSING_LAYOUT);
 			return;
 		}
 
@@ -78,38 +77,33 @@ public class PluginLogAppender extends AppenderSkeleton {
 			if (info != null)
 				thrown = info.getThrowable();
 		}
-		/*
+		/** /
 		Level level = event.getLevel();
 		int severity = IStatus.OK;
 
 		if (level.toInt() >= Priority.ERROR_INT)
 			severity = IStatus.ERROR;
-		else
-		if (level.toInt() >= Priority.WARN_INT)
+		else if (level.toInt() >= Priority.WARN_INT)
 			severity = IStatus.WARNING;
-		else
-		if (level.toInt() >= Priority.DEBUG_INT)
+		else if (level.toInt() >= Priority.DEBUG_INT)
 			severity = IStatus.INFO;
 
-
-		this.pluginLog.log(new Status(severity,
-		         this.pluginLog.getBundle().getSymbolicName(),
-				 level.toInt(),text,thrown));*/
+		this.pluginLog.log(new Status(severity, this.pluginLog.getBundle().getSymbolicName(), level
+				.toInt(), text, thrown));
+		/**/
 
 		Object peek = CurrentContext.peek();
-		MessageConsoleStream stream = KnownConfigurations.getInstance().findLoggingStream( (String)peek );
-		if(stream!=null) {
+		MessageConsoleStream stream = LoggingStreamManager.getInstance().findLoggingStream(
+				(String) peek);
+		if (stream != null) {
 			stream.println(text);
-			if(thrown!=null) {
+			if (thrown != null) {
 				StringWriter stringWriter = new StringWriter();
-				thrown.printStackTrace( new PrintWriter(stringWriter) );
+				thrown.printStackTrace(new PrintWriter(stringWriter));
 				stream.println(stringWriter.getBuffer().toString());
 			}
 		}
-
-		}
-
-
+	}
 
 	/**
 	 * Closes this appender
@@ -120,6 +114,7 @@ public class PluginLogAppender extends AppenderSkeleton {
 
 	/**
 	 * Checks if this appender requires layout
+	 * 
 	 * @return true if layout is required.
 	 */
 	public boolean requiresLayout() {

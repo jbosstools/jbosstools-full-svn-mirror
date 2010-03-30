@@ -19,8 +19,8 @@ public class Messages extends NLS {
 	//public static String JavaPage_no_info;
 	public static String JavaPage_not_allowed;
 	//public static String KnownConfigurations_could_not_write_state;
-	//public static String KnownConfigurations_hibernate_log;
-	//public static String KnownConfigurations_unknown;
+	public static String KnownConfigurations_hibernate_log;
+	public static String KnownConfigurations_unknown;
 	public static String DefaultExecutionContext_existing_classloader;
 	//public static String ClassNode_uninitialized_proxy;
 	//public static String ConfigurationNode_mapped_entities;
@@ -32,7 +32,7 @@ public class Messages extends NLS {
 	//public static String StandAloneConsoleConfigurationPreferences_could_not_resolve_classpaths;
 	//public static String StandAloneConsoleConfigurationPreferences_errors_while_parsing;
 	public static String PluginFileAppender_missing_plugin_state_location;
-	//public static String PluginLogAppender_missing_layout_for_appender;
+	public static String PluginLogAppender_missing_layout_for_appender;
 	public static String EntityPropertySource_identifier;
 	public static String EntityPropertySource_properties;
 	public static String DynamicSQLPreviewView_caused_by;

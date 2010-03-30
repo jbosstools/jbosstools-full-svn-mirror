@@ -109,7 +109,7 @@ public class ConfigurationStubFactory {
 	private Configuration buildAnnotationConfiguration() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
 		Class<?> clazz = ReflectHelper
-				.classForName("org.hibernate.cfg.AnnotationConfiguration", ConfigurationStubFactory.class); //$NON-NLS-1$
+				.classForName("org.hibernate.cfg.AnnotationConfiguration", Object.class); //$NON-NLS-1$
 		Configuration annotationConfig = (Configuration)clazz.newInstance();
 		return annotationConfig;
 	}
@@ -134,7 +134,7 @@ public class ConfigurationStubFactory {
 				overrides.put("hibernate.archive.autodetection", "none"); //$NON-NLS-1$//$NON-NLS-2$
 			}
 			Class<?> clazz = ReflectHelper.classForName(
-					"org.hibernate.ejb.Ejb3Configuration", ConfigurationStubFactory.class); //$NON-NLS-1$
+					"org.hibernate.ejb.Ejb3Configuration", Object.class); //$NON-NLS-1$
 			Object ejb3cfg = clazz.newInstance();
 
 			if (StringHelper.isNotEmpty(entityResolver)) {

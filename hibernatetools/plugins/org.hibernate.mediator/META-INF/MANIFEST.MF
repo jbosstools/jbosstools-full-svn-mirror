@@ -55,10 +55,6 @@ Export-Package: org.hibernate.mediator,
  org.hibernate.mediator.stubs,
  org.hibernate.mediator.stubs.util,
  org.hibernate.mediator.util,
- org.apache.log4j,
- org.apache.log4j.helpers,
- org.apache.log4j.spi,
- org.apache.commons.logging,
  org.dom4j,
  org.dom4j.io,
  net.sf.cglib.core,
@@ -73,3 +69,4 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Eclipse-BuddyPolicy: registered
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Activator: org.hibernate.mediator.MediatorPlugin
