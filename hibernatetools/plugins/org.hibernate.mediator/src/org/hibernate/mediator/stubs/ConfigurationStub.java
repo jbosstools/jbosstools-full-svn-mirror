@@ -55,7 +55,6 @@ public class ConfigurationStub {
 		configuration.buildMappings();
 	}
 
-	// TODO: temporary should be protected and/or SettingsStub?
 	public SettingsStub buildSettings() {
 		return new SettingsStub(configuration.buildSettings());
 	}
@@ -72,7 +71,6 @@ public class ConfigurationStub {
 		return new IHQLCodeAssistStub(new HQLCodeAssist(configuration));
 	}
 	
-	// TODO: temporary should be protected and/or NamingStrategyStub?
 	public NamingStrategyStub getNamingStrategy() {
 		return new NamingStrategyStub(configuration.getNamingStrategy());
 	}
@@ -91,17 +89,14 @@ public class ConfigurationStub {
 		return arr.iterator();
 	}
 	
-	// TODO: temporary should be protected and/or PersistentClassStub?
 	public PersistentClassStub getClassMapping(String entityName) {
 		return PersistentClassStubFactory.createPersistentClassStub(configuration.getClassMapping(entityName));
 	}
 
-	// TODO: temporary should be protected and/or MappingsStub?
 	public MappingsStub createMappings() {
 		return new MappingsStub(configuration.createMappings());
 	}
 
-	// TODO: temporary should be protected and/or MappingsStub?
 	public MappingStub buildMapping() {
 		return new MappingStub(configuration.buildMapping());
 	}

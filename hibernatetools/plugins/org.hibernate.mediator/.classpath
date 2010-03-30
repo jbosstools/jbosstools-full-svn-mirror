@@ -21,7 +21,7 @@
 	<classpathentry kind="lib" path="lib/hibernate/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/annotations/hibernate-entitymanager.jar" sourcepath="D:/Temp/_hibernate/hibernate-entitymanager-3.4.0.GA-sources.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate/javassist.jar"/>
-	<classpathentry kind="lib" path="lib/annotations/hibernate-validator.jar"/>
+	<classpathentry kind="lib" path="lib/annotations/hibernate-validator.jar" sourcepath="D:/Temp/_hibernate/hibernate-validator-3.1.0.GA-sources.jar "/>
 	<classpathentry kind="lib" path="lib/hibernate/log4j-1.2.15.jar" sourcepath="D:/Temp/_hibernate/log4j-1.2.15-sources.jar "/>
 	<classpathentry kind="lib" path="lib/hibernate/hibernate-jmx.jar" sourcepath="D:/Temp/_hibernate/hibernate-jmx-3.3.2.GA-sources.jar "/>
 	<classpathentry kind="lib" path="lib/hibernate/commons-collections-3.1.jar"/>

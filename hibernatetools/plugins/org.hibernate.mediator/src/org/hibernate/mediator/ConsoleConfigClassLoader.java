@@ -49,8 +49,7 @@ public class ConsoleConfigClassLoader extends URLClassLoader {
 	 * cleanup jar file factory cache
 	 */
 	@SuppressWarnings({ "nls", "unchecked" })
-	public boolean cleanupJarFileFactory()
-	{
+	public boolean cleanupJarFileFactory() {
 		boolean res = false;
 		Class classJarURLConnection = null;
 		try {

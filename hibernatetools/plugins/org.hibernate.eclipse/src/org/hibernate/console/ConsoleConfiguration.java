@@ -225,9 +225,11 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 
 	protected ClassLoader getParentClassLoader() {
+		return ConfigurationStub.class.getClassLoader();
+		//return this.getClass().getClassLoader();
 		//return ClassLoader.getSystemClassLoader();
 		//return Thread.currentThread().getContextClassLoader().getParent().getParent();
-		return Thread.currentThread().getContextClassLoader();
+		//return Thread.currentThread().getContextClassLoader();
 	}
 	public ConfigurationStub getConfiguration() {
 		return configStub;
