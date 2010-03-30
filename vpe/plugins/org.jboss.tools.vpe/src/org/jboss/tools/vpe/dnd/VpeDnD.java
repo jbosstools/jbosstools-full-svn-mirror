@@ -749,7 +749,6 @@ public class VpeDnD implements MozillaDndListener {
 		int dropOffset = 0;
 		int mouseX = nsuiEvent.getPageX();
 		int mouseY = nsuiEvent.getPageY();
-		System.out.println(String.format("x = %s; y = %s", mouseX, mouseY));
 		nsIDOMNode originalNode = vpeController.getVisualBuilder()
 				.getOriginalTargetNode(event);
 		if (originalNode == null || originalNode.getParentNode() == null ||
