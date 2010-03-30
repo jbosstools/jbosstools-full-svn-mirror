@@ -1109,14 +1109,14 @@ public class VpeController implements INodeAdapter,
 				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			try {
 				mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) > 0;
-				if (mouseUpSelectionReasonFlag
+				if (
 						// commited by Dzmitrovich - experimental
 						// TODO check selection and if are appear errors then
 						// uncommented next code
-						// || reason == nsISelectionListener.NO_REASON
-						|| reason == nsISelectionListener.KEYPRESS_REASON
-						|| reason == nsISelectionListener.SELECTALL_REASON
-						|| (reason & nsISelectionListener.MOUSEDOWN_REASON) > 0) {
+					    // reason != nsISelectionListener.NO_REASON
+						reason == nsISelectionListener.KEYPRESS_REASON
+						|| reason == nsISelectionListener.SELECTALL_REASON)
+						 {
 					if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
 						System.out
 								.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
