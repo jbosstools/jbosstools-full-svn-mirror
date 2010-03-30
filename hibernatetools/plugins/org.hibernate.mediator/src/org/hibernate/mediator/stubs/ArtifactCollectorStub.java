@@ -17,12 +17,11 @@ public class ArtifactCollectorStub {
 	}
 
 	public File[] getFiles(String string) {
-		return null;
+		return artifactCollector.getFiles(string);
 	}
 
 	public void formatFiles() {
-		// TODO Auto-generated method stub
-		
+		artifactCollector.formatFiles();
 	}
 
 }

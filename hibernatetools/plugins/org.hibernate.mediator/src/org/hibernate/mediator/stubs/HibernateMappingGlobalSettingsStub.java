@@ -15,7 +15,6 @@ public class HibernateMappingGlobalSettingsStub {
 	}
 
 	public void setDefaultAccess(String string) {
-		// TODO Auto-generated method stub
-		
+		hibernateMappingGlobalSettings.setDefaultAccess(string);
 	}
 }

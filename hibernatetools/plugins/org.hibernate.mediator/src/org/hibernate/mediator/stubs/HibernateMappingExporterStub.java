@@ -16,13 +16,11 @@ public class HibernateMappingExporterStub {
     }
 
 	public void setGlobalSettings(HibernateMappingGlobalSettingsStub hmgs) {
-		// TODO Auto-generated method stub
-		
+		hibernateMappingExporter.setGlobalSettings(hmgs.hibernateMappingGlobalSettings);
 	}
 
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		hibernateMappingExporter.start();
 	}
 
 	protected File getOutputDirectory() {

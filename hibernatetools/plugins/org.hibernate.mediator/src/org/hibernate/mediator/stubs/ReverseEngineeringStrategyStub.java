@@ -14,8 +14,7 @@ public class ReverseEngineeringStrategyStub {
 		return ReverseEngineeringStrategy.class.getName();
 	}
 
-	public void setSettings(ReverseEngineeringSettingsStub qqsettings) {
-		// TODO Auto-generated method stub
-		
+	public void setSettings(ReverseEngineeringSettingsStub settings) {
+		reverseEngineeringStrategy.setSettings(settings.reverseEngineeringSettings);
 	}
 }

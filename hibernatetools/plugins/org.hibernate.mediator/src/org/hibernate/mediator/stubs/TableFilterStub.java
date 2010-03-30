@@ -1,45 +1,45 @@
 package org.hibernate.mediator.stubs;
 
+import org.hibernate.cfg.reveng.TableFilter;
+
 public class TableFilterStub {
+	
+	protected TableFilter tableFilter;
+
+	protected TableFilterStub(Object tableFilter) {
+		this.tableFilter = (TableFilter)tableFilter;
+	}
 
 	public void setExclude(Boolean exclude) {
-		// TODO Auto-generated method stub
-		
+		tableFilter.setExclude(exclude);
 	}
 
 	public void setMatchCatalog(String matchCatalog) {
-		// TODO Auto-generated method stub
-		
+		tableFilter.setMatchCatalog(matchCatalog);
 	}
 
 	public void setMatchName(String matchName) {
-		// TODO Auto-generated method stub
-		
+		tableFilter.setMatchName(matchName);
 	}
 
 	public void setMatchSchema(String matchSchema) {
-		// TODO Auto-generated method stub
-		
+		tableFilter.setMatchSchema(matchSchema);
 	}
 
 	public Boolean getExclude() {
-		// TODO Auto-generated method stub
-		return null;
+		return tableFilter.getExclude();
 	}
 
 	public String getMatchCatalog() {
-		// TODO Auto-generated method stub
-		return null;
+		return tableFilter.getMatchCatalog();
 	}
 
 	public String getMatchSchema() {
-		// TODO Auto-generated method stub
-		return null;
+		return tableFilter.getMatchSchema();
 	}
 
 	public String getMatchName() {
-		// TODO Auto-generated method stub
-		return null;
+		return tableFilter.getMatchName();
 	}
 
 }

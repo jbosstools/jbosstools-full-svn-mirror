@@ -11,18 +11,15 @@ public class GenericExporterStub extends ExporterStub {
 	}
 
 	public void setFilePattern(String property) {
-		// TODO Auto-generated method stub
-		
+		genericExporter.setFilePattern(property);
 	}
 
 	public void setTemplateName(String property) {
-		// TODO Auto-generated method stub
-		
+		genericExporter.setTemplateName(property);
 	}
 
 	public void setForEach(String property) {
-		// TODO Auto-generated method stub
-		
+		genericExporter.setForEach(property);
 	}
 
 }

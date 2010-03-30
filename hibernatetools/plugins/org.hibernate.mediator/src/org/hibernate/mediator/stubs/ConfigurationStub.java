@@ -132,7 +132,7 @@ public class ConfigurationStub {
 	}
 	
 	public void updateExporter(ExporterStub exporter) {
-		exporter.setConfiguration(configuration);
+		exporter.setConfiguration(this);
 	}
 	
 	public Properties getProperties() {

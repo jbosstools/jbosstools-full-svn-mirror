@@ -3,7 +3,6 @@ package org.hibernate.mediator.stubs;
 import java.io.File;
 import java.util.Properties;
 
-import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2x.Exporter;
 
 public class ExporterStub {
@@ -15,33 +14,27 @@ public class ExporterStub {
 	}
 
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		exporter.start();
 	}
 
-	public void setConfiguration(Configuration configuration) {
-		// TODO Auto-generated method stub
-		
+	public void setConfiguration(ConfigurationStub configuration) {
+		exporter.setConfiguration(configuration.configuration);
 	}
 
 	public void setProperties(Properties props) {
-		// TODO Auto-generated method stub
-		
+		exporter.setProperties(props);
 	}
 
 	public void setArtifactCollector(ArtifactCollectorStub collector) {
-		// TODO Auto-generated method stub
-		
+		exporter.setArtifactCollector(collector.artifactCollector);
 	}
 
 	public void setOutputDirectory(File file) {
-		// TODO Auto-generated method stub
-		
+		exporter.setOutputDirectory(file);
 	}
 
 	public void setTemplatePath(String[] array) {
-		// TODO Auto-generated method stub
-		
+		exporter.setTemplatePath(array);
 	}
 
 }

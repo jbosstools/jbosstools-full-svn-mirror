@@ -18,12 +18,10 @@ public class HibernateConfigurationExporterStub extends ExporterStub {
 	}
 
 	public void setCustomProperties(Properties props) {
-		// TODO Auto-generated method stub
-		
+		hibernateConfigurationExporter.setCustomProperties(props);
 	}
 
 	public void setOutput(StringWriter stringWriter) {
-		// TODO Auto-generated method stub
-		
+		hibernateConfigurationExporter.setOutput(stringWriter);
 	}
 }

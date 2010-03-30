@@ -11,8 +11,7 @@ public class POJOClassStub {
 	}
 
 	public String getQualifiedDeclarationName() {
-		// TODO Auto-generated method stub
-		return null;
+		return pojoClass.getQualifiedDeclarationName();
 	}
 
 }
