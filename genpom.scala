@@ -6,15 +6,21 @@ object GenPom {
 
   case class GVA(groupId : String, artifactId : String, version : String)
 
+  /********** Configuration Start **********/
+  var projectName = "org.jboss.tools"
+  var pathToParentPom = "./"
+  var version = "0.0.1-SNAPSHOT"
+  /********** Configuration Ends  **********/
+
   var aggregatorcount = 0
   var modulecount = 0
-
+  
   def main(args: Array[String]) {
     
       generateAggregator(new File("."), 
-			 new File("parent-pom.xml"),
-			 GVA("org.jboss.tools", "org.jboss.tools.parent.pom", "1.0.0-SNAPSHOT"),
-			 GVA("org.jboss.tools", "trunk", "0.0.1-SNAPSHOT")
+			 new File(pathToParentPom + "parent-pom.xml"),
+			 GVA(projectName, projectName + ".parent.pom", version),
+			 GVA(projectName, "trunk", version)
 			 )
 
     println("Modules: " + modulecount + " Aggregator: " + aggregatorcount)
@@ -35,10 +41,9 @@ object GenPom {
       <groupId>{me.groupId}</groupId> 
       <artifactId>{me.artifactId}</artifactId> 
       <version>{getVersion(dir)}</version> 
-      <packaging>{
-	if (dir.getParentFile().getName().equals("tests")) 
+      <packaging>{ if (dir.getParentFile().getAbsolutePath().endsWith("/tests") || dir.getParentFile().getAbsolutePath().endsWith("/tests/.")) 
 	  "eclipse-test-plugin" 
-	else if (dir.getParentFile().getName().equals("features")) 
+	else if (dir.getParentFile().getAbsolutePath().endsWith("/features") || dir.getParentFile().getAbsolutePath().endsWith("/features/.")) 
 	  "eclipse-feature"
 	else
 	  "eclipse-plugin"}</packaging> 
