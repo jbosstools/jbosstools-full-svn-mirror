@@ -352,8 +352,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <note>
    <title>Note:</title>
-   <para>JBoss Developer Studio needs Java 6 and &quot;gij&quot; isn&apos;t available on
-    every platform.</para>
+   <para>JBoss Developer Studio 3.0 comes integrated with JBoss EAP 5.0 that requires JDK 6.0 to run 
+         and &quot;gij&quot; isn&apos;t available on every platform.</para>
   </note>
 
   <itemizedlist>
