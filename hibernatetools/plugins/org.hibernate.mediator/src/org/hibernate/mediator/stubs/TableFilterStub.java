@@ -9,6 +9,10 @@ public class TableFilterStub {
 	protected TableFilterStub(Object tableFilter) {
 		this.tableFilter = (TableFilter)tableFilter;
 	}
+	
+	public static TableFilterStub newInstance() {
+		return new TableFilterStub(new TableFilter());
+	}
 
 	public void setExclude(Boolean exclude) {
 		tableFilter.setExclude(exclude);

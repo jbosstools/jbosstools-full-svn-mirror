@@ -26,7 +26,7 @@ import org.hibernate.mediator.stubs.TableFilterStub;
 
 public class TableFilterImpl implements ITableFilter {
 
-	TableFilterStub tf = new TableFilterStub();
+	TableFilterStub tf = TableFilterStub.newInstance();
 	private final ReverseEngineeringDefinitionImpl revModel;
 	
 	protected TableFilterImpl(

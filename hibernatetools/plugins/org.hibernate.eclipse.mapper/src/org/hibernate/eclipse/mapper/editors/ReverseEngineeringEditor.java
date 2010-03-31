@@ -198,11 +198,11 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 
 			ITableFilter[] tableFilters = getReverseEngineeringDefinition().getTableFilters();
 			SettingsStub settings = configuration.getSettings2();
-			OverrideRepositoryStub repository = new OverrideRepositoryStub();///*settings.getDefaultCatalogName(),settings.getDefaultSchemaName()*/);
+			OverrideRepositoryStub repository = OverrideRepositoryStub.newInstance();///*settings.getDefaultCatalogName(),settings.getDefaultSchemaName()*/);
 			boolean hasIncludes = false;
 			for (int i = 0; i < tableFilters.length; i++) {
 				ITableFilter filter = tableFilters[i];
-				TableFilterStub tf = new TableFilterStub();
+				TableFilterStub tf = TableFilterStub.newInstance();
 				tf.setExclude(filter.getExclude());
 				if(filter.getExclude()!=null && !filter.getExclude().booleanValue()) {
 					hasIncludes = true;
@@ -212,7 +212,7 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 				tf.setMatchSchema(filter.getMatchSchema());
 				repository.addTableFilter(tf);
 			}
-			TableFilterStub tf = new TableFilterStub();
+			TableFilterStub tf = TableFilterStub.newInstance();
 			tf.setExclude(Boolean.FALSE);
 			tf.setMatchCatalog(".*"); //$NON-NLS-1$
 			tf.setMatchSchema(".*"); //$NON-NLS-1$

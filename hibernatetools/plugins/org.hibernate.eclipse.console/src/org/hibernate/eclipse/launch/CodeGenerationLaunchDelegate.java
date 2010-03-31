@@ -290,7 +290,7 @@ public class CodeGenerationLaunchDelegate extends
 					
 					if(revengres!=null) {
 						File file = PathHelper.getLocation( revengres ).toFile();
-						repository = new OverrideRepositoryStub();
+						repository = OverrideRepositoryStub.newInstance();
 						repository.addFile(file);						
 					}
 					

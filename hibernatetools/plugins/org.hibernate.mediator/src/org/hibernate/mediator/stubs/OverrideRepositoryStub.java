@@ -10,6 +10,10 @@ public class OverrideRepositoryStub {
 	protected OverrideRepositoryStub(Object overrideRepository) {
 		this.overrideRepository = (OverrideRepository)overrideRepository;
 	}
+	
+	public static OverrideRepositoryStub newInstance() {
+		return new OverrideRepositoryStub(new OverrideRepository());
+	}
 
 	public void addFile(File file) {
 		overrideRepository.addFile(file);
