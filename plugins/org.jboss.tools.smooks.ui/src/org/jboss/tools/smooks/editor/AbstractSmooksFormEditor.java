@@ -89,7 +89,6 @@ import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAd
 import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.javabean12.provider.Javabean12ItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.jmsrouting12.provider.Jmsrouting12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.json12.provider.Json12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
@@ -407,7 +406,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
 		// adapterFactory.addAdapterFactory(new
 		// JsonItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new JmsroutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
 		// adapterFactory.addAdapterFactory(new
 		// CsvItemProviderAdapterFactory());

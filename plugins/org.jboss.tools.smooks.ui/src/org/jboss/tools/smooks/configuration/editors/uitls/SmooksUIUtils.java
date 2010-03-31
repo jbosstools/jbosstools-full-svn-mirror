@@ -170,8 +170,6 @@ import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
-import org.jboss.tools.smooks.model.jmsrouting.JmsRouter;
-import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.json12.Json12Package;
@@ -2836,10 +2834,6 @@ public class SmooksUIUtils {
 			return true;
 		}
 
-		// for bean ref id :
-		if (JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID == feature) {
-			return true;
-		}
 		if (Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID == feature) {
 			return true;
 		}
@@ -2874,9 +2868,6 @@ public class SmooksUIUtils {
 			return true;
 		}
 		if (GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT == feature) {
-			return true;
-		}
-		if (JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT == feature) {
 			return true;
 		}
 		if (SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR == feature) {
@@ -2985,9 +2976,6 @@ public class SmooksUIUtils {
 		if (model == null) {
 			return null;
 		}
-		if (model instanceof JmsRouter) {
-			return JmsroutingPackage.Literals.JMS_ROUTER__BEAN_ID;
-		}
 		if (model instanceof JMS12Router) {
 			return Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID;
 		}
@@ -3024,9 +3012,6 @@ public class SmooksUIUtils {
 		}
 		if (model instanceof GroovyUICreator) {
 			return GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT_NS;
-		}
-		if (model instanceof JmsRouter) {
-			return JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT_NS;
 		}
 		if (model instanceof ResourceConfigType) {
 			return SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR_NAMESPACE;
@@ -3072,9 +3057,6 @@ public class SmooksUIUtils {
 		}
 		if (model instanceof GroovyUICreator) {
 			return GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT;
-		}
-		if (model instanceof JmsRouter) {
-			return JmsroutingPackage.Literals.JMS_ROUTER__ROUTE_ON_ELEMENT;
 		}
 
 		if (model instanceof ResourceConfigType) {

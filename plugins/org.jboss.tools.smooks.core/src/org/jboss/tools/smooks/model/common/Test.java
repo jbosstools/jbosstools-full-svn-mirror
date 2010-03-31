@@ -11,7 +11,6 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.jboss.tools.smooks.model.common.util.CommonResourceFactoryImpl;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.javabean.JavabeanPackage;
 import org.jboss.tools.smooks.model.medi.MEdiPackage;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
@@ -28,7 +27,6 @@ public class Test {
 		Registry.INSTANCE.put(FreemarkerPackage.eNS_URI, FreemarkerPackage.eINSTANCE);
 		Registry.INSTANCE.put(XslPackage.eNS_URI, XslPackage.eINSTANCE);
 		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
-		Registry.INSTANCE.put(JavabeanPackage.eNS_URI, JavabeanPackage.eINSTANCE);
 		Registry.INSTANCE.put(MEdiPackage.eNS_URI, MEdiPackage.eINSTANCE);
 		
 		

@@ -45,11 +45,6 @@ import org.jboss.tools.smooks.configuration.editors.javabean12.JavaBean12Propert
 import org.jboss.tools.smooks.configuration.editors.javabean12.Javabean12ExpressionUICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanValueBinding12UICreator;
 import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanWiringBiding12UICreator;
-import org.jboss.tools.smooks.configuration.editors.jms.ConnectionUICreator;
-import org.jboss.tools.smooks.configuration.editors.jms.JmsRouterUICreator;
-import org.jboss.tools.smooks.configuration.editors.jms.JndiUICreator;
-import org.jboss.tools.smooks.configuration.editors.jms.MessageUICreator;
-import org.jboss.tools.smooks.configuration.editors.jms.SessionUICreator;
 import org.jboss.tools.smooks.configuration.editors.jms12.JMSRouter12UICreator;
 import org.jboss.tools.smooks.configuration.editors.json12.Json12ReaderUICreator;
 import org.jboss.tools.smooks.configuration.editors.persistence12.DeleterUICreator;
@@ -102,11 +97,6 @@ import org.jboss.tools.smooks.model.groovy.impl.GroovyImpl;
 import org.jboss.tools.smooks.model.groovy.impl.ScriptTypeImpl;
 import org.jboss.tools.smooks.model.iorouting.impl.IORouterImpl;
 import org.jboss.tools.smooks.model.javabean12.impl.BeanTypeImpl;
-import org.jboss.tools.smooks.model.jmsrouting.impl.ConnectionImpl;
-import org.jboss.tools.smooks.model.jmsrouting.impl.JmsRouterImpl;
-import org.jboss.tools.smooks.model.jmsrouting.impl.JndiImpl;
-import org.jboss.tools.smooks.model.jmsrouting.impl.MessageImpl;
-import org.jboss.tools.smooks.model.jmsrouting.impl.SessionImpl;
 import org.jboss.tools.smooks.model.jmsrouting12.impl.JMS12RouterImpl;
 import org.jboss.tools.smooks.model.json12.impl.Json12ReaderImpl;
 import org.jboss.tools.smooks.model.medi.impl.ComponentImpl;
@@ -237,12 +227,7 @@ public class PropertyUICreatorManager {
 		map.put(IORouterImpl.class, new IORouterUICreator());
 
 		// for JMS
-		map.put(ConnectionImpl.class, new ConnectionUICreator());
 		map.put(HighWaterMarkImpl.class, new HighWaterMarkUICreator());
-		map.put(JndiImpl.class, new JndiUICreator());
-		map.put(MessageImpl.class, new MessageUICreator());
-		map.put(JmsRouterImpl.class, new JmsRouterUICreator());
-		map.put(SessionImpl.class, new SessionUICreator());
 
 		// for DB routing
 		map.put(ExecutorImpl.class, new ExecutorUICreator());
