@@ -29,9 +29,9 @@ public class ConfigurationStub {
 	protected Configuration configuration;
 
 	protected ConfigurationStub(Configuration configuration) {
-		//Class.forName(className)
-	    //Method ReflectionUtils.findPublicMethod(Class declaringClass, "isOpen", 
-		//		   new Class[]());
+		if (configuration == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.configuration = configuration;
 	}
 
@@ -56,7 +56,11 @@ public class ConfigurationStub {
 	}
 
 	public SettingsStub buildSettings() {
-		return new SettingsStub(configuration.buildSettings());
+		Object obj = configuration.buildSettings();
+		if (obj == null) {
+			return null;
+		}
+		return new SettingsStub(obj);
 	}
 
 	protected SessionFactory buildSessionFactory() {
@@ -72,7 +76,11 @@ public class ConfigurationStub {
 	}
 	
 	public NamingStrategyStub getNamingStrategy() {
-		return new NamingStrategyStub(configuration.getNamingStrategy());
+		Object obj = configuration.getNamingStrategy();
+		if (obj == null) {
+			return null;
+		}
+		return new NamingStrategyStub(obj);
 	}
 
 	public boolean hasNamingStrategy() {
@@ -94,11 +102,19 @@ public class ConfigurationStub {
 	}
 
 	public MappingsStub createMappings() {
-		return new MappingsStub(configuration.createMappings());
+		Object obj = configuration.createMappings();
+		if (obj == null) {
+			return null;
+		}
+		return new MappingsStub(obj);
 	}
 
 	public MappingStub buildMapping() {
-		return new MappingStub(configuration.buildMapping());
+		Object obj = configuration.buildMapping();
+		if (obj == null) {
+			return null;
+		}
+		return new MappingStub(obj);
 	}
 
 	public static interface IExporterNewOutputDir {

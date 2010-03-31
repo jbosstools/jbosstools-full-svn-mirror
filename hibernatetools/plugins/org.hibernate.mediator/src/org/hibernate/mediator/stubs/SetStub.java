@@ -1,12 +1,16 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.mapping.Set;
+import org.hibernate.mediator.Messages;
 
 public class SetStub extends CollectionStub {
 	protected Set set;
 
 	protected SetStub(Object set) {
 		super(set);
+		if (set == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.set = (Set)set;
 	}
 	

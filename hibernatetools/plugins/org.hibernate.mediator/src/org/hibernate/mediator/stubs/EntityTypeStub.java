@@ -1,5 +1,6 @@
 package org.hibernate.mediator.stubs;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.type.EntityType;
 
 public class EntityTypeStub extends AbstractTypeStub {
@@ -7,6 +8,9 @@ public class EntityTypeStub extends AbstractTypeStub {
 
 	protected EntityTypeStub(Object entityType) {
 		super(entityType);
+		if (entityType == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.entityType = (EntityType)entityType;
 	}
 

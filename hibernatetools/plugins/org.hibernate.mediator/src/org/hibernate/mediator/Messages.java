@@ -37,6 +37,7 @@ public class Messages extends NLS {
 	public static String EntityPropertySource_properties;
 	public static String DynamicSQLPreviewView_caused_by;
 	public static String DynamicSQLPreviewView_manipulation_of;
+	public static String Stub_create_null_stub_prohibit;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

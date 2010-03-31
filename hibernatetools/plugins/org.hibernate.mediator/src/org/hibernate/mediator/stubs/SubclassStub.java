@@ -1,6 +1,7 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.mapping.Subclass;
+import org.hibernate.mediator.Messages;
 
 public class SubclassStub extends PersistentClassStub {
 	
@@ -8,6 +9,9 @@ public class SubclassStub extends PersistentClassStub {
 
 	protected SubclassStub(Object subclass) {
 		super(subclass);
+		if (subclass == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.subclass = (Subclass)subclass;
 	}
 
@@ -32,7 +36,11 @@ public class SubclassStub extends PersistentClassStub {
 	}
 
 	public TableStub getRootTable() {
-		return new TableStub(subclass.getRootTable());
+		Object obj = subclass.getRootTable();
+		if (obj == null) {
+			return null;
+		}
+		return new TableStub(obj);
 	}
 
 	public boolean isJoinedSubclass() {

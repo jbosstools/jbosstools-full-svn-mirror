@@ -6,11 +6,15 @@ import java.util.List;
 
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.PrimaryKey;
+import org.hibernate.mediator.Messages;
 
 public class PrimaryKeyStub {
 	protected PrimaryKey primaryKey;
 
 	protected PrimaryKeyStub(Object primaryKey) {
+		if (primaryKey == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.primaryKey = (PrimaryKey)primaryKey;
 	}
 	
@@ -27,7 +31,10 @@ public class PrimaryKeyStub {
 		Iterator<Column> it = (Iterator<Column>)primaryKey.getColumnIterator();
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
-			al.add(new ColumnStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new ColumnStub(obj));
+			}
 		}
 		return al.iterator();
 	}
@@ -37,7 +44,10 @@ public class PrimaryKeyStub {
 		Iterator<Column> it = (Iterator<Column>)primaryKey.getColumnIterator();
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
-			al.add(new ColumnStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new ColumnStub(obj));
+			}
 		}
 		return al;
 	}
@@ -47,11 +57,19 @@ public class PrimaryKeyStub {
 	}
 
 	public ColumnStub getColumn(int i) {
-		return new ColumnStub(primaryKey.getColumn(i));
+		Object obj = primaryKey.getColumn(i);
+		if (obj == null) {
+			return null;
+		}
+		return new ColumnStub(obj);
 	}
 
 	public TableStub getTable() {
-		return new TableStub(primaryKey.getTable());
+		Object obj = primaryKey.getTable();
+		if (obj == null) {
+			return null;
+		}
+		return new TableStub(obj);
 	}
 
 }

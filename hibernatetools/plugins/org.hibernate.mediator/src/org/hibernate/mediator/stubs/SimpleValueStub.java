@@ -3,6 +3,7 @@ package org.hibernate.mediator.stubs;
 import java.util.Properties;
 
 import org.hibernate.mapping.SimpleValue;
+import org.hibernate.mediator.Messages;
 
 public class SimpleValueStub extends KeyValueStub {
 	
@@ -10,6 +11,9 @@ public class SimpleValueStub extends KeyValueStub {
 
 	protected SimpleValueStub(Object simpleValue) {
 		super(simpleValue);
+		if (simpleValue == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.simpleValue = (SimpleValue)simpleValue;
 	}
 	

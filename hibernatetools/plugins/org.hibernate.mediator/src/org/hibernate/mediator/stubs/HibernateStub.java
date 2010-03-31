@@ -1,6 +1,7 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.Hibernate;
+import org.hibernate.mediator.Messages;
 
 public class HibernateStub {
 	public static final NullableTypeStub BOOLEAN = new NullableTypeStub(Hibernate.BOOLEAN);
@@ -30,6 +31,9 @@ public class HibernateStub {
 	protected Hibernate hibernate;
 
 	protected HibernateStub(Object hibernate) {
+		if (hibernate == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.hibernate = (Hibernate)hibernate;
 	}
 

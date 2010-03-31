@@ -2,6 +2,7 @@ package org.hibernate.mediator.stubs;
 
 import org.hibernate.FetchMode;
 import org.hibernate.mapping.Collection;
+import org.hibernate.mediator.Messages;
 
 public abstract class CollectionStub extends ValueStub {
 	
@@ -9,6 +10,9 @@ public abstract class CollectionStub extends ValueStub {
 
 	protected CollectionStub(Object collection) {
 		super(collection);
+		if (collection == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.collection = (Collection)collection;
 	}
 
@@ -48,7 +52,11 @@ public abstract class CollectionStub extends ValueStub {
 	}
 
 	public TableStub getCollectionTable() {
-		return new TableStub(collection.getCollectionTable());
+		Object obj = collection.getCollectionTable();
+		if (obj == null) {
+			return null;
+		}
+		return new TableStub(obj);
 	}
 
 	public KeyValueStub getKey() {

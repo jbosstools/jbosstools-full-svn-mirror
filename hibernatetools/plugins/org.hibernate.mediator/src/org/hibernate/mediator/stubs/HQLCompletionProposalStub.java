@@ -1,5 +1,6 @@
 package org.hibernate.mediator.stubs;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.tool.ide.completion.HQLCompletionProposal;
 
 public class HQLCompletionProposalStub {
@@ -13,6 +14,9 @@ public class HQLCompletionProposalStub {
 	protected HQLCompletionProposal hqlCompletionProposal;
 
 	protected HQLCompletionProposalStub(Object hqlCompletionProposal) {
+		if (hqlCompletionProposal == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.hqlCompletionProposal = (HQLCompletionProposal)hqlCompletionProposal;
 	}
 
@@ -45,6 +49,10 @@ public class HQLCompletionProposalStub {
 	}
 
 	public PropertyStub getProperty() {
-		return new PropertyStub(hqlCompletionProposal.getProperty());
+		Object obj = hqlCompletionProposal.getProperty();
+		if (obj == null) {
+			return null;
+		}
+		return new PropertyStub(obj);
 	}
 }

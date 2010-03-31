@@ -1,12 +1,20 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.mapping.Property;
+import org.hibernate.mediator.Messages;
 
 public class PropertyStub {
 	protected Property property;
 
 	protected PropertyStub(Object property) {
-		this.property = (Property)property;
+		if (property == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
+		if (property instanceof PropertyStub) {
+			this.property = ((PropertyStub)property).property;
+		} else {
+			this.property = (Property)property;
+		}
 	}
 
 	public static PropertyStub newInstance() {

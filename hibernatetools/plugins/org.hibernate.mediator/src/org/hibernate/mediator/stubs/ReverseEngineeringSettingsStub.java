@@ -1,12 +1,16 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.cfg.reveng.ReverseEngineeringSettings;
+import org.hibernate.mediator.Messages;
 
 public class ReverseEngineeringSettingsStub {
 	
 	protected ReverseEngineeringSettings reverseEngineeringSettings;
 
 	protected ReverseEngineeringSettingsStub(Object reverseEngineeringSettings) {
+		if (reverseEngineeringSettings == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.reverseEngineeringSettings = (ReverseEngineeringSettings)reverseEngineeringSettings;
 	}
 	

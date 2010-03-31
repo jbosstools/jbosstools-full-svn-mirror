@@ -9,11 +9,15 @@ import java.util.Map.Entry;
 
 import org.hibernate.cfg.reveng.DefaultDatabaseCollector;
 import org.hibernate.mapping.Table;
+import org.hibernate.mediator.Messages;
 
 public class DefaultDatabaseCollectorStub {
 	protected DefaultDatabaseCollector defaultDatabaseCollector;
 
 	protected DefaultDatabaseCollectorStub(Object defaultDatabaseCollector) {
+		if (defaultDatabaseCollector == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.defaultDatabaseCollector = (DefaultDatabaseCollector)defaultDatabaseCollector;
 	}
 	
@@ -30,7 +34,10 @@ public class DefaultDatabaseCollectorStub {
 			ArrayList<TableStub> arr = new ArrayList<TableStub>();
 			Iterator<Table> itValue = (Iterator<Table>)entry.getValue().iterator();
 			while (itValue.hasNext()) {
-				arr.add(new TableStub(itValue.next()));
+				Object obj = itValue.next();
+				if (obj != null) {
+					arr.add(new TableStub(obj));
+				}
 			}
 			map.put(entry.getKey(), arr);
 		}

@@ -3,6 +3,8 @@ package org.hibernate.mediator.stubs.util;
 import java.io.Reader;
 
 import org.hibernate.hql.antlr.HqlBaseLexer;
+import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.HqlSqlTokenTypesStub;
 
 import antlr.Token;
@@ -13,6 +15,9 @@ public class HqlBaseLexerStub {
 	protected HqlBaseLexer hqlBaseLexer;
 	
 	protected HqlBaseLexerStub(HqlBaseLexer hqlBaseLexer) {
+		if (hqlBaseLexer == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.hqlBaseLexer = hqlBaseLexer;
 	}
 	

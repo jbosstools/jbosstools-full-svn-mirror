@@ -3,6 +3,9 @@ package org.hibernate.mediator.stubs;
 public class ValueStubFactory {
 	@SuppressWarnings("unchecked")
 	public static ValueStub createValueStub(Object value) {
+		if (value == null) {
+			return null;
+		}
 		final Class cl = value.getClass();
 		if (0 == "org.hibernate.mapping.Bag".compareTo(cl.getName())) { //$NON-NLS-1$
 			return new BagStub(value);

@@ -1,12 +1,16 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.mapping.OneToMany;
+import org.hibernate.mediator.Messages;
 
 public class OneToManyStub extends ValueStub {
 	protected OneToMany oneToMany;
 
 	protected OneToManyStub(Object oneToMany) {
 		super(oneToMany);
+		if (oneToMany == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.oneToMany = (OneToMany)oneToMany;
 	}
 	

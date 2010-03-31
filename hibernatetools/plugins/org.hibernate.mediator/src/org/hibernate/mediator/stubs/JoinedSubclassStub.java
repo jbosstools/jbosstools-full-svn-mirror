@@ -1,6 +1,7 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.mapping.JoinedSubclass;
+import org.hibernate.mediator.Messages;
 
 public class JoinedSubclassStub extends SubclassStub {
 	
@@ -8,6 +9,9 @@ public class JoinedSubclassStub extends SubclassStub {
 
 	protected JoinedSubclassStub(Object joinedSubclass) {
 		super(joinedSubclass);
+		if (joinedSubclass == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.joinedSubclass = (JoinedSubclass)joinedSubclass;
 	}
 	

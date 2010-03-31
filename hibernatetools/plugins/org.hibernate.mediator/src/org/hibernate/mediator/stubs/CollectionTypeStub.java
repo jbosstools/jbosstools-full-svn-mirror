@@ -1,5 +1,6 @@
 package org.hibernate.mediator.stubs;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.type.CollectionType;
 
 public class CollectionTypeStub extends AbstractTypeStub {
@@ -8,6 +9,9 @@ public class CollectionTypeStub extends AbstractTypeStub {
 
 	protected CollectionTypeStub(Object collectionType) {
 		super(collectionType);
+		if (collectionType == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.collectionType = (CollectionType)collectionType;
 	}
 

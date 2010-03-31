@@ -34,7 +34,7 @@ public class SpecialRootClass extends RootClassStub {
 	//protected RootClass rootClass;
 	
 	public SpecialRootClass(PropertyStub property) {
-		super(property);
+		super(RootClassStub.newInstance());
 		this.property = property;
 		//this.rootClass = null;
 		generate();

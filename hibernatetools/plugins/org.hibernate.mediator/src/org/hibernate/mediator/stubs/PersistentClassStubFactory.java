@@ -3,6 +3,9 @@ package org.hibernate.mediator.stubs;
 public class PersistentClassStubFactory {
 	@SuppressWarnings("unchecked")
 	public static PersistentClassStub createPersistentClassStub(Object value) {
+		if (value == null) {
+			return null;
+		}
 		final Class cl = value.getClass();
 		if (0 == "org.hibernate.mapping.RootClass".compareTo(cl.getName())) { //$NON-NLS-1$
 			return new RootClassStub(value);
@@ -14,8 +17,8 @@ public class PersistentClassStubFactory {
 			return new JoinedSubclassStub(value);
 		} else if (0 == "org.hibernate.mapping.SingleTableSubclass".compareTo(cl.getName())) { //$NON-NLS-1$
 			return new SingleTableSubclassStub(value);
-		//} else if (0 == "org.hibernate.mapping.UnionSubclass".compareTo(cl.getName())) { //$NON-NLS-1$
-		//	return new UnionSubclassStub(value);
+		} else if (0 == "org.hibernate.mapping.UnionSubclass".compareTo(cl.getName())) { //$NON-NLS-1$
+			return new UnionSubclassStub(value);
 		}
 		return null;
 	}

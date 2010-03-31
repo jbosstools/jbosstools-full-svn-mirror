@@ -2,6 +2,7 @@ package org.hibernate.mediator.stubs;
 
 import java.io.File;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.ArtifactCollector;
 
 public class ArtifactCollectorStub {
@@ -9,6 +10,9 @@ public class ArtifactCollectorStub {
 	protected ArtifactCollector artifactCollector;
 
 	protected ArtifactCollectorStub(Object artifactCollector) {
+		if (artifactCollector == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.artifactCollector = (ArtifactCollector)artifactCollector;
 	}
 	

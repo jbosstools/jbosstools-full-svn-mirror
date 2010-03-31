@@ -1,8 +1,9 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.mapping.Column;
+import org.hibernate.mediator.Messages;
 
-public class ColumnStub {
+public class ColumnStub extends SelectableStub {
 	public static final int DEFAULT_LENGTH = 255;
 	public static final int DEFAULT_PRECISION = 19;
 	public static final int DEFAULT_SCALE = 2;
@@ -10,6 +11,10 @@ public class ColumnStub {
 	protected Column column;
 
 	protected ColumnStub(Object column) {
+		super(column);
+		if (column == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.column = (Column)column;
 	}
 	

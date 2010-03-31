@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Properties;
 
 import org.hibernate.cfg.JDBCMetaDataConfiguration;
+import org.hibernate.mediator.Messages;
 
 public class ConfigurationStubJDBCMetaData extends ConfigurationStub {
 
@@ -12,6 +13,9 @@ public class ConfigurationStubJDBCMetaData extends ConfigurationStub {
 	
 	protected ConfigurationStubJDBCMetaData(JDBCMetaDataConfiguration configuration) {
 		super(configuration);
+		if (configuration == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		jdbcMetaDataConfiguration = configuration;
 	}
 
@@ -35,8 +39,10 @@ public class ConfigurationStubJDBCMetaData extends ConfigurationStub {
 		ArrayList<TableStub> arr = new ArrayList<TableStub>(); 
 		Iterator<?> it = jdbcMetaDataConfiguration.getTableMappings();
 		while (it.hasNext() ) {
-			Object table = it.next();
-			arr.add(new TableStub(table));
+			Object obj = it.next();
+			if (obj != null) {
+				arr.add(new TableStub(obj));
+			}
 		}
 		return arr;
 	}

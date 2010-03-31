@@ -1,5 +1,6 @@
 package org.hibernate.mediator.stubs;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.type.Type;
 
@@ -7,6 +8,9 @@ public class ClassMetadataStub {
 	protected ClassMetadata classMetadata;
 
 	protected ClassMetadataStub(Object classMetadata) {
+		if (classMetadata == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.classMetadata = (ClassMetadata)classMetadata;
 	}
 

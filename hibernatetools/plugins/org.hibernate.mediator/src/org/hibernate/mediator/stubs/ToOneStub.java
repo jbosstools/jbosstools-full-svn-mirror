@@ -2,12 +2,16 @@ package org.hibernate.mediator.stubs;
 
 import org.hibernate.FetchMode;
 import org.hibernate.mapping.ToOne;
+import org.hibernate.mediator.Messages;
 
 public class ToOneStub extends SimpleValueStub {
 	protected ToOne toOne;
 
 	protected ToOneStub(Object toOne) {
 		super(toOne);
+		if (toOne == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.toOne = (ToOne)toOne;
 	}
 

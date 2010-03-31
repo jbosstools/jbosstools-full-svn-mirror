@@ -1,11 +1,15 @@
 package org.hibernate.mediator.stubs;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.tool.ide.completion.HQLCodeAssist;
 
 public class IHQLCodeAssistStub {
 	protected HQLCodeAssist hqlCodeAssist;
 
 	protected IHQLCodeAssistStub(Object hqlCodeAssist) {
+		if (hqlCodeAssist == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.hqlCodeAssist = (HQLCodeAssist)hqlCodeAssist;
 	}
 

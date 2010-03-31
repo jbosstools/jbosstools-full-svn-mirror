@@ -5,13 +5,21 @@ import java.util.Iterator;
 
 import org.hibernate.mapping.RootClass;
 import org.hibernate.mapping.Subclass;
+import org.hibernate.mediator.Messages;
 
 public class RootClassStub extends PersistentClassStub {
 	protected RootClass rootClass;
 
 	protected RootClassStub(Object rootClass) {
 		super(rootClass);
-		this.rootClass = (RootClass)rootClass;
+		if (rootClass == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
+		if (rootClass instanceof RootClassStub) {
+			this.rootClass = ((RootClassStub)rootClass).rootClass;
+		} else {
+			this.rootClass = (RootClass)rootClass;
+		}
 	}
 
 	public static RootClassStub newInstance() {
@@ -27,7 +35,11 @@ public class RootClassStub extends PersistentClassStub {
 	}
 
 	public TableStub getTable() {
-		return new TableStub(rootClass.getTable());
+		Object obj = rootClass.getTable();
+		if (obj == null) {
+			return null;
+		}
+		return new TableStub(obj);
 	}
 
 	public void addProperty(PropertyStub p) {
@@ -39,7 +51,11 @@ public class RootClassStub extends PersistentClassStub {
 	}
 
 	public PropertyStub getIdentifierProperty() {
-		return new PropertyStub(rootClass.getIdentifierProperty());
+		Object obj = rootClass.getIdentifierProperty();
+		if (obj == null) {
+			return null;
+		}
+		return new PropertyStub(obj);
 	}
 
 	public void setEntityName(String entityName) {
@@ -183,7 +199,10 @@ public class RootClassStub extends PersistentClassStub {
 		Iterator<Subclass> it = (Iterator<Subclass>)rootClass.getSubclassIterator();
 		ArrayList<SubclassStub> al = new ArrayList<SubclassStub>();
 		while (it.hasNext()) {
-			al.add(new SubclassStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new SubclassStub(obj));
+			}
 		}
 		return al.iterator();
 	}

@@ -1,5 +1,6 @@
 package org.hibernate.mediator.stubs;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.GenericExporter;
 
 public class GenericExporterStub extends ExporterStub {
@@ -7,6 +8,9 @@ public class GenericExporterStub extends ExporterStub {
 
 	protected GenericExporterStub(Object genericExporter) {
 		super(genericExporter);
+		if (genericExporter == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.genericExporter = (GenericExporter)genericExporter;
 	}
 

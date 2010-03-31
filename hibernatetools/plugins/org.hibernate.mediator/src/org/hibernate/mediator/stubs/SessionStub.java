@@ -34,6 +34,9 @@ public class SessionStub {
 	protected Session session;
 
 	protected SessionStub(Session session) {
+		if (session == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.session = session;
 	}
 

@@ -1,12 +1,16 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.cfg.reveng.TableFilter;
+import org.hibernate.mediator.Messages;
 
 public class TableFilterStub {
 	
 	protected TableFilter tableFilter;
 
 	protected TableFilterStub(Object tableFilter) {
+		if (tableFilter == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.tableFilter = (TableFilter)tableFilter;
 	}
 	

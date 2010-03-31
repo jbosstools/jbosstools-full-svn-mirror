@@ -6,12 +6,20 @@ import java.util.Iterator;
 import org.hibernate.mapping.Join;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
+import org.hibernate.mediator.Messages;
 
 public abstract class PersistentClassStub {
 	protected PersistentClass persistentClass;
 
 	protected PersistentClassStub(Object persistentClass) {
-		this.persistentClass = (PersistentClass)persistentClass;
+		if (persistentClass == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
+		if (persistentClass instanceof PersistentClassStub) {
+			this.persistentClass = ((PersistentClassStub)persistentClass).persistentClass;
+		} else {
+			this.persistentClass = (PersistentClass)persistentClass;
+		}
 	}
 	
 	protected PersistentClass getPersistentClass() {
@@ -35,7 +43,11 @@ public abstract class PersistentClassStub {
 	}
 	
 	public PropertyStub getIdentifierProperty() {
-		return new PropertyStub(persistentClass.getIdentifierProperty());
+		Object obj = persistentClass.getIdentifierProperty();
+		if (obj == null) {
+			return null;
+		}
+		return new PropertyStub(obj);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -43,21 +55,36 @@ public abstract class PersistentClassStub {
 		Iterator<Property> it = persistentClass.getPropertyIterator();
 		ArrayList<PropertyStub> al = new ArrayList<PropertyStub>();
 		while (it.hasNext()) {
-			al.add(new PropertyStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new PropertyStub(obj));
+			}
 		}
 		return al.iterator();
 	}
 
 	public RootClassStub getRootClass() {
-		return new RootClassStub(persistentClass.getRootClass());
+		Object obj = persistentClass.getRootClass();
+		if (obj == null) {
+			return null;
+		}
+		return new RootClassStub(obj);
 	}
 
 	public PropertyStub getVersion() {
-		return new PropertyStub(persistentClass.getVersion());
+		Object obj = persistentClass.getVersion();
+		if (obj == null) {
+			return null;
+		}
+		return new PropertyStub(obj);
 	}
 
 	public TableStub getTable() {
-		return new TableStub(persistentClass.getTable());
+		Object obj = persistentClass.getTable();
+		if (obj == null) {
+			return null;
+		}
+		return new TableStub(obj);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -65,7 +92,10 @@ public abstract class PersistentClassStub {
 		Iterator<Join> it = (Iterator<Join>)persistentClass.getJoinIterator();
 		ArrayList<JoinStub> al = new ArrayList<JoinStub>();
 		while (it.hasNext()) {
-			al.add(new JoinStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new JoinStub(obj));
+			}
 		}
 		return al.iterator();
 	}
@@ -79,7 +109,11 @@ public abstract class PersistentClassStub {
 	}
 
 	public PropertyStub getProperty(String propertyName) {
-		return new PropertyStub(persistentClass.getProperty(propertyName));
+		Object obj = persistentClass.getProperty(propertyName);
+		if (obj == null) {
+			return null;
+		}
+		return new PropertyStub(obj);
 	}
 
 	public String getNodeName() {
@@ -91,7 +125,10 @@ public abstract class PersistentClassStub {
 		Iterator<Property> it = (Iterator<Property>)persistentClass.getPropertyClosureIterator();
 		ArrayList<PropertyStub> al = new ArrayList<PropertyStub>();
 		while (it.hasNext()) {
-			al.add(new PropertyStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new PropertyStub(obj));
+			}
 		}
 		return al.iterator();
 	}

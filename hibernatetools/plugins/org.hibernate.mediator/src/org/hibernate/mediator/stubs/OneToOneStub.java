@@ -1,12 +1,16 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.mapping.OneToOne;
+import org.hibernate.mediator.Messages;
 
 public class OneToOneStub extends ToOneStub {
 	protected OneToOne oneToOne;
 
 	protected OneToOneStub(Object oneToOne) {
 		super(oneToOne);
+		if (oneToOne == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.oneToOne = (OneToOne)oneToOne;
 	}
 	

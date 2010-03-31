@@ -6,11 +6,15 @@ import java.util.List;
 
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.ForeignKey;
+import org.hibernate.mediator.Messages;
 
 public class ForeignKeyStub {
 	protected ForeignKey foreignKey;
 
 	protected ForeignKeyStub(Object foreignKey) {
+		if (foreignKey == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.foreignKey = (ForeignKey)foreignKey;
 	}
 	
@@ -19,7 +23,11 @@ public class ForeignKeyStub {
 	}
 	
 	public TableStub getReferencedTable() {
-		return new TableStub(foreignKey.getReferencedTable());
+		Object obj = foreignKey.getReferencedTable();
+		if (obj == null) {
+			return null;
+		}
+		return new TableStub(obj);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -27,7 +35,10 @@ public class ForeignKeyStub {
 		Iterator<Column> it = (Iterator<Column>)foreignKey.getColumnIterator();
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
-			al.add(new ColumnStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new ColumnStub(obj));
+			}
 		}
 		return al.iterator();
 	}
@@ -37,7 +48,10 @@ public class ForeignKeyStub {
 		Iterator<Column> it = foreignKey.getReferencedColumns().iterator();
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
-			al.add(new ColumnStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new ColumnStub(obj));
+			}
 		}
 		return al;
 	}

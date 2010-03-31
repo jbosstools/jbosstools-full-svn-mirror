@@ -6,11 +6,15 @@ import java.util.Iterator;
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.ForeignKey;
 import org.hibernate.mapping.Table;
+import org.hibernate.mediator.Messages;
 
 public class TableStub {
 	protected Table table;
 
 	protected TableStub(Object table) {
+		if (table == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.table = (Table)table;
 	}
 	
@@ -27,7 +31,11 @@ public class TableStub {
 	}
 	
 	public PrimaryKeyStub getPrimaryKey() {
-		return new PrimaryKeyStub(table.getPrimaryKey());
+		Object obj = table.getPrimaryKey();
+		if (obj == null) {
+			return null;
+		}
+		return new PrimaryKeyStub(obj);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -35,7 +43,10 @@ public class TableStub {
 		Iterator<ForeignKey> it = (Iterator<ForeignKey>)table.getForeignKeyIterator();
 		ArrayList<ForeignKeyStub> al = new ArrayList<ForeignKeyStub>();
 		while (it.hasNext()) {
-			al.add(new ForeignKeyStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new ForeignKeyStub(obj));
+			}
 		}
 		return al.iterator();
 	}
@@ -48,8 +59,16 @@ public class TableStub {
 		return table.getSchema();
 	}
 
-	public DependantValueStub getIdentifierValue() {
-		return new DependantValueStub(table.getIdentifierValue());
+	public KeyValueStub getIdentifierValue() {
+		Object obj = table.getIdentifierValue();
+		if (obj == null) {
+			return null;
+		}
+		ValueStub res = ValueStubFactory.createValueStub(obj);
+		if (res instanceof KeyValueStub) {
+			return (KeyValueStub)res;
+		}
+		throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,7 +76,10 @@ public class TableStub {
 		Iterator<Column> it = (Iterator<Column>)table.getColumnIterator();
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
-			al.add(new ColumnStub(it.next()));
+			Object obj = it.next();
+			if (obj != null) {
+				al.add(new ColumnStub(obj));
+			}
 		}
 		return al.iterator();
 	}

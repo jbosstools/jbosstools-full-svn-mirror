@@ -3,6 +3,7 @@ package org.hibernate.mediator.stubs;
 import java.io.StringWriter;
 import java.util.Properties;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.HibernateConfigurationExporter;
 
 public class HibernateConfigurationExporterStub extends ExporterStub {
@@ -10,6 +11,9 @@ public class HibernateConfigurationExporterStub extends ExporterStub {
 
 	protected HibernateConfigurationExporterStub(Object hibernateConfigurationExporter) {
 		super(hibernateConfigurationExporter);
+		if (hibernateConfigurationExporter == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.hibernateConfigurationExporter = (HibernateConfigurationExporter)hibernateConfigurationExporter;
 	}
 	

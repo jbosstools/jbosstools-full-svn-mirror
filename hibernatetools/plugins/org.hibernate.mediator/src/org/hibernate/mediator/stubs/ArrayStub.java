@@ -1,12 +1,16 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.mapping.Array;
+import org.hibernate.mediator.Messages;
 
 public class ArrayStub extends ListStub {
 	protected Array array;
 
 	protected ArrayStub(Object array) {
 		super(array);
+		if (array == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.array = (Array)array;
 	}
 	

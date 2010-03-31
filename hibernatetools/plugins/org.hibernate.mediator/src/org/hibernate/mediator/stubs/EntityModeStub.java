@@ -1,6 +1,7 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.EntityMode;
+import org.hibernate.mediator.Messages;
 
 public class EntityModeStub {
 
@@ -11,6 +12,9 @@ public class EntityModeStub {
 	protected EntityMode entityMode;
 
 	protected EntityModeStub(Object entityMode) {
+		if (entityMode == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.entityMode = (EntityMode)entityMode;
 	}
 }

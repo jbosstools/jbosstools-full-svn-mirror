@@ -45,6 +45,9 @@ public class ConfigurationStubFactory {
 	private ConsoleConfigurationPreferences prefs = null;
 	
 	public ConfigurationStubFactory(ConsoleConfigurationPreferences prefs) {
+		if (prefs == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.prefs = prefs;
 	}
 

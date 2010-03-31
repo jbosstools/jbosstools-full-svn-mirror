@@ -1,11 +1,15 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.cfg.NamingStrategy;
+import org.hibernate.mediator.Messages;
 
 public class NamingStrategyStub {
 	protected NamingStrategy namingStrategy;
 
 	protected NamingStrategyStub(Object namingStrategy) {
+		if (namingStrategy == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.namingStrategy = (NamingStrategy)namingStrategy;
 	}
 	

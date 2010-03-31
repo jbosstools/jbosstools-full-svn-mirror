@@ -1,11 +1,15 @@
 package org.hibernate.mediator.stubs;
 
 import org.hibernate.dialect.Dialect;
+import org.hibernate.mediator.Messages;
 
 public class DialectStub {
 	protected Dialect dialect;
 
 	protected DialectStub(Object dialect) {
+		if (dialect == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.dialect = (Dialect)dialect;
 	}
 	

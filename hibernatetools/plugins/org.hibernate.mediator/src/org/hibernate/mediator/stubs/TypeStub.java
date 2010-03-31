@@ -1,11 +1,15 @@
 package org.hibernate.mediator.stubs;
 
+import org.hibernate.mediator.Messages;
 import org.hibernate.type.Type;
 
 public abstract class TypeStub {
 	protected Type type;
 
 	protected TypeStub(Object type) {
+		if (type == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
 		this.type = (Type)type;
 	}
 
