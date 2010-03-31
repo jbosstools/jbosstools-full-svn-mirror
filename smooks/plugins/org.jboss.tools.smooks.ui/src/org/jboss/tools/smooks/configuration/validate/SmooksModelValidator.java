@@ -54,7 +54,6 @@ import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProvider
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.jmsrouting.provider.JmsroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
@@ -274,7 +273,6 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 //			adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
 //			adapterFactory.addAdapterFactory(new JsonItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new JmsroutingItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
 //			adapterFactory.addAdapterFactory(new CsvItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new DatasourceItemProviderAdapterFactory());

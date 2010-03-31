@@ -46,8 +46,6 @@ import org.jboss.tools.smooks.model.iorouting.IoroutingFactory;
 import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
-import org.jboss.tools.smooks.model.jmsrouting.JmsroutingFactory;
-import org.jboss.tools.smooks.model.jmsrouting.JmsroutingPackage;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Factory;
 import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.json12.Json12Factory;
@@ -367,12 +365,6 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
 						.createEntry(IoroutingPackage.Literals.IO_DOCUMENT_ROOT__ROUTER, IoroutingFactory.eINSTANCE
 								.createIORouter())));
-
-		// for JMS routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(JmsroutingPackage.Literals.JMS_DOCUMENT_ROOT__ROUTER, JmsroutingFactory.eINSTANCE
-								.createJmsRouter())));
 
 		// for File routing
 		newChildDescriptors.add(createChildParameter(
