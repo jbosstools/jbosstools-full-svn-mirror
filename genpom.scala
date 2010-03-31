@@ -8,8 +8,9 @@ object GenPom {
 
   /********** Configuration Start **********/
   var projectName = "org.jboss.tools"
-  var pathToParentPom = "./"
-  var version = "0.0.1-SNAPSHOT"
+  var pathToParentPom = ""
+  var parentPomVersion = "1.0.0-SNAPSHOT"
+  var sourcePomVersion = "0.0.1-SNAPSHOT"
   /********** Configuration Ends  **********/
 
   var aggregatorcount = 0
@@ -19,8 +20,8 @@ object GenPom {
     
       generateAggregator(new File("."), 
 			 new File(pathToParentPom + "parent-pom.xml"),
-			 GVA(projectName, projectName + ".parent.pom", version),
-			 GVA(projectName, "trunk", version)
+			 GVA(projectName, projectName + ".parent.pom", parentPomVersion),
+			 GVA(projectName, "trunk", sourcePomVersion)
 			 )
 
     println("Modules: " + modulecount + " Aggregator: " + aggregatorcount)
