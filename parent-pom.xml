@@ -7,24 +7,8 @@
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>${scala.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
 	<properties>
 		<tychoVersion>0.8.0</tychoVersion>
-		<scala.version>2.8.0.Beta1</scala.version>
-		<scala.plugin.version>2.13.1</scala.plugin.version>
 	</properties>
 
 	<build>
@@ -85,28 +69,110 @@
 					<useUIThread>true</useUIThread>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.scala-tools</groupId>
-				<artifactId>maven-scala-plugin</artifactId>
-				<version>${scala.plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>script</goal>
-						<!--	<goal>compile</goal>
-							<goal>run</goal> -->
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<scalaVersion>${scala.version}</scalaVersion>
-					<scriptFile>genpom.scala</scriptFile>
-					<displayCmd>true</displayCmd>
-					<keepGeneratedScript>true</keepGeneratedScript>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>helios</id>
+			<activation>
+				<property>
+					<name>helios</name>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>helios</id>
+					<url>http://download.eclipse.org/releases/helios/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>eclipse36</id>
+					<url>http://download.eclipse.org/eclipse/updates/3.6/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>birt26</id>
+					<url>http://download.eclipse.org/birt/update-site/2.6/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>swtbot-helios</id>
+					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>svn-repos</id>
+			<activation>
+				<property>
+					<name>svn</name>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>subclipse16</id>
+					<url>http://subclipse.tigris.org/update_1.6.x/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>subversive07</id>
+					<url>http://download.eclipse.org/technology/subversive/0.7/update-site/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>subversive20</id>
+					<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+
+			</repositories>
+		</profile>
+	</profiles>
 
 	<repositories>
 		<repository>
@@ -131,6 +197,30 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		<repository>
+			<id>birt25</id>
+			<url>http://download.eclipse.org/birt/update-site/2.5/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>swtbot-galileo</id>
+			<url>http://download.eclipse.org/technology/swtbot/galileo/dev-build/update-site
+			</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+
 		<repository>
 			<id>webtools</id>
 			<url>http://download.eclipse.org/webtools/updates/</url>
@@ -165,50 +255,6 @@
 			</releases>
 		</repository>
 		<repository>
-			<id>birt25</id>
-			<url>http://download.eclipse.org/birt/update-site/2.5/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>subclipse16</id>
-			<url>http://subclipse.tigris.org/update_1.6.x/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>subversive07</id>
-			<url>http://download.eclipse.org/technology/subversive/0.7/update-site/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>subversive20</id>
-			<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
 			<id>xulrunner</id>
 			<url>http://download.jboss.org/tools/updates/xulrunner/</url>
 			<layout>p2</layout>
@@ -219,28 +265,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		<repository>
-			<id>scala-tools.org</id>
-			<name>Scala-tools Maven2 Repository</name>
-			<url>http://scala-tools.org/repo-releases</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>scala-library</id>
-			<name>Scala-library Repository</name>
-			<url>http://scala-tools.org/repo-releases/org/scala-lang/scala-library/2.8.0.Beta1/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
+
 	</repositories>
 
 	<pluginRepositories>
@@ -248,18 +273,6 @@
 			<id>tycho</id>
 			<url>http://repository.sonatype.org/content/repositories/all-001/
 			</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-		<pluginRepository>
-			<id>scala-tools.org</id>
-			<name>Scala-tools Maven2 Repository</name>
-			<url>http://scala-tools.org/repo-releases</url>
-			<layout>default</layout>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
