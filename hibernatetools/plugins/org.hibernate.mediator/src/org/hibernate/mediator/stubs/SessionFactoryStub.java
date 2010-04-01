@@ -18,12 +18,15 @@ import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.type.Type;
 
-public class SessionStubFactory {
+public class SessionFactoryStub {
 
 	protected SessionFactory sessionFactory;
 
-	public SessionStubFactory(ConfigurationStub configStub) {
-		sessionFactory = configStub.buildSessionFactory();
+	protected SessionFactoryStub(Object sessionFactory) {
+		if (sessionFactory == null) {
+			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
+		}
+		this.sessionFactory = (SessionFactory)sessionFactory;
 	}
 
 	public boolean isSessionFactoryCreated() {

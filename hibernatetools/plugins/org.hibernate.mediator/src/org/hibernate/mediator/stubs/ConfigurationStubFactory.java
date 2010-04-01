@@ -21,14 +21,6 @@ import org.dom4j.io.DOMWriter;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.HibernateException;
-import org.hibernate.MappingException;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.Environment;
-import org.hibernate.cfg.JDBCMetaDataConfiguration;
-import org.hibernate.cfg.NamingStrategy;
-import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.resolver.DialectFactory;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
@@ -52,17 +44,22 @@ public class ConfigurationStubFactory {
 	}
 
 	public ConfigurationStub createConfiguration() {
-		ConfigurationStub res = new ConfigurationStub(new Configuration());
-		return res;
+		try {
+			return ConfigurationStub.newInstance();
+		} catch (ClassNotFoundException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		} catch (InstantiationException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		}
 	}
 
 	public ConfigurationStubJDBCMetaData createConfigurationJDBCMetaData() {
-		ConfigurationStubJDBCMetaData res = new ConfigurationStubJDBCMetaData(new JDBCMetaDataConfiguration());
-		return res;
+		return ConfigurationStubJDBCMetaData.newInstance();
 	}
 	
-	public ConfigurationStub createConfiguration(ConfigurationStub cfg, boolean includeMappings) {
-		Configuration localCfg = cfg == null ? null : cfg.getConfiguration();
+	public ConfigurationStub createConfiguration(ConfigurationStub localCfg, boolean includeMappings) {
 		Properties properties = prefs.getProperties();
 		if (properties != null) {
 			// to fix: JBIDE-5839 - setup this property: false is default value
@@ -81,7 +78,15 @@ public class ConfigurationStubFactory {
 			}
 		}
 		if (localCfg == null) {
-			localCfg = buildConfiguration(properties, includeMappings);
+			try {
+				localCfg = buildConfiguration(properties, includeMappings);
+			} catch (ClassNotFoundException e) {
+				throw new HibernateConsoleRuntimeException(e);
+			} catch (InstantiationException e) {
+				throw new HibernateConsoleRuntimeException(e);
+			} catch (IllegalAccessException e) {
+				throw new HibernateConsoleRuntimeException(e);
+			}
 		} else {
 			// Properties origProperties = cfg.getProperties();
 			// origProperties.putAll(properties);
@@ -100,24 +105,22 @@ public class ConfigurationStubFactory {
 		}
 		// TODO: HBX-
 		localCfg.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false"); //$NON-NLS-1$//$NON-NLS-2$
-		localCfg.setProperty(Environment.HBM2DDL_AUTO, "false"); //$NON-NLS-1$
-		ConfigurationStub res = new ConfigurationStub(localCfg);
+		localCfg.setProperty(EnvironmentStub.HBM2DDL_AUTO, "false"); //$NON-NLS-1$
 		// here both setProperties and configxml have had their chance to tell which databasedriver
 		// is needed.
-		res.registerFakeDriver(localCfg.getProperty(Environment.DRIVER));
+		localCfg.registerFakeDriver(localCfg.getProperty(EnvironmentStub.DRIVER));
 		// autoConfigureDialect(localCfg); Disabled for now since it causes very looong timeouts for
-		return res;
+		return localCfg;
 	}
 
-	private Configuration buildAnnotationConfiguration() throws ClassNotFoundException,
+	private ConfigurationStub buildAnnotationConfiguration() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
 		Class<?> clazz = ReflectHelper
-				.classForName("org.hibernate.cfg.AnnotationConfiguration", Configuration.class); //$NON-NLS-1$
-		Configuration annotationConfig = (Configuration)clazz.newInstance();
-		return annotationConfig;
+				.classForName("org.hibernate.cfg.AnnotationConfiguration"); //$NON-NLS-1$
+		return new ConfigurationStub(clazz.newInstance());
 	}
 
-	private Configuration buildJPAConfiguration(String persistenceUnit, Properties properties,
+	private ConfigurationStub buildJPAConfiguration(String persistenceUnit, Properties properties,
 			String entityResolver, boolean includeMappings) {
 		if (StringHelper.isEmpty(persistenceUnit)) {
 			persistenceUnit = null;
@@ -137,11 +140,11 @@ public class ConfigurationStubFactory {
 				overrides.put("hibernate.archive.autodetection", "none"); //$NON-NLS-1$//$NON-NLS-2$
 			}
 			Class<?> clazz = ReflectHelper.classForName(
-					"org.hibernate.ejb.Ejb3Configuration", Configuration.class); //$NON-NLS-1$
+					"org.hibernate.ejb.Ejb3Configuration"); //$NON-NLS-1$
 			Object ejb3cfg = clazz.newInstance();
 
 			if (StringHelper.isNotEmpty(entityResolver)) {
-				Class<?> resolver = ReflectHelper.classForName(entityResolver, this.getClass());
+				Class<?> resolver = ReflectHelper.classForName(entityResolver);
 				Object object = resolver.newInstance();
 				Method method = clazz.getMethod(
 						"setEntityResolver", new Class[] { EntityResolver.class });//$NON-NLS-1$
@@ -158,7 +161,7 @@ public class ConfigurationStubFactory {
 
 			method = clazz.getMethod("getHibernateConfiguration", new Class[0]);//$NON-NLS-1$
 			Object obj = method.invoke(ejb3cfg, (Object[]) null);
-			Configuration invoke = (Configuration)obj;
+			ConfigurationStub invoke = new ConfigurationStub(obj);
 			invoke = configureConnectionProfile(invoke);
 
 			return invoke;
@@ -171,8 +174,8 @@ public class ConfigurationStubFactory {
 		}
 	}
 
-	private Configuration buildConfiguration(Properties properties, boolean includeMappings) {
-		Configuration localCfg = null;
+	private ConfigurationStub buildConfiguration(Properties properties, boolean includeMappings) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		ConfigurationStub localCfg = null;
 		if (prefs.getConfigurationMode().equals(ConfigurationMode.ANNOTATIONS)) {
 			try {
 				localCfg = buildAnnotationConfiguration();
@@ -195,14 +198,14 @@ public class ConfigurationStubFactory {
 						Messages.ConsoleConfiguration_could_not_load_jpa_configuration, e);
 			}
 		} else {
-			localCfg = new Configuration();
+			localCfg = ConfigurationStub.newInstance();
 			localCfg = configureStandardConfiguration(includeMappings, localCfg, properties);
 		}
 		return localCfg;
 	}
 
-	private Configuration configureStandardConfiguration(final boolean includeMappings,
-			Configuration localCfg, Properties properties) {
+	private ConfigurationStub configureStandardConfiguration(final boolean includeMappings,
+			ConfigurationStub localCfg, Properties properties) {
 		if (properties != null) {
 			localCfg = localCfg.setProperties(properties);
 		}
@@ -220,8 +223,8 @@ public class ConfigurationStubFactory {
 		localCfg.setEntityResolver(entityResolver);
 		if (StringHelper.isNotEmpty(prefs.getNamingStrategy())) {
 			try {
-				NamingStrategy ns = (NamingStrategy) ReflectHelper.classForName(
-						prefs.getNamingStrategy()).newInstance();
+				NamingStrategyStub ns = new NamingStrategyStub(ReflectHelper.classForName(
+						prefs.getNamingStrategy()).newInstance());
 				localCfg.setNamingStrategy(ns);
 			} catch (Exception c) {
 				throw new HibernateConsoleRuntimeException(
@@ -241,7 +244,7 @@ public class ConfigurationStubFactory {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Configuration loadConfigurationXML(Configuration localCfg, boolean includeMappings,
+	private ConfigurationStub loadConfigurationXML(ConfigurationStub localCfg, boolean includeMappings,
 			EntityResolver entityResolver) {
 		File configXMLFile = prefs.getConfigXMLFile();
 		if (!includeMappings) {
@@ -274,7 +277,7 @@ public class ConfigurationStubFactory {
 				doc = xmlHelper.createSAXReader(resourceName, errors, entityResolver).read(
 						new InputSource(stream));
 				if (errors.size() != 0) {
-					throw new MappingException(
+					throw new HibernateConsoleRuntimeException(
 							Messages.ConsoleConfiguration_invalid_configuration, errors
 									.get(0));
 				}
@@ -290,7 +293,7 @@ public class ConfigurationStubFactory {
 				return localCfg.configure(document);
 
 			} catch (DocumentException e) {
-				throw new HibernateException(
+				throw new HibernateConsoleRuntimeException(
 						Messages.ConsoleConfiguration_could_not_parse_configuration
 								+ resourceName, e);
 			} finally {
@@ -305,7 +308,7 @@ public class ConfigurationStubFactory {
 			if (configXMLFile != null) {
 				return localCfg.configure(configXMLFile);
 			} else {
-				Configuration resultCfg = localCfg;
+				ConfigurationStub resultCfg = localCfg;
 				if (checkHibernateResoureExistence("/hibernate.cfg.xml")) { //$NON-NLS-1$
 					resultCfg = localCfg.configure();
 				}
@@ -318,8 +321,13 @@ public class ConfigurationStubFactory {
 		InputStream is = null;
 		try {
 			is = ConfigHelper.getResourceAsStream(resource);
-		} catch (HibernateException e) {
-			// just ignore
+		} catch (RuntimeException he) {
+			// TODO: RuntimeException ? - find correct solution
+			if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
+				// just ignore
+			} else {
+				throw he;
+			}
 		} finally {
 			try {
 				if (is != null)
@@ -331,7 +339,7 @@ public class ConfigurationStubFactory {
 		return (is != null);
 	}
 
-	private Configuration configureConnectionProfile(Configuration localCfg) {
+	private ConfigurationStub configureConnectionProfile(ConfigurationStub localCfg) {
 		String connectionProfile = prefs.getConnectionProfileName();
 		if (connectionProfile == null) {
 			return localCfg;
@@ -343,7 +351,7 @@ public class ConfigurationStubFactory {
 			//
 			final Properties invokeProperties = localCfg.getProperties();
 			// set this property to null!
-			invokeProperties.remove(Environment.DATASOURCE);
+			invokeProperties.remove(EnvironmentStub.DATASOURCE);
 			localCfg.setProperties(invokeProperties);
 			Properties cpProperties = profile.getProperties(profile.getProviderId());
 			// seems we should not setup dialect here
@@ -352,23 +360,23 @@ public class ConfigurationStubFactory {
 			// invoke.setProperty(Environment.DIALECT, dialect);
 			String driver = cpProperties
 					.getProperty("org.eclipse.datatools.connectivity.db.driverClass"); //$NON-NLS-1$
-			localCfg.setProperty(Environment.DRIVER, driver);
+			localCfg.setProperty(EnvironmentStub.DRIVER, driver);
 			// TODO:
 			@SuppressWarnings("unused")
 			String driverJarPath = cpProperties.getProperty("jarList"); //$NON-NLS-1$
 			String url = cpProperties.getProperty("org.eclipse.datatools.connectivity.db.URL"); //$NON-NLS-1$
 			// url += "/";// +
 			// cpProperties.getProperty("org.eclipse.datatools.connectivity.db.databaseName");
-			localCfg.setProperty(Environment.URL, url);
+			localCfg.setProperty(EnvironmentStub.URL, url);
 			String user = cpProperties
 					.getProperty("org.eclipse.datatools.connectivity.db.username"); //$NON-NLS-1$
 			if (null != user && user.length() > 0) {
-				localCfg.setProperty(Environment.USER, user);
+				localCfg.setProperty(EnvironmentStub.USER, user);
 			}
 			String pass = cpProperties
 					.getProperty("org.eclipse.datatools.connectivity.db.password"); //$NON-NLS-1$
 			if (null != pass && pass.length() > 0) {
-				localCfg.setProperty(Environment.PASS, pass);
+				localCfg.setProperty(EnvironmentStub.PASS, pass);
 			}
 		} else {
 			String out = NLS.bind(
@@ -380,17 +388,17 @@ public class ConfigurationStubFactory {
 	}
 
 	@SuppressWarnings("unused")
-	private void autoConfigureDialect(Configuration localCfg) {
-		if (localCfg.getProperty(Environment.DIALECT) == null) {
-			String url = localCfg.getProperty(Environment.URL);
-			String user = localCfg.getProperty(Environment.USER);
-			String pass = localCfg.getProperty(Environment.PASS);
+	private void autoConfigureDialect(ConfigurationStub localCfg) {
+		if (localCfg.getProperty(EnvironmentStub.DIALECT) == null) {
+			String url = localCfg.getProperty(EnvironmentStub.URL);
+			String user = localCfg.getProperty(EnvironmentStub.USER);
+			String pass = localCfg.getProperty(EnvironmentStub.PASS);
 			Connection connection = null;
 			try {
 				connection = DriverManager.getConnection(url, user, pass);
 				// SQL Dialect:
-				Dialect dialect = DialectFactory.buildDialect(localCfg.getProperties(), connection);
-				localCfg.setProperty(Environment.DIALECT, dialect.toString());
+				DialectStub dialect = DialectStub.newInstance(localCfg.getProperties(), connection);
+				localCfg.setProperty(EnvironmentStub.DIALECT, dialect.toString());
 			} catch (SQLException e) {
 				// can't determine dialect
 			}

@@ -48,6 +48,7 @@ public interface ConsoleConfigurationPreferences {
 	static final String ANNOTATIONS_ATTRIB = "annotations"; //$NON-NLS-1$
 	static final String ENTITYRESOLVER_ATTRIB = "entityresolver"; //$NON-NLS-1$
 	static final String CONFIGURATION_MODE_ATTRIB = "configuration-factory"; //$NON-NLS-1$
+	static final String USE_CLASSPATH_HIBERNATE_LIBS_ATTRIB = "use-classpath-hibernate-libs"; //$NON-NLS-1$
 
 	// TODO: we should move this to some classhandler
 	static public class ConfigurationMode implements Serializable {
@@ -97,6 +98,8 @@ public interface ConsoleConfigurationPreferences {
 
 	public abstract ConfigurationMode getConfigurationMode();
 
+	public abstract boolean getUseClassPathHibernateLibs();
+	
 	public abstract String getName();
 
 	/**

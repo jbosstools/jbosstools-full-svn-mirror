@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mediator.Messages;
@@ -19,6 +18,7 @@ import org.hibernate.mediator.FakeDelegatingDriver;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.ide.completion.HQLCodeAssist;
+import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 
 public class ConfigurationStub {
@@ -28,15 +28,16 @@ public class ConfigurationStub {
 	// configuration != null - by default
 	protected Configuration configuration;
 
-	protected ConfigurationStub(Configuration configuration) {
+	protected ConfigurationStub(Object configuration) {
 		if (configuration == null) {
 			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
 		}
-		this.configuration = configuration;
+		this.configuration = (Configuration)configuration;
 	}
 
-	protected Configuration getConfiguration() {
-		return configuration;
+	public static ConfigurationStub newInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		Class<?> clazz = ReflectHelper.classForName("org.hibernate.cfg.Configuration"); //$NON-NLS-1$
+		return new ConfigurationStub(clazz.newInstance());
 	}
 
 	public void cleanUp() {
@@ -63,8 +64,8 @@ public class ConfigurationStub {
 		return new SettingsStub(obj);
 	}
 
-	protected SessionFactory buildSessionFactory() {
-		return configuration.buildSessionFactory();
+	public SessionFactoryStub buildSessionFactory() {
+		return new SessionFactoryStub(configuration.buildSessionFactory());
 	}
 
 	public EntityResolver getEntityResolver() {
@@ -203,5 +204,42 @@ public class ConfigurationStub {
 				throw new HibernateConsoleRuntimeException(out, e);
 			}
 		}
+	}
+
+	public ConfigurationStub setProperties(Properties properties) {
+		Configuration tmp = configuration.setProperties(properties);
+		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+	}
+
+	public void setProperty(String propertyName, String value) {
+		configuration.setProperty(propertyName, value);
+	}
+
+	public ConfigurationStub configure(Document document) {
+		Configuration tmp = configuration.configure(document);
+		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+	}
+
+	public ConfigurationStub configure() {
+		Configuration tmp = configuration.configure();
+		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+	}
+
+	public ConfigurationStub configure(File configFile) {
+		Configuration tmp = configuration.configure(configFile);
+		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+	}
+
+	public void setEntityResolver(EntityResolver entityResolver) {
+		configuration.setEntityResolver(entityResolver);
+	}
+
+	public void setNamingStrategy(NamingStrategyStub ns) {
+		configuration.setNamingStrategy(ns.namingStrategy);
+	}
+
+	public ConfigurationStub addFile(File xmlFile) {
+		Configuration tmp = configuration.addFile(xmlFile);
+		return (tmp == configuration ? this : new ConfigurationStub(tmp));
 	}
 }

@@ -114,6 +114,10 @@ public class KnownConfigurationsTest extends TestCase {
 				return null;
 			}
 
+			public boolean getUseClassPathHibernateLibs() {
+				return false;
+			}
+
 			public String getNamingStrategy() {
 				// TODO Auto-generated method stub
 				return null;
@@ -191,6 +195,10 @@ public class KnownConfigurationsTest extends TestCase {
 			public ConfigurationMode getConfigurationMode() {
 				// TODO Auto-generated method stub
 				return null;
+			}
+
+			public boolean getUseClassPathHibernateLibs() {
+				return false;
 			}
 
 			public String getNamingStrategy() {

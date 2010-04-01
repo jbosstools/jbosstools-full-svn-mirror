@@ -46,7 +46,7 @@ public class StandAloneConsoleConfigurationPreferences extends AbstractConsoleCo
 	private File[] customClasspath;
 
 	public StandAloneConsoleConfigurationPreferences(String name, File xmlconfig, File propertiesFile, File[] mappingFiles, File[] customClasspath) {
-		super(name, ConfigurationMode.CORE, null, false, null, null, null, null, null);
+		super(name, ConfigurationMode.CORE, false, null, false, null, null, null, null, null);
 		this.cfgFile = xmlconfig;
 		this.propertyFilename = propertiesFile;
 		this.mappings = mappingFiles;
@@ -91,7 +91,7 @@ public class StandAloneConsoleConfigurationPreferences extends AbstractConsoleCo
 	}
 
 	public void writeStateTo(Element node) {
-		writeStateTo(node, getName(), getEntityResolverName(), getConfigurationMode(), null, false, cfgFile, propertyFilename, mappings, customClasspath);
+		writeStateTo(node, getName(), getEntityResolverName(), getConfigurationMode(), getUseClassPathHibernateLibs(), null, false, cfgFile, propertyFilename, mappings, customClasspath);
 	}
 
 

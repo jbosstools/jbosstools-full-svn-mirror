@@ -17,6 +17,8 @@ public class EnvironmentStub {
 	public static final String SESSION_FACTORY_NAME = Environment.SESSION_FACTORY_NAME;
 	public static final String URL = Environment.URL;
 	public static final String USER = Environment.USER;
+	public static final String HBM2DDL_AUTO = Environment.HBM2DDL_AUTO;
+	public static final String DATASOURCE = Environment.DATASOURCE;
 
 	@SuppressWarnings("unchecked")
 	public static String[] extractHibernateProperties() {

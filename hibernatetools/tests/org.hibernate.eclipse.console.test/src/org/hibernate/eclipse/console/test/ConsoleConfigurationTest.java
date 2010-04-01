@@ -98,6 +98,10 @@ public class ConsoleConfigurationTest extends TestCase {
 			return ConfigurationMode.CORE;
 		}
 
+		public boolean getUseClassPathHibernateLibs() {
+			return false;
+		}
+
 		public String getNamingStrategy() {
 			// TODO Auto-generated method stub
 			return null;

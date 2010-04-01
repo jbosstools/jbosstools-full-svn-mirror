@@ -52,13 +52,15 @@ public abstract class AbstractConsoleConfigurationPreferences implements
 	protected String entityResolverName = null;
 	private boolean useProjectClasspath;
 	private ConfigurationMode configurationMode;
+	private boolean useClassPathHibernateLibs;
 	private String persistenceUnitName;
 	private String namingStrategy;
 	private String connectionProfile;
 	private String dialectName;
 	
 
-	public AbstractConsoleConfigurationPreferences(String name, ConfigurationMode configurationMode,
+	public AbstractConsoleConfigurationPreferences(String name, 
+			ConfigurationMode configurationMode, boolean useClassPathHibernateLibs,
 			String projectName, boolean useProjectclassPath, String entityResolver,
 			String persistenceUnitName, String namingStrategy,
 			String connectionProfile, String dialectName) {
@@ -66,6 +68,7 @@ public abstract class AbstractConsoleConfigurationPreferences implements
 		this.persistenceUnitName = persistenceUnitName;
 		this.namingStrategy = namingStrategy;
 		this.configurationMode = configurationMode;
+		this.useClassPathHibernateLibs = useClassPathHibernateLibs;
 		entityResolverName = entityResolver;
 		this.projectName = projectName;
 		this.useProjectClasspath = useProjectclassPath;
@@ -79,6 +82,10 @@ public abstract class AbstractConsoleConfigurationPreferences implements
 
 	public ConfigurationMode getConfigurationMode() {
 		return configurationMode;
+	}
+
+	public boolean getUseClassPathHibernateLibs() {
+		return useClassPathHibernateLibs;
 	}
 
 	public String getPersistenceUnitName() {
@@ -133,13 +140,17 @@ public abstract class AbstractConsoleConfigurationPreferences implements
 
 	/** generic xml dumper that just dumps the toString representation of the paramters
 	 * @param useAnnotations */
-	protected static void writeStateTo(Node node, String name, String entityResolver, ConfigurationMode configurationMode, String projectName, boolean useProjectClasspath, Object cfgFile, Object propertyFilename, Object[] mappings, Object[] customClasspath) {
+	protected static void writeStateTo(Node node, String name, String entityResolver, 
+			ConfigurationMode configurationMode, boolean useClassPathHibernateLibs, 
+			String projectName, boolean useProjectClasspath, Object cfgFile, 
+			Object propertyFilename, Object[] mappings, Object[] customClasspath) {
 		Document doc = node.getOwnerDocument();
 		Element n = createElementWithAttribute(doc, CONFIGURATION_TAG, NAME_ATTRIB, name);
 		/*if(useAnnotations) {
 			n.setAttribute(ANNOTATIONS_ATTRIB, "true");
 		}*/
 		n.setAttribute(CONFIGURATION_MODE_ATTRIB, configurationMode.toString());
+		n.setAttribute(USE_CLASSPATH_HIBERNATE_LIBS_ATTRIB, Boolean.toString(useClassPathHibernateLibs));
 
 		if(StringHelper.isNotEmpty(entityResolver)) {
 			n.setAttribute(ENTITYRESOLVER_ATTRIB, entityResolver);
@@ -227,6 +238,8 @@ public abstract class AbstractConsoleConfigurationPreferences implements
 			attribute = node.getAttribute(CONFIGURATION_MODE_ATTRIB);
 			configurationMode = ConfigurationMode.parse( attribute );
 		}
+		attribute = node.getAttribute(USE_CLASSPATH_HIBERNATE_LIBS_ATTRIB);
+		useClassPathHibernateLibs = Boolean.parseBoolean(attribute);
 
 
 		attribute = node.getAttribute( PROJECT_ATTRIB );

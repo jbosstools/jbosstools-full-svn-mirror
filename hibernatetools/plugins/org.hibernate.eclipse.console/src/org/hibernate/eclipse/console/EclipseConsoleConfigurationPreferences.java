@@ -59,11 +59,14 @@ public class EclipseConsoleConfigurationPreferences extends AbstractConsoleConfi
 	private IPath[] customClasspath = new IPath[0];
 
 	public EclipseConsoleConfigurationPreferences(String configName, 
-			ConfigurationMode cmode, String projectName, boolean useProjectClasspath, 
+			ConfigurationMode cmode, boolean useClassPathHibernateLibs,
+			String projectName, boolean useProjectClasspath, 
 			String entityResolver, IPath cfgFile, IPath propertyFilename, 
 			IPath[] mappings, IPath[] classpaths, String persistenceUnitName, String namingStrategy,
 			String connectionProfile, String dialectName) {
-		super(configName, cmode, projectName, useProjectClasspath, entityResolver, persistenceUnitName, namingStrategy, connectionProfile, dialectName);		
+		super(configName, cmode, useClassPathHibernateLibs, projectName, 
+			useProjectClasspath, entityResolver, persistenceUnitName, 
+			namingStrategy, connectionProfile, dialectName);		
 		this.cfgFile = cfgFile;
 		this.propertyFilename = propertyFilename;
 		this.mappings = mappings;
@@ -168,7 +171,7 @@ public class EclipseConsoleConfigurationPreferences extends AbstractConsoleConfi
 	}
 
 	public void writeStateTo(Element node) {
-		writeStateTo(node, getName(), getEntityResolverName(), getConfigurationMode(), getProjectName(), useProjectClasspath(), cfgFile, propertyFilename, mappings, customClasspath);
+		writeStateTo(node, getName(), getEntityResolverName(), getConfigurationMode(), getUseClassPathHibernateLibs(), getProjectName(), useProjectClasspath(), cfgFile, propertyFilename, mappings, customClasspath);
 	}
 
 	protected void setConfigFile(String cfgFile) {

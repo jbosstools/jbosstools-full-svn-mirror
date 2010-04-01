@@ -37,6 +37,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -60,6 +61,7 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 	private Button coreMode;
 	private Button jpaMode;
 	private Button annotationsMode;
+	private Button useLibs;
 	private Button confbutton;
 	private Button persistenceUnitNameButton;
 
@@ -119,6 +121,11 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 		jpaMode = new Button(group, SWT.RADIO);
 		jpaMode.setText(HibernateConsoleMessages.ConsoleConfigurationMainTab_jpa);
 		jpaMode.addSelectionListener( getChangeListener() );
+		Label label = new Label(group, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label.setVisible(false);
+		useLibs = new Button(group, SWT.CHECK);
+		useLibs.setText("Use classpath Hibernate jars");
+		useLibs.addSelectionListener( getChangeListener() );
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		group.setLayoutData( gd );
@@ -170,6 +177,7 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
 		String projectName = nonEmptyTrimOrNull( projectNameText );
 		configuration.setAttribute(IConsoleConfigurationLaunchConstants.CONFIGURATION_FACTORY, getConfigurationMode().toString());
+		configuration.setAttribute(IConsoleConfigurationLaunchConstants.USE_CLASSPATH_HIBERNATE_LIBS, Boolean.toString(getUseLibs()));
 		configuration.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, projectName);
 		if (projectName != null){
 			configuration.setAttribute(LaunchConfiguration.ATTR_MAPPED_RESOURCE_PATHS,
@@ -202,6 +210,8 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 			coreMode.setSelection( cm.equals( ConfigurationMode.CORE ) );
 			annotationsMode.setSelection( cm.equals( ConfigurationMode.ANNOTATIONS ) );
 			jpaMode.setSelection( cm.equals( ConfigurationMode.JPA ) );
+			
+			useLibs.setSelection(Boolean.parseBoolean(configuration.getAttribute( IConsoleConfigurationLaunchConstants.USE_CLASSPATH_HIBERNATE_LIBS, "false" ))); //$NON-NLS-1$
 
 			projectNameText.setText( configuration.getAttribute( IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, "" ) ); //$NON-NLS-1$
 			propertyFileText.setText( configuration.getAttribute( IConsoleConfigurationLaunchConstants.PROPERTY_FILE, "" ) ); //$NON-NLS-1$
@@ -496,6 +506,10 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 		} else {
 			return ConfigurationMode.CORE;
 		}
+	}
+
+	private boolean getUseLibs() {
+		return useLibs.getSelection();
 	}
 
 	String getProjectName() {

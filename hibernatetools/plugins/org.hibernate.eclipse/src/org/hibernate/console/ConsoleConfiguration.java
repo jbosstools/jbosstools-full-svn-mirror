@@ -47,7 +47,7 @@ import org.hibernate.mediator.stubs.ConfigurationStubFactory;
 import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.IHQLCodeAssistStub;
 import org.hibernate.mediator.stubs.SessionStub;
-import org.hibernate.mediator.stubs.SessionStubFactory;
+import org.hibernate.mediator.stubs.SessionFactoryStub;
 import org.hibernate.mediator.stubs.SettingsStub;
 import org.xml.sax.EntityResolver;
 
@@ -58,7 +58,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 
 	/* TODO: move this out to the actual users of the configuraiton/sf ? */
 	private ConfigurationStub configStub;
-	private SessionStubFactory sessionStubFactory;
+	private SessionFactoryStub sessionStubFactory;
 
 	private ConsoleConfigurationPreferences prefs = null;
 	
@@ -225,11 +225,11 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 
 	protected ClassLoader getParentClassLoader() {
+		boolean useClassPathHibernateLibs = prefs.getUseClassPathHibernateLibs();
+		if (useClassPathHibernateLibs) {
+			return ClassLoader.getSystemClassLoader();
+		}
 		return ConfigurationStub.class.getClassLoader();
-		//return this.getClass().getClassLoader();
-		//return ClassLoader.getSystemClassLoader();
-		//return Thread.currentThread().getContextClassLoader().getParent().getParent();
-		//return Thread.currentThread().getContextClassLoader();
 	}
 	public ConfigurationStub getConfiguration() {
 		return configStub;
@@ -247,14 +247,14 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 				if (sessionStubFactory != null) {
 					throw new HibernateConsoleRuntimeException(ConsoleMessages.ConsoleConfiguration_factory_not_closed_before_build_new_factory, null);
 				}
-				sessionStubFactory = new SessionStubFactory(configStub);
+				sessionStubFactory = configStub.buildSessionFactory();
 				fireFactoryBuilt();
 				return null;
 			}
 		});
 	}
 
-	public SessionStubFactory getSessionStubFactory() {
+	public SessionFactoryStub getSessionStubFactory() {
 		return sessionStubFactory;
 	}
 
@@ -335,7 +335,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		}
 	}
 
-	private void fireFactoryClosing(SessionStubFactory ssf) {
+	private void fireFactoryClosing(SessionFactoryStub ssf) {
 		for (ConsoleConfigurationListener view : consoleCfgListeners) {
 			view.sessionFactoryClosing(this);
 		}

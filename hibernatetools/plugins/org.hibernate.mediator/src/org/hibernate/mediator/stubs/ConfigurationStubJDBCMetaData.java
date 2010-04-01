@@ -18,9 +18,14 @@ public class ConfigurationStubJDBCMetaData extends ConfigurationStub {
 		}
 		jdbcMetaDataConfiguration = configuration;
 	}
+	
+	public static ConfigurationStubJDBCMetaData newInstance() {
+		return new ConfigurationStubJDBCMetaData(new JDBCMetaDataConfiguration());
+	}
 
-	public void setProperties(Properties properties) {
-		jdbcMetaDataConfiguration.setProperties(properties);
+	public ConfigurationStubJDBCMetaData setProperties(Properties properties) {
+		JDBCMetaDataConfiguration tmp = (JDBCMetaDataConfiguration)jdbcMetaDataConfiguration.setProperties(properties);
+		return (tmp == jdbcMetaDataConfiguration ? this : new ConfigurationStubJDBCMetaData(tmp));
 	}
 
 	public void setPreferBasicCompositeIds(boolean flag) {

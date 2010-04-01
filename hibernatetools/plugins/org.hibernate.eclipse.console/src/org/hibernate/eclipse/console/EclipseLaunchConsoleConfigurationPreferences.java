@@ -89,6 +89,10 @@ public class EclipseLaunchConsoleConfigurationPreferences implements ConsoleConf
 	public ConfigurationMode getConfigurationMode() {
 		return ConfigurationMode.parse( getAttribute( IConsoleConfigurationLaunchConstants.CONFIGURATION_FACTORY, "" ) );		 //$NON-NLS-1$
 	}
+	
+	public boolean getUseClassPathHibernateLibs() {
+		return Boolean.parseBoolean(getAttribute(IConsoleConfigurationLaunchConstants.USE_CLASSPATH_HIBERNATE_LIBS, "false")); //$NON-NLS-1$
+	}
 
 	public URL[] getCustomClassPathURLS() {
 		try {
