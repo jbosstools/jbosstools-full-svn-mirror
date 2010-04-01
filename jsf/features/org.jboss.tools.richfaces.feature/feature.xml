@@ -243,20 +243,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.jboss.tools.hibernate.xml"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jboss.tools.hibernate.xml.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.jboss.tools.jsf.vpe.jsf"
          download-size="0"
          install-size="0"
