@@ -21,6 +21,7 @@
   <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.jboss.tools.bpel.cheatsheet,org.jboss.tools.bpel.cheatsheet"/>
   <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/plugins/org.jboss.tools.bpel.runtimes,org.jboss.tools.bpel.runtimes"/>
 
+  <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/features/org.jboss.tools.bpel.tests.sdk.feature,org.jboss.tools.bpel.tests.sdk.feature"/>
   <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/features/org.jboss.tools.bpel.tests.feature,org.jboss.tools.bpel.tests.feature"/>
   <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/tests/org.eclipse.tools.bpel.ui.test,org.eclipse.tools.bpel.ui.test"/>
   <project reference="1.0.1,http://anonsvn.jboss.org/repos/jbosstools/trunk/bpel/tests/org.jboss.tools.bpel.ui.test,org.jboss.tools.bpel.ui.test"/>
