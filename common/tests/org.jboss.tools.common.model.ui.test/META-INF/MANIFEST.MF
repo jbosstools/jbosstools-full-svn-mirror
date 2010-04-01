@@ -9,8 +9,6 @@ Require-Bundle: org.junit;visibility:=reexport,
  org.eclipse.ui,
  org.jboss.tools.common,
  org.jboss.tools.common.model.ui,
- org.jboss.tools.jst.web,
- org.jboss.tools.jst.web.ui,
  org.jboss.tools.common.test
 Export-Package: org.jboss.tools.common.model.ui.test
 Bundle-Vendor: %Bundle-Vendor.0
