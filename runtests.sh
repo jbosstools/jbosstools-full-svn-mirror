@@ -9,7 +9,7 @@ if [[ $# -lt 1 ]]; then
 	# -o    - offline mode (don't search remote repos)
 	# -Dmaven.test.skip - compile but do not run tests
 	echo "Usage: $0 workingdir flags targets"
-	echo "Eg: $0 as/ -Dmaven.test.skip clean install 2>&1 | tee buildlog.latest.txt"
+	echo "Eg: $0 as/ -Dmaven.test.skip clean install"
 	echo "Eg: $0 bpel/tests/ -o install"
 	exit 1;
 fi
