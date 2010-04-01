@@ -1,4 +1,4 @@
-package org.jboss.tools.common.text.ext.test;
+package org.jboss.tools.jst.text.ext.test;
 
 import junit.framework.TestCase;
 
