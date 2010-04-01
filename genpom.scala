@@ -158,7 +158,7 @@ object GenPom {
   }
 
   def isModule(n : File) : Boolean = {
-    def v = new File(n, "pom.xml").exists() ||
+    def v = (new File(n, "pom.xml").exists() && !n.getName().equals("docs")) ||
       (!n.getName().contains(".sdk.") && (new File(new File(n, "META-INF"), "MANIFEST.MF").exists()) || (new File(n, "feature.xml").exists())) || (hasDirectory(n, "features") || hasDirectory(n, "tests")	|| hasDirectory(n, "plugins"))
     return v
   }
