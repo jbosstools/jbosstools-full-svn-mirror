@@ -27,7 +27,6 @@ import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -87,13 +86,6 @@ public class ProcessAnalyzer {
 				}
 
 				taskIDs.add(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE);
-			}
-			// for xsl template
-			if (abstractResourceConfig instanceof Xsl) {
-				// if (taskIDs.contains(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
-				// continue;
-				// }
-				// taskIDs.add(TaskTypeManager.TASK_ID_JAVA_MAPPING);
 			}
 		}
 		return tasks;

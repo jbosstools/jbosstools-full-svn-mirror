@@ -150,32 +150,18 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeEditPart;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
-import org.jboss.tools.smooks.model.calc.CalcPackage;
-import org.jboss.tools.smooks.model.calc.Counter;
 import org.jboss.tools.smooks.model.csv12.CSV12Reader;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
-import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
-import org.jboss.tools.smooks.model.datasource.Direct;
 import org.jboss.tools.smooks.model.edi12.EDI12Reader;
 import org.jboss.tools.smooks.model.edi12.Edi12Package;
-import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
-import org.jboss.tools.smooks.model.esbrouting.RouteBean;
-import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
-import org.jboss.tools.smooks.model.fileRouting.OutputStream;
 import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.groovy.GroovyPackage;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
-import org.jboss.tools.smooks.model.jmsrouting12.JMS12Router;
-import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.json12.Json12Reader;
-import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
-import org.jboss.tools.smooks.model.rules10.RuleBasesType;
-import org.jboss.tools.smooks.model.rules10.Rules10Package;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
@@ -186,9 +172,6 @@ import org.jboss.tools.smooks.model.smooks.ResourceConfigType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.validation10.Validation10Package;
-import org.jboss.tools.smooks.model.xsl.Xsl;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -198,8 +181,7 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 public class SmooksUIUtils {
 
 	public static String[] SMOOKS_PLATFORM_1_2_SPECIAL_NAMESPACES = new String[] { Javabean12Package.eNS_URI,
-			Csv12Package.eNS_URI, Edi12Package.eNS_URI, Jmsrouting12Package.eNS_URI, Json12Package.eNS_URI,
-			Persistence12Package.eNS_URI, Rules10Package.eNS_URI, Validation10Package.eNS_URI };
+			Csv12Package.eNS_URI, Edi12Package.eNS_URI, Json12Package.eNS_URI };
 
 	public static String[] SMOOKS_PLATFORM_1_1_CONFLICT_NAMESPACES = new String[] {};
 
@@ -2821,9 +2803,6 @@ public class SmooksUIUtils {
 		if (FreemarkerPackage.Literals.BIND_TO__ID == feature) {
 			return true;
 		}
-		if (feature == XslPackage.Literals.BIND_TO__ID) {
-			return true;
-		}
 
 		// if (feature == JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID) {
 		// return true;
@@ -2833,9 +2812,6 @@ public class SmooksUIUtils {
 			return true;
 		}
 
-		if (Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID == feature) {
-			return true;
-		}
 		// if (JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF == feature) {
 		// return true;
 		// }
@@ -2848,25 +2824,7 @@ public class SmooksUIUtils {
 		// feature) {
 		// return true;
 		// }
-		if (CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT == feature) {
-			return true;
-		}
-		if (DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT == feature) {
-			return true;
-		}
-		if (EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT == feature) {
-			return true;
-		}
-		if (FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT == feature) {
-			return true;
-		}
 		if (FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT == feature) {
-			return true;
-		}
-		if (XslPackage.Literals.XSL__APPLY_ON_ELEMENT == feature) {
-			return true;
-		}
-		if (GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT == feature) {
 			return true;
 		}
 		if (SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR == feature) {
@@ -2956,9 +2914,6 @@ public class SmooksUIUtils {
 		if (model instanceof BindTo) {
 			return FreemarkerPackage.Literals.BIND_TO__ID;
 		}
-		if (model instanceof org.jboss.tools.smooks.model.xsl.BindTo) {
-			return XslPackage.Literals.BIND_TO__ID;
-		}
 
 		// if (model instanceof BindingsType) {
 		// return JavabeanPackage.Literals.BINDINGS_TYPE__BEAN_ID;
@@ -2975,9 +2930,6 @@ public class SmooksUIUtils {
 		if (model == null) {
 			return null;
 		}
-		if (model instanceof JMS12Router) {
-			return Jmsrouting12Package.Literals.JMS12_ROUTER__BEAN_ID;
-		}
 		// if (model instanceof WiringType) {
 		// return JavabeanPackage.Literals.WIRING_TYPE__BEAN_ID_REF;
 		// }
@@ -2991,23 +2943,8 @@ public class SmooksUIUtils {
 	public static EStructuralFeature getSelectorNamespaceFeature(EObject model) {
 		if (model == null)
 			return null;
-		if (model instanceof Counter) {
-			return CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT_NS;
-		}
-		if (model instanceof Direct) {
-			return DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT_NS;
-		}
-		if (model instanceof RouteBean) {
-			return EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT_NS;
-		}
-		if (model instanceof OutputStream) {
-			return FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT_NS;
-		}
 		if (model instanceof Freemarker) {
 			return FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT_NS;
-		}
-		if (model instanceof Xsl) {
-			return XslPackage.Literals.XSL__APPLY_ON_ELEMENT_NS;
 		}
 		if (model instanceof ResourceConfigType) {
 			return SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR_NAMESPACE;
@@ -3033,23 +2970,8 @@ public class SmooksUIUtils {
 	public static EStructuralFeature getSelectorFeature(EObject model) {
 		if (model == null)
 			return null;
-		if (model instanceof Counter) {
-			return CalcPackage.Literals.COUNTER__COUNT_ON_ELEMENT;
-		}
-		if (model instanceof Direct) {
-			return DatasourcePackage.Literals.DIRECT__BIND_ON_ELEMENT;
-		}
-		if (model instanceof RouteBean) {
-			return EsbroutingPackage.Literals.ROUTE_BEAN__ROUTE_ON_ELEMENT;
-		}
-		if (model instanceof OutputStream) {
-			return FileRoutingPackage.Literals.OUTPUT_STREAM__OPEN_ON_ELEMENT;
-		}
 		if (model instanceof Freemarker) {
 			return FreemarkerPackage.Literals.FREEMARKER__APPLY_ON_ELEMENT;
-		}
-		if (model instanceof Xsl) {
-			return XslPackage.Literals.XSL__APPLY_ON_ELEMENT;
 		}
 
 		if (model instanceof ResourceConfigType) {
@@ -3318,14 +3240,8 @@ public class SmooksUIUtils {
 		if (model instanceof BeanType) {
 			return Javabean12Package.Literals.JAVABEAN12_DOCUMENT_ROOT__BEAN;
 		}
-		if (model instanceof Xsl) {
-			return XslPackage.Literals.DOCUMENT_ROOT__XSL;
-		}
 		if (model instanceof Freemarker) {
 			return FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER;
-		}
-		if (model instanceof RuleBasesType) {
-			return Rules10Package.Literals.RULES10_DOCUMENT_ROOT__RULE_BASES;
 		}
 		return null;
 	}

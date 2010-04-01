@@ -21,7 +21,6 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.command.GEFAdapterCommand;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
-import org.jboss.tools.smooks.model.xsl.Xsl;
 
 /**
  * @author Dart
@@ -59,10 +58,6 @@ public class DefaultSmooksCommandProvider implements ISmooksCommandProvider {
 
 		if (model instanceof BeanType ) {
 			command = new CreateJavaBeanModelCommand(domain, emfCommand, editorPart, provider);
-		}
-
-		if (model instanceof Xsl) {
-			command = new CreateXSLTemplateModelCommand(domain, emfCommand, editorPart, provider);
 		}
 
 		if (model instanceof Freemarker) {

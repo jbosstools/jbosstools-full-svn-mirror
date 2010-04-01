@@ -23,44 +23,20 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.jboss.tools.smooks.model.calc.CalcFactory;
-import org.jboss.tools.smooks.model.calc.CalcPackage;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
 import org.jboss.tools.smooks.model.csv12.Csv12Factory;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
-import org.jboss.tools.smooks.model.datasource.DatasourceFactory;
-import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
-import org.jboss.tools.smooks.model.dbrouting.DbroutingFactory;
-import org.jboss.tools.smooks.model.dbrouting.DbroutingPackage;
 import org.jboss.tools.smooks.model.edi12.Edi12Factory;
 import org.jboss.tools.smooks.model.edi12.Edi12Package;
-import org.jboss.tools.smooks.model.esbrouting.EsbroutingFactory;
-import org.jboss.tools.smooks.model.esbrouting.EsbroutingPackage;
-import org.jboss.tools.smooks.model.fileRouting.FileRoutingFactory;
-import org.jboss.tools.smooks.model.fileRouting.FileRoutingPackage;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
-import org.jboss.tools.smooks.model.groovy.GroovyFactory;
-import org.jboss.tools.smooks.model.groovy.GroovyPackage;
-import org.jboss.tools.smooks.model.iorouting.IoroutingFactory;
-import org.jboss.tools.smooks.model.iorouting.IoroutingPackage;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
-import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Factory;
-import org.jboss.tools.smooks.model.jmsrouting12.Jmsrouting12Package;
 import org.jboss.tools.smooks.model.json12.Json12Factory;
 import org.jboss.tools.smooks.model.json12.Json12Package;
-import org.jboss.tools.smooks.model.persistence12.Persistence12Factory;
-import org.jboss.tools.smooks.model.persistence12.Persistence12Package;
-import org.jboss.tools.smooks.model.rules10.Rules10Factory;
-import org.jboss.tools.smooks.model.rules10.Rules10Package;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.validation10.Validation10Factory;
-import org.jboss.tools.smooks.model.validation10.Validation10Package;
-import org.jboss.tools.smooks.model.xsl.XslFactory;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
 import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
 
 /**
@@ -310,114 +286,20 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 		// FeatureMapUtil.createEntry(
 		// JsonPackage.Literals.JSON_DOCUMENT_ROOT__READER, JsonFactory.eINSTANCE.createJsonReader())));
 
-		// for calc
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(CalcPackage.Literals.CALC_DOCUMENT_ROOT__COUNTER, CalcFactory.eINSTANCE
-								.createCounter())));
-
-		// for groovy
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(GroovyPackage.Literals.DOCUMENT_ROOT__GROOVY, GroovyFactory.eINSTANCE
-								.createGroovy())));
-
-		// for datasource
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(DatasourcePackage.Literals.DATA_SOURCE_DOCUMENT_ROOT__DIRECT,
-								DatasourceFactory.eINSTANCE.createDirect())));
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(DatasourcePackage.Literals.DATA_SOURCE_DOCUMENT_ROOT__JNDI,
-								DatasourceFactory.eINSTANCE.createDataSourceJndi())));
-
 		// for javabean
 //		newChildDescriptors.add(createChildParameter(
 //				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
 //						.createEntry(JavabeanPackage.Literals.DOCUMENT_ROOT__BINDINGS, JavabeanFactory.eINSTANCE
 //								.createBindingsType())));
-		// for xsl
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(XslPackage.Literals.DOCUMENT_ROOT__XSL, XslFactory.eINSTANCE.createXsl())));
 		// for freemarker
 		newChildDescriptors.add(createChildParameter(
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
 						.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER, FreemarkerFactory.eINSTANCE
 								.createFreemarker())));
 
-		// for DB routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(DbroutingPackage.Literals.DOCUMENT_ROOT__EXECUTOR, DbroutingFactory.eINSTANCE
-								.createExecutor())));
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(DbroutingPackage.Literals.DOCUMENT_ROOT__RESULT_SET_ROW_SELECTOR,
-								DbroutingFactory.eINSTANCE.createResultSetRowSelector())));
-
-		// for IO routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(IoroutingPackage.Literals.IO_DOCUMENT_ROOT__ROUTER, IoroutingFactory.eINSTANCE
-								.createIORouter())));
-
-		// for File routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(FileRoutingPackage.Literals.DOCUMENT_ROOT__OUTPUT_STREAM,
-								FileRoutingFactory.eINSTANCE.createOutputStream())));
-
-		// for ESB routing
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(EsbroutingPackage.Literals.ESB_ROUTING_DOCUMENT_ROOT__ROUTE_BEAN,
-								EsbroutingFactory.eINSTANCE.createRouteBean())));
-
 		/***********************************************/
 
 		/****************** Add Smooks 1.2 items ********/
-		// for Rules 1.0
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(Rules10Package.Literals.RULES10_DOCUMENT_ROOT__RULE_BASES,
-								Rules10Factory.eINSTANCE.createRuleBasesType())));
-
-		// for Persistence 1.2
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(Persistence12Package.Literals.PERSISTENCE12_DOCUMENT_ROOT__DELETER,
-								Persistence12Factory.eINSTANCE.createDeleter())));
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(Persistence12Package.Literals.PERSISTENCE12_DOCUMENT_ROOT__FLUSHER,
-								Persistence12Factory.eINSTANCE.createFlusher())));
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(Persistence12Package.Literals.PERSISTENCE12_DOCUMENT_ROOT__INSERTER,
-								Persistence12Factory.eINSTANCE.createInserter())));
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(Persistence12Package.Literals.PERSISTENCE12_DOCUMENT_ROOT__LOCATOR,
-								Persistence12Factory.eINSTANCE.createLocator())));
-
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(Persistence12Package.Literals.PERSISTENCE12_DOCUMENT_ROOT__UPDATER,
-								Persistence12Factory.eINSTANCE.createUpdater())));
-
-		// for Validation 1.0
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(Validation10Package.Literals.VALIDATION10_DOCUMENT_ROOT__RULE,
-								Validation10Factory.eINSTANCE.createRuleType())));
 
 		// for CSV 1.2
 		newChildDescriptors
@@ -442,13 +324,6 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
 						.createEntry(Javabean12Package.Literals.JAVABEAN12_DOCUMENT_ROOT__BEAN,
 								Javabean12Factory.eINSTANCE.createBeanType())));
-		
-		// for JMS Router 1.2
-		newChildDescriptors.add(createChildParameter(
-				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-						.createEntry(Jmsrouting12Package.Literals.JMS_ROUTING12_DOCUMENT_ROOT__ROUTER,
-								Jmsrouting12Factory.eINSTANCE.createJMS12Router())));
-
 	}
 
 	/**

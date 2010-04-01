@@ -19,9 +19,6 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
-import org.jboss.tools.smooks.model.rules10.RuleBase;
-import org.jboss.tools.smooks.model.rules10.RuleBasesType;
-import org.jboss.tools.smooks.model.validation10.RuleType;
 
 /**
  * @author Dart
@@ -97,10 +94,6 @@ public class GraphicalModelFactoryImpl implements GraphicalModelFactory {
 	public Object createGraphicalModel(Object model, ISmooksModelProvider provider) {
 		AbstractSmooksGraphicalModel graphModel = null;
 		String version = provider.getPlatformVersion();
-
-		if (model instanceof RuleType || model instanceof RuleBase || model instanceof RuleBasesType) {
-			return null;
-		}
 
 		if (SmooksUIUtils.isUnSupportElement(version, (EObject) model)) {
 			return null;

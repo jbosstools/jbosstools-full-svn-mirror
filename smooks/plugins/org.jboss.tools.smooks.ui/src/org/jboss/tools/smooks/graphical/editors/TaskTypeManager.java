@@ -21,7 +21,6 @@ import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.xsl.Xsl;
 
 /**
  * @author Dart
@@ -84,9 +83,6 @@ public class TaskTypeManager {
 		}
 		if (TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskID)) {
 			elementsType.add(Freemarker.class);
-		}
-		if (TASK_ID_XSL_TEMPLATE.equals(taskID)) {
-			elementsType.add(Xsl.class);
 		}
 		return elementsType;
 	}

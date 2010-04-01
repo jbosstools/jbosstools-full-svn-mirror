@@ -16,8 +16,6 @@ import java.util.Map;
 import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderBindingPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderMapBindingPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderUICreator;
-import org.jboss.tools.smooks.configuration.editors.datasource.DataSourceJndiUICreator;
-import org.jboss.tools.smooks.configuration.editors.datasource.DirectUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.ComponentUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.DelimitersUICreator;
 import org.jboss.tools.smooks.configuration.editors.edi.DescriptionUICreator;
@@ -55,8 +53,6 @@ import org.jboss.tools.smooks.configuration.editors.smooks.SmooksResourceListTyp
 import org.jboss.tools.smooks.model.csv12.impl.BindingImpl;
 import org.jboss.tools.smooks.model.csv12.impl.CSV12ReaderImpl;
 import org.jboss.tools.smooks.model.csv12.impl.MapBindingImpl;
-import org.jboss.tools.smooks.model.datasource.impl.DataSourceJndiImpl;
-import org.jboss.tools.smooks.model.datasource.impl.DirectImpl;
 import org.jboss.tools.smooks.model.edi12.impl.EDI12ReaderImpl;
 import org.jboss.tools.smooks.model.freemarker.impl.FreemarkerImpl;
 import org.jboss.tools.smooks.model.freemarker.impl.InlineImpl;
@@ -157,10 +153,6 @@ public class PropertyUICreatorManager {
 		
 		// for JSON 1.2
 		map.put(Json12ReaderImpl.class, new Json12ReaderUICreator());
-
-		// for datasource
-		map.put(DirectImpl.class, new DirectUICreator());
-		map.put(DataSourceJndiImpl.class, new DataSourceJndiUICreator());
 		/*
 		 * up is for smooks1.1
 		 */

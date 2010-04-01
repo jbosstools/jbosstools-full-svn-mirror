@@ -14,13 +14,11 @@ import org.eclipse.gef.EditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerTemplateEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanChildNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.JavaBeanEditPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.xsl.XSLTemplateEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.ResourceConfigChildNodeGraphModelImpl;
 import org.jboss.tools.smooks.graphical.editors.model.ResourceConfigGraphModelImpl;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanChildGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
-import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLTemplateGraphicalModel;
 
 /**
  * @author Dart
@@ -39,9 +37,6 @@ public class ResourceConfigEditFactory {
 		}
 		if(model instanceof ResourceConfigGraphModelImpl){
 			return new ResourceConfigEditPart();
-		}
-		if(model instanceof XSLTemplateGraphicalModel){
-			return new XSLTemplateEditPart();
 		}
 		if(model instanceof FreemarkerTemplateGraphicalModel){
 			return new FreemarkerTemplateEditPart();

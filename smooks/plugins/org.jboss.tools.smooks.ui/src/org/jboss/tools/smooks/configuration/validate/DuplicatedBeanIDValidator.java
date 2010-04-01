@@ -22,7 +22,6 @@ import org.jboss.tools.smooks.model.freemarker.BindTo;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -72,14 +71,6 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 				}
 				continue;
 			}
-			if (object instanceof org.jboss.tools.smooks.model.xsl.BindTo) {
-				String beanId = ((org.jboss.tools.smooks.model.xsl.BindTo) object).getId();
-				if(isDuplicateBeanId(beanId)){
-					list.add(newWaringDiagnostic(Messages.DuplicatedBeanIDValidator_Warning_Duplicate_Bean_ID + beanId, object,
-				XslPackage.Literals.BIND_TO__ID));
-				}
-				continue;
-			}
 			if (object instanceof EObject) {
 				validateModel(((EObject) object).eContents() , list);
 			}
@@ -105,20 +96,6 @@ public class DuplicatedBeanIDValidator extends AbstractValidator {
 			}
 			if(object instanceof BindTo){
 				String beanId = ((BindTo) object).getId();
-				if (beanId != null) {
-					beanId = beanId.trim();
-				}
-				if (idlist.contains(beanId)) {
-					if (!beanIdList.contains(beanId)) {
-						beanIdList.add(beanId);
-					}
-				} else {
-					idlist.add(beanId);
-				}
-				continue;
-			}
-			if(object instanceof org.jboss.tools.smooks.model.xsl.BindTo){
-				String beanId = ((org.jboss.tools.smooks.model.xsl.BindTo) object).getId();
 				if (beanId != null) {
 					beanId = beanId.trim();
 				}

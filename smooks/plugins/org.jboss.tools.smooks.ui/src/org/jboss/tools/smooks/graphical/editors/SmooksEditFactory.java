@@ -30,12 +30,10 @@ import org.jboss.tools.smooks.graphical.editors.editparts.SmooksRootEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.TriggerConnectionEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.BeanReferenceConnectionEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.javamapping.ValueBindingConnectionEditPart;
-import org.jboss.tools.smooks.graphical.editors.editparts.xsl.XSLNodeEditPart;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
-import org.jboss.tools.smooks.graphical.editors.model.xsl.XSLNodeGraphicalModel;
 
 /**
  * @author Dart
@@ -88,10 +86,6 @@ public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartF
 			editPart = new InputDataContainerEditPart();
 		}
 
-		if (model.getClass() == XSLNodeGraphicalModel.class ) {
-			editPart = new XSLNodeEditPart();
-		}
-		
 		if (model instanceof AbstractResourceConfigGraphModel
 				|| model instanceof AbstractResourceConfigChildNodeGraphModel) {
 			editPart = resourceConfigFactory.createEditPart(model);
