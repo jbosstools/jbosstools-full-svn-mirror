@@ -109,7 +109,6 @@ import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.validation10.RuleType;
 
 /**
  * @author Dart
@@ -510,22 +509,6 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		}
 	}
 
-	public AbstractSmooksGraphicalModel findRelatedInputGraphicalModel(Object model) {
-		if (model instanceof RuleType) {
-			String selector = ((RuleType) model).getExecuteOn();
-			for (Iterator<?> iterator = inputDataList.iterator(); iterator.hasNext();) {
-				Object inputData = (Object) iterator.next();
-				if (inputData instanceof IXMLStructuredObject) {
-					IXMLStructuredObject node = SmooksUIUtils.localXMLNodeWithPath(selector,
-							(IXMLStructuredObject) inputData);
-					AbstractSmooksGraphicalModel graphicalModel = findGraphicalModel(node);
-					return graphicalModel;
-				}
-			}
-		}
-		return null;
-	}
-
 	/**
 	 * Very important method ! neet to improve
 	 * 
@@ -545,10 +528,6 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 						for (Iterator<?> iterator2 = colletion.iterator(); iterator2.hasNext();) {
 							Object childModel = (Object) iterator2.next();
 							childModel = AdapterFactoryEditingDomain.unwrap(childModel);
-							AbstractSmooksGraphicalModel inputGraphicalModel = findRelatedInputGraphicalModel(childModel);
-							if (inputGraphicalModel != null) {
-								inputGraphicalModel.fireVisualChanged();
-							}
 							AbstractSmooksGraphicalModel graphModel = createGraphModel(childModel);
 							if (graphModel == null)
 								continue;
@@ -569,10 +548,6 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 						for (Iterator<?> iterator2 = colletion.iterator(); iterator2.hasNext();) {
 							Object childModel = (Object) iterator2.next();
 							childModel = AdapterFactoryEditingDomain.unwrap(childModel);
-							AbstractSmooksGraphicalModel inputGraphicalModel = findRelatedInputGraphicalModel(childModel);
-							if (inputGraphicalModel != null) {
-								inputGraphicalModel.fireVisualChanged();
-							}
 							AbstractSmooksGraphicalModel graphModel = findGraphicalModel(childModel);
 							if (graphModel == null)
 								continue;
@@ -597,10 +572,6 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 						}
 					}
 					if (command instanceof AddCommand) {
-						AbstractSmooksGraphicalModel inputGraphicalModel = findRelatedInputGraphicalModel(object);
-						if (inputGraphicalModel != null) {
-							inputGraphicalModel.fireVisualChanged();
-						}
 						Object owner = ((AddCommand) command).getOwner();
 						owner = AdapterFactoryEditingDomain.unwrap(owner);
 						if (owner instanceof SmooksResourceListType) {
@@ -628,10 +599,6 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 						node.fireConnectionChanged();
 					}
 					if (command instanceof DeleteCommand || command instanceof RemoveCommand) {
-						AbstractSmooksGraphicalModel inputGraphicalModel = findRelatedInputGraphicalModel(object);
-						if (inputGraphicalModel != null) {
-							inputGraphicalModel.fireVisualChanged();
-						}
 						if (node != null) {
 							node.fireChildrenChanged();
 						}

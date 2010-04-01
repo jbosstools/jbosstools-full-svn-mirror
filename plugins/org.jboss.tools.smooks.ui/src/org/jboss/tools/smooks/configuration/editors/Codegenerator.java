@@ -13,7 +13,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.jboss.tools.smooks.model.datasource.DatasourcePackage;
 
 public class Codegenerator {
 	String basePath = "/home/DartPeng/Work/eclipse/smooks-configuration-workspace/org.jboss.tools.smooks.ui/src/org/jboss/tools/smooks/configuration/editors/uitls/temp/"; //$NON-NLS-1$
@@ -41,16 +40,16 @@ public class Codegenerator {
 	}
 
 	public static void main(String[] args) {
-		Codegenerator g = new Codegenerator();
-		try {
-			g.generateCodes(DatasourcePackage.eINSTANCE);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		Codegenerator g = new Codegenerator();
+//		try {
+//			g.generateCodes(DatasourcePackage.eINSTANCE);
+//		} catch (IllegalArgumentException e) {
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public void generateCodes(EPackage epackage) throws IllegalArgumentException,

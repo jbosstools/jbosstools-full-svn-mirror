@@ -42,22 +42,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wst.validation.AbstractValidator;
 import org.eclipse.wst.validation.ValidationResult;
 import org.eclipse.wst.validation.ValidationState;
-import org.eclipse.wst.validation.internal.core.ValidationException;
 import org.eclipse.wst.validation.internal.provisional.core.IReporter;
 import org.eclipse.wst.validation.internal.provisional.core.IValidationContext;
 import org.eclipse.wst.validation.internal.provisional.core.IValidator;
-import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.datasource.provider.DatasourceItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
-import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -264,21 +256,10 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 			adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
 			adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new FreemarkerItemProviderAdapterFactory());
-//			adapterFactory.addAdapterFactory(new JavabeanItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
-//			adapterFactory.addAdapterFactory(new EdiItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
-//			adapterFactory.addAdapterFactory(new JsonItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
-//			adapterFactory.addAdapterFactory(new CsvItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new DatasourceItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new CalcItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
-			adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
 			adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 		}
 		return adapterFactory;
@@ -326,7 +307,7 @@ public class SmooksModelValidator extends AbstractValidator implements IValidato
 
 	}
 
-	public void validate(IValidationContext helper, IReporter reporter) throws ValidationException {
+	public void validate(IValidationContext helper, IReporter reporter) {
 	}
 
 	public void initValidator(Collection<?> selectedObjects, EditingDomain editingDomain) {

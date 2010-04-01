@@ -76,31 +76,19 @@ import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListene
 import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
 import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
-import org.jboss.tools.smooks.model.calc.provider.CalcItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv12.provider.Csv12ItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.datasource.provider.DatasourceItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.dbrouting.provider.DbroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.edi12.provider.Edi12ItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.esbrouting.provider.EsbroutingItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.fileRouting.provider.FileRoutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.freemarker.provider.FreemarkerItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.groovy.provider.GroovyItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.iorouting.provider.IoroutingItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.javabean12.provider.Javabean12ItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.jmsrouting12.provider.Jmsrouting12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.json12.provider.Json12ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.medi.provider.MEdiItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.persistence12.provider.Persistence12ItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.rules10.provider.Rules10ItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks.model.smooks.provider.SmooksItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.smooks.util.SmooksResourceFactoryImpl;
-import org.jboss.tools.smooks.model.validation10.provider.Validation10ItemProviderAdapterFactory;
-import org.jboss.tools.smooks.model.xsl.provider.XslItemProviderAdapterFactory;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
@@ -394,37 +382,17 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 		// add smooks 1.1.2 EMF item provider model
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new XslItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new FreemarkerItemProviderAdapterFactory());
-		// adapterFactory.addAdapterFactory(new
-		// JavabeanItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new CommonItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new SmooksItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new MEdiItemProviderAdapterFactory());
-		// adapterFactory.addAdapterFactory(new
-		// EdiItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new IoroutingItemProviderAdapterFactory());
-		// adapterFactory.addAdapterFactory(new
-		// JsonItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new DbroutingItemProviderAdapterFactory());
-		// adapterFactory.addAdapterFactory(new
-		// CsvItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new DatasourceItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new CalcItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new GroovyItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new FileRoutingItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new EsbroutingItemProviderAdapterFactory());
 
 		// add smooks 1.2 EMF itemprovider
 		adapterFactory.addAdapterFactory(new Json12ItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new Edi12ItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new Javabean12ItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new Csv12ItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new Rules10ItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new Validation10ItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new Jmsrouting12ItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new Persistence12ItemProviderAdapterFactory());
 
 		BasicCommandStack commandStack = new BasicCommandStack();
 		handleCommandStack(commandStack);

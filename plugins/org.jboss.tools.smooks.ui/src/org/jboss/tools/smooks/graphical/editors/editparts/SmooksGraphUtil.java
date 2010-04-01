@@ -23,7 +23,6 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
-import org.jboss.tools.smooks.model.xsl.Xsl;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -41,15 +40,6 @@ public class SmooksGraphUtil {
 			}
 			beanId = beanId.trim();
 			return "BeanType_" + beanId; //$NON-NLS-1$
-		}
-		
-		if (data instanceof Xsl) {
-			String id = ((Xsl) data).getApplyOnElement();
-			if (id == null) {
-				id = ""; //$NON-NLS-1$
-			}
-			id = id.trim();
-			return "XSL_" + id; //$NON-NLS-1$
 		}
 		
 		if (data instanceof Freemarker) {

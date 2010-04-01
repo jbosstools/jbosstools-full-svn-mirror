@@ -31,8 +31,6 @@ import org.jboss.tools.smooks.model.csv12.Binding;
 import org.jboss.tools.smooks.model.csv12.Csv12Package;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
-import org.jboss.tools.smooks.model.rules10.RuleBase;
-import org.jboss.tools.smooks.model.rules10.Rules10Package;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -76,8 +74,6 @@ public class ClassFieldEditorValidator extends AbstractValidator {
 		validationTargetList.add(target2);
 
 		ClassValidationTarget target3 = new ClassValidationTarget();
-		target3.setFeature(Rules10Package.Literals.RULE_BASE__PROVIDER);
-		target3.setTarget(RuleBase.class);
 		validationTargetList.add(target3);
 	}
 

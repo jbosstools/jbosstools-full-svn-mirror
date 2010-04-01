@@ -22,7 +22,6 @@ import org.jboss.tools.smooks.gef.tree.figures.TreeNodeFigure;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.validation10.RuleType;
 
 /**
  * @author Dart
@@ -56,14 +55,15 @@ public class InputDataTreeNodeEditPart extends TreeNodeEditPart {
 			List<?> list = listType.getAbstractResourceConfig();
 			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-				if (object instanceof RuleType) {
-					Object graphicalModel = ((SmooksGraphicalEditorPart) editorPart)
-							.findRelatedInputGraphicalModel(object);
-					if (graphicalModel == getModel()) {
-						((TreeNodeFigure) getFigure()).setLabelImage(SmooksConfigurationActivator.getDefault()
-								.getImageRegistry().get(GraphicsConstants.IMAGE_VALIDATED_TAG));
-					}
-				}
+				// TODO: Is this method required if we remove the code below?
+//				if (object instanceof RuleType) {
+//					Object graphicalModel = ((SmooksGraphicalEditorPart) editorPart)
+//							.findRelatedInputGraphicalModel(object);
+//					if (graphicalModel == getModel()) {
+//						((TreeNodeFigure) getFigure()).setLabelImage(SmooksConfigurationActivator.getDefault()
+//								.getImageRegistry().get(GraphicsConstants.IMAGE_VALIDATED_TAG));
+//					}
+//				}
 			}
 		}
 		((TreeNodeFigure) getFigure()).repaint();
