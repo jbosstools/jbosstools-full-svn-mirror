@@ -326,42 +326,4 @@ public class FileUtil {
 		return inputPath;
 	}
 	
-	public static IJavaElement searchForClass(IJavaProject javaProject, String className) throws JavaModelException {
-//		 Get the search pattern
-	    SearchPattern pattern = SearchPattern.createPattern(className, IJavaSearchConstants.TYPE, IJavaSearchConstants.DECLARATIONS, SearchPattern.R_EXACT_MATCH | SearchPattern.R_CASE_SENSITIVE);
-	    // Get the search scope
-	    IJavaSearchScope scope = SearchEngine.createJavaSearchScope(new IJavaElement[] { javaProject });
-
-	    final List<SearchMatch> matches = new ArrayList<SearchMatch>();
-	    // Get the search requestor
-	    SearchRequestor requestor = new SearchRequestor() {
-			public void acceptSearchMatch(SearchMatch match) throws CoreException {
-				matches.add(match);
-			}
-	    };
-
-	    // Search
-	    SearchEngine searchEngine = new SearchEngine();
-	    try {
-	    	searchEngine.search(pattern, new SearchParticipant[] {SearchEngine.getDefaultSearchParticipant()}, scope, requestor, null);
-	    } catch (CoreException ex) {
-	    	// Ignore
-//	    	ExtensionsPlugin.log(ex);
-	    }
-	    for (Iterator i = matches.iterator(); i != null && i.hasNext();) {
-	    	IJavaElement element = (IJavaElement)((SearchMatch)i.next()).getElement();
-	    	String classQualifiedName = getQualifiedClassName(element);
-	    	if (className.equals(classQualifiedName)) 
-	    		return element;
-	    }
-	    return javaProject.findType(className, new NullProgressMonitor());
-	}
-
-	private static String getQualifiedClassName(IJavaElement element) {
-		if(element instanceof IType) {
-			return ((IType)element).getFullyQualifiedName('.');
-		}
-		return null;
-	}
-
 }

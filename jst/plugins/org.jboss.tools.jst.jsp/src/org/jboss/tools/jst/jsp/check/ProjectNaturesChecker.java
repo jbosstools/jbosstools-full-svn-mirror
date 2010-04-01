@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.util;
+package org.jboss.tools.jst.jsp.check;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,10 +24,12 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.swt.widgets.Display;
+import org.jboss.tools.common.reporting.ProblemReportingHelper;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.util.FileUtil;
 import org.jboss.tools.jst.web.kb.IKbProject;
 import org.jboss.tools.jst.web.kb.internal.KbProject;
 import org.jboss.tools.jst.web.project.WebProject;
-import org.jboss.tools.vpe.VpePlugin;
 
 /**
  * 
@@ -132,7 +134,7 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 				try {
 					updateProjectJSFPersistents(project);
 				} catch (CoreException e) {
-					VpePlugin.getPluginLog().logError(e);
+					ProblemReportingHelper.reportProblem(JspEditorPlugin.PLUGIN_ID, e);
 				}
 			}
 		}
@@ -172,8 +174,8 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 		try {
 			updateProjectJSFPersistents(project);
 		} catch (CoreException e) {
-			VpePlugin.getPluginLog().logError(e);
-		}
+			ProblemReportingHelper.reportProblem(JspEditorPlugin.PLUGIN_ID, e);
+				}
 	}
 
 	private void processRemoveProject(IProject project) {

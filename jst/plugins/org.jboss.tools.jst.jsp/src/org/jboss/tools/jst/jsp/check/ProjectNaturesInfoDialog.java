@@ -8,11 +8,10 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.util;
+package org.jboss.tools.jst.jsp.check;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -30,8 +29,9 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
-import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
+import org.jboss.tools.common.reporting.ProblemReportingHelper;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 
 /**
  * 
@@ -81,8 +81,8 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 		gridData = new GridData(GridData.HORIZONTAL_ALIGN_END);
 		gridData.grabExcessHorizontalSpace = true;
 		link.setLayoutData(gridData);
-		link.setText("<A>" + VpeUIMessages.MOZILLA_LOADING_ERROR_LINK_TEXT + "</A>"); //$NON-NLS-1$ //$NON-NLS-2$
-		link.setToolTipText(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
+		link.setText("<A>" + JstUIMessages.DOCS_INFO_LINK_TEXT + "</A>"); //$NON-NLS-1$ //$NON-NLS-2$
+		link.setToolTipText(JstUIMessages.DOCS_INFO_LINK);
 		link.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
@@ -101,7 +101,9 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == 0) {
 			try {
-				project.setPersistentProperty(ProjectNaturesChecker.IS_NATURES_CHECK_NEED, Boolean.toString(!isRemember));
+				project.setPersistentProperty(
+						ProjectNaturesChecker.IS_NATURES_CHECK_NEED, Boolean
+								.toString(!isRemember));
 			} catch (CoreException e) {
 			}
 		}
@@ -114,36 +116,40 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 				URL theURL = null;
 				;
 				try {
-					theURL = new URL(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
+					theURL = new URL(JstUIMessages.DOCS_INFO_LINK);
 				} catch (MalformedURLException e) {
-					VpePlugin.reportProblem(e);
+					ProblemReportingHelper.reportProblem(
+							JspEditorPlugin.PLUGIN_ID, e);
 				}
 				IWorkbenchBrowserSupport support = PlatformUI.getWorkbench()
 						.getBrowserSupport();
 				try {
 					support.getExternalBrowser().openURL(theURL);
 				} catch (PartInitException e) {
-					VpePlugin.reportProblem(e);
+					ProblemReportingHelper.reportProblem(
+							JspEditorPlugin.PLUGIN_ID, e);
 				}
 			}
 		});
 	}
 
 	@SuppressWarnings("unused")
-	private String arrayToString(String[] strings){
+	private String arrayToString(String[] strings) {
 		StringBuilder builder = new StringBuilder(""); //$NON-NLS-1$
 		for (int i = 0; i < strings.length; i++) {
-			builder.append(strings[i]+"\n"); //$NON-NLS-1$
+			builder.append(strings[i] + "\n"); //$NON-NLS-1$
 		}
 		return builder.toString();
 	}
-	
-	private String getMessageInfo(String[] missingNatures, IProject project){
-		String dialogMessage = "JBoss Tools Visual Editor might not fully work in project \"" + project.getName() +  //$NON-NLS-1$
-				"\" because it does not have JSF and code completion enabled completely.\n\n" + //$NON-NLS-1$
-				"Please use the Configure menu on the project to enable JSF if " + //$NON-NLS-1$
+
+	private String getMessageInfo(String[] missingNatures, IProject project) {
+		String dialogMessage = "JBoss Tools Visual Editor might not fully work in project \"" + project.getName() + //$NON-NLS-1$
+				"\" because it does not have JSF and code completion enabled completely.\n\n"
+				+ //$NON-NLS-1$
+				"Please use the Configure menu on the project to enable JSF if "
+				+ //$NON-NLS-1$
 				"you want all features of the editor working."; //$NON-NLS-1$
 		return dialogMessage;
 	}
-		
+
 }

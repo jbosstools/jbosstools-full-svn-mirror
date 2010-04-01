@@ -18,7 +18,6 @@ import org.eclipse.ui.IStartup;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
-import org.jboss.tools.vpe.editor.util.ProjectNaturesChecker;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -54,9 +53,6 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	 * This method is called when the plug-in is stopped
 	 */
 	public void stop(BundleContext context) throws Exception {
-		ProjectNaturesChecker naturesChecker = ProjectNaturesChecker.getInstance();
-		naturesChecker.dispose();
-		naturesChecker = null;
 		super.stop(context);
 	}
 
