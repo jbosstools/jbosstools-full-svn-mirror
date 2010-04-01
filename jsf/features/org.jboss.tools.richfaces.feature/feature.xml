@@ -2,7 +2,7 @@
 <feature
       id="org.jboss.tools.richfaces.feature"
       label="%featureName"
-      version="2.0.0"
+      version="3.1.0"
       provider-name="%providerName"
       plugin="org.jboss.tools.vpe">
 
