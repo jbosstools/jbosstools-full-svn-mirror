@@ -27,7 +27,6 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
-import org.jboss.tools.common.model.ui.views.navigator.NDeleteAction;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.web.project.WebProject;
@@ -40,7 +39,6 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMElementCSSInlineStyle;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
-import org.mozilla.interfaces.nsIDebug;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -887,4 +885,29 @@ public class VpeStyleUtil {
 				+ FileUtil.getFile(resolvedValue, file).getLocation()
 						.toPortableString();
 	}
+    
+    /**
+     * Applies CSS attributes {@code left:x;top:y;} to the specified
+     * {@code element}.
+     */
+    public static void moveElementTo(nsIDOMElement element, int x, int y) {
+    	nsIDOMCSSStyleDeclaration style	= VpeStyleUtil.getStyle(element);
+		style.setProperty(HTML.STYLE_PARAMETER_LEFT,
+				VpeStyleUtil.toPxPosition(x), HTML.STYLE_PRIORITY_IMPORTANT);
+		style.setProperty(HTML.STYLE_PARAMETER_TOP,
+				VpeStyleUtil.toPxPosition(y), HTML.STYLE_PRIORITY_IMPORTANT);
+    }
+
+    /**
+     * Applies CSS attribute {@code display} to the specified
+     * {@code element} according to the {@code visible} parameter.
+     */
+    public static void setElementVisible(nsIDOMElement element,
+    		boolean visible) {
+    	nsIDOMCSSStyleDeclaration style	= VpeStyleUtil.getStyle(element);
+		style.setProperty(HTML.STYLE_PARAMETER_DISPLAY,
+				visible ? HTML.STYLE_VALUE_DEFAULT_DISPLAY
+						: HTML.STYLE_VALUE_NONE, HTML.STYLE_PRIORITY_IMPORTANT);
+
+    }
 }

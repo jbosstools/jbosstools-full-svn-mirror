@@ -50,10 +50,12 @@ import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIComponentManager;
+import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventTarget;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
+import org.mozilla.interfaces.nsIDOMNSDocument;
 import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -113,10 +115,19 @@ public class VpeDnD implements MozillaDndListener {
 				.getLastSelectedElement();
 		// start drag sessionvpe-element
 		if (isDraggable(selectedElement)) {
+			Point mousePosition = getMousePosition(domEvent);
+			draggablePattern.startSession(mousePosition.x, mousePosition.y);
 			startDragSession(selectedElement);
+			draggablePattern.closeSession();
 			domEvent.stopPropagation();
 			domEvent.preventDefault();
 		}
+	}
+	
+	private Point getMousePosition(nsIDOMEvent domEvent) {
+		nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent)
+				domEvent.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
+		return new Point(nsuiEvent.getPageX(), nsuiEvent.getPageY());
 	}
 
 	/**
@@ -126,6 +137,10 @@ public class VpeDnD implements MozillaDndListener {
 	public void dragOver(nsIDOMEvent event) {
 		final nsIDOMMouseEvent mouseEvent =
 			(nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+		if (isInnerDragSession()) {
+			Point mousePosition = getMousePosition(event);
+			draggablePattern.moveTo(mousePosition.x, mousePosition.y);
+		}
 		final XulRunnerEditor editor = vpeController.getXulRunnerEditor();
 		new ScrollingSupport(editor).scroll(mouseEvent);
 		refreshCanDrop(event);
@@ -138,12 +153,13 @@ public class VpeDnD implements MozillaDndListener {
 	 * @param vpeController
 	 */
 	public void dragDrop(nsIDOMEvent domEvent) {
-		if(getDragService().getCurrentSession().getSourceDocument()==null) {
+		if(isInnerDragSession()) {
+			// in this case it's is an internal drag
+			draggablePattern.closeSession();
+			innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
+		} else {
 			//in this case it's is  external drag
 			externalDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID), VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
-		} else {
-			// in this case it's is an internal drag
-			innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
 		}
 		vpeController.onRefresh();
 	}
@@ -278,6 +294,10 @@ public class VpeDnD implements MozillaDndListener {
 		}
 	
 		dropCommand.execute(dropData);
+	}
+	
+	private boolean isInnerDragSession() {
+		return getDragService().getCurrentSession().getSourceDocument() != null;
 	}
 	
 	private boolean isDraggable(nsIDOMElement element) {
@@ -749,8 +769,24 @@ public class VpeDnD implements MozillaDndListener {
 		int dropOffset = 0;
 		int mouseX = nsuiEvent.getPageX();
 		int mouseY = nsuiEvent.getPageY();
-		nsIDOMNode originalNode = vpeController.getVisualBuilder()
-				.getOriginalTargetNode(event);
+
+		nsIDOMDocument document = vpeController.getVisualBuilder()
+				.getOriginalTargetNode(event).getOwnerDocument();
+
+		nsIDOMNSDocument nsDocument = (nsIDOMNSDocument) document
+				.queryInterface(nsIDOMNSDocument.NS_IDOMNSDOCUMENT_IID);
+		nsIDOMNode originalNode = DndUtil.getElementFromPoint(nsDocument, mouseX, mouseY);
+//		if (originalNode != null) {
+//			if (dropableArea == null) {
+//				dropableArea = new DropableArea(document);
+//				dropableArea.setDropSpots(EnumSet.allOf(DropSpot.class));
+//			}
+//			dropableArea.setNode(originalNode);
+//			dropableArea.setHighlightedSpot(mouseX, mouseY);
+//			dropableArea.setVisible(true);
+//			dropableArea.redraw();
+//		}
+
 		if (originalNode == null || originalNode.getParentNode() == null ||
 				originalNode.getParentNode().getNodeType() == Node.DOCUMENT_NODE) {
 			return  new VpeVisualInnerDropInfo(null, 0, mouseX, mouseY);
