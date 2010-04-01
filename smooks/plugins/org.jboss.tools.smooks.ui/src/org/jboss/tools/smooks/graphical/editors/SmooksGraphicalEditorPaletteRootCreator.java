@@ -37,7 +37,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
-import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
@@ -89,80 +88,7 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 				.getDescriptor(GraphicsConstants.IMAGE_LINK24)));
 		root.add(drawer);
 
-		createPaletteDrawer(root);
-
 		return root;
-	}
-
-	private void createPaletteDrawer(PaletteRoot root) {
-		if (resourceList == null)
-			return;
-
-		IEditingDomainItemProvider provider = (IEditingDomainItemProvider) editingDomain.getAdapterFactory().adapt(
-				this.resourceList, IEditingDomainItemProvider.class);
-		if (provider != null) {
-			Collection<?> newChildrenDescripter = provider.getNewChildDescriptors(this.resourceList, editingDomain,
-					null);
-			List<ISmooksActionGrouper> grouperList = getSmooksActionGrouper();
-			for (Iterator<?> iterator = grouperList.iterator(); iterator.hasNext();) {
-				ISmooksActionGrouper iSmooksActionGrouper = (ISmooksActionGrouper) iterator.next();
-				PaletteDrawer drawer = new PaletteDrawer(iSmooksActionGrouper.getGroupName());
-				fillDrawer(drawer, newChildrenDescripter, iSmooksActionGrouper);
-				root.add(drawer);
-
-			}
-		}
-	}
-
-	private void fillDrawer(PaletteDrawer drawer, Collection<?> allchildren, ISmooksActionGrouper grouper) {
-		for (Iterator<?> iterator = allchildren.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-
-			if (grouper.belongsToGroup(object)) {
-				if (object instanceof CommandParameter) {
-					Object v = ((CommandParameter) object).getValue();
-					v = AdapterFactoryEditingDomain.unwrap(v);
-					v = EcoreUtil.copy((EObject) v);
-
-					IEditingDomainItemProvider editDomainIemProvider = (IEditingDomainItemProvider) editingDomain
-							.getAdapterFactory().adapt(v, IEditingDomainItemProvider.class);
-					IItemLabelProvider itemLabelProvider = (IItemLabelProvider) editingDomain.getAdapterFactory()
-							.adapt(v, IItemLabelProvider.class);
-
-					if (SmooksUIUtils.isUnSupportElement(smooksModelProvider.getPlatformVersion(), (EObject) v)) {
-						continue;
-					}
-					if (isIgnoreType(v)) {
-						continue;
-					}
-					EClass clazz = ((EObject) v).eClass();
-
-					Object newModel = ((CommandParameter) object).getValue();
-					if (newModel instanceof FeatureMap.Entry) {
-						newModel = FeatureMapUtil.createEntry(((FeatureMap.Entry) newModel).getEStructuralFeature(), v);
-					}
-
-					String entryName = clazz.getName();
-
-					ImageDescriptor smallImage = null;
-					if (itemLabelProvider != null) {
-						entryName = itemLabelProvider.getText(v);
-						Object imageObj = itemLabelProvider.getImage(v);
-						smallImage = ExtendedImageRegistry.getInstance().getImageDescriptor(imageObj);
-					}
-
-					CombinedTemplateCreationEntry toolEntry = new CombinedTemplateCreationEntry(entryName, entryName,
-							new SmooksModelCreationFactory(newModel, ((CommandParameter) object).getFeature()),
-							smallImage, smallImage);
-					drawer.add(toolEntry);
-
-					if (needtToCreateChildrenEntry(v)) {
-
-						fillDrawer(drawer, editDomainIemProvider.getNewChildDescriptors(v, editingDomain, null));
-					}
-				}
-			}
-		}
 	}
 
 	private boolean isIgnoreType(Object element) {
@@ -227,25 +153,6 @@ public class SmooksGraphicalEditorPaletteRootCreator {
 //			return true;
 //		}
 		return false;
-	}
-
-	protected void fillActionGrouper(List<ISmooksActionGrouper> grouperList) {
-
-	}
-
-	protected List<ISmooksActionGrouper> getSmooksActionGrouper() {
-		List<ISmooksActionGrouper> grouperList = new ArrayList<ISmooksActionGrouper>();
-		fillActionGrouper(grouperList);
-		// grouperList.add(new Reader11ActionGrouper());
-		// grouperList.add(new Calc11ActionGrouper());
-		// grouperList.add(new Database11ActionGrouper());
-		// grouperList.add(new Datasources11ActionGrouper());
-		// grouperList.add(new FragmentRouting11ActionGrouper());
-		// grouperList.add(new Scripting11ActionGrouper());
-		// grouperList.add(new Templating11ActionGrouper());
-		// grouperList.add(new PersistenceActionGrouper());
-		// grouperList.add(new Validation10ActionGrouper());
-		return grouperList;
 	}
 
 	public class SmooksModelCreationFactory implements CreationFactory {

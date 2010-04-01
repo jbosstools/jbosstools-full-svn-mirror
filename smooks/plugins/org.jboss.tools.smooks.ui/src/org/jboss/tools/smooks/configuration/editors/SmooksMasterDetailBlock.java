@@ -34,7 +34,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -53,7 +52,6 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
-import org.jboss.tools.smooks.configuration.wizards.NewSmooksElementWizard;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
@@ -372,18 +370,6 @@ public class SmooksMasterDetailBlock extends MasterDetailsBlock implements IMenu
 	}
 
 	private void hookButtons() {
-		addButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				NewSmooksElementWizard wizard = new NewSmooksElementWizard(editingDomain, getTreeViewerInput(),
-						getViewerFilters(), getNewSmooksElementTitle(), getNewSmooksElementDescription());
-				WizardDialog dialog = new WizardDialog(formEditor.getSite().getShell(), wizard);
-				dialog.open();
-			}
-
-		});
 
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {

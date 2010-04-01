@@ -18,12 +18,9 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalViewer;
-import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
-import org.jboss.tools.smooks.configuration.editors.actions.ISmooksActionGrouper;
-import org.jboss.tools.smooks.configuration.editors.actions.JavaBean11ActionGrouper;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.common.RootModel;
@@ -153,34 +150,6 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 	@Override
 	protected String getDiagnosticMessage(Diagnostic diagnostic) {
 		return super.getDiagnosticMessage(diagnostic);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#
-	 * getPaletteRoot()
-	 */
-	// @Override
-	protected PaletteRoot getPaletteRoot() {
-		SmooksGraphicalEditorPaletteRootCreator creator = new SmooksGraphicalEditorPaletteRootCreator(
-				this.smooksModelProvider, (AdapterFactoryEditingDomain) this.smooksModelProvider.getEditingDomain(),
-				getSmooksResourceListType()) {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @seeorg.jboss.tools.smooks.graphical.editors.
-			 * SmooksGraphicalEditorPaletteRootCreator
-			 * #fillActionGrouper(java.util.List)
-			 */
-			@Override
-			protected void fillActionGrouper(List<ISmooksActionGrouper> grouperList) {
-				grouperList.add(new JavaBean11ActionGrouper());
-			}
-
-		};
-		return creator.createPaletteRoot();
 	}
 
 	/*

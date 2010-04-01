@@ -137,7 +137,6 @@ import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.OpenFileHyperLinkListener;
 import org.jboss.tools.smooks.configuration.editors.SelectorAttributes;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
-import org.jboss.tools.smooks.configuration.editors.groovy.GroovyUICreator;
 import org.jboss.tools.smooks.configuration.editors.input.InputParameter;
 import org.jboss.tools.smooks.configuration.editors.input.InputType;
 import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
@@ -3010,9 +3009,6 @@ public class SmooksUIUtils {
 		if (model instanceof Xsl) {
 			return XslPackage.Literals.XSL__APPLY_ON_ELEMENT_NS;
 		}
-		if (model instanceof GroovyUICreator) {
-			return GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT_NS;
-		}
 		if (model instanceof ResourceConfigType) {
 			return SmooksPackage.Literals.RESOURCE_CONFIG_TYPE__SELECTOR_NAMESPACE;
 		}
@@ -3054,9 +3050,6 @@ public class SmooksUIUtils {
 		}
 		if (model instanceof Xsl) {
 			return XslPackage.Literals.XSL__APPLY_ON_ELEMENT;
-		}
-		if (model instanceof GroovyUICreator) {
-			return GroovyPackage.Literals.GROOVY__EXECUTE_ON_ELEMENT;
 		}
 
 		if (model instanceof ResourceConfigType) {
