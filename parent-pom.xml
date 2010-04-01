@@ -3,12 +3,28 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>org.jboss.tools.parent.pom</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${scala.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
 	<properties>
 		<tychoVersion>0.8.0</tychoVersion>
+		<scala.version>2.8.0.Beta1</scala.version>
+		<scala.plugin.version>2.13.1</scala.plugin.version>
 	</properties>
 
 	<build>
@@ -60,16 +76,35 @@
 					</environments>
 				</configuration>
 			</plugin>
-<plugin>
-      <groupId>org.sonatype.tycho</groupId>
-         <artifactId>maven-osgi-test-plugin</artifactId>
-         <version>${tychoVersion}</version>
-         <configuration>
-           <useUIHarness>true</useUIHarness>
-           <useUIThread>true</useUIThread>
-         </configuration>
-      </plugin>
-
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-test-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>true</useUIThread>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.scala-tools</groupId>
+				<artifactId>maven-scala-plugin</artifactId>
+				<version>${scala.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>script</goal>
+						<!--	<goal>compile</goal>
+							<goal>run</goal> -->
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<scalaVersion>${scala.version}</scalaVersion>
+					<scriptFile>genpom.scala</scriptFile>
+					<displayCmd>true</displayCmd>
+					<keepGeneratedScript>true</keepGeneratedScript>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -174,16 +209,38 @@
 			</releases>
 		</repository>
 		<repository>
-                    <id>xulrunner</id>
-                      <url>http://download.jboss.org/tools/updates/xulrunner/</url>
-                      <layout>p2</layout>
-                      <snapshots>
-                              <enabled>true</enabled>
-                       </snapshots>
-                      <releases>
-                                <enabled>true</enabled>
-                        </releases>
-                </repository>
+			<id>xulrunner</id>
+			<url>http://download.jboss.org/tools/updates/xulrunner/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>scala-tools.org</id>
+			<name>Scala-tools Maven2 Repository</name>
+			<url>http://scala-tools.org/repo-releases</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>scala-library</id>
+			<name>Scala-library Repository</name>
+			<url>http://scala-tools.org/repo-releases/org/scala-lang/scala-library/2.8.0.Beta1/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -191,6 +248,21 @@
 			<id>tycho</id>
 			<url>http://repository.sonatype.org/content/repositories/all-001/
 			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+		<pluginRepository>
+			<id>scala-tools.org</id>
+			<name>Scala-tools Maven2 Repository</name>
+			<url>http://scala-tools.org/repo-releases</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 			<releases>
 				<enabled>true</enabled>
 			</releases>

@@ -9,7 +9,7 @@ object GenPom {
   /********** Configuration Start **********/
   var projectName = "org.jboss.tools"
   var pathToParentPom = ""
-  var parentPomVersion = "1.0.0-SNAPSHOT"
+  var parentPomVersion = "0.0.1-SNAPSHOT"
   var sourcePomVersion = "0.0.1-SNAPSHOT"
   /********** Configuration Ends  **********/
 
