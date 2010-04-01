@@ -17,7 +17,8 @@
   <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/plugins/org.jboss.tools.flow.convert,org.jboss.tools.flow.convert"/>
   <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/plugins/org.jbpm.gd.jpdl,org.jbpm.gd.jpdl"/>
 
-  <!-- !*** test feature -->
+  <!-- !*** test features -->
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/features/org.jboss.tools.jbpm4.tests.sdk.feature,org.jboss.tools.jbpm4.tests.sdk.feature"/>
   <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/features/org.jboss.tools.jbpm4.tests.feature,org.jboss.tools.jbpm4.tests.feature"/>
 
   <!-- !*** test plugins -->
