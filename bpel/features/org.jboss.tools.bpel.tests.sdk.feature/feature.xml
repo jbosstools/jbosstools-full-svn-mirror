@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jboss.tools.bpel.tests.feature"
+      id="org.jboss.tools.bpel.tests.sdk.feature"
       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%featureProvider"
@@ -37,6 +37,10 @@
       <import plugin="org.junit" version="3.8.2" match="greaterOrEqual"/>
    </requires>
 
+   <includes
+         id="org.jboss.tools.bpel.tests.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.ant.optional.junit"
          download-size="0"
@@ -58,12 +62,6 @@
 
    <plugin
          id="org.jboss.tools.common.test"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.tools.bpel.ui.test"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
