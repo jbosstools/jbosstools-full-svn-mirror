@@ -8,7 +8,7 @@
   * Contributors:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.jsf.el.refactoring;
+package org.jboss.tools.jst.web.kb.refactoring;
 
 import java.util.List;
 import java.util.StringTokenizer;
