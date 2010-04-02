@@ -24,7 +24,7 @@ import junit.framework.TestCase;
  * @author eskimo
  *
  */
-public class ModelNewWizardTest extends TestCase {
+public class AbstractModelNewWizardTest extends TestCase {
 	protected void testNewWizardInstanceIsCreated(String id) {
 		IWizard
 		aWizard = WorkbenchUtils.findWizardByDefId(
