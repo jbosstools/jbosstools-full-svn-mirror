@@ -1,0 +1,74 @@
+<!-- Run a given ${COMPONENT} build -->
+<project default="run" xmlns:artifact="antlib:org.apache.maven.artifact.ant" basedir=".">
+
+	<target name="run" depends="init, genpom, install, deploy" />
+
+	<!-- override for local build -->
+	<available file="/qa/tools/opt" type="dir" property="isJBossQA" />
+	<target name="local" unless="jbossQAConfig">
+		<property name="WORKINGDIR" value="${basedir}" />
+		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
+	</target>
+
+	<!-- default settings for JBQA Hudson -->
+	<target name="init" depends="local">
+		<property name="WORKINGDIR" value="${WORKSPACE}/jbosstools-trunk" />
+		<!-- <property name="COMMON_TOOLS" value="/qa/tools/opt" /> -->
+		<property name="COMMON_TOOLS" value="${WORKSPACE}/tools" />
+		<mkdir dir="${COMMON_TOOLS}" />
+
+		<property name="MAVEN_MIRROR" value="http://mirror.csclub.uwaterloo.ca/apache/maven/binaries" />
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/apache-maven-3.0-alpha-7-bin.tar.gz"
+		     src="${MAVEN_MIRROR}/apache-maven-3.0-alpha-7-bin.tar.gz"
+		/>
+		<untar compression="gzip"
+		       overwrite="false"
+		       dest="${COMMON_TOOLS}"
+		       src="${COMMON_TOOLS}/apache-maven-3.0-alpha-7-bin.tar.gz"
+		/>
+		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn"/>
+
+		<!-- maven ant tasks -->
+		<!--<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar"
+		     src="${MAVEN_MIRROR}/maven-ant-tasks-2.1.0.jar"
+		/>
+		<path id="maven-ant-tasks.classpath" path="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar" />
+		<typedef resource="org/apache/maven/artifact/ant/antlib.xml"
+		         uri="antlib:org.apache.maven.artifact.ant"
+		         classpathref="maven-ant-tasks.classpath"
+		/> -->
+	</target>
+
+	<!-- TODO: replace this with ant script for better portability -->
+	<target name="genpom">
+		<exec executable="scala" dir="${WORKINGDIR}">
+			<arg line="${WORKINGDIR}/genpom.scala" />
+		</exec>
+	</target>
+
+	<target name="install">
+		<property name="COMPONENT" value="tests" />
+		<echo>Run pom file: ${WORKINGDIR}/${COMPONENT}/pom.xml</echo>
+		
+		<exec executable="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn" dir="${WORKINGDIR}/${COMPONENT}">
+			<!-- <arg line="-o -Dmaven.test.skip" /> -->
+			<arg line="clean install" />
+		</exec>
+	</target>
+
+	<target name="deploy">
+		<!-- TODO enable publishing to download.jboss.org or porkchop.jboss.com
+		<artifact:install-provider artifactId="wagon-ssh" version="1.0-beta-2"/>
+
+		<artifact:deploy file="target/my-project-1.0.jar">
+			<remoteRepository url="scp://localhost/www/repository">
+				<authentication username="${repository.username}" privateKey="${user.home}/.ssh/id_dsa" />
+			</remoteRepository>
+			<pom refid="mypom" />
+		</artifact:deploy>
+		-->
+	</target>
+</project>
+
