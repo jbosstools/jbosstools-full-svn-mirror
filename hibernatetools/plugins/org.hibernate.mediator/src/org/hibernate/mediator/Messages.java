@@ -38,6 +38,7 @@ public class Messages extends NLS {
 	public static String DynamicSQLPreviewView_caused_by;
 	public static String DynamicSQLPreviewView_manipulation_of;
 	public static String Stub_create_null_stub_prohibit;
+	public static String HObject_incompatible_object_types;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

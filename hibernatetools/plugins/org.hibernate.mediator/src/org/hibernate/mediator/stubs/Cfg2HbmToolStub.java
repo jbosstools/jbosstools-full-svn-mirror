@@ -1,29 +1,23 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.tool.hbm2x.Cfg2HbmTool;
+import org.hibernate.mediator.base.HObject;
 
-public class Cfg2HbmToolStub {
+public class Cfg2HbmToolStub extends HObject {
 	public static final String CL = "org.hibernate.tool.hbm2x.Cfg2HbmTool"; //$NON-NLS-1$
 
-	protected Cfg2HbmTool cfg2HbmTool;
-
 	protected Cfg2HbmToolStub(Object cfg2HbmTool) {
-		if (cfg2HbmTool == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.cfg2HbmTool = (Cfg2HbmTool)cfg2HbmTool;
+		super(cfg2HbmTool, CL);
 	}
 	
 	public static Cfg2HbmToolStub newInstance() {
-		return new Cfg2HbmToolStub(new Cfg2HbmTool());
+		return new Cfg2HbmToolStub(newInstance(CL));
 	}
 
 	public String getTag(PersistentClassStub persistentClass) {
-		return cfg2HbmTool.getTag(persistentClass.persistentClass);
+		return (String)invoke("getTag", persistentClass); //$NON-NLS-1$
 	}
 
 	public String getTag(PropertyStub property) {
-		return cfg2HbmTool.getTag(property.property);
+		return (String)invoke("getTag", property); //$NON-NLS-1$
 	}
 }

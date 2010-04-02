@@ -3,7 +3,9 @@ package org.hibernate.mediator.stubs;
 import java.io.File;
 import java.util.Properties;
 
+import org.hibernate.cfg.Configuration;
 import org.hibernate.mediator.Messages;
+import org.hibernate.tool.hbm2x.ArtifactCollector;
 import org.hibernate.tool.hbm2x.Exporter;
 
 public class ExporterStub {
@@ -23,7 +25,7 @@ public class ExporterStub {
 	}
 
 	public void setConfiguration(ConfigurationStub configuration) {
-		exporter.setConfiguration(configuration.configuration);
+		exporter.setConfiguration((Configuration)configuration.Obj());
 	}
 
 	public void setProperties(Properties props) {
@@ -31,7 +33,7 @@ public class ExporterStub {
 	}
 
 	public void setArtifactCollector(ArtifactCollectorStub collector) {
-		exporter.setArtifactCollector(collector.artifactCollector);
+		exporter.setArtifactCollector((ArtifactCollector)collector.Obj());
 	}
 
 	public void setOutputDirectory(File file) {

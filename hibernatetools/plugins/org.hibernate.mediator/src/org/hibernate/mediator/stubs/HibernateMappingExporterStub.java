@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import org.hibernate.cfg.Configuration;
 import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.HibernateMappingExporter;
 
@@ -14,10 +15,10 @@ public class HibernateMappingExporterStub {
 	protected HibernateMappingExporter hibernateMappingExporter;
 
 	protected HibernateMappingExporterStub(ConfigurationStub cfg, File outputdir) {
-		if (cfg.configuration == null) {
+		if (cfg.Obj() == null) {
 			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
 		}
-		hibernateMappingExporter = new HibernateMappingExporter(cfg.configuration, outputdir);    	
+		hibernateMappingExporter = new HibernateMappingExporter((Configuration)cfg.Obj(), outputdir);    	
     }
 
 	public void setGlobalSettings(HibernateMappingGlobalSettingsStub hmgs) {

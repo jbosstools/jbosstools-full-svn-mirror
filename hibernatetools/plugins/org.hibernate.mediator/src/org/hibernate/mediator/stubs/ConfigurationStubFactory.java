@@ -44,15 +44,7 @@ public class ConfigurationStubFactory {
 	}
 
 	public ConfigurationStub createConfiguration() {
-		try {
-			return ConfigurationStub.newInstance();
-		} catch (ClassNotFoundException e) {
-			throw new HibernateConsoleRuntimeException(e);
-		} catch (InstantiationException e) {
-			throw new HibernateConsoleRuntimeException(e);
-		} catch (IllegalAccessException e) {
-			throw new HibernateConsoleRuntimeException(e);
-		}
+		return ConfigurationStub.newInstance();
 	}
 
 	public ConfigurationStubJDBCMetaData createConfigurationJDBCMetaData() {

@@ -15,30 +15,24 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.FakeDelegatingDriver;
+import org.hibernate.mediator.base.HObject;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.ide.completion.HQLCodeAssist;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 
-public class ConfigurationStub {
+public class ConfigurationStub extends HObject {
 	public static final String CL = "org.hibernate.cfg.Configuration"; //$NON-NLS-1$
 
 	private Map<String, FakeDelegatingDriver> fakeDrivers = new HashMap<String, FakeDelegatingDriver>();
 
-	// configuration != null - by default
-	protected Configuration configuration;
-
 	protected ConfigurationStub(Object configuration) {
-		if (configuration == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.configuration = (Configuration)configuration;
+		super(configuration, CL);
 	}
 
-	public static ConfigurationStub newInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		Class<?> clazz = ReflectHelper.classForName("org.hibernate.cfg.Configuration"); //$NON-NLS-1$
-		return new ConfigurationStub(clazz.newInstance());
+	public static ConfigurationStub newInstance() {
+		return new ConfigurationStub(newInstance(CL));
 	}
 
 	public void cleanUp() {
@@ -54,11 +48,11 @@ public class ConfigurationStub {
 	}
 
 	public void buildMappings() {
-		configuration.buildMappings();
+		invoke("buildMappings"); //$NON-NLS-1$
 	}
 
 	public SettingsStub buildSettings() {
-		Object obj = configuration.buildSettings();
+		Object obj = invoke("buildSettings"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -66,7 +60,7 @@ public class ConfigurationStub {
 	}
 
 	public SessionFactoryStub buildSessionFactory() {
-		Object obj = configuration.buildSessionFactory();
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -74,15 +68,16 @@ public class ConfigurationStub {
 	}
 
 	public EntityResolver getEntityResolver() {
-		return configuration.getEntityResolver();
+		return (EntityResolver)invoke("getEntityResolver"); //$NON-NLS-1$
 	}
 
 	public IHQLCodeAssistStub getHQLCodeAssist() {
-		return new IHQLCodeAssistStub(new HQLCodeAssist(configuration));
+		// TODO: fix this
+		return new IHQLCodeAssistStub(new HQLCodeAssist((Configuration)Obj()));
 	}
 	
 	public NamingStrategyStub getNamingStrategy() {
-		Object obj = configuration.getNamingStrategy();
+		Object obj = invoke("getNamingStrategy"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -90,12 +85,12 @@ public class ConfigurationStub {
 	}
 
 	public boolean hasNamingStrategy() {
-		return (configuration.getNamingStrategy() != null);
+		return (invoke("getNamingStrategy") != null); //$NON-NLS-1$
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Iterator<PersistentClassStub> getClassMappings() {
-		Iterator<PersistentClass> it = (Iterator<PersistentClass>)configuration.getClassMappings();
+		Iterator<PersistentClass> it = (Iterator<PersistentClass>)invoke("getClassMappings"); //$NON-NLS-1$
 		ArrayList<PersistentClassStub> arr = new ArrayList<PersistentClassStub>();
 		while (it.hasNext()) {
 			arr.add(PersistentClassStubFactory.createPersistentClassStub(it.next()));
@@ -104,11 +99,11 @@ public class ConfigurationStub {
 	}
 	
 	public PersistentClassStub getClassMapping(String entityName) {
-		return PersistentClassStubFactory.createPersistentClassStub(configuration.getClassMapping(entityName));
+		return PersistentClassStubFactory.createPersistentClassStub(invoke("getClassMapping", entityName)); //$NON-NLS-1$
 	}
 
 	public MappingsStub createMappings() {
-		Object obj = configuration.createMappings();
+		Object obj = invoke("createMappings"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -116,7 +111,7 @@ public class ConfigurationStub {
 	}
 
 	public MappingStub buildMapping() {
-		Object obj = configuration.buildMapping();
+		Object obj = invoke("buildMapping"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -145,7 +140,8 @@ public class ConfigurationStub {
 	
 	@SuppressWarnings("unchecked")
 	public Iterator<Throwable> doSchemaExport() {
-		SchemaExport export = new SchemaExport(configuration);
+		// TODO: fix this
+		SchemaExport export = new SchemaExport((Configuration)Obj());
 		export.create(false, true);
 		if (!export.getExceptions().isEmpty()) {
 			return (Iterator<Throwable>)export.getExceptions().iterator();
@@ -158,11 +154,11 @@ public class ConfigurationStub {
 	}
 	
 	public Properties getProperties() {
-		return configuration.getProperties();
+		return (Properties)invoke("getProperties"); //$NON-NLS-1$
 	}
 	
 	public String getProperty(String propertyName) {
-		return configuration.getProperty(propertyName);
+		return (String)invoke("getProperty", propertyName); //$NON-NLS-1$
 	}
 	
 	/**
@@ -212,39 +208,39 @@ public class ConfigurationStub {
 	}
 
 	public ConfigurationStub setProperties(Properties properties) {
-		Configuration tmp = configuration.setProperties(properties);
-		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+		Object tmp = invoke("setProperties", properties); //$NON-NLS-1$
+		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 
 	public void setProperty(String propertyName, String value) {
-		configuration.setProperty(propertyName, value);
+		invoke("setProperty", propertyName, value); //$NON-NLS-1$
 	}
 
 	public ConfigurationStub configure(Document document) {
-		Configuration tmp = configuration.configure(document);
-		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+		Object tmp = invoke("configure", document); //$NON-NLS-1$
+		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 
 	public ConfigurationStub configure() {
-		Configuration tmp = configuration.configure();
-		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+		Object tmp = invoke("configure"); //$NON-NLS-1$
+		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 
 	public ConfigurationStub configure(File configFile) {
-		Configuration tmp = configuration.configure(configFile);
-		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+		Object tmp = invoke("configure", configFile); //$NON-NLS-1$
+		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 
 	public void setEntityResolver(EntityResolver entityResolver) {
-		configuration.setEntityResolver(entityResolver);
+		invoke("setEntityResolver", entityResolver); //$NON-NLS-1$
 	}
 
 	public void setNamingStrategy(NamingStrategyStub ns) {
-		configuration.setNamingStrategy(ns.namingStrategy);
+		invoke("setNamingStrategy", ns); //$NON-NLS-1$
 	}
 
 	public ConfigurationStub addFile(File xmlFile) {
-		Configuration tmp = configuration.addFile(xmlFile);
-		return (tmp == configuration ? this : new ConfigurationStub(tmp));
+		Object tmp = invoke("addFile", xmlFile); //$NON-NLS-1$
+		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 }

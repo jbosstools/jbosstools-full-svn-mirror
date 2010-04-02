@@ -1,43 +1,38 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mapping.Subclass;
-import org.hibernate.mediator.Messages;
-
 public class SubclassStub extends PersistentClassStub {
 	public static final String CL = "org.hibernate.mapping.Subclass"; //$NON-NLS-1$
 
-	protected Subclass subclass;
-
 	protected SubclassStub(Object subclass) {
-		super(subclass);
-		if (subclass == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.subclass = (Subclass)subclass;
+		super(subclass, CL);
+	}
+
+	protected SubclassStub(Object subclass, String cn) {
+		super(subclass, cn);
 	}
 
 	public void setClassName(String className) {
-		subclass.setClassName(className);
+		invoke("setClassName", className); //$NON-NLS-1$
 	}
 	
 	public void setEntityName(String entityName) {
-		subclass.setEntityName(entityName);
+		invoke("setEntityName", entityName); //$NON-NLS-1$
 	}
 	
 	public void setDiscriminatorValue(String discriminatorValue) {
-		subclass.setDiscriminatorValue(discriminatorValue);
+		invoke("setDiscriminatorValue", discriminatorValue); //$NON-NLS-1$
 	}
 	
 	public void setAbstract(Boolean isAbstract) {
-		subclass.setAbstract(isAbstract);
+		invoke("setAbstract", isAbstract); //$NON-NLS-1$
 	}
 	
 	public void addProperty(PropertyStub p) {
-		subclass.addProperty(p.property);
+		invoke("addProperty", p); //$NON-NLS-1$
 	}
 
 	public TableStub getRootTable() {
-		Object obj = subclass.getRootTable();
+		Object obj = invoke("getRootTable"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -45,6 +40,6 @@ public class SubclassStub extends PersistentClassStub {
 	}
 
 	public boolean isJoinedSubclass() {
-		return subclass.isJoinedSubclass();
+		return (Boolean)invoke("isJoinedSubclass"); //$NON-NLS-1$
 	}
 }

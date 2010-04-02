@@ -9,13 +9,13 @@ public class TypeStubFactory {
 			return null;
 		}
 		final Class cl = value.getClass();
-		if (ClassHelper.isClassOrOffspring(cl, "org.hibernate.type.CollectionType")) { //$NON-NLS-1$
+		if (ClassHelper.isClassOrOffspring(cl, CollectionTypeStub.CL)) {
 			return new CollectionTypeStub(value);
-		//} else if (0 == "org.hibernate.type.Type".compareTo(cl.getName())) { //$NON-NLS-1$
+		//} else if (0 == TypeStub.CL.compareTo(cl.getName())) {
 		//	return new TypeStub(value);
-		} else if (ClassHelper.isClassOrOffspring(cl, "org.hibernate.type.EntityType")) { //$NON-NLS-1$
+		} else if (ClassHelper.isClassOrOffspring(cl, EntityTypeStub.CL)) {
 			return new EntityTypeStub(value);
-		} else if (ClassHelper.isClassOrOffspring(cl, "org.hibernate.type.NullableType")) { //$NON-NLS-1$
+		} else if (ClassHelper.isClassOrOffspring(cl, NullableTypeStub.CL)) {
 			return new NullableTypeStub(value);
 		}
 		return new AbstractTypeStub(value);

@@ -1,42 +1,39 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mapping.Array;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
 public class ArrayStub extends ListStub {
 	public static final String CL = "org.hibernate.mapping.Array"; //$NON-NLS-1$
 
-	protected Array array;
-
 	protected ArrayStub(Object array) {
-		super(array);
-		if (array == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.array = (Array)array;
+		super(array, CL);
+	}
+
+	protected ArrayStub(Object array, String cn) {
+		super(array, cn);
 	}
 	
-	public static ArrayStub newInstance(PersistentClassStub owner) {
-		return new ArrayStub(new Array(owner.persistentClass));
+	public static ArrayStub newInstance(PersistentClassStub persistentClass) {
+		return new ArrayStub(HObject.newInstance(CL, persistentClass));
 	}
 
 	public void setElement(ValueStub element) {
-		array.setElement(element.value);
+		invoke("setElement", element); //$NON-NLS-1$
 	}
 
 	public void setCollectionTable(TableStub table) {
-		array.setCollectionTable(table.table);
+		invoke("setCollectionTable", table); //$NON-NLS-1$
 	}
 
 	public void setElementClassName(String elementClassName) {
-		array.setElementClassName(elementClassName);
+		invoke("setElementClassName", elementClassName); //$NON-NLS-1$
 	}
 
 	public void setIndex(ValueStub index) {
-		array.setIndex(index.value);
+		invoke("setIndex", index); //$NON-NLS-1$
 	}
 
 	public String getElementClassName() {
-		return array.getElementClassName();
+		return (String)invoke("getElementClassName"); //$NON-NLS-1$
 	}
 }

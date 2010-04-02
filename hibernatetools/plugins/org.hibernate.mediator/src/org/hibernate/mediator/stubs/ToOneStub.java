@@ -1,42 +1,29 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.FetchMode;
-import org.hibernate.mapping.ToOne;
-import org.hibernate.mediator.Messages;
-
 public class ToOneStub extends SimpleValueStub {
 	public static final String CL = "org.hibernate.mapping.ToOne"; //$NON-NLS-1$
 
-	protected ToOne toOne;
-
 	protected ToOneStub(Object toOne) {
-		super(toOne);
-		if (toOne == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.toOne = (ToOne)toOne;
+		super(toOne, CL);
+	}
+
+	protected ToOneStub(Object toOne, String cn) {
+		super(toOne, cn);
 	}
 
 	public void setReferencedEntityName(String referencedEntityName) {
-		toOne.setReferencedEntityName(referencedEntityName);
+		invoke("setReferencedEntityName", referencedEntityName); //$NON-NLS-1$
 	}
 
 	public void setReferencedPropertyName(String name) {
-		toOne.setReferencedPropertyName(name);
+		invoke("setReferencedPropertyName", name); //$NON-NLS-1$
 	}
 
 	public void setFetchMode(FetchModeStub fetchMode) {
-		if (FetchModeStub.DEFAULT.equals(fetchMode)) {
-			toOne.setFetchMode(FetchMode.DEFAULT);
-		} else if (FetchModeStub.SELECT.equals(fetchMode)) {
-			toOne.setFetchMode(FetchMode.SELECT);
-		} else if (FetchModeStub.JOIN.equals(fetchMode)) {
-			toOne.setFetchMode(FetchMode.JOIN);
-		} else if (FetchModeStub.SUBSELECT.equals(fetchMode)) {
-		}
+		invoke("setFetchMode", fetchMode); //$NON-NLS-1$
 	}
 
 	public boolean isEmbedded() {
-		return toOne.isEmbedded();
+		return (Boolean)invoke("isEmbedded"); //$NON-NLS-1$
 	}
 }

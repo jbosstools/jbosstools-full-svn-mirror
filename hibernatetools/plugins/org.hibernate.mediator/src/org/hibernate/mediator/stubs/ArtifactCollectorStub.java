@@ -2,31 +2,25 @@ package org.hibernate.mediator.stubs;
 
 import java.io.File;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.tool.hbm2x.ArtifactCollector;
+import org.hibernate.mediator.base.HObject;
 
-public class ArtifactCollectorStub {
+public class ArtifactCollectorStub extends HObject {
 	public static final String CL = "org.hibernate.tool.hbm2x.ArtifactCollector"; //$NON-NLS-1$
 
-	protected ArtifactCollector artifactCollector;
-
 	protected ArtifactCollectorStub(Object artifactCollector) {
-		if (artifactCollector == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.artifactCollector = (ArtifactCollector)artifactCollector;
+		super(artifactCollector, CL);
 	}
 	
 	public static ArtifactCollectorStub newInstance() {
-		return new ArtifactCollectorStub(new ArtifactCollector());
+		return new ArtifactCollectorStub(newInstance(CL));
 	}
 
 	public File[] getFiles(String string) {
-		return artifactCollector.getFiles(string);
+		return (File[])invoke("getFiles", string); //$NON-NLS-1$
 	}
 
 	public void formatFiles() {
-		artifactCollector.formatFiles();
+		invoke("formatFiles"); //$NON-NLS-1$
 	}
 
 }

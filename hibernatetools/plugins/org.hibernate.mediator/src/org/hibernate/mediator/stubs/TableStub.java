@@ -5,35 +5,26 @@ import java.util.Iterator;
 
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.ForeignKey;
-import org.hibernate.mapping.Table;
 import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class TableStub {
+public class TableStub extends HObject {
 	public static final String CL = "org.hibernate.mapping.Table"; //$NON-NLS-1$
 
-	protected Table table;
-
 	protected TableStub(Object table) {
-		if (table == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.table = (Table)table;
-	}
-	
-	protected Table getTable() {
-		return table;
+		super(table, CL);
 	}
 	
 	public static TableStub newInstance(String name) {
-		return new TableStub(new Table(name));
+		return new TableStub(newInstance(CL, name));
 	}
 	
 	public String getName() {
-		return table.getName();
+		return (String)invoke("getName"); //$NON-NLS-1$
 	}
 	
 	public PrimaryKeyStub getPrimaryKey() {
-		Object obj = table.getPrimaryKey();
+		Object obj = invoke("getPrimaryKey"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -42,7 +33,7 @@ public class TableStub {
 	
 	@SuppressWarnings("unchecked")
 	public Iterator<ForeignKeyStub> getForeignKeyIterator() {
-		Iterator<ForeignKey> it = (Iterator<ForeignKey>)table.getForeignKeyIterator();
+		Iterator<ForeignKey> it = (Iterator<ForeignKey>)invoke("getForeignKeyIterator"); //$NON-NLS-1$
 		ArrayList<ForeignKeyStub> al = new ArrayList<ForeignKeyStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -54,15 +45,15 @@ public class TableStub {
 	}
 
 	public String getCatalog() {
-		return table.getCatalog();
+		return (String)invoke("getCatalog"); //$NON-NLS-1$
 	}
 
 	public String getSchema() {
-		return table.getSchema();
+		return (String)invoke("getSchema"); //$NON-NLS-1$
 	}
 
 	public KeyValueStub getIdentifierValue() {
-		Object obj = table.getIdentifierValue();
+		Object obj = invoke("getIdentifierValue"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -75,7 +66,7 @@ public class TableStub {
 
 	@SuppressWarnings("unchecked")
 	public Iterator<ColumnStub> getColumnIterator() {
-		Iterator<Column> it = (Iterator<Column>)table.getColumnIterator();
+		Iterator<Column> it = (Iterator<Column>)invoke("getColumnIterator"); //$NON-NLS-1$
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -87,30 +78,30 @@ public class TableStub {
 	}
 
 	public String getComment() {
-		return table.getComment();
+		return (String)invoke("getComment"); //$NON-NLS-1$
 	}
 
 	public String getRowId() {
-		return table.getRowId();
+		return (String)invoke("getRowId"); //$NON-NLS-1$
 	}
 
 	public String getSubselect() {
-		return table.getSubselect();
+		return (String)invoke("getSubselect"); //$NON-NLS-1$
 	}
 
 	public boolean hasDenormalizedTables() {
-		return table.hasDenormalizedTables();
+		return (Boolean)invoke("hasDenormalizedTables"); //$NON-NLS-1$
 	}
 
 	public boolean isAbstract() {
-		return table.isAbstract();
+		return (Boolean)invoke("isAbstract"); //$NON-NLS-1$
 	}
 
 	public boolean isAbstractUnionTable() {
-		return table.isAbstractUnionTable();
+		return (Boolean)invoke("isAbstractUnionTable"); //$NON-NLS-1$
 	}
 
 	public boolean isPhysicalTable() {
-		return table.isPhysicalTable();
+		return (Boolean)invoke("isPhysicalTable"); //$NON-NLS-1$
 	}
 }

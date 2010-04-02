@@ -1,106 +1,96 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mapping.Property;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class PropertyStub {
+public class PropertyStub extends HObject {
 	public static final String CL = "org.hibernate.mapping.Property"; //$NON-NLS-1$
 
-	protected Property property;
-
 	protected PropertyStub(Object property) {
-		if (property == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		if (property instanceof PropertyStub) {
-			this.property = ((PropertyStub)property).property;
-		} else {
-			this.property = (Property)property;
-		}
+		super(property, CL);
 	}
 
 	public static PropertyStub newInstance() {
-		return new PropertyStub(new Property());
+		return new PropertyStub(newInstance(CL));
 	}
 
 	public void setName(String name) {
-		property.setName(name);
+		invoke("setName", name); //$NON-NLS-1$
 	}
 
 	public void setValue(ValueStub value) {
-		property.setValue(value.value);
+		invoke("setValue", value); //$NON-NLS-1$
 	}
 
 	public ValueStub getValue() {
-		return ValueStubFactory.createValueStub(property.getValue());
+		return ValueStubFactory.createValueStub(invoke("getValue")); //$NON-NLS-1$
 	}
 
 	public void setCascade(String cascade) {
-		property.setCascade(cascade);
+		invoke("setCascade", cascade); //$NON-NLS-1$
 	}
 
 	public String getName() {
-		return property.getName();
+		return (String)invoke("getName"); //$NON-NLS-1$
 	}
 
 	public TypeStub getType() {
-		return TypeStubFactory.createTypeStub(property.getType());
+		return TypeStubFactory.createTypeStub(invoke("getType")); //$NON-NLS-1$
 	}
 
 	public PersistentClassStub getPersistentClass() {
-		return PersistentClassStubFactory.createPersistentClassStub(property.getPersistentClass());
+		return PersistentClassStubFactory.createPersistentClassStub(invoke("getPersistentClass")); //$NON-NLS-1$
 	}
 
 	public void setPersistentClass(PersistentClassStub ownerClass) {
-		property.setPersistentClass(ownerClass.persistentClass);
+		invoke("setPersistentClass", ownerClass); //$NON-NLS-1$
 	}
 
 	public boolean isSelectable() {
-		return property.isSelectable();
+		return (Boolean)invoke("isSelectable"); //$NON-NLS-1$
 	}
 
 	public boolean isInsertable() {
-		return property.isInsertable();
+		return (Boolean)invoke("isInsertable"); //$NON-NLS-1$
 	}
 
 	public boolean isUpdateable() {
-		return property.isUpdateable();
+		return (Boolean)invoke("isUpdateable"); //$NON-NLS-1$
 	}
 
 	public boolean isLazy() {
-		return property.isLazy();
+		return (Boolean)invoke("isLazy"); //$NON-NLS-1$
 	}
 
 	public boolean isOptional() {
-		return property.isOptional();
+		return (Boolean)invoke("isOptional"); //$NON-NLS-1$
 	}
 
 	public boolean isNaturalIdentifier() {
-		return property.isNaturalIdentifier();
+		return (Boolean)invoke("isNaturalIdentifier"); //$NON-NLS-1$
 	}
 
 	public boolean isOptimisticLocked() {
-		return property.isOptimisticLocked();
+		return (Boolean)invoke("isOptimisticLocked"); //$NON-NLS-1$
 	}
 
 	public String getCascade() {
-		return property.getCascade();
+		return (String)invoke("getCascade"); //$NON-NLS-1$
 	}
 
 	public String getNodeName() {
-		return property.getNodeName();
+		return (String)invoke("getNodeName"); //$NON-NLS-1$
 	}
 
 	public boolean isBackRef() {
-		return property.isBackRef();
+		return (Boolean)invoke("isBackRef"); //$NON-NLS-1$
 	}
 
 	public boolean isComposite() {
-		return property.isComposite();
+		return (Boolean)invoke("isComposite"); //$NON-NLS-1$
 	}
 
 	public String getPropertyAccessorName() {
-		return property.getPropertyAccessorName();
+		return (String)invoke("getPropertyAccessorName"); //$NON-NLS-1$
 	}
 
 }

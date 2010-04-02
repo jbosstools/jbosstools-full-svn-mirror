@@ -3,49 +3,37 @@ package org.hibernate.mediator.stubs;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.hibernate.mapping.Join;
-import org.hibernate.mapping.PersistentClass;
-import org.hibernate.mapping.Property;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public abstract class PersistentClassStub {
+public abstract class PersistentClassStub extends HObject {
 	public static final String CL = "org.hibernate.mapping.PersistentClass"; //$NON-NLS-1$
 
-	protected PersistentClass persistentClass;
-
 	protected PersistentClassStub(Object persistentClass) {
-		if (persistentClass == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		if (persistentClass instanceof PersistentClassStub) {
-			this.persistentClass = ((PersistentClassStub)persistentClass).persistentClass;
-		} else {
-			this.persistentClass = (PersistentClass)persistentClass;
-		}
+		super(persistentClass, CL);
 	}
-	
-	protected PersistentClass getPersistentClass() {
-		return persistentClass;
+
+	protected PersistentClassStub(Object persistentClass, String cn) {
+		super(persistentClass, cn);
 	}
 	
 	public Boolean isAbstract() {
-		return persistentClass.isAbstract();
+		return (Boolean)invoke("isAbstract"); //$NON-NLS-1$
 	}
 	
 	public ValueStub getDiscriminator() {
-		return ValueStubFactory.createValueStub(persistentClass.getDiscriminator());
+		return ValueStubFactory.createValueStub(invoke("getDiscriminator")); //$NON-NLS-1$
 	}
 	
 	public String getClassName() {
-		return persistentClass.getClassName();
+		return (String)invoke("getClassName"); //$NON-NLS-1$
 	}
 	
 	public String getEntityName() {
-		return persistentClass.getEntityName();
+		return (String)invoke("getEntityName"); //$NON-NLS-1$
 	}
 	
 	public PropertyStub getIdentifierProperty() {
-		Object obj = persistentClass.getIdentifierProperty();
+		Object obj = invoke("getIdentifierProperty"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -54,7 +42,7 @@ public abstract class PersistentClassStub {
 	
 	@SuppressWarnings("unchecked")
 	public Iterator<PropertyStub> getPropertyIterator() {
-		Iterator<Property> it = persistentClass.getPropertyIterator();
+		Iterator it = (Iterator)invoke("getPropertyIterator"); //$NON-NLS-1$
 		ArrayList<PropertyStub> al = new ArrayList<PropertyStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -66,7 +54,7 @@ public abstract class PersistentClassStub {
 	}
 
 	public RootClassStub getRootClass() {
-		Object obj = persistentClass.getRootClass();
+		Object obj = invoke("getRootClass"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -74,7 +62,7 @@ public abstract class PersistentClassStub {
 	}
 
 	public PropertyStub getVersion() {
-		Object obj = persistentClass.getVersion();
+		Object obj = invoke("getVersion"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -82,7 +70,7 @@ public abstract class PersistentClassStub {
 	}
 
 	public TableStub getTable() {
-		Object obj = persistentClass.getTable();
+		Object obj = invoke("getTable"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -91,7 +79,7 @@ public abstract class PersistentClassStub {
 
 	@SuppressWarnings("unchecked")
 	public Iterator<JoinStub> getJoinIterator() {
-		Iterator<Join> it = (Iterator<Join>)persistentClass.getJoinIterator();
+		Iterator it = (Iterator)invoke("getJoinIterator"); //$NON-NLS-1$
 		ArrayList<JoinStub> al = new ArrayList<JoinStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -103,15 +91,15 @@ public abstract class PersistentClassStub {
 	}
 
 	public KeyValueStub getIdentifier() {
-		return (KeyValueStub)ValueStubFactory.createValueStub(persistentClass.getIdentifier());
+		return (KeyValueStub)ValueStubFactory.createValueStub(invoke("getIdentifier")); //$NON-NLS-1$
 	}
 
 	public PersistentClassStub getSuperclass() {
-		return PersistentClassStubFactory.createPersistentClassStub(persistentClass.getSuperclass());
+		return PersistentClassStubFactory.createPersistentClassStub(invoke("getSuperclass")); //$NON-NLS-1$
 	}
 
 	public PropertyStub getProperty(String propertyName) {
-		Object obj = persistentClass.getProperty(propertyName);
+		Object obj = invoke("getProperty", propertyName); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -119,12 +107,12 @@ public abstract class PersistentClassStub {
 	}
 
 	public String getNodeName() {
-		return persistentClass.getNodeName();
+		return (String)invoke("getNodeName"); //$NON-NLS-1$
 	}
 
 	@SuppressWarnings("unchecked")
 	public Iterator<PropertyStub> getPropertyClosureIterator() {
-		Iterator<Property> it = (Iterator<Property>)persistentClass.getPropertyClosureIterator();
+		Iterator it = (Iterator)invoke("getPropertyClosureIterator"); //$NON-NLS-1$
 		ArrayList<PropertyStub> al = new ArrayList<PropertyStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();

@@ -1,23 +1,18 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mapping.List;
-import org.hibernate.mediator.Messages;
-
 public class ListStub extends IndexedCollectionStub {
 	public static final String CL = "org.hibernate.mapping.List"; //$NON-NLS-1$
 
-	protected List list;
-
 	protected ListStub(Object list) {
-		super(list);
-		if (list == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.list = (List)list;
+		super(list, CL);
+	}
+
+	protected ListStub(Object list, String cn) {
+		super(list, cn);
 	}
 	
 	public static ListStub newInstance(PersistentClassStub owner) {
-		return new ListStub(new List(owner.persistentClass));
+		return new ListStub(newInstance(CL, owner));
 	}
 
 	@Override
@@ -26,7 +21,7 @@ public class ListStub extends IndexedCollectionStub {
 	}
 
 	public ValueStub getIndex() {
-		return ValueStubFactory.createValueStub(list.getIndex());
+		return ValueStubFactory.createValueStub(invoke("getIndex")); //$NON-NLS-1$
 	}
 
 }

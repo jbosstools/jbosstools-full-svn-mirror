@@ -1,35 +1,26 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mapping.OneToMany;
-import org.hibernate.mediator.Messages;
-
 public class OneToManyStub extends ValueStub {
 	public static final String CL = "org.hibernate.mapping.OneToMany"; //$NON-NLS-1$
 
-	protected OneToMany oneToMany;
-
 	protected OneToManyStub(Object oneToMany) {
-		super(oneToMany);
-		if (oneToMany == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.oneToMany = (OneToMany)oneToMany;
+		super(oneToMany, CL);
 	}
 	
 	public static OneToManyStub newInstance(PersistentClassStub owner) {
-		return new OneToManyStub(new OneToMany(owner.persistentClass));
+		return new OneToManyStub(newInstance(CL, owner));
 	}
 
 	public void setAssociatedClass(PersistentClassStub associatedClass) {
-		oneToMany.setAssociatedClass(associatedClass.persistentClass);
+		invoke("setAssociatedClass", associatedClass); //$NON-NLS-1$
 	}
 
 	public void setReferencedEntityName(String referencedEntityName) {
-		oneToMany.setReferencedEntityName(referencedEntityName);
+		invoke("setReferencedEntityName", referencedEntityName); //$NON-NLS-1$
 	}
 
 	public PersistentClassStub getAssociatedClass() {
-		return PersistentClassStubFactory.createPersistentClassStub(oneToMany.getAssociatedClass());
+		return PersistentClassStubFactory.createPersistentClassStub(invoke("getAssociatedClass")); //$NON-NLS-1$
 	}
 	
 	public Object accept(ValueVisitorStub visitor) {
@@ -37,6 +28,6 @@ public class OneToManyStub extends ValueStub {
 	}
 
 	public String getReferencedEntityName() {
-		return oneToMany.getReferencedEntityName();
+		return (String)invoke("getReferencedEntityName"); //$NON-NLS-1$
 	}
 }

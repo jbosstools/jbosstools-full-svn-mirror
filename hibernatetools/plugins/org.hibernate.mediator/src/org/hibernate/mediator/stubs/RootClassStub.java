@@ -3,41 +3,27 @@ package org.hibernate.mediator.stubs;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.hibernate.mapping.RootClass;
-import org.hibernate.mapping.Subclass;
-import org.hibernate.mediator.Messages;
-
 public class RootClassStub extends PersistentClassStub {
 	public static final String CL = "org.hibernate.mapping.RootClass"; //$NON-NLS-1$
 
-	protected RootClass rootClass;
-
 	protected RootClassStub(Object rootClass) {
-		super(rootClass);
-		if (rootClass == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		if (rootClass instanceof RootClassStub) {
-			this.rootClass = ((RootClassStub)rootClass).rootClass;
-		} else {
-			this.rootClass = (RootClass)rootClass;
-		}
+		super(rootClass, CL);
 	}
 
 	public static RootClassStub newInstance() {
-		return new RootClassStub(new RootClass());
+		return new RootClassStub(newInstance(CL));
 	}
 
 	public String getClassName() {
-		return rootClass.getClassName();
+		return (String)invoke("getClassName"); //$NON-NLS-1$
 	}
 
 	public void setDiscriminator(ValueStub discr) {
-		rootClass.setDiscriminator(discr.value);
+		invoke("setDiscriminator", discr); //$NON-NLS-1$
 	}
 
 	public TableStub getTable() {
-		Object obj = rootClass.getTable();
+		Object obj = invoke("getTable"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -45,15 +31,15 @@ public class RootClassStub extends PersistentClassStub {
 	}
 
 	public void addProperty(PropertyStub p) {
-		rootClass.addProperty(p.property);
+		invoke("addProperty", p); //$NON-NLS-1$
 	}
 
 	public void setIdentifierProperty(PropertyStub p) {
-		rootClass.setIdentifierProperty(p.property);
+		invoke("setIdentifierProperty", p); //$NON-NLS-1$
 	}
 
 	public PropertyStub getIdentifierProperty() {
-		Object obj = rootClass.getIdentifierProperty();
+		Object obj = invoke("getIdentifierProperty"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -61,144 +47,144 @@ public class RootClassStub extends PersistentClassStub {
 	}
 
 	public void setEntityName(String entityName) {
-		rootClass.setEntityName(entityName);
+		invoke("setEntityName", entityName); //$NON-NLS-1$
 	}
 
 	public void setClassName(String className) {
-		rootClass.setClassName(className);
+		invoke("setClassName", className); //$NON-NLS-1$
 	}
 
 	public void setProxyInterfaceName(String proxyInterfaceName) {
-		rootClass.setProxyInterfaceName(proxyInterfaceName);
+		invoke("setProxyInterfaceName", proxyInterfaceName); //$NON-NLS-1$
 	}
 
 	public void setLazy(boolean lazy) {
-		rootClass.setLazy(lazy);
+		invoke("setLazy", lazy); //$NON-NLS-1$
 	}
 
 	public void setTable(TableStub table) {
-		rootClass.setTable(table.table);
+		invoke("setTable", table); //$NON-NLS-1$
 	}
 
 	public void setAbstract(Boolean isAbstract) {
-		rootClass.setAbstract(isAbstract);
+		invoke("setAbstract", isAbstract); //$NON-NLS-1$
 	}
 
 	public String getNodeName() {
-		return rootClass.getNodeName();
+		return (String)invoke("getNodeName"); //$NON-NLS-1$
 	}
 
 	public KeyValueStub getIdentifier() {
-		return (KeyValueStub)ValueStubFactory.createValueStub(rootClass.getIdentifier());
+		return (KeyValueStub)ValueStubFactory.createValueStub(invoke("getIdentifier")); //$NON-NLS-1$
 	}
 
 	public boolean isCustomDeleteCallable() {
-		return rootClass.isCustomDeleteCallable();
+		return (Boolean)invoke("isCustomDeleteCallable"); //$NON-NLS-1$
 	}
 
 	public boolean isCustomInsertCallable() {
-		return rootClass.isCustomInsertCallable();
+		return (Boolean)invoke("isCustomInsertCallable"); //$NON-NLS-1$
 	}
 
 	public boolean isCustomUpdateCallable() {
-		return rootClass.isCustomUpdateCallable();
+		return (Boolean)invoke("isCustomUpdateCallable"); //$NON-NLS-1$
 	}
 
 	public boolean isDiscriminatorInsertable() {
-		return rootClass.isDiscriminatorInsertable();
+		return (Boolean)invoke("isDiscriminatorInsertable"); //$NON-NLS-1$
 	}
 
 	public boolean isDiscriminatorValueNotNull() {
-		return rootClass.isDiscriminatorValueNotNull();
+		return (Boolean)invoke("isDiscriminatorValueNotNull"); //$NON-NLS-1$
 	}
 
 	public boolean isDiscriminatorValueNull() {
-		return rootClass.isDiscriminatorValueNull();
+		return (Boolean)invoke("isDiscriminatorValueNull"); //$NON-NLS-1$
 	}
 
 	public boolean isExplicitPolymorphism() {
-		return rootClass.isExplicitPolymorphism();
+		return (Boolean)invoke("isExplicitPolymorphism"); //$NON-NLS-1$
 	}
 
 	public boolean isForceDiscriminator() {
-		return rootClass.isForceDiscriminator();
+		return (Boolean)invoke("isForceDiscriminator"); //$NON-NLS-1$
 	}
 
 	public boolean isInherited() {
-		return rootClass.isInherited();
+		return (Boolean)invoke("isInherited"); //$NON-NLS-1$
 	}
 
 	public boolean isJoinedSubclass() {
-		return rootClass.isJoinedSubclass();
+		return (Boolean)invoke("isJoinedSubclass"); //$NON-NLS-1$
 	}
 
 	public boolean isLazy() {
-		return rootClass.isLazy();
+		return (Boolean)invoke("isLazy"); //$NON-NLS-1$
 	}
 
 	public boolean isLazyPropertiesCacheable() {
-		return rootClass.isLazyPropertiesCacheable();
+		return (Boolean)invoke("isLazyPropertiesCacheable"); //$NON-NLS-1$
 	}
 
 	public boolean isMutable() {
-		return rootClass.isMutable();
+		return (Boolean)invoke("isMutable"); //$NON-NLS-1$
 	}
 
 	public boolean isPolymorphic() {
-		return rootClass.isPolymorphic();
+		return (Boolean)invoke("isPolymorphic"); //$NON-NLS-1$
 	}
 
 	public boolean isVersioned() {
-		return rootClass.isVersioned();
+		return (Boolean)invoke("isVersioned"); //$NON-NLS-1$
 	}
 
 	public int getBatchSize() {
-		return rootClass.getBatchSize();
+		return (Integer)invoke("getBatchSize"); //$NON-NLS-1$
 	}
 
 	public String getCacheConcurrencyStrategy() {
-		return rootClass.getCacheConcurrencyStrategy();
+		return (String)invoke("getCacheConcurrencyStrategy"); //$NON-NLS-1$
 	}
 
 	public String getCustomSQLDelete() {
-		return rootClass.getCustomSQLDelete();
+		return (String)invoke("getCustomSQLDelete"); //$NON-NLS-1$
 	}
 
 	public String getCustomSQLInsert() {
-		return rootClass.getCustomSQLInsert();
+		return (String)invoke("getCustomSQLInsert"); //$NON-NLS-1$
 	}
 
 	public String getCustomSQLUpdate() {
-		return rootClass.getCustomSQLUpdate();
+		return (String)invoke("getCustomSQLUpdate"); //$NON-NLS-1$
 	}
 
 	public String getDiscriminatorValue() {
-		return rootClass.getDiscriminatorValue();
+		return (String)invoke("getDiscriminatorValue"); //$NON-NLS-1$
 	}
 
 	public String getLoaderName() {
-		return rootClass.getLoaderName();
+		return (String)invoke("getLoaderName"); //$NON-NLS-1$
 	}
 
 	public int getOptimisticLockMode() {
-		return rootClass.getOptimisticLockMode();
+		return (Integer)invoke("getOptimisticLockMode"); //$NON-NLS-1$
 	}
 
 	public String getTemporaryIdTableDDL() {
-		return rootClass.getTemporaryIdTableDDL();
+		return (String)invoke("getTemporaryIdTableDDL"); //$NON-NLS-1$
 	}
 
 	public String getTemporaryIdTableName() {
-		return rootClass.getTemporaryIdTableName();
+		return (String)invoke("getTemporaryIdTableName"); //$NON-NLS-1$
 	}
 
 	public String getWhere() {
-		return rootClass.getWhere();
+		return (String)invoke("getWhere"); //$NON-NLS-1$
 	}
 
 	@SuppressWarnings("unchecked")
 	public Iterator<SubclassStub> getSubclassIterator() {
-		Iterator<Subclass> it = (Iterator<Subclass>)rootClass.getSubclassIterator();
+		Iterator it = (Iterator)invoke("getSubclassIterator"); //$NON-NLS-1$
 		ArrayList<SubclassStub> al = new ArrayList<SubclassStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -211,6 +197,6 @@ public class RootClassStub extends PersistentClassStub {
 
 	@Override
 	public ValueStub getDiscriminator() {
-		return ValueStubFactory.createValueStub(rootClass.getDiscriminator());
+		return ValueStubFactory.createValueStub(invoke("getDiscriminator")); //$NON-NLS-1$
 	}
 }

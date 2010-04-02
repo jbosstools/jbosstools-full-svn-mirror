@@ -2,52 +2,47 @@ package org.hibernate.mediator.stubs;
 
 import java.util.Properties;
 
-import org.hibernate.mapping.SimpleValue;
-import org.hibernate.mediator.Messages;
-
 public class SimpleValueStub extends KeyValueStub {
 	public static final String CL = "org.hibernate.mapping.SimpleValue"; //$NON-NLS-1$
 
-	protected SimpleValue simpleValue;
-
 	protected SimpleValueStub(Object simpleValue) {
-		super(simpleValue);
-		if (simpleValue == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.simpleValue = (SimpleValue)simpleValue;
+		super(simpleValue, CL);
+	}
+
+	protected SimpleValueStub(Object simpleValue, String cn) {
+		super(simpleValue, cn);
 	}
 	
 	public static SimpleValueStub newInstance() {
-		return new SimpleValueStub(new SimpleValue());
+		return new SimpleValueStub(newInstance(CL));
 	}
 
 	public void setTypeName(String type) {
-		simpleValue.setTypeName(type);
+		invoke("setTypeName", type); //$NON-NLS-1$
 	}
 
 	public void addColumn(ColumnStub column) {
-		simpleValue.addColumn(column.column);
+		invoke("addColumn", column.column); //$NON-NLS-1$
 	}
 
 	public void setTable(TableStub table) {
-		simpleValue.setTable(table.table);
+		invoke("setTable", table); //$NON-NLS-1$
 	}
 
 	public void setTypeParameters(Properties parameterMap) {
-		simpleValue.setTypeParameters(parameterMap);
+		invoke("setTypeParameters" ,parameterMap); //$NON-NLS-1$
 	}
 
 	public String getForeignKeyName() {
-		return simpleValue.getForeignKeyName();
+		return (String)invoke("getForeignKeyName"); //$NON-NLS-1$
 	}
 
 	public String getTypeName() {
-		return simpleValue.getTypeName();
+		return (String)invoke("getTypeName"); //$NON-NLS-1$
 	}
 
 	public boolean isTypeSpecified() {
-		return simpleValue.isTypeSpecified();
+		return (Boolean)invoke("isTypeSpecified"); //$NON-NLS-1$
 	}
 
 	@Override

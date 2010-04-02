@@ -1,59 +1,46 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.FetchMode;
-import org.hibernate.mapping.Collection;
-import org.hibernate.mediator.Messages;
-
 public abstract class CollectionStub extends ValueStub {
 	public static final String CL = "org.hibernate.mapping.Collection"; //$NON-NLS-1$
 
-	protected Collection collection;
-
 	protected CollectionStub(Object collection) {
-		super(collection);
-		if (collection == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.collection = (Collection)collection;
+		super(collection, CL);
+	}
+
+	protected CollectionStub(Object collection, String cn) {
+		super(collection, cn);
 	}
 
 	public void setCollectionTable(TableStub table) {
-		collection.setCollectionTable(table.table);
+		invoke("setCollectionTable", table); //$NON-NLS-1$
 	}
 
 	public void setKey(KeyValueStub key) {
-		collection.setKey(key.keyValue);
+		invoke("setKey", key); //$NON-NLS-1$
 	}
 
 	public void setLazy(boolean lazy) {
-		collection.setLazy(lazy);
+		invoke("setLazy", lazy); //$NON-NLS-1$
 	}
 
 	public void setRole(String role) {
-		collection.setRole(role);
+		invoke("setRole", role); //$NON-NLS-1$
 	}
 
 	public void setElement(ValueStub element) {
-		collection.setElement(element.value);
+		invoke("setElement", element); //$NON-NLS-1$
 	}
 
 	public void setFetchMode(FetchModeStub fetchMode) {
-		if (FetchModeStub.DEFAULT.equals(fetchMode)) {
-			collection.setFetchMode(FetchMode.DEFAULT);
-		} else if (FetchModeStub.SELECT.equals(fetchMode)) {
-			collection.setFetchMode(FetchMode.SELECT);
-		} else if (FetchModeStub.JOIN.equals(fetchMode)) {
-			collection.setFetchMode(FetchMode.JOIN);
-		} else if (FetchModeStub.SUBSELECT.equals(fetchMode)) {
-		}
+		invoke("setFetchMode", fetchMode); //$NON-NLS-1$
 	}
 
 	public ValueStub getElement() {
-		return ValueStubFactory.createValueStub(collection.getElement());
+		return ValueStubFactory.createValueStub(invoke("getElement")); //$NON-NLS-1$
 	}
 
 	public TableStub getCollectionTable() {
-		Object obj = collection.getCollectionTable();
+		Object obj = invoke("getCollectionTable"); //$NON-NLS-1$
 		if (obj == null) {
 			return null;
 		}
@@ -61,14 +48,14 @@ public abstract class CollectionStub extends ValueStub {
 	}
 
 	public KeyValueStub getKey() {
-		return (KeyValueStub)ValueStubFactory.createValueStub(collection.getKey());
+		return (KeyValueStub)ValueStubFactory.createValueStub(invoke("getKey")); //$NON-NLS-1$
 	}
 
 	public boolean isOneToMany() {
-		return collection.isOneToMany();
+		return (Boolean)invoke("isOneToMany"); //$NON-NLS-1$
 	}
 
 	public boolean isInverse() {
-		return collection.isInverse();
+		return (Boolean)invoke("isInverse"); //$NON-NLS-1$
 	}
 }

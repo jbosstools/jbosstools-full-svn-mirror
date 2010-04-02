@@ -1,21 +1,15 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.cfg.Mappings;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class MappingsStub {
+public class MappingsStub extends HObject {
 	public static final String CL = "org.hibernate.cfg.Mappings"; //$NON-NLS-1$
 
-	protected Mappings mappings;
-
 	protected MappingsStub(Object mappings) {
-		if (mappings == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.mappings = (Mappings)mappings;
+		super(mappings, CL);
 	}
 
 	public void addClass(PersistentClassStub persistentClass) {
-		mappings.addClass(persistentClass.getPersistentClass());
+		invoke("addClass", persistentClass); //$NON-NLS-1$
 	}
 }

@@ -7,9 +7,9 @@ public class SelectableStubFactory {
 			return null;
 		}
 		final Class cl = selectable.getClass();
-		if (0 == "org.hibernate.mapping.Column".compareTo(cl.getName())) { //$NON-NLS-1$
+		if (0 == ColumnStub.CL.compareTo(cl.getName())) {
 			return new ColumnStub(selectable);
-		} else if (0 == "org.hibernate.mapping.Formula".compareTo(cl.getName())) { //$NON-NLS-1$
+		} else if (0 == FormulaStub.CL.compareTo(cl.getName())) {
 			return new FormulaStub(selectable);
 		}
 		return null;

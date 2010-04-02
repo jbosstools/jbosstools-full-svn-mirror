@@ -1,59 +1,48 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.cfg.NamingStrategy;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class NamingStrategyStub {
+public class NamingStrategyStub extends HObject {
 	public static final String CL = "org.hibernate.cfg.NamingStrategy"; //$NON-NLS-1$
 
-	protected NamingStrategy namingStrategy;
-
 	protected NamingStrategyStub(Object namingStrategy) {
-		if (namingStrategy == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.namingStrategy = (NamingStrategy)namingStrategy;
-	}
-	
-	@SuppressWarnings("nls")
-	public static String getClassName() {
-		return "org.hibernate.cfg.NamingStrategy";
+		super(namingStrategy, CL);;
 	}
 
 	public String classToTableName(String className) {
-		return namingStrategy.classToTableName(className);
+		return (String)invoke("classToTableName", className); //$NON-NLS-1$
 	}
 
 	public String tableName(String tableName) {
-		return namingStrategy.tableName(tableName);
+		return (String)invoke("tableName", tableName); //$NON-NLS-1$
 	}
 
 	public String columnName(String columnName) {
-		return namingStrategy.columnName(columnName);
+		return (String)invoke("columnName", columnName); //$NON-NLS-1$
 	}
 
 	public String propertyToColumnName(String propertyName) {
-		return namingStrategy.propertyToColumnName(propertyName);
+		return (String)invoke("propertyToColumnName", propertyName); //$NON-NLS-1$
 	}
 
 	public String joinKeyColumnName(String joinedColumn, String joinedTable) {
-		return namingStrategy.joinKeyColumnName(joinedColumn, joinedTable);
+		return (String)invoke("joinKeyColumnName", joinedColumn, joinedTable); //$NON-NLS-1$
 	}
 
 	public String collectionTableName(String ownerEntity, String ownerEntityTable, 
 			String associatedEntity, String associatedEntityTable,
 			String propertyName) {
-		return namingStrategy.collectionTableName(ownerEntity, ownerEntityTable, 
+		return (String)invoke("collectionTableName", ownerEntity, ownerEntityTable, //$NON-NLS-1$ 
 				associatedEntity, associatedEntityTable, propertyName);
 	}
 
 	public String logicalColumnName(String columnName, String propertyName) {
-		return namingStrategy.logicalColumnName(columnName, propertyName);
+		return (String)invoke("logicalColumnName", columnName, propertyName); //$NON-NLS-1$
 	}
 
 	public String foreignKeyColumnName(String propertyName, String propertyEntityName, 
 			String propertyTableName, String referencedColumnName) {
-		return namingStrategy.foreignKeyColumnName(propertyName, 
+		return (String)invoke("foreignKeyColumnName", propertyName, //$NON-NLS-1$ 
 				propertyEntityName, propertyTableName, referencedColumnName);
 	}
 }
