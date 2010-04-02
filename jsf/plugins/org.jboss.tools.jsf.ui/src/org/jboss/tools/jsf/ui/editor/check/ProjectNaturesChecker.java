@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jst.jsp.check;
+package org.jboss.tools.jsf.ui.editor.check;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,7 +47,8 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 	private Set<IProject> projectsCollection;
 	private static final String JSF_NATURE = "JavaServer Faces Nature"; //$NON-NLS-1$
 	private static final String KB_NATURE = "Knowledge Base Nature"; //$NON-NLS-1$
-
+	private static final String STRUTS_NATURE_ID = "org.jboss.tools.struts.strutsnature"; //$NON-NLS-1$
+	
 	private static ProjectNaturesChecker checker;
 	
 	public static ProjectNaturesChecker getInstance(){
@@ -100,17 +101,20 @@ public class ProjectNaturesChecker implements IResourceChangeListener {
 	}
 
 	private String[] getMissingNatures(IProject project) throws CoreException {
-		List<String> missimgNatures = new ArrayList<String>(0);
-		if (project.getNature(IKbProject.NATURE_ID) == null) {
-			missimgNatures.add(JSF_NATURE);
-		}
-		if (project.getNature(WebProject.JSF_NATURE_ID) == null) {
-			missimgNatures.add(KB_NATURE);
-		}
-		if (missimgNatures.size() == 0) {
+		List<String> missingNatures = new ArrayList<String>(0);
+		if (project.getNature(STRUTS_NATURE_ID) != null) {
 			return null;
 		}
-		return missimgNatures.toArray(new String[0]);
+		if (project.getNature(IKbProject.NATURE_ID) == null) {
+			missingNatures.add(JSF_NATURE);
+		}
+		if (project.getNature(WebProject.JSF_NATURE_ID) == null) {
+			missingNatures.add(KB_NATURE);
+		}
+		if (missingNatures.size() == 0) {
+			return null;
+		}
+		return missingNatures.toArray(new String[0]);
 	}
 
 	private void handleResourceChangeEvent(IResourceChangeEvent changeEvent) {

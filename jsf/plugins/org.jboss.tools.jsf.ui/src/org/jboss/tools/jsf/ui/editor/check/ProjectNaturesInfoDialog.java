@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jst.jsp.check;
+package org.jboss.tools.jsf.ui.editor.check;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -51,7 +51,7 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 	public ProjectNaturesInfoDialog(String[] missingNatures, IProject project) {
 		super(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 				TITLE, null, "", INFORMATION, //$NON-NLS-1$
-				new String[] { IDialogConstants.OK_LABEL }, 0);
+				new String[] {"Add JSF Capabilities...", IDialogConstants.OK_LABEL }, 0); //$NON-NLS-1$
 		this.project = project;
 		message = getMessageInfo(missingNatures, project);
 	}
@@ -100,6 +100,13 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 	@Override
 	protected void buttonPressed(int buttonId) {
 		if (buttonId == 0) {
+			BusyIndicator.showWhile(getShell().getDisplay(), new Runnable() {
+				public void run() {
+					AddJSFCapabilitiesDelegate.getInstance(project).run(null);
+				}
+			});
+		}
+		if (buttonId == 1) {
 			try {
 				project.setPersistentProperty(
 						ProjectNaturesChecker.IS_NATURES_CHECK_NEED, Boolean
@@ -114,7 +121,6 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 		BusyIndicator.showWhile(link.getDisplay(), new Runnable() {
 			public void run() {
 				URL theURL = null;
-				;
 				try {
 					theURL = new URL(JstUIMessages.DOCS_INFO_LINK);
 				} catch (MalformedURLException e) {
@@ -132,7 +138,7 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 			}
 		});
 	}
-
+	
 	@SuppressWarnings("unused")
 	private String arrayToString(String[] strings) {
 		StringBuilder builder = new StringBuilder(""); //$NON-NLS-1$
@@ -144,11 +150,9 @@ public class ProjectNaturesInfoDialog extends MessageDialog {
 
 	private String getMessageInfo(String[] missingNatures, IProject project) {
 		String dialogMessage = "JBoss Tools Visual Editor might not fully work in project \"" + project.getName() + //$NON-NLS-1$
-				"\" because it does not have JSF and code completion enabled completely.\n\n"
-				+ //$NON-NLS-1$
-				"Please use the Configure menu on the project to enable JSF if "
-				+ //$NON-NLS-1$
-				"you want all features of the editor working."; //$NON-NLS-1$
+				"\" because it does not have JSF and code completion enabled completely.\n\n" //$NON-NLS-1$
+				+ "Please use the Configure menu on the project to enable JSF if " //$NON-NLS-1$
+				+ "you want all features of the editor working."; //$NON-NLS-1$
 		return dialogMessage;
 	}
 
