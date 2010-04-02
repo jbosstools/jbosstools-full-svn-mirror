@@ -4,6 +4,8 @@ import org.hibernate.mapping.SingleTableSubclass;
 import org.hibernate.mediator.Messages;
 
 public class SingleTableSubclassStub extends SubclassStub {
+	public static final String CL = "org.hibernate.mapping.SingleTableSubclass"; //$NON-NLS-1$
+
 	protected SingleTableSubclass singleTableSubclass;
 
 	protected SingleTableSubclassStub(Object singleTableSubclass) {

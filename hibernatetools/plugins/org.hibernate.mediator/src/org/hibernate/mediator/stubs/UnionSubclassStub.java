@@ -4,6 +4,8 @@ import org.hibernate.mapping.UnionSubclass;
 import org.hibernate.mediator.Messages;
 
 public class UnionSubclassStub extends SubclassStub {
+	public static final String CL = "org.hibernate.mapping.UnionSubclass"; //$NON-NLS-1$
+
 	protected UnionSubclass unionSubclass;
 
 	protected UnionSubclassStub(Object unionSubclass) {

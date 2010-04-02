@@ -4,6 +4,8 @@ import org.hibernate.mapping.KeyValue;
 import org.hibernate.mediator.Messages;
 
 public abstract class KeyValueStub extends ValueStub {
+	public static final String CL = "org.hibernate.mapping.KeyValue"; //$NON-NLS-1$
+
 	protected KeyValue keyValue;
 
 	protected KeyValueStub(Object keyValue) {

@@ -8,6 +8,8 @@ import org.hibernate.mapping.Property;
 import org.hibernate.mediator.Messages;
 
 public class ComponentStub extends SimpleValueStub {
+	public static final String CL = "org.hibernate.mapping.Component"; //$NON-NLS-1$
+
 	protected Component component;
 
 	protected ComponentStub(Object component) {

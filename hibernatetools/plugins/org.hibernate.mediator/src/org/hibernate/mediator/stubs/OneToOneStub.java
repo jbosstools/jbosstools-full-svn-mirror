@@ -4,6 +4,8 @@ import org.hibernate.mapping.OneToOne;
 import org.hibernate.mediator.Messages;
 
 public class OneToOneStub extends ToOneStub {
+	public static final String CL = "org.hibernate.mapping.OneToOne"; //$NON-NLS-1$
+
 	protected OneToOne oneToOne;
 
 	protected OneToOneStub(Object oneToOne) {

@@ -4,7 +4,8 @@ import org.hibernate.mapping.Formula;
 import org.hibernate.mediator.Messages;
 
 public class FormulaStub extends SelectableStub {
-	
+	public static final String CL = "org.hibernate.mapping.Formula"; //$NON-NLS-1$
+
 	protected Formula formula;
 
 	protected FormulaStub(Object formula) {

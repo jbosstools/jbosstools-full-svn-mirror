@@ -4,6 +4,8 @@ import org.hibernate.cfg.Mappings;
 import org.hibernate.mediator.Messages;
 
 public class MappingsStub {
+	public static final String CL = "org.hibernate.cfg.Mappings"; //$NON-NLS-1$
+
 	protected Mappings mappings;
 
 	protected MappingsStub(Object mappings) {

@@ -4,7 +4,8 @@ import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
 import org.hibernate.mediator.Messages;
 
 public class DefaultReverseEngineeringStrategyStub extends ReverseEngineeringStrategyStub {
-	
+	public static final String CL = "org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy"; //$NON-NLS-1$
+
 	protected DefaultReverseEngineeringStrategy defaultReverseEngineeringStrategy;
 
 	protected DefaultReverseEngineeringStrategyStub(Object defaultReverseEngineeringStrategy) {

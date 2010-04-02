@@ -4,7 +4,8 @@ import org.hibernate.cfg.reveng.TableFilter;
 import org.hibernate.mediator.Messages;
 
 public class TableFilterStub {
-	
+	public static final String CL = "org.hibernate.cfg.reveng.TableFilter"; //$NON-NLS-1$
+
 	protected TableFilter tableFilter;
 
 	protected TableFilterStub(Object tableFilter) {

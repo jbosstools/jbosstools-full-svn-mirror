@@ -4,7 +4,8 @@ import org.hibernate.mapping.Subclass;
 import org.hibernate.mediator.Messages;
 
 public class SubclassStub extends PersistentClassStub {
-	
+	public static final String CL = "org.hibernate.mapping.Subclass"; //$NON-NLS-1$
+
 	protected Subclass subclass;
 
 	protected SubclassStub(Object subclass) {

@@ -4,6 +4,8 @@ import org.hibernate.mapping.Array;
 import org.hibernate.mediator.Messages;
 
 public class ArrayStub extends ListStub {
+	public static final String CL = "org.hibernate.mapping.Array"; //$NON-NLS-1$
+
 	protected Array array;
 
 	protected ArrayStub(Object array) {

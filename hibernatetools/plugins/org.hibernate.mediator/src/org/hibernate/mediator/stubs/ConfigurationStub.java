@@ -22,7 +22,8 @@ import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 
 public class ConfigurationStub {
-	
+	public static final String CL = "org.hibernate.cfg.Configuration"; //$NON-NLS-1$
+
 	private Map<String, FakeDelegatingDriver> fakeDrivers = new HashMap<String, FakeDelegatingDriver>();
 
 	// configuration != null - by default
@@ -65,7 +66,11 @@ public class ConfigurationStub {
 	}
 
 	public SessionFactoryStub buildSessionFactory() {
-		return new SessionFactoryStub(configuration.buildSessionFactory());
+		Object obj = configuration.buildSessionFactory();
+		if (obj == null) {
+			return null;
+		}
+		return new SessionFactoryStub(obj);
 	}
 
 	public EntityResolver getEntityResolver() {

@@ -3,6 +3,7 @@ package org.hibernate.mediator.stubs;
 import org.hibernate.cfg.reveng.JDBCToHibernateTypeHelper;
 
 public class JDBCToHibernateTypeHelperStub {
+	public static final String CL = "org.hibernate.cfg.reveng.JDBCToHibernateTypeHelper"; //$NON-NLS-1$
 
 	public static String getJDBCTypeName(int intValue) {
 		return JDBCToHibernateTypeHelper.getJDBCTypeName(intValue);

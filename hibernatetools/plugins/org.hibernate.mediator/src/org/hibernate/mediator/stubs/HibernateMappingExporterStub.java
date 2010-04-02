@@ -9,7 +9,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.HibernateMappingExporter;
 
 public class HibernateMappingExporterStub {
-	
+	public static final String CL = "org.hibernate.tool.hbm2x.HibernateMappingExporter"; //$NON-NLS-1$
+
 	protected HibernateMappingExporter hibernateMappingExporter;
 
 	protected HibernateMappingExporterStub(ConfigurationStub cfg, File outputdir) {

@@ -9,6 +9,8 @@ import org.hibernate.mapping.ForeignKey;
 import org.hibernate.mediator.Messages;
 
 public class ForeignKeyStub {
+	public static final String CL = "org.hibernate.mapping.ForeignKey"; //$NON-NLS-1$
+
 	protected ForeignKey foreignKey;
 
 	protected ForeignKeyStub(Object foreignKey) {

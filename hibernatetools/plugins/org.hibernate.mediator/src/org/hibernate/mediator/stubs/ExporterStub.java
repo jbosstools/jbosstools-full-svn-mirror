@@ -7,6 +7,7 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.Exporter;
 
 public class ExporterStub {
+	public static final String CL = "org.hibernate.tool.hbm2x.Exporter"; //$NON-NLS-1$
 
 	protected Exporter exporter;
 

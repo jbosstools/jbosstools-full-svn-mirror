@@ -4,7 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.HibernateMappingGlobalSettings;
 
 public class HibernateMappingGlobalSettingsStub {
-	
+	public static final String CL = "org.hibernate.tool.hbm2x.HibernateMappingGlobalSettings"; //$NON-NLS-1$
+
 	protected HibernateMappingGlobalSettings hibernateMappingGlobalSettings;
 
 	protected HibernateMappingGlobalSettingsStub(Object hibernateMappingGlobalSettings) {

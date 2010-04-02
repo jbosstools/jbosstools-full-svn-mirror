@@ -12,6 +12,8 @@ import org.hibernate.mapping.Table;
 import org.hibernate.mediator.Messages;
 
 public class DefaultDatabaseCollectorStub {
+	public static final String CL = "org.hibernate.cfg.reveng.DefaultDatabaseCollector"; //$NON-NLS-1$
+
 	protected DefaultDatabaseCollector defaultDatabaseCollector;
 
 	protected DefaultDatabaseCollectorStub(Object defaultDatabaseCollector) {

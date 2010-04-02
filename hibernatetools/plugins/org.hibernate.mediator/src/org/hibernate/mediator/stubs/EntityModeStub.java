@@ -4,6 +4,7 @@ import org.hibernate.EntityMode;
 import org.hibernate.mediator.Messages;
 
 public class EntityModeStub {
+	public static final String CL = "org.hibernate.EntityMode"; //$NON-NLS-1$
 
 	public static final EntityModeStub POJO = new EntityModeStub(EntityMode.POJO);
 	public static final EntityModeStub DOM4J = new EntityModeStub(EntityMode.DOM4J);

@@ -4,6 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.Cfg2HbmTool;
 
 public class Cfg2HbmToolStub {
+	public static final String CL = "org.hibernate.tool.hbm2x.Cfg2HbmTool"; //$NON-NLS-1$
+
 	protected Cfg2HbmTool cfg2HbmTool;
 
 	protected Cfg2HbmToolStub(Object cfg2HbmTool) {

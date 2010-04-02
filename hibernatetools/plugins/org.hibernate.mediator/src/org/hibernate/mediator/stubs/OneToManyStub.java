@@ -4,6 +4,8 @@ import org.hibernate.mapping.OneToMany;
 import org.hibernate.mediator.Messages;
 
 public class OneToManyStub extends ValueStub {
+	public static final String CL = "org.hibernate.mapping.OneToMany"; //$NON-NLS-1$
+
 	protected OneToMany oneToMany;
 
 	protected OneToManyStub(Object oneToMany) {

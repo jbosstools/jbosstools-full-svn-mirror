@@ -30,6 +30,7 @@ import bsh.EvalError;
 import bsh.Interpreter;
 
 public class SessionStub {
+	public static final String CL = "org.hibernate.Session"; //$NON-NLS-1$
 
 	protected Session session;
 

@@ -4,6 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.metadata.CollectionMetadata;
 
 public class CollectionMetadataStub {
+	public static final String CL = "org.hibernate.metadata.CollectionMetadata"; //$NON-NLS-1$
+
 	protected CollectionMetadata collectionMetadata;
 
 	protected CollectionMetadataStub(Object collectionMetadata) {

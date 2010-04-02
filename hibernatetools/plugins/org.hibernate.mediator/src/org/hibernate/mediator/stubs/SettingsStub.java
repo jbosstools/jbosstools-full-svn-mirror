@@ -4,6 +4,8 @@ import org.hibernate.cfg.Settings;
 import org.hibernate.mediator.Messages;
 
 public class SettingsStub {
+	public static final String CL = "org.hibernate.cfg.Settings"; //$NON-NLS-1$
+
 	protected Settings settings;
 
 	protected SettingsStub(Object settings) {

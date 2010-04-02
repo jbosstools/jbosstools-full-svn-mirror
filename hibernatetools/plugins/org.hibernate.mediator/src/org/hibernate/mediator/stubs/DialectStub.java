@@ -8,6 +8,8 @@ import org.hibernate.dialect.resolver.DialectFactory;
 import org.hibernate.mediator.Messages;
 
 public class DialectStub {
+	public static final String CL = "org.hibernate.dialect.Dialect"; //$NON-NLS-1$
+
 	protected Dialect dialect;
 
 	protected DialectStub(Object dialect) {

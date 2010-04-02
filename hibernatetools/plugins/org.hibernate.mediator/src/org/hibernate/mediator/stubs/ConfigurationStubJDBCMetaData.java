@@ -8,6 +8,7 @@ import org.hibernate.cfg.JDBCMetaDataConfiguration;
 import org.hibernate.mediator.Messages;
 
 public class ConfigurationStubJDBCMetaData extends ConfigurationStub {
+	public static final String CL = "org.hibernate.cfg.JDBCMetaDataConfiguration"; //$NON-NLS-1$
 
 	protected JDBCMetaDataConfiguration jdbcMetaDataConfiguration;
 	

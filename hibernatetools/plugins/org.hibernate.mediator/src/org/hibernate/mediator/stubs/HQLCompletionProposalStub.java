@@ -4,7 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.tool.ide.completion.HQLCompletionProposal;
 
 public class HQLCompletionProposalStub {
-	
+	public static final String CL = "org.hibernate.tool.ide.completion.HQLCompletionProposal"; //$NON-NLS-1$
+
 	public static final int ENTITY_NAME = HQLCompletionProposal.ENTITY_NAME;
 	public static final int PROPERTY = HQLCompletionProposal.PROPERTY;
 	public static final int KEYWORD = HQLCompletionProposal.KEYWORD;

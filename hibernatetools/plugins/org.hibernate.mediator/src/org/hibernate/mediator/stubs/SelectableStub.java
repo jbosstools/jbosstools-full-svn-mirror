@@ -4,7 +4,8 @@ import org.hibernate.mapping.Selectable;
 import org.hibernate.mediator.Messages;
 
 public class SelectableStub {
-	
+	public static final String CL = "org.hibernate.mapping.Selectable"; //$NON-NLS-1$
+
 	protected Selectable selectable;
 
 	protected SelectableStub(Object selectable) {

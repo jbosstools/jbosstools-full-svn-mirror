@@ -4,6 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.type.Type;
 
 public abstract class TypeStub {
+	public static final String CL = "org.hibernate.type.Type"; //$NON-NLS-1$
+
 	protected Type type;
 
 	protected TypeStub(Object type) {

@@ -3,12 +3,13 @@ package org.hibernate.mediator.stubs;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.hibernate.mapping.Column;
 import org.hibernate.mapping.Selectable;
 import org.hibernate.mapping.Value;
 import org.hibernate.mediator.Messages;
 
 public abstract class ValueStub {
+	public static final String CL = "org.hibernate.mapping.Value"; //$NON-NLS-1$
+
 	protected Value value;
 
 	protected ValueStub(Object value) {

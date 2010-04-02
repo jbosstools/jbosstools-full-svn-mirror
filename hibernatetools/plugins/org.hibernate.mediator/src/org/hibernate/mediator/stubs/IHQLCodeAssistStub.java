@@ -4,6 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.tool.ide.completion.HQLCodeAssist;
 
 public class IHQLCodeAssistStub {
+	public static final String CL = "org.hibernate.tool.ide.completion.HQLCodeAssist"; //$NON-NLS-1$
+
 	protected HQLCodeAssist hqlCodeAssist;
 
 	protected IHQLCodeAssistStub(Object hqlCodeAssist) {

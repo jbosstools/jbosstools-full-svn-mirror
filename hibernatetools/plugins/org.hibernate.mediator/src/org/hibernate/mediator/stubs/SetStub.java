@@ -4,6 +4,8 @@ import org.hibernate.mapping.Set;
 import org.hibernate.mediator.Messages;
 
 public class SetStub extends CollectionStub {
+	public static final String CL = "org.hibernate.mapping.Set"; //$NON-NLS-1$
+
 	protected Set set;
 
 	protected SetStub(Object set) {

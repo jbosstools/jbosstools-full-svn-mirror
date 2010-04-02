@@ -4,6 +4,8 @@ import org.hibernate.Hibernate;
 import org.hibernate.mediator.Messages;
 
 public class HibernateStub {
+	public static final String CL = "org.hibernate.Hibernate"; //$NON-NLS-1$
+
 	public static final NullableTypeStub BOOLEAN = new NullableTypeStub(Hibernate.BOOLEAN);
 	public static final NullableTypeStub BYTE = new NullableTypeStub(Hibernate.BYTE);
 	public static final NullableTypeStub BIG_INTEGER = new NullableTypeStub(Hibernate.BIG_INTEGER);

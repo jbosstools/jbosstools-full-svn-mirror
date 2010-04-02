@@ -5,6 +5,8 @@ import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.type.Type;
 
 public class ClassMetadataStub {
+	public static final String CL = "org.hibernate.metadata.ClassMetadata"; //$NON-NLS-1$
+
 	protected ClassMetadata classMetadata;
 
 	protected ClassMetadataStub(Object classMetadata) {

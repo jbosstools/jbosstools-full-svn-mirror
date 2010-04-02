@@ -4,7 +4,8 @@ import org.hibernate.mapping.JoinedSubclass;
 import org.hibernate.mediator.Messages;
 
 public class JoinedSubclassStub extends SubclassStub {
-	
+	public static final String CL = "org.hibernate.mapping.JoinedSubclass"; //$NON-NLS-1$
+
 	protected JoinedSubclass joinedSubclass;
 
 	protected JoinedSubclassStub(Object joinedSubclass) {

@@ -6,6 +6,8 @@ import org.hibernate.cfg.reveng.OverrideRepository;
 import org.hibernate.mediator.Messages;
 
 public class OverrideRepositoryStub {
+	public static final String CL = "org.hibernate.cfg.reveng.OverrideRepository"; //$NON-NLS-1$
+
 	protected OverrideRepository overrideRepository;
 
 	protected OverrideRepositoryStub(Object overrideRepository) {

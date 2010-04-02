@@ -1,7 +1,5 @@
 package org.hibernate.mediator.stubs;
 
-import java.lang.reflect.Type;
-
 import org.hibernate.mediator.stubs.util.ClassHelper;
 
 public class TypeStubFactory {

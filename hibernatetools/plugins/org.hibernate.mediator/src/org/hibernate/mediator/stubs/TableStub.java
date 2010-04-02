@@ -9,6 +9,8 @@ import org.hibernate.mapping.Table;
 import org.hibernate.mediator.Messages;
 
 public class TableStub {
+	public static final String CL = "org.hibernate.mapping.Table"; //$NON-NLS-1$
+
 	protected Table table;
 
 	protected TableStub(Object table) {

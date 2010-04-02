@@ -5,6 +5,8 @@ import org.hibernate.mapping.ToOne;
 import org.hibernate.mediator.Messages;
 
 public class ToOneStub extends SimpleValueStub {
+	public static final String CL = "org.hibernate.mapping.ToOne"; //$NON-NLS-1$
+
 	protected ToOne toOne;
 
 	protected ToOneStub(Object toOne) {

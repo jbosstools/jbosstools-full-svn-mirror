@@ -4,6 +4,8 @@ import org.hibernate.mapping.Any;
 import org.hibernate.mediator.Messages;
 
 public class AnyStub extends SimpleValueStub {
+	public static final String CL = "org.hibernate.mapping.Any"; //$NON-NLS-1$
+
 	protected Any any;
 
 	protected AnyStub(Object any) {

@@ -8,6 +8,8 @@ import org.hibernate.mapping.Subclass;
 import org.hibernate.mediator.Messages;
 
 public class RootClassStub extends PersistentClassStub {
+	public static final String CL = "org.hibernate.mapping.RootClass"; //$NON-NLS-1$
+
 	protected RootClass rootClass;
 
 	protected RootClassStub(Object rootClass) {

@@ -4,7 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.type.IntegerType;
 
 public class IntegerTypeStub extends PrimitiveTypeStub {
-	
+	public static final String CL = "org.hibernate.type.IntegerType"; //$NON-NLS-1$
+
 	protected IntegerType integerType;
 
 	protected IntegerTypeStub(Object integerType) {

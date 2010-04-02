@@ -4,7 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.type.EnumType;
 
 public class EnumTypeStub {
-	
+	public static final String CL = "org.hibernate.type.EnumType"; //$NON-NLS-1$
+
 	public static final String ENUM = EnumType.ENUM;
 	public static final String TYPE = EnumType.TYPE;
 

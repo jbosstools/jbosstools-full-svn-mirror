@@ -4,6 +4,8 @@ import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.mediator.Messages;
 
 public class ConnectionProviderStub {
+	public static final String CL = "org.hibernate.connection.ConnectionProvider"; //$NON-NLS-1$
+
 	protected ConnectionProvider connectionProvider;
 
 	protected ConnectionProviderStub(Object connectionProvider) {

@@ -19,6 +19,7 @@ import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.type.Type;
 
 public class SessionFactoryStub {
+	public static final String CL = "org.hibernate.SessionFactory"; //$NON-NLS-1$
 
 	protected SessionFactory sessionFactory;
 

@@ -4,6 +4,8 @@ import org.hibernate.mapping.Column;
 import org.hibernate.mediator.Messages;
 
 public class ColumnStub extends SelectableStub {
+	public static final String CL = "org.hibernate.mapping.Column"; //$NON-NLS-1$
+
 	public static final int DEFAULT_LENGTH = 255;
 	public static final int DEFAULT_PRECISION = 19;
 	public static final int DEFAULT_SCALE = 2;

@@ -8,6 +8,8 @@ import org.hibernate.mapping.Property;
 import org.hibernate.mediator.Messages;
 
 public class JoinStub {
+	public static final String CL = "org.hibernate.mapping.Join"; //$NON-NLS-1$
+
 	protected Join join;
 
 	protected JoinStub(Object join) {

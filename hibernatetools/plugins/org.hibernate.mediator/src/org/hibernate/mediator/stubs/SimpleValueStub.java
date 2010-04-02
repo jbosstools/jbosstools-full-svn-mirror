@@ -6,7 +6,8 @@ import org.hibernate.mapping.SimpleValue;
 import org.hibernate.mediator.Messages;
 
 public class SimpleValueStub extends KeyValueStub {
-	
+	public static final String CL = "org.hibernate.mapping.SimpleValue"; //$NON-NLS-1$
+
 	protected SimpleValue simpleValue;
 
 	protected SimpleValueStub(Object simpleValue) {

@@ -4,6 +4,8 @@ import org.hibernate.mapping.Property;
 import org.hibernate.mediator.Messages;
 
 public class PropertyStub {
+	public static final String CL = "org.hibernate.mapping.Property"; //$NON-NLS-1$
+
 	protected Property property;
 
 	protected PropertyStub(Object property) {

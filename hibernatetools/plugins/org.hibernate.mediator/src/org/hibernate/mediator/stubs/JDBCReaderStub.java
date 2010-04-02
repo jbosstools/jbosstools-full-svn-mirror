@@ -7,7 +7,8 @@ import org.hibernate.cfg.JDBCReaderFactory;
 import org.hibernate.cfg.reveng.JDBCReader;
 
 public class JDBCReaderStub {
-	
+	public static final String CL = "org.hibernate.cfg.reveng.JDBCReader"; //$NON-NLS-1$
+
 	protected JDBCReader jdbcReader;
 	
 	protected JDBCReaderStub(Properties cfg, SettingsStub settings, ReverseEngineeringStrategyStub revengStrategy) {

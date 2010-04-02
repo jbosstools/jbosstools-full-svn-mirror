@@ -4,6 +4,8 @@ import org.hibernate.mapping.Bag;
 import org.hibernate.mediator.Messages;
 
 public class BagStub extends CollectionStub {
+	public static final String CL = "org.hibernate.mapping.Bag"; //$NON-NLS-1$
+
 	protected Bag bag;
 
 	protected BagStub(Object bag) {

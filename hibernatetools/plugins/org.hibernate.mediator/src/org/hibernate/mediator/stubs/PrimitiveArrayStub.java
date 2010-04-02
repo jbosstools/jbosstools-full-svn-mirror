@@ -4,6 +4,8 @@ import org.hibernate.mapping.PrimitiveArray;
 import org.hibernate.mediator.Messages;
 
 public class PrimitiveArrayStub extends ArrayStub {
+	public static final String CL = "org.hibernate.mapping.PrimitiveArray"; //$NON-NLS-1$
+
 	protected PrimitiveArray primitiveArray;
 
 	protected PrimitiveArrayStub(Object primitiveArray) {

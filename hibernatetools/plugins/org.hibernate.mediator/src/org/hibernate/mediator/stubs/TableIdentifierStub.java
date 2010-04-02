@@ -4,6 +4,8 @@ import org.hibernate.cfg.reveng.TableIdentifier;
 import org.hibernate.mediator.Messages;
 
 public class TableIdentifierStub {
+	public static final String CL = "org.hibernate.cfg.reveng.TableIdentifier"; //$NON-NLS-1$
+
 	protected TableIdentifier tableIdentifier;
 
 	protected TableIdentifierStub(Object tableIdentifier) {

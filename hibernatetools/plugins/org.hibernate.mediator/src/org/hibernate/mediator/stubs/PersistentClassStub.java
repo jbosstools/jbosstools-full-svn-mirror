@@ -9,6 +9,8 @@ import org.hibernate.mapping.Property;
 import org.hibernate.mediator.Messages;
 
 public abstract class PersistentClassStub {
+	public static final String CL = "org.hibernate.mapping.PersistentClass"; //$NON-NLS-1$
+
 	protected PersistentClass persistentClass;
 
 	protected PersistentClassStub(Object persistentClass) {

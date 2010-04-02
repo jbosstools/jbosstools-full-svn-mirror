@@ -5,7 +5,8 @@ import org.hibernate.mapping.Collection;
 import org.hibernate.mediator.Messages;
 
 public abstract class CollectionStub extends ValueStub {
-	
+	public static final String CL = "org.hibernate.mapping.Collection"; //$NON-NLS-1$
+
 	protected Collection collection;
 
 	protected CollectionStub(Object collection) {

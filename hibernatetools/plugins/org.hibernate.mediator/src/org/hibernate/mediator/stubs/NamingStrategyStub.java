@@ -4,6 +4,8 @@ import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.mediator.Messages;
 
 public class NamingStrategyStub {
+	public static final String CL = "org.hibernate.cfg.NamingStrategy"; //$NON-NLS-1$
+
 	protected NamingStrategy namingStrategy;
 
 	protected NamingStrategyStub(Object namingStrategy) {

@@ -4,7 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.type.NullableType;
 
 public class NullableTypeStub extends AbstractTypeStub {
-	
+	public static final String CL = "org.hibernate.type.NullableType"; //$NON-NLS-1$
+
 	protected NullableType nullableType;
 
 	protected NullableTypeStub(Object nullableType) {

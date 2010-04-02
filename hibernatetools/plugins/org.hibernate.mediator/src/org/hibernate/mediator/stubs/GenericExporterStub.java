@@ -4,6 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.GenericExporter;
 
 public class GenericExporterStub extends ExporterStub {
+	public static final String CL = "org.hibernate.tool.hbm2x.GenericExporter"; //$NON-NLS-1$
+
 	protected GenericExporter genericExporter;
 
 	protected GenericExporterStub(Object genericExporter) {

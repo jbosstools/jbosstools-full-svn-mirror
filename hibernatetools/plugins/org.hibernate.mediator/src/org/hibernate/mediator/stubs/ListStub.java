@@ -4,6 +4,8 @@ import org.hibernate.mapping.List;
 import org.hibernate.mediator.Messages;
 
 public class ListStub extends IndexedCollectionStub {
+	public static final String CL = "org.hibernate.mapping.List"; //$NON-NLS-1$
+
 	protected List list;
 
 	protected ListStub(Object list) {

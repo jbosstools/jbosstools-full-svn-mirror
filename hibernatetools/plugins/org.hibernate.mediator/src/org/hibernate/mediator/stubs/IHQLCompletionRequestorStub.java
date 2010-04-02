@@ -4,6 +4,7 @@ import org.hibernate.tool.ide.completion.HQLCompletionProposal;
 import org.hibernate.tool.ide.completion.IHQLCompletionRequestor;
 
 public abstract class IHQLCompletionRequestorStub {
+	public static final String CL = "org.hibernate.tool.ide.completion.HQLCompletionProposal"; //$NON-NLS-1$
 
 	protected IHQLCompletionRequestor hqlCompletionRequestor;
 	

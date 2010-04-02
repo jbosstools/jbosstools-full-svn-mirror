@@ -9,6 +9,8 @@ import org.hibernate.mapping.PrimaryKey;
 import org.hibernate.mediator.Messages;
 
 public class PrimaryKeyStub {
+	public static final String CL = "org.hibernate.mapping.PrimaryKey"; //$NON-NLS-1$
+
 	protected PrimaryKey primaryKey;
 
 	protected PrimaryKeyStub(Object primaryKey) {

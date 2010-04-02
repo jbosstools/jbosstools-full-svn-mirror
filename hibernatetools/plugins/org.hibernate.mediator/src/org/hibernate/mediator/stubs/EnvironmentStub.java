@@ -9,6 +9,8 @@ import java.util.List;
 import org.hibernate.cfg.Environment;
 
 public class EnvironmentStub {
+	public static final String CL = "org.hibernate.cfg.Environment"; //$NON-NLS-1$
+
 	public static final String DIALECT = Environment.DIALECT;
 	public static final String DEFAULT_CATALOG = Environment.DEFAULT_CATALOG;
 	public static final String DEFAULT_SCHEMA = Environment.DEFAULT_SCHEMA;

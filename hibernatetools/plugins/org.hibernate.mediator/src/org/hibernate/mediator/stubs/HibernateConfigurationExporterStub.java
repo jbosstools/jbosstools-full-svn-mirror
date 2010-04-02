@@ -7,6 +7,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.tool.hbm2x.HibernateConfigurationExporter;
 
 public class HibernateConfigurationExporterStub extends ExporterStub {
+	public static final String CL = "org.hibernate.tool.hbm2x.HibernateConfigurationExporter"; //$NON-NLS-1$
+
 	protected HibernateConfigurationExporter hibernateConfigurationExporter;
 
 	protected HibernateConfigurationExporterStub(Object hibernateConfigurationExporter) {

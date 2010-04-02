@@ -4,7 +4,8 @@ import org.hibernate.cfg.reveng.ReverseEngineeringSettings;
 import org.hibernate.mediator.Messages;
 
 public class ReverseEngineeringSettingsStub {
-	
+	public static final String CL = "org.hibernate.cfg.reveng.ReverseEngineeringSettings"; //$NON-NLS-1$
+
 	protected ReverseEngineeringSettings reverseEngineeringSettings;
 
 	protected ReverseEngineeringSettingsStub(Object reverseEngineeringSettings) {

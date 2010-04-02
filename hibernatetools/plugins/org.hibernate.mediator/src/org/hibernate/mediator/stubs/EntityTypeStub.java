@@ -4,6 +4,8 @@ import org.hibernate.mediator.Messages;
 import org.hibernate.type.EntityType;
 
 public class EntityTypeStub extends AbstractTypeStub {
+	public static final String CL = "org.hibernate.type.EntityType"; //$NON-NLS-1$
+
 	protected EntityType entityType;
 
 	protected EntityTypeStub(Object entityType) {
