@@ -1584,133 +1584,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
-	public VpeSourceInnerDropInfo getSourceInnerDropInfo(Node sourceDragNode,
-			VpeVisualInnerDropInfo visualDropInfo, boolean checkParentTemplates) {
-		nsIDOMNode visualDropContainer = visualDropInfo.getDropContainer();
-		long visualDropOffset = visualDropInfo.getDropOffset();
-		Node sourceDropContainer = null;
-		int sourceDropOffset = 0;
-
-		switch (visualDropContainer.getNodeType()) {
-		case nsIDOMNode.ELEMENT_NODE:
-			nsIDOMNode visualOffsetNode = null;
-			boolean afterFlag = false;
-			long visualChildCount = VisualDomUtil
-					.getChildCount(visualDropContainer);
-			if (visualDropOffset < visualChildCount) {
-				visualOffsetNode = VisualDomUtil.getChildNode(
-						visualDropContainer, visualDropOffset);
-				if (isPseudoElement(visualOffsetNode)
-						|| isAnonElement(visualOffsetNode)) {
-					visualOffsetNode = getLastAppreciableVisualChild(visualDropContainer);
-					afterFlag = true;
-				}
-			} else {
-				visualOffsetNode = getLastAppreciableVisualChild(visualDropContainer);
-				afterFlag = visualChildCount != 0;
-			}
-			if (visualOffsetNode != null) {
-				Node sourceOffsetNode = domMapping
-						.getSourceNode(visualOffsetNode);
-				if (sourceOffsetNode != null) {
-					sourceDropContainer = sourceOffsetNode.getParentNode();
-					sourceDropOffset = ((NodeImpl) sourceOffsetNode).getIndex();
-					if (afterFlag) {
-						sourceDropOffset++;
-					}
-				}
-			}
-			if (sourceDropContainer == null) {
-				sourceDropContainer = domMapping
-						.getNearSourceNode(visualDropContainer);
-				if (sourceDropContainer != null) {
-					sourceDropOffset = sourceDropContainer.getChildNodes()
-							.getLength();
-				}
-			}
-			if (sourceDropContainer == null) {
-				sourceDropContainer = domMapping
-						.getNearSourceNode(getContentArea());
-				sourceDropOffset = sourceDropContainer.getChildNodes()
-						.getLength();
-			}
-			break;
-		case nsIDOMNode.TEXT_NODE:
-			VpeNodeMapping nodeMapping = domMapping
-					.getNearNodeMapping(visualDropContainer);
-			// switch (nodeMapping.getType()) {
-			// case VpeNodeMapping.TEXT_MAPPING:
-			sourceDropContainer = nodeMapping.getSourceNode();
-			sourceDropOffset = TextUtil.sourceInnerPosition(sourceDropContainer
-					.getNodeValue(), visualDropOffset);
-			// break;
-			// case VpeNodeMapping.ELEMENT_MAPPING:
-			// it's attribute
-			if (isTextEditable(visualDropContainer)) {
-				String[] atributeNames = ((VpeElementMapping) nodeMapping)
-						.getTemplate().getOutputAttributeNames();
-				if (atributeNames != null && atributeNames.length > 0) {
-					Element sourceElement = (Element) nodeMapping
-							.getSourceNode();
-					sourceDropContainer = sourceElement
-							.getAttributeNode(atributeNames[0]);
-					sourceDropOffset = TextUtil.sourceInnerPosition(
-							sourceDropContainer.getNodeValue(),
-							visualDropOffset);
-				}
-			}
-			nodeMapping.getVisualNode();
-			// }
-			// break;
-		}
-		if (sourceDropContainer != null) {
-			return getSourceInnerDropInfo(sourceDragNode, sourceDropContainer,
-					sourceDropOffset, checkParentTemplates);
-		} else {
-			return new VpeSourceInnerDropInfo(null, 0, false);
-		}
-	}
-
-	public VpeSourceInnerDropInfo getSourceInnerDropInfo(Node dragNode,
-			Node container, int offset, boolean checkParentsTemplates) {
-		// Thread.dumpStack();
-		boolean canDrop = false;
-		switch (container.getNodeType()) {
-		case Node.ELEMENT_NODE:
-			VpeNodeMapping nodeMapping = domMapping.getNodeMapping(container);
-			if (nodeMapping != null && nodeMapping instanceof VpeElementMapping) {
-				canDrop = ((VpeElementMapping) nodeMapping).getTemplate()
-						.canInnerDrop(pageContext, container, dragNode);
-			}
-			if (!canDrop) {
-				if (!checkParentsTemplates)
-					return new VpeSourceInnerDropInfo(container, offset,
-							canDrop);
-				// offset = ((NodeImpl)container).getIndex();
-				// container = container.getParentNode();
-				// TODO Max Areshkau unclear logic , if we can drop on element
-				// why we trying to drop
-				// this on parent
-				// return getSourceInnerDropInfo(dragNode, container, offset,
-				// false);
-				return new VpeSourceInnerDropInfo(container, offset, canDrop);
-			}
-			break;
-		case Node.TEXT_NODE:
-		case Node.DOCUMENT_NODE:
-			canDrop = true;
-			break;
-		case Node.ATTRIBUTE_NODE:
-			canDrop = true;
-			break;
-		}
-		if (canDrop) {
-			return new VpeSourceInnerDropInfo(container, offset, canDrop);
-		} else {
-			return new VpeSourceInnerDropInfo(null, 0, canDrop);
-		}
-	}
-
 	public void innerDrop(Node dragNode, Node container, int offset) {
 		VpeNodeMapping mapping = domMapping.getNearNodeMapping(container);
 		if (mapping != null) {
@@ -1776,7 +1649,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 
-	public boolean isTextEditable(nsIDOMNode visualNode) {
+	public static boolean isTextEditable(nsIDOMNode visualNode) {
 
 		if (visualNode != null) {
 			nsIDOMNode parent = visualNode.getParentNode();
@@ -1940,19 +1813,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return buffer.toString();
 	}
 
-	public Rectangle getNodeBounds(nsIDOMNode visualNode) {
-
-		return XulRunnerVpeUtils.getElementBounds(visualNode);
-	}
-
-	public static boolean canInsertAfter(int x, int y, Rectangle rect) {
-		if (y > (rect.y + rect.height) || x > (rect.x + rect.width)) {
-			return true;
-		}
-		return y >= rect.x && x > (rect.x + rect.width / 2);
-	}
-
-	static nsIDOMNode getLastAppreciableVisualChild(nsIDOMNode visualParent) {
+	public static nsIDOMNode getLastAppreciableVisualChild(nsIDOMNode visualParent) {
 		nsIDOMNode visualLastChild = null;
 		nsIDOMNodeList visualChildren = visualParent.getChildNodes();
 		long len = visualChildren.getLength();
@@ -1964,34 +1825,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 		}
 		return visualLastChild;
-	}
-
-	public void correctVisualDropPosition(VpeVisualInnerDropInfo newVisualDropInfo,
-			VpeVisualInnerDropInfo oldVisualDropInfo) {
-		nsIDOMNode newVisualDropContainer = newVisualDropInfo
-				.getDropContainer();
-		nsIDOMNode oldVisualDropContainer = oldVisualDropInfo
-				.getDropContainer();
-
-		if (newVisualDropContainer.equals(oldVisualDropContainer)) {
-			newVisualDropInfo.setDropOffset(oldVisualDropInfo.getDropOffset());
-			return;
-		}
-
-		nsIDOMNode child = oldVisualDropContainer;
-		while (child != null && child.getNodeType() != Node.DOCUMENT_NODE) {
-			nsIDOMNode parent = child.getParentNode();
-			if (newVisualDropContainer.equals(parent)) {
-				long offset = VisualDomUtil.getOffset(child);
-				Rectangle rect = getNodeBounds(child);
-				if (canInsertAfter(oldVisualDropInfo.getMouseX(),
-						oldVisualDropInfo.getMouseY(), rect)) {
-					offset++;
-				}
-				newVisualDropInfo.setDropOffset(offset);
-			}
-			child = parent;
-		}
 	}
 
 	public nsIDOMRange createDOMRange() {
