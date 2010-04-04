@@ -1,7 +1,25 @@
 <!-- INCOMPLETE - see TODO markers -->
 <project default="run" basedir=".">
-
+	<!-- Configuration Start -->
+	<property name="projectName" value="org.jboss.tools" />
+	<property name="pathToParentPom" value="" />
+	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
 	<property name="debug" value="false" />
+	<property name="dirsToExclude"
+	          value="**/*.sdk.*, **/doc*, **/download.jboss.org, **/util, **/test, **/builders, **/releng, ."
+	/>
+	<!-- Configuration Ends -->
+
+	<!-- To run this script in Eclipse:
+			Run As > Ant Build
+	-->
+	<!-- To run this script via commandline:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -f genpom.xml -q 
+		 or, to build a specific module only:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; \
+			ant -f genpom.xml -q -DWORKINGDIR=/home/nboldt/workspace36/jbosstools-modular_build/jbpm \
+			-DpathToParentPom=../
+	-->
 
 	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
 		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
@@ -62,15 +80,6 @@
 			<attribute name="artifactId" default="" />
 			<attribute name="artifactVersion" default="" />
 			<sequential>
-				<propertyregex property="activeDir"
-				               input="@{dir}"
-				               defaultvalue="@{dir}"
-				               regexp="${WORKINGDIR}/"
-				               replace=""
-				               casesensitive="true"
-				               override="true"
-				/>
-				<debug>         Agg dir: ${activeDir}, artifactId: @{artifactId}, artifactVersion: @{artifactVersion}, parentpom: @{parentpom}</debug>
 				<if>
 					<equals arg1="@{artifactId}" arg2="" />
 					<then>
@@ -95,6 +104,16 @@
 						<var name="artifactVersion" value="@{artifactVersion}" />
 					</else>
 				</if>
+				<var name="artifactType" value="pom" />
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<debug>         Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
 				<!-- <echo>Write Agg @{dir}/pom.xml</echo> -->
 				<echo file="@{dir}/pom.xml">&lt;project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	       xmlns="http://maven.apache.org/POM/4.0.0"
@@ -110,7 +129,7 @@
 	&lt;groupId>${projectName}&lt;/groupId>
 	&lt;artifactId>${artifactId}&lt;/artifactId>
 	&lt;version>${artifactVersion}&lt;/version>
-	&lt;packaging>pom&lt;/packaging>
+	&lt;packaging>${artifactType}&lt;/packaging>
 	&lt;modules>
 </echo>
 				<var name="artifactId" unset="true" />
@@ -118,7 +137,7 @@
 				<for param="subdir" delimiter=", 
 	">
 					<path>
-						<dirset dir="@{dir}" excludes="**/*.sdk.*, ., **/doc*, **/download.jboss.org" includes="*" />
+						<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
 					</path>
 					<sequential>
 						<basename property="subdirSuffix" file="@{subdir}" />
@@ -145,7 +164,7 @@
 					<property name="dir" value="@{dir}" />
 				</antcallback>
 				<if>
-					<!-- cannot calculate id and version so just set them to defaults -->
+					<!-- cannot calculate id and version for an update site so just set them to defaults -->
 					<equals arg1="${artifactType}" arg2="eclipse-update-site" />
 					<then>
 						<var name="artifactId" unset="true" />
@@ -153,7 +172,6 @@
 						<var name="artifactVersion" value="0.0.0" />
 					</then>
 					<else>
-
 						<var name="artifactId" unset="true" />
 						<antcallback target="getArtifactId" return="artifactId">
 							<property name="dir" value="@{dir}" />
@@ -172,7 +190,7 @@
 				               casesensitive="true"
 				               override="true"
 				/>
-				<debug>         Mod dir: ${activeDir}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
+				<debug>         Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
 				<echo file="@{dir}/pom.xml">&lt;project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	&lt;modelVersion>4.0.0&lt;/modelVersion> 
 	&lt;parent>
@@ -190,6 +208,7 @@
 				<var name="artifactId" unset="true" />
 				<var name="artifactVersion" unset="true" />
 				<var name="artifactType" unset="true" />
+				<var name="modulecountstring" value="${modulecountstring}1" />
 			</sequential>
 		</macrodef>
 
@@ -197,7 +216,7 @@
 	      macrodef: generateAggregator          
 	     = = = = = = = = = = = = = = = = = -->
 		<macrodef name="generateAggregator">
-			<attribute name="dir" default="." />
+			<attribute name="dir" default="${WORKINGDIR}" />
 			<attribute name="parentPom" default="${pathToParentPom}parent-pom.xml" />
 			<attribute name="artifactId" default="" />
 			<attribute name="artifactVersion" default="" />
@@ -207,13 +226,13 @@
 				                   artifactId="@{artifactId}"
 				                   artifactVersion="@{artifactVersion}"
 				/>
-				<var name="aggregatorcountstring" value="${aggregatorcountstring}1" />
 
 				<dump dir="@{dir}"
 				      parentpom="@{parentpom}"
 				      artifactId="@{artifactId}"
 				      artifactVersion="@{artifactVersion}"
 				/>
+				<var name="aggregatorcountstring" value="${aggregatorcountstring}1" />
 
 			</sequential>
 		</macrodef>
@@ -232,12 +251,10 @@
 				<for param="subdir" delimiter=", 
 	">
 					<path>
-						<dirset dir="@{dir}"
-						        excludes="*.sdk.*, ., **/doc*, **/download.jboss.org, **/util"
-						        includes="*"
-						/>
+						<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
 					</path>
 					<sequential>
+						<!-- <debug>         @{subdir}</debug> -->
 						<var name="aggregate" value="false" />
 						<if>
 							<or>
@@ -249,25 +266,34 @@
 							<then>
 								<!-- valid place to create a pom -->
 								<writeModulePom dir="@{subdir}" parentpom="../@{parentpom}" />
-								<var name="modulecountstring" value="${modulecountstring}1" />
 							</then>
 							<else>
-								<for list="plugins tests features site" param="type" delimiter=" ">
+								<for list="plugins tests features" param="type" delimiter=" ">
 									<sequential>
+										<basename property="artifactIdAgg" file="@{subdir}" />
 										<if>
 											<available file="@{subdir}/@{type}" type="dir" />
 											<then>
 												<var name="aggregate" value="true" />
-												<basename property="artifactIdAgg" file="@{subdir}" />
 												<generateAggregator dir="@{subdir}/@{type}"
 												                    parentpom="../../@{parentpom}"
 												                    artifactId="${artifactIdAgg}.@{type}"
 												                    artifactVersion="@{artifactVersion}"
 												/>
-												<var name="artifactIdAgg" unset="true" />
-												<var name="aggregatorcountstring" value="${aggregatorcountstring}1" />
 											</then>
+											<elseif>
+												<equals arg1="@{type}" arg2="${artifactIdAgg}" />
+												<then>
+													<var name="aggregate" value="true" />
+													<generateAggregator dir="@{subdir}"
+													                    parentpom="../@{parentpom}"
+													                    artifactId="${artifactIdAgg}.@{type}"
+													                    artifactVersion="@{artifactVersion}"
+													/>
+												</then>
+											</elseif>
 										</if>
+										<var name="artifactIdAgg" unset="true" />
 									</sequential>
 								</for>
 
@@ -275,14 +301,14 @@
 									<istrue value="${aggregate}" />
 									<else>
 										<basename property="artifactIdAgg" file="@{subdir}" />
-										<echo>Generate Agg for ${artifactIdAgg}</echo>
+										<echo>Generate Agg for: ${artifactIdAgg}</echo>
 										<writeAggregatePom dir="@{subdir}"
 										                   parentpom="../${pathToParentPom}parent-pom.xml"
 										                   artifactId="${artifactIdAgg}.all"
 										                   artifactVersion="@{artifactVersion}"
 										/>
+
 										<var name="artifactIdAgg" unset="true" />
-										<var name="aggregatorcountstring" value="${aggregatorcountstring}1" />
 									</else>
 								</if>
 							</else>
@@ -321,25 +347,19 @@
 	<target name="run" depends="init">
 		<if>
 			<not>
-				<available file="${WORKINGDIR}/parent-pom.xml" type="file" />
+				<available file="${WORKINGDIR}/${pathToParentPom}parent-pom.xml" type="file" />
 			</not>
 			<then>
-				<fail>Error: no parent-pom.xml found in ${WORKINGDIR}</fail>
+				<fail>Error: no parent-pom.xml found in ${WORKINGDIR}/${pathToParentPom}</fail>
 			</then>
 		</if>
-
-		<!-- Configuration Start -->
-		<var name="projectName" value="org.jboss.tools" />
-		<var name="pathToParentPom" value="" />
-		<var name="pomVersion" value="0.0.1-SNAPSHOT" />
-		<!-- Configuration Ends -->
 
 		<!-- counter variables -->
 		<var name="aggregatorcountstring" value="" />
 		<var name="modulecountstring" value="" />
 
 		<!-- call generateAggregator for overall -->
-		<generateAggregator dir="."
+		<generateAggregator dir="${WORKINGDIR}"
 		                    parentpom="${pathToParentPom}parent-pom.xml"
 		                    artifactId="trunk"
 		                    artifactVersion="${pomVersion}"
@@ -359,7 +379,10 @@
 				<var name="artifactType" value="eclipse-feature" />
 			</then>
 			<elseif>
-				<matches string="${dir}" pattern=".+/.+site" />
+				<or>
+					<matches string="${dir}" pattern=".+/site" />
+					<matches string="${dir}" pattern=".+site" />
+				</or>
 				<then>
 					<var name="artifactType" value="eclipse-update-site" />
 				</then>
