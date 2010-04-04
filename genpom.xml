@@ -140,14 +140,30 @@
 			<attribute name="dir" default="." />
 			<attribute name="parentpom" />
 			<sequential>
-				<var name="artifactId" unset="true" />
-				<antcallback target="getArtifactId" return="artifactId">
+				<var name="artifactType" unset="true" />
+				<antcallback target="getArtifactType" return="artifactType">
 					<property name="dir" value="@{dir}" />
 				</antcallback>
-				<var name="artifactVersion" unset="true" />
-				<antcallback target="getArtifactVersion" return="artifactVersion">
-					<property name="dir" value="@{dir}" />
-				</antcallback>
+				<if>
+					<!-- cannot calculate id and version so just set them to defaults -->
+					<equals arg1="${artifactType}" arg2="eclipse-update-site" />
+					<then>
+						<var name="artifactId" unset="true" />
+						<basename property="artifactId" file="@{dir}" />
+						<var name="artifactVersion" value="0.0.0" />
+					</then>
+					<else>
+
+						<var name="artifactId" unset="true" />
+						<antcallback target="getArtifactId" return="artifactId">
+							<property name="dir" value="@{dir}" />
+						</antcallback>
+						<var name="artifactVersion" unset="true" />
+						<antcallback target="getArtifactVersion" return="artifactVersion">
+							<property name="dir" value="@{dir}" />
+						</antcallback>
+					</else>
+				</if>
 				<propertyregex property="activeDir"
 				               input="@{dir}"
 				               defaultvalue="@{dir}"
@@ -168,41 +184,12 @@
 	&lt;groupId>${projectName}&lt;/groupId> 
 	&lt;artifactId>${artifactId}&lt;/artifactId> 
 	&lt;version>${artifactVersion}&lt;/version> 
-	&lt;packaging></echo>
-				<var name="artifactId" unset="true" />
-				<var name="artifactVersion" unset="true" />
-				<if>
-					<matches string="@{dir}" pattern=".+/features/.+" />
-					<then>
-						<echo file="@{dir}/pom.xml" append="true">eclipse-feature</echo>
-					</then>
-					<elseif>
-						<matches string="@{dir}" pattern=".+/.+site" />
-						<then>
-							<echo file="@{dir}/pom.xml" append="true">eclipse-update-site</echo>
-						</then>
-					</elseif>
-					<elseif>
-						<and>
-							<not>
-								<matches string="@{dir}" pattern=".+/plugins/.+" />
-							</not>
-							<matches string="@{dir}" pattern=".+/tests/.+" />
-						</and>
-						<then>
-							<echo>@{dir} is a test plugin</echo>
-							<echo file="@{dir}/pom.xml" append="true">eclipse-test-plugin</echo>
-						</then>
-					</elseif>
-					<else>
-						<echo file="@{dir}/pom.xml" append="true">eclipse-plugin</echo>
-					</else>
-
-				</if>
-				<echo file="@{dir}/pom.xml" append="true">
-	&lt;/packaging> 
+	&lt;packaging>${artifactType}&lt;/packaging> 
 &lt;/project>
 	</echo>
+				<var name="artifactId" unset="true" />
+				<var name="artifactVersion" unset="true" />
+				<var name="artifactType" unset="true" />
 			</sequential>
 		</macrodef>
 
@@ -364,6 +351,36 @@
 
 	</target>
 
+	<target name="getArtifactType">
+		<property name="dir" value="." />
+		<if>
+			<matches string="${dir}" pattern=".+/features/.+" />
+			<then>
+				<var name="artifactType" value="eclipse-feature" />
+			</then>
+			<elseif>
+				<matches string="${dir}" pattern=".+/.+site" />
+				<then>
+					<var name="artifactType" value="eclipse-update-site" />
+				</then>
+			</elseif>
+			<elseif>
+				<and>
+					<not>
+						<matches string="${dir}" pattern=".+/plugins/.+" />
+					</not>
+					<matches string="${dir}" pattern=".+/tests/.+" />
+				</and>
+				<then>
+					<var name="artifactType" value="eclipse-test-plugin" />
+				</then>
+			</elseif>
+			<else>
+				<var name="artifactType" value="eclipse-plugin" />
+			</else>
+		</if>
+	</target>
+
 	<target name="getArtifactVersion">
 		<property name="dir" value="." />
 		<!-- echo>${dir}</echo -->
@@ -401,6 +418,14 @@
 					<!-- get <feature version=""> -->
 					<xmlproperty file="${dir}/feature.xml" collapseAttributes="true" />
 					<var name="artifactVersion" value="${feature.version}" />
+					<propertyregex property="artifactVersion"
+					               input="${artifactVersion}"
+					               defaultvalue="${artifactVersion}"
+					               regexp="(.+).qualifier"
+					               replace="\1-SNAPSHOT"
+					               casesensitive="true"
+					               override="true"
+					/>
 					<var name="feature.version" unset="true" />
 				</then>
 			</elseif>
@@ -453,13 +478,70 @@
 			</elseif>
 			<else>
 				<echo>Warning! artifactId not found for ${dir}!</echo>
-				<basename file="${dir}" property="artifactId" />
+				<basename property="artifactId" file="${dir}" />
 			</else>
 		</if>
 	</target>
 
-	<!-- tests -->
+	<!-- ************************************ TESTS ************************************ -->
+
+	<target name="test.expected.values">
+		<property name="ant.enable.asserts" value="true" />
+
+		<!-- expected values for artifactVersion tests -->
+		<property name="artifactVersion.esb/features/org.jboss.tools.esb.feature" value="1.0.0" />
+		<property name="artifactVersion.as/tests/org.jboss.ide.eclipse.as.archives.integration.test" value="1.0.0" />
+		<property name="artifactVersion.esb/plugins/org.jboss.tools.esb.core" value="2.0.0" />
+		<property name="artifactVersion.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui" value="0.5.0-SNAPSHOT" />
+		<property name="artifactVersion.bpel/features/org.jboss.tools.bpel.sdk.feature" value="1.0.0-SNAPSHOT" />
+		<property name="artifactVersion.bpel/plugins/org.eclipse.bpel.xpath10" value="0.5.0-SNAPSHOT" />
+		<property name="artifactVersion.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="2.1.0" />
+		<property name="artifactVersion.tests/features/org.jboss.tools.test.feature" value="2.0.0" />
+		<property name="artifactVersion.portlet/features/org.jboss.tools.portlet.test.feature" value="1.0.0" />
+		<property name="artifactVersion.jst/features/org.jboss.tools.jst.feature" value="2.0.0" />
+		<property name="artifactVersion.jst/features/org.jboss.tools.jst.web.tiles.feature" value="2.0.0" />
+
+		<!-- expected values for artifactId tests -->
+		<property name="artifactId.esb/features/org.jboss.tools.esb.feature" value="org.jboss.tools.esb.feature" />
+		<property name="artifactId.as/tests/org.jboss.ide.eclipse.as.archives.integration.test"
+		          value="org.jboss.ide.eclipse.as.archives.integration.test"
+		/>
+		<property name="artifactId.esb/plugins/org.jboss.tools.esb.core" value="org.jboss.tools.esb.core" />
+		<property name="artifactId.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui"
+		          value="org.eclipse.bpel.apache.ode.deploy.ui"
+		/>
+		<property name="artifactId.bpel/features/org.jboss.tools.bpel.sdk.feature"
+		          value="org.jboss.tools.bpel.sdk.feature"
+		/>
+		<property name="artifactId.bpel/plugins/org.eclipse.bpel.xpath10" value="org.eclipse.bpel.xpath10" />
+		<property name="artifactId.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="org.jboss.tools.vpe.ui.palette" />
+		<property name="artifactId.tests/features/org.jboss.tools.test.feature" value="org.jboss.tools.test.feature" />
+		<property name="artifactId.portlet/features/org.jboss.tools.portlet.test.feature"
+		          value="org.jboss.tools.portlet.test.feature"
+		/>
+		<property name="artifactId.jst/features/org.jboss.tools.jst.feature" value="org.jboss.tools.jst.feature" />
+		<property name="artifactId.jst/features/org.jboss.tools.jst.web.tiles.feature"
+		          value="org.jboss.tools.jst.web.tiles.feature"
+		/>
+
+		<!-- expected values for artifactType tests -->
+		<property name="artifactType.esb/features/org.jboss.tools.esb.feature" value="eclipse-feature" />
+		<property name="artifactType.as/tests/org.jboss.ide.eclipse.as.archives.integration.test"
+		          value="eclipse-test-plugin"
+		/>
+		<property name="artifactType.esb/plugins/org.jboss.tools.esb.core" value="eclipse-plugin" />
+		<property name="artifactType.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui" value="eclipse-plugin" />
+		<property name="artifactType.bpel/features/org.jboss.tools.bpel.sdk.feature" value="eclipse-feature" />
+		<property name="artifactType.bpel/plugins/org.eclipse.bpel.xpath10" value="eclipse-plugin" />
+		<property name="artifactType.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="eclipse-plugin" />
+		<property name="artifactType.tests/features/org.jboss.tools.test.feature" value="eclipse-feature" />
+		<property name="artifactType.portlet/features/org.jboss.tools.portlet.test.feature" value="eclipse-feature" />
+		<property name="artifactType.jst/features/org.jboss.tools.jst.feature" value="eclipse-feature" />
+		<property name="artifactType.jst/features/org.jboss.tools.jst.web.tiles.feature" value="eclipse-feature" />
+	</target>
+
 	<target name="test.all">
+
 		<property name="dirs"
 		          value="
 		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
@@ -473,14 +555,14 @@
 		${WORKINGDIR}/portlet/features/org.jboss.tools.portlet.test.feature
 		${WORKINGDIR}/jst/features/org.jboss.tools.jst.feature
 		${WORKINGDIR}/jst/features/org.jboss.tools.jst.web.tiles.feature
-		${WORKINGDIR}/xulrunner/site/org.mozilla.xulrunner.site
 		"
 		/>
 		<antcall target="test.getArtifactVersion" />
 		<antcall target="test.getArtifactId" />
+		<antcall target="test.getArtifactType" />
 	</target>
 
-	<target name="test.getArtifactVersion" depends="init">
+	<target name="test.getArtifactVersion" depends="init, test.expected.values">
 		<property name="dirs"
 		          value="
 		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
@@ -491,7 +573,6 @@
 		${WORKINGDIR}/portlet/features/org.jboss.tools.portlet.test.feature
 		${WORKINGDIR}/jst/features/org.jboss.tools.jst.feature
 		${WORKINGDIR}/jst/features/org.jboss.tools.jst.web.tiles.feature
-		${WORKINGDIR}/xulrunner/site/org.mozilla.xulrunner.site
 		"
 		/>
 		<for param="dir" list="${dirs}" delimiter=", 
@@ -500,19 +581,34 @@
 				<antcallback target="getArtifactVersion" return="artifactVersion">
 					<property name="dir" value="@{dir}" />
 				</antcallback>
-				<echo>artifactVersion = ${artifactVersion} for @{dir}</echo>
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<propertycopy name="expected.value" from="artifactVersion.${activeDir}" />
+				<assert failonerror="false"
+				        message="For ${activeDir}, artifactVersion = ${artifactVersion}; expected ${expected.value}"
+				>
+					<bool>
+						<equals arg1="${expected.value}" arg2="${artifactVersion}" />
+					</bool>
+				</assert>
+				<var name="expected.value" unset="true" />
 				<var name="artifactVersion" unset="true" />
 			</sequential>
 		</for>
 	</target>
 
-	<target name="test.getArtifactId" depends="init">
+	<target name="test.getArtifactId" depends="init, test.expected.values">
 		<property name="dirs"
 		          value="
 		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
 		${WORKINGDIR}/as/tests/org.jboss.ide.eclipse.as.archives.integration.test
 		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
-		${WORKINGDIR}/xulrunner/site/org.mozilla.xulrunner.site
 		"
 		/>
 		<for param="dir" list="${dirs}" delimiter=", 
@@ -521,8 +617,60 @@
 				<antcallback target="getArtifactId" return="artifactId">
 					<property name="dir" value="@{dir}" />
 				</antcallback>
-				<echo>artifactId = ${artifactId} for @{dir}</echo>
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<propertycopy name="expected.value" from="artifactId.${activeDir}" />
+				<assert failonerror="false"
+				        message="For ${activeDir}, artifactId = ${artifactId}; expected ${expected.value}"
+				>
+					<bool>
+						<equals arg1="${expected.value}" arg2="${artifactId}" />
+					</bool>
+				</assert>
+				<var name="expected.value" unset="true" />
 				<var name="artifactId" unset="true" />
+			</sequential>
+		</for>
+	</target>
+
+	<target name="test.getArtifactType" depends="init, test.expected.values">
+		<property name="dirs"
+		          value="
+		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
+		${WORKINGDIR}/as/tests/org.jboss.ide.eclipse.as.archives.integration.test
+		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		"
+		/>
+		<for param="dir" list="${dirs}" delimiter=", 
+			">
+			<sequential>
+				<antcallback target="getArtifactType" return="artifactType">
+					<property name="dir" value="@{dir}" />
+				</antcallback>
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<propertycopy name="expected.value" from="artifactType.${activeDir}" />
+				<assert failonerror="false"
+				        message="For ${activeDir}, artifactType = ${artifactType}; expected ${expected.value}"
+				>
+					<bool>
+						<equals arg1="${expected.value}" arg2="${artifactType}" />
+					</bool>
+				</assert>
+				<var name="expected.value" unset="true" />
+				<var name="artifactType" unset="true" />
 			</sequential>
 		</for>
 	</target>
