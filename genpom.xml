@@ -172,20 +172,26 @@
 				<var name="artifactId" unset="true" />
 				<var name="artifactVersion" unset="true" />
 				<if>
-					<matches string="@{dir}" pattern=".+/test(s+)" />
+					<matches string="@{dir}" pattern=".+/features/.+" />
 					<then>
-						<echo file="@{dir}/pom.xml" append="true">eclipse-test-plugin</echo>
+						<echo file="@{dir}/pom.xml" append="true">eclipse-feature</echo>
 					</then>
-					<elseif>
-						<matches string="@{dir}" pattern=".+/feature(s+)" />
-						<then>
-							<echo file="@{dir}/pom.xml" append="true">eclipse-feature</echo>
-						</then>
-					</elseif>
 					<elseif>
 						<matches string="@{dir}" pattern=".+/.+site" />
 						<then>
 							<echo file="@{dir}/pom.xml" append="true">eclipse-update-site</echo>
+						</then>
+					</elseif>
+					<elseif>
+						<and>
+							<not>
+								<matches string="@{dir}" pattern=".+/plugins/.+" />
+							</not>
+							<matches string="@{dir}" pattern=".+/tests/.+" />
+						</and>
+						<then>
+							<echo>@{dir} is a test plugin</echo>
+							<echo file="@{dir}/pom.xml" append="true">eclipse-test-plugin</echo>
 						</then>
 					</elseif>
 					<else>
