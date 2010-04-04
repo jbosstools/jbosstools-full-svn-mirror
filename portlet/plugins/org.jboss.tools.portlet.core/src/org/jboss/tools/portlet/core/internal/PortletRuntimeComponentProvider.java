@@ -23,7 +23,7 @@ import org.jboss.tools.portlet.core.PortletCoreActivator;
 public class PortletRuntimeComponentProvider extends
 		RuntimeFacetComponentProviderDelegate {
 
-	private static final String IS_PORTLET_RUNTIME = "isPortletRuntime"; //$NON-NLS-1$
+	public static final String IS_PORTLET_RUNTIME = "isPortletRuntime"; //$NON-NLS-1$
 
 	private static final IRuntimeComponentType PORTAL_TYPE = RuntimeManager
 			.getRuntimeComponentType("org.jboss.tools.portlet.core.runtime.component"); //$NON-NLS-1$
