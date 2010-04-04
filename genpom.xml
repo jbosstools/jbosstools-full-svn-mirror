@@ -113,7 +113,7 @@
 				               casesensitive="true"
 				               override="true"
 				/>
-				<debug>         Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
+				<debug>   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
 				<!-- <echo>Write Agg @{dir}/pom.xml</echo> -->
 				<echo file="@{dir}/pom.xml">&lt;project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	       xmlns="http://maven.apache.org/POM/4.0.0"
@@ -190,7 +190,7 @@
 				               casesensitive="true"
 				               override="true"
 				/>
-				<debug>         Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
+				<debug>   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
 				<echo file="@{dir}/pom.xml">&lt;project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	&lt;modelVersion>4.0.0&lt;/modelVersion> 
 	&lt;parent>
@@ -254,7 +254,7 @@
 						<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
 					</path>
 					<sequential>
-						<!-- <debug>         @{subdir}</debug> -->
+						<!-- <debug>   @{subdir}</debug> -->
 						<var name="aggregate" value="false" />
 						<if>
 							<or>
@@ -301,13 +301,14 @@
 									<istrue value="${aggregate}" />
 									<else>
 										<basename property="artifactIdAgg" file="@{subdir}" />
-										<echo>Generate Agg for: ${artifactIdAgg}</echo>
 										<writeAggregatePom dir="@{subdir}"
 										                   parentpom="../${pathToParentPom}parent-pom.xml"
 										                   artifactId="${artifactIdAgg}.all"
 										                   artifactVersion="@{artifactVersion}"
 										/>
 
+										<echo>Aggregated: ${artifactIdAgg}</echo>
+																				
 										<var name="artifactIdAgg" unset="true" />
 									</else>
 								</if>
