@@ -1,4 +1,3 @@
-<!-- INCOMPLETE - see TODO markers -->
 <project default="run" basedir=".">
 	<!-- Configuration Start -->
 	<property name="projectName" value="org.jboss.tools" />
