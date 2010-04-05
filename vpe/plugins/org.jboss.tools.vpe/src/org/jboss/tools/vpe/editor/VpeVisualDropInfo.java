@@ -12,11 +12,11 @@ package org.jboss.tools.vpe.editor;
 
 import org.mozilla.interfaces.nsIDOMNode;
 
-public class VpeVisualInnerDropInfo {
+public class VpeVisualDropInfo {
 	private nsIDOMNode dropContainer;
 	private long dropOffset;
 
-	public VpeVisualInnerDropInfo(nsIDOMNode dropContainer, long dropOffset) {
+	public VpeVisualDropInfo(nsIDOMNode dropContainer, long dropOffset) {
 		this.dropContainer = dropContainer;
 		this.dropOffset = dropOffset;
 	}

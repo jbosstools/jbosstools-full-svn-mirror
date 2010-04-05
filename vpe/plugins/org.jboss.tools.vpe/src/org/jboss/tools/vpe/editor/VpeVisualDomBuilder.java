@@ -1599,13 +1599,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				((VpeElementMapping) mapping).getTemplate().innerDrop(
 						pageContext,
 						new VpeSourceInnerDragInfo(dragNode, 0, 0),
-						new VpeSourceInnerDropInfo(container, offset, true));
+						new VpeSourceDropInfo(container, offset, true));
 			} else {
 				if (oldMapping instanceof VpeElementMapping) {
 					((VpeElementMapping) oldMapping).getTemplate().innerDrop(
 							pageContext,
 							new VpeSourceInnerDragInfo(dragNode, 0, 0),
-							new VpeSourceInnerDropInfo(container, offset, true));
+							new VpeSourceDropInfo(container, offset, true));
 				} else {
 					/* TODO: implement this case or completely
 					 * remove this method?
@@ -1622,7 +1622,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	public void innerDrop(VpeSourceInnerDragInfo dragInfo,
-			VpeSourceInnerDropInfo dropInfo) {
+			VpeSourceDropInfo dropInfo) {
 		dropper.drop(pageContext, dragInfo, dropInfo);
 	}
 

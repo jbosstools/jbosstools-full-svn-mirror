@@ -13,7 +13,7 @@ package org.jboss.tools.vpe.editor.template;
 import org.eclipse.jface.text.IRegion;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
-import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
+import org.jboss.tools.vpe.editor.VpeSourceDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -256,7 +256,7 @@ public interface VpeTemplate {
 	 *            The information on the drop container
 	 */
 	void innerDrop(VpePageContext pageContext, VpeSourceInnerDragInfo dragInfo,
-			VpeSourceInnerDropInfo dropInfo);
+			VpeSourceDropInfo dropInfo);
 
 	/**
 	 * Returns <code>VpeTagDescription</code>

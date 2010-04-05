@@ -24,7 +24,7 @@ import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
-import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
+import org.jboss.tools.vpe.editor.VpeSourceDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -957,7 +957,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param dragInfo The information on the dragged element
 	 */
 	public void innerDrop(VpePageContext pageContext,
-			VpeSourceInnerDragInfo dragInfo, VpeSourceInnerDropInfo dropInfo) {
+			VpeSourceInnerDragInfo dragInfo, VpeSourceDropInfo dropInfo) {
 		// TODO Max Areshkau add DnD support
 		// if (dragger != null) {
 		// dragger.drop(pageContext, dragInfo, dropInfo);

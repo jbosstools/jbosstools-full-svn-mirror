@@ -12,12 +12,12 @@ package org.jboss.tools.vpe.editor;
 
 import org.w3c.dom.Node;
 
-public class VpeSourceInnerDropInfo {
+public class VpeSourceDropInfo {
 	private Node container;
 	private int offset;
 	private boolean canDrop;
 	
-	public VpeSourceInnerDropInfo(Node container, int offset, boolean canDrop) {
+	public VpeSourceDropInfo(Node container, int offset, boolean canDrop) {
 		this.container = container;
 		this.offset = offset;
 		this.canDrop = canDrop;

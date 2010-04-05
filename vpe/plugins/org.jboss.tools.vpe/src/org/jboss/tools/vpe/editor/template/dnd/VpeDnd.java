@@ -13,7 +13,7 @@ package org.jboss.tools.vpe.editor.template.dnd;
 import java.util.HashSet;
 
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
-import org.jboss.tools.vpe.editor.VpeSourceInnerDropInfo;
+import org.jboss.tools.vpe.editor.VpeSourceDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.w3c.dom.Document;
@@ -182,7 +182,7 @@ public class VpeDnd {
 		}
 	}
 	
-	public void drop(VpePageContext pageContext, VpeSourceInnerDragInfo dragInfo, VpeSourceInnerDropInfo dropInfo){
+	public void drop(VpePageContext pageContext, VpeSourceInnerDragInfo dragInfo, VpeSourceDropInfo dropInfo){
 		Node container = dropInfo.getContainer();
 		int offset = dropInfo.getOffset();
 		Node node = dragInfo.getNode();
