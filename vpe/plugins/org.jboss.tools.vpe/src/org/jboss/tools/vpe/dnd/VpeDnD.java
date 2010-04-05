@@ -75,9 +75,11 @@ import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Max Areshkau
@@ -387,11 +389,7 @@ public class VpeDnD implements MozillaDndListener {
 			VpeVisualInnerDropInfo visualDropInfo = getInnerDropInfo(event);
 			if (visualDropInfo.getDropContainer() != null) {
 				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-					System.out.print("  x: " //$NON-NLS-1$
-							+ visualDropInfo.getMouseX()
-							+ "  y: " //$NON-NLS-1$
-							+ visualDropInfo.getMouseY()
-							+ "  container: " //$NON-NLS-1$
+					System.out.print("  container: " //$NON-NLS-1$
 							+ visualDropInfo.getDropContainer().getNodeName()
 							+ "(" //$NON-NLS-1$
 							+ visualDropInfo.getDropContainer()
@@ -410,11 +408,11 @@ public class VpeDnD implements MozillaDndListener {
 								visualDropInfo, true);
 				canDrop = sourceDropInfo.canDrop();
 				if (canDrop) {
-					VpeVisualInnerDropInfo newVisualDropInfo = vpeController.getVisualBuilder()
-							.getInnerDropInfo(sourceDropInfo.getContainer(),
+					VpeVisualInnerDropInfo newVisualDropInfo
+							= getInnerDropInfo(sourceDropInfo.getContainer(),
 									sourceDropInfo.getOffset());
 					if (newVisualDropInfo != null) {
-						correctVisualDropPosition(
+						correctVisualDropPosition(event,
 								newVisualDropInfo, visualDropInfo);
 						caretParent = newVisualDropInfo.getDropContainer();
 						caretOffset = newVisualDropInfo.getDropOffset();
@@ -453,14 +451,12 @@ public class VpeDnD implements MozillaDndListener {
 						= getSourceInnerDropInfo(sourceInnerDragInfo.getNode(),
 								visualDropInfo, true);
 				if (sourceDropInfo.canDrop()) {
-					VpeVisualInnerDropInfo newVisualDropInfo = vpeController.getVisualBuilder()
-							.getInnerDropInfo(sourceDropInfo.getContainer(),
+					VpeVisualInnerDropInfo newVisualDropInfo
+							= getInnerDropInfo(sourceDropInfo.getContainer(),
 									sourceDropInfo.getOffset());
 					if (newVisualDropInfo != null) {
-						correctVisualDropPosition(
+						correctVisualDropPosition(event,
 								newVisualDropInfo, visualDropInfo);
-						sourceDropInfo.setTop(visualDropInfo.getMouseY());
-						sourceDropInfo.setLeft(visualDropInfo.getMouseX());
 						vpeController.getVisualBuilder().innerDrop(sourceInnerDragInfo,
 								sourceDropInfo);
 						if (innerDragInfo != null) {
@@ -476,7 +472,8 @@ public class VpeDnD implements MozillaDndListener {
 		}
 	}
 	
-	private void correctVisualDropPosition(VpeVisualInnerDropInfo newVisualDropInfo,
+	private void correctVisualDropPosition(nsIDOMMouseEvent mouseEvent,
+			VpeVisualInnerDropInfo newVisualDropInfo,
 			VpeVisualInnerDropInfo oldVisualDropInfo) {
 		nsIDOMNode newVisualDropContainer = newVisualDropInfo
 				.getDropContainer();
@@ -494,8 +491,13 @@ public class VpeDnD implements MozillaDndListener {
 			if (newVisualDropContainer.equals(parent)) {
 				long offset = VisualDomUtil.getOffset(child);
 				Rectangle rect = XulRunnerVpeUtils.getElementBounds(child);
-				if (canInsertAfter(oldVisualDropInfo.getMouseX(),
-						oldVisualDropInfo.getMouseY(), rect)) {
+				
+				nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent)
+				mouseEvent.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
+				int mouseX = nsuiEvent.getPageX();
+				int mouseY = nsuiEvent.getPageY();
+
+				if (canInsertAfter(mouseX, mouseY, rect)) {
 					offset++;
 				}
 				newVisualDropInfo.setDropOffset(offset);
@@ -783,12 +785,12 @@ public class VpeDnD implements MozillaDndListener {
 									sourceDragNode, visualDropInfo, true);
 					canDrop = sourceDropInfo.canDrop();
 					if (canDrop) {
-						VpeVisualInnerDropInfo newVisualDropInfo = vpeController.getVisualBuilder()
-								.getInnerDropInfo(
+						VpeVisualInnerDropInfo newVisualDropInfo
+								= getInnerDropInfo(
 										sourceDropInfo.getContainer(),
 										sourceDropInfo.getOffset());
 						if (newVisualDropInfo != null) {
-							correctVisualDropPosition(
+							correctVisualDropPosition(mouseEvent,
 									newVisualDropInfo, visualDropInfo);
 							caretParent = newVisualDropInfo.getDropContainer();
 							caretOffset = newVisualDropInfo.getDropOffset();
@@ -959,7 +961,7 @@ public class VpeDnD implements MozillaDndListener {
 
 		if (originalNode == null || originalNode.getParentNode() == null ||
 				originalNode.getParentNode().getNodeType() == Node.DOCUMENT_NODE) {
-			return  new VpeVisualInnerDropInfo(null, 0, mouseX, mouseY);
+			return  new VpeVisualInnerDropInfo(null, 0);
 		}
 		if (originalNode.getNodeType() == Node.TEXT_NODE) {
 			dropContainer = nsuiEvent.getRangeParent();
@@ -1053,8 +1055,63 @@ public class VpeDnD implements MozillaDndListener {
 				}
 			}
 		}
-		VpeVisualInnerDropInfo info = new VpeVisualInnerDropInfo(dropContainer, dropOffset, mouseX, mouseY);
+		VpeVisualInnerDropInfo info = new VpeVisualInnerDropInfo(dropContainer, dropOffset);
 		return info;
+	}
+	
+	private VpeVisualInnerDropInfo getInnerDropInfo(Node sourceDropContainer,
+			int sourceDropOffset) {
+		nsIDOMNode visualDropContainer = null;
+		long visualDropOffset = 0;
+
+		switch (sourceDropContainer.getNodeType()) {
+		case Node.TEXT_NODE:
+			visualDropContainer = vpeController.getDomMapping().getVisualNode(sourceDropContainer);
+			visualDropOffset = TextUtil.visualInnerPosition(sourceDropContainer
+					.getNodeValue(), sourceDropOffset);
+			break;
+		case Node.ELEMENT_NODE:
+		case Node.DOCUMENT_NODE:
+			NodeList sourceChildren = sourceDropContainer.getChildNodes();
+			if (sourceDropOffset < sourceChildren.getLength()) {
+				Node sourceChild = sourceChildren.item(sourceDropOffset);
+				nsIDOMNode visualChild = vpeController.getDomMapping().getVisualNode(sourceChild);
+				if (visualChild != null) {
+					visualDropContainer = visualChild.getParentNode();
+
+					visualDropOffset = VisualDomUtil.getOffset(visualChild);
+				}
+			}
+			if (visualDropContainer == null) {
+				visualDropContainer = vpeController.getDomMapping()
+						.getNearVisualNode(sourceDropContainer);
+				nsIDOMNode visualChild = VpeVisualDomBuilder.getLastAppreciableVisualChild(visualDropContainer);
+				if (visualChild != null) {
+					visualDropOffset = VisualDomUtil.getOffset(visualChild) + 1;
+				} else {
+					visualDropOffset = 0;
+				}
+			}
+			break;
+		case Node.ATTRIBUTE_NODE:
+			Element sourceElement = ((Attr) sourceDropContainer)
+					.getOwnerElement();
+			VpeElementMapping elementMapping = vpeController.getDomMapping()
+					.getNearElementMapping(sourceElement);
+			nsIDOMNode textNode = elementMapping.getTemplate()
+					.getOutputTextNode(vpeController.getPageContext(), sourceElement,
+							elementMapping.getData());
+			if (textNode != null) {
+				visualDropContainer = textNode;
+				visualDropOffset = TextUtil.visualInnerPosition(
+						sourceDropContainer.getNodeValue(), sourceDropOffset);
+			}
+			break;
+		}
+		if (visualDropContainer == null) {
+			return null;
+		}
+		return new VpeVisualInnerDropInfo(visualDropContainer, visualDropOffset);
 	}
 	
 	private nsIDOMNode getNearChild(nsIDOMNode container, int x, int y) {

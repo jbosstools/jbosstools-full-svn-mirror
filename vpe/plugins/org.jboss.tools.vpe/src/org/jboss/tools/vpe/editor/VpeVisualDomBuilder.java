@@ -1681,62 +1681,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return true;
 	}
 
-	public VpeVisualInnerDropInfo getInnerDropInfo(Node sourceDropContainer,
-			int sourceDropOffset) {
-		nsIDOMNode visualDropContainer = null;
-		long visualDropOffset = 0;
-
-		switch (sourceDropContainer.getNodeType()) {
-		case Node.TEXT_NODE:
-			visualDropContainer = domMapping.getVisualNode(sourceDropContainer);
-			visualDropOffset = TextUtil.visualInnerPosition(sourceDropContainer
-					.getNodeValue(), sourceDropOffset);
-			break;
-		case Node.ELEMENT_NODE:
-		case Node.DOCUMENT_NODE:
-			NodeList sourceChildren = sourceDropContainer.getChildNodes();
-			if (sourceDropOffset < sourceChildren.getLength()) {
-				Node sourceChild = sourceChildren.item(sourceDropOffset);
-				nsIDOMNode visualChild = domMapping.getVisualNode(sourceChild);
-				if (visualChild != null) {
-					visualDropContainer = visualChild.getParentNode();
-
-					visualDropOffset = VisualDomUtil.getOffset(visualChild);
-				}
-			}
-			if (visualDropContainer == null) {
-				visualDropContainer = domMapping
-						.getNearVisualNode(sourceDropContainer);
-				nsIDOMNode visualChild = getLastAppreciableVisualChild(visualDropContainer);
-				if (visualChild != null) {
-					visualDropOffset = VisualDomUtil.getOffset(visualChild) + 1;
-				} else {
-					visualDropOffset = 0;
-				}
-			}
-			break;
-		case Node.ATTRIBUTE_NODE:
-			Element sourceElement = ((Attr) sourceDropContainer)
-					.getOwnerElement();
-			VpeElementMapping elementMapping = domMapping
-					.getNearElementMapping(sourceElement);
-			nsIDOMNode textNode = elementMapping.getTemplate()
-					.getOutputTextNode(pageContext, sourceElement,
-							elementMapping.getData());
-			if (textNode != null) {
-				visualDropContainer = textNode;
-				visualDropOffset = TextUtil.visualInnerPosition(
-						sourceDropContainer.getNodeValue(), sourceDropOffset);
-			}
-			break;
-		}
-		if (visualDropContainer == null) {
-			return null;
-		}
-		return new VpeVisualInnerDropInfo(visualDropContainer,
-				visualDropOffset, 0, 0);
-	}
-
 	protected void setTooltip(Element sourceElement, nsIDOMElement visualElement) {
 		if (visualElement != null && sourceElement != null
 				&& !((IDOMElement) sourceElement).isJSPTag()) {

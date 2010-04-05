@@ -15,15 +15,10 @@ import org.mozilla.interfaces.nsIDOMNode;
 public class VpeVisualInnerDropInfo {
 	private nsIDOMNode dropContainer;
 	private long dropOffset;
-	private int mouseX;
-	private int mouseY;
 
-	public VpeVisualInnerDropInfo(nsIDOMNode dropContainer, long dropOffset, int mouseX, int mouseY) {
+	public VpeVisualInnerDropInfo(nsIDOMNode dropContainer, long dropOffset) {
 		this.dropContainer = dropContainer;
 		this.dropOffset = dropOffset;
-		this.mouseX = mouseX;
-		this.mouseY = mouseY;
-		
 	}
 	
 	public nsIDOMNode getDropContainer() {
@@ -36,15 +31,7 @@ public class VpeVisualInnerDropInfo {
 	public void setDropOffset(long dropOffset) {
 		this.dropOffset = dropOffset;
 	}
-	
-	public int getMouseX() {
-		return mouseX;
-	}
-	
-	public int getMouseY() {
-		return mouseY;
-	}
-	
+
 	public void release() {
 			dropContainer = null;
 	}

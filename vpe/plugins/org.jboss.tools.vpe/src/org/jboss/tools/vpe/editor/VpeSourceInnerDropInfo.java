@@ -16,8 +16,6 @@ public class VpeSourceInnerDropInfo {
 	private Node container;
 	private int offset;
 	private boolean canDrop;
-	private int top;
-	private int left;
 	
 	public VpeSourceInnerDropInfo(Node container, int offset, boolean canDrop) {
 		this.container = container;
@@ -35,22 +33,6 @@ public class VpeSourceInnerDropInfo {
 
 	public boolean canDrop() {
 		return canDrop;
-	}
-
-	public int getTop() {
-		return top;
-	}
-
-	public void setTop(int top) {
-		this.top = top;
-	}
-
-	public int getLeft() {
-		return left;
-	}
-
-	public void setLeft(int left) {
-		this.left = left;
 	}
 
 	public void setContainer(Node container) {
