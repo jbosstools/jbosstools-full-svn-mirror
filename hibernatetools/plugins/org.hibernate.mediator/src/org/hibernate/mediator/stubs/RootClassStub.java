@@ -15,15 +15,15 @@ public class RootClassStub extends PersistentClassStub {
 	}
 
 	public String getClassName() {
-		return (String)invoke("getClassName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public void setDiscriminator(ValueStub discr) {
-		invoke("setDiscriminator", discr); //$NON-NLS-1$
+		invoke(mn(), discr);
 	}
 
 	public TableStub getTable() {
-		Object obj = invoke("getTable"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -31,15 +31,15 @@ public class RootClassStub extends PersistentClassStub {
 	}
 
 	public void addProperty(PropertyStub p) {
-		invoke("addProperty", p); //$NON-NLS-1$
+		invoke(mn(), p);
 	}
 
 	public void setIdentifierProperty(PropertyStub p) {
-		invoke("setIdentifierProperty", p); //$NON-NLS-1$
+		invoke(mn(), p);
 	}
 
 	public PropertyStub getIdentifierProperty() {
-		Object obj = invoke("getIdentifierProperty"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -47,144 +47,144 @@ public class RootClassStub extends PersistentClassStub {
 	}
 
 	public void setEntityName(String entityName) {
-		invoke("setEntityName", entityName); //$NON-NLS-1$
+		invoke(mn(), entityName);
 	}
 
 	public void setClassName(String className) {
-		invoke("setClassName", className); //$NON-NLS-1$
+		invoke(mn(), className);
 	}
 
 	public void setProxyInterfaceName(String proxyInterfaceName) {
-		invoke("setProxyInterfaceName", proxyInterfaceName); //$NON-NLS-1$
+		invoke(mn(), proxyInterfaceName);
 	}
 
 	public void setLazy(boolean lazy) {
-		invoke("setLazy", lazy); //$NON-NLS-1$
+		invoke(mn(), lazy);
 	}
 
 	public void setTable(TableStub table) {
-		invoke("setTable", table); //$NON-NLS-1$
+		invoke(mn(), table);
 	}
 
 	public void setAbstract(Boolean isAbstract) {
-		invoke("setAbstract", isAbstract); //$NON-NLS-1$
+		invoke(mn(), isAbstract);
 	}
 
 	public String getNodeName() {
-		return (String)invoke("getNodeName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public KeyValueStub getIdentifier() {
-		return (KeyValueStub)ValueStubFactory.createValueStub(invoke("getIdentifier")); //$NON-NLS-1$
+		return (KeyValueStub)ValueStubFactory.createValueStub(invoke(mn()));
 	}
 
 	public boolean isCustomDeleteCallable() {
-		return (Boolean)invoke("isCustomDeleteCallable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isCustomInsertCallable() {
-		return (Boolean)invoke("isCustomInsertCallable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isCustomUpdateCallable() {
-		return (Boolean)invoke("isCustomUpdateCallable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isDiscriminatorInsertable() {
-		return (Boolean)invoke("isDiscriminatorInsertable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isDiscriminatorValueNotNull() {
-		return (Boolean)invoke("isDiscriminatorValueNotNull"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isDiscriminatorValueNull() {
-		return (Boolean)invoke("isDiscriminatorValueNull"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isExplicitPolymorphism() {
-		return (Boolean)invoke("isExplicitPolymorphism"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isForceDiscriminator() {
-		return (Boolean)invoke("isForceDiscriminator"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isInherited() {
-		return (Boolean)invoke("isInherited"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isJoinedSubclass() {
-		return (Boolean)invoke("isJoinedSubclass"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isLazy() {
-		return (Boolean)invoke("isLazy"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isLazyPropertiesCacheable() {
-		return (Boolean)invoke("isLazyPropertiesCacheable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isMutable() {
-		return (Boolean)invoke("isMutable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isPolymorphic() {
-		return (Boolean)invoke("isPolymorphic"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isVersioned() {
-		return (Boolean)invoke("isVersioned"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public int getBatchSize() {
-		return (Integer)invoke("getBatchSize"); //$NON-NLS-1$
+		return (Integer)invoke(mn());
 	}
 
 	public String getCacheConcurrencyStrategy() {
-		return (String)invoke("getCacheConcurrencyStrategy"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getCustomSQLDelete() {
-		return (String)invoke("getCustomSQLDelete"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getCustomSQLInsert() {
-		return (String)invoke("getCustomSQLInsert"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getCustomSQLUpdate() {
-		return (String)invoke("getCustomSQLUpdate"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getDiscriminatorValue() {
-		return (String)invoke("getDiscriminatorValue"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getLoaderName() {
-		return (String)invoke("getLoaderName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public int getOptimisticLockMode() {
-		return (Integer)invoke("getOptimisticLockMode"); //$NON-NLS-1$
+		return (Integer)invoke(mn());
 	}
 
 	public String getTemporaryIdTableDDL() {
-		return (String)invoke("getTemporaryIdTableDDL"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getTemporaryIdTableName() {
-		return (String)invoke("getTemporaryIdTableName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getWhere() {
-		return (String)invoke("getWhere"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	@SuppressWarnings("unchecked")
 	public Iterator<SubclassStub> getSubclassIterator() {
-		Iterator it = (Iterator)invoke("getSubclassIterator"); //$NON-NLS-1$
+		Iterator it = (Iterator)invoke(mn());
 		ArrayList<SubclassStub> al = new ArrayList<SubclassStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -197,6 +197,6 @@ public class RootClassStub extends PersistentClassStub {
 
 	@Override
 	public ValueStub getDiscriminator() {
-		return ValueStubFactory.createValueStub(invoke("getDiscriminator")); //$NON-NLS-1$
+		return ValueStubFactory.createValueStub(invoke(mn()));
 	}
 }

@@ -1,18 +1,12 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.cfg.reveng.TableIdentifier;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class TableIdentifierStub {
+public class TableIdentifierStub extends HObject {
 	public static final String CL = "org.hibernate.cfg.reveng.TableIdentifier"; //$NON-NLS-1$
 
-	protected TableIdentifier tableIdentifier;
-
 	protected TableIdentifierStub(Object tableIdentifier) {
-		if (tableIdentifier == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.tableIdentifier = (TableIdentifier)tableIdentifier;
+		super(tableIdentifier, CL);
 	}
 
 	public static TableIdentifierStub create(TableStub table) {
@@ -20,10 +14,10 @@ public class TableIdentifierStub {
 	}
 	
 	public static TableIdentifierStub newInstance(String catalog, String schema, String name) {
-		return new TableIdentifierStub(new TableIdentifier(catalog, schema, name));
+		return new TableIdentifierStub(HObject.newInstance(CL, catalog, schema, name));
 	}
 
 	public String getName() {
-		return tableIdentifier.getName();
+		return (String)invoke(mn());
 	}
 }

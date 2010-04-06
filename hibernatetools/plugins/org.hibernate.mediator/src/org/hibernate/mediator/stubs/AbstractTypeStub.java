@@ -6,4 +6,8 @@ public class AbstractTypeStub extends TypeStub {
 	protected AbstractTypeStub(Object abstractType) {
 		super(abstractType, CL);
 	}
+
+	protected AbstractTypeStub(Object abstractType, String cn) {
+		super(abstractType, cn);
+	}
 }

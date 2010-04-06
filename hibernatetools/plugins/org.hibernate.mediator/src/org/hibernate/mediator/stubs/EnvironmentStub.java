@@ -6,28 +6,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.hibernate.cfg.Environment;
+import org.hibernate.mediator.base.HObject;
+import org.hibernate.mediator.stubs.util.ReflectHelper;
 
 public class EnvironmentStub {
 	public static final String CL = "org.hibernate.cfg.Environment"; //$NON-NLS-1$
 
-	public static final String DIALECT = Environment.DIALECT;
-	public static final String DEFAULT_CATALOG = Environment.DEFAULT_CATALOG;
-	public static final String DEFAULT_SCHEMA = Environment.DEFAULT_SCHEMA;
-	public static final String DRIVER = Environment.DRIVER;
-	public static final String PASS = Environment.PASS;
-	public static final String SESSION_FACTORY_NAME = Environment.SESSION_FACTORY_NAME;
-	public static final String URL = Environment.URL;
-	public static final String USER = Environment.USER;
-	public static final String HBM2DDL_AUTO = Environment.HBM2DDL_AUTO;
-	public static final String DATASOURCE = Environment.DATASOURCE;
+	public static final String DIALECT = (String)HObject.readStaticFieldValue(CL, "DIALECT"); //$NON-NLS-1$
+	public static final String DEFAULT_CATALOG = (String)HObject.readStaticFieldValue(CL, "DEFAULT_CATALOG"); //$NON-NLS-1$
+	public static final String DEFAULT_SCHEMA = (String)HObject.readStaticFieldValue(CL, "DEFAULT_SCHEMA"); //$NON-NLS-1$
+	public static final String DRIVER = (String)HObject.readStaticFieldValue(CL, "DRIVER"); //$NON-NLS-1$
+	public static final String PASS = (String)HObject.readStaticFieldValue(CL, "PASS"); //$NON-NLS-1$
+	public static final String SESSION_FACTORY_NAME = (String)HObject.readStaticFieldValue(CL, "SESSION_FACTORY_NAME"); //$NON-NLS-1$
+	public static final String URL = (String)HObject.readStaticFieldValue(CL, "URL"); //$NON-NLS-1$
+	public static final String USER = (String)HObject.readStaticFieldValue(CL, "USER"); //$NON-NLS-1$
+	public static final String HBM2DDL_AUTO = (String)HObject.readStaticFieldValue(CL, "HBM2DDL_AUTO"); //$NON-NLS-1$
+	public static final String DATASOURCE = (String)HObject.readStaticFieldValue(CL, "DATASOURCE"); //$NON-NLS-1$
 
 	@SuppressWarnings("unchecked")
 	public static String[] extractHibernateProperties() {
 		try {
 			// TODO: extract property names from the Environment class in the users hibernate
 			// configuration.
-			Class cl = Environment.class;
+			Class cl = ReflectHelper.classForName(CL);
 			List<String> names = new ArrayList<String>();
 			Field[] fields = cl.getFields();
 			for (int i = 0; i < fields.length; i++) {
@@ -42,6 +43,9 @@ public class EnvironmentStub {
 			String[] propertyNames = (String[]) names.toArray(new String[names.size()]);
 			Arrays.sort(propertyNames);
 			return propertyNames;
+		} catch (ClassNotFoundException e) {
+			// ignore
+			return new String[0];
 		} catch (IllegalAccessException iae) {
 			// ignore
 			return new String[0];

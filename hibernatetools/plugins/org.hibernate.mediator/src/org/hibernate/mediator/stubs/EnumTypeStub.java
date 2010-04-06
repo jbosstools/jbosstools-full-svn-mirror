@@ -1,24 +1,14 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.type.EnumType;
+import org.hibernate.mediator.base.HObject;
 
-public class EnumTypeStub {
+public class EnumTypeStub extends HObject {
 	public static final String CL = "org.hibernate.type.EnumType"; //$NON-NLS-1$
 
-	public static final String ENUM = EnumType.ENUM;
-	public static final String TYPE = EnumType.TYPE;
-
-	protected EnumType enumType;
+	public static final String ENUM = (String)readStaticFieldValue(CL, "ENUM"); //$NON-NLS-1$
+	public static final String TYPE = (String)readStaticFieldValue(CL, "TYPE"); //$NON-NLS-1$
 
 	protected EnumTypeStub(Object enumType) {
-		if (enumType == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.enumType = (EnumType)enumType;
-	}
-	
-	public static String getClassName() {
-		return EnumType.class.getName();
+		super(enumType, CL);
 	}
 }

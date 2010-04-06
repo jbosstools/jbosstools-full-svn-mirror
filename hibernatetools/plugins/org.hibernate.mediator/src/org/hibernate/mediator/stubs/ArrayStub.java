@@ -18,22 +18,22 @@ public class ArrayStub extends ListStub {
 	}
 
 	public void setElement(ValueStub element) {
-		invoke("setElement", element); //$NON-NLS-1$
+		invoke(mn(), element);
 	}
 
 	public void setCollectionTable(TableStub table) {
-		invoke("setCollectionTable", table); //$NON-NLS-1$
+		invoke(mn(), table);
 	}
 
 	public void setElementClassName(String elementClassName) {
-		invoke("setElementClassName", elementClassName); //$NON-NLS-1$
+		invoke(mn(), elementClassName);
 	}
 
 	public void setIndex(ValueStub index) {
-		invoke("setIndex", index); //$NON-NLS-1$
+		invoke(mn(), index);
 	}
 
 	public String getElementClassName() {
-		return (String)invoke("getElementClassName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 }

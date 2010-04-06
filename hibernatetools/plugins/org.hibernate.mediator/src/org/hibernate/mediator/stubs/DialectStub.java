@@ -3,31 +3,34 @@ package org.hibernate.mediator.stubs;
 import java.sql.Connection;
 import java.util.Properties;
 
-import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.resolver.DialectFactory;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class DialectStub {
+public class DialectStub extends HObject {
 	public static final String CL = "org.hibernate.dialect.Dialect"; //$NON-NLS-1$
 
-	protected Dialect dialect;
-
 	protected DialectStub(Object dialect) {
-		if (dialect == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.dialect = (Dialect)dialect;
+		super(dialect, CL);
 	}
 	
-	public static DialectStub newInstance(final String dialectName) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		return new DialectStub(Class.forName(dialectName).newInstance());
+	public static DialectStub newInstance(final String dialectName) {
+		try {
+			return new DialectStub(Class.forName(dialectName).newInstance());
+		} catch (InstantiationException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		}
 	}
 	
 	public static DialectStub newInstance(Properties properties, Connection connection) {
-		return new DialectStub(DialectFactory.buildDialect(properties, connection));
+		Object dialect = invokeStaticMethod("org.hibernate.dialect.resolver.DialectFactory",  //$NON-NLS-1$
+				"buildDialect", properties, connection); //$NON-NLS-1$
+		return new DialectStub(dialect);
 	}
 	
 	public String toString() {
-		return dialect.toString();
+		return Obj().toString();
 	}
 }

@@ -12,7 +12,7 @@ public abstract class IndexedCollectionStub extends CollectionStub {
 	}
 
 	public void setIndex(ValueStub index) {
-		invoke("setIndex", index); //$NON-NLS-1$
+		invoke(mn(), index);
 	}
 
 }

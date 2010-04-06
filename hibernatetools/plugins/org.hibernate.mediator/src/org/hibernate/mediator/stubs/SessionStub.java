@@ -12,7 +12,6 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.hibernate.Criteria;
 import org.hibernate.EntityMode;
-import org.hibernate.Session;
 import org.hibernate.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -20,6 +19,7 @@ import org.hibernate.engine.SessionImplementor;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.ConsoleQueryParameter;
 import org.hibernate.mediator.QueryInputModel;
+import org.hibernate.mediator.base.HObject;
 import org.hibernate.mediator.util.CollectionPropertySource;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.metadata.CollectionMetadata;
@@ -29,30 +29,22 @@ import org.hibernate.type.Type;
 import bsh.EvalError;
 import bsh.Interpreter;
 
-public class SessionStub {
+public class SessionStub extends HObject {
 	public static final String CL = "org.hibernate.Session"; //$NON-NLS-1$
 
-	protected Session session;
-
-	protected SessionStub(Session session) {
-		if (session == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.session = session;
+	protected SessionStub(Object session) {
+		super(session, CL);
 	}
 
 	public boolean isOpen() {
-		boolean res = false;
-		if (session != null) {
-			res = session.isOpen();
-		}
+		boolean res = (Boolean)invoke(mn());
 		return res;
 	}
 
 	public void close(List<Throwable> exceptions) {
-		if (session != null && session.isOpen()) {
+		if (isOpen()) {
 			try {
-				session.close();
+				invoke(mn());
 			} catch (HibernateException e) {
 				exceptions.add(e);
 			}
@@ -60,88 +52,75 @@ public class SessionStub {
 	}
 
 	public boolean contains(Object obj) {
-		boolean res = false;
-		if (session != null) {
-			res = session.contains(obj);
-		}
+		boolean res = (Boolean)invoke(mn(), obj);
 		return res;
 	}
 
 	public boolean hasMetaData(Object obj) {
-		boolean res = false;
-		if (session != null) {
-			res = session.getSessionFactory().getClassMetadata(
-					HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) != null;
-		}
+		SessionFactory sf = (SessionFactory)invoke("getSessionFactory"); //$NON-NLS-1$
+		boolean res = sf.getClassMetadata(
+			HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) != null;
 		return res;
 	}
 
 	public boolean hasMetaData(Object obj, List<Throwable> exceptions) {
 		boolean res = false;
-		if (session != null) {
-			try {
-				res = session.getSessionFactory().getClassMetadata(
-						HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) != null;
-			} catch (HibernateException e) {
-				exceptions.add(e);
-			}
+		try {
+			SessionFactory sf = (SessionFactory)invoke("getSessionFactory"); //$NON-NLS-1$
+			res = sf.getClassMetadata(
+					HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) != null;
+		} catch (HibernateException e) {
+			exceptions.add(e);
 		}
 		return res;
 	}
 
 	public String getEntityName(Object obj) {
-		String res = null;
-		if (session != null) {
-			res = session.getEntityName(obj);
-		}
+		String res = (String)invoke(mn(), obj);
 		return res;
 	}
 	
 	public String getEntityName(Object obj, List<Throwable> exceptions) {
 		String res = null;
-		if (session != null) {
-			try {
-				res = session.getEntityName(obj);
-			} catch (HibernateException e) {
-				exceptions.add(e);
-			}
+		try {
+			res = (String)invoke(mn(), obj);
+		} catch (HibernateException e) {
+			exceptions.add(e);
 		}
 		return res;
 	}
 
 	public Object getPropertyValue(Object obj, Object id) {
 		Object pv = null;
-		if (session != null) {
-			SessionFactory sf = session.getSessionFactory();
-			ClassMetadata classMetadata;
-			if (session.isOpen()) {
-				classMetadata = sf.getClassMetadata(session.getEntityName(obj));
-			} else {
-				classMetadata = sf.getClassMetadata(HibernateProxyHelper
-						.getClassWithoutInitializingProxy(obj));
-			}
-			if (id.equals(classMetadata.getIdentifierPropertyName())) {
-				pv = classMetadata.getIdentifier(obj, EntityMode.POJO);
-			} else {
-				pv = classMetadata.getPropertyValue(obj, (String) id, EntityMode.POJO);
-			}
-			if (pv instanceof Collection<?>) {
-				CollectionMetadata collectionMetadata = sf.getCollectionMetadata(classMetadata
-						.getEntityName()
-						+ "." + id); //$NON-NLS-1$
-				if (collectionMetadata != null) {
-					pv = new CollectionPropertySource((Collection<?>) pv);
-				}
+		SessionFactory sf = (SessionFactory)invoke("getSessionFactory"); //$NON-NLS-1$
+		ClassMetadata classMetadata;
+		if (isOpen()) {
+			classMetadata = sf.getClassMetadata(getEntityName(obj));
+		} else {
+			classMetadata = sf.getClassMetadata(HibernateProxyHelper
+					.getClassWithoutInitializingProxy(obj));
+		}
+		if (id.equals(classMetadata.getIdentifierPropertyName())) {
+			pv = classMetadata.getIdentifier(obj, EntityMode.POJO);
+		} else {
+			pv = classMetadata.getPropertyValue(obj, (String) id, EntityMode.POJO);
+		}
+		if (pv instanceof Collection<?>) {
+			CollectionMetadata collectionMetadata = sf.getCollectionMetadata(classMetadata
+					.getEntityName()
+					+ "." + id); //$NON-NLS-1$
+			if (collectionMetadata != null) {
+				pv = new CollectionPropertySource((Collection<?>) pv);
 			}
 		}
 		return pv;
 	}
 
 	public IPropertyDescriptor[] getPropertyDescriptors(final Object obj) {
-		SessionFactory sf = session.getSessionFactory();
+		SessionFactory sf = (SessionFactory)invoke("getSessionFactory"); //$NON-NLS-1$
 		ClassMetadata classMetadata;
-		if (session.isOpen()) {
-			classMetadata = sf.getClassMetadata(session.getEntityName(obj));
+		if (isOpen()) {
+			classMetadata = sf.getClassMetadata(getEntityName(obj));
 		} else {
 			classMetadata = sf.getClassMetadata(HibernateProxyHelper
 					.getClassWithoutInitializingProxy(obj));
@@ -221,9 +200,9 @@ public class SessionStub {
 	private Interpreter setupInterpreter() throws EvalError, HibernateException {
 		Interpreter interpreter = new Interpreter();
 
-		interpreter.set("session", session); //$NON-NLS-1$
+		interpreter.set("session", Obj()); //$NON-NLS-1$
 		interpreter.setClassLoader(Thread.currentThread().getContextClassLoader());
-		SessionImplementor si = (SessionImplementor) session;
+		SessionImplementor si = (SessionImplementor)Obj();
 
 		Map<String, ?> map = si.getFactory().getAllClassMetadata();
 
@@ -248,7 +227,7 @@ public class SessionStub {
 		List<Object> res = Collections.emptyList();
 		Query query = null;
 		try {
-			query = session.createQuery(queryString);
+			query = (Query)invoke("createQuery", queryString); //$NON-NLS-1$
 		} catch (HibernateException e) {
 			exceptions.add(e);
 		} catch (Exception e) {
@@ -301,7 +280,7 @@ public class SessionStub {
 		List<String> res = Collections.emptyList();
 		Query query = null;
 		try {
-			query = session.createQuery(queryString);
+			query = (Query)invoke("createQuery", queryString); //$NON-NLS-1$
 		} catch (HibernateException e) {
 			exceptions.add(e);
 		} catch (Exception e) {

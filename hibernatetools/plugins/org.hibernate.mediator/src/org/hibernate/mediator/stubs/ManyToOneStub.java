@@ -12,7 +12,7 @@ public class ManyToOneStub extends ToOneStub {
 	}
 
 	public String getReferencedEntityName() {
-		return (String)invoke("getReferencedEntityName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 }

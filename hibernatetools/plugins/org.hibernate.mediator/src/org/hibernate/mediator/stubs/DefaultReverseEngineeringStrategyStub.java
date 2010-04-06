@@ -1,22 +1,15 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
 public class DefaultReverseEngineeringStrategyStub extends ReverseEngineeringStrategyStub {
 	public static final String CL = "org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy"; //$NON-NLS-1$
 
-	protected DefaultReverseEngineeringStrategy defaultReverseEngineeringStrategy;
-
 	protected DefaultReverseEngineeringStrategyStub(Object defaultReverseEngineeringStrategy) {
-		super(defaultReverseEngineeringStrategy);
-		if (defaultReverseEngineeringStrategy == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.defaultReverseEngineeringStrategy = (DefaultReverseEngineeringStrategy)defaultReverseEngineeringStrategy;
+		super(defaultReverseEngineeringStrategy, CL);
 	}
 	
 	public static DefaultReverseEngineeringStrategyStub newInstance() {
-		return new DefaultReverseEngineeringStrategyStub(new DefaultReverseEngineeringStrategy());
+		return new DefaultReverseEngineeringStrategyStub(HObject.newInstance(CL));
 	}
 }

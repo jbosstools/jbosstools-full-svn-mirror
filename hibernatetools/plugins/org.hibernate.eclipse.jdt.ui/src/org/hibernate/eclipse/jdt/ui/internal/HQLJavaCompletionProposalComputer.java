@@ -39,7 +39,7 @@ import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.hqleditor.EclipseHQLCompletionRequestor;
 import org.hibernate.eclipse.hqleditor.HQLCompletionProcessor;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.mediator.stubs.IHQLCodeAssistStub;
+import org.hibernate.mediator.stubs.HQLCodeAssistStub;
 
 public class HQLJavaCompletionProposalComputer implements IJavaCompletionProposalComputer {
 
@@ -76,7 +76,7 @@ public class HQLJavaCompletionProposalComputer implements IJavaCompletionProposa
 		try {
 			ConsoleConfiguration consoleConfig = getConfiguration( ctx.getProject() );
 			if (consoleConfig != null) {
-				IHQLCodeAssistStub hqlEval = consoleConfig.getHQLCodeAssist();
+				HQLCodeAssistStub hqlEval = consoleConfig.getHQLCodeAssist();
 				String query = ""; //$NON-NLS-1$
 				int stringStart = getStringStart( ctx.getDocument(), ctx.getInvocationOffset() );
 				int stringEnd = getStringEnd( ctx.getDocument(), ctx.getInvocationOffset() );

@@ -1,21 +1,15 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.metadata.CollectionMetadata;
+import org.hibernate.mediator.base.HObject;
 
-public class CollectionMetadataStub {
+public class CollectionMetadataStub extends HObject {
 	public static final String CL = "org.hibernate.metadata.CollectionMetadata"; //$NON-NLS-1$
 
-	protected CollectionMetadata collectionMetadata;
-
 	protected CollectionMetadataStub(Object collectionMetadata) {
-		if (collectionMetadata == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.collectionMetadata = (CollectionMetadata)collectionMetadata;
+		super(collectionMetadata, CL);
 	}
 
 	public TypeStub getElementType() {
-		return TypeStubFactory.createTypeStub(collectionMetadata.getElementType());
+		return TypeStubFactory.createTypeStub(invoke(mn()));
 	}
 }

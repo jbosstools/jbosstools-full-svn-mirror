@@ -3,25 +3,18 @@ package org.hibernate.mediator.stubs;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.hibernate.mapping.Join;
-import org.hibernate.mapping.Property;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class JoinStub {
+public class JoinStub extends HObject {
 	public static final String CL = "org.hibernate.mapping.Join"; //$NON-NLS-1$
 
-	protected Join join;
-
 	protected JoinStub(Object join) {
-		if (join == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.join = (Join)join;
+		super(join, CL);
 	}
 
 	@SuppressWarnings("unchecked")
 	public Iterator<PropertyStub> getPropertyIterator() {
-		Iterator<Property> it = (Iterator<Property>)join.getPropertyIterator();
+		Iterator it = (Iterator)invoke(mn());
 		ArrayList<PropertyStub> al = new ArrayList<PropertyStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();

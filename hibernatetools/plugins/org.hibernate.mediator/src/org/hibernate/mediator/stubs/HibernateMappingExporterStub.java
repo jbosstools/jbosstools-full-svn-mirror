@@ -4,64 +4,56 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import org.hibernate.mediator.base.HObject;
 
-import org.hibernate.cfg.Configuration;
-import org.hibernate.mediator.Messages;
-import org.hibernate.tool.hbm2x.HibernateMappingExporter;
-
-public class HibernateMappingExporterStub {
+public class HibernateMappingExporterStub extends HObject {
 	public static final String CL = "org.hibernate.tool.hbm2x.HibernateMappingExporter"; //$NON-NLS-1$
 
-	protected HibernateMappingExporter hibernateMappingExporter;
-
 	protected HibernateMappingExporterStub(ConfigurationStub cfg, File outputdir) {
-		if (cfg.Obj() == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		hibernateMappingExporter = new HibernateMappingExporter((Configuration)cfg.Obj(), outputdir);    	
+		super(HObject.newInstance(CL, cfg, outputdir), CL);    	
     }
 
 	public void setGlobalSettings(HibernateMappingGlobalSettingsStub hmgs) {
-		hibernateMappingExporter.setGlobalSettings(hmgs.hibernateMappingGlobalSettings);
+		invoke(mn(), hmgs);
 	}
 
 	public void start() {
-		hibernateMappingExporter.start();
+		invoke(mn());
 	}
 
 	protected File getOutputDirectory() {
-		return hibernateMappingExporter.getOutputDirectory();
+		return (File)invoke(mn());
 	}
 
 	protected void setOutputDirectory(File outputdir) {
-		hibernateMappingExporter.setOutputDirectory(outputdir);
+		invoke(mn(), outputdir);
 	}
 
 	@SuppressWarnings("unchecked")
 	protected void exportPOJO(Map additionalContext, POJOClassStub element) {
-		// TODO: protected - call via reflection
+		// protected -> call via reflection
 		Method m = null;
 		try {
-			m = hibernateMappingExporter.getClass().getDeclaredMethod("exportPOJO");//$NON-NLS-1$
+			m = Cl().getDeclaredMethod("exportPOJO");//$NON-NLS-1$
 		} catch (SecurityException e) {
-			//TODO:
+			throw new HibernateConsoleRuntimeException(e);
 		} catch (NoSuchMethodException e) {
-			//TODO:
+			throw new HibernateConsoleRuntimeException(e);
 		}
 		m.setAccessible(true);
 		try {
-			m.invoke(hibernateMappingExporter, additionalContext, element.pojoClass);
+			m.invoke(Obj(), additionalContext, element.Obj());
 		} catch (IllegalArgumentException e) {
-			//TODO:
+			throw new HibernateConsoleRuntimeException(e);
 		} catch (IllegalAccessException e) {
-			//TODO:
+			throw new HibernateConsoleRuntimeException(e);
 		} catch (InvocationTargetException e) {
-			//TODO:
+			throw new HibernateConsoleRuntimeException(e);
 		}
 	}
 
 	public ArtifactCollectorStub getArtifactCollector() {
-		return new ArtifactCollectorStub(hibernateMappingExporter.getArtifactCollector());
+		return new ArtifactCollectorStub(invoke(mn()));
 	}
 
 }

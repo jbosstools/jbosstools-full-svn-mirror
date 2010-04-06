@@ -12,13 +12,22 @@ public class ClassHelper {
 		}
 		Type[] types = cl.getInterfaces();
 		for (Type type : types) {
-			if (0 == name.compareTo(((Class<?>)type).getName())) {
-				return true;
+			if (type instanceof Class<?>) {
+				if (0 == name.compareTo(((Class<?>)type).getName())) {
+					return true;
+				}
+				boolean b = isClassOrOffspring((Class<?>)type, name);
+				if (b) {
+					return true;
+				}
 			}
 		}
 		Type type = cl.getGenericSuperclass();
 		if (type instanceof Class<?>) {
-			return isClassOrOffspring((Class<?>)type, name);
+			boolean b = isClassOrOffspring((Class<?>)type, name);
+			if (b) {
+				return true;
+			}
 		}
 		return false;
 	}

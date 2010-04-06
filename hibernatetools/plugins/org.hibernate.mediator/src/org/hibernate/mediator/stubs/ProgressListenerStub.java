@@ -2,6 +2,7 @@ package org.hibernate.mediator.stubs;
 
 import org.hibernate.cfg.reveng.ProgressListener;
 
+//TODO: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 public abstract class ProgressListenerStub {
 	public static final String CL = "org.hibernate.cfg.reveng.ProgressListener"; //$NON-NLS-1$
 

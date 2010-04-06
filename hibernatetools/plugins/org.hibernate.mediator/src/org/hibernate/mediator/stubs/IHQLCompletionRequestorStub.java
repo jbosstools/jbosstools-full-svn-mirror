@@ -1,6 +1,5 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.tool.ide.completion.HQLCompletionProposal;
 import org.hibernate.tool.ide.completion.IHQLCompletionRequestor;
 
 public abstract class IHQLCompletionRequestorStub {
@@ -8,6 +7,9 @@ public abstract class IHQLCompletionRequestorStub {
 
 	protected IHQLCompletionRequestor hqlCompletionRequestor;
 	
+	public IHQLCompletionRequestorStub() {
+	}
+	/** /
 	protected IHQLCompletionRequestorStub() {
 		hqlCompletionRequestor = new IHQLCompletionRequestor() {
 
@@ -21,6 +23,7 @@ public abstract class IHQLCompletionRequestorStub {
 			
 		};
 	}
+	/**/
 	
 	public abstract boolean accept(HQLCompletionProposalStub proposal);
 	public abstract void completionFailure(String errorMessage);

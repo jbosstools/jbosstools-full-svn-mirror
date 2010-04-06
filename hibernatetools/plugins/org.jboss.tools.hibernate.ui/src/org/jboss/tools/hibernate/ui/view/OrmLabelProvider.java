@@ -30,6 +30,7 @@ import org.hibernate.mediator.stubs.ColumnStub;
 import org.hibernate.mediator.stubs.ConfigurationStub;
 import org.hibernate.mediator.stubs.DialectStub;
 import org.hibernate.mediator.stubs.EnvironmentStub;
+import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.MappingStub;
 import org.hibernate.mediator.stubs.PropertyStub;
 import org.hibernate.mediator.stubs.RootClassStub;
@@ -152,11 +153,7 @@ public class OrmLabelProvider extends LabelProvider implements IColorProvider, I
 			if (dialectName != null) {
 				try {
 					dialect = DialectStub.newInstance(dialectName);
-				} catch (InstantiationException e) {
-					HibernateConsolePlugin.getDefault().logErrorMessage("Exception: ", e); //$NON-NLS-1$
-				} catch (IllegalAccessException e) {
-					HibernateConsolePlugin.getDefault().logErrorMessage("Exception: ", e); //$NON-NLS-1$
-				} catch (ClassNotFoundException e) {
+				} catch (HibernateConsoleRuntimeException e) {
 					HibernateConsolePlugin.getDefault().logErrorMessage("Exception: ", e); //$NON-NLS-1$
 				}
 			}

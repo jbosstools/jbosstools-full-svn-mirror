@@ -11,14 +11,10 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.FakeDelegatingDriver;
 import org.hibernate.mediator.base.HObject;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.tool.ide.completion.HQLCodeAssist;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 
@@ -31,8 +27,12 @@ public class ConfigurationStub extends HObject {
 		super(configuration, CL);
 	}
 
+	protected ConfigurationStub(Object configuration, String cn) {
+		super(configuration, cn);
+	}
+
 	public static ConfigurationStub newInstance() {
-		return new ConfigurationStub(newInstance(CL));
+		return new ConfigurationStub(HObject.newInstance(CL));
 	}
 
 	public void cleanUp() {
@@ -48,11 +48,11 @@ public class ConfigurationStub extends HObject {
 	}
 
 	public void buildMappings() {
-		invoke("buildMappings"); //$NON-NLS-1$
+		invoke(mn());
 	}
 
 	public SettingsStub buildSettings() {
-		Object obj = invoke("buildSettings"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -68,16 +68,15 @@ public class ConfigurationStub extends HObject {
 	}
 
 	public EntityResolver getEntityResolver() {
-		return (EntityResolver)invoke("getEntityResolver"); //$NON-NLS-1$
+		return (EntityResolver)invoke(mn());
 	}
 
-	public IHQLCodeAssistStub getHQLCodeAssist() {
-		// TODO: fix this
-		return new IHQLCodeAssistStub(new HQLCodeAssist((Configuration)Obj()));
+	public HQLCodeAssistStub getHQLCodeAssist() {
+		return HQLCodeAssistStub.createHQLCodeAssist(this);
 	}
 	
 	public NamingStrategyStub getNamingStrategy() {
-		Object obj = invoke("getNamingStrategy"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -90,7 +89,7 @@ public class ConfigurationStub extends HObject {
 	
 	@SuppressWarnings("unchecked")
 	public Iterator<PersistentClassStub> getClassMappings() {
-		Iterator<PersistentClass> it = (Iterator<PersistentClass>)invoke("getClassMappings"); //$NON-NLS-1$
+		Iterator it = (Iterator)invoke(mn());
 		ArrayList<PersistentClassStub> arr = new ArrayList<PersistentClassStub>();
 		while (it.hasNext()) {
 			arr.add(PersistentClassStubFactory.createPersistentClassStub(it.next()));
@@ -99,11 +98,11 @@ public class ConfigurationStub extends HObject {
 	}
 	
 	public PersistentClassStub getClassMapping(String entityName) {
-		return PersistentClassStubFactory.createPersistentClassStub(invoke("getClassMapping", entityName)); //$NON-NLS-1$
+		return PersistentClassStubFactory.createPersistentClassStub(invoke(mn(), entityName));
 	}
 
 	public MappingsStub createMappings() {
-		Object obj = invoke("createMappings"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -111,7 +110,7 @@ public class ConfigurationStub extends HObject {
 	}
 
 	public MappingStub buildMapping() {
-		Object obj = invoke("buildMapping"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -140,8 +139,7 @@ public class ConfigurationStub extends HObject {
 	
 	@SuppressWarnings("unchecked")
 	public Iterator<Throwable> doSchemaExport() {
-		// TODO: fix this
-		SchemaExport export = new SchemaExport((Configuration)Obj());
+		SchemaExportStub export = SchemaExportStub.createSchemaExport(this);
 		export.create(false, true);
 		if (!export.getExceptions().isEmpty()) {
 			return (Iterator<Throwable>)export.getExceptions().iterator();
@@ -154,11 +152,11 @@ public class ConfigurationStub extends HObject {
 	}
 	
 	public Properties getProperties() {
-		return (Properties)invoke("getProperties"); //$NON-NLS-1$
+		return (Properties)invoke(mn());
 	}
 	
 	public String getProperty(String propertyName) {
-		return (String)invoke("getProperty", propertyName); //$NON-NLS-1$
+		return (String)invoke(mn(), propertyName);
 	}
 	
 	/**
@@ -208,39 +206,39 @@ public class ConfigurationStub extends HObject {
 	}
 
 	public ConfigurationStub setProperties(Properties properties) {
-		Object tmp = invoke("setProperties", properties); //$NON-NLS-1$
+		Object tmp = invoke(mn(), properties);
 		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 
 	public void setProperty(String propertyName, String value) {
-		invoke("setProperty", propertyName, value); //$NON-NLS-1$
+		invoke(mn(), propertyName, value);
 	}
 
 	public ConfigurationStub configure(Document document) {
-		Object tmp = invoke("configure", document); //$NON-NLS-1$
+		Object tmp = invoke(mn(), document);
 		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 
 	public ConfigurationStub configure() {
-		Object tmp = invoke("configure"); //$NON-NLS-1$
+		Object tmp = invoke(mn());
 		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 
 	public ConfigurationStub configure(File configFile) {
-		Object tmp = invoke("configure", configFile); //$NON-NLS-1$
+		Object tmp = invoke(mn(), configFile);
 		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 
 	public void setEntityResolver(EntityResolver entityResolver) {
-		invoke("setEntityResolver", entityResolver); //$NON-NLS-1$
+		invoke(mn(), entityResolver);
 	}
 
 	public void setNamingStrategy(NamingStrategyStub ns) {
-		invoke("setNamingStrategy", ns); //$NON-NLS-1$
+		invoke(mn(), ns);
 	}
 
 	public ConfigurationStub addFile(File xmlFile) {
-		Object tmp = invoke("addFile", xmlFile); //$NON-NLS-1$
+		Object tmp = invoke(mn(), xmlFile);
 		return (tmp == Obj() ? this : new ConfigurationStub(tmp));
 	}
 }

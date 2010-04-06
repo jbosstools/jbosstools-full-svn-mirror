@@ -14,83 +14,83 @@ public class PropertyStub extends HObject {
 	}
 
 	public void setName(String name) {
-		invoke("setName", name); //$NON-NLS-1$
+		invoke(mn(), name);
 	}
 
 	public void setValue(ValueStub value) {
-		invoke("setValue", value); //$NON-NLS-1$
+		invoke(mn(), value);
 	}
 
 	public ValueStub getValue() {
-		return ValueStubFactory.createValueStub(invoke("getValue")); //$NON-NLS-1$
+		return ValueStubFactory.createValueStub(invoke(mn()));
 	}
 
 	public void setCascade(String cascade) {
-		invoke("setCascade", cascade); //$NON-NLS-1$
+		invoke(mn(), cascade);
 	}
 
 	public String getName() {
-		return (String)invoke("getName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public TypeStub getType() {
-		return TypeStubFactory.createTypeStub(invoke("getType")); //$NON-NLS-1$
+		return TypeStubFactory.createTypeStub(invoke(mn()));
 	}
 
 	public PersistentClassStub getPersistentClass() {
-		return PersistentClassStubFactory.createPersistentClassStub(invoke("getPersistentClass")); //$NON-NLS-1$
+		return PersistentClassStubFactory.createPersistentClassStub(invoke(mn()));
 	}
 
 	public void setPersistentClass(PersistentClassStub ownerClass) {
-		invoke("setPersistentClass", ownerClass); //$NON-NLS-1$
+		invoke(mn(), ownerClass);
 	}
 
 	public boolean isSelectable() {
-		return (Boolean)invoke("isSelectable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isInsertable() {
-		return (Boolean)invoke("isInsertable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isUpdateable() {
-		return (Boolean)invoke("isUpdateable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isLazy() {
-		return (Boolean)invoke("isLazy"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isOptional() {
-		return (Boolean)invoke("isOptional"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isNaturalIdentifier() {
-		return (Boolean)invoke("isNaturalIdentifier"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isOptimisticLocked() {
-		return (Boolean)invoke("isOptimisticLocked"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public String getCascade() {
-		return (String)invoke("getCascade"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getNodeName() {
-		return (String)invoke("getNodeName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public boolean isBackRef() {
-		return (Boolean)invoke("isBackRef"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isComposite() {
-		return (Boolean)invoke("isComposite"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public String getPropertyAccessorName() {
-		return (String)invoke("getPropertyAccessorName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 }

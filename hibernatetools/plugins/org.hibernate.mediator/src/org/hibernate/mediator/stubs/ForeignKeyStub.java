@@ -4,28 +4,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.ForeignKey;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class ForeignKeyStub {
+public class ForeignKeyStub extends HObject {
 	public static final String CL = "org.hibernate.mapping.ForeignKey"; //$NON-NLS-1$
 
-	protected ForeignKey foreignKey;
-
 	protected ForeignKeyStub(Object foreignKey) {
-		if (foreignKey == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.foreignKey = (ForeignKey)foreignKey;
+		super(foreignKey, CL);
 	}
 	
 	public boolean containsColumn(ColumnStub column) {
-		return foreignKey.containsColumn(column.column);
+		return (Boolean)invoke(mn(), column);
 	}
 	
 	public TableStub getReferencedTable() {
-		Object obj = foreignKey.getReferencedTable();
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -34,7 +27,7 @@ public class ForeignKeyStub {
 
 	@SuppressWarnings("unchecked")
 	public Iterator<ColumnStub> columnIterator() {
-		Iterator<Column> it = (Iterator<Column>)foreignKey.getColumnIterator();
+		Iterator it = (Iterator)invoke(mn());
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -47,8 +40,9 @@ public class ForeignKeyStub {
 
 	@SuppressWarnings("unchecked")
 	public List<ColumnStub> getReferencedColumns() {
-		Iterator<Column> it = foreignKey.getReferencedColumns().iterator();
+		List list = (List)invoke(mn());
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
+		Iterator it = list.iterator();
 		while (it.hasNext()) {
 			Object obj = it.next();
 			if (obj != null) {
@@ -59,7 +53,7 @@ public class ForeignKeyStub {
 	}
 
 	public boolean isReferenceToPrimaryKey() {
-		return foreignKey.isReferenceToPrimaryKey();
+		return (Boolean)invoke(mn());
 	}
 
 }

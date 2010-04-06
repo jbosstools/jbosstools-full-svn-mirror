@@ -1,22 +1,16 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.tool.hbm2x.pojo.POJOClass;
+import org.hibernate.mediator.base.HObject;
 
-public class POJOClassStub {
+public class POJOClassStub extends HObject {
 	public static final String CL = "org.hibernate.tool.hbm2x.pojo.POJOClass"; //$NON-NLS-1$
 
-	protected POJOClass pojoClass;
-
 	protected POJOClassStub(Object pojoClass) {
-		if (pojoClass == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.pojoClass = (POJOClass)pojoClass;
+		super(pojoClass, CL);
 	}
 
 	public String getQualifiedDeclarationName() {
-		return pojoClass.getQualifiedDeclarationName();
+		return (String)invoke(mn());
 	}
 
 }

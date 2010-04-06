@@ -6,35 +6,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.hibernate.mediator.base.HObject;
 
-import org.hibernate.cfg.reveng.DefaultDatabaseCollector;
-import org.hibernate.mapping.Table;
-import org.hibernate.mediator.Messages;
-
-public class DefaultDatabaseCollectorStub {
+public class DefaultDatabaseCollectorStub extends HObject {
 	public static final String CL = "org.hibernate.cfg.reveng.DefaultDatabaseCollector"; //$NON-NLS-1$
 
-	protected DefaultDatabaseCollector defaultDatabaseCollector;
-
 	protected DefaultDatabaseCollectorStub(Object defaultDatabaseCollector) {
-		if (defaultDatabaseCollector == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.defaultDatabaseCollector = (DefaultDatabaseCollector)defaultDatabaseCollector;
+		super(defaultDatabaseCollector, CL);
 	}
 	
 	public static DefaultDatabaseCollectorStub newInstance() {
-		return new DefaultDatabaseCollectorStub(new DefaultDatabaseCollector());
+		return new DefaultDatabaseCollectorStub(HObject.newInstance(CL));
 	}
 
 	@SuppressWarnings("unchecked")
 	public Iterator<Entry<String, List<TableStub>>> getQualifierEntries() {
-		Iterator<Map.Entry<String, List<Table>>> it = defaultDatabaseCollector.getQualifierEntries();
+		Iterator<Map.Entry<String, List>> it = (Iterator<Map.Entry<String, List>>)invoke(mn());
 		HashMap<String, List<TableStub>> map = new HashMap<String, List<TableStub>>();
 		while (it.hasNext()) {
-			Map.Entry<String, List<Table>> entry = it.next();
+			Map.Entry<String, List> entry = it.next();
 			ArrayList<TableStub> arr = new ArrayList<TableStub>();
-			Iterator<Table> itValue = (Iterator<Table>)entry.getValue().iterator();
+			Iterator itValue = (Iterator)entry.getValue().iterator();
 			while (itValue.hasNext()) {
 				Object obj = itValue.next();
 				if (obj != null) {

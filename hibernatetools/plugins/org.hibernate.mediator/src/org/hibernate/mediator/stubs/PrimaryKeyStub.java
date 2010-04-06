@@ -4,33 +4,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.PrimaryKey;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class PrimaryKeyStub {
+public class PrimaryKeyStub extends HObject {
 	public static final String CL = "org.hibernate.mapping.PrimaryKey"; //$NON-NLS-1$
 
-	protected PrimaryKey primaryKey;
-
 	protected PrimaryKeyStub(Object primaryKey) {
-		if (primaryKey == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.primaryKey = (PrimaryKey)primaryKey;
+		super(primaryKey, CL);
 	}
 	
 	public boolean containsColumn(ColumnStub column) {
-		return primaryKey.containsColumn(column.column);
+		return (Boolean)invoke(mn(), column);
 	}
 
 	public String getName() {
-		return primaryKey.getName();
+		return (String)invoke(mn());
 	}
 
 	@SuppressWarnings("unchecked")
 	public Iterator<ColumnStub> columnIterator() {
-		Iterator<Column> it = (Iterator<Column>)primaryKey.getColumnIterator();
+		Iterator it = (Iterator)invoke(mn());
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -43,7 +36,7 @@ public class PrimaryKeyStub {
 
 	@SuppressWarnings("unchecked")
 	public List<ColumnStub> getColumns() {
-		Iterator<Column> it = (Iterator<Column>)primaryKey.getColumnIterator();
+		Iterator it = (Iterator)invoke("getColumnIterator"); //$NON-NLS-1$
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -55,11 +48,11 @@ public class PrimaryKeyStub {
 	}
 
 	public int getColumnSpan() {
-		return primaryKey.getColumnSpan();
+		return (Integer)invoke(mn());
 	}
 
 	public ColumnStub getColumn(int i) {
-		Object obj = primaryKey.getColumn(i);
+		Object obj = invoke(mn(), i);
 		if (obj == null) {
 			return null;
 		}
@@ -67,7 +60,7 @@ public class PrimaryKeyStub {
 	}
 
 	public TableStub getTable() {
-		Object obj = primaryKey.getTable();
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}

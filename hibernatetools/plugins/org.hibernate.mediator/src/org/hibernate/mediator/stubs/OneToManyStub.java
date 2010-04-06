@@ -12,15 +12,15 @@ public class OneToManyStub extends ValueStub {
 	}
 
 	public void setAssociatedClass(PersistentClassStub associatedClass) {
-		invoke("setAssociatedClass", associatedClass); //$NON-NLS-1$
+		invoke(mn(), associatedClass);
 	}
 
 	public void setReferencedEntityName(String referencedEntityName) {
-		invoke("setReferencedEntityName", referencedEntityName); //$NON-NLS-1$
+		invoke(mn(), referencedEntityName);
 	}
 
 	public PersistentClassStub getAssociatedClass() {
-		return PersistentClassStubFactory.createPersistentClassStub(invoke("getAssociatedClass")); //$NON-NLS-1$
+		return PersistentClassStubFactory.createPersistentClassStub(invoke(mn()));
 	}
 	
 	public Object accept(ValueVisitorStub visitor) {
@@ -28,6 +28,6 @@ public class OneToManyStub extends ValueStub {
 	}
 
 	public String getReferencedEntityName() {
-		return (String)invoke("getReferencedEntityName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 }

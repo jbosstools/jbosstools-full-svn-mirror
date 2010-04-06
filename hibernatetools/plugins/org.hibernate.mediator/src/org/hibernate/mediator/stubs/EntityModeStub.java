@@ -1,21 +1,15 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.EntityMode;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class EntityModeStub {
+public class EntityModeStub extends HObject {
 	public static final String CL = "org.hibernate.EntityMode"; //$NON-NLS-1$
 
-	public static final EntityModeStub POJO = new EntityModeStub(EntityMode.POJO);
-	public static final EntityModeStub DOM4J = new EntityModeStub(EntityMode.DOM4J);
-	public static final EntityModeStub MAP = new EntityModeStub(EntityMode.MAP);
-
-	protected EntityMode entityMode;
+	public static final EntityModeStub POJO = new EntityModeStub(readStaticFieldValue(CL, "POJO")); //$NON-NLS-1$
+	public static final EntityModeStub DOM4J = new EntityModeStub(readStaticFieldValue(CL, "DOM4J")); //$NON-NLS-1$
+	public static final EntityModeStub MAP = new EntityModeStub(readStaticFieldValue(CL, "MAP")); //$NON-NLS-1$
 
 	protected EntityModeStub(Object entityMode) {
-		if (entityMode == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.entityMode = (EntityMode)entityMode;
+		super(entityMode, CL);
 	}
 }

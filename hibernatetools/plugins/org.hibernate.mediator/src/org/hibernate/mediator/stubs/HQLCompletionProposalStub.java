@@ -1,56 +1,50 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.tool.ide.completion.HQLCompletionProposal;
+import org.hibernate.mediator.base.HObject;
 
-public class HQLCompletionProposalStub {
+public class HQLCompletionProposalStub extends HObject {
 	public static final String CL = "org.hibernate.tool.ide.completion.HQLCompletionProposal"; //$NON-NLS-1$
 
-	public static final int ENTITY_NAME = HQLCompletionProposal.ENTITY_NAME;
-	public static final int PROPERTY = HQLCompletionProposal.PROPERTY;
-	public static final int KEYWORD = HQLCompletionProposal.KEYWORD;
-	public static final int FUNCTION = HQLCompletionProposal.FUNCTION;
-	public static final int ALIAS_REF = HQLCompletionProposal.ALIAS_REF;
-
-	protected HQLCompletionProposal hqlCompletionProposal;
+	public static final int ENTITY_NAME = (Integer)readStaticFieldValue(CL, "ENTITY_NAME"); //$NON-NLS-1$
+	public static final int PROPERTY = (Integer)readStaticFieldValue(CL, "PROPERTY"); //$NON-NLS-1$
+	public static final int KEYWORD = (Integer)readStaticFieldValue(CL, "KEYWORD"); //$NON-NLS-1$
+	public static final int FUNCTION = (Integer)readStaticFieldValue(CL, "FUNCTION"); //$NON-NLS-1$
+	public static final int ALIAS_REF = (Integer)readStaticFieldValue(CL, "ALIAS_REF"); //$NON-NLS-1$
 
 	protected HQLCompletionProposalStub(Object hqlCompletionProposal) {
-		if (hqlCompletionProposal == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.hqlCompletionProposal = (HQLCompletionProposal)hqlCompletionProposal;
+		super(hqlCompletionProposal, CL);
 	}
 
 	public String getCompletion() {
-		return hqlCompletionProposal.getCompletion();
+		return (String)invoke(mn());
 	}
 
 	public int getReplaceStart() {
-		return hqlCompletionProposal.getReplaceStart();
+		return (Integer)invoke(mn());
 	}
 
 	public int getReplaceEnd() {
-		return hqlCompletionProposal.getReplaceEnd();
+		return (Integer)invoke(mn());
 	}
 
 	public int getCompletionKind() {
-		return hqlCompletionProposal.getCompletionKind();
+		return (Integer)invoke(mn());
 	}
 
 	public String getEntityName() {
-		return hqlCompletionProposal.getEntityName();
+		return (String)invoke(mn());
 	}
 
 	public String getSimpleName() {
-		return hqlCompletionProposal.getSimpleName();
+		return (String)invoke(mn());
 	}
 
 	public String getShortEntityName() {
-		return hqlCompletionProposal.getShortEntityName();
+		return (String)invoke(mn());
 	}
 
 	public PropertyStub getProperty() {
-		Object obj = hqlCompletionProposal.getProperty();
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}

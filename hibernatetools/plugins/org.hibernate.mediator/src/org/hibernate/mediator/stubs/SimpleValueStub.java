@@ -18,31 +18,31 @@ public class SimpleValueStub extends KeyValueStub {
 	}
 
 	public void setTypeName(String type) {
-		invoke("setTypeName", type); //$NON-NLS-1$
+		invoke(mn(), type);
 	}
 
 	public void addColumn(ColumnStub column) {
-		invoke("addColumn", column.column); //$NON-NLS-1$
+		invoke(mn(), column);
 	}
 
 	public void setTable(TableStub table) {
-		invoke("setTable", table); //$NON-NLS-1$
+		invoke(mn(), table);
 	}
 
 	public void setTypeParameters(Properties parameterMap) {
-		invoke("setTypeParameters" ,parameterMap); //$NON-NLS-1$
+		invoke(mn() ,parameterMap);
 	}
 
 	public String getForeignKeyName() {
-		return (String)invoke("getForeignKeyName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getTypeName() {
-		return (String)invoke("getTypeName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public boolean isTypeSpecified() {
-		return (Boolean)invoke("isTypeSpecified"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	@Override

@@ -577,7 +577,7 @@ class TypeVisitor extends ASTVisitor{
 			}
 			prop.setCascade("none");//$NON-NLS-1$
 		} else if (tb.isEnum()){
-			value = buildSimpleValue(EnumTypeStub.getClassName());
+			value = buildSimpleValue(EnumTypeStub.CL);
 			Properties typeParameters = new Properties();
 			typeParameters.put(EnumTypeStub.ENUM, tb.getBinaryName());
 			typeParameters.put(EnumTypeStub.TYPE, java.sql.Types.VARCHAR);

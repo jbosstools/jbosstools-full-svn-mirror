@@ -1,11 +1,15 @@
 package org.hibernate.mediator.base;
 
 import java.beans.Expression;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.util.ClassHelper;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
+import org.hibernate.mediator.util.MReflectionUtils;
 
 public class HObject {
 	// store object
@@ -46,42 +50,34 @@ public class HObject {
 		return invoke(methodName, new HObject[0]);
 	}
 
-	// TODO: get rid of Object -> HObject
 	public Object invoke(final String methodName, Object param0) {
-		return invoke(methodName, new HObject[] { new HObject(param0) });
+		return invoke(methodName, new HObject[] { ho(param0) });
 	}
 
-	// TODO: get rid of Object -> HObject
 	public Object invoke(final String methodName, Object param0, Object param1) {
-		return invoke(methodName, new HObject[] { new HObject(param0), new HObject(param1) });
+		return invoke(methodName, new HObject[] { ho(param0), ho(param1) });
 	}
 
-	// TODO: get rid of Object -> HObject
 	public Object invoke(final String methodName, Object param0, Object param1, Object param2) {
-		return invoke(methodName, new HObject[] { new HObject(param0), new HObject(param1),
-				new HObject(param2) });
+		return invoke(methodName, new HObject[] { ho(param0), ho(param1), ho(param2) });
 	}
 
-	// TODO: get rid of Object -> HObject
 	public Object invoke(final String methodName, Object param0, Object param1, Object param2,
 			Object param3) {
-		return invoke(methodName, new HObject[] { new HObject(param0), new HObject(param1),
-				new HObject(param2), new HObject(param3) });
+		return invoke(methodName, new HObject[] { ho(param0), ho(param1), ho(param2), 
+			ho(param3) });
 	}
 
-	// TODO: get rid of Object -> HObject
 	public Object invoke(final String methodName, Object param0, Object param1, Object param2,
 			Object param3, Object param4) {
-		return invoke(methodName, new HObject[] { new HObject(param0), new HObject(param1),
-				new HObject(param2), new HObject(param3), new HObject(param4) });
+		return invoke(methodName, new HObject[] { ho(param0), ho(param1), ho(param2), 
+			ho(param3), ho(param4) });
 	}
 
-	// TODO: get rid of Object -> HObject
 	public Object invoke(final String methodName, Object param0, Object param1, Object param2,
 			Object param3, Object param4, Object param5) {
-		return invoke(methodName,
-				new HObject[] { new HObject(param0), new HObject(param1), new HObject(param2),
-						new HObject(param3), new HObject(param4), new HObject(param5) });
+		return invoke(methodName, new HObject[] { ho(param0), ho(param1), ho(param2),
+			ho(param3), ho(param4), ho(param5) });
 	}
 
 	//
@@ -105,25 +101,73 @@ public class HObject {
 		}
 	}
 
+
+	//
+	public static Object invokeStaticMethod(final String className, final String methodName) {
+		return invokeStaticMethod(className, methodName, new HObject[0]);
+	}
+
+	public static Object invokeStaticMethod(final String className, final String methodName, Object param0) {
+		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0) });
+	}
+
+	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, Object param1) {
+		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0), ho(param1) });
+	}
+
+	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, Object param1, Object param2) {
+		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0), ho(param1), ho(param2) });
+	}
+	
+    public static Object invokeStaticMethod(final String className, final String methodName, HObject[] params ) {
+		Class<?>[] signature = new Class<?>[params.length];
+		Object[] vals = new Object[params.length];
+		for (int i = 0; i < params.length; i++) {
+			signature[i] = params[i].Cl();
+			vals[i] = params[i].obj;
+		}
+		Class<?> clazz;
+		try {
+			clazz = ReflectHelper.classForName(className);
+		} catch (ClassNotFoundException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		}
+		Method method = MReflectionUtils.getMethod(clazz, methodName, signature );
+		Object res;
+		try {
+			res = method.invoke(null, vals);
+		} catch (IllegalArgumentException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		} catch (InvocationTargetException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		}
+		return res;
+    }
+
 	//
 	public static Object newInstance(final String cn) {
 		return newInstance(cn, new HObject[0]);
 	}
 
-	// TODO: get rid of Object -> HObject
 	public static Object newInstance(final String cn, Object param0) {
-		return newInstance(cn, new HObject[] { new HObject(param0) });
+		return newInstance(cn, new HObject[] { ho(param0) });
 	}
 
-	// TODO: get rid of Object -> HObject
 	public static Object newInstance(final String cn, Object param0, Object param1) {
-		return newInstance(cn, new HObject[] { new HObject(param0), new HObject(param1) });
+		return newInstance(cn, new HObject[] { ho(param0), ho(param1) });
 	}
 
-	// TODO: get rid of Object -> HObject
 	public static Object newInstance(final String cn, Object param0, Object param1, Object param2) {
-		return newInstance(cn, new HObject[] { new HObject(param0), new HObject(param1),
-				new HObject(param2) });
+		return newInstance(cn, new HObject[] { ho(param0), ho(param1), ho(param2) });
+	}
+	
+	protected static HObject ho(Object obj) {
+		if (obj instanceof HObject) {
+			return (HObject)obj;
+		}
+		return new HObject(obj);
 	}
 
 	//
@@ -166,5 +210,29 @@ public class HObject {
 			doNext1 = s.getMethodName().equals("getStackTrace"); //$NON-NLS-1$
 		}
 		return ""; //$NON-NLS-1$
+	}
+
+	public static final Object readStaticFieldValue(final String className, String fieldName) {
+		Class<?> clazz;
+		try {
+			clazz = ReflectHelper.classForName(className);
+		} catch (ClassNotFoundException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		}
+		Field fld;
+		try {
+			fld = clazz.getDeclaredField(fieldName);
+		} catch (SecurityException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		} catch (NoSuchFieldException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		}
+		try {
+			return fld.get(null);
+		} catch (IllegalArgumentException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		}
 	}
 }

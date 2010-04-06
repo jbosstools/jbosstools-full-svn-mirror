@@ -1,45 +1,40 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.Hibernate;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class HibernateStub {
+public class HibernateStub extends HObject {
 	public static final String CL = "org.hibernate.Hibernate"; //$NON-NLS-1$
 
-	public static final NullableTypeStub BOOLEAN = new NullableTypeStub(Hibernate.BOOLEAN);
-	public static final NullableTypeStub BYTE = new NullableTypeStub(Hibernate.BYTE);
-	public static final NullableTypeStub BIG_INTEGER = new NullableTypeStub(Hibernate.BIG_INTEGER);
-	public static final NullableTypeStub SHORT = new NullableTypeStub(Hibernate.SHORT);
-	public static final NullableTypeStub CALENDAR = new NullableTypeStub(Hibernate.CALENDAR);
-	public static final NullableTypeStub CALENDAR_DATE = new NullableTypeStub(Hibernate.CALENDAR_DATE);
-	public static final NullableTypeStub INTEGER = new NullableTypeStub(Hibernate.INTEGER);
-	public static final NullableTypeStub BIG_DECIMAL = new NullableTypeStub(Hibernate.BIG_DECIMAL);
-	public static final NullableTypeStub CHARACTER = new NullableTypeStub(Hibernate.CHARACTER);
-	public static final NullableTypeStub CLASS = new NullableTypeStub(Hibernate.CLASS);
-	public static final NullableTypeStub CURRENCY = new NullableTypeStub(Hibernate.CURRENCY);
-	public static final NullableTypeStub DATE = new NullableTypeStub(Hibernate.DATE);
-	public static final NullableTypeStub DOUBLE = new NullableTypeStub(Hibernate.DOUBLE);
-	public static final NullableTypeStub FLOAT = new NullableTypeStub(Hibernate.FLOAT);
-	public static final NullableTypeStub LOCALE = new NullableTypeStub(Hibernate.LOCALE);
-	public static final NullableTypeStub LONG = new NullableTypeStub(Hibernate.LONG);
-	public static final NullableTypeStub STRING = new NullableTypeStub(Hibernate.STRING);
-	public static final NullableTypeStub TEXT = new NullableTypeStub(Hibernate.TEXT);
-	public static final NullableTypeStub TIME = new NullableTypeStub(Hibernate.TIME);
-	public static final NullableTypeStub TIMESTAMP = new NullableTypeStub(Hibernate.TIMESTAMP);
-	public static final NullableTypeStub TIMEZONE = new NullableTypeStub(Hibernate.TIMEZONE);
-	public static final NullableTypeStub TRUE_FALSE = new NullableTypeStub(Hibernate.TRUE_FALSE);
-	public static final NullableTypeStub YES_NO = new NullableTypeStub(Hibernate.YES_NO);
-
-	protected Hibernate hibernate;
+	public static final NullableTypeStub BOOLEAN = new NullableTypeStub(readStaticFieldValue(CL, "BOOLEAN")); //$NON-NLS-1$
+	public static final NullableTypeStub BYTE = new NullableTypeStub(readStaticFieldValue(CL, "BYTE")); //$NON-NLS-1$
+	public static final NullableTypeStub BIG_INTEGER = new NullableTypeStub(readStaticFieldValue(CL, "BIG_INTEGER")); //$NON-NLS-1$
+	public static final NullableTypeStub SHORT = new NullableTypeStub(readStaticFieldValue(CL, "SHORT")); //$NON-NLS-1$
+	public static final NullableTypeStub CALENDAR = new NullableTypeStub(readStaticFieldValue(CL, "CALENDAR")); //$NON-NLS-1$
+	public static final NullableTypeStub CALENDAR_DATE = new NullableTypeStub(readStaticFieldValue(CL, "CALENDAR_DATE")); //$NON-NLS-1$
+	public static final NullableTypeStub INTEGER = new NullableTypeStub(readStaticFieldValue(CL, "INTEGER")); //$NON-NLS-1$
+	public static final NullableTypeStub BIG_DECIMAL = new NullableTypeStub(readStaticFieldValue(CL, "BIG_DECIMAL")); //$NON-NLS-1$
+	public static final NullableTypeStub CHARACTER = new NullableTypeStub(readStaticFieldValue(CL, "CHARACTER")); //$NON-NLS-1$
+	public static final NullableTypeStub CLASS = new NullableTypeStub(readStaticFieldValue(CL, "CLASS")); //$NON-NLS-1$
+	public static final NullableTypeStub CURRENCY = new NullableTypeStub(readStaticFieldValue(CL, "CURRENCY")); //$NON-NLS-1$
+	public static final NullableTypeStub DATE = new NullableTypeStub(readStaticFieldValue(CL, "DATE")); //$NON-NLS-1$
+	public static final NullableTypeStub DOUBLE = new NullableTypeStub(readStaticFieldValue(CL, "DOUBLE")); //$NON-NLS-1$
+	public static final NullableTypeStub FLOAT = new NullableTypeStub(readStaticFieldValue(CL, "FLOAT")); //$NON-NLS-1$
+	public static final NullableTypeStub LOCALE = new NullableTypeStub(readStaticFieldValue(CL, "LOCALE")); //$NON-NLS-1$
+	public static final NullableTypeStub LONG = new NullableTypeStub(readStaticFieldValue(CL, "LONG")); //$NON-NLS-1$
+	public static final NullableTypeStub STRING = new NullableTypeStub(readStaticFieldValue(CL, "STRING")); //$NON-NLS-1$
+	public static final NullableTypeStub TEXT = new NullableTypeStub(readStaticFieldValue(CL, "TEXT")); //$NON-NLS-1$
+	public static final NullableTypeStub TIME = new NullableTypeStub(readStaticFieldValue(CL, "TIME")); //$NON-NLS-1$
+	public static final NullableTypeStub TIMESTAMP = new NullableTypeStub(readStaticFieldValue(CL, "TIMESTAMP")); //$NON-NLS-1$
+	public static final NullableTypeStub TIMEZONE = new NullableTypeStub(readStaticFieldValue(CL, "TIMEZONE")); //$NON-NLS-1$
+	public static final NullableTypeStub TRUE_FALSE = new NullableTypeStub(readStaticFieldValue(CL, "TRUE_FALSE")); //$NON-NLS-1$
+	public static final NullableTypeStub YES_NO = new NullableTypeStub(readStaticFieldValue(CL, "YES_NO")); //$NON-NLS-1$
 
 	protected HibernateStub(Object hibernate) {
-		if (hibernate == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.hibernate = (Hibernate)hibernate;
+		super(hibernate, CL);
 	}
 
 	public static boolean isInitialized(Object proxy) {
-		return Hibernate.isInitialized(proxy);
+		Boolean isInitialized = (Boolean)invokeStaticMethod(CL, "isInitialized", proxy); //$NON-NLS-1$
+		return isInitialized;
 	}
 }

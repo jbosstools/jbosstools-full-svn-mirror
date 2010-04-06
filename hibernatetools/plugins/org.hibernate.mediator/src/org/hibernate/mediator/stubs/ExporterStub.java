@@ -3,45 +3,41 @@ package org.hibernate.mediator.stubs;
 import java.io.File;
 import java.util.Properties;
 
-import org.hibernate.cfg.Configuration;
-import org.hibernate.mediator.Messages;
-import org.hibernate.tool.hbm2x.ArtifactCollector;
-import org.hibernate.tool.hbm2x.Exporter;
+import org.hibernate.mediator.base.HObject;
 
-public class ExporterStub {
+public class ExporterStub extends HObject {
 	public static final String CL = "org.hibernate.tool.hbm2x.Exporter"; //$NON-NLS-1$
 
-	protected Exporter exporter;
-
 	protected ExporterStub(Object exporter) {
-		if (exporter == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.exporter = (Exporter)exporter;
+		super(exporter, CL);
+	}
+
+	protected ExporterStub(Object exporter, String cn) {
+		super(exporter, cn);
 	}
 
 	public void start() {
-		exporter.start();
+		invoke(mn());
 	}
 
 	public void setConfiguration(ConfigurationStub configuration) {
-		exporter.setConfiguration((Configuration)configuration.Obj());
+		invoke(mn(), configuration);
 	}
 
 	public void setProperties(Properties props) {
-		exporter.setProperties(props);
+		invoke(mn(), props);
 	}
 
 	public void setArtifactCollector(ArtifactCollectorStub collector) {
-		exporter.setArtifactCollector((ArtifactCollector)collector.Obj());
+		invoke(mn(), collector);
 	}
 
 	public void setOutputDirectory(File file) {
-		exporter.setOutputDirectory(file);
+		invoke(mn(), file);
 	}
 
 	public void setTemplatePath(String[] array) {
-		exporter.setTemplatePath(array);
+		invoke(mn(), array);
 	}
 
 }

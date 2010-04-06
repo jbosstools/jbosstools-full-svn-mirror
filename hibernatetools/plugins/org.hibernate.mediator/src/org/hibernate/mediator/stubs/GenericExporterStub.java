@@ -1,31 +1,22 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.tool.hbm2x.GenericExporter;
-
 public class GenericExporterStub extends ExporterStub {
 	public static final String CL = "org.hibernate.tool.hbm2x.GenericExporter"; //$NON-NLS-1$
 
-	protected GenericExporter genericExporter;
-
 	protected GenericExporterStub(Object genericExporter) {
-		super(genericExporter);
-		if (genericExporter == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.genericExporter = (GenericExporter)genericExporter;
+		super(genericExporter, CL);
 	}
 
 	public void setFilePattern(String property) {
-		genericExporter.setFilePattern(property);
+		invoke(mn(), property);
 	}
 
 	public void setTemplateName(String property) {
-		genericExporter.setTemplateName(property);
+		invoke(mn(), property);
 	}
 
 	public void setForEach(String property) {
-		genericExporter.setForEach(property);
+		invoke(mn(), property);
 	}
 
 }

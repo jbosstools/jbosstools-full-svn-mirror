@@ -21,7 +21,7 @@ public class ListStub extends IndexedCollectionStub {
 	}
 
 	public ValueStub getIndex() {
-		return ValueStubFactory.createValueStub(invoke("getIndex")); //$NON-NLS-1$
+		return ValueStubFactory.createValueStub(invoke(mn()));
 	}
 
 }

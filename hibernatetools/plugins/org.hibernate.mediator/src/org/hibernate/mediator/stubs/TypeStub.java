@@ -15,26 +15,26 @@ public abstract class TypeStub extends HObject {
 
 	@SuppressWarnings("unchecked")
 	public Class getReturnedClass() {
-		return (Class)invoke("getReturnedClass"); //$NON-NLS-1$
+		return (Class)invoke(mn());
 	}
 
 	public boolean isCollectionType() {
-		return (Boolean)invoke("isCollectionType"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isEntityType() {
-		return (Boolean)invoke("isEntityType"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isAnyType() {
-		return (Boolean)invoke("isAnyType"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isComponentType() {
-		return (Boolean)invoke("isComponentType"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public String getName() {
-		return (String)invoke("getName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 }

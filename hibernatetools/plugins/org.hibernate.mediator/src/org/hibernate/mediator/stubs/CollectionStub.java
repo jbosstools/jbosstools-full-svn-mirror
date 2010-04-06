@@ -12,35 +12,35 @@ public abstract class CollectionStub extends ValueStub {
 	}
 
 	public void setCollectionTable(TableStub table) {
-		invoke("setCollectionTable", table); //$NON-NLS-1$
+		invoke(mn(), table);
 	}
 
 	public void setKey(KeyValueStub key) {
-		invoke("setKey", key); //$NON-NLS-1$
+		invoke(mn(), key);
 	}
 
 	public void setLazy(boolean lazy) {
-		invoke("setLazy", lazy); //$NON-NLS-1$
+		invoke(mn(), lazy);
 	}
 
 	public void setRole(String role) {
-		invoke("setRole", role); //$NON-NLS-1$
+		invoke(mn(), role);
 	}
 
 	public void setElement(ValueStub element) {
-		invoke("setElement", element); //$NON-NLS-1$
+		invoke(mn(), element);
 	}
 
 	public void setFetchMode(FetchModeStub fetchMode) {
-		invoke("setFetchMode", fetchMode); //$NON-NLS-1$
+		invoke(mn(), fetchMode);
 	}
 
 	public ValueStub getElement() {
-		return ValueStubFactory.createValueStub(invoke("getElement")); //$NON-NLS-1$
+		return ValueStubFactory.createValueStub(invoke(mn()));
 	}
 
 	public TableStub getCollectionTable() {
-		Object obj = invoke("getCollectionTable"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -48,14 +48,14 @@ public abstract class CollectionStub extends ValueStub {
 	}
 
 	public KeyValueStub getKey() {
-		return (KeyValueStub)ValueStubFactory.createValueStub(invoke("getKey")); //$NON-NLS-1$
+		return (KeyValueStub)ValueStubFactory.createValueStub(invoke(mn()));
 	}
 
 	public boolean isOneToMany() {
-		return (Boolean)invoke("isOneToMany"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isInverse() {
-		return (Boolean)invoke("isInverse"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 }

@@ -45,7 +45,7 @@ import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.mediator.stubs.ConfigurationStub;
 import org.hibernate.mediator.stubs.ConfigurationStubFactory;
 import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.mediator.stubs.IHQLCodeAssistStub;
+import org.hibernate.mediator.stubs.HQLCodeAssistStub;
 import org.hibernate.mediator.stubs.SessionStub;
 import org.hibernate.mediator.stubs.SessionFactoryStub;
 import org.hibernate.mediator.stubs.SettingsStub;
@@ -446,7 +446,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		return configStub.getEntityResolver();
 	}
 
-	public IHQLCodeAssistStub getHQLCodeAssist() {
+	public HQLCodeAssistStub getHQLCodeAssist() {
 		if (configStub == null) {
 			try{
 			 	build();

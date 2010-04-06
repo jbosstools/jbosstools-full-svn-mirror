@@ -12,7 +12,7 @@ public class OneToOneStub extends ToOneStub {
 	}
 
 	public String getEntityName() {
-		return (String)invoke("getEntityName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 }

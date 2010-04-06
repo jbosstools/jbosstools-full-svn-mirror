@@ -1,25 +1,19 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.tool.hbm2x.HibernateMappingGlobalSettings;
+import org.hibernate.mediator.base.HObject;
 
-public class HibernateMappingGlobalSettingsStub {
+public class HibernateMappingGlobalSettingsStub extends HObject {
 	public static final String CL = "org.hibernate.tool.hbm2x.HibernateMappingGlobalSettings"; //$NON-NLS-1$
 
-	protected HibernateMappingGlobalSettings hibernateMappingGlobalSettings;
-
 	protected HibernateMappingGlobalSettingsStub(Object hibernateMappingGlobalSettings) {
-		if (hibernateMappingGlobalSettings == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.hibernateMappingGlobalSettings = (HibernateMappingGlobalSettings)hibernateMappingGlobalSettings;
+		super(hibernateMappingGlobalSettings, CL);
 	}
 	
 	public static HibernateMappingGlobalSettingsStub newInstance() {
-		return new HibernateMappingGlobalSettingsStub(new HibernateMappingGlobalSettings());
+		return new HibernateMappingGlobalSettingsStub(HObject.newInstance(CL));
 	}
 
 	public void setDefaultAccess(String string) {
-		hibernateMappingGlobalSettings.setDefaultAccess(string);
+		invoke(mn(), string);
 	}
 }

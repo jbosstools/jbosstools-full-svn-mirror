@@ -3,8 +3,6 @@ package org.hibernate.mediator.stubs;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.hibernate.mapping.Column;
-import org.hibernate.mapping.ForeignKey;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.base.HObject;
 
@@ -20,11 +18,11 @@ public class TableStub extends HObject {
 	}
 	
 	public String getName() {
-		return (String)invoke("getName"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 	
 	public PrimaryKeyStub getPrimaryKey() {
-		Object obj = invoke("getPrimaryKey"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -33,7 +31,7 @@ public class TableStub extends HObject {
 	
 	@SuppressWarnings("unchecked")
 	public Iterator<ForeignKeyStub> getForeignKeyIterator() {
-		Iterator<ForeignKey> it = (Iterator<ForeignKey>)invoke("getForeignKeyIterator"); //$NON-NLS-1$
+		Iterator it = (Iterator)invoke(mn());
 		ArrayList<ForeignKeyStub> al = new ArrayList<ForeignKeyStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -45,15 +43,15 @@ public class TableStub extends HObject {
 	}
 
 	public String getCatalog() {
-		return (String)invoke("getCatalog"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getSchema() {
-		return (String)invoke("getSchema"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public KeyValueStub getIdentifierValue() {
-		Object obj = invoke("getIdentifierValue"); //$NON-NLS-1$
+		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
@@ -66,7 +64,7 @@ public class TableStub extends HObject {
 
 	@SuppressWarnings("unchecked")
 	public Iterator<ColumnStub> getColumnIterator() {
-		Iterator<Column> it = (Iterator<Column>)invoke("getColumnIterator"); //$NON-NLS-1$
+		Iterator it = (Iterator)invoke(mn());
 		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
 		while (it.hasNext()) {
 			Object obj = it.next();
@@ -78,30 +76,30 @@ public class TableStub extends HObject {
 	}
 
 	public String getComment() {
-		return (String)invoke("getComment"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getRowId() {
-		return (String)invoke("getRowId"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public String getSubselect() {
-		return (String)invoke("getSubselect"); //$NON-NLS-1$
+		return (String)invoke(mn());
 	}
 
 	public boolean hasDenormalizedTables() {
-		return (Boolean)invoke("hasDenormalizedTables"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isAbstract() {
-		return (Boolean)invoke("isAbstract"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isAbstractUnionTable() {
-		return (Boolean)invoke("isAbstractUnionTable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 
 	public boolean isPhysicalTable() {
-		return (Boolean)invoke("isPhysicalTable"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 }

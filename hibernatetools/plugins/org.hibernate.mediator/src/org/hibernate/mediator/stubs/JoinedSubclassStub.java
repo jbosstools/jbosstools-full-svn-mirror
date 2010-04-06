@@ -12,11 +12,11 @@ public class JoinedSubclassStub extends SubclassStub {
 	}
 	
 	public void setTable(TableStub table) {
-		invoke("setTable", table); //$NON-NLS-1$
+		invoke(mn(), table);
 	}
 	
 	public void setKey(KeyValueStub key) {
-		invoke("ssetKey", key); //$NON-NLS-1$
+		invoke(mn(), key);
 	}
 
 }

@@ -1,54 +1,48 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.cfg.reveng.TableFilter;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
-public class TableFilterStub {
+public class TableFilterStub extends HObject {
 	public static final String CL = "org.hibernate.cfg.reveng.TableFilter"; //$NON-NLS-1$
 
-	protected TableFilter tableFilter;
-
 	protected TableFilterStub(Object tableFilter) {
-		if (tableFilter == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.tableFilter = (TableFilter)tableFilter;
+		super(tableFilter, CL);
 	}
 	
 	public static TableFilterStub newInstance() {
-		return new TableFilterStub(new TableFilter());
+		return new TableFilterStub(newInstance(CL));
 	}
 
 	public void setExclude(Boolean exclude) {
-		tableFilter.setExclude(exclude);
+		invoke(mn(), exclude);
 	}
 
 	public void setMatchCatalog(String matchCatalog) {
-		tableFilter.setMatchCatalog(matchCatalog);
+		invoke(mn(), matchCatalog);
 	}
 
 	public void setMatchName(String matchName) {
-		tableFilter.setMatchName(matchName);
+		invoke(mn(), matchName);
 	}
 
 	public void setMatchSchema(String matchSchema) {
-		tableFilter.setMatchSchema(matchSchema);
+		invoke(mn(), matchSchema);
 	}
 
 	public Boolean getExclude() {
-		return tableFilter.getExclude();
+		return (Boolean)invoke(mn());
 	}
 
 	public String getMatchCatalog() {
-		return tableFilter.getMatchCatalog();
+		return (String)invoke(mn());
 	}
 
 	public String getMatchSchema() {
-		return tableFilter.getMatchSchema();
+		return (String)invoke(mn());
 	}
 
 	public String getMatchName() {
-		return tableFilter.getMatchName();
+		return (String)invoke(mn());
 	}
 
 }

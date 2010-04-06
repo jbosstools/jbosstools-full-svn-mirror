@@ -2,6 +2,7 @@ package org.hibernate.mediator.stubs;
 
 import org.hibernate.cfg.reveng.JDBCToHibernateTypeHelper;
 
+// TODO: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 public class JDBCToHibernateTypeHelperStub {
 	public static final String CL = "org.hibernate.cfg.reveng.JDBCToHibernateTypeHelper"; //$NON-NLS-1$
 

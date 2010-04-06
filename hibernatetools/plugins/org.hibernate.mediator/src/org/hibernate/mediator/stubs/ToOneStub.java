@@ -12,18 +12,18 @@ public class ToOneStub extends SimpleValueStub {
 	}
 
 	public void setReferencedEntityName(String referencedEntityName) {
-		invoke("setReferencedEntityName", referencedEntityName); //$NON-NLS-1$
+		invoke(mn(), referencedEntityName);
 	}
 
 	public void setReferencedPropertyName(String name) {
-		invoke("setReferencedPropertyName", name); //$NON-NLS-1$
+		invoke(mn(), name);
 	}
 
 	public void setFetchMode(FetchModeStub fetchMode) {
-		invoke("setFetchMode", fetchMode); //$NON-NLS-1$
+		invoke(mn(), fetchMode);
 	}
 
 	public boolean isEmbedded() {
-		return (Boolean)invoke("isEmbedded"); //$NON-NLS-1$
+		return (Boolean)invoke(mn());
 	}
 }

@@ -3,47 +3,40 @@ package org.hibernate.mediator.stubs;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
-
-import org.hibernate.cfg.JDBCMetaDataConfiguration;
-import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 
 public class ConfigurationStubJDBCMetaData extends ConfigurationStub {
 	public static final String CL = "org.hibernate.cfg.JDBCMetaDataConfiguration"; //$NON-NLS-1$
 
-	protected JDBCMetaDataConfiguration jdbcMetaDataConfiguration;
-	
-	protected ConfigurationStubJDBCMetaData(JDBCMetaDataConfiguration configuration) {
-		super(configuration);
-		if (configuration == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		jdbcMetaDataConfiguration = configuration;
+	protected ConfigurationStubJDBCMetaData(Object configuration) {
+		super(configuration, CL);
 	}
 	
 	public static ConfigurationStubJDBCMetaData newInstance() {
-		return new ConfigurationStubJDBCMetaData(new JDBCMetaDataConfiguration());
+		return new ConfigurationStubJDBCMetaData(HObject.newInstance(CL));
 	}
 
 	public ConfigurationStubJDBCMetaData setProperties(Properties properties) {
-		JDBCMetaDataConfiguration tmp = (JDBCMetaDataConfiguration)jdbcMetaDataConfiguration.setProperties(properties);
-		return (tmp == jdbcMetaDataConfiguration ? this : new ConfigurationStubJDBCMetaData(tmp));
+		Object tmp = invoke(mn(), properties);
+		return (tmp == Obj() ? this : new ConfigurationStubJDBCMetaData(tmp));
 	}
 
 	public void setPreferBasicCompositeIds(boolean flag) {
-		jdbcMetaDataConfiguration.setPreferBasicCompositeIds(flag);
+		invoke(mn(), flag);
 	}
 
 	public void setReverseEngineeringStrategy(ReverseEngineeringStrategyStub reverseEngineeringStrategy) {
-		jdbcMetaDataConfiguration.setReverseEngineeringStrategy(reverseEngineeringStrategy.reverseEngineeringStrategy);
+		invoke(mn(), reverseEngineeringStrategy);
 	}
 
 	public void readFromJDBC() {
-		jdbcMetaDataConfiguration.readFromJDBC();
+		invoke(mn());
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<TableStub> getTableMappingsArr() {
 		ArrayList<TableStub> arr = new ArrayList<TableStub>(); 
-		Iterator<?> it = jdbcMetaDataConfiguration.getTableMappings();
+		Iterator it = (Iterator)invoke(mn());
 		while (it.hasNext() ) {
 			Object obj = it.next();
 			if (obj != null) {

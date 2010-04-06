@@ -10,6 +10,6 @@ public class MappingsStub extends HObject {
 	}
 
 	public void addClass(PersistentClassStub persistentClass) {
-		invoke("addClass", persistentClass); //$NON-NLS-1$
+		invoke(mn(), persistentClass);
 	}
 }

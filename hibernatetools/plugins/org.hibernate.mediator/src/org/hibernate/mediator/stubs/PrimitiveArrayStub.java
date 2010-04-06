@@ -12,7 +12,7 @@ public class PrimitiveArrayStub extends ArrayStub {
 	}
 
 	public void setElement(ValueStub element) {
-		invoke("setElement", element); //$NON-NLS-1$
+		invoke(mn(), element);
 	}
 
 }

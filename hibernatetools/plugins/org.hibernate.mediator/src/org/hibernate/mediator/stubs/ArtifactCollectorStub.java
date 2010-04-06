@@ -16,11 +16,11 @@ public class ArtifactCollectorStub extends HObject {
 	}
 
 	public File[] getFiles(String string) {
-		return (File[])invoke("getFiles", string); //$NON-NLS-1$
+		return (File[])invoke(mn(), string);
 	}
 
 	public void formatFiles() {
-		invoke("formatFiles"); //$NON-NLS-1$
+		invoke(mn());
 	}
 
 }

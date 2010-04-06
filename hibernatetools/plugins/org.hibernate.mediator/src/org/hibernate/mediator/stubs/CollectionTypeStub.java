@@ -1,27 +1,18 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.mediator.Messages;
-import org.hibernate.type.CollectionType;
-
 public class CollectionTypeStub extends AbstractTypeStub {
 	public static final String CL = "org.hibernate.type.CollectionType"; //$NON-NLS-1$
 
-	protected CollectionType collectionType;
-
 	protected CollectionTypeStub(Object collectionType) {
-		super(collectionType);
-		if (collectionType == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.collectionType = (CollectionType)collectionType;
+		super(collectionType, CL);
 	}
 
 	public String getRole() {
-		return collectionType.getRole();
+		return (String)invoke(mn());
 	}
 
 	public boolean isArrayType() {
-		return collectionType.isArrayType();
+		return (Boolean)invoke(mn());
 	}
 
 }

@@ -7,82 +7,76 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.engine.query.HQLQueryPlan;
 import org.hibernate.hql.QueryTranslator;
 import org.hibernate.impl.SessionFactoryImpl;
 import org.hibernate.mediator.Messages;
+import org.hibernate.mediator.base.HObject;
 import org.hibernate.mediator.util.ELTransformer;
 import org.hibernate.mediator.util.QLFormatHelper;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.type.Type;
 
-public class SessionFactoryStub {
+//TODO: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+public class SessionFactoryStub extends HObject {
 	public static final String CL = "org.hibernate.SessionFactory"; //$NON-NLS-1$
 
-	protected SessionFactory sessionFactory;
-
 	protected SessionFactoryStub(Object sessionFactory) {
-		if (sessionFactory == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
-		this.sessionFactory = (SessionFactory)sessionFactory;
+		super(sessionFactory, CL);
 	}
 
 	public boolean isSessionFactoryCreated() {
-		return sessionFactory != null;
+		return Obj() != null;
 	}
 
 	public SessionStub openSession() {
-		if (sessionFactory != null) {
-			return new SessionStub(sessionFactory.openSession());
+		if (Obj() != null) {
+			return new SessionStub(invoke(mn()));
 		}
 		return null;
 	}
 
 	public void close() {
-		if (sessionFactory != null) {
-			sessionFactory.close();
+		if (Obj() != null) {
+			invoke(mn());
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<String> getClasses() {
 		List<String> res = Collections.emptyList();
-		if (sessionFactory != null) {
+		if (Obj() != null) {
 			res = new ArrayList<String>();
-			res.addAll(sessionFactory.getAllClassMetadata().keySet());
+			res.addAll(((Map)invoke("getAllClassMetadata")).keySet()); //$NON-NLS-1$
 		}
 		return res;
 	}
 
 	@SuppressWarnings("unchecked")
 	public Map<String, ClassMetadataStub> getClassMetaData() {
-		if (sessionFactory == null) {
+		if (Obj() == null) {
 			return new HashMap<String, ClassMetadataStub>();
 		}
-		Map<String, ClassMetadata> allClassMetadata = sessionFactory.getAllClassMetadata();
-		Iterator<Map.Entry<String, ClassMetadata>> it = allClassMetadata.entrySet().iterator();
+		Map allClassMetadata = (Map)invoke("getAllClassMetadata"); //$NON-NLS-1$
+		Iterator it = allClassMetadata.entrySet().iterator();
 		Map<String, ClassMetadataStub> res = new HashMap<String, ClassMetadataStub>();
 		while (it.hasNext()) {
-			Map.Entry<String, ClassMetadata> entry = it.next();
-			res.put(entry.getKey(), new ClassMetadataStub(entry.getValue()));
+			Map.Entry entry = (Map.Entry)it.next();
+			res.put((String)entry.getKey(), new ClassMetadataStub(entry.getValue()));
 		}
 		return res;
 	}
 
 	@SuppressWarnings("unchecked")
 	public Map<String, CollectionMetadataStub> getCollectionMetaData() {
-		if (sessionFactory == null) {
+		if (Obj() == null) {
 			return new HashMap<String, CollectionMetadataStub>();
 		}
-		Map<String, CollectionMetadata> allClassMetadata = sessionFactory.getAllCollectionMetadata();
-		Iterator<Map.Entry<String, CollectionMetadata>> it = allClassMetadata.entrySet().iterator();
+		Map allClassMetadata = (Map)invoke("getAllCollectionMetadata"); //$NON-NLS-1$
+		Iterator it = allClassMetadata.entrySet().iterator();
 		Map<String, CollectionMetadataStub> res = new HashMap<String, CollectionMetadataStub>();
 		while (it.hasNext()) {
-			Map.Entry<String, CollectionMetadata> entry = it.next();
-			res.put(entry.getKey(), new CollectionMetadataStub(entry.getValue()));
+			Map.Entry entry = (Map.Entry)it.next();
+			res.put((String)entry.getKey(), new CollectionMetadataStub(entry.getValue()));
 		}
 		return res;
 	}
@@ -96,18 +90,18 @@ public class SessionFactoryStub {
 	 *            if true, EL syntax will be replaced as a named variable
 	 */
 	public void checkQuery(String query, boolean allowEL) {
-		if (sessionFactory != null) {
+		if (Obj() != null) {
 			if (allowEL) {
 				query = ELTransformer.removeEL(query);
 			}
 			new HQLQueryPlan(query, false, Collections.EMPTY_MAP,
-					(SessionFactoryImpl) sessionFactory);
+					(SessionFactoryImpl) Obj());
 		}
 	}
 
 	public String generateSQL(String query) {
 		try {
-			SessionFactoryImpl sfimpl = (SessionFactoryImpl) sessionFactory; // hack - to get to the
+			SessionFactoryImpl sfimpl = (SessionFactoryImpl) Obj(); // hack - to get to the
 																				// actual queries..
 			StringBuffer str = new StringBuffer(256);
 			HQLQueryPlan plan = new HQLQueryPlan(query, false, Collections.EMPTY_MAP, sfimpl);

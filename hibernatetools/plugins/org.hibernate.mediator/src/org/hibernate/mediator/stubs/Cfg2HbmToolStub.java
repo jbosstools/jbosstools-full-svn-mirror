@@ -14,10 +14,10 @@ public class Cfg2HbmToolStub extends HObject {
 	}
 
 	public String getTag(PersistentClassStub persistentClass) {
-		return (String)invoke("getTag", persistentClass); //$NON-NLS-1$
+		return (String)invoke(mn(), persistentClass);
 	}
 
 	public String getTag(PropertyStub property) {
-		return (String)invoke("getTag", property); //$NON-NLS-1$
+		return (String)invoke(mn(), property);
 	}
 }
