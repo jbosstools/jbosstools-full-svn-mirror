@@ -5,13 +5,13 @@
   <!-- !*** Contains features, plugins, and tests common to both jbpm3 and jbpm4. -->
 
   <!-- !*** features -->
-  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/features/org.jboss.tools.jbpm.common.feature,org.jboss.tools.jbpm.common.feature"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/jbpm/features/org.jboss.tools.jbpm.common.feature,org.jboss.tools.jbpm.common.feature"/>
 
   <!-- !*** plugins -->
-  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/plugins/org.jboss.tools.jbpm.common,org.jboss.tools.jbpm.common"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/jbpm/plugins/org.jboss.tools.jbpm.common,org.jboss.tools.jbpm.common"/>
 
   <!-- !*** test plugins -->
-  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/plugins/org.jboss.tools.jbpm.common.test,org.jboss.tools.jbpm.common.test"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/jbpm/plugins/org.jboss.tools.jbpm.common.test,org.jboss.tools.jbpm.common.test"/>
 
 </provider>
 </psf>

@@ -6,17 +6,17 @@
   <!-- !*** See common.map for features, plugins, and tests common to both jbpm3 and jbpm4. -->
 
   <!-- !*** features -->
-  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/features/org.jbpm.gd.jpdl.feature,org.jbpm.gd.jpdl.feature"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/jbpm/features/org.jbpm.gd.jpdl.feature,org.jbpm.gd.jpdl.feature"/>
 
   <!-- !*** plugins -->
-  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/plugins/org.jbpm.gd.jpdl,org.jbpm.gd.jpdl"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/jbpm/plugins/org.jbpm.gd.jpdl,org.jbpm.gd.jpdl"/>
 
   <!-- !*** test features -->
-  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/features/org.jboss.tools.jbpm3.tests.sdk.feature,org.jboss.tools.jbpm3.tests.sdk.feature"/>
-  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/features/org.jboss.tools.jbpm3.tests.feature,org.jboss.tools.jbpm3.tests.feature"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/jbpm/features/org.jboss.tools.jbpm3.tests.sdk.feature,org.jboss.tools.jbpm3.tests.sdk.feature"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/jbpm/features/org.jboss.tools.jbpm3.tests.feature,org.jboss.tools.jbpm3.tests.feature"/>
 
   <!-- !*** test plugins -->
-  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/trunk/jbpm/tests/org.jbpm.gd.jpdl.test,org.jbpm.gd.jpdl.test"/>
+  <project reference="0.9.3,http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/jbpm/tests/org.jbpm.gd.jpdl.test,org.jbpm.gd.jpdl.test"/>
 
 </provider>
 </psf>
