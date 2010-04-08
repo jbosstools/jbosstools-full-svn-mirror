@@ -1056,12 +1056,15 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			IHandlerService handlerService = (IHandlerService) workbench
 					.getService(IHandlerService.class);
 			if (handlerService != null) {
+				if(sourceActivation != null) handlerService.deactivateHandler(sourceActivation);
 				sourceActivation = handlerService.activateHandler(
 						VPE_SOURCE_MAXMIN,
 						sourceMaxmin);
+				if(visualActivation != null) handlerService.deactivateHandler(visualActivation);
 				visualActivation = handlerService.activateHandler(
 						VPE_VISUAL_MAXMIN,
 						visualMaxmin);
+				if(jumpingActivation != null) handlerService.deactivateHandler(jumpingActivation);
 				jumpingActivation = handlerService.activateHandler(
 						VPE_JUMPING,
 						jumping);
