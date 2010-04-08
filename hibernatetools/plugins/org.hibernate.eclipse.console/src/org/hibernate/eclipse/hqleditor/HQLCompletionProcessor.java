@@ -38,6 +38,7 @@ import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.QueryEditor;
+import org.hibernate.mediator.execution.ExecutionContext;
 import org.hibernate.mediator.stubs.HQLCodeAssistStub;
 
 /**
@@ -110,12 +111,18 @@ public class HQLCompletionProcessor implements IContentAssistProcessor {
 					return result;
 				}
 				HQLCodeAssistStub hqlEval = null;
+				EclipseHQLCompletionRequestor eclipseHQLCompletionCollector = null;
 				if (consoleConfig != null) {
 					hqlEval = consoleConfig.getHQLCodeAssist();
+					eclipseHQLCompletionCollector = (EclipseHQLCompletionRequestor)consoleConfig.execute(new ExecutionContext.Command() {
+						public Object execute() {
+							return new EclipseHQLCompletionRequestor();
+						}
+					});
 				} else {
 					hqlEval = HQLCodeAssistStub.createHQLCodeAssist();
+					eclipseHQLCompletionCollector = new EclipseHQLCompletionRequestor();
 				}
-				EclipseHQLCompletionRequestor eclipseHQLCompletionCollector = new EclipseHQLCompletionRequestor();
 				hqlEval.codeComplete(doc.get(), currentOffset, eclipseHQLCompletionCollector);
 				proposalList.addAll(eclipseHQLCompletionCollector.getCompletionProposals());
 				errorMessage = eclipseHQLCompletionCollector.getLastErrorMessage();
