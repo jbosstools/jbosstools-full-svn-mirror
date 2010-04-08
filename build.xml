@@ -26,9 +26,9 @@
 
 	<!-- default settings for JBQA Hudson -->
 	<target name="init" depends="local">
-		<property name="WORKINGDIR" value="${WORKSPACE}/jbosstools-trunk" />
+		<property name="WORKINGDIR" value="${basedir}" />
 		<!-- <property name="COMMON_TOOLS" value="/qa/tools/opt" /> -->
-		<property name="COMMON_TOOLS" value="${WORKSPACE}/tools" />
+		<property name="COMMON_TOOLS" value="${basedir}/../tools" />
 		<mkdir dir="${COMMON_TOOLS}" />
 
 		<property name="MAVEN_MIRROR" value="http://mirror.csclub.uwaterloo.ca/apache/maven/binaries" />
