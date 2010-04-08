@@ -1,30 +1,38 @@
 package org.hibernate.mediator.stubs;
 
-import org.hibernate.tool.ide.completion.IHQLCompletionRequestor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+import org.hibernate.mediator.stubs.util.ReflectHelper;
 
 public abstract class IHQLCompletionRequestorStub {
-	public static final String CL = "org.hibernate.tool.ide.completion.HQLCompletionProposal"; //$NON-NLS-1$
+	public static final String CL = "org.hibernate.tool.ide.completion.IHQLCompletionRequestor"; //$NON-NLS-1$
 
-	protected IHQLCompletionRequestor hqlCompletionRequestor;
-	
+	protected Object hqlCompletionRequestor;
+
 	public IHQLCompletionRequestorStub() {
-	}
-	/** /
-	protected IHQLCompletionRequestorStub() {
-		hqlCompletionRequestor = new IHQLCompletionRequestor() {
-
-			public boolean accept(HQLCompletionProposal proposal) {
-				return IHQLCompletionRequestorStub.this.accept(new HQLCompletionProposalStub(proposal));
+		Class<?> clazz;
+		try {
+			clazz = ReflectHelper.classForName(CL);
+		} catch (ClassNotFoundException e) {
+			throw new HibernateConsoleRuntimeException(e);
+		}
+		InvocationHandler handler = new InvocationHandler() {
+			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+				if ("accept".equals(method.getName())) { //$NON-NLS-1$
+					return IHQLCompletionRequestorStub.this.accept(new HQLCompletionProposalStub(args[0]));
+				} else if ("completionFailure".equals(method.getName())) { //$NON-NLS-1$
+					IHQLCompletionRequestorStub.this.completionFailure(args[0].toString());
+				}
+				return null;
 			}
-
-			public void completionFailure(String errorMessage) {
-				IHQLCompletionRequestorStub.this.completionFailure(errorMessage);
-			}
-			
 		};
+		hqlCompletionRequestor = Proxy.newProxyInstance(clazz.getClassLoader(),
+				new Class[] { clazz }, handler);
 	}
-	/**/
-	
+
 	public abstract boolean accept(HQLCompletionProposalStub proposal);
+
 	public abstract void completionFailure(String errorMessage);
 }

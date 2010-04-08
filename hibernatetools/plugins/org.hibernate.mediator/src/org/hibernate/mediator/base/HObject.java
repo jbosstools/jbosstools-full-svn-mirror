@@ -111,12 +111,29 @@ public class HObject {
 		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0) });
 	}
 
-	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, Object param1) {
+	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, 
+			Object param1) {
 		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0), ho(param1) });
 	}
 
-	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, Object param1, Object param2) {
+	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, 
+			Object param1, Object param2) {
 		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0), ho(param1), ho(param2) });
+	}
+
+	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, 
+			Object param1, Object param2, Object param3) {
+		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0), ho(param1), ho(param2), ho(param3) });
+	}
+
+	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, 
+			Object param1, Object param2, Object param3, Object param4) {
+		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0), ho(param1), ho(param2), ho(param3), ho(param4) });
+	}
+
+	public static Object invokeStaticMethod(final String className, final String methodName, Object param0, 
+			Object param1, Object param2, Object param3, Object param4, Object param5) {
+		return invokeStaticMethod(className, methodName, new HObject[] { ho(param0), ho(param1), ho(param2), ho(param3), ho(param4), ho(param5) });
 	}
 	
     public static Object invokeStaticMethod(final String className, final String methodName, HObject[] params ) {

@@ -18,6 +18,6 @@ public class HQLCodeAssistStub extends HObject {
 	}
 
 	public void codeComplete(String query, int position, IHQLCompletionRequestorStub requestor) {
-		invoke(mn(), query, position, requestor);
+		invoke(mn(), query, position, requestor.hqlCompletionRequestor);
 	}
 }

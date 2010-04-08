@@ -458,7 +458,15 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 				//HibernateConsolePlugin.getDefault().logErrorMessage(mess, e);
 			}
 		}
-		return configStub.getHQLCodeAssist();
+		HQLCodeAssistStub res = (HQLCodeAssistStub)execute(new ExecutionContext.Command() {
+			public Object execute() {
+				if (configStub != null) {
+					return configStub.getHQLCodeAssist();
+				}
+				return null;
+			}
+		} );
+		return res;
 	}
 	
 	public void buildMappings() {

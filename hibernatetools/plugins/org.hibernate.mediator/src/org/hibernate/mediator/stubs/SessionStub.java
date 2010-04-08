@@ -29,6 +29,7 @@ import org.hibernate.type.Type;
 import bsh.EvalError;
 import bsh.Interpreter;
 
+// TODO: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 public class SessionStub extends HObject {
 	public static final String CL = "org.hibernate.Session"; //$NON-NLS-1$
 
