@@ -16,8 +16,8 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -f genpom.xml -q 
 		 or, to build a specific module only:
 			cd /home/nboldt/workspace36/jbosstools-modular_build; \
-			ant -f genpom.xml -q -DWORKINGDIR=/home/nboldt/workspace36/jbosstools-modular_build/jbpm \
-			-DpathToParentPom=../
+			ant -f genpom.xml -q -DpathToParentPom=../ -DWORKINGDIR=/home/nboldt/workspace36/jbosstools-modular_build/as
+			
 	-->
 
 	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
@@ -307,7 +307,7 @@
 										/>
 
 										<echo>Aggregated: ${artifactIdAgg}</echo>
-																				
+
 										<var name="artifactIdAgg" unset="true" />
 									</else>
 								</if>
@@ -351,6 +351,21 @@
 			</not>
 			<then>
 				<fail>Error: no parent-pom.xml found in ${WORKINGDIR}/${pathToParentPom}</fail>
+			</then>
+		</if>
+
+		<!-- if set, compare values in tags file to values found in manifests and report discrepancies -->
+		<var name="tagsFile"
+		     value="/home/nboldt/eclipse/workspace-jboss/devstudio-trunk/releng/org.jboss.ide.eclipse.releng/builders/product/versionTags/jbosstools/3.1.0.GA.tags"
+		/>
+
+		<if>
+			<and>
+				<isset property="tagsFile" />
+				<available file="${tagsFile}" type="file" />
+			</and>
+			<then>
+				<property file="${tagsFile}" prefix="tagsFile" />
 			</then>
 		</if>
 
@@ -426,6 +441,31 @@
 				               casesensitive="true"
 				               override="true"
 				/>
+
+				<!-- compare tags file to current manifests -->
+				<antcallback target="checkArtifactVersionAgainstTagFile" return="artifactVersion.from.tag" />
+				<if>
+					<not>
+						<equals arg1="${artifactVersion.from.tag}" arg2="${artifactVersion}" />
+					</not>
+					<then>
+						<loadfile property="manifest.file" srcfile="${dir}/META-INF/MANIFEST.MF">
+							<filterchain>
+								<tokenfilter>
+									<replaceregex pattern="Bundle-Version:( +)${artifactVersion}"
+									              replace="Bundle-Version: ${artifactVersion.from.tag}"
+									              flags=""
+									/>
+								</tokenfilter>
+							</filterchain>
+						</loadfile>
+						<echo message="${manifest.file}" file="${dir}/META-INF/MANIFEST.MF" />
+						<var name="manifest.file" unset="true" />
+					</then>
+				</if>
+				<var name="artifactVersion.from.tag" unset="true" />
+
+				<!-- now, switch to Maven style (s/.qualifier/-SNAPSHOT/) -->
 				<propertyregex property="artifactVersion"
 				               input="${artifactVersion}"
 				               defaultvalue="${artifactVersion}"
@@ -441,15 +481,40 @@
 					<!-- get <feature version=""> -->
 					<xmlproperty file="${dir}/feature.xml" collapseAttributes="true" />
 					<var name="artifactVersion" value="${feature.version}" />
+
+					<!-- compare tags file to current manifests -->
+					<antcallback target="checkArtifactVersionAgainstTagFile" return="artifactVersion.from.tag" />
+					<if>
+						<not>
+							<equals arg1="${artifactVersion.from.tag}" arg2="${artifactVersion}" />
+						</not>
+						<then>
+							<var name="feature.version" unset="true" />
+							<loadfile property="manifest.file" srcfile="${dir}/feature.xml">
+								<filterchain>
+									<tokenfilter>
+										<replaceregex pattern="version=&quot;${artifactVersion}&quot;"
+										              replace="version=&quot;${artifactVersion.from.tag}&quot;"
+										              flags=""
+										/>
+									</tokenfilter>
+								</filterchain>
+							</loadfile>
+							<echo message="${manifest.file}" file="${dir}/feature.xml" />
+							<var name="manifest.file" unset="true" />
+						</then>
+					</if>
+					<var name="artifactVersion.from.tag" unset="true" />
+
+					<!-- now, switch to Maven style (s/.qualifier/-SNAPSHOT/) -->
 					<propertyregex property="artifactVersion"
-					               input="${artifactVersion}"
-					               defaultvalue="${artifactVersion}"
+					               input="${artifactVersion.from.tag}"
+					               defaultvalue="${artifactVersion.from.tag}"
 					               regexp="(.+).qualifier"
 					               replace="\1-SNAPSHOT"
 					               casesensitive="true"
 					               override="true"
 					/>
-					<var name="feature.version" unset="true" />
 				</then>
 			</elseif>
 			<else>
@@ -457,6 +522,44 @@
 				<var name="artifactVersion" value="0.0.0" />
 			</else>
 		</if>
+	</target>
+
+	<target name="checkArtifactVersionAgainstTagFile">
+		<dirname property="this.dir" file="${dir}" />
+		<dirname property="parent.dir.path" file="${this.dir}" />
+		<basename property="parent.dir" file="${parent.dir.path}" />
+		<var name="this.dir" unset="true" />
+		<var name="parent.dir.path" unset="true" />
+		<if>
+			<isset property="tagsFile.${parent.dir}" />
+			<then>
+				<propertycopy from="tagsFile.${parent.dir}" property="artifactVersion.from.tag" />
+				<propertyregex property="artifactVersion.from.tag"
+				               input="${artifactVersion.from.tag}"
+				               defaultvalue="${artifactVersion.from.tag}"
+				               regexp="(.+).GA"
+				               replace="\1.qualifier"
+				               casesensitive="true"
+				               override="true"
+				/>
+			</then>
+		</if>
+		<if>
+			<and>
+				<isset property="tagsFile.${parent.dir}" />
+				<not>
+					<equals arg1="${artifactVersion}" arg2="${artifactVersion.from.tag}" />
+				</not>
+			</and>
+			<then>
+				<basename file="${dir}" property="this.dir" />
+				<echo>For ${this.dir}, got ${artifactVersion}; should be ${artifactVersion.from.tag}</echo>
+			</then>
+			<else>
+				<var name="artifactVersion.from.tag" value="${artifactVersion}" />
+			</else>
+		</if>
+		<var name="parent.dir" unset="true" />
 	</target>
 
 	<target name="getArtifactId">
