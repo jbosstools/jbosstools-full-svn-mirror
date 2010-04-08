@@ -45,10 +45,11 @@
 	</target>
 
 	<target name="genpom">
-		<ant antfile="genpom.xml" target="run">
+		<!-- comment out because genpom.xml is broken, genpom.scala won't run on Hudson, and we should just commit the poms anyway -->
+		<!-- <ant antfile="genpom.xml" target="run">
 			<property name="WORKINGDIR" value="${WORKINGDIR}/${COMPONENT}" />
 			<property name="pathToParentPom" value="../" />
-		</ant>
+		</ant> -->
 	</target>
 
 	<target name="install">
