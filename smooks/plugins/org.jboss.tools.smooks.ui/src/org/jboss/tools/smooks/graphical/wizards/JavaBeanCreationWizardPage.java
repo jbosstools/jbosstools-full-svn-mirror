@@ -513,6 +513,9 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				Text t = (Text) e.getSource();
 				beanID = t.getText();
 				updateWizardPageStatus();
+				if(javaBeanModel != null){
+					javaBeanModel.setName(beanID);
+				}
 			}
 
 		});
