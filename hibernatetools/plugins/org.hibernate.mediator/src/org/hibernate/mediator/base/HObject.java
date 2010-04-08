@@ -179,6 +179,10 @@ public class HObject {
 	public static Object newInstance(final String cn, Object param0, Object param1, Object param2) {
 		return newInstance(cn, new HObject[] { ho(param0), ho(param1), ho(param2) });
 	}
+
+	public static Object newInstance(final String cn, Object param0, Object param1, Object param2, Object param3) {
+		return newInstance(cn, new HObject[] { ho(param0), ho(param1), ho(param2), ho(param3) });
+	}
 	
 	protected static HObject ho(Object obj) {
 		if (obj instanceof HObject) {

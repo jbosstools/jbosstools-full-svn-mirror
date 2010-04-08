@@ -39,6 +39,6 @@
 	<classpathentry kind="lib" path="lib/tools/hibernate-tools.jar" sourcepath="C:/RHDS/hibernate/branches/Branch_3_2/HibernateExt_without_changes"/>
 	<classpathentry kind="lib" path="lib/tools/jtidy-r8-20060801.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate/hibernate3.jar" sourcepath="D:/Temp/_hibernate/hibernate-core-3.3.2.GA-sources.jar "/>
-	<classpathentry kind="lib" path="lib/bsh-core-2.0b4.jar"/>
+	<classpathentry kind="lib" path="lib/bsh-core-2.0b4.jar" sourcepath="D:/Temp/_hibernate/bsh/src/BeanShell/src/bsh.zip"/>
 	<classpathentry kind="output" path="build/eclipse"/>
 </classpath>

@@ -7,16 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.engine.query.HQLQueryPlan;
-import org.hibernate.hql.QueryTranslator;
-import org.hibernate.impl.SessionFactoryImpl;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.base.HObject;
 import org.hibernate.mediator.util.ELTransformer;
 import org.hibernate.mediator.util.QLFormatHelper;
-import org.hibernate.type.Type;
 
-//TODO: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 public class SessionFactoryStub extends HObject {
 	public static final String CL = "org.hibernate.SessionFactory"; //$NON-NLS-1$
 
@@ -94,21 +89,18 @@ public class SessionFactoryStub extends HObject {
 			if (allowEL) {
 				query = ELTransformer.removeEL(query);
 			}
-			new HQLQueryPlan(query, false, Collections.EMPTY_MAP,
-					(SessionFactoryImpl) Obj());
+			HQLQueryPlanStub.newInstance(query, false, Collections.EMPTY_MAP, this);
 		}
 	}
 
 	public String generateSQL(String query) {
 		try {
-			SessionFactoryImpl sfimpl = (SessionFactoryImpl) Obj(); // hack - to get to the
-																				// actual queries..
 			StringBuffer str = new StringBuffer(256);
-			HQLQueryPlan plan = new HQLQueryPlan(query, false, Collections.EMPTY_MAP, sfimpl);
+			HQLQueryPlanStub plan = HQLQueryPlanStub.newInstance(query, false, Collections.EMPTY_MAP, this);
 
-			QueryTranslator[] translators = plan.getTranslators();
+			QueryTranslatorStub[] translators = plan.getTranslators();
 			for (int i = 0; i < translators.length; i++) {
-				QueryTranslator translator = translators[i];
+				QueryTranslatorStub translator = translators[i];
 				if (translator.isManipulationStatement()) {
 					str.append(Messages.DynamicSQLPreviewView_manipulation_of + i
 							+ ":"); //$NON-NLS-1$
@@ -121,10 +113,10 @@ public class SessionFactoryStub extends HObject {
 					}
 
 				} else {
-					Type[] returnTypes = translator.getReturnTypes();
+					TypeStub[] returnTypes = translator.getReturnTypes();
 					str.append(i + ": "); //$NON-NLS-1$
 					for (int j = 0; j < returnTypes.length; j++) {
-						Type returnType = returnTypes[j];
+						TypeStub returnType = returnTypes[j];
 						str.append(returnType.getName());
 						if (j < returnTypes.length - 1) {
 							str.append(", ");} //$NON-NLS-1$
@@ -158,5 +150,17 @@ public class SessionFactoryStub extends HObject {
 			// return sw.getBuffer().toString();
 			return msgs.toString();
 		}
+	}
+
+	public ClassMetadataStub getClassMetadata(String entityName) {
+		return new ClassMetadataStub(invoke(mn(), entityName));
+	}
+
+	public CollectionMetadataStub getCollectionMetadata(String roleName) {
+		return new CollectionMetadataStub(invoke(mn(), roleName));
+	}
+
+	public ClassMetadataStub getClassMetadata(Class<?> classWithoutInitializingProxy) {
+		return new ClassMetadataStub(invoke(mn(), classWithoutInitializingProxy));
 	}
 }

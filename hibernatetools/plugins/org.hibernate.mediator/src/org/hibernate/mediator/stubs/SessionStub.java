@@ -6,30 +6,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.hibernate.Criteria;
-import org.hibernate.EntityMode;
-import org.hibernate.Query;
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.engine.SessionImplementor;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.ConsoleQueryParameter;
 import org.hibernate.mediator.QueryInputModel;
 import org.hibernate.mediator.base.HObject;
 import org.hibernate.mediator.util.CollectionPropertySource;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.metadata.CollectionMetadata;
-import org.hibernate.proxy.HibernateProxyHelper;
-import org.hibernate.type.Type;
 
 import bsh.EvalError;
 import bsh.Interpreter;
 
-// TODO: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 public class SessionStub extends HObject {
 	public static final String CL = "org.hibernate.Session"; //$NON-NLS-1$
 
@@ -46,7 +34,7 @@ public class SessionStub extends HObject {
 		if (isOpen()) {
 			try {
 				invoke(mn());
-			} catch (HibernateException e) {
+			} catch (Exception e) {
 				exceptions.add(e);
 			}
 		}
@@ -57,22 +45,14 @@ public class SessionStub extends HObject {
 		return res;
 	}
 
-	public boolean hasMetaData(Object obj) {
-		SessionFactory sf = (SessionFactory)invoke("getSessionFactory"); //$NON-NLS-1$
-		boolean res = sf.getClassMetadata(
-			HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) != null;
-		return res;
+	public SessionFactoryStub getSessionFactory() {
+		return new SessionFactoryStub(invoke(mn()));
 	}
 
-	public boolean hasMetaData(Object obj, List<Throwable> exceptions) {
-		boolean res = false;
-		try {
-			SessionFactory sf = (SessionFactory)invoke("getSessionFactory"); //$NON-NLS-1$
-			res = sf.getClassMetadata(
-					HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) != null;
-		} catch (HibernateException e) {
-			exceptions.add(e);
-		}
+	public boolean hasMetaData(Object obj) {
+		SessionFactoryStub sf = getSessionFactory();
+		boolean res = sf.getClassMetadata(
+			HibernateProxyHelperStub.getClassWithoutInitializingProxy(obj)) != null;
 		return res;
 	}
 
@@ -80,34 +60,24 @@ public class SessionStub extends HObject {
 		String res = (String)invoke(mn(), obj);
 		return res;
 	}
-	
-	public String getEntityName(Object obj, List<Throwable> exceptions) {
-		String res = null;
-		try {
-			res = (String)invoke(mn(), obj);
-		} catch (HibernateException e) {
-			exceptions.add(e);
-		}
-		return res;
-	}
 
 	public Object getPropertyValue(Object obj, Object id) {
 		Object pv = null;
-		SessionFactory sf = (SessionFactory)invoke("getSessionFactory"); //$NON-NLS-1$
-		ClassMetadata classMetadata;
+		SessionFactoryStub sf = getSessionFactory();
+		ClassMetadataStub classMetadata;
 		if (isOpen()) {
 			classMetadata = sf.getClassMetadata(getEntityName(obj));
 		} else {
-			classMetadata = sf.getClassMetadata(HibernateProxyHelper
+			classMetadata = sf.getClassMetadata(HibernateProxyHelperStub
 					.getClassWithoutInitializingProxy(obj));
 		}
 		if (id.equals(classMetadata.getIdentifierPropertyName())) {
-			pv = classMetadata.getIdentifier(obj, EntityMode.POJO);
+			pv = classMetadata.getIdentifier(obj, EntityModeStub.POJO);
 		} else {
-			pv = classMetadata.getPropertyValue(obj, (String) id, EntityMode.POJO);
+			pv = classMetadata.getPropertyValue(obj, (String) id, EntityModeStub.POJO);
 		}
 		if (pv instanceof Collection<?>) {
-			CollectionMetadata collectionMetadata = sf.getCollectionMetadata(classMetadata
+			CollectionMetadataStub collectionMetadata = sf.getCollectionMetadata(classMetadata
 					.getEntityName()
 					+ "." + id); //$NON-NLS-1$
 			if (collectionMetadata != null) {
@@ -118,18 +88,18 @@ public class SessionStub extends HObject {
 	}
 
 	public IPropertyDescriptor[] getPropertyDescriptors(final Object obj) {
-		SessionFactory sf = (SessionFactory)invoke("getSessionFactory"); //$NON-NLS-1$
-		ClassMetadata classMetadata;
+		SessionFactoryStub sf = getSessionFactory();
+		ClassMetadataStub classMetadata;
 		if (isOpen()) {
 			classMetadata = sf.getClassMetadata(getEntityName(obj));
 		} else {
-			classMetadata = sf.getClassMetadata(HibernateProxyHelper
+			classMetadata = sf.getClassMetadata(HibernateProxyHelperStub
 					.getClassWithoutInitializingProxy(obj));
 		}
 		return initializePropertyDescriptors(classMetadata);
 	}
 
-	protected IPropertyDescriptor[] initializePropertyDescriptors(ClassMetadata classMetadata) {
+	protected IPropertyDescriptor[] initializePropertyDescriptors(ClassMetadataStub classMetadata) {
 
 		String[] propertyNames = classMetadata.getPropertyNames();
 		int length = propertyNames.length;
@@ -173,8 +143,8 @@ public class SessionStub extends HObject {
 			long startTime = System.currentTimeMillis();
 			Object o = ip.eval(criteriaCode);
 			// ugly! TODO: make un-ugly!
-			if (o instanceof Criteria) {
-				Criteria criteria = (Criteria) o;
+			if (CriteriaStub.CL.equals(o.getClass().getName())) {
+				CriteriaStub criteria = new CriteriaStub(o);
 				if (maxResults != null) {
 					criteria.setMaxResults(maxResults.intValue());
 				}
@@ -191,23 +161,21 @@ public class SessionStub extends HObject {
 			queryTime.setTime(System.currentTimeMillis() - startTime);
 		} catch (EvalError e) {
 			exceptions.add(e);
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			exceptions.add(e);
 		}
 		return res;
 	}
 
-	@SuppressWarnings("unchecked")
-	private Interpreter setupInterpreter() throws EvalError, HibernateException {
+	private Interpreter setupInterpreter() throws EvalError {
 		Interpreter interpreter = new Interpreter();
 
 		interpreter.set("session", Obj()); //$NON-NLS-1$
 		interpreter.setClassLoader(Thread.currentThread().getContextClassLoader());
-		SessionImplementor si = (SessionImplementor)Obj();
 
-		Map<String, ?> map = si.getFactory().getAllClassMetadata();
+		List<String> classes = getSessionFactory().getClasses();
 
-		Iterator<String> iterator = map.keySet().iterator();
+		Iterator<String> iterator = classes.iterator();
 		// TODO: filter non classes.
 		String imports = ""; //$NON-NLS-1$
 		while (iterator.hasNext()) {
@@ -226,11 +194,9 @@ public class SessionStub extends HObject {
 	public List<Object> evalQuery(String queryString, QueryInputModel model, Time queryTime,
 			List<Throwable> exceptions) {
 		List<Object> res = Collections.emptyList();
-		Query query = null;
+		QueryStub query = null;
 		try {
-			query = (Query)invoke("createQuery", queryString); //$NON-NLS-1$
-		} catch (HibernateException e) {
-			exceptions.add(e);
+			query = createQuery(queryString);
 		} catch (Exception e) {
 			exceptions.add(e);
 		}
@@ -248,15 +214,15 @@ public class SessionStub extends HObject {
 				Object element = iter.next();
 				res.add(element);
 			}
-		} catch (HibernateException e) {
-			exceptions.add(e);
 		} catch (IllegalArgumentException e) {
+			exceptions.add(e);
+		} catch (Exception e) {
 			exceptions.add(e);
 		}
 		return res;
 	}
 
-	private void setupParameters(Query query, QueryInputModel model) {
+	private void setupParameters(QueryStub query, QueryInputModel model) {
 		if (model.getMaxResults() != null) {
 			query.setMaxResults(model.getMaxResults().intValue());
 		}
@@ -265,9 +231,9 @@ public class SessionStub extends HObject {
 			ConsoleQueryParameter parameter = qp[i];
 			try {
 				int pos = Integer.parseInt(parameter.getName());
-				query.setParameter(pos, calcValue(parameter), (Type)parameter.getType().Obj());
+				query.setParameter(pos, calcValue(parameter), parameter.getType());
 			} catch (NumberFormatException nfe) {
-				query.setParameter(parameter.getName(), calcValue(parameter), (Type)parameter.getType().Obj());
+				query.setParameter(parameter.getName(), calcValue(parameter), parameter.getType());
 			}
 		}
 	}
@@ -275,15 +241,17 @@ public class SessionStub extends HObject {
 	private Object calcValue(ConsoleQueryParameter parameter) {
 		return parameter.getValueForQuery();
 	}
+	
+	public QueryStub createQuery(String queryString) {
+		return new QueryStub(invoke(mn(), queryString));
+	}
 
 	public List<String> evalQueryPathNames(String queryString, QueryInputModel model,
 			List<Throwable> exceptions) {
 		List<String> res = Collections.emptyList();
-		Query query = null;
+		QueryStub query = null;
 		try {
-			query = (Query)invoke("createQuery", queryString); //$NON-NLS-1$
-		} catch (HibernateException e) {
-			exceptions.add(e);
+			query = createQuery(queryString);
 		} catch (Exception e) {
 			exceptions.add(e);
 		}
@@ -298,16 +266,16 @@ public class SessionStub extends HObject {
 				// ignore - http://opensource.atlassian.com/projects/hibernate/browse/HHH-2188
 			}
 			if (returnAliases == null) {
-				Type[] t;
+				TypeStub[] t;
 				try {
 					t = query.getReturnTypes();
 				} catch (NullPointerException npe) {
-					t = new Type[] { null };
+					t = new TypeStub[] { null };
 					// ignore - http://opensource.atlassian.com/projects/hibernate/browse/HHH-2188
 				}
 				res = new ArrayList<String>(t.length);
 				for (int i = 0; i < t.length; i++) {
-					Type type = t[i];
+					TypeStub type = t[i];
 					if (type == null) {
 						res.add("<multiple types>"); //$NON-NLS-1$
 					} else {
@@ -321,7 +289,7 @@ public class SessionStub extends HObject {
 					res.add(t[i]);
 				}
 			}
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			exceptions.add(e);
 		}
 		return res;

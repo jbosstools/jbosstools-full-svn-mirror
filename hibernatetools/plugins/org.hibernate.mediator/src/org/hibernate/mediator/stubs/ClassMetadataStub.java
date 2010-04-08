@@ -1,5 +1,7 @@
 package org.hibernate.mediator.stubs;
 
+import java.io.Serializable;
+
 import org.hibernate.mediator.base.HObject;
 
 public class ClassMetadataStub extends HObject {
@@ -40,6 +42,14 @@ public class ClassMetadataStub extends HObject {
 
 	public Class<?> getMappedClass(EntityModeStub pojo) {
 		return (Class<?>)invoke(mn(), pojo);
+	}
+
+	public boolean hasIdentifierProperty() {
+		return (Boolean)invoke(mn());
+	}
+
+	public Serializable getIdentifier(Object entity, EntityModeStub pojo) {
+		return (Serializable)invoke(mn(), entity, pojo);
 	}
 
 }

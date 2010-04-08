@@ -166,7 +166,7 @@ public class HbmExporterTest extends TestCase {
 				value.getClass()==ListStub.class);
 		ListStub list = (ListStub)value;
 		assertTrue(list.getElement() instanceof OneToManyStub);
-		assertTrue(list.getCollectionTable().equals(b.getTable()));
+		assertTrue(list.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(list.getIndex());
 		assertNotNull(list.getKey());
 	}
@@ -184,7 +184,7 @@ public class HbmExporterTest extends TestCase {
 				value.getClass()==SetStub.class);
 		SetStub set = (SetStub)value;
 		assertTrue(set.getElement() instanceof OneToManyStub);
-		assertTrue(set.getCollectionTable().equals(b.getTable()));
+		assertTrue(set.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(set.getKey());
 	}
 	
@@ -201,7 +201,7 @@ public class HbmExporterTest extends TestCase {
 				value.getClass()==MapStub.class);
 		MapStub map = (MapStub)value;
 		assertTrue(map.getElement() instanceof OneToManyStub);
-		assertTrue(map.getCollectionTable().equals(b.getTable()));
+		assertTrue(map.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(map.getKey());
 		assertEquals("string", map.getKey().getType().getName()); //$NON-NLS-1$
 	}

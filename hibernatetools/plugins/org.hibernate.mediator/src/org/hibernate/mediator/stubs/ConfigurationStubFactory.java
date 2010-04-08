@@ -37,9 +37,6 @@ public class ConfigurationStubFactory {
 	private ConsoleConfigurationPreferences prefs = null;
 	
 	public ConfigurationStubFactory(ConsoleConfigurationPreferences prefs) {
-		if (prefs == null) {
-			throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
-		}
 		this.prefs = prefs;
 	}
 
@@ -52,7 +49,7 @@ public class ConfigurationStubFactory {
 	}
 	
 	public ConfigurationStub createConfiguration(ConfigurationStub localCfg, boolean includeMappings) {
-		Properties properties = prefs.getProperties();
+		Properties properties = prefs != null ? prefs.getProperties() : null;
 		if (properties != null) {
 			// to fix: JBIDE-5839 - setup this property: false is default value
 			// to make hibernate tools diff hibernate versions compatible
