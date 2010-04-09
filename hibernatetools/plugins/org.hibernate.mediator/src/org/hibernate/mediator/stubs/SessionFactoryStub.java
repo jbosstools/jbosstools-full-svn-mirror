@@ -153,14 +153,26 @@ public class SessionFactoryStub extends HObject {
 	}
 
 	public ClassMetadataStub getClassMetadata(String entityName) {
-		return new ClassMetadataStub(invoke(mn(), entityName));
+		Object obj = invoke(mn(), entityName);
+		if (obj == null) {
+			return null;
+		}
+		return new ClassMetadataStub(obj);
 	}
 
 	public CollectionMetadataStub getCollectionMetadata(String roleName) {
-		return new CollectionMetadataStub(invoke(mn(), roleName));
+		Object obj = invoke(mn(), roleName);
+		if (obj == null) {
+			return null;
+		}
+		return new CollectionMetadataStub(obj);
 	}
 
 	public ClassMetadataStub getClassMetadata(Class<?> classWithoutInitializingProxy) {
-		return new ClassMetadataStub(invoke(mn(), classWithoutInitializingProxy));
+		Object obj = invoke(mn(), classWithoutInitializingProxy);
+		if (obj == null) {
+			return null;
+		}
+		return new ClassMetadataStub(obj);
 	}
 }

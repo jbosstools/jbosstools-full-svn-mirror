@@ -6,6 +6,6 @@ public class HibernateProxyHelperStub {
 	public static final String CL = "org.hibernate.proxy.HibernateProxyHelper"; //$NON-NLS-1$
 	
 	public static Class<?> getClassWithoutInitializingProxy(Object object) {
-		return (Class<?>)HObject.invokeStaticMethod(CL, "getClassWithoutInitializingProxy"); //$NON-NLS-1$
+		return (Class<?>)HObject.invokeStaticMethod(CL, "getClassWithoutInitializingProxy", object); //$NON-NLS-1$
 	}
 }
