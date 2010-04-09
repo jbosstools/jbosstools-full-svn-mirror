@@ -293,8 +293,7 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>A new <property>JBoss Server</property> should now appear in the <property>JBoss
-                    Server view</property>.</para>
+            <para>A new <property>JBoss Server</property> should now appear in the <property>Servers</property> view.</para>
             <figure>
                 <title>New JBoss Server</title>
                 <mediaobject>
