@@ -28,13 +28,13 @@ import net.sf.cglib.proxy.Enhancer;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.mediator.stubs.ClassMetadataStub;
-import org.hibernate.mediator.stubs.CollectionMetadataStub;
-import org.hibernate.mediator.stubs.CollectionTypeStub;
-import org.hibernate.mediator.stubs.EntityTypeStub;
-import org.hibernate.mediator.stubs.SessionStub;
-import org.hibernate.mediator.stubs.TableStub;
-import org.hibernate.mediator.stubs.TypeStub;
+import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.metadata.ClassMetadataStub;
+import org.hibernate.mediator.x.metadata.CollectionMetadataStub;
+import org.hibernate.mediator.x.type.CollectionTypeStub;
+import org.hibernate.mediator.x.type.EntityTypeStub;
+import org.hibernate.mediator.x.type.TypeStub;
 
 /**
  * @author MAX
@@ -86,15 +86,15 @@ public class NodeFactory {
 	}
 
 	public ClassMetadataStub getMetaData(String clazz) {
-		return consoleConfig.getSessionStubFactory().getClassMetaData().get(clazz);
+		return consoleConfig.getSessionStubFactory().getAllClassMetadata().get(clazz);
 	}
 
 	public ClassMetadataStub getMetaData(Class<?> clazz) {
-		return consoleConfig.getSessionStubFactory().getClassMetaData().get(clazz.getName());
+		return consoleConfig.getSessionStubFactory().getAllClassMetadata().get(clazz.getName());
 	}
 
      public CollectionMetadataStub getCollectionMetaData(String role) {
- 		return consoleConfig.getSessionStubFactory().getCollectionMetaData().get(role);
+ 		return consoleConfig.getSessionStubFactory().getAllCollectionMetadata().get(role);
      }
 
 	public BaseNode createPropertyNode(BaseNode parent, int idx, ClassMetadataStub metadata) {

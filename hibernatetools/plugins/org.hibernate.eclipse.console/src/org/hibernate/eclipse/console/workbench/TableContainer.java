@@ -23,7 +23,7 @@ package org.hibernate.eclipse.console.workbench;
 
 import java.util.List;
 
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 
 public class TableContainer {
 

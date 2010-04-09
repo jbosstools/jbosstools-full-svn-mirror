@@ -39,7 +39,7 @@ import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.hqleditor.EclipseHQLCompletionRequestor;
 import org.hibernate.eclipse.hqleditor.HQLCompletionProcessor;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.mediator.stubs.HQLCodeAssistStub;
+import org.hibernate.mediator.x.tool.ide.completion.HQLCodeAssistStub;
 
 public class HQLJavaCompletionProposalComputer implements IJavaCompletionProposalComputer {
 

@@ -34,10 +34,10 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.OpenMappingUtils;
 import org.hibernate.eclipse.console.utils.ProjectUtils;
-import org.hibernate.mediator.stubs.ComponentStub;
-import org.hibernate.mediator.stubs.PersistentClassStub;
-import org.hibernate.mediator.stubs.PropertyStub;
-import org.hibernate.mediator.stubs.RootClassStub;
+import org.hibernate.mediator.x.mapping.ComponentStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.RootClassStub;
 
 /**
  * Open Mapping File action

@@ -22,7 +22,7 @@
 package org.hibernate.eclipse.console.model.impl;
 
 import org.hibernate.eclipse.console.model.ITableFilter;
-import org.hibernate.mediator.stubs.TableFilterStub;
+import org.hibernate.mediator.x.cfg.reveng.TableFilterStub;
 
 public class TableFilterImpl implements ITableFilter {
 

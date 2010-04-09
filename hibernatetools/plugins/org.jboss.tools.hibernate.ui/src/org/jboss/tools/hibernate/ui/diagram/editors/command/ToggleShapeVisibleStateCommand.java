@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.commands.Command;
-import org.hibernate.mediator.stubs.PersistentClassStub;
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.OrmShape;
 
 /**

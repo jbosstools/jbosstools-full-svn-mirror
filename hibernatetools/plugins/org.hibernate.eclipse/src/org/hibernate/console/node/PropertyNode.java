@@ -21,8 +21,8 @@
  */
 package org.hibernate.console.node;
 
-import org.hibernate.mediator.stubs.ClassMetadataStub;
-import org.hibernate.mediator.stubs.EntityModeStub;
+import org.hibernate.mediator.x.EntityModeStub;
+import org.hibernate.mediator.x.metadata.ClassMetadataStub;
 
 public class PropertyNode extends TypeNode {
 

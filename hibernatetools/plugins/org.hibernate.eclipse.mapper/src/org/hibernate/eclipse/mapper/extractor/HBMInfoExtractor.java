@@ -38,9 +38,9 @@ import org.eclipse.jdt.core.Signature;
 import org.eclipse.wst.sse.ui.internal.contentassist.CustomCompletionProposal;
 import org.eclipse.wst.xml.ui.internal.contentassist.XMLRelevanceConstants;
 import org.hibernate.eclipse.mapper.MapperMessages;
-import org.hibernate.mediator.stubs.EnvironmentStub;
-import org.hibernate.mediator.stubs.TableIdentifierStub;
 import org.hibernate.mediator.stubs.util.StringHelper;
+import org.hibernate.mediator.x.cfg.EnvironmentStub;
+import org.hibernate.mediator.x.cfg.reveng.TableIdentifierStub;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 

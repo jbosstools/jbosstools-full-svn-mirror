@@ -30,7 +30,7 @@ import org.hibernate.eclipse.graph.model.ConfigurationViewAdapter;
 import org.hibernate.eclipse.graph.model.TableViewAdapter;
 import org.hibernate.eclipse.graph.parts.ConfigurationEditPart;
 import org.hibernate.eclipse.graph.parts.PersistentClassEditPart;
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 
 public class RelationalGraphView extends AbstractGraphViewPart {
 

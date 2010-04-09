@@ -30,11 +30,11 @@ import org.hibernate.console.KnownConfigurations;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.project.ConfigurableTestProject;
 import org.hibernate.eclipse.console.test.utils.ConsoleConfigUtils;
-import org.hibernate.mediator.stubs.ArtifactCollectorStub;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.HibernateMappingExporterStub;
-import org.hibernate.mediator.stubs.HibernateMappingGlobalSettingsStub;
-import org.hibernate.mediator.stubs.POJOClassStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.tool.hbm2x.ArtifactCollectorStub;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingExporterStub;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingGlobalSettingsStub;
+import org.hibernate.mediator.x.tool.hbm2x.pojo.POJOClassStub;
 
 /**
  * @author Dmitry Geraskov

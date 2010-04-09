@@ -28,9 +28,9 @@ import java.util.List;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.stubs.ColumnStub;
-import org.hibernate.mediator.stubs.PrimaryKeyStub;
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.PrimaryKeyStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 
 public class TableWorkbenchAdapter extends BasicWorkbenchAdapter {
 

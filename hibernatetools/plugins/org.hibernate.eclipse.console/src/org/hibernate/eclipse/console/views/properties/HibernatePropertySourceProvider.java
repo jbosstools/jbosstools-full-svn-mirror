@@ -25,7 +25,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.hibernate.console.QueryPage;
 import org.hibernate.eclipse.console.views.QueryPageTabView;
-import org.hibernate.mediator.stubs.SessionStub;
+import org.hibernate.mediator.x.SessionStub;
 
 public class HibernatePropertySourceProvider implements IPropertySourceProvider
 {	

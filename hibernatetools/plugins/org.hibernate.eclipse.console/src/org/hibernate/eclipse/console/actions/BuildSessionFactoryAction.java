@@ -27,7 +27,7 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 
 /**
  * @author max

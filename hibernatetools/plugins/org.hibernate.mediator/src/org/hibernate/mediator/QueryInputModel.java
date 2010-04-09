@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 
-import org.hibernate.mediator.stubs.HibernateStub;
+import org.hibernate.mediator.x.HibernateStub;
 
 /**
  * Class for managing misc parameters and other inputs to a Query, Criteria etc.  

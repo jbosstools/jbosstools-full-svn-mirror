@@ -17,15 +17,15 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-import org.hibernate.mediator.stubs.CollectionStub;
-import org.hibernate.mediator.stubs.ColumnStub;
-import org.hibernate.mediator.stubs.ComponentStub;
-import org.hibernate.mediator.stubs.KeyValueStub;
-import org.hibernate.mediator.stubs.PropertyStub;
-import org.hibernate.mediator.stubs.RootClassStub;
-import org.hibernate.mediator.stubs.SimpleValueStub;
-import org.hibernate.mediator.stubs.SubclassStub;
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.mapping.CollectionStub;
+import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.ComponentStub;
+import org.hibernate.mediator.x.mapping.KeyValueStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.RootClassStub;
+import org.hibernate.mediator.x.mapping.SimpleValueStub;
+import org.hibernate.mediator.x.mapping.SubclassStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.rulers.DiagramGuide;
 
 /**

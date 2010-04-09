@@ -29,9 +29,9 @@ import org.eclipse.swt.graphics.Image;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.eclipse.console.workbench.HibernateWorkbenchHelper;
-import org.hibernate.mediator.stubs.HQLCompletionProposalStub;
-import org.hibernate.mediator.stubs.IHQLCompletionRequestorStub;
 import org.hibernate.mediator.stubs.util.StringHelper;
+import org.hibernate.mediator.x.tool.ide.completion.HQLCompletionProposalStub;
+import org.hibernate.mediator.x.tool.ide.completion.IHQLCompletionRequestorStub;
 
 public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestorStub {
 

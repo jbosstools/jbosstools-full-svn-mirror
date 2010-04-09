@@ -11,16 +11,16 @@
 package org.jboss.tools.hibernate.ui.view;
 
 import org.hibernate.eclipse.console.workbench.TypeNameValueVisitor;
-import org.hibernate.mediator.stubs.ColumnStub;
-import org.hibernate.mediator.stubs.ComponentStub;
-import org.hibernate.mediator.stubs.DependantValueStub;
-import org.hibernate.mediator.stubs.OneToManyStub;
-import org.hibernate.mediator.stubs.PersistentClassStub;
-import org.hibernate.mediator.stubs.PropertyStub;
-import org.hibernate.mediator.stubs.SimpleValueStub;
-import org.hibernate.mediator.stubs.TableStub;
-import org.hibernate.mediator.stubs.TypeStub;
-import org.hibernate.mediator.stubs.ValueStub;
+import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.ComponentStub;
+import org.hibernate.mediator.x.mapping.DependantValueStub;
+import org.hibernate.mediator.x.mapping.OneToManyStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.SimpleValueStub;
+import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.ValueStub;
+import org.hibernate.mediator.x.type.TypeStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Utils;
 
 /**

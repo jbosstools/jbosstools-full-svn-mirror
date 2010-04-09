@@ -50,9 +50,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mediator.stubs.ExporterStub;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
+import org.hibernate.mediator.x.tool.hbm2x.ExporterStub;
 
 /**
  * Represents what is specified in plugin.xml about possible exporters.

@@ -18,12 +18,12 @@ import org.eclipse.osgi.util.NLS;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.launch.HibernateLaunchConstants;
 import org.hibernate.eclipse.launch.PathHelper;
-import org.hibernate.mediator.stubs.ArtifactCollectorStub;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.ExporterStub;
-import org.hibernate.mediator.stubs.GenericExporterStub;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.util.StringHelper;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.tool.hbm2x.ArtifactCollectorStub;
+import org.hibernate.mediator.x.tool.hbm2x.ExporterStub;
+import org.hibernate.mediator.x.tool.hbm2x.GenericExporterStub;
 
 /**
  * ExporterFactory is used in UI to hold additional configuration for Exporter definitions

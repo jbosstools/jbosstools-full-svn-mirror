@@ -16,7 +16,7 @@ import org.eclipse.jpt.core.internal.context.orm.GenericOrmBasicMapping;
 import org.eclipse.jpt.core.resource.orm.XmlBasic;
 import org.eclipse.wst.validation.internal.core.Message;
 import org.eclipse.wst.validation.internal.provisional.core.IMessage;
-import org.hibernate.mediator.stubs.NamingStrategyStub;
+import org.hibernate.mediator.x.cfg.NamingStrategyStub;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJpaProject;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJptPlugin;
 import org.jboss.tools.hibernate.jpt.core.internal.context.Messages;

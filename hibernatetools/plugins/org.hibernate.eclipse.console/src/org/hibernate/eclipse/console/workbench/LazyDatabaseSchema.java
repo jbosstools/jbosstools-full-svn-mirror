@@ -22,8 +22,8 @@
 package org.hibernate.eclipse.console.workbench;
 
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.mediator.stubs.DefaultReverseEngineeringStrategyStub;
-import org.hibernate.mediator.stubs.ReverseEngineeringStrategyStub;
+import org.hibernate.mediator.x.cfg.reveng.DefaultReverseEngineeringStrategyStub;
+import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategyStub;
 
 public class LazyDatabaseSchema {
 

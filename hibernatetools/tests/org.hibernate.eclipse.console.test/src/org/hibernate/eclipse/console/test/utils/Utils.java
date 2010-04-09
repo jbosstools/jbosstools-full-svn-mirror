@@ -21,7 +21,7 @@ import org.eclipse.ui.internal.ErrorEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.utils.OpenMappingUtils;
-import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
 
 /**
  * @author Dmitry Geraskov

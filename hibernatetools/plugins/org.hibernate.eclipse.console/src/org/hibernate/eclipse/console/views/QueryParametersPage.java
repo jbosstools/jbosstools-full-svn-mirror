@@ -66,10 +66,10 @@ import org.hibernate.eclipse.console.QueryEditor;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.mediator.ConsoleQueryParameter;
 import org.hibernate.mediator.QueryInputModel;
-import org.hibernate.mediator.stubs.NullableTypeStub;
-import org.hibernate.mediator.stubs.TypeStub;
 import org.hibernate.mediator.stubs.util.ParserHelper;
 import org.hibernate.mediator.stubs.util.StringHelper;
+import org.hibernate.mediator.x.type.NullableTypeStub;
+import org.hibernate.mediator.x.type.TypeStub;
 
 public class QueryParametersPage extends Page implements IQueryParametersPage {
 

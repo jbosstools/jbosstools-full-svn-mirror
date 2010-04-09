@@ -27,11 +27,11 @@ import java.util.Iterator;
 import javax.swing.tree.TreeNode;
 
 import org.hibernate.console.ConsoleMessages;
-import org.hibernate.mediator.stubs.ClassMetadataStub;
-import org.hibernate.mediator.stubs.CollectionMetadataStub;
-import org.hibernate.mediator.stubs.CollectionTypeStub;
-import org.hibernate.mediator.stubs.EntityModeStub;
-import org.hibernate.mediator.stubs.TypeStub;
+import org.hibernate.mediator.x.EntityModeStub;
+import org.hibernate.mediator.x.metadata.ClassMetadataStub;
+import org.hibernate.mediator.x.metadata.CollectionMetadataStub;
+import org.hibernate.mediator.x.type.CollectionTypeStub;
+import org.hibernate.mediator.x.type.TypeStub;
 
 /**
  * @author MAX

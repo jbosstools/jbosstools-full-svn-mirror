@@ -65,9 +65,9 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.views.QueryPageTabView;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.PersistentClassStub;
-import org.hibernate.mediator.stubs.SessionStub;
+import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
 
 public class CriteriaEditor extends AbstractQueryEditor {
 

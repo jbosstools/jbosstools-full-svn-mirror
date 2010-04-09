@@ -36,19 +36,19 @@ import java.util.Properties;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
 import org.hibernate.mediator.ConsoleConfigClassLoader;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.QueryInputModel;
 import org.hibernate.mediator.execution.DefaultExecutionContext;
 import org.hibernate.mediator.execution.ExecutionContext;
 import org.hibernate.mediator.execution.ExecutionContextHolder;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
 import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.ConfigurationStubFactory;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.mediator.stubs.HQLCodeAssistStub;
-import org.hibernate.mediator.stubs.SessionStub;
-import org.hibernate.mediator.stubs.SessionFactoryStub;
-import org.hibernate.mediator.stubs.SettingsStub;
+import org.hibernate.mediator.x.SessionFactoryStub;
+import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStubFactory;
+import org.hibernate.mediator.x.cfg.SettingsStub;
+import org.hibernate.mediator.x.tool.ide.completion.HQLCodeAssistStub;
 import org.xml.sax.EntityResolver;
 
 public class ConsoleConfiguration implements ExecutionContextHolder {

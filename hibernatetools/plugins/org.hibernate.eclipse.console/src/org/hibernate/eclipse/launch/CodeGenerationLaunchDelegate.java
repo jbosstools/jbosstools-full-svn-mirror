@@ -63,19 +63,19 @@ import org.hibernate.console.KnownConfigurations;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.model.impl.ExporterFactory;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.stubs.ArtifactCollectorStub;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.ConfigurationStubFactory;
-import org.hibernate.mediator.stubs.ConfigurationStubJDBCMetaData;
-import org.hibernate.mediator.stubs.DefaultReverseEngineeringStrategyStub;
-import org.hibernate.mediator.stubs.ExporterStub;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.mediator.stubs.OverrideRepositoryStub;
-import org.hibernate.mediator.stubs.ReverseEngineeringSettingsStub;
-import org.hibernate.mediator.stubs.ReverseEngineeringStrategyStub;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
 import org.hibernate.mediator.stubs.util.StringHelper;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStubFactory;
+import org.hibernate.mediator.x.cfg.ConfigurationStubJDBCMetaData;
+import org.hibernate.mediator.x.cfg.reveng.DefaultReverseEngineeringStrategyStub;
+import org.hibernate.mediator.x.cfg.reveng.OverrideRepositoryStub;
+import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringSettingsStub;
+import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategyStub;
+import org.hibernate.mediator.x.tool.hbm2x.ArtifactCollectorStub;
+import org.hibernate.mediator.x.tool.hbm2x.ExporterStub;
 
 public class CodeGenerationLaunchDelegate extends
 		LaunchConfigurationDelegate {

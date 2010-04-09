@@ -46,8 +46,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.hibernate.console.node.BaseNode;
 import org.hibernate.console.node.ConfigurationListNode;
 import org.hibernate.mediator.ConsoleQueryParameter;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.logging.LoggingStreamManager;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

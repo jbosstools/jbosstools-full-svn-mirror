@@ -20,7 +20,7 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.DialogSelectionHelper;
 import org.hibernate.eclipse.console.utils.DriverClassHelpers;
-import org.hibernate.mediator.stubs.NamingStrategyStub;
+import org.hibernate.mediator.x.cfg.NamingStrategyStub;
 import org.xml.sax.EntityResolver;
 
 @SuppressWarnings("restriction")

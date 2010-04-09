@@ -40,7 +40,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.internal.PluginAction;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mediator.stubs.XMLPrettyPrinterStub;
+import org.hibernate.mediator.x.tool.hbm2x.XMLPrettyPrinterStub;
 
 public class JTidyFormatAction implements IObjectActionDelegate {
 

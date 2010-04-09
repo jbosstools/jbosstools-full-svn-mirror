@@ -67,8 +67,8 @@ import org.hibernate.eclipse.hqleditor.HQLEditorStorage;
 import org.hibernate.eclipse.launch.ICodeGenerationLaunchConstants;
 import org.hibernate.eclipse.logging.PluginLogger;
 import org.hibernate.eclipse.logging.xpl.EclipseLogger;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.osgi.framework.BundleContext;
 
 /**

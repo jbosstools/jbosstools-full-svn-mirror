@@ -3,7 +3,7 @@ package org.hibernate.mediator.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
 
 public class MReflectionUtils {

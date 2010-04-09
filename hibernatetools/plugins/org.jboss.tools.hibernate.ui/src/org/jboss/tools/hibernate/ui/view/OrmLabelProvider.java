@@ -26,14 +26,14 @@ import org.eclipse.swt.widgets.Display;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mediator.stubs.ColumnStub;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.DialectStub;
-import org.hibernate.mediator.stubs.EnvironmentStub;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.mediator.stubs.MappingStub;
-import org.hibernate.mediator.stubs.PropertyStub;
-import org.hibernate.mediator.stubs.RootClassStub;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.EnvironmentStub;
+import org.hibernate.mediator.x.dialect.DialectStub;
+import org.hibernate.mediator.x.engine.MappingStub;
+import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.RootClassStub;
 
 /**
  *

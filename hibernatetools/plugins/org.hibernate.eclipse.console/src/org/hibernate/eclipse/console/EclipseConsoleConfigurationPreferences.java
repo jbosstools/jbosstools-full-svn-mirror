@@ -41,7 +41,7 @@ import org.eclipse.osgi.util.NLS;
 import org.hibernate.console.preferences.AbstractConsoleConfigurationPreferences;
 import org.hibernate.eclipse.console.utils.ClassLoaderHelper;
 import org.hibernate.eclipse.console.utils.ProjectUtils;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

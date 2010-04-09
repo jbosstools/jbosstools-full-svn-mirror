@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.PersistentClassStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
 
 public class ConfigurationViewAdapter extends Observable {
 

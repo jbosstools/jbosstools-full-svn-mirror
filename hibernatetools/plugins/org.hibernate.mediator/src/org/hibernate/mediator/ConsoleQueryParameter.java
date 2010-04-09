@@ -32,10 +32,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
-import org.hibernate.mediator.stubs.HibernateStub;
-import org.hibernate.mediator.stubs.NullableTypeStub;
-import org.hibernate.mediator.stubs.TableStub;
-import org.hibernate.mediator.stubs.TypeStub;
+import org.hibernate.mediator.x.HibernateStub;
+import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.type.NullableTypeStub;
+import org.hibernate.mediator.x.type.TypeStub;
 
 
 public class ConsoleQueryParameter {

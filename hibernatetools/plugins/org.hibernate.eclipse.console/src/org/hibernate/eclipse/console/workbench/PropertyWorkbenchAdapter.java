@@ -23,23 +23,23 @@ package org.hibernate.eclipse.console.workbench;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.progress.IDeferredWorkbenchAdapter;
-import org.hibernate.mediator.stubs.AnyStub;
-import org.hibernate.mediator.stubs.ArrayStub;
-import org.hibernate.mediator.stubs.BagStub;
-import org.hibernate.mediator.stubs.ComponentStub;
-import org.hibernate.mediator.stubs.DependantValueStub;
-import org.hibernate.mediator.stubs.IdentifierBagStub;
-import org.hibernate.mediator.stubs.ListStub;
-import org.hibernate.mediator.stubs.ManyToOneStub;
-import org.hibernate.mediator.stubs.MapStub;
-import org.hibernate.mediator.stubs.OneToManyStub;
-import org.hibernate.mediator.stubs.OneToOneStub;
-import org.hibernate.mediator.stubs.PrimitiveArrayStub;
-import org.hibernate.mediator.stubs.PropertyStub;
-import org.hibernate.mediator.stubs.SetStub;
-import org.hibernate.mediator.stubs.SimpleValueStub;
-import org.hibernate.mediator.stubs.ValueStub;
-import org.hibernate.mediator.stubs.ValueVisitorStub;
+import org.hibernate.mediator.x.mapping.AnyStub;
+import org.hibernate.mediator.x.mapping.ArrayStub;
+import org.hibernate.mediator.x.mapping.BagStub;
+import org.hibernate.mediator.x.mapping.ComponentStub;
+import org.hibernate.mediator.x.mapping.DependantValueStub;
+import org.hibernate.mediator.x.mapping.IdentifierBagStub;
+import org.hibernate.mediator.x.mapping.ListStub;
+import org.hibernate.mediator.x.mapping.ManyToOneStub;
+import org.hibernate.mediator.x.mapping.MapStub;
+import org.hibernate.mediator.x.mapping.OneToManyStub;
+import org.hibernate.mediator.x.mapping.OneToOneStub;
+import org.hibernate.mediator.x.mapping.PrimitiveArrayStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.SetStub;
+import org.hibernate.mediator.x.mapping.SimpleValueStub;
+import org.hibernate.mediator.x.mapping.ValueStub;
+import org.hibernate.mediator.x.mapping.ValueVisitorStub;
 
 public class PropertyWorkbenchAdapter extends BasicWorkbenchAdapter implements
 		IDeferredWorkbenchAdapter {

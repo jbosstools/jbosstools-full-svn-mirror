@@ -59,8 +59,8 @@ import org.hibernate.eclipse.console.actions.EditConsoleConfiguration;
 import org.hibernate.eclipse.console.actions.OpenMappingAction;
 import org.hibernate.eclipse.console.viewers.xpl.MTreeViewer;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
-import org.hibernate.mediator.stubs.PersistentClassStub;
-import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
 
 
 /**

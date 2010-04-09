@@ -63,7 +63,7 @@ import org.hibernate.eclipse.console.views.IQueryParametersPage;
 import org.hibernate.eclipse.console.views.QueryPageTabView;
 import org.hibernate.eclipse.console.views.QueryParametersPage;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.stubs.SessionStub;
+import org.hibernate.mediator.x.SessionStub;
 
 
 /**

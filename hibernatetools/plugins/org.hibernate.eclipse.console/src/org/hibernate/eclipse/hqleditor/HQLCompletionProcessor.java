@@ -39,7 +39,7 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.QueryEditor;
 import org.hibernate.mediator.execution.ExecutionContext;
-import org.hibernate.mediator.stubs.HQLCodeAssistStub;
+import org.hibernate.mediator.x.tool.ide.completion.HQLCodeAssistStub;
 
 /**
  * content assist processor for HQL code.

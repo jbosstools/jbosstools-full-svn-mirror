@@ -32,10 +32,10 @@ import org.hibernate.eclipse.console.workbench.ConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.ConsoleConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.PersistentClassWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.PropertyWorkbenchAdapter;
-import org.hibernate.mediator.stubs.ComponentStub;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.PersistentClassStub;
-import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.mapping.ComponentStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
 
 /**
  * @author Dmitry Geraskov

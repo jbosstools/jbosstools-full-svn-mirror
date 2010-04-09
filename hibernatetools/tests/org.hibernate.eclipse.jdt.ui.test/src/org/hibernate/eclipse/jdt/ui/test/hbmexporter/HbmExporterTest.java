@@ -29,18 +29,18 @@ import org.hibernate.eclipse.jdt.ui.internal.jpa.common.Utils;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.process.AllEntitiesProcessor;
 import org.hibernate.eclipse.jdt.ui.test.HibernateJDTuiTestPlugin;
 import org.hibernate.eclipse.jdt.ui.wizards.ConfigurationActor;
-import org.hibernate.mediator.stubs.ArrayStub;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.IntegerTypeStub;
-import org.hibernate.mediator.stubs.ListStub;
-import org.hibernate.mediator.stubs.ManyToOneStub;
-import org.hibernate.mediator.stubs.MapStub;
-import org.hibernate.mediator.stubs.OneToManyStub;
-import org.hibernate.mediator.stubs.PersistentClassStub;
-import org.hibernate.mediator.stubs.PrimitiveArrayStub;
-import org.hibernate.mediator.stubs.PropertyStub;
-import org.hibernate.mediator.stubs.SetStub;
-import org.hibernate.mediator.stubs.ValueStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.mapping.ArrayStub;
+import org.hibernate.mediator.x.mapping.ListStub;
+import org.hibernate.mediator.x.mapping.ManyToOneStub;
+import org.hibernate.mediator.x.mapping.MapStub;
+import org.hibernate.mediator.x.mapping.OneToManyStub;
+import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.mapping.PrimitiveArrayStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.SetStub;
+import org.hibernate.mediator.x.mapping.ValueStub;
+import org.hibernate.mediator.x.type.IntegerTypeStub;
 
 public class HbmExporterTest extends TestCase {
 	

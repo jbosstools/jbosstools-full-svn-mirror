@@ -48,11 +48,11 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.properties.HibernatePropertiesConstants;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.ConfigurationStubFactory;
-import org.hibernate.mediator.stubs.ConfigurationStubJDBCMetaData;
-import org.hibernate.mediator.stubs.TableIdentifierStub;
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStubFactory;
+import org.hibernate.mediator.x.cfg.ConfigurationStubJDBCMetaData;
+import org.hibernate.mediator.x.cfg.reveng.TableIdentifierStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 import org.osgi.service.prefs.Preferences;
 
 public class HibernateNature implements IProjectNature {

@@ -69,10 +69,10 @@ import org.hibernate.eclipse.mapper.model.RevEngGeneratorAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngParamAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngPrimaryKeyAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngTableAdapter;
-import org.hibernate.mediator.stubs.ColumnStub;
-import org.hibernate.mediator.stubs.PrimaryKeyStub;
-import org.hibernate.mediator.stubs.TableIdentifierStub;
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.cfg.reveng.TableIdentifierStub;
+import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.PrimaryKeyStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 
 public class TablePropertiesBlock extends MasterDetailsBlock {
 

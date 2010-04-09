@@ -3,9 +3,9 @@ package org.hibernate.mediator.stubs.util;
 import java.io.Reader;
 
 import org.hibernate.hql.antlr.HqlBaseLexer;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.Messages;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
-import org.hibernate.mediator.stubs.HqlSqlTokenTypesStub;
+import org.hibernate.mediator.x.hql.antlr.HqlSqlTokenTypesStub;
 
 import antlr.Token;
 import antlr.TokenStreamException;

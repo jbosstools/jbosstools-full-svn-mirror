@@ -28,7 +28,7 @@ import org.hibernate.console.ImageConstants;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.stubs.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
 
 public class ConsoleConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter {
 

@@ -25,7 +25,7 @@ import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.eclipse.console.model.ITypeMapping;
-import org.hibernate.mediator.stubs.SQLTypeMappingStub;
+import org.hibernate.mediator.x.cfg.reveng.SQLTypeMappingStub;
 
 final public class TypeMappingCellModifier implements ICellModifier {
 	private final TableViewer tv;

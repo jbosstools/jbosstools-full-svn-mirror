@@ -56,7 +56,7 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.model.impl.ExporterDefinition;
 import org.hibernate.eclipse.console.model.impl.ExporterFactory;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 
 // This class was created to centralize launch configuration attribute loading/saving
 // (and also to clean up CodeGenerationLaunchDelegate considerably)

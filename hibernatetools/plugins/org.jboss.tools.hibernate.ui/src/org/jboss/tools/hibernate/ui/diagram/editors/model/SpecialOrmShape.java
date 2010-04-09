@@ -14,9 +14,9 @@ import java.util.Iterator;
 
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.stubs.PropertyStub;
-import org.hibernate.mediator.stubs.RootClassStub;
-import org.hibernate.mediator.stubs.TypeStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.RootClassStub;
+import org.hibernate.mediator.x.type.TypeStub;
 
 /**
  * 

@@ -5,8 +5,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.Messages;
-import org.hibernate.mediator.stubs.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.util.ClassHelper;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
 import org.hibernate.mediator.util.MReflectionUtils;

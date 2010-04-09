@@ -12,9 +12,9 @@ package org.jboss.tools.hibernate.ui.view;
 
 import java.util.Iterator;
 
-import org.hibernate.mediator.stubs.ColumnStub;
-import org.hibernate.mediator.stubs.ForeignKeyStub;
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.ForeignKeyStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 
 /**
  * @author some modifications from Vitali

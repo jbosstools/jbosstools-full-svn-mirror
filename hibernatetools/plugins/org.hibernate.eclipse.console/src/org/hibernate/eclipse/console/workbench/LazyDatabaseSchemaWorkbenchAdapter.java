@@ -37,13 +37,13 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.mediator.execution.ExecutionContext;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.ConnectionProviderStub;
-import org.hibernate.mediator.stubs.DefaultDatabaseCollectorStub;
-import org.hibernate.mediator.stubs.JDBCReaderStub;
-import org.hibernate.mediator.stubs.ReverseEngineeringStrategyStub;
-import org.hibernate.mediator.stubs.SettingsStub;
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.SettingsStub;
+import org.hibernate.mediator.x.cfg.reveng.DefaultDatabaseCollectorStub;
+import org.hibernate.mediator.x.cfg.reveng.JDBCReaderStub;
+import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategyStub;
+import org.hibernate.mediator.x.connection.ConnectionProviderStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 
 public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 

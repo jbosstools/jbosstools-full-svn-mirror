@@ -21,7 +21,7 @@
  */
 package org.hibernate.console.node;
 
-import org.hibernate.mediator.stubs.TableStub;
+import org.hibernate.mediator.x.mapping.TableStub;
 
 public class TableNode extends BaseNode {
 

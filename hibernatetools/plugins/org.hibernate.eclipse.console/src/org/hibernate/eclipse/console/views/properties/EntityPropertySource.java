@@ -23,7 +23,7 @@ package org.hibernate.eclipse.console.views.properties;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource2;
-import org.hibernate.mediator.stubs.SessionStub;
+import org.hibernate.mediator.x.SessionStub;
 
 public class EntityPropertySource implements IPropertySource2
 {

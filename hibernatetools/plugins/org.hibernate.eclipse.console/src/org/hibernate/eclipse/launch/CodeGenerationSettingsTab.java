@@ -63,7 +63,7 @@ import org.hibernate.eclipse.console.utils.DialogSelectionHelper;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.console.wizards.NewReverseEngineeringFileWizard;
-import org.hibernate.mediator.stubs.ReverseEngineeringStrategyStub;
+import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategyStub;
 
 @SuppressWarnings("restriction")
 public class CodeGenerationSettingsTab extends	AbstractLaunchConfigurationTab {

@@ -49,8 +49,8 @@ import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.stubs.EnvironmentStub;
-import org.hibernate.mediator.stubs.HibernateConfigurationExporterStub;
+import org.hibernate.mediator.x.cfg.EnvironmentStub;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateConfigurationExporterStub;
 
 /**
  * Creates a new hibernate.cfg.xml

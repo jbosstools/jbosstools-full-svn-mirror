@@ -70,10 +70,10 @@ import org.hibernate.eclipse.jdt.ui.internal.JdtUiMessages;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.collect.AllEntitiesInfoCollector;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.EntityInfo;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.Utils;
-import org.hibernate.mediator.stubs.ConfigurationStub;
-import org.hibernate.mediator.stubs.HibernateMappingExporterStub;
-import org.hibernate.mediator.stubs.HibernateMappingGlobalSettingsStub;
-import org.hibernate.mediator.stubs.POJOClassStub;
+import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingExporterStub;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingGlobalSettingsStub;
+import org.hibernate.mediator.x.tool.hbm2x.pojo.POJOClassStub;
 
 /**
  * @author Dmitry Geraskov

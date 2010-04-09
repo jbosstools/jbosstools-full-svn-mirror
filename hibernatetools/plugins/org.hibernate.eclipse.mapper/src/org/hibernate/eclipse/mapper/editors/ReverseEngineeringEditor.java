@@ -52,11 +52,11 @@ import org.hibernate.eclipse.mapper.editors.reveng.RevEngTypeMappingPage;
 import org.hibernate.eclipse.mapper.editors.xpl.XMLFormEditorPart;
 import org.hibernate.eclipse.mapper.model.DOMReverseEngineeringDefinition;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.mediator.stubs.DefaultReverseEngineeringStrategyStub;
-import org.hibernate.mediator.stubs.OverrideRepositoryStub;
-import org.hibernate.mediator.stubs.SettingsStub;
-import org.hibernate.mediator.stubs.TableFilterStub;
 import org.hibernate.mediator.stubs.util.StringHelper;
+import org.hibernate.mediator.x.cfg.SettingsStub;
+import org.hibernate.mediator.x.cfg.reveng.DefaultReverseEngineeringStrategyStub;
+import org.hibernate.mediator.x.cfg.reveng.OverrideRepositoryStub;
+import org.hibernate.mediator.x.cfg.reveng.TableFilterStub;
 import org.w3c.dom.Document;
 
 public class ReverseEngineeringEditor extends XMLFormEditorPart {

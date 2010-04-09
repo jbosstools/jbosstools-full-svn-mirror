@@ -24,8 +24,8 @@ package org.hibernate.eclipse.console.workbench;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.stubs.ColumnStub;
-import org.hibernate.mediator.stubs.JDBCToHibernateTypeHelperStub;
+import org.hibernate.mediator.x.cfg.reveng.JDBCToHibernateTypeHelperStub;
+import org.hibernate.mediator.x.mapping.ColumnStub;
 
 public class ColumnWorkbenchAdapter extends BasicWorkbenchAdapter {
 

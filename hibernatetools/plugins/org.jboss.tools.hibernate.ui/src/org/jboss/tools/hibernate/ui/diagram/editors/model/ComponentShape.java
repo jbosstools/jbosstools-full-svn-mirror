@@ -12,8 +12,8 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 
 import java.util.Properties;
 
-import org.hibernate.mediator.stubs.CollectionStub;
-import org.hibernate.mediator.stubs.PropertyStub;
+import org.hibernate.mediator.x.mapping.CollectionStub;
+import org.hibernate.mediator.x.mapping.PropertyStub;
 
 /**
  * @author some modifications from Vitali
