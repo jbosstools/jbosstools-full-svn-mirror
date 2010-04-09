@@ -392,8 +392,8 @@
 					Studio</property>. You can do it by performing one of the following actions:</para>
 			<itemizedlist>
 				<listitem>
-					<para>Start JBoss Server from JBoss
-						Server view by clicking the Start the server icon (
+					<para>Start JBoss Server from 
+						Servers view by clicking the Start the server icon (
 						<inlinemediaobject>
 							<imageobject>
 								<imagedata fileref="images/jsp_application/jsp_application_18.png"/>
