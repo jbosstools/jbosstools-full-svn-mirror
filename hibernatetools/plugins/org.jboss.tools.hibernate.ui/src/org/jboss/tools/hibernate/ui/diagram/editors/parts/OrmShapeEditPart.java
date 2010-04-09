@@ -20,9 +20,9 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.figures.TitleFigure;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.BaseElement;
@@ -121,10 +121,10 @@ public class OrmShapeEditPart extends ExpandableShapeEditPart {
 
 	protected Color getBackgroundColor() {
 		Object element = getElement();
-		if (element instanceof PersistentClassStub || 
-				element instanceof ComponentStub) {
+		if (element instanceof PersistentClass || 
+				element instanceof Component) {
 			return ResourceManager.getInstance().getColor(new RGB(0, 0, 0));
-		} else if (element instanceof TableStub || element instanceof PropertyStub) {
+		} else if (element instanceof TableStub || element instanceof Property) {
 			return ResourceManager.getInstance().getColor(new RGB(
 					Integer.parseInt(ColorConstants.Colors_DatabaseColumnR),
 					Integer.parseInt(ColorConstants.Colors_DatabaseColumnG),

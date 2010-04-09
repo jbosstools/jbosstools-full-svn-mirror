@@ -5,7 +5,7 @@ import java.io.Reader;
 import org.hibernate.hql.antlr.HqlBaseLexer;
 import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.Messages;
-import org.hibernate.mediator.x.hql.antlr.HqlSqlTokenTypesStub;
+import org.hibernate.mediator.x.hql.antlr.HqlSqlTokenTypes;
 
 import antlr.Token;
 import antlr.TokenStreamException;
@@ -35,7 +35,7 @@ public class HqlBaseLexerStub {
 	
 	public boolean isNextTokenIdent() {
 		Token token = nextToken();
-		if (token != null && token.getType() == HqlSqlTokenTypesStub.IDENT) {
+		if (token != null && token.getType() == HqlSqlTokenTypes.IDENT) {
 			return true;
 		} 
 		return false;

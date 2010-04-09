@@ -28,13 +28,13 @@ import net.sf.cglib.proxy.Enhancer;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.Session;
 import org.hibernate.mediator.x.mapping.TableStub;
-import org.hibernate.mediator.x.metadata.ClassMetadataStub;
-import org.hibernate.mediator.x.metadata.CollectionMetadataStub;
-import org.hibernate.mediator.x.type.CollectionTypeStub;
-import org.hibernate.mediator.x.type.EntityTypeStub;
-import org.hibernate.mediator.x.type.TypeStub;
+import org.hibernate.mediator.x.metadata.ClassMetadata;
+import org.hibernate.mediator.x.metadata.CollectionMetadata;
+import org.hibernate.mediator.x.type.CollectionType;
+import org.hibernate.mediator.x.type.EntityType;
+import org.hibernate.mediator.x.type.Type;
 
 /**
  * @author MAX
@@ -66,8 +66,8 @@ public class NodeFactory {
         //return new RootNode(this, classes);
     }
 
-    public BaseNode createObjectNode(SessionStub sessionStub, Object o) {
-		ClassMetadataStub md = getMetaData(sessionStub.getEntityName(o));
+    public BaseNode createObjectNode(Session sessionStub, Object o) {
+		ClassMetadata md = getMetaData(sessionStub.getEntityName(o));
 		return internalCreateClassNode(null, md.getEntityName(), md, o, false);
 		//return new ClassNode(this,null,md.getEntityName(),md,o,true);
 	}
@@ -77,34 +77,34 @@ public class NodeFactory {
 		//return new ClassNode(this, node, clazz, getMetaData(clazz),null,false);
 	}
 
-	private ClassNode internalCreateClassNode(BaseNode node, String clazz, ClassMetadataStub md, Object o, boolean objectGraph) {
+	private ClassNode internalCreateClassNode(BaseNode node, String clazz, ClassMetadata md, Object o, boolean objectGraph) {
 
 		Enhancer e = ProxyFactory.createEnhancer(ClassNode.class);
 
-        return (ClassNode) e.create(new Class[] { NodeFactory.class, BaseNode.class, String.class, ClassMetadataStub.class, Object.class, boolean.class},
+        return (ClassNode) e.create(new Class[] { NodeFactory.class, BaseNode.class, String.class, ClassMetadata.class, Object.class, boolean.class},
        		 new Object[] { this, node, clazz, md,o, Boolean.valueOf(objectGraph) } );
 	}
 
-	public ClassMetadataStub getMetaData(String clazz) {
+	public ClassMetadata getMetaData(String clazz) {
 		return consoleConfig.getSessionStubFactory().getAllClassMetadata().get(clazz);
 	}
 
-	public ClassMetadataStub getMetaData(Class<?> clazz) {
+	public ClassMetadata getMetaData(Class<?> clazz) {
 		return consoleConfig.getSessionStubFactory().getAllClassMetadata().get(clazz.getName());
 	}
 
-     public CollectionMetadataStub getCollectionMetaData(String role) {
+     public CollectionMetadata getCollectionMetaData(String role) {
  		return consoleConfig.getSessionStubFactory().getAllCollectionMetadata().get(role);
      }
 
-	public BaseNode createPropertyNode(BaseNode parent, int idx, ClassMetadataStub metadata) {
+	public BaseNode createPropertyNode(BaseNode parent, int idx, ClassMetadata metadata) {
 		return createPropertyNode(parent, idx, metadata, null,false);
 	}
 
-	public BaseNode createPropertyNode(BaseNode node, int i, ClassMetadataStub md, Object baseObject, boolean objectGraph) {
+	public BaseNode createPropertyNode(BaseNode node, int i, ClassMetadata md, Object baseObject, boolean objectGraph) {
 		Enhancer e = ProxyFactory.createEnhancer(PropertyNode.class);
 
-        return (BaseNode) e.create(new Class[] { NodeFactory.class, BaseNode.class, int.class, ClassMetadataStub.class, Object.class, boolean.class},
+        return (BaseNode) e.create(new Class[] { NodeFactory.class, BaseNode.class, int.class, ClassMetadata.class, Object.class, boolean.class},
         		 new Object[] { this, node, Integer.valueOf(i),md,baseObject,Boolean.valueOf(objectGraph) } );
 	}
 
@@ -114,16 +114,16 @@ public class NodeFactory {
 	 * @param md
 	 * @return
 	 */
-	public IdentifierNode createIdentifierNode(BaseNode parent, ClassMetadataStub md) {
+	public IdentifierNode createIdentifierNode(BaseNode parent, ClassMetadata md) {
 		Enhancer e = ProxyFactory.createEnhancer(IdentifierNode.class);
 
-        return (IdentifierNode) e.create(new Class[] { NodeFactory.class, BaseNode.class, ClassMetadataStub.class},
+        return (IdentifierNode) e.create(new Class[] { NodeFactory.class, BaseNode.class, ClassMetadata.class},
         		 new Object[] { this, parent, md } );
 		//return new IdentifierNode(this, parent, md);
 	}
 
 	public BaseNode createNode(BaseNode parent, final Class<?> clazz) {
-		ClassMetadataStub metadata = getMetaData(clazz);
+		ClassMetadata metadata = getMetaData(clazz);
 		if(metadata!=null) {
 			return createClassNode(parent, clazz.getName() );
 		}
@@ -143,19 +143,19 @@ public class NodeFactory {
 		};
 	}
 
-	public PersistentCollectionNode createPersistentCollectionNode(ClassNode node, String name, ClassMetadataStub md, CollectionTypeStub type, Object baseObject, boolean objectGraph) {
+	public PersistentCollectionNode createPersistentCollectionNode(ClassNode node, String name, ClassMetadata md, CollectionType type, Object baseObject, boolean objectGraph) {
 		Enhancer e = ProxyFactory.createEnhancer(PersistentCollectionNode.class);
 
         return (PersistentCollectionNode) e.create(
-        		 new Class[] { NodeFactory.class, BaseNode.class, String.class, CollectionTypeStub.class, ClassMetadataStub.class, CollectionMetadataStub.class, Object.class, boolean.class},
+        		 new Class[] { NodeFactory.class, BaseNode.class, String.class, CollectionType.class, ClassMetadata.class, CollectionMetadata.class, Object.class, boolean.class},
         		 new Object[] { this, node, name, type,  md, getCollectionMetaData(type.getRole() ), baseObject, Boolean.valueOf(objectGraph) } );
 		//return new PersistentCollectionNode(this, node, name, type,  md, getCollectionMetaData(type.getRole() ), baseObject, objectGraph);
 	}
 
-		public String getIconNameForType(TypeStub type) {
+		public String getIconNameForType(Type type) {
 			String result = ImageConstants.UNKNOWNPROPERTY;
 			if (type.isEntityType()) {
-				EntityTypeStub et = (EntityTypeStub) type;
+				EntityType et = (EntityType) type;
 				if (!et.isOneToOne()) {
 					result = ImageConstants.MANYTOONE;
 				} else {

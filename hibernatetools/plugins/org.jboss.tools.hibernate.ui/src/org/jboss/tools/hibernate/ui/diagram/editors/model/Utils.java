@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.ui.IMemento;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.SimpleValueStub;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.SimpleValue;
 import org.hibernate.mediator.x.mapping.TableStub;
 
 /**
@@ -46,8 +46,8 @@ public class Utils {
 
 	public static String getName(Object obj) {
 		String res = ""; //$NON-NLS-1$
-		if (obj instanceof PersistentClassStub) {
-			PersistentClassStub rootClass = (PersistentClassStub)obj;
+		if (obj instanceof PersistentClass) {
+			PersistentClass rootClass = (PersistentClass)obj;
 			if (rootClass.getEntityName() != null) {
 				res = rootClass.getEntityName();
 			} else {
@@ -55,11 +55,11 @@ public class Utils {
 			}
 		} else if (obj instanceof TableStub) {
 			res = getTableName((TableStub)obj);
-		} else if (obj instanceof PropertyStub) {
-			PropertyStub property = (PropertyStub)obj;
+		} else if (obj instanceof Property) {
+			Property property = (Property)obj;
 			res = property.getPersistentClass().getEntityName() + "." + property.getName(); //$NON-NLS-1$
-		} else if (obj instanceof SimpleValueStub) {
-			SimpleValueStub sv = (SimpleValueStub)obj;
+		} else if (obj instanceof SimpleValue) {
+			SimpleValue sv = (SimpleValue)obj;
 			res = getTableName(sv.getTable()) + "." + sv.getForeignKeyName(); //$NON-NLS-1$
 		} else if (obj instanceof String) {
 			res = (String)obj;

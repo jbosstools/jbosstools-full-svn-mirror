@@ -43,12 +43,12 @@ import org.hibernate.mediator.execution.ExecutionContext;
 import org.hibernate.mediator.execution.ExecutionContextHolder;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
 import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
-import org.hibernate.mediator.x.SessionFactoryStub;
-import org.hibernate.mediator.x.SessionStub;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.cfg.ConfigurationStubFactory;
-import org.hibernate.mediator.x.cfg.SettingsStub;
-import org.hibernate.mediator.x.tool.ide.completion.HQLCodeAssistStub;
+import org.hibernate.mediator.x.SessionFactory;
+import org.hibernate.mediator.x.Session;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.cfg.ConfigurationFactory;
+import org.hibernate.mediator.x.cfg.Settings;
+import org.hibernate.mediator.x.tool.ide.completion.HQLCodeAssist;
 import org.xml.sax.EntityResolver;
 
 public class ConsoleConfiguration implements ExecutionContextHolder {
@@ -57,8 +57,8 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	private ConsoleConfigClassLoader classLoader = null;
 
 	/* TODO: move this out to the actual users of the configuraiton/sf ? */
-	private ConfigurationStub configStub;
-	private SessionFactoryStub sessionStubFactory;
+	private Configuration configStub;
+	private SessionFactory sessionStubFactory;
 
 	private ConsoleConfigurationPreferences prefs = null;
 	
@@ -119,14 +119,14 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	 * @return
 	 *
 	 */
-	public ConfigurationStub buildWith(final ConfigurationStub cfg, final boolean includeMappings) {
+	public Configuration buildWith(final Configuration cfg, final boolean includeMappings) {
 		if (classLoader == null) {
 			classLoader = createClassLoader();
 			executionContext = new DefaultExecutionContext(getName(), classLoader);
 		}
-		ConfigurationStub result = (ConfigurationStub) executionContext.execute(new ExecutionContext.Command() {
+		Configuration result = (Configuration) executionContext.execute(new ExecutionContext.Command() {
 			public Object execute() {
-				ConfigurationStubFactory csf = new ConfigurationStubFactory(prefs);
+				ConfigurationFactory csf = new ConfigurationFactory(prefs);
 				return csf.createConfiguration(cfg, includeMappings);
 			}
 		});
@@ -145,7 +145,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		if (profile == null) {
 			return null;
 		}
-		ConfigurationStubFactory.refreshProfile(profile);
+		ConfigurationFactory.refreshProfile(profile);
 		//
 		Properties cpProperties = profile.getProperties(profile.getProviderId());
 		String driverJarPath = cpProperties.getProperty("jarList"); //$NON-NLS-1$
@@ -229,9 +229,9 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		if (useClassPathHibernateLibs) {
 			return ClassLoader.getSystemClassLoader();
 		}
-		return ConfigurationStub.class.getClassLoader();
+		return Configuration.class.getClassLoader();
 	}
-	public ConfigurationStub getConfiguration() {
+	public Configuration getConfiguration() {
 		return configStub;
 	}
 	/**
@@ -254,7 +254,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		});
 	}
 
-	public SessionFactoryStub getSessionStubFactory() {
+	public SessionFactory getSessionStubFactory() {
 		return sessionStubFactory;
 	}
 
@@ -283,7 +283,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		return (QueryPage)execute(new ExecutionContext.Command() {
 
 			public Object execute() {
-				SessionStub sessionStub = getSessionStubFactory().openSession();
+				Session sessionStub = getSessionStubFactory().openSession();
 				QueryPage qp = new HQLQueryPage(ConsoleConfiguration.this.getName(), hql, model);
 				qp.setSessionStub(sessionStub);
 
@@ -299,7 +299,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		return (QueryPage)execute(new ExecutionContext.Command() {
 
 			public Object execute() {
-				SessionStub sessionStub = getSessionStubFactory().openSession();
+				Session sessionStub = getSessionStubFactory().openSession();
 				QueryPage qp = new JavaPage(ConsoleConfiguration.this.getName(), queryString, model);
 				qp.setSessionStub(sessionStub);
 
@@ -335,7 +335,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		}
 	}
 
-	private void fireFactoryClosing(SessionFactoryStub ssf) {
+	private void fireFactoryClosing(SessionFactory ssf) {
 		for (ConsoleConfigurationListener view : consoleCfgListeners) {
 			view.sessionFactoryClosing(this);
 		}
@@ -422,8 +422,8 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		}
 	}
 
-	public SettingsStub getSettings(final ConfigurationStub cfg) {
-		return (SettingsStub) execute(new Command() {
+	public Settings getSettings(final Configuration cfg) {
+		return (Settings) execute(new Command() {
 
 			public Object execute() {
 				return cfg.buildSettings();
@@ -432,9 +432,9 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		});
 	}
 
-	public SettingsStub getSettings2() {
-		ConfigurationStub cfg = buildWith(null, false);
-		SettingsStub settings = getSettings(cfg);
+	public Settings getSettings2() {
+		Configuration cfg = buildWith(null, false);
+		Settings settings = getSettings(cfg);
 		return settings;
 	}
 
@@ -446,7 +446,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		return configStub.getEntityResolver();
 	}
 
-	public HQLCodeAssistStub getHQLCodeAssist() {
+	public HQLCodeAssist getHQLCodeAssist() {
 		if (configStub == null) {
 			try{
 			 	build();
@@ -458,7 +458,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 				//HibernateConsolePlugin.getDefault().logErrorMessage(mess, e);
 			}
 		}
-		HQLCodeAssistStub res = (HQLCodeAssistStub)execute(new ExecutionContext.Command() {
+		HQLCodeAssist res = (HQLCodeAssist)execute(new ExecutionContext.Command() {
 			public Object execute() {
 				if (configStub != null) {
 					return configStub.getHQLCodeAssist();

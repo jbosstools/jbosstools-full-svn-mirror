@@ -22,11 +22,11 @@
 package org.hibernate.eclipse.console.model.impl;
 
 import org.hibernate.eclipse.console.model.ITableFilter;
-import org.hibernate.mediator.x.cfg.reveng.TableFilterStub;
+import org.hibernate.mediator.x.cfg.reveng.TableFilter;
 
 public class TableFilterImpl implements ITableFilter {
 
-	TableFilterStub tf = TableFilterStub.newInstance();
+	TableFilter tf = TableFilter.newInstance();
 	private final ReverseEngineeringDefinitionImpl revModel;
 	
 	protected TableFilterImpl(

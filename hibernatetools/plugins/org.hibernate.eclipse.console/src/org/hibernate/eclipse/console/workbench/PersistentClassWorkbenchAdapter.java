@@ -27,16 +27,16 @@ import java.util.Iterator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 
 public class PersistentClassWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	public Object[] getChildren(Object o) {
-		PersistentClassStub pc = (PersistentClassStub) o;
-		PropertyStub identifierProperty = pc.getIdentifierProperty();
-		ArrayList<PropertyStub> res = new ArrayList<PropertyStub>();
-		Iterator<PropertyStub> it = pc.getPropertyClosureIterator();
+		PersistentClass pc = (PersistentClass) o;
+		Property identifierProperty = pc.getIdentifierProperty();
+		ArrayList<Property> res = new ArrayList<Property>();
+		Iterator<Property> it = pc.getPropertyClosureIterator();
 		while (it.hasNext()) {
 			res.add(it.next());
 		}
@@ -52,7 +52,7 @@ public class PersistentClassWorkbenchAdapter extends BasicWorkbenchAdapter {
 	}
 
 	public String getLabel(Object o) {
-		PersistentClassStub pc = (PersistentClassStub) o;
+		PersistentClass pc = (PersistentClass) o;
 		return HibernateWorkbenchHelper.getLabelForClassName(pc.getEntityName());
 	}
 

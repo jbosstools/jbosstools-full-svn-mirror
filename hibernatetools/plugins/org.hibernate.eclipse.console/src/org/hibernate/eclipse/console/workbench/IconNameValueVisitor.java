@@ -22,45 +22,45 @@
 package org.hibernate.eclipse.console.workbench;
 
 import org.hibernate.console.ImageConstants;
-import org.hibernate.mediator.x.mapping.AnyStub;
-import org.hibernate.mediator.x.mapping.ArrayStub;
-import org.hibernate.mediator.x.mapping.BagStub;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.DependantValueStub;
-import org.hibernate.mediator.x.mapping.IdentifierBagStub;
+import org.hibernate.mediator.x.mapping.Any;
+import org.hibernate.mediator.x.mapping.Array;
+import org.hibernate.mediator.x.mapping.Bag;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.DependantValue;
+import org.hibernate.mediator.x.mapping.IdentifierBag;
 import org.hibernate.mediator.x.mapping.ListStub;
-import org.hibernate.mediator.x.mapping.ManyToOneStub;
+import org.hibernate.mediator.x.mapping.ManyToOne;
 import org.hibernate.mediator.x.mapping.MapStub;
-import org.hibernate.mediator.x.mapping.OneToManyStub;
-import org.hibernate.mediator.x.mapping.OneToOneStub;
-import org.hibernate.mediator.x.mapping.PrimitiveArrayStub;
+import org.hibernate.mediator.x.mapping.OneToMany;
+import org.hibernate.mediator.x.mapping.OneToOne;
+import org.hibernate.mediator.x.mapping.PrimitiveArray;
 import org.hibernate.mediator.x.mapping.SetStub;
-import org.hibernate.mediator.x.mapping.SimpleValueStub;
-import org.hibernate.mediator.x.mapping.ValueVisitorStub;
+import org.hibernate.mediator.x.mapping.SimpleValue;
+import org.hibernate.mediator.x.mapping.ValueVisitor;
 
-final class IconNameValueVisitor implements ValueVisitorStub {
+final class IconNameValueVisitor implements ValueVisitor {
 	
-	public Object accept(OneToOneStub oto) {
+	public Object accept(OneToOne oto) {
 		return ImageConstants.ONETOONE;
 	}
 
-	public Object accept(ManyToOneStub mto) {
+	public Object accept(ManyToOne mto) {
 		return ImageConstants.MANYTOONE;
 	}
 
-	public Object accept(ComponentStub component) {
+	public Object accept(Component component) {
 		return ImageConstants.COMPONENT;
 	}
 
-	public Object accept(DependantValueStub value) {
+	public Object accept(DependantValue value) {
 		return ImageConstants.UNKNOWNPROPERTY;
 	}
 
-	public Object accept(SimpleValueStub value) {
+	public Object accept(SimpleValue value) {
 		return ImageConstants.PROPERTY;
 	}
 
-	public Object accept(AnyStub any) {
+	public Object accept(Any any) {
 		return ImageConstants.PROPERTY;
 	}
 
@@ -68,7 +68,7 @@ final class IconNameValueVisitor implements ValueVisitorStub {
 		return ImageConstants.MANYTOONE;
 	}	
 
-	public Object accept(OneToManyStub many) {
+	public Object accept(OneToMany many) {
 		return ImageConstants.ONETOMANY;
 	}
 
@@ -76,11 +76,11 @@ final class IconNameValueVisitor implements ValueVisitorStub {
 		return ImageConstants.MANYTOONE;
 	}
 
-	public Object accept(ArrayStub list) {
+	public Object accept(Array list) {
 		return ImageConstants.MANYTOONE;
 	}
 
-	public Object accept(PrimitiveArrayStub primitiveArray) {
+	public Object accept(PrimitiveArray primitiveArray) {
 		return ImageConstants.MANYTOONE;			
 	}
 
@@ -88,11 +88,11 @@ final class IconNameValueVisitor implements ValueVisitorStub {
 		return ImageConstants.MANYTOONE;
 	}
 
-	public Object accept(IdentifierBagStub bag) {
+	public Object accept(IdentifierBag bag) {
 		return ImageConstants.MANYTOONE;
 	}
 
-	public Object accept(BagStub bag) {
+	public Object accept(Bag bag) {
 		return ImageConstants.MANYTOONE;
 	}
 	

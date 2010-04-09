@@ -63,7 +63,7 @@ import org.hibernate.eclipse.console.utils.DialogSelectionHelper;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.console.wizards.NewReverseEngineeringFileWizard;
-import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategyStub;
+import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategy;
 
 @SuppressWarnings("restriction")
 public class CodeGenerationSettingsTab extends	AbstractLaunchConfigurationTab {
@@ -155,7 +155,7 @@ public class CodeGenerationSettingsTab extends	AbstractLaunchConfigurationTab {
         reverseEngineeringStrategy = new StringButtonDialogField(new IStringButtonAdapter() {
 
 			public void changeControlPressed(DialogField field) {
-				String string = DialogSelectionHelper.chooseImplementation(ReverseEngineeringStrategyStub.CL, reverseEngineeringStrategy.getText(), HibernateConsoleMessages.CodeGenerationSettingsTab_choose_reverse_engineering_strategy, getShell());
+				String string = DialogSelectionHelper.chooseImplementation(ReverseEngineeringStrategy.CL, reverseEngineeringStrategy.getText(), HibernateConsoleMessages.CodeGenerationSettingsTab_choose_reverse_engineering_strategy, getShell());
 				if(string!=null) {
 					reverseEngineeringStrategy.setText(string);
 				}

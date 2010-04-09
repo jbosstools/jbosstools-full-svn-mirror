@@ -8,12 +8,12 @@ public class SetStub extends CollectionStub {
 		super(set, CL);
 	}
 	
-	public static SetStub newInstance(PersistentClassStub owner) {
+	public static SetStub newInstance(PersistentClass owner) {
 		return new SetStub(newInstance(CL, owner));
 	}
 
 	@Override
-	public Object accept(ValueVisitorStub visitor) {
+	public Object accept(ValueVisitor visitor) {
 		return visitor.accept(this);
 	}
 

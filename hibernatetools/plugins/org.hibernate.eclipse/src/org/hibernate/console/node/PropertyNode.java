@@ -21,13 +21,13 @@
  */
 package org.hibernate.console.node;
 
-import org.hibernate.mediator.x.EntityModeStub;
-import org.hibernate.mediator.x.metadata.ClassMetadataStub;
+import org.hibernate.mediator.x.EntityMode;
+import org.hibernate.mediator.x.metadata.ClassMetadata;
 
 public class PropertyNode extends TypeNode {
 
-	ClassMetadataStub baseMetaData;
-	public PropertyNode(NodeFactory factory, BaseNode parent, int idx, ClassMetadataStub metadata,Object baseObject, boolean objectGraph) {
+	ClassMetadata baseMetaData;
+	public PropertyNode(NodeFactory factory, BaseNode parent, int idx, ClassMetadata metadata,Object baseObject, boolean objectGraph) {
         super(factory, parent, metadata.getPropertyTypes()[idx], factory.getMetaData(metadata.getPropertyTypes()[idx].getReturnedClass() ), baseObject, objectGraph);
         name = metadata.getPropertyNames()[idx];
         baseMetaData = metadata;
@@ -39,7 +39,7 @@ public class PropertyNode extends TypeNode {
 				if (baseObject == null) {
 					return null;
 				}
-				return baseMetaData.getPropertyValue(baseObject, getName(), EntityModeStub.POJO);
+				return baseMetaData.getPropertyValue(baseObject, getName(), EntityMode.POJO);
 			} catch (RuntimeException he) {
 				// TODO: RuntimeException ? - find correct solution
 				if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$

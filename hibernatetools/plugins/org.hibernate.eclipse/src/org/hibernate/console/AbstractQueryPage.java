@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.mediator.QueryInputModel;
-import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.Session;
 
 /**
  * @author MAX
@@ -38,7 +38,7 @@ public abstract class AbstractQueryPage implements QueryPage {
 
 	PropertyChangeSupport pcs = new PropertyChangeSupport(this);    
     private int id;
-    private SessionStub sessionStub;
+    private Session sessionStub;
 	private final String consoleConfigName;
     protected List<Object> list;
     protected long queryTime = -1;				//shows how long query runs
@@ -97,11 +97,11 @@ public abstract class AbstractQueryPage implements QueryPage {
         this.sticky = sticky;
     }
 
-	public SessionStub getSessionStub() {
+	public Session getSessionStub() {
 		return sessionStub;
 	}
 
-	public void setSessionStub(SessionStub s) {
+	public void setSessionStub(Session s) {
 		sessionStub = s;		
 	}
 

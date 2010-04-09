@@ -16,23 +16,23 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.Configuration;
 import org.hibernate.mediator.x.mapping.CollectionStub;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.DependantValueStub;
-import org.hibernate.mediator.x.mapping.ForeignKeyStub;
-import org.hibernate.mediator.x.mapping.JoinStub;
-import org.hibernate.mediator.x.mapping.OneToManyStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.RootClassStub;
-import org.hibernate.mediator.x.mapping.SimpleValueStub;
-import org.hibernate.mediator.x.mapping.SubclassStub;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.DependantValue;
+import org.hibernate.mediator.x.mapping.ForeignKey;
+import org.hibernate.mediator.x.mapping.Join;
+import org.hibernate.mediator.x.mapping.OneToMany;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.RootClass;
+import org.hibernate.mediator.x.mapping.SimpleValue;
+import org.hibernate.mediator.x.mapping.Subclass;
 import org.hibernate.mediator.x.mapping.TableStub;
-import org.hibernate.mediator.x.mapping.ValueStub;
-import org.hibernate.mediator.x.type.EntityTypeStub;
-import org.hibernate.mediator.x.type.TypeStub;
+import org.hibernate.mediator.x.mapping.Value;
+import org.hibernate.mediator.x.type.EntityType;
+import org.hibernate.mediator.x.type.Type;
 
 /**
  * Responsible to create diagram elements for given
@@ -42,11 +42,11 @@ import org.hibernate.mediator.x.type.TypeStub;
  */
 public class ElementsFactory {
 
-	private final ConfigurationStub config;
+	private final Configuration config;
 	private final HashMap<String, OrmShape> elements;
 	private final ArrayList<Connection> connections;
 	
-	public ElementsFactory(ConfigurationStub config, HashMap<String, OrmShape> elements,
+	public ElementsFactory(Configuration config, HashMap<String, OrmShape> elements,
 			ArrayList<Connection> connections) {
 		this.config = config;
 		this.elements = elements;
@@ -63,26 +63,26 @@ public class ElementsFactory {
 			Object ormElement = shape.getOrmElement();
 			if (ormElement instanceof TableStub) {
 				TableStub databaseTable = (TableStub)ormElement;
-				Iterator<ForeignKeyStub> itFK = (Iterator<ForeignKeyStub>)databaseTable.getForeignKeyIterator();
+				Iterator<ForeignKey> itFK = (Iterator<ForeignKey>)databaseTable.getForeignKeyIterator();
 				while (itFK.hasNext()) {
-					final ForeignKeyStub fk = itFK.next();
+					final ForeignKey fk = itFK.next();
 					TableStub referencedTable = fk.getReferencedTable();
 					final OrmShape referencedShape = getOrCreateDatabaseTable(referencedTable);
 					//
-					Iterator<ColumnStub> itColumns = (Iterator<ColumnStub>)fk.columnIterator();
+					Iterator<Column> itColumns = (Iterator<Column>)fk.columnIterator();
 					while (itColumns.hasNext()) {
-						ColumnStub col = itColumns.next();
+						Column col = itColumns.next();
 						Shape shapeColumn = shape.getChild(col);
-						Iterator<ColumnStub> itReferencedColumns = null;
+						Iterator<Column> itReferencedColumns = null;
 						if (fk.isReferenceToPrimaryKey()) {
 							itReferencedColumns = 
-								(Iterator<ColumnStub>)referencedTable.getPrimaryKey().columnIterator();
+								(Iterator<Column>)referencedTable.getPrimaryKey().columnIterator();
 						} else {
 							itReferencedColumns = 
-								(Iterator<ColumnStub>)fk.getReferencedColumns().iterator();
+								(Iterator<Column>)fk.getReferencedColumns().iterator();
 						}
 						while (itReferencedColumns != null && itReferencedColumns.hasNext()) {
-							ColumnStub colReferenced = itReferencedColumns.next();
+							Column colReferenced = itReferencedColumns.next();
 							Shape shapeReferencedColumn = referencedShape.getChild(colReferenced);
 							if (shouldCreateConnection(shapeColumn, shapeReferencedColumn)) {
 								connections.add(new Connection(shapeColumn, shapeReferencedColumn));
@@ -109,25 +109,25 @@ public class ElementsFactory {
 	
 	protected void processExpand(ExpandableShape shape) {
 		Object element = shape.getOrmElement();
-		if (!(element instanceof PropertyStub)) {
+		if (!(element instanceof Property)) {
 			return;
 		}
 		OrmShape s = null;
-		PropertyStub property = (PropertyStub)element;
+		Property property = (Property)element;
 		if (!property.isComposite()) {
-			TypeStub type = ((PropertyStub)element).getType();
+			Type type = ((Property)element).getType();
 			if (type.isEntityType()) {
-				EntityTypeStub et = (EntityTypeStub) type;
+				EntityType et = (EntityType) type;
 				Object clazz = config != null ? 
 						config.getClassMapping(et.getAssociatedEntityName()) : null;
-				if (clazz instanceof RootClassStub) {
-					RootClassStub rootClass = (RootClassStub)clazz;
+				if (clazz instanceof RootClass) {
+					RootClass rootClass = (RootClass)clazz;
 					s = getOrCreatePersistentClass(rootClass, null);
 					if (shouldCreateConnection(shape, s)) {
 						connections.add(new Connection(shape, s));
 					}
-				} else if (clazz instanceof SubclassStub) {
-					s = getOrCreatePersistentClass(((SubclassStub)clazz).getRootClass(), null);
+				} else if (clazz instanceof Subclass) {
+					s = getOrCreatePersistentClass(((Subclass)clazz).getRootClass(), null);
 				}
 			}
 		} else {
@@ -141,12 +141,12 @@ public class ElementsFactory {
 
 	@SuppressWarnings("unchecked")
 	protected void refreshComponentReferences(ComponentShape componentShape) {
-		PropertyStub property = (PropertyStub)componentShape.getOrmElement();
+		Property property = (Property)componentShape.getOrmElement();
 		if (!(property.getValue() instanceof CollectionStub)) {
 			return;
 		}
 		CollectionStub collection = (CollectionStub)property.getValue();
-		ValueStub component = collection.getElement();
+		Value component = collection.getElement();
 		Shape csChild0 = null, csChild1 = null;
 		Iterator<Shape> tmp = componentShape.getChildrenIterator();
 		if (tmp.hasNext()) {
@@ -156,19 +156,19 @@ public class ElementsFactory {
 			csChild1 = tmp.next();
 		}
 		OrmShape childShape = null;
-		if (component instanceof ComponentStub) {
-			childShape = elements.get(((ComponentStub)component).getComponentClassName());
+		if (component instanceof Component) {
+			childShape = elements.get(((Component)component).getComponentClassName());
 			if (childShape == null) {
 				childShape = getOrCreateComponentClass(property);
 			}
-			SimpleValueStub value = (SimpleValueStub)csChild0.getOrmElement();
+			SimpleValue value = (SimpleValue)csChild0.getOrmElement();
 			OrmShape tableShape = getOrCreateDatabaseTable(value.getTable());
 			if (tableShape != null) {
 				Iterator it = value.getColumnIterator();
 				while (it.hasNext()) {
 					Object el = it.next();
-					if (el instanceof ColumnStub) {
-						ColumnStub col = (ColumnStub)el;
+					if (el instanceof Column) {
+						Column col = (Column)el;
 						Shape shape = tableShape.getChild(col);
 						if (shouldCreateConnection(csChild0, shape)) {
 							connections.add(new Connection(csChild0, shape));
@@ -190,8 +190,8 @@ public class ElementsFactory {
 				Iterator it = collection.getKey().getColumnIterator();
 				while (it.hasNext()) {
 					Object el = it.next();
-					if (el instanceof ColumnStub) {
-						ColumnStub col = (ColumnStub)el;
+					if (el instanceof Column) {
+						Column col = (Column)el;
 						Shape shape = keyTableShape.getChild(col);
 						if (shouldCreateConnection(csChild0, shape)) {
 							connections.add(new Connection(csChild0, shape));
@@ -204,22 +204,22 @@ public class ElementsFactory {
 			// this is case: if (collection.isMap() || collection.isSet())
 			childShape = getOrCreateDatabaseTable(collection.getCollectionTable());
 			if (childShape != null) {
-				Iterator it = ((DependantValueStub)csChild0.getOrmElement()).getColumnIterator();
+				Iterator it = ((DependantValue)csChild0.getOrmElement()).getColumnIterator();
 				while (it.hasNext()) {
 					Object el = it.next();
-					if (el instanceof ColumnStub) {
-						ColumnStub col = (ColumnStub)el;
+					if (el instanceof Column) {
+						Column col = (Column)el;
 						Shape shape = childShape.getChild(col);
 						if (shouldCreateConnection(csChild0, shape)) {
 							connections.add(new Connection(csChild0, shape));
 						}
 					}
 				}
-				it = ((SimpleValueStub)csChild1.getOrmElement()).getColumnIterator();
+				it = ((SimpleValue)csChild1.getOrmElement()).getColumnIterator();
 				while (it.hasNext()) {
 					Object el = it.next();
-					if (el instanceof ColumnStub) {
-						ColumnStub col = (ColumnStub)el;
+					if (el instanceof Column) {
+						Column col = (Column)el;
 						Shape shape = childShape.getChild(col);
 						if (shouldCreateConnection(csChild1, shape)) {
 							connections.add(new Connection(csChild1, shape));
@@ -241,8 +241,8 @@ public class ElementsFactory {
 					Iterator iterator = config.getClassMappings();
 					while (iterator.hasNext()) {
 						Object clazz = iterator.next();
-						if (clazz instanceof RootClassStub) {
-							RootClassStub cls = (RootClassStub)clazz;
+						if (clazz instanceof RootClass) {
+							RootClass cls = (RootClass)clazz;
 							if (databaseTable.equals(cls.getTable())) {
 								// create persistent class shape only for RootClass,
 								// which has same table reference
@@ -256,7 +256,7 @@ public class ElementsFactory {
 		return tableShape;
 	}
 
-	protected OrmShape getOrCreatePersistentClass(PersistentClassStub persistentClass, 
+	protected OrmShape getOrCreatePersistentClass(PersistentClass persistentClass, 
 			TableStub componentClassDatabaseTable) {
 		OrmShape classShape = null;
 		if (persistentClass == null) {
@@ -280,18 +280,18 @@ public class ElementsFactory {
 				connections.add(new Connection(classShape, shape));
 			}
 		}
-		RootClassStub rc = (RootClassStub)persistentClass;
-		Iterator<SubclassStub> iter = rc.getSubclassIterator();
+		RootClass rc = (RootClass)persistentClass;
+		Iterator<Subclass> iter = rc.getSubclassIterator();
 		while (iter.hasNext()) {
 			Object element = iter.next();
-			if (element instanceof SubclassStub) {
-				SubclassStub subclass = (SubclassStub)element;
+			if (element instanceof Subclass) {
+				Subclass subclass = (Subclass)element;
 				OrmShape subclassShape = getShape(subclass);
 				if (subclassShape == null) {
 					subclassShape = createShape(subclass);
 				}
-				if (((SubclassStub)element).isJoinedSubclass()) {
-					TableStub jcTable = ((SubclassStub)element).getTable();
+				if (((Subclass)element).isJoinedSubclass()) {
+					TableStub jcTable = ((Subclass)element).getTable();
 					OrmShape jcTableShape = getOrCreateDatabaseTable(jcTable);
 					createConnections(subclassShape, jcTableShape);
 					if (shouldCreateConnection(subclassShape, jcTableShape)) {
@@ -303,15 +303,15 @@ public class ElementsFactory {
 						connections.add(new Connection(subclassShape, shape));
 					}
 				}
-				OrmShape ownerTableShape = getOrCreateDatabaseTable(((SubclassStub)element).getRootTable());
+				OrmShape ownerTableShape = getOrCreateDatabaseTable(((Subclass)element).getRootTable());
 				createConnections(subclassShape, ownerTableShape);
 
-				Iterator<JoinStub> joinIterator = subclass.getJoinIterator();
+				Iterator<Join> joinIterator = subclass.getJoinIterator();
 				while (joinIterator.hasNext()) {
-					JoinStub join = joinIterator.next();
-					Iterator<PropertyStub> iterator = join.getPropertyIterator();
+					Join join = joinIterator.next();
+					Iterator<Property> iterator = join.getPropertyIterator();
 					while (iterator.hasNext()) {
-						PropertyStub property = iterator.next();
+						Property property = iterator.next();
 						OrmShape tableShape =  getOrCreateDatabaseTable(property.getValue().getTable());
 						createConnections(subclassShape, tableShape);
 					}
@@ -319,12 +319,12 @@ public class ElementsFactory {
 			}
 		}
 
-		if (persistentClass.getIdentifier() instanceof ComponentStub) {
-			ComponentStub identifier = (ComponentStub)persistentClass.getIdentifier();
+		if (persistentClass.getIdentifier() instanceof Component) {
+			Component identifier = (Component)persistentClass.getIdentifier();
 			if (identifier.getComponentClassName() != null && !identifier.getComponentClassName().equals(identifier.getOwner().getEntityName())) {
 				OrmShape componentClassShape = elements.get(identifier.getComponentClassName());
-				if (componentClassShape == null && persistentClass instanceof RootClassStub) {
-					componentClassShape = getOrCreateComponentClass(((RootClassStub)persistentClass).getIdentifierProperty());
+				if (componentClassShape == null && persistentClass instanceof RootClass) {
+					componentClassShape = getOrCreateComponentClass(((RootClass)persistentClass).getIdentifierProperty());
 
 					Shape idPropertyShape = classShape.getChild(persistentClass.getIdentifierProperty());
 					if (shouldCreateConnection(idPropertyShape, componentClassShape)) {
@@ -339,12 +339,12 @@ public class ElementsFactory {
 			}
 		}
 
-		Iterator<JoinStub> joinIterator = persistentClass.getJoinIterator();
+		Iterator<Join> joinIterator = persistentClass.getJoinIterator();
 		while (joinIterator.hasNext()) {
-			JoinStub join = joinIterator.next();
-			Iterator<PropertyStub> iterator = join.getPropertyIterator();
+			Join join = joinIterator.next();
+			Iterator<Property> iterator = join.getPropertyIterator();
 			while (iterator.hasNext()) {
-				PropertyStub property = iterator.next();
+				Property property = iterator.next();
 				OrmShape tableShape = getOrCreateDatabaseTable(property.getValue().getTable());
 				createConnections(classShape, tableShape);
 			}
@@ -352,13 +352,13 @@ public class ElementsFactory {
 		return classShape;
 	}
 
-	protected OrmShape getOrCreateComponentClass(PropertyStub property) {
+	protected OrmShape getOrCreateComponentClass(Property property) {
 		OrmShape classShape = null;
 		if (property == null) {
 			return classShape;
 		}
 		if (property.getValue() instanceof CollectionStub) {
-			ComponentStub component = (ComponentStub)((CollectionStub)property.getValue()).getElement();
+			Component component = (Component)((CollectionStub)property.getValue()).getElement();
 			if (component != null) {
 				classShape = createShape(property);
 				OrmShape tableShape = elements.get(Utils.getTableName(component.getTable()));
@@ -372,14 +372,14 @@ public class ElementsFactory {
 				Shape parentShape = ((SpecialOrmShape)classShape).getParentShape();
 				if (parentShape != null) {
 					OrmShape parentClassShape = elements.get(
-							Utils.getName(((PropertyStub)parentShape.getOrmElement()).getPersistentClass().getEntityName()));
+							Utils.getName(((Property)parentShape.getOrmElement()).getPersistentClass().getEntityName()));
 					if (shouldCreateConnection(parentShape, parentClassShape)) {
 						connections.add(new Connection(parentShape, parentClassShape));
 					}
 				}
 			}
-		} else if (property.getValue() instanceof ComponentStub) {
-			classShape = elements.get(((ComponentStub)property.getValue()).getComponentClassName());
+		} else if (property.getValue() instanceof Component) {
+			classShape = elements.get(((Component)property.getValue()).getComponentClassName());
 			if (classShape == null) {
 				classShape = createShape(property);
 			}
@@ -387,13 +387,13 @@ public class ElementsFactory {
 		return classShape;
 	}
 
-	protected OrmShape getOrCreateAssociationClass(PropertyStub property) {
+	protected OrmShape getOrCreateAssociationClass(Property property) {
 		OrmShape classShape = null;
-		OneToManyStub component = (OneToManyStub)(((CollectionStub)(property.getValue())).getElement());
+		OneToMany component = (OneToMany)(((CollectionStub)(property.getValue())).getElement());
 		if (component == null) {
 			return classShape;
 		}
-		if (component.getAssociatedClass() instanceof RootClassStub) {
+		if (component.getAssociatedClass() instanceof RootClass) {
 			classShape = getOrCreatePersistentClass(component.getAssociatedClass(), null);
 			if (classShape == null) {
 				classShape = createShape(component.getAssociatedClass());
@@ -412,8 +412,8 @@ public class ElementsFactory {
 	
 	protected OrmShape createShape(Object ormElement) {
 		OrmShape ormShape = null;
-		if (ormElement instanceof PropertyStub) {
-			SpecialRootClass specialRootClass = new SpecialRootClass((PropertyStub)ormElement);
+		if (ormElement instanceof Property) {
+			SpecialRootClass specialRootClass = new SpecialRootClass((Property)ormElement);
 			String key = Utils.getName(specialRootClass.getEntityName());
 			ormShape = elements.get(key);
 			if (null == ormShape) {
@@ -437,7 +437,7 @@ public class ElementsFactory {
 		if (persistentClass == null || dbTable == null) {
 			return res;
 		}
-		PropertyStub parentProperty = null;
+		Property parentProperty = null;
 		if (persistentClass.getOrmElement() instanceof SpecialRootClass) {
 			parentProperty = ((SpecialRootClass)persistentClass.getOrmElement()).getParentProperty();
 		}
@@ -446,17 +446,17 @@ public class ElementsFactory {
 		while (itFields.hasNext()) {
 			final Shape shape = itFields.next();
 			Object element = shape.getOrmElement();
-			if (!(element instanceof PropertyStub && parentProperty != element)) {
+			if (!(element instanceof Property && parentProperty != element)) {
 				continue;
 			}
-			ValueStub value = ((PropertyStub)element).getValue();
+			Value value = ((Property)element).getValue();
 			Iterator iterator = value.getColumnIterator();
 			while (iterator.hasNext()) {
 				Object o = iterator.next();
-				if (!(o instanceof ColumnStub)) {
+				if (!(o instanceof Column)) {
 					continue;
 				}
-				ColumnStub dbColumn = (ColumnStub)o;
+				Column dbColumn = (Column)o;
 				Iterator<Shape> itColumns = dbTable.getChildrenIterator();
 				while (itColumns.hasNext()) {
 					final Shape shapeCol = itColumns.next();
@@ -468,11 +468,11 @@ public class ElementsFactory {
 					}
 					Object ormElement = shapeCol.getOrmElement();
 					String name2 = ""; //$NON-NLS-1$
-					if (ormElement instanceof ColumnStub) {
-						ColumnStub dbColumn2 = (ColumnStub)ormElement;
+					if (ormElement instanceof Column) {
+						Column dbColumn2 = (Column)ormElement;
 						name2 = dbColumn2.getName();
-					} else if (ormElement instanceof PropertyStub) {
-						PropertyStub property2 = (PropertyStub)ormElement;
+					} else if (ormElement instanceof Property) {
+						Property property2 = (Property)ormElement;
 						name2 = property2.getName();
 					}
 					if (dbColumn.getName().equals(name2)) {
@@ -491,8 +491,8 @@ public class ElementsFactory {
 
 	public OrmShape getShape(Object ormElement) {
 		OrmShape ormShape = null;
-		if (ormElement instanceof PropertyStub) {
-			SpecialRootClass specialRootClass = new SpecialRootClass((PropertyStub)ormElement);
+		if (ormElement instanceof Property) {
+			SpecialRootClass specialRootClass = new SpecialRootClass((Property)ormElement);
 			ormShape = elements.get(Utils.getName(specialRootClass.getEntityName()));
 		} else {
 			ormShape = elements.get(Utils.getName(ormElement));

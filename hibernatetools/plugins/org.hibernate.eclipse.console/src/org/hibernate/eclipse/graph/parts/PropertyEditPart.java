@@ -38,7 +38,7 @@ import org.hibernate.eclipse.graph.figures.EditableLabel;
 import org.hibernate.eclipse.graph.model.PersistentClassViewAdapter;
 import org.hibernate.eclipse.graph.model.PropertyAssociationViewAdapter;
 import org.hibernate.eclipse.graph.model.PropertyViewAdapter;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.Property;
 
 public class PropertyEditPart extends AbstractGraphicalEditPart implements NodeEditPart, Observer {
 
@@ -57,7 +57,7 @@ public class PropertyEditPart extends AbstractGraphicalEditPart implements NodeE
 	}
 	
 	protected IFigure createFigure() {
-		PropertyStub property = ((PropertyViewAdapter) getModel()).getProperty();
+		Property property = ((PropertyViewAdapter) getModel()).getProperty();
 		String label = property.getName();
 		Label propertyLabel = new EditableLabel(label);
 		propertyLabel.setIcon(((PropertyViewAdapter)getModel()).getImage());

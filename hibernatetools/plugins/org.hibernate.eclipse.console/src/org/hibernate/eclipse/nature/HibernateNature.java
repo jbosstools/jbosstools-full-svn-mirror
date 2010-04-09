@@ -48,10 +48,10 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.properties.HibernatePropertiesConstants;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.cfg.ConfigurationStubFactory;
-import org.hibernate.mediator.x.cfg.ConfigurationStubJDBCMetaData;
-import org.hibernate.mediator.x.cfg.reveng.TableIdentifierStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.cfg.ConfigurationFactory;
+import org.hibernate.mediator.x.cfg.JDBCMetaDataConfiguration;
+import org.hibernate.mediator.x.cfg.reveng.TableIdentifier;
 import org.hibernate.mediator.x.mapping.TableStub;
 import org.osgi.service.prefs.Preferences;
 
@@ -150,9 +150,9 @@ public class HibernateNature implements IProjectNature {
 		}
 
 		protected IStatus run(IProgressMonitor monitor) {
-			ConfigurationStub cfg = ccfg.buildWith(null, false);
-			ConfigurationStubFactory csf = new ConfigurationStubFactory(null);
-			final ConfigurationStubJDBCMetaData jcfg = csf.createConfigurationJDBCMetaData();
+			Configuration cfg = ccfg.buildWith(null, false);
+			ConfigurationFactory csf = new ConfigurationFactory(null);
+			final JDBCMetaDataConfiguration jcfg = csf.createConfigurationJDBCMetaData();
 			jcfg.setProperties(cfg.getProperties());
 			monitor.beginTask(HibernateConsoleMessages.HibernateNature_reading_database_metadata, IProgressMonitor.UNKNOWN);
 			try {
@@ -184,7 +184,7 @@ public class HibernateNature implements IProjectNature {
 		return result;
 	}
 
-	public TableStub getTable(TableIdentifierStub nearestTableName) {
+	public TableStub getTable(TableIdentifier nearestTableName) {
 		// TODO: can be made MUCH more efficient with proper indexing of the tables.
 		// TODO: handle catalog/schema properly
 		for (TableStub table : getTables()) {

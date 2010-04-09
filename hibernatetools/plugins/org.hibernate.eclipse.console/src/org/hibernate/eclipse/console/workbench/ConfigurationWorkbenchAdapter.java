@@ -29,17 +29,17 @@ import org.hibernate.console.ImageConstants;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.mapping.PersistentClass;
 
 public class ConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	public Object[] getChildren(Object o) {
-		ConfigurationStub cfg = (ConfigurationStub) o;
-		Iterator<PersistentClassStub> classMappings = cfg.getClassMappings();
-		return toArray(classMappings, PersistentClassStub.class, new Comparator<PersistentClassStub>() {
+		Configuration cfg = (Configuration) o;
+		Iterator<PersistentClass> classMappings = cfg.getClassMappings();
+		return toArray(classMappings, PersistentClass.class, new Comparator<PersistentClass>() {
 
-			public int compare(PersistentClassStub p0, PersistentClassStub p1) {
+			public int compare(PersistentClass p0, PersistentClass p1) {
 				String label0 = HibernateWorkbenchHelper.getLabelForClassName(p0.getEntityName());
 				String label1 = HibernateWorkbenchHelper.getLabelForClassName(p1.getEntityName());
 				return label0.compareTo(label1);

@@ -22,9 +22,9 @@
 package org.hibernate.eclipse.console.workbench;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.hibernate.mediator.x.cfg.reveng.ProgressListenerStub;
+import org.hibernate.mediator.x.cfg.reveng.ProgressListener;
 
-public class ProgressListenerMonitor extends ProgressListenerStub {
+public class ProgressListenerMonitor extends ProgressListener {
 
 	private final IProgressMonitor monitor;
 

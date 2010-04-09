@@ -21,23 +21,23 @@
  */
 package org.hibernate.eclipse.console.workbench;
 
-import org.hibernate.mediator.x.mapping.AnyStub;
-import org.hibernate.mediator.x.mapping.ArrayStub;
-import org.hibernate.mediator.x.mapping.BagStub;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.DependantValueStub;
-import org.hibernate.mediator.x.mapping.IdentifierBagStub;
+import org.hibernate.mediator.x.mapping.Any;
+import org.hibernate.mediator.x.mapping.Array;
+import org.hibernate.mediator.x.mapping.Bag;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.DependantValue;
+import org.hibernate.mediator.x.mapping.IdentifierBag;
 import org.hibernate.mediator.x.mapping.ListStub;
-import org.hibernate.mediator.x.mapping.ManyToOneStub;
+import org.hibernate.mediator.x.mapping.ManyToOne;
 import org.hibernate.mediator.x.mapping.MapStub;
-import org.hibernate.mediator.x.mapping.OneToManyStub;
-import org.hibernate.mediator.x.mapping.OneToOneStub;
-import org.hibernate.mediator.x.mapping.PrimitiveArrayStub;
+import org.hibernate.mediator.x.mapping.OneToMany;
+import org.hibernate.mediator.x.mapping.OneToOne;
+import org.hibernate.mediator.x.mapping.PrimitiveArray;
 import org.hibernate.mediator.x.mapping.SetStub;
-import org.hibernate.mediator.x.mapping.SimpleValueStub;
-import org.hibernate.mediator.x.mapping.ValueVisitorStub;
+import org.hibernate.mediator.x.mapping.SimpleValue;
+import org.hibernate.mediator.x.mapping.ValueVisitor;
 
-public class TypeNameValueVisitor implements ValueVisitorStub {
+public class TypeNameValueVisitor implements ValueVisitor {
 
 	/** if true then only return the classname, not the fully qualified classname */
 	final boolean dequalify; 
@@ -46,11 +46,11 @@ public class TypeNameValueVisitor implements ValueVisitorStub {
 		this.dequalify=dequalify;
 	}
 	
-	public Object accept(BagStub bag) {
+	public Object accept(Bag bag) {
 		return "Bag <" + bag.getElement().accept(this) + ">";  //$NON-NLS-1$//$NON-NLS-2$
 	}
 
-	public Object accept(IdentifierBagStub bag) {
+	public Object accept(IdentifierBag bag) {
 		return "IdBag <" + bag.getElement().accept(this) + ">";  //$NON-NLS-1$//$NON-NLS-2$
 	}
 
@@ -58,11 +58,11 @@ public class TypeNameValueVisitor implements ValueVisitorStub {
 		return "List <" + list.getElement().accept(this) + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public Object accept(PrimitiveArrayStub primitiveArray) {
+	public Object accept(PrimitiveArray primitiveArray) {
 		return primitiveArray.getElement().accept(this) + "[]"; //$NON-NLS-1$
 	}
 
-	public Object accept(ArrayStub list) {
+	public Object accept(Array list) {
 		return list.getElement().accept(this) + "[]"; //$NON-NLS-1$
 	}
 
@@ -70,7 +70,7 @@ public class TypeNameValueVisitor implements ValueVisitorStub {
 		return "Map<" + map.getElement().accept(this) + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public Object accept(OneToManyStub many) {
+	public Object accept(OneToMany many) {
 		return dequalify(many.getReferencedEntityName());
 	}
 
@@ -85,27 +85,27 @@ public class TypeNameValueVisitor implements ValueVisitorStub {
 		return "Set<" + set.getElement().accept(this) + ">"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public Object accept(AnyStub any) {
+	public Object accept(Any any) {
 		return "Any"; //$NON-NLS-1$
 	}
 
-	public Object accept(SimpleValueStub value) {
+	public Object accept(SimpleValue value) {
 		return dequalify(value.getTypeName());
 	}
 
-	public Object accept(DependantValueStub value) {
+	public Object accept(DependantValue value) {
 		return null;
 	}
 
-	public Object accept(ComponentStub component) {
+	public Object accept(Component component) {
 		return dequalify(component.getComponentClassName());
 	}
 
-	public Object accept(ManyToOneStub mto) {
+	public Object accept(ManyToOne mto) {
 		return dequalify(mto.getReferencedEntityName());
 	}
 
-	public Object accept(OneToOneStub oto) {
+	public Object accept(OneToOne oto) {
 		return dequalify(oto.getEntityName());
 	}
 

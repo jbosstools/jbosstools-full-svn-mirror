@@ -28,8 +28,8 @@ import org.hibernate.console.node.BaseNode;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 
 public class HQLScratchpadAction extends OpenQueryEditorAction {
 
@@ -52,12 +52,12 @@ public class HQLScratchpadAction extends OpenQueryEditorAction {
 	 */
 	protected String generateQuery(TreePath path) {
 		Object node = path.getLastSegment();
-		if (node instanceof PersistentClassStub){
-			String name = ((PersistentClassStub)node).getEntityName();
+		if (node instanceof PersistentClass){
+			String name = ((PersistentClass)node).getEntityName();
 			return "from " + name; //$NON-NLS-1$
-		} else if (node instanceof PropertyStub){
-			String prName = ((PropertyStub)node).getName();
-			PersistentClassStub pClass = ((PropertyStub)node).getPersistentClass();
+		} else if (node instanceof Property){
+			String prName = ((Property)node).getName();
+			PersistentClass pClass = ((Property)node).getPersistentClass();
 			String enName = ""; //$NON-NLS-1$
 			if (pClass != null){
 				enName = pClass.getEntityName();
@@ -65,11 +65,11 @@ public class HQLScratchpadAction extends OpenQueryEditorAction {
 			} else {
 				// Generate script for Component property
 				for (int i = path.getSegmentCount() - 2; i > 0; i--) {
-					if (path.getSegment(i) instanceof PersistentClassStub){
-						enName = ((PersistentClassStub)path.getSegment(i)).getEntityName();
+					if (path.getSegment(i) instanceof PersistentClass){
+						enName = ((PersistentClass)path.getSegment(i)).getEntityName();
 						enName = enName.substring(enName.lastIndexOf('.') + 1);
-					} else if (path.getSegment(i) instanceof PropertyStub){
-						prName = ((PropertyStub)path.getSegment(i)).getName() + "." + prName; //$NON-NLS-1$
+					} else if (path.getSegment(i) instanceof Property){
+						prName = ((Property)path.getSegment(i)).getName() + "." + prName; //$NON-NLS-1$
 					}
 				}
 			}

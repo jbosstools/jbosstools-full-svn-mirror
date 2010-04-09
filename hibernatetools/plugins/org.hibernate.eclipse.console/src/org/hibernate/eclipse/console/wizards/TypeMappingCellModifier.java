@@ -25,7 +25,7 @@ import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.eclipse.console.model.ITypeMapping;
-import org.hibernate.mediator.x.cfg.reveng.SQLTypeMappingStub;
+import org.hibernate.mediator.x.cfg.reveng.SQLTypeMapping;
 
 final public class TypeMappingCellModifier implements ICellModifier {
 	private final TableViewer tv;
@@ -73,8 +73,8 @@ final public class TypeMappingCellModifier implements ICellModifier {
 	private Boolean notnullToNullable(Integer value) {
 		if(value.intValue()==1) return Boolean.FALSE;
 		if(value.intValue()==0) return Boolean.TRUE;
-		if(value.intValue()==2) return SQLTypeMappingStub.UNKNOWN_NULLABLE;
-		return SQLTypeMappingStub.UNKNOWN_NULLABLE;
+		if(value.intValue()==2) return SQLTypeMapping.UNKNOWN_NULLABLE;
+		return SQLTypeMapping.UNKNOWN_NULLABLE;
 	}
 
 	private boolean safeEquals(Object value, Object tf) {

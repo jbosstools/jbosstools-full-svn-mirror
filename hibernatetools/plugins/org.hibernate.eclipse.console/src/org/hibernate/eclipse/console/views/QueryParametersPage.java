@@ -68,8 +68,8 @@ import org.hibernate.mediator.ConsoleQueryParameter;
 import org.hibernate.mediator.QueryInputModel;
 import org.hibernate.mediator.stubs.util.ParserHelper;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.x.type.NullableTypeStub;
-import org.hibernate.mediator.x.type.TypeStub;
+import org.hibernate.mediator.x.type.NullableType;
+import org.hibernate.mediator.x.type.Type;
 
 public class QueryParametersPage extends Page implements IQueryParametersPage {
 
@@ -190,10 +190,10 @@ public class QueryParametersPage extends Page implements IQueryParametersPage {
 			}
 
 		});
-		final List<TypeStub> possibleTypes = new ArrayList<TypeStub>(ConsoleQueryParameter.getPossibleTypes());
-		Collections.sort(possibleTypes, new Comparator<TypeStub>() {
+		final List<Type> possibleTypes = new ArrayList<Type>(ConsoleQueryParameter.getPossibleTypes());
+		Collections.sort(possibleTypes, new Comparator<Type>() {
 
-			public int compare(TypeStub t1, TypeStub t2) {
+			public int compare(Type t1, Type t2) {
 				return t1.getName().compareTo(t2.getName());
 			}
 
@@ -209,10 +209,10 @@ public class QueryParametersPage extends Page implements IQueryParametersPage {
 					cqp.setName( (String) value );
 				}
 				if ( TYPE_PROPERTY.equals( property ) ) {
-					Iterator<TypeStub> iterator = possibleTypes.iterator();
+					Iterator<Type> iterator = possibleTypes.iterator();
 					int i = 0;
 					while(iterator.hasNext()) {
-						NullableTypeStub type = (NullableTypeStub) iterator.next();
+						NullableType type = (NullableType) iterator.next();
 						if(i==((Integer)value).intValue()) {
 							if(cqp.getType()!=type) {
 								cqp.setType(type);
@@ -242,8 +242,8 @@ public class QueryParametersPage extends Page implements IQueryParametersPage {
 					return cqp.getName();
 				}
 				if ( TYPE_PROPERTY.equals( property ) ) {
-					Iterator<TypeStub> iterator = possibleTypes.iterator();
-					NullableTypeStub type = cqp.getType();
+					Iterator<Type> iterator = possibleTypes.iterator();
+					NullableType type = cqp.getType();
 					int i = 0;
 					while(iterator.hasNext()) {
 						if (type == iterator.next()) {
@@ -285,10 +285,10 @@ public class QueryParametersPage extends Page implements IQueryParametersPage {
 
 		String[] valueTypes = new String[possibleTypes.size()];
 
-		Iterator<TypeStub> iterator = possibleTypes.iterator();
+		Iterator<Type> iterator = possibleTypes.iterator();
 		int i=0;
 		while ( iterator.hasNext() ) {
-			TypeStub element = iterator.next();
+			Type element = iterator.next();
 			valueTypes[i++] = element.getName();
 		}
 		CellEditor[] editors = new CellEditor[columnProperties.length];

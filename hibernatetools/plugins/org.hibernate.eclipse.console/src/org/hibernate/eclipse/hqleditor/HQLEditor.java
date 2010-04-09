@@ -63,7 +63,7 @@ import org.hibernate.eclipse.console.views.IQueryParametersPage;
 import org.hibernate.eclipse.console.views.QueryPageTabView;
 import org.hibernate.eclipse.console.views.QueryParametersPage;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.Session;
 
 
 /**
@@ -424,9 +424,9 @@ public class HQLEditor extends AbstractQueryEditor {
 		} else {
 			KnownConfigurations.getInstance().getQueryPageModel().remove(queryPage);
 			final ConsoleConfiguration cfg0 = cfg;
-			SessionStub sessionStub = (SessionStub)cfg.execute(new Command() {
+			Session sessionStub = (Session)cfg.execute(new Command() {
 				public Object execute() {
-					SessionStub sessionStub = cfg0.getSessionStubFactory().openSession();
+					Session sessionStub = cfg0.getSessionStubFactory().openSession();
 					return sessionStub;
 				}
 			});

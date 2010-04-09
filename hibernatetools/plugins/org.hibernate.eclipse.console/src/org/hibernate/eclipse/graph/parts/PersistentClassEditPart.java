@@ -32,8 +32,8 @@ import org.hibernate.eclipse.graph.figures.PersistentClassFigure;
 import org.hibernate.eclipse.graph.model.PersistentClassViewAdapter;
 import org.hibernate.eclipse.graph.model.PropertyViewAdapter;
 import org.hibernate.eclipse.graph.policy.PersistentClassLayoutPolicy;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 
 public class PersistentClassEditPart extends GraphNodeEditPart  {
 
@@ -67,12 +67,12 @@ public class PersistentClassEditPart extends GraphNodeEditPart  {
 		
 		List<PropertyViewAdapter> list = new ArrayList<PropertyViewAdapter>();
 		
-		PropertyStub identifierProperty = getPersistentClass().getIdentifierProperty();
+		Property identifierProperty = getPersistentClass().getIdentifierProperty();
 		if(identifierProperty!=null) {
 			list.add( new PropertyViewAdapter(getPersistentClassViewAdapter(), identifierProperty ));
 		}
 		
-		Iterator<PropertyStub> propertyIterator = getPersistentClass().getPropertyIterator();
+		Iterator<Property> propertyIterator = getPersistentClass().getPropertyIterator();
 		
 		while ( propertyIterator.hasNext() ) {
 			list.add( new PropertyViewAdapter(getPersistentClassViewAdapter(), propertyIterator.next()) );
@@ -80,7 +80,7 @@ public class PersistentClassEditPart extends GraphNodeEditPart  {
 		return list;
 	}
 
-	private PersistentClassStub getPersistentClass() {
+	private PersistentClass getPersistentClass() {
 		return getPersistentClassViewAdapter().getPersistentClass();
 	}
 

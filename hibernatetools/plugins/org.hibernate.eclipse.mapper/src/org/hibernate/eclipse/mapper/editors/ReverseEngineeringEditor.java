@@ -53,10 +53,10 @@ import org.hibernate.eclipse.mapper.editors.xpl.XMLFormEditorPart;
 import org.hibernate.eclipse.mapper.model.DOMReverseEngineeringDefinition;
 import org.hibernate.eclipse.nature.HibernateNature;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.x.cfg.SettingsStub;
-import org.hibernate.mediator.x.cfg.reveng.DefaultReverseEngineeringStrategyStub;
-import org.hibernate.mediator.x.cfg.reveng.OverrideRepositoryStub;
-import org.hibernate.mediator.x.cfg.reveng.TableFilterStub;
+import org.hibernate.mediator.x.cfg.Settings;
+import org.hibernate.mediator.x.cfg.reveng.DefaultReverseEngineeringStrategy;
+import org.hibernate.mediator.x.cfg.reveng.OverrideRepository;
+import org.hibernate.mediator.x.cfg.reveng.TableFilter;
 import org.w3c.dom.Document;
 
 public class ReverseEngineeringEditor extends XMLFormEditorPart {
@@ -197,12 +197,12 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 			}
 
 			ITableFilter[] tableFilters = getReverseEngineeringDefinition().getTableFilters();
-			SettingsStub settings = configuration.getSettings2();
-			OverrideRepositoryStub repository = OverrideRepositoryStub.newInstance();///*settings.getDefaultCatalogName(),settings.getDefaultSchemaName()*/);
+			Settings settings = configuration.getSettings2();
+			OverrideRepository repository = OverrideRepository.newInstance();///*settings.getDefaultCatalogName(),settings.getDefaultSchemaName()*/);
 			boolean hasIncludes = false;
 			for (int i = 0; i < tableFilters.length; i++) {
 				ITableFilter filter = tableFilters[i];
-				TableFilterStub tf = TableFilterStub.newInstance();
+				TableFilter tf = TableFilter.newInstance();
 				tf.setExclude(filter.getExclude());
 				if(filter.getExclude()!=null && !filter.getExclude().booleanValue()) {
 					hasIncludes = true;
@@ -212,7 +212,7 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 				tf.setMatchSchema(filter.getMatchSchema());
 				repository.addTableFilter(tf);
 			}
-			TableFilterStub tf = TableFilterStub.newInstance();
+			TableFilter tf = TableFilter.newInstance();
 			tf.setExclude(Boolean.FALSE);
 			tf.setMatchCatalog(".*"); //$NON-NLS-1$
 			tf.setMatchSchema(".*"); //$NON-NLS-1$
@@ -231,7 +231,7 @@ public class ReverseEngineeringEditor extends XMLFormEditorPart {
 				//}
 			//}
 
-			LazyDatabaseSchema lazyDatabaseSchema = new LazyDatabaseSchema(configuration, repository.getReverseEngineeringStrategy(DefaultReverseEngineeringStrategyStub.newInstance()));
+			LazyDatabaseSchema lazyDatabaseSchema = new LazyDatabaseSchema(configuration, repository.getReverseEngineeringStrategy(DefaultReverseEngineeringStrategy.newInstance()));
 
 			return lazyDatabaseSchema;
 		} catch(RuntimeException he) {

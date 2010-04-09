@@ -46,34 +46,34 @@ import org.hibernate.eclipse.jdt.ui.internal.jpa.common.RefEntityInfo;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.RefType;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.Utils;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.x.FetchModeStub;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.cfg.ConfigurationStubFactory;
-import org.hibernate.mediator.x.cfg.MappingsStub;
-import org.hibernate.mediator.x.mapping.ArrayStub;
-import org.hibernate.mediator.x.mapping.BagStub;
+import org.hibernate.mediator.x.FetchMode;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.cfg.ConfigurationFactory;
+import org.hibernate.mediator.x.cfg.Mappings;
+import org.hibernate.mediator.x.mapping.Array;
+import org.hibernate.mediator.x.mapping.Bag;
 import org.hibernate.mediator.x.mapping.CollectionStub;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.IndexedCollectionStub;
-import org.hibernate.mediator.x.mapping.JoinedSubclassStub;
-import org.hibernate.mediator.x.mapping.KeyValueStub;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.IndexedCollection;
+import org.hibernate.mediator.x.mapping.JoinedSubclass;
+import org.hibernate.mediator.x.mapping.KeyValue;
 import org.hibernate.mediator.x.mapping.ListStub;
-import org.hibernate.mediator.x.mapping.ManyToOneStub;
+import org.hibernate.mediator.x.mapping.ManyToOne;
 import org.hibernate.mediator.x.mapping.MapStub;
-import org.hibernate.mediator.x.mapping.OneToManyStub;
-import org.hibernate.mediator.x.mapping.OneToOneStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStubFactory;
-import org.hibernate.mediator.x.mapping.PrimitiveArrayStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.RootClassStub;
+import org.hibernate.mediator.x.mapping.OneToMany;
+import org.hibernate.mediator.x.mapping.OneToOne;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.PersistentClassFactory;
+import org.hibernate.mediator.x.mapping.PrimitiveArray;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.RootClass;
 import org.hibernate.mediator.x.mapping.SetStub;
-import org.hibernate.mediator.x.mapping.SimpleValueStub;
-import org.hibernate.mediator.x.mapping.SubclassStub;
+import org.hibernate.mediator.x.mapping.SimpleValue;
+import org.hibernate.mediator.x.mapping.Subclass;
 import org.hibernate.mediator.x.mapping.TableStub;
-import org.hibernate.mediator.x.mapping.ToOneStub;
-import org.hibernate.mediator.x.mapping.ValueStub;
-import org.hibernate.mediator.x.type.EnumTypeStub;
+import org.hibernate.mediator.x.mapping.ToOne;
+import org.hibernate.mediator.x.mapping.Value;
+import org.hibernate.mediator.x.type.EnumType;
 
 /**
  * @author Dmitry Geraskov
@@ -95,8 +95,8 @@ public class ConfigurationActor {
 	 * 
 	 * @return different configuration for different projects
 	 */
-	public Map<IJavaProject, ConfigurationStub> createConfigurations(int processDepth){
-		Map<IJavaProject, ConfigurationStub> configs = new HashMap<IJavaProject, ConfigurationStub>();
+	public Map<IJavaProject, Configuration> createConfigurations(int processDepth){
+		Map<IJavaProject, Configuration> configs = new HashMap<IJavaProject, Configuration>();
 		if (selectionCU.size() == 0) {
 			return configs;
 		}		
@@ -136,7 +136,7 @@ public class ConfigurationActor {
 		return configs;
 	}
 	
-	protected ConfigurationStub createConfiguration(IJavaProject project, Map<String, EntityInfo> entities) {
+	protected Configuration createConfiguration(IJavaProject project, Map<String, EntityInfo> entities) {
 		ProcessEntityInfo processor = new ProcessEntityInfo();
 		processor.setEntities(entities);
 		
@@ -153,11 +153,11 @@ public class ConfigurationActor {
 		
 		// vitali: TODO: should get ConsoleConfig in association with JavaProject
 		// and create Configuration in execution context of it! 
-		ConfigurationStubFactory configStubFactory = new ConfigurationStubFactory(null);
-		ConfigurationStub config = configStubFactory.createConfiguration();
-		MappingsStub mappings = config.createMappings();
-		Collection<PersistentClassStub> classesCollection = createHierarhyStructure(project, processor.getRootClasses());
-		for (PersistentClassStub persistentClass : classesCollection) {
+		ConfigurationFactory configStubFactory = new ConfigurationFactory(null);
+		Configuration config = configStubFactory.createConfiguration();
+		Mappings mappings = config.createMappings();
+		Collection<PersistentClass> classesCollection = createHierarhyStructure(project, processor.getRootClasses());
+		for (PersistentClass persistentClass : classesCollection) {
 			mappings.addClass(persistentClass);
 		}
 		return config;
@@ -170,42 +170,42 @@ public class ConfigurationActor {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private Collection<PersistentClassStub> createHierarhyStructure(IJavaProject project, Map<String, RootClassStub> rootClasses){
-		Map<String, PersistentClassStub> pcCopy = new HashMap<String, PersistentClassStub>();
-		for (Map.Entry<String, RootClassStub> entry : rootClasses.entrySet()) {
+	private Collection<PersistentClass> createHierarhyStructure(IJavaProject project, Map<String, RootClass> rootClasses){
+		Map<String, PersistentClass> pcCopy = new HashMap<String, PersistentClass>();
+		for (Map.Entry<String, RootClass> entry : rootClasses.entrySet()) {
 			pcCopy.put(entry.getKey(), entry.getValue());
 		}
-		for (Map.Entry<String, PersistentClassStub> entry : pcCopy.entrySet()) {
-			PersistentClassStub pc = null;
+		for (Map.Entry<String, PersistentClass> entry : pcCopy.entrySet()) {
+			PersistentClass pc = null;
 			try {
-				pc = getMappedSuperclass(project, pcCopy, (RootClassStub) entry.getValue());				
-				SubclassStub subclass = null;
+				pc = getMappedSuperclass(project, pcCopy, (RootClass) entry.getValue());				
+				Subclass subclass = null;
 				if (pc != null){
 					if (pc.isAbstract()){
-						subclass = (SubclassStub)PersistentClassStubFactory.createPersistentClassStub(pc);
-						if (pc instanceof RootClassStub && pc.getDiscriminator() == null){
-							SimpleValueStub discr = SimpleValueStub.newInstance();
+						subclass = (Subclass)PersistentClassFactory.createPersistentClassStub(pc);
+						if (pc instanceof RootClass && pc.getDiscriminator() == null){
+							SimpleValue discr = SimpleValue.newInstance();
 							discr.setTypeName("string"); //$NON-NLS-1$
-							((RootClassStub)pc).setDiscriminator(discr);
+							((RootClass)pc).setDiscriminator(discr);
 						}
 					} else {
-						subclass = JoinedSubclassStub.newInstance(pc);
+						subclass = JoinedSubclass.newInstance(pc);
 					}
 				} else {
-					pc = getMappedImplementedInterface(project, pcCopy, (RootClassStub) entry.getValue());
+					pc = getMappedImplementedInterface(project, pcCopy, (RootClass) entry.getValue());
 					if (pc != null){
-						subclass = (SubclassStub)PersistentClassStubFactory.createPersistentClassStub(pc);
+						subclass = (Subclass)PersistentClassFactory.createPersistentClassStub(pc);
 					}
 				}
 				if (subclass != null){
-					PersistentClassStub pastClass = pcCopy.get(entry.getKey());
+					PersistentClass pastClass = pcCopy.get(entry.getKey());
 					subclass.setClassName(pastClass.getClassName());
 					subclass.setEntityName(pastClass.getEntityName());
 					subclass.setDiscriminatorValue(StringHelper.unqualify(pastClass.getClassName()));
 					subclass.setAbstract(pastClass.isAbstract());
-					if (subclass instanceof JoinedSubclassStub) {
-						((JoinedSubclassStub) subclass).setTable(TableStub.newInstance(pastClass.getClassName().toUpperCase()));
-						((JoinedSubclassStub) subclass).setKey((KeyValueStub) pc.getIdentifierProperty().getValue());
+					if (subclass instanceof JoinedSubclass) {
+						((JoinedSubclass) subclass).setTable(TableStub.newInstance(pastClass.getClassName().toUpperCase()));
+						((JoinedSubclass) subclass).setKey((KeyValue) pc.getIdentifierProperty().getValue());
 					} else {
 						if (pastClass.getIdentifierProperty() != null) {
 							subclass.addProperty(pastClass.getIdentifierProperty());
@@ -213,7 +213,7 @@ public class ConfigurationActor {
 					}
 					Iterator it = pastClass.getPropertyIterator();
 					while (it.hasNext()) {
-						subclass.addProperty((PropertyStub) it.next());
+						subclass.addProperty((Property) it.next());
 					}
 					entry.setValue(subclass);
 				}
@@ -224,7 +224,7 @@ public class ConfigurationActor {
 		return pcCopy.values();
 	}
 	
-	private PersistentClassStub getMappedSuperclass(IJavaProject project, Map<String, PersistentClassStub> persistentClasses, RootClassStub rootClass) throws JavaModelException{
+	private PersistentClass getMappedSuperclass(IJavaProject project, Map<String, PersistentClass> persistentClasses, RootClass rootClass) throws JavaModelException{
 		IType type = Utils.findType(project, rootClass.getClassName());
 		//TODO not direct superclass?
 		if (type.getSuperclassName() != null){
@@ -238,7 +238,7 @@ public class ConfigurationActor {
 		return null;
 	}
 	
-	private PersistentClassStub getMappedImplementedInterface(IJavaProject project, Map<String, PersistentClassStub> persistentClasses, RootClassStub rootClass) throws JavaModelException{
+	private PersistentClass getMappedImplementedInterface(IJavaProject project, Map<String, PersistentClass> persistentClasses, RootClass rootClass) throws JavaModelException{
 		IType type = Utils.findType(project, rootClass.getClassName());	
 		//TODO not direct interfaces?
 		String[] interfaces = type.getSuperInterfaceNames();			
@@ -258,12 +258,12 @@ public class ConfigurationActor {
 
 class ProcessEntityInfo extends ASTVisitor {
 	
-	private Map<String, RootClassStub> rootClasses = new HashMap<String, RootClassStub>();
+	private Map<String, RootClass> rootClasses = new HashMap<String, RootClass>();
 	
 	/**
 	 * current rootClass
 	 */
-	private RootClassStub rootClass;
+	private RootClass rootClass;
 	
 	/**
 	 * information about entity
@@ -280,7 +280,7 @@ class ProcessEntityInfo extends ASTVisitor {
 			EntityInfo entryInfo = entry.getValue();
 			String className = entryInfo.getName();
 			TableStub table = TableStub.newInstance(className.toUpperCase());
-			RootClassStub rootClass = RootClassStub.newInstance();
+			RootClass rootClass = RootClass.newInstance();
 			rootClass.setEntityName( entryInfo.getFullyQualifiedName() );
 			rootClass.setClassName( entryInfo.getFullyQualifiedName() );
 			rootClass.setProxyInterfaceName( entryInfo.getFullyQualifiedName() );
@@ -338,10 +338,10 @@ class ProcessEntityInfo extends ASTVisitor {
 	public void endVisit(TypeDeclaration node) {
 		if (rootClass.getIdentifierProperty() == null){
 			//root class should always has id
-			SimpleValueStub sValue = SimpleValueStub.newInstance();
-			sValue.addColumn(ColumnStub.newInstance("id".toUpperCase()));//$NON-NLS-1$
+			SimpleValue sValue = SimpleValue.newInstance();
+			sValue.addColumn(Column.newInstance("id".toUpperCase()));//$NON-NLS-1$
 			sValue.setTypeName(Long.class.getName());
-			PropertyStub prop = PropertyStub.newInstance();
+			Property prop = Property.newInstance();
 			prop.setName("id"); //$NON-NLS-1$
 			prop.setValue(sValue);
 			rootClass.setIdentifierProperty(prop);
@@ -359,7 +359,7 @@ class ProcessEntityInfo extends ASTVisitor {
 		Iterator<VariableDeclarationFragment> itVarNames = node.fragments().iterator();
 		while (itVarNames.hasNext()) {
 			VariableDeclarationFragment var = itVarNames.next();
-			PropertyStub prop = createProperty(var);			
+			Property prop = createProperty(var);			
 			if (prop == null) {
 				continue;
 			}
@@ -387,7 +387,7 @@ class ProcessEntityInfo extends ASTVisitor {
 				Type methodType = node.getReturnType2();
 				if (varName.toLowerCase().equals(primaryIdName.toLowerCase()))
 					varName = primaryIdName;
-				PropertyStub prop = createProperty(varName, methodType);
+				Property prop = createProperty(varName, methodType);
 				if (varName.equals(primaryIdName)) {
 					rootClass.setIdentifierProperty(prop);
 				} else {
@@ -402,25 +402,25 @@ class ProcessEntityInfo extends ASTVisitor {
 	/**
 	 * @return the rootClass
 	 */
-	public PersistentClassStub getPersistentClass() {
+	public PersistentClass getPersistentClass() {
 		return rootClass;
 	}
 	
-	protected PropertyStub createProperty(VariableDeclarationFragment var) {
+	protected Property createProperty(VariableDeclarationFragment var) {
 		return createProperty(var.getName().getIdentifier(), ((FieldDeclaration)var.getParent()).getType());
 	}
 	
-	protected PropertyStub createProperty(String varName,  Type varType) {
+	protected Property createProperty(String varName,  Type varType) {
 			typeVisitor.init(varName, entityInfo);
 			varType.accept(typeVisitor);
-			PropertyStub p = typeVisitor.getProperty();			
+			Property p = typeVisitor.getProperty();			
 			return p;
 	}
 
 	/**
 	 * @return the rootClasses
 	 */
-	public Map<String, RootClassStub> getRootClasses() {
+	public Map<String, RootClass> getRootClasses() {
 		return rootClasses;
 	}
 	
@@ -430,17 +430,17 @@ class TypeVisitor extends ASTVisitor{
 	
 	private String varName;
 	
-	private Map<String, RootClassStub> rootClasses;
+	private Map<String, RootClass> rootClasses;
 	
-	private RootClassStub rootClass;
+	private RootClass rootClass;
 	
 	private EntityInfo entityInfo;
 	
 	private RefEntityInfo ref;
 	
-	private PropertyStub prop;
+	private Property prop;
 	
-	TypeVisitor(Map<String, RootClassStub> rootClasses){
+	TypeVisitor(Map<String, RootClass> rootClasses){
 		this.rootClasses = rootClasses;
 	}
 	
@@ -455,37 +455,37 @@ class TypeVisitor extends ASTVisitor{
 
 	@Override
 	public boolean visit(ArrayType type) {
-		ArrayStub array = null;
+		Array array = null;
 		Type componentType = type.getComponentType();
 		ITypeBinding tb = componentType.resolveBinding();
 		if (tb == null) return false;//Unresolved binding. Omit the property.
 		if (tb.isPrimitive()){
-			array = PrimitiveArrayStub.newInstance(rootClass);
+			array = PrimitiveArray.newInstance(rootClass);
 			
-			SimpleValueStub value = buildSimpleValue(tb.getName());
+			SimpleValue value = buildSimpleValue(tb.getName());
 			value.setTable(rootClass.getTable());
 			array.setElement(value);
 			array.setCollectionTable(rootClass.getTable());//TODO what to set?
 		} else {
-			RootClassStub associatedClass = rootClasses.get(tb.getBinaryName());
-			array = ArrayStub.newInstance(rootClass);
+			RootClass associatedClass = rootClasses.get(tb.getBinaryName());
+			array = Array.newInstance(rootClass);
 			array.setElementClassName(tb.getBinaryName());
 			array.setCollectionTable(associatedClass.getTable());
 			
-			OneToManyStub oValue = OneToManyStub.newInstance(rootClass);
+			OneToMany oValue = OneToMany.newInstance(rootClass);
 			oValue.setAssociatedClass(associatedClass);
 			oValue.setReferencedEntityName(tb.getBinaryName());
 			
 			array.setElement(oValue);
 		}
 		
-		SimpleValueStub key = SimpleValueStub.newInstance();
+		SimpleValue key = SimpleValue.newInstance();
 		if (StringHelper.isNotEmpty(entityInfo.getPrimaryIdName())) {
-			key.addColumn(ColumnStub.newInstance(entityInfo.getPrimaryIdName().toUpperCase()));
+			key.addColumn(Column.newInstance(entityInfo.getPrimaryIdName().toUpperCase()));
 		}
 		array.setKey(key);
-		array.setFetchMode(FetchModeStub.JOIN);
-		SimpleValueStub index = SimpleValueStub.newInstance();
+		array.setFetchMode(FetchMode.JOIN);
+		SimpleValue index = SimpleValue.newInstance();
 		
 		//add default index
 		//index.addColumn(new Column(varName.toUpperCase()+"_POSITION"));
@@ -506,31 +506,31 @@ class TypeVisitor extends ASTVisitor{
 		Assert.isNotNull(rootClass, "RootClass not found."); //$NON-NLS-1$
 		
 		ITypeBinding[] interfaces = Utils.getAllInterfaces(tb);
-		ValueStub value = buildCollectionValue(interfaces);
+		Value value = buildCollectionValue(interfaces);
 		if (value != null) {
 			CollectionStub cValue = (CollectionStub)value;			
 			if (ref != null && rootClasses.get(ref.fullyQualifiedName) != null){
-				OneToManyStub oValue = OneToManyStub.newInstance(rootClass);
-				RootClassStub associatedClass = rootClasses.get(ref.fullyQualifiedName);
+				OneToMany oValue = OneToMany.newInstance(rootClass);
+				RootClass associatedClass = rootClasses.get(ref.fullyQualifiedName);
 				oValue.setAssociatedClass(associatedClass);
 				oValue.setReferencedEntityName(associatedClass.getEntityName());
 				//Set another table
 				cValue.setCollectionTable(associatedClass.getTable());				
 				cValue.setElement(oValue);				
 			} else {
-				SimpleValueStub elementValue = buildSimpleValue(tb.getTypeArguments()[0].getQualifiedName());
+				SimpleValue elementValue = buildSimpleValue(tb.getTypeArguments()[0].getQualifiedName());
 				elementValue.setTable(rootClass.getTable());
 				cValue.setElement(elementValue);
 				cValue.setCollectionTable(rootClass.getTable());//TODO what to set?
 			}
 			if (value instanceof ListStub){
-				((IndexedCollectionStub)cValue).setIndex(SimpleValueStub.newInstance());
+				((IndexedCollection)cValue).setIndex(SimpleValue.newInstance());
 			} else if (value instanceof MapStub){
-				SimpleValueStub map_key = SimpleValueStub.newInstance();
+				SimpleValue map_key = SimpleValue.newInstance();
 				//FIXME: is it possible to map Map<SourceType, String>?
 				//Or only Map<String, SourceType>
 				map_key.setTypeName(tb.getTypeArguments()[0].getBinaryName());
-				((IndexedCollectionStub)cValue).setIndex(map_key);
+				((IndexedCollection)cValue).setIndex(map_key);
 			}
 		}
 				
@@ -539,7 +539,7 @@ class TypeVisitor extends ASTVisitor{
 		}
 		
 		buildProperty(value);
-		if (!(value instanceof SimpleValueStub)){
+		if (!(value instanceof SimpleValue)){
 			prop.setCascade("none");//$NON-NLS-1$
 		}
 		return false;//do not visit children
@@ -561,46 +561,46 @@ class TypeVisitor extends ASTVisitor{
 		ITypeBinding tb = type.resolveBinding();
 		if (tb == null) return false;//Unresolved binding. Omit the property.
 		ITypeBinding[] interfaces = Utils.getAllInterfaces(tb);
-		ValueStub value = buildCollectionValue(interfaces);
+		Value value = buildCollectionValue(interfaces);
 		if (value != null){
-			SimpleValueStub element = buildSimpleValue("string");//$NON-NLS-1$
+			SimpleValue element = buildSimpleValue("string");//$NON-NLS-1$
 			((CollectionStub) value).setElement(element);
 			((CollectionStub) value).setCollectionTable(rootClass.getTable());//TODO what to set?
 			buildProperty(value);
 			if (value instanceof ListStub){
-				((IndexedCollectionStub)value).setIndex(SimpleValueStub.newInstance());
+				((IndexedCollection)value).setIndex(SimpleValue.newInstance());
 			} else if (value instanceof MapStub){
-				SimpleValueStub map_key = SimpleValueStub.newInstance();
+				SimpleValue map_key = SimpleValue.newInstance();
 				//FIXME: how to detect key-type here
 				map_key.setTypeName("string"); //$NON-NLS-1$
-				((IndexedCollectionStub)value).setIndex(map_key);
+				((IndexedCollection)value).setIndex(map_key);
 			}
 			prop.setCascade("none");//$NON-NLS-1$
 		} else if (tb.isEnum()){
-			value = buildSimpleValue(EnumTypeStub.CL);
+			value = buildSimpleValue(EnumType.CL);
 			Properties typeParameters = new Properties();
-			typeParameters.put(EnumTypeStub.ENUM, tb.getBinaryName());
-			typeParameters.put(EnumTypeStub.TYPE, java.sql.Types.VARCHAR);
-			((SimpleValueStub)value).setTypeParameters(typeParameters);
+			typeParameters.put(EnumType.ENUM, tb.getBinaryName());
+			typeParameters.put(EnumType.TYPE, java.sql.Types.VARCHAR);
+			((SimpleValue)value).setTypeParameters(typeParameters);
 			buildProperty(value);
 		} else if (ref != null){
-			ToOneStub sValue = null;
+			ToOne sValue = null;
 			if (ref.refType == RefType.MANY2ONE){
-				sValue = ManyToOneStub.newInstance(rootClass.getTable());
+				sValue = ManyToOne.newInstance(rootClass.getTable());
 			} else if (ref.refType == RefType.ONE2ONE){
-				sValue = OneToOneStub.newInstance(rootClass.getTable(), rootClass);
+				sValue = OneToOne.newInstance(rootClass.getTable(), rootClass);
 			} else if (ref.refType == RefType.UNDEF){
-				sValue = OneToOneStub.newInstance(rootClass.getTable(), rootClass);
+				sValue = OneToOne.newInstance(rootClass.getTable(), rootClass);
 			} else {
 				//OneToMany and ManyToMany must be a collection
 				throw new IllegalStateException(ref.refType.toString());
 			}
 			
-			ColumnStub column = ColumnStub.newInstance(varName.toUpperCase());
+			Column column = Column.newInstance(varName.toUpperCase());
 			sValue.addColumn(column);					
 			sValue.setTypeName(tb.getBinaryName());
-			sValue.setFetchMode(FetchModeStub.JOIN);
-			RootClassStub associatedClass = rootClasses.get(ref.fullyQualifiedName);
+			sValue.setFetchMode(FetchMode.JOIN);
+			RootClass associatedClass = rootClasses.get(ref.fullyQualifiedName);
 			if (associatedClass != null){
 				sValue.setReferencedEntityName(associatedClass.getEntityName());
 			} else {
@@ -620,19 +620,19 @@ class TypeVisitor extends ASTVisitor{
 		return super.visit(type);
 	}
 	
-	public PropertyStub getProperty(){
+	public Property getProperty(){
 		return prop;
 	}
 	
-	protected void buildProperty(ValueStub value){
-		prop = PropertyStub.newInstance();
+	protected void buildProperty(Value value){
+		prop = Property.newInstance();
 		prop.setName(varName);
 		prop.setValue(value);
 	}
 	
-	private SimpleValueStub buildSimpleValue(String typeName){
-		SimpleValueStub sValue = SimpleValueStub.newInstance();
-		sValue.addColumn(ColumnStub.newInstance(varName.toUpperCase()));
+	private SimpleValue buildSimpleValue(String typeName){
+		SimpleValue sValue = SimpleValue.newInstance();
+		sValue.addColumn(Column.newInstance(varName.toUpperCase()));
 		sValue.setTypeName(typeName);
 		return sValue;
 	}
@@ -646,7 +646,7 @@ class TypeVisitor extends ASTVisitor{
 		} else if (Utils.isImplementInterface(interfaces, Map.class.getName())){
 			cValue = MapStub.newInstance(rootClass);
 		} else if (Utils.isImplementInterface(interfaces, Collection.class.getName())){
-			cValue = BagStub.newInstance(rootClass);
+			cValue = Bag.newInstance(rootClass);
 		}
 		
 		if (cValue == null) return null;
@@ -654,10 +654,10 @@ class TypeVisitor extends ASTVisitor{
 		//By default set the same table, but for one-to-many should change it to associated class's table
 		cValue.setCollectionTable(rootClass.getTable());
 
-		SimpleValueStub key = SimpleValueStub.newInstance();
+		SimpleValue key = SimpleValue.newInstance();
 		key.setTypeName("string");//$NON-NLS-1$
 		if (StringHelper.isNotEmpty(entityInfo.getPrimaryIdName())){
-			key.addColumn(ColumnStub.newInstance(entityInfo.getPrimaryIdName().toUpperCase()));
+			key.addColumn(Column.newInstance(entityInfo.getPrimaryIdName().toUpperCase()));
 		}
 		cValue.setKey(key);
 		cValue.setLazy(true);

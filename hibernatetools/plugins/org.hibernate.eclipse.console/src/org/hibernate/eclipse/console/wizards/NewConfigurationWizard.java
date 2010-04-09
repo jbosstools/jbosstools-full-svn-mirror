@@ -49,8 +49,8 @@ import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.x.cfg.EnvironmentStub;
-import org.hibernate.mediator.x.tool.hbm2x.HibernateConfigurationExporterStub;
+import org.hibernate.mediator.x.cfg.Environment;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateConfigurationExporter;
 
 /**
  * Creates a new hibernate.cfg.xml
@@ -112,14 +112,14 @@ public class NewConfigurationWizard extends Wizard implements INewWizard {
 	 */
 	public boolean performFinish() {
 		final Properties props = new Properties();
-        putIfNotNull(props, EnvironmentStub.SESSION_FACTORY_NAME, connectionInfoPage.getSessionFactoryName() );
-        putIfNotNull(props, EnvironmentStub.DIALECT, connectionInfoPage.getDialect() );
-        putIfNotNull(props, EnvironmentStub.DRIVER, connectionInfoPage.getDriver() );
-        putIfNotNull(props, EnvironmentStub.URL, connectionInfoPage.getConnectionURL() );
-        putIfNotNull(props, EnvironmentStub.USER, connectionInfoPage.getUsername() );
-        putIfNotNull(props, EnvironmentStub.PASS, connectionInfoPage.getPassword() );
-        putIfNotNull(props, EnvironmentStub.DEFAULT_CATALOG, connectionInfoPage.getDefaultCatalog() );
-        putIfNotNull(props, EnvironmentStub.DEFAULT_SCHEMA, connectionInfoPage.getDefaultSchema() );
+        putIfNotNull(props, Environment.SESSION_FACTORY_NAME, connectionInfoPage.getSessionFactoryName() );
+        putIfNotNull(props, Environment.DIALECT, connectionInfoPage.getDialect() );
+        putIfNotNull(props, Environment.DRIVER, connectionInfoPage.getDriver() );
+        putIfNotNull(props, Environment.URL, connectionInfoPage.getConnectionURL() );
+        putIfNotNull(props, Environment.USER, connectionInfoPage.getUsername() );
+        putIfNotNull(props, Environment.PASS, connectionInfoPage.getPassword() );
+        putIfNotNull(props, Environment.DEFAULT_CATALOG, connectionInfoPage.getDefaultCatalog() );
+        putIfNotNull(props, Environment.DEFAULT_SCHEMA, connectionInfoPage.getDefaultSchema() );
         final IFile file = cPage.createNewFile();
 
 		IRunnableWithProgress op = new IRunnableWithProgress() {
@@ -216,7 +216,7 @@ public class NewConfigurationWizard extends Wizard implements INewWizard {
 	 */
 	private InputStream openContentStream(Properties props) {
         StringWriter stringWriter = new StringWriter();
-        HibernateConfigurationExporterStub hce = HibernateConfigurationExporterStub.newInstance();
+        HibernateConfigurationExporter hce = HibernateConfigurationExporter.newInstance();
 		hce.setCustomProperties(props);
 		hce.setOutput(stringWriter);
         hce.start();

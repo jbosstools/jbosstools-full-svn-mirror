@@ -29,18 +29,18 @@ import org.hibernate.eclipse.jdt.ui.internal.jpa.common.Utils;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.process.AllEntitiesProcessor;
 import org.hibernate.eclipse.jdt.ui.test.HibernateJDTuiTestPlugin;
 import org.hibernate.eclipse.jdt.ui.wizards.ConfigurationActor;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.mapping.ArrayStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.mapping.Array;
 import org.hibernate.mediator.x.mapping.ListStub;
-import org.hibernate.mediator.x.mapping.ManyToOneStub;
+import org.hibernate.mediator.x.mapping.ManyToOne;
 import org.hibernate.mediator.x.mapping.MapStub;
-import org.hibernate.mediator.x.mapping.OneToManyStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PrimitiveArrayStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.OneToMany;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.PrimitiveArray;
+import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.SetStub;
-import org.hibernate.mediator.x.mapping.ValueStub;
-import org.hibernate.mediator.x.type.IntegerTypeStub;
+import org.hibernate.mediator.x.mapping.Value;
+import org.hibernate.mediator.x.type.IntegerType;
 
 public class HbmExporterTest extends TestCase {
 	
@@ -78,7 +78,7 @@ public class HbmExporterTest extends TestCase {
 	 * Fails if configuration is null.
 	 * @return
 	 */
-	protected ConfigurationStub getConfigurationFor(String... cuNames){
+	protected Configuration getConfigurationFor(String... cuNames){
 		Set<ICompilationUnit> selectionCU = new HashSet<ICompilationUnit>();
 		for (int i = 0; i < cuNames.length; i++) {
 			ICompilationUnit icu = Utils.findCompilationUnit(project.getIJavaProject(),
@@ -87,27 +87,27 @@ public class HbmExporterTest extends TestCase {
 			selectionCU.add(icu);
 		}
 		ConfigurationActor actor = new ConfigurationActor(selectionCU);
-		Map<IJavaProject, ConfigurationStub> configurations = actor.createConfigurations(Integer.MAX_VALUE);
+		Map<IJavaProject, Configuration> configurations = actor.createConfigurations(Integer.MAX_VALUE);
 		assertEquals(1, configurations.size());
-		ConfigurationStub config = configurations.get(project.getIJavaProject());
+		Configuration config = configurations.get(project.getIJavaProject());
 		assertNotNull(config);
 		return config;
 	}
 	
-	protected void checkClassesMaped(ConfigurationStub config, String... classesNames){
+	protected void checkClassesMaped(Configuration config, String... classesNames){
 		for (int i = 0; i < classesNames.length; i++) {
 			assertNotNull(config.getClassMapping(classesNames[i]));
 		}
 	}
 	
 	public void testId(){
-		ConfigurationStub config = getConfigurationFor("pack.A"); //$NON-NLS-1$
+		Configuration config = getConfigurationFor("pack.A"); //$NON-NLS-1$
 		checkClassesMaped(config, "pack.A", "pack.B"); //$NON-NLS-1$ //$NON-NLS-2$
-		PersistentClassStub a = config.getClassMapping("pack.A"); //$NON-NLS-1$
-		PersistentClassStub b = config.getClassMapping("pack.B"); //$NON-NLS-1$
+		PersistentClass a = config.getClassMapping("pack.A"); //$NON-NLS-1$
+		PersistentClass b = config.getClassMapping("pack.B"); //$NON-NLS-1$
 		
-		PropertyStub aId= a.getIdentifierProperty();
-		PropertyStub bId= b.getIdentifierProperty();
+		Property aId= a.getIdentifierProperty();
+		Property bId= b.getIdentifierProperty();
 		assertNotNull(aId);
 		assertNotNull(bId);
 		assertEquals("id", aId.getName()); //$NON-NLS-1$
@@ -115,92 +115,92 @@ public class HbmExporterTest extends TestCase {
 	}
 	
 	public void testProperty(){
-		ConfigurationStub config = getConfigurationFor("pack.A"); //$NON-NLS-1$
+		Configuration config = getConfigurationFor("pack.A"); //$NON-NLS-1$
 		checkClassesMaped(config, "pack.A", "pack.B"); //$NON-NLS-1$ //$NON-NLS-2$
-		PersistentClassStub a = config.getClassMapping("pack.A"); //$NON-NLS-1$
+		PersistentClass a = config.getClassMapping("pack.A"); //$NON-NLS-1$
 		
-		PropertyStub prop = a.getProperty("prop"); //$NON-NLS-1$
-		ValueStub value = prop.getValue();
+		Property prop = a.getProperty("prop"); //$NON-NLS-1$
+		Value value = prop.getValue();
 		assertNotNull(value);
-		assertTrue("Expected to get ManyToOne-type mapping", value.getClass()== ManyToOneStub.class); //$NON-NLS-1$
-		ManyToOneStub mto = (ManyToOneStub)value;
+		assertTrue("Expected to get ManyToOne-type mapping", value.getClass()== ManyToOne.class); //$NON-NLS-1$
+		ManyToOne mto = (ManyToOne)value;
 		assertEquals("pack.B", mto.getTypeName()); //$NON-NLS-1$
 	}
 	
 	public void testArray(){
-		ConfigurationStub config = getConfigurationFor("pack.A"); //$NON-NLS-1$
+		Configuration config = getConfigurationFor("pack.A"); //$NON-NLS-1$
 		checkClassesMaped(config, "pack.A", "pack.B"); //$NON-NLS-1$ //$NON-NLS-2$
-		PersistentClassStub a = config.getClassMapping("pack.A"); //$NON-NLS-1$
-		PersistentClassStub b = config.getClassMapping("pack.B"); //$NON-NLS-1$
+		PersistentClass a = config.getClassMapping("pack.A"); //$NON-NLS-1$
+		PersistentClass b = config.getClassMapping("pack.B"); //$NON-NLS-1$
 		
-		PropertyStub bs = a.getProperty("bs"); //$NON-NLS-1$
-		ValueStub value = bs.getValue();
+		Property bs = a.getProperty("bs"); //$NON-NLS-1$
+		Value value = bs.getValue();
 		assertNotNull(value);
-		assertTrue("Expected to get Array-type mapping", value.getClass()==ArrayStub.class); //$NON-NLS-1$
-		ArrayStub ar = (ArrayStub)value;
+		assertTrue("Expected to get Array-type mapping", value.getClass()==Array.class); //$NON-NLS-1$
+		Array ar = (Array)value;
 		assertEquals("pack.B", ar.getElementClassName()); //$NON-NLS-1$
 		assertTrue("Expected to get one-to-many array's element type", //$NON-NLS-1$
-				ar.getElement().getClass() == OneToManyStub.class);
+				ar.getElement().getClass() == OneToMany.class);
 		
-		PropertyStub testIntArray = b.getProperty("testIntArray"); //$NON-NLS-1$
+		Property testIntArray = b.getProperty("testIntArray"); //$NON-NLS-1$
 		assertNotNull(testIntArray);
 		value = testIntArray.getValue();
 		assertNotNull(value);
 		assertTrue("Expected to get PrimitiveArray-type mapping", //$NON-NLS-1$  
-				value.getClass()==PrimitiveArrayStub.class);
-		PrimitiveArrayStub pAr = (PrimitiveArrayStub) value;
+				value.getClass()==PrimitiveArray.class);
+		PrimitiveArray pAr = (PrimitiveArray) value;
 		assertNotNull(pAr.getElement());
-		assertTrue("Expected to get int-type primitive array", pAr.getElement().getType().getClass()==IntegerTypeStub.class); //$NON-NLS-1$
+		assertTrue("Expected to get int-type primitive array", pAr.getElement().getType().getClass()==IntegerType.class); //$NON-NLS-1$
 	}
 	
 	public void testList(){
-		ConfigurationStub config = getConfigurationFor("pack.A"); //$NON-NLS-1$
+		Configuration config = getConfigurationFor("pack.A"); //$NON-NLS-1$
 		checkClassesMaped(config, "pack.A", "pack.B"); //$NON-NLS-1$ //$NON-NLS-2$
-		PersistentClassStub a = config.getClassMapping("pack.A"); //$NON-NLS-1$
-		PersistentClassStub b = config.getClassMapping("pack.B"); //$NON-NLS-1$
+		PersistentClass a = config.getClassMapping("pack.A"); //$NON-NLS-1$
+		PersistentClass b = config.getClassMapping("pack.B"); //$NON-NLS-1$
 		
-		PropertyStub listProp = a.getProperty("list"); //$NON-NLS-1$
-		ValueStub value = listProp.getValue();
+		Property listProp = a.getProperty("list"); //$NON-NLS-1$
+		Value value = listProp.getValue();
 		assertNotNull(value);
 		assertTrue("Expected to get List-type mapping", //$NON-NLS-1$ 
 				value.getClass()==ListStub.class);
 		ListStub list = (ListStub)value;
-		assertTrue(list.getElement() instanceof OneToManyStub);
+		assertTrue(list.getElement() instanceof OneToMany);
 		assertTrue(list.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(list.getIndex());
 		assertNotNull(list.getKey());
 	}
 	
 	public void testSet(){
-		ConfigurationStub config = getConfigurationFor("pack.A"); //$NON-NLS-1$
+		Configuration config = getConfigurationFor("pack.A"); //$NON-NLS-1$
 		checkClassesMaped(config, "pack.A", "pack.B"); //$NON-NLS-1$ //$NON-NLS-2$
-		PersistentClassStub a = config.getClassMapping("pack.A"); //$NON-NLS-1$
-		PersistentClassStub b = config.getClassMapping("pack.B"); //$NON-NLS-1$
+		PersistentClass a = config.getClassMapping("pack.A"); //$NON-NLS-1$
+		PersistentClass b = config.getClassMapping("pack.B"); //$NON-NLS-1$
 		
-		PropertyStub setProp = a.getProperty("set"); //$NON-NLS-1$
-		ValueStub value = setProp.getValue();
+		Property setProp = a.getProperty("set"); //$NON-NLS-1$
+		Value value = setProp.getValue();
 		assertNotNull(value);
 		assertTrue("Expected to get Set-type mapping",  //$NON-NLS-1$
 				value.getClass()==SetStub.class);
 		SetStub set = (SetStub)value;
-		assertTrue(set.getElement() instanceof OneToManyStub);
+		assertTrue(set.getElement() instanceof OneToMany);
 		assertTrue(set.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(set.getKey());
 	}
 	
 	public void testMap(){
-		ConfigurationStub config = getConfigurationFor("pack.A"); //$NON-NLS-1$
+		Configuration config = getConfigurationFor("pack.A"); //$NON-NLS-1$
 		checkClassesMaped(config, "pack.A", "pack.B"); //$NON-NLS-1$ //$NON-NLS-2$
-		PersistentClassStub a = config.getClassMapping("pack.A"); //$NON-NLS-1$
-		PersistentClassStub b = config.getClassMapping("pack.B"); //$NON-NLS-1$
+		PersistentClass a = config.getClassMapping("pack.A"); //$NON-NLS-1$
+		PersistentClass b = config.getClassMapping("pack.B"); //$NON-NLS-1$
 		
-		PropertyStub mapValue = a.getProperty("mapValue"); //$NON-NLS-1$
-		ValueStub value = mapValue.getValue();
+		Property mapValue = a.getProperty("mapValue"); //$NON-NLS-1$
+		Value value = mapValue.getValue();
 		assertNotNull(value);
 		assertTrue("Expected to get Map-type mapping", //$NON-NLS-1$ 
 				value.getClass()==MapStub.class);
 		MapStub map = (MapStub)value;
-		assertTrue(map.getElement() instanceof OneToManyStub);
+		assertTrue(map.getElement() instanceof OneToMany);
 		assertTrue(map.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(map.getKey());
 		assertEquals("string", map.getKey().getType().getName()); //$NON-NLS-1$

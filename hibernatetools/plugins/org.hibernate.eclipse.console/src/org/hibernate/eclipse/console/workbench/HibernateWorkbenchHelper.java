@@ -26,12 +26,12 @@ import org.eclipse.swt.graphics.Image;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.ValueStub;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.Value;
 
 public class HibernateWorkbenchHelper {
 
-	public static ImageDescriptor getImageDescriptor(PropertyStub property) {
+	public static ImageDescriptor getImageDescriptor(Property property) {
 		if(property==null) return null;
 		if(property.getPersistentClass()!=null) {
 			if(property.getPersistentClass().getIdentifierProperty()==property) {
@@ -43,7 +43,7 @@ public class HibernateWorkbenchHelper {
 		return EclipseImages.getImageDescriptor(iconNameForValue);
 	}
 	
-	public static Image getImage(PropertyStub property) {
+	public static Image getImage(Property property) {
 		if(property==null) return null;
 		if(property.getPersistentClass()!=null) {
 			if(property.getPersistentClass().getIdentifierProperty()==property) {
@@ -55,7 +55,7 @@ public class HibernateWorkbenchHelper {
 		return EclipseImages.getImage(iconNameForValue);
 	}
 	
-	static private String getIconNameForValue(ValueStub value) {
+	static private String getIconNameForValue(Value value) {
 		String result;
 		
 		result = (String) value.accept(new IconNameValueVisitor());

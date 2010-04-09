@@ -20,7 +20,7 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.DialogSelectionHelper;
 import org.hibernate.eclipse.console.utils.DriverClassHelpers;
-import org.hibernate.mediator.x.cfg.NamingStrategyStub;
+import org.hibernate.mediator.x.cfg.NamingStrategy;
 import org.xml.sax.EntityResolver;
 
 @SuppressWarnings("restriction")
@@ -121,7 +121,7 @@ public class ConsoleConfigurationOptionsTab extends ConsoleConfigurationTab {
 	}
 
 	private void handleNamingStrategyBrowse() {
-		String string = DialogSelectionHelper.chooseImplementation(NamingStrategyStub.CL, namingStrategyClassNameText.getText(), HibernateConsoleMessages.ConsoleConfigurationOptionsTab_select_naming_strategy_class, getShell());
+		String string = DialogSelectionHelper.chooseImplementation(NamingStrategy.CL, namingStrategyClassNameText.getText(), HibernateConsoleMessages.ConsoleConfigurationOptionsTab_select_naming_strategy_class, getShell());
 		if(string!=null) {
 			namingStrategyClassNameText.setText(string);
 		}

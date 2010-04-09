@@ -1,7 +1,7 @@
 package org.hibernate.mediator.x.mapping;
 
 
-public class ListStub extends IndexedCollectionStub {
+public class ListStub extends IndexedCollection {
 	public static final String CL = "org.hibernate.mapping.List"; //$NON-NLS-1$
 
 	protected ListStub(Object list) {
@@ -12,17 +12,17 @@ public class ListStub extends IndexedCollectionStub {
 		super(list, cn);
 	}
 	
-	public static ListStub newInstance(PersistentClassStub owner) {
+	public static ListStub newInstance(PersistentClass owner) {
 		return new ListStub(newInstance(CL, owner));
 	}
 
 	@Override
-	public Object accept(ValueVisitorStub visitor) {
+	public Object accept(ValueVisitor visitor) {
 		return visitor.accept(this);
 	}
 
-	public ValueStub getIndex() {
-		return ValueStubFactory.createValueStub(invoke(mn()));
+	public Value getIndex() {
+		return ValueFactory.createValueStub(invoke(mn()));
 	}
 
 }

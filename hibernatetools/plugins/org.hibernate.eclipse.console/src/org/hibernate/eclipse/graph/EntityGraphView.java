@@ -28,7 +28,7 @@ import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.views.KnownConfigurationsView;
 import org.hibernate.eclipse.graph.model.ConfigurationViewAdapter;
 import org.hibernate.eclipse.graph.parts.ConfigurationEditPart;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.Configuration;
 
 public class EntityGraphView extends AbstractGraphViewPart {
 
@@ -49,8 +49,8 @@ public class EntityGraphView extends AbstractGraphViewPart {
 
 	protected void selectionChanged(IStructuredSelection ss)  {
 		Object o = ss.getFirstElement();
-		if (o instanceof ConfigurationStub) {
-			viewer.setContents(new ConfigurationViewAdapter((ConfigurationStub) o));
+		if (o instanceof Configuration) {
+			viewer.setContents(new ConfigurationViewAdapter((Configuration) o));
 			boolean b = HibernateConsolePlugin.getDefault().getPluginPreferences().getBoolean(ConsolePreferencesConstants.ENTITY_MODEL_LAYOUT);
 			((ConfigurationEditPart)viewer.getContents()).setManualLayoutActive(b);
 		}

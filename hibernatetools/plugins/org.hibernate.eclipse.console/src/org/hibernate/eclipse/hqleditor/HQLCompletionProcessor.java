@@ -39,7 +39,7 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.QueryEditor;
 import org.hibernate.mediator.execution.ExecutionContext;
-import org.hibernate.mediator.x.tool.ide.completion.HQLCodeAssistStub;
+import org.hibernate.mediator.x.tool.ide.completion.HQLCodeAssist;
 
 /**
  * content assist processor for HQL code.
@@ -110,7 +110,7 @@ public class HQLCompletionProcessor implements IContentAssistProcessor {
 					errorMessage = HibernateConsoleMessages.HQLCompletionProcessor_could_not_get_document_contents;
 					return result;
 				}
-				HQLCodeAssistStub hqlEval = null;
+				HQLCodeAssist hqlEval = null;
 				EclipseHQLCompletionRequestor eclipseHQLCompletionCollector = null;
 				if (consoleConfig != null) {
 					hqlEval = consoleConfig.getHQLCodeAssist();
@@ -120,7 +120,7 @@ public class HQLCompletionProcessor implements IContentAssistProcessor {
 						}
 					});
 				} else {
-					hqlEval = HQLCodeAssistStub.createHQLCodeAssist();
+					hqlEval = HQLCodeAssist.createHQLCodeAssist();
 					eclipseHQLCompletionCollector = new EclipseHQLCompletionRequestor();
 				}
 				hqlEval.codeComplete(doc.get(), currentOffset, eclipseHQLCompletionCollector);

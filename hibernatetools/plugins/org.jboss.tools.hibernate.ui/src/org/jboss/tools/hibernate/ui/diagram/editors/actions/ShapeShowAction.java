@@ -20,7 +20,7 @@ import org.eclipse.gef.editparts.AbstractTreeEditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPart;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.editors.DiagramViewer;
@@ -109,7 +109,7 @@ public class ShapeShowAction extends SelectionAction {
 			if (null != obj && obj instanceof OrmShape) {
 				OrmShape ormShape = (OrmShape)obj;
 				Object ormElement = ormShape.getOrmElement();
-				if (ormElement instanceof PersistentClassStub || ormElement instanceof TableStub) {
+				if (ormElement instanceof PersistentClass || ormElement instanceof TableStub) {
 					if (!ormShape.isVisible()) {
 						res = true;
 					}

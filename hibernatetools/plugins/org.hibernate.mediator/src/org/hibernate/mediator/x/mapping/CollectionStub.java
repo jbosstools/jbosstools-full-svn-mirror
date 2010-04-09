@@ -1,8 +1,8 @@
 package org.hibernate.mediator.x.mapping;
 
-import org.hibernate.mediator.x.FetchModeStub;
+import org.hibernate.mediator.x.FetchMode;
 
-public abstract class CollectionStub extends ValueStub {
+public abstract class CollectionStub extends Value {
 	public static final String CL = "org.hibernate.mapping.Collection"; //$NON-NLS-1$
 
 	protected CollectionStub(Object collection) {
@@ -17,7 +17,7 @@ public abstract class CollectionStub extends ValueStub {
 		invoke(mn(), table);
 	}
 
-	public void setKey(KeyValueStub key) {
+	public void setKey(KeyValue key) {
 		invoke(mn(), key);
 	}
 
@@ -29,16 +29,16 @@ public abstract class CollectionStub extends ValueStub {
 		invoke(mn(), role);
 	}
 
-	public void setElement(ValueStub element) {
+	public void setElement(Value element) {
 		invoke(mn(), element);
 	}
 
-	public void setFetchMode(FetchModeStub fetchMode) {
+	public void setFetchMode(FetchMode fetchMode) {
 		invoke(mn(), fetchMode);
 	}
 
-	public ValueStub getElement() {
-		return ValueStubFactory.createValueStub(invoke(mn()));
+	public Value getElement() {
+		return ValueFactory.createValueStub(invoke(mn()));
 	}
 
 	public TableStub getCollectionTable() {
@@ -49,8 +49,8 @@ public abstract class CollectionStub extends ValueStub {
 		return new TableStub(obj);
 	}
 
-	public KeyValueStub getKey() {
-		return (KeyValueStub)ValueStubFactory.createValueStub(invoke(mn()));
+	public KeyValue getKey() {
+		return (KeyValue)ValueFactory.createValueStub(invoke(mn()));
 	}
 
 	public boolean isOneToMany() {

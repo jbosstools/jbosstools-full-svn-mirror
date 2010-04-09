@@ -25,7 +25,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.hibernate.console.QueryPage;
 import org.hibernate.eclipse.console.views.QueryPageTabView;
-import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.Session;
 
 public class HibernatePropertySourceProvider implements IPropertySourceProvider
 {	
@@ -46,7 +46,7 @@ public class HibernatePropertySourceProvider implements IPropertySourceProvider
 			// maybe we should be hooked up with the queryview to get this ?
 			QueryPage qp = view.getSelectedQueryPage();
 			if (qp != null) {
-				SessionStub sessionStub = qp.getSessionStub();
+				Session sessionStub = qp.getSessionStub();
 				String consoleConfigName = qp.getConsoleConfigName();
 				if ((sessionStub.isOpen() && sessionStub.contains(obj)) || 
 						(obj != null && sessionStub.hasMetaData(obj))) {

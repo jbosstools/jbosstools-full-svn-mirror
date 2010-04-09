@@ -39,8 +39,8 @@ import org.eclipse.wst.sse.ui.internal.contentassist.CustomCompletionProposal;
 import org.eclipse.wst.xml.ui.internal.contentassist.XMLRelevanceConstants;
 import org.hibernate.eclipse.mapper.MapperMessages;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.x.cfg.EnvironmentStub;
-import org.hibernate.mediator.x.cfg.reveng.TableIdentifierStub;
+import org.hibernate.mediator.x.cfg.Environment;
+import org.hibernate.mediator.x.cfg.reveng.TableIdentifier;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -175,7 +175,7 @@ public class HBMInfoExtractor {
 	}
 
 	private String[] extractHibernateProperties() {
-		return EnvironmentStub.extractHibernateProperties();
+		return Environment.extractHibernateProperties();
 	}
 
 	private void setupTypeFinder() {
@@ -586,7 +586,7 @@ public class HBMInfoExtractor {
 		return typename;
 	}
 
-	public TableIdentifierStub getNearestTableName(Node node) {
+	public TableIdentifier getNearestTableName(Node node) {
 		Map map = tableProvider;
 
 		if(node==null) return null;
@@ -615,7 +615,7 @@ public class HBMInfoExtractor {
 				schema = namedItem.getNodeValue();
 			}
 
-			return TableIdentifierStub.newInstance(catalog,schema,typename);
+			return TableIdentifier.newInstance(catalog,schema,typename);
 		}
 
 		return null;

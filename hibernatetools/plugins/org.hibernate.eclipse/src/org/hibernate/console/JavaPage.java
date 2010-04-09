@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.mediator.QueryInputModel;
-import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.Session;
 
 /**
  * @author MAX
@@ -46,7 +46,7 @@ public class JavaPage extends AbstractQueryPage {
 	}
 
 	@Override
-	public void setSessionStub(SessionStub s) {
+	public void setSessionStub(Session s) {
 		super.setSessionStub(s);
 		evalCriteria();
 	}

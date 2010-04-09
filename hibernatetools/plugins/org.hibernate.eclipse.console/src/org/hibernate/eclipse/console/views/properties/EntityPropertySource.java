@@ -23,15 +23,15 @@ package org.hibernate.eclipse.console.views.properties;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource2;
-import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.Session;
 
 public class EntityPropertySource implements IPropertySource2
 {
 	private Object reflectedObj;
 	private IPropertyDescriptor[] propertyDescriptors;
-	private final SessionStub sessionStub;
+	private final Session sessionStub;
 
-	public EntityPropertySource(final Object obj, final SessionStub sessionStub) {
+	public EntityPropertySource(final Object obj, final Session sessionStub) {
 		this.sessionStub = sessionStub;
 		reflectedObj = obj;
 	}

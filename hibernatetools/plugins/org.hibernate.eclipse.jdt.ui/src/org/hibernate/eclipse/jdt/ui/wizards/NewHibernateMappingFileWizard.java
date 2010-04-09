@@ -70,10 +70,10 @@ import org.hibernate.eclipse.jdt.ui.internal.JdtUiMessages;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.collect.AllEntitiesInfoCollector;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.EntityInfo;
 import org.hibernate.eclipse.jdt.ui.internal.jpa.common.Utils;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingExporterStub;
-import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingGlobalSettingsStub;
-import org.hibernate.mediator.x.tool.hbm2x.pojo.POJOClassStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingExporter;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingGlobalSettings;
+import org.hibernate.mediator.x.tool.hbm2x.pojo.POJOClass;
 
 /**
  * @author Dmitry Geraskov
@@ -242,11 +242,11 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 
 	protected Map<IJavaProject, IPath> getPlaces2Gen() {
 		updateCompilationUnits();
-		Map<IJavaProject, ConfigurationStub> configs = createConfigurations();
+		Map<IJavaProject, Configuration> configs = createConfigurations();
 		Map<IJavaProject, IPath> places2Gen = new HashMap<IJavaProject, IPath>();
-		for (Entry<IJavaProject, ConfigurationStub> entry : configs.entrySet()) {
-			ConfigurationStub config = entry.getValue();
-			HibernateMappingGlobalSettingsStub hmgs = HibernateMappingGlobalSettingsStub.newInstance();
+		for (Entry<IJavaProject, Configuration> entry : configs.entrySet()) {
+			Configuration config = entry.getValue();
+			HibernateMappingGlobalSettings hmgs = HibernateMappingGlobalSettings.newInstance();
 			hmgs.setDefaultAccess("field"); //$NON-NLS-1$
 
 			//final IPath projPath = entry.getKey().getProject().getLocation();
@@ -260,12 +260,12 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 			}
 			
 			final IJavaProject proj = entry.getKey();
-			ConfigurationStub.IExporterNewOutputDir nod = new ConfigurationStub.IExporterNewOutputDir() {
+			Configuration.IExporterNewOutputDir nod = new Configuration.IExporterNewOutputDir() {
 				/**
 				 * redefine base exportPOJO to setup right output dir in case 
 				 * of several source folders 
 				 */
-				public File getNewOutputDir(POJOClassStub element, File outputdir4FileNew) {
+				public File getNewOutputDir(POJOClass element, File outputdir4FileNew) {
 
 					String fullyQualifiedName = element.getQualifiedDeclarationName();
 					ICompilationUnit icu = Utils.findCompilationUnit(proj, fullyQualifiedName);
@@ -298,7 +298,7 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 					return outputdir4FileNew;
 				}
 			};
-			HibernateMappingExporterStub hce = config.createHibernateMappingExporter(folder2Gen, nod);
+			HibernateMappingExporter hce = config.createHibernateMappingExporter(folder2Gen, nod);
 			
 			hce.setGlobalSettings(hmgs);
 			//hce.setForEach("entity");
@@ -523,9 +523,9 @@ public class NewHibernateMappingFileWizard extends Wizard implements INewWizard,
 	}
 	
 
-	protected Map<IJavaProject, ConfigurationStub> createConfigurations() {
+	protected Map<IJavaProject, Configuration> createConfigurations() {
 		ConfigurationActor actor = new ConfigurationActor(selectionCU);
-		Map<IJavaProject, ConfigurationStub> configs = actor.createConfigurations(processDepth);
+		Map<IJavaProject, Configuration> configs = actor.createConfigurations(processDepth);
 		return configs;
 	}
 	

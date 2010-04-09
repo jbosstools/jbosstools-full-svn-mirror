@@ -19,8 +19,8 @@ import org.eclipse.jpt.core.internal.AbstractJpaProject;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.eclipse.console.properties.HibernatePropertiesConstants;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.cfg.NamingStrategyStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.cfg.NamingStrategy;
 import org.osgi.service.prefs.Preferences;
 
 /**
@@ -36,7 +36,7 @@ public class HibernateJpaProject extends AbstractJpaProject {
 		super(config);
 	}
 
-	public NamingStrategyStub getNamingStrategy(){
+	public NamingStrategy getNamingStrategy(){
 		String ccName = getDefaultConsoleConfigurationName();
 		if (ccName != null || "".equals(ccName)){//$NON-NLS-1$
 			ConsoleConfiguration cc = KnownConfigurations.getInstance().find(ccName);
@@ -45,7 +45,7 @@ public class HibernateJpaProject extends AbstractJpaProject {
 				// so NamingStrategy is a key class for org.jboss.tools.hibernate.jpt.core plugin
 				// Configuration - wrong use here!!!
 				if (cc.getConfiguration() != null){
-					ConfigurationStub config = cc.getConfiguration();
+					Configuration config = cc.getConfiguration();
 					return config.getNamingStrategy();
 				}
 			}

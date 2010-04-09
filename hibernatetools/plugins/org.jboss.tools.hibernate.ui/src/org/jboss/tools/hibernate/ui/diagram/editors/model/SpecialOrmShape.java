@@ -14,9 +14,9 @@ import java.util.Iterator;
 
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.RootClassStub;
-import org.hibernate.mediator.x.type.TypeStub;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.RootClass;
+import org.hibernate.mediator.x.type.Type;
 
 /**
  * 
@@ -34,8 +34,8 @@ public class SpecialOrmShape extends OrmShape {
 	 */
 	@Override
 	protected void initModel() {
-		RootClassStub rootClass = (RootClassStub)getOrmElement();
-		PropertyStub identifierProperty = rootClass.getIdentifierProperty();
+		RootClass rootClass = (RootClass)getOrmElement();
+		Property identifierProperty = rootClass.getIdentifierProperty();
 		if (identifierProperty != null) {
 			addChild(new Shape(identifierProperty));
 		}
@@ -47,14 +47,14 @@ public class SpecialOrmShape extends OrmShape {
 			parentShape = bodyOrmShape;
 		}
 		
-		Iterator<PropertyStub> iterator = rootClass.getPropertyIterator();
+		Iterator<Property> iterator = rootClass.getPropertyIterator();
 		while (iterator.hasNext()) {
-			PropertyStub field = iterator.next();
-			TypeStub type = null;
+			Property field = iterator.next();
+			Type type = null;
 			if (getOrmDiagram() != null) {
 				ConsoleConfiguration cfg = getOrmDiagram().getConsoleConfig();
-				final PropertyStub fField = field;
-				type = (TypeStub) cfg.execute(new Command() {
+				final Property fField = field;
+				type = (Type) cfg.execute(new Command() {
 					public Object execute() {
 						return fField.getValue().getType();
 					}});								

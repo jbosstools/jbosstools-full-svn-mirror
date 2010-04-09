@@ -43,8 +43,8 @@ import org.hibernate.eclipse.console.actions.HQLScratchpadAction;
 import org.hibernate.eclipse.console.actions.OpenMappingAction;
 import org.hibernate.eclipse.console.actions.OpenSourceAction;
 import org.hibernate.eclipse.console.actions.RefreshAction;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 
 /**
  * @author max
@@ -185,7 +185,7 @@ public class ConfigurationsViewActionGroup extends ActionGroup {
 		menu.add(new GroupMarker(GROUP_ADDITION_LAST));
 		menu.add(new Separator(GROUP_OTHER_EDITORS));
 		// TODO: shouldn't these and maybe the others not be defined via menu extension points ?
-		if (first != null && (first instanceof PersistentClassStub || first.getClass() == PropertyStub.class)) {			
+		if (first != null && (first instanceof PersistentClass || first.getClass() == Property.class)) {			
 			menu.appendToGroup(GROUP_OTHER_EDITORS, openSourceAction);
 			menu.appendToGroup(GROUP_OTHER_EDITORS, openMappingAction);
 		}

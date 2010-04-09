@@ -12,8 +12,8 @@ package org.jboss.tools.hibernate.ui.view;
 
 import java.util.Iterator;
 
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.ForeignKeyStub;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.ForeignKey;
 import org.hibernate.mediator.x.mapping.TableStub;
 
 /**
@@ -21,7 +21,7 @@ import org.hibernate.mediator.x.mapping.TableStub;
  */
 public class HibernateUtils {
 	
-	public static boolean isPrimaryKey(ColumnStub column) {
+	public static boolean isPrimaryKey(Column column) {
 		TableStub table = getTable(column);
 		if (table != null) {
 			if (table.getPrimaryKey() != null) {
@@ -33,12 +33,12 @@ public class HibernateUtils {
 		return false;
 	}
 	
-	public static boolean isForeignKey(ColumnStub column) {
+	public static boolean isForeignKey(Column column) {
 		TableStub table = getTable(column);
 		if (table != null) {
-			Iterator<ForeignKeyStub> iter = table.getForeignKeyIterator();
+			Iterator<ForeignKey> iter = table.getForeignKeyIterator();
 			while (iter.hasNext()) {
-				ForeignKeyStub fk = iter.next();
+				ForeignKey fk = iter.next();
 				if (fk.containsColumn(column)) {
 					return true;
 				}
@@ -48,7 +48,7 @@ public class HibernateUtils {
 		
 	}
 	
-	public static TableStub getTable(ColumnStub column) {
+	public static TableStub getTable(Column column) {
 		if (column.getValue() != null) {
 			return column.getValue().getTable();
 		}

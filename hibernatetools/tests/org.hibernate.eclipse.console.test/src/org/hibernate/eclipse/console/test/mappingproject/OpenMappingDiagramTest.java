@@ -26,8 +26,8 @@ import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.utils.Utils;
 import org.hibernate.eclipse.console.workbench.ConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.ConsoleConfigurationWorkbenchAdapter;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.jboss.tools.hibernate.ui.view.OpenDiagramActionDelegate;
 
 /**
@@ -67,7 +67,7 @@ public class OpenMappingDiagramTest extends TestCase {
 		Object[] persClasses = null;
 		try {
 			configs = new ConsoleConfigurationWorkbenchAdapter().getChildren(consCFG);
-			assertTrue(configs[0] instanceof ConfigurationStub);
+			assertTrue(configs[0] instanceof Configuration);
 			persClasses = new ConfigurationWorkbenchAdapter().getChildren(configs[0]);
 		} catch (RuntimeException ex) {
 			// TODO: RuntimeException ? - find correct solution
@@ -82,8 +82,8 @@ public class OpenMappingDiagramTest extends TestCase {
 
 		if (persClasses.length > 0){
 			for (int i = 0; i < persClasses.length; i++) {
-				assertTrue(persClasses[i] instanceof PersistentClassStub);
-				PersistentClassStub persClass = (PersistentClassStub) persClasses[i];
+				assertTrue(persClasses[i] instanceof PersistentClass);
+				PersistentClass persClass = (PersistentClass) persClasses[i];
 
 				IEditorPart editor = null;
 				Throwable ex = null;

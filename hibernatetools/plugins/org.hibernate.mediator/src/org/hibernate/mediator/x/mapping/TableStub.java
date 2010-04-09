@@ -22,22 +22,22 @@ public class TableStub extends HObject {
 		return (String)invoke(mn());
 	}
 	
-	public PrimaryKeyStub getPrimaryKey() {
+	public PrimaryKey getPrimaryKey() {
 		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
-		return new PrimaryKeyStub(obj);
+		return new PrimaryKey(obj);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Iterator<ForeignKeyStub> getForeignKeyIterator() {
+	public Iterator<ForeignKey> getForeignKeyIterator() {
 		Iterator it = (Iterator)invoke(mn());
-		ArrayList<ForeignKeyStub> al = new ArrayList<ForeignKeyStub>();
+		ArrayList<ForeignKey> al = new ArrayList<ForeignKey>();
 		while (it.hasNext()) {
 			Object obj = it.next();
 			if (obj != null) {
-				al.add(new ForeignKeyStub(obj));
+				al.add(new ForeignKey(obj));
 			}
 		}
 		return al.iterator();
@@ -51,26 +51,26 @@ public class TableStub extends HObject {
 		return (String)invoke(mn());
 	}
 
-	public KeyValueStub getIdentifierValue() {
+	public KeyValue getIdentifierValue() {
 		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
-		ValueStub res = ValueStubFactory.createValueStub(obj);
-		if (res instanceof KeyValueStub) {
-			return (KeyValueStub)res;
+		Value res = ValueFactory.createValueStub(obj);
+		if (res instanceof KeyValue) {
+			return (KeyValue)res;
 		}
 		throw new HibernateConsoleRuntimeException(Messages.Stub_create_null_stub_prohibit);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Iterator<ColumnStub> getColumnIterator() {
+	public Iterator<Column> getColumnIterator() {
 		Iterator it = (Iterator)invoke(mn());
-		ArrayList<ColumnStub> al = new ArrayList<ColumnStub>();
+		ArrayList<Column> al = new ArrayList<Column>();
 		while (it.hasNext()) {
 			Object obj = it.next();
 			if (obj != null) {
-				al.add(new ColumnStub(obj));
+				al.add(new Column(obj));
 			}
 		}
 		return al.iterator();

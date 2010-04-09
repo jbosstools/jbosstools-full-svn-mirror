@@ -69,9 +69,9 @@ import org.hibernate.eclipse.mapper.model.RevEngGeneratorAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngParamAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngPrimaryKeyAdapter;
 import org.hibernate.eclipse.mapper.model.RevEngTableAdapter;
-import org.hibernate.mediator.x.cfg.reveng.TableIdentifierStub;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.PrimaryKeyStub;
+import org.hibernate.mediator.x.cfg.reveng.TableIdentifier;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.PrimaryKey;
 import org.hibernate.mediator.x.mapping.TableStub;
 
 public class TablePropertiesBlock extends MasterDetailsBlock {
@@ -163,8 +163,8 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 
 		LazyDatabaseSchema lds = editor.getLazyDatabaseSchema();
 
-		Map<TableIdentifierStub, TableStub> tables = new HashMap<TableIdentifierStub, TableStub>();
-		Map<TableIdentifierStub, List<ColumnStub> > columns = new HashMap<TableIdentifierStub, List<ColumnStub> >();
+		Map<TableIdentifier, TableStub> tables = new HashMap<TableIdentifier, TableStub>();
+		Map<TableIdentifier, List<Column> > columns = new HashMap<TableIdentifier, List<Column> >();
 
 		if (lds == null) {
 			String tableName = "", namePrefix = "TABLE_";  //$NON-NLS-1$  //$NON-NLS-2$
@@ -193,36 +193,36 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 			dialog.setContainerMode(true);
 			dialog.open();
 			Object[] result = dialog.getResult();
-			TableIdentifierStub lastTable = null;
+			TableIdentifier lastTable = null;
 			if(result!=null) {
 				for (int i = 0; i < result.length; i++) {
 					Object object = result[i];
 					if(object instanceof TableStub) {
 						TableStub table = (TableStub) object;
-						tables.put(TableIdentifierStub.create(table), table);
-						lastTable = TableIdentifierStub.create(table);
-					} else if (object instanceof ColumnStub) {
-						ColumnStub column = (ColumnStub) object;
-						List<ColumnStub> existing = (List<ColumnStub>)columns.get(lastTable);
+						tables.put(TableIdentifier.create(table), table);
+						lastTable = TableIdentifier.create(table);
+					} else if (object instanceof Column) {
+						Column column = (Column) object;
+						List<Column> existing = (List<Column>)columns.get(lastTable);
 						if(existing==null) {
-							existing = new ArrayList<ColumnStub>();
+							existing = new ArrayList<Column>();
 							columns.put(lastTable,existing);
 						}
 						existing.add(column);
-					} else if (object instanceof PrimaryKeyStub) {
-						List<ColumnStub> existing = (List<ColumnStub>) columns.get(lastTable);
+					} else if (object instanceof PrimaryKey) {
+						List<Column> existing = (List<Column>) columns.get(lastTable);
 						if(existing==null) {
-							existing = new ArrayList<ColumnStub>();
+							existing = new ArrayList<Column>();
 							columns.put(lastTable,existing);
 						}
-						existing.addAll(((PrimaryKeyStub)object).getColumns());
+						existing.addAll(((PrimaryKey)object).getColumns());
 					}
 				}
 			}
 
-			Iterator<Map.Entry<TableIdentifierStub, TableStub>> iterator = tables.entrySet().iterator();
+			Iterator<Map.Entry<TableIdentifier, TableStub>> iterator = tables.entrySet().iterator();
 			while ( iterator.hasNext() ) {
-				Map.Entry<TableIdentifierStub, TableStub> element = iterator.next();
+				Map.Entry<TableIdentifier, TableStub> element = iterator.next();
 				TableStub table = element.getValue();
 				IRevEngTable retable = null;
 				//	editor.getReverseEngineeringDefinition().findTable(TableIdentifier.create(table));
@@ -234,11 +234,11 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 					editor.getReverseEngineeringDefinition().addTable(retable);
 				}
 
-				List<ColumnStub> columnList = columns.get(element.getKey());
+				List<Column> columnList = columns.get(element.getKey());
 				if(columnList!=null) {
-					Iterator<ColumnStub> colIterator = columnList.iterator();
+					Iterator<Column> colIterator = columnList.iterator();
 					while ( colIterator.hasNext() ) {
-						ColumnStub column = colIterator.next();
+						Column column = colIterator.next();
 						IRevEngColumn revCol = editor.getReverseEngineeringDefinition().createColumn();
 						revCol.setName(column.getName());
 						if (column.getSqlType() != null){

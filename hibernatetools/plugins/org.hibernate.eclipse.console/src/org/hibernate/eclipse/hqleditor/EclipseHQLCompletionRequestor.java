@@ -30,10 +30,10 @@ import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.eclipse.console.workbench.HibernateWorkbenchHelper;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.x.tool.ide.completion.HQLCompletionProposalStub;
-import org.hibernate.mediator.x.tool.ide.completion.IHQLCompletionRequestorStub;
+import org.hibernate.mediator.x.tool.ide.completion.HQLCompletionProposal;
+import org.hibernate.mediator.x.tool.ide.completion.IHQLCompletionRequestor;
 
-public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestorStub {
+public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestor {
 
 	private final List<ICompletionProposal> result = new ArrayList<ICompletionProposal>();
 	private String lastErrorMessage;
@@ -51,7 +51,7 @@ public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestorStub {
 		return result;
 	}
 
-	public boolean accept(HQLCompletionProposalStub proposal) {
+	public boolean accept(HQLCompletionProposal proposal) {
 		result.add(new CompletionProposal(proposal.getCompletion(), // replacementString 
 										  proposal.getReplaceStart()+virtualOffset, // replacementOffset 
 										  proposal.getReplaceEnd()-proposal.getReplaceStart(), // replacementLength
@@ -63,11 +63,11 @@ public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestorStub {
 		return true;
 	}
 
-	private String getDisplayString(HQLCompletionProposalStub proposal) {
+	private String getDisplayString(HQLCompletionProposal proposal) {
 		StringBuffer buf = new StringBuffer(proposal.getSimpleName());
 		
 		final int n = proposal.getCompletionKind();
-		if (n == HQLCompletionProposalStub.ENTITY_NAME) {
+		if (n == HQLCompletionProposal.ENTITY_NAME) {
 			if(proposal.getEntityName()!=null && 
 					  !(proposal.getSimpleName().equals( proposal.getEntityName()))) {
 				buf.append(" - "); //$NON-NLS-1$
@@ -76,13 +76,13 @@ public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestorStub {
 					!(proposal.getSimpleName().equals( proposal.getEntityName()))) {
 				buf.append( " - " + proposal.getShortEntityName() ); //$NON-NLS-1$
 			} 
-		} else if (n == HQLCompletionProposalStub.ALIAS_REF) {
+		} else if (n == HQLCompletionProposal.ALIAS_REF) {
 			if(proposal.getShortEntityName()!=null) {
 				buf.append( " - " + proposal.getShortEntityName() ); //$NON-NLS-1$
 			} else if(proposal.getEntityName()!=null) {
 				buf.append( " - " + proposal.getEntityName() ); //$NON-NLS-1$
 			}
-		} else if (n == HQLCompletionProposalStub.PROPERTY) {
+		} else if (n == HQLCompletionProposal.PROPERTY) {
 			if(proposal.getShortEntityName()!=null) {
 				buf.append( " - " + proposal.getShortEntityName() ); //$NON-NLS-1$
 			} else if(proposal.getEntityName()!=null) {
@@ -92,8 +92,8 @@ public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestorStub {
 					buf.append( " - " + proposal.getEntityName() ); //$NON-NLS-1$
 				}
 			}
-		} else if (n == HQLCompletionProposalStub.KEYWORD) {
-		} else if (n == HQLCompletionProposalStub.FUNCTION) {
+		} else if (n == HQLCompletionProposal.KEYWORD) {
+		} else if (n == HQLCompletionProposal.FUNCTION) {
 		} else {
 		}
 		
@@ -101,22 +101,22 @@ public class EclipseHQLCompletionRequestor extends IHQLCompletionRequestorStub {
 		return buf.toString();
 	}
 
-	private Image getImage(HQLCompletionProposalStub proposal) {
+	private Image getImage(HQLCompletionProposal proposal) {
 		String key = null;
 		
 		final int n = proposal.getCompletionKind();
-		if (n == HQLCompletionProposalStub.ENTITY_NAME ||
-			n == HQLCompletionProposalStub.ALIAS_REF) {
+		if (n == HQLCompletionProposal.ENTITY_NAME ||
+			n == HQLCompletionProposal.ALIAS_REF) {
 			key = ImageConstants.MAPPEDCLASS;
-		} else if (n == HQLCompletionProposalStub.PROPERTY) {
+		} else if (n == HQLCompletionProposal.PROPERTY) {
 			if(proposal.getProperty()!=null) {
 				return HibernateWorkbenchHelper.getImage( proposal.getProperty() );
 			} else {
 				key = ImageConstants.PROPERTY;				
 			}
-		} else if (n == HQLCompletionProposalStub.KEYWORD) {
+		} else if (n == HQLCompletionProposal.KEYWORD) {
 			key = null;
-		} else if (n == HQLCompletionProposalStub.FUNCTION) {
+		} else if (n == HQLCompletionProposal.FUNCTION) {
 			key = ImageConstants.FUNCTION;
 		} else {
 			key = null;

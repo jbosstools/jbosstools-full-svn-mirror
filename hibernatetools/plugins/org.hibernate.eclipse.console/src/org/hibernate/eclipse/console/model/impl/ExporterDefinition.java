@@ -52,7 +52,7 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
-import org.hibernate.mediator.x.tool.hbm2x.ExporterStub;
+import org.hibernate.mediator.x.tool.hbm2x.Exporter;
 
 /**
  * Represents what is specified in plugin.xml about possible exporters.
@@ -116,11 +116,11 @@ public class ExporterDefinition {
 	}
 
 
-	public ExporterStub createExporterInstance() {
-	   ExporterStub exporter = null;
+	public Exporter createExporterInstance() {
+	   Exporter exporter = null;
 
 	   try {
-		   exporter = (ExporterStub) ReflectHelper.classForName( classname ).newInstance();
+		   exporter = (Exporter) ReflectHelper.classForName( classname ).newInstance();
 	   }
 	   catch (InstantiationException e) {
 		   throw new HibernateConsoleRuntimeException(HibernateConsoleMessages.ExporterDefinition_problem_creating_exporter_class + classname);

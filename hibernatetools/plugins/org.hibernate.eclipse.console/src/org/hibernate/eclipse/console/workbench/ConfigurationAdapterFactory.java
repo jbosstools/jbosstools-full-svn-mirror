@@ -33,13 +33,13 @@ import org.eclipse.ui.views.properties.IPropertySource2;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.node.BaseNode;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PrimaryKeyStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.PrimaryKey;
+import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.TableStub;
-import org.hibernate.mediator.x.mapping.ValueStub;
+import org.hibernate.mediator.x.mapping.Value;
 
 public class ConfigurationAdapterFactory implements IAdapterFactory {
 
@@ -51,18 +51,18 @@ public class ConfigurationAdapterFactory implements IAdapterFactory {
 		Map<Class<?>, IDeferredWorkbenchAdapter> map = new HashMap<Class<?>, IDeferredWorkbenchAdapter>();
 		
 		map.put(ConsoleConfiguration.class, new ConsoleConfigurationWorkbenchAdapter());
-		map.put(ConfigurationStub.class, new ConfigurationWorkbenchAdapter());
+		map.put(Configuration.class, new ConfigurationWorkbenchAdapter());
 		map.put(KnownConfigurations.class, new KnownConfigurationsWorkbenchAdapter());
-		map.put(PersistentClassStub.class, new PersistentClassWorkbenchAdapter());
-		map.put(PropertyStub.class, new PropertyWorkbenchAdapter());
-		map.put(ValueStub.class, new ValueWorkbenchAdapter());
+		map.put(PersistentClass.class, new PersistentClassWorkbenchAdapter());
+		map.put(Property.class, new PropertyWorkbenchAdapter());
+		map.put(Value.class, new ValueWorkbenchAdapter());
 		map.put(BaseNode.class, new BaseNodeWorkbenchAdapter());
 		map.put(LazyDatabaseSchema.class, new LazyDatabaseSchemaWorkbenchAdapter());
 		map.put(LazySessionFactory.class, new LazySessionFactoryAdapter());
 		map.put(TableContainer.class, new TableContainerWorkbenchAdapter());
 		map.put(TableStub.class, new TableWorkbenchAdapter());
-		map.put(PrimaryKeyStub.class, new PrimaryKeyWorkbenchAdapter());
-		map.put(ColumnStub.class, new ColumnWorkbenchAdapter());				
+		map.put(PrimaryKey.class, new PrimaryKeyWorkbenchAdapter());
+		map.put(Column.class, new ColumnWorkbenchAdapter());				
 		
 		classes = new Class[map.size()];
 		adapters = new IDeferredWorkbenchAdapter[map.size()];

@@ -20,10 +20,10 @@ import org.hibernate.eclipse.launch.HibernateLaunchConstants;
 import org.hibernate.eclipse.launch.PathHelper;
 import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.tool.hbm2x.ArtifactCollectorStub;
-import org.hibernate.mediator.x.tool.hbm2x.ExporterStub;
-import org.hibernate.mediator.x.tool.hbm2x.GenericExporterStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.tool.hbm2x.ArtifactCollector;
+import org.hibernate.mediator.x.tool.hbm2x.Exporter;
+import org.hibernate.mediator.x.tool.hbm2x.GenericExporter;
 
 /**
  * ExporterFactory is used in UI to hold additional configuration for Exporter definitions
@@ -166,10 +166,10 @@ public class ExporterFactory {
 	 * @param collector
 	 * @throws CoreException in case of resolve variables issues.
 	 */
-	public ExporterStub createConfiguredExporter(ConfigurationStub cfg, String defaultOutputDirectory,
-			String customTemplatePath, Properties globalProperties, Set<String> outputDirectories, ArtifactCollectorStub collector) throws CoreException {
+	public Exporter createConfiguredExporter(Configuration cfg, String defaultOutputDirectory,
+			String customTemplatePath, Properties globalProperties, Set<String> outputDirectories, ArtifactCollector collector) throws CoreException {
 
-		ExporterStub exporter = getExporterDefinition().createExporterInstance();
+		Exporter exporter = getExporterDefinition().createExporterInstance();
 
 
 		Properties props = new Properties();
@@ -245,7 +245,7 @@ public class ExporterFactory {
 
 		// special handling for GenericExporter (TODO: be delegated via plugin.xml)
 		if(getExporterDefinition().getId().equals("org.hibernate.tools.hbmtemplate")) { //$NON-NLS-1$
-			GenericExporterStub ge = (GenericExporterStub) exporter;
+			GenericExporter ge = (GenericExporter) exporter;
 
 			ge.setFilePattern(props.getProperty("file_pattern", null)); //$NON-NLS-1$
 			props.remove("file_pattern"); //$NON-NLS-1$

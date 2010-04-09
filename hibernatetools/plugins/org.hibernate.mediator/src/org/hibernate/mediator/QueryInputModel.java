@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 
-import org.hibernate.mediator.x.HibernateStub;
+import org.hibernate.mediator.x.Hibernate;
 
 /**
  * Class for managing misc parameters and other inputs to a Query, Criteria etc.  
@@ -113,7 +113,7 @@ public class QueryInputModel extends Observable {
 	/** create a parameter which does not collide with any other parameter */
 	public ConsoleQueryParameter createUniqueParameter(String paramName) {
 		if(parameters.isEmpty()) {
-			return new ConsoleQueryParameter(paramName, HibernateStub.STRING, ""); //$NON-NLS-1$
+			return new ConsoleQueryParameter(paramName, Hibernate.STRING, ""); //$NON-NLS-1$
 		} else {
 			ConsoleQueryParameter cqp = parameters.get(parameters.size()-1);
 			ConsoleQueryParameter c = new ConsoleQueryParameter(cqp);

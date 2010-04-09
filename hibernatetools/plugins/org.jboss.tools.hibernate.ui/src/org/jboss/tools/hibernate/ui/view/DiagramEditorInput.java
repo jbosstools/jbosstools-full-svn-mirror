@@ -20,7 +20,7 @@ import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.mediator.x.mapping.RootClassStub;
+import org.hibernate.mediator.x.mapping.RootClass;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.OrmDiagram;
 
 /**
@@ -34,12 +34,12 @@ public class DiagramEditorInput implements IEditorInput, IStorageEditorInput, IP
 	private DiagramEditorStorage storage = new DiagramEditorStorage();
 
 	public DiagramEditorInput() {
-		ArrayList<RootClassStub> roots = new ArrayList<RootClassStub>();
+		ArrayList<RootClass> roots = new ArrayList<RootClass>();
 		createOrmDiagram("", roots); //$NON-NLS-1$
 	}
 
 	public DiagramEditorInput(FileEditorInput fei) {
-		ArrayList<RootClassStub> roots = new ArrayList<RootClassStub>();
+		ArrayList<RootClass> roots = new ArrayList<RootClass>();
 		createOrmDiagram("", roots); //$NON-NLS-1$
 		ormDiagram.loadFromFile(fei.getPath(), true);
 		if (ormDiagram.getConsoleConfig() != null) {
@@ -50,21 +50,21 @@ public class DiagramEditorInput implements IEditorInput, IStorageEditorInput, IP
 		ormDiagram.setDirty(false);
 	}
 
-	public DiagramEditorInput(String configName, RootClassStub rc) {
-		ArrayList<RootClassStub> roots = new ArrayList<RootClassStub>();
+	public DiagramEditorInput(String configName, RootClass rc) {
+		ArrayList<RootClass> roots = new ArrayList<RootClass>();
 		roots.add(rc);
 		createOrmDiagram(configName, roots);
 	}
 
-	public DiagramEditorInput(String configName, RootClassStub[] rcs) {
-		ArrayList<RootClassStub> roots = new ArrayList<RootClassStub>();
+	public DiagramEditorInput(String configName, RootClass[] rcs) {
+		ArrayList<RootClass> roots = new ArrayList<RootClass>();
     	for (int i = 0; i < rcs.length; i++) {
     		roots.add(rcs[i]);
     	}
     	createOrmDiagram(configName, roots);
 	}
 	
-	protected void createOrmDiagram(String configName, ArrayList<RootClassStub> roots) {
+	protected void createOrmDiagram(String configName, ArrayList<RootClass> roots) {
 		ormDiagram = new OrmDiagram(configName, roots);
 	}
 	

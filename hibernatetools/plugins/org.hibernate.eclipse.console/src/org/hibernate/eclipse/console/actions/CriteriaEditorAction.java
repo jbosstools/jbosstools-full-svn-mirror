@@ -33,8 +33,8 @@ import org.hibernate.console.node.TypeNode;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 
 public class CriteriaEditorAction extends OpenQueryEditorAction {
 	
@@ -64,13 +64,13 @@ public class CriteriaEditorAction extends OpenQueryEditorAction {
 		String propCriteria = ""; //$NON-NLS-1$
 		String enName = ""; //$NON-NLS-1$
 		Object node = path.getLastSegment();
-		if (node instanceof PersistentClassStub){
-			enName = ((PersistentClassStub)node).getEntityName();
+		if (node instanceof PersistentClass){
+			enName = ((PersistentClass)node).getEntityName();
 			enName = enName.substring(enName.lastIndexOf('.') + 1);
-		} else if (node instanceof PropertyStub){
-			PropertyStub prop = (PropertyStub)node;
+		} else if (node instanceof Property){
+			Property prop = (Property)node;
 			String prName = prop.getName();
-			PersistentClassStub pClass = prop.getPersistentClass();
+			PersistentClass pClass = prop.getPersistentClass();
 			if (pClass != null){
 				enName = pClass.getEntityName();
 				enName = enName.substring(enName.lastIndexOf('.') + 1);
@@ -82,11 +82,11 @@ public class CriteriaEditorAction extends OpenQueryEditorAction {
 			} else {
 				// Generate script for Component property
 				for (int i = path.getSegmentCount() - 1; i > 0; i--) {
-					if (path.getSegment(i) instanceof PersistentClassStub){
-						enName = ((PersistentClassStub)path.getSegment(i)).getEntityName();
+					if (path.getSegment(i) instanceof PersistentClass){
+						enName = ((PersistentClass)path.getSegment(i)).getEntityName();
 						enName = enName.substring(enName.lastIndexOf('.') + 1);
-					} else if (path.getSegment(i) instanceof PropertyStub){
-						prName = ((PropertyStub)path.getSegment(i)).getName();
+					} else if (path.getSegment(i) instanceof Property){
+						prName = ((Property)path.getSegment(i)).getName();
 						if (prop.getValue().isSimpleValue()) {
 						    propCriteria += NLS.bind(projection, prName);
 						} else {

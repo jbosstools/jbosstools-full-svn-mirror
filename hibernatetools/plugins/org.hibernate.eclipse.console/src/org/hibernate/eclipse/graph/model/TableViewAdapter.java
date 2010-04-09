@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.TableStub;
 
 
@@ -50,9 +50,9 @@ public class TableViewAdapter extends GraphNode {
 
 	public List<ColumnViewAdapter> getColumns() {
 		List<ColumnViewAdapter> result = new ArrayList<ColumnViewAdapter>();
-		Iterator<ColumnStub> columnIterator = table.getColumnIterator();
+		Iterator<Column> columnIterator = table.getColumnIterator();
 		while ( columnIterator.hasNext() ) {
-			ColumnStub element = columnIterator.next();
+			Column element = columnIterator.next();
 			result.add(new ColumnViewAdapter(this,element));
 		}
 		

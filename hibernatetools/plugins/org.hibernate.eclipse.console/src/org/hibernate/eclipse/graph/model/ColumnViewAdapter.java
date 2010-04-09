@@ -23,20 +23,20 @@ package org.hibernate.eclipse.graph.model;
 
 import java.util.Observable;
 
-import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.Column;
 
 public class ColumnViewAdapter extends Observable {
 
 	private final TableViewAdapter table;
-	private final ColumnStub column;
+	private final Column column;
 
-	public ColumnViewAdapter(TableViewAdapter adapter, ColumnStub element) {
+	public ColumnViewAdapter(TableViewAdapter adapter, Column element) {
 		this.table = adapter;
 		// TODO Auto-generated constructor stub
 		this.column = element;
 	}
 
-	public ColumnStub getcolumn() {
+	public Column getcolumn() {
 		return column;
 	}
 

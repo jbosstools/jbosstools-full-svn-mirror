@@ -30,8 +30,8 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.mediator.x.cfg.reveng.TableIdentifierStub;
-import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.cfg.reveng.TableIdentifier;
+import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.TableStub;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -52,13 +52,13 @@ public class ColumnNameHandler implements HBMInfoHandler {
 		
 		HibernateNature nature = HibernateNature.getHibernateNature( javaProject );
 		if(nature!=null) {
-			TableIdentifierStub nearestTableName = extractor.getNearestTableName(node);
+			TableIdentifier nearestTableName = extractor.getNearestTableName(node);
 			if(nearestTableName!=null) {
 				TableStub table = nature.getTable(nearestTableName);
 				if (table!=null) {
 					Iterator tableMappings = table.getColumnIterator();
 					while (tableMappings.hasNext() ) {
-						ColumnStub column = (ColumnStub) tableMappings.next();
+						Column column = (Column) tableMappings.next();
 						if(column.getName().toUpperCase().startsWith(start.toUpperCase()) ) {
 							columns.add(column);
 						}
@@ -69,7 +69,7 @@ public class ColumnNameHandler implements HBMInfoHandler {
 
 		List proposals = new ArrayList();
 		for (Iterator iter = columns.iterator(); iter.hasNext();) {
-			ColumnStub element = (ColumnStub) iter.next();
+			Column element = (Column) iter.next();
 			proposals.add(new CompletionProposal(element.getName(), offset, start.length(), element.getName().length(), null, null, null, null) );
 		}
 		

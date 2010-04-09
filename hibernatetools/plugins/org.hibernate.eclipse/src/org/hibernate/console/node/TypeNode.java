@@ -21,8 +21,8 @@
  */
 package org.hibernate.console.node;
 
-import org.hibernate.mediator.x.metadata.ClassMetadataStub;
-import org.hibernate.mediator.x.type.TypeStub;
+import org.hibernate.mediator.x.metadata.ClassMetadata;
+import org.hibernate.mediator.x.type.Type;
 
 /**
  * @author MAX
@@ -30,8 +30,8 @@ import org.hibernate.mediator.x.type.TypeStub;
  */
 public class TypeNode extends ClassNode {
 
-	TypeStub type;
-	public TypeNode(NodeFactory factory, BaseNode parent, TypeStub type, ClassMetadataStub metadata, Object baseObject, boolean objectGraph) {
+	Type type;
+	public TypeNode(NodeFactory factory, BaseNode parent, Type type, ClassMetadata metadata, Object baseObject, boolean objectGraph) {
 		super(factory, parent, type.getReturnedClass().getName(), metadata, baseObject, objectGraph);
 		this.type = type;
 				
@@ -46,7 +46,7 @@ public class TypeNode extends ClassNode {
 	/**
 	 * 
 	 */
-	public TypeStub getType() {
+	public Type getType() {
 		return type;
 	}
 

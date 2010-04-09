@@ -30,9 +30,9 @@ import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.ProjectUtils;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 
 /**
  * @author Dmitry Geraskov
@@ -62,15 +62,15 @@ public class OpenSourceAction extends SelectionListenerAction {
 		for (int i = 0; i < paths.length; i++) {
 			TreePath path = paths[i];
 			Object lastSegment = path.getLastSegment();
-	    	PersistentClassStub persClass = getPersistentClass(lastSegment);
+	    	PersistentClass persClass = getPersistentClass(lastSegment);
 			ConsoleConfiguration consoleConfig = (ConsoleConfiguration)(path.getSegment(0));
 
 			String fullyQualifiedName = null;
-			if (lastSegment instanceof PropertyStub){
+			if (lastSegment instanceof Property){
 				Object prevSegment = path.getParentPath().getLastSegment();
-				if (prevSegment instanceof PropertyStub
-						&& ((PropertyStub)prevSegment).isComposite()){
-					fullyQualifiedName =((ComponentStub)((PropertyStub) prevSegment).getValue()).getComponentClassName();
+				if (prevSegment instanceof Property
+						&& ((Property)prevSegment).isComposite()){
+					fullyQualifiedName =((Component)((Property) prevSegment).getValue()).getComponentClassName();
 				}
 			}
 			if (fullyQualifiedName == null && persClass != null){
@@ -124,8 +124,8 @@ public class OpenSourceAction extends SelectionListenerAction {
 			}
 		}
 		IJavaElement jElement = null;
-		if (selection instanceof PropertyStub){
-			final String selectionName =((PropertyStub)selection).getName(); 
+		if (selection instanceof Property){
+			final String selectionName =((Property)selection).getName(); 
 			final IType typeSave = type;
 			while (true) {
 				jElement = type.getField(selectionName);
@@ -166,11 +166,11 @@ public class OpenSourceAction extends SelectionListenerAction {
 
 	}
 
-	private PersistentClassStub getPersistentClass(Object selection){
-    	if (selection instanceof PropertyStub){
-    		return ((PropertyStub)selection).getPersistentClass();
-		} else if (selection instanceof PersistentClassStub){
-			return (PersistentClassStub)selection;
+	private PersistentClass getPersistentClass(Object selection){
+    	if (selection instanceof Property){
+    		return ((Property)selection).getPersistentClass();
+		} else if (selection instanceof PersistentClass){
+			return (PersistentClass)selection;
 		} else {
 			return null;
 		}

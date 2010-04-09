@@ -47,7 +47,7 @@ import org.hibernate.eclipse.console.workbench.LazyDatabaseSchema;
 import org.hibernate.eclipse.console.workbench.TableContainer;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.x.mapping.ColumnStub;
+import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.TableStub;
 
 public abstract class TableFilterView extends TreeToTableComposite {
@@ -171,7 +171,7 @@ public abstract class TableFilterView extends TreeToTableComposite {
 					}
 					filter.setMatchName(".*"); //$NON-NLS-1$
 					filter.setExclude( Boolean.valueOf( exclude ) );
-				} else if ( sel instanceof ColumnStub ) {
+				} else if ( sel instanceof Column ) {
 					// we ignore column since at the moment we dont know which table is there.
 					return;
 				} else {

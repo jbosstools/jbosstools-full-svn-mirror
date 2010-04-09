@@ -13,28 +13,28 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 import java.util.Iterator;
 
 import org.hibernate.mediator.x.mapping.CollectionStub;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.RootClassStub;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.RootClass;
 
 // TODO: What is this ? And why is it extending mapping classes ?!
 // vitali: it seems this is class to "wrap" properties set to RootClass
 // 
 // TODO: vitali: try to change "extends RootClass" into property
-public class SpecialRootClass extends RootClassStub {
+public class SpecialRootClass extends RootClass {
 //public class SpecialRootClass {
 
-	private PropertyStub property;
-	private PropertyStub parentProperty;
+	private Property property;
+	private Property parentProperty;
 
 	//protected String entityName;
 	//protected String className;
 	//protected ArrayList properties = new ArrayList();
 	//protected RootClass rootClass;
 	
-	public SpecialRootClass(PropertyStub property) {
-		super(RootClassStub.newInstance());
+	public SpecialRootClass(Property property) {
+		super(RootClass.newInstance());
 		this.property = property;
 		//this.rootClass = null;
 		generate();
@@ -44,25 +44,25 @@ public class SpecialRootClass extends RootClassStub {
 		if (property == null) {
 			return;
 		}
-		ComponentStub component = null;
+		Component component = null;
 		if (property.getValue() instanceof CollectionStub) {
 			CollectionStub collection = (CollectionStub)property.getValue();
-			component = (ComponentStub)collection.getElement();
-		} else if (property.getValue() instanceof ComponentStub) {
-			component = (ComponentStub)property.getValue();
+			component = (Component)collection.getElement();
+		} else if (property.getValue() instanceof Component) {
+			component = (Component)property.getValue();
 		}
 		if (component != null) {
 			setClassName(component.getComponentClassName());
 			setEntityName(component.getComponentClassName());
-			PersistentClassStub ownerClass = component.getOwner();
+			PersistentClass ownerClass = component.getOwner();
 			if (component.getParentProperty() != null) {
-				parentProperty = PropertyStub.newInstance();
+				parentProperty = Property.newInstance();
 				parentProperty.setName(component.getParentProperty());
 				parentProperty.setPersistentClass(ownerClass);
 			}
-			Iterator<PropertyStub> iterator = component.getPropertyIterator();
+			Iterator<Property> iterator = component.getPropertyIterator();
 			while (iterator.hasNext()) {
-				PropertyStub property = iterator.next();
+				Property property = iterator.next();
 				if (property != null) {
 					addProperty(property);
 				}
@@ -70,11 +70,11 @@ public class SpecialRootClass extends RootClassStub {
 		}
 	}
 
-	protected PropertyStub getParentProperty() {
+	protected Property getParentProperty() {
 		return parentProperty;
 	}
 
-	public PropertyStub getProperty() {
+	public Property getProperty() {
 		return this.property;
 	}
 	/** /

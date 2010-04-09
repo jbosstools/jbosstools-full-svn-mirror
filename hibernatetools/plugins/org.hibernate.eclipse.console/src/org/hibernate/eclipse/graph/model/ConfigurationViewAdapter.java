@@ -28,18 +28,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.mapping.PersistentClass;
 
 public class ConfigurationViewAdapter extends Observable {
 
-	private final ConfigurationStub cfg;
+	private final Configuration cfg;
 	private Map<String, PersistentClassViewAdapter> persistentClasses; // key: name, value: PersistentClassViewAdapter
 	private List<TableViewAdapter> selectedTables;
 	//private final Map sourceAssociations; // key: name, value: List of AssociationViewAdapter
 	//private final Map targetAssociations; // key: name, value: List of AssociationViewAdapter
 	
-	public ConfigurationViewAdapter(ConfigurationStub cfg) {
+	public ConfigurationViewAdapter(Configuration cfg) {
 		this.cfg = cfg;		
 		
 		//sourceAssociations = new HashMap();
@@ -48,10 +48,10 @@ public class ConfigurationViewAdapter extends Observable {
 
 	public List<PersistentClassViewAdapter> getPersistentClasses() {
 		if(persistentClasses==null) {
-			Iterator<PersistentClassStub> classMappings = cfg.getClassMappings();
+			Iterator<PersistentClass> classMappings = cfg.getClassMappings();
 			persistentClasses = new HashMap<String, PersistentClassViewAdapter>();
 			while ( classMappings.hasNext() ) {
-				PersistentClassStub clazz = classMappings.next();
+				PersistentClass clazz = classMappings.next();
 				persistentClasses.put( clazz.getEntityName(), new PersistentClassViewAdapter(this, clazz) );
 			}
 			
@@ -73,7 +73,7 @@ public class ConfigurationViewAdapter extends Observable {
 		return selectedTables;
 	}
 
-	public ConfigurationStub getConfiguration() {
+	public Configuration getConfiguration() {
 		return cfg;
 	}
 

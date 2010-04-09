@@ -46,9 +46,9 @@ import org.hibernate.eclipse.console.workbench.DeferredContentProvider;
 import org.hibernate.eclipse.console.workbench.LazyDatabaseSchema;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
 import org.hibernate.eclipse.mapper.MapperMessages;
-import org.hibernate.mediator.x.cfg.reveng.JDBCToHibernateTypeHelperStub;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.PrimaryKeyStub;
+import org.hibernate.mediator.x.cfg.reveng.JDBCToHibernateTypeHelper;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.PrimaryKey;
 
 public abstract class TypeMappingView extends TreeToTableComposite {
 
@@ -124,15 +124,15 @@ public abstract class TypeMappingView extends TreeToTableComposite {
 			Iterator iterator = ss.iterator();
 			while ( iterator.hasNext() ) {
 				Object sel = iterator.next();
-				if(sel instanceof ColumnStub) {
-					ColumnStub col = (ColumnStub) sel;
+				if(sel instanceof Column) {
+					Column col = (Column) sel;
 					Integer sqlTypeCode = col.getSqlTypeCode();
 					createTypeMapping( col, sqlTypeCode );
-				} else if (sel instanceof PrimaryKeyStub) {
-					PrimaryKeyStub pk = (PrimaryKeyStub) sel;
+				} else if (sel instanceof PrimaryKey) {
+					PrimaryKey pk = (PrimaryKey) sel;
 					Iterator iter = pk.columnIterator();
 					while ( iter.hasNext() ) {
-						ColumnStub column = (ColumnStub) iter.next();
+						Column column = (Column) iter.next();
 						createTypeMapping(column, column.getSqlTypeCode());
 					}
 				} else {
@@ -144,26 +144,26 @@ public abstract class TypeMappingView extends TreeToTableComposite {
 		}
 	}
 
-	private void createTypeMapping(ColumnStub col, Integer sqlTypeCode) {
+	private void createTypeMapping(Column col, Integer sqlTypeCode) {
 		if(sqlTypeCode!=null) {
 			ITypeMapping typeMapping = revEngDef.createTypeMapping();
 
-			typeMapping.setJDBCType(JDBCToHibernateTypeHelperStub.getJDBCTypeName(sqlTypeCode.intValue()));
+			typeMapping.setJDBCType(JDBCToHibernateTypeHelper.getJDBCTypeName(sqlTypeCode.intValue()));
 			int length = col.getLength();
 			int precision = col.getPrecision();
 			int scale = col.getScale();
 			boolean nullability = col.isNullable();
-			typeMapping.setHibernateType(JDBCToHibernateTypeHelperStub.getPreferredHibernateType(sqlTypeCode.intValue(), length, precision, scale, nullability, false));
-			if(JDBCToHibernateTypeHelperStub.typeHasLength(sqlTypeCode.intValue())) {
-				if(length!=0 && ColumnStub.DEFAULT_LENGTH!=length) {
+			typeMapping.setHibernateType(JDBCToHibernateTypeHelper.getPreferredHibernateType(sqlTypeCode.intValue(), length, precision, scale, nullability, false));
+			if(JDBCToHibernateTypeHelper.typeHasLength(sqlTypeCode.intValue())) {
+				if(length!=0 && Column.DEFAULT_LENGTH!=length) {
 					typeMapping.setLength(new Integer(length));
 				}
 			}
-			if(JDBCToHibernateTypeHelperStub.typeHasScaleAndPrecision(sqlTypeCode.intValue())) {
-				if(precision!=0 && ColumnStub.DEFAULT_PRECISION!=precision) {
+			if(JDBCToHibernateTypeHelper.typeHasScaleAndPrecision(sqlTypeCode.intValue())) {
+				if(precision!=0 && Column.DEFAULT_PRECISION!=precision) {
 					typeMapping.setPrecision(new Integer(precision));
 				}
-				if(scale!=0 && ColumnStub.DEFAULT_SCALE!=scale) {
+				if(scale!=0 && Column.DEFAULT_SCALE!=scale) {
 					typeMapping.setScale(new Integer(scale));
 				}
 			}

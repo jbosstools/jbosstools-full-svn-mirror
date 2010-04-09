@@ -34,10 +34,10 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.OpenMappingUtils;
 import org.hibernate.eclipse.console.utils.ProjectUtils;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.RootClassStub;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.RootClass;
 
 /**
  * Open Mapping File action
@@ -90,14 +90,14 @@ public class OpenMappingAction extends SelectionListenerAction {
 	 */
 	public static IEditorPart run(ConsoleConfiguration consoleConfig, TreePath path) 
 			throws PartInitException, JavaModelException, FileNotFoundException {
-		boolean isPropertySel = (path.getLastSegment().getClass() == PropertyStub.class);
+		boolean isPropertySel = (path.getLastSegment().getClass() == Property.class);
 		if (isPropertySel) {
-			PropertyStub propertySel = (PropertyStub)path.getLastSegment();
-			PersistentClassStub persClass = propertySel.getPersistentClass();
+			Property propertySel = (Property)path.getLastSegment();
+			PersistentClass persClass = propertySel.getPersistentClass();
 			if (persClass == null
-					|| (RootClassStub.class.isAssignableFrom(persClass.getClass())
-					&& persClass.getClass() != RootClassStub.class)) {
-				PropertyStub parentProp = (PropertyStub)path.getParentPath().getLastSegment();
+					|| (RootClass.class.isAssignableFrom(persClass.getClass())
+					&& persClass.getClass() != RootClass.class)) {
+				Property parentProp = (Property)path.getParentPath().getLastSegment();
 				return run(consoleConfig, propertySel, parentProp);
 			}
 		}
@@ -116,8 +116,8 @@ public class OpenMappingAction extends SelectionListenerAction {
 	public static IEditorPart run(ConsoleConfiguration consoleConfig, Object selection, Object selectionParent) throws PartInitException, JavaModelException, FileNotFoundException {
 		IEditorPart editorPart = null;
 		IFile file = null;
-		if (selection instanceof PropertyStub) {
-			PropertyStub p = (PropertyStub)selection;
+		if (selection instanceof Property) {
+			Property p = (Property)selection;
 			if (p.getPersistentClass() != null) {
 				//use PersistentClass to open editor
 				file = OpenMappingUtils.searchFileToOpen(consoleConfig, p.getPersistentClass());
@@ -140,12 +140,12 @@ public class OpenMappingAction extends SelectionListenerAction {
 		}
 		if (editorPart == null) {
 			//try to find hibernate-annotations
-			PersistentClassStub rootClass = null;
-			if (selection instanceof PersistentClassStub) {
-				rootClass = (PersistentClassStub)selection;
+			PersistentClass rootClass = null;
+			if (selection instanceof PersistentClass) {
+				rootClass = (PersistentClass)selection;
 		    }
-			else if (selection instanceof PropertyStub) {
-	    		PropertyStub p = (PropertyStub)selection;
+			else if (selection instanceof Property) {
+	    		Property p = (Property)selection;
 	    		if (p.getPersistentClass() != null) {
 	    			rootClass = p.getPersistentClass();
 	    		}
@@ -175,9 +175,9 @@ public class OpenMappingAction extends SelectionListenerAction {
 	 * @throws FileNotFoundException
 	 * @throws BadLocationException
 	 */
-	public static IEditorPart run(ConsoleConfiguration consoleConfig, PropertyStub compositeProperty, PropertyStub parentProperty) 
+	public static IEditorPart run(ConsoleConfiguration consoleConfig, Property compositeProperty, Property parentProperty) 
 			throws PartInitException, JavaModelException, FileNotFoundException {
-		PersistentClassStub rootClass = parentProperty.getPersistentClass();
+		PersistentClass rootClass = parentProperty.getPersistentClass();
 		IFile file = OpenMappingUtils.searchFileToOpen(consoleConfig, rootClass);
 		IEditorPart editorPart = null;
 		if (file != null){
@@ -186,7 +186,7 @@ public class OpenMappingAction extends SelectionListenerAction {
 		}
    		if (editorPart == null && parentProperty.isComposite()) {
 			if (OpenMappingUtils.hasConfigXMLMappingClassAnnotation(consoleConfig, rootClass)) {
-				String fullyQualifiedName =((ComponentStub)parentProperty.getValue()).getComponentClassName();
+				String fullyQualifiedName =((Component)parentProperty.getValue()).getComponentClassName();
 				editorPart = OpenSourceAction.run(consoleConfig, compositeProperty, fullyQualifiedName);
 			}
 	    }
@@ -235,7 +235,7 @@ public class OpenMappingAction extends SelectionListenerAction {
 	 * @param compositeProperty
 	 * @param parentProperty
 	 */
-	public static boolean updateEditorSelection(IEditorPart editorPart, PropertyStub compositeProperty, PropertyStub parentProperty) {
+	public static boolean updateEditorSelection(IEditorPart editorPart, Property compositeProperty, Property parentProperty) {
 		ITextEditor[] textEditors = OpenMappingUtils.getTextEditors(editorPart);
 		if (textEditors.length == 0) {
 			return false;
@@ -260,7 +260,7 @@ public class OpenMappingAction extends SelectionListenerAction {
 		try {
 			final String hbmPropertyPattern = OpenMappingUtils.generateHbmPropertyPattern(compositeProperty);
 			propRegion = findAdapter.find(startOffset, hbmPropertyPattern, true, true, false, true);
-			PersistentClassStub rootClass = parentProperty.getPersistentClass();
+			PersistentClass rootClass = parentProperty.getPersistentClass();
 			if (propRegion == null && parentProperty.isComposite()
 					&& rootClass.getIdentifierProperty() == parentProperty) {
 				// try to use key-property

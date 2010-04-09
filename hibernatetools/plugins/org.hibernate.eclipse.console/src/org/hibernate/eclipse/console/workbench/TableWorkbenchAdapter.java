@@ -28,8 +28,8 @@ import java.util.List;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.PrimaryKeyStub;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.PrimaryKey;
 import org.hibernate.mediator.x.mapping.TableStub;
 
 public class TableWorkbenchAdapter extends BasicWorkbenchAdapter {
@@ -39,14 +39,14 @@ public class TableWorkbenchAdapter extends BasicWorkbenchAdapter {
 		
 		List<Object> items = new ArrayList<Object>();
 		
-		PrimaryKeyStub primaryKey = t.getPrimaryKey();
+		PrimaryKey primaryKey = t.getPrimaryKey();
 		if(primaryKey!=null) {
 			items.add(primaryKey);			
 		}
 		
 		Iterator<?> columnIterator = t.getColumnIterator();
 		while ( columnIterator.hasNext() ) {
-			ColumnStub col = (ColumnStub) columnIterator.next();
+			Column col = (Column) columnIterator.next();
 			if(primaryKey==null || !primaryKey.containsColumn(col)) {
 				items.add(col); // only add non-pk columns here
 			}			

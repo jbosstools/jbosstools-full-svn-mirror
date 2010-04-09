@@ -23,11 +23,11 @@ import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.gef.editpolicies.SelectionEditPolicy;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.RootClassStub;
-import org.hibernate.mediator.x.mapping.SubclassStub;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.RootClass;
+import org.hibernate.mediator.x.mapping.Subclass;
 import org.hibernate.mediator.x.mapping.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.figures.RoundPolylineConnection;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection;
@@ -96,9 +96,9 @@ public class ConnectionEditPart extends AbstractConnectionEditPart
 
 	private Color getColor() {
 		Object el = getTargetElement();
-		if (el instanceof RootClassStub || el instanceof SubclassStub) { 
+		if (el instanceof RootClass || el instanceof Subclass) { 
 			return ResourceManager.getInstance().getColor(new RGB(210, 155, 100));
-		} else if (el instanceof ColumnStub || el instanceof TableStub || el instanceof PropertyStub) { 
+		} else if (el instanceof Column || el instanceof TableStub || el instanceof Property) { 
 			return ResourceManager.getInstance().getColor(new RGB(160, 160, 160));
 		}
 		return ResourceManager.getInstance().getColor(new RGB(255, 0, 0));
@@ -106,10 +106,10 @@ public class ConnectionEditPart extends AbstractConnectionEditPart
 
 	private Color getSelectionColor() {
 		Object el = getTargetElement();
-		if (el instanceof RootClassStub || el instanceof SubclassStub) { 
+		if (el instanceof RootClass || el instanceof Subclass) { 
 			return ResourceManager.getInstance().getColor(new RGB(112, 161, 99));
-		} else if (el instanceof ColumnStub || el instanceof TableStub || 
-				el instanceof ComponentStub) { 
+		} else if (el instanceof Column || el instanceof TableStub || 
+				el instanceof Component) { 
 			return ResourceManager.getInstance().getColor(new RGB(66, 173, 247));
 		}
 		return ResourceManager.getInstance().getColor(new RGB(255, 0, 0));

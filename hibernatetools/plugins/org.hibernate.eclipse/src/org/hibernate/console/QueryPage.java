@@ -25,7 +25,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.hibernate.mediator.QueryInputModel;
-import org.hibernate.mediator.x.SessionStub;
+import org.hibernate.mediator.x.Session;
 
 
 /**
@@ -73,8 +73,8 @@ public interface QueryPage {
      */
     public abstract void setSticky(boolean b);
     
-    public SessionStub getSessionStub();
-    public void setSessionStub(SessionStub sessionStub);
+    public Session getSessionStub();
+    public void setSessionStub(Session sessionStub);
     
 	public String getConsoleConfigName();
 	

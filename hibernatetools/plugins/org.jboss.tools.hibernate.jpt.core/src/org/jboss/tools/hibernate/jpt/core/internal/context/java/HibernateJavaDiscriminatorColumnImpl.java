@@ -24,7 +24,7 @@ import org.eclipse.jpt.db.Table;
 import org.eclipse.wst.validation.internal.core.Message;
 import org.eclipse.wst.validation.internal.provisional.core.IMessage;
 import org.eclipse.wst.validation.internal.provisional.core.IReporter;
-import org.hibernate.mediator.x.cfg.NamingStrategyStub;
+import org.hibernate.mediator.x.cfg.NamingStrategy;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJpaProject;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJptPlugin;
 import org.jboss.tools.hibernate.jpt.core.internal.context.Messages;
@@ -60,7 +60,7 @@ public class HibernateJavaDiscriminatorColumnImpl extends
 
 	public String getSpecifiedDBColumnName(){
 		if (getSpecifiedName() == null) return null;
-		NamingStrategyStub ns = getJpaProject().getNamingStrategy();
+		NamingStrategy ns = getJpaProject().getNamingStrategy();
 		if (getJpaProject().isNamingStrategyEnabled() && ns != null){
 			try {
 				return ns.columnName(getSpecifiedName());

@@ -27,9 +27,9 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.actions.ActionFactory;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.editors.actions.AutoLayoutAction;
 import org.jboss.tools.hibernate.ui.diagram.editors.actions.ExportImageAction;
@@ -88,10 +88,10 @@ public class PopupMenuProvider extends ContextMenuProvider {
 			}			
 			if (selectedShape != null && selection.size() == 1) {
 				Object first = selectedShape.getOrmElement();
-				if (first instanceof PersistentClassStub
-						|| first.getClass() == PropertyStub.class
+				if (first instanceof PersistentClass
+						|| first.getClass() == Property.class
 						|| first instanceof TableStub
-						|| first instanceof ColumnStub) {
+						|| first instanceof Column) {
 					action = getActionRegistry().getAction(OpenSourceAction.ACTION_ID);
 					appendToGroup(GROUP_OPEN_SOURCE, action);
 					createMenuItem(getMenu(), action);
@@ -115,7 +115,7 @@ public class PopupMenuProvider extends ContextMenuProvider {
 				if (null != obj && obj instanceof OrmShape) {
 					selectedShape = (Shape)obj;
 					Object first = selectedShape.getOrmElement();
-					if (first instanceof PersistentClassStub || first instanceof TableStub) {
+					if (first instanceof PersistentClass || first instanceof TableStub) {
 						addToggleVisibleStateMenu = true;
 					}
 				}

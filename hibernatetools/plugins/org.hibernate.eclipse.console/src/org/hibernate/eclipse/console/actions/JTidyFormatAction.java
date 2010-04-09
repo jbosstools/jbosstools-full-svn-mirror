@@ -40,7 +40,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.internal.PluginAction;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mediator.x.tool.hbm2x.XMLPrettyPrinterStub;
+import org.hibernate.mediator.x.tool.hbm2x.XMLPrettyPrinter;
 
 public class JTidyFormatAction implements IObjectActionDelegate {
 
@@ -82,7 +82,7 @@ public class JTidyFormatAction implements IObjectActionDelegate {
                 try {
                     contents = file.getContents();
                     bos = new ByteArrayOutputStream();
-                    XMLPrettyPrinterStub.prettyPrint(contents, bos);
+                    XMLPrettyPrinter.prettyPrint(contents, bos);
                     stream = new ByteArrayInputStream(bos.toByteArray() );
                     file.setContents(stream, true, true, null);
                 } finally {

@@ -37,12 +37,12 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.mediator.execution.ExecutionContext;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.cfg.SettingsStub;
-import org.hibernate.mediator.x.cfg.reveng.DefaultDatabaseCollectorStub;
-import org.hibernate.mediator.x.cfg.reveng.JDBCReaderStub;
-import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategyStub;
-import org.hibernate.mediator.x.connection.ConnectionProviderStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.cfg.Settings;
+import org.hibernate.mediator.x.cfg.reveng.DefaultDatabaseCollector;
+import org.hibernate.mediator.x.cfg.reveng.JDBCReader;
+import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategy;
+import org.hibernate.mediator.x.connection.ConnectionProvider;
 import org.hibernate.mediator.x.mapping.TableStub;
 
 public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
@@ -53,7 +53,7 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	public synchronized Object[] getChildren(Object o, final IProgressMonitor monitor) {
 		LazyDatabaseSchema dbs = getLazyDatabaseSchema( o );
-		final DefaultDatabaseCollectorStub db = DefaultDatabaseCollectorStub.newInstance();
+		final DefaultDatabaseCollector db = DefaultDatabaseCollector.newInstance();
 
 		ConsoleConfiguration consoleConfiguration = dbs.getConsoleConfiguration();
 		try{
@@ -103,18 +103,18 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 		return getLazyDatabaseSchema(o).getConsoleConfiguration();
 	}
 
-	protected void readDatabaseSchema(final IProgressMonitor monitor, final DefaultDatabaseCollectorStub db, ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategyStub strategy) {
-		final ConfigurationStub configuration = consoleConfiguration.buildWith(null, false);
+	protected void readDatabaseSchema(final IProgressMonitor monitor, final DefaultDatabaseCollector db, ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
+		final Configuration configuration = consoleConfiguration.buildWith(null, false);
 
 		consoleConfiguration.execute(new ExecutionContext.Command() {
 
 			public Object execute() {
-				SettingsStub settings = configuration.buildSettings();
-				ConnectionProviderStub connectionProvider = null;
+				Settings settings = configuration.buildSettings();
+				ConnectionProvider connectionProvider = null;
 				try {
 					connectionProvider = settings.getConnectionProvider();
 
-					JDBCReaderStub reader = JDBCReaderStub.newInstance(configuration.getProperties(), settings, strategy);
+					JDBCReader reader = JDBCReader.newInstance(configuration.getProperties(), settings, strategy);
 					reader.readDatabaseSchema(db, settings.getDefaultCatalogName(), settings.getDefaultSchemaName(), new ProgressListenerMonitor(monitor));
 				} catch (RuntimeException he) {
 					// TODO: RuntimeException ? - find correct solution

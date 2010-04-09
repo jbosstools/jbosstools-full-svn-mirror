@@ -21,7 +21,7 @@ import org.eclipse.jpt.db.Schema;
 import org.eclipse.wst.validation.internal.core.Message;
 import org.eclipse.wst.validation.internal.provisional.core.IMessage;
 import org.eclipse.wst.validation.internal.provisional.core.IReporter;
-import org.hibernate.mediator.x.cfg.NamingStrategyStub;
+import org.hibernate.mediator.x.cfg.NamingStrategy;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJpaProject;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJptPlugin;
 import org.jboss.tools.hibernate.jpt.core.internal.context.Messages;
@@ -56,7 +56,7 @@ implements HibernateJavaJoinTable {
 	
 	public String getSpecifiedDBTableName() {
 		if (getSpecifiedName() == null) return null;
-		NamingStrategyStub ns = getJpaProject().getNamingStrategy();
+		NamingStrategy ns = getJpaProject().getNamingStrategy();
 		if (getJpaProject().isNamingStrategyEnabled() && ns != null){
 			try {
 				return ns.tableName(getSpecifiedName());

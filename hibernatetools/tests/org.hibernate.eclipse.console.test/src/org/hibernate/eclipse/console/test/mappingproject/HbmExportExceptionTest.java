@@ -30,11 +30,11 @@ import org.hibernate.console.KnownConfigurations;
 import org.hibernate.eclipse.console.test.ConsoleTestMessages;
 import org.hibernate.eclipse.console.test.project.ConfigurableTestProject;
 import org.hibernate.eclipse.console.test.utils.ConsoleConfigUtils;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.tool.hbm2x.ArtifactCollectorStub;
-import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingExporterStub;
-import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingGlobalSettingsStub;
-import org.hibernate.mediator.x.tool.hbm2x.pojo.POJOClassStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.tool.hbm2x.ArtifactCollector;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingExporter;
+import org.hibernate.mediator.x.tool.hbm2x.HibernateMappingGlobalSettings;
+import org.hibernate.mediator.x.tool.hbm2x.pojo.POJOClass;
 
 /**
  * @author Dmitry Geraskov
@@ -74,7 +74,7 @@ public class HbmExportExceptionTest extends TestCase {
 			consCFG.build();
 			assertTrue(consCFG.hasConfiguration());
 			consCFG.buildMappings();
-			ConfigurationStub config = consCFG.getConfiguration();
+			Configuration config = consCFG.getConfiguration();
 			
 			//delete old hbm files
 			assertNotNull( testPackage );
@@ -90,19 +90,19 @@ public class HbmExportExceptionTest extends TestCase {
 				}
 			}
 			
-			HibernateMappingGlobalSettingsStub hmgs = HibernateMappingGlobalSettingsStub.newInstance();
+			HibernateMappingGlobalSettings hmgs = HibernateMappingGlobalSettings.newInstance();
 			
-			ConfigurationStub.IExporterNewOutputDir nod = new ConfigurationStub.IExporterNewOutputDir() {
-				public File getNewOutputDir(POJOClassStub element, File outputdir4FileNew) {
+			Configuration.IExporterNewOutputDir nod = new Configuration.IExporterNewOutputDir() {
+				public File getNewOutputDir(POJOClass element, File outputdir4FileNew) {
 					return outputdir4FileNew;
 				}
 			};
-			HibernateMappingExporterStub hce = config.createHibernateMappingExporter(getSrcFolder(), nod);
+			HibernateMappingExporter hce = config.createHibernateMappingExporter(getSrcFolder(), nod);
 			
 			hce.setGlobalSettings(hmgs);
 			try {
 				hce.start();
-				ArtifactCollectorStub collector = hce.getArtifactCollector();
+				ArtifactCollector collector = hce.getArtifactCollector();
 				collector.formatFiles();
 	
 				try {//build generated configuration

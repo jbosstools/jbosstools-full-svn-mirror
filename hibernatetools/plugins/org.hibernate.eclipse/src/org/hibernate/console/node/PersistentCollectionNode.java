@@ -27,11 +27,11 @@ import java.util.Iterator;
 import javax.swing.tree.TreeNode;
 
 import org.hibernate.console.ConsoleMessages;
-import org.hibernate.mediator.x.EntityModeStub;
-import org.hibernate.mediator.x.metadata.ClassMetadataStub;
-import org.hibernate.mediator.x.metadata.CollectionMetadataStub;
-import org.hibernate.mediator.x.type.CollectionTypeStub;
-import org.hibernate.mediator.x.type.TypeStub;
+import org.hibernate.mediator.x.EntityMode;
+import org.hibernate.mediator.x.metadata.ClassMetadata;
+import org.hibernate.mediator.x.metadata.CollectionMetadata;
+import org.hibernate.mediator.x.type.CollectionType;
+import org.hibernate.mediator.x.type.Type;
 
 /**
  * @author MAX
@@ -40,15 +40,15 @@ import org.hibernate.mediator.x.type.TypeStub;
 public class PersistentCollectionNode extends BaseNode {
 
 	BaseNode virtualNode;
-	CollectionTypeStub type;
-	TypeStub elementType;
+	CollectionType type;
+	Type elementType;
 	private boolean objectGraph;
 	private Object baseObject;
 	private Object collectionObject;
 
 	boolean childrenCreated = false;
-	private ClassMetadataStub md;
-	public PersistentCollectionNode(NodeFactory factory, BaseNode parent, String name, CollectionTypeStub type, ClassMetadataStub md, CollectionMetadataStub metadata, Object baseObject, boolean objectGraph) {
+	private ClassMetadata md;
+	public PersistentCollectionNode(NodeFactory factory, BaseNode parent, String name, CollectionType type, ClassMetadata md, CollectionMetadata metadata, Object baseObject, boolean objectGraph) {
 		super(factory, parent);
 		this.md = md;
 		this.type = type;
@@ -70,7 +70,7 @@ public class PersistentCollectionNode extends BaseNode {
 	Object initCollectionObject() {
 		if(collectionObject!=null) return collectionObject;
 		try {
-			collectionObject = md.getPropertyValue(baseObject, name, EntityModeStub.POJO);
+			collectionObject = md.getPropertyValue(baseObject, name, EntityMode.POJO);
 		} catch (RuntimeException he) {
 			// TODO: RuntimeException ? - find correct solution
 			if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$
@@ -150,7 +150,7 @@ public class PersistentCollectionNode extends BaseNode {
 
 	}
 
-	private BaseNode createNode(int idx, Object element, TypeStub type) { // TODO: use a common way to create these darn nodes!
+	private BaseNode createNode(int idx, Object element, Type type) { // TODO: use a common way to create these darn nodes!
 		return new ClassNode(factory, this,type.getReturnedClass().getName(), factory.getMetaData(type.getReturnedClass() ),element,objectGraph);
 	}
 
@@ -158,7 +158,7 @@ public class PersistentCollectionNode extends BaseNode {
 		return getLabel(getName(),b) + " : " + getLabel(type.getReturnedClass().getName(),b) + "<" + getLabel(elementType.getReturnedClass().getName(),b) + ">";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 	}
 
-	public TypeStub getType() {
+	public Type getType() {
 		return type;
 	}
 }

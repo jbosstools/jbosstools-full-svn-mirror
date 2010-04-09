@@ -28,7 +28,7 @@ import org.hibernate.console.ImageConstants;
 import org.hibernate.console.KnownConfigurations;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.utils.EclipseImages;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
+import org.hibernate.mediator.x.cfg.Configuration;
 
 public class ConsoleConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter {
 
@@ -50,7 +50,7 @@ public class ConsoleConfigurationWorkbenchAdapter extends BasicWorkbenchAdapter 
 		}*/
 
 
-		ConfigurationStub configStub = ccfg.getConfiguration();
+		Configuration configStub = ccfg.getConfiguration();
 		Object o1;
 		if (configStub != null) {
 			o1 = configStub;

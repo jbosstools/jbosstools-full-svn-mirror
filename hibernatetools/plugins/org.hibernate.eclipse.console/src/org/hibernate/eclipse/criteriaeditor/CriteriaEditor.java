@@ -65,9 +65,9 @@ import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.views.QueryPageTabView;
 import org.hibernate.mediator.execution.ExecutionContext.Command;
-import org.hibernate.mediator.x.SessionStub;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
+import org.hibernate.mediator.x.Session;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.mapping.PersistentClass;
 
 public class CriteriaEditor extends AbstractQueryEditor {
 
@@ -145,9 +145,9 @@ public class CriteriaEditor extends AbstractQueryEditor {
 		} else {
 			KnownConfigurations.getInstance().getQueryPageModel().remove(queryPage);
 			final ConsoleConfiguration cfg0 = cfg;
-			SessionStub sessionStub = (SessionStub)cfg.execute(new Command() {
+			Session sessionStub = (Session)cfg.execute(new Command() {
 				public Object execute() {
-					SessionStub sessionStub = cfg0.getSessionStubFactory().openSession();
+					Session sessionStub = cfg0.getSessionStubFactory().openSession();
 					return sessionStub;
 				}
 			});
@@ -190,11 +190,11 @@ public class CriteriaEditor extends AbstractQueryEditor {
 		}
 		
 		Set<String> imports = new HashSet<String>();
-		ConfigurationStub configuration = consoleConfiguration.getConfiguration();
+		Configuration configuration = consoleConfiguration.getConfiguration();
 		if(configuration!=null) {
-			Iterator<PersistentClassStub> classMappings = configuration.getClassMappings();
+			Iterator<PersistentClass> classMappings = configuration.getClassMappings();
 			while ( classMappings.hasNext() ) {
-				PersistentClassStub clazz = classMappings.next();
+				PersistentClass clazz = classMappings.next();
 				String className = clazz.getClassName();
 				if(className!=null) {
 					imports.add( className );

@@ -21,9 +21,9 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.TableStub;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
@@ -61,7 +61,7 @@ public class OpenSourceAction extends SelectionAction {
 		while (iterator.hasNext() && editorPart == null) {
 			Shape shape = iterator.next();
 			Object selection = shape.getOrmElement();
-			if (selection instanceof ColumnStub || selection instanceof TableStub) {
+			if (selection instanceof Column || selection instanceof TableStub) {
 				Iterator<Connection> targetConnections = shape.getTargetConnections().iterator();
 				while (targetConnections.hasNext()) {
 					Connection connection = targetConnections.next();
@@ -77,11 +77,11 @@ public class OpenSourceAction extends SelectionAction {
 				}
 				selection = shape.getOrmElement();
 			}
-			PersistentClassStub rootClass = null;
-			if (selection instanceof PersistentClassStub) {
-				rootClass = (PersistentClassStub) selection;
-			} else if (selection instanceof PropertyStub) {
-				rootClass = ((PropertyStub) selection).getPersistentClass();
+			PersistentClass rootClass = null;
+			if (selection instanceof PersistentClass) {
+				rootClass = (PersistentClass) selection;
+			} else if (selection instanceof Property) {
+				rootClass = ((Property) selection).getPersistentClass();
 			} else {
 				continue;
 			}

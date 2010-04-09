@@ -17,10 +17,10 @@ import java.util.Properties;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-import org.hibernate.mediator.x.mapping.ColumnStub;
-import org.hibernate.mediator.x.mapping.ComponentStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
-import org.hibernate.mediator.x.mapping.ValueStub;
+import org.hibernate.mediator.x.mapping.Column;
+import org.hibernate.mediator.x.mapping.Component;
+import org.hibernate.mediator.x.mapping.Property;
+import org.hibernate.mediator.x.mapping.Value;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection.ConnectionType;
 import org.jboss.tools.hibernate.ui.view.HibernateUtils;
 
@@ -255,9 +255,9 @@ public class Shape extends BaseElement {
 	 */
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
-		if (getOrmElement() instanceof PropertyStub) {
+		if (getOrmElement() instanceof Property) {
 			return descriptors_property;
-		} else if (getOrmElement() instanceof ColumnStub) {
+		} else if (getOrmElement() instanceof Column) {
 			return descriptors_column;
 		}
 		return super.getPropertyDescriptors();
@@ -273,20 +273,20 @@ public class Shape extends BaseElement {
 	@Override
 	public Object getPropertyValue(Object propertyId) {
 		Object res = null;
-		ColumnStub col = null;
-		if (getOrmElement() instanceof ColumnStub) {
-			col = (ColumnStub)getOrmElement();
+		Column col = null;
+		if (getOrmElement() instanceof Column) {
+			col = (Column)getOrmElement();
 		}
-		PropertyStub prop = null;
-		if (getOrmElement() instanceof PropertyStub) {
-			prop = (PropertyStub)getOrmElement();
+		Property prop = null;
+		if (getOrmElement() instanceof Property) {
+			prop = (Property)getOrmElement();
 		}
 		if (prop != null) {
 			if (PROPERTY_NAME.equals(propertyId)) {
 				res = prop.getName();
 			} else if (PROPERTY_TYPE.equals(propertyId)) {
-				ValueStub value = prop.getValue();
-				if (value instanceof ComponentStub) {
+				Value value = prop.getValue();
+				if (value instanceof Component) {
 					res = prop.getValue().toString();
 				} else {
 					res = prop.getType().getReturnedClass().getName();

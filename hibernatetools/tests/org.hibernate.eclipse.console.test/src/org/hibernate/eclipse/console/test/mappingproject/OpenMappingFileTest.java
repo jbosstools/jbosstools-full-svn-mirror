@@ -32,9 +32,9 @@ import org.hibernate.eclipse.console.workbench.ConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.ConsoleConfigurationWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.PersistentClassWorkbenchAdapter;
 import org.hibernate.eclipse.console.workbench.PropertyWorkbenchAdapter;
-import org.hibernate.mediator.x.cfg.ConfigurationStub;
-import org.hibernate.mediator.x.mapping.PersistentClassStub;
-import org.hibernate.mediator.x.mapping.PropertyStub;
+import org.hibernate.mediator.x.cfg.Configuration;
+import org.hibernate.mediator.x.mapping.PersistentClass;
+import org.hibernate.mediator.x.mapping.Property;
 
 /**
  * @author Dmitry Geraskov
@@ -74,7 +74,7 @@ public class OpenMappingFileTest extends TestCase {
 		Object[] props = null;
 		try {
 			configs = new ConsoleConfigurationWorkbenchAdapter().getChildren(consCFG);
-			assertTrue(configs[0] instanceof ConfigurationStub);
+			assertTrue(configs[0] instanceof Configuration);
 			persClasses = new ConfigurationWorkbenchAdapter().getChildren(configs[0]);
 		} catch (RuntimeException ex) {
 			// TODO: RuntimeException ? - find correct solution
@@ -89,26 +89,26 @@ public class OpenMappingFileTest extends TestCase {
 		if (persClasses.length > 0) {
 			final String testClass = "class"; //$NON-NLS-1$
 			for (int i = 0; i < persClasses.length; i++) {
-				assertTrue(persClasses[i] instanceof PersistentClassStub);
-				PersistentClassStub persClass = (PersistentClassStub) persClasses[i];
+				assertTrue(persClasses[i] instanceof PersistentClass);
+				PersistentClass persClass = (PersistentClass) persClasses[i];
 				openTest(persClass, consCFG);
 				props =  new PersistentClassWorkbenchAdapter().getChildren(persClass);
 				for (int j = 0; j < props.length; j++) {
-					if (props[j].getClass() != PropertyStub.class) {
+					if (props[j].getClass() != Property.class) {
 						continue;
 					}
 					openTest(props[j], consCFG);
 					Object[] compProperties = new PropertyWorkbenchAdapter().getChildren(props[j]);
 					for (int k = 0; k < compProperties.length; k++) {
 						//test Composite properties
-						if (compProperties[k].getClass() != PropertyStub.class) {
+						if (compProperties[k].getClass() != Property.class) {
 							continue;
 						}
-						final PropertyStub prop = (PropertyStub)compProperties[k];
+						final Property prop = (Property)compProperties[k];
 						if (testClass.equals(prop.getNodeName()) || testClass.equals(prop.getName())) {
 							continue;
 						}
-						openPropertyTest((PropertyStub)compProperties[k], (PropertyStub) props[j], consCFG);
+						openPropertyTest((Property)compProperties[k], (Property) props[j], consCFG);
 					}
 				}
 			}
@@ -116,7 +116,7 @@ public class OpenMappingFileTest extends TestCase {
 		//close all editors
 	}
 
-	private void openPropertyTest(PropertyStub compositeProperty, PropertyStub parentProperty, ConsoleConfiguration consCFG){
+	private void openPropertyTest(Property compositeProperty, Property parentProperty, ConsoleConfiguration consCFG){
 		IEditorPart editor = null;
 		Throwable ex = null;
 		try {
@@ -130,7 +130,7 @@ public class OpenMappingFileTest extends TestCase {
 			Object[] compProperties = new PropertyWorkbenchAdapter().getChildren(compositeProperty);
 			for (int k = 0; k < compProperties.length; k++) {
 				//test Composite properties
-				assertTrue(compProperties[k] instanceof PropertyStub);
+				assertTrue(compProperties[k] instanceof Property);
 				// use only first level to time safe
 				//openPropertyTest((Property)compProperties[k], compositeProperty, consCFG);
 			}
