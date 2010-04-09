@@ -1422,7 +1422,7 @@
 	<vpe:tag name="object" case-sensitive="no">
 	<vpe:template children="yes" modify="no">
 		<vpe:copy
-			attrs="align,classid,code,codebase,codetype,data,height,hspace,type,vspace,width,class,id,dir" />
+			attrs="align,code,codebase,codetype,data,height,hspace,type,vspace,width,class,id,dir" />
 		<vpe:dnd>
 			<vpe:drop container="yes">
 				<vpe:container-child tag-name="param" />
