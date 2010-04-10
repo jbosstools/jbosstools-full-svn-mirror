@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='1'>
+  <artifact classifier='osgi.bundle' id='org.mozilla.xulrunner.carbon.macosx' version='1.9.1.2'>
+    <properties size='6'>
+      <property name='artifact.size' value='13011689'/>
+      <property name='download.size' value='13011689'/>
+      <property name='download.md5' value='9b336ce7a537d9df2790a4ba9f0dce32'/>
+      <property name='maven-artifactId' value='org.mozilla.xulrunner.carbon.macosx'/>
+      <property name='maven-groupId' value='org.jboss.tools'/>
+      <property name='maven-version' value='1.9.1.2'/>
+    </properties>
+  </artifact>
+</artifacts>

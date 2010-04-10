@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-Name: Mozilla Xulrunner
+MavenArtifact-GroupId: org.jboss.tools
+Bundle-Vendor: mozilla.org
+Bundle-ManifestVersion: 2
+MavenArtifact-BaseVersion: 1.9.1.2
+Bundle-SymbolicName: org.mozilla.xulrunner.carbon.macosx;singleton:=tr
+ ue
+Eclipse-PlatformFilter: (& (osgi.ws=carbon) (osgi.os=macosx) (|(osgi.a
+ rch=x86)(osgi.arch=ppc)) )
+Bundle-Version: 1.9.1.2
+
