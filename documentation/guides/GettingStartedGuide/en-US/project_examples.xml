@@ -50,8 +50,7 @@
            Alternatively, if the xml is stored on your local machine, you can hit the <property>Browse</property> button to select the file in the file system.</para>
         <para>Here is an example of the xml file that holds  project example settings:</para>
     
-    <programlisting role="XML"><![CDATA[
-<projects>
+    <programlisting role="XML"><![CDATA[<projects>
     <project>
 		<category>User Examples</category>
 		<name>User Project Example</name>
@@ -163,7 +162,17 @@
                 </imageobject>
             </mediaobject>
         </figure>
-
+        
+        <para>For further operation add the following code to .project files of your Web project example.</para>
+            <programlisting role="XML"><![CDATA[<buildCommand>
+    <name>org.jboss.tools.jst.web.kb.kbbuilder</name>
+    <arguments>
+    </arguments>
+</buildCommand>
+...
+<nature>org.jboss.tools.jst.web.kb.kbnature</nature>
+]]></programlisting> 
+        <para>It is needed for correct work of <property>Code Assist</property> and <property>JSF EL Validation</property>.</para>
     </section>
     
     <section id="QuickFixes">
@@ -172,9 +181,9 @@
             Project Examples Wizard has an option for making quick fixes 
             for the imported project to easily fix possible issues like  missing servers, Seam runtimes etc.
         </para>
+
         <para>To enable quick fixing option you need to check the
             <emphasis><property>Show the Quick Fix dialog</property></emphasis> while choosing the <link linkend="DownloadingProjectExample">Project Example</link>.</para>
-        
         <para>When the project you selected is downloaded it will be checked for missing dependences and if there are some you will see a dialog listing the problems.</para>
         <figure>
             <title>Quick Fix Dialog box</title>
@@ -201,10 +210,39 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>In this case(see the image above), when the <emphasis><property>Finish</property></emphasis> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
+        <para>In this case (see the image above), when the <emphasis><property>Finish</property></emphasis> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
         
         <para>When the problem is fixed you will be returned to the Quick Fix dialog box with the remaining problems to be fixed.</para>
         
+        <para>There is a possibility to fix problems before downloading. When the project example is selected you will see warning message on the <property>New Project Example</property> dialog.</para>
+        
+        <figure>
+            <title>Requirements warning in the Project Example wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_41.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>To fix the problem immideatly immediately you need to:</para>
+        <itemizedlist>
+            <listitem><para>Click <emphasis><property>Details...</property></emphasis> button in the <property>New Project Example</property> dialog</para></listitem>
+            <listitem><para>Select the problem from the list in the <property>Requirement details</property> dialog box</para></listitem>
+            <listitem><para>Click <emphasis><property>Fix</property></emphasis> button</para></listitem>
+        </itemizedlist>
+        
+        <figure>
+            <title>Requirement Details Dialog box: Selecting a Fix</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_42.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        
+        <para>You will be offered a solution to the problem.</para>
     </section>
     
     
