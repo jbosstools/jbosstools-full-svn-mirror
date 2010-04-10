@@ -30,6 +30,8 @@ object GenPom {
   def generateModule(dir : File, parentPom : File, parent : GVA, me : GVA) {
     modulecount = modulecount + 1
 
+
+	
     var module =
     <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
      <modelVersion>4.0.0</modelVersion> 
@@ -47,14 +49,73 @@ object GenPom {
 	else if (dir.getParentFile().getAbsolutePath().endsWith("/features") || dir.getParentFile().getAbsolutePath().endsWith("/features/.")) 
 	  "eclipse-feature"
 	else
-	  "eclipse-plugin"}</packaging> 
-    </project>;
-    
+	  "eclipse-plugin"}</packaging>
+	  	{ getTarget(dir) }
+     </project>;
+		
     val pp = new scala.xml.PrettyPrinter(80,2)
-
 
     writePom("Module ", pp.format(module), dir)
     
+  }
+
+  def getTarget(dir : File) : Object ={
+  	var env = <environment/>;
+	
+	 if (dir.getAbsolutePath().endsWith("gtk.linux.x86")) {
+		env = <environment>
+		<os>linux</os>
+		<ws>gtk</ws>
+		<arch>x86</arch>
+		</environment>;
+	} else if (dir.getAbsolutePath().endsWith("gtk.linux.x86_64")) {
+		env = <environment>
+		<os>linux</os>
+		<ws>gtk</ws>
+		<arch>x86_64</arch>
+		</environment>;
+	} else if (dir.getAbsolutePath().endsWith("carbon.macosx")) {
+		env = <environment>
+		<os>macosx</os>
+		<ws>carbon</ws>
+		<arch>x86</arch>
+		</environment>;
+	} else if (dir.getAbsolutePath().endsWith("cocoa.macosx")) {
+		env = <environment>
+		<os>macosx</os>
+		<ws>cocoa</ws>
+		<arch>x86</arch>
+		</environment>;
+	} else if (dir.getAbsolutePath().endsWith("win32.win32.x86")) {
+		env = <environment>
+		<os>win32</os>
+		<ws>win32</ws>
+		<arch>x86</arch>
+		</environment>;
+	}
+	
+	var target = <build>
+			<plugins>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${{tychoVersion}}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<environments>
+						{ env }
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+		</build>;
+		
+  	if(dir.getAbsolutePath().endsWith("x86_64") 
+  		|| dir.getAbsolutePath().endsWith("x86")
+  		|| dir.getAbsolutePath().endsWith("macosx")) {
+  		return target
+  	}
+	return ""
   }
 
   def writePom(n : String, pp : String, dir : File) {
