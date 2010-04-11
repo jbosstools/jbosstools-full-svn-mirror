@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="intro" xreflabel="intro">
+    <?dbhtml filename="intro.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Workingset</keyword>
+            <keyword>JBDS</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Introduction</title>
+
+    <section>
+
+        <title>What is Workingset?</title>
+        <para>This introduction will help you to understand what is <property>Workingset Tools</property>.</para>
+        
+    </section>
+
+    <section><title>Key Features of Workingset Tools</title> 
+
+</section>
+
+<section>
+        <title>Other relevant resources on the topic</title>
+    </section>
+</chapter>
