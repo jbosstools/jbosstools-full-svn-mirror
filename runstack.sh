@@ -11,11 +11,22 @@ if [[ $# -lt 1 ]]; then
 	exit 1
 fi
 
-components="$*"
+flags=""
+components=""
+while [ "$#" -gt 0 ]; do
+        case $1 in
+                '-'*) flags="$flags $1"; shift 1;;
+                *) components="$components $1"; shift 1;;
+        esac
+done
 
 # run builds w/o running tests
 for d in $components; do 
-	cd $workingdir; ./runtests.sh ${d}/ clean install -Dmaven.test.skip
+	# build features, plugins, and tests, but do not RUN tests
+	#cd $workingdir; ./runtests.sh ${d}/ clean install -Dmaven.test.skip
+
+	# build features, plugins, and tests, then run ALL tests (don't stop after first failed test)
+	cd $workingdir; ./runtests.sh ${d}/ clean install --fail-at-end $flags
 done
 
 # collect compilation results and failures
