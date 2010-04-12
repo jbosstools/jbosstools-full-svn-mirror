@@ -59,6 +59,8 @@
 			<!-- 
 				to skip running tests (compile only) use commandline flag:
 			    -Dmaven.test.skip
+			    To allow all tests in a pom to pass/fail, use commandline flag:
+			    -fae (fail at end)
 			-->
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
@@ -66,10 +68,10 @@
 				<version>${tychoVersion}</version>
 				<configuration>
 					<useUIHarness>true</useUIHarness>
-					<useUIThread>false</useUIThread>
+					<useUIThread>true</useUIThread>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
-					<!-- set useUIThread=true and remove next lines for regular ui tests -->
-					<!-- set useUIThread=false and add next lines for swtbot tests -->
+					<!-- set useUIThread=true for regular ui tests -->
+					<!-- set useUIThread=false for swtbot tests (?) -->
 					<product>org.eclipse.sdk.ide</product>
 					<application>org.eclipse.ui.ide.workbench</application>
 					<dependencies>
@@ -79,14 +81,10 @@
 							<version>0.0.0</version>
 						</dependency>
 					</dependencies>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<!-- not working; maven-osgi-test-plugin does not respect this setting -->
-					<includes>**/*AllTests*</includes>
+					<includes>
+						<include>**/*AllTests*.class</include>
+						<include>**/*TestSuite*.class</include>
+					</includes>
 					<parallel>true</parallel>
 				</configuration>
 			</plugin>
@@ -219,8 +217,8 @@
 			</releases>
 		</repository>
 		<repository>
-			<id>birt25</id>
-			<url>http://download.eclipse.org/birt/update-site/2.5/</url>
+			<id>birt25r</id>
+			<url>http://download.eclipse.org/birt/update-site/2.5</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
@@ -277,7 +275,7 @@
 		</repository>
 	</repositories>
 
-	<pluginRepositories>
+	<!--	<pluginRepositories>
 		<pluginRepository>
 			<id>tycho</id>
 			<url>http://repository.sonatype.org/content/repositories/all-001/
@@ -289,5 +287,5 @@
 				<enabled>true</enabled>
 			</releases>
 		</pluginRepository>
-	</pluginRepositories>
+	</pluginRepositories> -->
 </project>
