@@ -45,11 +45,10 @@
 	</target>
 
 	<target name="genpom">
-		<!-- comment out because genpom.xml is broken, genpom.scala won't run on Hudson, and we should just commit the poms anyway -->
-		<!-- <ant antfile="genpom.xml" target="run">
+		<ant antfile="genpom.xml" target="run">
 			<property name="WORKINGDIR" value="${WORKINGDIR}/${COMPONENT}" />
 			<property name="pathToParentPom" value="../" />
-		</ant> -->
+		</ant>
 	</target>
 
 	<target name="install">
@@ -57,7 +56,7 @@
 		
 		<exec executable="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn" dir="${WORKINGDIR}/${COMPONENT}">
 			<!-- <arg line="-o -Dmaven.test.skip" /> -->
-			<arg line="clean install" />
+			<arg line="-fae clean install" />
 		</exec>
 	</target>
 
