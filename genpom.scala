@@ -2,19 +2,26 @@ import java.io.File
 import scala.io.Source
 import scala.xml.XML
 
-object HelloWorld {
+object GenPom {
 
   case class GVA(groupId : String, artifactId : String, version : String)
 
+  /********** Configuration Start **********/
+  var projectName = "org.jboss.tools"
+  var pathToParentPom = ""
+  var parentPomVersion = "0.0.1-SNAPSHOT"
+  var sourcePomVersion = "0.0.1-SNAPSHOT"
+  /********** Configuration Ends  **********/
+
   var aggregatorcount = 0
   var modulecount = 0
-
+  
   def main(args: Array[String]) {
     
       generateAggregator(new File("."), 
-			 new File("parent-pom.xml"),
-			 GVA("org.jboss.tools", "org.jboss.tools.parent.pom", "0.0.1-SNAPSHOT"),
-			 GVA("org.jboss.tools", "trunk", "0.0.1-SNAPSHOT")
+			 new File(pathToParentPom + "parent-pom.xml"),
+			 GVA(projectName, projectName + ".parent.pom", parentPomVersion),
+			 GVA(projectName, "trunk", sourcePomVersion)
 			 )
 
     println("Modules: " + modulecount + " Aggregator: " + aggregatorcount)
@@ -23,6 +30,8 @@ object HelloWorld {
   def generateModule(dir : File, parentPom : File, parent : GVA, me : GVA) {
     modulecount = modulecount + 1
 
+
+	
     var module =
     <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
      <modelVersion>4.0.0</modelVersion> 
@@ -35,20 +44,78 @@ object HelloWorld {
       <groupId>{me.groupId}</groupId> 
       <artifactId>{me.artifactId}</artifactId> 
       <version>{getVersion(dir)}</version> 
-      <packaging>{
-	if (dir.getParentFile().getName().equals("tests")) 
+      <packaging>{ if (dir.getParentFile().getAbsolutePath().endsWith("/tests") || dir.getParentFile().getAbsolutePath().endsWith("/tests/.")) 
 	  "eclipse-test-plugin" 
-	else if (dir.getParentFile().getName().equals("features")) 
+	else if (dir.getParentFile().getAbsolutePath().endsWith("/features") || dir.getParentFile().getAbsolutePath().endsWith("/features/.")) 
 	  "eclipse-feature"
 	else
-	  "eclipse-plugin"}</packaging> 
-    </project>;
-    
+	  "eclipse-plugin"}</packaging>
+	  	{ getTarget(dir) }
+     </project>;
+		
     val pp = new scala.xml.PrettyPrinter(80,2)
-
 
     writePom("Module ", pp.format(module), dir)
     
+  }
+
+  def getTarget(dir : File) : Object ={
+  	var env = <environment/>;
+	
+	 if (dir.getAbsolutePath().endsWith("gtk.linux.x86")) {
+		env = <environment>
+		<os>linux</os>
+		<ws>gtk</ws>
+		<arch>x86</arch>
+		</environment>;
+	} else if (dir.getAbsolutePath().endsWith("gtk.linux.x86_64")) {
+		env = <environment>
+		<os>linux</os>
+		<ws>gtk</ws>
+		<arch>x86_64</arch>
+		</environment>;
+	} else if (dir.getAbsolutePath().endsWith("carbon.macosx")) {
+		env = <environment>
+		<os>macosx</os>
+		<ws>carbon</ws>
+		<arch>x86</arch>
+		</environment>;
+	} else if (dir.getAbsolutePath().endsWith("cocoa.macosx")) {
+		env = <environment>
+		<os>macosx</os>
+		<ws>cocoa</ws>
+		<arch>x86</arch>
+		</environment>;
+	} else if (dir.getAbsolutePath().endsWith("win32.win32.x86")) {
+		env = <environment>
+		<os>win32</os>
+		<ws>win32</ws>
+		<arch>x86</arch>
+		</environment>;
+	}
+	
+	var target = <build>
+			<plugins>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${{tychoVersion}}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<environments>
+						{ env }
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+		</build>;
+		
+  	if(dir.getAbsolutePath().endsWith("x86_64") 
+  		|| dir.getAbsolutePath().endsWith("x86")
+  		|| dir.getAbsolutePath().endsWith("macosx")) {
+  		return target
+  	}
+	return ""
   }
 
   def writePom(n : String, pp : String, dir : File) {
@@ -103,7 +170,7 @@ object HelloWorld {
 
   def dump(dirs : Collection[File], parentPom : File, parent : GVA, me : GVA) {
     for(f <- dirs) {
-      
+      var aggregate = false  
       val manifest = new File(new File(f, "META-INF"), "MANIFEST.MF")
       val plugins = new File(f, "plugins")
       val tests = new File(f, "tests")
@@ -118,32 +185,51 @@ object HelloWorld {
       }      
       
       if(plugins.exists()) {	
-	generateAggregator(plugins, 
+    	  aggregate = true
+    	  generateAggregator(plugins, 
 			   new File("../../" + parentPom.getPath()),
 			   parent,
-			   GVA(me.groupId, f.getName() , "0.0.1-SNAPSHOT")
+			   GVA(me.groupId, f.getName() + ".plugins" , "0.0.1-SNAPSHOT")
 			 )
       }
       
       if(tests.exists()) {
-	generateAggregator(tests, 
+        aggregate = true
+        generateAggregator(tests, 
 			   new File("../../" + parentPom.getPath()),
 			   parent,
-			   GVA(me.groupId, f.getName() , "0.0.1-SNAPSHOT")
+			   GVA(me.groupId, f.getName() + ".tests", "0.0.1-SNAPSHOT")
 			 )
       }
 
       if(features.exists()) {
-	generateAggregator(features, 
+    	  aggregate = true
+    	  generateAggregator(features, 
 			   new File("../../" + parentPom.getPath()),
 			   parent,
-			   GVA(me.groupId, f.getName() , "0.0.1-SNAPSHOT")
+			   GVA(me.groupId, f.getName()+".features" , "0.0.1-SNAPSHOT")
 			 )
       }
 
+      if(aggregate) {
+    	  println("Generate Agg for " + f)
+    	  generateAggregator(f, new File("../" + parentPom.getPath()), parent, GVA(me.groupId, f.getName()+".all", "0.0.1-SNAPSHOT"))
+      }
     }
   }
 
+  def isModule(n : File) : Boolean = {
+    def v = (new File(n, "pom.xml").exists() && !n.getName().equals("docs")) ||
+      (!n.getName().contains(".sdk.") && (new File(new File(n, "META-INF"), "MANIFEST.MF").exists()) || (new File(n, "feature.xml").exists())) || (hasDirectory(n, "features") || hasDirectory(n, "tests")	|| hasDirectory(n, "plugins"))
+    return v
+  }
+  
+  def hasDirectory(parent : File, name : String) : Boolean = {
+   
+    val dir = new File(parent, name)
+    return dir.isDirectory() && dir.exists()
+  }
+  
   def generateAggregator(dir : File, 
 			 parentPom : File, 
 			 parent : GVA,
@@ -152,11 +238,12 @@ object HelloWorld {
     aggregatorcount = aggregatorcount + 1
 
     val	 dirs =  dir.listFiles().filter(
-      (n) => n.isDirectory() && !n.getName().startsWith(".") 
+      (n) => n.isDirectory() && !n.getName().startsWith(".") && !n.getName().contains(".sdk.")
     )
     
     val realModules = dirs.filter(
-      (n) => n.isDirectory() && !n.getName().startsWith(".") && (new File(new File(n, "META-INF"), "MANIFEST.MF").exists() || (new File(n, "feature.xml").exists() && !n.getName().contains(".sdk."))))
+    		(n) => isModule(n))
+    
     var modules =
       <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion> 
@@ -167,7 +254,7 @@ object HelloWorld {
       <version>{parent.version}</version> 
     </parent>
       <groupId>{me.groupId}</groupId> 
-      <artifactId>{me.artifactId}.{dir.getName()}</artifactId> 
+      <artifactId>{me.artifactId}</artifactId> 
       <version>{me.version}</version> 
     <packaging>pom</packaging> 
       <modules>
@@ -191,4 +278,4 @@ object HelloWorld {
 }
 
 
-HelloWorld.main(args)
+GenPom.main(args)

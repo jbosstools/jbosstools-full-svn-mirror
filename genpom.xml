@@ -1,0 +1,805 @@
+<project default="run" basedir=".">
+	<!-- Configuration Start -->
+	<property name="projectName" value="org.jboss.tools" />
+	<property name="pathToParentPom" value="" />
+	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
+	<property name="debug" value="false" />
+	<property name="dirsToExclude"
+	          value="**/*.sdk.*, **/doc*, **/download.jboss.org, **/util, **/test, **/builders, **/releng, ."
+	/>
+	<!-- Configuration Ends -->
+
+	<!-- To run this script in Eclipse:
+			Run As > Ant Build
+	-->
+	<!-- To run this script via commandline:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -f genpom.xml -q 
+		 or, to build a specific module only:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; \
+			ant -f genpom.xml -q -DpathToParentPom=../ -DWORKINGDIR=/home/nboldt/workspace36/jbosstools-modular_build/as
+			
+	-->
+
+	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
+		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip"
+		     src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip"
+		/>
+		<touch file="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" />
+		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
+		<unzip src="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip"
+		       dest="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_"
+		       overwrite="true"
+		/>
+		<copy file="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_/ant-contrib/lib/ant-contrib.jar"
+		      tofile="${COMMON_TOOLS}/ant-contrib.jar"
+		      failonerror="true"
+		/>
+		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
+	<!-- override for local build -->
+	<available file="/qa/tools/opt" type="dir" property="isJBossQA" />
+	<target name="local" unless="isJBossQA">
+		<property name="WORKINGDIR" value="${basedir}" />
+		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
+	</target>
+
+	<target name="init" depends="local">
+		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
+		<antcall target="get.ant-contrib" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+		<macrodef name="debug">
+			<text name="echo" />
+			<sequential>
+				<if>
+					<and>
+						<isset property="debug" />
+						<istrue value="${debug}" />
+					</and>
+					<then>
+						<echo message="@{echo}" />
+					</then>
+				</if>
+			</sequential>
+		</macrodef>
+
+		<!-- = = = = = = = = = = = = = = = = =
+	      macrodef: write out a pom.xml which aggregates subdirs   
+	     = = = = = = = = = = = = = = = = = -->
+		<macrodef name="writeAggregatePom">
+			<attribute name="dir" default="." />
+			<attribute name="parentpom" />
+			<attribute name="artifactId" default="" />
+			<attribute name="artifactVersion" default="" />
+			<sequential>
+				<if>
+					<equals arg1="@{artifactId}" arg2="" />
+					<then>
+						<var name="artifactId" unset="true" />
+						<antcallback target="getArtifactId" return="artifactId">
+							<property name="dir" value="@{dir}" />
+						</antcallback>
+					</then>
+					<else>
+						<var name="artifactId" value="@{artifactId}" />
+					</else>
+				</if>
+				<if>
+					<equals arg1="@{artifactVersion}" arg2="" />
+					<then>
+						<var name="artifactVersion" unset="true" />
+						<antcallback target="getArtifactVersion" return="artifactVersion">
+							<property name="dir" value="@{dir}" />
+						</antcallback>
+					</then>
+					<else>
+						<var name="artifactVersion" value="@{artifactVersion}" />
+					</else>
+				</if>
+				<var name="artifactType" value="pom" />
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<debug>   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
+				<!-- <echo>Write Agg @{dir}/pom.xml</echo> -->
+				<echo file="@{dir}/pom.xml">&lt;project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	&lt;modelVersion>4.0.0&lt;/modelVersion>
+	&lt;parent>
+		&lt;relativePath>@{parentpom}&lt;/relativePath>
+		&lt;groupId>${projectName}&lt;/groupId>
+		&lt;artifactId>${projectName}.parent.pom&lt;/artifactId>
+		&lt;version>${pomVersion}&lt;/version>
+	&lt;/parent>
+	&lt;groupId>${projectName}&lt;/groupId>
+	&lt;artifactId>${artifactId}&lt;/artifactId>
+	&lt;version>${artifactVersion}&lt;/version>
+	&lt;packaging>${artifactType}&lt;/packaging>
+	&lt;modules>
+</echo>
+				<var name="artifactId" unset="true" />
+				<var name="artifactVersion" unset="true" />
+				<for param="subdir" delimiter=", 
+	">
+					<path>
+						<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
+					</path>
+					<sequential>
+						<basename property="subdirSuffix" file="@{subdir}" />
+						<echo file="@{dir}/pom.xml" append="true">		&lt;module>${subdirSuffix}&lt;/module>
+</echo>
+						<var name="subdirSuffix" unset="true" />
+					</sequential>
+				</for>
+				<echo file="@{dir}/pom.xml" append="true">	&lt;/modules>
+&lt;/project>
+	</echo>
+			</sequential>
+		</macrodef>
+
+		<!-- = = = = = = = = = = = = = = = = =
+	      macrodef: write out a pom.xml for a plugin or feature or test   
+	     = = = = = = = = = = = = = = = = = -->
+		<macrodef name="writeModulePom">
+			<attribute name="dir" default="." />
+			<attribute name="parentpom" />
+			<sequential>
+				<var name="artifactType" unset="true" />
+				<antcallback target="getArtifactType" return="artifactType">
+					<property name="dir" value="@{dir}" />
+				</antcallback>
+				<if>
+					<!-- cannot calculate id and version for an update site so just set them to defaults -->
+					<equals arg1="${artifactType}" arg2="eclipse-update-site" />
+					<then>
+						<var name="artifactId" unset="true" />
+						<basename property="artifactId" file="@{dir}" />
+						<var name="artifactVersion" value="0.0.0" />
+					</then>
+					<else>
+						<var name="artifactId" unset="true" />
+						<antcallback target="getArtifactId" return="artifactId">
+							<property name="dir" value="@{dir}" />
+						</antcallback>
+						<var name="artifactVersion" unset="true" />
+						<antcallback target="getArtifactVersion" return="artifactVersion">
+							<property name="dir" value="@{dir}" />
+						</antcallback>
+					</else>
+				</if>
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<debug>   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
+				<echo file="@{dir}/pom.xml">&lt;project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	&lt;modelVersion>4.0.0&lt;/modelVersion> 
+	&lt;parent>
+	  &lt;relativePath>@{parentpom}&lt;/relativePath>
+	  &lt;groupId>${projectName}&lt;/groupId>
+	  &lt;artifactId>${projectName}.parent.pom&lt;/artifactId>
+	  &lt;version>${pomVersion}&lt;/version>
+	&lt;/parent>
+	&lt;groupId>${projectName}&lt;/groupId> 
+	&lt;artifactId>${artifactId}&lt;/artifactId> 
+	&lt;version>${artifactVersion}&lt;/version> 
+	&lt;packaging>${artifactType}&lt;/packaging> 
+&lt;/project>
+	</echo>
+				<var name="artifactId" unset="true" />
+				<var name="artifactVersion" unset="true" />
+				<var name="artifactType" unset="true" />
+				<var name="modulecountstring" value="${modulecountstring}1" />
+			</sequential>
+		</macrodef>
+
+		<!-- = = = = = = = = = = = = = = = = =
+	      macrodef: generateAggregator          
+	     = = = = = = = = = = = = = = = = = -->
+		<macrodef name="generateAggregator">
+			<attribute name="dir" default="${WORKINGDIR}" />
+			<attribute name="parentPom" default="${pathToParentPom}parent-pom.xml" />
+			<attribute name="artifactId" default="" />
+			<attribute name="artifactVersion" default="" />
+			<sequential>
+				<writeAggregatePom dir="@{dir}"
+				                   parentpom="@{parentpom}"
+				                   artifactId="@{artifactId}"
+				                   artifactVersion="@{artifactVersion}"
+				/>
+
+				<dump dir="@{dir}"
+				      parentpom="@{parentpom}"
+				      artifactId="@{artifactId}"
+				      artifactVersion="@{artifactVersion}"
+				/>
+				<var name="aggregatorcountstring" value="${aggregatorcountstring}1" />
+
+			</sequential>
+		</macrodef>
+
+
+		<!-- = = = = = = = = = = = = = = = = =
+          macrodef: dump          
+         = = = = = = = = = = = = = = = = = -->
+		<macrodef name="dump">
+			<attribute name="dir" />
+			<attribute name="parentpom" />
+			<attribute name="artifactId" default="" />
+			<attribute name="artifactVersion" default="" />
+			<sequential>
+
+				<for param="subdir" delimiter=", 
+	">
+					<path>
+						<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
+					</path>
+					<sequential>
+						<!-- <debug>   @{subdir}</debug> -->
+						<var name="aggregate" value="false" />
+						<if>
+							<or>
+								<!-- a plugin, feature, or update site dir -->
+								<available file="@{subdir}/META-INF/MANIFEST.MF" type="file" />
+								<available file="@{subdir}/feature.xml" type="file" />
+								<available file="@{subdir}/site.xml" type="file" />
+							</or>
+							<then>
+								<!-- valid place to create a pom -->
+								<writeModulePom dir="@{subdir}" parentpom="../@{parentpom}" />
+							</then>
+							<else>
+								<for list="plugins tests features" param="type" delimiter=" ">
+									<sequential>
+										<basename property="artifactIdAgg" file="@{subdir}" />
+										<if>
+											<available file="@{subdir}/@{type}" type="dir" />
+											<then>
+												<var name="aggregate" value="true" />
+												<generateAggregator dir="@{subdir}/@{type}"
+												                    parentpom="../../@{parentpom}"
+												                    artifactId="${artifactIdAgg}.@{type}"
+												                    artifactVersion="@{artifactVersion}"
+												/>
+											</then>
+										</if>
+										<var name="artifactIdAgg" unset="true" />
+									</sequential>
+								</for>
+
+								<if>
+									<istrue value="${aggregate}" />
+									<else>
+										<basename property="artifactIdAgg" file="@{subdir}" />
+										<writeAggregatePom dir="@{subdir}"
+										                   parentpom="../${pathToParentPom}parent-pom.xml"
+										                   artifactId="${artifactIdAgg}.all"
+										                   artifactVersion="@{artifactVersion}"
+										/>
+
+										<debug>subdir = @{subdir}</debug>
+										<echo>Aggregated: ${artifactIdAgg}</echo>
+
+										<var name="artifactIdAgg" unset="true" />
+									</else>
+								</if>
+							</else>
+						</if>
+					</sequential>
+				</for>
+			</sequential>
+		</macrodef>
+
+		<!-- = = = = = = = = = = = = = = = = =
+	      macrodef: count items in a list    
+	     = = = = = = = = = = = = = = = = = -->
+		<!-- example usage: 
+		<list.count list="foo bar baz" />
+		<echo message="${list.count.return}" />
+		<var name="list.count.return" unset="true"/>
+		<list.count list="foo bar" />
+		<echo message="${list.count.return}" />
+		-->
+		<macrodef name="list.count">
+			<attribute name="list" default="" />
+			<sequential>
+				<var name="count" value="" />
+				<for param="listitem" list="@{list}" delimiter=", 
+	">
+					<sequential>
+						<var name="count" value="${count}0" />
+					</sequential>
+				</for>
+				<length property="list.count.return" string="${count}" />
+			</sequential>
+		</macrodef>
+
+	</target>
+
+	<target name="run" depends="init">
+		<if>
+			<not>
+				<available file="${WORKINGDIR}/${pathToParentPom}parent-pom.xml" type="file" />
+			</not>
+			<then>
+				<fail>Error: no parent-pom.xml found in ${WORKINGDIR}/${pathToParentPom}</fail>
+			</then>
+		</if>
+
+		<!-- if set, compare values in tags file to values found in manifests and report discrepancies -->
+		<!--<property name="tagsFile"
+		     value="/home/nboldt/eclipse/workspace-jboss/devstudio-trunk/releng/org.jboss.ide.eclipse.releng/builders/product/versionTags/jbosstools/3.1.0.GA.tags"
+		/>-->
+
+		<if>
+			<and>
+				<isset property="tagsFile" />
+				<available file="${tagsFile}" type="file" />
+			</and>
+			<then>
+				<property file="${tagsFile}" prefix="tagsFile" />
+			</then>
+		</if>
+
+		<!-- counter variables -->
+		<var name="aggregatorcountstring" value="" />
+		<var name="modulecountstring" value="" />
+
+		<!-- call generateAggregator for overall -->
+		<generateAggregator dir="${WORKINGDIR}"
+		                    parentpom="${pathToParentPom}parent-pom.xml"
+		                    artifactId="trunk"
+		                    artifactVersion="${pomVersion}"
+		/>
+		<!-- summary -->
+		<length string="${modulecountstring}" property="modulecount" />
+		<length string="${aggregatorcountstring}" property="aggregatorcount" />
+		<echo>Modules: ${modulecount} Aggregations: ${aggregatorcount}</echo>
+
+	</target>
+
+	<target name="getArtifactType">
+		<property name="dir" value="." />
+		<if>
+			<matches string="${dir}" pattern=".+/features/.+" />
+			<then>
+				<var name="artifactType" value="eclipse-feature" />
+			</then>
+			<elseif>
+				<or>
+					<matches string="${dir}" pattern=".+/site" />
+					<matches string="${dir}" pattern=".+site" />
+				</or>
+				<then>
+					<var name="artifactType" value="eclipse-update-site" />
+				</then>
+			</elseif>
+			<elseif>
+				<and>
+					<not>
+						<matches string="${dir}" pattern=".+/plugins/.+" />
+					</not>
+					<matches string="${dir}" pattern=".+/tests/.+" />
+				</and>
+				<then>
+					<var name="artifactType" value="eclipse-test-plugin" />
+				</then>
+			</elseif>
+			<else>
+				<var name="artifactType" value="eclipse-plugin" />
+			</else>
+		</if>
+	</target>
+
+	<target name="getArtifactVersion">
+		<property name="dir" value="." />
+		<!-- echo>${dir}</echo -->
+		<if>
+			<available file="${dir}/META-INF/MANIFEST.MF" type="file" />
+			<then>
+				<!-- get Bundle-SymbolicName: -->
+				<loadfile srcfile="${dir}/META-INF/MANIFEST.MF" property="artifactVersion">
+					<filterchain>
+						<linecontains>
+							<contains value="Bundle-Version:" />
+						</linecontains>
+					</filterchain>
+				</loadfile>
+				<propertyregex property="artifactVersion"
+				               input="${artifactVersion}"
+				               defaultvalue="${artifactVersion}"
+				               regexp="Bundle-Version:( +)([^\n\r]+)[\n\r]+"
+				               replace="\2"
+				               casesensitive="true"
+				               override="true"
+				/>
+
+				<!-- compare tags file to current manifests -->
+				<antcallback target="checkArtifactVersionAgainstTagFile" return="artifactVersion.from.tag" />
+				<if>
+					<and>
+						<isset property="artifactVersion.from.tag" />
+						<not>
+							<equals arg1="${artifactVersion.from.tag}" arg2="${artifactVersion}" />
+						</not>
+					</and>
+					<then>
+						<loadfile property="manifest.file" srcfile="${dir}/META-INF/MANIFEST.MF">
+							<filterchain>
+								<tokenfilter>
+									<replaceregex pattern="Bundle-Version:( +)${artifactVersion}"
+									              replace="Bundle-Version: ${artifactVersion.from.tag}"
+									              flags=""
+									/>
+								</tokenfilter>
+							</filterchain>
+						</loadfile>
+						<echo message="${manifest.file}" file="${dir}/META-INF/MANIFEST.MF" />
+						<var name="manifest.file" unset="true" />
+					</then>
+					<else>
+						<var name="artifactVersion.from.tag" value="${artifactVersion}" />
+					</else>
+				</if>
+
+				<!-- now, switch to Maven style (s/.qualifier/-SNAPSHOT/) -->
+				<propertyregex property="artifactVersion"
+				               input="${artifactVersion.from.tag}"
+				               defaultvalue="${artifactVersion.from.tag}"
+				               regexp="(.+).qualifier"
+				               replace="\1-SNAPSHOT"
+				               casesensitive="true"
+				               override="true"
+				/>
+				<var name="artifactVersion.from.tag" unset="true" />
+			</then>
+			<elseif>
+				<available file="${dir}/feature.xml" type="file" />
+				<then>
+					<!-- get <feature version=""> -->
+					<xmlproperty file="${dir}/feature.xml" collapseAttributes="true" />
+					<var name="artifactVersion" value="${feature.version}" />
+
+					<!-- compare tags file to current manifests -->
+					<antcallback target="checkArtifactVersionAgainstTagFile" return="artifactVersion.from.tag" />
+					<if>
+						<and>
+							<isset property="artifactVersion.from.tag" />
+							<not>
+								<equals arg1="${artifactVersion.from.tag}" arg2="${artifactVersion}" />
+							</not>
+						</and>
+						<then>
+							<loadfile property="manifest.file" srcfile="${dir}/feature.xml">
+								<filterchain>
+									<tokenfilter>
+										<replaceregex pattern="version=&quot;${artifactVersion}&quot;"
+										              replace="version=&quot;${artifactVersion.from.tag}&quot;"
+										              flags=""
+										/>
+									</tokenfilter>
+								</filterchain>
+							</loadfile>
+							<echo message="${manifest.file}" file="${dir}/feature.xml" />
+							<var name="manifest.file" unset="true" />
+						</then>
+						<else>
+							<var name="artifactVersion.from.tag" value="${artifactVersion}" />
+						</else>
+					</if>
+					<var name="feature.version" unset="true" />
+
+					<!-- now, switch to Maven style (s/.qualifier/-SNAPSHOT/) -->
+					<propertyregex property="artifactVersion"
+					               input="${artifactVersion.from.tag}"
+					               defaultvalue="${artifactVersion.from.tag}"
+					               regexp="(.+).qualifier"
+					               replace="\1-SNAPSHOT"
+					               casesensitive="true"
+					               override="true"
+					/>
+					<var name="artifactVersion.from.tag" unset="true" />
+				</then>
+			</elseif>
+			<else>
+				<echo>Warning! artifactVersion not found for ${dir}!</echo>
+				<var name="artifactVersion" value="0.0.0" />
+			</else>
+		</if>
+	</target>
+
+	<target name="checkArtifactVersionAgainstTagFile">
+		<dirname property="this.dir" file="${dir}" />
+		<dirname property="parent.dir.path" file="${this.dir}" />
+		<basename property="parent.dir" file="${parent.dir.path}" />
+		<var name="this.dir" unset="true" />
+		<var name="parent.dir.path" unset="true" />
+		<if>
+			<isset property="tagsFile.${parent.dir}" />
+			<then>
+				<propertycopy from="tagsFile.${parent.dir}" property="artifactVersion.from.tag" />
+				<propertyregex property="artifactVersion.from.tag"
+				               input="${artifactVersion.from.tag}"
+				               defaultvalue="${artifactVersion.from.tag}"
+				               regexp="(.+).GA"
+				               replace="\1.qualifier"
+				               casesensitive="true"
+				               override="true"
+				/>
+			</then>
+		</if>
+		<if>
+			<and>
+				<isset property="tagsFile.${parent.dir}" />
+				<not>
+					<equals arg1="${artifactVersion}" arg2="${artifactVersion.from.tag}" />
+				</not>
+			</and>
+			<then>
+				<basename file="${dir}" property="this.dir" />
+				<echo>For ${this.dir}, got ${artifactVersion}; should be ${artifactVersion.from.tag}</echo>
+			</then>
+			<else>
+				<var name="artifactVersion.from.tag" value="${artifactVersion}" />
+			</else>
+		</if>
+		<var name="parent.dir" unset="true" />
+	</target>
+
+	<target name="getArtifactId">
+		<property name="dir" value="." />
+		<!-- echo>${dir}</echo -->
+		<if>
+			<available file="${dir}/META-INF/MANIFEST.MF" type="file" />
+			<then>
+				<!-- get Bundle-SymbolicName: -->
+				<loadfile srcfile="${dir}/META-INF/MANIFEST.MF" property="artifactId">
+					<filterchain>
+						<linecontains>
+							<contains value="Bundle-SymbolicName:" />
+						</linecontains>
+					</filterchain>
+				</loadfile>
+				<propertyregex property="artifactId"
+				               input="${artifactId}"
+				               defaultvalue="${artifactId}"
+				               regexp="Bundle-SymbolicName:([\t ]+)([^\n\r\t ]+);(.+)[\n\r\t ]+"
+				               replace="\2"
+				               casesensitive="true"
+				               override="true"
+				/>
+				<propertyregex property="artifactId"
+				               input="${artifactId}"
+				               defaultvalue="${artifactId}"
+				               regexp="Bundle-SymbolicName:([\t ]+)([^\n\r\t ]+)[\n\r\t ]+"
+				               replace="\2"
+				               casesensitive="true"
+				               override="true"
+				/>
+			</then>
+			<elseif>
+				<available file="${dir}/feature.xml" type="file" />
+				<then>
+					<!-- get <feature id=""> -->
+					<xmlproperty file="${dir}/feature.xml" collapseAttributes="true" />
+					<var name="artifactId" value="${feature.id}" />
+					<var name="feature.id" unset="true" />
+				</then>
+			</elseif>
+			<else>
+				<echo>Warning! artifactId not found for ${dir}!</echo>
+				<basename property="artifactId" file="${dir}" />
+			</else>
+		</if>
+	</target>
+
+	<!-- ************************************ TESTS ************************************ -->
+
+	<target name="test.expected.values">
+		<property name="ant.enable.asserts" value="true" />
+
+		<!-- expected values for artifactVersion tests -->
+		<property name="artifactVersion.esb/features/org.jboss.tools.esb.feature" value="1.0.0" />
+		<property name="artifactVersion.as/tests/org.jboss.ide.eclipse.as.archives.integration.test" value="1.0.0" />
+		<property name="artifactVersion.esb/plugins/org.jboss.tools.esb.core" value="2.0.0" />
+		<property name="artifactVersion.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui" value="0.5.0-SNAPSHOT" />
+		<property name="artifactVersion.bpel/features/org.jboss.tools.bpel.sdk.feature" value="1.0.0-SNAPSHOT" />
+		<property name="artifactVersion.bpel/plugins/org.eclipse.bpel.xpath10" value="0.5.0-SNAPSHOT" />
+		<property name="artifactVersion.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="2.1.0" />
+		<property name="artifactVersion.tests/features/org.jboss.tools.test.feature" value="2.0.0" />
+		<property name="artifactVersion.portlet/features/org.jboss.tools.portlet.test.feature" value="1.0.0" />
+		<property name="artifactVersion.jst/features/org.jboss.tools.jst.feature" value="2.0.0" />
+		<property name="artifactVersion.jst/features/org.jboss.tools.jst.web.tiles.feature" value="2.0.0" />
+
+		<!-- expected values for artifactId tests -->
+		<property name="artifactId.esb/features/org.jboss.tools.esb.feature" value="org.jboss.tools.esb.feature" />
+		<property name="artifactId.as/tests/org.jboss.ide.eclipse.as.archives.integration.test"
+		          value="org.jboss.ide.eclipse.as.archives.integration.test"
+		/>
+		<property name="artifactId.esb/plugins/org.jboss.tools.esb.core" value="org.jboss.tools.esb.core" />
+		<property name="artifactId.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui"
+		          value="org.eclipse.bpel.apache.ode.deploy.ui"
+		/>
+		<property name="artifactId.bpel/features/org.jboss.tools.bpel.sdk.feature"
+		          value="org.jboss.tools.bpel.sdk.feature"
+		/>
+		<property name="artifactId.bpel/plugins/org.eclipse.bpel.xpath10" value="org.eclipse.bpel.xpath10" />
+		<property name="artifactId.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="org.jboss.tools.vpe.ui.palette" />
+		<property name="artifactId.tests/features/org.jboss.tools.test.feature" value="org.jboss.tools.test.feature" />
+		<property name="artifactId.portlet/features/org.jboss.tools.portlet.test.feature"
+		          value="org.jboss.tools.portlet.test.feature"
+		/>
+		<property name="artifactId.jst/features/org.jboss.tools.jst.feature" value="org.jboss.tools.jst.feature" />
+		<property name="artifactId.jst/features/org.jboss.tools.jst.web.tiles.feature"
+		          value="org.jboss.tools.jst.web.tiles.feature"
+		/>
+
+		<!-- expected values for artifactType tests -->
+		<property name="artifactType.esb/features/org.jboss.tools.esb.feature" value="eclipse-feature" />
+		<property name="artifactType.as/tests/org.jboss.ide.eclipse.as.archives.integration.test"
+		          value="eclipse-test-plugin"
+		/>
+		<property name="artifactType.esb/plugins/org.jboss.tools.esb.core" value="eclipse-plugin" />
+		<property name="artifactType.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui" value="eclipse-plugin" />
+		<property name="artifactType.bpel/features/org.jboss.tools.bpel.sdk.feature" value="eclipse-feature" />
+		<property name="artifactType.bpel/plugins/org.eclipse.bpel.xpath10" value="eclipse-plugin" />
+		<property name="artifactType.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="eclipse-plugin" />
+		<property name="artifactType.tests/features/org.jboss.tools.test.feature" value="eclipse-feature" />
+		<property name="artifactType.portlet/features/org.jboss.tools.portlet.test.feature" value="eclipse-feature" />
+		<property name="artifactType.jst/features/org.jboss.tools.jst.feature" value="eclipse-feature" />
+		<property name="artifactType.jst/features/org.jboss.tools.jst.web.tiles.feature" value="eclipse-feature" />
+	</target>
+
+	<target name="test.all">
+
+		<property name="dirs"
+		          value="
+		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
+		${WORKINGDIR}/as/tests/org.jboss.ide.eclipse.as.archives.integration.test
+		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		${WORKINGDIR}/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui
+		${WORKINGDIR}/bpel/features/org.jboss.tools.bpel.sdk.feature	
+		${WORKINGDIR}/bpel/plugins/org.eclipse.bpel.xpath10
+		${WORKINGDIR}/vpe/plugins/org.jboss.tools.vpe.ui.palette
+		${WORKINGDIR}/tests/features/org.jboss.tools.test.feature
+		${WORKINGDIR}/portlet/features/org.jboss.tools.portlet.test.feature
+		${WORKINGDIR}/jst/features/org.jboss.tools.jst.feature
+		${WORKINGDIR}/jst/features/org.jboss.tools.jst.web.tiles.feature
+		"
+		/>
+		<antcall target="test.getArtifactVersion" />
+		<antcall target="test.getArtifactId" />
+		<antcall target="test.getArtifactType" />
+	</target>
+
+	<target name="test.getArtifactVersion" depends="init, test.expected.values">
+		<property name="dirs"
+		          value="
+		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
+		${WORKINGDIR}/as/tests/org.jboss.ide.eclipse.as.archives.integration.test
+		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		${WORKINGDIR}/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui
+		${WORKINGDIR}/tests/features/org.jboss.tools.test.feature
+		${WORKINGDIR}/portlet/features/org.jboss.tools.portlet.test.feature
+		${WORKINGDIR}/jst/features/org.jboss.tools.jst.feature
+		${WORKINGDIR}/jst/features/org.jboss.tools.jst.web.tiles.feature
+		"
+		/>
+		<for param="dir" list="${dirs}" delimiter=", 
+			">
+			<sequential>
+				<antcallback target="getArtifactVersion" return="artifactVersion">
+					<property name="dir" value="@{dir}" />
+				</antcallback>
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<propertycopy name="expected.value" from="artifactVersion.${activeDir}" />
+				<assert failonerror="false"
+				        message="For ${activeDir}, artifactVersion = ${artifactVersion}; expected ${expected.value}"
+				>
+					<bool>
+						<equals arg1="${expected.value}" arg2="${artifactVersion}" />
+					</bool>
+				</assert>
+				<var name="expected.value" unset="true" />
+				<var name="artifactVersion" unset="true" />
+			</sequential>
+		</for>
+	</target>
+
+	<target name="test.getArtifactId" depends="init, test.expected.values">
+		<property name="dirs"
+		          value="
+		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
+		${WORKINGDIR}/as/tests/org.jboss.ide.eclipse.as.archives.integration.test
+		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		"
+		/>
+		<for param="dir" list="${dirs}" delimiter=", 
+			">
+			<sequential>
+				<antcallback target="getArtifactId" return="artifactId">
+					<property name="dir" value="@{dir}" />
+				</antcallback>
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<propertycopy name="expected.value" from="artifactId.${activeDir}" />
+				<assert failonerror="false"
+				        message="For ${activeDir}, artifactId = ${artifactId}; expected ${expected.value}"
+				>
+					<bool>
+						<equals arg1="${expected.value}" arg2="${artifactId}" />
+					</bool>
+				</assert>
+				<var name="expected.value" unset="true" />
+				<var name="artifactId" unset="true" />
+			</sequential>
+		</for>
+	</target>
+
+	<target name="test.getArtifactType" depends="init, test.expected.values">
+		<property name="dirs"
+		          value="
+		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
+		${WORKINGDIR}/as/tests/org.jboss.ide.eclipse.as.archives.integration.test
+		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		"
+		/>
+		<for param="dir" list="${dirs}" delimiter=", 
+			">
+			<sequential>
+				<antcallback target="getArtifactType" return="artifactType">
+					<property name="dir" value="@{dir}" />
+				</antcallback>
+				<propertyregex property="activeDir"
+				               input="@{dir}"
+				               defaultvalue="@{dir}"
+				               regexp="${WORKINGDIR}/"
+				               replace=""
+				               casesensitive="true"
+				               override="true"
+				/>
+				<propertycopy name="expected.value" from="artifactType.${activeDir}" />
+				<assert failonerror="false"
+				        message="For ${activeDir}, artifactType = ${artifactType}; expected ${expected.value}"
+				>
+					<bool>
+						<equals arg1="${expected.value}" arg2="${artifactType}" />
+					</bool>
+				</assert>
+				<var name="expected.value" unset="true" />
+				<var name="artifactType" unset="true" />
+			</sequential>
+		</for>
+	</target>
+
+</project>

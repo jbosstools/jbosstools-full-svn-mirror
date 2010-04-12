@@ -30,11 +30,6 @@
 						<environment>
 							<os>macosx</os>
 							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
 							<arch>x86</arch>
 						</environment>
 						<environment>
@@ -60,18 +55,144 @@
 					</environments>
 				</configuration>
 			</plugin>
-<plugin>
-      <groupId>org.sonatype.tycho</groupId>
-         <artifactId>maven-osgi-test-plugin</artifactId>
-         <version>${tychoVersion}</version>
-         <configuration>
-           <useUIHarness>true</useUIHarness>
-           <useUIThread>true</useUIThread>
-         </configuration>
-      </plugin>
 
+			<!-- 
+				to skip running tests (compile only) use commandline flag:
+			    -Dmaven.test.skip
+			    To allow all tests in a pom to pass/fail, use commandline flag:
+			    -fae (fail at end)
+			-->
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-test-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>true</useUIThread>
+					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
+					<!-- set useUIThread=true for regular ui tests -->
+					<!-- set useUIThread=false for swtbot tests (?) -->
+					<product>org.eclipse.sdk.ide</product>
+					<application>org.eclipse.ui.ide.workbench</application>
+					<dependencies>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.sdk.ide</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+					</dependencies>
+					<includes>
+						<include>**/*AllTests*.class</include>
+						<include>**/*AllBotTests*.class</include>
+						<include>**/*TestSuite*.class</include>
+					</includes>
+					<parallel>true</parallel>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>helios</id>
+			<activation>
+				<property>
+					<name>helios</name>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>helios</id>
+					<url>http://download.eclipse.org/releases/helios/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>eclipse36</id>
+					<url>http://download.eclipse.org/eclipse/updates/3.6/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>birt26</id>
+					<url>http://download.eclipse.org/birt/update-site/2.6/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>swtbot-helios</id>
+					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>svn-repos</id>
+			<activation>
+				<property>
+					<name>svn</name>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>subclipse16</id>
+					<url>http://subclipse.tigris.org/update_1.6.x/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>subversive07</id>
+					<url>http://download.eclipse.org/technology/subversive/0.7/update-site/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>subversive20</id>
+					<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+
+			</repositories>
+		</profile>
+	</profiles>
 
 	<repositories>
 		<repository>
@@ -96,6 +217,30 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		<repository>
+			<id>birt25r</id>
+			<url>http://download.eclipse.org/birt/update-site/2.5</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>swtbot-galileo</id>
+			<url>http://download.eclipse.org/technology/swtbot/galileo/dev-build/update-site
+			</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+
 		<repository>
 			<id>webtools</id>
 			<url>http://download.eclipse.org/webtools/updates/</url>
@@ -129,54 +274,10 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		<repository>
-			<id>birt25</id>
-			<url>http://download.eclipse.org/birt/update-site/2.5/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>subclipse16</id>
-			<url>http://subclipse.tigris.org/update_1.6.x/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>subversive07</id>
-			<url>http://download.eclipse.org/technology/subversive/0.7/update-site/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>subversive20</id>
-			<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
 
 		<repository>
 			<id>xulrunner</id>
-			<url>http://download.jboss.org/tools/updates/xulrunner/</url>
+			<url>http://download.jboss.org/jbosstools/updates/xulrunner/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
@@ -185,111 +286,19 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-
-		<!-- 
-		<repository>
-			<id>xpcom1912a</id>
-			<url>http://repository.jboss.org/xulrunner/org.mozilla.xpcom_1.9.1.2a.jar</url>
-			<layout>jar</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>xulrunner1912-carbon32</id>
-			<url>http://repository.jboss.org/xulrunner/org.mozilla.xulrunner.carbon.macosx_1.9.1.2.jar</url>
-			<layout>jar</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>xulrunner1912-cocoa32</id>
-			<url>http://repository.jboss.org/xulrunner/org.mozilla.xulrunner.cocoa.macosx_1.9.1.2.jar</url>
-			<layout>jar</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>xulrunner1912-linux32</id>
-			<url>http://repository.jboss.org/xulrunner/org.mozilla.xulrunner.gtk.linux.x86_1.9.1.2.jar</url>
-			<layout>jar</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>xulrunner1912-linux64</id>
-			<url>http://repository.jboss.org/xulrunner/org.mozilla.xulrunner.gtk.linux.x86_64_1.9.1.2a.jar</url>
-			<layout>jar</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>xulrunner1912-win32</id>
-			<url>http://repository.jboss.org/xulrunner/org.mozilla.xulrunner.win32.win32.x86_1.9.1.2.jar</url>
-			<layout>jar</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		-->
-		<!-- 
-		<repository>
-			<id>jbosstools31</id>
-			<url>http://download.jboss.org/tools/updates/stable/galileo</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		-->
-		<!--
-		<repository>
-			<id>jbosstools32-nightly</id>
-			<url>http://download.jboss.org/tools/updates/nightly/trunk</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		-->
 	</repositories>
 
-	<pluginRepositories>
+	<!--	<pluginRepositories>
 		<pluginRepository>
 			<id>tycho</id>
 			<url>http://repository.sonatype.org/content/repositories/all-001/
 			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
 		</pluginRepository>
-	</pluginRepositories>
+	</pluginRepositories> -->
 </project>
