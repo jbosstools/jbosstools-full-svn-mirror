@@ -114,10 +114,8 @@
 				/>
 				<debug>   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
 				<!-- <echo>Write Agg @{dir}/pom.xml</echo> -->
-				<echo file="@{dir}/pom.xml">&lt;project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	       xmlns="http://maven.apache.org/POM/4.0.0"
-	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	>
+				<echo file="@{dir}/pom.xml">&lt;project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	&lt;modelVersion>4.0.0&lt;/modelVersion>
 	&lt;parent>
 		&lt;relativePath>@{parentpom}&lt;/relativePath>
@@ -190,7 +188,8 @@
 				               override="true"
 				/>
 				<debug>   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
-				<echo file="@{dir}/pom.xml">&lt;project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<echo file="@{dir}/pom.xml">&lt;project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	&lt;modelVersion>4.0.0&lt;/modelVersion> 
 	&lt;parent>
 	  &lt;relativePath>@{parentpom}&lt;/relativePath>
@@ -280,17 +279,6 @@
 												                    artifactVersion="@{artifactVersion}"
 												/>
 											</then>
-											<elseif>
-												<equals arg1="@{type}" arg2="${artifactIdAgg}" />
-												<then>
-													<var name="aggregate" value="true" />
-													<generateAggregator dir="@{subdir}"
-													                    parentpom="../@{parentpom}"
-													                    artifactId="${artifactIdAgg}.@{type}"
-													                    artifactVersion="@{artifactVersion}"
-													/>
-												</then>
-											</elseif>
 										</if>
 										<var name="artifactIdAgg" unset="true" />
 									</sequential>
@@ -306,6 +294,7 @@
 										                   artifactVersion="@{artifactVersion}"
 										/>
 
+										<debug>subdir = @{subdir}</debug>
 										<echo>Aggregated: ${artifactIdAgg}</echo>
 
 										<var name="artifactIdAgg" unset="true" />
@@ -355,9 +344,9 @@
 		</if>
 
 		<!-- if set, compare values in tags file to values found in manifests and report discrepancies -->
-		<var name="tagsFile"
+		<!--<property name="tagsFile"
 		     value="/home/nboldt/eclipse/workspace-jboss/devstudio-trunk/releng/org.jboss.ide.eclipse.releng/builders/product/versionTags/jbosstools/3.1.0.GA.tags"
-		/>
+		/>-->
 
 		<if>
 			<and>
@@ -445,9 +434,12 @@
 				<!-- compare tags file to current manifests -->
 				<antcallback target="checkArtifactVersionAgainstTagFile" return="artifactVersion.from.tag" />
 				<if>
-					<not>
-						<equals arg1="${artifactVersion.from.tag}" arg2="${artifactVersion}" />
-					</not>
+					<and>
+						<isset property="artifactVersion.from.tag" />
+						<not>
+							<equals arg1="${artifactVersion.from.tag}" arg2="${artifactVersion}" />
+						</not>
+					</and>
 					<then>
 						<loadfile property="manifest.file" srcfile="${dir}/META-INF/MANIFEST.MF">
 							<filterchain>
@@ -462,18 +454,21 @@
 						<echo message="${manifest.file}" file="${dir}/META-INF/MANIFEST.MF" />
 						<var name="manifest.file" unset="true" />
 					</then>
+					<else>
+						<var name="artifactVersion.from.tag" value="${artifactVersion}" />
+					</else>
 				</if>
-				<var name="artifactVersion.from.tag" unset="true" />
 
 				<!-- now, switch to Maven style (s/.qualifier/-SNAPSHOT/) -->
 				<propertyregex property="artifactVersion"
-				               input="${artifactVersion}"
-				               defaultvalue="${artifactVersion}"
+				               input="${artifactVersion.from.tag}"
+				               defaultvalue="${artifactVersion.from.tag}"
 				               regexp="(.+).qualifier"
 				               replace="\1-SNAPSHOT"
 				               casesensitive="true"
 				               override="true"
 				/>
+				<var name="artifactVersion.from.tag" unset="true" />
 			</then>
 			<elseif>
 				<available file="${dir}/feature.xml" type="file" />
@@ -485,11 +480,13 @@
 					<!-- compare tags file to current manifests -->
 					<antcallback target="checkArtifactVersionAgainstTagFile" return="artifactVersion.from.tag" />
 					<if>
-						<not>
-							<equals arg1="${artifactVersion.from.tag}" arg2="${artifactVersion}" />
-						</not>
+						<and>
+							<isset property="artifactVersion.from.tag" />
+							<not>
+								<equals arg1="${artifactVersion.from.tag}" arg2="${artifactVersion}" />
+							</not>
+						</and>
 						<then>
-							<var name="feature.version" unset="true" />
 							<loadfile property="manifest.file" srcfile="${dir}/feature.xml">
 								<filterchain>
 									<tokenfilter>
@@ -503,8 +500,11 @@
 							<echo message="${manifest.file}" file="${dir}/feature.xml" />
 							<var name="manifest.file" unset="true" />
 						</then>
+						<else>
+							<var name="artifactVersion.from.tag" value="${artifactVersion}" />
+						</else>
 					</if>
-					<var name="artifactVersion.from.tag" unset="true" />
+					<var name="feature.version" unset="true" />
 
 					<!-- now, switch to Maven style (s/.qualifier/-SNAPSHOT/) -->
 					<propertyregex property="artifactVersion"
@@ -515,6 +515,7 @@
 					               casesensitive="true"
 					               override="true"
 					/>
+					<var name="artifactVersion.from.tag" unset="true" />
 				</then>
 			</elseif>
 			<else>
