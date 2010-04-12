@@ -59,7 +59,9 @@ public final class DataTypes
         typeStringIntPair.put( "BIG_INTEGER", new Integer( INT ) ); //$NON-NLS-1$
 		typeStringIntPair.put( "NULL", new Integer ( NULL ) ); //$NON-NLS-1$
 		typeStringIntPair.put( UNKNOWN, new Integer ( STRING ) );
-        
+		typeStringIntPair.put( "ORG.HIBERNATE.TYPE.ENUMTYPE", new Integer ( STRING ) ); //$NON-NLS-1$
+		typeStringIntPair.put( "ENUMTYPE", new Integer ( STRING ) ); //$NON-NLS-1$
+		
 	}
 
 	/**
