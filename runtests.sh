@@ -8,9 +8,10 @@ if [[ $# -lt 1 ]]; then
 	# -pl   - list of projects to build
 	# -o    - offline mode (don't search remote repos)
 	# -Dmaven.test.skip - compile but do not run tests
+        # --fail-at-end     - fail build after ALL tests have run, not at first failure
 	echo "Usage: $0 workingdir flags targets"
 	echo "Eg: $0 as/ -Dmaven.test.skip clean install"
-	echo "Eg: $0 bpel/tests/ -o install"
+	echo "Eg: $0 bpel/tests/ -o --fail-at-end install"
 	exit 1;
 fi
 
