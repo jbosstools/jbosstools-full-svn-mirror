@@ -1,0 +1,85 @@
+<!-- Run a given ${COMPONENT} build -->
+<project default="run" basedir=".">
+
+	<!-- Configuration Start -->
+	<!-- must set name of component to build/test -->
+	<property name="COMPONENT" value="tests" />
+	<!-- Configuration Ends -->
+
+	<!-- To run this script in Eclipse:
+			Run As > Ant Build
+	-->
+	<!-- To run this script via commandline (build default module, tests):
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -q
+		 or, to build a specific module: 
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -q -DCOMPONENT=jbpm 
+	-->
+
+	<target name="run" depends="init, genpom, install, deploy" />
+
+	<!-- override for local build -->
+	<available file="/qa/tools/opt" type="dir" property="isJBossQA" />
+	<target name="local" unless="isJBossQA">
+		<property name="WORKINGDIR" value="${basedir}" />
+		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
+	</target>
+
+	<!-- default settings for JBQA Hudson -->
+	<target name="init" depends="local">
+		<property name="WORKINGDIR" value="${basedir}" />
+		<!-- <property name="COMMON_TOOLS" value="/qa/tools/opt" /> -->
+		<property name="COMMON_TOOLS" value="${basedir}/../tools" />
+		<mkdir dir="${COMMON_TOOLS}" />
+
+		<property name="MAVEN_MIRROR" value="http://mirror.csclub.uwaterloo.ca/apache/maven/binaries" />
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/apache-maven-3.0-alpha-7-bin.tar.gz"
+		     src="${MAVEN_MIRROR}/apache-maven-3.0-alpha-7-bin.tar.gz"
+		/>
+		<untar compression="gzip"
+		       overwrite="false"
+		       dest="${COMMON_TOOLS}"
+		       src="${COMMON_TOOLS}/apache-maven-3.0-alpha-7-bin.tar.gz"
+		/>
+		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn"/>
+	</target>
+
+	<target name="genpom">
+		<!-- comment out because genpom.xml is broken, genpom.scala won't run on Hudson, and we should just commit the poms anyway -->
+		<!-- <ant antfile="genpom.xml" target="run">
+			<property name="WORKINGDIR" value="${WORKINGDIR}/${COMPONENT}" />
+			<property name="pathToParentPom" value="../" />
+		</ant> -->
+	</target>
+
+	<target name="install">
+		<echo>Run pom file: ${WORKINGDIR}/${COMPONENT}/pom.xml</echo>
+		
+		<exec executable="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn" dir="${WORKINGDIR}/${COMPONENT}">
+			<!-- <arg line="-o -Dmaven.test.skip" /> -->
+			<arg line="clean install" />
+		</exec>
+	</target>
+
+	<target name="deploy">
+		<!-- TODO enable publishing to download.jboss.org or porkchop.jboss.com
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar"
+		     src="${MAVEN_MIRROR}/maven-ant-tasks-2.1.0.jar"
+		/>
+		<taskdef resource="org/apache/maven/artifact/ant/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar" />
+			</classpath>
+		</taskdef>
+		<install-provider artifactId="wagon-ssh" version="1.0-beta-2"/>
+		<deploy file="target/my-project-1.0.jar">
+			<remoteRepository url="scp://localhost/www/repository">
+				<authentication username="${repository.username}" privateKey="${user.home}/.ssh/id_dsa" />
+			</remoteRepository>
+			<pom refid="mypom" />
+		</deploy>
+		-->
+	</target>
+</project>
+
