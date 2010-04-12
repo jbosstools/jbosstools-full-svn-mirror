@@ -83,6 +83,7 @@
 					</dependencies>
 					<includes>
 						<include>**/*AllTests*.class</include>
+						<include>**/*AllBotTests*.class</include>
 						<include>**/*TestSuite*.class</include>
 					</includes>
 					<parallel>true</parallel>
@@ -265,6 +266,18 @@
 		<repository>
 			<id>m2eclipse-extras</id>
 			<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+
+		<repository>
+			<id>xulrunner</id>
+			<url>http://download.jboss.org/jbosstools/updates/xulrunner/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
