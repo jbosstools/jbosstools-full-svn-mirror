@@ -4,6 +4,9 @@
 	<!-- Configuration Start -->
 	<!-- must set name of component to build/test -->
 	<property name="COMPONENT" value="tests" />
+	
+	<!-- more verbose output -->
+	<property name="debug" value="false" />
 	<!-- Configuration Ends -->
 
 	<!-- To run this script in Eclipse:
@@ -18,18 +21,64 @@
 	<target name="run" depends="init, genpom, install, deploy" />
 
 	<!-- override for local build -->
-	<available file="/qa/tools/opt" type="dir" property="isJBossQA" />
-	<target name="local" unless="isJBossQA">
+	<condition property="isInHudson" value="true">
+		<or>
+			<contains string="${user.dir}" substring="hudson" />
+			<contains string="${user.name}" substring="hudson" />
+			<contains string="${user.home}" substring="hudson" />
+		</or>
+	</condition>
+	<target name="local" unless="isInHudson">
 		<property name="WORKINGDIR" value="${basedir}" />
 		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
 	</target>
 
-	<!-- default settings for JBQA Hudson -->
+	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
+		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip"
+		     src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip"
+		/>
+		<touch file="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" />
+		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
+		<unzip src="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip"
+		       dest="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_"
+		       overwrite="true"
+		/>
+		<copy file="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_/ant-contrib/lib/ant-contrib.jar"
+		      tofile="${COMMON_TOOLS}/ant-contrib.jar"
+		      failonerror="true"
+		/>
+		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
 	<target name="init" depends="local">
 		<property name="WORKINGDIR" value="${basedir}" />
-		<!-- <property name="COMMON_TOOLS" value="/qa/tools/opt" /> -->
 		<property name="COMMON_TOOLS" value="${basedir}/../tools" />
 		<mkdir dir="${COMMON_TOOLS}" />
+
+		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
+		<antcall target="get.ant-contrib" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+		<macrodef name="debug">
+			<text name="echo" />
+			<sequential>
+				<if>
+					<and>
+						<isset property="debug" />
+						<istrue value="${debug}" />
+					</and>
+					<then>
+						<echo message="@{echo}" />
+					</then>
+				</if>
+			</sequential>
+		</macrodef>
 
 		<property name="MAVEN_MIRROR" value="http://mirror.csclub.uwaterloo.ca/apache/maven/binaries" />
 		<get usetimestamp="true"
@@ -41,7 +90,7 @@
 		       dest="${COMMON_TOOLS}"
 		       src="${COMMON_TOOLS}/apache-maven-3.0-alpha-7-bin.tar.gz"
 		/>
-		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn"/>
+		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn" />
 	</target>
 
 	<target name="genpom">
@@ -52,9 +101,18 @@
 	</target>
 
 	<target name="install">
-		<echo>Run pom file: ${WORKINGDIR}/${COMPONENT}/pom.xml</echo>
-		
+		<debug>Generate settings.xml file</debug>
+		<mkdir dir="${WORKINGDIR}/m2-repository" />
+		<echo file="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/conf/settings.xml">
+&lt;settings xmlns="http://maven.apache.org/settings/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  &lt;localRepository>${WORKINGDIR}/m2-repository&lt;/localRepository>
+  &lt;interactiveMode>false&lt;/interactiveMode>
+  &lt;pluginGroups>&lt;/pluginGroups>&lt;proxies>&lt;/proxies>&lt;servers>&lt;/servers>&lt;mirrors>&lt;/mirrors>&lt;profiles>&lt;/profiles>
+&lt;/settings></echo>
+
+		<debug>Run pom file: ${WORKINGDIR}/${COMPONENT}/pom.xml</debug>
 		<exec executable="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn" dir="${WORKINGDIR}/${COMPONENT}">
+			<arg line="-gs ${COMMON_TOOLS}/apache-maven-3.0-alpha-7/conf/settings.xml" />
 			<!-- <arg line="-o -Dmaven.test.skip" /> -->
 			<arg line="-fae clean install" />
 		</exec>
