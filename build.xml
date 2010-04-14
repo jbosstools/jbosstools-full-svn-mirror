@@ -109,7 +109,7 @@
 			/> -->
 			<!-- <arg line="-gs ${COMMON_TOOLS}/apache-maven-${maven.version}/conf/settings.xml" /> -->
 			<!-- <arg line="-o -Dmaven.test.skip" /> -->
-			<arg line="-fae clean install" />
+			<arg line="-Dmaven.repo.local=${COMMON_TOOLS}/m2-repository -fae clean install" />
 		</exec>
 	</target>
 
