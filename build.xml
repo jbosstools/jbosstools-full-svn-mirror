@@ -4,18 +4,18 @@
 	<!-- Configuration Start -->
 	<!-- must set name of component to build/test -->
 	<property name="COMPONENT" value="tests" />
-	
-	<!-- more verbose output -->
-	<property name="debug" value="false" />
+
+	<!-- default maven version --> 
+	<property name="maven.version" value="3.0-alpha-7" />
 	<!-- Configuration Ends -->
 
 	<!-- To run this script in Eclipse:
 			Run As > Ant Build
 	-->
 	<!-- To run this script via commandline (build default module, tests):
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -q
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant
 		 or, to build a specific module: 
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -q -DCOMPONENT=jbpm 
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENT=jbpm 
 	-->
 
 	<target name="run" depends="init, genpom, install, deploy" />
@@ -65,32 +65,17 @@
 			</classpath>
 		</taskdef>
 
-		<macrodef name="debug">
-			<text name="echo" />
-			<sequential>
-				<if>
-					<and>
-						<isset property="debug" />
-						<istrue value="${debug}" />
-					</and>
-					<then>
-						<echo message="@{echo}" />
-					</then>
-				</if>
-			</sequential>
-		</macrodef>
-
 		<property name="MAVEN_MIRROR" value="http://mirror.csclub.uwaterloo.ca/apache/maven/binaries" />
 		<get usetimestamp="true"
-		     dest="${COMMON_TOOLS}/apache-maven-3.0-alpha-7-bin.tar.gz"
-		     src="${MAVEN_MIRROR}/apache-maven-3.0-alpha-7-bin.tar.gz"
+		     dest="${COMMON_TOOLS}/apache-maven-${maven.version}-bin.tar.gz"
+		     src="${MAVEN_MIRROR}/apache-maven-${maven.version}-bin.tar.gz"
 		/>
 		<untar compression="gzip"
 		       overwrite="false"
 		       dest="${COMMON_TOOLS}"
-		       src="${COMMON_TOOLS}/apache-maven-3.0-alpha-7-bin.tar.gz"
+		       src="${COMMON_TOOLS}/apache-maven-${maven.version}-bin.tar.gz"
 		/>
-		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn" />
+		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" />
 	</target>
 
 	<target name="genpom">
@@ -101,18 +86,28 @@
 	</target>
 
 	<target name="install">
-		<debug>Generate settings.xml file</debug>
-		<mkdir dir="${WORKINGDIR}/m2-repository" />
-		<echo file="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/conf/settings.xml">
+		<!-- <echo level="debug">Generate settings.xml file</echo>
+		<mkdir dir="${COMMON_TOOLS}/m2-repository" />
+		<echo file="${COMMON_TOOLS}/apache-maven-${maven.version}/conf/settings.xml">
 &lt;settings xmlns="http://maven.apache.org/settings/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-  &lt;localRepository>${WORKINGDIR}/m2-repository&lt;/localRepository>
+  &lt;localRepository>${COMMON_TOOLS}/m2-repository&lt;/localRepository>
   &lt;interactiveMode>false&lt;/interactiveMode>
   &lt;pluginGroups>&lt;/pluginGroups>&lt;proxies>&lt;/proxies>&lt;servers>&lt;/servers>&lt;mirrors>&lt;/mirrors>&lt;profiles>&lt;/profiles>
-&lt;/settings></echo>
+&lt;/settings></echo> -->
 
-		<debug>Run pom file: ${WORKINGDIR}/${COMPONENT}/pom.xml</debug>
-		<exec executable="${COMMON_TOOLS}/apache-maven-3.0-alpha-7/bin/mvn" dir="${WORKINGDIR}/${COMPONENT}">
-			<arg line="-gs ${COMMON_TOOLS}/apache-maven-3.0-alpha-7/conf/settings.xml" />
+		<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
+		<echo level="verbose">Pom: ${WORKINGDIR}/${COMPONENT}/pom.xml</echo>
+		<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn"
+		      dir="${WORKINGDIR}/${COMPONENT}"
+		      failifexecutionfails="true"
+		      failonerror="true"
+		      timeout="10800000"
+		>
+			<env key="M2_HOME" value="${COMMON_TOOLS}/apache-maven-${maven.version}" />
+			<!-- <env key="MAVEN_OPTS"
+			     value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
+			/> -->
+			<!-- <arg line="-gs ${COMMON_TOOLS}/apache-maven-${maven.version}/conf/settings.xml" /> -->
 			<!-- <arg line="-o -Dmaven.test.skip" /> -->
 			<arg line="-fae clean install" />
 		</exec>
