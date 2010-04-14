@@ -5,7 +5,7 @@
 	<!-- must set name of component to build/test -->
 	<property name="COMPONENT" value="tests" />
 
-	<!-- default maven version --> 
+	<!-- default maven version -->
 	<property name="maven.version" value="3.0-alpha-7" />
 	<!-- Configuration Ends -->
 
@@ -110,6 +110,7 @@
 			<!-- <arg line="-gs ${COMMON_TOOLS}/apache-maven-${maven.version}/conf/settings.xml" /> -->
 			<!-- <arg line="-o -Dmaven.test.skip" /> -->
 			<arg line="-Dmaven.repo.local=${COMMON_TOOLS}/m2-repository -fae clean install" />
+			<arg line="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
 		</exec>
 	</target>
 
