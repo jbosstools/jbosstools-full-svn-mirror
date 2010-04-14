@@ -54,7 +54,7 @@
 
 	<target name="init" depends="local">
 		<property name="WORKINGDIR" value="${basedir}" />
-		<property name="COMMON_TOOLS" value="${basedir}/../tools" />
+		<property name="COMMON_TOOLS" value="${WORKINGDIR}/../tools" />
 		<mkdir dir="${COMMON_TOOLS}" />
 
 		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
