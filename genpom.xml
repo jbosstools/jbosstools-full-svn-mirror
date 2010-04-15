@@ -3,7 +3,6 @@
 	<property name="projectName" value="org.jboss.tools" />
 	<property name="pathToParentPom" value="" />
 	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
-	<property name="debug" value="false" />
 	<property name="dirsToExclude"
 	          value="**/*.sdk.*, **/doc*, **/download.jboss.org, **/util, **/test, **/builders, **/contrib, **/releng, ."
 	/>
@@ -55,21 +54,6 @@
 			</classpath>
 		</taskdef>
 
-		<macrodef name="debug">
-			<text name="echo" />
-			<sequential>
-				<if>
-					<and>
-						<isset property="debug" />
-						<istrue value="${debug}" />
-					</and>
-					<then>
-						<echo message="@{echo}" />
-					</then>
-				</if>
-			</sequential>
-		</macrodef>
-
 		<!-- = = = = = = = = = = = = = = = = =
 	      macrodef: write out a pom.xml which aggregates subdirs   
 	     = = = = = = = = = = = = = = = = = -->
@@ -112,8 +96,7 @@
 				               casesensitive="true"
 				               override="true"
 				/>
-				<debug>   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
-				<!-- <echo>Write Agg @{dir}/pom.xml</echo> -->
+				<echo level="debug">   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</echo>
 				<echo file="@{dir}/pom.xml">&lt;project
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	&lt;modelVersion>4.0.0&lt;/modelVersion>
@@ -187,7 +170,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				               casesensitive="true"
 				               override="true"
 				/>
-				<debug>   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
+				<echo level="debug">   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</echo>
 				<echo file="@{dir}/pom.xml">&lt;project
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	&lt;modelVersion>4.0.0&lt;/modelVersion> 
@@ -252,7 +235,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 						<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
 					</path>
 					<sequential>
-						<!-- <debug>   @{subdir}</debug> -->
 						<var name="aggregate" value="false" />
 						<if>
 							<or>
@@ -294,8 +276,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 										                   artifactVersion="@{artifactVersion}"
 										/>
 
-										<debug>subdir = @{subdir}</debug>
-										<echo>Aggregated: ${artifactIdAgg}</echo>
+										<echo level="debug">subdir = @{subdir}</echo>
+										<echo level="verbose">Aggregated: ${artifactIdAgg}</echo>
 
 										<var name="artifactIdAgg" unset="true" />
 									</else>
@@ -304,30 +286,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 						</if>
 					</sequential>
 				</for>
-			</sequential>
-		</macrodef>
-
-		<!-- = = = = = = = = = = = = = = = = =
-	      macrodef: count items in a list    
-	     = = = = = = = = = = = = = = = = = -->
-		<!-- example usage: 
-		<list.count list="foo bar baz" />
-		<echo message="${list.count.return}" />
-		<var name="list.count.return" unset="true"/>
-		<list.count list="foo bar" />
-		<echo message="${list.count.return}" />
-		-->
-		<macrodef name="list.count">
-			<attribute name="list" default="" />
-			<sequential>
-				<var name="count" value="" />
-				<for param="listitem" list="@{list}" delimiter=", 
-	">
-					<sequential>
-						<var name="count" value="${count}0" />
-					</sequential>
-				</for>
-				<length property="list.count.return" string="${count}" />
 			</sequential>
 		</macrodef>
 
@@ -371,7 +329,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<!-- summary -->
 		<length string="${modulecountstring}" property="modulecount" />
 		<length string="${aggregatorcountstring}" property="aggregatorcount" />
-		<echo>Modules: ${modulecount} Aggregations: ${aggregatorcount}</echo>
+		<echo level="info">Modules: ${modulecount} Aggregations: ${aggregatorcount}</echo>
 
 	</target>
 
@@ -519,7 +477,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				</then>
 			</elseif>
 			<else>
-				<echo>Warning! artifactVersion not found for ${dir}!</echo>
+				<echo level="verbose">Warning! artifactVersion not found for ${dir}!</echo>
 				<var name="artifactVersion" value="0.0.0" />
 			</else>
 		</if>
@@ -554,7 +512,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			</and>
 			<then>
 				<basename file="${dir}" property="this.dir" />
-				<echo>For ${this.dir}, got ${artifactVersion}; should be ${artifactVersion.from.tag}</echo>
+				<echo level="info">For ${this.dir}, got ${artifactVersion}; should be ${artifactVersion.from.tag}</echo>
 			</then>
 			<else>
 				<var name="artifactVersion.from.tag" value="${artifactVersion}" />
@@ -604,7 +562,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				</then>
 			</elseif>
 			<else>
-				<echo>Warning! artifactId not found for ${dir}!</echo>
+				<echo level="info">Warning! artifactId not found for ${dir}!</echo>
 				<basename property="artifactId" file="${dir}" />
 			</else>
 		</if>
