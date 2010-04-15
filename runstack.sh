@@ -32,7 +32,8 @@ done
 # collect compilation results and failures
 for d in $components; do 
 	cd $workingdir; echo "==== $d ===="
-	egrep -v "org\.|com\." $d/buildlog.latest.txt | egrep "SUCCESS|FAIL"
+	egrep -v "org\.|com\." $d/buildlog.latest.txt | egrep "SUCCESS"
+	egrep "FAILURE|SKIPPED" $d/buildlog.latest.txt
 	egrep -A1 "Cannot complete the request|depends on|satisfy dependency|Missing requirement|requires '.+'" $d/buildlog.latest.txt
 	echo ""
 done
