@@ -11,9 +11,7 @@
 	<name>All_Userguides</name>
 
 	<modules>
-                <!--<module>../jbosstools-docbook-xslt</module>
-		<module>../jbosstools-jdocbook-style</module>-->
-		<module>../guides/Exadel-migration</module>
+        <module>../guides/Exadel-migration</module>
 		<module>../guides/GettingStartedGuide</module>
 		<module>../guides/Beginners_Guide</module>
 		<module>../../as/docs/reference</module>
@@ -35,14 +33,11 @@
 		<module>../../jbpm/docs/converter_ref</module>
 		<module>../../jmx/docs/reference</module>
 		<module>../../bpel/docs/reference</module>
-		
-
 		<module>index</module>
 	</modules>
 
 	<build>
 		<plugins>
-
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.2-beta-2</version>
@@ -56,7 +51,36 @@
 					<ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
 				</configuration>
 			</plugin>
-
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>clean</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                    <filesets>
+                        <fileset>
+                            <directory>${pom.basedir}/target/docbook/publish/en-US/</directory>
+                            <includes>
+                                <include>html/com/</include>
+                                <include>html/org/</include>
+                                <include>html_single/com/</include>
+                                <include>html_single/org/</include>
+                                <include>eclipse/com/</include>
+                                <include>eclipse/org/</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 

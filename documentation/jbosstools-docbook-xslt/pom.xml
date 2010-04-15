@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -10,62 +10,53 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <name>JBoss Tools DocBook XSLT</name>
-    <description>The main project to transform DocBook XML into XHTML and other formats for JBoss Tools Documentation.</description>
+    <description>The main project to transform DocBook XML into XHTML and other formats for JBoss Tools Documentation.
+    </description>
     <url>http://www.jboss.org/tools/</url>
 
     <contributors>
-      <contributor>
-        <name>Mark Newton</name>
-        <email>mark.newton@jboss.org</email>
-        <organization>Red Hat</organization>
-        <roles>
-          <role>Content Lead</role>
-        </roles>
-        <timezone>+1</timezone>
-      </contributor>
+        <contributor>
+            <name>Mark Newton</name>
+            <email>mark.newton@jboss.org</email>
+            <organization>Red Hat</organization>
+            <roles>
+                <role>Content Lead</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
     </contributors>
 
-   <scm>
-      <developerConnection>scm:svn:https://svn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-docbook-xslt/</developerConnection>
-      <connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-docbook-xslt/</connection>
-   </scm>
-   
+    <scm>
+        <developerConnection>scm:svn:https://svn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-docbook-xslt/
+        </developerConnection>
+        <connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-docbook-xslt/
+        </connection>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>org.jboss</groupId>
             <artifactId>jbossorg-docbook-xslt</artifactId>
+            <version>1.1.0.Beta1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jboss</groupId>
+            <artifactId>jbossent-docbook-xslt</artifactId>
+            <version>1.0.0.Beta1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss</groupId>
-                <artifactId>jbossorg-docbook-xslt</artifactId>
-                <version>1.1.0.Beta1</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+        </extensions>
+    </build>
 
-   <build>
-      <extensions>
-         <extension>
-            <groupId>org.apache.maven.wagon</groupId>
-            <artifactId>wagon-webdav</artifactId>
-            <version>1.0-beta-2</version>
-         </extension>
-      </extensions>
-      <pluginManagement>
-         <plugins>
-            <plugin>
-               <groupId>org.jboss.maven.plugins</groupId>
-               <artifactId>maven-jdocbook-plugin</artifactId>
-               <version>2.1.0-200803311251UTC-MPJDOCBOOK-8</version>
-            </plugin>
-         </plugins>
-      </pluginManagement>
-   </build>
-   
     <distributionManagement>
         <repository>
             <!-- Copy the dist to the local checkout of the JBoss maven2 repo ${maven.repository.root} -->
@@ -80,5 +71,10 @@
             <url>dav:https://snapshots.jboss.org/maven2</url>
         </snapshotRepository>
     </distributionManagement>
-
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repository.sonatype.org</id>
+            <url>http://repository.sonatype.org/content/groups/public</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

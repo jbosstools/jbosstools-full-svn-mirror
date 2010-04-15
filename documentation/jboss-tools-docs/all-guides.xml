@@ -6,46 +6,7 @@
     <format>dir</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
-<!--
-  <moduleSets>
-    <moduleSet>
-      <includes>
-        <include>org.jboss.tools:exadel-migration-${translation}</include>
-      </includes>
-      <binaries>
-        <outputDirectory></outputDirectory>
-        <unpack>true</unpack>
-      </binaries>
-    </moduleSet>
-  </moduleSets>
- -->
 		<fileSets>
-			<fileSet>
-				<directory>index/target/docbook/publish/en-US/html_single/</directory>
-				<outputDirectory>../</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>index.html</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-			<fileSet>
-				<directory>index/target/docbook/publish/en-US/html_single/</directory>
-				<outputDirectory>../</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<excludes>
-					<exclude>index.html</exclude>
-				</excludes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
 			<fileSet>
 				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
 				<outputDirectory>/Exadel-migration</outputDirectory>
@@ -60,6 +21,31 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
+				<directory>index/target/docbook/publish/en-US/html_single/</directory>
+				<outputDirectory>../</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+
+            <!-- Maybe it is unnecessary fileSet and it could be removed at all? -->
+            <!--fileSet>
+				<directory>../guides/GettingStartedGuide/en</directory>
+				<outputDirectory>/GettingStartedGuide</outputDirectory>
+				<filtered>false</filtered>
+				<includes>
+					<include>database.zip</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet-->
+
+            <fileSet>
 				<directory>../guides/GettingStartedGuide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/GettingStartedGuide</outputDirectory>
 				<filtered>false</filtered>
@@ -85,18 +71,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			<!--fileSet>
-				<directory>../guides/GettingStartedGuide/en</directory>
-				<outputDirectory>/GettingStartedGuide</outputDirectory>
-				<filtered>false</filtered>
-				<includes>
-					<include>database.zip</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet-->
+
 			<fileSet>
 				<directory>../guides/Legacy-jsf-struts/target/docbook/publish/en-US</directory>
 				<outputDirectory>/Legacy-jsf-struts</outputDirectory>
@@ -270,7 +245,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			
+
 			<fileSet>
 				<directory>../../portlet/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jboss_portal_tools_ref_guide</outputDirectory>
@@ -298,7 +273,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			
+
 			<fileSet>
 				<directory>../../drools/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/drools_tools_ref_guide</outputDirectory>
@@ -312,7 +287,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			
+
 			<fileSet>
 				<directory>../../drools/docs/guvnor_ref/target/docbook/publish/en-US</directory>
 				<outputDirectory>/guvnor_tools_ref_guide</outputDirectory>
@@ -326,7 +301,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			
+
 			<fileSet>
 				<directory>../../smooks/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jboss_smooks_plugin_ref_guide</outputDirectory>
@@ -354,8 +329,8 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			
-			
+
+
 			<fileSet>
 				<directory>../../bpel/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/bpel_user_guide</outputDirectory>
@@ -370,5 +345,5 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 	</fileSets>
-		
+
 </assembly>

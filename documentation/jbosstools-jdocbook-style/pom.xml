@@ -19,29 +19,54 @@
     </organization>
 
     <contributors>
-      <contributor>
-        <name>Mark Newton</name>
-        <email>mark.newton@jboss.org</email>
-        <organization>Red Hat</organization>
-        <roles>
-          <role>Content Lead</role>
-        </roles>
-        <timezone>+1</timezone>
-      </contributor>
+        <contributor>
+            <name>Mark Newton</name>
+            <email>mark.newton@jboss.org</email>
+            <organization>Red Hat</organization>
+            <roles>
+                <role>Content Lead</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
     </contributors>
 
-   <scm>
-      <developerConnection>scm:svn:https://svn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-jdocbook-style/</developerConnection>
-      <connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-jdocbook-style/</connection>
-   </scm>
-   
+    <scm>
+        <developerConnection>
+            scm:svn:https://svn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-jdocbook-style/
+        </developerConnection>
+        <connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/jbosstools-jdocbook-style/
+        </connection>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jboss</groupId>
+            <artifactId>jbossent-jdocbook-style</artifactId>
+            <version>1.0.0.Beta1</version>
+            <type>jdocbook-style</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jbossorg-jdocbook-style</artifactId>
+            <version>1.1.0.Beta1</version>
+            <type>jdocbook-style</type>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.jboss.maven.plugins</groupId>
                 <artifactId>maven-jdocbook-style-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>2.0.0</version>
                 <extensions>true</extensions>
+                <configuration>
+                    <cssSourceDirectory>
+                        ${pom.basedir}/src/main
+                    </cssSourceDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
