@@ -79,7 +79,8 @@
 	</target>
 
 	<target name="genpoms">
-		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",">
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
+	">
 			<sequential>
 				<ant antfile="genpom.xml" target="run">
 					<property name="WORKINGDIR" value="${WORKINGDIR}/@{COMPONENT}" />
@@ -92,7 +93,8 @@
 	<target name="install">
 		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
 		<property name="MAVEN_FLAGS" value="" />
-		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",">
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
+	">
 			<sequential>
 				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
 				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
