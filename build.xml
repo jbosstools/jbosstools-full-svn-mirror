@@ -1,9 +1,9 @@
-<!-- Run a given ${COMPONENT} build -->
+<!-- Build a given list of ${COMPONENTS} -->
 <project default="run" basedir=".">
 
 	<!-- Configuration Start -->
 	<!-- must set name of component to build/test -->
-	<property name="COMPONENT" value="tests" />
+	<property name="COMPONENTS" value="tests,common" />
 
 	<!-- default maven version -->
 	<property name="maven.version" value="3.0-alpha-7" />
@@ -15,10 +15,10 @@
 	<!-- To run this script via commandline (build default module, tests):
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant
 		 or, to build a specific module: 
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENT=jbpm 
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common 
 	-->
 
-	<target name="run" depends="init, genpom, install, deploy" />
+	<target name="run" depends="init, genpoms, install, deploy" />
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -78,38 +78,38 @@
 		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" />
 	</target>
 
-	<target name="genpom">
-		<ant antfile="genpom.xml" target="run">
-			<property name="WORKINGDIR" value="${WORKINGDIR}/${COMPONENT}" />
-			<property name="pathToParentPom" value="../" />
-		</ant>
+	<target name="genpoms">
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",">
+			<sequential>
+				<ant antfile="genpom.xml" target="run">
+					<property name="WORKINGDIR" value="${WORKINGDIR}/@{COMPONENT}" />
+					<property name="pathToParentPom" value="../" />
+				</ant>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="install">
-		<!-- <echo level="debug">Generate settings.xml file</echo>
-		<mkdir dir="${COMMON_TOOLS}/m2-repository" />
-		<echo file="${COMMON_TOOLS}/apache-maven-${maven.version}/conf/settings.xml">
-&lt;settings xmlns="http://maven.apache.org/settings/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-  &lt;localRepository>${COMMON_TOOLS}/m2-repository&lt;/localRepository>
-  &lt;interactiveMode>false&lt;/interactiveMode>
-  &lt;pluginGroups>&lt;/pluginGroups>&lt;proxies>&lt;/proxies>&lt;servers>&lt;/servers>&lt;mirrors>&lt;/mirrors>&lt;profiles>&lt;/profiles>
-&lt;/settings></echo> -->
-
-		<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
-		<echo level="verbose">Pom: ${WORKINGDIR}/${COMPONENT}/pom.xml</echo>
-		<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn"
-		      dir="${WORKINGDIR}/${COMPONENT}"
-		      failifexecutionfails="true"
-		      failonerror="true"
-		      timeout="10800000"
-		>
-			<env key="M2_HOME" value="${COMMON_TOOLS}/apache-maven-${maven.version}" />
-			<env key="MAVEN_OPTS" value="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
-			<!-- more debug output with <env key="MAVEN_OPTS" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"/> -->
-			<!-- <arg line="-gs ${COMMON_TOOLS}/apache-maven-${maven.version}/conf/settings.xml" /> -->
-			<!-- <arg line="-o -Dmaven.test.skip" /> -->
-			<arg line="-Dmaven.repo.local=${COMMON_TOOLS}/m2-repository -fae clean install" />
-		</exec>
+		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
+		<property name="MAVEN_FLAGS" value="" />
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",">
+			<sequential>
+				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
+				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
+				<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn"
+				      dir="${WORKINGDIR}/@{COMPONENT}"
+				      failifexecutionfails="true"
+				      failonerror="true"
+				      timeout="10800000"
+				>
+					<env key="M2_HOME" value="${COMMON_TOOLS}/apache-maven-${maven.version}" />
+					<env key="MAVEN_OPTS" value="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
+					<!-- more debug output with <env key="MAVEN_OPTS" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"/> -->
+					<!-- <arg line="-o -Dmaven.test.skip" /> -->
+					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository -fae clean install" />
+				</exec>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="deploy">
