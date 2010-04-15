@@ -7,7 +7,7 @@ workingdir=~/workspace36/jbosstools-modular_build
 if [[ $# -lt 1 ]]; then
 	echo "Usage: $0 component1 component2 ..."
 	echo "Eg. $0 tests common jmx archives as"
-	echo "Eg. $0 jst jsf vpe struts seam"
+	echo "Eg. $0 jst jsf vpe struts seam -Dmaven.test.skip"
 	exit 1
 fi
 
