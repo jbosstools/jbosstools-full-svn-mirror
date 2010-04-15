@@ -288,8 +288,41 @@
 		</repository>
 	</repositories>
 
-	<!--	<pluginRepositories>
+	<pluginRepositories>
 		<pluginRepository>
+			<id>maven-central</id>
+			<url>http://repo1.maven.org/maven2/
+			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+		<pluginRepository>
+			<id>sonatype-maven-central</id>
+			<url>http://repository.sonatype.org/content/repositories/central/
+			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven-snapshots-sonatype</id>
+			<url>http://repository.apache.org/content/repositories/maven-snapshots-sonatype/
+			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+		<!-- <pluginRepository>
 			<id>tycho</id>
 			<url>http://repository.sonatype.org/content/repositories/all-001/
 			</url>
@@ -299,6 +332,6 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-		</pluginRepository>
-	</pluginRepositories> -->
+		</pluginRepository> -->
+	</pluginRepositories>
 </project>
