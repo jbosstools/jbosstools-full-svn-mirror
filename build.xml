@@ -83,7 +83,7 @@
 	">
 			<sequential>
 				<ant antfile="genpom.xml" target="run">
-					<property name="COMPONENT" value="@{COMPONENT}"/>
+					<property name="COMPONENT" value="@{COMPONENT}" />
 				</ant>
 			</sequential>
 		</for>
@@ -111,6 +111,12 @@
 				</exec>
 			</sequential>
 		</for>
+	</target>
+
+	<!-- TODO: generate site.xml files for components: gensite.xml script called by build.xml -->
+	<!-- TODO: zip up update site zips for each component; publish to download.jboss.org as part of deploy task -->
+	<target name="zip.sites">
+
 	</target>
 
 	<target name="deploy">

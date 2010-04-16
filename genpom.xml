@@ -186,6 +186,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	&lt;packaging>${artifactType}&lt;/packaging> 
 &lt;/project>
 	</echo>
+				<!-- TODO: if generating module pom for a given platform, add in platform-specific stuff (see xulrunner) -->
 				<var name="artifactId" unset="true" />
 				<var name="artifactVersion" unset="true" />
 				<var name="artifactType" unset="true" />
