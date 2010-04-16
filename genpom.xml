@@ -144,7 +144,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 					<property name="dir" value="@{dir}" />
 				</antcallback>
 				<if>
-					<!-- cannot calculate id and version for an update site so just set them to defaults -->
+					<!-- TODO: calculate id and version for an update site so just set them to defaults -->
 					<equals arg1="${artifactType}" arg2="eclipse-update-site" />
 					<then>
 						<var name="artifactId" unset="true" />
