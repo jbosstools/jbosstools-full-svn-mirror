@@ -123,9 +123,11 @@ public class VpeTest extends TestCase implements ILogListener {
 		 	Job[] jobs = Job.getJobManager().find(null);
 			for (Job job : jobs) {
 				if (job instanceof StructuredRegionProcessor) {
-					TestUtil.delay(50);
-					isJobsCheck = true;
-					break;
+					if (job.getState() == Job.RUNNING) {
+						TestUtil.delay(50);
+						isJobsCheck = true;
+						break;
+					}
 				}
 			}
 		}
