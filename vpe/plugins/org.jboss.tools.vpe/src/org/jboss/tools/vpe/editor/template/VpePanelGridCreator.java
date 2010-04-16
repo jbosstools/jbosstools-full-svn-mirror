@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
@@ -23,6 +24,7 @@ import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionInfo;
 import org.jboss.tools.vpe.editor.template.expression.VpeValue;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeClassUtil;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -30,7 +32,6 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -265,6 +266,23 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			if (tableSize == 0) {
 			    tableSize = childrenCount;
 			}
+ 			Map<String, List<Node>> captionFacetChildren = null;
+ 			Map<String, List<Node>> headerFacetChildren = null;
+ 			Map<String, List<Node>> footerFacetChildren = null;
+ 			captionFacetChildren = VisualDomUtil.findFacetElements(caption, pageContext);
+ 			headerFacetChildren = VisualDomUtil.findFacetElements(header, pageContext);
+ 			footerFacetChildren = VisualDomUtil.findFacetElements(footer, pageContext);
+ 			/*
+ 			 * Add additional table cell for odd facet's elements.
+ 			 */
+ 			boolean captionHtmlElementsPresents = ((null != captionFacetChildren) && (captionFacetChildren.get(VisualDomUtil.FACET_HTML_TAGS).size() > 0));
+ 			boolean headerHtmlElementsPresents = ((null != headerFacetChildren) && (headerFacetChildren.get(VisualDomUtil.FACET_HTML_TAGS).size() > 0));
+ 			boolean footerHtmlElementsPresents = ((null != footerFacetChildren) && (footerFacetChildren.get(VisualDomUtil.FACET_HTML_TAGS).size() > 0));
+ 			boolean htmlFacetsElementsPresents = captionHtmlElementsPresents || headerHtmlElementsPresents || footerHtmlElementsPresents;
+ 			boolean htmlFacetsElementsRendered = false;
+ 			if (htmlFacetsElementsPresents) {
+ 				childrenCount++;
+ 			}
 			int rowCount = (childrenCount + tableSize - 1) / tableSize;
 
 			nsIDOMElement visualHead = null;
@@ -275,8 +293,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			    visualCaption = visualDocument
 			    .createElement(HTML.TAG_CAPTION);
 			    visualTable.appendChild(visualCaption);
-			    VpeChildrenInfo childrenInfo = new VpeChildrenInfo(
-				    visualCaption);
+			    VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualCaption);
 			    childrenInfo.addSourceChild(caption);
 			    creatorInfo.addChildrenInfo(childrenInfo);
 			    if (captionClassExpr != null
@@ -317,8 +334,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 			for (int i = 0; i < rowCount; i++) {
 			    int cci = 0; // index of column class. Reset on every new row.
 
-			    nsIDOMElement visualRow = visualDocument
-			    .createElement(HTML.TAG_TR);
+			    nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 			    if (rowClasses.size() > 0) {
 				visualRow.setAttribute(HTML.ATTR_CLASS, rowClasses.get(rci)
 					.toString());
@@ -330,8 +346,7 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				if (i*tableSize+j >= childrenCount) {
 				    break;
 				}
-				nsIDOMElement visualCell = visualDocument
-				.createElement(HTML.TAG_TD);
+				nsIDOMElement visualCell = visualDocument.createElement(HTML.TAG_TD);
 				if (columnClasses.size() > 0) {
 				    visualCell.setAttribute(HTML.ATTR_CLASS, columnClasses.get(
 					    cci).toString());
@@ -340,16 +355,53 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 					cci = 0;
 				}
 				visualRow.appendChild(visualCell);
-				int sourceIndex = tableSize * i + j;
-				if (sourceIndex < childrenCount) {
-				    Node child = sourceChildren[sourceIndex];
-				    if (child != header && child != footer) {
-					VpeChildrenInfo childrenInfo = new VpeChildrenInfo(
-						visualCell);
-					childrenInfo.addSourceChild(child);
-					creatorInfo.addChildrenInfo(childrenInfo);
-				    }
-				}
+ 				/*
+ 				 * https://jira.jboss.org/jira/browse/JBIDE-3373
+ 				 * Add odd facets elements to the first table cell
+ 				 */
+ 				if (htmlFacetsElementsPresents && !htmlFacetsElementsRendered) {
+ 					VpeChildrenInfo childrenInfo = null;
+ 					if (captionHtmlElementsPresents) {
+ 						for (Node node : captionFacetChildren.get(VisualDomUtil.FACET_HTML_TAGS)) {
+ 							childrenInfo = new VpeChildrenInfo(visualCell);
+ 							childrenInfo.addSourceChild(node);
+ 							creatorInfo.addChildrenInfo(childrenInfo);
+ 						}
+ 					}
+ 					if (headerHtmlElementsPresents) {
+ 						for (Node node : headerFacetChildren.get(VisualDomUtil.FACET_HTML_TAGS)) {
+ 							childrenInfo = new VpeChildrenInfo(visualCell);
+ 							childrenInfo.addSourceChild(node);
+ 							creatorInfo.addChildrenInfo(childrenInfo);
+ 						}
+ 					}
+ 					if (footerHtmlElementsPresents) {
+ 						for (Node node : footerFacetChildren.get(VisualDomUtil.FACET_HTML_TAGS)) {
+ 							childrenInfo = new VpeChildrenInfo(visualCell);
+ 							childrenInfo.addSourceChild(node);
+ 							creatorInfo.addChildrenInfo(childrenInfo);
+ 						}
+ 					}
+ 					htmlFacetsElementsRendered = true;
+ 				} else {
+ 
+ 					int sourceIndex = tableSize * i + j;
+ 					if (sourceIndex < childrenCount) {
+ 						/*
+ 						 * https://jira.jboss.org/jira/browse/JBIDE-3373
+ 						 * Correct index when odd facets elements presents
+ 						 */
+ 						if (htmlFacetsElementsPresents) {
+ 							sourceIndex = sourceIndex-1;
+ 						}
+ 						Node child = sourceChildren[sourceIndex];
+ 						if (child != header && child != footer) {
+ 							VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualCell);
+ 							childrenInfo.addSourceChild(child);
+ 							creatorInfo.addChildrenInfo(childrenInfo);
+ 						}
+ 					}
+			    }
 			    }
 			    if (visualBody != null) {
 				visualBody.appendChild(visualRow);
@@ -357,10 +409,10 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 				visualTable.appendChild(visualRow);
 			    }
 			}
-			makeSpecial(header, visualHead, visualDocument, tableSize,
-				creatorInfo,  HTML.TAG_TH, headerClassExpr, pageContext);
-			makeSpecial(footer, visualFoot, visualDocument, tableSize,
-				creatorInfo, HTML.TAG_TD, footerClassExpr, pageContext);
+			makeSpecial(header, "header", visualHead, visualDocument, tableSize, //$NON-NLS-1$
+	 				creatorInfo,  HTML.TAG_TH, headerClassExpr, pageContext);
+			makeSpecial(footer, "footer", visualFoot, visualDocument, tableSize, //$NON-NLS-1$
+	 				creatorInfo, HTML.TAG_TD, footerClassExpr, pageContext);
 
 			for (int i = 0; i < propertyCreators.size(); i++) {
 			    VpeCreator creator = (VpeCreator) propertyCreators.get(i);
@@ -382,24 +434,25 @@ public class VpePanelGridCreator extends VpeAbstractCreator {
 		return creatorInfo;
 	}
 
-	private void makeSpecial(Node header, nsIDOMElement visualHead,
+	private void makeSpecial(Node facet, String facetName, nsIDOMElement visualHead,
 			nsIDOMDocument visualDocument, int tableSize,
 			VpeCreatorInfo creatorInfo, String cellTag,
 			VpeExpression headerClassExpr, VpePageContext pageContext) throws VpeExpressionException {
-		if (header != null && visualHead != null) {
+		if (facet != null && visualHead != null) {
 			nsIDOMElement visualRow = visualDocument.createElement(HTML.TAG_TR);
 			visualHead.appendChild(visualRow);
 			nsIDOMElement visualCell = visualDocument.createElement(cellTag);
 			visualCell.setAttribute(HTML.ATTR_COLSPAN, "" + tableSize); //$NON-NLS-1$
-			if (headerClassExpr != null && header.getParentNode() != null) {
+			if (headerClassExpr != null && facet.getParentNode() != null) {
 				String headerClass = headerClassExpr.exec(pageContext,
-						header.getParentNode()).stringValue();
+						facet.getParentNode()).stringValue();
 				visualCell.setAttribute(HTML.ATTR_CLASS, headerClass);
 			}
 			visualRow.appendChild(visualCell);
 			VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualCell);
-			childrenInfo.addSourceChild(header);
+			childrenInfo.addSourceChild(facet);
 			creatorInfo.addChildrenInfo(childrenInfo);
+			visualCell.setAttribute(VpeVisualDomBuilder.VPE_FACET, facetName);
 		}
 	}
 

@@ -20,6 +20,7 @@ import org.jboss.tools.vpe.editor.proxy.VpeProxyUtil;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class SourceDomUtil {
 	private static final Set<String> templatesNamespacesWithRendered=new HashSet<String>();
@@ -90,5 +91,21 @@ public class SourceDomUtil {
 			}
 		}
 		return result;
+	}
+	
+	public static Element getFacetByName(Element sourceElement, String facetName) {
+		Element facetElement = null; 
+		NodeList children = sourceElement.getChildNodes();
+	        for (int i = 0; i < children.getLength(); i++) {
+	            Node node = children.item(i);
+			if ((facetName != null)
+					&& (node instanceof Element)
+					&& (node.getNodeName() != null)
+					&& (node.getNodeName().indexOf(":facet") > 0) //$NON-NLS-1$
+					&& (facetName.equalsIgnoreCase((((Element) node)).getAttribute("name")))) { //$NON-NLS-1$
+				facetElement = (Element) node;
+	            }
+	        }
+	        return facetElement;
 	}
 }

@@ -192,7 +192,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 //		div.appendChild(visualDocument.createTextNode(redundantText));
 		div.appendChild(outterTable);
 
-		if (true || sourceElements.hasTableCaption()) {
+		if (sourceElements.hasTableCaption()) {
 			caption = visualDocument.createElement(HTML.TAG_CAPTION);
 			if (sourceElements.getTableCaption() != null) {
 				VpeChildrenInfo info = new VpeChildrenInfo(caption);

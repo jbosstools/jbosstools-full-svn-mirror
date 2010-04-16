@@ -30,7 +30,7 @@ public class VpeFacetCreator extends VpeAbstractCreator {
 	@Override
 	public VpeCreatorInfo create(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, nsIDOMElement visualElement, Map visualNodeMap) {
 		VpeCreatorInfo creatorInfo = null;
-
+		
 		boolean isHeader = false;
 		boolean isFooter = false;
 

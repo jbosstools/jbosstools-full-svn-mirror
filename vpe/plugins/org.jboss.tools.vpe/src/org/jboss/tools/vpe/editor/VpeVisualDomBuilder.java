@@ -98,7 +98,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
     public static final String PARENT = "PARENT"; //$NON-NLS-1$
     public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
 	public static final String VPE_USER_TOGGLE_LOOKUP_PARENT = "vpe-user-toggle-lookup-parent"; //$NON-NLS-1$
-
+ 	/*
+ 	 * https://jira.jboss.org/jira/browse/JBIDE-3373
+ 	 * Attribute that specifies the place where JSF facet should be rendered.
+ 	 */
+ 	public static final String VPE_FACET = "VPE-FACET"; //$NON-NLS-1$
+	
 	private static final String PSEUDO_ELEMENT = "br"; //$NON-NLS-1$
 	private static final String PSEUDO_ELEMENT_ATTR = "vpe:pseudo-element"; //$NON-NLS-1$
 	private static final String INIT_ELEMENT_ATTR = "vpe:init-element"; //$NON-NLS-1$
@@ -284,8 +289,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * @param visualContainer visual container, cannot be {@code null} 
 	 * @return {@code true} if and only if the visual representation is created and added successfully 
 	 */
-	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode,
-			nsIDOMNode visualContainer) {
+	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode, nsIDOMNode visualContainer) {
+		if (sourceNode.toString().indexOf("h:outputText/@[1568, 1603] (<h:outputText value=\"first text\" />)") > -1) {
+			System.out.println("My Out 11");
+		}
+		if (sourceNode.toString().indexOf("h:outputText/@[1153, 1188] (<h:outputText value=\"panel text\" />)") > -1) {
+			System.out.println("My Out 22");
+		}
 		try {
 		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
 // Commented as fix for JBIDE-3012.	
@@ -299,11 +309,28 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //		} catch (XPCOMException ex) {
 //			// just ignore this exception
 //		}
+
 		if (visualNewNode != null) {
-			if (visualNextNode == null) {
-				visualContainer.appendChild(visualNewNode);
-			} else {
-				visualContainer.insertBefore(visualNewNode, visualNextNode);
+			/*
+			 * https://jira.jboss.org/jira/browse/JBIDE-3373
+			 * Do not add additional visual node for f:facet
+			 * when it is inserted into existing one.
+			 */
+			nsIDOMElement element = null;
+			try {
+				element = (nsIDOMElement) visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			} catch (org.mozilla.xpcom.XPCOMException e) {
+				/*
+				 * Cannot parse node to element,
+				 * do nothing
+				 */
+		 	}
+			if (!((null != element) && element.hasAttribute(VPE_FACET))) {
+				if (visualNextNode == null) {
+					visualContainer.appendChild(visualNewNode);
+				} else {
+					visualContainer.insertBefore(visualNewNode, visualNextNode);
+				}
 			}
 			return true;
 		}
@@ -688,9 +715,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			if (sourceChildren != null) {
 				for (int j = 0; j < sourceChildren.size(); j++) {
 					Node child = (Node) sourceChildren.get(j);
-					if ((!isInvisibleNode(child))
-							&& addNode((Node) sourceChildren.get(j), null,
-									visualParent)) {
+					if ((!isInvisibleNode(child)) 
+							&& addNode(child, null, visualParent)) {
 						childrenCount++;
 					}
 				}

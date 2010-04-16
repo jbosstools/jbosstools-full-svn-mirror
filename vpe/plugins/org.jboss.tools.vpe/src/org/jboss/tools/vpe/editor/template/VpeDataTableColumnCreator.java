@@ -10,18 +10,18 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import java.util.List;
 import java.util.Map;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.SourceColumnElements;
-import org.jboss.tools.vpe.editor.template.VpeDataTableElements.SourceDataTableElements;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.VisualColumnElements;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.VisualDataTableElements;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -90,8 +90,45 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 				}
 				setCellClass(cell, styleClass);
 				visualColumnElements.setFooterCell(cell);
-		
+				
+				/*
+				 * Find elements from the f:facet 
+				 */
+				Map<String, List<Node>> headerFacetChildren = null;
+	 			Map<String, List<Node>> footerFacetChildren = null;
+				headerFacetChildren = VisualDomUtil.findFacetElements(columnElements.getHeader(), pageContext);
+	 			footerFacetChildren = VisualDomUtil.findFacetElements(columnElements.getFooter(), pageContext);
+				boolean headerHtmlElementsPresents = ((null != headerFacetChildren) && (headerFacetChildren
+						.get(VisualDomUtil.FACET_HTML_TAGS).size() > 0));
+				boolean footerHtmlElementsPresents = ((null != footerFacetChildren) && (footerFacetChildren
+						.get(VisualDomUtil.FACET_HTML_TAGS).size() > 0));
+	 			
+	 			/*
+	 			 * Create column body cell. (TD)
+	 			 */
 				cell = VpeDataTableElements.makeCell(visualDataTableElements.getBodyRow(), index, HTML.TAG_TD, visualDocument);
+				
+				/*
+				 * Add HTML elements to the body cell.
+				 * Correct facet will be rendered while JsfFacet template creating.  
+				 */
+				VpeChildrenInfo childrenInfo = new VpeChildrenInfo(cell);
+				if (headerHtmlElementsPresents) {
+					for (Node node : headerFacetChildren.get(VisualDomUtil.FACET_HTML_TAGS)) {
+						childrenInfo.addSourceChild(node);
+					}
+				}
+				if (footerHtmlElementsPresents) {
+					for (Node node : footerFacetChildren.get(VisualDomUtil.FACET_HTML_TAGS)) {
+						childrenInfo.addSourceChild(node);
+					}
+				}
+				/*
+				 * If any elements were added they will be shown
+				 * otherwise empty childrenInfo will be added.
+				 */
+				creatorInfo.addChildrenInfo(childrenInfo);
+				
 				NodeList list = sourceNode.getChildNodes();
 				int cnt = list != null ? list.getLength() : 0;
 				if (cnt > 0) {

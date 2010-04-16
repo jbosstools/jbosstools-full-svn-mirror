@@ -11,11 +11,16 @@
 package org.jboss.tools.vpe.editor.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.swt.graphics.Point;
+import org.jboss.tools.jst.web.tld.TaglibData;
+import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -33,6 +38,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 
 public class VisualDomUtil {
@@ -42,6 +48,10 @@ public class VisualDomUtil {
     public static String RICH_FACES_URI = "http://richfaces.org/rich"; //$NON-NLS-1$
     public static String A4J_URI = "http://richfaces.org/a4j"; //$NON-NLS-1$
     public static String FACELETS_URI = "http://java.sun.com/jsf/facelets"; //$NON-NLS-1$
+    
+     public static String FACET_JSF_TAG = "FACET-JSF-TAG"; //$NON-NLS-1$
+     public static String FACET_ODD_TAGS = "FACET-ODD-TAGS"; //$NON-NLS-1$
+     public static String FACET_HTML_TAGS = "FACET-HTML-TAGS"; //$NON-NLS-1$
 
 	private static final String ACCESSIBILITY_SERVICE_CONTRACT_ID = "@mozilla.org/accessibilityService;1"; //$NON-NLS-1$
 //	private static Reference<nsIAccessibilityService> accessibilityServiceCache = null;
@@ -381,4 +391,149 @@ public class VisualDomUtil {
 		}
 		return creationData;
 	}
+	
+	/**
+ 	 * Finds visual tag with 'VPE-FACET' attribute in it.
+ 	 * Facet element should be rendered into this tag. 
+ 	 * 
+ 	 * @param facetsParentNode node for which its facet should be rendered. 
+ 	 * @param facetName facet's name to compare to 'VPE-FACET' attribute value.
+ 	 * @return found visual tag or 'null' otherwise.
+ 	 */
+	public static nsIDOMElement findVisualTagWithFacetAttribute(
+			nsIDOMNode facetsParentNode, String facetName) {
+		
+     	nsIDOMElement tagForFacet = null;
+     	if (null != facetsParentNode) {
+     		nsIDOMNodeList nodeList = facetsParentNode.getChildNodes();
+     		for (int i = 0; i < nodeList.getLength(); i++) {
+     			nsIDOMElement element = null;
+     			try {
+     				element = (nsIDOMElement) nodeList.item(i).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+     			} catch (org.mozilla.xpcom.XPCOMException e) {
+     				/*
+     				 * Cannot parse node to element, return null.
+     				 */
+     				return null;
+     			}
+     			/*
+     			 * If current tag has 'VPE-FACET' attribute 
+     			 * with the corresponding  facet name.
+     			 * Then return this tag.
+     			 */
+     			if (element.hasAttribute(VpeVisualDomBuilder.VPE_FACET)) {
+     				String facetAttributeName = element.getAttribute(VpeVisualDomBuilder.VPE_FACET);
+     				/*
+     				 * In some cases there could be several footer in one visual node.
+     				 * For instance, header and footer could be in single column cell.
+     				 * Thus VPE-FACET can contain several facet names
+     				 * separated by whitespace, i.e. "header footer".
+     				 */
+     				if (facetAttributeName.indexOf(facetName) >= 0) {
+     					return element;
+     				}
+     			}
+     			/*
+     			 * Else search in children
+     			 */
+     			tagForFacet = findVisualTagWithFacetAttribute(element, facetName);
+     			/*
+     			 * When tag is found in children it will be returned 
+     			 */
+     			if (null != tagForFacet) {
+     				return tagForFacet;
+     			}
+     		}
+		}
+     	/*
+     	 * If nothing matched return null
+     	 */
+     	return tagForFacet;
+     }
+     
+ 	/**
+ 	 * Clarifies JSF facet element's children: JSF tags, other tags, HTML, text.
+ 	 * (For JSF Facet cannot display more than one JSF component).
+ 	 *  Results are put into the map with keys:
+ 	 *  <P> 'FACET-JSF-TAG' - for suitable JSF element
+ 	 *  <P> 'FACET-ODD-TAGS' - for superfluous elements
+ 	 *  <P> 'FACET-HTML-TAG' - for HTML elements and plain text
+ 	 * 
+ 	 * @param facet the facet
+ 	 * @param pageContext the page context 
+ 	 * @return map with arranged elements or empty map if nothing was found.
+ 	 */
+     public static Map<String, List<Node>> findFacetElements(Node facet, VpePageContext pageContext) {
+    	Map<String, List<Node>> facetChildren = new HashMap<String, List<Node>>();
+     	List<Node> jsfTag = new ArrayList<Node>(0);
+     	List<Node> oddTags = new ArrayList<Node>(0);
+     	List<Node> htmlTags = new ArrayList<Node>(0);
+     	facetChildren.put(FACET_JSF_TAG, jsfTag);
+     	facetChildren.put(FACET_ODD_TAGS, oddTags);
+     	facetChildren.put(FACET_HTML_TAGS, htmlTags);
+     	if (null != facet) {
+     		NodeList children = facet.getChildNodes();
+     		Node lastJSFComponent = null;
+     		for (int i = 0; i < children.getLength() ; i++) {
+     			Node child = children.item(i);
+     			String sourcePrefix = child.getPrefix();
+     			List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(child,
+     					pageContext);
+     			TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(
+     					sourcePrefix, taglibs);
+     			/*
+     			 * Here will be nodes with taglibs
+     			 * Plain html tags and text - will not.
+     			 */
+     			if (null != sourceNodeTaglib) {
+     				String sourceNodeUri = sourceNodeTaglib.getUri();
+     				if ((JSF_CORE_URI.equalsIgnoreCase(sourceNodeUri)
+     								|| JSF_HTML_URI.equalsIgnoreCase(sourceNodeUri)
+     								|| RICH_FACES_URI.equalsIgnoreCase(sourceNodeUri) 
+     								|| A4J_URI.equalsIgnoreCase(sourceNodeUri)
+     								|| FACELETS_URI.equalsIgnoreCase(sourceNodeUri))) {
+     					/*
+     					 * Mark the correct jsf component
+     					 * and add it to the odd list for further correction.
+     					 */
+     					lastJSFComponent = child;
+     					oddTags.add(child);
+     				} else {
+     					/*
+     					 * All other tags: JSF, RF, FACELETS, A4J.
+     					 */
+     					oddTags.add(child);
+     				} 
+     			} else {
+     				/*
+     				 * Plain html and text
+     				 */
+     				if (child instanceof Text) {
+     					/*
+     					 * For text nodes we should omit empty strings
+     					 */
+     					Text textNode = (Text) child;
+     					if (textNode.getNodeValue().trim().length() > 0) {
+     						htmlTags.add(child);
+						}
+                    } else {
+                    	/*
+                    	 * If it is not text then it is normal html tag
+                    	 */
+                    	htmlTags.add(child);
+                    }
+     			}
+     		}
+     		/*
+     		 * Fill the correct JSF component:
+     		 * remove it from the odd list and add to the jsf list.
+     		 */
+     		if (null != lastJSFComponent) {
+     			oddTags.remove(lastJSFComponent);
+     			jsfTag.add(lastJSFComponent);
+			}
+ 		}
+     	return facetChildren;
+     }
+	
 }
