@@ -119,7 +119,6 @@ public class OpenOnUtil {
 				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		assertEquals(
 				"Active page should be ", openedOnFileName, activeEditor.getEditorInput().getName()); //$NON-NLS-1$
-
 	}
 
 	private static StructuredTextEditor findStructEditor (MultiPageEditorPart part, IEditorInput input){
