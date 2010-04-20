@@ -34,6 +34,7 @@ import org.eclipse.bpel.apache.ode.deploy.model.dd.ddPackage;
 import org.eclipse.bpel.apache.ode.deploy.ui.Activator;
 import org.eclipse.bpel.apache.ode.deploy.ui.editors.ODEDeployMultiPageEditor;
 import org.eclipse.bpel.apache.ode.deploy.ui.util.DeployUtils;
+import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.bpel.model.PartnerLink;
 import org.eclipse.bpel.model.PartnerLinks;
 import org.eclipse.bpel.model.Process;
@@ -55,6 +56,8 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -714,56 +717,62 @@ public class ProcessPage extends FormPage implements IResourceChangeListener {
 		
 		public Object[] getElements(Object inputElement) {
 			
-			if (inputElement instanceof ProcessType){
-				ProcessType type  = (ProcessType) inputElement;
-				if (forInbound){
-					EList<TProvide> provide = type.getProvide();
-					
-					if (provide.isEmpty()){
-						Process process = type.getModel();
-						PartnerLinks pls = process.getPartnerLinks();
-						EList<PartnerLink> plList = pls.getChildren();
-						for (Iterator<PartnerLink> iterator = plList.iterator(); iterator.hasNext();) {
-							PartnerLink current = (PartnerLink) iterator.next();
-							if (current.getMyRole() != null){
-								TProvide currentProvide = ddFactory.eINSTANCE.createTProvide();
-								currentProvide.setPartnerLink(current.getName());
-								provide.add(currentProvide);
-							}	
-						}
-					}
-					
-					return provide.toArray();
-				}
-				else {
-					EList<TInvoke> invoke = type.getInvoke();
-					
-					if (invoke.isEmpty()){
-						Process process = type.getModel();
-						PartnerLinks pls = process.getPartnerLinks();
-						if (pls != null) {
+			try
+			{
+				if (inputElement instanceof ProcessType){
+					ProcessType type  = (ProcessType) inputElement;
+					if (forInbound){
+						EList<TProvide> provide = type.getProvide();
+						
+						if (provide.isEmpty()){
+							Process process = type.getModel();
+							PartnerLinks pls = process.getPartnerLinks();
 							EList<PartnerLink> plList = pls.getChildren();
-							for (Iterator<PartnerLink> iterator = plList.iterator(); iterator
-									.hasNext();) {
-								PartnerLink current = (PartnerLink) iterator
-										.next();
-								if (current.getPartnerRole() != null) {
-									TInvoke currentInvoke = ddFactory.eINSTANCE
-											.createTInvoke();
-									currentInvoke.setPartnerLink(current
-											.getName());
-									invoke.add(currentInvoke);
+							for (Iterator<PartnerLink> iterator = plList.iterator(); iterator.hasNext();) {
+								PartnerLink current = (PartnerLink) iterator.next();
+								if (current.getMyRole() != null){
+									TProvide currentProvide = ddFactory.eINSTANCE.createTProvide();
+									currentProvide.setPartnerLink(current.getName());
+									provide.add(currentProvide);
+								}	
+							}
+						}
+						
+						return provide.toArray();
+					}
+					else {
+						EList<TInvoke> invoke = type.getInvoke();
+						
+						if (invoke.isEmpty()){
+							Process process = type.getModel();
+							PartnerLinks pls = process.getPartnerLinks();
+							if (pls != null) {
+								EList<PartnerLink> plList = pls.getChildren();
+								for (Iterator<PartnerLink> iterator = plList.iterator(); iterator
+										.hasNext();) {
+									PartnerLink current = (PartnerLink) iterator
+											.next();
+									if (current.getPartnerRole() != null) {
+										TInvoke currentInvoke = ddFactory.eINSTANCE
+												.createTInvoke();
+										currentInvoke.setPartnerLink(current
+												.getName());
+										invoke.add(currentInvoke);
+									}
 								}
 							}
 						}
+						
+						return invoke.toArray();
 					}
-					
-					return invoke.toArray();
 				}
 			}
-			else {
-				return new String[1];
+			catch(NullPointerException ex)
+			{
 			}
+			// https://jira.jboss.org/jira/browse/JBIDE-6006
+			// create a stub invoke so the editor doesn't crash
+			return new TInvoke[] { ddFactory.eINSTANCE.createTInvoke() };
 		}
 		
 		public void dispose() {
@@ -812,7 +821,8 @@ public class ProcessPage extends FormPage implements IResourceChangeListener {
 		IResourceDeltaVisitor rdv = new IResourceDeltaVisitor() {
 			public boolean visit(IResourceDelta delta) {
 				IResource res = delta.getResource();
-				if ("bpel".equalsIgnoreCase(res.getFileExtension())) { //$NON-NLS-1$
+				// https://jira.jboss.org/jira/browse/JBIDE-6006
+				if (DeployUtils.isBPELFile(res)) {
 					Display.getDefault().syncExec(new Runnable() {
 						public void run() {
 							mainform.setMessage("Associated BPEL and/or WSDL has been changed, click to update!", IMessageProvider.WARNING);

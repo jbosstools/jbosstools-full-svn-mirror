@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.QualifiedName;
 
 public interface IBPELUIConstants {
 	// File extensions
+	@Deprecated // use content type instead of bpel file extensions
 	public final String EXTENSION_BPEL = "bpel"; //$NON-NLS-1$
 	public final String EXTENSION_WSDL = "wsdl"; //$NON-NLS-1$
 	public final String EXTENSION_WSIL = "wsil"; //$NON-NLS-1$

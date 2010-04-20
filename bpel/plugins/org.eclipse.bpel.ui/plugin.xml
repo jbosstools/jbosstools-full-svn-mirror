@@ -6,7 +6,7 @@
    <extension-point id="expressionEditors" name="Expression Language Editors" schema="schemas/expressionEditors.exsd"/>
    <extension-point id="actions" name="Actions" schema="schemas/actions.exsd"/>
    <extension-point id="modelListener" name="Model Listener" schema="schemas/modelListener.exsd"/>
-   <extension-point id="uiObjectFactories" name="UIObjectFactories" schema="schema/uiObjectFactories.exsd"/>
+   <extension-point id="uiObjectFactories" name="UIObjectFactories" schema="schemas/uiObjectFactories.exsd"/>
 
 
    <extension
@@ -15,10 +15,12 @@
             class="org.eclipse.bpel.ui.BPELMultipageEditorPart"
             contributorClass="org.eclipse.bpel.ui.BPELMultiPageEditorActionBarContributor"
             default="true"
-            extensions="bpel"
-            icon="icons/obj16/bpel.gif"
             id="org.eclipse.bpel.ui.bpeleditor"
             name="%BPEL_EDITOR_NAME">
+         <!-- use content type to identify BPEL files https://jira.jboss.org/jira/browse/JBIDE-6006 -->
+         <contentTypeBinding
+               contentTypeId="org.eclipse.bpel.contenttype">
+         </contentTypeBinding>
       </editor>
    </extension>
    <extension
@@ -639,5 +641,51 @@
             namespace="http://www.w3.org/TR/1999/REC-xpath-19991116"
             uri="platform:/plugin/org.eclipse.bpel.ui/templates/fn.xml">
       </registry>
+   </extension>
+   
+   <!--
+   https://jira.jboss.org/jira/browse/JBIDE-6006
+   Content Type recognition for BPEL files
+   NOTE: eclipse does not support recognition of file types for files without extensions
+   See eclipse bugzilla https://bugs.eclipse.org/bugs/show_bug.cgi?id=46297
+   -->
+	<extension
+		 point="org.eclipse.core.contenttype.contentTypes">
+	   <content-type
+	   		base-type="org.eclipse.core.runtime.xml"
+	        id="org.eclipse.bpel.contenttype"
+	        name="BPEL Editor File"
+	        file-extensions="bpel,bpel2,xml"
+	        priority="normal">
+	      <describer
+              class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber2">
+            <parameter
+                name="element"
+                value="{http://docs.oasis-open.org/wsbpel/2.0/process/executable}process"/>
+          </describer>
+	   </content-type>
+	</extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            icon="icons/obj16/bpel.gif"
+            id="org.eclipse.bpel.ui.icondecorator"
+            label="BPEL Resource Decorator"
+            lightweight="true"
+            location="TOP_LEFT"
+            state="true">
+         <enablement>
+            <and>
+               <objectClass
+                     name="org.eclipse.core.resources.IFile">
+               </objectClass>
+               <objectState
+                     name="contentTypeId"
+                     value="org.eclipse.bpel.contenttype">
+               </objectState>
+            </and>
+         </enablement>
+      </decorator>
    </extension>
 </plugin>

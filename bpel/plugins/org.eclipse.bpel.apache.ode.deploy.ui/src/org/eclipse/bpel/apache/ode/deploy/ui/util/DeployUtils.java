@@ -32,6 +32,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.content.IContentDescription;
+import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -56,7 +58,8 @@ public class DeployUtils {
 	public static final String URL_PREFIX_PLATFORM = "platform"; //$NON-NLS-1$
 	public static final String URL_PREFIX_RESOURCE = "resource"; //$NON-NLS-1$
 	public static final String NONE_STRING = "-- none -- "; //$NON-NLS-1$
-
+	public static final String BPEL_CONTENT_TYPE = "org.eclipse.bpel.contenttype"; //$NON-NLS-1$
+	
 	public static ProcessType findProcessTypeInDD(
 			org.eclipse.bpel.model.Process process, TDeployment dd) {
 		for (ProcessType pt : dd.getProcess()) {
@@ -210,8 +213,9 @@ public class DeployUtils {
 
 		for (IFile file : allFiles) {
 
-			if (file.getFileExtension().equalsIgnoreCase("bpel")) { //$NON-NLS-1$
-			// load it
+			// https://jira.jboss.org/jira/browse/JBIDE-6006
+			if (DeployUtils.isBPELFile(file)) {
+				// load it
 				Process currentProcess = loadBPEL(file, resourceSet);
 				// stuff it in bpelFiles
 				bpelFiles.add(currentProcess);
@@ -316,4 +320,28 @@ public class DeployUtils {
 		return file;
 	}
 
+	// https://jira.jboss.org/jira/browse/JBIDE-6006
+	public static boolean isBPELFile(IResource res)
+	{
+		try
+		{
+			if (res.getType() == IResource.FILE) {
+				// check if file was recognized by eclipse BPEL editor
+				IContentDescription desc = ((IFile) res).getContentDescription();
+				if (desc != null) {
+					IContentType type = desc.getContentType();
+					if (type.getId().equals(BPEL_CONTENT_TYPE))
+						return true;
+				}
+				// maybe the eclipse BPEL editor is not installed?
+				// fall back to using '.bpel' file extension
+				if ("bpel".equals(((IFile)res).getFileExtension()))
+					return true;
+			}
+		}
+		catch(Exception ex)
+		{
+		}
+		return false;	
+	}
 }

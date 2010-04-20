@@ -55,6 +55,7 @@ public class Templates {
 	static final String DEFAULT_ENCODING    = "UTF-8";		//$NON-NLS-1$
 	
 	/** the main bpel file has this extension */
+	@Deprecated // use content type instead of bpel file extensions
 	static final String BPEL_FILE_EXTENSION = ".bpel";	//$NON-NLS-1$
 	
 	/** Entries which are directories of the bundle */

@@ -22,6 +22,7 @@ import org.eclipse.bpel.apache.ode.deploy.model.dd.TDeployment;
 import org.eclipse.bpel.apache.ode.deploy.model.dd.util.ddResourceFactoryImpl;
 import org.eclipse.bpel.apache.ode.deploy.ui.pages.ProcessPage;
 import org.eclipse.bpel.apache.ode.deploy.ui.util.DeployUtils;
+import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
@@ -52,14 +53,17 @@ import org.eclipse.ui.forms.editor.FormEditor;
  * @author Tammo van Lessen (IAAS)
  * @author Simon Moser (IBM)
  */
-public class ODEDeployMultiPageEditor extends FormEditor implements IEditingDomainProvider {
-	
-	protected TDeployment deployDescriptor = null;	
-	
+public class ODEDeployMultiPageEditor extends FormEditor implements
+		IEditingDomainProvider {
+
+	// Display this in title if no BPEL process files are found in current directory
+	private final static String NO_PROCESSES_FOUND = " *** No Processes Found *** ";
+	private boolean readOnly = false;
+	protected TDeployment deployDescriptor = null;
+
 	protected AdapterFactoryEditingDomain editingDomain;
 	protected ComposedAdapterFactory adapterFactory;
 
-	
 	/**
 	 * Creates a multi-page editor example.
 	 */
@@ -67,36 +71,38 @@ public class ODEDeployMultiPageEditor extends FormEditor implements IEditingDoma
 		super();
 		initializeEditingDomain();
 	}
-	
+
 	/**
 	 * Saves the deployment descriptor
 	 */
 	public void doSave(IProgressMonitor monitor) {
 		commitPages(true);
 		saveDeploymentDescriptor();
-		((BasicCommandStack)editingDomain.getCommandStack()).saveIsDone();
+		((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
 		firePropertyChange(IEditorPart.PROP_DIRTY);
 	}
-	
+
 	/**
 	 * SaveAs is not supported.
 	 */
 	public void doSaveAs() {
 		throw new UnsupportedOperationException("SaveAs is not allowed."); //$NON-NLS-1$
 	}
-	
+
 	/**
-	 * The implementation of this method checks that the input is an 
-	 * instance of <code>IFileEditorInput</code> and creates the data model.
+	 * The implementation of this method checks that the input is an instance of
+	 * <code>IFileEditorInput</code> and creates the data model.
 	 */
-	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
+	public void init(IEditorSite site, IEditorInput editorInput)
+			throws PartInitException {
 		super.init(site, editorInput);
 		setPartName(editorInput.getName());
-		
+
 		if (!(editorInput instanceof IFileEditorInput)) {
-			throw new PartInitException("Invalid Input: Must be IFileEditorInput"); //$NON-NLS-1$
+			throw new PartInitException(
+					"Invalid Input: Must be IFileEditorInput"); //$NON-NLS-1$
 		}
-		
+
 		createModel();
 	}
 
@@ -105,14 +111,16 @@ public class ODEDeployMultiPageEditor extends FormEditor implements IEditingDoma
 	}
 
 	public void saveDeploymentDescriptor() {
-		try {			
-			deployDescriptor.eResource().save(null);
-		} 
-		catch (IOException e1) {
+		try {
+			// https://jira.jboss.org/jira/browse/JBIDE-6006
+			// editor will be "read only" if there are no BPEL resources to process
+			if (!readOnly)
+				deployDescriptor.eResource().save(null);
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	protected org.eclipse.bpel.model.Process loadBPEL(IFile bpelFile) {
 		IPath fullProcessPath = bpelFile.getFullPath();
 		URI uri = URI.createPlatformResourceURI(fullProcessPath.toString(), false);
@@ -133,42 +141,43 @@ public class ODEDeployMultiPageEditor extends FormEditor implements IEditingDoma
 	}
 
 	@Override
-	protected void addPages() {		
+	protected void addPages() {
 		try {
 			for (ProcessType pt : deployDescriptor.getProcess()) {
 				addPage(new ProcessPage(this, pt));
 			}
-		} 
-		catch (PartInitException e) {
+		} catch (PartInitException e) {
 			// ~
 		}
 	}
-	
-	public TDeployment getDeploymentModel(){
+
+	public TDeployment getDeploymentModel() {
 		return deployDescriptor;
 	}
 
 	protected void initializeEditingDomain() {
-		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
-		// Create the command stack that will notify this editor as commands are executed.
+		// Create the command stack that will notify this editor as commands are
+		// executed.
 		BasicCommandStack commandStack = new BasicCommandStack();
 
-		// Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
-		commandStack.addCommandStackListener
-			(new CommandStackListener() {
-				 public void commandStackChanged(final EventObject event) {
-					 getContainer().getDisplay().asyncExec
-						 (new Runnable() {
-							  public void run() {
-								  editorDirtyStateChanged();
-							  }
-						  });
-				 }
-			 });
+		// Add a listener to set the most recent command's affected objects to
+		// be the selection of the viewer with focus.
+		commandStack.addCommandStackListener(new CommandStackListener() {
+			public void commandStackChanged(final EventObject event) {
+				getContainer().getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						editorDirtyStateChanged();
+					}
+				});
+			}
+		});
 
 		// Create the editing domain with a special command stack.
-		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
+		editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
+				commandStack, new HashMap<Resource, Boolean>());
 	}
 
 	public EditingDomain getEditingDomain() {
@@ -177,16 +186,18 @@ public class ODEDeployMultiPageEditor extends FormEditor implements IEditingDoma
 
 	@Override
 	public boolean isDirty() {
-		return ((BasicCommandStack)editingDomain.getCommandStack()).isSaveNeeded();
+		return !readOnly
+				&& ((BasicCommandStack) editingDomain.getCommandStack())
+						.isSaveNeeded();
 	}
-	
+
 	@Override
 	public void setFocus() {
 		if (getActivePage() != -1 && getControl(getActivePage()) != null) {
 			getControl(getActivePage()).setFocus();
 		}
 	}
-	
+
 	protected void createModel() throws PartInitException {
 		URI resourceURI = EditUIUtil.getURI(getEditorInput());
 		Resource resource = null;
@@ -196,43 +207,51 @@ public class ODEDeployMultiPageEditor extends FormEditor implements IEditingDoma
 		editingDomain.getResourceSet().getResources().add(resource);
 		try {
 			resource.load(Collections.EMPTY_MAP);
-			
+
 			EList<EObject> contents = resource.getContents();
 			if (!contents.isEmpty() && contents.get(0) instanceof DocumentRoot) {
 				deployDescriptor = ((DocumentRoot) contents.get(0)).getDeploy();
-				
+
 				populateModel();
-				
-				//TODO: what to do with processtypes in DD without a corresponding BPEL file available?
 			}
 		} catch (CoreException e) {
 			throw new PartInitException(e.getStatus());
 		} catch (IOException e) {
 			throw new PartInitException(e.getMessage(), e);
 		}
+		if (deployDescriptor.getProcess().isEmpty()) {
+			// https://jira.jboss.org/jira/browse/JBIDE-6006
+			// add a process stub to DD so the editor doesn't crash
+			org.eclipse.bpel.model.Process p = BPELFactory.eINSTANCE.createProcess();
+			p.setName(NO_PROCESSES_FOUND);
+			ProcessType pt = DeployUtils.createProcessStub(p);
+			deployDescriptor.getProcess().add(pt);
+			// set model
+			pt.setModel(p);
+			readOnly = true; // can't save editor
+		}
 	}
 
 	public void populateModel() throws CoreException {
-		((IFileEditorInput)getEditorInput()).getFile().getProject().accept(new IResourceVisitor() {
+		((IFileEditorInput) getEditorInput()).getFile().getProject().accept(new IResourceVisitor() {
 			public boolean visit(IResource bpelfile) throws CoreException {
-				if (bpelfile.getType() == IResource.FILE
-						&& bpelfile.getFileExtension().equalsIgnoreCase("bpel")) { //$NON-NLS-1$
-					org.eclipse.bpel.model.Process p = DeployUtils.loadBPEL((IFile)bpelfile, editingDomain.getResourceSet());
+				// https://jira.jboss.org/jira/browse/JBIDE-6006
+				if (DeployUtils.isBPELFile(bpelfile)) {
+					org.eclipse.bpel.model.Process p = DeployUtils.loadBPEL((IFile) bpelfile, editingDomain.getResourceSet());
 					if (p != null) {
-						// add process to DD unless it it not already there.
-						ProcessType pt = DeployUtils.findProcessTypeInDD(p, deployDescriptor); 
+						// add process to DD unless it is not already there.
+						ProcessType pt = DeployUtils.findProcessTypeInDD(p, deployDescriptor);
 						if (pt == null) {
 							pt = DeployUtils.createProcessStub(p);
 							deployDescriptor.getProcess().add(pt);
 						}
 						// set model
 						pt.setModel(p);
-						
+
 					}
-				}
+			}
 				return true;
 			}
 		});
 	}
-
 }

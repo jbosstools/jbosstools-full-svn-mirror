@@ -44,15 +44,4 @@
             name="org.eclipse.bpel.common.ui.lineNumInObject">
       </attribute>
    </extension>
-   <extension
-         point="org.eclipse.core.runtime.contentTypes">
-      <content-type
-            base-type="org.eclipse.core.runtime.xml"
-            default-charset="UTF-8"
-            file-extensions="bpel,bpel2"
-            id="org.eclipse.bpel.common.ui.bpel.content-type"
-            name="BPEL Process"
-            priority="normal"/>
-   </extension>
-
 </plugin>

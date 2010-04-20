@@ -78,6 +78,12 @@
       <provider class="org.eclipse.bpel.model.resource.ResourceSetProvider"/>
    </extension>
 
-
+	<!-- https://jira.jboss.org/jira/browse/JBIDE-6006 -->
+	<extension point="org.eclipse.emf.ecore.content_parser">
+		<parser
+            class="org.eclipse.bpel.model.resource.BPELResourceFactoryImpl"
+			contentTypeIdentifier="org.eclipse.bpel.contenttype">
+		</parser>
+	</extension>
 </plugin>
 
