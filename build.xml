@@ -1,9 +1,10 @@
 <!-- Build a given list of ${COMPONENTS} -->
-<project default="run" basedir=".">
+<project default="run" basedir="." name="jbosstools build.xml">
 
 	<!-- Configuration Start -->
 	<!-- must set name of component to build/test -->
-	<property name="COMPONENTS" value="tests,common" />
+	<!-- <property name="COMPONENTS" value="tests,common" /> -->
+	<property name="COMPONENTS" value="tests, common, flow, jbpm, jmx, archives, as, drools, bpel, smooks, freemarker, profiler, portlet, xulrunner, jst, vpe, jsf, esb, tptp, ws, cdi, struts, seam, examples, birt, maven, hibernatetools" />
 
 	<!-- default maven version -->
 	<property name="maven.version" value="3.0-alpha-7" />
@@ -18,8 +19,8 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common 
 	-->
 
-	<target name="run" depends="init, genpoms, install, deploy" />
-
+	<target name="run" depends="init, genpoms, install" />
+	
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
 		<or>
@@ -82,6 +83,7 @@
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
 	">
 			<sequential>
+				<!-- TODO: check if poms exist already; if not, generate; if so, use existing -->
 				<ant antfile="genpom.xml" target="run">
 					<property name="COMPONENT" value="@{COMPONENT}" />
 				</ant>
@@ -119,8 +121,86 @@
 
 	</target>
 
+	<target name="test.deploy" depends="init">
+		<antcall target="deploy">
+			<param name="targetZipsDir" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository/" />
+		</antcall>
+	</target>
 	<target name="deploy">
-		<!-- TODO enable publishing to download.jboss.org or porkchop.jboss.com
+		<!-- TODO enable publishing to download.jboss.org or porkchop.jboss.com -->
+		<property name="DESTINATION.jbosstools" value="filemgmt.jboss.org/downloads_htdocs/tools/repository/" />
+		<property name="DESTINATION.jbds" value="/qa/services/http/binaries/RHDS/repository/" />
+
+		<echo level="debug">Promote build in ${sourceZipsDirActual} ...</echo>
+		<for param="aDir" list="${sourceZipsDirActual}" delimiter=", 
+">
+			<sequential>
+				<!-- rsync or copy build dir @{aDir} into ${targetZipsDir}/ -->
+				<if>
+					<available file="/usr/bin/rsync" type="file" />
+					<then>
+						<var name="rsyncCmd"
+						     value="/usr/bin/rsync -a${synchMethodParam} --exclude=eclipse/ @{aDir} ${targetZipsDir}/"
+						/>
+						<echo message="${rsyncCmd}" />
+						<exec executable="bash">
+							<arg line=" -c &quot;${rsyncCmd}&quot;" />
+						</exec>
+						<var name="rsyncCmd" unset="true" />
+					</then>
+					<else>
+						<propertyregex override="true"
+						               property="aBuildDir"
+						               defaultvalue="@{aDir}"
+						               input="@{aDir}"
+						               regexp=".+/([^/]+)"
+						               replace="\1"
+						/>
+						<echo>Copy ${aBuildDir} into ${targetZipsDir}/</echo>
+						<mkdir dir="${targetZipsDir}/${aBuildDir}" />
+						<copy todir="${targetZipsDir}/${aBuildDir}"
+						      includeemptydirs="true"
+						      preservelastmodified="true"
+						      failonerror="true"
+						>
+							<fileset dir="@{aDir}" excludes="eclipse/" />
+						</copy>
+					</else>
+				</if>
+
+				<!-- unpack update zip(s) -->
+				<if>
+					<and>
+						<isset property="targetUpdateDir" />
+						<not>
+							<equals arg1="${targetUpdateDir}" arg2="" />
+						</not>
+					</and>
+					<then>
+						<for param="anUpdateZip">
+							<path>
+								<fileset dir="@{aDir}" includes="*-Update-*.zip" />
+							</path>
+							<sequential>
+								<unzip dest="${targetUpdateDir}/"
+								       src="@{anUpdateZip}"
+								       overwrite="${unzipMethodParam}"
+								/>
+								<for param="subdir">
+									<path>
+										<dirset dir="${targetUpdateDir}/" />
+									</path>
+									<sequential>
+										<copy file="staticDropFiles/index.php" todir="@{subdir}" />
+									</sequential>
+								</for>
+							</sequential>
+						</for>
+					</then>
+				</if>
+			</sequential>
+		</for>
+		<!--
 		<get usetimestamp="true"
 		     dest="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar"
 		     src="${MAVEN_MIRROR}/maven-ant-tasks-2.1.0.jar"
@@ -131,9 +211,10 @@
 			</classpath>
 		</taskdef>
 		<install-provider artifactId="wagon-ssh" version="1.0-beta-2"/>
-		<deploy file="target/my-project-1.0.jar">
-			<remoteRepository url="scp://localhost/www/repository">
-				<authentication username="${repository.username}" privateKey="${user.home}/.ssh/id_dsa" />
+		<deploy>
+			
+			<remoteRepository url="scp://${DESTINATION}">
+				<authentication username="tools" privateKey="${user.home}/.ssh/id_rsa" />
 			</remoteRepository>
 			<pom refid="mypom" />
 		</deploy>
