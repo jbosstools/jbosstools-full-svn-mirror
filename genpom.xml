@@ -15,9 +15,12 @@
 	-->
 	<!-- To run this script via commandline:
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -f genpom.xml -q 
-		 or, to build a specific module only:
+		 or, to build a specific module IFF no poms already exist:
 			cd /home/nboldt/workspace36/jbosstools-modular_build; \
-			ant -f genpom.xml -q -DCOMPONENT=common
+			ant -f genpom.xml -q -DCOMPONENT=xulrunner
+		 or, to build a specific module and overwrite existing pom.xml files:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; \
+			ant -f genpom.xml -q -DCOMPONENT=common -Doverwrite.existing.pom.xml=true
 	-->
 
 	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
