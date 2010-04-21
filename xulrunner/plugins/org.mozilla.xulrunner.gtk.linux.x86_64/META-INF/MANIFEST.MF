@@ -5,6 +5,5 @@ Bundle-SymbolicName: org.mozilla.xulrunner.gtk.linux.x86_64;singleton:
  =true
 Bundle-Version: 1.9.1.2a
 Bundle-Vendor: mozilla.org
-Eclipse-PlatformFilter: (& (osgi.ws=gtk) (osgi.os=linux)  (osgi.arch=x
- 86_64))
+Eclipse-PlatformFilter: (& (osgi.ws=gtk)(osgi.os=linux)(osgi.arch=x86_64))
 
