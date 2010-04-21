@@ -1,4 +1,4 @@
-<project default="run" basedir=".">
+<project default="run" basedir="." name="jbosstools genpom.xml">
 	<!-- Configuration Start -->
 	<property name="projectName" value="org.jboss.tools" />
 	<property name="pathToParentPom" value="" />
