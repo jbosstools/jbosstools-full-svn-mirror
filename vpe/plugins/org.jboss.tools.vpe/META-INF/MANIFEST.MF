@@ -26,7 +26,6 @@ Export-Package:
  org.jboss.tools.vpe.editor.selection,
  org.jboss.tools.vpe.editor.template,
  org.jboss.tools.vpe.editor.template.custom,
- org.jboss.tools.vpe.editor.template.dnd,
  org.jboss.tools.vpe.editor.template.expression,
  org.jboss.tools.vpe.editor.template.resize,
  org.jboss.tools.vpe.editor.template.textformating,

@@ -31,11 +31,11 @@ import org.mozilla.interfaces.nsIDOMNode;
 public class DropableArea {
 	private boolean visible;
 	private EnumSet<DropTarget> dropTargets;
-	private final nsIDOMDocument document;
+	private nsIDOMDocument document;
 	private nsIDOMNode node;
 	private nsIDOMElement domArea;
 	private static final String AREA_COLOR = "rgba(166, 202, 240, 0.5)"; //$NON-NLS-1$
-	private DropTarget hightlightedDropTarget;
+	private DropTarget highlightedDropTarget;
 	
 	/**
 	 * 
@@ -51,6 +51,9 @@ public class DropableArea {
 	public void setNode(nsIDOMNode node) {
 		this.node = node;
 	}
+	public nsIDOMNode getNode() {
+		return node;
+	}
 	
 	/**
 	 * @param dropTargets cannot be null
@@ -63,37 +66,37 @@ public class DropableArea {
 		this.visible = visible;
 	}
 	
-	public void setHighlightedSpot(int mouseX, int mouseY) {
-		this.hightlightedDropTarget = getHighlightedDropTarget(mouseX, mouseY);
-	}
-	
-	public DropTarget getHighlightedDropTarget(int mouseX, int mouseY) {
+	public void setHighlightedDropTarget(int mouseX, int mouseY) {
 		if (node == null) {
-			return null;
+			highlightedDropTarget = null;
 		}
 		
 		Rectangle bounds = XulRunnerVpeUtils.getElementBounds(node);
 		if (dropTargets.contains(DropTarget.BEFORE)
 				&& bounds.x <= mouseX
 				&& mouseX < bounds.x + bounds.width / 5) {
-			return DropTarget.BEFORE; 
+			highlightedDropTarget = DropTarget.BEFORE; 
 		} else if (dropTargets.contains(DropTarget.AFTER)
 				&& bounds.x + bounds.width * 4 / 5 <= mouseX
 				&& mouseX < bounds.x + bounds.width) {
-			return DropTarget.AFTER;
+			highlightedDropTarget = DropTarget.AFTER;
 		} else if (dropTargets.contains(DropTarget.BEGIN)
 				&& bounds.y <= mouseY
 				&& mouseY < bounds.y + bounds.height / 5) {
-			return DropTarget.BEGIN;
+			highlightedDropTarget = DropTarget.BEGIN;
 		} else if (dropTargets.contains(DropTarget.END)
 				&& bounds.y + bounds.height * 4 / 5 <= mouseY
 				&& mouseY < bounds.y + bounds.height) {
-			return DropTarget.END;
+			highlightedDropTarget = DropTarget.END;
 		} else {
-			return null;
+			highlightedDropTarget = null;
 		}
 	}
-	
+
+	public DropTarget getHighlightedDropTarget() {
+		return highlightedDropTarget;
+	}
+
 	public void redraw() {
 		if (!visible || node == null) {
 			if (domArea != null) {
@@ -156,15 +159,24 @@ public class DropableArea {
 			contentArea.removeChild(oldDomArea);
 		}
 	}
-	
+
+	public void dispose() {
+		setVisible(false);
+		redraw();
+
+		document = null;
+		node = null;
+		domArea = null;
+	}
+
 	private String getColor(DropTarget dropTarget) {
-		if (dropTarget == hightlightedDropTarget) {
+		if (dropTarget == highlightedDropTarget) {
 			return "red";
 		} else {
 			return "black";
 		}
 	}
-	
+
 	private nsIDOMElement createRect(Rectangle coords, String color) {
 		nsIDOMElement rect = createElement(HTML.TAG_DIV);
 		

@@ -23,6 +23,7 @@ import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.dnd.VpeDnDHelper;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -31,7 +32,6 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
-import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
@@ -76,7 +76,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 
 	// TODO Max Areshkau add DnD support
 	/** The dragger. */
-	private VpeDnd dragger;
+	private VpeDnDHelper dragger;
 	
 	/** The text formating data. */
 	private TextFormatingData textFormatingData;
@@ -321,7 +321,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	private void initDndHandler(Element templateSection) {
 
 		if (getDragger() == null) {
-			setDragger(new VpeDnd());
+			setDragger(new VpeDnDHelper());
 			getDragger().setDndData(templateSection);
 		}
 	}
@@ -1279,7 +1279,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * 
 	 * @return the dragger
 	 */
-	public VpeDnd getDragger() {
+	public VpeDnDHelper getDragger() {
 
 		return dragger;
 	}
@@ -1289,7 +1289,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * 
 	 * @param dragger the dragger to set
 	 */
-	public void setDragger(VpeDnd dragger) {
+	public void setDragger(VpeDnDHelper dragger) {
 		this.dragger = dragger;
 	}
 

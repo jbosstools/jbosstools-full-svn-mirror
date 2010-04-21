@@ -38,4 +38,6 @@ public interface MozillaDndListener extends EventListener {
 //	void dragExit(nsIDOMEvent event);
 //	void drop(nsIDOMEvent event);
 //	void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data);
+
+	void dragExit(nsIDOMEvent domEvent);
 }

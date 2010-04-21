@@ -44,6 +44,7 @@ import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.dnd.VpeDnDHelper;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
@@ -60,7 +61,6 @@ import org.jboss.tools.vpe.editor.template.VpeTagDescription;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
-import org.jboss.tools.vpe.editor.template.dnd.VpeDnd;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
@@ -164,7 +164,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		unborderedVisualNodes.add(HTML.TAG_LI);
 		unborderedVisualNodes.add(HTML.TAG_BR);
 	}
-	private VpeDnd dropper;
 
 	private Map<IStorage, Document> includeDocuments = new HashMap<IStorage, Document>();
 	private boolean showInvisibleTags;
@@ -181,8 +180,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		// this.visualContentArea = visualEditor.getContentArea();
 		this.pageContext = pageContext;
 		// this.headNode = visualEditor.getHeadNode();
-		dropper = new VpeDnd();
-		dropper.setDndData(false, true);
 
 //		if (isFacelet()) {
 //			faceletFile = true;
@@ -1645,11 +1642,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			// }
 
 		}
-	}
-
-	public void innerDrop(VpeSourceInnerDragInfo dragInfo,
-			VpeSourceDropInfo dropInfo) {
-		dropper.drop(pageContext, dragInfo, dropInfo);
 	}
 
 	nsIDOMElement getNearDragElement(Element visualElement) {

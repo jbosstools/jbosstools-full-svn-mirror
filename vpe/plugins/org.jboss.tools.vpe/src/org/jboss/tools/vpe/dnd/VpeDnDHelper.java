@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.editor.template.dnd;
+package org.jboss.tools.vpe.dnd;
 
 import java.util.HashSet;
 
@@ -23,7 +23,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 
-public class VpeDnd {
+public class VpeDnDHelper {
 	static final String TAG_DRAG            = VpeTemplateManager.VPE_PREFIX + "drag"; //$NON-NLS-1$
 	static final String TAG_DROP            = VpeTemplateManager.VPE_PREFIX + "drop"; //$NON-NLS-1$
 	static final String TAG_CONTAINER_CHILD = VpeTemplateManager.VPE_PREFIX + "container-child"; //$NON-NLS-1$
@@ -36,13 +36,7 @@ public class VpeDnd {
 	
 	private boolean dragEnabled = false;
 	private boolean isContainer = false;
-	private HashSet enabledTags = null;
-	
-	
-	
-	public VpeDnd(){
-		
-	}
+	private HashSet<String> enabledTags = null;
 	
 	public void setDndData(boolean dragEnabled, boolean isContainer){
 		this.dragEnabled = dragEnabled;
@@ -72,12 +66,14 @@ public class VpeDnd {
 							else isContainer = false;
 
 							dropFlag = true;
-							NodeList list = innerNode.getChildNodes();
-							if (list != null) {
-								int l = list.getLength();
-								if(l > 0)enabledTags = new HashSet();
-								for (int j = 0; j < l; j++) {
-									Node child = list.item(j);
+							NodeList childNodes = innerNode.getChildNodes();
+							if (childNodes != null) {
+								int childNodesLength = childNodes.getLength();
+								if (childNodesLength > 0) {
+									enabledTags = new HashSet<String>();
+								}
+								for (int j = 0; j < childNodesLength; j++) {
+									Node child = childNodes.item(j);
 									if (child.getNodeType() == Node.ELEMENT_NODE) {
 										String tagName = child.getNodeName();
 										if (tagName.startsWith(VpeTemplateManager.VPE_PREFIX)) {
@@ -286,5 +282,3 @@ public class VpeDnd {
 		}
 	}
 }
-
-

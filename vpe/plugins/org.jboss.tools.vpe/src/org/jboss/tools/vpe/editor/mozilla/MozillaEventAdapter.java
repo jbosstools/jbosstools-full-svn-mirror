@@ -92,11 +92,6 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			contentArea.addEventListener(MozillaEventAdapter.MOUSEUPEVENTTYPE, this, false); 
 			contentArea.addEventListener(MozillaEventAdapter.MOUSEMOVEEVENTTYPE, this, false); 
 			contentArea.addEventListener(MozillaEventAdapter.CONTEXTMENUEVENTTYPE, this, false);
-			contentArea.addEventListener(MozillaEventAdapter.DRAGDROPEVENT, this, false);
-			contentArea.addEventListener(MozillaEventAdapter.DRAGENTEREVENT, this, false);
-			contentArea.addEventListener(MozillaEventAdapter.DRAGEXITEVENT,this, false);
-			contentArea.addEventListener(MozillaEventAdapter.DRAGGESTUREEVENT, this, false);
-			contentArea.addEventListener(MozillaEventAdapter.DRAGOVEREVENT, this, false);
 			contentArea.addEventListener(MozillaEventAdapter.DBLCLICK, this, false);
 		}
 		if (window != null) {
@@ -108,6 +103,12 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			selectionPrivate.addSelectionListener(this);
 		}
 		if (document != null) {
+			document.addEventListener(MozillaEventAdapter.DRAGDROPEVENT, this, false);
+			document.addEventListener(MozillaEventAdapter.DRAGENTEREVENT, this, false);
+			document.addEventListener(MozillaEventAdapter.DRAGEXITEVENT,this, false);
+			document.addEventListener(MozillaEventAdapter.DRAGGESTUREEVENT, this, false);
+			document.addEventListener(MozillaEventAdapter.DRAGOVEREVENT, this, false);
+			
 			document.addEventListener(MozillaEventAdapter.KEYPRESS, this, false);
 			//as a fix of https://jira.jboss.org/jira/browse/JBIDE-4022
 			//scroll event listener was added for selection border redrawing
@@ -127,15 +128,16 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			contentArea.removeEventListener(MozillaEventAdapter.MOUSEUPEVENTTYPE, this, false); 
 			contentArea.removeEventListener(MozillaEventAdapter.MOUSEMOVEEVENTTYPE, this, false); 
 			contentArea.removeEventListener(MozillaEventAdapter.CONTEXTMENUEVENTTYPE, this, false);
-			contentArea.removeEventListener(MozillaEventAdapter.DRAGDROPEVENT, this, false);
-			contentArea.removeEventListener(MozillaEventAdapter.DRAGENTEREVENT, this, false);
-			contentArea.removeEventListener(MozillaEventAdapter.DRAGEXITEVENT, this, false);
-			contentArea.removeEventListener(MozillaEventAdapter.DRAGGESTUREEVENT, this, false);
-			contentArea.removeEventListener(MozillaEventAdapter.DRAGOVEREVENT, this, false);
 			contentArea.removeEventListener(MozillaEventAdapter.DBLCLICK, this, false);
 			contentArea = null;
 		}
 		if (document != null) {
+			document.removeEventListener(MozillaEventAdapter.DRAGDROPEVENT, this, false);
+			document.removeEventListener(MozillaEventAdapter.DRAGENTEREVENT, this, false);
+			document.removeEventListener(MozillaEventAdapter.DRAGEXITEVENT, this, false);
+			document.removeEventListener(MozillaEventAdapter.DRAGGESTUREEVENT, this, false);
+			document.removeEventListener(MozillaEventAdapter.DRAGOVEREVENT, this, false);
+			
 			document.removeEventListener(MozillaEventAdapter.KEYPRESS, this, false); 
 			document.removeEventListener(MozillaEventAdapter.SCROLL, this, false);
 			document = null;
@@ -282,7 +284,10 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 		} else if(DRAGENTEREVENT.equals(eventType)) {
 			//just ignore this event
 		} else if(DRAGEXITEVENT.equals(eventType)) {
-			//just ignore this event
+			for (MozillaDndListener listener : listeners.getListeners(
+					MozillaDndListener.class)) {
+				listener.dragExit(domEvent);
+			}
 		} else if(DRAGOVEREVENT.equals(eventType)) {			
 			for (MozillaDndListener listener : listeners.getListeners(
 					MozillaDndListener.class)) {

@@ -48,8 +48,4 @@ public class VpeVisualCaretInfo {
 	public int getSourcePosition() {
 		return selectionBuilder.getSourcePosition(rangeParent, rangeOffset);
 	}
-
-	Point getSourceSelectionRange() {
-		return selectionBuilder.getSourceSelectionRangeAtVisualNode(rangeParent, rangeOffset);
-	}
 }

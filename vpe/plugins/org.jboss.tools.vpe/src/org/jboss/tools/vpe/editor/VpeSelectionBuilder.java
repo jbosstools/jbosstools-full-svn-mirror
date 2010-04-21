@@ -908,7 +908,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		return position;
 	}
 	
-	public Point getSourceSelectionRangeAtVisualNode(nsIDOMNode visualInitNode, int visualInitOffset) {
+	private Point getSourceSelectionRangeAtVisualNode(nsIDOMNode visualInitNode, int visualInitOffset) {
 		if (visualInitNode.getNodeType() == Node.TEXT_NODE) {
 			Node sourceNode = domMapping.getSourceNode(visualInitNode);
 			if (sourceNode == null) {
@@ -930,37 +930,6 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 		}
 	}
 
-	Point getSourceSelectionRange(Node sourceInitNode, int sourceInitOffset) {
-		int offset=0;
-		int position=0;
-		switch (sourceInitNode.getNodeType()) {
-		case Node.TEXT_NODE:
-			offset = Math.min(sourceInitOffset, sourceInitNode.getNodeValue().length());
-			position = sourceBuilder.getPosition(sourceInitNode, offset, false);
-			break;
-		case Node.ELEMENT_NODE:
-		case Node.DOCUMENT_NODE:
-			NodeList children = sourceInitNode.getChildNodes();
-			int count = children.getLength();
-			if (sourceInitOffset < count) {
-				Node sourceNode = children.item(sourceInitOffset);
-				position = ((IndexedRegion)sourceNode).getStartOffset();
-			} else if (count > 0) {
-				Node sourceNode = children.item(count - 1);
-				position = ((IndexedRegion)sourceNode).getEndOffset();
-			} else {
-				position = ((IndexedRegion)sourceInitNode).getStartOffset();
-				if (sourceInitNode instanceof ElementImpl) {
-			 		ElementImpl element = (ElementImpl)sourceInitNode;
-			 		if (element.isContainer()) {
-			 			position  = element.getStartEndOffset();
-			 		}
-				}
-			}
-			break;
-		}
-		return new Point(position, offset);
-	}
 	
 	void setVisualElementSelection(nsIDOMMouseEvent mouseEvent) {
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);

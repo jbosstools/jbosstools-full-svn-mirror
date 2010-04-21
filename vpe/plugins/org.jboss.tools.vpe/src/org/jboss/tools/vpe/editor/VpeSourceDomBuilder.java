@@ -353,7 +353,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 		return empty;
 	}
 
-	int getPosition(Node sourceNode, int offset, boolean innerFlag) {
+	public int getPosition(Node sourceNode, int offset, boolean innerFlag) {
 		int start = 0;
 		if (sourceNode != null) {
 			start = ((IndexedRegion) sourceNode).getStartOffset() + offset;

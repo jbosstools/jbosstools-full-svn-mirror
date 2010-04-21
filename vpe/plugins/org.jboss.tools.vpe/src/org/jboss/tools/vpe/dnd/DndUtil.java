@@ -27,6 +27,7 @@ import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNSDocument;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsIServiceManager;
@@ -234,9 +235,12 @@ public class DndUtil {
 		}
 	}
 	
-	public static nsIDOMElement getElementFromPoint(nsIDOMNSDocument document,
-			int x, int y) {
-		nsIDOMElement element = document.elementFromPoint(x, y);
+	public static nsIDOMElement getElementFromPoint(nsIDOMDocument document,
+			int clientX, int clientY) {
+		nsIDOMNSDocument nsDocument = (nsIDOMNSDocument) document
+				.queryInterface(nsIDOMNSDocument.NS_IDOMNSDOCUMENT_IID);
+
+		nsIDOMElement element = nsDocument.elementFromPoint(clientX, clientY);
 
 		Stack<nsIDOMElement> hiddenElements = new Stack<nsIDOMElement>();
 		Stack<String> hiddenElementsStyles = new Stack<String>();
@@ -245,7 +249,7 @@ public class DndUtil {
 			hiddenElementsStyles.push(element.getAttribute(HTML.ATTR_STYLE));
 
 			element.setAttribute(HTML.ATTR_STYLE, "display:none !important;");
-			element = document.elementFromPoint(x, y);
+			element = nsDocument.elementFromPoint(clientX, clientY);
 		}
 
 		while (!hiddenElements.empty()) {
