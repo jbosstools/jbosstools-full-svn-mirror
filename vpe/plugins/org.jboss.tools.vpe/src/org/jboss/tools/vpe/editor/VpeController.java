@@ -526,8 +526,8 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 									// refresh job in time, so we just ignore
 									// this exception
 								}
-							} catch(ClassCastException ex) {
-								VpePlugin.getDefault().reportProblem(ex);
+							} catch(Exception ex) {
+								VpePlugin.getPluginLog().logError(ex);
 							}
 							getChangeEvents().remove(eventBean);
 						}
@@ -1512,7 +1512,9 @@ public class VpeController implements INodeAdapter, IModelLifecycleListener,
 							// refresh job in time, so we just ignore this
 							// exception
 						}
-					} finally {
+					}catch (Exception ex){
+						VpePlugin.getPluginLog().logError(ex);
+					}finally {
 						if (switcher != null) {
 							switcher.stopActiveEditor();
 						}

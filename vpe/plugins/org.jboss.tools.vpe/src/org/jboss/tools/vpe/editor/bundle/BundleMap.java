@@ -439,8 +439,15 @@ public class BundleMap {
 				}
 			}
 			if(index < i.getEndPosition()) {
-				sb.append(name.substring(index, i.getEndPosition()));
-				index = i.getEndPosition();
+				//fix has been added by Maksim Areshkau
+				// https://jira.jboss.org/jira/browse/JBIDE-6064
+				if(name.length()>i.getEndPosition()) {
+					sb.append(name.substring(index, i.getEndPosition()));
+					index = i.getEndPosition();
+				}else {
+					sb.append(name.substring(index, name.length()));
+					index =name.length();
+				}
 			}
 		}
 		sb.append(name.substring(index));
