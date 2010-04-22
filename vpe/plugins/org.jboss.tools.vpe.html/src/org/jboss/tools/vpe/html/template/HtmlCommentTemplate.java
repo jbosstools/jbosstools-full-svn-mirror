@@ -28,7 +28,9 @@ import org.w3c.dom.Node;
  * Template for comment node
  */
 public class HtmlCommentTemplate extends VpeAbstractTemplate {
+	
 
+	private static final String doubleHyphen = "--"; //$NON-NLS-1$
     private static final String COMMENT_STYLE = "font-style:italic; color:green"; //$NON-NLS-1$
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.vpe.editor.template.VpeTemplate#create(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMDocument)
@@ -44,9 +46,21 @@ public class HtmlCommentTemplate extends VpeAbstractTemplate {
 		    ((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).appendChild(text);
 
 	     } else {
-	    	 visualNode = visualDocument.createComment(sourceNode.getNodeValue());
+	    	 visualNode = visualDocument.createComment(removeDoubleHyphens(sourceNode.getNodeValue()));
 	     }
 		return new VpeCreationData(visualNode);
+	}
+	
+	//a part of https://jira.jboss.org/jira/browse/JBIDE-5143 fix
+	
+	private String removeDoubleHyphens(String value){
+		StringBuilder stringBuilder = new StringBuilder(""); //$NON-NLS-1$
+		while (value.indexOf(doubleHyphen)>-1) {
+			stringBuilder.append(value.substring(0, value.indexOf(doubleHyphen)));
+			value = value.substring(value.indexOf(doubleHyphen)+doubleHyphen.length());
+		}
+		stringBuilder.append(value);
+		return stringBuilder.toString();
 	}
 
 }
