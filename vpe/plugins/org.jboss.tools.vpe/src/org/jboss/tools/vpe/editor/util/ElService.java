@@ -186,7 +186,9 @@ public final class ElService implements IELService {
         if (((this.isAvailable(file) && this.isAvailableForNode(sourceNode, file))) 
         		|| isInResourcesBundle(pageContext, sourceNode)){
             rst = true;
-        }else if(Jsf2ResourceUtil.isContainJSF2ResourceAttributes(sourceNode)) {
+        }else if(Jsf2ResourceUtil.isContainJSFExternalContextPath(sourceNode)){
+        	rst = true;
+        }if(Jsf2ResourceUtil.isContainJSF2ResourceAttributes(sourceNode)) {
             //added by Maksim Areshkau, see JBIDE-4812
         	rst = true;
         }
@@ -385,6 +387,10 @@ public final class ElService implements IELService {
         rst = ResourceUtil.getBundleValue(pageContext, value);
         //replace custom attributes
         rst = replaceCustomAttributes(pageContext,rst);
+        
+        if(Jsf2ResourceUtil.isExternalContextPathString(value)){
+        	rst =  Jsf2ResourceUtil.processExternalContextPath(value);
+        }
         
         if(Jsf2ResourceUtil.isJSF2ResourceString(rst)){
         	rst = Jsf2ResourceUtil.processCustomJSFAttributes(pageContext, rst);

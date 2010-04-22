@@ -52,7 +52,7 @@ public class VpeFunctionSrc extends VpeFunction {
     public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
 	String tagValue = getParameter(0).exec(pageContext, sourceNode)
 		.stringValue();
-	tagValue = resolveEL(pageContext,tagValue);
+//	tagValue = resolveEL(pageContext,tagValue);
 	IFile iFile = VpeCreatorUtil.getFile(tagValue, pageContext);
 
 	if (iFile != null) {
@@ -251,24 +251,24 @@ public class VpeFunctionSrc extends VpeFunction {
      * temporary solution to solve #{facesContext.externalContext.requestContextPath}
      * JBIDE-1410
      */
-    protected String resolveEL(VpePageContext pageContext, String value) {
-        String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
-        
-        //fix for JBIDE-2550, author Maksim Areshkau
-        if(Jsf2ResourceUtil.isJSF2ResourceString(resolvedValue)){
-        	resolvedValue = Jsf2ResourceUtil.processCustomJSFAttributes(pageContext, resolvedValue);
-        }
-
-        //Fix for JBIDE-3030
-        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null
-        		|| !(pageContext.getVisualBuilder().getCurrentIncludeInfo() instanceof IFile)){
-        	return resolvedValue;
-        }
-        final IFile file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
-
-        resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
-        return resolvedValue;
-    }
+//    protected String resolveEL(VpePageContext pageContext, String value) {
+//        String resolvedValue = value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
+//        
+//        //fix for JBIDE-2550, author Maksim Areshkau
+//        if(Jsf2ResourceUtil.isJSF2ResourceString(resolvedValue)){
+//        	resolvedValue = Jsf2ResourceUtil.processCustomJSFAttributes(pageContext, resolvedValue);
+//        }
+//
+//        //Fix for JBIDE-3030
+//        if(pageContext.getVisualBuilder().getCurrentIncludeInfo()==null
+//        		|| !(pageContext.getVisualBuilder().getCurrentIncludeInfo() instanceof IFile)){
+//        	return resolvedValue;
+//        }
+//        final IFile file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
+//
+//        resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
+//        return resolvedValue;
+//    }
     
     public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
 	String pluginPath = VpePlugin.getPluginResourcePath();
