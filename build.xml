@@ -65,6 +65,7 @@
 			<available file="/home/hudson/static_build_env/jbds" type="dir" />
 		</condition>
 		<mkdir dir="${COMMON_TOOLS}" />
+		<echo>COMMON_TOOLS = ${COMMON_TOOLS}</echo>
 
 		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
 		<antcall target="get.ant-contrib" />
