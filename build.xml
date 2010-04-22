@@ -4,7 +4,9 @@
 	<!-- Configuration Start -->
 	<!-- must set name of component to build/test -->
 	<!-- <property name="COMPONENTS" value="tests,common" /> -->
-	<property name="COMPONENTS" value="tests, common, flow, jbpm, jmx, archives, as, drools, bpel, smooks, freemarker, profiler, portlet, xulrunner, jst, vpe, jsf, esb, tptp, ws, cdi, struts, seam, examples, birt, maven, hibernatetools" />
+	<property name="COMPONENTS"
+	          value="tests, common, flow, jbpm, jmx, archives, as, drools, bpel, smooks, freemarker, profiler, portlet, xulrunner, jst, vpe, jsf, esb, tptp, ws, cdi, struts, seam, examples, birt, maven, hibernatetools"
+	/>
 
 	<!-- default maven version -->
 	<property name="maven.version" value="3.0-alpha-7" />
@@ -20,7 +22,7 @@
 	-->
 
 	<target name="run" depends="init, genpoms, install" />
-	
+
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
 		<or>
@@ -55,7 +57,13 @@
 
 	<target name="init" depends="local">
 		<property name="WORKINGDIR" value="${basedir}" />
-		<property name="COMMON_TOOLS" value="${WORKINGDIR}/../tools" />
+		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
+		<condition property="COMMON_TOOLS"
+		           value="/home/hudson/static_build_env/jbds/tools"
+		           else="${WORKINGDIR}/../tools"
+		>
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
 		<mkdir dir="${COMMON_TOOLS}" />
 
 		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
