@@ -5,7 +5,7 @@
 	<property name="COMPONENT" value="trunk" />
 	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
 	<property name="dirsToExclude"
-	          value="**/*.sdk.*, **/doc*, **/download.jboss.org, **/util/**, **/test, **/builders, **/contrib, **/releng/**, ."
+	          value="**/*.sdk.*, **/doc*, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders, **/contrib, **/releng/**, ."
 	/>
 	<property name="overwrite.existing.pom.xml" value="false" />
 	<!-- Configuration Ends -->
