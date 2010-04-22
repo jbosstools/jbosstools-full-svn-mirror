@@ -1422,7 +1422,7 @@
 	<vpe:tag name="object" case-sensitive="no">
 	<vpe:template children="yes" modify="no">
 		<vpe:copy
-			attrs="align,code,codebase,codetype,data,height,hspace,type,vspace,width,class,id,dir" />
+			attrs="align,height,hspace,vspace,width,id,dir" />
 		<vpe:dnd>
 			<vpe:drop container="yes">
 				<vpe:container-child tag-name="param" />
@@ -1436,7 +1436,7 @@
 	<vpe:tag name="embed" case-sensitive="no">
 	<vpe:template children="yes" modify="no">
 		<vpe:copy
-			attrs="align,height,hidden,hspace,pluginspage,src,type,vspace,width" />
+			attrs="align,height,hidden,hspace,pluginspage,src,vspace,width" />
 	</vpe:template>
 	</vpe:tag>
 

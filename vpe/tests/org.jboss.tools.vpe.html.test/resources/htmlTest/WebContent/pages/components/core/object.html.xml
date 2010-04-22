@@ -1,7 +1,7 @@
 <tests>
 	<test id="object">
-		<OBJECT WIDTH="500" VSPACE="10" HEIGHT="200" ALIGN="top"
-			STYLE="-moz-user-modify: read-only;" >
+		<OBJECT WIDTH="500" VSPACE="10" HEIGHT="200" ALIGN="top" ID="object"
+			STYLE="-moz-user-modify: read-only;">
 		</OBJECT>
 	</test>
 </tests>
