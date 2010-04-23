@@ -22,10 +22,12 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.part.MultiPageEditorActionBarContributor;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -104,19 +106,18 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	}
 
 	private void addProcessGraphicalEditor() {
-		processPage = new SmooksProcessGraphicalEditor(this, "process", Messages.SmooksMultiFormEditor_processpage_name, this); //$NON-NLS-1$
+		processPage = new SmooksProcessGraphicalEditor(this,
+				"process", Messages.SmooksMultiFormEditor_processpage_name, this); //$NON-NLS-1$
 		addSourceSynchronizeListener(processPage);
 		addValidateListener(processPage);
 		addSmooksEditorInitListener(processPage);
 		try {
-			int index = this.addPage(processPage );
+			int index = this.addPage(processPage);
 			setPageText(index, Messages.SmooksMultiFormEditor_processtabel_label);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	// private void addSmooksGraphicalEditor() {
 	// graphicalPage = new SmooksGraphicalEditorPart(this);
@@ -129,34 +130,53 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	// }
 	// }
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.ui.forms.editor.FormEditor#getActiveEditor()
 	 */
 	@Override
 	public IEditorPart getActiveEditor() {
 		int index = getActivePage();
 		if (index != -1) {
-			IEditorPart part =  getEditor(index);
-			if(part == null){
-//				if(index == 0){
-//					part = processPage;
-//				}
-//				if(index == 1){
-//					part = configurationPage;
-//				}
+			IEditorPart part = getEditor(index);
+			if (part == null) {
+				// if(index == 0){
+				// part = processPage;
+				// }
+				// if(index == 1){
+				// part = configurationPage;
+				// }
 			}
 			return part;
 		}
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
+	protected void pageChange(int newPageIndex) {
+		super.pageChange(newPageIndex);
+		IEditorPart activeEditor = getEditor(newPageIndex);
+		if (activeEditor == null) {
+			if (newPageIndex == 0) {
+				IEditorActionBarContributor contributor = getEditorSite().getActionBarContributor();
+				if (contributor != null && contributor instanceof MultiPageEditorActionBarContributor) {
+					((MultiPageEditorActionBarContributor) contributor).setActivePage(processPage);
+				}
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.jboss.tools.smooks.editor.AbstractSmooksFormEditor#init(org.eclipse
+	 * .ui.IEditorSite, org.eclipse.ui.IEditorInput)
 	 */
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		super.init(site, input);
-//		site.setSelectionProvider(this);
+		// site.setSelectionProvider(this);
 	}
 
 	public Object getAdapter(Class adapter) {
@@ -164,13 +184,13 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 			tabbedPropertySheetPage = new TabbedPropertySheetPage(this);
 			return tabbedPropertySheetPage;
 		}
-		
-		if(adapter == GraphicalViewer.class){
-			if(this.processPage != null){
+
+		if (adapter == GraphicalViewer.class) {
+			if (this.processPage != null) {
 				Object activeEditorPart = processPage.getActiveEditorPage();
-				if(activeEditorPart != null && activeEditorPart instanceof IEditorPart){
-					if(activeEditorPart instanceof GraphicalEditor){
-						return ((IEditorPart)activeEditorPart).getAdapter(adapter);
+				if (activeEditorPart != null && activeEditorPart instanceof IEditorPart) {
+					if (activeEditorPart instanceof GraphicalEditor) {
+						return ((IEditorPart) activeEditorPart).getAdapter(adapter);
 					}
 				}
 			}
@@ -185,7 +205,8 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor implements I
 	// }
 
 	private SmooksConfigurationOverviewPage createSmooksConfigurationOverviewPage() {
-		return new SmooksConfigurationOverviewPage(this, "options_page", Messages.SmooksMultiFormEditor_optinepage_name, this); //$NON-NLS-1$
+		return new SmooksConfigurationOverviewPage(this,
+				"options_page", Messages.SmooksMultiFormEditor_optinepage_name, this); //$NON-NLS-1$
 	}
 
 	@Override
