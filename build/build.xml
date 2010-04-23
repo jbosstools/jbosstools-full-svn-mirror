@@ -35,7 +35,7 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
 	-->
 
-	<target name="run" depends="init, get.bootstrap.scripts, get.sources, genpoms, install" />
+	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, genpoms, install" />
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -85,7 +85,6 @@
 	</target>
 
 	<target name="init" depends="local">
-		<property name="WORKINGDIR" value="${basedir}" />
 		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
 		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
 			<available file="/home/hudson/static_build_env/jbds" type="dir" />
@@ -239,14 +238,17 @@
 
 	<target name="get.components.to.build">
 		<property file="build.cfg" />
-		<var name="COMPONENTS" unset="true" />
-		<property name="COMPONENTS" value="${COMPONENTS.to.build}" />
-		<echo level="debug">Got COMPONENTS = ${COMPONENTS}</echo>
+		<if>
+			<equals arg1="${COMPONENTS.to.build}" arg2="" />
+			<then>
+				<echo level="info">All components up to date: nothing to do!
+To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="genpoms">
-		<antcallback target="get.components.to.build" return="COMPONENTS" />
-		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
+		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
@@ -258,12 +260,9 @@
 	</target>
 
 	<target name="install">
-		<!-- if not running genpom, make sure you call this to filter out unchanged sources from build -->
-		<!-- <antcallback target="get.components.to.build" return="COMPONENTS"/> -->
-
 		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
 		<property name="MAVEN_FLAGS" value="" />
-		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
+		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
 				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
@@ -480,13 +479,13 @@
 
 		<echo level="info">
 2/6: Test build.cfg</echo>
-		<var name="COMPONENTS" unset="true" />
-		<antcallback target="get.components.to.build" return="COMPONENTS" />
+		<var name="COMPONENTS.to.build" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
 		<assert failonerror="false"
-		        message="expected: [${get.components.to.build.expected.2}] but got: [${COMPONENTS}]"
+		        message="expected: [${get.components.to.build.expected.2}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
-				<equals arg1="${get.components.to.build.expected.2}" arg2="${COMPONENTS}" />
+				<equals arg1="${get.components.to.build.expected.2}" arg2="${COMPONENTS.to.build}" />
 			</bool>
 		</assert>
 		<echo level="info">----------------------------------</echo>
@@ -520,13 +519,13 @@
 
 		<echo level="info">
 4/6: Test build.cfg</echo>
-		<var name="COMPONENTS" unset="true" />
-		<antcallback target="get.components.to.build" return="COMPONENTS" />
+		<var name="COMPONENTS.to.build" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
 		<assert failonerror="false"
-		        message="expected: [${get.components.to.build.expected.4}] but got: [${COMPONENTS}]"
+		        message="expected: [${get.components.to.build.expected.4}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
-				<equals arg1="${get.components.to.build.expected.4}" arg2="${COMPONENTS}" />
+				<equals arg1="${get.components.to.build.expected.4}" arg2="${COMPONENTS.to.build}" />
 			</bool>
 		</assert>
 		<echo level="info">----------------------------------</echo>
@@ -558,13 +557,13 @@
 
 		<echo level="info">
 6/6: Test build.cfg</echo>
-		<var name="COMPONENTS" unset="true" />
-		<antcallback target="get.components.to.build" return="COMPONENTS" />
+		<var name="COMPONENTS.to.build" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
 		<assert failonerror="false"
-		        message="expected: [${get.components.to.build.expected.6}] but got: [${COMPONENTS}]"
+		        message="expected: [${get.components.to.build.expected.6}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
-				<equals arg1="${get.components.to.build.expected.6}" arg2="${COMPONENTS}" />
+				<equals arg1="${get.components.to.build.expected.6}" arg2="${COMPONENTS.to.build}" />
 			</bool>
 		</assert>
 		<echo level="info">----------------------------------</echo>
