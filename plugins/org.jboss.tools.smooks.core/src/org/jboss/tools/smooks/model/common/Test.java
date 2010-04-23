@@ -14,7 +14,6 @@ import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
 
 public class Test {
 
@@ -24,7 +23,6 @@ public class Test {
 	public static void main(String[] args) {
 		Registry.INSTANCE.put(CommonPackage.eNS_URI, CommonPackage.eINSTANCE);
 		Registry.INSTANCE.put(FreemarkerPackage.eNS_URI, FreemarkerPackage.eINSTANCE);
-		Registry.INSTANCE.put(XslPackage.eNS_URI, XslPackage.eINSTANCE);
 		Registry.INSTANCE.put(SmooksPackage.eNS_URI, SmooksPackage.eINSTANCE);
 		
 		

@@ -20,7 +20,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
-import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
+import org.jboss.tools.smooks.model.javabean12.provider.Javabean12EditPlugin;
 
 
 
@@ -107,7 +107,7 @@ public class AbstractResourceConfigItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Xsl1EditPlugin.INSTANCE;
+		return Javabean12EditPlugin.INSTANCE;
 	}
 
 }
