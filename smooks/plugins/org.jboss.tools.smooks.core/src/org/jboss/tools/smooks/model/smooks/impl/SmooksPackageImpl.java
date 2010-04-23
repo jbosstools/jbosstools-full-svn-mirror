@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.jboss.tools.smooks.model.common.CommonPackage;
 import org.jboss.tools.smooks.model.common.impl.CommonPackageImpl;
+import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
+import org.jboss.tools.smooks.model.javabean12.impl.Javabean12PackageImpl;
 import org.jboss.tools.smooks.model.smooks.AbstractReader;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 import org.jboss.tools.smooks.model.smooks.ConditionType;
@@ -40,8 +42,6 @@ import org.jboss.tools.smooks.model.smooks.SetOnType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.xsl.XslPackage;
-import org.jboss.tools.smooks.model.xsl.impl.XslPackageImpl;
 
 
 /**
@@ -251,7 +251,7 @@ public class SmooksPackageImpl extends EPackageImpl implements SmooksPackage {
 		XMLTypePackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
-		XslPackageImpl theXslPackage = (XslPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(XslPackage.eNS_URI) instanceof XslPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(XslPackage.eNS_URI) : XslPackage.eINSTANCE);
+		Javabean12PackageImpl theXslPackage = (Javabean12PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(Javabean12Package.eNS_URI) instanceof Javabean12PackageImpl ? EPackage.Registry.INSTANCE.getEPackage(Javabean12Package.eNS_URI) : Javabean12Package.eINSTANCE);
 		CommonPackageImpl theCommonPackage = (CommonPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) instanceof CommonPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CommonPackage.eNS_URI) : CommonPackage.eINSTANCE);
 
 		// Create package meta-data objects

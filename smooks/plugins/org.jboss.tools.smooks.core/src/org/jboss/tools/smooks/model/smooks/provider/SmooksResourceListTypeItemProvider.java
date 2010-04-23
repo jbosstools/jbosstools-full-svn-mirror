@@ -32,12 +32,12 @@ import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
+import org.jboss.tools.smooks.model.javabean12.provider.Javabean12EditPlugin;
 import org.jboss.tools.smooks.model.json12.Json12Factory;
 import org.jboss.tools.smooks.model.json12.Json12Package;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
 
 /**
  * This is the item provider adapter for a {@link smooks.SmooksResourceListType}
@@ -334,7 +334,7 @@ public class SmooksResourceListTypeItemProvider extends AbstractAnyTypeItemProvi
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Xsl1EditPlugin.INSTANCE;
+		return Javabean12EditPlugin.INSTANCE;
 	}
 
 }

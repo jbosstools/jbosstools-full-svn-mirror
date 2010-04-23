@@ -22,10 +22,10 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.common.provider.AbstractAnyTypeItemProvider;
+import org.jboss.tools.smooks.model.javabean12.provider.Javabean12EditPlugin;
 import org.jboss.tools.smooks.model.smooks.ConditionsType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
-import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
 
 
 
@@ -164,7 +164,7 @@ public class ConditionsTypeItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Xsl1EditPlugin.INSTANCE;
+		return Javabean12EditPlugin.INSTANCE;
 	}
 
 }

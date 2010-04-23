@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.CommonPackage;
-import org.jboss.tools.smooks.model.xsl.provider.Xsl1EditPlugin;
+import org.jboss.tools.smooks.model.javabean12.provider.Javabean12EditPlugin;
 
 
 /**
@@ -299,6 +299,6 @@ public class AbstractAnyTypeItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return Xsl1EditPlugin.INSTANCE;
+		return Javabean12EditPlugin.INSTANCE;
 	}
 }
