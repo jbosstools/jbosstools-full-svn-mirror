@@ -341,7 +341,7 @@ public class SmooksConfigurationOverviewPage extends FormPage implements ISmooks
 			toolkit.createLabel(globalParamComposite, Messages.SmooksConfigurationOverviewPage_SerializationLabel)
 					.setForeground(toolkit.getColors().getColor(IFormColors.TITLE));
 			gd = new GridData(SWT.FILL, SWT.NONE, true, false);
-			defaultSerializationOnCheckbox = toolkit.createButton(globalParamComposite, "", SWT.CHECK); //$NON-NLS-1$
+			defaultSerializationOnCheckbox = toolkit.createButton(globalParamComposite, null, SWT.CHECK); //$NON-NLS-1$
 			defaultSerializationOnCheckbox.setLayoutData(gd);
 
 			initGlobalSettingControls();

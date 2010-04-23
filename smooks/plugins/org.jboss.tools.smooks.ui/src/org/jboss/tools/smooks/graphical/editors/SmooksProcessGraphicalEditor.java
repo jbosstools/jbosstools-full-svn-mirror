@@ -45,17 +45,21 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.IEditorActionBarContributor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -64,6 +68,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.ui.part.MultiPageEditorActionBarContributor;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.widgets.CGraphNode;
 import org.eclipse.zest.core.widgets.Graph;
@@ -81,9 +86,11 @@ import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListene
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
+import org.jboss.tools.smooks.gef.common.SmooksGraphicalMenuContextProvider;
 import org.jboss.tools.smooks.graphical.actions.AbstractProcessGraphAction;
 import org.jboss.tools.smooks.graphical.actions.AddNextTaskNodeAction;
 import org.jboss.tools.smooks.graphical.actions.DeleteTaskNodeAction;
+import org.jboss.tools.smooks.graphical.actions.ISmooksActionProvider;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager.TaskTypeDescriptor;
 import org.jboss.tools.smooks.graphical.editors.process.IProcessProvider;
 import org.jboss.tools.smooks.graphical.editors.process.ProcessFactory;
@@ -108,7 +115,9 @@ import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
  */
 public class SmooksProcessGraphicalEditor extends FormPage implements ISelectionChangedListener,
 		ISourceSynchronizeListener, IPropertyListener, ISmooksModelValidateListener, IProcessProvider,
-		PropertyChangeListener, ISmooksEditorInitListener {
+		PropertyChangeListener, ISmooksEditorInitListener, ISmooksActionProvider {
+
+	private boolean processMapActived = false;
 
 	private int currentMessageType = IMessageProvider.NONE;
 
@@ -260,8 +269,33 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				}
 				showTaskControl(firstElement);
 				SmooksProcessGraphicalEditor.this.selectionChanged(event);
+				updateGlobalActions();
 			}
 		});
+		// when focus change , update the actions in the Eclipse menu via
+		// EditorContributor
+		getProcessGraphViewer().getControl().addFocusListener(new FocusListener() {
+
+			public void focusLost(FocusEvent e) {
+				processMapActived = false;
+				updateGlobalActions();
+			}
+
+			public void focusGained(FocusEvent e) {
+				processMapActived = true;
+				updateGlobalActions();
+			}
+		});
+	}
+
+	private void updateGlobalActions() {
+		IEditorActionBarContributor contributor = getEditorSite().getActionBarContributor();
+		if (contributor != null && contributor instanceof MultiPageEditorActionBarContributor) {
+			// clean all actions
+			((MultiPageEditorActionBarContributor) contributor).setActivePage(null);
+			// re-active the page and add all actions
+			((MultiPageEditorActionBarContributor) contributor).setActivePage(SmooksProcessGraphicalEditor.this);
+		}
 	}
 
 	protected void unhighlightGraphNodes() {
@@ -793,7 +827,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	public void selectionChanged(SelectionChangedEvent event) {
 		ISelectionProvider provider = getEditor().getSite().getSelectionProvider();
-		if(provider != null){
+		if (provider != null) {
 			provider.setSelection(event.getSelection());
 		}
 	}
@@ -855,9 +889,9 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		}
 		return null;
 	}
-	
-	public Object getActiveEditorPage(){
-		if(pageBook != null){
+
+	public Object getActiveEditorPage() {
+		if (pageBook != null) {
 			Control control = pageBook.getCurrentPage();
 			return control.getData();
 		}
@@ -941,7 +975,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			}
 
 		});
-
+		updateGlobalActions();
 	}
 
 	protected IEditorSite createSite(IEditorPart editor) {
@@ -1312,5 +1346,27 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 			}
 		}
+	}
+
+	public IAction getAction(String actionId) {
+		if (processMapActived) {
+			updateProcessActions(processGraphViewer.getSelection());
+			if(ActionFactory.DELETE.getId().equals(actionId)){
+				for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
+					IAction action = (IAction) iterator.next();
+					if(action instanceof DeleteTaskNodeAction){
+						return action;
+					}
+				}
+			}
+		} else {
+			IEditorPart editor = (IEditorPart) getActiveEditorPage();
+			if (editor != null && editor instanceof SmooksGraphicalEditorPart) {
+				SmooksGraphicalMenuContextProvider provider = (SmooksGraphicalMenuContextProvider) ((SmooksGraphicalEditorPart) editor)
+						.getContextMenuProvider();
+				return provider.getActionRegistry().getAction(actionId);
+			}
+		}
+		return null;
 	}
 }
