@@ -1,11 +1,9 @@
-<!-- TODO move this script into releng/ folder so that it can be checked out via Hudson -->
-<!-- TODO write wrapper script (./build.xml) which fetches if not avail then simply calls ./releng/build.xml -->
-
-<!-- Build a given list of ${COMPONENTS} -->
 <project default="run" basedir="." name="jbosstools build.xml">
+	<!-- Build a given list of ${COMPONENTS} -->
 
-	<!-- Configuration Start -->
-	<!-- must set name of component to build/test, IN ORDER -->
+	<!-- ****************************** Configuration ****************************** -->
+
+	<!-- set name of component(s) to build+test, IN ORDER -->
 	<property name="COMPONENTS"
 	          value="tests, common, 
 						flow, jbpm, 
@@ -23,7 +21,8 @@
 
 	<!-- default maven version -->
 	<property name="maven.version" value="3.0-alpha-7" />
-	<!-- Configuration Ends -->
+
+	<!-- ****************************** Usage Instructions ****************************** -->
 
 	<!-- To run this script in Eclipse:
 			Run As > Ant Build
@@ -230,7 +229,7 @@
 
 	<target name="get.bootstrap.scripts">
 		<!-- also get files required to bootstrap the build -->
-		<for param="BOOTSTRAP" list="parent-pom.xml, genpom.xml, build.xml" delimiter=", 
+		<for param="BOOTSTRAP" list="parent-pom.xml, genpom.xml" delimiter=", 
 ">
 			<sequential>
 				<get src="${svn.root}/@{BOOTSTRAP}" dest="${WORKINGDIR}/@{BOOTSTRAP}" usetimestamp="true" />
