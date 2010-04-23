@@ -2,10 +2,17 @@
 <project default="run" basedir="." name="jbosstools build.xml">
 
 	<!-- Configuration Start -->
-	<!-- must set name of component to build/test -->
-	<!-- <property name="COMPONENTS" value="tests,common" /> -->
+	<!-- must set name of component to build/test, IN ORDER -->
 	<property name="COMPONENTS"
-	          value="tests, common, flow, jbpm, jmx, archives, as, drools, bpel, smooks, freemarker, profiler, portlet, xulrunner, jst, vpe, jsf, esb, tptp, ws, cdi, struts, seam, examples, birt, maven, hibernatetools"
+	          value="tests, common, 
+						flow, jbpm, 
+						jmx, archives, as, 
+						drools, bpel, smooks, freemarker, profiler, portlet, 
+						xulrunner, jst, vpe, jsf, 
+							esb, tptp, ws, 
+							cdi, struts, hibernatetools, seam, 
+								examples, birt, 
+								maven"
 	/>
 
 	<!-- default maven version -->
@@ -15,10 +22,12 @@
 	<!-- To run this script in Eclipse:
 			Run As > Ant Build
 	-->
-	<!-- To run this script via commandline (build default module, tests):
+	<!-- To run this script via commandline (build default modules & run tests):
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant
-		 or, to build a specific module: 
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common 
+		 or, to build everything but not *run* the tests:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -Dmaven.test.skip 
+		 or, to build specific module(s): 
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
 	-->
 
 	<target name="run" depends="init, genpoms, install" />
