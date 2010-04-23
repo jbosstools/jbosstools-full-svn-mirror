@@ -25,7 +25,7 @@
 	<!-- To run this script via commandline (build default modules & run tests):
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant
 		 or, to build everything but not *run* the tests:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -Dmaven.test.skip 
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="-Dmaven.test.skip"
 		 or, to build specific module(s): 
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
 	-->
