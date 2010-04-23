@@ -15,6 +15,9 @@
 								maven"
 	/>
 
+	<!-- svn root, including trunk or branch path -->
+	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build" />
+
 	<!-- default maven version -->
 	<property name="maven.version" value="3.0-alpha-7" />
 	<!-- Configuration Ends -->
@@ -30,7 +33,7 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
 	-->
 
-	<target name="run" depends="init, genpoms, install" />
+	<target name="run" depends="init, get.sources, genpoms, install" />
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -64,9 +67,30 @@
 		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
 	</target>
 
+	<target name="get.svnant" unless="svnant.jar.exists">
+		<property name="SVNANT_MIRROR" value="http://www.tigris.org/files/documents/906/46267" />
+		<!-- ant <get> does not work due to redirection; on Windows just download this file manually -->
+		<exec executable="wget" dir="${COMMON_TOOLS}">
+			<arg line="${SVNANT_MIRROR}/svnant-1.3.0.zip --no-clobber" />
+		</exec>
+		<touch file="${COMMON_TOOLS}/svnant-1.3.0.zip" />
+		<mkdir dir="${java.io.tmpdir}/svnant-1.3.0.zip_" />
+		<unzip src="${COMMON_TOOLS}/svnant-1.3.0.zip" dest="${java.io.tmpdir}/svnant-1.3.0.zip_" overwrite="true" />
+		<copy todir="${COMMON_TOOLS}" failonerror="true">
+			<fileset dir="${java.io.tmpdir}/svnant-1.3.0.zip_/svnant-1.3.0/lib/" includes="*.jar" />
+		</copy>
+		<delete dir="${java.io.tmpdir}/svnant-1.3.0.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
 	<target name="init" depends="local">
 		<property name="WORKINGDIR" value="${basedir}" />
 		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
+		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${WORKINGDIR}" />
+		<echo level="info">WORKINGDIR = ${WORKINGDIR}</echo>
+
 		<condition property="COMMON_TOOLS"
 		           value="/home/hudson/static_build_env/jbds/tools"
 		           else="${WORKINGDIR}/../tools"
@@ -74,13 +98,23 @@
 			<available file="/home/hudson/static_build_env/jbds" type="dir" />
 		</condition>
 		<mkdir dir="${COMMON_TOOLS}" />
-		<echo>COMMON_TOOLS = ${COMMON_TOOLS}</echo>
+		<echo level="info">COMMON_TOOLS = ${COMMON_TOOLS}</echo>
 
 		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
 		<antcall target="get.ant-contrib" />
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
 			<classpath>
 				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+		<available file="${COMMON_TOOLS}/svnant.jar" type="file" property="svnant.jar.exists" />
+		<antcall target="get.svnant" />
+		<taskdef resource="org/tigris/subversion/svnant/svnantlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/svnant.jar" />
+				<pathelement location="${COMMON_TOOLS}/svnkit.jar" />
+				<pathelement location="${COMMON_TOOLS}/svnClientAdapter.jar" />
 			</classpath>
 		</taskdef>
 
@@ -97,11 +131,94 @@
 		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" />
 	</target>
 
+	<target name="get.sources" description="if sources not already on disk, fetch them">
+		<!-- = = = = = = = = = = = = = = = = =
+          COMPONENT: component to fetch or update
+          op: up (update) or co (checkout)
+         = = = = = = = = = = = = = = = = = -->
+		<macrodef name="svn.fetch">
+			<attribute name="COMPONENT" />
+			<attribute name="op" />
+			<sequential>
+				<!-- check out or update -->
+				<if>
+					<equals arg1="@{op}" arg2="up" />
+					<then>
+						<svn javahl="false" svnkit="true">
+							<update dir="@{COMPONENT}" />
+						</svn>
+					</then>
+					<else>
+						<echo>Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
+						<svn javahl="false" svnkit="true">
+							<checkout url="${svn.root}/@{COMPONENT}" destpath="${WORKINGDIR}/@{COMPONENT}" />
+						</svn>
+					</else>
+				</if>
+
+				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
+				<svn javahl="false" svnkit="true">
+					<info target="@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" />
+				</svn>
+				<echo file="svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
+</echo>
+			</sequential>
+		</macrodef>
+
+		<!-- check for each component dir in ${WORKINGDIR}; if not found, fetch -->
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
+	">
+			<sequential>
+				<if>
+					<not>
+						<available file="${WORKINGDIR}/@{COMPONENT}" type="dir" />
+					</not>
+					<then>
+						<svn.fetch component="@{COMPONENT}" op="co" />
+					</then>
+					<else>
+						<if>
+							<available file="svn.info-@{COMPONENT}.txt" type="file" />
+							<then>
+								<property file="svn.info-@{COMPONENT}.txt" />
+								<!-- check svn info; if new version found, svn up -->
+								<svn javahl="false" svnkit="true">
+									<info target="@{COMPONENT}" propprefix="svn.info.@{COMPONENT}.check" />
+								</svn>
+								<if>
+									<not>
+										<equals arg1="${svn.info.@{COMPONENT}.rev}"
+										        arg2="${svn.info.@{COMPONENT}.check.rev}"
+										/>
+									</not>
+									<then>
+										<svn.fetch component="@{COMPONENT}" op="up" />
+									</then>
+								</if>
+							</then>
+							<else>
+								<svn.fetch component="@{COMPONENT}" op="up" />
+							</else>
+						</if>
+					</else>
+				</if>
+			</sequential>
+		</for>
+
+		<!-- also get files required to bootstrap the build -->
+		<for param="BOOTSTRAP" list="parent-pom.xml, genpom.xml, build.xml" delimiter=", 
+	">
+			<sequential>
+				<get src="${svn.root}/@{BOOTSTRAP}" dest="${WORKINGDIR}/@{BOOTSTRAP}" usetimestamp="true" />
+			</sequential>
+		</for>
+	</target>
+
 	<target name="genpoms">
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
 	">
 			<sequential>
-				<!-- TODO: check if poms exist already; if not, generate; if so, use existing -->
+				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run">
 					<property name="COMPONENT" value="@{COMPONENT}" />
 				</ant>
@@ -238,5 +355,29 @@
 		</deploy>
 		-->
 	</target>
-</project>
 
+	<!-- ************************************ TESTS ************************************ -->
+
+	<target name="test.get.sources"
+	        depends="init"
+	        description="manual test to verify get.sources works to fetch, then update the tests component"
+	>
+		<var name="COMPONENTS" unset="true" />
+		<var name="COMPONENTS" value="tests" />
+		<delete dir="tests" includeemptydirs="true" />
+		<echo>Full checkout:</echo>
+		<antcall target="get.sources" />
+		<echo>----------------------------------</echo>
+
+		<delete file="svn.info-tests.txt" />
+		<echo>Full update:</echo>
+		<antcall target="get.sources" />
+		<echo>----------------------------------</echo>
+
+		<echo>Check info, but do not update:</echo>
+		<antcall target="get.sources" />
+		<echo>----------------------------------</echo>
+
+	</target>
+
+</project>
