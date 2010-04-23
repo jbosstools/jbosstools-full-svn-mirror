@@ -5,7 +5,7 @@
 	<property name="COMPONENT" value="trunk" />
 	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
 	<property name="dirsToExclude"
-	          value="**/*.sdk.*, **/doc*, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders, **/contrib, **/releng/**, ."
+	          value="**/*.sdk.*, **/doc*, **/releng/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders, **/contrib, **/releng/**, ."
 	/>
 	<property name="overwrite.existing.pom.xml" value="false" />
 	<!-- Configuration Ends -->
@@ -158,12 +158,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 					<property name="dir" value="@{dir}" />
 				</antcallback>
 				<if>
-					<!-- TODO: calculate id and version for an update site so just set them to defaults -->
 					<equals arg1="${artifactType}" arg2="eclipse-update-site" />
 					<then>
 						<var name="artifactId" unset="true" />
 						<basename property="artifactId" file="@{dir}" />
-						<var name="artifactVersion" value="0.0.0" />
+						<var name="artifactVersion" value="${pomVersion}" />
 					</then>
 					<else>
 						<var name="artifactId" unset="true" />
