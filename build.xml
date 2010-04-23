@@ -1,3 +1,6 @@
+<!-- TODO move this script into releng/ folder so that it can be checked out via Hudson -->
+<!-- TODO write wrapper script (./build.xml) which fetches if not avail then simply calls ./releng/build.xml -->
+
 <!-- Build a given list of ${COMPONENTS} -->
 <project default="run" basedir="." name="jbosstools build.xml">
 
@@ -33,7 +36,7 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
 	-->
 
-	<target name="run" depends="init, get.sources, genpoms, install" />
+	<target name="run" depends="init, get.bootstrap.scripts, get.sources, genpoms, install" />
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -132,6 +135,8 @@
 	</target>
 
 	<target name="get.sources" description="if sources not already on disk, fetch them">
+		<property name="svn.recurse" value="true" />
+
 		<!-- = = = = = = = = = = = = = = = = =
           COMPONENT: component to fetch or update
           op: up (update) or co (checkout)
@@ -145,13 +150,16 @@
 					<equals arg1="@{op}" arg2="up" />
 					<then>
 						<svn javahl="false" svnkit="true">
-							<update dir="@{COMPONENT}" />
+							<update recurse="${svn.recurse}" dir="@{COMPONENT}" />
 						</svn>
 					</then>
 					<else>
-						<echo>Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
+						<echo level="info">Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
 						<svn javahl="false" svnkit="true">
-							<checkout url="${svn.root}/@{COMPONENT}" destpath="${WORKINGDIR}/@{COMPONENT}" />
+							<checkout recurse="${svn.recurse}"
+							          url="${svn.root}/@{COMPONENT}"
+							          destpath="${WORKINGDIR}/@{COMPONENT}"
+							/>
 						</svn>
 					</else>
 				</if>
@@ -162,10 +170,12 @@
 				</svn>
 				<echo file="svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
 </echo>
+				<echo file="build.cfg" message="@{COMPONENT}," append="true" />
 			</sequential>
 		</macrodef>
 
 		<!-- check for each component dir in ${WORKINGDIR}; if not found, fetch -->
+		<echo file="build.cfg" message="COMPONENTS.to.build = " />
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
 	">
 			<sequential>
@@ -194,6 +204,17 @@
 									<then>
 										<svn.fetch component="@{COMPONENT}" op="up" />
 									</then>
+									<else>
+										<if>
+											<and>
+												<isset property="build.if.sources.unchanged" />
+												<istrue value="${build.if.sources.unchanged}" />
+											</and>
+											<then>
+												<echo file="build.cfg" message="@{COMPONENT}," append="true" />
+											</then>
+										</if>
+									</else>
 								</if>
 							</then>
 							<else>
@@ -205,16 +226,27 @@
 			</sequential>
 		</for>
 
+	</target>
+
+	<target name="get.bootstrap.scripts">
 		<!-- also get files required to bootstrap the build -->
 		<for param="BOOTSTRAP" list="parent-pom.xml, genpom.xml, build.xml" delimiter=", 
-	">
+">
 			<sequential>
 				<get src="${svn.root}/@{BOOTSTRAP}" dest="${WORKINGDIR}/@{BOOTSTRAP}" usetimestamp="true" />
 			</sequential>
 		</for>
 	</target>
 
+	<target name="get.components.to.build">
+		<property file="build.cfg" />
+		<var name="COMPONENTS" unset="true" />
+		<property name="COMPONENTS" value="${COMPONENTS.to.build}" />
+		<echo level="debug">Got COMPONENTS = ${COMPONENTS}</echo>
+	</target>
+
 	<target name="genpoms">
+		<antcallback target="get.components.to.build" return="COMPONENTS" />
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
 	">
 			<sequential>
@@ -227,6 +259,9 @@
 	</target>
 
 	<target name="install">
+		<!-- if not running genpom, make sure you call this to filter out unchanged sources from build -->
+		<!-- <antcallback target="get.components.to.build" return="COMPONENTS"/> -->
+
 		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
 		<property name="MAVEN_FLAGS" value="" />
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
@@ -256,11 +291,6 @@
 
 	</target>
 
-	<target name="test.deploy" depends="init">
-		<antcall target="deploy">
-			<param name="targetZipsDir" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository/" />
-		</antcall>
-	</target>
 	<target name="deploy">
 		<!-- TODO enable publishing to download.jboss.org or porkchop.jboss.com -->
 		<property name="DESTINATION.jbosstools" value="filemgmt.jboss.org/downloads_htdocs/tools/repository/" />
@@ -358,26 +388,194 @@
 
 	<!-- ************************************ TESTS ************************************ -->
 
+	<target name="test.expected.values">
+		<property name="ant.enable.asserts" value="true" />
+
+		<!-- expected values for get.sources.* tests -->
+		<property name="get.sources.expected.dirs" value="tests,common,xulrunner," />
+		<property name="get.sources.expected.files" value="build.cfg" />
+
+		<!-- expected values for test.get.sources.build.updated.only tests -->
+		<property name="get.components.to.build.expected.2" value="tests,common,xulrunner," />
+		<property name="get.components.to.build.expected.4" value="tests,xulrunner," />
+		<property name="get.components.to.build.expected.6" value="" />
+
+		<!-- expected values for test.get.sources.build.all tests -->
+		<property name="get.components.to.build.expected.2.all" value="tests,common,xulrunner," />
+		<property name="get.components.to.build.expected.4.all" value="tests,common,xulrunner," />
+		<property name="get.components.to.build.expected.6.all" value="tests,common,xulrunner," />
+
+	</target>
+
+	<target name="test.all">
+		<antcall target="test.get.sources.build.all" />
+		<antcall target="test.get.sources" />
+		<antcall target="test.deploy" />
+	</target>
+
+	<target name="test.get.sources.build.all"
+	        depends="init, test.expected.values"
+	        description="verify get.sources works to fetch, then update; verify all components will be built"
+	>
+		<var name="build.if.sources.unchanged" value="true" />
+		<var name="get.components.to.build.expected.2" unset="true" />
+		<var name="get.components.to.build.expected.4" unset="true" />
+		<var name="get.components.to.build.expected.6" unset="true" />
+		<var name="get.components.to.build.expected.2" value="${get.components.to.build.expected.2.all}" />
+		<var name="get.components.to.build.expected.4" value="${get.components.to.build.expected.4.all}" />
+		<var name="get.components.to.build.expected.6" value="${get.components.to.build.expected.6.all}" />
+		<antcall target="test.get.sources" />
+	</target>
+
 	<target name="test.get.sources"
-	        depends="init"
-	        description="manual test to verify get.sources works to fetch, then update the tests component"
+	        depends="init, test.expected.values"
+	        description="verify get.sources works to fetch, then update; verify if components are not updated, they will not be built"
 	>
 		<var name="COMPONENTS" unset="true" />
-		<var name="COMPONENTS" value="tests" />
-		<delete dir="tests" includeemptydirs="true" />
-		<echo>Full checkout:</echo>
-		<antcall target="get.sources" />
-		<echo>----------------------------------</echo>
+		<var name="COMPONENTS" value="${get.sources.expected.dirs}" />
 
+		<!-- for testing purposes, do not recurse (otherwise will have to download 100s of Mb of data -->
+		<var name="svn.recurse" unset="true" />
+		<var name="svn.recurse" value="false" />
+
+		<!-- cleanup before test -->
+		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
+	">
+			<sequential>
+				<delete dir="@{expected.dir}" includeemptydirs="true" />
+				<delete file="svn.info-@{expected.dir}.txt" />
+			</sequential>
+		</for>
+		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
+	">
+			<sequential>
+				<delete file="@{expected.file}" />
+			</sequential>
+		</for>
+
+		<echo level="info">----------------------------------</echo>
+		<echo level="info">
+1/6: Test checkout</echo>
+		<antcall target="get.sources" />
+		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+					<bool>
+						<available file="@{expected.dir}" type="dir" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.file} not found!">
+					<bool>
+						<available file="@{expected.file}" type="file" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<echo level="info">----------------------------------</echo>
+
+		<echo level="info">
+2/6: Test build.cfg</echo>
+		<var name="COMPONENTS" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS" />
+		<assert failonerror="false"
+		        message="expected: [${get.components.to.build.expected.2}] but got: [${COMPONENTS}]"
+		>
+			<bool>
+				<equals arg1="${get.components.to.build.expected.2}" arg2="${COMPONENTS}" />
+			</bool>
+		</assert>
+		<echo level="info">----------------------------------</echo>
+
+		<echo level="info">
+3/6: Test update</echo>
 		<delete file="svn.info-tests.txt" />
-		<echo>Full update:</echo>
+		<delete file="svn.info-xulrunner.txt" />
 		<antcall target="get.sources" />
-		<echo>----------------------------------</echo>
+		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+					<bool>
+						<available file="@{expected.dir}" type="dir" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.file} not found!">
+					<bool>
+						<available file="@{expected.file}" type="file" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<echo level="info">----------------------------------</echo>
 
-		<echo>Check info, but do not update:</echo>
+		<echo level="info">
+4/6: Test build.cfg</echo>
+		<var name="COMPONENTS" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS" />
+		<assert failonerror="false"
+		        message="expected: [${get.components.to.build.expected.4}] but got: [${COMPONENTS}]"
+		>
+			<bool>
+				<equals arg1="${get.components.to.build.expected.4}" arg2="${COMPONENTS}" />
+			</bool>
+		</assert>
+		<echo level="info">----------------------------------</echo>
+
+		<echo level="info">
+5/6: Test info w/o update</echo>
 		<antcall target="get.sources" />
-		<echo>----------------------------------</echo>
+		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+					<bool>
+						<available file="@{expected.dir}" type="dir" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.file} not found!">
+					<bool>
+						<available file="@{expected.file}" type="file" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<echo level="info">----------------------------------</echo>
 
+		<echo level="info">
+6/6: Test build.cfg</echo>
+		<var name="COMPONENTS" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS" />
+		<assert failonerror="false"
+		        message="expected: [${get.components.to.build.expected.6}] but got: [${COMPONENTS}]"
+		>
+			<bool>
+				<equals arg1="${get.components.to.build.expected.6}" arg2="${COMPONENTS}" />
+			</bool>
+		</assert>
+		<echo level="info">----------------------------------</echo>
+	</target>
+
+	<!-- TODO: fixme -->
+	<target name="test.deploy" depends="init, test.expected.values">
+		<antcall target="deploy">
+			<param name="targetZipsDir" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository/" />
+		</antcall>
 	</target>
 
 </project>
