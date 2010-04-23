@@ -164,7 +164,7 @@
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
 				<svn javahl="false" svnkit="true">
-					<info target="@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" />
+					<info verbose="true" target="@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" />
 				</svn>
 				<echo file="svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
 </echo>
@@ -191,7 +191,7 @@
 								<property file="svn.info-@{COMPONENT}.txt" />
 								<!-- check svn info; if new version found, svn up -->
 								<svn javahl="false" svnkit="true">
-									<info target="@{COMPONENT}" propprefix="svn.info.@{COMPONENT}.check" />
+									<info verbose="true" target="@{COMPONENT}" propprefix="svn.info.@{COMPONENT}.check" />
 								</svn>
 								<if>
 									<not>
