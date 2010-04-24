@@ -161,13 +161,13 @@
 				<if>
 					<equals arg1="@{op}" arg2="up" />
 					<then>
-						<svn javahl="false" svnkit="true">
+						<svn javahl="false" svnkit="true" failonerror="false">
 							<update recurse="${svn.recurse}" dir="@{COMPONENT}" />
 						</svn>
 					</then>
 					<else>
 						<echo level="info">Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
-						<svn javahl="false" svnkit="true">
+						<svn javahl="false" svnkit="true" failonerror="true">
 							<checkout recurse="${svn.recurse}"
 							          url="${svn.root}/@{COMPONENT}"
 							          destpath="${WORKINGDIR}/@{COMPONENT}"
@@ -177,11 +177,16 @@
 				</if>
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
-				<svn javahl="false" svnkit="true">
+				<svn javahl="false" svnkit="true" failonerror="false">
 					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" />
 				</svn>
-				<echo file="svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
+				<if>
+					<isset property="svn.info.@{COMPONENT}.rev" />
+					<then>
+						<echo file="svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
 </echo>
+					</then>
+				</if>
 				<echo file="build.cfg" message="@{COMPONENT}," append="true" />
 			</sequential>
 		</macrodef>
@@ -204,17 +209,25 @@
 							<then>
 								<property file="svn.info-@{COMPONENT}.txt" />
 								<!-- check svn info; if new version found, svn up -->
-								<svn javahl="false" svnkit="true">
+								<svn javahl="false" svnkit="true" failonerror="false">
 									<info target="${WORKINGDIR}/@{COMPONENT}"
 									      propprefix="svn.info.@{COMPONENT}.check"
 									/>
 								</svn>
 								<if>
-									<not>
-										<equals arg1="${svn.info.@{COMPONENT}.rev}"
-										        arg2="${svn.info.@{COMPONENT}.check.rev}"
-										/>
-									</not>
+									<or>
+										<not>
+											<isset property="svn.info.@{COMPONENT}.rev" />
+										</not>
+										<not>
+											<isset property="svn.info.@{COMPONENT}.check.rev" />
+										</not>
+										<not>
+											<equals arg1="${svn.info.@{COMPONENT}.rev}"
+											        arg2="${svn.info.@{COMPONENT}.check.rev}"
+											/>
+										</not>
+									</or>
 									<then>
 										<svn.fetch component="@{COMPONENT}" op="up" />
 									</then>
