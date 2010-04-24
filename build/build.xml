@@ -183,7 +183,7 @@
 				<if>
 					<isset property="svn.info.@{COMPONENT}.rev" />
 					<then>
-						<echo file="svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
+						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
 </echo>
 					</then>
 				</if>
@@ -196,6 +196,7 @@
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
 	">
 			<sequential>
+				<!-- TODO: add timestamps / elapsed time -->
 				<if>
 					<not>
 						<available file="${WORKINGDIR}/@{COMPONENT}" type="dir" />
@@ -205,9 +206,9 @@
 					</then>
 					<else>
 						<if>
-							<available file="svn.info-@{COMPONENT}.txt" type="file" />
+							<available file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt" type="file" />
 							<then>
-								<property file="svn.info-@{COMPONENT}.txt" />
+								<property file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt" />
 								<!-- check svn info; if new version found, svn up -->
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<info target="${WORKINGDIR}/@{COMPONENT}"
@@ -278,6 +279,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
+				<!-- TODO: add timestamps / elapsed time -->
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
@@ -458,13 +460,13 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 	">
 			<sequential>
 				<delete dir="@{expected.dir}" includeemptydirs="true" />
-				<delete file="svn.info-@{expected.dir}.txt" />
+				<delete file="${WORKINGDIR}/svn.info-@{expected.dir}.txt" />
 			</sequential>
 		</for>
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<delete file="@{expected.file}" />
+				<delete file="${WORKINGDIR}/@{expected.file}" />
 			</sequential>
 		</for>
 
@@ -509,8 +511,8 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 		<echo level="info">
 3/6: Test update</echo>
-		<delete file="svn.info-tests.txt" />
-		<delete file="svn.info-xulrunner.txt" />
+		<delete file="${WORKINGDIR}/svn.info-tests.txt" />
+		<delete file="${WORKINGDIR}/svn.info-xulrunner.txt" />
 		<antcall target="get.sources" />
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
