@@ -197,6 +197,7 @@
 	">
 			<sequential>
 				<!-- TODO: add timestamps / elapsed time -->
+				<echo level="info">Fetch @{COMPONENT} sources into ${WORKINGDIR}/</echo>
 				<if>
 					<not>
 						<available file="${WORKINGDIR}/@{COMPONENT}" type="dir" />
