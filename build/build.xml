@@ -86,6 +86,20 @@
 		<delete dir="${java.io.tmpdir}/svnant-1.3.0.zip_" includeemptydirs="true" quiet="true" />
 	</target>
 
+	<target name="get.maven" unless="maven.exists">
+		<property name="MAVEN_MIRROR" value="http://mirror.csclub.uwaterloo.ca/apache/maven/binaries" />
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/apache-maven-${maven.version}-bin.tar.gz"
+		     src="${MAVEN_MIRROR}/apache-maven-${maven.version}-bin.tar.gz"
+		/>
+		<untar compression="gzip"
+		       overwrite="false"
+		       dest="${COMMON_TOOLS}"
+		       src="${COMMON_TOOLS}/apache-maven-${maven.version}-bin.tar.gz"
+		/>
+		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" />
+	</target>
+
 	<target name="init" depends="local">
 		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
 		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
@@ -121,17 +135,8 @@
 			</classpath>
 		</taskdef>
 
-		<property name="MAVEN_MIRROR" value="http://mirror.csclub.uwaterloo.ca/apache/maven/binaries" />
-		<get usetimestamp="true"
-		     dest="${COMMON_TOOLS}/apache-maven-${maven.version}-bin.tar.gz"
-		     src="${MAVEN_MIRROR}/apache-maven-${maven.version}-bin.tar.gz"
-		/>
-		<untar compression="gzip"
-		       overwrite="false"
-		       dest="${COMMON_TOOLS}"
-		       src="${COMMON_TOOLS}/apache-maven-${maven.version}-bin.tar.gz"
-		/>
-		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" />
+		<available file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" type="file" property="maven.exists" />
+		<antcall target="get.maven" />
 	</target>
 
 	<target name="get.sources" description="if sources not already on disk, fetch them">
@@ -193,7 +198,9 @@
 								<property file="svn.info-@{COMPONENT}.txt" />
 								<!-- check svn info; if new version found, svn up -->
 								<svn javahl="false" svnkit="true">
-									<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}.check" />
+									<info target="${WORKINGDIR}/@{COMPONENT}"
+									      propprefix="svn.info.@{COMPONENT}.check"
+									/>
 								</svn>
 								<if>
 									<not>
