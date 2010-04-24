@@ -298,7 +298,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<env key="MAVEN_OPTS" value="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
 					<!-- more debug output with <env key="MAVEN_OPTS" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"/> -->
 					<!-- <arg line="-o -Dmaven.test.skip" /> -->
-					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository -B -fae clean install" />
+					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository clean install" />
 				</exec>
 			</sequential>
 		</for>
