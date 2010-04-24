@@ -37,7 +37,7 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
 	-->
 
-	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, install" />
+	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build" />
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -137,6 +137,13 @@
 
 		<available file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" type="file" property="maven.exists" />
 		<antcall target="get.maven" />
+
+		<condition property="bootstrap.scripts.exist" value="true">
+			<and>
+				<available file="${WORKINGDIR}/parent-pom.xml" type="file" />
+				<available file="${WORKINGDIR}/genpom.xml" type="file" />
+			</and>
+		</condition>
 	</target>
 
 	<target name="get.sources" description="if sources not already on disk, fetch them">
@@ -235,7 +242,7 @@
 
 	</target>
 
-	<target name="get.bootstrap.scripts">
+	<target name="get.bootstrap.scripts" unless="bootstrap.scripts.exist">
 		<!-- also get files required to bootstrap the build -->
 		<get src="${svn.root}/parent-pom.xml" dest="${WORKINGDIR}/parent-pom.xml" usetimestamp="true" />
 		<get src="${svn.root}/genpom.xml" dest="${WORKINGDIR}/genpom.xml" usetimestamp="true" />
@@ -252,7 +259,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		</if>
 	</target>
 
-	<target name="install">
+	<target name="run.build">
 		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
 		<property name="MAVEN_FLAGS" value="" />
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
