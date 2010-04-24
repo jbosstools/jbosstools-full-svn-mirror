@@ -178,7 +178,7 @@
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
 				<svn javahl="false" svnkit="true" failonerror="false">
-					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" />
+					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" verbose="true" />
 				</svn>
 				<if>
 					<isset property="svn.info.@{COMPONENT}.rev" />
@@ -214,6 +214,7 @@
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<info target="${WORKINGDIR}/@{COMPONENT}"
 									      propprefix="svn.info.@{COMPONENT}.check"
+									      verbose="true"
 									/>
 								</svn>
 								<if>
