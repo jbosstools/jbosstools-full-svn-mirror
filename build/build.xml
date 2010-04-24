@@ -33,6 +33,8 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="-Dmaven.test.skip"
 		 or, to build specific module(s): 
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
+		 or, to rebuild even if sources have not changed:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
 	-->
 
 	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, install" />
