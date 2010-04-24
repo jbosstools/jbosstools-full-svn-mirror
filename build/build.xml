@@ -35,7 +35,7 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
 	-->
 
-	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, genpoms, install" />
+	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, install" />
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -228,12 +228,8 @@
 
 	<target name="get.bootstrap.scripts">
 		<!-- also get files required to bootstrap the build -->
-		<for param="BOOTSTRAP" list="parent-pom.xml, genpom.xml" delimiter=", 
-">
-			<sequential>
-				<get src="${svn.root}/@{BOOTSTRAP}" dest="${WORKINGDIR}/@{BOOTSTRAP}" usetimestamp="true" />
-			</sequential>
-		</for>
+		<get src="${svn.root}/parent-pom.xml" dest="${WORKINGDIR}/parent-pom.xml" usetimestamp="true" />
+		<get src="${svn.root}/genpom.xml" dest="${WORKINGDIR}/genpom.xml" usetimestamp="true" />
 	</target>
 
 	<target name="get.components.to.build">
@@ -247,24 +243,16 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		</if>
 	</target>
 
-	<target name="genpoms">
-		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
-	">
-			<sequential>
-				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
-				<ant antfile="genpom.xml" target="run">
-					<property name="COMPONENT" value="@{COMPONENT}" />
-				</ant>
-			</sequential>
-		</for>
-	</target>
-
 	<target name="install">
 		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
 		<property name="MAVEN_FLAGS" value="" />
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
+				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
+				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
+					<property name="COMPONENT" value="@{COMPONENT}" />
+				</ant>
 				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
 				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
 				<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn"
