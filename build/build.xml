@@ -38,7 +38,7 @@
 	-->
 
 	<target name="run"
-	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.test.results"
+	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build"
 	/>
 
 	<!-- override for local build -->
@@ -302,16 +302,20 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<!-- <arg line="-o -Dmaven.test.skip" /> -->
 					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository clean install" />
 				</exec>
+				
+				<antcall target="collect.test.results">
+					<param name="COMPONENT" value="${COMPONENT}" />
+				</antcall>
 			</sequential>
 		</for>
 	</target>
 
 	<target name="collect.test.results">
-		<!-- collect test results by copying ${WORKINGDIR}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/ -->
-		<delete dir="${basedir}/surefire-reports/" includeemptydirs="true" />
-		<mkdir dir="${basedir}/surefire-reports/" />
-		<copy todir="${basedir}/surefire-reports/">
-			<fileset dir="${WORKINGDIR}" includes="**/target/surefire-reports/*.xml" />
+		<!-- collect test results by copying ${WORKINGDIR}/${COMPONENT}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/${COMPONENT} -->
+		<delete dir="${basedir}/surefire-reports/${COMPONENT}" includeemptydirs="true" />
+		<mkdir dir="${basedir}/surefire-reports/${COMPONENT}" />
+		<copy todir="${basedir}/surefire-reports/${COMPONENT}">
+			<fileset dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports/*.xml" />
 		</copy>
 		<!-- TODO parse test results files for output to dump into log :: look for lines with ERROR or FAILURE -->
 	</target>
