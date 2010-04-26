@@ -308,10 +308,10 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
 				<mkdir dir="${basedir}/surefire-reports/NoTestsRun" />
 				<echo file="${basedir}/surefire-reports/NoTestsRun/TEST-org.jboss.tools.NoTestsRun.xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;testsuite failures="0" time="0" errors="0" skipped="0" tests="0" name="org.jboss.tools.NoTestsRun"/&gt;
+&lt;testsuite failures="0" time="0.001" errors="0" skipped="0" tests="1" name="org.jboss.tools.NoTestsRun"&gt;
+  &lt;testcase time="0.001" classname="org.jboss.tools.NoTestsRun" name="NoTestsRun"/&gt;
+&lt;/testsuite&gt;
 </echo>
-				<delete dir="${basedir}/surefire-reports/${COMPONENT}" includeemptydirs="true" />
-				<mkdir dir="${basedir}/surefire-reports/${COMPONENT}" />
 			</then>
 		</if>
 	</target>
