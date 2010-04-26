@@ -182,10 +182,7 @@
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
 				<svn javahl="false" svnkit="true" failonerror="false">
-					<!--
 					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" verbose="false" />
-					-->
-					<wcVersion path="${WORKINGDIR}/@{COMPONENT}" prefix="svn.info.@{COMPONENT}." />
 				</svn>
 				<if>
 					<isset property="svn.info.@{COMPONENT}.rev" />
