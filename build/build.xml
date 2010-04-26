@@ -37,9 +37,7 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
 	-->
 
-	<target name="run"
-	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build"
-	/>
+	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build" />
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -103,6 +101,16 @@
 	</target>
 
 	<target name="init" depends="local">
+		<macrodef name="now">
+			<sequential>
+				<var name="now" unset="true"/>
+				<tstamp>
+					<format property="now" pattern="hh:mm:ss" />
+				</tstamp>
+				<echo>${now}</echo>
+			</sequential>
+		</macrodef>
+
 		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
 		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
 			<available file="/home/hudson/static_build_env/jbds" type="dir" />
@@ -168,6 +176,7 @@
 						</svn>
 					</then>
 					<else>
+						<now/>
 						<echo level="info">Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
 						<svn javahl="false" svnkit="true" failonerror="true">
 							<checkout recurse="${svn.recurse}"
@@ -180,7 +189,7 @@
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
 				<svn javahl="false" svnkit="true" failonerror="false">
-					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" verbose="true" />
+					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" verbose="false" />
 				</svn>
 				<if>
 					<isset property="svn.info.@{COMPONENT}.rev" />
@@ -198,7 +207,7 @@
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
 	">
 			<sequential>
-				<!-- TODO: add timestamps / elapsed time -->
+				<now/>
 				<echo level="info">Fetch @{COMPONENT} sources into ${WORKINGDIR}/</echo>
 				<if>
 					<not>
@@ -216,7 +225,7 @@
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<info target="${WORKINGDIR}/@{COMPONENT}"
 									      propprefix="svn.info.@{COMPONENT}.check"
-									      verbose="true"
+									      verbose="false"
 									/>
 								</svn>
 								<if>
@@ -283,7 +292,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
-				<!-- TODO: add timestamps / elapsed time -->
+				<now/>
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
@@ -302,16 +311,16 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<!-- <arg line="-o -Dmaven.test.skip" /> -->
 					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository clean install" />
 				</exec>
-				
 				<antcall target="collect.test.results">
 					<param name="COMPONENT" value="@{COMPONENT}" />
 				</antcall>
 			</sequential>
 		</for>
+		<now/>
 	</target>
 
 	<target name="collect.test.results">
-		<property name="COMPONENT" value=""/>
+		<property name="COMPONENT" value="" />
 		<!-- collect test results by copying ${WORKINGDIR}/${COMPONENT}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/${COMPONENT} -->
 		<delete dir="${basedir}/surefire-reports/${COMPONENT}" includeemptydirs="true" />
 		<mkdir dir="${basedir}/surefire-reports/${COMPONENT}" />
