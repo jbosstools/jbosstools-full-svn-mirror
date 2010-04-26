@@ -195,9 +195,9 @@
 </echo>
 					</then>
 					-->
-					<isset property="svn.info.@{COMPONENT}.committed.max" />
+					<isset property="svn.info.@{COMPONENT}.revision.max" />
 					<then>
-						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.committed.max = ${svn.info.@{COMPONENT}.committed.max}
+						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.revision.max = ${svn.info.@{COMPONENT}.revision.max}
 </echo>
 					</then>
 				</if>
@@ -252,14 +252,14 @@
 									-->
 									<or>
 										<not>
-											<isset property="svn.info.@{COMPONENT}.committed.max" />
+											<isset property="svn.info.@{COMPONENT}.revision.max" />
 										</not>
 										<not>
-											<isset property="svn.info.@{COMPONENT}.check.committed.max" />
+											<isset property="svn.info.@{COMPONENT}.check.revision.max" />
 										</not>
 										<not>
-											<equals arg1="${svn.info.@{COMPONENT}.committed.max}"
-											        arg2="${svn.info.@{COMPONENT}.check.committed.max}"
+											<equals arg1="${svn.info.@{COMPONENT}.revision.max}"
+											        arg2="${svn.info.@{COMPONENT}.check.revision.max}"
 											/>
 										</not>
 									</or>
