@@ -1,16 +1,13 @@
-<project default="run" basedir=".">
+<project default="run" basedir="." name="jbosstools genpom.xml">
 	<!-- Configuration Start -->
 	<property name="projectName" value="org.jboss.tools" />
 	<property name="pathToParentPom" value="" />
+	<property name="COMPONENT" value="trunk" />
 	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
-	<property name="debug" value="false" />
 	<property name="dirsToExclude"
-<<<<<<< .working
-	          value="**/*.sdk.*, **/doc*, **/download.jboss.org, **/util, **/test, **/builders, **/releng, ."
-=======
-	          value="**/*.sdk.*, **/doc*, **/releng/**, **/build/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders, **/contrib, **/releng/**, ."
->>>>>>> .merge-right.r21669
+	          value="**/*.sdk.*, **/doc*, **/releng/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders, **/contrib, **/releng/**, ."
 	/>
+	<property name="overwrite.existing.pom.xml" value="false" />
 	<!-- Configuration Ends -->
 
 	<!-- To run this script in Eclipse:
@@ -18,10 +15,12 @@
 	-->
 	<!-- To run this script via commandline:
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -f genpom.xml -q 
-		 or, to build a specific module only:
+		 or, to build a specific module IFF no poms already exist:
 			cd /home/nboldt/workspace36/jbosstools-modular_build; \
-			ant -f genpom.xml -q -DpathToParentPom=../ -DWORKINGDIR=/home/nboldt/workspace36/jbosstools-modular_build/as
-			
+			ant -f genpom.xml -q -DCOMPONENT=xulrunner
+		 or, to build a specific module and overwrite existing pom.xml files:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; \
+			ant -f genpom.xml -q -DCOMPONENT=common -Doverwrite.existing.pom.xml=true
 	-->
 
 	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
@@ -58,21 +57,6 @@
 				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
 			</classpath>
 		</taskdef>
-
-		<macrodef name="debug">
-			<text name="echo" />
-			<sequential>
-				<if>
-					<and>
-						<isset property="debug" />
-						<istrue value="${debug}" />
-					</and>
-					<then>
-						<echo message="@{echo}" />
-					</then>
-				</if>
-			</sequential>
-		</macrodef>
 
 		<!-- = = = = = = = = = = = = = = = = =
 	      macrodef: write out a pom.xml which aggregates subdirs   
@@ -116,16 +100,23 @@
 				               casesensitive="true"
 				               override="true"
 				/>
-				<debug>   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
-				<!-- <echo>Write Agg @{dir}/pom.xml</echo> -->
-				<echo file="@{dir}/pom.xml">&lt;project
+				<echo level="verbose">   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</echo>
+				<if>
+					<or>
+						<not>
+							<available file="@{dir}/pom.xml" type="file" />
+						</not>
+						<istrue value="${overwrite.existing.pom.xml}" />
+					</or>
+					<then>
+						<echo file="@{dir}/pom.xml">&lt;project
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	&lt;modelVersion>4.0.0&lt;/modelVersion>
 	&lt;parent>
-		&lt;relativePath>@{parentpom}&lt;/relativePath>
-		&lt;groupId>${projectName}&lt;/groupId>
-		&lt;artifactId>${projectName}.parent.pom&lt;/artifactId>
-		&lt;version>${pomVersion}&lt;/version>
+	  &lt;relativePath>@{parentpom}&lt;/relativePath>
+	  &lt;groupId>${projectName}&lt;/groupId>
+	  &lt;artifactId>${projectName}.parent.pom&lt;/artifactId>
+	  &lt;version>${pomVersion}&lt;/version>
 	&lt;/parent>
 	&lt;groupId>${projectName}&lt;/groupId>
 	&lt;artifactId>${artifactId}&lt;/artifactId>
@@ -133,23 +124,25 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	&lt;packaging>${artifactType}&lt;/packaging>
 	&lt;modules>
 </echo>
-				<var name="artifactId" unset="true" />
-				<var name="artifactVersion" unset="true" />
-				<for param="subdir" delimiter=", 
+						<var name="artifactId" unset="true" />
+						<var name="artifactVersion" unset="true" />
+						<for param="subdir" delimiter=", 
 	">
-					<path>
-						<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
-					</path>
-					<sequential>
-						<basename property="subdirSuffix" file="@{subdir}" />
-						<echo file="@{dir}/pom.xml" append="true">		&lt;module>${subdirSuffix}&lt;/module>
+							<path>
+								<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
+							</path>
+							<sequential>
+								<basename property="subdirSuffix" file="@{subdir}" />
+								<echo file="@{dir}/pom.xml" append="true">		&lt;module>${subdirSuffix}&lt;/module>
 </echo>
-						<var name="subdirSuffix" unset="true" />
-					</sequential>
-				</for>
-				<echo file="@{dir}/pom.xml" append="true">	&lt;/modules>
+								<var name="subdirSuffix" unset="true" />
+							</sequential>
+						</for>
+						<echo file="@{dir}/pom.xml" append="true">	&lt;/modules>
 &lt;/project>
 	</echo>
+					</then>
+				</if>
 			</sequential>
 		</macrodef>
 
@@ -165,12 +158,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 					<property name="dir" value="@{dir}" />
 				</antcallback>
 				<if>
-					<!-- cannot calculate id and version for an update site so just set them to defaults -->
 					<equals arg1="${artifactType}" arg2="eclipse-update-site" />
 					<then>
 						<var name="artifactId" unset="true" />
 						<basename property="artifactId" file="@{dir}" />
-						<var name="artifactVersion" value="0.0.0" />
+						<var name="artifactVersion" value="${pomVersion}" />
 					</then>
 					<else>
 						<var name="artifactId" unset="true" />
@@ -180,6 +172,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 						<var name="artifactVersion" unset="true" />
 						<antcallback target="getArtifactVersion" return="artifactVersion">
 							<property name="dir" value="@{dir}" />
+						</antcallback>
+						<var name="artifactOs" unset="true" />
+						<var name="artifactWs" unset="true" />
+						<var name="artifactArch" unset="true" />
+						<antcallback target="getArtifactOsWsArch" return="artifactOs, artifactWs, artifactArch">
+							<property name="artifactId" value="${artifactId}" />
 						</antcallback>
 					</else>
 				</if>
@@ -191,8 +189,16 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				               casesensitive="true"
 				               override="true"
 				/>
-				<debug>   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</debug>
-				<echo file="@{dir}/pom.xml">&lt;project
+				<echo level="verbose">   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</echo>
+				<if>
+					<or>
+						<not>
+							<available file="@{dir}/pom.xml" type="file" />
+						</not>
+						<istrue value="${overwrite.existing.pom.xml}" />
+					</or>
+					<then>
+						<echo file="@{dir}/pom.xml">&lt;project
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	&lt;modelVersion>4.0.0&lt;/modelVersion> 
 	&lt;parent>
@@ -201,15 +207,65 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	  &lt;artifactId>${projectName}.parent.pom&lt;/artifactId>
 	  &lt;version>${pomVersion}&lt;/version>
 	&lt;/parent>
-	&lt;groupId>${projectName}&lt;/groupId> 
+	&lt;groupId>${projectName}&lt;/groupId>
 	&lt;artifactId>${artifactId}&lt;/artifactId> 
-	&lt;version>${artifactVersion}&lt;/version> 
-	&lt;packaging>${artifactType}&lt;/packaging> 
-&lt;/project>
-	</echo>
+	&lt;version>${artifactVersion}&lt;/version>
+	&lt;packaging>${artifactType}&lt;/packaging>
+</echo>
+						<if>
+							<or>
+								<and>
+									<isset property="artifactOs" />
+									<not>
+										<equals arg1="" arg2="${artifactOs}" />
+									</not>
+								</and>
+								<and>
+									<isset property="artifactWs" />
+									<not>
+										<equals arg1="" arg2="${artifactWs}" />
+									</not>
+								</and>
+								<and>
+									<isset property="artifactArch" />
+									<not>
+										<equals arg1="" arg2="${artifactArch}" />
+									</not>
+								</and>
+							</or>
+							<then>
+								<echo file="@{dir}/pom.xml" append="true">	&lt;build>
+	   &lt;plugins>
+	     &lt;plugin>
+  	       &lt;groupId>org.sonatype.tycho&lt;/groupId>
+  	       &lt;artifactId>target-platform-configuration&lt;/artifactId>
+  	       &lt;version>${tychoVersion}&lt;/version>
+  	       &lt;configuration>
+    	     &lt;resolver>p2&lt;/resolver>
+    	     &lt;environments>
+      	     &lt;environment>
+        	     &lt;os>${artifactOs}&lt;/os>
+        	     &lt;ws>${artifactWs}&lt;/ws>
+        	     &lt;arch>${artifactArch}&lt;/arch>
+      	     &lt;/environment>
+    	     &lt;/environments>
+  	       &lt;/configuration>
+	     &lt;/plugin>
+	   &lt;/plugins>
+	&lt;/build>
+</echo>
+							</then>
+						</if>
+						<echo file="@{dir}/pom.xml" append="true">&lt;/project>
+</echo>
+					</then>
+				</if>
 				<var name="artifactId" unset="true" />
 				<var name="artifactVersion" unset="true" />
 				<var name="artifactType" unset="true" />
+				<var name="artifactOs" unset="true" />
+				<var name="artifactWs" unset="true" />
+				<var name="artifactArch" unset="true" />
 				<var name="modulecountstring" value="${modulecountstring}1" />
 			</sequential>
 		</macrodef>
@@ -249,14 +305,27 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<attribute name="artifactId" default="" />
 			<attribute name="artifactVersion" default="" />
 			<sequential>
-
+				<if>
+					<equals arg1="${COMPONENT}" arg2="trunk" />
+					<then>
+						<path id="trunkDir">
+							<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
+						</path>
+					</then>
+					<else>
+						<path id="trunkDir">
+							<dirset dir="@{dir}/${pathToParentPom}"
+							        excludes="${dirsToExclude}"
+							        includes="${COMPONENT}/*/*, ${COMPONENT}/plugins, ${COMPONENT}/features, ${COMPONENT}/tests, ${COMPONENT}/site"
+							/>
+						</path>
+					</else>
+				</if>
 				<for param="subdir" delimiter=", 
 	">
-					<path>
-						<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
-					</path>
+					<path refid="trunkDir" />
 					<sequential>
-						<!-- <debug>   @{subdir}</debug> -->
+						<echo level="debug">@{subdir}</echo>
 						<var name="aggregate" value="false" />
 						<if>
 							<or>
@@ -267,10 +336,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 							</or>
 							<then>
 								<!-- valid place to create a pom -->
-								<writeModulePom dir="@{subdir}" parentpom="../@{parentpom}" />
+								<writeModulePom dir="@{subdir}" parentpom="../${pathToParentPom}@{parentpom}" />
 							</then>
 							<else>
-								<for list="plugins tests features" param="type" delimiter=" ">
+								<for list="plugins tests features site" param="type" delimiter=" ">
 									<sequential>
 										<basename property="artifactIdAgg" file="@{subdir}" />
 										<if>
@@ -278,7 +347,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 											<then>
 												<var name="aggregate" value="true" />
 												<generateAggregator dir="@{subdir}/@{type}"
-												                    parentpom="../../@{parentpom}"
+												                    parentpom="../../${pathToParentPom}@{parentpom}"
 												                    artifactId="${artifactIdAgg}.@{type}"
 												                    artifactVersion="@{artifactVersion}"
 												/>
@@ -292,46 +361,32 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 									<istrue value="${aggregate}" />
 									<else>
 										<basename property="artifactIdAgg" file="@{subdir}" />
+										<if>
+											<equals arg1="${COMPONENT}" arg2="trunk" />
+											<then>
+												<var name="artifactId" value="${artifactIdAgg}.all" />
+											</then>
+											<else>
+												<var name="artifactId" value="${COMPONENT}.${artifactIdAgg}" />
+											</else>
+										</if>
 										<writeAggregatePom dir="@{subdir}"
 										                   parentpom="../${pathToParentPom}parent-pom.xml"
-										                   artifactId="${artifactIdAgg}.all"
+										                   artifactId="${artifactId}"
 										                   artifactVersion="@{artifactVersion}"
 										/>
 
-										<debug>subdir = @{subdir}</debug>
-										<echo>Aggregated: ${artifactIdAgg}</echo>
+										<echo level="debug">subdir = @{subdir}</echo>
+										<echo level="verbose">Aggregated: ${artifactIdAgg}</echo>
 
 										<var name="artifactIdAgg" unset="true" />
+										<var name="artifactId" unset="true" />
 									</else>
 								</if>
 							</else>
 						</if>
 					</sequential>
 				</for>
-			</sequential>
-		</macrodef>
-
-		<!-- = = = = = = = = = = = = = = = = =
-	      macrodef: count items in a list    
-	     = = = = = = = = = = = = = = = = = -->
-		<!-- example usage: 
-		<list.count list="foo bar baz" />
-		<echo message="${list.count.return}" />
-		<var name="list.count.return" unset="true"/>
-		<list.count list="foo bar" />
-		<echo message="${list.count.return}" />
-		-->
-		<macrodef name="list.count">
-			<attribute name="list" default="" />
-			<sequential>
-				<var name="count" value="" />
-				<for param="listitem" list="@{list}" delimiter=", 
-	">
-					<sequential>
-						<var name="count" value="${count}0" />
-					</sequential>
-				</for>
-				<length property="list.count.return" string="${count}" />
 			</sequential>
 		</macrodef>
 
@@ -346,6 +401,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<fail>Error: no parent-pom.xml found in ${WORKINGDIR}/${pathToParentPom}</fail>
 			</then>
 		</if>
+
+		<if>
+			<not>
+				<equals arg1="${COMPONENT}" arg2="trunk" />
+			</not>
+			<then>
+				<var name="pathToParentPom" unset="true" />
+				<var name="pathToParentPom" value="../" />
+			</then>
+		</if>
+		<echo level="verbose">COMPONENT = ${COMPONENT}, pathToParentPom = ${pathToParentPom}</echo>
 
 		<!-- if set, compare values in tags file to values found in manifests and report discrepancies -->
 		<!--<property name="tagsFile"
@@ -366,16 +432,29 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<var name="aggregatorcountstring" value="" />
 		<var name="modulecountstring" value="" />
 
-		<!-- call generateAggregator for overall -->
-		<generateAggregator dir="${WORKINGDIR}"
-		                    parentpom="${pathToParentPom}parent-pom.xml"
-		                    artifactId="trunk"
-		                    artifactVersion="${pomVersion}"
-		/>
+		<if>
+			<equals arg1="${COMPONENT}" arg2="trunk" />
+			<then>
+				<!-- call generateAggregator for overall -->
+				<generateAggregator dir="${WORKINGDIR}"
+				                    parentpom="${pathToParentPom}parent-pom.xml"
+				                    artifactId="${COMPONENT}"
+				                    artifactVersion="${pomVersion}"
+				/>
+			</then>
+			<else>
+				<!-- call generateAggregator for component -->
+				<generateAggregator dir="${WORKINGDIR}/${COMPONENT}"
+				                    parentpom="${pathToParentPom}parent-pom.xml"
+				                    artifactId="${COMPONENT}"
+				                    artifactVersion="${pomVersion}"
+				/>
+			</else>
+		</if>
 		<!-- summary -->
 		<length string="${modulecountstring}" property="modulecount" />
 		<length string="${aggregatorcountstring}" property="aggregatorcount" />
-		<echo>Modules: ${modulecount} Aggregations: ${aggregatorcount}</echo>
+		<echo level="info">Modules: ${modulecount} Aggregations: ${aggregatorcount}</echo>
 
 	</target>
 
@@ -523,7 +602,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				</then>
 			</elseif>
 			<else>
-				<echo>Warning! artifactVersion not found for ${dir}!</echo>
+				<echo level="verbose">Warning! artifactVersion not found for ${dir}!</echo>
 				<var name="artifactVersion" value="0.0.0" />
 			</else>
 		</if>
@@ -558,13 +637,49 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			</and>
 			<then>
 				<basename file="${dir}" property="this.dir" />
-				<echo>For ${this.dir}, got ${artifactVersion}; should be ${artifactVersion.from.tag}</echo>
+				<echo level="info">For ${this.dir}, got ${artifactVersion}; should be ${artifactVersion.from.tag}</echo>
 			</then>
 			<else>
 				<var name="artifactVersion.from.tag" value="${artifactVersion}" />
 			</else>
 		</if>
 		<var name="parent.dir" unset="true" />
+	</target>
+
+	<!-- supports only the following platforms:
+			org.mozilla.xulrunner.carbon.macosx
+			org.mozilla.xulrunner.cocoa.macosx
+			org.mozilla.xulrunner.gtk.linux.x86
+			org.mozilla.xulrunner.gtk.linux.x86_64
+			org.mozilla.xulrunner.win32.win32.x86
+	-->
+	<target name="getArtifactOsWsArch">
+		<property name="artifactId" value="org.mozilla.xulrunner.cocoa.macosx" />
+		<propertyregex property="artifactOs"
+		               input="${artifactId}"
+		               defaultvalue=""
+		               regexp="(macosx|linux|win32)"
+		               select="\1"
+		               casesensitive="true"
+		               override="true"
+		/>
+		<propertyregex property="artifactWs"
+		               input="${artifactId}"
+		               defaultvalue=""
+		               regexp="(carbon|cocoa|win32|gtk)"
+		               select="\1"
+		               casesensitive="true"
+		               override="true"
+		/>
+		<propertyregex property="artifactArch"
+		               input="${artifactId}"
+		               defaultvalue=""
+		               regexp="\.(x86|x86_64)$"
+		               select="\1"
+		               casesensitive="true"
+		               override="true"
+		/>
+
 	</target>
 
 	<target name="getArtifactId">
@@ -608,7 +723,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				</then>
 			</elseif>
 			<else>
-				<echo>Warning! artifactId not found for ${dir}!</echo>
+				<echo level="info">Warning! artifactId not found for ${dir}!</echo>
 				<basename property="artifactId" file="${dir}" />
 			</else>
 		</if>
@@ -669,6 +784,31 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<property name="artifactType.portlet/features/org.jboss.tools.portlet.test.feature" value="eclipse-feature" />
 		<property name="artifactType.jst/features/org.jboss.tools.jst.feature" value="eclipse-feature" />
 		<property name="artifactType.jst/features/org.jboss.tools.jst.web.tiles.feature" value="eclipse-feature" />
+
+		<!-- expected values for artifactOsWsArch tests -->
+		<property name="artifactOsWsArch.org.mozilla.xpcom.os" value="" />
+		<property name="artifactOsWsArch.org.mozilla.xpcom.ws" value="" />
+		<property name="artifactOsWsArch.org.mozilla.xpcom.arch" value="" />
+
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.carbon.macosx.os" value="macosx" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.carbon.macosx.ws" value="carbon" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.carbon.macosx.arch" value="" />
+
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.cocoa.macosx.os" value="macosx" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.cocoa.macosx.ws" value="cocoa" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.cocoa.macosx.arch" value="" />
+
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.gtk.linux.x86.os" value="linux" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.gtk.linux.x86.ws" value="gtk" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.gtk.linux.x86.arch" value="x86" />
+
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.gtk.linux.x86_64.os" value="linux" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.gtk.linux.x86_64.ws" value="gtk" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.gtk.linux.x86_64.arch" value="x86_64" />
+
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.win32.win32.x86.os" value="win32" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.win32.win32.x86.ws" value="win32" />
+		<property name="artifactOsWsArch.org.mozilla.xulrunner.win32.win32.x86.arch" value="x86" />
 	</target>
 
 	<target name="test.all">
@@ -691,6 +831,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<antcall target="test.getArtifactVersion" />
 		<antcall target="test.getArtifactId" />
 		<antcall target="test.getArtifactType" />
+		<antcall target="test.getArtifactOsWsArch" />
 	</target>
 
 	<target name="test.getArtifactVersion" depends="init, test.expected.values">
@@ -768,6 +909,56 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<var name="artifactId" unset="true" />
 			</sequential>
 		</for>
+	</target>
+
+	<target name="test.getArtifactOsWsArch" depends="init, test.expected.values">
+		<property name="artifactIds"
+		          value="
+			org.mozilla.xpcom
+			org.mozilla.xulrunner.carbon.macosx
+			org.mozilla.xulrunner.cocoa.macosx
+			org.mozilla.xulrunner.gtk.linux.x86
+			org.mozilla.xulrunner.gtk.linux.x86_64
+			org.mozilla.xulrunner.win32.win32.x86
+		"
+		/>
+		<for param="artifactId" list="${artifactIds}" delimiter=", 
+			">
+			<sequential>
+				<echo level="debug">artifactId = @{artifactId}</echo>
+				<antcallback target="getArtifactOsWsArch" return="artifactOs, artifactWs, artifactArch">
+					<property name="artifactId" value="@{artifactId}" />
+				</antcallback>
+				<propertycopy name="expected.value.os" from="artifactOsWsArch.@{artifactId}.os" />
+				<propertycopy name="expected.value.ws" from="artifactOsWsArch.@{artifactId}.ws" />
+				<propertycopy name="expected.value.arch" from="artifactOsWsArch.@{artifactId}.arch" />
+				<assert failonerror="false"
+				        message="For @{artifactId}, artifactOs = ${artifactOs}; expected ${expected.value.os}"
+				>
+					<bool>
+						<equals arg1="${expected.value.os}" arg2="${artifactOs}" />
+					</bool>
+				</assert>
+				<assert failonerror="false"
+				        message="For @{artifactId}, artifactWs = ${artifactWs}; expected ${expected.value.ws}"
+				>
+					<bool>
+						<equals arg1="${expected.value.ws}" arg2="${artifactWs}" />
+					</bool>
+				</assert>
+				<assert failonerror="false"
+				        message="For @{artifactId}, artifactArch = ${artifactArch}; expected ${expected.value.arch}"
+				>
+					<bool>
+						<equals arg1="${expected.value.arch}" arg2="${artifactArch}" />
+					</bool>
+				</assert>
+				<var name="expected.value.os" unset="true" />
+				<var name="expected.value.ws" unset="true" />
+				<var name="expected.value.arch" unset="true" />
+			</sequential>
+		</for>
+
 	</target>
 
 	<target name="test.getArtifactType" depends="init, test.expected.values">
