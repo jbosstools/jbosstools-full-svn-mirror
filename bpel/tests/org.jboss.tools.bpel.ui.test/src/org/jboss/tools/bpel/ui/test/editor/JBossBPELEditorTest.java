@@ -1,5 +1,8 @@
 package org.jboss.tools.bpel.ui.test.editor;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -9,8 +12,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
-import org.jboss.tools.common.test.util.TestProjectProvider;
-
+import org.jboss.tools.test.util.JUnitUtils;
+import org.jboss.tools.test.util.ResourcesUtils;
 
 import junit.framework.TestCase;
 
@@ -42,9 +45,16 @@ public class JBossBPELEditorTest extends TestCase{
 	}
 	
 	public IProject createProject(String prjName) throws CoreException {
-		TestProjectProvider provider = new TestProjectProvider(BUNDLE, "/projects/" + prjName,
-				prjName, true);
-		IProject prj = provider.getProject();
+		IProject prj=null;
+		try {
+			prj = ResourcesUtils.importProject(BUNDLE, "/projects/" + prjName);
+		} catch (IOException e) {
+			JUnitUtils.fail("", e);
+		} catch (InvocationTargetException e) {
+			JUnitUtils.fail("", e);
+		} catch (InterruptedException e) {
+			JUnitUtils.fail("", e);
+		}
 		assertNotNull(prj);
 		return prj;
 	}

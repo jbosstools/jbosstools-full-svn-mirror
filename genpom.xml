@@ -5,7 +5,11 @@
 	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
 	<property name="debug" value="false" />
 	<property name="dirsToExclude"
+<<<<<<< .working
 	          value="**/*.sdk.*, **/doc*, **/download.jboss.org, **/util, **/test, **/builders, **/releng, ."
+=======
+	          value="**/*.sdk.*, **/doc*, **/releng/**, **/build/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders, **/contrib, **/releng/**, ."
+>>>>>>> .merge-right.r21669
 	/>
 	<!-- Configuration Ends -->
 

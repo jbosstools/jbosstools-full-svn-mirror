@@ -1,0 +1,600 @@
+<project default="run" basedir="." name="jbosstools build.xml">
+	<!-- Build a given list of ${COMPONENTS} -->
+
+	<!-- ****************************** Configuration ****************************** -->
+
+	<!-- set name of component(s) to build+test, IN ORDER -->
+	<property name="COMPONENTS"
+	          value="tests, common, 
+						flow, jbpm, 
+						jmx, archives, as, 
+						drools, bpel, smooks, freemarker, profiler, portlet, 
+						xulrunner, jst, vpe, jsf, 
+							esb, tptp, ws, 
+							cdi, struts, hibernatetools, seam, 
+								examples, birt, 
+								maven"
+	/>
+
+	<!-- svn root, including trunk or branch path -->
+	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build" />
+
+	<!-- default maven version -->
+	<property name="maven.version" value="3.0-alpha-7" />
+
+	<!-- ****************************** Usage Instructions ****************************** -->
+
+	<!-- To run this script in Eclipse:
+			Run As > Ant Build
+	-->
+	<!-- To run this script via commandline (build default modules & run tests):
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant
+		 or, to build everything but not *run* the tests:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="-Dmaven.test.skip"
+		 or, to build specific module(s): 
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
+		 or, to rebuild even if sources have not changed:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
+	-->
+
+	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build" />
+
+	<!-- override for local build -->
+	<condition property="isInHudson" value="true">
+		<or>
+			<contains string="${user.dir}" substring="hudson" />
+			<contains string="${user.name}" substring="hudson" />
+			<contains string="${user.home}" substring="hudson" />
+		</or>
+	</condition>
+	<target name="local" unless="isInHudson">
+		<property name="WORKINGDIR" value="${basedir}" />
+		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
+	</target>
+
+	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
+		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip"
+		     src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip"
+		/>
+		<touch file="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" />
+		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
+		<unzip src="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip"
+		       dest="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_"
+		       overwrite="true"
+		/>
+		<copy file="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_/ant-contrib/lib/ant-contrib.jar"
+		      tofile="${COMMON_TOOLS}/ant-contrib.jar"
+		      failonerror="true"
+		/>
+		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
+	<target name="get.svnant" unless="svnant.jar.exists">
+		<property name="SVNANT_MIRROR" value="http://www.tigris.org/files/documents/906/46267" />
+		<!-- ant <get> does not work due to redirection; on Windows just download this file manually -->
+		<exec executable="wget" dir="${COMMON_TOOLS}">
+			<arg line="${SVNANT_MIRROR}/svnant-1.3.0.zip --no-clobber" />
+		</exec>
+		<touch file="${COMMON_TOOLS}/svnant-1.3.0.zip" />
+		<mkdir dir="${java.io.tmpdir}/svnant-1.3.0.zip_" />
+		<unzip src="${COMMON_TOOLS}/svnant-1.3.0.zip" dest="${java.io.tmpdir}/svnant-1.3.0.zip_" overwrite="true" />
+		<copy todir="${COMMON_TOOLS}" failonerror="true">
+			<fileset dir="${java.io.tmpdir}/svnant-1.3.0.zip_/svnant-1.3.0/lib/" includes="*.jar" />
+		</copy>
+		<delete dir="${java.io.tmpdir}/svnant-1.3.0.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
+	<target name="get.maven" unless="maven.exists">
+		<property name="MAVEN_MIRROR" value="http://mirror.csclub.uwaterloo.ca/apache/maven/binaries" />
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/apache-maven-${maven.version}-bin.tar.gz"
+		     src="${MAVEN_MIRROR}/apache-maven-${maven.version}-bin.tar.gz"
+		/>
+		<untar compression="gzip"
+		       overwrite="false"
+		       dest="${COMMON_TOOLS}"
+		       src="${COMMON_TOOLS}/apache-maven-${maven.version}-bin.tar.gz"
+		/>
+		<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" />
+	</target>
+
+	<target name="init" depends="local">
+		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
+		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${WORKINGDIR}" />
+		<echo level="info">WORKINGDIR = ${WORKINGDIR}</echo>
+
+		<condition property="COMMON_TOOLS"
+		           value="/home/hudson/static_build_env/jbds/tools"
+		           else="${WORKINGDIR}/../tools"
+		>
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${COMMON_TOOLS}" />
+		<echo level="info">COMMON_TOOLS = ${COMMON_TOOLS}</echo>
+
+		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
+		<antcall target="get.ant-contrib" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+		<available file="${COMMON_TOOLS}/svnant.jar" type="file" property="svnant.jar.exists" />
+		<antcall target="get.svnant" />
+		<taskdef resource="org/tigris/subversion/svnant/svnantlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/svnant.jar" />
+				<pathelement location="${COMMON_TOOLS}/svnkit.jar" />
+				<pathelement location="${COMMON_TOOLS}/svnClientAdapter.jar" />
+			</classpath>
+		</taskdef>
+
+		<available file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" type="file" property="maven.exists" />
+		<antcall target="get.maven" />
+
+		<condition property="bootstrap.scripts.exist" value="true">
+			<and>
+				<available file="${WORKINGDIR}/parent-pom.xml" type="file" />
+				<available file="${WORKINGDIR}/genpom.xml" type="file" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="get.sources" description="if sources not already on disk, fetch them">
+		<property name="svn.recurse" value="true" />
+
+		<!-- = = = = = = = = = = = = = = = = =
+          COMPONENT: component to fetch or update
+          op: up (update) or co (checkout)
+         = = = = = = = = = = = = = = = = = -->
+		<macrodef name="svn.fetch">
+			<attribute name="COMPONENT" />
+			<attribute name="op" />
+			<sequential>
+				<!-- check out or update -->
+				<if>
+					<equals arg1="@{op}" arg2="up" />
+					<then>
+						<svn javahl="false" svnkit="true" failonerror="false">
+							<update recurse="${svn.recurse}" dir="@{COMPONENT}" />
+						</svn>
+					</then>
+					<else>
+						<echo level="info">Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
+						<svn javahl="false" svnkit="true" failonerror="true">
+							<checkout recurse="${svn.recurse}"
+							          url="${svn.root}/@{COMPONENT}"
+							          destpath="${WORKINGDIR}/@{COMPONENT}"
+							/>
+						</svn>
+					</else>
+				</if>
+
+				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
+				<svn javahl="false" svnkit="true" failonerror="false">
+					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" verbose="true" />
+				</svn>
+				<if>
+					<isset property="svn.info.@{COMPONENT}.rev" />
+					<then>
+						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
+</echo>
+					</then>
+				</if>
+				<echo file="build.cfg" message="@{COMPONENT}," append="true" />
+			</sequential>
+		</macrodef>
+
+		<!-- check for each component dir in ${WORKINGDIR}; if not found, fetch -->
+		<echo file="build.cfg" message="COMPONENTS.to.build = " />
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
+	">
+			<sequential>
+				<!-- TODO: add timestamps / elapsed time -->
+				<echo level="info">Fetch @{COMPONENT} sources into ${WORKINGDIR}/</echo>
+				<if>
+					<not>
+						<available file="${WORKINGDIR}/@{COMPONENT}" type="dir" />
+					</not>
+					<then>
+						<svn.fetch component="@{COMPONENT}" op="co" />
+					</then>
+					<else>
+						<if>
+							<available file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt" type="file" />
+							<then>
+								<property file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt" />
+								<!-- check svn info; if new version found, svn up -->
+								<svn javahl="false" svnkit="true" failonerror="false">
+									<info target="${WORKINGDIR}/@{COMPONENT}"
+									      propprefix="svn.info.@{COMPONENT}.check"
+									      verbose="true"
+									/>
+								</svn>
+								<if>
+									<or>
+										<not>
+											<isset property="svn.info.@{COMPONENT}.rev" />
+										</not>
+										<not>
+											<isset property="svn.info.@{COMPONENT}.check.rev" />
+										</not>
+										<not>
+											<equals arg1="${svn.info.@{COMPONENT}.rev}"
+											        arg2="${svn.info.@{COMPONENT}.check.rev}"
+											/>
+										</not>
+									</or>
+									<then>
+										<svn.fetch component="@{COMPONENT}" op="up" />
+									</then>
+									<else>
+										<if>
+											<and>
+												<isset property="build.if.sources.unchanged" />
+												<istrue value="${build.if.sources.unchanged}" />
+											</and>
+											<then>
+												<echo file="build.cfg" message="@{COMPONENT}," append="true" />
+											</then>
+										</if>
+									</else>
+								</if>
+							</then>
+							<else>
+								<svn.fetch component="@{COMPONENT}" op="up" />
+							</else>
+						</if>
+					</else>
+				</if>
+			</sequential>
+		</for>
+
+	</target>
+
+	<target name="get.bootstrap.scripts" unless="bootstrap.scripts.exist">
+		<!-- also get files required to bootstrap the build -->
+		<get src="${svn.root}/parent-pom.xml" dest="${WORKINGDIR}/parent-pom.xml" usetimestamp="true" />
+		<get src="${svn.root}/genpom.xml" dest="${WORKINGDIR}/genpom.xml" usetimestamp="true" />
+	</target>
+
+	<target name="get.components.to.build">
+		<property file="build.cfg" />
+		<if>
+			<equals arg1="${COMPONENTS.to.build}" arg2="" />
+			<then>
+				<echo level="info">All components up to date: nothing to do!
+To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="run.build">
+		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
+		<property name="MAVEN_FLAGS" value="" />
+		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
+	">
+			<sequential>
+				<!-- TODO: add timestamps / elapsed time -->
+				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
+				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
+					<property name="COMPONENT" value="@{COMPONENT}" />
+				</ant>
+				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
+				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
+				<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn"
+				      dir="${WORKINGDIR}/@{COMPONENT}"
+				      failifexecutionfails="true"
+				      failonerror="true"
+				      timeout="10800000"
+				>
+					<env key="M2_HOME" value="${COMMON_TOOLS}/apache-maven-${maven.version}" />
+					<env key="MAVEN_OPTS" value="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
+					<!-- more debug output with <env key="MAVEN_OPTS" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"/> -->
+					<!-- <arg line="-o -Dmaven.test.skip" /> -->
+					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository clean install" />
+				</exec>
+			</sequential>
+		</for>
+	</target>
+
+	<!-- TODO: generate site.xml files for components: gensite.xml script called by build.xml -->
+	<!-- TODO: zip up update site zips for each component; publish to download.jboss.org as part of deploy task -->
+	<target name="zip.sites">
+
+	</target>
+
+	<target name="deploy">
+		<!-- TODO enable publishing to download.jboss.org or porkchop.jboss.com -->
+		<property name="DESTINATION.jbosstools" value="filemgmt.jboss.org/downloads_htdocs/tools/repository/" />
+		<property name="DESTINATION.jbds" value="/qa/services/http/binaries/RHDS/repository/" />
+
+		<echo level="debug">Promote build in ${sourceZipsDirActual} ...</echo>
+		<for param="aDir" list="${sourceZipsDirActual}" delimiter=", 
+">
+			<sequential>
+				<!-- rsync or copy build dir @{aDir} into ${targetZipsDir}/ -->
+				<if>
+					<available file="/usr/bin/rsync" type="file" />
+					<then>
+						<var name="rsyncCmd"
+						     value="/usr/bin/rsync -a${synchMethodParam} --exclude=eclipse/ @{aDir} ${targetZipsDir}/"
+						/>
+						<echo message="${rsyncCmd}" />
+						<exec executable="bash">
+							<arg line=" -c &quot;${rsyncCmd}&quot;" />
+						</exec>
+						<var name="rsyncCmd" unset="true" />
+					</then>
+					<else>
+						<propertyregex override="true"
+						               property="aBuildDir"
+						               defaultvalue="@{aDir}"
+						               input="@{aDir}"
+						               regexp=".+/([^/]+)"
+						               replace="\1"
+						/>
+						<echo>Copy ${aBuildDir} into ${targetZipsDir}/</echo>
+						<mkdir dir="${targetZipsDir}/${aBuildDir}" />
+						<copy todir="${targetZipsDir}/${aBuildDir}"
+						      includeemptydirs="true"
+						      preservelastmodified="true"
+						      failonerror="true"
+						>
+							<fileset dir="@{aDir}" excludes="eclipse/" />
+						</copy>
+					</else>
+				</if>
+
+				<!-- unpack update zip(s) -->
+				<if>
+					<and>
+						<isset property="targetUpdateDir" />
+						<not>
+							<equals arg1="${targetUpdateDir}" arg2="" />
+						</not>
+					</and>
+					<then>
+						<for param="anUpdateZip">
+							<path>
+								<fileset dir="@{aDir}" includes="*-Update-*.zip" />
+							</path>
+							<sequential>
+								<unzip dest="${targetUpdateDir}/"
+								       src="@{anUpdateZip}"
+								       overwrite="${unzipMethodParam}"
+								/>
+								<for param="subdir">
+									<path>
+										<dirset dir="${targetUpdateDir}/" />
+									</path>
+									<sequential>
+										<copy file="staticDropFiles/index.php" todir="@{subdir}" />
+									</sequential>
+								</for>
+							</sequential>
+						</for>
+					</then>
+				</if>
+			</sequential>
+		</for>
+		<!--
+		<get usetimestamp="true"
+		     dest="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar"
+		     src="${MAVEN_MIRROR}/maven-ant-tasks-2.1.0.jar"
+		/>
+		<taskdef resource="org/apache/maven/artifact/ant/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar" />
+			</classpath>
+		</taskdef>
+		<install-provider artifactId="wagon-ssh" version="1.0-beta-2"/>
+		<deploy>
+			
+			<remoteRepository url="scp://${DESTINATION}">
+				<authentication username="tools" privateKey="${user.home}/.ssh/id_rsa" />
+			</remoteRepository>
+			<pom refid="mypom" />
+		</deploy>
+		-->
+	</target>
+
+	<!-- ************************************ TESTS ************************************ -->
+
+	<target name="test.expected.values">
+		<property name="ant.enable.asserts" value="true" />
+
+		<!-- expected values for get.sources.* tests -->
+		<property name="get.sources.expected.dirs" value="tests,common,xulrunner," />
+		<property name="get.sources.expected.files" value="build.cfg" />
+
+		<!-- expected values for test.get.sources.build.updated.only tests -->
+		<property name="get.components.to.build.expected.2" value="tests,common,xulrunner," />
+		<property name="get.components.to.build.expected.4" value="tests,xulrunner," />
+		<property name="get.components.to.build.expected.6" value="" />
+
+		<!-- expected values for test.get.sources.build.all tests -->
+		<property name="get.components.to.build.expected.2.all" value="tests,common,xulrunner," />
+		<property name="get.components.to.build.expected.4.all" value="tests,common,xulrunner," />
+		<property name="get.components.to.build.expected.6.all" value="tests,common,xulrunner," />
+
+	</target>
+
+	<target name="test.all">
+		<antcall target="test.get.sources.build.all" />
+		<antcall target="test.get.sources" />
+		<antcall target="test.deploy" />
+	</target>
+
+	<target name="test.get.sources.build.all"
+	        depends="init, test.expected.values"
+	        description="verify get.sources works to fetch, then update; verify all components will be built"
+	>
+		<var name="build.if.sources.unchanged" value="true" />
+		<var name="get.components.to.build.expected.2" unset="true" />
+		<var name="get.components.to.build.expected.4" unset="true" />
+		<var name="get.components.to.build.expected.6" unset="true" />
+		<var name="get.components.to.build.expected.2" value="${get.components.to.build.expected.2.all}" />
+		<var name="get.components.to.build.expected.4" value="${get.components.to.build.expected.4.all}" />
+		<var name="get.components.to.build.expected.6" value="${get.components.to.build.expected.6.all}" />
+		<antcall target="test.get.sources" />
+	</target>
+
+	<target name="test.get.sources"
+	        depends="init, test.expected.values"
+	        description="verify get.sources works to fetch, then update; verify if components are not updated, they will not be built"
+	>
+		<var name="COMPONENTS" unset="true" />
+		<var name="COMPONENTS" value="${get.sources.expected.dirs}" />
+
+		<!-- for testing purposes, do not recurse (otherwise will have to download 100s of Mb of data -->
+		<var name="svn.recurse" unset="true" />
+		<var name="svn.recurse" value="false" />
+
+		<!-- cleanup before test -->
+		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
+	">
+			<sequential>
+				<delete dir="@{expected.dir}" includeemptydirs="true" />
+				<delete file="${WORKINGDIR}/svn.info-@{expected.dir}.txt" />
+			</sequential>
+		</for>
+		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
+	">
+			<sequential>
+				<delete file="${WORKINGDIR}/@{expected.file}" />
+			</sequential>
+		</for>
+
+		<echo level="info">----------------------------------</echo>
+		<echo level="info">
+1/6: Test checkout</echo>
+		<antcall target="get.sources" />
+		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+					<bool>
+						<available file="@{expected.dir}" type="dir" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.file} not found!">
+					<bool>
+						<available file="@{expected.file}" type="file" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<echo level="info">----------------------------------</echo>
+
+		<echo level="info">
+2/6: Test build.cfg</echo>
+		<var name="COMPONENTS.to.build" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
+		<assert failonerror="false"
+		        message="expected: [${get.components.to.build.expected.2}] but got: [${COMPONENTS.to.build}]"
+		>
+			<bool>
+				<equals arg1="${get.components.to.build.expected.2}" arg2="${COMPONENTS.to.build}" />
+			</bool>
+		</assert>
+		<echo level="info">----------------------------------</echo>
+
+		<echo level="info">
+3/6: Test update</echo>
+		<delete file="${WORKINGDIR}/svn.info-tests.txt" />
+		<delete file="${WORKINGDIR}/svn.info-xulrunner.txt" />
+		<antcall target="get.sources" />
+		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+					<bool>
+						<available file="@{expected.dir}" type="dir" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.file} not found!">
+					<bool>
+						<available file="@{expected.file}" type="file" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<echo level="info">----------------------------------</echo>
+
+		<echo level="info">
+4/6: Test build.cfg</echo>
+		<var name="COMPONENTS.to.build" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
+		<assert failonerror="false"
+		        message="expected: [${get.components.to.build.expected.4}] but got: [${COMPONENTS.to.build}]"
+		>
+			<bool>
+				<equals arg1="${get.components.to.build.expected.4}" arg2="${COMPONENTS.to.build}" />
+			</bool>
+		</assert>
+		<echo level="info">----------------------------------</echo>
+
+		<echo level="info">
+5/6: Test info w/o update</echo>
+		<antcall target="get.sources" />
+		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+					<bool>
+						<available file="@{expected.dir}" type="dir" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
+	">
+			<sequential>
+				<assert failonerror="false" message="Dir @{expected.file} not found!">
+					<bool>
+						<available file="@{expected.file}" type="file" />
+					</bool>
+				</assert>
+			</sequential>
+		</for>
+		<echo level="info">----------------------------------</echo>
+
+		<echo level="info">
+6/6: Test build.cfg</echo>
+		<var name="COMPONENTS.to.build" unset="true" />
+		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
+		<assert failonerror="false"
+		        message="expected: [${get.components.to.build.expected.6}] but got: [${COMPONENTS.to.build}]"
+		>
+			<bool>
+				<equals arg1="${get.components.to.build.expected.6}" arg2="${COMPONENTS.to.build}" />
+			</bool>
+		</assert>
+		<echo level="info">----------------------------------</echo>
+	</target>
+
+	<!-- TODO: fixme -->
+	<target name="test.deploy" depends="init, test.expected.values">
+		<antcall target="deploy">
+			<param name="targetZipsDir" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository/" />
+		</antcall>
+	</target>
+
+</project>

@@ -3,7 +3,7 @@
       id="org.jboss.tools.modeshape.rest.test.feature"
       label="ModeShape Tests Feature"
       version="1.0.0"
-      provider-name="JBoss by RedHat">
+      provider-name="JBoss by Red Hat">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -23,18 +23,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipse.ant.optional.junit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="org.eclipse.test"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
 </feature>

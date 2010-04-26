@@ -1,6 +1,11 @@
+<<<<<<< .working
 <!-- Run a given ${COMPONENT} build -->
 <project default="run" basedir=".">
+=======
+<project default="run" basedir="." name="jbosstools build.xml">
+>>>>>>> .merge-right.r21669
 
+<<<<<<< .working
 	<!-- Configuration Start -->
 	<!-- must set name of component to build/test -->
 	<property name="COMPONENT" value="tests" />
@@ -22,7 +27,23 @@
 	<target name="local" unless="isJBossQA">
 		<property name="WORKINGDIR" value="${basedir}" />
 		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
+=======
+<!--
+	This script is provided here for convenience if building entire tree already on disk.
+	Generally, you would this instead to self-bootstrap the process:
+
+		svn co http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build/build/
+		cd build
+		ant
+
+	See build/build.xml for usage details, commandline flag overrides, etc. 
+	See also genpom.xml for how to generate missing pom.xml files.
+-->
+	<target name="run">
+		<ant antfile="build/build.xml" inheritall="true" inheritrefs="true" />
+>>>>>>> .merge-right.r21669
 	</target>
+<<<<<<< .working
 
 	<!-- default settings for JBQA Hudson -->
 	<target name="init" depends="local">
@@ -80,5 +101,7 @@
 		</deploy>
 		-->
 	</target>
+=======
+>>>>>>> .merge-right.r21669
 </project>
 

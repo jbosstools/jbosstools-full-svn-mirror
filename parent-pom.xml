@@ -8,7 +8,9 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tychoVersion>0.8.0</tychoVersion>
+		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
+		<!-- <tychoVersion>0.8.0</tychoVersion> -->
+		<scmBranch>modular_build</scmBranch>
 	</properties>
 
 	<build>
@@ -56,12 +58,9 @@
 				</configuration>
 			</plugin>
 
-			<!-- 
-				to skip running tests (compile only) use commandline flag:
-			    -Dmaven.test.skip
-			    To allow all tests in a pom to pass/fail, use commandline flag:
-			    -fae (fail at end)
-			-->
+			<!-- to skip running tests (compile only) use commandline flag: -Dmaven.test.skip 
+				To allow all tests in a pom to pass/fail, use commandline flag: -fae (fail 
+				at end) -->
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-test-plugin</artifactId>
@@ -89,8 +88,50 @@
 					<parallel>true</parallel>
 				</configuration>
 			</plugin>
+			<!-- Enable deploy task -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
 		</plugins>
+		<!-- Enable SCP -->
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
 	</build>
+
+	<scm>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		</connection>
+		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		</developerConnection>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		</url>
+	</scm>
+
+	<issueManagement>
+		<system>jira</system>
+		<url>https://jira.jboss.org/jira/secure/</url>
+	</issueManagement>
 
 	<profiles>
 		<profile>
@@ -169,7 +210,8 @@
 				</repository>
 				<repository>
 					<id>subversive07</id>
-					<url>http://download.eclipse.org/technology/subversive/0.7/update-site/</url>
+					<url>http://download.eclipse.org/technology/subversive/0.7/update-site/
+					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -180,7 +222,8 @@
 				</repository>
 				<repository>
 					<id>subversive20</id>
-					<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/</url>
+					<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/
+					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -274,24 +317,12 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-
-		<repository>
-			<id>xulrunner</id>
-			<url>http://download.jboss.org/jbosstools/updates/xulrunner/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
 	</repositories>
 
-	<!--	<pluginRepositories>
+	<pluginRepositories>
 		<pluginRepository>
-			<id>tycho</id>
-			<url>http://repository.sonatype.org/content/repositories/all-001/
+			<id>maven-central</id>
+			<url>http://repo1.maven.org/maven2/
 			</url>
 			<snapshots>
 				<enabled>true</enabled>
@@ -300,5 +331,59 @@
 				<enabled>true</enabled>
 			</releases>
 		</pluginRepository>
-	</pluginRepositories> -->
+		<pluginRepository>
+			<id>sonatype-maven-central</id>
+			<url>http://repository.sonatype.org/content/repositories/central/
+			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven-snapshots-sonatype</id>
+			<url>https://repository.apache.org/content/repositories/maven-snapshots-sonatype/
+			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+		<pluginRepository>
+			<id>tycho</id>
+			<url>http://repository.sonatype.org/content/repositories/snapshots/
+			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- https://issues.sonatype.org/browse/TYCHO-413: does not work - doesn't 
+		respect username & ssh key -->
+	<distributionManagement>
+		<!-- http://download.jboss.org/jbosstools/ -->
+		<!-- <repository> <id>jbosstools.internal.repo</id> <url> scp://filemgmt.jboss.org/downloads_htdocs/tools/repository/ 
+			</url> </repository> -->
+		<!-- https://sourceforge.net/projects/jboss/files/JBossTools/JBossTools3.2.x -->
+		<!-- <repository> <id>jbosstools.external.repo</id> <name>JBoss Developer 
+			Studio Repository</name> <url>scp://nickboldt,jboss@frs.sourceforge.net/home/frs/project/j/jb/jboss/JBossTools/JBossTools3.2.x/</url> 
+			</repository> -->
+
+		<!-- http://reports.qa.atl.jboss.com/binaries/RHDS/ -->
+		<!-- <repository> <id>jbds.internal.repo</id> <name>JBoss Developer Studio 
+			Repository</name> <url>scp://hudson@localhost/qa/services/http/binaries/RHDS/repository/</url> 
+			</repository> -->
+		<!-- http://devstudio.jboss.com -->
+		<!-- <repository> <id>jbds.external.repo</id> <name>JBoss Developer Studio 
+			Repository</name> <url>scp://nboldt@wallace.redhat.com/mnt/devstudio/repository/</url> 
+			</repository> -->
+	</distributionManagement>
 </project>

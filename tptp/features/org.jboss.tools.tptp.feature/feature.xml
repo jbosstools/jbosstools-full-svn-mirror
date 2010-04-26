@@ -2,7 +2,7 @@
 <feature
       id="org.jboss.tools.tptp.feature"
       label="TPTP Profile On JBoss Server"
-      version="1.0.0"
+      version="1.1.0.qualifier"
       plugin="org.jboss.tools.eclipse.as.tptp">
 
    <description>
