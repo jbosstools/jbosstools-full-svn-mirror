@@ -147,13 +147,6 @@
 
 		<available file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" type="file" property="maven.exists" />
 		<antcall target="get.maven" />
-
-		<condition property="bootstrap.scripts.exist" value="true">
-			<and>
-				<available file="${WORKINGDIR}/parent-pom.xml" type="file" />
-				<available file="${WORKINGDIR}/genpom.xml" type="file" />
-			</and>
-		</condition>
 	</target>
 
 	<target name="get.sources" description="if sources not already on disk, fetch them">
@@ -269,7 +262,7 @@
 
 	</target>
 
-	<target name="get.bootstrap.scripts" unless="bootstrap.scripts.exist">
+	<target name="get.bootstrap.scripts">
 		<!-- also get files required to bootstrap the build -->
 		<get src="${svn.root}/parent-pom.xml" dest="${WORKINGDIR}/parent-pom.xml" usetimestamp="true" />
 		<get src="${svn.root}/genpom.xml" dest="${WORKINGDIR}/genpom.xml" usetimestamp="true" />
