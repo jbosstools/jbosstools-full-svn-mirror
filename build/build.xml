@@ -188,16 +188,9 @@
 					<wcVersion path="${WORKINGDIR}/@{COMPONENT}" prefix="svn.info.@{COMPONENT}." />
 				</svn>
 				<if>
-					<!--
 					<isset property="svn.info.@{COMPONENT}.rev" />
 					<then>
 						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
-</echo>
-					</then>
-					-->
-					<isset property="svn.info.@{COMPONENT}.revision.max" />
-					<then>
-						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.revision.max = ${svn.info.@{COMPONENT}.revision.max}
 </echo>
 					</then>
 				</if>
@@ -224,18 +217,12 @@
 								<property file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt" />
 								<!-- check svn info; if new version found, svn up -->
 								<svn javahl="false" svnkit="true" failonerror="false">
-									<!--
 									<info target="${WORKINGDIR}/@{COMPONENT}"
 									      propprefix="svn.info.@{COMPONENT}.check"
 									      verbose="false"
 									/>
-									-->
-									<wcVersion path="${WORKINGDIR}/@{COMPONENT}"
-									           prefix="svn.info.@{COMPONENT}.check."
-									/>
 								</svn>
 								<if>
-									<!--
 									<or>
 										<not>
 											<isset property="svn.info.@{COMPONENT}.rev" />
@@ -246,20 +233,6 @@
 										<not>
 											<equals arg1="${svn.info.@{COMPONENT}.rev}"
 											        arg2="${svn.info.@{COMPONENT}.check.rev}"
-											/>
-										</not>
-									</or>
-									-->
-									<or>
-										<not>
-											<isset property="svn.info.@{COMPONENT}.revision.max" />
-										</not>
-										<not>
-											<isset property="svn.info.@{COMPONENT}.check.revision.max" />
-										</not>
-										<not>
-											<equals arg1="${svn.info.@{COMPONENT}.revision.max}"
-											        arg2="${svn.info.@{COMPONENT}.check.revision.max}"
 											/>
 										</not>
 									</or>
