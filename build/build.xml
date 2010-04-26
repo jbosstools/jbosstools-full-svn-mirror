@@ -345,7 +345,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<!-- collect test results by copying ${WORKINGDIR}/${COMPONENT}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/${COMPONENT} -->
 		<delete dir="${basedir}/surefire-reports/${COMPONENT}" includeemptydirs="true" />
 		<mkdir dir="${basedir}/surefire-reports/${COMPONENT}" />
-		<copy todir="${basedir}/surefire-reports/${COMPONENT}">
+		<copy todir="${basedir}/surefire-reports/${COMPONENT}" flatten="true" preservelastmodified="true" overwrite="true">
 			<fileset dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports/*.xml" />
 		</copy>
 		<!-- TODO parse test results files for output to dump into log :: look for lines with ERROR or FAILURE -->
