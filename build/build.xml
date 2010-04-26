@@ -103,7 +103,7 @@
 	<target name="init" depends="local">
 		<macrodef name="now">
 			<sequential>
-				<var name="now" unset="true"/>
+				<var name="now" unset="true" />
 				<tstamp>
 					<format property="now" pattern="hh:mm:ss" />
 				</tstamp>
@@ -161,6 +161,7 @@
 			<attribute name="op" />
 			<sequential>
 				<!-- check out or update -->
+				<now />
 				<if>
 					<equals arg1="@{op}" arg2="up" />
 					<then>
@@ -169,7 +170,6 @@
 						</svn>
 					</then>
 					<else>
-						<now/>
 						<echo level="info">Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
 						<svn javahl="false" svnkit="true" failonerror="true">
 							<checkout recurse="${svn.recurse}"
@@ -182,12 +182,22 @@
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
 				<svn javahl="false" svnkit="true" failonerror="false">
+					<!--
 					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" verbose="false" />
+					-->
+					<wcVersion path="${WORKINGDIR}/@{COMPONENT}" prefix="svn.info.@{COMPONENT}." />
 				</svn>
 				<if>
+					<!--
 					<isset property="svn.info.@{COMPONENT}.rev" />
 					<then>
 						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
+</echo>
+					</then>
+					-->
+					<isset property="svn.info.@{COMPONENT}.committed.max" />
+					<then>
+						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.committed.max = ${svn.info.@{COMPONENT}.committed.max}
 </echo>
 					</then>
 				</if>
@@ -200,8 +210,6 @@
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
 	">
 			<sequential>
-				<now/>
-				<echo level="info">Fetch @{COMPONENT} sources into ${WORKINGDIR}/</echo>
 				<if>
 					<not>
 						<available file="${WORKINGDIR}/@{COMPONENT}" type="dir" />
@@ -216,12 +224,18 @@
 								<property file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt" />
 								<!-- check svn info; if new version found, svn up -->
 								<svn javahl="false" svnkit="true" failonerror="false">
+									<!--
 									<info target="${WORKINGDIR}/@{COMPONENT}"
 									      propprefix="svn.info.@{COMPONENT}.check"
 									      verbose="false"
 									/>
+									-->
+									<wcVersion path="${WORKINGDIR}/@{COMPONENT}"
+									           prefix="svn.info.@{COMPONENT}.check."
+									/>
 								</svn>
 								<if>
+									<!--
 									<or>
 										<not>
 											<isset property="svn.info.@{COMPONENT}.rev" />
@@ -232,6 +246,20 @@
 										<not>
 											<equals arg1="${svn.info.@{COMPONENT}.rev}"
 											        arg2="${svn.info.@{COMPONENT}.check.rev}"
+											/>
+										</not>
+									</or>
+									-->
+									<or>
+										<not>
+											<isset property="svn.info.@{COMPONENT}.committed.max" />
+										</not>
+										<not>
+											<isset property="svn.info.@{COMPONENT}.check.committed.max" />
+										</not>
+										<not>
+											<equals arg1="${svn.info.@{COMPONENT}.committed.max}"
+											        arg2="${svn.info.@{COMPONENT}.check.committed.max}"
 											/>
 										</not>
 									</or>
@@ -285,7 +313,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
-				<now/>
+				<now />
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
@@ -309,7 +337,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				</antcall>
 			</sequential>
 		</for>
-		<now/>
+		<now />
 	</target>
 
 	<target name="collect.test.results">
@@ -498,7 +526,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir @{expected.dir} not found!">
 					<bool>
 						<available file="@{expected.dir}" type="dir" />
 					</bool>
@@ -508,7 +536,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir @{expected.file} not found!">
 					<bool>
 						<available file="@{expected.file}" type="file" />
 					</bool>
@@ -521,7 +549,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 2/6: Test build.cfg</echo>
 		<var name="COMPONENTS.to.build" unset="true" />
 		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
-		<assert failonerror="false"
+		<assert failonerror="true"
 		        message="expected: [${get.components.to.build.expected.2}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
@@ -539,7 +567,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir @{expected.dir} not found!">
 					<bool>
 						<available file="@{expected.dir}" type="dir" />
 					</bool>
@@ -549,7 +577,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir @{expected.file} not found!">
 					<bool>
 						<available file="@{expected.file}" type="file" />
 					</bool>
@@ -562,7 +590,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 4/6: Test build.cfg</echo>
 		<var name="COMPONENTS.to.build" unset="true" />
 		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
-		<assert failonerror="false"
+		<assert failonerror="true"
 		        message="expected: [${get.components.to.build.expected.4}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
@@ -577,7 +605,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir @{expected.dir} not found!">
 					<bool>
 						<available file="@{expected.dir}" type="dir" />
 					</bool>
@@ -587,7 +615,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir @{expected.file} not found!">
 					<bool>
 						<available file="@{expected.file}" type="file" />
 					</bool>
@@ -600,7 +628,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 6/6: Test build.cfg</echo>
 		<var name="COMPONENTS.to.build" unset="true" />
 		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
-		<assert failonerror="false"
+		<assert failonerror="true"
 		        message="expected: [${get.components.to.build.expected.6}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
