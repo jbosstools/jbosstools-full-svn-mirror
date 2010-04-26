@@ -37,7 +37,9 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
 	-->
 
-	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build" />
+	<target name="run"
+	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.test.results"
+	/>
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -304,6 +306,16 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		</for>
 	</target>
 
+	<target name="collect.test.results">
+		<!-- collect test results by copying ${WORKINGDIR}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/ -->
+		<delete dir="${basedir}/surefire-reports/" includeemptydirs="true" />
+		<mkdir dir="${basedir}/surefire-reports/" />
+		<copy todir="${basedir}/surefire-reports/">
+			<fileset dir="${WORKINGDIR}" includes="**/target/surefire-reports/*.xml" />
+		</copy>
+		<!-- TODO parse test results files for output to dump into log :: look for lines with ERROR or FAILURE -->
+	</target>
+
 	<!-- TODO: generate site.xml files for components: gensite.xml script called by build.xml -->
 	<!-- TODO: zip up update site zips for each component; publish to download.jboss.org as part of deploy task -->
 	<target name="zip.sites">
@@ -515,6 +527,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 3/6: Test update</echo>
 		<delete file="${WORKINGDIR}/svn.info-tests.txt" />
 		<delete file="${WORKINGDIR}/svn.info-xulrunner.txt" />
+		<touch file="${WORKINGDIR}/common/pom.xml" />
 		<antcall target="get.sources" />
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
