@@ -2,7 +2,7 @@
 <feature
       id="org.jboss.tools.vpe_feature"
       label="%featureName"
-      version="2.0.0">
+      version="3.1.0.qualifier">
 
    <description url="http://www.jboss.org/tools">
       %description
@@ -29,47 +29,45 @@ Raleigh NC 27606 USA.
          version="0.0.0"/>
 
    <plugin
-         id="org.jboss.tools.vpe.mozilla"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.tools.vpe.mozilla.gtk"
+         id="org.jboss.tools.vpe.docbook"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="org.jboss.tools.vpe.mozilla.win32"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="org.jboss.tools.vpe.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.jboss.tools.vpe.ui.palette"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+         unpack="false"/>
 
    <plugin
          id="org.jboss.tools.vpe.html"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.jboss.tools.vpe.jsp"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jboss.tools.vpe.resref"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jboss.tools.vpe.ui.palette"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jboss.tools.vpe.xulrunner"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
