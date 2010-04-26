@@ -454,7 +454,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<!-- summary -->
 		<length string="${modulecountstring}" property="modulecount" />
 		<length string="${aggregatorcountstring}" property="aggregatorcount" />
-		<echo level="info">Modules: ${modulecount} Aggregations: ${aggregatorcount}</echo>
+		<echo level="info">${WORKINGDIR}/${COMPONENT} :: Modules: ${modulecount},  Aggregations: ${aggregatorcount}</echo>
 
 	</target>
 
