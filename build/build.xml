@@ -304,13 +304,14 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				</exec>
 				
 				<antcall target="collect.test.results">
-					<param name="COMPONENT" value="${COMPONENT}" />
+					<param name="COMPONENT" value="@{COMPONENT}" />
 				</antcall>
 			</sequential>
 		</for>
 	</target>
 
 	<target name="collect.test.results">
+		<property name="COMPONENT" value=""/>
 		<!-- collect test results by copying ${WORKINGDIR}/${COMPONENT}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/${COMPONENT} -->
 		<delete dir="${basedir}/surefire-reports/${COMPONENT}" includeemptydirs="true" />
 		<mkdir dir="${basedir}/surefire-reports/${COMPONENT}" />
