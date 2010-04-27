@@ -10,7 +10,7 @@
 	<properties>
 		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
 		<!-- <tychoVersion>0.8.0</tychoVersion> -->
-		<scmBranch>modular_build</scmBranch>
+		<scmBranch>branches/modular_build</scmBranch>
 	</properties>
 
 	<build>
@@ -81,6 +81,7 @@
 						</dependency>
 					</dependencies>
 					<includes>
+						<include>**/AllTests.class</include>
 						<include>**/*AllTests*.class</include>
 						<include>**/*AllBotTests*.class</include>
 						<include>**/*TestSuite*.class</include>
@@ -120,9 +121,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</connection>
-		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</developerConnection>
 		<url>http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
 		</url>
