@@ -157,7 +157,7 @@
           op: up (update) or co (checkout)
          = = = = = = = = = = = = = = = = = -->
 		<macrodef name="svn.fetch">
-			<attribute name="COMPONENT" />
+			<attribute name="component" />
 			<attribute name="op" />
 			<sequential>
 				<!-- check out or update -->
@@ -166,15 +166,15 @@
 					<equals arg1="@{op}" arg2="up" />
 					<then>
 						<svn javahl="false" svnkit="true" failonerror="false">
-							<update recurse="${svn.recurse}" dir="@{COMPONENT}" />
+							<update recurse="${svn.recurse}" dir="@{component}" />
 						</svn>
 					</then>
 					<else>
-						<echo level="info">Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
+						<echo level="info">Fetch sources from ${svn.root}/@{component} into ${WORKINGDIR}/@{component}</echo>
 						<svn javahl="false" svnkit="true" failonerror="true">
 							<checkout recurse="${svn.recurse}"
-							          url="${svn.root}/@{COMPONENT}"
-							          destpath="${WORKINGDIR}/@{COMPONENT}"
+							          url="${svn.root}/@{component}"
+							          destpath="${WORKINGDIR}/@{component}"
 							/>
 						</svn>
 					</else>
@@ -182,16 +182,16 @@
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
 				<svn javahl="false" svnkit="true" failonerror="false">
-					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" verbose="false" />
+					<info target="${WORKINGDIR}/@{component}" propprefix="svn.info.@{component}" verbose="false" />
 				</svn>
 				<if>
-					<isset property="svn.info.@{COMPONENT}.rev" />
+					<isset property="svn.info.@{component}.rev" />
 					<then>
-						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
+						<echo file="${WORKINGDIR}/svn.info-@{component}.txt">svn.info.@{component}.rev = ${svn.info.@{component}.rev}
 </echo>
 					</then>
 				</if>
-				<echo file="build.cfg" message="@{COMPONENT}," append="true" />
+				<echo file="build.cfg" message="@{component}," append="true" />
 			</sequential>
 		</macrodef>
 
