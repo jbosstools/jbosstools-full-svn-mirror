@@ -81,6 +81,7 @@
 						</dependency>
 					</dependencies>
 					<includes>
+						<include>**/AllTests.class</include>
 						<include>**/*AllTests*.class</include>
 						<include>**/*AllBotTests*.class</include>
 						<include>**/*TestSuite*.class</include>
