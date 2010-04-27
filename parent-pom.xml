@@ -10,7 +10,7 @@
 	<properties>
 		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
 		<!-- <tychoVersion>0.8.0</tychoVersion> -->
-		<scmBranch>modular_build</scmBranch>
+		<scmBranch>trunk</scmBranch>
 	</properties>
 
 	<build>
@@ -120,9 +120,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</connection>
-		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</developerConnection>
 		<url>http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
 		</url>
