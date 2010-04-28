@@ -37,7 +37,9 @@
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
 	-->
 
-	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build" />
+	<target name="run"
+	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
+	/>
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -299,6 +301,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				</ant>
 				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
 				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
+				<!-- 3 hr timeout = 10800000ms -->
 				<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn"
 				      dir="${WORKINGDIR}/@{COMPONENT}"
 				      failifexecutionfails="true"
@@ -325,11 +328,68 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<!-- collect test results by copying ${WORKINGDIR}/${COMPONENT}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/${COMPONENT} -->
 		<delete dir="${basedir}/surefire-reports/${COMPONENT}" includeemptydirs="true" />
 		<mkdir dir="${basedir}/surefire-reports/${COMPONENT}" />
-		<copy todir="${basedir}/surefire-reports/${COMPONENT}" flatten="true" preservelastmodified="true" overwrite="true">
+		<copy todir="${basedir}/surefire-reports/${COMPONENT}"
+		      flatten="true"
+		      preservelastmodified="true"
+		      overwrite="true"
+		>
 			<fileset dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports/*.xml" />
 		</copy>
-		<!-- TODO parse test results files for output to dump into log :: look for lines with ERROR or FAILURE -->
 	</target>
+
+	<target name="collect.all.test.results">
+		<!-- Parse this: <testsuite errors="0" skipped="0" tests="10" time="0.042" failures="0" name="org.jboss.tools.jmx.ui.JMXUIAllTests"> -->
+		<for param="testresultfile" delimiter=", 
+		">
+			<path>
+				<fileset dir="${basedir}/surefire-reports/" includes="**/*.xml" />
+			</path>
+			<sequential>
+				<var name="testsuite.name" unset="true" />
+				<var name="testsuite.tests" unset="true" />
+				<var name="testsuite.time" unset="true" />
+				<var name="testsuite.skipped" unset="true" />
+				<var name="testsuite.errors" unset="true" />
+				<var name="testsuite.failures" unset="true" />
+				<xmlproperty file="@{testresultfile}" keepRoot="true" collapseAttributes="true" />
+				<for param="ts" list="testsuite.skipped, testsuite.errors, testsuite.failures" delimiter=", ">
+					<sequential>
+						<propertyregex override="true"
+						               property="ts.label"
+						               defaultvalue="@{ts}"
+						               input="@{ts}"
+						               regexp="testsuite\.(.+)"
+						               replace="\1"
+						/>
+						<if>
+							<isset property="@{ts}" />
+							<then>
+								<if>
+									<equals arg1="${@{ts}}" arg2="0" />
+									<then>
+										<var name="@{ts}" value="" />
+									</then>
+									<else>
+										<var name="@{ts}" value="; ${@{ts}} ${ts.label}" />
+									</else>
+								</if>
+							</then>
+						</if>
+
+					</sequential>
+				</for>
+				<echo level="info">${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures} 
+</echo>
+				<var name="testsuite.name" unset="true" />
+				<var name="testsuite.tests" unset="true" />
+				<var name="testsuite.time" unset="true" />
+				<var name="testsuite.skipped" unset="true" />
+				<var name="testsuite.errors" unset="true" />
+				<var name="testsuite.failures" unset="true" />
+			</sequential>
+		</for>
+	</target>
+
 
 	<!-- TODO: generate site.xml files for components: gensite.xml script called by build.xml -->
 	<!-- TODO: zip up update site zips for each component; publish to download.jboss.org as part of deploy task -->
