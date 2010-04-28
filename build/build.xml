@@ -20,7 +20,7 @@
 	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/trunk" />
 
 	<!-- default maven version -->
-	<property name="maven.version" value="3.0-alpha-7" />
+	<property name="maven.version" value="3.0-beta-1" />
 
 	<!-- ****************************** Usage Instructions ****************************** -->
 
