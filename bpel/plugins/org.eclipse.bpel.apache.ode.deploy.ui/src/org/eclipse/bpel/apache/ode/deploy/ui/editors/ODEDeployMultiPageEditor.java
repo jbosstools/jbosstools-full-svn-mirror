@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import org.eclipse.bpel.apache.ode.deploy.model.dd.DocumentRoot;
 import org.eclipse.bpel.apache.ode.deploy.model.dd.ProcessType;
@@ -59,6 +61,8 @@ public class ODEDeployMultiPageEditor extends FormEditor implements
 	// Display this in title if no BPEL process files are found in current directory
 	private final static String NO_PROCESSES_FOUND = " *** No Processes Found *** ";
 	private boolean readOnly = false;
+	// if BPEL processes were added or deleted, DD model is not in sync and needs to be saved 
+	private boolean modelInSync = true;
 	protected TDeployment deployDescriptor = null;
 
 	protected AdapterFactoryEditingDomain editingDomain;
@@ -79,6 +83,7 @@ public class ODEDeployMultiPageEditor extends FormEditor implements
 		commitPages(true);
 		saveDeploymentDescriptor();
 		((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
+		modelInSync = true;
 		firePropertyChange(IEditorPart.PROP_DIRTY);
 	}
 
@@ -186,9 +191,11 @@ public class ODEDeployMultiPageEditor extends FormEditor implements
 
 	@Override
 	public boolean isDirty() {
-		return !readOnly
-				&& ((BasicCommandStack) editingDomain.getCommandStack())
-						.isSaveNeeded();
+		return !readOnly &&
+			(
+					((BasicCommandStack) editingDomain.getCommandStack()).isSaveNeeded() ||
+					!modelInSync
+			);
 	}
 
 	@Override
@@ -228,11 +235,13 @@ public class ODEDeployMultiPageEditor extends FormEditor implements
 			deployDescriptor.getProcess().add(pt);
 			// set model
 			pt.setModel(p);
-			readOnly = true; // can't save editor
+			readOnly = true; // can't save editor anyway
+			modelInSync = true; // so it might as well be in sync
 		}
 	}
 
 	public void populateModel() throws CoreException {
+		final Vector<ProcessType> processesFound = new Vector<ProcessType>();
 		((IFileEditorInput) getEditorInput()).getFile().getProject().accept(new IResourceVisitor() {
 			public boolean visit(IResource bpelfile) throws CoreException {
 				// https://jira.jboss.org/jira/browse/JBIDE-6006
@@ -244,14 +253,26 @@ public class ODEDeployMultiPageEditor extends FormEditor implements
 						if (pt == null) {
 							pt = DeployUtils.createProcessStub(p);
 							deployDescriptor.getProcess().add(pt);
+							modelInSync = false; // need to do a save
 						}
 						// set model
 						pt.setModel(p);
-
+						processesFound.add(pt);
 					}
-			}
+				}
 				return true;
 			}
 		});
+		Vector<ProcessType> processesToDelete = new Vector<ProcessType>();
+		for(ProcessType pt : deployDescriptor.getProcess())
+		{
+			if (!processesFound.contains(pt))
+				processesToDelete.add(pt);
+		}
+		if ( processesToDelete.size()>0)
+		{
+			deployDescriptor.getProcess().removeAll(processesToDelete);
+			modelInSync = false; // need to do a save
+		}
 	}
 }
