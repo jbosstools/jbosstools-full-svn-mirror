@@ -23,9 +23,9 @@
     <section id="start_dev_db">
       <title>Start Development Database</title>
 
-      <para>Before opening the JBoss Developer studio you need to <ulink
-          url="http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/guides/GettingStartedGuide/en/database.zip"
-          >download</ulink> and start a Workshop Database.</para>
+      <para>Before opening the JBoss Developer studio you need to download and start <ulink
+        url="http://docs.jboss.org/tools/resources/GSG_database.zip"
+        >Workshop Database</ulink> .</para>
       <para>To start the database just run <property>./runDBServer.sh</property> or
           <property>runDBServer.bat</property> from the database directory.</para>
       <para>The end result should be a console window that looks like:</para>
