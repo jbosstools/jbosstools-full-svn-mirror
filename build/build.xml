@@ -8,7 +8,7 @@
 	          value="tests, common, 
 						flow, jbpm, 
 						jmx, archives, as, 
-						drools, bpel, smooks, freemarker, profiler, portlet, 
+						drools, bpel, smooks, freemarker, profiler, portlet, modeshape,
 						xulrunner, jst, vpe, jsf, 
 							esb, tptp, ws, 
 							cdi, struts, hibernatetools, seam, 
@@ -20,7 +20,7 @@
 	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build" />
 
 	<!-- default maven version -->
-	<property name="maven.version" value="3.0-alpha-7" />
+	<property name="maven.version" value="3.0-beta-1" />
 
 	<!-- ****************************** Usage Instructions ****************************** -->
 
