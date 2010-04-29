@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
@@ -183,8 +184,16 @@ public class VpeFunctionSrc extends VpeFunction {
 	if (document == null || query == null) {
 	    return tagValue;
 	}
-	
-	ValueHelper valueHelper = new ValueHelper();
+	final IEditorPart editor = pageContext.getEditPart().getSite().getPage().getActiveEditor();
+	ValueHelper valueHelper = new ValueHelper() {
+		// yradtsevich: fix of JBIDE-6204: NPE was thrown in the base method
+		// because getActivePage() may be null before the page is initialized
+		@Override
+		protected IEditorPart getEditor() {
+			return editor;
+		}
+	};
+
 	JspContentAssistProcessor processor = valueHelper.createContentAssistProcessor();
 	int offset = 0;
 	if(sourceNode instanceof IndexedRegion) {
