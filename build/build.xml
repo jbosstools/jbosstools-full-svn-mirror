@@ -5,39 +5,59 @@
 
 	<!-- set name of component(s) to build+test, IN ORDER -->
 	<property name="COMPONENTS"
-	          value="tests, common, 
-						flow, jbpm, 
-						jmx, archives, as, 
-						drools, bpel, smooks, freemarker, profiler, portlet, 
-						xulrunner, jst, vpe, jsf, 
-							esb, tptp, ws, 
-							cdi, struts, hibernatetools, seam, 
-								examples, birt, 
-								maven"
+	          value="
+tests,common;
+	flow,jbpm;
+	jmx,archives,as;
+	drools,bpel,smooks,freemarker,profiler,portlet;
+	xulrunner,jst,vpe,jsf;
+		esb,tptp,ws;
+		cdi,struts,hibernatetools,seam; 
+			examples,birt;
+			maven"
 	/>
+	<!-- TODO: add modeshape -->
 
 	<!-- svn root, including trunk or branch path -->
-	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/trunk" />
+	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build" />
 
 	<!-- default maven version -->
 	<property name="maven.version" value="3.0-beta-1" />
 
 	<!-- ****************************** Usage Instructions ****************************** -->
+	<target name="help" description="Usage Instructions" depends="init">
+		<echo>
+To run this script in Eclipse:
+	Run As > Ant Build
 
-	<!-- To run this script in Eclipse:
-			Run As > Ant Build
-	-->
-	<!-- To run this script via commandline (build default modules & run tests):
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant
-		 or, to build everything but not *run* the tests:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="-Dmaven.test.skip"
-		 or, to build specific module(s): 
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
-		 or, to rebuild even if sources have not changed:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
-	-->
+To run this script via commandline (build default modules + run tests):
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant
 
-	<target name="run" depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build" />
+or, to build everything but not *run* the tests:
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="clean install -Dmaven.test.skip"
+
+or, to build specific module(s): 
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
+
+or, to rebuild even if sources have not changed:
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
+
+or, to (re-)run tests w/o (re-)building first:
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
+
+Here is the order in which components must be built:
+</echo>
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";" >
+			<sequential>
+				<echo message="  @{COMPONENT}" />
+			</sequential>
+		</for>
+
+	</target>
+
+	<target name="run"
+	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
+	/>
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -101,6 +121,16 @@
 	</target>
 
 	<target name="init" depends="local">
+		<macrodef name="now">
+			<sequential>
+				<var name="now" unset="true" />
+				<tstamp>
+					<format property="now" pattern="hh:mm:ss" />
+				</tstamp>
+				<echo>${now}</echo>
+			</sequential>
+		</macrodef>
+
 		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
 		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
 			<available file="/home/hudson/static_build_env/jbds" type="dir" />
@@ -137,16 +167,10 @@
 
 		<available file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn" type="file" property="maven.exists" />
 		<antcall target="get.maven" />
-
-		<condition property="bootstrap.scripts.exist" value="true">
-			<and>
-				<available file="${WORKINGDIR}/parent-pom.xml" type="file" />
-				<available file="${WORKINGDIR}/genpom.xml" type="file" />
-			</and>
-		</condition>
 	</target>
 
 	<target name="get.sources" description="if sources not already on disk, fetch them">
+		<property name="clean.sources" value="false" />
 		<property name="svn.recurse" value="true" />
 
 		<!-- = = = = = = = = = = = = = = = = =
@@ -154,23 +178,24 @@
           op: up (update) or co (checkout)
          = = = = = = = = = = = = = = = = = -->
 		<macrodef name="svn.fetch">
-			<attribute name="COMPONENT" />
+			<attribute name="component" />
 			<attribute name="op" />
 			<sequential>
 				<!-- check out or update -->
+				<now />
 				<if>
 					<equals arg1="@{op}" arg2="up" />
 					<then>
 						<svn javahl="false" svnkit="true" failonerror="false">
-							<update recurse="${svn.recurse}" dir="@{COMPONENT}" />
+							<update recurse="${svn.recurse}" dir="@{component}" />
 						</svn>
 					</then>
 					<else>
-						<echo level="info">Fetch sources from ${svn.root}/@{COMPONENT} into ${WORKINGDIR}/@{COMPONENT}</echo>
+						<echo level="info">Fetch sources from ${svn.root}/@{component} into ${WORKINGDIR}/@{component}</echo>
 						<svn javahl="false" svnkit="true" failonerror="true">
 							<checkout recurse="${svn.recurse}"
-							          url="${svn.root}/@{COMPONENT}"
-							          destpath="${WORKINGDIR}/@{COMPONENT}"
+							          url="${svn.root}/@{component}"
+							          destpath="${WORKINGDIR}/@{component}"
 							/>
 						</svn>
 					</else>
@@ -178,26 +203,30 @@
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
 				<svn javahl="false" svnkit="true" failonerror="false">
-					<info target="${WORKINGDIR}/@{COMPONENT}" propprefix="svn.info.@{COMPONENT}" verbose="true" />
+					<info target="${WORKINGDIR}/@{component}" propprefix="svn.info.@{component}" verbose="false" />
 				</svn>
 				<if>
-					<isset property="svn.info.@{COMPONENT}.rev" />
+					<isset property="svn.info.@{component}.rev" />
 					<then>
-						<echo file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt">svn.info.@{COMPONENT}.rev = ${svn.info.@{COMPONENT}.rev}
+						<echo file="${WORKINGDIR}/svn.info-@{component}.txt">svn.info.@{component}.rev = ${svn.info.@{component}.rev}
 </echo>
 					</then>
 				</if>
-				<echo file="build.cfg" message="@{COMPONENT}," append="true" />
+				<echo file="build.cfg" message="@{component}," append="true" />
 			</sequential>
 		</macrodef>
 
 		<!-- check for each component dir in ${WORKINGDIR}; if not found, fetch -->
 		<echo file="build.cfg" message="COMPONENTS.to.build = " />
-		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",; 
 	">
 			<sequential>
-				<!-- TODO: add timestamps / elapsed time -->
-				<echo level="info">Fetch @{COMPONENT} sources into ${WORKINGDIR}/</echo>
+				<if>
+					<equals arg1="${clean.sources}" arg2="true" />
+					<then>
+						<delete dir="${WORKINGDIR}/@{COMPONENT}" includeemptydirs="true" quiet="true" />
+					</then>
+				</if>
 				<if>
 					<not>
 						<available file="${WORKINGDIR}/@{COMPONENT}" type="dir" />
@@ -214,7 +243,7 @@
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<info target="${WORKINGDIR}/@{COMPONENT}"
 									      propprefix="svn.info.@{COMPONENT}.check"
-									      verbose="true"
+									      verbose="false"
 									/>
 								</svn>
 								<if>
@@ -258,7 +287,7 @@
 
 	</target>
 
-	<target name="get.bootstrap.scripts" unless="bootstrap.scripts.exist">
+	<target name="get.bootstrap.scripts">
 		<!-- also get files required to bootstrap the build -->
 		<get src="${svn.root}/parent-pom.xml" dest="${WORKINGDIR}/parent-pom.xml" usetimestamp="true" />
 		<get src="${svn.root}/genpom.xml" dest="${WORKINGDIR}/genpom.xml" usetimestamp="true" />
@@ -271,23 +300,33 @@
 			<then>
 				<echo level="info">All components up to date: nothing to do!
 To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
+
+				<!-- create fake test result file to avoid Hudson failure -->
+				<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
+				<mkdir dir="${basedir}/surefire-reports/NoTestsRun" />
+				<echo file="${basedir}/surefire-reports/NoTestsRun/TEST-org.jboss.tools.NoTestsRun.xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;testsuite failures="0" time="0.001" errors="0" skipped="0" tests="1" name="org.jboss.tools.NoTestsRun"&gt;
+  &lt;testcase time="0.001" classname="org.jboss.tools.NoTestsRun" name="NoTestsRun"/&gt;
+&lt;/testsuite&gt;
+</echo>
 			</then>
 		</if>
 	</target>
 
 	<target name="run.build">
-		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
-		<property name="MAVEN_FLAGS" value="" />
+		<!-- could set -Dmaven.test.skip to skip tests, or use osgi-test:test to just (re-)run tests w/o first building -->
+		<property name="MAVEN_FLAGS" value="clean install -B -fn -q" />
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
-				<!-- TODO: add timestamps / elapsed time -->
+				<now />
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
 				</ant>
 				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
 				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
+				<!-- 3 hr timeout = 10800000ms -->
 				<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn"
 				      dir="${WORKINGDIR}/@{COMPONENT}"
 				      failifexecutionfails="true"
@@ -298,11 +337,84 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<env key="MAVEN_OPTS" value="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
 					<!-- more debug output with <env key="MAVEN_OPTS" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"/> -->
 					<!-- <arg line="-o -Dmaven.test.skip" /> -->
-					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository clean install" />
+					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository" />
 				</exec>
+				<antcall target="collect.test.results">
+					<param name="COMPONENT" value="@{COMPONENT}" />
+				</antcall>
+			</sequential>
+		</for>
+		<now />
+	</target>
+
+	<target name="collect.test.results">
+		<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
+		<property name="COMPONENT" value="" />
+		<!-- collect test results by copying ${WORKINGDIR}/${COMPONENT}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/${COMPONENT} -->
+		<delete dir="${basedir}/surefire-reports/${COMPONENT}" includeemptydirs="true" />
+		<mkdir dir="${basedir}/surefire-reports/${COMPONENT}" />
+		<copy todir="${basedir}/surefire-reports/${COMPONENT}"
+		      flatten="true"
+		      preservelastmodified="true"
+		      overwrite="true"
+		>
+			<fileset dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports/*.xml" />
+		</copy>
+	</target>
+
+	<target name="collect.all.test.results">
+		<!-- Parse this: <testsuite errors="0" skipped="0" tests="10" time="0.042" failures="0" name="org.jboss.tools.jmx.ui.JMXUIAllTests"> -->
+		<for param="testresultfile" delimiter=", 
+		">
+			<path>
+				<fileset dir="${basedir}/surefire-reports/" includes="**/*.xml" />
+			</path>
+			<sequential>
+				<var name="testsuite.name" unset="true" />
+				<var name="testsuite.tests" unset="true" />
+				<var name="testsuite.time" unset="true" />
+				<var name="testsuite.skipped" unset="true" />
+				<var name="testsuite.errors" unset="true" />
+				<var name="testsuite.failures" unset="true" />
+				<xmlproperty file="@{testresultfile}" keepRoot="true" collapseAttributes="true" />
+				<for param="ts" list="testsuite.skipped, testsuite.errors, testsuite.failures" delimiter=", ">
+					<sequential>
+						<propertyregex override="true"
+						               property="ts.label"
+						               defaultvalue="@{ts}"
+						               input="@{ts}"
+						               regexp="testsuite\.(.+)"
+						               replace="\1"
+						/>
+						<if>
+							<isset property="@{ts}" />
+							<then>
+								<if>
+									<equals arg1="${@{ts}}" arg2="0" />
+									<then>
+										<var name="@{ts}" value="" />
+									</then>
+									<else>
+										<var name="@{ts}" value="; ${@{ts}} ${ts.label}" />
+									</else>
+								</if>
+							</then>
+						</if>
+
+					</sequential>
+				</for>
+				<echo level="info">${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures} 
+</echo>
+				<var name="testsuite.name" unset="true" />
+				<var name="testsuite.tests" unset="true" />
+				<var name="testsuite.time" unset="true" />
+				<var name="testsuite.skipped" unset="true" />
+				<var name="testsuite.errors" unset="true" />
+				<var name="testsuite.failures" unset="true" />
 			</sequential>
 		</for>
 	</target>
+
 
 	<!-- TODO: generate site.xml files for components: gensite.xml script called by build.xml -->
 	<!-- TODO: zip up update site zips for each component; publish to download.jboss.org as part of deploy task -->
@@ -479,7 +591,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir @{expected.dir} not found!">
 					<bool>
 						<available file="@{expected.dir}" type="dir" />
 					</bool>
@@ -489,7 +601,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir @{expected.file} not found!">
 					<bool>
 						<available file="@{expected.file}" type="file" />
 					</bool>
@@ -502,7 +614,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 2/6: Test build.cfg</echo>
 		<var name="COMPONENTS.to.build" unset="true" />
 		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
-		<assert failonerror="false"
+		<assert failonerror="true"
 		        message="expected: [${get.components.to.build.expected.2}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
@@ -515,11 +627,12 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 3/6: Test update</echo>
 		<delete file="${WORKINGDIR}/svn.info-tests.txt" />
 		<delete file="${WORKINGDIR}/svn.info-xulrunner.txt" />
+		<touch file="${WORKINGDIR}/common/pom.xml" />
 		<antcall target="get.sources" />
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir @{expected.dir} not found!">
 					<bool>
 						<available file="@{expected.dir}" type="dir" />
 					</bool>
@@ -529,7 +642,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir @{expected.file} not found!">
 					<bool>
 						<available file="@{expected.file}" type="file" />
 					</bool>
@@ -542,7 +655,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 4/6: Test build.cfg</echo>
 		<var name="COMPONENTS.to.build" unset="true" />
 		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
-		<assert failonerror="false"
+		<assert failonerror="true"
 		        message="expected: [${get.components.to.build.expected.4}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
@@ -557,7 +670,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir @{expected.dir} not found!">
 					<bool>
 						<available file="@{expected.dir}" type="dir" />
 					</bool>
@@ -567,7 +680,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="false" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir @{expected.file} not found!">
 					<bool>
 						<available file="@{expected.file}" type="file" />
 					</bool>
@@ -580,7 +693,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 6/6: Test build.cfg</echo>
 		<var name="COMPONENTS.to.build" unset="true" />
 		<antcallback target="get.components.to.build" return="COMPONENTS.to.build" />
-		<assert failonerror="false"
+		<assert failonerror="true"
 		        message="expected: [${get.components.to.build.expected.6}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
