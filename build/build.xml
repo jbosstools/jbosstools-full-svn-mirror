@@ -60,7 +60,7 @@ Here is the order in which components must be built:
 	</target>
 
 	<target name="run"
-	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results, deploy"
+	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
 	/>
 
 	<!-- override for local build -->
@@ -523,7 +523,7 @@ ${test.results.errors.failures.skipped}
 			This account is restricted by rssh.
 			Allowed commands: scp sftp rsync
 	-->
-	<target name="deploy" if="isInHudson">
+	<target name="deploy" if="isInHudson" depends="init, get.bootstrap.scripts">
 		<!-- default destinations -->
 		<property name="DESTINATION.jbosstools" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository" />
 		<property name="DESTINATION.jbds" value="/qa/services/http/binaries/RHDS/repository" />
