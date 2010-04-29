@@ -315,6 +315,11 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 </echo>
 				<property name="no.tests.run" value="true" />
 			</then>
+			<else>
+				<echo>The following components' sources have changed and will be built:
+	COMPONENTS.to.build = ${COMPONENTS.to.build}
+</echo>
+			</else>
 		</if>
 	</target>
 
