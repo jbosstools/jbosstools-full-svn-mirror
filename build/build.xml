@@ -5,18 +5,17 @@
 
 	<!-- set name of component(s) to build+test, IN ORDER -->
 	<property name="COMPONENTS"
-	          value="
-tests,common;
-	flow,jbpm;
-	jmx,archives,as;
-	drools,bpel,smooks,freemarker,profiler,portlet;
-	xulrunner,jst,vpe,jsf;
-		esb,tptp,ws;
-		cdi,struts,hibernatetools,seam; 
-			examples,birt;
-			maven"
+	          value="tests,common;
+    flow,jbpm;
+    jmx,archives,as;
+    drools,bpel,smooks,freemarker,profiler,portlet;
+    xulrunner,jst,vpe,jsf;
+        esb,tptp,ws;
+        cdi,struts,hibernatetools,seam;
+            examples,birt;
+            maven"
 	/>
-	<!-- TODO: add modeshape -->
+	<!-- TODO: add modeshape, which reqs JDK6 -->
 
 	<!-- svn root, including trunk or branch path -->
 	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build" />
@@ -49,10 +48,9 @@ Here is the order in which components must be built:
 </echo>
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";" >
 			<sequential>
-				<echo message="  @{COMPONENT}" />
+				<echo message="    @{COMPONENT}" />
 			</sequential>
 		</for>
-
 	</target>
 
 	<target name="run"
