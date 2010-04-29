@@ -601,6 +601,14 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </itemizedlist>
    </para>
 <itemizedlist>
+ <note>
+  <title>Note:</title>
+  <para>During the JBT installation/updating process using some of Jboss 
+   update sites <emphasis>No repository found containing...</emphasis> error
+   can appear.It is a Eclipse P2 bug.To work around it try:1.Restart your Eclipse. 2.   
+   Add the update site again. 3. 
+   Do the update again.</para>
+ </note>
  <para>To install/update Jboss Tools from one of the update sites you should follow the steps:</para>
  <listitem><para>First, download the correct version of Eclipse 
   for your platform which is compatible with the version of JBoss
