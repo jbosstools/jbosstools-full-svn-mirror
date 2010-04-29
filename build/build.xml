@@ -30,11 +30,13 @@
 	<!-- To run this script via commandline (build default modules & run tests):
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant
 		 or, to build everything but not *run* the tests:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="-Dmaven.test.skip"
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="clean install -Dmaven.test.skip"
 		 or, to build specific module(s): 
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
 		 or, to rebuild even if sources have not changed:
 			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
+		 or, to (re-)run tests w/o (re-)building first:
+			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
 	-->
 
 	<target name="run"
@@ -296,7 +298,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 	</target>
 
 	<target name="run.build">
-		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
+		<!-- could set -Dmaven.test.skip to skip tests, or use osgi-test:test to just (re-)run tests w/o first building -->
 		<property name="MAVEN_FLAGS" value="clean install -B -fn -q" />
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
