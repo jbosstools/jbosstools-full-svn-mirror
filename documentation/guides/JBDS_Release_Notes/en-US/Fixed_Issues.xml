@@ -7,7 +7,7 @@
 	<para>
 		Following is a list of new and noteworthy features and bug fixes in this release:
 	</para>
-	<formalpara>
+<!--	<formalpara>
 		<title>Contexts and Dependency Injection (CDI)</title>
 		<para>
 			<itemizedlist>
@@ -18,8 +18,8 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	</formalpara> -->
+<!--	<formalpara>
 		<title>ESB</title>
 		<para>
 			<itemizedlist>
@@ -30,8 +30,8 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	</formalpara> -->
+<!--	<formalpara>
 		<title>jBPM</title>
 		<para>
 			<itemizedlist>
@@ -42,14 +42,14 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
+	</formalpara> -->
 	<formalpara>
 		<title>Hibernate</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6075">In the Hibernate reverse engineering editor it was impossible to add a parameter as the button to do so was missing. This update corrects the user interface to include the <guibutton>Add parameter</guibutton> button under the <guilabel>Id Generator details</guilabel> <guilabel>Class</guilabel> section.</ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6075">: In the Hibernate reverse engineering editor it was impossible to add a parameter as the button to do so was missing. This update corrects the user interface to include the <guibutton>Add parameter</guibutton> button under the <guilabel>Id Generator details</guilabel> <guilabel>Class</guilabel> section.</ulink>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -61,13 +61,13 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5941">JBIDE-5941</ulink>: A new JSF2 feature has been added that allows a user to type <code>#{cc.attrs.|</code> and have an attribute list returned.
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
-	<formalpara>
+<!--	<formalpara>
 		<title>RichFaces</title>
 		<para>
 			<itemizedlist>
@@ -78,8 +78,8 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	</formalpara> -->
+<!--	<formalpara>
 		<title>Seam</title>
 		<para>
 			<itemizedlist>
@@ -90,8 +90,8 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	</formalpara> -->
+<!--	<formalpara>
 		<title>Smooks</title>
 		<para>
 			<itemizedlist>
@@ -102,8 +102,8 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	</formalpara> -->
+<!--	<formalpara>
 		<title>Struts</title>
 		<para>
 			<itemizedlist>
@@ -114,8 +114,8 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	</formalpara> -->
+<!--	<formalpara>
 		<title>Visual Page Editor</title>
 		<para>
 			<itemizedlist>
@@ -126,8 +126,8 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	</formalpara> -->
+<!--	<formalpara>
 		<title>XHTML Editor</title>
 		<para>
 			<itemizedlist>
@@ -138,8 +138,8 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	</formalpara> -->
+<!--	<formalpara>
 		<title>XML Structured Editor</title>
 		<para>
 			<itemizedlist>
@@ -150,14 +150,24 @@
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
+	</formalpara> -->
 	<formalpara>
 		<title>General Issues</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1155">JBDS-1155</ulink>: A regression existed in the Eclipse 3.5.2 Web Tools Platform (WTP) 3.1.2. The bug would break EAR deployments that used classpath variables by deploying dependent artifacts to <filename>&lt;root_ear&gt;/lib/lib/lib</filename> instead of <filename>&lt;root_ear&gt;/lib</filename>. The issue has been corrected with these updated packages so that the regression no longer exists and EAR deployments function correctly.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1147">JBDS-1147</ulink>: An incorrect link to the Guvnor Rules repository was included in the JBoss Developer Studio. This bug caused the repository to become unreachable. This has been fixed by correcting the link to be <ulink url="http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav">http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav</ulink>. The JBoss Developer Studio is now able to connect to the Guvnor Rules repository.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1091">JBDS-1091</ulink>: Two bugs were found. A problem was found in the <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in and the visibility of the <property>Instance</property> field was changed from public to private. These bugs respectively caused the JBoss Developer Studio <guilabel>Server View</guilabel> to not display all available servers on occasion after using the installer and jBPM runtimes to not be initialized correctly. The <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in has now been updated to force a refresh of the <guilabel>Server View</guilabel> post installation, which can be verified by a refresh message appearing in the log file and the <filename>org.jboss.tools.jbpm.common</filename> plug-in has been updated to set <code>public static final PreferencesManager INSTANCE = new PreferencesManager();</code>. By correcting the <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in, all installed servers now appear in the <guilabel>Server View</guilabel> directly after installation of the JBoss Developer Studio through the installer. Fixing the <filename>org.jboss.tools.jbpm.common</filename> plug-in now allows for jBPM runtimes to be initialized correctly. Both issues are fixed with this update.
 					</para>
 				</listitem>
 			</itemizedlist>
