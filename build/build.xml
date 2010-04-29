@@ -297,7 +297,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 	<target name="run.build">
 		<!-- could set -Dmaven.test.skip to skip tests, etc. -->
-		<property name="MAVEN_FLAGS" value="" />
+		<property name="MAVEN_FLAGS" value="clean install -B -fn -q" />
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
@@ -319,7 +319,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<env key="MAVEN_OPTS" value="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
 					<!-- more debug output with <env key="MAVEN_OPTS" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"/> -->
 					<!-- <arg line="-o -Dmaven.test.skip" /> -->
-					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository clean install" />
+					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository" />
 				</exec>
 				<antcall target="collect.test.results">
 					<param name="COMPONENT" value="@{COMPONENT}" />
