@@ -49,7 +49,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6075">JBIDE-6075</ulink>: In the Hibernate reverse engineering editor it was impossible to add a parameter as the button to do so was missing. This update corrects the user interface to include the <guibutton>Add parameter</guibutton> button under the <guilabel>Id Generator details</guilabel> <guilabel>Class</guilabel> section.</ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6075">JBIDE-6075</ulink>: In the Hibernate reverse engineering editor it was impossible to add a parameter as the button to do so was missing. This update corrects the user interface to include the <guibutton>Add parameter</guibutton> button under the <guilabel>Id Generator details</guilabel> <guilabel>Class</guilabel> section.
 					</para>
 				</listitem>
 			</itemizedlist>
