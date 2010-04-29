@@ -5,23 +5,33 @@
 	<property name="COMPONENT" value="trunk" />
 	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
 	<property name="dirsToExclude"
-	          value="**/*.sdk.*, **/doc*, **/releng/**, **/build/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders, **/contrib, **/releng/**, ."
+	          value="**/*.sdk.*, **/doc*/**, **/releng/**, **/build/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders/**, **/contrib, **/releng/**, ."
 	/>
+	<property name="testClassFilesToInclude"
+	          value="**/AllTests.java, **/*AllTests*.java, **/*AllBotTests*.java, **/*TestSuite*.java"
+	/>
+
 	<property name="overwrite.existing.pom.xml" value="false" />
 	<!-- Configuration Ends -->
 
-	<!-- To run this script in Eclipse:
-			Run As > Ant Build
-	-->
-	<!-- To run this script via commandline:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -f genpom.xml -q 
-		 or, to build a specific module IFF no poms already exist:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; \
-			ant -f genpom.xml -q -DCOMPONENT=xulrunner
-		 or, to build a specific module and overwrite existing pom.xml files:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; \
-			ant -f genpom.xml -q -DCOMPONENT=common -Doverwrite.existing.pom.xml=true
-	-->
+	<!-- ****************************** Usage Instructions ****************************** -->
+	<target name="help" description="Usage Instructions">
+		<echo>
+To run this script in Eclipse:
+    Run As > Ant Build
+
+To run this script via commandline:
+    cd /home/nboldt/workspace36/jbosstools-modular_build; ant -f genpom.xml -q 
+
+or, to build a specific module IFF no poms already exist:
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+    ant -f genpom.xml -q -DCOMPONENT=xulrunner
+
+or, to build a specific module and overwrite existing pom.xml files:
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+    ant -f genpom.xml -q -DCOMPONENT=common -Doverwrite.existing.pom.xml=true
+</echo>
+	</target>
 
 	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
 		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
@@ -482,7 +492,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 					<matches string="${dir}" pattern=".+/tests/.+" />
 				</and>
 				<then>
-					<var name="artifactType" value="eclipse-test-plugin" />
+					<var name="artifactType" value="eclipse-plugin" />
+					<for param="testClassFile" delimiter=", ">
+						<path>
+							<fileset dir="${dir}" includes="${testClassFilesToInclude}" />
+						</path>
+						<sequential>
+							<var name="artifactType" value="eclipse-test-plugin" />
+						</sequential>
+					</for>
 				</then>
 			</elseif>
 			<else>
@@ -775,6 +793,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<property name="artifactType.as/tests/org.jboss.ide.eclipse.as.archives.integration.test"
 		          value="eclipse-test-plugin"
 		/>
+		<property name="artifactType.flow/tests/org.jboss.tools.flow.common.test" value="eclipse-plugin" />
+		<property name="artifactType.jbpm/tests/org.jboss.tools.flow.jpdl4.test" value="eclipse-plugin" />
 		<property name="artifactType.esb/plugins/org.jboss.tools.esb.core" value="eclipse-plugin" />
 		<property name="artifactType.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui" value="eclipse-plugin" />
 		<property name="artifactType.bpel/features/org.jboss.tools.bpel.sdk.feature" value="eclipse-feature" />
@@ -967,6 +987,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
 		${WORKINGDIR}/as/tests/org.jboss.ide.eclipse.as.archives.integration.test
 		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		${WORKINGDIR}/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui
+		${WORKINGDIR}/bpel/features/org.jboss.tools.bpel.sdk.feature
+		${WORKINGDIR}/bpel/plugins/org.eclipse.bpel.xpath10
+		${WORKINGDIR}/vpe/plugins/org.jboss.tools.vpe.ui.palette
+		${WORKINGDIR}/tests/features/org.jboss.tools.test.feature
+		${WORKINGDIR}/portlet/features/org.jboss.tools.portlet.test.feature
+		${WORKINGDIR}/jst/features/org.jboss.tools.jst.feature
+		${WORKINGDIR}/jst/features/org.jboss.tools.jst.web.tiles.feature
+		${WORKINGDIR}/flow/tests/org.jboss.tools.flow.common.test
+		${WORKINGDIR}/jbpm/tests/org.jboss.tools.flow.jpdl4.test
 		"
 		/>
 		<for param="dir" list="${dirs}" delimiter=", 
