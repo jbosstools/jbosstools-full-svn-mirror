@@ -48,6 +48,8 @@ or, to (re-)run tests w/o (re-)building first:
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
 
+Note: if tests stall on Linux, install Xvfb and this script will use that to run Maven.
+
 Here is the order in which components must be built:
 </echo>
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";">
@@ -58,7 +60,7 @@ Here is the order in which components must be built:
 	</target>
 
 	<target name="run"
-	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
+	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results, deploy"
 	/>
 
 	<!-- override for local build -->
@@ -327,10 +329,42 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
 				</ant>
-				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn</echo>
+
+				<!-- Use Xvfb wrapper for maven when invoking UI tests -->
+				<var name="mvnExe" value="mvn" />
+				<if>
+					<available file="/usr/bin/Xvfb" type="file" />
+					<then>
+						<if>
+							<not>
+								<available file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb"
+								           type="file"
+								/>
+							</not>
+							<then>
+								<echo file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb">#!/bin/bash
+if [[ -f /tmp/.X3-lock ]]; then 
+	kill -9 `cat /tmp/.X3-lock`
+	rm -fr /tmp/.X3-lock
+fi
+/usr/bin/Xvfb :3 -ac 2&gt;&amp;1 1&gt;/dev/null &amp; 
+DISPLAY=:3 /opt/maven3/bin/mvn $* 
+kill -9 `cat /tmp/.X3-lock`
+rm -fr /tmp/.X3-lock
+</echo>
+								<chmod perm="755"
+								       file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb"
+								/>
+							</then>
+						</if>
+						<var name="mvnExe" value="mvnWithXvfb" />
+					</then>
+				</if>
+
+				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}</echo>
 				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
 				<!-- 3 hr timeout = 10800000ms -->
-				<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvn"
+				<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}"
 				      dir="${WORKINGDIR}/@{COMPONENT}"
 				      failifexecutionfails="true"
 				      failonerror="true"
@@ -374,6 +408,9 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 	</target>
 
 	<target name="collect.all.test.results" unless="no.tests.run">
+		<var name="test.results.all" value="" />
+		<var name="test.results.errors.failures.skipped" value="" />
+
 		<!-- Parse this: <testsuite errors="0" skipped="0" tests="10" time="0.042" failures="0" name="org.jboss.tools.jmx.ui.JMXUIAllTests"> -->
 		<for param="testresultfile" delimiter=", 
 		">
@@ -414,8 +451,27 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 					</sequential>
 				</for>
-				<echo level="info">${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures} 
-</echo>
+				<if>
+					<or>
+						<not>
+							<equals arg1="${testsuite.skipped}" arg2="" />
+						</not>
+						<not>
+							<equals arg1="${testsuite.errors}" arg2="" />
+						</not>
+						<not>
+							<equals arg1="${testsuite.failures}" arg2="" />
+						</not>
+					</or>
+					<then>
+						<var name="test.results.errors.failures.skipped"
+						     value="${test.results.errors.failures.skipped}${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures}${line.separator}"
+						/>
+					</then>
+				</if>
+				<var name="test.results.all"
+				     value="${test.results.all}${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures}${line.separator}"
+				/>
 				<var name="testsuite.name" unset="true" />
 				<var name="testsuite.tests" unset="true" />
 				<var name="testsuite.time" unset="true" />
@@ -424,6 +480,30 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				<var name="testsuite.failures" unset="true" />
 			</sequential>
 		</for>
+		<echo level="verbose">-------------------------------------------------------
+ A L L   T E S T   R E S U L T S 
+-------------------------------------------------------
+${test.results.all}
+-------------------------------------------------------
+
+</echo>
+		<if>
+			<and>
+				<isset property="test.results.errors.failures.skipped" />
+				<not>
+					<equals arg1="${test.results.errors.failures.skipped}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<echo level="error">-------------------------------------------------------
+ T E S T   R E S U L T S 
+-------------------------------------------------------
+${test.results.errors.failures.skipped}
+-------------------------------------------------------
+
+</echo>
+			</then>
+		</if>
 	</target>
 
 
@@ -433,99 +513,57 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 	</target>
 
-	<target name="deploy">
-		<!-- TODO enable publishing to download.jboss.org or porkchop.jboss.com -->
-		<property name="DESTINATION.jbosstools" value="filemgmt.jboss.org/downloads_htdocs/tools/repository/" />
-		<property name="DESTINATION.jbds" value="/qa/services/http/binaries/RHDS/repository/" />
+	<!-- TODO: figure out why this fails with error: 
+			insecure -e option not allowed.
+			This account is restricted by rssh.
+			Allowed commands: scp sftp rsync
+	-->
+	<target name="deploy" if="isInHudson">
+		<!-- default destinations -->
+		<property name="DESTINATION.jbosstools" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository" />
+		<property name="DESTINATION.jbds" value="/qa/services/http/binaries/RHDS/repository" />
 
-		<echo level="debug">Promote build in ${sourceZipsDirActual} ...</echo>
-		<for param="aDir" list="${sourceZipsDirActual}" delimiter=", 
-">
-			<sequential>
-				<!-- rsync or copy build dir @{aDir} into ${targetZipsDir}/ -->
-				<if>
-					<available file="/usr/bin/rsync" type="file" />
-					<then>
-						<var name="rsyncCmd"
-						     value="/usr/bin/rsync -a${synchMethodParam} --exclude=eclipse/ @{aDir} ${targetZipsDir}/"
-						/>
-						<echo message="${rsyncCmd}" />
-						<exec executable="bash">
-							<arg line=" -c &quot;${rsyncCmd}&quot;" />
-						</exec>
-						<var name="rsyncCmd" unset="true" />
-					</then>
-					<else>
-						<propertyregex override="true"
-						               property="aBuildDir"
-						               defaultvalue="@{aDir}"
-						               input="@{aDir}"
-						               regexp=".+/([^/]+)"
-						               replace="\1"
-						/>
-						<echo>Copy ${aBuildDir} into ${targetZipsDir}/</echo>
-						<mkdir dir="${targetZipsDir}/${aBuildDir}" />
-						<copy todir="${targetZipsDir}/${aBuildDir}"
-						      includeemptydirs="true"
-						      preservelastmodified="true"
-						      failonerror="true"
-						>
-							<fileset dir="@{aDir}" excludes="eclipse/" />
-						</copy>
-					</else>
-				</if>
+		<!-- values for this deployment -->
+		<property name="deployDir" value="${DESTINATION.jbosstools}/SNAPSHOT" />
+		<property name="sourceDir" value="${WORKINGDIR}" />
+		<property name="synchMethodParam" value=" --delete" />
 
-				<!-- unpack update zip(s) -->
-				<if>
-					<and>
-						<isset property="targetUpdateDir" />
-						<not>
-							<equals arg1="${targetUpdateDir}" arg2="" />
-						</not>
-					</and>
-					<then>
-						<for param="anUpdateZip">
-							<path>
-								<fileset dir="@{aDir}" includes="*-Update-*.zip" />
-							</path>
-							<sequential>
-								<unzip dest="${targetUpdateDir}/"
-								       src="@{anUpdateZip}"
-								       overwrite="${unzipMethodParam}"
-								/>
-								<for param="subdir">
-									<path>
-										<dirset dir="${targetUpdateDir}/" />
-									</path>
-									<sequential>
-										<copy file="staticDropFiles/index.php" todir="@{subdir}" />
-									</sequential>
-								</for>
-							</sequential>
-						</for>
-					</then>
-				</if>
-			</sequential>
-		</for>
-		<!--
-		<get usetimestamp="true"
-		     dest="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar"
-		     src="${MAVEN_MIRROR}/maven-ant-tasks-2.1.0.jar"
-		/>
-		<taskdef resource="org/apache/maven/artifact/ant/antlib.xml">
-			<classpath>
-				<pathelement location="${COMMON_TOOLS}/maven-ant-tasks-2.1.0.jar" />
-			</classpath>
-		</taskdef>
-		<install-provider artifactId="wagon-ssh" version="1.0-beta-2"/>
-		<deploy>
-			
-			<remoteRepository url="scp://${DESTINATION}">
-				<authentication username="tools" privateKey="${user.home}/.ssh/id_rsa" />
-			</remoteRepository>
-			<pom refid="mypom" />
-		</deploy>
-		-->
+		<echo level="debug">Promote build in ${sourceDir} ...</echo>
+		<!-- rsync or scp build dir ${sourceDir} into ${deployDir}/ -->
+		<if>
+			<available file="/usr/bin/rsync" type="file" />
+			<then>
+				<var name="deployCmd"
+				     value="/usr/bin/rsync -arz --delete --include=*/*/*/target/ --include=*.xml --include=svn.info*.txt --include=build.cfg --exclude=eclipse/ ${sourceDir} ${deployDir}/"
+				/>
+			</then>
+			<elseif>
+				<available file="/usr/bin/scp" type="file" />
+				<then>
+					<var name="deployCmd" value="/usr/bin/scp -r ${sourceDir} ${deployDir}/" />
+				</then>
+			</elseif>
+			<else>
+				<fail>ERROR!
+Cannot deploy - please install scp or rsync on this server and try again.
+</fail>
+			</else>
+		</if>
+		<if>
+			<available file="${sourceDir}" type="dir" />
+			<then>
+				<echo message="${deployCmd}" />
+				<exec executable="bash">
+					<arg line=" -c &quot;${deployCmd}&quot;" />
+				</exec>
+			</then>
+			<else>
+				<fail>ERROR!
+Cannot deploy - sourceDir not found in 
+	${sourceDir}
+</fail>
+			</else>
+		</if>
 	</target>
 
 	<!-- ************************************ TESTS ************************************ -->
@@ -552,7 +590,6 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 	<target name="test.all">
 		<antcall target="test.get.sources.build.all" />
 		<antcall target="test.get.sources" />
-		<antcall target="test.deploy" />
 	</target>
 
 	<target name="test.get.sources.build.all"
@@ -714,10 +751,11 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<echo level="info">----------------------------------</echo>
 	</target>
 
-	<!-- TODO: fixme -->
-	<target name="test.deploy" depends="init, test.expected.values">
+	<!-- TODO: fixme: manual test; lacks something we can assert... maybe that deployDir exists? -->
+	<target name="test.deploy" depends="init">
 		<antcall target="deploy">
-			<param name="targetZipsDir" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository/" />
+			<param name="deployDir" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository/SNAPSHOT" />
+			<param name="sourceDir" value="${WORKINGDIR}/surefire-reports" />
 		</antcall>
 	</target>
 
