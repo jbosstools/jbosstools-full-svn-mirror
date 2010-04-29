@@ -27,28 +27,32 @@
 	<target name="help" description="Usage Instructions" depends="init">
 		<echo>
 To run this script in Eclipse:
-	Run As > Ant Build
+    Run As > Ant Build
 
 To run this script via commandline (build default modules + run tests):
-	cd /home/nboldt/workspace36/jbosstools-modular_build; ant
+    cd /home/nboldt/workspace36/jbosstools-modular_build; ant
 
 or, to build everything but not *run* the tests:
-	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="clean install -Dmaven.test.skip"
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+    ant -DMAVEN_FLAGS="clean install -Dmaven.test.skip"
 
 or, to build specific module(s): 
-	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+    ant -DCOMPONENTS=tests,common,flow,jbpm
 
 or, to rebuild even if sources have not changed:
-	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+    ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
 
 or, to (re-)run tests w/o (re-)building first:
-	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+    ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
 
 Here is the order in which components must be built:
 </echo>
-		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";" >
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";">
 			<sequential>
-				<echo message="    @{COMPONENT}" />
+				<echo message="    @{COMPONENT}," />
 			</sequential>
 		</for>
 	</target>
@@ -307,6 +311,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
   &lt;testcase time="0.001" classname="org.jboss.tools.NoTestsRun" name="NoTestsRun"/&gt;
 &lt;/testsuite&gt;
 </echo>
+				<property name="no.tests.run" value="true" />
 			</then>
 		</if>
 	</target>
@@ -337,9 +342,17 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<!-- <arg line="-o -Dmaven.test.skip" /> -->
 					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository" />
 				</exec>
-				<antcall target="collect.test.results">
-					<param name="COMPONENT" value="@{COMPONENT}" />
-				</antcall>
+				<!-- don't collect test results if there are no test results to collect! -->
+				<if>
+					<not>
+						<contains string="${MAVEN_FLAGS}" substring="-Dmaven.test.skip" />
+					</not>
+					<then>
+						<antcall target="collect.test.results">
+							<param name="COMPONENT" value="@{COMPONENT}" />
+						</antcall>
+					</then>
+				</if>
 			</sequential>
 		</for>
 		<now />
@@ -360,7 +373,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		</copy>
 	</target>
 
-	<target name="collect.all.test.results">
+	<target name="collect.all.test.results" unless="no.tests.run">
 		<!-- Parse this: <testsuite errors="0" skipped="0" tests="10" time="0.042" failures="0" name="org.jboss.tools.jmx.ui.JMXUIAllTests"> -->
 		<for param="testresultfile" delimiter=", 
 		">
