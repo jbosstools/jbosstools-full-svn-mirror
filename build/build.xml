@@ -5,16 +5,18 @@
 
 	<!-- set name of component(s) to build+test, IN ORDER -->
 	<property name="COMPONENTS"
-	          value="tests, common, 
-						flow, jbpm, 
-						jmx, archives, as, 
-						drools, bpel, smooks, freemarker, profiler, portlet, modeshape,
-						xulrunner, jst, vpe, jsf, 
-							esb, tptp, ws, 
-							cdi, struts, hibernatetools, seam, 
-								examples, birt, 
-								maven"
+	          value="
+tests,common;
+	flow,jbpm;
+	jmx,archives,as;
+	drools,bpel,smooks,freemarker,profiler,portlet;
+	xulrunner,jst,vpe,jsf;
+		esb,tptp,ws;
+		cdi,struts,hibernatetools,seam; 
+			examples,birt;
+			maven"
 	/>
+	<!-- TODO: add modeshape -->
 
 	<!-- svn root, including trunk or branch path -->
 	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build" />
@@ -23,21 +25,35 @@
 	<property name="maven.version" value="3.0-beta-1" />
 
 	<!-- ****************************** Usage Instructions ****************************** -->
+	<target name="help" description="Usage Instructions" depends="init">
+		<echo>
+To run this script in Eclipse:
+	Run As > Ant Build
 
-	<!-- To run this script in Eclipse:
-			Run As > Ant Build
-	-->
-	<!-- To run this script via commandline (build default modules & run tests):
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant
-		 or, to build everything but not *run* the tests:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="clean install -Dmaven.test.skip"
-		 or, to build specific module(s): 
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
-		 or, to rebuild even if sources have not changed:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
-		 or, to (re-)run tests w/o (re-)building first:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
-	-->
+To run this script via commandline (build default modules + run tests):
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant
+
+or, to build everything but not *run* the tests:
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DMAVEN_FLAGS="clean install -Dmaven.test.skip"
+
+or, to build specific module(s): 
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,flow,jbpm
+
+or, to rebuild even if sources have not changed:
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
+
+or, to (re-)run tests w/o (re-)building first:
+	cd /home/nboldt/workspace36/jbosstools-modular_build; ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
+
+Here is the order in which components must be built:
+</echo>
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";" >
+			<sequential>
+				<echo message="  @{COMPONENT}" />
+			</sequential>
+		</for>
+
+	</target>
 
 	<target name="run"
 	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
@@ -202,7 +218,7 @@
 
 		<!-- check for each component dir in ${WORKINGDIR}; if not found, fetch -->
 		<echo file="build.cfg" message="COMPONENTS.to.build = " />
-		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",; 
 	">
 			<sequential>
 				<if>
