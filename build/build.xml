@@ -152,6 +152,7 @@
 	</target>
 
 	<target name="get.sources" description="if sources not already on disk, fetch them">
+		<property name="clean.sources" value="false" />
 		<property name="svn.recurse" value="true" />
 
 		<!-- = = = = = = = = = = = = = = = = =
@@ -202,6 +203,12 @@
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=", 
 	">
 			<sequential>
+				<if>
+					<equals arg1="${clean.sources}" arg2="true" />
+					<then>
+						<delete dir="${WORKINGDIR}/@{COMPONENT}" includeemptydirs="true" quiet="true" />
+					</then>
+				</if>
 				<if>
 					<not>
 						<available file="${WORKINGDIR}/@{COMPONENT}" type="dir" />
