@@ -61,6 +61,7 @@ public class ODEDeployMultiPageEditor extends FormEditor implements
 	// Display this in title if no BPEL process files are found in current directory
 	private final static String NO_PROCESSES_FOUND = " *** No Processes Found *** ";
 	private boolean readOnly = false;
+	// https://jira.jboss.org/jira/browse/JBIDE-6230
 	// if BPEL processes were added or deleted, DD model is not in sync and needs to be saved 
 	private boolean modelInSync = true;
 	protected TDeployment deployDescriptor = null;
@@ -263,6 +264,9 @@ public class ODEDeployMultiPageEditor extends FormEditor implements
 				return true;
 			}
 		});
+		// https://jira.jboss.org/jira/browse/JBIDE-6230
+		// figure out which BPEL processes are missing from the workspace
+		// and remove them from the DD model
 		Vector<ProcessType> processesToDelete = new Vector<ProcessType>();
 		for(ProcessType pt : deployDescriptor.getProcess())
 		{
