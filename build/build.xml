@@ -63,6 +63,10 @@ Here is the order in which components must be built:
 	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
 	/>
 
+	<target name="test" description="run tests w/o first getting sources + list of components to build; assumes an upstream build job was already run"
+	        depends="init, get.bootstrap.scripts, run.build, collect.all.test.results"
+	/>
+
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
 		<or>
