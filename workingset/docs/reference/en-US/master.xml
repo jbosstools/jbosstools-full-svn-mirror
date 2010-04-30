@@ -3,6 +3,9 @@
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
 [<!ENTITY intro SYSTEM "intro.xml">
+<!ENTITY references SYSTEM "references.xml">
+<!ENTITY tasks SYSTEM "tasks.xml">
+
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">
@@ -57,5 +60,7 @@
     
     <toc/> 
     &intro;
+    &tasks;
+    &references;
     
 </book>    
