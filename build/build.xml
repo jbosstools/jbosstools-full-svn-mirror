@@ -398,7 +398,7 @@ rm -fr /tmp/.X3-lock
 				</if>
 			</sequential>
 		</for>
-		<now>@{COMPONENT} build done.</now>
+		<now>Builds done</now>
 	</target>
 
 	<target name="collect.test.results">
