@@ -12,10 +12,12 @@ package org.jboss.tools.vpe.editor.mozilla;
 
 import javax.swing.event.EventListenerList;
 
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaAfterPaintListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaContextMenuListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaKeyListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaMouseListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaScrollListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -202,6 +204,23 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 	public void removeSelectionListener(MozillaSelectionListener listener) {
 		listeners.remove(MozillaSelectionListener.class, listener);
 	}
+	
+	public void addAfterPaintListener(MozillaAfterPaintListener listener) {
+		listeners.add(MozillaAfterPaintListener.class, listener);
+	}
+
+	public void removeAfterPaintListener(MozillaAfterPaintListener listener) {
+		listeners.remove(MozillaAfterPaintListener.class, listener);
+	}
+	
+	public void addScrollListener(MozillaScrollListener listener) {
+		listeners.add(MozillaScrollListener.class, listener);
+	}
+
+	public void removeScrollListener(MozillaScrollListener listener) {
+		listeners.remove(MozillaScrollListener.class, listener);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -292,6 +311,16 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			for (MozillaDndListener listener : listeners.getListeners(
 					MozillaDndListener.class)) {
 				listener.dragOver(domEvent);
+			}
+		} else if (SCROLL.equals(eventType)) {
+			for (MozillaScrollListener listener : listeners.getListeners(
+					MozillaScrollListener.class)) {
+				listener.editorScrolled(domEvent);
+			}
+		} else if (MOZAFTERPAINT.equals(eventType)) {
+			for (MozillaAfterPaintListener listener : listeners.getListeners(
+					MozillaAfterPaintListener.class)) {
+				listener.afterPaint(domEvent);
 			}
 		}
 	}

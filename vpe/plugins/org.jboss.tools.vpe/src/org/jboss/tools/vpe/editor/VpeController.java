@@ -97,10 +97,12 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.VpeMenuCreator;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEventAdapter;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaAfterPaintListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaContextMenuListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaKeyListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaMouseListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
+import org.jboss.tools.vpe.editor.mozilla.listener.MozillaScrollListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
@@ -147,7 +149,8 @@ public class VpeController implements INodeAdapter,
 		ResourceReferenceListListener, ISelectionChangedListener,
 		IVisualController, MozillaMouseListener, MozillaKeyListener,
 		MozillaTooltipListener, MozillaSelectionListener,
-		MozillaContextMenuListener, MozillaResizeListener {
+		MozillaContextMenuListener, MozillaResizeListener,
+		MozillaAfterPaintListener, MozillaScrollListener {
 
 	private boolean visualEditorVisible = true;
 	private boolean synced = true;
@@ -458,6 +461,8 @@ public class VpeController implements INodeAdapter,
 				mozillaEventAdapter.addKeyListener(this);
 				mozillaEventAdapter.addMouseListener(this);
 				mozillaEventAdapter.addSelectionListener(this);
+				mozillaEventAdapter.addAfterPaintListener(this);
+				mozillaEventAdapter.addScrollListener(this);
 			}
 		}
 	}
@@ -475,6 +480,8 @@ public class VpeController implements INodeAdapter,
 				mozillaEventAdapter.removeKeyListener(this);
 				mozillaEventAdapter.removeMouseListener(this);
 				mozillaEventAdapter.removeSelectionListener(this);
+				mozillaEventAdapter.removeAfterPaintListener(this);
+				mozillaEventAdapter.removeScrollListener(this);
 			}
 		}
 	}
@@ -1277,6 +1284,7 @@ public class VpeController implements INodeAdapter,
 	}
 
 	public void mouseMove(nsIDOMMouseEvent mouseEvent) {
+		onRefresh();
 //		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 //		if (visualNode != null) {
 //			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
@@ -1430,6 +1438,14 @@ public class VpeController implements INodeAdapter,
 		}
 		visualBuilder.resize(element, constrains, top, left, width, height);
 		sourceSelectionChanged();
+	}
+	
+	public void afterPaint(nsIDOMEvent domEvent) {
+		onRefresh();
+	}
+	
+	public void editorScrolled(nsIDOMEvent domEvent) {
+		onRefresh();
 	}
 
 	/**
