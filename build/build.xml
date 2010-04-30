@@ -187,7 +187,7 @@ Here is the order in which components must be built:
 			<attribute name="op" />
 			<sequential>
 				<!-- check out or update -->
-				<now/>
+				<now>Fetch @{COMPONENT}</now>
 				<if>
 					<equals arg1="@{op}" arg2="up" />
 					<then>
@@ -330,7 +330,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
-				<now>@{COMPONENT}</now>
+				<now>Build @{COMPONENT}</now>
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
@@ -398,7 +398,7 @@ rm -fr /tmp/.X3-lock
 				</if>
 			</sequential>
 		</for>
-		<now />
+		<now>@{COMPONENT} build done.</now>
 	</target>
 
 	<target name="collect.test.results">
