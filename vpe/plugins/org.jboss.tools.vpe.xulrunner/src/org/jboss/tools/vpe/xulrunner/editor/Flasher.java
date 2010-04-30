@@ -8,6 +8,8 @@ import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.xpcom.Mozilla;
 
 /**
+ * Class responsible for drawing borders around visual elements.
+ * 
  * @author Yahor Radtsevich (yradtsevich): extracted the code from XulRunnerEditor
  *
  */
