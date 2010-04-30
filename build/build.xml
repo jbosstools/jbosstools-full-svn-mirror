@@ -126,12 +126,13 @@ Here is the order in which components must be built:
 
 	<target name="init" depends="local">
 		<macrodef name="now">
+			<text name="info" optional="true" />
 			<sequential>
 				<var name="now" unset="true" />
 				<tstamp>
 					<format property="now" pattern="hh:mm:ss" />
 				</tstamp>
-				<echo>${now}</echo>
+				<echo>${now} @{info}</echo>
 			</sequential>
 		</macrodef>
 
@@ -186,7 +187,7 @@ Here is the order in which components must be built:
 			<attribute name="op" />
 			<sequential>
 				<!-- check out or update -->
-				<now />
+				<now/>
 				<if>
 					<equals arg1="@{op}" arg2="up" />
 					<then>
@@ -329,7 +330,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
-				<now />
+				<now>@{COMPONENT}</now>
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
@@ -765,6 +766,11 @@ Cannot deploy - sourceDir not found in
 			<param name="deployDir" value="tools@filemgmt.jboss.org:/downloads_htdocs/tools/repository/SNAPSHOT" />
 			<param name="sourceDir" value="${WORKINGDIR}/surefire-reports" />
 		</antcall>
+	</target>
+
+	<target name="test.now" depends="init">
+		<now>foobar!</now>
+		<now/>
 	</target>
 
 </project>
