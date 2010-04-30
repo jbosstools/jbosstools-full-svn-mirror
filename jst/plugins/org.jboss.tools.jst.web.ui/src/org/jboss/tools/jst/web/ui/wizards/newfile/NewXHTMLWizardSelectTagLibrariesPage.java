@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.ui.wizard.newfile;
+package org.jboss.tools.jst.web.ui.wizards.newfile;
 
 import org.eclipse.jface.wizard.IWizard;
 import org.jboss.tools.common.meta.action.impl.SpecialWizardSupport;

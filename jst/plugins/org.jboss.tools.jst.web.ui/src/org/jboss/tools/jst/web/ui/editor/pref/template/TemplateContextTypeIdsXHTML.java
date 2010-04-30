@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.ui.editor.pref.template;
+package org.jboss.tools.jst.web.ui.editor.pref.template;
 
 /**
  * @author mareshkau

@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.ui.wizard.newfile;
+package org.jboss.tools.jst.web.ui.wizards.newfile;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -33,15 +32,13 @@ import org.eclipse.ui.ide.IDE;
 import org.eclipse.wst.html.ui.internal.wizard.NewHTMLWizard;
 import org.eclipse.wst.sse.core.internal.encoding.CommonEncodingPreferenceNames;
 import org.eclipse.wst.sse.core.utils.StringUtils;
-import org.jboss.tools.common.meta.action.XEntityData;
 import org.jboss.tools.common.meta.action.impl.SpecialWizardSupport;
 import org.jboss.tools.common.model.XModelException;
 import org.jboss.tools.common.model.ui.ModelUIPlugin;
 import org.jboss.tools.common.model.ui.wizard.newfile.NewXHTMLFileWizard;
-import org.jboss.tools.common.model.ui.wizards.standard.DefaultStandardStep;
-import org.jboss.tools.jsf.ui.JsfUIMessages;
-import org.jboss.tools.jsf.ui.JsfUiPlugin;
 import org.jboss.tools.jst.web.model.handlers.CreateJSPFileSupport;
+import org.jboss.tools.jst.web.ui.Messages;
+import org.jboss.tools.jst.web.ui.WebUiPlugin;
 
 /**
  * @author mareshkau
@@ -64,8 +61,8 @@ public class NewXHTMLWizard extends NewHTMLWizard{
 		super.addPages();
 		
 		this.fNewFilePage = (WizardNewFileCreationPage) getPage(NewXHTMLWizard.HTMLWizardNewFileCreationPage);
-		this.fNewFilePage.setTitle(JsfUIMessages.UI_WIZARD_XHTML_NEW_TITLE);
-		this.fNewFilePage.setDescription(JsfUIMessages.UI_WIZARD_XHTML_NEW_Description);
+		this.fNewFilePage.setTitle(Messages.UI_WIZARD_XHTML_NEW_TITLE);
+		this.fNewFilePage.setDescription(Messages.UI_WIZARD_XHTML_NEW_Description);
 		
 		this.fNewFileTemplatesPage = new NewXHTMLTemplatesWizardPage();
 		addPage(this.fNewFileTemplatesPage);
@@ -75,7 +72,7 @@ public class NewXHTMLWizard extends NewHTMLWizard{
 	@Override
 	public void init(IWorkbench aWorkbench, IStructuredSelection aSelection) {
 		super.init(aWorkbench, aSelection);
-		setWindowTitle(JsfUIMessages.UI_WIZARD_XHTML_NEW_TITLE);
+		setWindowTitle(Messages.UI_WIZARD_XHTML_NEW_TITLE);
 		setNewXHTMLFileWizard(new NewXHTMLFileWizard());
 		getNewXHTMLFileWizard().init(aWorkbench, aSelection);
 	}
@@ -123,12 +120,12 @@ public class NewXHTMLWizard extends NewHTMLWizard{
 			try {
 				templateString=((CreateJSPFileSupport)getNewXHTMLFileWizard().getFileContext().getSupport()).addTaglibs(templateString);
 			} catch (IOException ex) {
-				JsfUiPlugin.getDefault().logWarning("Problems with adding taglibs",ex); //$NON-NLS-1$
+				WebUiPlugin.getDefault().logWarning("Problems with adding taglibs",ex); //$NON-NLS-1$
 			}
 			if (templateString != null) {
 				templateString = applyLineDelimiter(file, templateString);
 				// determine the encoding for the new file
-				Preferences preference = JsfUiPlugin.getDefault().getPluginPreferences();
+				Preferences preference = WebUiPlugin.getDefault().getPluginPreferences();
 				String charSet = preference.getString(CommonEncodingPreferenceNames.OUTPUT_CODESET);
 
 				try {
@@ -149,7 +146,7 @@ public class NewXHTMLWizard extends NewHTMLWizard{
 					inputStream.close();
 				}
 				catch (Exception e) {
-					JsfUiPlugin.getDefault().logWarning("Could not create contents for new HTML file", e); //$NON-NLS-1$
+					WebUiPlugin.getDefault().logWarning("Could not create contents for new HTML file", e); //$NON-NLS-1$
 				}
 			}
 
@@ -177,7 +174,7 @@ public class NewXHTMLWizard extends NewHTMLWizard{
 						IDE.openEditor(page, file, true);
 					}
 					catch (PartInitException e) {
-						JsfUiPlugin.getDefault().logError(e.getMessage(), e);
+						WebUiPlugin.getDefault().logError(e.getMessage(), e);
 					}
 				}
 			});
@@ -187,7 +184,7 @@ public class NewXHTMLWizard extends NewHTMLWizard{
 	 * @return the newXHTMLFileWizard
 	 */
 	private NewXHTMLFileWizard getNewXHTMLFileWizard() {
-		return newXHTMLFileWizard;
+		return this.newXHTMLFileWizard;
 	}
 	/**
 	 * @param newXHTMLFileWizard the newXHTMLFileWizard to set

@@ -8,10 +8,10 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.ui.editor.pref.template;
+package org.jboss.tools.jst.web.ui.editor.pref.template;
 
 import org.eclipse.wst.html.ui.internal.preferences.ui.HTMLTemplatePreferencePage;
-import org.jboss.tools.jsf.ui.JsfUiPlugin;
+import org.jboss.tools.jst.web.ui.WebUiPlugin;
 
 /**
  * @author mareshkau
@@ -20,10 +20,10 @@ import org.jboss.tools.jsf.ui.JsfUiPlugin;
 public class VPETemplatePreferencePage extends HTMLTemplatePreferencePage {
 
 	public VPETemplatePreferencePage() {
-		JsfUiPlugin jsfUiPlugin = JsfUiPlugin.getDefault();
-		setPreferenceStore(jsfUiPlugin.getPreferenceStore());
-		setTemplateStore(jsfUiPlugin.getTemplateStore());
-		setContextTypeRegistry(jsfUiPlugin.getTemplateContextRegistry());
+		WebUiPlugin webUiPlugin = WebUiPlugin.getDefault();
+		setPreferenceStore(webUiPlugin.getPreferenceStore());
+		setTemplateStore(webUiPlugin.getTemplateStore());
+		setContextTypeRegistry(webUiPlugin.getTemplateContextRegistry());
 	}
 	
 	/* (non-Javadoc)
@@ -32,7 +32,7 @@ public class VPETemplatePreferencePage extends HTMLTemplatePreferencePage {
 	@Override
 	public boolean performOk() {
   	  boolean ok = super.performOk();
-  	  JsfUiPlugin.getDefault().savePluginPreferences();
+  	  WebUiPlugin.getDefault().savePluginPreferences();
 	  return ok;
 	}
 

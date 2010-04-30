@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.ui.editor.pref.template.contentassist;
+package org.jboss.tools.jst.web.ui.editor.pref.template.contentassist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.core.internal.provisional.text.ITextRegion;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
-import org.jboss.tools.jsf.ui.JsfUiPlugin;
-import org.jboss.tools.jsf.ui.editor.pref.template.TemplateContextTypeIdsXHTML;
+import org.jboss.tools.jst.web.ui.WebUiPlugin;
+import org.jboss.tools.jst.web.ui.editor.pref.template.TemplateContextTypeIdsXHTML;
 import org.w3c.dom.Node;
 
 /**
@@ -186,7 +186,7 @@ public class XHTMLContentAssistProcessor implements IContentAssistProcessor,
 
 	protected IPreferenceStore getPreferenceStore() {
 		if (this.fPreferenceStore == null)
-			this.fPreferenceStore = JsfUiPlugin.getDefault().getPreferenceStore();
+			this.fPreferenceStore = WebUiPlugin.getDefault().getPreferenceStore();
 
 		return this.fPreferenceStore;
 	}

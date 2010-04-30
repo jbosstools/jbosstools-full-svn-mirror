@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.ui.editor.pref.template.contentassist;
+package org.jboss.tools.jst.web.ui.editor.pref.template.contentassist;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,7 @@ import org.eclipse.jface.text.templates.TemplateProposal;
 import org.eclipse.jface.text.templates.persistence.TemplateStore;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wst.html.ui.internal.contentassist.ReplaceNameTemplateContext;
-import org.jboss.tools.jsf.ui.JsfUiPlugin;
+import org.jboss.tools.jst.web.ui.WebUiPlugin;
 
 
 /**
@@ -142,7 +142,7 @@ public class XHTMLTemplateCompletionProcessor  extends TemplateCompletionProcess
 //	}
 
 	private ContextTypeRegistry getTemplateContextRegistry() {
-		return JsfUiPlugin.getDefault().getTemplateContextRegistry();
+		return WebUiPlugin.getDefault().getTemplateContextRegistry();
 	}
 
 	protected Template[] getTemplates(String contextTypeId) {
@@ -156,7 +156,7 @@ public class XHTMLTemplateCompletionProcessor  extends TemplateCompletionProcess
 	}
 
 	private TemplateStore getTemplateStore() {
-		return JsfUiPlugin.getDefault().getTemplateStore();
+		return WebUiPlugin.getDefault().getTemplateStore();
 	}
 
 	void setContextType(String contextTypeId) {

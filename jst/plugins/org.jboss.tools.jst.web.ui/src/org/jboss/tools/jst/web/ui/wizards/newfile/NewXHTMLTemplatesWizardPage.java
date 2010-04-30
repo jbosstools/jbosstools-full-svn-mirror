@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.ui.wizard.newfile;
+package org.jboss.tools.jst.web.ui.wizards.newfile;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.PreferenceDialog;
@@ -63,9 +63,9 @@ import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.ui.StructuredTextViewerConfiguration;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.sse.ui.internal.provisional.style.LineStyleProvider;
-import org.jboss.tools.jsf.ui.JsfUIMessages;
-import org.jboss.tools.jsf.ui.JsfUiPlugin;
-import org.jboss.tools.jsf.ui.editor.pref.template.TemplateContextTypeIdsXHTML;
+import org.jboss.tools.jst.web.ui.Messages;
+import org.jboss.tools.jst.web.ui.WebUiPlugin;
+import org.jboss.tools.jst.web.ui.editor.pref.template.TemplateContextTypeIdsXHTML;
 
 /**
  * Copied from NewHTMLTemplatesWizardPage, because the class is internal and not provide possibility 
@@ -148,8 +148,8 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 	private Button fUseTemplateButton;
 
 	public NewXHTMLTemplatesWizardPage() {
-		super("NewXHTMLTemplatesWizardPage", JsfUIMessages.NewXHTMLTemplatesWizardPage_0, null); //$NON-NLS-1$
-		setDescription(JsfUIMessages.NewXHTMLTemplatesWizardPage_0);
+		super("NewXHTMLTemplatesWizardPage", Messages.NewXHTMLTemplatesWizardPage_0, null); //$NON-NLS-1$
+		setDescription(Messages.NewXHTMLTemplatesWizardPage_0);
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 
 		// create checkbox for user to use HTML Template
 		fUseTemplateButton = new Button(parent, SWT.CHECK);
-		fUseTemplateButton.setText(JsfUIMessages.NewXHTMLTemplatesWizardPage_4);
+		fUseTemplateButton.setText(Messages.NewXHTMLTemplatesWizardPage_4);
 		GridData data = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 		fUseTemplateButton.setLayoutData(data);
 		fUseTemplateButton.addSelectionListener(new SelectionAdapter() {
@@ -231,7 +231,7 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 		innerParent.setLayoutData(gd);
 
 		Label label = new Label(innerParent, SWT.NONE);
-		label.setText(JsfUIMessages.NewXHTMLTemplatesWizardPage_7);
+		label.setText(Messages.NewXHTMLTemplatesWizardPage_7);
 		data = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 		label.setLayoutData(data);
 
@@ -249,10 +249,10 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 		table.setLayout(tableLayout);
 
 		TableColumn column1 = new TableColumn(table, SWT.NONE);
-		column1.setText(JsfUIMessages.NewXHTMLTemplatesWizardPage_2);
+		column1.setText(Messages.NewXHTMLTemplatesWizardPage_2);
 
 		TableColumn column2 = new TableColumn(table, SWT.NONE);
-		column2.setText(JsfUIMessages.NewXHTMLTemplatesWizardPage_3);
+		column2.setText(Messages.NewXHTMLTemplatesWizardPage_3);
 
 		fTableViewer = new TableViewer(table);
 		fTableViewer.setLabelProvider(new TemplateLabelProvider());
@@ -285,12 +285,12 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 		// create viewer that displays currently selected template's contents
 		fPatternViewer = doCreateViewer(parent);
 
-		fTemplateStore = JsfUiPlugin.getDefault().getTemplateStore();
+		fTemplateStore = WebUiPlugin.getDefault().getTemplateStore();
 		fTableViewer.setInput(fTemplateStore);
 
 		// Create linked text to just to templates preference page
 		Link link = new Link(parent, SWT.NONE);
-		link.setText(JsfUIMessages.NewXHTMLTemplatesWizardPage_6);
+		link.setText(Messages.NewXHTMLTemplatesWizardPage_6);
 		data = new GridData(SWT.END, SWT.FILL, true, false, 2, 1);
 		link.setLayoutData(data);
 		link.addSelectionListener(new SelectionAdapter() {
@@ -339,7 +339,7 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 
 	private SourceViewer doCreateViewer(Composite parent) {
 		Label label = new Label(parent, SWT.NONE);
-		label.setText(JsfUIMessages.NewXHTMLTemplatesWizardPage_5);
+		label.setText(Messages.NewXHTMLTemplatesWizardPage_5);
 		GridData data = new GridData();
 		data.horizontalSpan = 2;
 		label.setLayoutData(data);
@@ -417,7 +417,7 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 
 		Template template = getSelectedTemplate();
 		if (template != null) {
-			TemplateContextType contextType = JsfUiPlugin.getDefault().getTemplateContextRegistry().getContextType(TemplateContextTypeIdsXHTML.NEW);
+			TemplateContextType contextType = WebUiPlugin.getDefault().getTemplateContextRegistry().getContextType(TemplateContextTypeIdsXHTML.NEW);
 			IDocument document = new Document();
 			TemplateContext context = new DocumentTemplateContext(contextType, document, 0, 0);
 			try {
@@ -425,7 +425,7 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 				templateString = buffer.getString();
 			}
 			catch (Exception e) {
-				JsfUiPlugin.getDefault().logWarning("Could not create template for new html", e); //$NON-NLS-1$
+				WebUiPlugin.getDefault().logWarning("Could not create template for new html", e); //$NON-NLS-1$
 			}
 		}
 
@@ -443,7 +443,7 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 	 * Load the last template name used in New HTML File wizard.
 	 */
 	private void loadLastSavedPreferences() {
-		String templateName = JsfUiPlugin.getDefault().getPreferenceStore().getString(HTMLUIPreferenceNames.NEW_FILE_TEMPLATE_NAME);
+		String templateName = WebUiPlugin.getDefault().getPreferenceStore().getString(HTMLUIPreferenceNames.NEW_FILE_TEMPLATE_NAME);
 		if (templateName == null || templateName.length() == 0) {
 			fLastSelectedTemplateName = ""; //$NON-NLS-1$
 			fUseTemplateButton.setSelection(false);
@@ -466,8 +466,8 @@ public class NewXHTMLTemplatesWizardPage extends WizardPage {
 			templateName = template.getName();
 		}
 
-		JsfUiPlugin.getDefault().getPreferenceStore().setValue(HTMLUIPreferenceNames.NEW_FILE_TEMPLATE_NAME, templateName);
-		JsfUiPlugin.getDefault().savePluginPreferences();
+		WebUiPlugin.getDefault().getPreferenceStore().setValue(HTMLUIPreferenceNames.NEW_FILE_TEMPLATE_NAME, templateName);
+		WebUiPlugin.getDefault().savePluginPreferences();
 	}
 
 	/**
