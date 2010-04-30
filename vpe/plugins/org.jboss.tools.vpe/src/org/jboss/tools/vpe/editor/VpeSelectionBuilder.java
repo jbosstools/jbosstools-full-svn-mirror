@@ -995,7 +995,7 @@ if (visualAnchorContainer == null || visualFocusContainer == null) {
 	
 	void setVisualElementSelection(nsIDOMElement visualElement) {
 		nsISelection selection = visualSelectionController.getSelection(nsISelectionController.SELECTION_NORMAL);
-		visualElement.removeAttribute(XulRunnerEditor.VPEFLASHERCOLORATTRIBUTE);
+		visualElement.removeAttribute(XulRunnerEditor.VPE_INVISIBLE_ELEMENT);
 		nsIDOMNode visualParent = visualElement.getParentNode();
 		int offset = (int) VisualDomUtil.getOffset(visualElement);
 		selection.removeAllRanges();

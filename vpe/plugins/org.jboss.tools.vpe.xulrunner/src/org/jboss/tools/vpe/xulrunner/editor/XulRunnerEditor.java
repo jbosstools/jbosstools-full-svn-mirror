@@ -13,7 +13,6 @@ package org.jboss.tools.vpe.xulrunner.editor;
 
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -27,7 +26,6 @@ import org.jboss.tools.vpe.xulrunner.BrowserPlugin;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
-import org.mozilla.interfaces.inIFlasher;
 import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIClipboardDragDropHookList;
 import org.mozilla.interfaces.nsIComponentManager;
@@ -47,7 +45,6 @@ import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITooltipListener;
 import org.mozilla.interfaces.nsITransferable;
-import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
 /**
@@ -64,29 +61,22 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	/** IXulRunnerVpeResizer */
 	private IXulRunnerVpeResizer xulRunnerVpeResizer;
 
+	
 	/**
 	 * color which used for highlight elements which user can see, blue color
 	 */
-	public static final String flasherVisialElementColor = "#0000ff"; //$NON-NLS-1$
+	private static final String FLASHER_VISUAL_ELEMENT_COLOR = "#0000ff"; //$NON-NLS-1$
 
 	/**
 	 * color which used for highlight parent elements for elements which user,
 	 * red color can't see.
 	 */
-	public static final String flasherHiddentElementColor = "#ff0000"; //$NON-NLS-1$
-
-	// added by Maksim Areshkau as element for which we
-	// have drowed border. When we draw new border,
-	// we should remove old one;
-	private nsIDOMElement lastBorderedElement;
-	private static final String INVISIBLE_ELEMENT_BORDER = "border: 2px solid red !important;";//$NON-NLS-1$
-	private static final String VISIBLE_ELEMENT_BORDER = "border: 2px solid blue !important;";//$NON-NLS-1$
-	private static final String PREV_STYLE_ATTR_NAME = "oldstyle";//$NON-NLS-1$
+	private static final String FLASHER_HIDDEN_ELEMENT_COLOR = "#ff0000"; //$NON-NLS-1$
 
 	/**
 	 * Contains name of attribute for inIFLasher drawing
 	 */
-	public static String VPEFLASHERCOLORATTRIBUTE = "vpeFlasherColorAttribute"; //$NON-NLS-1$
+	public static String VPE_INVISIBLE_ELEMENT = "vpeInvisibleElement"; //$NON-NLS-1$
 
 	public static final String TRANS_FLAVOR_kHTMLMime = "text/html"; //$NON-NLS-1$
 	public static final String TRANS_FLAVOR_kURLDataMime = "text/x-moz-url-data"; //$NON-NLS-1$
@@ -98,7 +88,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	/**
 	 * xpcom flasher component which used to draw lines
 	 */
-	private inIFlasher iFlasher;
+	private Flasher flasher;
 	private nsIDocShell docShell = null;
 
 	/**
@@ -111,7 +101,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	/**
 	 * Contains attribute name for style
 	 */
-	private static final String STYLE_ATTR = "style"; //$NON-NLS-1$
+	public static final String STYLE_ATTR = "style"; //$NON-NLS-1$
 
 	// private nsIDOMElement lastSelectedElement;
 	private nsIDOMNode lastSelectedNode;
@@ -385,7 +375,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	public void setSelectionRectangle(nsIDOMNode node, int resizerConstrains,
 			boolean scroll) {
-		if (getIFlasher() == null) {
+		if (getFlasher() == null) {
 
 			return;
 		}
@@ -458,24 +448,22 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				scrollToElement(element);
 				scrollRegtangleFlag = true;
 			}
-			if (checkVisability(element)) {
 
-				if ((element.getAttribute(VPEFLASHERCOLORATTRIBUTE) == null)
-						|| (!element.getAttribute(VPEFLASHERCOLORATTRIBUTE)
-								.equals(flasherHiddentElementColor))) {
+			if (checkVisibility(element)) {
+				if ((element.getAttribute(VPE_INVISIBLE_ELEMENT) == null)
+						|| (!element.getAttribute(VPE_INVISIBLE_ELEMENT)
+								.equals(Boolean.TRUE.toString()))) {
 
-					getIFlasher().setColor(flasherVisialElementColor);
+					getFlasher().setColor(FLASHER_VISUAL_ELEMENT_COLOR);
 				} else {
-					getIFlasher().setColor(flasherHiddentElementColor);
+					getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
 				}
 				drawElementOutline(element);
 			} else {
-
-				getIFlasher().setColor(flasherHiddentElementColor);
+				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
 				nsIDOMElement domElement = findVisbleParentElement(element);
 
 				if (domElement != null) {
-
 					drawElementOutline(domElement);
 				}
 			}
@@ -498,16 +486,12 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	/**
 	 * @return the iFlasher
 	 */
-	private inIFlasher getIFlasher() {
+	private Flasher getFlasher() {
 
-		if (iFlasher == null) {
-			nsIServiceManager serviceManager = Mozilla.getInstance()
-					.getServiceManager();
-			iFlasher = (inIFlasher) serviceManager.getServiceByContractID(
-					XPCOM.IN_FLASHER_CONTRACTID, inIFlasher.INIFLASHER_IID);
-			iFlasher.setThickness(2);
+		if (flasher == null) {
+			flasher = new Flasher();
 		}
-		return iFlasher;
+		return flasher;
 	}
 
 	private IXulRunnerVpeResizer getIXulRunnerVpeResizer() {
@@ -519,19 +503,14 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 
 	/**
-	 * Function created for checking if user can see element or not. Element
-	 * doesn't shows in VPE if it's has 'display:none;' attribute in style.
+	 * Function created for checking if the user can see element or not. Element
+	 * isn't shown in VPE if it has 'display:none;' attribute in style.
 	 * 
-	 * @param node
-	 *            for checking it's visability
-	 * @param iFlasher
-	 *            flasher which used for drawning border for elements adn in
-	 *            which was setted color in depends of visability of element
-	 * 
-	 * @return false for hiddent elements and true for visble elements
+	 * @param node node to check its visibility
+	 * @return {@code false} for hidden elements and {@code true}
+	 * for visible elements
 	 */
-	private boolean checkVisability(nsIDOMNode node) {
-
+	private boolean checkVisibility(nsIDOMNode node) {
 		nsIDOMElement domElement;
 		try {
 
@@ -569,8 +548,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			// if parent node isn't nsIDOMElement just return null;
 			return null;
 		}
-		while (parentElement != null && !checkVisability(parentElement)) {
-			if (checkVisability(parentElement)) {
+		while (parentElement != null && !checkVisibility(parentElement)) {
+			if (checkVisibility(parentElement)) {
 
 				return parentElement;
 			} else {
@@ -621,31 +600,31 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 		// ((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(false);
 
-		if (getIFlasher() != null && getLastSelectedElement() != null) {
+		if (getLastSelectedElement() != null) {
 			if (scrollRegtangleFlag) {
 				scrollRegtangleFlag = false;
 
 				scrollToElement(getLastSelectedElement());
 			}
 			// checks visability of element
-			if (checkVisability(getLastSelectedElement())) {
+			if (checkVisibility(getLastSelectedElement())) {
 
 				if ((getLastSelectedElement().getAttribute(
-						VPEFLASHERCOLORATTRIBUTE) == null)
+						VPE_INVISIBLE_ELEMENT) == null)
 						|| (!getLastSelectedElement().getAttribute(
-								VPEFLASHERCOLORATTRIBUTE).equals(
-								flasherHiddentElementColor))) {
+								VPE_INVISIBLE_ELEMENT).equals(
+										Boolean.TRUE.toString()))) {
 
-					getIFlasher().setColor(flasherVisialElementColor);
+					getFlasher().setColor(FLASHER_VISUAL_ELEMENT_COLOR);
 				} else {
 
-					getIFlasher().setColor(flasherHiddentElementColor);
+					getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
 				}
 
 				drawElementOutline(getLastSelectedElement());
 			} else {
 
-				getIFlasher().setColor(flasherHiddentElementColor);
+				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
 				nsIDOMElement domElement = findVisbleParentElement(getLastSelectedElement());
 
 				if (domElement != null) {
@@ -675,8 +654,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 *            -element to which we should scroll
 	 */
 	private void scrollToElement(nsIDOMElement element) {
-
-		getIFlasher().scrollElementIntoView(element);
+		getFlasher().scrollElementIntoView(element);
 	}
 
 	/**
@@ -718,40 +696,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 *            arround which border will be shown
 	 * 
 	 */
-	private void drawElementOutline(nsIDOMElement domElement) {
-		// fix for JBIDE-3969
-		// if(Platform.OS_MACOSX.equals(Platform.getOS())&&hasSelectInParenNodes(domElement.getParentNode()))
-		// {
-		// return;
-		// }
-		if (Platform.OS_MACOSX.equals(Platform.getOS())) {
-			// restore style for previously bordered element
-			if (this.lastBorderedElement != null
-					&& this.lastBorderedElement.getAttribute(STYLE_ATTR) != null) {
-				String style = this.lastBorderedElement
-						.getAttribute(PREV_STYLE_ATTR_NAME);
-				this.lastBorderedElement.removeAttribute(PREV_STYLE_ATTR_NAME);
-				this.lastBorderedElement.setAttribute(STYLE_ATTR, style);
-			}
-
-			// save style for early bordered element
-			String oldstyle = domElement.getAttribute(STYLE_ATTR);
-			if (flasherHiddentElementColor.equals(getIFlasher().getColor())) {
-				domElement.setAttribute(STYLE_ATTR, domElement
-						.getAttribute(STYLE_ATTR)
-						+ ';' + XulRunnerEditor.INVISIBLE_ELEMENT_BORDER);
-			} else {
-				domElement.setAttribute(STYLE_ATTR, domElement
-						.getAttribute(STYLE_ATTR)
-						+ ';' + XulRunnerEditor.VISIBLE_ELEMENT_BORDER);
-			}
-			this.lastBorderedElement = domElement;
-			this.lastBorderedElement.setAttribute(PREV_STYLE_ATTR_NAME,
-					oldstyle);
-		} else {
-			// under osx function drawElementOutline not works
-			getIFlasher().drawElementOutline(domElement);
-		}
+	private void drawElementOutline(nsIDOMElement element) {
+		getFlasher().drawElementOutline(element);
 	}
 
 	/**
@@ -774,7 +720,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	@Override
 	protected void onDispose() {
 		lastSelectedNode = null;
-		iFlasher = null;
+		flasher.dispose();
+		flasher = null;
 		super.onDispose();
 	}
 

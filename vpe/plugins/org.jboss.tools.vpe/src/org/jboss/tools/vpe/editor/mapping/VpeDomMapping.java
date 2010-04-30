@@ -133,7 +133,7 @@ public class VpeDomMapping {
 				if(nearVisualNode instanceof nsIDOMElement){	
 					
 					nsIDOMElement visualElement = (nsIDOMElement) nearVisualNode;
-					visualElement.removeAttribute(XulRunnerEditor.VPEFLASHERCOLORATTRIBUTE);
+					visualElement.removeAttribute(XulRunnerEditor.VPE_INVISIBLE_ELEMENT);
 				}
 			}
 		}
@@ -145,10 +145,10 @@ public class VpeDomMapping {
 				nsIDOMNode nearVisualNode = nodeMapping.getVisualNode();
 				if(nearVisualNode instanceof nsIDOMElement){	
 					nsIDOMElement visualElement = (nsIDOMElement) nearVisualNode;
-					visualElement.setAttribute(XulRunnerEditor.VPEFLASHERCOLORATTRIBUTE, 
-							XulRunnerEditor.flasherHiddentElementColor);
+					visualElement.setAttribute(XulRunnerEditor.VPE_INVISIBLE_ELEMENT, 
+							Boolean.TRUE.toString());
 				}
-			} 
+			}
 		}
 		return nodeMapping;
 	}
