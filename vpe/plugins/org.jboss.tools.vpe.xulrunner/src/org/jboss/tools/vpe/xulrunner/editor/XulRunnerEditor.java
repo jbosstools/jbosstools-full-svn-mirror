@@ -720,8 +720,10 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	@Override
 	protected void onDispose() {
 		lastSelectedNode = null;
-		flasher.dispose();
-		flasher = null;
+		if (flasher != null) {
+			flasher.dispose();
+			flasher = null;
+		}
 		super.onDispose();
 	}
 
