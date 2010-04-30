@@ -12,7 +12,7 @@ package org.jboss.tools.smooks.configuration.editors.uitls;
 
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavaBeanModel;
 
 /**
  * @author Dart (dpeng@redhat.com)

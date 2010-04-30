@@ -42,10 +42,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavaBeanModel;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavaBeanModelFactory;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanContentProvider;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanlabelProvider;
 import org.jboss.tools.smooks.configuration.editors.uitls.JavaTypeFieldDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
 

@@ -18,11 +18,10 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.csv12.CSV12InputDataWizard;
-import org.jboss.tools.smooks.configuration.editors.edi.EDIDataWizard;
-import org.jboss.tools.smooks.configuration.editors.edireader12.EDIReader12DataWizard;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanContentProvider;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanStrucutredDataWizard;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavabeanlabelProvider;
+import org.jboss.tools.smooks.configuration.editors.edireader12.EDIDataWizard;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanContentProvider;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanStrucutredDataWizard;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanlabelProvider;
 import org.jboss.tools.smooks.configuration.editors.json12.Json12DataWizard;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
@@ -280,24 +279,6 @@ public class ViewerInitorStore {
 		ediViewerInitor.setStructuredDataLoadWizard(new EDIDataWizard());
 		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
 		map.put(typeID, ediViewerInitor);
-
-		// for EDI 1.2
-		BaseViewerInitor edi12ViewerInitor = new BaseViewerInitor();
-		name = "EDI 1.2"; //$NON-NLS-1$
-		description = "Select EDI data file as the input data. (version 1.2)"; //$NON-NLS-1$
-		iconPath = null;
-		typeID = SmooksModelUtils.INPUT_TYPE_EDI_1_2;
-
-		edi12ViewerInitor.setName(name);
-		edi12ViewerInitor.setDescription(description);
-		edi12ViewerInitor.setWizardIconPath(iconPath);
-		edi12ViewerInitor.setTypeID(typeID);
-		edi12ViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
-		edi12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
-		edi12ViewerInitor.setStructuredDataLoadWizard(new EDIReader12DataWizard());
-		// jsonViewerInitor.setWizardIconPath(GraphicsConstants.IMAGE_JAVA_FILE);
-		// map.put(typeID, edi12ViewerInitor);
-
 		return map;
 	}
 }

@@ -21,8 +21,8 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModel;
-import org.jboss.tools.smooks.configuration.editors.javabean.JavaBeanModelFactory;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavaBeanModel;
+import org.jboss.tools.smooks.configuration.editors.javabean12.JavaBeanModelFactory;
 
 /**
  * @author Dart (dpeng@redhat.com)

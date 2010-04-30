@@ -14,18 +14,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContentProvider;
-import org.jboss.tools.smooks.configuration.editors.xml.XSLModelAnalyzer;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelConstants;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
@@ -68,53 +63,11 @@ public class FreemarkerContentProvider implements ITreeContentProvider {
 				
 				ParamType param = SmooksFactory.eINSTANCE.createParamType();
 				param.setName("name"); //$NON-NLS-1$
-				param.setStringValue("aaa"); //$NON-NLS-1$
+				param.setStringValue("value"); //$NON-NLS-1$
 				
-				
-				System.out.println(comments);
-//				if (obj == null) {
-//					String filePath = SmooksModelUtils.getAnyTypeText(template);
-//					if(filePath != null) filePath = filePath.trim();
-//					if (filePath != null && !"".equals(filePath)) {
-//						IFile file = SmooksUIUtils.getFile(filePath, SmooksUIUtils.getResource(template).getProject());
-//						if (file != null && XSLCore.isXSLFile(file)) {
-//							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();
-//							try {
-//								obj = analyzer.parse(file.getContents());
-//							} catch (DocumentException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							} catch (CoreException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//						}
-//					}else{
-//						String contents = SmooksModelUtils.getAnyTypeCDATA(template);
-//						if(contents != null){
-//							XSLModelAnalyzer analyzer = new XSLModelAnalyzer();
-//							try {
-//								obj = analyzer.parse(new ByteArrayInputStream(contents.getBytes()));
-//							} catch (DocumentException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							} 
-//						}
-//					}
-//				}
-//
-//				if (obj != null) {
-//					buffer.put(template, obj);
-//					return new Object[] { obj };
-//				}
 			}
 			return new Object[] {};
 		}
-
-		if(parentElement instanceof AbstractXMLObject && XSLModelAnalyzer.isXSLTagObject((AbstractXMLObject)parentElement)){
-			return ((AbstractXMLObject)parentElement).getXMLNodeChildren().toArray();
-		}
-		
 		return xmlObjectContentProvider.getChildren(parentElement);
 
 	}
