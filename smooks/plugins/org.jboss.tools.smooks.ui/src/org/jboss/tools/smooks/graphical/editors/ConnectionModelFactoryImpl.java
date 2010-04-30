@@ -20,9 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
-import org.jboss.tools.smooks.configuration.editors.xml.XSLTagObject;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.BeanReferenceConnection;
@@ -258,40 +256,6 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 			AbstractSmooksGraphicalModel model) {
 		List<TreeNodeConnection> connections = new ArrayList<TreeNodeConnection>();
 		Object data = model.getData();
-		if (data instanceof XSLTagObject) {
-			List<TagObject> list = ((XSLTagObject) data).getRelatedIgnoreXSLTagObjects();
-			for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
-				XSLTagObject tagObject = (XSLTagObject) iterator.next();
-				String select = null;
-				if (tagObject.isValueOfElement()) {
-					select = tagObject.getSelectValue();
-				}
-				if (select != null) {
-					select = select.trim();
-					select = processSelectString(select, tagObject.getSmooksPrix());
-					fillSelectorConnection(inputDataList, root, model, select, connections);
-				}
-			}
-
-			if (((XSLTagObject) data).isTemplateElement()) {
-				String select = ((XSLTagObject) data).getMatchValue();
-				if (select != null) {
-					select = select.trim();
-					select = processSelectString(select, ((XSLTagObject) data).getSmooksPrix());
-					fillSelectorConnection(inputDataList, root, model, select, connections);
-				}
-			}
-
-			if (((XSLTagObject) data).isSortElement() || ((XSLTagObject) data).isForeachElement()) {
-				String select = ((XSLTagObject) data).getSelectValue();
-				if (select != null) {
-					select = select.trim();
-					select = processSelectString(select, ((XSLTagObject) data).getSmooksPrix());
-					fillSelectorConnection(inputDataList, root, model, select, connections);
-				}
-			}
-
-		}
 
 		if (data instanceof TagPropertyObject) {
 			TagPropertyObject tagPropertyObject = (TagPropertyObject) data;
@@ -305,18 +269,6 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 			}
 		}
 		return connections;
-	}
-
-	public boolean hasXSLConnection(AbstractSmooksGraphicalModel model) {
-		Object data = model.getData();
-		if (data instanceof XSLTagObject) {
-			return true;
-		}
-		if (data instanceof TagPropertyObject) {
-			if (((TagPropertyObject) data).getParent() instanceof XSLTagObject)
-				return true;
-		}
-		return false;
 	}
 
 	public Collection<TreeNodeConnection> createConnection(List<Object> inputDataList, EObject rootModel,
@@ -340,6 +292,6 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 	}
 
 	public boolean hasConnection(AbstractSmooksGraphicalModel model) {
-		return hasBeanIDConnection(model) || hasSelectorConnection(model) || hasXSLConnection(model);
+		return hasBeanIDConnection(model) || hasSelectorConnection(model);
 	}
 }

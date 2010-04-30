@@ -16,15 +16,6 @@ import java.util.Map;
 import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderBindingPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderMapBindingPropertyUICreator;
 import org.jboss.tools.smooks.configuration.editors.csv12.Csv12ReaderUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.ComponentUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.DelimitersUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.DescriptionUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.EdiMapUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.FieldUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.MappingNodeUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.SegmentUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.SegmentsUICreator;
-import org.jboss.tools.smooks.configuration.editors.edi.SubComponentUICreator;
 import org.jboss.tools.smooks.configuration.editors.edireader12.EDIReader12UICreator;
 import org.jboss.tools.smooks.configuration.editors.freemarker.FreemarkerUICreator;
 import org.jboss.tools.smooks.configuration.editors.freemarker.InlineUICreator;
@@ -59,15 +50,6 @@ import org.jboss.tools.smooks.model.freemarker.impl.InlineImpl;
 import org.jboss.tools.smooks.model.freemarker.impl.UseImpl;
 import org.jboss.tools.smooks.model.javabean12.impl.BeanTypeImpl;
 import org.jboss.tools.smooks.model.json12.impl.Json12ReaderImpl;
-import org.jboss.tools.smooks.model.medi.impl.ComponentImpl;
-import org.jboss.tools.smooks.model.medi.impl.DelimitersImpl;
-import org.jboss.tools.smooks.model.medi.impl.DescriptionImpl;
-import org.jboss.tools.smooks.model.medi.impl.EdiMapImpl;
-import org.jboss.tools.smooks.model.medi.impl.FieldImpl;
-import org.jboss.tools.smooks.model.medi.impl.MappingNodeImpl;
-import org.jboss.tools.smooks.model.medi.impl.SegmentImpl;
-import org.jboss.tools.smooks.model.medi.impl.SegmentsImpl;
-import org.jboss.tools.smooks.model.medi.impl.SubComponentImpl;
 import org.jboss.tools.smooks.model.smooks.impl.ConditionTypeImpl;
 import org.jboss.tools.smooks.model.smooks.impl.ConditionsTypeImpl;
 import org.jboss.tools.smooks.model.smooks.impl.FeaturesTypeImpl;
@@ -138,17 +120,6 @@ public class PropertyUICreatorManager {
 		map.put(org.jboss.tools.smooks.model.freemarker.impl.TemplateImpl.class,
 				new org.jboss.tools.smooks.configuration.editors.freemarker.TemplateUICreator());
 		map.put(UseImpl.class, new UseUICreator());
-
-		// for medi
-		map.put(ComponentImpl.class, new ComponentUICreator());
-		map.put(DelimitersImpl.class, new DelimitersUICreator());
-		map.put(DescriptionImpl.class, new DescriptionUICreator());
-		map.put(EdiMapImpl.class, new EdiMapUICreator());
-		map.put(FieldImpl.class, new FieldUICreator());
-		map.put(MappingNodeImpl.class, new MappingNodeUICreator());
-		map.put(SegmentImpl.class, new SegmentUICreator());
-		map.put(SegmentsImpl.class, new SegmentsUICreator());
-		map.put(SubComponentImpl.class, new SubComponentUICreator());
 
 		
 		// for JSON 1.2

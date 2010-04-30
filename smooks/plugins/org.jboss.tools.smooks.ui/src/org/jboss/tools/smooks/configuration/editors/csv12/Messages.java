@@ -12,10 +12,18 @@ public class Messages extends NLS {
 	public static String CSV12InputDataWizard_1;
 	public static String CSV12InputDataWizard_ExtensionName;
 	public static String Csv12ReaderUICreator_0;
-//	public static String Csv12ReaderUICreator_1;
-//	public static String Csv12ReaderUICreator_7;
-//	public static String Csv12ReaderUICreator_8;
-//	public static String Csv12ReaderUICreator_9;
+
+	public static String CSVDataPathWizardPage_CantFindFileErrorMessage;
+	public static String CSVDataPathWizardPage_ErrorPathErrorMessage;
+	public static String CSVDataPathWizardPage_WizardDes;
+	public static String CSVDataPathWizardPage_WizardTitle;
+	public static String CSVInputDataWizard_ExtensionName;
+	public static String CSVInputDataWizard_WizardPageText;
+	public static String CSVInputDataWizard_WizardTitle;
+	public static String CsvReaderUICreator_AddButtonLabel;
+	public static String CsvReaderUICreator_FieldsLabel;
+	public static String CsvReaderUICreator_RemoveButtonLabel;
+	
 	public static String Csv12ReaderUICreator_Fields;
 	public static String Csv12ReaderUICreator_ListBinding;
 	public static String Csv12ReaderUICreator_ListMapBinding;

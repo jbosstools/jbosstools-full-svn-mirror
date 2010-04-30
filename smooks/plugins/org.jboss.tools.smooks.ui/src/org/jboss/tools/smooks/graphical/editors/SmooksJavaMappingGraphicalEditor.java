@@ -203,19 +203,6 @@ public class SmooksJavaMappingGraphicalEditor extends SmooksGraphicalEditorPart 
 
 	private class JavaMappingConnectionModelFactory extends ConnectionModelFactoryImpl {
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.jboss.tools.smooks.graphical.editors.ConnectionModelFactoryImpl
-		 * #hasXSLConnection
-		 * (org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
-		 */
-		@Override
-		public boolean hasXSLConnection(AbstractSmooksGraphicalModel model) {
-			return false;
-		}
-
 	}
 
 	private class JavaMappingGraphicalModelFactory extends GraphicalModelFactoryImpl {

@@ -21,8 +21,6 @@ import org.eclipse.jface.action.MenuManager;
 import org.jboss.tools.smooks.gef.common.SmooksGraphicalMenuContextProvider;
 import org.jboss.tools.smooks.graphical.actions.AddSmooksModelAction;
 import org.jboss.tools.smooks.graphical.actions.AutoLayoutAction;
-import org.jboss.tools.smooks.graphical.actions.xsltemplate.AddAttributeAction;
-import org.jboss.tools.smooks.graphical.actions.xsltemplate.AddElementAction;
 
 /**
  * @author Dart
@@ -41,21 +39,20 @@ public class SmooksGraphicalEditorMenuContextProvider extends SmooksGraphicalMen
 		menu.appendToGroup(GROUP_CUSTOME, addChildActionMenu);
 
 		Iterator<?> iterator = getActionRegistry().getActions();
+//		while (iterator.hasNext()) {
+//			Object obj = iterator.next();
+//			if (obj instanceof AddSmooksModelAction) {
+//				if (((IAction) obj).isEnabled()
+//						&& (obj instanceof AddElementAction || obj instanceof AddAttributeAction)) {
+//					addChildActionMenu.add((IAction) obj);
+//				}
+//			}
+//		}
+//		iterator = getActionRegistry().getActions();
 		while (iterator.hasNext()) {
 			Object obj = iterator.next();
 			if (obj instanceof AddSmooksModelAction) {
-				if (((IAction) obj).isEnabled()
-						&& (obj instanceof AddElementAction || obj instanceof AddAttributeAction)) {
-					addChildActionMenu.add((IAction) obj);
-				}
-			}
-		}
-		iterator = getActionRegistry().getActions();
-		while (iterator.hasNext()) {
-			Object obj = iterator.next();
-			if (obj instanceof AddSmooksModelAction) {
-				if (((IAction) obj).isEnabled()
-						&& !(obj instanceof AddElementAction || obj instanceof AddAttributeAction)) {
+				if (((IAction) obj).isEnabled()){//						&& !(obj instanceof AddElementAction || obj instanceof AddAttributeAction)) {
 					addChildActionMenu.add((IAction) obj);
 				}
 			}
