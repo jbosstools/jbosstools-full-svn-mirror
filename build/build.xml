@@ -126,13 +126,14 @@ Here is the order in which components must be built:
 
 	<target name="init" depends="local">
 		<macrodef name="now">
+			<attribute name="level" default="error" />
 			<text name="info" optional="true" />
 			<sequential>
 				<var name="now" unset="true" />
 				<tstamp>
 					<format property="now" pattern="hh:mm:ss" />
 				</tstamp>
-				<echo>${now} @{info}</echo>
+				<echo level="@{level}">${now} @{info}</echo>
 			</sequential>
 		</macrodef>
 
@@ -187,16 +188,16 @@ Here is the order in which components must be built:
 			<attribute name="op" />
 			<sequential>
 				<!-- check out or update -->
-				<now>Fetch @{COMPONENT}</now>
 				<if>
 					<equals arg1="@{op}" arg2="up" />
 					<then>
+						<now level="info">Update @{COMPONENT}</now>
 						<svn javahl="false" svnkit="true" failonerror="false">
 							<update recurse="${svn.recurse}" dir="@{component}" />
 						</svn>
 					</then>
 					<else>
-						<echo level="info">Fetch sources from ${svn.root}/@{component} into ${WORKINGDIR}/@{component}</echo>
+						<now level="info">Fetch sources from ${svn.root}/@{component} into ${WORKINGDIR}/@{component}</now>
 						<svn javahl="false" svnkit="true" failonerror="true">
 							<checkout recurse="${svn.recurse}"
 							          url="${svn.root}/@{component}"
@@ -303,7 +304,7 @@ Here is the order in which components must be built:
 		<if>
 			<equals arg1="${COMPONENTS.to.build}" arg2="" />
 			<then>
-				<echo level="info">All components up to date: nothing to do!
+				<echo level="error">All components up to date: nothing to do!
 To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
 
 				<!-- create fake test result file to avoid Hudson failure -->
@@ -317,7 +318,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				<property name="no.tests.run" value="true" />
 			</then>
 			<else>
-				<echo>The following components' sources have changed and will be built:
+				<echo level="error">The following components' sources have changed and will be built:
 	COMPONENTS.to.build = ${COMPONENTS.to.build}
 </echo>
 			</else>
@@ -330,7 +331,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
-				<now>Build @{COMPONENT}</now>
+				<now level="error">Build @{COMPONENT}</now>
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
@@ -398,7 +399,7 @@ rm -fr /tmp/.X3-lock
 				</if>
 			</sequential>
 		</for>
-		<now>Builds done</now>
+		<now level="info">Builds done</now>
 	</target>
 
 	<target name="collect.test.results">
@@ -770,7 +771,9 @@ Cannot deploy - sourceDir not found in
 
 	<target name="test.now" depends="init">
 		<now>foobar!</now>
-		<now/>
+		<now />
+		<now level="error">error!</now>
+		<now level="info">info!</now>
 	</target>
 
 </project>
