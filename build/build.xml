@@ -391,6 +391,9 @@ rm -fr /tmp/.X3-lock
 							<param name="COMPONENT" value="@{COMPONENT}" />
 						</antcall>
 					</then>
+					<else>
+						<property name="no.tests.run" value="true" />
+					</else>
 				</if>
 			</sequential>
 		</for>
