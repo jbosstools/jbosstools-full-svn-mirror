@@ -63,8 +63,9 @@ Here is the order in which components must be built:
 	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
 	/>
 
-	<target name="test" description="run tests w/o first getting sources + list of components to build; assumes an upstream build job was already run"
-	        depends="init, get.bootstrap.scripts, run.build, collect.all.test.results"
+	<target name="test"
+	        description="run tests w/o first getting sources + list of components to build; assumes an upstream build job was already run"
+	        depends="init, get.bootstrap.scripts, get.components.to.test, run.build, collect.all.test.results"
 	/>
 
 	<!-- override for local build -->
@@ -130,7 +131,7 @@ Here is the order in which components must be built:
 
 	<target name="init" depends="local">
 		<macrodef name="now">
-			<attribute name="level" default="error" />
+			<attribute name="level" default="warning" />
 			<text name="info" optional="true" />
 			<sequential>
 				<var name="now" unset="true" />
@@ -303,12 +304,22 @@ Here is the order in which components must be built:
 		<get src="${svn.root}/genpom.xml" dest="${WORKINGDIR}/genpom.xml" usetimestamp="true" />
 	</target>
 
+	<target name="get.components.to.test">
+		<var name="COMPONENTS.to.build" unset="true" />
+		<var name="COMPONENTS.to.build" value="" />
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter="; ">
+			<sequential>
+				<var name="COMPONENTS.to.build" value="${COMPONENTS.to.build}@{COMPONENT}," />
+			</sequential>
+		</for>
+	</target>
+
 	<target name="get.components.to.build">
 		<property file="build.cfg" />
 		<if>
 			<equals arg1="${COMPONENTS.to.build}" arg2="" />
 			<then>
-				<echo level="error">All components up to date: nothing to do!
+				<echo level="warning">All components up to date: nothing to do!
 To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
 
 				<!-- create fake test result file to avoid Hudson failure -->
@@ -322,7 +333,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				<property name="no.tests.run" value="true" />
 			</then>
 			<else>
-				<echo level="error">The following components' sources have changed and will be built:
+				<echo level="warning">The following components' sources have changed and will be built:
 	COMPONENTS.to.build = ${COMPONENTS.to.build}
 </echo>
 			</else>
@@ -335,7 +346,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
-				<now level="error">Build @{COMPONENT}</now>
+				<now level="warning">Build @{COMPONENT}</now>
 				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
 				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
 					<property name="COMPONENT" value="@{COMPONENT}" />
@@ -599,6 +610,10 @@ Cannot deploy - sourceDir not found in
 		<property name="get.components.to.build.expected.4.all" value="tests,common,xulrunner," />
 		<property name="get.components.to.build.expected.6.all" value="tests,common,xulrunner," />
 
+		<!-- expected values for test.get.components.to.test -->
+		<property name="get.components.to.test.expected"
+		          value="tests,common,flow,jbpm,jmx,archives,as,drools,bpel,smooks,freemarker,profiler,portlet,xulrunner,jst,vpe,jsf,esb,tptp,ws,cdi,struts,hibernatetools,seam,examples,birt,maven,"
+		/>
 	</target>
 
 	<target name="test.all">
@@ -778,6 +793,29 @@ Cannot deploy - sourceDir not found in
 		<now />
 		<now level="error">error!</now>
 		<now level="info">info!</now>
+	</target>
+
+	<target name="test.get.components.to.test" depends="init, test.expected.values">
+		<var name="COMPONENTS" unset="true" />
+		<var name="COMPONENTS"
+		     value="tests,common;
+	    flow,jbpm;
+	    jmx,archives,as;
+	    drools,bpel,smooks,freemarker,profiler,portlet;
+	    xulrunner,jst,vpe,jsf;
+	        esb,tptp,ws;
+	        cdi,struts,hibernatetools,seam;
+	            examples,birt;
+	            maven"
+		/>
+		<antcallback target="get.components.to.test" return="COMPONENTS.to.build" />
+		<assert failonerror="true"
+		        message="expected: [${get.components.to.test.expected}] but got: [${COMPONENTS.to.build}]"
+		>
+			<bool>
+				<equals arg1="${get.components.to.test.expected}" arg2="${COMPONENTS.to.build}" />
+			</bool>
+		</assert>
 	</target>
 
 </project>
