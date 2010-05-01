@@ -565,7 +565,7 @@ ${test.results.errors.failures.skipped}
 		<delete file="${WORKINGDIR}/site/target/site.zip"/>
 		
 		<!-- create real update site zip -->
-		<zip destfile="${WORKINGDIR}/site/target/JBossTools-Update.zip" basedir="${WORKINGDIR}/site/target/site" update="false"/>
+		<zip destfile="${WORKINGDIR}/site/target/JBossTools-Update-SNAPSHOT.zip" basedir="${WORKINGDIR}/site/target/site" update="false"/>
 	</target>
 
 	<!-- TODO: figure out why this fails with error: 
