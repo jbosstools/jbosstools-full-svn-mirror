@@ -59,6 +59,7 @@ Here is the order in which components must be built:
 		</for>
 	</target>
 
+	<!-- TODO: enable create.overall.update.site task -->
 	<target name="run"
 	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
 	/>
@@ -342,7 +343,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 	<target name="run.build">
 		<!-- could set -Dmaven.test.skip to skip tests, or use osgi-test:test to just (re-)run tests w/o first building -->
-		<property name="MAVEN_FLAGS" value="clean install -B -fn -q" />
+		<property name="MAVEN_FLAGS" value="install -B -fn -q" />
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
@@ -531,11 +532,40 @@ ${test.results.errors.failures.skipped}
 		</if>
 	</target>
 
+	<!-- TODO: generate site.xml files for each component from generated site.xml -->
+	<target name="create.update.site">
+	</target>
 
-	<!-- TODO: generate site.xml files for components: gensite.xml script called by build.xml -->
-	<!-- TODO: zip up update site zips for each component; publish to download.jboss.org as part of deploy task -->
-	<target name="zip.sites">
+	<!-- TODO: exclude test plugins/features from zip -->
+	<target name="create.overall.update.site" depends="init">
+		<delete dir="${WORKINGDIR}/site/target/site" includes="artifacts.*, content.*" quiet="true" />
 
+		<delete dir="${WORKINGDIR}/site/target/site/features" includeemptydirs="true" quiet="true" />
+		<mkdir dir="${WORKINGDIR}/site/target/site/features" />
+		<copy todir="${WORKINGDIR}/site/target/site/features" flatten="true">
+			<fileset dir="${WORKINGDIR}" includes="**/target/*feature_*.jar,**/target/*feature*SNAPSHOT.jar" />
+		</copy>
+
+		<delete dir="${WORKINGDIR}/site/target/site/plugins" includeemptydirs="true" quiet="true" />
+		<mkdir dir="${WORKINGDIR}/site/target/site/plugins" />
+		<copy todir="${WORKINGDIR}/site/target/site/plugins" flatten="true">
+			<fileset dir="${WORKINGDIR}"
+			         excludes="**/target/*feature_*.jar,**/target/*feature*SNAPSHOT.jar"
+			         includes="**/target/*_*.jar,**/target/*-SNAPSHOT.jar"
+			/>
+		</copy>
+		
+		<!-- Call maven to generate pom.xml, then build site from site.xml -->
+		<antcall target="run.build">
+			<param name="COMPONENTS.to.build" value="site" />
+			<param name="MAVEN_FLAGS" value="verify -B -fae -Dmaven.test.skip" />
+		</antcall>
+
+		<!-- delete pointless empty site.zip (contains only site.xml) -->
+		<delete file="${WORKINGDIR}/site/target/site.zip"/>
+		
+		<!-- create real update site zip -->
+		<zip destfile="${WORKINGDIR}/site/target/JBossTools-Update.zip" basedir="${WORKINGDIR}/site/target/site" update="false"/>
 	</target>
 
 	<!-- TODO: figure out why this fails with error: 

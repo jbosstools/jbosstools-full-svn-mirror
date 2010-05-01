@@ -322,6 +322,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 							<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
 						</path>
 					</then>
+					<elseif>
+						<equals arg1="${COMPONENT}" arg2="site" />
+						<then>
+							<dirname property="parent.dir" file="@{dir}" />
+							<path id="trunkDir">
+								<dirset dir="${parent.dir}" includes="site"/>
+							</path>
+							<var name="parent.dir" unset="true"/>
+							<var name="pathToParentPom" value="${pathToParentPom}site/"/>
+						</then>
+					</elseif>
 					<else>
 						<path id="trunkDir">
 							<dirset dir="@{dir}/${pathToParentPom}"
@@ -342,12 +353,19 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 								<!-- a plugin, feature, or update site dir -->
 								<available file="@{subdir}/META-INF/MANIFEST.MF" type="file" />
 								<available file="@{subdir}/feature.xml" type="file" />
-								<available file="@{subdir}/site.xml" type="file" />
 							</or>
 							<then>
 								<!-- valid place to create a pom -->
 								<writeModulePom dir="@{subdir}" parentpom="../${pathToParentPom}@{parentpom}" />
 							</then>
+							<elseif>
+								<available file="@{subdir}/site.xml" type="file" />
+								<then>
+									<!-- valid place to create a pom -->
+									<echo level="debug">writeModulePom dir="@{subdir}" parentpom="${pathToParentPom}@{parentpom}"</echo>
+									<writeModulePom dir="@{subdir}" parentpom="${pathToParentPom}@{parentpom}" />
+								</then>
+							</elseif>
 							<else>
 								<for list="plugins tests features site" param="type" delimiter=" ">
 									<sequential>
@@ -753,17 +771,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<property name="ant.enable.asserts" value="true" />
 
 		<!-- expected values for artifactVersion tests -->
-		<property name="artifactVersion.esb/features/org.jboss.tools.esb.feature" value="1.0.0" />
-		<property name="artifactVersion.as/tests/org.jboss.ide.eclipse.as.archives.integration.test" value="1.0.0" />
-		<property name="artifactVersion.esb/plugins/org.jboss.tools.esb.core" value="2.0.0" />
+		<property name="artifactVersion.esb/features/org.jboss.tools.esb.feature" value="1.3.0-SNAPSHOT" />
+		<property name="artifactVersion.as/tests/org.jboss.ide.eclipse.as.archives.integration.test" value="2.1.0-SNAPSHOT" />
+		<property name="artifactVersion.esb/plugins/org.jboss.tools.esb.core" value="1.3.0-SNAPSHOT" />
 		<property name="artifactVersion.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui" value="0.5.0-SNAPSHOT" />
 		<property name="artifactVersion.bpel/features/org.jboss.tools.bpel.sdk.feature" value="1.0.0-SNAPSHOT" />
 		<property name="artifactVersion.bpel/plugins/org.eclipse.bpel.xpath10" value="0.5.0-SNAPSHOT" />
-		<property name="artifactVersion.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="2.1.0" />
-		<property name="artifactVersion.tests/features/org.jboss.tools.test.feature" value="2.0.0" />
-		<property name="artifactVersion.portlet/features/org.jboss.tools.portlet.test.feature" value="1.0.0" />
-		<property name="artifactVersion.jst/features/org.jboss.tools.jst.feature" value="2.0.0" />
-		<property name="artifactVersion.jst/features/org.jboss.tools.jst.web.tiles.feature" value="2.0.0" />
+		<property name="artifactVersion.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="3.1.0-SNAPSHOT" />
+		<property name="artifactVersion.tests/features/org.jboss.tools.test.feature" value="3.1.0-SNAPSHOT" />
+		<property name="artifactVersion.portlet/features/org.jboss.tools.portlet.test.feature" value="1.1.0-SNAPSHOT" />
+		<property name="artifactVersion.jst/features/org.jboss.tools.jst.feature" value="3.1.0-SNAPSHOT" />
+		<property name="artifactVersion.jst/features/org.jboss.tools.jst.web.tiles.feature" value="3.1.0-SNAPSHOT" />
 
 		<!-- expected values for artifactId tests -->
 		<property name="artifactId.esb/features/org.jboss.tools.esb.feature" value="org.jboss.tools.esb.feature" />
