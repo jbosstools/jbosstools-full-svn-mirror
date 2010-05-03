@@ -33,6 +33,9 @@
 	<property name="product.version" value="3.1.0-beta-1"/>
 	-->
 
+	<!-- TODO: connect build type (snapshot, milestone, release) to update site description (nightly, milestone, stable) -->
+	<property name="update.site.description" value="Nightly Build" />
+
 	<!-- ****************************** Usage Instructions ****************************** -->
 	<target name="help" description="Usage Instructions" depends="init">
 		<echo>
@@ -58,9 +61,14 @@ or, to (re-)run tests w/o (re-)building first:
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
 			
-or, to re-build the update site w/o building first:
+or, to re-build the overall update site w/o building first:
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant create.overall.update.site -Dbuild.if.sources.unchanged=true
+
+or, to re-build a single component's update site w/o first building, testing, and installing it into the m2 repo:
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+	ant -DCOMPONENT=jmx create.update.site; \
+	ant -DCOMPONENT=jbpm create.update.site
 
 Note: if tests stall on Linux, install Xvfb and this script will use that to run Maven.
 
@@ -73,14 +81,22 @@ Here is the order in which components must be built:
 		</for>
 	</target>
 
+	<!-- ******************* MAIN ENTRY TARGETS ******************* -->
 	<target name="run"
-	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results, create.overall.update.site"
+	        description="run a build, collect test results, generate overall update site"
+	        depends="build,  collect.all.test.results, create.overall.update.site"
+	/>
+
+	<target name="build"
+	        description="run a build"
+	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build"
 	/>
 
 	<target name="test"
 	        description="run tests w/o first getting sources + list of components to build; assumes an upstream build job was already run"
 	        depends="init, get.bootstrap.scripts, get.components.to.test, run.build, collect.all.test.results"
 	/>
+	<!-- ******************* MAIN ENTRY TARGETS ******************* -->
 
 	<!-- override for local build -->
 	<condition property="isInHudson" value="true">
@@ -369,6 +385,28 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 	<target name="run.build">
 		<!-- could set -Dmaven.test.skip to skip tests, or use osgi-test:test to just (re-)run tests w/o first building -->
 		<property name="MAVEN_FLAGS" value="install -B -fn -q" />
+
+		<!-- commandline overrides to suppress doing tests -->
+		<if>
+			<or>
+				<isset property="notest" />
+				<isset property="notests" />
+				<isset property="skiptest" />
+				<isset property="skiptests" />
+			</or>
+			<then>
+				<property name="noXvfb" value="true" />
+				<if>
+					<not>
+						<contains string="${MAVEN_FLAGS}" substring="-Dmaven.test.skip" />
+					</not>
+					<then>
+						<var name="MAVEN_FLAGS" value="${MAVEN_FLAGS} -Dmaven.test.skip" />
+					</then>
+				</if>
+			</then>
+		</if>
+
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
@@ -378,24 +416,10 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<property name="COMPONENT" value="@{COMPONENT}" />
 				</ant>
 
-				<var name="mvnExe" value="mvn" />
-				<antcallback target="getMvnExe" return="mvnExe" />
+				<antcall target="mvn">
+					<param name="COMPONENT" value="@{COMPONENT}" />
+				</antcall>
 
-				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}</echo>
-				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
-				<!-- 3 hr timeout = 10800000ms -->
-				<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}"
-				      dir="${WORKINGDIR}/@{COMPONENT}"
-				      failifexecutionfails="true"
-				      failonerror="true"
-				      timeout="10800000"
-				>
-					<env key="M2_HOME" value="${COMMON_TOOLS}/apache-maven-${maven.version}" />
-					<env key="MAVEN_OPTS" value="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
-					<!-- more debug output with <env key="MAVEN_OPTS" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"/> -->
-					<!-- <arg line="-o -Dmaven.test.skip" /> -->
-					<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository" />
-				</exec>
 				<!-- don't collect test results if there are no test results to collect! -->
 				<if>
 					<not>
@@ -410,9 +434,42 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						<property name="no.tests.run" value="true" />
 					</else>
 				</if>
+
+				<!-- prevent recursion: overall site component is built with create.overall.update.site, not simpler create.update.site -->
+				<if>
+					<not>
+						<equals arg1="@{COMPONENT}" arg2="site" />
+					</not>
+					<then>
+						<antcall target="create.update.site">
+							<param name="COMPONENT" value="@{COMPONENT}" />
+						</antcall>
+					</then>
+				</if>
 			</sequential>
 		</for>
 		<now level="info">Builds done</now>
+	</target>
+
+	<target name="mvn">
+		<var name="mvnExe" value="mvn" />
+		<antcallback target="getMvnExe" return="mvnExe" />
+		<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}</echo>
+		<echo level="verbose">Pom: ${WORKINGDIR}/${COMPONENT}/pom.xml</echo>
+		<property name="MAVEN_DIR" value="${WORKINGDIR}/${COMPONENT}" />
+		<!-- 3 hr timeout = 10800000ms -->
+		<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}"
+		      dir="${MAVEN_DIR}"
+		      failifexecutionfails="true"
+		      failonerror="true"
+		      timeout="10800000"
+		>
+			<env key="M2_HOME" value="${COMMON_TOOLS}/apache-maven-${maven.version}" />
+			<env key="MAVEN_OPTS" value="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m" />
+			<!-- more debug output with <env key="MAVEN_OPTS" value="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"/> -->
+			<!-- <arg line="-o -Dmaven.test.skip" /> -->
+			<arg line="${MAVEN_FLAGS} -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository" />
+		</exec>
 	</target>
 
 	<!-- Use Xvfb wrapper for maven when invoking UI tests -->
@@ -557,12 +614,8 @@ ${test.results.errors.failures.skipped}
 		</if>
 	</target>
 
-	<!-- TODO: generate site.xml files for each component from generated site.xml -->
-	<target name="create.update.site">
-	</target>
-
+	<!-- Used to build the overall update site for all components; requires a custom site.xml (generated from category.*.xml) and previously checked in pom.xml -->
 	<target name="create.overall.update.site" depends="init">
-		<property name="update.site.description" value="Nightly Build" />
 
 		<!-- Clean up from last time, then fetch fresh sources (checkout or update) -->
 		<delete dir="${WORKINGDIR}/site/target" quiet="true" />
@@ -579,22 +632,57 @@ ${test.results.errors.failures.skipped}
 		<echo file="${WORKINGDIR}/site/site.xml" message="${site.xml.transformed}" />
 		<var name="site.xml.transformed" unset="true" />
 
-		<!-- Call maven to generate pom.xml, then build site from site.xml -->
-		<antcall target="run.build">
+		<!-- Build update site -->
+		<antcall target="build.update.site">
 			<param name="COMPONENTS.to.build" value="site" />
-			<param name="MAVEN_FLAGS" value="verify -B -fae -Dmaven.test.skip" />
-			<param name="noXvfb" value="true" />
+			<param name="update.site.path" value="site" />
 		</antcall>
+	</target>
+
+	<target name="build.update.site">
+		<property name="update.site.path" value="site" />
+		<if>
+			<equals arg1="${update.site.path}" arg2="site" />
+			<then>
+				<var name="destinationZip"
+				     value="${WORKINGDIR}/${update.site.path}/target/JBossTools-ALL-Update-SNAPSHOT.zip"
+				/>
+			</then>
+			<else>
+				<var name="destinationZip"
+				     value="${WORKINGDIR}/${update.site.path}/target/JBossTools-${COMPONENTS.to.build}-Update-SNAPSHOT.zip"
+				/>
+			</else>
+		</if>
+
+		<!-- Call maven to generate pom.xml, then build site from site.xml -->
+		<if>
+			<equals arg1="${COMPONENTS.to.build}" arg2="site" />
+			<then>
+				<antcall target="run.build">
+					<param name="COMPONENTS.to.build" value="${COMPONENTS.to.build}" />
+					<param name="MAVEN_FLAGS" value="verify -q -B -fae -Dmaven.test.skip" />
+					<param name="noXvfb" value="true" />
+				</antcall>
+			</then>
+			<else>
+				<antcall target="mvn">
+					<param name="MAVEN_DIR" value="${WORKINGDIR}/${update.site.path}" />
+					<param name="MAVEN_FLAGS" value="verify -q -B -fae -Dmaven.test.skip" />
+					<param name="noXvfb" value="true" />
+				</antcall>
+			</else>
+		</if>
 
 		<!-- Delete pointless site.zip -->
-		<delete file="${WORKINGDIR}/site/target/site.zip" />
+		<delete file="${WORKINGDIR}/${update.site.path}/target/site.zip" />
 
 		<!-- Create real update site zip, including web UI -->
-		<copy todir="${WORKINGDIR}/site/target/site">
-			<fileset dir="${WORKINGDIR}/site" includes="web/*, index.html" />
+		<copy todir="${WORKINGDIR}/${update.site.path}/target/site">
+			<fileset dir="${WORKINGDIR}/${update.site.path}" includes="web/*, index.html" />
 		</copy>
-		<zip destfile="${WORKINGDIR}/site/target/JBossTools-Update-SNAPSHOT.zip"
-		     basedir="${WORKINGDIR}/site/target/site"
+		<zip destfile="${destinationZip}"
+		     basedir="${WORKINGDIR}/${update.site.path}/target/site"
 		     update="false"
 		/>
 
@@ -604,12 +692,102 @@ ${test.results.errors.failures.skipped}
 				<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
 			</not>
 			<then>
-				<mkdir dir="${basedir}/site/target" />
-				<copy todir="${basedir}/site/target" flatten="true" preservelastmodified="true" overwrite="true">
-					<fileset dir="${WORKINGDIR}/site/target" includes="*Update*.zip" />
+				<mkdir dir="${basedir}/${update.site.path}/target" />
+				<copy todir="${basedir}/${update.site.path}/target"
+				      flatten="true"
+				      preservelastmodified="true"
+				      overwrite="true"
+				>
+					<fileset dir="${WORKINGDIR}/${update.site.path}/target" includes="*Update*.zip" />
 				</copy>
 			</then>
 		</if>
+	</target>
+
+	<!-- Used to build the update site of a component; requires a site.xml and pom.xml be generated first -->
+	<target name="create.update.site" depends="init, genSitePomXml, genSiteXml">
+		<antcall target="build.update.site">
+			<param name="COMPONENTS.to.build" value="${COMPONENT}" />
+			<param name="update.site.path" value="${COMPONENT}/site" />
+		</antcall>
+	</target>
+
+	<target name="genSitePomXml" description="Generate a pom.xml to build update site">
+		<property name="updateSiteJarDir" value="${WORKINGDIR}/${COMPONENT}/site" />
+		<property name="COMPONENT" value="${COMPONENT}" />
+		<mkdir dir="${updateSiteJarDir}" />
+		<echo file="${updateSiteJarDir}/pom.xml">&lt;project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt; 
+	&lt;parent&gt;
+		&lt;relativePath&gt;../../parent-pom.xml&lt;/relativePath&gt;
+		&lt;groupId&gt;org.jboss.tools&lt;/groupId&gt;
+		&lt;artifactId&gt;org.jboss.tools.parent.pom&lt;/artifactId&gt;
+		&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+	&lt;/parent&gt;
+	&lt;groupId&gt;org.jboss.tools&lt;/groupId&gt;
+	&lt;artifactId&gt;${COMPONENT}.site&lt;/artifactId&gt; 
+	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+	&lt;packaging&gt;eclipse-update-site&lt;/packaging&gt;
+&lt;/project&gt;
+</echo>
+
+	</target>
+	
+	<target name="genSiteXml" description="Generate a site.xml to contain the features in a category">
+		<property name="updateSiteJarDir" value="${WORKINGDIR}/${COMPONENT}/site" />
+		<property name="COMPONENT" value="${COMPONENT}" />
+		<property name="category.name" value="${product.name} ${COMPONENT} ${update.site.description} Update Site" />
+
+		<mkdir dir="${updateSiteJarDir}" />
+		<echo file="${updateSiteJarDir}/site.xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;site&gt;
+	&lt;description&gt;To install these features, point Eclipse at this site.&lt;/description&gt;
+	&lt;!-- ${category.name} --&gt;
+	&lt;category-def label="${category.name}" name="${category.name}"&gt;
+		&lt;description&gt;${category.name}: contains all features in this build.&lt;/description&gt;
+	&lt;/category-def&gt;
+</echo>
+
+		<mkdir dir="${updateSiteJarDir}/../features" />
+		<for param="featureJar">
+			<path>
+				<fileset dir="${updateSiteJarDir}/../features" includes="**/target/*.jar" excludes="**/*test*" />
+			</path>
+			<sequential>
+				<var name="feature.jarfile" unset="true" />
+				<var name="feature.id" unset="true" />
+				<propertyregex property="feature.jarfile"
+				               defaultvalue="@{featureJar}"
+				               input="@{featureJar}"
+				               regexp=".+/features/[^/]+/target/([^/]+feature.+\.jar)"
+				               replace="\1"
+				               override="true"
+				/>
+				<propertyregex property="feature.id"
+				               defaultvalue="${feature.jarfile}"
+				               input="${feature.jarfile}"
+				               regexp="([^_]+)_(\d+\.\d+\.\d+\..+)\.jar"
+				               replace="\1"
+				               override="true"
+				/>
+				<propertyregex property="feature.id"
+				               defaultvalue="${feature.jarfile}"
+				               input="${feature.jarfile}"
+				               regexp="([^_]+)-(\d+\.\d+\.\d+-SNAPSHOT)\.jar"
+				               replace="\1"
+				               override="true"
+				/>
+				<echo append="true" file="${updateSiteJarDir}/site.xml">	&lt;feature url="features/${feature.id}_0.0.0.jar" id="${feature.id}" version="0.0.0"&gt;
+		&lt;category name="${category.name}"/&gt;
+	&lt;/feature&gt;
+</echo>
+				<var name="feature.jarfile" unset="true" />
+				<var name="feature.id" unset="true" />
+			</sequential>
+		</for>
+		<echo append="true" file="${updateSiteJarDir}/site.xml">
+&lt;/site&gt;
+</echo>
 	</target>
 
 	<!-- TODO: figure out why this fails with error: 
