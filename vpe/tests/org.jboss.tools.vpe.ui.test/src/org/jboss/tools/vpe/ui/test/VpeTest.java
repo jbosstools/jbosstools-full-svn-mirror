@@ -9,9 +9,7 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-
 package org.jboss.tools.vpe.ui.test;
-
 
 import java.io.IOException;
 import java.util.Collection;
@@ -51,143 +49,151 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-
 /**
  * The Class VpeTest.
  * 
  * @author Max Areshkau
  * 
- * Base Class for VPE tests
+ *         Base Class for VPE tests
  */
 public class VpeTest extends TestCase implements ILogListener {
 
-    /** Editor in which we open visual page. */
-    protected final static String EDITOR_ID = "org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"; //$NON-NLS-1$
+	/** Editor in which we open visual page. */
+	protected final static String EDITOR_ID = "org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"; //$NON-NLS-1$
 
-    /** Collects exceptions. */
-    private Throwable exception;
+	/** Collects exceptions. */
+	private Throwable exception;
 
-    /** check warning log. */
-    private boolean checkWarning = false;
-  
-    // FIX for JBIDE-1628
-    static {
-        ClassLoaderUtil.init();
-        // wait for initialization
-        TestUtil.delay(3000);
-        JspEditorPlugin.getDefault().getPreferenceStore().setValue(IVpePreferencesPage.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE, false);
-    }
+	/** check warning log. */
+	private boolean checkWarning = false;
 
-    /**
-     * The Constructor.
-     * 
-     * @param importProjectName      * @param name the name
-     */
+	// FIX for JBIDE-1628
+	static {
+		ClassLoaderUtil.init();
+		// wait for initialization
+		TestUtil.delay(3000);
+		JspEditorPlugin
+				.getDefault()
+				.getPreferenceStore()
+				.setValue(
+						IVpePreferencesPage.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
+						false);
+	}
 
-    public VpeTest(String name) {
-        super(name);
+	/**
+	 * The Constructor.
+	 * 
+	 * @param importProjectName
+	 *            * @param name the name
+	 */
 
-    }
+	public VpeTest(String name) {
+		super(name);
 
-    /**
-     * Perform pre-test initialization.
-     * 
-     * @throws Exception the exception
-     * 
-     * @see TestCase#setUp()
-     */
-    @Override
+	}
+
+	/**
+	 * Perform pre-test initialization.
+	 * 
+	 * @throws Exception
+	 *             the exception
+	 * 
+	 * @see TestCase#setUp()
+	 */
+	@Override
 	protected void setUp() throws Exception {
-        super.setUp();
-        Platform.addLogListener(this);
-        // String jbossPath = System.getProperty(
-        // "jbosstools.test.jboss.home.4.2", "C:\\java\\jboss-4.2.2.GA");
-        // JBossASAdapterInitializer.initJBossAS(jbossPath, new
-        // NullProgressMonitor());
-        closeEditors();
-    }
+		super.setUp();
+		Platform.addLogListener(this);
+		// String jbossPath = System.getProperty(
+		// "jbosstools.test.jboss.home.4.2", "C:\\java\\jboss-4.2.2.GA");
+		// JBossASAdapterInitializer.initJBossAS(jbossPath, new
+		// NullProgressMonitor());
+		closeEditors();
+	}
 
-    /**
-     * Perform post-test cleanup.
-     * 
-     * @throws Exception the exception
-     * 
-     * @see TestCase#tearDown()
-     */
-    @Override
+	/**
+	 * Perform post-test cleanup.
+	 * 
+	 * @throws Exception
+	 *             the exception
+	 * 
+	 * @see TestCase#tearDown()
+	 */
+	@Override
 	protected void tearDown() throws Exception {
-    	
-    	boolean isJobsCheck = true;
-		while (isJobsCheck){
+
+		boolean isJobsCheck = true;
+		while (isJobsCheck) {
 			isJobsCheck = false;
-		 	Job[] jobs = Job.getJobManager().find(null);
+			Job[] jobs = Job.getJobManager().find(null);
 			for (Job job : jobs) {
 				if (job instanceof StructuredRegionProcessor) {
-					if (job.getState() == Job.RUNNING) {
-						TestUtil.delay(50);
-						isJobsCheck = true;
-						break;
-					}
+					TestUtil.delay(50);
+					isJobsCheck = true;
+					break;
 				}
 			}
 		}
-   
-        closeEditors();
-	    
-        Platform.removeLogListener(this);
-    
-    	if (getException() != null) {
+
+		closeEditors();
+
+		Platform.removeLogListener(this);
+
+		if (getException() != null) {
 			throw new Exception(getException());
 		}
-        
-        super.tearDown();
 
-    }
+		super.tearDown();
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.core.runtime.ILogListener#logging(org.eclipse.core.runtime
-     * .IStatus, java.lang.String)
-     */
-    /**
-     * Logging.
-     * 
-     * @param status the status
-     * @param plugin the plugin
-     */
-    public void logging(IStatus status, String plugin) {
-        switch (status.getSeverity()) {
-        case IStatus.ERROR:
-            setException(status.getException());
-            break;
-        case IStatus.WARNING:
-            if (isCheckWarning())
-                setException(status.getException());
-            break;
-        default:
-            break;
-        }
+	}
 
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.core.runtime.ILogListener#logging(org.eclipse.core.runtime
+	 * .IStatus, java.lang.String)
+	 */
+	/**
+	 * Logging.
+	 * 
+	 * @param status
+	 *            the status
+	 * @param plugin
+	 *            the plugin
+	 */
+	public void logging(IStatus status, String plugin) {
+		switch (status.getSeverity()) {
+		case IStatus.ERROR:
+			setException(status.getException());
+			break;
+		case IStatus.WARNING:
+			if (isCheckWarning())
+				setException(status.getException());
+			break;
+		default:
+			break;
+		}
 
-    /**
-     * close all opened editors.
-     */
-    protected void closeEditors() {
+	}
 
-        // wait
-//        TestUtil.waitForJobs();
-        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        IWorkbenchPart part = page.getViewReferences()[0].getPart(false);
-        page.activate(part);
-        // close
-       	page.closeAllEditors(false);
+	/**
+	 * close all opened editors.
+	 */
+	protected void closeEditors() {
 
-    }
- 
-    /**
+		// wait
+		// TestUtil.waitForJobs();
+		IWorkbenchPage page = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage();
+		IWorkbenchPart part = page.getViewReferences()[0].getPart(false);
+		page.activate(part);
+		// close
+		page.closeAllEditors(false);
+
+	}
+
+	/**
 	 * 
 	 * @return source document
 	 */
@@ -197,102 +203,118 @@ public class VpeTest extends TestCase implements ILogListener {
 
 	}
 
-    /**
-     * Perfoms test for some page.
-     * 
-     * @param componentPage the component page
-     * 
-     * @throws Throwable the throwable
-     * @throws PartInitException the part init exception
-     */
-    protected void performTestForVpeComponent(IFile componentPage) throws PartInitException, Throwable {
-        TestUtil.waitForJobs();
+	/**
+	 * Perfoms test for some page.
+	 * 
+	 * @param componentPage
+	 *            the component page
+	 * 
+	 * @throws Throwable
+	 *             the throwable
+	 * @throws PartInitException
+	 *             the part init exception
+	 */
+	protected void performTestForVpeComponent(IFile componentPage)
+			throws PartInitException, Throwable {
+		TestUtil.waitForJobs();
 
-        setException(null);
+		setException(null);
 
-        // IFile file = (IFile)
-        // TestUtil.getComponentPath(componentPage,getImportProjectName());
-        IEditorInput input = new FileEditorInput(componentPage);
+		// IFile file = (IFile)
+		// TestUtil.getComponentPath(componentPage,getImportProjectName());
+		IEditorInput input = new FileEditorInput(componentPage);
 
-        TestUtil.waitForJobs();
+		TestUtil.waitForJobs();
 
-        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(input, EDITOR_ID, true);
-        //here we wait for inintialization VPE controller
-        TestUtil.getVpeController((JSPMultiPageEditor) editor);
-        
-        assertNotNull(editor);
+		IEditorPart editor = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
+						EDITOR_ID, true);
+		// here we wait for inintialization VPE controller
+		TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
-        TestUtil.waitForJobs();
-        //JBIDE-1628
-//        TestUtil.delay(1000);
+		assertNotNull(editor);
 
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(true);
+		TestUtil.waitForJobs();
+		// JBIDE-1628
+		// TestUtil.delay(1000);
 
-        if (getException() != null) {
-            throw getException();
-        }
-    }
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+				.closeAllEditors(true);
 
-    /**
-     * Open JSPMultiPageEditor editor.
-     * 
-     * @param input the input
-     * 
-     * @return the JSP multi page editor
-     * 
-     * @throws PartInitException the part init exception
-     */
-    protected JSPMultiPageEditor openEditor(IEditorInput input) throws PartInitException {
+		if (getException() != null) {
+			throw getException();
+		}
+	}
 
-        // get editor
-        JSPMultiPageEditor part = (JSPMultiPageEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
-                input, EDITOR_ID, true);
+	/**
+	 * Open JSPMultiPageEditor editor.
+	 * 
+	 * @param input
+	 *            the input
+	 * 
+	 * @return the JSP multi page editor
+	 * 
+	 * @throws PartInitException
+	 *             the part init exception
+	 */
+	protected JSPMultiPageEditor openEditor(IEditorInput input)
+			throws PartInitException {
 
-        assertNotNull(part);
-        return part;
+		// get editor
+		JSPMultiPageEditor part = (JSPMultiPageEditor) PlatformUI
+				.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+				.openEditor(input, EDITOR_ID, true);
 
-    }
+		assertNotNull(part);
+		return part;
 
-    /**
-     * Gets the exception.
-     * 
-     * @return the exception
-     */
-    protected Throwable getException() {
-        return exception;
-    }
+	}
 
-    /**
-     * Sets the exception.
-     * 
-     * @param exception the exception to set
-     */
-    protected void setException(Throwable exception) {
-        this.exception = exception;
-    }
+	/**
+	 * Gets the exception.
+	 * 
+	 * @return the exception
+	 */
+	protected Throwable getException() {
+		return exception;
+	}
 
-    /**
-     * Checks if is check warning.
-     * 
-     * @return the checkWarning
-     */
-    protected boolean isCheckWarning() {
-        return checkWarning;
-    }
+	/**
+	 * Sets the exception.
+	 * 
+	 * @param exception
+	 *            the exception to set
+	 */
+	protected void setException(Throwable exception) {
+		this.exception = exception;
+	}
 
-    /**
-     * Sets the check warning.
-     * 
-     * @param checkWarning the checkWarning to set
-     */
-    protected void setCheckWarning(boolean checkWarning) {
-        this.checkWarning = checkWarning;
-    }
-    /**
-     * Compares source nodes selection and visual selection
-     * @param VPE Editor part
-     */
-    protected void checkSourceSelection(JSPMultiPageEditor part) {
+	/**
+	 * Checks if is check warning.
+	 * 
+	 * @return the checkWarning
+	 */
+	protected boolean isCheckWarning() {
+		return checkWarning;
+	}
+
+	/**
+	 * Sets the check warning.
+	 * 
+	 * @param checkWarning
+	 *            the checkWarning to set
+	 */
+	protected void setCheckWarning(boolean checkWarning) {
+		this.checkWarning = checkWarning;
+	}
+
+	/**
+	 * Compares source nodes selection and visual selection
+	 * 
+	 * @param VPE
+	 *            Editor part
+	 */
+	protected void checkSourceSelection(JSPMultiPageEditor part) {
 		// get controller
 		VpeController controller = TestUtil.getVpeController(part);
 		assertNotNull(controller);
@@ -334,44 +356,45 @@ public class VpeTest extends TestCase implements ILogListener {
 				TestUtil.delay(50);
 
 				assertNotNull(xulRunnerEditor.getLastSelectedNode());
-				
+
 				nsIDOMNode sample;
 				if (nodeMapping.getSourceNode().getNodeType() == Node.TEXT_NODE
 						&& ((VpeElementMapping) nodeMapping).getElementData() != null) {
 
-					sample = ((VpeElementMapping) nodeMapping).getElementData().getNodesData().get(0).getVisualNode();
-				}
-				else {
+					sample = ((VpeElementMapping) nodeMapping).getElementData()
+							.getNodesData().get(0).getVisualNode();
+				} else {
 					sample = nodeMapping.getVisualNode();
 				}
-				
-				assertEquals(sample, xulRunnerEditor
-						.getLastSelectedNode());
+
+				assertEquals(sample, xulRunnerEditor.getLastSelectedNode());
 			}
 		}
-    }
+	}
 
 	/**
 	 * Opens specified file in the VPE editor.
 	 * 
-	 * @param projectName the name of the project
-	 * @param fileName the name of the file
+	 * @param projectName
+	 *            the name of the project
+	 * @param fileName
+	 *            the name of the file
 	 * 
 	 * @return VpeController
-	 * @throws CoreException 
-	 * @throws IOException 
+	 * @throws CoreException
+	 * @throws IOException
 	 */
 	protected VpeController openInVpe(String projectName, String fileName)
 			throws CoreException, IOException {
 		// get test page path
-		final IFile file =
-			(IFile) TestUtil.getComponentPath(fileName, projectName);
-		assertNotNull("Could not open specified file."		//$NON-NLS-1$
-				+ " componentPage = " + fileName			//$NON-NLS-1$
-				+ ";projectName = " + projectName, file);	//$NON-NLS-1$
+		final IFile file = (IFile) TestUtil.getComponentPath(fileName,
+				projectName);
+		assertNotNull("Could not open specified file." //$NON-NLS-1$
+				+ " componentPage = " + fileName //$NON-NLS-1$
+				+ ";projectName = " + projectName, file); //$NON-NLS-1$
 
 		final IEditorInput input = new FileEditorInput(file);
-		assertNotNull("Editor input is null", input);		//$NON-NLS-1$
+		assertNotNull("Editor input is null", input); //$NON-NLS-1$
 
 		// open and get the editor
 		final JSPMultiPageEditor part = openEditor(input);
@@ -379,7 +402,7 @@ public class VpeTest extends TestCase implements ILogListener {
 		final VpeController vpeController = TestUtil.getVpeController(part);
 		return vpeController;
 	}
-	
+
 	/**
 	 * find source element by "id"
 	 * 
@@ -392,7 +415,7 @@ public class VpeTest extends TestCase implements ILogListener {
 
 		return getSourceDocument(controller).getElementById(elementId);
 	}
-	
+
 	/**
 	 * find visual element by "id" entered in source part of vpe
 	 * 
