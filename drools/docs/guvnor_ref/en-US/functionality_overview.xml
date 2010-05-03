@@ -266,7 +266,7 @@ the Guvnor repository causes the Eclipse <property>Properties view</property> to
 
         <para>As mentioned in the <link linkend="introduction">&quot;Introduction&quot;</link>, the main purpose
             of the <property>EGT</property> is to allow development using resources held in a Guvnor
-            repository. There are two method of getting local copies of Guvnor repository
+            repository. There are two methods of getting local copies of Guvnor repository
             resources:</para>
 
         <orderedlist>
@@ -305,10 +305,10 @@ the Guvnor repository causes the Eclipse <property>Properties view</property> to
            above you can see the <emphasis>
                 <property>Dummy rule.drl</property></emphasis> file with the decoration in the <property>Resource Navigator</property>. The Guvnor icon decorator is on the top right of the file image, and the Guvnor
             revision details are appended to the file name. (The presence/location of these can be
-            changed the <link linkend="resource_decoration_preferences">Guvnor
+            changed in the <link linkend="resource_decoration_preferences">Guvnor
             Preferences</link>.)</para>
 
-        <para>Here we see that, <emphasis><property>Dummy role.drl</property></emphasis> is associated with a Guvnor repository
+        <para>Here we see that, <emphasis><property>Dummy rule.drl</property></emphasis> is associated with a Guvnor repository
             resource and the local copy is based on revision 0, with a <code>02-10-2008, 4:21:53</code> date/time
             stamp. The file <emphasis><property>Sample.drl</property>,</emphasis> however, is not associated with a Guvnor repository
             file. Further details about the association can be found in the standard Eclipse
@@ -496,7 +496,7 @@ the Guvnor repository causes the Eclipse <property>Properties view</property> to
 
             <para>The <emphasis>
                     <property>Show History</property>
-                </emphasis> action is enable for one Guvnor repository associated file and causes
+                </emphasis> action is enabled for one Guvnor repository associated file and causes
                 the <link linkend="guvnor_history_view">Guvnor Resource History view</link> to be
                 populated with revision history for the selected file.</para>
         </section>
@@ -634,7 +634,7 @@ the Guvnor repository causes the Eclipse <property>Properties view</property> to
 
         <para>Here we see that the file <emphasis>
                 <property>test.txt</property>
-            </emphasis> has three revisions. Double clicking on a revision row (or the context menu <emphasis>
+            </emphasis> has seven revisions. Double clicking on a revision row (or the context menu <emphasis>
                 <property>Open (Read only)</property>)</emphasis> opens an Eclipse read-only editor
             with the revision contents.</para>
 

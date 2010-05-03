@@ -119,7 +119,7 @@
         <title>How to start with Guvnor Tools</title>
 
         <para><property>Guvnor Tools</property> is a part of the <property>JBoss Tools</property>
-            project. Thus to get started with <property>Guvnor Tools</property>, you should have the following:</para>
+            project. Thus to get started with Guvnor Tools, you should have the following:</para>
 
         <itemizedlist>
             <listitem>
@@ -128,14 +128,35 @@
             </listitem>
 
             <listitem>
-                <para>JBoss Server 4.2 or higher with Guvnor repository deployed. Thus, you should
-                    download <ulink
-                        url="http://download.jboss.org/drools/release/5.0.0.25561.CR1/drools-5.0.0.CR1-guvnor.zip"
-                        >Guvnor CR1</ulink> and extract it to the deploy directory of the
-                    server.</para>
+                <para>JBoss Server 4.2 or higher with Guvnor repository deployed.</para>
             </listitem>
         </itemizedlist>
-
+        <para>To have JBoss Server with Guvnor repository deployed, you should
+            download <ulink url="http://www.jboss.org/drools/downloads.html">Guvnor</ulink>.
+            When downloading you may choose either web based Guvnor to deploy to your
+            JBoss Server or Standalone Guvnor with JBoss AS.</para> 
+        <para>If you use a JBoss AS 5 and a <property>Guvnor Tools</property> doesn't work when deployed to the server,
+        you should do the following to get Guvnor Tools running:</para>
+        <orderedlist>
+            <listitem>
+                <para>Remove the  JBoss Security libraries (authorization-spi-2.0.2.CR6.jar, 
+                    identity-*, acl-spi-2.0.2.CR6.jar) from drools WAR file (not the app server itself).                    
+                    The JBoss Security libraries are provided in AS 5.</para>
+            </listitem>
+            <listitem>
+                <para>Remove the JAXP libraries (xercesImpl-2.8.0.jar, xml-apis-2.*)</para>
+            </listitem>
+            <listitem>
+                <para>Remove the EL libraries (el-*)</para>
+            </listitem>
+        </orderedlist>
+        <para>After this, Guvnor should operate as normal.            
+            During deployment, you would see the following exception in the log which indicates that the experiemental
+            JBoss Security based ACL integration has defined some EJB3/JPA stuff in guvnor that has not been configured.</para>
+        <programlisting>ERROR [AbstractKernelController] Error installing to Start: name=persistence.unit:unitName=#ACL state=Create
+java.lang.RuntimeException: Specification violation [EJB3 JPA 6.2.1.2] - You have not defined a non-jta-data-source 
+for a RESOURCE_LOCAL enabled persistence context named: ACL            
+        </programlisting>
         <para>Now refer to the <link linkend="functionality_overview">&quot;Functionality
                 Overview&quot;</link> section to find out what you can do with Guvnor and
             Eclipse synchronisation tool.</para>
