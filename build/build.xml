@@ -597,6 +597,19 @@ ${test.results.errors.failures.skipped}
 		     basedir="${WORKINGDIR}/site/target/site"
 		     update="false"
 		/>
+
+		<!-- Copy zip into workspace so it can be archived by Hudson -->
+		<if>
+			<not>
+				<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
+			</not>
+			<then>
+				<mkdir dir="${basedir}/site/target" />
+				<copy todir="${basedir}/site/target" flatten="true" preservelastmodified="true" overwrite="true">
+					<fileset dir="${WORKINGDIR}/site/target" includes="*Update*.zip" />
+				</copy>
+			</then>
+		</if>
 	</target>
 
 	<!-- TODO: figure out why this fails with error: 
