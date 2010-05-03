@@ -747,13 +747,19 @@ public class XPathValidator extends Validator {
 		String name = expr.getVariableName();
 		IProblem problem;
 
+		// https://jira.jboss.org/jira/browse/JBIDE-6000
+		// this returns too soon - only check duplicateThing if we're sure that there really IS a problem
 		// check to make sure we don't print the same message twice.
-		if (duplicateThing("duplicate.variable.check.", name)) {
-			return;
-		}
+//		if (duplicateThing("duplicate.variable.check.", name)) {
+//			return;
+//		}
 
 		if (isEmpty(prefix) == false) {
 
+			// check to make sure we don't print the same message twice.
+			if (duplicateThing("duplicate.variable.check.", name)) {
+				return;
+			}
 			problem = createError();
 			problem.fill("XPATH_INVALID_VARREF_PREFIX", //$NON-NLS-1$
 					prefix + ":" + name); //$NON-NLS-1$
@@ -774,6 +780,10 @@ public class XPathValidator extends Validator {
 
 		if (isUndefined(variable)) {
 
+			// check to make sure we don't print the same message twice.
+			if (duplicateThing("duplicate.variable.check.", name)) {
+				return;
+			}
 			problem = createError();
 			problem.fill("XPATH_UNDEF_VARIABLE", //$NON-NLS-1$
 					varName, expr.getText());
@@ -808,6 +818,10 @@ public class XPathValidator extends Validator {
 		if (partName != null) {
 
 			if (WSDL_ND_MESSAGE.equals(varTypeNode.nodeName()) == false) {
+				// check to make sure we don't print the same message twice.
+				if (duplicateThing("duplicate.variable.check.", name)) {
+					return;
+				}
 				problem = createError();
 				problem.fill("XPATH_VARIABLE_PART", varName, partName, expr
 						.getText(), 0);
@@ -815,6 +829,10 @@ public class XPathValidator extends Validator {
 
 			} else if (isUndefined(variablePart)) {
 
+				// check to make sure we don't print the same message twice.
+				if (duplicateThing("duplicate.variable.check.", name)) {
+					return;
+				}
 				problem = createError();
 				problem.fill("XPATH_UNDEF_VARIABLE_PART", //$NON-NLS-1$
 						varName, partName, expr.getText());
@@ -829,6 +847,10 @@ public class XPathValidator extends Validator {
 			// there is no part name specified, but variable does have more then
 			// 1 part.
 			if (WSDL_ND_MESSAGE.equals(varTypeNode.nodeName())) {
+				// check to make sure we don't print the same message twice.
+				if (duplicateThing("duplicate.variable.check.", name)) {
+					return;
+				}
 				problem = createError();
 				problem.fill("XPATH_VARIABLE_PART", varName,
 						"text.term.unspecified", expr.getText(), 1);
