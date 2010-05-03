@@ -13,8 +13,7 @@
         esb,tptp,ws;
         cdi,struts,hibernatetools,seam;
             examples,birt;
-            maven;
-site"
+            maven"
 	/>
 	<!-- TODO: add modeshape, which reqs JDK6 -->
 
