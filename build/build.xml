@@ -24,6 +24,16 @@ site"
 	<!-- default maven version -->
 	<property name="maven.version" value="3.0-beta-1" />
 
+	<!-- name/version we're building -->
+	<property name="product.name" value="JBoss Tools" />
+	<property name="product.id" value="JBossTools" />
+	<property name="product.version" value="3.2.0-beta-1" />
+	<!--
+	<property name="product.name" value="JBoss Developer Studio"/>
+	<property name="product.id" value="JBDS"/>
+	<property name="product.version" value="3.1.0-beta-1"/>
+	-->
+
 	<!-- ****************************** Usage Instructions ****************************** -->
 	<target name="help" description="Usage Instructions" depends="init">
 		<echo>
@@ -60,9 +70,8 @@ Here is the order in which components must be built:
 		</for>
 	</target>
 
-	<!-- TODO: enable create.overall.update.site task -->
 	<target name="run"
-	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results"
+	        depends="init, get.bootstrap.scripts, get.sources, get.components.to.build, run.build, collect.all.test.results, create.overall.update.site"
 	/>
 
 	<target name="test"
@@ -231,6 +240,18 @@ Here is the order in which components must be built:
 
 		<!-- check for each component dir in ${WORKINGDIR}; if not found, fetch -->
 		<echo file="build.cfg" message="COMPONENTS.to.build = " />
+		<if>
+			<and>
+				<isset property="COMPONENT" />
+				<not>
+					<equals arg1="${COMPONENT}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<var name="COMPONENTS" unset="true" />
+				<var name="COMPONENTS" value="${COMPONENT}" />
+			</then>
+		</if>
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",; 
 	">
 			<sequential>
@@ -354,36 +375,8 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<property name="COMPONENT" value="@{COMPONENT}" />
 				</ant>
 
-				<!-- Use Xvfb wrapper for maven when invoking UI tests -->
 				<var name="mvnExe" value="mvn" />
-				<if>
-					<available file="/usr/bin/Xvfb" type="file" />
-					<then>
-						<if>
-							<not>
-								<available file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb"
-								           type="file"
-								/>
-							</not>
-							<then>
-								<echo file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb">#!/bin/bash
-if [[ -f /tmp/.X3-lock ]]; then 
-	kill -9 `cat /tmp/.X3-lock`
-	rm -fr /tmp/.X3-lock
-fi
-/usr/bin/Xvfb :3 -ac 2&gt;&amp;1 1&gt;/dev/null &amp; 
-DISPLAY=:3 /opt/maven3/bin/mvn $* 
-kill -9 `cat /tmp/.X3-lock`
-rm -fr /tmp/.X3-lock
-</echo>
-								<chmod perm="755"
-								       file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb"
-								/>
-							</then>
-						</if>
-						<var name="mvnExe" value="mvnWithXvfb" />
-					</then>
-				</if>
+				<antcallback target="getMvnExe" return="mvnExe" />
 
 				<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}</echo>
 				<echo level="verbose">Pom: ${WORKINGDIR}/@{COMPONENT}/pom.xml</echo>
@@ -417,6 +410,34 @@ rm -fr /tmp/.X3-lock
 			</sequential>
 		</for>
 		<now level="info">Builds done</now>
+	</target>
+
+	<!-- Use Xvfb wrapper for maven when invoking UI tests -->
+	<target name="getMvnExe" unless="noXvfb">
+		<if>
+			<available file="/usr/bin/Xvfb" type="file" />
+			<then>
+				<if>
+					<not>
+						<available file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb" type="file" />
+					</not>
+					<then>
+						<echo file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb">#!/bin/bash
+if [[ -f /tmp/.X3-lock ]]; then 
+kill -9 `cat /tmp/.X3-lock`
+rm -fr /tmp/.X3-lock
+fi
+/usr/bin/Xvfb :3 -ac 2&gt;&amp;1 1&gt;/dev/null &amp; 
+DISPLAY=:3 /opt/maven3/bin/mvn $* 
+kill -9 `cat /tmp/.X3-lock`
+rm -fr /tmp/.X3-lock
+</echo>
+						<chmod perm="755" file="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/mvnWithXvfb" />
+					</then>
+				</if>
+				<var name="mvnExe" value="mvnWithXvfb" />
+			</then>
+		</if>
 	</target>
 
 	<target name="collect.test.results">
@@ -537,36 +558,42 @@ ${test.results.errors.failures.skipped}
 	<target name="create.update.site">
 	</target>
 
-	<!-- TODO: exclude test plugins/features from zip -->
 	<target name="create.overall.update.site" depends="init">
-		<delete dir="${WORKINGDIR}/site/target/site" includes="artifacts.*, content.*" quiet="true" />
+		<property name="update.site.description" value="Nightly Build" />
 
-		<delete dir="${WORKINGDIR}/site/target/site/features" includeemptydirs="true" quiet="true" />
-		<mkdir dir="${WORKINGDIR}/site/target/site/features" />
-		<copy todir="${WORKINGDIR}/site/target/site/features" flatten="true">
-			<fileset dir="${WORKINGDIR}" includes="**/target/*feature_*.jar,**/target/*feature*SNAPSHOT.jar" />
-		</copy>
+		<!-- Clean up from last time, then fetch fresh sources (checkout or update) -->
+		<delete dir="${WORKINGDIR}/site/target" quiet="true" />
+		<antcall target="get.sources">
+			<param name="COMPONENT" value="site" />
+		</antcall>
 
-		<delete dir="${WORKINGDIR}/site/target/site/plugins" includeemptydirs="true" quiet="true" />
-		<mkdir dir="${WORKINGDIR}/site/target/site/plugins" />
-		<copy todir="${WORKINGDIR}/site/target/site/plugins" flatten="true">
-			<fileset dir="${WORKINGDIR}"
-			         excludes="**/target/*feature_*.jar,**/target/*feature*SNAPSHOT.jar"
-			         includes="**/target/*_*.jar,**/target/*-SNAPSHOT.jar"
-			/>
-		</copy>
-		
+		<!-- Get correct version of site.xml + resolve variables -->
+		<loadfile property="site.xml.transformed" srcfile="${WORKINGDIR}/site/category.${product.id}.xml">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+		<echo file="${WORKINGDIR}/site/site.xml" message="${site.xml.transformed}" />
+		<var name="site.xml.transformed" unset="true" />
+
 		<!-- Call maven to generate pom.xml, then build site from site.xml -->
 		<antcall target="run.build">
 			<param name="COMPONENTS.to.build" value="site" />
 			<param name="MAVEN_FLAGS" value="verify -B -fae -Dmaven.test.skip" />
+			<param name="noXvfb" value="true" />
 		</antcall>
 
-		<!-- delete pointless empty site.zip (contains only site.xml) -->
-		<delete file="${WORKINGDIR}/site/target/site.zip"/>
-		
-		<!-- create real update site zip -->
-		<zip destfile="${WORKINGDIR}/site/target/JBossTools-Update-SNAPSHOT.zip" basedir="${WORKINGDIR}/site/target/site" update="false"/>
+		<!-- Delete pointless site.zip -->
+		<delete file="${WORKINGDIR}/site/target/site.zip" />
+
+		<!-- Create real update site zip, including web UI -->
+		<copy todir="${WORKINGDIR}/site/target/site">
+			<fileset dir="${WORKINGDIR}/site" includes="web/*, index.html" />
+		</copy>
+		<zip destfile="${WORKINGDIR}/site/target/JBossTools-Update-SNAPSHOT.zip"
+		     basedir="${WORKINGDIR}/site/target/site"
+		     update="false"
+		/>
 	</target>
 
 	<!-- TODO: figure out why this fails with error: 
