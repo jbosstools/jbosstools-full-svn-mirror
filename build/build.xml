@@ -656,10 +656,10 @@ ${test.results.errors.failures.skipped}
 			</else>
 		</if>
 
-		<!-- Call maven to generate pom.xml, then build site from site.xml -->
 		<if>
 			<equals arg1="${COMPONENTS.to.build}" arg2="site" />
 			<then>
+				<!-- Call maven to generate pom.xml, then build site from site.xml -->
 				<antcall target="run.build">
 					<param name="COMPONENTS.to.build" value="${COMPONENTS.to.build}" />
 					<param name="MAVEN_FLAGS" value="verify -q -B -fae -Dmaven.test.skip" />
@@ -667,6 +667,7 @@ ${test.results.errors.failures.skipped}
 				</antcall>
 			</then>
 			<else>
+				<!-- Or just call maven to build site -->
 				<antcall target="mvn">
 					<param name="MAVEN_DIR" value="${WORKINGDIR}/${update.site.path}" />
 					<param name="MAVEN_FLAGS" value="verify -q -B -fae -Dmaven.test.skip" />
@@ -682,10 +683,7 @@ ${test.results.errors.failures.skipped}
 		<copy todir="${WORKINGDIR}/${update.site.path}/target/site">
 			<fileset dir="${WORKINGDIR}/${update.site.path}" includes="web/*, index.html" />
 		</copy>
-		<zip destfile="${destinationZip}"
-		     basedir="${WORKINGDIR}/${update.site.path}/target/site"
-		     update="false"
-		/>
+		<zip destfile="${destinationZip}" basedir="${WORKINGDIR}/${update.site.path}/target/site" update="false" />
 
 		<!-- Copy zip into workspace so it can be archived by Hudson -->
 		<if>
@@ -733,7 +731,7 @@ ${test.results.errors.failures.skipped}
 </echo>
 
 	</target>
-	
+
 	<target name="genSiteXml" description="Generate a site.xml to contain the features in a category">
 		<property name="updateSiteJarDir" value="${WORKINGDIR}/${COMPONENT}/site" />
 		<property name="COMPONENT" value="${COMPONENT}" />
@@ -757,27 +755,9 @@ ${test.results.errors.failures.skipped}
 			<sequential>
 				<var name="feature.jarfile" unset="true" />
 				<var name="feature.id" unset="true" />
-				<propertyregex property="feature.jarfile"
-				               defaultvalue="@{featureJar}"
-				               input="@{featureJar}"
-				               regexp=".+/features/[^/]+/target/([^/]+feature.+\.jar)"
-				               replace="\1"
-				               override="true"
-				/>
-				<propertyregex property="feature.id"
-				               defaultvalue="${feature.jarfile}"
-				               input="${feature.jarfile}"
-				               regexp="([^_]+)_(\d+\.\d+\.\d+\..+)\.jar"
-				               replace="\1"
-				               override="true"
-				/>
-				<propertyregex property="feature.id"
-				               defaultvalue="${feature.jarfile}"
-				               input="${feature.jarfile}"
-				               regexp="([^_]+)-(\d+\.\d+\.\d+-SNAPSHOT)\.jar"
-				               replace="\1"
-				               override="true"
-				/>
+				<antcallback target="get.feature.id" return="feature.id">
+					<property name="featureJar" value="@{featureJar}" />
+				</antcallback>
 				<echo append="true" file="${updateSiteJarDir}/site.xml">	&lt;feature url="features/${feature.id}_0.0.0.jar" id="${feature.id}" version="0.0.0"&gt;
 		&lt;category name="${category.name}"/&gt;
 	&lt;/feature&gt;
@@ -789,6 +769,84 @@ ${test.results.errors.failures.skipped}
 		<echo append="true" file="${updateSiteJarDir}/site.xml">
 &lt;/site&gt;
 </echo>
+	</target>
+
+	<target name="get.feature.id">
+		<propertyregex property="feature.jarfile"
+		               defaultvalue="${featureJar}"
+		               input="${featureJar}"
+		               regexp=".+/features/[^/]+/target/([^/]+feature.+\.jar)"
+		               replace="\1"
+		               override="true"
+		/>
+		<propertyregex property="feature.id"
+		               defaultvalue="${feature.jarfile}"
+		               input="${feature.jarfile}"
+		               regexp="([^_]+)_(\d+\.\d+\.\d+\..+)\.jar"
+		               replace="\1"
+		               override="true"
+		/>
+		<propertyregex property="feature.id"
+		               defaultvalue="${feature.id}"
+		               input="${feature.id}"
+		               regexp="([^_]+)-(\d+\.\d+\.\d+\..+)\.jar"
+		               replace="\1"
+		               override="true"
+		/>
+		<propertyregex property="feature.id"
+		               defaultvalue="${feature.id}"
+		               input="${feature.id}"
+		               regexp="([^_]+)-(\d+\.\d+\.\d+-SNAPSHOT)\.jar"
+		               replace="\1"
+		               override="true"
+		/>
+		<var name="featureJar" unset="true" />
+	</target>
+
+
+	<!-- single test, runs faster -->
+	<target name="test.get.feature.id.vpe">
+		<antcall target="test.get.feature.id">
+			<param name="COMPONENTS" value="vpe" />
+		</antcall>
+	</target>
+
+	<!-- test all feature.id fetches -->
+	<target name="test.get.feature.id" depends="init, test.expected.values">
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";, 
+	">
+			<sequential>
+				<for param="featureJar" delimiter=", ">
+					<!-- list="org.jboss.tools.xulrunner.feature, org.jboss.tools.vpe.feature" -->
+					<path>
+						<fileset dir="${basedir}/@{COMPONENT}" includes="**/features/**/target/*.jar" />
+					</path>
+					<sequential>
+						<echo level="info">Test @{featureJar}</echo>
+						<antcallback target="get.feature.id" return="feature.id">
+							<property name="featureJar" value="@{featureJar}" />
+						</antcallback>
+						<var name="featureJar.path" unset="true" />
+						<propertyregex override="true"
+						               property="feature.id.expected.name"
+						               defaultvalue="@{featureJar}"
+						               input="@{featureJar}"
+						               regexp="${basedir}\/(.+)"
+						               replace="get.feature.id.expected.\1"
+						/>
+						<!-- <echo>&lt;property name="get.feature.id.expected.@{featureJar}" value="${feature.id}"/&gt; </echo> -->
+
+						<propertycopy name="feature.id.expected" from="${feature.id.expected.name}" />
+						<assert failonerror="true" message="Expected: ${feature.id.expected}; got: ${feature.id}">
+							<bool>
+								<equals arg1="${feature.id.expected}" arg2="${feature.id}" />
+							</bool>
+						</assert>
+						<var name="feature.id.expected" unset="true" />
+					</sequential>
+				</for>
+			</sequential>
+		</for>
 	</target>
 
 	<!-- TODO: figure out why this fails with error: 
@@ -867,6 +925,171 @@ Cannot deploy - sourceDir not found in
 		<property name="get.components.to.test.expected"
 		          value="tests,common,flow,jbpm,jmx,archives,as,drools,bpel,smooks,freemarker,profiler,portlet,xulrunner,jst,vpe,jsf,esb,tptp,ws,cdi,struts,hibernatetools,seam,examples,birt,maven,"
 		/>
+
+		<!-- expected values for test.get.feature.id -->
+		<property name="get.feature.id.expected.tests/features/org.jboss.tools.test.feature/target/org.jboss.tools.test.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.test.feature"
+		/>
+		<property name="get.feature.id.expected.common/features/org.jboss.tools.common.all.feature/target/org.jboss.tools.common.all.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.common.all.feature"
+		/>
+		<property name="get.feature.id.expected.common/features/org.jboss.tools.common.all.tests.feature/target/org.jboss.tools.common.all.tests.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.common.all.tests.feature"
+		/>
+		<property name="get.feature.id.expected.common/features/org.jboss.tools.common.core.feature/target/org.jboss.tools.common.core.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.common.core.feature"
+		/>
+		<property name="get.feature.id.expected.common/features/org.jboss.tools.common.feature/target/org.jboss.tools.common.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.common.feature"
+		/>
+		<property name="get.feature.id.expected.common/features/org.jboss.tools.common.text.ext.feature/target/org.jboss.tools.common.text.ext.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.common.text.ext.feature"
+		/>
+		<property name="get.feature.id.expected.common/features/org.jboss.tools.common.ui.feature/target/org.jboss.tools.common.ui.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.common.ui.feature"
+		/>
+		<property name="get.feature.id.expected.common/features/org.jboss.tools.common.verification.feature/target/org.jboss.tools.common.verification.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.common.verification.feature"
+		/>
+		<property name="get.feature.id.expected.flow/features/org.jboss.tools.flow.common.feature/target/org.jboss.tools.flow.common.feature-4.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.flow.common.feature"
+		/>
+		<property name="get.feature.id.expected.jbpm/features/org.jboss.tools.flow.jpdl4.feature/target/org.jboss.tools.flow.jpdl4.feature-4.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.flow.jpdl4.feature"
+		/>
+		<property name="get.feature.id.expected.jbpm/features/org.jboss.tools.jbpm.common.feature/target/org.jboss.tools.jbpm.common.feature-4.3.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jbpm.common.feature"
+		/>
+		<property name="get.feature.id.expected.jbpm/features/org.jboss.tools.jbpm.convert.feature/target/org.jboss.tools.jbpm.convert.feature-1.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jbpm.convert.feature"
+		/>
+		<property name="get.feature.id.expected.jbpm/features/org.jboss.tools.jbpm3.feature/target/org.jboss.tools.jbpm3.feature-3.2.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jbpm3.feature"
+		/>
+		<property name="get.feature.id.expected.jbpm/features/org.jboss.tools.jbpm3.tests.feature/target/org.jboss.tools.jbpm3.tests.feature-3.2.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jbpm3.tests.feature"
+		/>
+		<property name="get.feature.id.expected.jbpm/features/org.jboss.tools.jbpm4.feature/target/org.jboss.tools.jbpm4.feature-4.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jbpm4.feature"
+		/>
+		<property name="get.feature.id.expected.jbpm/features/org.jboss.tools.jbpm4.tests.feature/target/org.jboss.tools.jbpm4.tests.feature-4.3.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jbpm4.tests.feature"
+		/>
+		<property name="get.feature.id.expected.jbpm/features/org.jbpm.gd.jpdl.feature/target/org.jbpm.gd.jpdl.feature-3.2.0-SNAPSHOT.jar"
+		          value="org.jbpm.gd.jpdl.feature"
+		/>
+		<property name="get.feature.id.expected.jmx/features/org.jboss.tools.jmx.feature/target/org.jboss.tools.jmx.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jmx.feature"
+		/>
+		<property name="get.feature.id.expected.jmx/features/org.jboss.tools.jmx.tests.feature/target/org.jboss.tools.jmx.tests.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jmx.tests.feature"
+		/>
+		<property name="get.feature.id.expected.archives/features/org.jboss.ide.eclipse.archives.feature/target/org.jboss.ide.eclipse.archives.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.ide.eclipse.archives.feature"
+		/>
+		<property name="get.feature.id.expected.archives/features/org.jboss.ide.eclipse.archives.test.feature/target/org.jboss.ide.eclipse.archives.test.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.ide.eclipse.archives.test.feature"
+		/>
+		<property name="get.feature.id.expected.as/features/org.jboss.ide.eclipse.as.test.feature/target/org.jboss.ide.eclipse.as.test.feature-2.1.0-SNAPSHOT.jar"
+		          value="org.jboss.ide.eclipse.as.test.feature"
+		/>
+		<property name="get.feature.id.expected.bpel/features/org.jboss.tools.bpel.feature/target/org.jboss.tools.bpel.feature-1.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.bpel.feature"
+		/>
+		<property name="get.feature.id.expected.bpel/features/org.jboss.tools.bpel.tests.feature/target/org.jboss.tools.bpel.tests.feature-1.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.bpel.tests.feature"
+		/>
+		<property name="get.feature.id.expected.smooks/features/org.jboss.tools.smooks.feature/target/org.jboss.tools.smooks.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.smooks.feature"
+		/>
+		<property name="get.feature.id.expected.smooks/features/org.jboss.tools.smooks.test.feature/target/org.jboss.tools.smooks.test.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.smooks.test.feature"
+		/>
+		<property name="get.feature.id.expected.freemarker/features/org.jboss.ide.eclipse.freemarker.feature/target/org.jboss.ide.eclipse.freemarker.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.ide.eclipse.freemarker.feature"
+		/>
+		<property name="get.feature.id.expected.freemarker/features/org.jboss.ide.eclipse.freemarker.test.feature/target/org.jboss.ide.eclipse.freemarker.test.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.ide.eclipse.freemarker.test.feature"
+		/>
+		<property name="get.feature.id.expected.profiler/features/org.jboss.tools.profiler.feature/target/org.jboss.tools.profiler.feature-1.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.profiler.feature"
+		/>
+		<property name="get.feature.id.expected.portlet/features/org.jboss.tools.portlet.feature/target/org.jboss.tools.portlet.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.portlet.feature"
+		/>
+		<property name="get.feature.id.expected.portlet/features/org.jboss.tools.portlet.test.feature/target/org.jboss.tools.portlet.test.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.portlet.test.feature"
+		/>
+		<property name="get.feature.id.expected.jst/features/org.jboss.tools.jst.feature/target/org.jboss.tools.jst.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jst.feature"
+		/>
+		<property name="get.feature.id.expected.jst/features/org.jboss.tools.jst.web.tiles.feature/target/org.jboss.tools.jst.web.tiles.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jst.web.tiles.feature"
+		/>
+		<property name="get.feature.id.expected.vpe/features/org.jboss.tools.vpe.feature/target/org.jboss.tools.vpe.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.vpe.feature"
+		/>
+		<property name="get.feature.id.expected.vpe/features/org.jboss.tools.xulrunner.feature/target/org.jboss.tools.xulrunner.feature-1.9.1.2.jar"
+		          value="org.jboss.tools.xulrunner.feature"
+		/>
+		<property name="get.feature.id.expected.jsf/features/org.jboss.tools.jsf.feature/target/org.jboss.tools.jsf.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.jsf.feature"
+		/>
+		<property name="get.feature.id.expected.jsf/features/org.jboss.tools.richfaces.feature/target/org.jboss.tools.richfaces.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.richfaces.feature"
+		/>
+		<property name="get.feature.id.expected.esb/features/org.jboss.tools.esb.feature/target/org.jboss.tools.esb.feature-1.3.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.esb.feature"
+		/>
+		<property name="get.feature.id.expected.esb/features/org.jboss.tools.esb.test.feature/target/org.jboss.tools.esb.test.feature-1.3.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.esb.test.feature"
+		/>
+		<property name="get.feature.id.expected.tptp/features/org.jboss.tools.tptp.feature/target/org.jboss.tools.tptp.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.tptp.feature"
+		/>
+		<property name="get.feature.id.expected.ws/features/org.jboss.tools.ws.feature/target/org.jboss.tools.ws.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.ws.feature"
+		/>
+		<property name="get.feature.id.expected.cdi/features/org.jboss.tools.cdi.feature/target/org.jboss.tools.cdi.feature-1.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.cdi.feature"
+		/>
+		<property name="get.feature.id.expected.struts/features/org.jboss.tools.struts.feature/target/org.jboss.tools.struts.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.struts.feature"
+		/>
+		<property name="get.feature.id.expected.hibernatetools/features/org.hibernate.eclipse.feature/target/org.hibernate.eclipse.feature-3.3.0-SNAPSHOT.jar"
+		          value="org.hibernate.eclipse.feature"
+		/>
+		<property name="get.feature.id.expected.hibernatetools/features/org.hibernate.eclipse.test.feature/target/org.hibernate.eclipse.test.feature-3.3.0-SNAPSHOT.jar"
+		          value="org.hibernate.eclipse.test.feature"
+		/>
+		<property name="get.feature.id.expected.seam/features/org.jboss.tools.seam.feature/target/org.jboss.tools.seam.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.seam.feature"
+		/>
+		<property name="get.feature.id.expected.seam/features/org.jboss.tools.seam.test.feature/target/org.jboss.tools.seam.test.feature-3.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.seam.test.feature"
+		/>
+		<property name="get.feature.id.expected.examples/features/org.jboss.tools.community.project.examples.feature/target/org.jboss.tools.community.project.examples.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.community.project.examples.feature"
+		/>
+		<property name="get.feature.id.expected.examples/features/org.jboss.tools.project.examples.feature/target/org.jboss.tools.project.examples.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.project.examples.feature"
+		/>
+		<property name="get.feature.id.expected.examples/features/org.jboss.tools.project.examples.test.feature/target/org.jboss.tools.project.examples.test.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.project.examples.test.feature"
+		/>
+		<property name="get.feature.id.expected.birt/features/org.jboss.tools.birt.feature/target/org.jboss.tools.birt.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.birt.feature"
+		/>
+		<property name="get.feature.id.expected.birt/features/org.jboss.tools.birt.test.feature/target/org.jboss.tools.birt.test.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.birt.test.feature"
+		/>
+		<property name="get.feature.id.expected.maven/features/org.jboss.tools.maven.feature/target/org.jboss.tools.maven.feature-1.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.maven.feature"
+		/>
+		<property name="get.feature.id.expected.maven/features/org.jboss.tools.maven.seam.feature/target/org.jboss.tools.maven.seam.feature-1.0.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.maven.seam.feature"
+		/>
+
 	</target>
 
 	<target name="test.all">
