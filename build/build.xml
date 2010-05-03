@@ -323,6 +323,7 @@ Here is the order in which components must be built:
 												<istrue value="${build.if.sources.unchanged}" />
 											</and>
 											<then>
+												<svn.fetch component="@{COMPONENT}" op="up" />
 												<echo file="build.cfg" message="@{COMPONENT}," append="true" />
 											</then>
 										</if>
