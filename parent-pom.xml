@@ -379,15 +379,6 @@
 	<!-- https://issues.sonatype.org/browse/TYCHO-413: does not work - doesn't 
 		respect username & ssh key -->
 	<distributionManagement>
-
-		<snapshotRepository>
-			<id>jbosstools.internal.repo.snapshot</id>
-			<name>JBoss Tools Internal Snapshot Repository</name>
-			<url>sftp://filemgmt.jboss.org/downloads_htdocs/tools/repository/SNAPSHOT/
-			</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-
 		<!-- http://download.jboss.org/jbosstools/ -->
 		<!-- <repository> <id>jbosstools.internal.repo</id> <url> scp://filemgmt.jboss.org/downloads_htdocs/tools/repository/ 
 			</url> </repository> -->
