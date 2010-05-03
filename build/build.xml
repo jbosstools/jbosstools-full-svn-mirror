@@ -1126,7 +1126,7 @@ Cannot deploy - sourceDir not found in
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<delete dir="@{expected.dir}" includeemptydirs="true" />
+				<delete dir="${WORKINGDIR}/@{expected.dir}" includeemptydirs="true" />
 				<delete file="${WORKINGDIR}/svn.info-@{expected.dir}.txt" />
 			</sequential>
 		</for>
@@ -1144,9 +1144,9 @@ Cannot deploy - sourceDir not found in
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="true" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir ${WORKINGDIR}/@{expected.dir} not found!">
 					<bool>
-						<available file="@{expected.dir}" type="dir" />
+						<available file="${WORKINGDIR}/@{expected.dir}" type="dir" />
 					</bool>
 				</assert>
 			</sequential>
@@ -1154,9 +1154,9 @@ Cannot deploy - sourceDir not found in
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="true" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir ${WORKINGDIR}/@{expected.file} not found!">
 					<bool>
-						<available file="@{expected.file}" type="file" />
+						<available file="${WORKINGDIR}/@{expected.file}" type="file" />
 					</bool>
 				</assert>
 			</sequential>
@@ -1185,9 +1185,9 @@ Cannot deploy - sourceDir not found in
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="true" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir ${WORKINGDIR}/@{expected.dir} not found!">
 					<bool>
-						<available file="@{expected.dir}" type="dir" />
+						<available file="${WORKINGDIR}/@{expected.dir}" type="dir" />
 					</bool>
 				</assert>
 			</sequential>
@@ -1195,9 +1195,9 @@ Cannot deploy - sourceDir not found in
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="true" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir ${WORKINGDIR}/@{expected.file} not found!">
 					<bool>
-						<available file="@{expected.file}" type="file" />
+						<available file="${WORKINGDIR}/@{expected.file}" type="file" />
 					</bool>
 				</assert>
 			</sequential>
@@ -1223,9 +1223,9 @@ Cannot deploy - sourceDir not found in
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="true" message="Dir @{expected.dir} not found!">
+				<assert failonerror="true" message="Dir ${WORKINGDIR}/@{expected.dir} not found!">
 					<bool>
-						<available file="@{expected.dir}" type="dir" />
+						<available file="${WORKINGDIR}/@{expected.dir}" type="dir" />
 					</bool>
 				</assert>
 			</sequential>
@@ -1233,9 +1233,9 @@ Cannot deploy - sourceDir not found in
 		<for param="expected.file" list="${get.sources.expected.files}" delimiter=", 
 	">
 			<sequential>
-				<assert failonerror="true" message="Dir @{expected.file} not found!">
+				<assert failonerror="true" message="Dir ${WORKINGDIR}/@{expected.file} not found!">
 					<bool>
-						<available file="@{expected.file}" type="file" />
+						<available file="${WORKINGDIR}/@{expected.file}" type="file" />
 					</bool>
 				</assert>
 			</sequential>
