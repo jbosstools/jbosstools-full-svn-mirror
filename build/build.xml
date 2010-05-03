@@ -57,6 +57,10 @@ or, to rebuild even if sources have not changed:
 or, to (re-)run tests w/o (re-)building first:
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
+			
+or, to re-build the update site w/o building first:
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+    ant create.overall.update.site -Dbuild.if.sources.unchanged=true
 
 Note: if tests stall on Linux, install Xvfb and this script will use that to run Maven.
 
