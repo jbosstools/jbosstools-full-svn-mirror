@@ -140,6 +140,21 @@
       <category name="AllTools"/>
       <category name="SOATools"/>
    </feature>
+   <feature url="features/org.jboss.tools.jbpm.common.feature_0.0.0.jar" id="org.jboss.tools.jbpm.common.feature" version="0.0.0">
+      <category name="AllTools"/>
+      <category name="SOATools"/>
+   </feature>
+   <feature url="features/org.jboss.tools.jbpm3.feature_0.0.0.jar" id="org.jboss.tools.jbpm3.feature" version="0.0.0">
+      <category name="AllTools"/>
+      <category name="SOATools"/>
+   </feature>
+   <!-- Only in JBT -->
+   <!--
+   <feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
+      <category name="AllTools"/>
+      <category name="SOATools"/>
+   </feature>
+   -->
  
    <!-- categories - see also ../../../common/aggregateRepos.*.properties -->
    <category-def name="SDKTools" label="${product.name} SDK">
