@@ -638,6 +638,20 @@ ${test.results.errors.failures.skipped}
 			<param name="COMPONENTS.to.build" value="site" />
 			<param name="update.site.path" value="site" />
 		</antcall>
+
+		<!-- Copy overall site into workspace so it can be archived by Hudson -->
+		<if>
+			<not>
+				<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
+			</not>
+			<then>
+				<mkdir dir="${basedir}/${update.site.path}/target" />
+				<copy todir="${basedir}/${update.site.path}/target" overwrite="true">
+					<fileset dir="${WORKINGDIR}/${update.site.path}/target/site" />
+				</copy>
+			</then>
+		</if>
+
 	</target>
 
 	<target name="build.update.site">
@@ -900,6 +914,7 @@ Cannot deploy - sourceDir not found in
 </fail>
 			</else>
 		</if>
+
 	</target>
 
 	<!-- ************************************ TESTS ************************************ -->
