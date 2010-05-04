@@ -8,15 +8,7 @@
         comprehensive reference, there should be enough detail included for early adopters using
         these tools.</para>
 
-    <para>The <property>Guvnor repository</property> is not intended as a Source Code Management
-        (SCM) solution, and the <property>EGT</property> are not intended to be Eclipse “team
-        provider” extensions or replacements. Rather, the Guvnor repository is a location where
-        certain artifacts (such as rules and SOA policy definitions) are controlled (“governed”) by
-        policies defined by the deployment environment. The purpose of the <property>EGT</property>
-        is then to enable access to resources held by the Guvnor repository, so
-        they can be used in development. Thus, limited capabilities for reading, writing, adding,
-        and removing Guvnor repository resources are provided in the
-            <property>EGT</property>.</para>
+    <para>First, have a look at the key features of <property>Guvnor Tools:</property></para>
 
     <section id="drools_key_features">
         <title>Guvnor Tools Key Features</title>
@@ -114,9 +106,20 @@
             </tgroup>
         </table>
     </section>
-
+    <section id="what_is_guvnor_tools">
+        <title>What is Guvnor Tools?</title>
+        <para>The <property>Guvnor repository</property> is not intended as a Source Code Management
+        (SCM) solution, and the <property>EGT</property> are not intended to be Eclipse “team
+        provider” extensions or replacements. Rather, the Guvnor repository is a location where
+        certain artifacts (such as rules and SOA policy definitions) are controlled (“governed”) by
+        policies defined by the deployment environment. The purpose of the <property>EGT</property>
+        is then to enable access to resources held by the Guvnor repository, so
+        they can be used in development. Thus, limited capabilities for reading, writing, adding,
+        and removing Guvnor repository resources are provided in the
+            <property>EGT</property>.</para>
+    </section>
     <section id="how_to_start">
-        <title>How to start with Guvnor Tools</title>
+        <title>Requirements and Installation</title>
 
         <para><property>Guvnor Tools</property> is a part of the <property>JBoss Tools</property>
             project. Thus to get started with Guvnor Tools, you should have the following:</para>
@@ -162,37 +165,4 @@ for a RESOURCE_LOCAL enabled persistence context named: ACL
             Eclipse synchronisation tool.</para>
     </section>
 
-    <section>
-        <title>Other relevant resources on the topic</title>
-
-        <itemizedlist>
-            <listitem>
-                <para>Guvnor <ulink url="http://www.jboss.org/community/wiki/Guvnor">wiki page</ulink></para>
-            </listitem>
-            
-            <listitem>
-                <para>Drools on <ulink url="http://www.jboss.org/drools/">JBoss.org</ulink></para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://www.jboss.org/tools/">JBoss Tools Home Page</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">The latest
-                        JBossTools/JBDS documentation builds</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://docs.jboss.org/tools/">JBossTools/JBDS
-                        release documentation</ulink></para>
-            </listitem>
-        </itemizedlist>
-
-    </section>
 </chapter>

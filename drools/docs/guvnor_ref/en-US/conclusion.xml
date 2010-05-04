@@ -16,7 +16,39 @@
         aspects of the current tooling that require revision going forward, we feel that the current
         state of the <property>EGT</property> is sufficient for the major use cases.</para>
 
-    <para>If you have some questions, comments or suggestions on the topic, please feel free to ask in the
+    <section>
+        <title>Other relevant resources on the topic</title>
+        
+        <itemizedlist>
+            <listitem>
+                <para>Guvnor <ulink url="http://www.jboss.org/community/wiki/Guvnor">wiki page</ulink></para>
+            </listitem>
+            
+            <listitem>
+                <para>Drools on <ulink url="http://www.jboss.org/drools/">JBoss.org</ulink></para>
+            </listitem>
+            
+            <listitem>
+                <para>
+                    <ulink url="http://www.jboss.org/tools/">JBoss Tools Home Page</ulink>
+                </para>
+            </listitem>
+            
+            <listitem>
+                <para>
+                    <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">The latest
+                        JBossTools/JBDS documentation builds</ulink>
+                </para>
+            </listitem>
+            
+            <listitem>
+                <para>
+                    <ulink url="http://docs.jboss.org/tools/">JBossTools/JBDS
+                        release documentation</ulink></para>
+            </listitem>
+        </itemizedlist>
+        <para>If you have some questions, comments or suggestions on the topic, please feel free to ask in the
             <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201"
             >Jboss Tools Forum</ulink>.</para>
+    </section>    
 </chapter>

@@ -8,265 +8,22 @@
         </keywordset>
     </chapterinfo>
 
-    <title>Functionality Overview</title>
+    <title>Tasks</title>
 
-    <para>This chapter will introduce you to the <property>Guvnor Repository Exploring
-            perspective</property> and give an overview on all functionality the <property>Guvnor Tools</property> provides.</para>
-
-    <section id="guvnor_perspective">
-        <title>Guvnor Perspective</title>
-
-        <para>The <property>Guvnor Repository Exploring perspective</property> contains two views
-            supplied by <property>EGT</property> – <property>Repository Explorer</property> and
-                <property>Version History</property>, that will be the center of most interaction
-            with Guvnor, and Eclipse standard views such as <property>Properties</property> and
-                <property>Resource Navigator</property> that are also useful.</para>
-
-        <para>While each of these views can be opened and positioned independently within an Eclipse
-            workbench, the <property>Guvnor perspective</property> provides a convenient method of
-            getting a suggested layout. In the Eclipse workbench menu, choose <emphasis>
-                <property>Window &gt; Open Perspective &gt; Other</property>
-            </emphasis> to get the perspective list:</para>
-
-	<figure>
-		<title>Enabling the Guvnor Repository Perspective</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/open_guvnor_perspectine.png"/>
-			</imageobject>
-		</mediaobject>
-	</figure>
-
-        <para>And then choose <emphasis>
-                <property>Guvnor Repository Exploring</property>.</emphasis> This opens the
-                <property>Guvnor perspective</property>.</para>
-    </section>
-
-    <section id="connection_wizard">
-        <title>Guvnor Connection Wizard</title>
-
-        <para>After opening the <property>Guvnor perspective</property>, the first task is to make a
-            connection to a Guvnor repository. This is handled by the <property>Guvnor Connection
-                wizard</property>. This wizard appears in a number of places within the
-                <property>EGT</property> (as detailed below), but in this section we will cover only
-            the two most basic entry points.</para>
-
-        <para>The <property>Guvnor Connection wizard</property> can be started in the following
-            ways:</para>
-
-        <itemizedlist>
-            <listitem>
-                <para>using the Eclipse menu <emphasis>
-                        <property>File &gt; New &gt; Other &gt; Guvnor &gt; Guvnor
-                            repository location</property>
-                    </emphasis></para>
-
-		<figure>
-		<title>New Guvnor Repository Location</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/start_guvnor_connection1.png"/>
-			</imageobject>
-		</mediaobject>
-		</figure>
-            </listitem>
-
-            <listitem>
-                <para>in the <property>Guvnor Repositories view</property> using the drop-down menu</para>
-
-		<figure>
-		<title>Adding New Guvnor Connection</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/start_guvnor_connection2.png"/>
-			</imageobject>
-		</mediaobject>
-		</figure>
-            </listitem>
-
-            <listitem>
-                <para>using the menu button 
-			( <inlinemediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/functionality_overview/guvnor_connection_button.png"/>
-                            </imageobject>
-                        </inlinemediaobject> )
-		</para>
-            </listitem>
-        </itemizedlist>
-
-        <para>Choosing either of these will start the <property>Guvnor Connection
-            wizard</property>.</para>
-	
-	<figure id="guvnor_connection_wizard">
-		<title>Guvnor Connection Wizard</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/guvnor_connection_wizard.png"/>
-			</imageobject>
-		</mediaobject>
-	</figure>
-
-        <para>Default values appear in the <emphasis>
-                <property>Location</property>,</emphasis>
-            <emphasis>
-                <property>Port</property>,</emphasis> and <emphasis>
-                <property>Repository</property>
-            </emphasis> fields (See the <link linkend="guvnor_preferences">“Guvnor Preferences”</link> section below for 			details about how to
-            change these default values.) Of course, any of these fields can be edited by typing in
-            the corresponding text box. Drag-and-drop or paste into the <emphasis>
-                <property>Location</property>
-            </emphasis> field of a typical Guvnor repository URL such as:</para>
-
-        <para>
-            <emphasis>
-                <property>http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav</property>
-            </emphasis>
-        </para>
-
-        <para>Results in the URL being parsed into the respective fields as well. The authentication
-            information (user name and password) can optionally be stored in the Eclipse
-            workbench&apos;s key-ring file based on the selection of <emphasis>
-                <property>Save user name and password</property>.</emphasis></para>
-
-        <note>
-            <title>Note:</title>
-            <para>If the authentication information is not stored in the key-ring, then the
-                    <property>EGT</property> uses a session authentication, what means that the
-                credentials supplied are used only for the lifetime of the Eclipse workbench
-                instance.</para>
-        </note>
-
-        <para>If authentication information is not stored in the key-ring or the authentication
-            information (key-ring or session) is not valid, the <property>EGT</property> will prompt
-            for authentication information when it has to access the Guvnor repository.</para>
-
-        <para>If authentication fails, the <property>EGT</property> will retry once and then issue
-            an authentication failure error.</para>
-
-        <tip>
-            <title>Tip:</title>
-            <para>If an authentication failure error occurs, you can retry the same operation and
-                supply different authentication information.</para>
-        </tip>
-
-        <para>Note that the <property>EGT</property> calls the Guvnor repository at various times,
-            such as when determining if resource updates are available. Thus if you use session
-            authentication, the authentication dialog will appear at different times during the
-            Eclipse workbench session, depending on what actions you take. For ease of use, we
-            recommend saving the authentication information in the Eclipse key-ring.</para>
-
-        <note>
-            <title>Note:</title>
-            <para>The Eclipse key-ring file is distinct from key-ring files found in some platforms
-                such as Mac OS X and many forms of Linux. Thus, sometimes if you access a Guvnor
-                repository outside the <property>EGT</property>, the key-ring files might become
-                unsynchronized and you will be unexpectedly prompted for authentication in Eclipse.
-                This is nuisance, but your usual credentials should apply in this case.</para>
-        </note>
-    </section>
-
-    <section id="guvnor_repositories_view">
-        <title>Guvnor Repositories View</title>
-
-        <para>The <property>Guvnor Repositories view</property> contains tree structures for Guvnor
-            repository contents.</para> 
-
-	<figure>
-		<title>Guvnor Repositories View</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/guvnor_repository.png"/>
-			</imageobject>
-		</mediaobject>
-	</figure>
-
-	<para>You can perform the following actions under the resources in the
-                <property>Guvnor Repositories view</property>:</para>
-
-        <itemizedlist>
-            <listitem>
-                <para>create a new Guvnor repository connection. How to do this is describe above in the <link linkend="connection_wizard">&quot;Guvnor Connection Wizard&quot;</link> section.</para>
-            </listitem>
-
-	    <listitem>
-                <para>remove a Guvnor repository connection. Use the Delete button 
-			( <inlinemediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/functionality_overview/delete_connection_button.png"/>
-                            </imageobject>
-                        </inlinemediaobject> ) in the tool-bar or the <emphasis>
-						<property>Delete</property></emphasis> option in the context menu to remove a repository connection.</para>
-            </listitem>
-
-	    <listitem>
-                <para>refresh Guvnor repository resorces. Use the <emphasis>
-						<property>Refresh</property></emphasis> context menu item to reload a tree content for the selected node.</para>
-            </listitem>
-
-	    <listitem>
-                <para>make use of &quot;drill-into&quot; functionality. It&apos;s represented by a number of tool-bar/context menu items such as <emphasis><property>Go Home</property></emphasis>
-			 ( <inlinemediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/functionality_overview/go_home_button.png"/>
-                            </imageobject>
-                        </inlinemediaobject> ), <emphasis><property>Go Back</property></emphasis>
-			 ( <inlinemediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/functionality_overview/go_back_button.png"/>
-                            </imageobject>
-                        </inlinemediaobject> ) and <emphasis>
-						<property>Go Into</property></emphasis>
-			 ( <inlinemediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/functionality_overview/go_into_button.png"/>
-                            </imageobject>
-                        </inlinemediaobject> ).</para>
-            </listitem>
-        </itemizedlist>
-
-        <para>Drill-down is useful when working with deeply nested tree structures and when you wish to concentrate on only branch of the tree. For example, drilling into the <emphasis>
-						<property>&quot;defaultPackage&quot;</property></emphasis> node changes the tree view to:</para>
-
-	<figure>
-		<title>Going Into the <emphasis>&quot;defaultPackage&quot;</emphasis></title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/go_into_defaultPackage.png"/>
-			</imageobject>
-		</mediaobject>
-	</figure>
-
-	<para>Clicking on the Go Home button ( <inlinemediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/functionality_overview/go_home_button.png"/>
-                            </imageobject>
-                        </inlinemediaobject> ) or selecting <emphasis>
-						<property>Go Home</property></emphasis> in the context menu returns the 	tree to the top-level structure shown in the previous picture above.
-	</para>
-
-	<para>There are a number of operations that can be performed on Guvnor repository files. Selecting a file in
-the Guvnor repository causes the Eclipse <property>Properties view</property> to update with details about that file:
-</para>
-
-	<figure>
-		<title>Guvnor Repository Files Properties</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/repository_files_properties.png"/>
-			</imageobject>
-		</mediaobject>
-	</figure>
-
-	<para></para>
-    </section>
-
+    <para>This chapter will give an overview on all functionality the <property>Guvnor Tools</property> provides.</para>
+   
+   <section > <!-- id="new_connection" -->
+       <title>Creating a New Guvnor Connection</title>
+       <para>As mentioned in the <link linkend="introduction">&quot;Introduction&quot;</link>, the main purpose
+           of the <property>EGT</property> is to allow development using resources held in a Guvnor
+           repository. The first task is to make a connection to a Guvnor repository. 
+           This is handled by the <link linkend="connection_wizard">Guvnor Connection
+               wizard</link>. </para>
+   </section>
+    
     <section id="local_copies">
-        <title>Local Copies of Guvnor Files</title>
-
-        <para>As mentioned in the <link linkend="introduction">&quot;Introduction&quot;</link>, the main purpose
-            of the <property>EGT</property> is to allow development using resources held in a Guvnor
-            repository. There are two methods of getting local copies of Guvnor repository
+        <title>Getting Local Copies of Guvnor Files</title>
+        <para>There are two methods of getting local copies of Guvnor repository
             resources:</para>
 
         <orderedlist>
@@ -329,8 +86,76 @@ the Guvnor repository causes the Eclipse <property>Properties view</property> to
             the revision number.</para>
     </section>
 
+    <section id="resources_from_guvnor">
+        <title>Importing Guvnor Repository Resources</title>
+        
+        <para>In addition to the single file drag-and-drop from the <property>Guvnor Repositories
+            view</property>, the <property>EGT</property> also includes a wizard for copying one
+            or more files from a Guvnor repository to the local workspace (and setting the
+            association with the Guvnor repository). This wizard is available from the <emphasis>
+                <property>File &gt; Import &gt; Guvnor &gt; Resource from
+                    Guvnor</property>
+            </emphasis> and the <emphasis>
+                <property>File &gt; New &gt; Other &gt; Guvnor &gt; Resource from
+                    Guvnor</property>
+            </emphasis> menu items.</para>
+        <note>
+            <title>Note:</title>
+            
+            <para>Note that the wizard is identical but appears in both locations to accommodate
+                users who tend to view this functionality as being in either category.</para>
+        </note>
+        
+        <para>The first page of the wizard asks for the selection of the source Guvnor repository
+            and gives the choice to create a new Guvnor repository connection (in which case the
+            second page is the same as the <link linkend="guvnor_connection_wizard">Guvnor Connection wizard</link>).</para>
+        
+        <figure>
+            <title>Resource from Guvnor Wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/functionality_overview/add_toGuvnor_wizard.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>Once the source Guvnor repository is chosen, the wizard prompts for resource selection:</para>
+        
+        <figure>
+            <title>Resource Selection</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/functionality_overview/resource_from_guvnor.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>Finally, the target location in the local workspace should be chosen:</para>
+        <figure>
+            <title>Choosing the Target Location</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/functionality_overview/resource_from_guvnor2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>On completion the wizard copies the selected files from the Guvnor repository to the local workspace.
+            If a file with the same name already exists in the destination, the wizard uses the Eclipse standard
+            &quot;prompt for rename&quot; dialog:</para>
+        
+        <figure>
+            <title>Prompt for Rename Dialog</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/functionality_overview/resource_from_guvnor3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    
     <section id="actions">
-        <title>Actions for Local Guvnor Resources</title>
+        <title>Managing Guvnor Resources</title>
 
         <para>The <property>EGT</property> provides a number of actions (available through the
             <emphasis><property>Guvnor</property></emphasis> context menu on files) for working with files, both those associated with
@@ -598,130 +423,6 @@ the Guvnor repository causes the Eclipse <property>Properties view</property> to
                 and removes local metadata for the Guvnor repository association.</para>
         </section>
     </section>
-
-    <section id="guvnor_history_view">
-        <title>Guvnor Resource History View</title>
-
-        <para>The <property>Guvnor Resource History view</property> should details about revision
-            history for selected files, both local and those in Guvnor repositories. The initial
-            state of this view is shown on the figure below.</para>
-
-	   <figure>
-		<title>Initial State of the Guvnor Resource History View</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/resource_history_view.png"/>
-			</imageobject>
-		</mediaobject>
-	   </figure>
-
-        <para>The <property>Guvnor Resource History view</property> is populated by <emphasis>
-                <property>Show History</property>
-            </emphasis> actions in either the local <emphasis>
-                    <property>Guvnor</property></emphasis> context menu or in the context menu for
-            a Guvnor repository file in the <link linkend="guvnor_repositories_view">Guvnor
-                Repositories view</link>. Once this action is performed, the <property>Guvnor
-                Resource History view</property> updates to show the revision history:</para>
-
-	   <figure>
-		<title>IGuvnor Resource History View</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/resource_history_view2.png"/>
-			</imageobject>
-		</mediaobject>
-	   </figure>
-
-        <para>Here we see that the file <emphasis>
-                <property>test.txt</property>
-            </emphasis> has seven revisions. Double clicking on a revision row (or the context menu <emphasis>
-                <property>Open (Read only)</property>)</emphasis> opens an Eclipse read-only editor
-            with the revision contents.</para>
-
-	   <figure>
-		<title>Eclipse Read-only Editor with the Revision Contents</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/resource_history_view3.png"/>
-			</imageobject>
-		</mediaobject>
-	   </figure>
-        <note>
-            <title>Note:</title>
-            <para>You can also use the <emphasis>
-                    <property>Save As...</property>
-                </emphasis> option when a file is open in a read-only editor to save a local
-                writable copy of the contents. Doing so, however, will not associate the file
-                created with its Guvnor source.</para>
-        </note>
-
-    </section>
-
-    <section id="resources_from_guvnor">
-        <title>Importing Guvnor Repository Resources</title>
-
-        <para>In addition to the single file drag-and-drop from the <property>Guvnor Repositories
-                view</property>, the <property>EGT</property> also includes a wizard for copying one
-            or more files from a Guvnor repository to the local workspace (and setting the
-            association with the Guvnor repository). This wizard is available from the <emphasis>
-                <property>File &gt; Import &gt; Guvnor &gt; Resource from
-                    Guvnor</property>
-            </emphasis> and the <emphasis>
-                <property>File &gt; New &gt; Other &gt; Guvnor &gt; Resource from
-                    Guvnor</property>
-            </emphasis> menu items.</para>
-        <note>
-            <title>Note:</title>
-
-            <para>Note that the wizard is identical but appears in both locations to accommodate
-                users who tend to view this functionality as being in either category.</para>
-        </note>
-
-        <para>The first page of the wizard asks for the selection of the source Guvnor repository
-            and gives the choice to create a new Guvnor repository connection (in which case the
-            second page is the same as the <link linkend="guvnor_connection_wizard">Guvnor Connection wizard</link>).</para>
-
-	   <figure>
-		<title>Resource from Guvnor Wizard</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/add_toGuvnor_wizard.png"/>
-			</imageobject>
-		</mediaobject>
-	   </figure>
-        
-        <para>Once the source Guvnor repository is chosen, the wizard prompts for resource selection:</para>
-
-	   <figure>
-		<title>Resource Selection</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/resource_from_guvnor.png"/>
-			</imageobject>
-		</mediaobject>
-	   </figure>
-        
-        <para>Finally, the target location in the local workspace should be chosen:</para>
-	   <figure>
-		<title>Choosing the Target Location</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/resource_from_guvnor2.png"/>
-			</imageobject>
-		</mediaobject>
-	   </figure>
-        
-        <para>On completion the wizard copies the selected files from the Guvnor repository to the local workspace.
-            If a file with the same name already exists in the destination, the wizard uses the Eclipse standard
-            &quot;prompt for rename&quot; dialog:</para>
-
-	   <figure>
-		<title>Prompt for Rename Dialog</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/resource_from_guvnor3.png"/>
-			</imageobject>
-		</mediaobject>
-	   </figure>
-    </section>
+   
+   
 </chapter>
