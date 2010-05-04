@@ -623,26 +623,28 @@ ${test.results.errors.failures.skipped}
 
 	<!-- Used to build the overall update site for all components; requires a custom site.xml (generated from category.*.xml) and previously checked in pom.xml -->
 	<target name="create.overall.update.site" depends="init">
+		<property name="update.site.path" value="site" />
 
 		<!-- Clean up from last time, then fetch fresh sources (checkout or update) -->
-		<delete dir="${WORKINGDIR}/site/target" quiet="true" />
+		<!-- TODO: don't overwrite the build.cfg file the second time we call get.sources -->
+		<delete dir="${WORKINGDIR}/${update.site.path}/target" quiet="true" />
 		<antcall target="get.sources">
 			<param name="COMPONENT" value="site" />
 		</antcall>
 
 		<!-- Get correct version of site.xml + resolve variables -->
-		<loadfile property="site.xml.transformed" srcfile="${WORKINGDIR}/site/category.${product.id}.xml">
+		<loadfile property="site.xml.transformed" srcfile="${WORKINGDIR}/${update.site.path}/category.${product.id}.xml">
 			<filterchain>
 				<expandproperties />
 			</filterchain>
 		</loadfile>
-		<echo file="${WORKINGDIR}/site/site.xml" message="${site.xml.transformed}" />
+		<echo file="${WORKINGDIR}/${update.site.path}/site.xml" message="${site.xml.transformed}" />
 		<var name="site.xml.transformed" unset="true" />
 
 		<!-- Build update site -->
 		<antcall target="build.update.site">
 			<param name="COMPONENTS.to.build" value="site" />
-			<param name="update.site.path" value="site" />
+			<param name="update.site.path" value="${update.site.path}" />
 		</antcall>
 
 		<!-- Copy overall site into workspace so it can be archived by Hudson -->
@@ -657,7 +659,6 @@ ${test.results.errors.failures.skipped}
 				</copy>
 			</then>
 		</if>
-
 	</target>
 
 	<target name="build.update.site">
