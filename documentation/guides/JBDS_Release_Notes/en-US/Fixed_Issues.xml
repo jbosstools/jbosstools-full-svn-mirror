@@ -52,12 +52,11 @@
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6075">JBIDE-6075</ulink>: In the Hibernate reverse engineering editor it was impossible to add a parameter as the button to do so was missing. This update corrects the user interface to include the <guibutton>Add parameter</guibutton> button under the <guilabel>Id Generator details</guilabel> <guilabel>Class</guilabel> section.
 					</para>
 				</listitem>
-				<!-- info still needed for issue listed below -->
-			<!--	<listitem>
+				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5960">JBIDE-5960</ulink>: A new <guibutton>Details ...</guibutton> button has been added to the <guilabel>Hibernate Settings</guilabel> section within the project properties. This added button displays.... 
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5960">JBIDE-5960</ulink>: A new <guibutton>Details ...</guibutton> button has been added to the <guilabel>Hibernate Settings</guilabel> section within the project properties. This added button displays the configuration wizard for the selected console (this wizard is also still available through the <guilabel>Console Configuration</guilabel> view). With the addition of this new button, a consoles configuration wizard is now more easily accessable to the user.
 					</para>
-				</listitem> -->
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
