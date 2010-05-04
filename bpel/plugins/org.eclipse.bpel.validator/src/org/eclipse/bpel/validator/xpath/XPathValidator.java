@@ -407,6 +407,11 @@ public class XPathValidator extends Validator {
 			mVisitor.visit((EqualityExpr) expr);
 		} else if (expr instanceof RelationalExpr) {
 			mVisitor.visit((RelationalExpr) expr);
+		} else if (expr instanceof UnaryExpr && !(((UnaryExpr)expr).getExpr() instanceof FunctionCallExpr)) {
+			// https://jira.jboss.org/jira/browse/JBIDE-6015
+			// Allow unary expressions like variable references and literals
+			// Since we're using XPath 1.0 there's no XSD type checking
+			mVisitor.visit((UnaryExpr) expr);
 		} else {
 			FunctionCallExpr fce = null;
 			// JBIDE-5999
