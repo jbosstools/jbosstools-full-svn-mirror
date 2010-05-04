@@ -910,7 +910,7 @@ Cannot deploy - please install scp or rsync on this server and try again.
 			<available file="${sourceDir}" type="dir" />
 			<then>
 				<echo message="${deployCmd}" />
-				<exec executable="bash">
+				<exec executable="bash" failonerror="true">
 					<arg line=" -c &quot;${deployCmd}&quot;" />
 				</exec>
 			</then>
