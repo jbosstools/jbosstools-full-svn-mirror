@@ -117,141 +117,148 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		
 		boolean isJBossPortal = PortletUIActivator.isJBossPortalRuntime(model);
 		model.setBooleanProperty(ADD_PORTLET, isJBossPortal);
-		
-		addPortlet = new Button(composite,SWT.CHECK);
-		addPortlet.setText(ADD_PORTLET_LABEL);
-		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-		gd.horizontalSpan = 2;
-		addPortlet.setLayoutData(gd);
-		synchHelper.synchCheckbox(addPortlet, ADD_PORTLET, null);
-		
-		// if exists
-		Label ifExistsLabel = new Label(composite, SWT.LEFT);
-		ifExistsLabel.setText(IF_EXISTS_LABEL);
-		ifExistsLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		ifExistsCombo = new Combo(composite,SWT.READ_ONLY);
-		ifExistsCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
-		ifExistsCombo.setItems(new String[] {"overwrite","keep"}); //$NON-NLS-1$ //$NON-NLS-2$
-		synchHelper.synchCombo(ifExistsCombo, IF_EXISTS, null);
-		
-		// instance name
-		Label instanceNameLabel = new Label(composite, SWT.LEFT);
-		instanceNameLabel.setText(INSTANCE_NAME_LABEL);
-		instanceNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		instanceNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		instanceNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		synchHelper.synchText(instanceNameText, INSTANCE_NAME, null);
-
-		// window name
-		Label pageNameLabel = new Label(composite, SWT.LEFT);
-		pageNameLabel.setText(PAGE_NAME_LABEL);
-		pageNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		pageNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		pageNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		synchHelper.synchText(pageNameText, PAGE_NAME, null);
-		
-		// window name
-		Label windowNameLabel = new Label(composite, SWT.LEFT);
-		windowNameLabel.setText(WINDOW_NAME_LABEL);
-		windowNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		windowNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		windowNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		synchHelper.synchText(windowNameText, WINDOW_NAME, null);
-		
-		// parent reference
-		Label parentReferenceLabel = new Label(composite, SWT.LEFT);
-		parentReferenceLabel.setText(PARENT_PORTAL_LABEL);
-		parentReferenceLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		parentReferenceText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		parentReferenceText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		synchHelper.synchText(parentReferenceText, PARENT_PORTAL, null);
-
-		// region
-		Label regionLabel = new Label(composite, SWT.LEFT);
-		regionLabel.setText(PAGE_REGION_LABEL);
-		regionLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		regionText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		regionText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		synchHelper.synchText(regionText, PAGE_REGION, null);
-		
-		// height
-		Label heightLabel = new Label(composite, SWT.LEFT);
-		heightLabel.setText(PORTLET_HEIGHT_LABEL);
-		heightLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		heightText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		heightText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		synchHelper.synchText(heightText, PORTLET_HEIGHT, null);
-		
-		// initial window state
-		Label initialWindowStateLabel = new Label(composite, SWT.LEFT);
-		initialWindowStateLabel.setText(INITIAL_WINDOW_STATE_LABEL);
-		initialWindowStateLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		initialWindowStateCombo = new Combo(composite,SWT.READ_ONLY);
-		initialWindowStateCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
-		initialWindowStateCombo.setItems(new String[] {"maximized","minimized","normal"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		synchHelper.synchCombo(initialWindowStateCombo, INITIAL_WINDOW_STATE, null);
-		
-		addPortlet.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				enableJBossProperties();
-			}
-		});
-		enableJBossProperties();
-		
-		if (isJSFPortlet() || isSeamPortlet()) {
-			final Button addJBossApp = new Button(composite, SWT.CHECK);
-			addJBossApp.setText(ADD_JBOSS_APP_LABEL);
-			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-			gd.horizontalSpan = 2;
-			addJBossApp.setLayoutData(gd);
-			synchHelper.synchCheckbox(addJBossApp, ADD_JBOSS_APP, null);
-			
-			// JBoss Application Name
-			Label jbossAppLabel = new Label(composite, SWT.LEFT);
-			jbossAppLabel.setText(JBOSS_APP_LABEL);
-			jbossAppLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-			final Text jbossAppText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-			jbossAppText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-			synchHelper.synchText(jbossAppText, JBOSS_APP, null);
-			
-			addJBossApp.addSelectionListener(new SelectionAdapter() {
-
-				public void widgetSelected(SelectionEvent e) {
-					boolean enable = addJBossApp.getSelection();
-					jbossAppText.setEnabled(enable);
-					
-				}
-			});
-			
-			addJBossApp.setSelection(isJBossPortal);
-			jbossAppText.setEnabled(addJBossApp.getSelection());
-			
-			final Button addJBossPortlet = new Button(composite, SWT.CHECK);
-			addJBossPortlet.setText(ADD_JBOSS_PORTLET_LABEL);
-			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-			gd.horizontalSpan = 2;
-			addJBossPortlet.setLayoutData(gd);
-			synchHelper.synchCheckbox(addJBossPortlet, ADD_JBOSS_PORTLET, null);
-			
-			final Button copyJSFTemplates = new Button(composite, SWT.CHECK);
-			copyJSFTemplates.setText(COPY_JSF_TEMPLATES_LABEL);
-			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-			gd.horizontalSpan = 2;
-			copyJSFTemplates.setLayoutData(gd);
-			synchHelper.synchCheckbox(copyJSFTemplates, COPY_JSF_TEMPLATES, null);
-			
-			boolean isGateIn = PortletUIActivator.isGateIn(model);
-			model.setBooleanProperty(CONFIGURE_GATEIN_PARAMETERS, isGateIn);
-			
-			final Button configureGateIn = new Button(composite, SWT.CHECK);
-			configureGateIn.setText(CONFIGURE_GATEIN_PARAMETERS_LABEL);
-			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-			gd.horizontalSpan = 2;
-			configureGateIn.setLayoutData(gd);
-			synchHelper.synchCheckbox(configureGateIn, CONFIGURE_GATEIN_PARAMETERS, null);
-			
+		boolean isGateIn = PortletUIActivator.isGateIn(model);
+		if (isGateIn) {
+			model.setBooleanProperty(ADD_JBOSS_APP, false);
+			model.setBooleanProperty(ADD_JBOSS_PORTLET, false);
 		}
+		GridData gd;
+		if (isJBossPortal) {
+			addPortlet = new Button(composite,SWT.CHECK);
+			addPortlet.setText(ADD_PORTLET_LABEL);
+			gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+			gd.horizontalSpan = 2;
+			addPortlet.setLayoutData(gd);
+			synchHelper.synchCheckbox(addPortlet, ADD_PORTLET, null);
+		
+			// if exists
+			Label ifExistsLabel = new Label(composite, SWT.LEFT);
+			ifExistsLabel.setText(IF_EXISTS_LABEL);
+			ifExistsLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			ifExistsCombo = new Combo(composite,SWT.READ_ONLY);
+			ifExistsCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
+			ifExistsCombo.setItems(new String[] {"overwrite","keep"}); //$NON-NLS-1$ //$NON-NLS-2$
+			synchHelper.synchCombo(ifExistsCombo, IF_EXISTS, null);
+		
+			// instance name
+			Label instanceNameLabel = new Label(composite, SWT.LEFT);
+			instanceNameLabel.setText(INSTANCE_NAME_LABEL);
+			instanceNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			instanceNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+			instanceNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			synchHelper.synchText(instanceNameText, INSTANCE_NAME, null);
+
+			// window name
+			Label pageNameLabel = new Label(composite, SWT.LEFT);
+			pageNameLabel.setText(PAGE_NAME_LABEL);
+			pageNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			pageNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+			pageNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			synchHelper.synchText(pageNameText, PAGE_NAME, null);
+		
+			// window name
+			Label windowNameLabel = new Label(composite, SWT.LEFT);
+			windowNameLabel.setText(WINDOW_NAME_LABEL);
+			windowNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			windowNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+			windowNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			synchHelper.synchText(windowNameText, WINDOW_NAME, null);
+		
+			// parent reference
+			Label parentReferenceLabel = new Label(composite, SWT.LEFT);
+			parentReferenceLabel.setText(PARENT_PORTAL_LABEL);
+			parentReferenceLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			parentReferenceText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+			parentReferenceText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			synchHelper.synchText(parentReferenceText, PARENT_PORTAL, null);
+
+			// region
+			Label regionLabel = new Label(composite, SWT.LEFT);
+			regionLabel.setText(PAGE_REGION_LABEL);
+			regionLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			regionText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+			regionText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			synchHelper.synchText(regionText, PAGE_REGION, null);
+		
+			// height
+			Label heightLabel = new Label(composite, SWT.LEFT);
+			heightLabel.setText(PORTLET_HEIGHT_LABEL);
+			heightLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			heightText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+			heightText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			synchHelper.synchText(heightText, PORTLET_HEIGHT, null);
+		
+			// initial window state
+			Label initialWindowStateLabel = new Label(composite, SWT.LEFT);
+			initialWindowStateLabel.setText(INITIAL_WINDOW_STATE_LABEL);
+			initialWindowStateLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+			initialWindowStateCombo = new Combo(composite,SWT.READ_ONLY);
+			initialWindowStateCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));		
+			initialWindowStateCombo.setItems(new String[] {"maximized","minimized","normal"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			synchHelper.synchCombo(initialWindowStateCombo, INITIAL_WINDOW_STATE, null);
+		
+			addPortlet.addSelectionListener(new SelectionAdapter() {
+
+					public void widgetSelected(SelectionEvent e) {
+						enableJBossProperties();
+					}
+			});
+			enableJBossProperties();
+		
+			if (isJSFPortlet() || isSeamPortlet()) {
+				final Button addJBossApp = new Button(composite, SWT.CHECK);
+				addJBossApp.setText(ADD_JBOSS_APP_LABEL);
+				gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+				gd.horizontalSpan = 2;
+				addJBossApp.setLayoutData(gd);
+				synchHelper.synchCheckbox(addJBossApp, ADD_JBOSS_APP, null);
+			
+				// JBoss Application Name
+				Label jbossAppLabel = new Label(composite, SWT.LEFT);
+				jbossAppLabel.setText(JBOSS_APP_LABEL);
+				jbossAppLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+				final Text jbossAppText = new Text(composite, SWT.SINGLE | SWT.BORDER);
+				jbossAppText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+				synchHelper.synchText(jbossAppText, JBOSS_APP, null);
+			
+				addJBossApp.addSelectionListener(new SelectionAdapter() {
+
+					public void widgetSelected(SelectionEvent e) {
+						boolean enable = addJBossApp.getSelection();
+						jbossAppText.setEnabled(enable);
+					
+					}
+				});
+			
+				addJBossApp.setSelection(isJBossPortal);
+				jbossAppText.setEnabled(addJBossApp.getSelection());
+			
+				final Button addJBossPortlet = new Button(composite, SWT.CHECK);
+				addJBossPortlet.setText(ADD_JBOSS_PORTLET_LABEL);
+				gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+				gd.horizontalSpan = 2;
+				addJBossPortlet.setLayoutData(gd);
+				synchHelper.synchCheckbox(addJBossPortlet, ADD_JBOSS_PORTLET, null);
+			}
+		}
+			
+		final Button copyJSFTemplates = new Button(composite, SWT.CHECK);
+		copyJSFTemplates.setText(COPY_JSF_TEMPLATES_LABEL);
+		gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd.horizontalSpan = 2;
+		copyJSFTemplates.setLayoutData(gd);
+		synchHelper.synchCheckbox(copyJSFTemplates, COPY_JSF_TEMPLATES, null);
+			
+		model.setBooleanProperty(CONFIGURE_GATEIN_PARAMETERS, isGateIn);
+			
+		final Button configureGateIn = new Button(composite, SWT.CHECK);
+		configureGateIn.setText(CONFIGURE_GATEIN_PARAMETERS_LABEL);
+		gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd.horizontalSpan = 2;
+		configureGateIn.setLayoutData(gd);
+		synchHelper.synchCheckbox(configureGateIn, CONFIGURE_GATEIN_PARAMETERS, null);
+			
+		
 	}
 	
 	public boolean canFlipToNextPage() {
