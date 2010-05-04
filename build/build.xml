@@ -59,6 +59,10 @@ or, to rebuild even if sources have not changed:
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
 
+or, to fetch fresh sources, then build anew:
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+	ant -DCOMPONENTS=tests,common,flow,jbpm -Dclean.sources=true
+
 or, to (re-)run tests w/o (re-)building first:
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
