@@ -48,6 +48,8 @@ To run this script via commandline (build default modules + run tests):
 or, to build everything but not *run* the tests:
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant -DMAVEN_FLAGS="clean install -Dmaven.test.skip"
+		or
+	ant -Dnotests=true
 
 or, to build specific module(s): 
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
