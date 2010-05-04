@@ -42,7 +42,7 @@
 To run this script in Eclipse:
     Run As > Ant Build
 
-To run this script via commandline (build default modules + run tests):
+To run this script via commandline (build default modules + run tests, then collect test results and build per-component + overall update site zips):
     cd /home/nboldt/workspace36/jbosstools-modular_build; ant
 
 or, to build everything but not *run* the tests:
