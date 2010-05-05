@@ -51,6 +51,10 @@ or, to build everything but not *run* the tests:
 		or
 	ant -Dnotests=true
 
+or, to purge the local repo before building:
+    cd /home/nboldt/workspace36/jbosstools-modular_build; \
+    ant -DMAVEN_FLAGS="dependency:purge-local-repository clean install"
+
 or, to build specific module(s): 
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant -DCOMPONENTS=tests,common,flow,jbpm
@@ -90,7 +94,7 @@ Here is the order in which components must be built:
 	<!-- ******************* MAIN ENTRY TARGETS ******************* -->
 	<target name="run"
 	        description="run a build, collect test results, generate overall update site"
-	        depends="build,  collect.all.test.results, create.overall.update.site"
+	        depends="build, collect.all.test.results, create.overall.update.site"
 	/>
 
 	<target name="build"
