@@ -23,7 +23,11 @@
 			should happen next (step over, continue, etc). To inspect
 			the content of the working memory and agenda the Debug views can be used.</para>
 
-		<para>You can add/remove rule breakpoints in <emphasis>
+		<para>To create breakpoints in the Package Explorer view or Navigator view of the Drools perspective, double-click the selected 
+		    <property>.drl</property> file to open it in the editor. In the example below we opened <property>Sample.drl</property> file.
+		</para>
+		
+		<para>You can add/remove rule breakpoints in the <emphasis>
 				<property>.drl</property>
 			</emphasis> files in two ways, similar to adding breakpoints to Java files:</para>
 
