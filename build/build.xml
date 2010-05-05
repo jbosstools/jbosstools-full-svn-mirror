@@ -286,8 +286,16 @@ Here is the order in which components must be built:
 			</sequential>
 		</macrodef>
 
+		<!-- only reset the file if we don't already have a value for COMPONENTS.to.build; thus when called later for "site" component build, append instead of overwriting -->
+		<if>
+			<not>
+				<isset property="COMPONENTS.to.build" />
+			</not>
+			<then>
+				<echo file="build.cfg" message="COMPONENTS.to.build = " />
+			</then>
+		</if>
 		<!-- check for each component dir in ${WORKINGDIR}; if not found, fetch -->
-		<echo file="build.cfg" message="COMPONENTS.to.build = " />
 		<if>
 			<and>
 				<isset property="COMPONENT" />
@@ -402,6 +410,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 &lt;/testsuite&gt;
 </echo>
 				<property name="no.tests.run" value="true" />
+				<property name="no.builds.run" value="true" />
 			</then>
 			<else>
 				<echo level="warning">The following components' sources have changed and will be built:
@@ -517,7 +526,7 @@ kill -9 `cat /tmp/.X3-lock`
 rm -fr /tmp/.X3-lock
 fi
 /usr/bin/Xvfb :3 -ac 2&gt;&amp;1 1&gt;/dev/null &amp; 
-DISPLAY=:3 /opt/maven3/bin/mvn $* 
+DISPLAY=:3 /opt/maven3/bin/mvn $*
 kill -9 `cat /tmp/.X3-lock`
 rm -fr /tmp/.X3-lock
 </echo>
@@ -645,43 +654,51 @@ ${test.results.errors.failures.skipped}
 
 	<!-- Used to build the overall update site for all components; requires a custom site.xml (generated from category.*.xml) and previously checked in pom.xml -->
 	<target name="create.overall.update.site" depends="init">
-		<property name="update.site.path" value="site" />
-
-		<!-- Clean up from last time, then fetch fresh sources (checkout or update) -->
-		<!-- TODO: don't overwrite the build.cfg file the second time we call get.sources -->
-		<delete dir="${WORKINGDIR}/${update.site.path}/target" quiet="true" />
-		<antcall target="get.sources">
-			<param name="COMPONENT" value="site" />
-		</antcall>
-
-		<!-- Get correct version of site.xml + resolve variables -->
-		<loadfile property="site.xml.transformed"
-		          srcfile="${WORKINGDIR}/${update.site.path}/category.${product.id}.xml"
-		>
-			<filterchain>
-				<expandproperties />
-			</filterchain>
-		</loadfile>
-		<echo file="${WORKINGDIR}/${update.site.path}/site.xml" message="${site.xml.transformed}" />
-		<var name="site.xml.transformed" unset="true" />
-
-		<!-- Build update site -->
-		<antcall target="build.update.site">
-			<param name="COMPONENTS.to.build" value="site" />
-			<param name="update.site.path" value="${update.site.path}" />
-		</antcall>
-
-		<!-- Copy overall site into workspace so it can be archived by Hudson -->
 		<if>
-			<not>
-				<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
-			</not>
+			<isset property="no.builds.run" />
 			<then>
-				<mkdir dir="${basedir}/${update.site.path}/target" />
-				<copy todir="${basedir}/${update.site.path}/target" overwrite="true">
-					<fileset dir="${WORKINGDIR}/${update.site.path}/target/site" />
-				</copy>
+				<echo>All components up to date: nothing to do!
+To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
 			</then>
+			<else>
+				<property name="update.site.path" value="site" />
+
+				<!-- Clean up from last time, then fetch fresh sources (checkout or update) -->
+				<delete dir="${WORKINGDIR}/${update.site.path}/target" quiet="true" />
+				<antcall target="get.sources">
+					<param name="COMPONENT" value="site" />
+				</antcall>
+
+				<!-- Get correct version of site.xml + resolve variables -->
+				<loadfile property="site.xml.transformed"
+				          srcfile="${WORKINGDIR}/${update.site.path}/category.${product.id}.xml"
+				>
+					<filterchain>
+						<expandproperties />
+					</filterchain>
+				</loadfile>
+				<echo file="${WORKINGDIR}/${update.site.path}/site.xml" message="${site.xml.transformed}" />
+				<var name="site.xml.transformed" unset="true" />
+
+				<!-- Build update site -->
+				<antcall target="build.update.site">
+					<param name="COMPONENTS.to.build" value="site" />
+					<param name="update.site.path" value="${update.site.path}" />
+				</antcall>
+
+				<!-- Copy overall site into workspace so it can be archived by Hudson -->
+				<if>
+					<not>
+						<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
+					</not>
+					<then>
+						<mkdir dir="${basedir}/${update.site.path}/target" />
+						<copy todir="${basedir}/${update.site.path}/target" overwrite="true">
+							<fileset dir="${WORKINGDIR}/${update.site.path}/target/site" />
+						</copy>
+					</then>
+				</if>
+			</else>
 		</if>
 	</target>
 
@@ -700,6 +717,7 @@ ${test.results.errors.failures.skipped}
 				/>
 			</else>
 		</if>
+		<delete file="${destinationZip}" quiet="true" />
 
 		<if>
 			<equals arg1="${COMPONENTS.to.build}" arg2="site" />
@@ -724,32 +742,56 @@ ${test.results.errors.failures.skipped}
 		<!-- Delete pointless site.zip -->
 		<delete file="${WORKINGDIR}/${update.site.path}/target/site.zip" />
 
-		<!-- Create real update site zip, including web UI -->
-		<copy todir="${WORKINGDIR}/${update.site.path}/target/site">
-			<fileset dir="${WORKINGDIR}/${update.site.path}" includes="web/*, index.html" />
-		</copy>
-		<zip destfile="${destinationZip}" basedir="${WORKINGDIR}/${update.site.path}/target/site" update="false" />
-
-		<!-- Copy zip into workspace so it can be archived by Hudson -->
 		<if>
-			<not>
-				<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
-			</not>
+			<and>
+				<available file="${WORKINGDIR}/${update.site.path}/target/site/plugins" type="dir" />
+				<available file="${WORKINGDIR}/${update.site.path}/target/site/features" type="dir" />
+			</and>
 			<then>
-				<mkdir dir="${basedir}/${update.site.path}/target" />
-				<copy todir="${basedir}/${update.site.path}/target"
-				      flatten="true"
-				      preservelastmodified="true"
-				      overwrite="true"
-				>
-					<fileset dir="${WORKINGDIR}/${update.site.path}/target" includes="*Update*.zip" />
+				<!-- Create real update site zip, including web UI -->
+				<copy todir="${WORKINGDIR}/${update.site.path}/target/site">
+					<fileset dir="${WORKINGDIR}/${update.site.path}" includes="web/*, index.html" />
 				</copy>
+				<zip destfile="${destinationZip}"
+				     basedir="${WORKINGDIR}/${update.site.path}/target/site"
+				     update="false"
+				/>
+
+				<!-- Copy zip into workspace so it can be archived by Hudson -->
+				<if>
+					<not>
+						<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
+					</not>
+					<then>
+						<mkdir dir="${basedir}/${update.site.path}/target" />
+						<copy todir="${basedir}/${update.site.path}/target"
+						      flatten="true"
+						      preservelastmodified="true"
+						      overwrite="true"
+						>
+							<fileset dir="${WORKINGDIR}/${update.site.path}/target" includes="*Update*.zip" />
+						</copy>
+					</then>
+				</if>
 			</then>
+			<else>
+				<if>
+					<equals arg1="${update.site.path}" arg2="site" />
+					<then>
+						<fail>Overall update site zip is empty!</fail>
+					</then>
+					<else>
+						<echo level="info">Update site zip for ${COMPONENTS.to.build} is empty!</echo>
+					</else>
+				</if>
+			</else>
 		</if>
 	</target>
 
 	<!-- Used to build the update site of a component; requires a site.xml and pom.xml be generated first -->
-	<target name="create.update.site" depends="init, genPomXml, genSiteXml">
+	<target name="create.update.site" depends="init">
+		<antcall target="genPomXml" />
+		<antcall target="genSiteXml" />
 		<antcall target="build.update.site">
 			<param name="COMPONENTS.to.build" value="${COMPONENT}" />
 			<param name="update.site.path" value="${COMPONENT}/site" />
