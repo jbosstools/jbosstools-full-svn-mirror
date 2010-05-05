@@ -12,7 +12,7 @@
 
     <para>This chapter will give an overview on all functionality the <property>Guvnor Tools</property> provides.</para>
    
-   <section > <!-- id="new_connection" -->
+   <section >
        <title>Creating a New Guvnor Connection</title>
        <para>As mentioned in the <link linkend="introduction">&quot;Introduction&quot;</link>, the main purpose
            of the <property>EGT</property> is to allow development using resources held in a Guvnor
@@ -84,74 +84,6 @@
             properties dialog, the contents of which are shown above. It displays the specific Guvnor
             repository, the location within the repository, the version (date/time stamp) and
             the revision number.</para>
-    </section>
-
-    <section id="resources_from_guvnor">
-        <title>Importing Guvnor Repository Resources</title>
-        
-        <para>In addition to the single file drag-and-drop from the <property>Guvnor Repositories
-            view</property>, the <property>EGT</property> also includes a wizard for copying one
-            or more files from a Guvnor repository to the local workspace (and setting the
-            association with the Guvnor repository). This wizard is available from the <emphasis>
-                <property>File &gt; Import &gt; Guvnor &gt; Resource from
-                    Guvnor</property>
-            </emphasis> and the <emphasis>
-                <property>File &gt; New &gt; Other &gt; Guvnor &gt; Resource from
-                    Guvnor</property>
-            </emphasis> menu items.</para>
-        <note>
-            <title>Note:</title>
-            
-            <para>Note that the wizard is identical but appears in both locations to accommodate
-                users who tend to view this functionality as being in either category.</para>
-        </note>
-        
-        <para>The first page of the wizard asks for the selection of the source Guvnor repository
-            and gives the choice to create a new Guvnor repository connection (in which case the
-            second page is the same as the <link linkend="guvnor_connection_wizard">Guvnor Connection wizard</link>).</para>
-        
-        <figure>
-            <title>Resource from Guvnor Wizard</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/functionality_overview/add_toGuvnor_wizard.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-        
-        <para>Once the source Guvnor repository is chosen, the wizard prompts for resource selection:</para>
-        
-        <figure>
-            <title>Resource Selection</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/functionality_overview/resource_from_guvnor.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-        
-        <para>Finally, the target location in the local workspace should be chosen:</para>
-        <figure>
-            <title>Choosing the Target Location</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/functionality_overview/resource_from_guvnor2.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-        
-        <para>On completion the wizard copies the selected files from the Guvnor repository to the local workspace.
-            If a file with the same name already exists in the destination, the wizard uses the Eclipse standard
-            &quot;prompt for rename&quot; dialog:</para>
-        
-        <figure>
-            <title>Prompt for Rename Dialog</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/functionality_overview/resource_from_guvnor3.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
     </section>
     
     <section id="actions">

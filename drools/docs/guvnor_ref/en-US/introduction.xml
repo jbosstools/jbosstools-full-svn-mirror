@@ -109,8 +109,8 @@
     <section id="what_is_guvnor_tools">
         <title>What is Guvnor Tools?</title>
         <para>The <property>Guvnor repository</property> is not intended as a Source Code Management
-        (SCM) solution, and the <property>EGT</property> are not intended to be Eclipse “team
-        provider” extensions or replacements. Rather, the Guvnor repository is a location where
+        (SCM) solution, and the <property>EGT</property> is not intended to be Eclipse “team
+        provider” extension or replacement. Rather, the Guvnor repository is a location where
         certain artifacts (such as rules and SOA policy definitions) are controlled (“governed”) by
         policies defined by the deployment environment. The purpose of the <property>EGT</property>
         is then to enable access to resources held by the Guvnor repository, so
@@ -160,8 +160,8 @@
 java.lang.RuntimeException: Specification violation [EJB3 JPA 6.2.1.2] - You have not defined a non-jta-data-source 
 for a RESOURCE_LOCAL enabled persistence context named: ACL            
         </programlisting>
-        <para>Now refer to the <link linkend="functionality_overview">&quot;Functionality
-                Overview&quot;</link> section to find out what you can do with Guvnor and
+        <para>Now refer to the <link linkend="functionality_overview">&quot;Tasks&quot;</link> 
+            section to find out what you can do with Guvnor and
             Eclipse synchronisation tool.</para>
     </section>
 
