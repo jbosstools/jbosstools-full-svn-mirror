@@ -367,14 +367,14 @@ public class VpeDnD implements MozillaDndListener {
 	}
 
 	private void externalDropAny(final String flavor, final String data,
-			final Point range) {
+			final int offset) {
 		StructuredTextEditor sourceEditor = vpeController.getSourceEditor();
 		if (flavor == null || flavor.length() == 0 
 				|| !(sourceEditor instanceof IDNDTextEditor)) {
 			return;
 		}
 		
-		sourceEditor.setHighlightRange(range.x, range.y, true);
+		sourceEditor.setHighlightRange(offset, 0, true);
 		((IDNDTextEditor) sourceEditor).runDropCommand(flavor, data);
 
 	}
@@ -461,6 +461,9 @@ public class VpeDnD implements MozillaDndListener {
 					dropper.drop(vpeController.getPageContext(),
 							sourceInnerDragInfo, sourceDropInfo);
 
+					// select dropped node, JBIDE-6239
+					setSelectedNode(sourceInnerDragInfo.getNode());
+
 					if (sourceInnerDragInfo != null) {
 						sourceInnerDragInfo = null;
 					}
@@ -470,6 +473,17 @@ public class VpeDnD implements MozillaDndListener {
 		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.println();
 		}
+	}
+
+	@SuppressWarnings("restriction")
+	private void setSelectedNode(final Node node) {
+		IndexedRegion sourceNodeBounds
+				= ((IndexedRegion)node);
+		
+		vpeController.getSourceEditor().getTextViewer()
+				.getTextWidget().setSelection(
+						sourceNodeBounds.getStartOffset(),
+						sourceNodeBounds.getEndOffset());
 	}
 
 	private void externalDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data) {
@@ -514,7 +528,7 @@ public class VpeDnD implements MozillaDndListener {
 						.println("  drop!  container: " + dropInfo.getContainer().getNodeName()); //$NON-NLS-1$
 			}
 
-			externalDropAny(aFlavor, data, range);
+			externalDropAny(aFlavor, data, range.x);
 	
 			// TypedEvent tEvent = new TypedEvent(mouseEvent);
 			// tEvent.data = data;
