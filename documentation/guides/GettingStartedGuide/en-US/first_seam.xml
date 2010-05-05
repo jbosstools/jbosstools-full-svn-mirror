@@ -467,14 +467,14 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
         start by adding some custom login logic.</para>
       <para>Open <property>Authenticator.java</property> in JBoss Developer Studio and replace the
           <property>authenticate()</property> method with this code:</para>
-      <programlisting><![CDATA[public boolean authenticate() {
-if (identity.getUsername().equals("admin")
-&& identity.getPassword().equals("password")) {
-identity.addRole("admin");
-return true;
-}
-else
-return true;
+      <programlisting><![CDATA[public boolean authenticate()
+{
+  if ("admin".equals(credentials.getUsername()))
+  {
+    identity.addRole("admin");
+    return true;
+  }
+  return false;
 }]]></programlisting>
     </section>
     <section id="secure_seam_page">
