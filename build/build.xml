@@ -1214,13 +1214,13 @@ Cannot deploy - sourceDir not found in
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";, 
 	">
 			<sequential>
-				<echo level="warn">Test feature.ids for @{COMPONENT}</echo>
+				<echo level="info">Test feature.ids for @{COMPONENT}</echo>
 				<for param="artifactJar" delimiter=", ">
 					<path>
 						<fileset dir="${basedir}/@{COMPONENT}" includes="**/features/**/target/*.jar" />
 					</path>
 					<sequential>
-						<echo level="info">Test @{artifactJar}</echo>
+						<echo level="verbose">Test @{artifactJar}</echo>
 						<antcallback target="get.artifact.id" return="artifact.id">
 							<property name="artifactJar" value="@{artifactJar}" />
 							<param name="regexp.path" value=".+/features/[^/]+/target/([^/]+feature.+\.jar)" />
@@ -1251,13 +1251,13 @@ Cannot deploy - sourceDir not found in
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter=";, 
 	">
 			<sequential>
-				<echo level="warn">Test plugin.ids for @{COMPONENT}</echo>
+				<echo level="info">Test plugin.ids for @{COMPONENT}</echo>
 				<for param="artifactJar" delimiter=", ">
 					<path>
 						<fileset dir="${basedir}/@{COMPONENT}" includes="**/plugins/*.jar" excludes="**/target/**" />
 					</path>
 					<sequential>
-						<echo level="info">[1] Test @{artifactJar}</echo>
+						<echo level="verbose">[1] Test @{artifactJar}</echo>
 						<antcallback target="get.artifact.id" return="artifact.id">
 							<property name="artifactJar" value="@{artifactJar}" />
 							<property name="regexp.path" value=".+/plugins/([^/]+.+\.jar)" />
@@ -1279,7 +1279,7 @@ Cannot deploy - sourceDir not found in
 						<var name="artifact.id.expected" unset="true" />
 						<var name="artifact.id" unset="true" />
 
-						<echo level="info">[2] Test @{artifactJar}</echo>
+						<echo level="verbose">[2] Test @{artifactJar}</echo>
 						<antcallback target="get.plugin.id" return="plugin.id">
 							<property name="artifactJar" value="@{artifactJar}" />
 							<property name="regexp.path" value=".+/plugins/([^/]+.+\.jar)" />
@@ -1390,6 +1390,7 @@ Cannot deploy - sourceDir not found in
 		<delete file="${WORKINGDIR}/svn.info-tests.txt" />
 		<delete file="${WORKINGDIR}/svn.info-xulrunner.txt" />
 		<touch file="${WORKINGDIR}/common/pom.xml" />
+		<var name="COMPONENTS.to.build" unset="true"/>
 		<antcall target="get.sources" />
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
@@ -1428,6 +1429,7 @@ Cannot deploy - sourceDir not found in
 
 		<echo level="info">
 5/6: Test info w/o update</echo>
+		<var name="COMPONENTS.to.build" unset="true"/>
 		<antcall target="get.sources" />
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
