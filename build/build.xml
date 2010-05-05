@@ -51,9 +51,11 @@ or, to build everything but not *run* the tests:
 		or
 	ant -Dnotests=true
 
-or, to purge the local repo before building:
+or, to purge the local repo (or purge then build):
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
-    ant clean-run
+	ant purge -q
+		or
+	ant clean-run
 
 or, to build specific module(s): 
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
