@@ -410,7 +410,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 &lt;/testsuite&gt;
 </echo>
 				<property name="no.tests.run" value="true" />
-				<property name="no.builds.run" value="true" />
+				<property name="no.overall" value="true" />
 			</then>
 			<else>
 				<echo level="warning">The following components' sources have changed and will be built:
@@ -448,12 +448,15 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<for param="COMPONENT" list="${COMPONENTS.to.build}" delimiter=", 
 	">
 			<sequential>
-				<now level="warning">Build @{COMPONENT}</now>
-				<!-- If poms already exist, DO NOT OVERWRITE unless overwrite.existing.pom.xml=true -->
-				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
-					<property name="COMPONENT" value="@{COMPONENT}" />
-				</ant>
-
+				<if>
+					<equals arg1="@{COMPONENT}" arg2="site" />
+					<then>
+						<now level="warning">Build overall update @{COMPONENT}</now>
+					</then>
+					<else>
+						<now level="warning">Build @{COMPONENT} component</now>
+					</else>
+				</if>
 				<!-- optional extra instructions to do before a maven build -->
 				<if>
 					<available file="${WORKINGDIR}/@{COMPONENT}/build.xml" type="file" />
@@ -464,6 +467,11 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						</ant>
 					</then>
 				</if>
+
+				<!-- If poms already exist, DO NOT OVERWRITE unless -Doverwrite.existing.pom.xml=true -->
+				<ant antfile="genpom.xml" target="run" dir="${WORKINGDIR}">
+					<property name="COMPONENT" value="@{COMPONENT}" />
+				</ant>
 
 				<antcall target="mvn">
 					<param name="COMPONENT" value="@{COMPONENT}" />
@@ -664,9 +672,9 @@ ${test.results.errors.failures.skipped}
 	</target>
 
 	<!-- Used to build the overall update site for all components; requires a custom site.xml (generated from category.*.xml) and previously checked in pom.xml -->
-	<target name="create.overall.update.site" depends="init">
+	<target name="create.overall.update.site" depends="init" unless="no.overall">
 		<if>
-			<isset property="no.builds.run" />
+			<isset property="no.overall" />
 			<then>
 				<echo>All components up to date: nothing to do!
 To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
@@ -674,8 +682,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 			<else>
 				<property name="update.site.path" value="site" />
 
-				<!-- Clean up from last time, then fetch fresh sources (checkout or update) -->
-				<delete dir="${WORKINGDIR}/${update.site.path}/target" quiet="true" />
+				<!-- Fetch fresh sources (checkout or update) -->
 				<antcall target="get.sources">
 					<param name="COMPONENT" value="site" />
 				</antcall>
@@ -715,6 +722,9 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 	<target name="build.update.site">
 		<property name="update.site.path" value="site" />
+		<!-- without deleting previous target dir, update sites may end up missing all plugins and features! -->
+		<delete dir="${WORKINGDIR}/${update.site.path}/target" includeemptydirs="true" quiet="true" />
+
 		<if>
 			<equals arg1="${update.site.path}" arg2="site" />
 			<then>
@@ -920,6 +930,66 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		               override="true"
 		/>
 		<var name="artifactJar" unset="true" />
+	</target>
+
+	<!-- unpack previously built & jarred plugin jars -->
+	<target name="unjarPlugins">
+		<for param="artifactJar">
+			<path>
+				<fileset dir="${WORKINGDIR}/${COMPONENT}/plugins/" includes="*.jar" />
+			</path>
+			<sequential>
+				<antcallback target="get.artifact.id" return="artifact.id">
+					<property name="artifactJar" value="@{artifactJar}" />
+					<property name="regexp.path" value=".+/plugins/([^/]+.+\.jar)" />
+				</antcallback>
+				<unzip src="@{artifactJar}" dest="${WORKINGDIR}/${COMPONENT}/plugins/${artifact.id}" overwrite="true" />
+				<var name="artifact.id" unset="true" />
+			</sequential>
+		</for>
+	</target>
+
+	<!-- for a given ${COMPONENT} dir, switch all plugin/feature manifests from .SNAPSHOT to .qualifier -->
+	<target name="snapshot2qualifier">
+		<property name="COMPONENT" value="" />
+		<for param="artifactManifest">
+			<path>
+				<fileset dir="${WORKINGDIR}/${COMPONENT}"
+				         excludes="**/target/**"
+				         includes="**/plugins/**/**/MANIFEST.MF, **/features/**/feature.xml"
+				/>
+			</path>
+			<sequential>
+				<loadfile property="artifact.file" srcfile="@{artifactManifest}">
+					<filterchain>
+						<replaceregex pattern="([0-9]+).SNAPSHOT" replace="\1.qualifier" />
+					</filterchain>
+				</loadfile>
+				<echo file="@{artifactManifest}" message="${artifact.file}" />
+				<var name="artifact.file" unset="true" />
+			</sequential>
+		</for>
+	</target>
+
+	<!-- include a build.properties file if one not provided -->
+	<target name="genBuildProperties">
+		<for param="artifactDir">
+			<path>
+				<dirset dir="${WORKINGDIR}/${COMPONENT}/features/" />
+				<dirset dir="${WORKINGDIR}/${COMPONENT}/plugins/" />
+			</path>
+			<sequential>
+				<if>
+					<not>
+						<available file="@{artifactDir}/build.properties" type="file" />
+					</not>
+					<then>
+						<echo file="@{artifactDir}/build.properties">bin.includes = feature.*, ., plugin.*, about.*, META-INF/, .options/, lib/, help/, icons/, org/, src/
+</echo>
+					</then>
+				</if>
+			</sequential>
+		</for>
 	</target>
 
 	<!-- TODO: figure out why this fails with error: 
@@ -1390,7 +1460,7 @@ Cannot deploy - sourceDir not found in
 		<delete file="${WORKINGDIR}/svn.info-tests.txt" />
 		<delete file="${WORKINGDIR}/svn.info-xulrunner.txt" />
 		<touch file="${WORKINGDIR}/common/pom.xml" />
-		<var name="COMPONENTS.to.build" unset="true"/>
+		<var name="COMPONENTS.to.build" unset="true" />
 		<antcall target="get.sources" />
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">
@@ -1429,7 +1499,7 @@ Cannot deploy - sourceDir not found in
 
 		<echo level="info">
 5/6: Test info w/o update</echo>
-		<var name="COMPONENTS.to.build" unset="true"/>
+		<var name="COMPONENTS.to.build" unset="true" />
 		<antcall target="get.sources" />
 		<for param="expected.dir" list="${get.sources.expected.dirs}" delimiter=", 
 	">

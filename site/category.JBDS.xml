@@ -101,14 +101,22 @@
 		<category name="DataTools" />
 		<category name="GeneralTools" />
 	</feature>
-	<!-- TODO add Drools back into site -->
-	<!-- <feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" 
-		version="0.0.0"> <category name="AllTools"/> <category name="SOATools"/> 
-		<category name="GeneralTools"/> </feature> <feature url="features/org.drools.eclipse.task.feature_0.0.0.jar" 
-		id="org.drools.eclipse.task.feature" version="0.0.0"> <category name="AllTools"/> 
-		<category name="SOATools"/> </feature> <feature url="features/org.guvnor.tools.feature_0.0.0.jar" 
-		id="org.guvnor.tools.feature" version="0.0.0"> <category name="AllTools"/> 
-		<category name="SOATools"/> </feature> -->
+	<feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="SOATools" />
+		<category name="GeneralTools" />
+	</feature>
+	<feature url="features/org.drools.eclipse.task.feature_0.0.0.jar"
+	         id="org.drools.eclipse.task.feature"
+	         version="0.0.0"
+	>
+		<category name="AllTools" />
+		<category name="SOATools" />
+	</feature>
+	<feature url="features/org.guvnor.tools.feature_0.0.0.jar" id="org.guvnor.tools.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="SOATools" />
+	</feature>
 	<feature url="features/org.jboss.tools.project.examples.feature_0.0.0.jar"
 	         id="org.jboss.tools.project.examples.feature"
 	         version="0.0.0"
