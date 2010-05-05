@@ -413,7 +413,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 	<target name="run.build">
 		<!-- could set -Dmaven.test.skip to skip tests, or use osgi-test:test to just (re-)run tests w/o first building -->
-		<property name="MAVEN_FLAGS" value="install -B -fn -q" />
+		<property name="MAVEN_FLAGS" value="clean install -B -fn -q -U -e -Dsurefire.useFile=false" />
 
 		<!-- commandline overrides to suppress doing tests -->
 		<if>
