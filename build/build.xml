@@ -53,7 +53,7 @@ or, to build everything but not *run* the tests:
 
 or, to purge the local repo before building:
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
-    ant -DMAVEN_FLAGS="dependency:purge-local-repository clean install"
+    ant clean-run
 
 or, to build specific module(s): 
     cd /home/nboldt/workspace36/jbosstools-modular_build; \
@@ -92,6 +92,19 @@ Here is the order in which components must be built:
 	</target>
 
 	<!-- ******************* MAIN ENTRY TARGETS ******************* -->
+	<target name="clean-run"
+	        description="purge m2 repo, then run build"
+	        depends="purge, run"
+	/>
+	
+	<target name="purge" depends="init">
+		<antcall target="mvn">
+			<param name="COMPONENT" value="site" />
+			<param name="MAVEN_FLAGS" value="dependency:purge-local-repository -q -B -fae" />
+			<param name="noXvfb" value="true" />
+		</antcall>
+	</target>
+	
 	<target name="run"
 	        description="run a build, collect test results, generate overall update site"
 	        depends="build, collect.all.test.results, create.overall.update.site"
@@ -106,6 +119,7 @@ Here is the order in which components must be built:
 	        description="run tests w/o first getting sources + list of components to build; assumes an upstream build job was already run"
 	        depends="init, get.bootstrap.scripts, get.components.to.test, run.build, collect.all.test.results"
 	/>
+	
 	<!-- ******************* MAIN ENTRY TARGETS ******************* -->
 
 	<!-- override for local build -->
