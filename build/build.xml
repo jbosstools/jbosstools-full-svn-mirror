@@ -104,7 +104,7 @@ Here is the order in which components must be built:
 		<antcall target="mvn">
 			<param name="COMPONENT" value="purge" />
 			<param name="MAVEN_DIR" value="${WORKINGDIR}/purge/site" />
-			<param name="MAVEN_FLAGS" value="dependency:purge-local-repository -q -B -fae" />
+			<param name="MAVEN_FLAGS" value="dependency:purge-local-repository -e -U -q -B -fae" />
 			<param name="noXvfb" value="true" />
 		</antcall>
 		<delete dir="${WORKINGDIR}/purge" includeemptydirs="true" quiet="true" />
@@ -707,7 +707,7 @@ ${test.results.errors.failures.skipped}
 				<!-- Call maven to generate pom.xml, then build site from site.xml -->
 				<antcall target="run.build">
 					<param name="COMPONENTS.to.build" value="${COMPONENTS.to.build}" />
-					<param name="MAVEN_FLAGS" value="verify -q -B -fae -Dmaven.test.skip" />
+					<param name="MAVEN_FLAGS" value="verify -e -q -B -fae -Dmaven.test.skip" />
 					<param name="noXvfb" value="true" />
 				</antcall>
 			</then>
@@ -715,7 +715,7 @@ ${test.results.errors.failures.skipped}
 				<!-- Or just call maven to build site -->
 				<antcall target="mvn">
 					<param name="MAVEN_DIR" value="${WORKINGDIR}/${update.site.path}" />
-					<param name="MAVEN_FLAGS" value="verify -q -B -fae -Dmaven.test.skip" />
+					<param name="MAVEN_FLAGS" value="verify -e -q -B -fae -Dmaven.test.skip" />
 					<param name="noXvfb" value="true" />
 				</antcall>
 			</else>
