@@ -330,7 +330,6 @@ Here is the order in which components must be built:
 											</and>
 											<then>
 												<svn.fetch component="@{COMPONENT}" op="up" />
-												<echo file="build.cfg" message="@{COMPONENT}," append="true" />
 											</then>
 										</if>
 									</else>
