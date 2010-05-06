@@ -112,7 +112,7 @@ Here is the order in which components must be built:
 
 	<target name="run"
 	        description="run a build, collect test results, generate overall update site"
-	        depends="build, collect.all.test.results, create.overall.update.site"
+	        depends="build, collect.all.test.results, create.overall.update.site, collect.update.site.results"
 	/>
 
 	<target name="build"
@@ -669,6 +669,88 @@ ${test.results.errors.failures.skipped}
 </echo>
 			</then>
 		</if>
+	</target>
+
+	<!-- collect names, dates, and contained features in all generated update site zips, including the overall one -->
+	<target name="collect.update.site.results" depends="init">
+		<var name="COMPONENTS.to.check" unset="" />
+		<if>
+			<isset property="COMPONENTS.to.build" />
+			<then>
+				<var name="COMPONENTS.to.check" value="${COMPONENTS.to.build}" />
+			</then>
+			<else>
+				<var name="COMPONENTS.to.check" value="${COMPONENTS}" />
+			</else>
+		</if>
+		<if>
+			<not>
+				<contains string="${COMPONENTS.to.check}" substring=",site" />
+			</not>
+			<then>
+				<var name="COMPONENTS.to.check" value="${COMPONENTS.to.check},site" />
+			</then>
+		</if>
+		<for param="COMPONENT" list="${COMPONENTS.to.check}" delimiter=",; 
+	">
+			<sequential>
+				<for param="updateZip">
+					<path>
+						<fileset dir="${WORKINGDIR}/@{COMPONENT}" includes="**/JBossTools*Update*.zip" />
+					</path>
+					<sequential>
+						<propertyregex property="updateZip"
+						               defaultvalue="@{updateZip}"
+						               input="@{updateZip}"
+						               regexp=".+/site/target/([^/]+.+\.zip)"
+						               replace="\1"
+						               override="true"
+						/>
+						<exec executable="unzip" outputproperty="zip.contents">
+							<arg line="-l @{updateZip}" />
+						</exec>
+						<if>
+							<and>
+								<isset property="zip.contents" />
+								<contains string="${zip.contents}" substring="plugins/" />
+								<contains string="${zip.contents}" substring=".jar" />
+							</and>
+							<then>
+								<echo level="info">@{COMPONENT} :: ${updateZip}</echo>
+								<for param="featureJar" list="${zip.contents}" delimiter="
+">
+									<sequential>
+										<if>
+											<and>
+												<contains string="@{featureJar}" substring="features/" />
+												<contains string="@{featureJar}" substring=".jar" />
+											</and>
+											<then>
+												<echo level="info">  :: @{featureJar}</echo>
+											</then>
+										</if>
+									</sequential>
+								</for>
+							</then>
+							<else>
+								<echo level="warn">@{COMPONENT} :: ${updateZip}</echo>
+							</else>
+						</if>
+					</sequential>
+				</for>
+				<if>
+					<not>
+						<isset property="zip.contents" />
+					</not>
+					<then>
+						<echo level="warn">No update site found for @{COMPONENT}.</echo>
+					</then>
+				</if>
+				<var name="zip.contents" unset="true" />
+				<var name="zip.features" unset="true" />
+				<echo level="info"></echo>
+			</sequential>
+		</for>
 	</target>
 
 	<!-- Used to build the overall update site for all components; requires a custom site.xml (generated from category.*.xml) and previously checked in pom.xml -->
