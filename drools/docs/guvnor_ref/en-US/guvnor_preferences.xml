@@ -15,8 +15,8 @@
         <title>Guvnor Repository Exploring Perspective</title>
        
         <para>The <property>Guvnor Repository Exploring perspective</property> contains two views
-            supplied by <property>EGT</property> – <link linkend="guvnor_repositories_view">Guvnor Repositories</link> and
-            <link linkend="guvnor_history_view">Guvnor Resource History</link>, that will be the center of most interactions
+            supplied by <property>EGT</property> – <link linkend="guvnor_repositories_view">Guvnor Repositories view</link> and
+            <link linkend="guvnor_history_view">Guvnor Resource History view</link>, that will be the center of most interactions
             with Guvnor, and Eclipse standard views such as <property>Properties</property> and
             <property>Resource Navigator</property> that are also useful.</para>
         
@@ -163,7 +163,7 @@
     </section>
     
     <section id="resources_from_guvnor">
-        <title>Import from Guvnor wizard</title>
+        <title>Resource from Guvnor Wizard</title>
         
         <para>In addition to the single file drag-and-drop from the <property>Guvnor Repositories
             view</property>, the <property>EGT</property> also includes a wizard for copying one
@@ -350,7 +350,7 @@
                     Resource History view</property> updates to show the revision history:</para>
         
         <figure>
-            <title>IGuvnor Resource History View</title>
+            <title>Guvnor Resource History View</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/functionality_overview/resource_history_view2.png"/>

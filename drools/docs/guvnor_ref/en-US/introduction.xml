@@ -74,15 +74,14 @@
 
                     <row>
                         <entry>
-                            <para>Resources from Guvnor Wizard</para>
+                            <para>Resource from Guvnor wizard</para>
                         </entry>
                         <entry>
                             <para>The wizard helps to get local copies of Guvnor repository
                                 resources.</para>
                         </entry>
                         <entry>
-                            <link linkend="resources_from_guvnor">Importing Guvnor Repository
-                                Resources</link>
+                            <link linkend="resources_from_guvnor">Resource from Guvnor wizard</link>
                         </entry>
                     </row>
 
@@ -98,7 +97,7 @@
                                 and those not associated.</para>
                         </entry>
                         <entry>
-                            <link linkend="actions">Actions for Local Guvnor Resources</link>
+                            <link linkend="actions">Managing Guvnor Resources</link>
                         </entry>
                     </row>
 
@@ -135,7 +134,7 @@
             </listitem>
         </itemizedlist>
         <para>To have JBoss Server with Guvnor repository deployed, you should
-            download <ulink url="http://www.jboss.org/drools/downloads.html">Guvnor</ulink>.
+            download <ulink url="http://www.jboss.org/drools/downloads.html">Drools Guvnor</ulink>.
             When downloading you may choose either web based Guvnor to deploy to your
             JBoss Server or Standalone Guvnor with JBoss AS.</para> 
         <para>If you use a JBoss AS 5 and a <property>Guvnor Tools</property> doesn't work when deployed to the server,

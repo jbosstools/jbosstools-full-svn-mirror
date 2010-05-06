@@ -28,10 +28,10 @@
 
         <orderedlist>
             <listitem>
-                <para>Drag-and-drop from the <property>Guvnor Repositories view</property></para>
+                <para>Drag-and-drop from the <link linkend="guvnor_repositories_view">Guvnor Repositories view</link></para>
             </listitem>
             <listitem>
-                <para>Using the <link linkend="resources_from_guvnor">Import from Guvnor
+                <para>Using the <link linkend="resources_from_guvnor">Resource from Guvnor
                         wizard</link>, as described further in this document</para>
             </listitem>
         </orderedlist>
@@ -234,14 +234,7 @@
             <para>If a local change is based on an older revision of a file that is currently in the
                 Guvnor repository (for example, someone else changed the same file), then the <emphasis>
                     <property>Commit</property>
-                </emphasis> action will<figure>
-		<title>Add to Guvnor Wizard</title>
-		<mediaobject>
-			<imageobject>
-				<imagedata fileref="images/functionality_overview/add_toGuvnor_wizard.png"/>
-			</imageobject>
-		</mediaobject>
-	   </figure> ask whether you wish to overwrite the current version in the
+                </emphasis> action will ask whether you wish to overwrite the current version in the
                 Guvnor repository with the local content. When such conflicts occur, however, you
                 should use the Eclipse Guvnor version tools, along with Eclipse standard tools, to
                 determine the differences and merge content based on the current version in the
