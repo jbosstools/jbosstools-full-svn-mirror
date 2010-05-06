@@ -108,7 +108,7 @@ Here is the order in which components must be built:
 			<param name="noXvfb" value="true" />
 		</antcall>
 		<delete dir="${WORKINGDIR}/purge" includeemptydirs="true" quiet="true" />
-		<delete dir="${COMMON_TOOLS}/m2-repository/org/jboss/tools" includeemptydirs="true" quiet="true"/>
+		<delete dir="${COMMON_TOOLS}/m2-repository/org/jboss/tools" includeemptydirs="true" quiet="true" />
 	</target>
 
 	<target name="run"
@@ -515,6 +515,30 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<echo level="verbose">Exe: ${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}</echo>
 		<echo level="verbose">Pom: ${WORKINGDIR}/${COMPONENT}/pom.xml</echo>
 		<property name="MAVEN_DIR" value="${WORKINGDIR}/${COMPONENT}" />
+		<!-- support using true/false/other path values of maven.repo.local -->
+		<if>
+			<isset property="maven.repo.local" />
+			<then>
+				<if>
+					<isfalse value="${maven.repo.local}" />
+					<then>
+						<var name="maven.repo.local" value="" />
+					</then>
+					<elseif>
+						<istrue value="${maven.repo.local}" />
+						<then>
+							<var name="maven.repo.local" value=" -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository" />
+						</then>
+					</elseif>
+					<else>
+						<var name="maven.repo.local" value=" -Dmaven.repo.local=${maven.repo.local}" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<var name="maven.repo.local" value=" -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository" />
+			</else>
+		</if>
 		<!-- 3 hr timeout = 10800000ms -->
 		<exec executable="${COMMON_TOOLS}/apache-maven-${maven.version}/bin/${mvnExe}"
 		      dir="${MAVEN_DIR}"
@@ -749,7 +773,8 @@ ${test.results.errors.failures.skipped}
 				</if>
 				<var name="zip.contents" unset="true" />
 				<var name="zip.features" unset="true" />
-				<echo level="info"></echo>
+				<echo level="info">
+</echo>
 			</sequential>
 		</for>
 	</target>
