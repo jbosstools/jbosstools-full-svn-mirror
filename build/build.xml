@@ -108,6 +108,7 @@ Here is the order in which components must be built:
 			<param name="noXvfb" value="true" />
 		</antcall>
 		<delete dir="${WORKINGDIR}/purge" includeemptydirs="true" quiet="true" />
+		<delete dir="${COMMON_TOOLS}/m2-repository/org/jboss/tools" includeemptydirs="true" quiet="true"/>
 	</target>
 
 	<target name="run"
