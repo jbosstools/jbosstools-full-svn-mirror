@@ -16,7 +16,7 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.tycho</groupId>
+				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-packaging-plugin</artifactId>
 				<version>${tychoVersion}</version>
 				<configuration>
@@ -32,12 +32,28 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<!-- <goals>install</goals> -->
+					<skipCheckoutIfExists>true</skipCheckoutIfExists>
+					<checkoutDirectory>sources</checkoutDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tychoVersion}</version>
 				<configuration>
 					<resolver>p2</resolver>
 					<environments>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
 						<environment>
 							<os>macosx</os>
 							<ws>cocoa</ws>
@@ -134,7 +150,7 @@
 		</connection>
 		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</developerConnection>
-		<url>http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		<url>http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</url>
 	</scm>
 
@@ -248,6 +264,7 @@
 	</profiles>
 
 	<repositories>
+		<!-- TODO: add JBT nightly update site so we can build against binaries -->
 		<repository>
 			<id>galileo</id>
 			<url>http://download.eclipse.org/releases/galileo/</url>
@@ -365,7 +382,7 @@
 		</pluginRepository>
 		<pluginRepository>
 			<id>tycho</id>
-			<url>http://repository.sonatype.org/content/repositories/snapshots/
+			<url>https://repository.sonatype.org/content/repositories/snapshots/
 			</url>
 			<snapshots>
 				<enabled>true</enabled>
