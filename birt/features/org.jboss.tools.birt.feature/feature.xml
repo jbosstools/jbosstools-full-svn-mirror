@@ -21,6 +21,8 @@
    <requires>
       <import feature="org.eclipse.birt" version="2.5.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.birt.integration.wtp" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.birt.chart" version="2.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.birt.chart.integration.wtp" version="2.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
