@@ -28,7 +28,7 @@ import org.hibernate.mediator.x.mapping.Component;
 import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.RootClass;
 import org.hibernate.mediator.x.mapping.Subclass;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.jboss.tools.hibernate.ui.diagram.editors.figures.RoundPolylineConnection;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.BaseElement;
@@ -98,7 +98,7 @@ public class ConnectionEditPart extends AbstractConnectionEditPart
 		Object el = getTargetElement();
 		if (el instanceof RootClass || el instanceof Subclass) { 
 			return ResourceManager.getInstance().getColor(new RGB(210, 155, 100));
-		} else if (el instanceof Column || el instanceof TableStub || el instanceof Property) { 
+		} else if (el instanceof Column || el instanceof Table || el instanceof Property) { 
 			return ResourceManager.getInstance().getColor(new RGB(160, 160, 160));
 		}
 		return ResourceManager.getInstance().getColor(new RGB(255, 0, 0));
@@ -108,7 +108,7 @@ public class ConnectionEditPart extends AbstractConnectionEditPart
 		Object el = getTargetElement();
 		if (el instanceof RootClass || el instanceof Subclass) { 
 			return ResourceManager.getInstance().getColor(new RGB(112, 161, 99));
-		} else if (el instanceof Column || el instanceof TableStub || 
+		} else if (el instanceof Column || el instanceof Table || 
 				el instanceof Component) { 
 			return ResourceManager.getInstance().getColor(new RGB(66, 173, 247));
 		}

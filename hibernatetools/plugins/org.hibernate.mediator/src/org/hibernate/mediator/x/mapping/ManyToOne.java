@@ -8,7 +8,7 @@ public class ManyToOne extends ToOne {
 		super(manyToOne, CL);
 	}
 	
-	public static ManyToOne newInstance(TableStub table) {
+	public static ManyToOne newInstance(Table table) {
 		return new ManyToOne(newInstance(CL, table));
 	}
 

@@ -16,16 +16,16 @@ public class ValueFactory {
 			return new IdentifierBag(value);
 		//} else if (0 == "org.hibernate.mapping.IndexedCollection".compareTo(cl.getName())) {
 		//	return new IndexedCollectionStub(value);
-		} else if (0 == ListStub.CL.compareTo(cl.getName())) {
-			return new ListStub(value);
+		} else if (0 == List.CL.compareTo(cl.getName())) {
+			return new List(value);
 		} else if (0 == Array.CL.compareTo(cl.getName())) {
 			return new Array(value);
 		} else if (0 == PrimitiveArray.CL.compareTo(cl.getName())) {
 			return new PrimitiveArray(value);
-		} else if (0 == MapStub.CL.compareTo(cl.getName())) {
-			return new MapStub(value);
-		} else if (0 == SetStub.CL.compareTo(cl.getName())) {
-			return new SetStub(value);
+		} else if (0 == Map.CL.compareTo(cl.getName())) {
+			return new Map(value);
+		} else if (0 == Set.CL.compareTo(cl.getName())) {
+			return new Set(value);
 		} else if (0 == OneToMany.CL.compareTo(cl.getName())) {
 			return new OneToMany(value);
 		//} else if (0 == KeyValueStub.CL.compareTo(cl.getName())) {

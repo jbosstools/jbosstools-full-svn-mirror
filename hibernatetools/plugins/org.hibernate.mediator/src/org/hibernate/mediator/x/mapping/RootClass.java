@@ -23,12 +23,12 @@ public class RootClass extends PersistentClass {
 		invoke(mn(), discr);
 	}
 
-	public TableStub getTable() {
+	public Table getTable() {
 		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
-		return new TableStub(obj);
+		return new Table(obj);
 	}
 
 	public void addProperty(Property p) {
@@ -63,7 +63,7 @@ public class RootClass extends PersistentClass {
 		invoke(mn(), lazy);
 	}
 
-	public void setTable(TableStub table) {
+	public void setTable(Table table) {
 		invoke(mn(), table);
 	}
 

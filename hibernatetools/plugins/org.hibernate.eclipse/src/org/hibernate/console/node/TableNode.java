@@ -21,11 +21,11 @@
  */
 package org.hibernate.console.node;
 
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 public class TableNode extends BaseNode {
 
-	public TableNode(BaseNode parent, TableStub table) {
+	public TableNode(BaseNode parent, Table table) {
 		super(null, parent);
 		name = table.getName();
 	}

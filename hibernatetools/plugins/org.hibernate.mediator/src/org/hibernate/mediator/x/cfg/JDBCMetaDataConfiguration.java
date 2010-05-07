@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Properties;
 import org.hibernate.mediator.base.HObject;
 import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategy;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 public class JDBCMetaDataConfiguration extends Configuration {
 	public static final String CL = "org.hibernate.cfg.JDBCMetaDataConfiguration"; //$NON-NLS-1$
@@ -36,19 +36,19 @@ public class JDBCMetaDataConfiguration extends Configuration {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<TableStub> getTableMappingsArr() {
-		ArrayList<TableStub> arr = new ArrayList<TableStub>(); 
+	public ArrayList<Table> getTableMappingsArr() {
+		ArrayList<Table> arr = new ArrayList<Table>(); 
 		Iterator it = (Iterator)invoke(mn());
 		while (it.hasNext() ) {
 			Object obj = it.next();
 			if (obj != null) {
-				arr.add(new TableStub(obj));
+				arr.add(new Table(obj));
 			}
 		}
 		return arr;
 	}
 
-	public Iterator<TableStub> getTableMappingsIt() {
+	public Iterator<Table> getTableMappingsIt() {
 		return getTableMappingsArr().iterator();
 	}
 

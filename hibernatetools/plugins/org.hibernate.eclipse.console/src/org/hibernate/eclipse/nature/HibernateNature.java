@@ -52,7 +52,7 @@ import org.hibernate.mediator.x.cfg.Configuration;
 import org.hibernate.mediator.x.cfg.ConfigurationFactory;
 import org.hibernate.mediator.x.cfg.JDBCMetaDataConfiguration;
 import org.hibernate.mediator.x.cfg.reveng.TableIdentifier;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.osgi.service.prefs.Preferences;
 
 public class HibernateNature implements IProjectNature {
@@ -118,11 +118,11 @@ public class HibernateNature implements IProjectNature {
 		}
 	}
 
-	List<TableStub> tables = null;
+	List<Table> tables = null;
 
 	private ReadDatabaseMetaData job;
 
-	public List<TableStub> getTables() {
+	public List<Table> getTables() {
 		ConsoleConfiguration ccfg = getDefaultConsoleConfiguration();
 		if(ccfg==null) return Collections.emptyList();
 
@@ -172,11 +172,11 @@ public class HibernateNature implements IProjectNature {
 
 	}
 
-	public List<TableStub> getMatchingTables(String tableName) {
-		List<TableStub> result = new ArrayList<TableStub>();
-		Iterator<TableStub> tableMappings = getTables().iterator();
+	public List<Table> getMatchingTables(String tableName) {
+		List<Table> result = new ArrayList<Table>();
+		Iterator<Table> tableMappings = getTables().iterator();
 		while (tableMappings.hasNext() ) {
-			TableStub table = tableMappings.next();
+			Table table = tableMappings.next();
 			if(table.getName().toUpperCase().startsWith(tableName.toUpperCase()) ) {
 				result.add(table);
 			}
@@ -184,10 +184,10 @@ public class HibernateNature implements IProjectNature {
 		return result;
 	}
 
-	public TableStub getTable(TableIdentifier nearestTableName) {
+	public Table getTable(TableIdentifier nearestTableName) {
 		// TODO: can be made MUCH more efficient with proper indexing of the tables.
 		// TODO: handle catalog/schema properly
-		for (TableStub table : getTables()) {
+		for (Table table : getTables()) {
 			if(nearestTableName.getName().equals(table.getName())) {
 				return table;
 			}

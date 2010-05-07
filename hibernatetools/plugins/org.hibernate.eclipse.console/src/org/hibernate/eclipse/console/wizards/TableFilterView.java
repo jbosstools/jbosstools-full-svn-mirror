@@ -34,7 +34,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.hibernate.console.ConsoleConfiguration;
@@ -48,7 +47,7 @@ import org.hibernate.eclipse.console.workbench.TableContainer;
 import org.hibernate.eclipse.console.workbench.xpl.AnyAdaptableLabelProvider;
 import org.hibernate.mediator.stubs.util.StringHelper;
 import org.hibernate.mediator.x.mapping.Column;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 public abstract class TableFilterView extends TreeToTableComposite {
 
@@ -141,8 +140,8 @@ public abstract class TableFilterView extends TreeToTableComposite {
 				Object sel = iterator.next();
 				ITableFilter filter = null;
 
-				if ( sel instanceof TableStub ) {
-					TableStub table = (TableStub) sel;
+				if ( sel instanceof Table ) {
+					Table table = (Table) sel;
 					filter = revEngDef.createTableFilter();
 					if ( StringHelper.isNotEmpty( table.getName() ) ) {
 						filter.setMatchName( table.getName() );
@@ -243,7 +242,7 @@ public abstract class TableFilterView extends TreeToTableComposite {
 		}
 	}
 
-	protected void createTableColumns(Table table) {
+	protected void createTableColumns(org.eclipse.swt.widgets.Table table) {
 		TableColumn column = new TableColumn(table, SWT.CENTER, 0);
 		column.setText(HibernateConsoleMessages.TableFilterView_sign);
 		column.setWidth(20);

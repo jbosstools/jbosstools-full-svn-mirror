@@ -1,15 +1,15 @@
 package org.hibernate.mediator.x.mapping;
 
 
-public class SetStub extends CollectionStub {
+public class Set extends Collection {
 	public static final String CL = "org.hibernate.mapping.Set"; //$NON-NLS-1$
 
-	protected SetStub(Object set) {
+	protected Set(Object set) {
 		super(set, CL);
 	}
 	
-	public static SetStub newInstance(PersistentClass owner) {
-		return new SetStub(newInstance(CL, owner));
+	public static Set newInstance(PersistentClass owner) {
+		return new Set(newInstance(CL, owner));
 	}
 
 	@Override

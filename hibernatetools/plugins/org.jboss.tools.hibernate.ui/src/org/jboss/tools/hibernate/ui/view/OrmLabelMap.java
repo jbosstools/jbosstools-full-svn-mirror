@@ -18,7 +18,7 @@ import org.hibernate.mediator.x.mapping.OneToMany;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.SimpleValue;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.mapping.Value;
 import org.hibernate.mediator.x.type.Type;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Utils;
@@ -36,8 +36,8 @@ public class OrmLabelMap {
 
 	public static String getLabel(final Object obj) {
 		String label = null;
-		if (obj instanceof TableStub) {
-			label = getParticularLabel((TableStub)obj);
+		if (obj instanceof Table) {
+			label = getParticularLabel((Table)obj);
 		} else if (obj instanceof Column) {
 			label = getParticularLabel((Column)obj);
 		} else if (obj instanceof Property) {
@@ -59,7 +59,7 @@ public class OrmLabelMap {
 		return label;
 	}
 
-	public static String getParticularLabel(TableStub table) {
+	public static String getParticularLabel(Table table) {
 		return Utils.getTableName(table);
 	}
 
@@ -160,7 +160,7 @@ public class OrmLabelMap {
 		StringBuffer name = new StringBuffer();
 		name.append(persistentClass.getEntityName() != null ? 
 				persistentClass.getEntityName() : persistentClass.getClassName());
-		TableStub table = persistentClass.getTable();
+		Table table = persistentClass.getTable();
 		if (table != null) {
 			final String tableName = Utils.getTableName(table);
 			if (tableName != null) {

@@ -2,7 +2,7 @@ package org.hibernate.mediator.x.mapping;
 
 import org.hibernate.mediator.base.HObject;
 
-public class Array extends ListStub {
+public class Array extends List {
 	public static final String CL = "org.hibernate.mapping.Array"; //$NON-NLS-1$
 
 	protected Array(Object array) {
@@ -21,7 +21,7 @@ public class Array extends ListStub {
 		invoke(mn(), element);
 	}
 
-	public void setCollectionTable(TableStub table) {
+	public void setCollectionTable(Table table) {
 		invoke(mn(), table);
 	}
 

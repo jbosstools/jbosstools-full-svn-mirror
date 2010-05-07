@@ -52,7 +52,7 @@ import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.utils.ProjectUtils;
 import org.hibernate.mediator.x.cfg.Configuration;
 import org.hibernate.mediator.x.mapping.RootClass;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection.ConnectionType;
@@ -1042,7 +1042,7 @@ public class OrmDiagram extends BaseElement {
 			while (it.hasNext()) {
 				final OrmShape shape = it.next();
 				Object ormElement = shape.getOrmElement();
-				if (ormElement instanceof TableStub) {
+				if (ormElement instanceof Table) {
 					nTables++;
 				}
 			}

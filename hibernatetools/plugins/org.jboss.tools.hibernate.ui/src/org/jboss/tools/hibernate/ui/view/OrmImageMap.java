@@ -18,17 +18,17 @@ import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.Component;
 import org.hibernate.mediator.x.mapping.DependantValue;
 import org.hibernate.mediator.x.mapping.IdentifierBag;
-import org.hibernate.mediator.x.mapping.ListStub;
+import org.hibernate.mediator.x.mapping.List;
 import org.hibernate.mediator.x.mapping.ManyToOne;
-import org.hibernate.mediator.x.mapping.MapStub;
+import org.hibernate.mediator.x.mapping.Map;
 import org.hibernate.mediator.x.mapping.OneToMany;
 import org.hibernate.mediator.x.mapping.OneToOne;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.PrimitiveArray;
 import org.hibernate.mediator.x.mapping.Property;
-import org.hibernate.mediator.x.mapping.SetStub;
+import org.hibernate.mediator.x.mapping.Set;
 import org.hibernate.mediator.x.mapping.SimpleValue;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.mapping.Value;
 import org.hibernate.mediator.x.type.Type;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
@@ -42,8 +42,8 @@ public class OrmImageMap {
 
 	public static ImageDescriptor getImageDescriptor(final Object obj) {
 		String imageName = null;
-		if (obj instanceof TableStub) {
-			imageName = getImageName((TableStub)obj);
+		if (obj instanceof Table) {
+			imageName = getImageName((Table)obj);
 		} else if (obj instanceof Column) {
 			imageName = getImageName((Column)obj);
 		} else if (obj instanceof Property) {
@@ -66,7 +66,7 @@ public class OrmImageMap {
 	 * @param table
 	 * @return
 	 */
-	public static String getImageName(TableStub table) {
+	public static String getImageName(Table table) {
 		return "Image_DatabaseTable"; //$NON-NLS-1$
 	}
 
@@ -80,7 +80,7 @@ public class OrmImageMap {
 		String str = "Image_DatabaseColumn"; //$NON-NLS-1$
 		final boolean primaryKey = HibernateUtils.isPrimaryKey(column);
 		final boolean foreignKey = HibernateUtils.isForeignKey(column);
-		final TableStub table = HibernateUtils.getTable(column);
+		final Table table = HibernateUtils.getTable(column);
 		if (column.isUnique()) {
 			str = "Image_DatabaseUniqueKeyColumn"; //$NON-NLS-1$
 		} else if (primaryKey && table != null && foreignKey) {
@@ -132,11 +132,11 @@ public class OrmImageMap {
 						str = "Image_Collection_primitive_array"; //$NON-NLS-1$
 					} else if (value instanceof Array) {
 						str = "Image_Collection_array"; //$NON-NLS-1$
-					} else if (value instanceof ListStub) {
+					} else if (value instanceof List) {
 						str = "Image_Collection_list"; //$NON-NLS-1$
-					} else if (value instanceof SetStub) {
+					} else if (value instanceof Set) {
 						str = "Image_Collection_set"; //$NON-NLS-1$
-					} else if (value instanceof MapStub) {
+					} else if (value instanceof Map) {
 						str = "Image_Collection_map"; //$NON-NLS-1$
 					} else if (value instanceof Bag) {
 						str = "Image_Collection_bag"; //$NON-NLS-1$

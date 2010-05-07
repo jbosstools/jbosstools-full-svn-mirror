@@ -1,7 +1,7 @@
 package org.hibernate.mediator.x.mapping;
 
 
-public abstract class IdentifierCollection extends CollectionStub {
+public abstract class IdentifierCollection extends Collection {
 	public static final String CL = "org.hibernate.mapping.IdentifierCollection"; //$NON-NLS-1$
 
 	protected IdentifierCollection(Object identifierCollection) {

@@ -18,12 +18,12 @@ public abstract class Value extends HObject {
 		super(value, cn);
 	}
 	
-	public TableStub getTable() {
+	public Table getTable() {
 		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
-		return new TableStub(obj);
+		return new Table(obj);
 	}
 
 	public boolean isSimpleValue() {

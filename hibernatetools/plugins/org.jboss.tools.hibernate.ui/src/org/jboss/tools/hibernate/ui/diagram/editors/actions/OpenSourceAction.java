@@ -24,7 +24,7 @@ import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.Property;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.jboss.tools.hibernate.ui.diagram.DiagramViewerMessages;
 import org.jboss.tools.hibernate.ui.diagram.UiPlugin;
 import org.jboss.tools.hibernate.ui.diagram.editors.DiagramViewer;
@@ -61,7 +61,7 @@ public class OpenSourceAction extends SelectionAction {
 		while (iterator.hasNext() && editorPart == null) {
 			Shape shape = iterator.next();
 			Object selection = shape.getOrmElement();
-			if (selection instanceof Column || selection instanceof TableStub) {
+			if (selection instanceof Column || selection instanceof Table) {
 				Iterator<Connection> targetConnections = shape.getTargetConnections().iterator();
 				while (targetConnections.hasNext()) {
 					Connection connection = targetConnections.next();

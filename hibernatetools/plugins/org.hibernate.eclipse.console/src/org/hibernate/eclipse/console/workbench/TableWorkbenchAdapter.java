@@ -30,12 +30,12 @@ import org.hibernate.console.ImageConstants;
 import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.PrimaryKey;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 public class TableWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	public Object[] getChildren(Object o) {
-		TableStub t = getTable( o );
+		Table t = getTable( o );
 		
 		List<Object> items = new ArrayList<Object>();
 		
@@ -55,8 +55,8 @@ public class TableWorkbenchAdapter extends BasicWorkbenchAdapter {
 		return items.toArray(new Object[items.size()]);
 	}
 
-	private TableStub getTable(Object o) {
-		return (TableStub) o;
+	private Table getTable(Object o) {
+		return (Table) o;
 	}
 
 	public ImageDescriptor getImageDescriptor(Object object) {
@@ -64,7 +64,7 @@ public class TableWorkbenchAdapter extends BasicWorkbenchAdapter {
 	}
 
 	public String getLabel(Object o) {
-		TableStub table = getTable(o);
+		Table table = getTable(o);
 		//return Table.qualify(table.getCatalog(), table.getSchema(), table.getName(), '.');
 		return table.getName();
 	}

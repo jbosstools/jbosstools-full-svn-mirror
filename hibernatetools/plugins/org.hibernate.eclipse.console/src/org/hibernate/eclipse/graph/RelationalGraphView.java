@@ -30,7 +30,7 @@ import org.hibernate.eclipse.graph.model.ConfigurationViewAdapter;
 import org.hibernate.eclipse.graph.model.TableViewAdapter;
 import org.hibernate.eclipse.graph.parts.ConfigurationEditPart;
 import org.hibernate.eclipse.graph.parts.PersistentClassEditPart;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 public class RelationalGraphView extends AbstractGraphViewPart {
 
@@ -60,7 +60,7 @@ public class RelationalGraphView extends AbstractGraphViewPart {
 					cv = new ConfigurationViewAdapter(pe.getPersistentClassViewAdapter().getConfiguration().getConfiguration());
 				} 
 				
-				TableStub table = pe.getPersistentClassViewAdapter().getPersistentClass().getTable();
+				Table table = pe.getPersistentClassViewAdapter().getPersistentClass().getTable();
 				tables.add(new TableViewAdapter(cv,table));
 				
 			}			

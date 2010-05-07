@@ -5,12 +5,12 @@ package org.hibernate.mediator.x.mapping;
 public interface ValueVisitor {
 	Object accept(Bag bag);
 	Object accept(IdentifierBag bag);
-	Object accept(ListStub list);
+	Object accept(List list);
 	Object accept(PrimitiveArray primitiveArray);
 	Object accept(Array list);
-	Object accept(MapStub map);
+	Object accept(Map map);
 	Object accept(OneToMany many);
-	Object accept(SetStub set);
+	Object accept(Set set);
 	Object accept(Any any);
 	Object accept(SimpleValue value);
 	Object accept(DependantValue value);

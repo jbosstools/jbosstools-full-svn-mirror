@@ -26,15 +26,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.mediator.x.mapping.Column;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 
 public class TableViewAdapter extends GraphNode {
 
-	private TableStub table;
+	private Table table;
 	private final ConfigurationViewAdapter configuration;
 
-	public TableViewAdapter(ConfigurationViewAdapter configuration, TableStub table) {
+	public TableViewAdapter(ConfigurationViewAdapter configuration, Table table) {
 		this.configuration = configuration;
 		this.table = table;
 	}
@@ -44,7 +44,7 @@ public class TableViewAdapter extends GraphNode {
 		
 	}
 
-	public TableStub getTable() {
+	public Table getTable() {
 		return table;
 	}
 

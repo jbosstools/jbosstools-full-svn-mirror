@@ -8,7 +8,7 @@ public class OneToOne extends ToOne {
 		super(oneToOne, CL);
 	}
 	
-	public static OneToOne newInstance(TableStub table, PersistentClass owner) {
+	public static OneToOne newInstance(Table table, PersistentClass owner) {
 		return new OneToOne(newInstance(CL, table, owner));
 	}
 

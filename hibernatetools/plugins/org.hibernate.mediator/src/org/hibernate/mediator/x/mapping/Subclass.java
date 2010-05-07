@@ -32,12 +32,12 @@ public class Subclass extends PersistentClass {
 		invoke(mn(), p);
 	}
 
-	public TableStub getRootTable() {
+	public Table getRootTable() {
 		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
-		return new TableStub(obj);
+		return new Table(obj);
 	}
 
 	public boolean isJoinedSubclass() {

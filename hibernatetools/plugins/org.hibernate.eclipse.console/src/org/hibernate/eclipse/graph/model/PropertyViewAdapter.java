@@ -30,7 +30,7 @@ import org.eclipse.swt.graphics.Image;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.workbench.HibernateWorkbenchHelper;
 import org.hibernate.mediator.HibernateConsoleRuntimeException;
-import org.hibernate.mediator.x.mapping.CollectionStub;
+import org.hibernate.mediator.x.mapping.Collection;
 import org.hibernate.mediator.x.mapping.OneToMany;
 import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.type.EntityType;
@@ -78,8 +78,8 @@ public class PropertyViewAdapter extends Observable {
 	
 	private void createSingleEndedEnityAssociations() {
 		try { //TODO: we need the consoleconfiguration here to know the exact types			
-			if ( property.getValue() instanceof CollectionStub ) {
-				CollectionStub collection = (CollectionStub) property.getValue();
+			if ( property.getValue() instanceof Collection ) {
+				Collection collection = (Collection) property.getValue();
 				if(!collection.isInverse() && collection.getElement() instanceof OneToMany) {
 					OneToMany oneToMany = (OneToMany) collection.getElement();
 					

@@ -31,14 +31,11 @@ import org.hibernate.eclipse.jdt.ui.test.HibernateJDTuiTestPlugin;
 import org.hibernate.eclipse.jdt.ui.wizards.ConfigurationActor;
 import org.hibernate.mediator.x.cfg.Configuration;
 import org.hibernate.mediator.x.mapping.Array;
-import org.hibernate.mediator.x.mapping.ListStub;
 import org.hibernate.mediator.x.mapping.ManyToOne;
-import org.hibernate.mediator.x.mapping.MapStub;
 import org.hibernate.mediator.x.mapping.OneToMany;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.PrimitiveArray;
 import org.hibernate.mediator.x.mapping.Property;
-import org.hibernate.mediator.x.mapping.SetStub;
 import org.hibernate.mediator.x.mapping.Value;
 import org.hibernate.mediator.x.type.IntegerType;
 
@@ -163,8 +160,8 @@ public class HbmExporterTest extends TestCase {
 		Value value = listProp.getValue();
 		assertNotNull(value);
 		assertTrue("Expected to get List-type mapping", //$NON-NLS-1$ 
-				value.getClass()==ListStub.class);
-		ListStub list = (ListStub)value;
+				value.getClass()==List.class);
+		org.hibernate.mediator.x.mapping.List list = (org.hibernate.mediator.x.mapping.List)value;
 		assertTrue(list.getElement() instanceof OneToMany);
 		assertTrue(list.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(list.getIndex());
@@ -181,8 +178,8 @@ public class HbmExporterTest extends TestCase {
 		Value value = setProp.getValue();
 		assertNotNull(value);
 		assertTrue("Expected to get Set-type mapping",  //$NON-NLS-1$
-				value.getClass()==SetStub.class);
-		SetStub set = (SetStub)value;
+				value.getClass()==Set.class);
+		org.hibernate.mediator.x.mapping.Set set = (org.hibernate.mediator.x.mapping.Set)value;
 		assertTrue(set.getElement() instanceof OneToMany);
 		assertTrue(set.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(set.getKey());
@@ -198,8 +195,8 @@ public class HbmExporterTest extends TestCase {
 		Value value = mapValue.getValue();
 		assertNotNull(value);
 		assertTrue("Expected to get Map-type mapping", //$NON-NLS-1$ 
-				value.getClass()==MapStub.class);
-		MapStub map = (MapStub)value;
+				value.getClass()==Map.class);
+		org.hibernate.mediator.x.mapping.Map map = (org.hibernate.mediator.x.mapping.Map)value;
 		assertTrue(map.getElement() instanceof OneToMany);
 		assertTrue(map.getCollectionTable().Obj().equals(b.getTable().Obj()));
 		assertNotNull(map.getKey());

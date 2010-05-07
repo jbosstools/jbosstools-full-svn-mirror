@@ -1,7 +1,7 @@
 package org.hibernate.mediator.x.cfg.reveng;
 
 import org.hibernate.mediator.base.HObject;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 public class TableIdentifier extends HObject {
 	public static final String CL = "org.hibernate.cfg.reveng.TableIdentifier"; //$NON-NLS-1$
@@ -10,7 +10,7 @@ public class TableIdentifier extends HObject {
 		super(tableIdentifier, CL);
 	}
 
-	public static TableIdentifier create(TableStub table) {
+	public static TableIdentifier create(Table table) {
 		return newInstance(table.getCatalog(), table.getSchema(), table.getName() );
 	}
 	

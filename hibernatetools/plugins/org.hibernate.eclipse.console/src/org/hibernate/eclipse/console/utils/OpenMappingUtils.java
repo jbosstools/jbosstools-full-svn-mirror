@@ -52,18 +52,18 @@ import org.hibernate.mediator.execution.ExecutionContext;
 import org.hibernate.mediator.stubs.util.OpenMappingUtilsEjb3;
 import org.hibernate.mediator.stubs.util.StringHelper;
 import org.hibernate.mediator.stubs.util.XMLHelper;
-import org.hibernate.mediator.x.mapping.CollectionStub;
+import org.hibernate.mediator.x.mapping.Collection;
 import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.Component;
 import org.hibernate.mediator.x.mapping.ManyToOne;
-import org.hibernate.mediator.x.mapping.MapStub;
+import org.hibernate.mediator.x.mapping.Map;
 import org.hibernate.mediator.x.mapping.OneToMany;
 import org.hibernate.mediator.x.mapping.OneToOne;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.RootClass;
 import org.hibernate.mediator.x.mapping.Subclass;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.mapping.ToOne;
 import org.hibernate.mediator.x.mapping.Value;
 import org.hibernate.mediator.x.tool.hbm2x.Cfg2HbmTool;
@@ -132,7 +132,7 @@ public class OpenMappingUtils {
 	 * @param table
 	 * @return
 	 */
-	public static String getTableName(TableStub table) {
+	public static String getTableName(Table table) {
 		return getTableName(table.getCatalog(), table.getSchema(), table.getName());
 	}
 
@@ -165,8 +165,8 @@ public class OpenMappingUtils {
 			res = rootClassInFile(consoleConfig, file, (RootClass)element);
 		} else if (element instanceof Subclass) {
 			res = subclassInFile(consoleConfig, file, (Subclass)element);
-		} else if (element instanceof TableStub) {
-			res = tableInFile(consoleConfig, file, (TableStub)element);
+		} else if (element instanceof Table) {
+			res = tableInFile(consoleConfig, file, (Table)element);
 		}
 		return res;
 	}
@@ -243,7 +243,7 @@ public class OpenMappingUtils {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static boolean tableInFile(ConsoleConfiguration consoleConfig, IFile file, TableStub table) {
+	public static boolean tableInFile(ConsoleConfiguration consoleConfig, IFile file, Table table) {
 		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(file.getLocation().toFile(), entityResolver);
 		Iterator<Element> classes = getElements(doc, HIBERNATE_TAG_CLASS);
@@ -671,8 +671,8 @@ public class OpenMappingUtils {
 			selectRegion = findSelectRegion(proj, findAdapter, (PersistentClass)selection);
 		} else if (selection instanceof Property){
 			selectRegion = findSelectRegion(proj, findAdapter, (Property)selection);
-		} else if (selection instanceof TableStub) {
-			selectRegion = findSelectRegion(proj, findAdapter, (TableStub)selection);
+		} else if (selection instanceof Table) {
+			selectRegion = findSelectRegion(proj, findAdapter, (Table)selection);
 		} else if (selection instanceof Column) {
 			selectRegion = findSelectRegion(proj, findAdapter, (Column)selection);
 		}
@@ -804,7 +804,7 @@ public class OpenMappingUtils {
 	 * @param table
 	 * @return a proper document region
 	 */
-	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, TableStub table) {
+	public static IRegion findSelectRegion(IJavaProject proj, FindReplaceDocumentAdapter findAdapter, Table table) {
 		IRegion res = null;
 		String[] tablePatterns = generateTablePatterns(table.getName());
 		IRegion tableRegion = null;
@@ -1022,8 +1022,8 @@ public class OpenMappingUtils {
 			Value value = property.getValue();
 			toolTag = "basic"; //$NON-NLS-1$
 			if (!value.isSimpleValue()) {
-				if (value instanceof CollectionStub) {
-					value = ((CollectionStub)value).getElement();
+				if (value instanceof Collection) {
+					value = ((Collection)value).getElement();
 				}
 			}
 			if (value instanceof OneToMany) {
@@ -1036,7 +1036,7 @@ public class OpenMappingUtils {
 			else if (value instanceof OneToOne) {
 				toolTag = "one-to-one"; //$NON-NLS-1$
 			}
-			else if (value instanceof MapStub) {
+			else if (value instanceof Map) {
 				toolTag = "many-to-many"; //$NON-NLS-1$
 			}
 			else if (value instanceof Component) {

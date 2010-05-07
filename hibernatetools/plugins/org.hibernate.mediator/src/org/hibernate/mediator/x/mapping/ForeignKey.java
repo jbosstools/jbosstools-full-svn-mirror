@@ -17,12 +17,12 @@ public class ForeignKey extends HObject {
 		return (Boolean)invoke(mn(), column);
 	}
 	
-	public TableStub getReferencedTable() {
+	public Table getReferencedTable() {
 		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
-		return new TableStub(obj);
+		return new Table(obj);
 	}
 
 	@SuppressWarnings("unchecked")

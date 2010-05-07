@@ -1,19 +1,19 @@
 package org.hibernate.mediator.x.mapping;
 
 
-public class ListStub extends IndexedCollection {
+public class List extends IndexedCollection {
 	public static final String CL = "org.hibernate.mapping.List"; //$NON-NLS-1$
 
-	protected ListStub(Object list) {
+	protected List(Object list) {
 		super(list, CL);
 	}
 
-	protected ListStub(Object list, String cn) {
+	protected List(Object list, String cn) {
 		super(list, cn);
 	}
 	
-	public static ListStub newInstance(PersistentClass owner) {
-		return new ListStub(newInstance(CL, owner));
+	public static List newInstance(PersistentClass owner) {
+		return new List(newInstance(CL, owner));
 	}
 
 	@Override

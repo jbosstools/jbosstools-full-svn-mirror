@@ -7,15 +7,15 @@ import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.base.HObject;
 
-public class TableStub extends HObject {
+public class Table extends HObject {
 	public static final String CL = "org.hibernate.mapping.Table"; //$NON-NLS-1$
 
-	public TableStub(Object table) {
+	public Table(Object table) {
 		super(table, CL);
 	}
 	
-	public static TableStub newInstance(String name) {
-		return new TableStub(newInstance(CL, name));
+	public static Table newInstance(String name) {
+		return new Table(newInstance(CL, name));
 	}
 	
 	public String getName() {

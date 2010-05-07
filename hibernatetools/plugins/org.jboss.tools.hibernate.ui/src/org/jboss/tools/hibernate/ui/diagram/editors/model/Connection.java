@@ -18,7 +18,7 @@ import org.hibernate.mediator.x.mapping.OneToMany;
 import org.hibernate.mediator.x.mapping.OneToOne;
 import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.RootClass;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 /**
  * Directed connection between 2 shapes, from source to target. 
@@ -131,23 +131,23 @@ public class Connection extends BaseElement {
 	 */
 	public ConnectionType getConnectionType() {
 		if (source instanceof OrmShape && target instanceof OrmShape) {
-			if ((source.getOrmElement() instanceof TableStub) && (target.getOrmElement() instanceof TableStub)) {
+			if ((source.getOrmElement() instanceof Table) && (target.getOrmElement() instanceof Table)) {
 				return ConnectionType.ForeignKeyConstraint;
 			}
 			boolean bClassMapping = true;
-			if (!(source.getOrmElement() instanceof RootClass || source.getOrmElement() instanceof TableStub)) {
+			if (!(source.getOrmElement() instanceof RootClass || source.getOrmElement() instanceof Table)) {
 				bClassMapping = false;
 			}
-			if (!(target.getOrmElement() instanceof RootClass || target.getOrmElement() instanceof TableStub)) {
+			if (!(target.getOrmElement() instanceof RootClass || target.getOrmElement() instanceof Table)) {
 				bClassMapping = false;
 			}
 			if (bClassMapping) {
 				return ConnectionType.ClassMapping;
 			}
 		}
-		if ((source.getOrmElement() instanceof TableStub && target.getOrmElement() instanceof TableStub) ||
-			(source.getOrmElement() instanceof TableStub && target.getOrmElement() instanceof Column) ||
-			(source.getOrmElement() instanceof Column && target.getOrmElement() instanceof TableStub) ||
+		if ((source.getOrmElement() instanceof Table && target.getOrmElement() instanceof Table) ||
+			(source.getOrmElement() instanceof Table && target.getOrmElement() instanceof Column) ||
+			(source.getOrmElement() instanceof Column && target.getOrmElement() instanceof Table) ||
 			(source.getOrmElement() instanceof Column && target.getOrmElement() instanceof Column)) {
 			return ConnectionType.ForeignKeyConstraint;
 		}
@@ -260,16 +260,16 @@ public class Connection extends BaseElement {
 			}
 		} else if (PROPERTY_TABLE_NAME.equals(propertyId)) {
 			if (connectType == ConnectionType.ClassMapping) {
-				if (source.getOrmElement() instanceof TableStub) {
-					res = ((TableStub)(source.getOrmElement())).getName();
-				} else if (target.getOrmElement() instanceof TableStub) {
-					res = ((TableStub)(target.getOrmElement())).getName();
+				if (source.getOrmElement() instanceof Table) {
+					res = ((Table)(source.getOrmElement())).getName();
+				} else if (target.getOrmElement() instanceof Table) {
+					res = ((Table)(target.getOrmElement())).getName();
 				}
 			} else if (connectType == ConnectionType.PropertyMapping) {
-				if (((Shape)source.getParent()).getOrmElement() instanceof TableStub) {
-					res = ((TableStub)(((Shape)source.getParent()).getOrmElement())).getName();
-				} else if (((Shape)target.getParent()).getOrmElement() instanceof TableStub) {
-					res = ((TableStub)(((Shape)target.getParent()).getOrmElement())).getName();
+				if (((Shape)source.getParent()).getOrmElement() instanceof Table) {
+					res = ((Table)(((Shape)source.getParent()).getOrmElement())).getName();
+				} else if (((Shape)target.getParent()).getOrmElement() instanceof Table) {
+					res = ((Table)(((Shape)target.getParent()).getOrmElement())).getName();
 				}
 			}
 		} else if (PROPERTY_CLASS_FIELD.equals(propertyId)) {

@@ -72,7 +72,7 @@ import org.hibernate.eclipse.mapper.model.RevEngTableAdapter;
 import org.hibernate.mediator.x.cfg.reveng.TableIdentifier;
 import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.PrimaryKey;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 public class TablePropertiesBlock extends MasterDetailsBlock {
 
@@ -163,7 +163,7 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 
 		LazyDatabaseSchema lds = editor.getLazyDatabaseSchema();
 
-		Map<TableIdentifier, TableStub> tables = new HashMap<TableIdentifier, TableStub>();
+		Map<TableIdentifier, Table> tables = new HashMap<TableIdentifier, Table>();
 		Map<TableIdentifier, List<Column> > columns = new HashMap<TableIdentifier, List<Column> >();
 
 		if (lds == null) {
@@ -197,8 +197,8 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 			if(result!=null) {
 				for (int i = 0; i < result.length; i++) {
 					Object object = result[i];
-					if(object instanceof TableStub) {
-						TableStub table = (TableStub) object;
+					if(object instanceof Table) {
+						Table table = (Table) object;
 						tables.put(TableIdentifier.create(table), table);
 						lastTable = TableIdentifier.create(table);
 					} else if (object instanceof Column) {
@@ -220,10 +220,10 @@ public class TablePropertiesBlock extends MasterDetailsBlock {
 				}
 			}
 
-			Iterator<Map.Entry<TableIdentifier, TableStub>> iterator = tables.entrySet().iterator();
+			Iterator<Map.Entry<TableIdentifier, Table>> iterator = tables.entrySet().iterator();
 			while ( iterator.hasNext() ) {
-				Map.Entry<TableIdentifier, TableStub> element = iterator.next();
-				TableStub table = element.getValue();
+				Map.Entry<TableIdentifier, Table> element = iterator.next();
+				Table table = element.getValue();
 				IRevEngTable retable = null;
 				//	editor.getReverseEngineeringDefinition().findTable(TableIdentifier.create(table));
 				if(retable==null) {

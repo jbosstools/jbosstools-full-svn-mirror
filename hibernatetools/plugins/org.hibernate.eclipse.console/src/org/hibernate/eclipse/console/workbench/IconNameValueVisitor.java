@@ -28,13 +28,13 @@ import org.hibernate.mediator.x.mapping.Bag;
 import org.hibernate.mediator.x.mapping.Component;
 import org.hibernate.mediator.x.mapping.DependantValue;
 import org.hibernate.mediator.x.mapping.IdentifierBag;
-import org.hibernate.mediator.x.mapping.ListStub;
+import org.hibernate.mediator.x.mapping.List;
 import org.hibernate.mediator.x.mapping.ManyToOne;
-import org.hibernate.mediator.x.mapping.MapStub;
+import org.hibernate.mediator.x.mapping.Map;
 import org.hibernate.mediator.x.mapping.OneToMany;
 import org.hibernate.mediator.x.mapping.OneToOne;
 import org.hibernate.mediator.x.mapping.PrimitiveArray;
-import org.hibernate.mediator.x.mapping.SetStub;
+import org.hibernate.mediator.x.mapping.Set;
 import org.hibernate.mediator.x.mapping.SimpleValue;
 import org.hibernate.mediator.x.mapping.ValueVisitor;
 
@@ -64,7 +64,7 @@ final class IconNameValueVisitor implements ValueVisitor {
 		return ImageConstants.PROPERTY;
 	}
 
-	public Object accept(SetStub set) {
+	public Object accept(Set set) {
 		return ImageConstants.MANYTOONE;
 	}	
 
@@ -72,7 +72,7 @@ final class IconNameValueVisitor implements ValueVisitor {
 		return ImageConstants.ONETOMANY;
 	}
 
-	public Object accept(MapStub map) {
+	public Object accept(Map map) {
 		return ImageConstants.MANYTOONE;
 	}
 
@@ -84,7 +84,7 @@ final class IconNameValueVisitor implements ValueVisitor {
 		return ImageConstants.MANYTOONE;			
 	}
 
-	public Object accept(ListStub list) {
+	public Object accept(List list) {
 		return ImageConstants.MANYTOONE;
 	}
 

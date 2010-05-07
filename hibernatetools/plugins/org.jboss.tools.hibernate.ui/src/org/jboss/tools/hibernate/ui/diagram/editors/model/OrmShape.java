@@ -17,7 +17,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
-import org.hibernate.mediator.x.mapping.CollectionStub;
+import org.hibernate.mediator.x.mapping.Collection;
 import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.Component;
 import org.hibernate.mediator.x.mapping.KeyValue;
@@ -25,7 +25,7 @@ import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.RootClass;
 import org.hibernate.mediator.x.mapping.SimpleValue;
 import org.hibernate.mediator.x.mapping.Subclass;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.jboss.tools.hibernate.ui.diagram.rulers.DiagramGuide;
 
 /**
@@ -192,7 +192,7 @@ public class OrmShape extends ExpandableShape {
 						Shape bodyOrmShape = null;
 						if (field.getValue().isSimpleValue() && !((SimpleValue)field.getValue()).isTypeSpecified()) {
 							bodyOrmShape = new Shape(field);
-						} else if (typeIsAccessible && field.getValue() instanceof CollectionStub) {
+						} else if (typeIsAccessible && field.getValue() instanceof Collection) {
 							bodyOrmShape = new ComponentShape(field);
 						} else if (typeIsAccessible && field.getValue().getType().isEntityType()) {
 							bodyOrmShape = new ExpandableShape(field);
@@ -283,8 +283,8 @@ public class OrmShape extends ExpandableShape {
 					}
 				}
 			}
-		} else if (ormElement instanceof TableStub) {
-			Iterator<Column> iterator = ((TableStub)getOrmElement()).getColumnIterator();
+		} else if (ormElement instanceof Table) {
+			Iterator<Column> iterator = ((Table)getOrmElement()).getColumnIterator();
 			while (iterator.hasNext()) {
 				Column column = iterator.next();
 				Shape bodyOrmShape = new Shape(column);
@@ -445,7 +445,7 @@ public class OrmShape extends ExpandableShape {
 			res = descriptors_entity;
 		} else if (ormElement instanceof Subclass) {
 			//RootClass rootClass = ((Subclass)ormElement).getRootClass();
-		} else if (ormElement instanceof TableStub) {
+		} else if (ormElement instanceof Table) {
 			//Iterator iterator = ((Table)getOrmElement()).getColumnIterator();
 			//while (iterator.hasNext()) {
 			//	Column column = (Column)iterator.next();
@@ -461,14 +461,14 @@ public class OrmShape extends ExpandableShape {
 	public Object getPropertyValue(Object propertyId) {
 		Object res = null;
 		RootClass rootClass = null;
-		TableStub table = null;
+		Table table = null;
 		Object ormElement = getOrmElement();
 		if (ormElement instanceof RootClass) {
 			rootClass = (RootClass)ormElement;
 		} else if (ormElement instanceof Subclass) {
 			//rootClass = ((Subclass)ormElement).getRootClass();
-		} else if (ormElement instanceof TableStub) {
-			table = (TableStub)getOrmElement();
+		} else if (ormElement instanceof Table) {
+			table = (Table)getOrmElement();
 		}
 		if (rootClass != null) {
 			if (ENTITY_isAbstract.equals(propertyId)) {

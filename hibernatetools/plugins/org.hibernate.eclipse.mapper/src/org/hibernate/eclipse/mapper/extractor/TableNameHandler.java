@@ -30,7 +30,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.hibernate.eclipse.nature.HibernateNature;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
@@ -41,7 +41,7 @@ public class TableNameHandler implements HBMInfoHandler {
 			IJavaProject javaProject, Node node, String attributeName,
 			String start, int offset) {
 
-		List<TableStub> tables = new ArrayList<TableStub>(); 
+		List<Table> tables = new ArrayList<Table>(); 
 		
 		HibernateNature nature = HibernateNature.getHibernateNature( javaProject );
 		if(nature!=null) {
@@ -49,8 +49,8 @@ public class TableNameHandler implements HBMInfoHandler {
 		}
 		
 		List<ICompletionProposal> proposals = new ArrayList<ICompletionProposal>();
-		for (Iterator<TableStub> iter = tables.iterator(); iter.hasNext();) {
-			TableStub element = iter.next();
+		for (Iterator<Table> iter = tables.iterator(); iter.hasNext();) {
+			Table element = iter.next();
 			proposals.add(new CompletionProposal(element.getName(), offset, start.length(), element.getName().length(), null, null, null, null) );
 		}
 		

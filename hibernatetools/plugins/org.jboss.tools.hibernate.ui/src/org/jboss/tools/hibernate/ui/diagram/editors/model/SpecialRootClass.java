@@ -12,7 +12,7 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 
 import java.util.Iterator;
 
-import org.hibernate.mediator.x.mapping.CollectionStub;
+import org.hibernate.mediator.x.mapping.Collection;
 import org.hibernate.mediator.x.mapping.Component;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.Property;
@@ -45,8 +45,8 @@ public class SpecialRootClass extends RootClass {
 			return;
 		}
 		Component component = null;
-		if (property.getValue() instanceof CollectionStub) {
-			CollectionStub collection = (CollectionStub)property.getValue();
+		if (property.getValue() instanceof Collection) {
+			Collection collection = (Collection)property.getValue();
 			component = (Component)collection.getElement();
 		} else if (property.getValue() instanceof Component) {
 			component = (Component)property.getValue();

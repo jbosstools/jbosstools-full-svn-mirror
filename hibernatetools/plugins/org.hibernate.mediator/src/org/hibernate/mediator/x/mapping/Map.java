@@ -1,15 +1,15 @@
 package org.hibernate.mediator.x.mapping;
 
 
-public class MapStub extends IndexedCollection {
+public class Map extends IndexedCollection {
 	public static final String CL = "org.hibernate.mapping.Map"; //$NON-NLS-1$
 
-	protected MapStub(Object map) {
+	protected Map(Object map) {
 		super(map, CL);
 	}
 	
-	public static MapStub newInstance(PersistentClass owner) {
-		return new MapStub(newInstance(CL, owner));
+	public static Map newInstance(PersistentClass owner) {
+		return new Map(newInstance(CL, owner));
 	}
 
 	@Override

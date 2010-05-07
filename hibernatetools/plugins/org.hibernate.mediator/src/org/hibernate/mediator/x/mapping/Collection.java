@@ -2,18 +2,18 @@ package org.hibernate.mediator.x.mapping;
 
 import org.hibernate.mediator.x.FetchMode;
 
-public abstract class CollectionStub extends Value {
+public abstract class Collection extends Value {
 	public static final String CL = "org.hibernate.mapping.Collection"; //$NON-NLS-1$
 
-	protected CollectionStub(Object collection) {
+	protected Collection(Object collection) {
 		super(collection, CL);
 	}
 
-	protected CollectionStub(Object collection, String cn) {
+	protected Collection(Object collection, String cn) {
 		super(collection, cn);
 	}
 
-	public void setCollectionTable(TableStub table) {
+	public void setCollectionTable(Table table) {
 		invoke(mn(), table);
 	}
 
@@ -41,12 +41,12 @@ public abstract class CollectionStub extends Value {
 		return ValueFactory.createValueStub(invoke(mn()));
 	}
 
-	public TableStub getCollectionTable() {
+	public Table getCollectionTable() {
 		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
-		return new TableStub(obj);
+		return new Table(obj);
 	}
 
 	public KeyValue getKey() {

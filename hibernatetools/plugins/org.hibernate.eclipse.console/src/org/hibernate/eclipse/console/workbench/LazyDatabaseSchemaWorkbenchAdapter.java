@@ -43,7 +43,7 @@ import org.hibernate.mediator.x.cfg.reveng.DefaultDatabaseCollector;
 import org.hibernate.mediator.x.cfg.reveng.JDBCReader;
 import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategy;
 import org.hibernate.mediator.x.connection.ConnectionProvider;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 
@@ -61,9 +61,9 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 			List<TableContainer> result = new ArrayList<TableContainer>();
 
-			Iterator<Map.Entry<String, List<TableStub>>> qualifierEntries = db.getQualifierEntries();
+			Iterator<Map.Entry<String, List<Table>>> qualifierEntries = db.getQualifierEntries();
 			while (qualifierEntries.hasNext()) {
-				Map.Entry<String, List<TableStub>> entry = qualifierEntries.next();
+				Map.Entry<String, List<Table>> entry = qualifierEntries.next();
 				result.add(new TableContainer(entry.getKey(), entry.getValue()));
 			}
 			return toArray(result.iterator(), TableContainer.class, new Comparator<TableContainer>() {

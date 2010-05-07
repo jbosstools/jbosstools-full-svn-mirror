@@ -51,7 +51,7 @@ import org.jboss.tools.hibernate.jpt.ui.internal.mappings.db.xpl.TableCombo;
  * | ------------------------------------------------------------------------- |
  * -----------------------------------------------------------------------------</pre>
  *
- * @see TableStub
+ * @see Table
  * @see EntityComposite - The parent container
  * @see TableCombo
  * @see CatalogCombo

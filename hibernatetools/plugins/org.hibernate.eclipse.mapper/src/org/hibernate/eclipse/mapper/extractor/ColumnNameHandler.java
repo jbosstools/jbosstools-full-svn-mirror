@@ -32,7 +32,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.hibernate.eclipse.nature.HibernateNature;
 import org.hibernate.mediator.x.cfg.reveng.TableIdentifier;
 import org.hibernate.mediator.x.mapping.Column;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
@@ -54,7 +54,7 @@ public class ColumnNameHandler implements HBMInfoHandler {
 		if(nature!=null) {
 			TableIdentifier nearestTableName = extractor.getNearestTableName(node);
 			if(nearestTableName!=null) {
-				TableStub table = nature.getTable(nearestTableName);
+				Table table = nature.getTable(nearestTableName);
 				if (table!=null) {
 					Iterator tableMappings = table.getColumnIterator();
 					while (tableMappings.hasNext() ) {

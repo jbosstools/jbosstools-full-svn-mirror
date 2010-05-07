@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.hibernate.mediator.x.cfg.Configuration;
-import org.hibernate.mediator.x.mapping.CollectionStub;
+import org.hibernate.mediator.x.mapping.Collection;
 import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.Component;
 import org.hibernate.mediator.x.mapping.DependantValue;
@@ -29,7 +29,7 @@ import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.RootClass;
 import org.hibernate.mediator.x.mapping.SimpleValue;
 import org.hibernate.mediator.x.mapping.Subclass;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.mapping.Value;
 import org.hibernate.mediator.x.type.EntityType;
 import org.hibernate.mediator.x.type.Type;
@@ -61,12 +61,12 @@ public class ElementsFactory {
 		while (it.hasNext()) {
 			final OrmShape shape = it.next();
 			Object ormElement = shape.getOrmElement();
-			if (ormElement instanceof TableStub) {
-				TableStub databaseTable = (TableStub)ormElement;
+			if (ormElement instanceof Table) {
+				Table databaseTable = (Table)ormElement;
 				Iterator<ForeignKey> itFK = (Iterator<ForeignKey>)databaseTable.getForeignKeyIterator();
 				while (itFK.hasNext()) {
 					final ForeignKey fk = itFK.next();
-					TableStub referencedTable = fk.getReferencedTable();
+					Table referencedTable = fk.getReferencedTable();
 					final OrmShape referencedShape = getOrCreateDatabaseTable(referencedTable);
 					//
 					Iterator<Column> itColumns = (Iterator<Column>)fk.columnIterator();
@@ -142,10 +142,10 @@ public class ElementsFactory {
 	@SuppressWarnings("unchecked")
 	protected void refreshComponentReferences(ComponentShape componentShape) {
 		Property property = (Property)componentShape.getOrmElement();
-		if (!(property.getValue() instanceof CollectionStub)) {
+		if (!(property.getValue() instanceof Collection)) {
 			return;
 		}
-		CollectionStub collection = (CollectionStub)property.getValue();
+		Collection collection = (Collection)property.getValue();
 		Value component = collection.getElement();
 		Shape csChild0 = null, csChild1 = null;
 		Iterator<Shape> tmp = componentShape.getChildrenIterator();
@@ -231,7 +231,7 @@ public class ElementsFactory {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected OrmShape getOrCreateDatabaseTable(TableStub databaseTable) {
+	protected OrmShape getOrCreateDatabaseTable(Table databaseTable) {
 		OrmShape tableShape = null;
 		if (databaseTable != null) {
 			tableShape = getShape(databaseTable);
@@ -257,7 +257,7 @@ public class ElementsFactory {
 	}
 
 	protected OrmShape getOrCreatePersistentClass(PersistentClass persistentClass, 
-			TableStub componentClassDatabaseTable) {
+			Table componentClassDatabaseTable) {
 		OrmShape classShape = null;
 		if (persistentClass == null) {
 			return classShape;
@@ -291,7 +291,7 @@ public class ElementsFactory {
 					subclassShape = createShape(subclass);
 				}
 				if (((Subclass)element).isJoinedSubclass()) {
-					TableStub jcTable = ((Subclass)element).getTable();
+					Table jcTable = ((Subclass)element).getTable();
 					OrmShape jcTableShape = getOrCreateDatabaseTable(jcTable);
 					createConnections(subclassShape, jcTableShape);
 					if (shouldCreateConnection(subclassShape, jcTableShape)) {
@@ -357,8 +357,8 @@ public class ElementsFactory {
 		if (property == null) {
 			return classShape;
 		}
-		if (property.getValue() instanceof CollectionStub) {
-			Component component = (Component)((CollectionStub)property.getValue()).getElement();
+		if (property.getValue() instanceof Collection) {
+			Component component = (Component)((Collection)property.getValue()).getElement();
 			if (component != null) {
 				classShape = createShape(property);
 				OrmShape tableShape = elements.get(Utils.getTableName(component.getTable()));
@@ -389,7 +389,7 @@ public class ElementsFactory {
 
 	protected OrmShape getOrCreateAssociationClass(Property property) {
 		OrmShape classShape = null;
-		OneToMany component = (OneToMany)(((CollectionStub)(property.getValue())).getElement());
+		OneToMany component = (OneToMany)(((Collection)(property.getValue())).getElement());
 		if (component == null) {
 			return classShape;
 		}

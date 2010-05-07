@@ -17,7 +17,7 @@ import org.eclipse.ui.IMemento;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.SimpleValue;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 /**
  * Some common model utils.
@@ -53,8 +53,8 @@ public class Utils {
 			} else {
 				res = rootClass.getClassName();
 			}
-		} else if (obj instanceof TableStub) {
-			res = getTableName((TableStub)obj);
+		} else if (obj instanceof Table) {
+			res = getTableName((Table)obj);
 		} else if (obj instanceof Property) {
 			Property property = (Property)obj;
 			res = property.getPersistentClass().getEntityName() + "." + property.getName(); //$NON-NLS-1$
@@ -77,7 +77,7 @@ public class Utils {
 		return (catalog != null ? catalog + "." : "") + (schema != null ? schema + "." : "") + name; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
-	public static String getTableName(TableStub table) {
+	public static String getTableName(Table table) {
 		return getTableName(table.getCatalog(), table.getSchema(), table.getName());
 	}
 

@@ -33,7 +33,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import org.hibernate.mediator.x.Hibernate;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.type.NullableType;
 import org.hibernate.mediator.x.type.Type;
 
@@ -54,7 +54,7 @@ public class ConsoleQueryParameter {
 		addTypeFormat(Hibernate.INTEGER, Integer.valueOf(42));
 		addTypeFormat(Hibernate.BIG_DECIMAL, new BigDecimal(42.0));
 		addTypeFormat(Hibernate.CHARACTER, Character.valueOf('h'));
-		addTypeFormat(Hibernate.CLASS, TableStub.class);
+		addTypeFormat(Hibernate.CLASS, Table.class);
 		addTypeFormat(Hibernate.CURRENCY, Currency.getInstance(Locale.getDefault()));
 		addTypeFormat(Hibernate.DATE, new Date());
 		addTypeFormat(Hibernate.DOUBLE, Double.valueOf(42.42));

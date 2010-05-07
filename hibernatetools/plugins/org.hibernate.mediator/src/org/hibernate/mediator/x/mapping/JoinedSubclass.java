@@ -12,7 +12,7 @@ public class JoinedSubclass extends Subclass {
 		return new JoinedSubclass(newInstance(CL, persistentClass));
 	}
 	
-	public void setTable(TableStub table) {
+	public void setTable(Table table) {
 		invoke(mn(), table);
 	}
 	

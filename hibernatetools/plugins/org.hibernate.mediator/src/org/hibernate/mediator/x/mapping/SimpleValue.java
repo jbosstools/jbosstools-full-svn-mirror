@@ -26,7 +26,7 @@ public class SimpleValue extends KeyValue {
 		invoke(mn(), column);
 	}
 
-	public void setTable(TableStub table) {
+	public void setTable(Table table) {
 		invoke(mn(), table);
 	}
 

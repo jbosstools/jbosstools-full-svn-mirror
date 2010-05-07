@@ -69,12 +69,12 @@ public abstract class PersistentClass extends HObject {
 		return new Property(obj);
 	}
 
-	public TableStub getTable() {
+	public Table getTable() {
 		Object obj = invoke(mn());
 		if (obj == null) {
 			return null;
 		}
-		return new TableStub(obj);
+		return new Table(obj);
 	}
 
 	@SuppressWarnings("unchecked")

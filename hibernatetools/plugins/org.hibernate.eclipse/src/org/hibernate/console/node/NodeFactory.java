@@ -29,7 +29,7 @@ import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.ImageConstants;
 import org.hibernate.mediator.x.Session;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.metadata.ClassMetadata;
 import org.hibernate.mediator.x.metadata.CollectionMetadata;
 import org.hibernate.mediator.x.type.CollectionType;
@@ -180,7 +180,7 @@ public class NodeFactory {
 			return consoleConfig;
 		}
 
-		public static TableNode createTableNode(BaseNode parent, TableStub table) {
+		public static TableNode createTableNode(BaseNode parent, Table table) {
 			return new TableNode(parent, table);
 		}
 

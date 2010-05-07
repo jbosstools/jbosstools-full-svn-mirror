@@ -38,7 +38,7 @@ import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.PrimaryKey;
 import org.hibernate.mediator.x.mapping.Property;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.mapping.Value;
 
 public class ConfigurationAdapterFactory implements IAdapterFactory {
@@ -60,7 +60,7 @@ public class ConfigurationAdapterFactory implements IAdapterFactory {
 		map.put(LazyDatabaseSchema.class, new LazyDatabaseSchemaWorkbenchAdapter());
 		map.put(LazySessionFactory.class, new LazySessionFactoryAdapter());
 		map.put(TableContainer.class, new TableContainerWorkbenchAdapter());
-		map.put(TableStub.class, new TableWorkbenchAdapter());
+		map.put(Table.class, new TableWorkbenchAdapter());
 		map.put(PrimaryKey.class, new PrimaryKeyWorkbenchAdapter());
 		map.put(Column.class, new ColumnWorkbenchAdapter());				
 		

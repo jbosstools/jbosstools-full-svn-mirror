@@ -40,7 +40,7 @@ import org.hibernate.mediator.x.mapping.OneToMany;
 import org.hibernate.mediator.x.mapping.PersistentClass;
 import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.SimpleValue;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 import org.jboss.tools.hibernate.ui.diagram.editors.figures.TitleFigure;
 import org.jboss.tools.hibernate.ui.diagram.editors.figures.TopLineBorder;
 import org.jboss.tools.hibernate.ui.diagram.editors.model.Connection;
@@ -311,7 +311,7 @@ public class ShapeEditPart extends OrmEditPart implements NodeEditPart {
 					Integer.parseInt(ColorConstants.Colors_DatabaseColumnR),
 					Integer.parseInt(ColorConstants.Colors_DatabaseColumnG),
 					Integer.parseInt(ColorConstants.Colors_DatabaseColumnB)));
-		else if (el instanceof TableStub)
+		else if (el instanceof Table)
 			return ResourceManager.getInstance().getColor(new RGB(
 					Integer.parseInt(ColorConstants.Colors_DatabaseTableR),
 					Integer.parseInt(ColorConstants.Colors_DatabaseTableG),
@@ -335,7 +335,7 @@ public class ShapeEditPart extends OrmEditPart implements NodeEditPart {
 		if (el instanceof PersistentClass || el instanceof Property ||
 				el instanceof SimpleValue || el instanceof OneToMany) {
 			return ResourceManager.getInstance().getColor(new RGB(112, 161, 99));
-		} else if (el instanceof TableStub || el instanceof Column) {
+		} else if (el instanceof Table || el instanceof Column) {
 			return ResourceManager.getInstance().getColor(new RGB(66, 173, 247));
 		}
 		return ResourceManager.getInstance().getColor(new RGB(255, 0, 0));

@@ -1,7 +1,7 @@
 package org.hibernate.mediator.x.mapping;
 
 
-public class Bag extends CollectionStub {
+public class Bag extends Collection {
 	public static final String CL = "org.hibernate.mapping.Bag"; //$NON-NLS-1$
 
 	protected Bag(Object bag) {

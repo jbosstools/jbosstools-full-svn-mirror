@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.ForeignKey;
-import org.hibernate.mediator.x.mapping.TableStub;
+import org.hibernate.mediator.x.mapping.Table;
 
 /**
  * @author some modifications from Vitali
@@ -22,7 +22,7 @@ import org.hibernate.mediator.x.mapping.TableStub;
 public class HibernateUtils {
 	
 	public static boolean isPrimaryKey(Column column) {
-		TableStub table = getTable(column);
+		Table table = getTable(column);
 		if (table != null) {
 			if (table.getPrimaryKey() != null) {
 				if (table.getPrimaryKey().containsColumn(column)) {
@@ -34,7 +34,7 @@ public class HibernateUtils {
 	}
 	
 	public static boolean isForeignKey(Column column) {
-		TableStub table = getTable(column);
+		Table table = getTable(column);
 		if (table != null) {
 			Iterator<ForeignKey> iter = table.getForeignKeyIterator();
 			while (iter.hasNext()) {
@@ -48,7 +48,7 @@ public class HibernateUtils {
 		
 	}
 	
-	public static TableStub getTable(Column column) {
+	public static Table getTable(Column column) {
 		if (column.getValue() != null) {
 			return column.getValue().getTable();
 		}

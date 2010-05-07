@@ -12,7 +12,7 @@ package org.jboss.tools.hibernate.ui.diagram.editors.model;
 
 import java.util.Properties;
 
-import org.hibernate.mediator.x.mapping.CollectionStub;
+import org.hibernate.mediator.x.mapping.Collection;
 import org.hibernate.mediator.x.mapping.Property;
 
 /**
@@ -31,7 +31,7 @@ public class ComponentShape extends ExpandableShape {
 	protected void initModel() {
 		Object ormElement = getOrmElement();
 		if (ormElement instanceof Property) {
-			CollectionStub collection = (CollectionStub)((Property)ormElement).getValue();
+			Collection collection = (Collection)((Property)ormElement).getValue();
 			Shape bodyOrmShape = new Shape(collection.getKey());
 			bodyOrmShape.setIndent(20);
 			addChild(bodyOrmShape);
