@@ -37,9 +37,9 @@
 				<artifactId>maven-scm-plugin</artifactId>
 				<version>1.0</version>
 				<configuration>
-					<!-- <goals>install</goals> -->
-					<skipCheckoutIfExists>true</skipCheckoutIfExists>
-					<checkoutDirectory>sources</checkoutDirectory>
+					<useNonInteractive>true</useNonInteractive>
+					<connectionType>connection</connectionType>
+					<!-- <connectionType>developerConnection</connectionType> -->
 				</configuration>
 			</plugin>
 
@@ -50,11 +50,6 @@
 				<configuration>
 					<resolver>p2</resolver>
 					<environments>
-						<!-- <environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment> -->
 						<environment>
 							<os>macosx</os>
 							<ws>cocoa</ws>
@@ -224,6 +219,17 @@
 				</property>
 			</activation>
 			<repositories>
+				<repository>
+					<id>svnkit13</id>
+					<url>http://eclipse.svnkit.com/1.3.x/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
 				<repository>
 					<id>subclipse16</id>
 					<url>http://subclipse.tigris.org/update_1.6.x/</url>

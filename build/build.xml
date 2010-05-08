@@ -163,31 +163,20 @@ Here is the order in which components must be built:
 	<target name="get.svnant" unless="svnant.jar.exists">
 		<property name="SVNANT_MIRROR" value="http://www.tigris.org/files/documents/906/46267" />
 		<if>
-			<os family="windows" />
+			<not>
+				<os family="windows" />
+			</not>
 			<then>
-				<if>
-					<available file="${WORKINGDIR}/svnant.jar" type="file" />
-					<then>
-						<copy todir="${COMMON_TOOLS}" failonerror="true">
-							<fileset dir="${WORKINGDIR}" includes="*.jar" />
-						</copy>
-					</then>
-					<else>
-						<!-- ant <get> does not work due to 302/200 redirections -->
-						<get src="${SVNANT_MIRROR}/svnant-1.3.0.zip"
-						     dest="${COMMON_TOOLS}/svnant-1.3.0.zip"
-						     verbose="true"
-						     usetimestamp="true"
-						/>
-					</else>
-				</if>
+				<property name="svnant.enabled" value="false" />
 			</then>
 			<else>
+				<property name="svnant.enabled" value="true" />
 				<exec executable="wget" dir="${COMMON_TOOLS}">
 					<arg line="${SVNANT_MIRROR}/svnant-1.3.0.zip --no-clobber" />
 				</exec>
 			</else>
 		</if>
+		
 		<if>
 			<available file="${COMMON_TOOLS}/svnant-1.3.0.zip" type="file" />
 			<then>
@@ -208,7 +197,7 @@ Here is the order in which components must be built:
 				</not>
 				<then>
 					<fail>Error!
-Cannot proceed - must install svnant.jar from ${SVNANT_MIRROR}/svnant-1.3.0.zip into ${COMMON_TOOLS}/.
+Build cannot proceed - must install svnant.jar + other jars from ${SVNANT_MIRROR}/svnant-1.3.0.zip into ${COMMON_TOOLS}/.
 </fail>
 				</then>
 			</elseif>
@@ -297,25 +286,62 @@ Cannot proceed - must install svnant.jar from ${SVNANT_MIRROR}/svnant-1.3.0.zip 
 					<equals arg1="@{op}" arg2="up" />
 					<then>
 						<now level="info">Update @{COMPONENT}</now>
-						<svn javahl="false" svnkit="true" failonerror="false">
-							<update recurse="${svn.recurse}" dir="@{component}" />
-						</svn>
+						<if>
+							<istrue value="svnant.enabled" />
+							<then>
+								<svn javahl="false" svnkit="true" failonerror="false">
+									<update recurse="${svn.recurse}" dir="@{component}" />
+								</svn>
+							</then>
+							<else>
+								<antcall target="mvn">
+									<param name="MAVEN_DIR" value="${WORKINGDIR}" />
+									<param name="MAVEN_FLAGS"
+									       value="scm:update -e -q -B -fae -Dmaven.test.skip -DworkingDirectory=${WORKINGDIR}/@{component} -DconnectionUrl=scm:svn:${svn.root}/@{component} -DdeveloperConnectionUrl=scm:svn:${svn.root}/@{component}"
+									/>
+									<param name="noXvfb" value="true" />
+								</antcall>
+							</else>
+						</if>
 					</then>
 					<else>
 						<now level="info">Fetch sources from ${svn.root}/@{component} into ${WORKINGDIR}/@{component}</now>
-						<svn javahl="false" svnkit="true" failonerror="true">
-							<checkout recurse="${svn.recurse}"
-							          url="${svn.root}/@{component}"
-							          destpath="${WORKINGDIR}/@{component}"
-							/>
-						</svn>
+						<if>
+							<istrue value="svnant.enabled" />
+							<then>
+								<svn javahl="false" svnkit="true" failonerror="true">
+									<checkout recurse="${svn.recurse}"
+									          url="${svn.root}/@{component}"
+									          destpath="${WORKINGDIR}/@{component}"
+									/>
+								</svn>
+
+							</then>
+							<else>
+								<antcall target="mvn">
+									<param name="MAVEN_DIR" value="${WORKINGDIR}" />
+									<param name="MAVEN_FLAGS"
+									       value="scm:checkout -e -q -B -fae -Dmaven.test.skip -DskipCheckoutIfExists=true -DcheckoutDirectory=${WORKINGDIR}/@{component} -DworkingDirectory=${WORKINGDIR}/@{component} -DconnectionUrl=scm:svn:${svn.root}/@{component} -DdeveloperConnectionUrl=scm:svn:${svn.root}/@{component}"
+									/>
+									<param name="noXvfb" value="true" />
+								</antcall>
+							</else>
+						</if>
 					</else>
 				</if>
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
-				<svn javahl="false" svnkit="true" failonerror="false">
-					<info target="${WORKINGDIR}/@{component}" propprefix="svn.info.@{component}" verbose="false" />
-				</svn>
+				<if>
+					<istrue value="svnant.enabled" />
+					<then>
+						<svn javahl="false" svnkit="true" failonerror="false">
+							<info target="${WORKINGDIR}/@{component}"
+							      propprefix="svn.info.@{component}"
+							      verbose="false"
+							/>
+						</svn>
+					</then>
+				</if>
 				<if>
 					<isset property="svn.info.@{component}.rev" />
 					<then>
@@ -371,12 +397,17 @@ Cannot proceed - must install svnant.jar from ${SVNANT_MIRROR}/svnant-1.3.0.zip 
 							<then>
 								<property file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt" />
 								<!-- check svn info; if new version found, svn up -->
-								<svn javahl="false" svnkit="true" failonerror="false">
-									<info target="${WORKINGDIR}/@{COMPONENT}"
-									      propprefix="svn.info.@{COMPONENT}.check"
-									      verbose="false"
-									/>
-								</svn>
+								<if>
+									<istrue value="svnant.enabled" />
+									<then>
+										<svn javahl="false" svnkit="true" failonerror="false">
+											<info target="${WORKINGDIR}/@{COMPONENT}"
+											      propprefix="svn.info.@{COMPONENT}.check"
+											      verbose="false"
+											/>
+										</svn>
+									</then>
+								</if>
 								<if>
 									<or>
 										<not>
