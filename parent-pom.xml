@@ -21,6 +21,7 @@
 				<version>${tychoVersion}</version>
 				<configuration>
 					<format>'v'yyyyMMdd-HHmm</format>
+					<archiveSite>true</archiveSite>
 				</configuration>
 			</plugin>
 
