@@ -880,53 +880,30 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 			</else>
 		</if>
 
-		<!-- Delete pointless site.zip -->
-		<delete file="${WORKINGDIR}/${update.site.path}/target/site.zip" />
+		<!-- rename resulting update site zip -->
+		<move file="${WORKINGDIR}/${update.site.path}/target/site.zip"
+		      tofile="${destinationZip}"
+		      overwrite="true"
+		      preservelastmodified="false"
+		/>
 
+		<!-- Copy zip into workspace so it can be archived by Hudson -->
 		<if>
-			<and>
-				<available file="${WORKINGDIR}/${update.site.path}/target/site/plugins" type="dir" />
-				<available file="${WORKINGDIR}/${update.site.path}/target/site/features" type="dir" />
-			</and>
+			<not>
+				<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
+			</not>
 			<then>
-				<!-- Create real update site zip, including web UI -->
-				<copy todir="${WORKINGDIR}/${update.site.path}/target/site">
-					<fileset dir="${WORKINGDIR}/${update.site.path}" includes="web/*, index.html" />
+				<mkdir dir="${basedir}/${update.site.path}/target" />
+				<copy todir="${basedir}/${update.site.path}/target"
+				      flatten="true"
+				      preservelastmodified="true"
+				      overwrite="true"
+				>
+					<fileset dir="${WORKINGDIR}/${update.site.path}/target" includes="*Update*.zip" />
 				</copy>
-				<zip destfile="${destinationZip}"
-				     basedir="${WORKINGDIR}/${update.site.path}/target/site"
-				     update="false"
-				/>
-
-				<!-- Copy zip into workspace so it can be archived by Hudson -->
-				<if>
-					<not>
-						<equals arg1="${basedir}" arg2="${WORKINGDIR}" />
-					</not>
-					<then>
-						<mkdir dir="${basedir}/${update.site.path}/target" />
-						<copy todir="${basedir}/${update.site.path}/target"
-						      flatten="true"
-						      preservelastmodified="true"
-						      overwrite="true"
-						>
-							<fileset dir="${WORKINGDIR}/${update.site.path}/target" includes="*Update*.zip" />
-						</copy>
-					</then>
-				</if>
 			</then>
-			<else>
-				<if>
-					<equals arg1="${update.site.path}" arg2="site" />
-					<then>
-						<fail>Overall update site zip is empty!</fail>
-					</then>
-					<else>
-						<echo level="info">Update site zip for ${COMPONENTS.to.build} is empty!</echo>
-					</else>
-				</if>
-			</else>
 		</if>
+		
 	</target>
 
 	<!-- Used to build the update site of a component; requires a site.xml and pom.xml be generated first -->
