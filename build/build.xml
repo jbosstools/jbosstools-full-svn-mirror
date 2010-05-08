@@ -168,7 +168,9 @@ Here is the order in which components must be built:
 				<if>
 					<available file="${WORKINGDIR}/svnant.jar" type="file" />
 					<then>
-						<copy file="${WORKINGDIR}/svnant.jar" todir="${COMMON_TOOLS}" failonerror="true" />
+						<copy todir="${COMMON_TOOLS}" failonerror="true">
+							<fileset dir="${WORKINGDIR}" includes="*.jar" />
+						</copy>
 					</then>
 					<else>
 						<!-- ant <get> does not work due to 302/200 redirections -->
