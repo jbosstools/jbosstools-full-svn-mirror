@@ -48,8 +48,12 @@ import org.eclipse.swt.widgets.Widget;
  */
 public abstract class SplitToolBar implements IVpeToolBar {
 
+	// The height of toolbar is computed wrong in some cases. See JBIDE-6262. 
+	// It is SWT bug. To work around it, manually computed height is used.
+	private int maxItemHeight = 0;
+
 	protected CoolBar coolBar;
-	public abstract void createItems(ToolBar bar);
+	protected abstract void createItems(ToolBar bar);
 
 	public void createToolBarControl(Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);
@@ -62,10 +66,12 @@ public abstract class SplitToolBar implements IVpeToolBar {
 		createItems(toolBar);
 		final CoolItem coolItem = new CoolItem(coolBar, SWT.DROP_DOWN);
 		coolItem.setControl(toolBar);
+		
 		Point size = toolBar.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point coolSize = coolItem.computeSize(size.x, size.y);
 
+		Point coolSize = coolItem.computeSize(size.x, getMaxItemHeight());
 		coolItem.setSize(coolSize);
+		
 		coolItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				if (event.detail == SWT.ARROW) {
@@ -235,7 +241,8 @@ public abstract class SplitToolBar implements IVpeToolBar {
 		item = new ToolItem(bar, style);
 		item.setImage(image);		
 		item.setToolTipText(toolTipText);
-
+		updateMaxItemHeight(item.getBounds().height);
+		
 		return item;
 	}
 
@@ -249,6 +256,7 @@ public abstract class SplitToolBar implements IVpeToolBar {
 				toolTipText, comboItems, selectionIndex);
 		ToolItem sep = new ToolItem(bar, SWT.SEPARATOR);
 		sep.setWidth(combo.getSize().x);
+		updateMaxItemHeight(combo.getSize().y);
 		sep.setControl(combo);
 
 		return combo;
@@ -397,5 +405,13 @@ public abstract class SplitToolBar implements IVpeToolBar {
 			i++;
 		}
 		return i;
+	}
+	
+	private void updateMaxItemHeight(int oneOfHeights) {
+		maxItemHeight = Math.max(maxItemHeight, oneOfHeights);
+	}
+
+	private int getMaxItemHeight() {
+		return maxItemHeight;
 	}
 }
