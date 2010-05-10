@@ -10,43 +10,21 @@
  ************************************************************************************/
 package org.jboss.tools.portlet.core.internal.project.facet;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.jdt.core.IClasspathEntry;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jst.j2ee.model.IModelProvider;
 import org.eclipse.jst.javaee.web.WebApp;
 import org.eclipse.jst.javaee.web.WebAppVersionType;
-import org.eclipse.jst.jsf.facesconfig.emf.ApplicationType;
-import org.eclipse.jst.jsf.facesconfig.emf.FacesConfigFactory;
-import org.eclipse.jst.jsf.facesconfig.emf.FacesConfigType;
-import org.eclipse.jst.jsf.facesconfig.emf.StateManagerType;
-import org.eclipse.jst.jsf.facesconfig.emf.ViewHandlerType;
-import org.eclipse.jst.jsf.facesconfig.util.FacesConfigArtifactEdit;
-import org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider;
-import org.eclipse.ui.wizards.datatransfer.ImportOperation;
-import org.eclipse.wst.common.componentcore.ComponentCore;
-import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
-import org.eclipse.wst.common.componentcore.resources.IVirtualFile;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
+import org.eclipse.wst.common.project.facet.core.IFacetedProject;
+import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
+import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.jboss.tools.portlet.core.IJBossWebUtil;
-import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.JBossWebUtil;
 import org.jboss.tools.portlet.core.JBossWebUtil25;
 import org.jboss.tools.portlet.core.Messages;
@@ -137,11 +115,20 @@ public class SeamPortletFacetInstallDelegate implements IDelegate {
 				util.configureContextParam(project, monitor, name, value,
 						description);
 
-				// FIXME optional for Seam portlets version 2.1.x and up
-				name = "javax.faces.LIFECYCLE_ID"; //$NON-NLS-1$
-				value = "SEAM_PORTLET"; //$NON-NLS-1$
-				util.configureContextParam(project, monitor, name, value,
-						description);
+				// optional for Seam portlets version 2.1.x and up
+				try {
+					IProjectFacet seamFacet = ProjectFacetsManager.getProjectFacet("jst.seam"); //$NON-NLS-1$
+					final IFacetedProject fproj = ProjectFacetsManager.create(project);
+					IProjectFacetVersion sfVersion = fproj.getProjectFacetVersion(seamFacet);
+					if (sfVersion.getVersionString().startsWith("1") || sfVersion.getVersionString().startsWith("2.0")) {  //$NON-NLS-1$//$NON-NLS-2$
+						name = "javax.faces.LIFECYCLE_ID"; //$NON-NLS-1$
+						value = "SEAM_PORTLET"; //$NON-NLS-1$
+						util.configureContextParam(project, monitor, name, value,
+							description);
+					}
+				} catch (CoreException e) {
+					PortletCoreActivator.log(e);
+				}
 			}
 		}, modelPath);
 	}
