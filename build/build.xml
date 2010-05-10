@@ -127,7 +127,7 @@ Here is the order in which components must be built:
 
 	<target name="test"
 	        description="run tests w/o first getting sources + list of components to build; assumes an upstream build job was already run"
-	        depends="init, get.bootstrap.scripts, get.components.to.test, run.build, collect.all.test.results"
+	        depends="init, get.bootstrap.scripts, get.all.components, run.build, collect.all.test.results"
 	/>
 
 	<!-- ******************* MAIN ENTRY TARGETS ******************* -->
@@ -380,7 +380,7 @@ Svnant unavailable. Will use Maven to fetch sources.
 </echo>
 					</then>
 				</if>
-				<echo file="build.cfg" message="@{component}," append="true" />
+				<echo file="${WORKINGDIR}/build.cfg" message="@{component}," append="true" />
 			</sequential>
 		</macrodef>
 
@@ -390,7 +390,7 @@ Svnant unavailable. Will use Maven to fetch sources.
 				<isset property="COMPONENTS.to.build" />
 			</not>
 			<then>
-				<echo file="build.cfg" message="COMPONENTS.to.build = " />
+				<echo file="${WORKINGDIR}/build.cfg" message="COMPONENTS.to.build = " />
 			</then>
 		</if>
 		<!-- check for each component dir in ${WORKINGDIR}; if not found, fetch -->
@@ -486,7 +486,7 @@ Svnant unavailable. Will use Maven to fetch sources.
 		<get src="${svn.root}/genpom.xml" dest="${WORKINGDIR}/genpom.xml" usetimestamp="true" />
 	</target>
 
-	<target name="get.components.to.test">
+	<target name="get.all.components">
 		<var name="COMPONENTS.to.build" unset="true" />
 		<var name="COMPONENTS.to.build" value="" />
 		<for param="COMPONENT" list="${COMPONENTS}" delimiter="; ">
@@ -497,28 +497,36 @@ Svnant unavailable. Will use Maven to fetch sources.
 	</target>
 
 	<target name="get.components.to.build">
-		<property file="build.cfg" />
 		<if>
-			<equals arg1="${COMPONENTS.to.build}" arg2="" />
+			<available file="${WORKINGDIR}/build.cfg" type="file" />
 			<then>
-				<echo level="warning">All components up to date: nothing to do!
+				<property file="${WORKINGDIR}/build.cfg" />
+				<if>
+					<equals arg1="${COMPONENTS.to.build}" arg2="" />
+					<then>
+						<echo level="warning">All components up to date: nothing to do!
 To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
 
-				<!-- create fake test result file to avoid Hudson failure -->
-				<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
-				<mkdir dir="${basedir}/surefire-reports/NoTestsRun" />
-				<echo file="${basedir}/surefire-reports/NoTestsRun/TEST-org.jboss.tools.NoTestsRun.xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+						<!-- create fake test result file to avoid Hudson failure -->
+						<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
+						<mkdir dir="${basedir}/surefire-reports/NoTestsRun" />
+						<echo file="${basedir}/surefire-reports/NoTestsRun/TEST-org.jboss.tools.NoTestsRun.xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 &lt;testsuite failures="0" time="0.001" errors="0" skipped="0" tests="1" name="org.jboss.tools.NoTestsRun"&gt;
   &lt;testcase time="0.001" classname="org.jboss.tools.NoTestsRun" name="NoTestsRun"/&gt;
 &lt;/testsuite&gt;
 </echo>
-				<property name="no.tests.run" value="true" />
-				<property name="no.overall" value="true" />
-			</then>
-			<else>
-				<echo level="warning">The following components' sources have changed and will be built:
+						<property name="no.tests.run" value="true" />
+						<property name="no.overall" value="true" />
+					</then>
+					<else>
+						<echo level="warning">The following components' sources have changed and will be built:
 	COMPONENTS.to.build = ${COMPONENTS.to.build}
 </echo>
+					</else>
+				</if>
+			</then>
+			<else>
+				<antcallback target="get.all.components" return="COMPONENTS.to.build"/>
 			</else>
 		</if>
 	</target>
@@ -1229,7 +1237,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 			<available file="/usr/bin/rsync" type="file" />
 			<then>
 				<var name="deployCmd"
-				     value="/usr/bin/rsync -arz --delete --include=*/*/*/target/ --include=*.xml --include=svn.info*.txt --include=build.cfg --exclude=eclipse/ ${sourceDir} ${deployDir}/"
+				     value="/usr/bin/rsync -arz --delete --include=*/*/*/target/ --include=*.xml --include=svn.info*.txt --include=${WORKINGDIR}/build.cfg --exclude=eclipse/ ${sourceDir} ${deployDir}/"
 				/>
 			</then>
 			<elseif>
@@ -1269,7 +1277,7 @@ Cannot deploy - sourceDir not found in
 
 		<!-- expected values for get.sources.* tests -->
 		<property name="get.sources.expected.dirs" value="tests,common,xulrunner," />
-		<property name="get.sources.expected.files" value="build.cfg" />
+		<property name="get.sources.expected.files" value="${WORKINGDIR}/build.cfg" />
 
 		<!-- expected values for test.get.sources.build.updated.only tests -->
 		<property name="get.components.to.build.expected.2" value="tests,common,xulrunner," />
@@ -1281,8 +1289,8 @@ Cannot deploy - sourceDir not found in
 		<property name="get.components.to.build.expected.4.all" value="tests,common,xulrunner," />
 		<property name="get.components.to.build.expected.6.all" value="tests,common,xulrunner," />
 
-		<!-- expected values for test.get.components.to.test -->
-		<property name="get.components.to.test.expected"
+		<!-- expected values for test.get.all.components -->
+		<property name="get.all.components.expected"
 		          value="tests,common,flow,jbpm,jmx,archives,as,drools,bpel,smooks,freemarker,profiler,portlet,xulrunner,jst,vpe,jsf,esb,tptp,ws,cdi,struts,hibernatetools,seam,examples,birt,maven,"
 		/>
 
@@ -1768,7 +1776,7 @@ Cannot deploy - sourceDir not found in
 		<now level="info">info!</now>
 	</target>
 
-	<target name="test.get.components.to.test" depends="init, test.expected.values">
+	<target name="test.get.all.components" depends="init, test.expected.values">
 		<var name="COMPONENTS" unset="true" />
 		<var name="COMPONENTS"
 		     value="tests,common;
@@ -1781,12 +1789,12 @@ Cannot deploy - sourceDir not found in
 	            examples,birt;
 	            maven"
 		/>
-		<antcallback target="get.components.to.test" return="COMPONENTS.to.build" />
+		<antcallback target="get.all.components" return="COMPONENTS.to.build" />
 		<assert failonerror="true"
-		        message="expected: [${get.components.to.test.expected}] but got: [${COMPONENTS.to.build}]"
+		        message="expected: [${get.all.components.expected}] but got: [${COMPONENTS.to.build}]"
 		>
 			<bool>
-				<equals arg1="${get.components.to.test.expected}" arg2="${COMPONENTS.to.build}" />
+				<equals arg1="${get.all.components.expected}" arg2="${COMPONENTS.to.build}" />
 			</bool>
 		</assert>
 	</target>
