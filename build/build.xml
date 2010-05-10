@@ -300,7 +300,7 @@ Build cannot proceed!
 					<then>
 						<now level="info">Update @{COMPONENT}</now>
 						<if>
-							<istrue value="svnant.enabled" />
+							<istrue value="${svnant.enabled}" />
 							<then>
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<update recurse="${svn.recurse}" dir="@{component}" />
@@ -310,7 +310,7 @@ Build cannot proceed!
 								<antcall target="mvn">
 									<param name="MAVEN_DIR" value="${WORKINGDIR}" />
 									<param name="MAVEN_FLAGS"
-									       value="scm:update -e -q -B -fae -Dmaven.test.skip -DworkingDirectory=${WORKINGDIR}/@{component} -DconnectionUrl=scm:svn:${svn.root}/@{component} -DdeveloperConnectionUrl=scm:svn:${svn.root}/@{component}"
+									       value="scm:update -f ${WORKINGDIR}/parent-pom.xml -e -q -B -fae -Dmaven.test.skip -DworkingDirectory=${WORKINGDIR}/@{component} -DconnectionUrl=scm:svn:${svn.root}/@{component} -DdeveloperConnectionUrl=scm:svn:${svn.root}/@{component}"
 									/>
 									<param name="noXvfb" value="true" />
 								</antcall>
@@ -320,7 +320,7 @@ Build cannot proceed!
 					<else>
 						<now level="info">Fetch sources from ${svn.root}/@{component} into ${WORKINGDIR}/@{component}</now>
 						<if>
-							<istrue value="svnant.enabled" />
+							<istrue value="${svnant.enabled}" />
 							<then>
 								<svn javahl="false" svnkit="true" failonerror="true">
 									<checkout recurse="${svn.recurse}"
@@ -334,7 +334,7 @@ Build cannot proceed!
 								<antcall target="mvn">
 									<param name="MAVEN_DIR" value="${WORKINGDIR}" />
 									<param name="MAVEN_FLAGS"
-									       value="scm:checkout -e -q -B -fae -Dmaven.test.skip -DskipCheckoutIfExists=true -DcheckoutDirectory=${WORKINGDIR}/@{component} -DworkingDirectory=${WORKINGDIR}/@{component} -DconnectionUrl=scm:svn:${svn.root}/@{component} -DdeveloperConnectionUrl=scm:svn:${svn.root}/@{component}"
+									       value="scm:checkout -f ${WORKINGDIR}/parent-pom.xml -e -q -B -fae -Dmaven.test.skip -DskipCheckoutIfExists=true -DcheckoutDirectory=${WORKINGDIR}/@{component} -DworkingDirectory=${WORKINGDIR}/@{component} -DconnectionUrl=scm:svn:${svn.root}/@{component} -DdeveloperConnectionUrl=scm:svn:${svn.root}/@{component}"
 									/>
 									<param name="noXvfb" value="true" />
 								</antcall>
@@ -345,7 +345,7 @@ Build cannot proceed!
 
 				<!-- Store svn info so we can compare it later and thus not need to update or checkout every time -->
 				<if>
-					<istrue value="svnant.enabled" />
+					<istrue value="${svnant.enabled}" />
 					<then>
 						<svn javahl="false" svnkit="true" failonerror="false">
 							<info target="${WORKINGDIR}/@{component}"
@@ -411,7 +411,7 @@ Build cannot proceed!
 								<property file="${WORKINGDIR}/svn.info-@{COMPONENT}.txt" />
 								<!-- check svn info; if new version found, svn up -->
 								<if>
-									<istrue value="svnant.enabled" />
+									<istrue value="${svnant.enabled}" />
 									<then>
 										<svn javahl="false" svnkit="true" failonerror="false">
 											<info target="${WORKINGDIR}/@{COMPONENT}"
