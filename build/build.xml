@@ -161,12 +161,13 @@ Here is the order in which components must be built:
 	</target>
 
 	<target name="get.svnant" unless="svnant.jar.exists">
-		<echo>${os.name}, ${os.arch}, ${os.version}, ${osgi.os}</echo>
+		<echo level="debug">${os.name}, ${os.arch}, ${os.version}, ${osgi.os}</echo>
 		<property name="SVNANT_MIRROR" value="http://www.tigris.org/files/documents/906/46267" />
 		<if>
-			<not>
+			<or>
 				<os family="windows" />
-			</not>
+				<contains string="${os.name}" substring="windows" casesensitive="false" />
+			</or>
 			<then>
 				<var name="svnant.enabled" unset="true" />
 				<var name="svnant.enabled" value="false" />
