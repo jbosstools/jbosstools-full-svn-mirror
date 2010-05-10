@@ -180,40 +180,50 @@ Here is the order in which components must be built:
 		</if>
 
 		<if>
-			<available file="${COMMON_TOOLS}/svnant-1.3.0.zip" type="file" />
+			<istrue value="${svnant.enabled}" />
 			<then>
-				<touch file="${COMMON_TOOLS}/svnant-1.3.0.zip" />
-				<mkdir dir="${java.io.tmpdir}/svnant-1.3.0.zip_" />
-				<unzip src="${COMMON_TOOLS}/svnant-1.3.0.zip"
-				       dest="${java.io.tmpdir}/svnant-1.3.0.zip_"
-				       overwrite="true"
-				/>
-				<copy todir="${COMMON_TOOLS}" failonerror="true">
-					<fileset dir="${java.io.tmpdir}/svnant-1.3.0.zip_/svnant-1.3.0/lib/" includes="*.jar" />
-				</copy>
-				<delete dir="${java.io.tmpdir}/svnant-1.3.0.zip_" includeemptydirs="true" quiet="true" />
-			</then>
-			<elseif>
-				<or>
-					<not>
-						<available file="${COMMON_TOOLS}/svnant.jar" type="file" />
-					</not>
-					<not>
-						<available file="${COMMON_TOOLS}/svnkit.jar" type="file" />
-					</not>
-					<not>
-						<available file="${COMMON_TOOLS}/svnClientAdapter.jar" type="file" />
-					</not>
-				</or>
-				<then>
-					<fail>Error!
+				<if>
+					<available file="${COMMON_TOOLS}/svnant-1.3.0.zip" type="file" />
+					<then>
+						<touch file="${COMMON_TOOLS}/svnant-1.3.0.zip" />
+						<mkdir dir="${java.io.tmpdir}/svnant-1.3.0.zip_" />
+						<unzip src="${COMMON_TOOLS}/svnant-1.3.0.zip"
+						       dest="${java.io.tmpdir}/svnant-1.3.0.zip_"
+						       overwrite="true"
+						/>
+						<copy todir="${COMMON_TOOLS}" failonerror="true">
+							<fileset dir="${java.io.tmpdir}/svnant-1.3.0.zip_/svnant-1.3.0/lib/" includes="*.jar" />
+						</copy>
+						<delete dir="${java.io.tmpdir}/svnant-1.3.0.zip_" includeemptydirs="true" quiet="true" />
+					</then>
+					<elseif>
+						<or>
+							<not>
+								<available file="${COMMON_TOOLS}/svnant.jar" type="file" />
+							</not>
+							<not>
+								<available file="${COMMON_TOOLS}/svnkit.jar" type="file" />
+							</not>
+							<not>
+								<available file="${COMMON_TOOLS}/svnClientAdapter.jar" type="file" />
+							</not>
+						</or>
+						<then>
+							<fail>Error!
 Build cannot proceed!
 	Must install svnant.jar, svnkit.jar + svnClientAdapter.jar from 
 		${SVNANT_MIRROR}/svnant-1.3.0.zip 
 	into ${COMMON_TOOLS}/.
 </fail>
-				</then>
-			</elseif>
+						</then>
+					</elseif>
+				</if>
+			</then>
+			<else>
+				<echo level="warning">Warning! 
+Svnant unavailable. Will use Maven to fetch sources.
+</echo>
+			</else>
 		</if>
 	</target>
 
