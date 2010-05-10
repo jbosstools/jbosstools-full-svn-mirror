@@ -398,6 +398,16 @@
 				<enabled>true</enabled>
 			</releases>
 		</pluginRepository>
+		<pluginRepository>
+			<id>apache-snapshots</id>
+			<url>http://repository.apache.org/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
 	</pluginRepositories>
 
 	<!-- https://issues.sonatype.org/browse/TYCHO-413: does not work - doesn't 
