@@ -321,6 +321,11 @@ Svnant unavailable. Will use Maven to fetch sources.
 						<if>
 							<istrue value="${svnant.enabled}" />
 							<then>
+								<!-- remove generated site/ folder -->
+								<delete dir="${WORKINGDIR}/@{component}/site" includeemptydirs="true" quiet="true"/>
+								<svn javahl="false" svnkit="true" failonerror="false">
+									<revert recurse="${svn.recurse}" dir="@{component}" />
+								</svn>
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<update recurse="${svn.recurse}" dir="@{component}" />
 								</svn>
