@@ -161,6 +161,7 @@ Here is the order in which components must be built:
 	</target>
 
 	<target name="get.svnant" unless="svnant.jar.exists">
+		<echo>${os.name}, ${os.arch}, ${os.version}, ${osgi.os}</echo>
 		<property name="SVNANT_MIRROR" value="http://www.tigris.org/files/documents/906/46267" />
 		<if>
 			<not>
