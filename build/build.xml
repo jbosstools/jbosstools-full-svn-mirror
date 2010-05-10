@@ -82,7 +82,11 @@ or, to re-build a single component's update site w/o first building, testing, an
 	ant -DCOMPONENT=jmx create.update.site; \
 	ant -DCOMPONENT=jbpm create.update.site
 
-Note: if tests stall on Linux, install Xvfb and this script will use that to run Maven.
+To have hudson manage sources (rather than having this script checkout/update them) use: 
+	-Dhudson.managed.sources=true
+			
+Note: if tests stall on Linux, install Xvfb and this script will use that to run Maven, unless use:
+	-DnoXvfb=true
 
 Here is the order in which components must be built:
 </echo>
@@ -164,10 +168,7 @@ Here is the order in which components must be built:
 		<echo level="debug">${os.name}, ${os.arch}, ${os.version}, ${osgi.os}</echo>
 		<property name="SVNANT_MIRROR" value="http://www.tigris.org/files/documents/906/46267" />
 		<if>
-			<or>
-				<os family="windows" />
-				<contains string="${os.name}" substring="windows" casesensitive="false" />
-			</or>
+			<istrue value="${isWindows}" />
 			<then>
 				<var name="svnant.enabled" unset="true" />
 				<var name="svnant.enabled" value="false" />
@@ -254,6 +255,13 @@ Svnant unavailable. Will use Maven to fetch sources.
 			</sequential>
 		</macrodef>
 
+		<condition property="isWindows" value="true" else="false">
+			<or>
+				<os family="windows" />
+				<contains string="${os.name}" substring="windows" casesensitive="false" />
+			</or>
+		</condition>
+
 		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
 		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
 			<available file="/home/hudson/static_build_env/jbds" type="dir" />
@@ -293,7 +301,7 @@ Svnant unavailable. Will use Maven to fetch sources.
 		<antcall target="get.maven" />
 	</target>
 
-	<target name="get.sources" description="if sources not already on disk, fetch them">
+	<target name="get.sources" description="if sources not already on disk, fetch them" unless="hudson.managed.sources">
 		<property name="clean.sources" value="false" />
 		<property name="svn.recurse" value="true" />
 
@@ -339,7 +347,6 @@ Svnant unavailable. Will use Maven to fetch sources.
 									          destpath="${WORKINGDIR}/@{component}"
 									/>
 								</svn>
-
 							</then>
 							<else>
 								<antcall target="mvn">
