@@ -17,7 +17,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>common</module>
 		<module>flow</module>
 		<module>jbpm</module>
-		<module>jmx</module>
+		<!-- <module>jmx</module>
 		<module>archives</module>
 		<module>as</module>
 		<module>drools</module>
@@ -41,7 +41,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>examples</module>
 		<module>birt</module>
 		<module>maven</module>
-		<module>site</module>
+		<module>site</module> -->
 	</modules>
 </project>
 	
