@@ -66,6 +66,22 @@ or, to build a specific module and overwrite existing pom.xml files:
 	</target>
 
 	<target name="init" depends="local">
+		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
+		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${WORKINGDIR}" />
+		<echo level="info">WORKINGDIR = ${WORKINGDIR}</echo>
+
+		<condition property="COMMON_TOOLS"
+		           value="/home/hudson/static_build_env/jbds/tools"
+		           else="${WORKINGDIR}/../tools"
+		>
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${COMMON_TOOLS}" />
+		<echo level="info">COMMON_TOOLS = ${COMMON_TOOLS}</echo>
+
 		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
 		<antcall target="get.ant-contrib" />
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
