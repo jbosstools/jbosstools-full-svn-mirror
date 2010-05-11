@@ -90,6 +90,8 @@ or, to build a specific module and overwrite existing pom.xml files:
 			</classpath>
 		</taskdef>
 
+		<var name="show.pom.exists.warning" value="" />
+
 		<!-- = = = = = = = = = = = = = = = = =
 	      macrodef: write out a pom.xml which aggregates subdirs   
 	     = = = = = = = = = = = = = = = = = -->
@@ -133,6 +135,17 @@ or, to build a specific module and overwrite existing pom.xml files:
 				               override="true"
 				/>
 				<echo level="verbose">   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</echo>
+				<if>
+					<and>
+						<available file="@{dir}/pom.xml" type="file" />
+						<not>
+							<istrue value="${overwrite.existing.pom.xml}" />
+						</not>
+					</and>
+					<then>
+						<var name="show.pom.exists.warning" value="${show.pom.exists.warning}1" />
+					</then>
+				</if>
 				<if>
 					<or>
 						<not>
@@ -222,6 +235,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				               override="true"
 				/>
 				<echo level="verbose">   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</echo>
+				<if>
+					<and>
+						<available file="@{dir}/pom.xml" type="file" />
+						<not>
+							<istrue value="${overwrite.existing.pom.xml}" />
+						</not>
+					</and>
+					<then>
+						<var name="show.pom.exists.warning" value="${show.pom.exists.warning}1" />
+					</then>
+				</if>
 				<if>
 					<or>
 						<not>
@@ -505,7 +529,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<length string="${modulecountstring}" property="modulecount" />
 		<length string="${aggregatorcountstring}" property="aggregatorcount" />
 		<echo level="info">${WORKINGDIR}/${COMPONENT} :: Modules: ${modulecount},  Aggregations: ${aggregatorcount}</echo>
-
+		<if>
+			<not>
+				<equals arg1="${show.pom.exists.warning}" arg2="" />
+			</not>
+			<then>
+				<length property="show.pom.exists.warning.count" string="${show.pom.exists.warning}" />
+				<echo level="warning">${show.pom.exists.warning.count} pom.xml file(s) already exist. To overwrite, use -Doverwrite.existing.pom.xml=true</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="getArtifactType">
