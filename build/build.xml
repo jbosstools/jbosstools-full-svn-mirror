@@ -589,7 +589,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						<echo>Run custom @{COMPONENT}/build.xml</echo>
 						<ant antfile="${WORKINGDIR}/@{COMPONENT}/build.xml">
 							<property name="COMPONENT" value="@{COMPONENT}" />
-							<property name="basedir" value="${WORKINGDIR}/@{COMPONENT}"/>
+							<property name="basedir" value="${WORKINGDIR}/@{COMPONENT}" />
 						</ant>
 					</then>
 				</if>
@@ -730,7 +730,7 @@ rm -fr /tmp/.X3-lock
 		<for param="testresultfile" delimiter=", 
 		">
 			<path>
-				<fileset dir="${basedir}/surefire-reports/" includes="**/*.xml" />
+				<fileset dir="${basedir}/surefire-reports/" includes="**/TEST-*.xml" excludes="**/*pom.xml, **/build.xml"/>
 			</path>
 			<sequential>
 				<var name="testsuite.name" unset="true" />
@@ -784,9 +784,14 @@ rm -fr /tmp/.X3-lock
 						/>
 					</then>
 				</if>
-				<var name="test.results.all"
-				     value="${test.results.all}${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures}${line.separator}"
-				/>
+				<if>
+					<isset property="testsuite.name" />
+					<then>
+						<var name="test.results.all"
+						     value="${test.results.all}${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures}${line.separator}"
+						/>
+					</then>
+				</if>
 				<var name="testsuite.name" unset="true" />
 				<var name="testsuite.tests" unset="true" />
 				<var name="testsuite.time" unset="true" />
