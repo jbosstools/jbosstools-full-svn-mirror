@@ -535,7 +535,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			</not>
 			<then>
 				<length property="show.pom.exists.warning.count" string="${show.pom.exists.warning}" />
-				<echo level="warning">${show.pom.exists.warning.count} pom.xml file(s) already exist. To overwrite, use -Doverwrite.existing.pom.xml=true</echo>
+				<echo level="warning">${show.pom.exists.warning.count} ${COMPONENT} pom.xml file(s) already exist. To overwrite, use -Doverwrite.existing.pom.xml=true</echo>
 			</then>
 		</if>
 	</target>
