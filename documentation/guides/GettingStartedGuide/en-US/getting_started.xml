@@ -570,7 +570,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <para>Remember to choose the download that matches your OS and use Java 6 when you run
     it.</para>
    </note>
-    <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
+   <para>If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://community.jboss.org/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read
     about dependencies between standalone plug-ins.</para>  
    <para>For more information about how to install JBoss Tools 3.0 and JBoss Tools 3.1 please read the following docs:
    </para>
