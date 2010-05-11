@@ -1,7 +1,26 @@
 <project default="custom.build" name="jbosstools drools build.xml">
 
-	<!-- customize as needed -->
+	<!-- Configuration Start -->
+	<property name="COMPONENT" value="drools" />
 	<property name="drools.zip" value="drools-5.1.0.SNAPSHOT-eclipse-all.zip" />
+	<!-- Configuration Ends -->
+
+	<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources/">
+		<available file="/home/hudson/static_build_env/jbds" type="dir" />
+	</condition>
+	<condition property="WORKINGDIR" value="${basedir}/../build" else="${basedir}/../">
+		<available file="${basedir}/../build/${COMPONENT}" type="dir" />
+	</condition>
+
+	<mkdir dir="${WORKINGDIR}" />
+	<echo level="info">WORKINGDIR = ${WORKINGDIR}</echo>
+
+	<condition property="build.xml" value="/home/hudson/static_build_env/jbds/tools/sources">
+		<available file="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml" type="file" />
+	</condition>
+	<condition property="build.xml" value="${basedir}/../build/build.xml" else="${basedir}/../build.xml">
+		<available file="${basedir}/../build/build.xml" type="file" />
+	</condition>
 
 	<target name="custom.build"
 	        description="fetch latest drools from their Hudson build + selectively unpack it"
@@ -12,7 +31,7 @@
 		     usetimestamp="true"
 		/>
 		<unzip src="${WORKINGDIR}/${COMPONENT}/${drools.zip}" dest="${WORKINGDIR}/${COMPONENT}" overwrite="true" />
-		
+
 		<ant antfile="${build.xml}" target="unjarPlugins">
 			<property name="COMPONENT" value="${COMPONENT}" />
 		</ant>
@@ -27,8 +46,12 @@
 	</target>
 
 	<target name="init">
-		<property name="build.xml" value="${WORKINGDIR}/build.xml" />
 		<ant antfile="${build.xml}" target="init" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
 	</target>
 
 </project>
