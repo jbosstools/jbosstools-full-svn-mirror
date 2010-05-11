@@ -53,8 +53,14 @@ or, to build a specific module and overwrite existing pom.xml files:
 	</target>
 
 	<!-- override for local build -->
-	<available file="/qa/tools/opt" type="dir" property="isJBossQA" />
-	<target name="local" unless="isJBossQA">
+	<condition property="isInHudson" value="true">
+		<or>
+			<contains string="${user.dir}" substring="hudson" />
+			<contains string="${user.name}" substring="hudson" />
+			<contains string="${user.home}" substring="hudson" />
+		</or>
+	</condition>
+	<target name="local" unless="isInHudson">
 		<property name="WORKINGDIR" value="${basedir}" />
 		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
 	</target>
