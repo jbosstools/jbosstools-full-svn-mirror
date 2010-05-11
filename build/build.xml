@@ -589,6 +589,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						<echo>Run custom @{COMPONENT}/build.xml</echo>
 						<ant antfile="${WORKINGDIR}/@{COMPONENT}/build.xml">
 							<property name="COMPONENT" value="@{COMPONENT}" />
+							<property name="basedir" value="${WORKINGDIR}/@{COMPONENT}"/>
 						</ant>
 					</then>
 				</if>
