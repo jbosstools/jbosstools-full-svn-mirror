@@ -574,8 +574,17 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					</else>
 				</if>
 				<!-- optional extra instructions to do before a maven build -->
+				<loadfile property="@{COMPONENT}.pom.xml" srcfile="${WORKINGDIR}/@{COMPONENT}/pom.xml" />
 				<if>
-					<available file="${WORKINGDIR}/@{COMPONENT}/build.xml" type="file" />
+					<and>
+						<!-- if pom.xml does not call custom build.xml directly -->
+						<not>
+							<contains string="${@{COMPONENT}.pom.xml}"
+							          substring="&lt;ant antfile=&quot;build.xml&quot; /&gt;"
+							/>
+						</not>
+						<available file="${WORKINGDIR}/@{COMPONENT}/build.xml" type="file" />
+					</and>
 					<then>
 						<echo>Run custom @{COMPONENT}/build.xml</echo>
 						<ant antfile="${WORKINGDIR}/@{COMPONENT}/build.xml">
