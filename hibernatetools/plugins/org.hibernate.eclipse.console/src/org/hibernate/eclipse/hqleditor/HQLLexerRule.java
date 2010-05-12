@@ -27,7 +27,7 @@ import java.io.Reader;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
-import org.hibernate.mediator.stubs.util.HqlBaseLexerStub;
+import org.hibernate.mediator.x.hql.antlr.HqlBaseLexer;
 
 public class HQLLexerRule implements IRule {
 
@@ -38,7 +38,7 @@ public class HQLLexerRule implements IRule {
 	}
 
 	public IToken evaluate(final ICharacterScanner scanner) {
-		HqlBaseLexerStub lexer = HqlBaseLexerStub.newInstance(new Reader() {
+		HqlBaseLexer lexer = HqlBaseLexer.newInstance(new Reader() {
 
 			public void close() throws IOException {
 				// noop				

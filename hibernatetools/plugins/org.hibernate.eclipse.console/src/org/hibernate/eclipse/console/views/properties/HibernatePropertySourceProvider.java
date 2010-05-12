@@ -50,7 +50,7 @@ public class HibernatePropertySourceProvider implements IPropertySourceProvider
 				String consoleConfigName = qp.getConsoleConfigName();
 				if ((sessionStub.isOpen() && sessionStub.contains(obj)) || 
 						(obj != null && sessionStub.hasMetaData(obj))) {
-					res = new EntityPropertySource(obj, sessionStub);	
+					res = new EntityPropertySource(obj, sessionStub, consoleConfigName);	
 				}
 			}
 		}

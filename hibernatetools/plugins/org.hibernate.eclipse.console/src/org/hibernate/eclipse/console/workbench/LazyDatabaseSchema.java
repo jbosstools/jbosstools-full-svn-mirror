@@ -22,7 +22,6 @@
 package org.hibernate.eclipse.console.workbench;
 
 import org.hibernate.console.ConsoleConfiguration;
-import org.hibernate.mediator.x.cfg.reveng.DefaultReverseEngineeringStrategy;
 import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategy;
 
 public class LazyDatabaseSchema {
@@ -31,7 +30,7 @@ public class LazyDatabaseSchema {
 	private final ReverseEngineeringStrategy res;
 	
 	public LazyDatabaseSchema(ConsoleConfiguration ccfg) {
-		this(ccfg, DefaultReverseEngineeringStrategy.newInstance());
+		this(ccfg, ccfg.createDefReverseEngineeringStrategy());
 	}
 
 	public LazyDatabaseSchema(ConsoleConfiguration ccfg, ReverseEngineeringStrategy res) {

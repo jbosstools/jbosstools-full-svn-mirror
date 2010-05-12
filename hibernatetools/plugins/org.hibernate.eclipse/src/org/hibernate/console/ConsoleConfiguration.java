@@ -47,7 +47,11 @@ import org.hibernate.mediator.x.SessionFactory;
 import org.hibernate.mediator.x.Session;
 import org.hibernate.mediator.x.cfg.Configuration;
 import org.hibernate.mediator.x.cfg.ConfigurationFactory;
+import org.hibernate.mediator.x.cfg.JDBCMetaDataConfiguration;
 import org.hibernate.mediator.x.cfg.Settings;
+import org.hibernate.mediator.x.cfg.reveng.DefaultDatabaseCollector;
+import org.hibernate.mediator.x.cfg.reveng.DefaultReverseEngineeringStrategy;
+import org.hibernate.mediator.x.cfg.reveng.ReverseEngineeringStrategy;
 import org.hibernate.mediator.x.tool.ide.completion.HQLCodeAssist;
 import org.xml.sax.EntityResolver;
 
@@ -476,6 +480,32 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 					configStub.buildMappings();
 				}
 				return null;
+			}
+		} );
+	}
+	
+	public ReverseEngineeringStrategy createDefReverseEngineeringStrategy() {
+		return (ReverseEngineeringStrategy)execute(new ExecutionContext.Command() {
+			public Object execute() {
+				return DefaultReverseEngineeringStrategy.newInstance();
+			}
+		} );
+	}
+	
+	public DefaultDatabaseCollector createDefaultDatabaseCollector() {
+		return (DefaultDatabaseCollector)execute(new ExecutionContext.Command() {
+			public Object execute() {
+				return DefaultDatabaseCollector.newInstance();
+			}
+		} );
+	}
+	
+	public JDBCMetaDataConfiguration createJDBCMetaDataConfiguration() {
+		return (JDBCMetaDataConfiguration)execute(new ExecutionContext.Command() {
+			public Object execute() {
+				ConfigurationFactory configStubFactory = new ConfigurationFactory(null);
+				final JDBCMetaDataConfiguration cfg = configStubFactory.createConfigurationJDBCMetaData();
+				return cfg;
 			}
 		} );
 	}

@@ -28,9 +28,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
+import org.dom4j.mediator.x.Element;
+import org.dom4j.mediator.x.io.SAXReader;
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.internal.resources.ICoreConstants;
 import org.eclipse.core.internal.resources.ResourceInfo;
@@ -401,15 +400,19 @@ public class ProjectUtils {
 			return new String[0];
 		}
 		InputStream is = null;
-		org.dom4j.Document doc = null;
+		org.dom4j.mediator.x.Document doc = null;
 		try {
 			is = file.getContents();
-			SAXReader saxReader = new SAXReader();
+			SAXReader saxReader = SAXReader.newInstance();
 			doc = saxReader.read(new InputSource(is));
 		} catch (CoreException e) {
 			HibernateConsolePlugin.getDefault().logErrorMessage("CoreException: ", e); //$NON-NLS-1$
-		} catch (DocumentException e) {
-			HibernateConsolePlugin.getDefault().logErrorMessage("DocumentException: ", e); //$NON-NLS-1$
+		} catch (Exception e) {
+			if (e.getClass().getName().contains("DocumentException")) { //$NON-NLS-1$
+				HibernateConsolePlugin.getDefault().logErrorMessage("DocumentException: ", e); //$NON-NLS-1$
+			} else {
+				HibernateConsolePlugin.getDefault().logErrorMessage("Exception: ", e); //$NON-NLS-1$
+			}
 		} finally {
 			try {
 				if (is != null) is.close();

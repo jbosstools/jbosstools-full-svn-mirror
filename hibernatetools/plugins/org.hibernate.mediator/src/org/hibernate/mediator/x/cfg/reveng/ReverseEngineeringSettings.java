@@ -1,5 +1,6 @@
 package org.hibernate.mediator.x.cfg.reveng;
 
+import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.base.HObject;
 
 public class ReverseEngineeringSettings extends HObject {
@@ -10,7 +11,24 @@ public class ReverseEngineeringSettings extends HObject {
 	}
 	
 	public static ReverseEngineeringSettings newInstance(ReverseEngineeringStrategy reverseEngineeringStrategy) {
-		return new ReverseEngineeringSettings(newInstance(CL, reverseEngineeringStrategy));
+		ReverseEngineeringSettings resNewInstance = null;
+		HibernateConsoleRuntimeException hcre = null;
+		try {
+			resNewInstance = new ReverseEngineeringSettings(newInstance(CL, reverseEngineeringStrategy));
+		} catch (HibernateConsoleRuntimeException hcre1) {
+			hcre = hcre1;
+		}
+		if (resNewInstance == null) { // hibernate 3.5 & new hibernate-tools
+			try {
+				resNewInstance = new ReverseEngineeringSettings(newInstance(CL));
+			} catch (HibernateConsoleRuntimeException hcre2) {
+				//hcre = hcre2;
+			}
+		}
+		if (resNewInstance == null) {
+			throw hcre;
+		}
+		return resNewInstance;
 	}
 
 	public ReverseEngineeringSettings setDefaultPackageName(String defaultPackageName) {
@@ -24,7 +42,11 @@ public class ReverseEngineeringSettings extends HObject {
 	}
 
 	public ReverseEngineeringSettings setDetectOneToOne(boolean b) {
-		invoke(mn(), b);
+		try {
+			invoke(mn(), b);
+		} catch (HibernateConsoleRuntimeException hcre1) {
+			// hibernate 3.5 & new hibernate-tools
+		}
 		return this;
 	}
 

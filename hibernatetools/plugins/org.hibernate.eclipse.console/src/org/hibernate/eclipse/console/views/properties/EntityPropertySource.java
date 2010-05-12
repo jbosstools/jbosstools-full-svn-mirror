@@ -23,6 +23,9 @@ package org.hibernate.eclipse.console.views.properties;
 
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource2;
+import org.hibernate.console.ConsoleConfiguration;
+import org.hibernate.console.KnownConfigurations;
+import org.hibernate.mediator.execution.ExecutionContext;
 import org.hibernate.mediator.x.Session;
 
 public class EntityPropertySource implements IPropertySource2
@@ -30,25 +33,45 @@ public class EntityPropertySource implements IPropertySource2
 	private Object reflectedObj;
 	private IPropertyDescriptor[] propertyDescriptors;
 	private final Session sessionStub;
+	private String consoleConfigName;
 
-	public EntityPropertySource(final Object obj, final Session sessionStub) {
+	public EntityPropertySource(final Object obj, final Session sessionStub, String consoleConfigName) {
 		this.sessionStub = sessionStub;
-		reflectedObj = obj;
+		this.reflectedObj = obj;
+		this.consoleConfigName = consoleConfigName;
 	}
 
 	public Object getEditableValue() {
 		return ""; //$NON-NLS-1$
 	}
 
+	public ConsoleConfiguration getConsoleConfig() {
+		final KnownConfigurations knownConfigurations = KnownConfigurations.getInstance();
+		ConsoleConfiguration consoleConfig = knownConfigurations.find(consoleConfigName);
+		return consoleConfig;
+	}
+
 	public IPropertyDescriptor[] getPropertyDescriptors() {
-		if (propertyDescriptors == null) {
-			propertyDescriptors = sessionStub.getPropertyDescriptors(reflectedObj);
+		if (propertyDescriptors == null && getConsoleConfig() != null) {
+			propertyDescriptors = (IPropertyDescriptor[])getConsoleConfig().execute(new ExecutionContext.Command() {
+				public Object execute() {
+					return sessionStub.getPropertyDescriptors(reflectedObj);
+				}
+			});
 		}
 		return propertyDescriptors;
 	}
 
-	public Object getPropertyValue(Object id) {
-		return sessionStub.getPropertyValue(reflectedObj, id);
+	public Object getPropertyValue(final Object id) {
+		Object val = null;
+		if (getConsoleConfig() != null) {
+			val = getConsoleConfig().execute(new ExecutionContext.Command() {
+				public Object execute() {
+					return sessionStub.getPropertyValue(reflectedObj, id);
+				}
+			});
+		}
+		return val;
 	}
 
 	public boolean isPropertySet(Object id) {

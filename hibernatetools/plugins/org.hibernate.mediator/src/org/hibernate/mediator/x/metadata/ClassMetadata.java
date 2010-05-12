@@ -54,5 +54,4 @@ public class ClassMetadata extends HObject {
 	public Serializable getIdentifier(Object entity, EntityMode pojo) {
 		return (Serializable)invoke(mn(), entity, pojo);
 	}
-
 }

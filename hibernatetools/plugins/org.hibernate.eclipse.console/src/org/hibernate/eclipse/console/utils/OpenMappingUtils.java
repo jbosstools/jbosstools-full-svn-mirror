@@ -18,12 +18,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.Attribute;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.VisitorSupport;
-import org.dom4j.io.SAXReader;
+import org.dom4j.mediator.x.Attribute;
+import org.dom4j.mediator.x.Document;
+import org.dom4j.mediator.x.Element;
+import org.dom4j.mediator.x.Visitor;
+import org.dom4j.mediator.x.io.SAXReader;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
@@ -51,7 +50,6 @@ import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.mediator.execution.ExecutionContext;
 import org.hibernate.mediator.stubs.util.OpenMappingUtilsEjb3;
 import org.hibernate.mediator.stubs.util.StringHelper;
-import org.hibernate.mediator.stubs.util.XMLHelper;
 import org.hibernate.mediator.x.mapping.Collection;
 import org.hibernate.mediator.x.mapping.Column;
 import org.hibernate.mediator.x.mapping.Component;
@@ -67,6 +65,7 @@ import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.mapping.ToOne;
 import org.hibernate.mediator.x.mapping.Value;
 import org.hibernate.mediator.x.tool.hbm2x.Cfg2HbmTool;
+import org.hibernate.mediator.x.util.XMLHelper;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -328,7 +327,7 @@ public class OpenMappingUtils {
 		return visitor.iterator();
 	}
 
-	private static class LVS extends VisitorSupport {
+	private static class LVS extends Visitor {
 		private String nodeName;
 		private String attrName;
 		private String attrValue;
@@ -395,15 +394,19 @@ public class OpenMappingUtils {
 		}
 		try {
 			List<Throwable> errors = new ArrayList<Throwable>();
-			XMLHelper helper = new XMLHelper();
+			XMLHelper helper = XMLHelper.newInstance();
 			SAXReader saxReader = helper.createSAXReader(configXMLFile.getPath(), errors, entityResolver);
 			doc = saxReader.read(new InputSource( stream));
 			if (errors.size() != 0) {
     			HibernateConsolePlugin.getDefault().logErrorMessage("invalid configuration", (Throwable)null);	//$NON-NLS-1$
 			}
 		}
-		catch (DocumentException e) {
-			HibernateConsolePlugin.getDefault().logErrorMessage("Could not parse configuration", e);			//$NON-NLS-1$
+		catch (Exception e) {
+			if (e.getClass().getName().contains("DocumentException")) { //$NON-NLS-1$
+				HibernateConsolePlugin.getDefault().logErrorMessage("Could not parse configuration", e);			//$NON-NLS-1$
+			} else {
+				HibernateConsolePlugin.getDefault().logErrorMessage("Could not parse configuration", e);			//$NON-NLS-1$
+			}
 		}
 		finally {
 			try {

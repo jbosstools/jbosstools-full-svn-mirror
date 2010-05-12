@@ -15,9 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.dom4j.DocumentException;
-import org.dom4j.Node;
-import org.dom4j.io.DOMWriter;
+import org.dom4j.mediator.x.Element;
+import org.dom4j.mediator.x.io.DOMWriter;
 import org.eclipse.datatools.connectivity.IConnectionProfile;
 import org.eclipse.datatools.connectivity.ProfileManager;
 import org.eclipse.osgi.util.NLS;
@@ -25,11 +24,11 @@ import org.hibernate.mediator.HibernateConsoleRuntimeException;
 import org.hibernate.mediator.Messages;
 import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.mediator.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
+import org.hibernate.mediator.stubs.util.ConfigHelper;
 import org.hibernate.mediator.stubs.util.ReflectHelper;
 import org.hibernate.mediator.stubs.util.StringHelper;
 import org.hibernate.mediator.x.dialect.Dialect;
-import org.hibernate.util.ConfigHelper;
-import org.hibernate.util.XMLHelper;
+import org.hibernate.mediator.x.util.XMLHelper;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -234,13 +233,12 @@ public class ConfigurationFactory {
 		return localCfg;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Configuration loadConfigurationXML(Configuration localCfg, boolean includeMappings,
 			EntityResolver entityResolver) {
 		File configXMLFile = prefs.getConfigXMLFile();
 		if (!includeMappings) {
-			org.dom4j.Document doc;
-			XMLHelper xmlHelper = new XMLHelper();
+			org.dom4j.mediator.x.Document doc;
+			XMLHelper xmlHelper = XMLHelper.newInstance();
 			InputStream stream = null;
 			String resourceName = "<unknown>"; //$NON-NLS-1$
 			if (configXMLFile != null) {
@@ -273,20 +271,26 @@ public class ConfigurationFactory {
 									.get(0));
 				}
 
-				List<Node> list = doc.getRootElement()
+				List<Element> list = doc.getRootElement()
 						.element("session-factory").elements("mapping"); //$NON-NLS-1$ //$NON-NLS-2$
-				for (Node element : list) {
+				for (Element element : list) {
 					element.getParent().remove(element);
 				}
 
-				DOMWriter dw = new DOMWriter();
+				DOMWriter dw = DOMWriter.newInstance();
 				Document document = dw.write(doc);
 				return localCfg.configure(document);
 
-			} catch (DocumentException e) {
-				throw new HibernateConsoleRuntimeException(
-						Messages.ConsoleConfiguration_could_not_parse_configuration
-								+ resourceName, e);
+			} catch (Exception e) {
+				if (e.getClass().getName().contains("DocumentException")) { //$NON-NLS-1$
+					throw new HibernateConsoleRuntimeException(
+							Messages.ConsoleConfiguration_could_not_parse_configuration
+									+ resourceName, e);
+				} else {
+					throw new HibernateConsoleRuntimeException(
+							Messages.ConsoleConfiguration_could_not_parse_configuration
+									+ resourceName, e);
+				}
 			} finally {
 				try {
 					if (stream != null)
@@ -312,6 +316,8 @@ public class ConfigurationFactory {
 		InputStream is = null;
 		try {
 			is = ConfigHelper.getResourceAsStream(resource);
+		} catch (HibernateConsoleRuntimeException hcre) {
+			// just ignore
 		} catch (RuntimeException he) {
 			// TODO: RuntimeException ? - find correct solution
 			if (he.getClass().getName().contains("HibernateException")) { //$NON-NLS-1$

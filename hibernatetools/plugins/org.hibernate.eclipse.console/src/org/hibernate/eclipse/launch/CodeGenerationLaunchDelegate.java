@@ -271,9 +271,7 @@ public class CodeGenerationLaunchDelegate extends
 				configuration = cc.buildWith( null, false );
 			}
 
-			// vitali: TODO: use execution context
-			ConfigurationFactory configStubFactory = new ConfigurationFactory(null);
-			final JDBCMetaDataConfiguration cfg = configStubFactory.createConfigurationJDBCMetaData();
+			final JDBCMetaDataConfiguration cfg = cc.createJDBCMetaDataConfiguration();
 			Properties properties = configuration.getProperties();
 			cfg.setProperties( properties );
 			cc.buildWith(cfg,false);

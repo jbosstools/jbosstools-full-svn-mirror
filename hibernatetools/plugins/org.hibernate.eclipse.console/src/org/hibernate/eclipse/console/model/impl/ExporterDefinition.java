@@ -120,7 +120,8 @@ public class ExporterDefinition {
 	   Exporter exporter = null;
 
 	   try {
-		   exporter = (Exporter) ReflectHelper.classForName( classname ).newInstance();
+		   Object obj = ReflectHelper.classForName( classname ).newInstance();
+		   exporter = org.hibernate.mediator.x.tool.hbm2x.ExporterFactory.createExporterStub(obj); 
 	   }
 	   catch (InstantiationException e) {
 		   throw new HibernateConsoleRuntimeException(HibernateConsoleMessages.ExporterDefinition_problem_creating_exporter_class + classname);

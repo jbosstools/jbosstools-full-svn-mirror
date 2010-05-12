@@ -1,8 +1,8 @@
 package org.hibernate.mediator.stubs.util;
 
 import java.util.ArrayList;
-
-import org.hibernate.util.ArrayHelper;
+import java.util.Collection;
+import java.util.Iterator;
 
 // org.hibernate.util.StringHelper
 public final class StringHelper {
@@ -74,6 +74,17 @@ public final class StringHelper {
 				locations.add( new Integer( indx ) );
 			}
 		}
-		return ArrayHelper.toIntArray( locations );
+		return toIntArray(locations);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static int[] toIntArray(Collection coll) {
+		Iterator iter = coll.iterator();
+		int[] arr = new int[ coll.size() ];
+		int i=0;
+		while (iter.hasNext()) {
+			arr[i++] = ((Integer)iter.next()).intValue();
+		}
+		return arr;
 	}
 }

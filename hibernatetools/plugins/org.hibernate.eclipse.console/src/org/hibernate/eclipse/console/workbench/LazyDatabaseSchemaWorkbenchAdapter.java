@@ -53,9 +53,9 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	public synchronized Object[] getChildren(Object o, final IProgressMonitor monitor) {
 		LazyDatabaseSchema dbs = getLazyDatabaseSchema( o );
-		final DefaultDatabaseCollector db = DefaultDatabaseCollector.newInstance();
 
 		ConsoleConfiguration consoleConfiguration = dbs.getConsoleConfiguration();
+		final DefaultDatabaseCollector db = consoleConfiguration.createDefaultDatabaseCollector();
 		try{
 			readDatabaseSchema(monitor, db, consoleConfiguration, dbs.getReverseEngineeringStrategy());
 

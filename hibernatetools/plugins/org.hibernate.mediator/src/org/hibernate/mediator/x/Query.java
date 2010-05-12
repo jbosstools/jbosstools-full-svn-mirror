@@ -23,7 +23,7 @@ public class Query extends HObject {
 		for (int i = 0; i < returnTypes.length; i++) {
 			res[i] = TypeFactory.createTypeStub(returnTypes[i]);
 		}
-		return null;
+		return res;
 	}
 
 	public void setMaxResults(int intValue) {
