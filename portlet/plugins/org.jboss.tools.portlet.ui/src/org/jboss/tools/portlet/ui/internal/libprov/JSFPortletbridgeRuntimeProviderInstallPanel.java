@@ -1,8 +1,10 @@
 package org.jboss.tools.portlet.ui.internal.libprov;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -16,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig;
 import org.jboss.tools.portlet.ui.Messages;
@@ -67,6 +70,22 @@ public class JSFPortletbridgeRuntimeProviderInstallPanel extends
 				portletbridgeRuntime = ""; //$NON-NLS-1$
 			}
 			config.setPortletbridgeHome(portletbridgeRuntime);
+		}
+		if (portletbridgeRuntime == null || portletbridgeRuntime.length() == 0 ) {
+			IFacetedProjectBase facetedProject = config.getFacetedProject();
+			IPath configPath = PortletUIActivator.getJBossConfigPath(facetedProject);
+			if (configPath != null) {
+				IPath portalPath = configPath.append(IPortletConstants.SERVER_DEFAULT_DEPLOY_GATEIN);
+				File portalFile = portalPath.toFile();
+				if (portalFile != null && portalFile.exists()) {
+					IPath eppHome = configPath.removeLastSegments(3);
+					IPath pbPath = eppHome.append("portletbridge"); //$NON-NLS-1$
+					File pbFile = pbPath.toFile();
+					if (pbFile != null && pbFile.exists()) {
+						portletbridgeRuntime = pbFile.getAbsolutePath();
+					}
+				}
+			}
 		}
 		folderText.setText(portletbridgeRuntime);
 		
