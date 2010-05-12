@@ -18,6 +18,7 @@ import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFile;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IFacetedProject;
+import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.eclipse.wst.server.core.IRuntime;
@@ -115,26 +116,31 @@ public class PortletUIActivator extends AbstractUIPlugin {
 			IProject project = ProjectUtilities.getProject(projectName);
 			try {
 				IFacetedProject facetedProject = ProjectFacetsManager.create(project);
-				if (facetedProject != null) {
-					org.eclipse.wst.common.project.facet.core.runtime.IRuntime facetRuntime = facetedProject.getPrimaryRuntime();
-					if (facetRuntime == null) {
-						return null;
-					}
-					IRuntime runtime = PortletCoreActivator.getRuntime(facetRuntime);
-					if (runtime == null) {
-						return null;
-					}
-					IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
-					if (jbossRuntime == null) {
-						return null;
-					}
-					IPath jbossLocation = runtime.getLocation();
-					IPath configPath = jbossLocation.append(IJBossServerConstants.SERVER).append(jbossRuntime.getJBossConfiguration());
-					return configPath;
-				}
+				return getJBossConfigPath(facetedProject);
 			} catch (CoreException e) {
 				PortletUIActivator.log(e);
 			}
+		}
+		return null;
+	}
+	
+	public static IPath getJBossConfigPath(IFacetedProjectBase facetedProject) {
+		if (facetedProject != null) {
+			org.eclipse.wst.common.project.facet.core.runtime.IRuntime facetRuntime = facetedProject.getPrimaryRuntime();
+			if (facetRuntime == null) {
+				return null;
+			}
+			IRuntime runtime = PortletCoreActivator.getRuntime(facetRuntime);
+			if (runtime == null) {
+				return null;
+			}
+			IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
+			if (jbossRuntime == null) {
+				return null;
+			}
+			IPath jbossLocation = runtime.getLocation();
+			IPath configPath = jbossLocation.append(IJBossServerConstants.SERVER).append(jbossRuntime.getJBossConfiguration());
+			return configPath;
 		}
 		return null;
 	}
