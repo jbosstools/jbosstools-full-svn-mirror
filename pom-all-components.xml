@@ -1,0 +1,47 @@
+<project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+	  <relativePath>parent-pom.xml</relativePath>
+	  <groupId>org.jboss.tools</groupId>
+	  <artifactId>org.jboss.tools.parent.pom</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>trunk</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<!-- this order is important! make sure you've run genpom.xml first! -->
+		<module>tests</module>
+		<module>common</module>
+		<module>flow</module>
+		<module>jbpm</module>
+		<module>jmx</module>
+		<module>archives</module>
+		<module>as</module>
+		<module>drools</module>
+		<module>bpel</module>
+		<module>smooks</module>
+		<module>freemarker</module>
+		<module>profiler</module>
+		<module>portlet</module>
+		<module>modeshape</module>
+		<module>xulrunner</module>
+		<module>jst</module>
+		<module>vpe</module>
+		<module>jsf</module>
+		<module>esb</module>
+		<module>tptp</module>
+		<module>ws</module>
+		<module>cdi</module>
+		<module>struts</module>
+		<module>hibernatetools</module>
+		<module>seam</module>
+		<module>examples</module>
+		<module>birt</module>
+		<module>maven</module>
+		<module>site</module>
+	</modules>
+</project>
+	
