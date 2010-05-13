@@ -5,7 +5,7 @@
 	<property name="drools.zip" value="drools-5.1.0.SNAPSHOT-eclipse-all.zip" />
 	<!-- Configuration Ends -->
 
-	<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources/">
+	<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources">
 		<available file="/home/hudson/static_build_env/jbds" type="dir" />
 	</condition>
 	<condition property="WORKINGDIR" value="${basedir}/../build" else="${basedir}/../">
