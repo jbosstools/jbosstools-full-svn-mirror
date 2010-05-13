@@ -2,7 +2,6 @@
 	<!-- Configuration Start -->
 	<property name="projectName" value="org.jboss.tools" />
 	<property name="pathToParentPom" value="" />
-	<property name="COMPONENT" value="trunk" />
 	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
 	<property name="dirsToExclude"
 	          value="**/*.sdk.*, **/doc*/**, **/releng/**, **/build/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders/**, **/contrib, **/releng/**, ."
@@ -90,8 +89,8 @@ or, to build a specific module and overwrite existing pom.xml files:
 			</classpath>
 		</taskdef>
 
-		<var name="show.pom.exists.warning" value="" />
-
+		<var name="pathToParentPomInput" value="${pathToParentPom}"/>
+		
 		<!-- = = = = = = = = = = = = = = = = =
 	      macrodef: write out a pom.xml which aggregates subdirs   
 	     = = = = = = = = = = = = = = = = = -->
@@ -467,77 +466,110 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	</target>
 
 	<target name="run" depends="init">
-		<if>
-			<not>
-				<available file="${WORKINGDIR}/${pathToParentPom}parent-pom.xml" type="file" />
-			</not>
-			<then>
-				<fail>Error: no parent-pom.xml found in ${WORKINGDIR}/${pathToParentPom}</fail>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<equals arg1="${COMPONENT}" arg2="trunk" />
-			</not>
-			<then>
-				<var name="pathToParentPom" unset="true" />
-				<var name="pathToParentPom" value="../" />
-			</then>
-		</if>
-		<echo level="verbose">COMPONENT = ${COMPONENT}, pathToParentPom = ${pathToParentPom}</echo>
-
-		<!-- if set, compare values in tags file to values found in manifests and report discrepancies -->
-		<!--<property name="tagsFile"
-		     value="/home/nboldt/eclipse/workspace-jboss/devstudio-trunk/releng/org.jboss.ide.eclipse.releng/builders/product/versionTags/jbosstools/3.1.0.GA.tags"
-		/>-->
+		<var name="show.pom.exists.warning" value="" />
 
 		<if>
 			<and>
-				<isset property="tagsFile" />
-				<available file="${tagsFile}" type="file" />
+				<isset property="COMPONENT" />
+				<not>
+					<equals arg1="${COMPONENT}" arg2="" />
+				</not>
 			</and>
 			<then>
-				<property file="${tagsFile}" prefix="tagsFile" />
+				<var name="COMPONENTS" unset="true" />
+				<var name="COMPONENTS" value="${COMPONENT}" />
 			</then>
+			<elseif>
+				<not>
+					<isset property="COMPONENTS" />
+				</not>
+				<then>
+					<var name="COMPONENTS" value="trunk" />
+				</then>
+			</elseif>
 		</if>
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",; 
+	">
+			<sequential>
+				<var name="COMPONENT" value="@{COMPONENT}" />
+				<echo level="info">COMPONENT = ${COMPONENT}</echo>
+				<if>
+					<not>
+						<available file="${WORKINGDIR}/${pathToParentPomInput}parent-pom.xml" type="file" />
+					</not>
+					<then>
+						<fail>Error: no parent-pom.xml found in ${WORKINGDIR}/${pathToParentPomInput}</fail>
+					</then>
+				</if>
 
-		<!-- counter variables -->
-		<var name="aggregatorcountstring" value="" />
-		<var name="modulecountstring" value="" />
+				<if>
+					<not>
+						<equals arg1="${COMPONENT}" arg2="trunk" />
+					</not>
+					<then>
+						<var name="pathToParentPom" unset="true" />
+						<var name="pathToParentPom" value="../" />
+					</then>
+				</if>
+				<echo level="verbose">COMPONENT = ${COMPONENT}, pathToParentPom = ${pathToParentPom}</echo>
 
-		<if>
-			<equals arg1="${COMPONENT}" arg2="trunk" />
-			<then>
-				<!-- call generateAggregator for overall -->
-				<generateAggregator dir="${WORKINGDIR}"
-				                    parentpom="${pathToParentPom}parent-pom.xml"
-				                    artifactId="${COMPONENT}"
-				                    artifactVersion="${pomVersion}"
-				/>
-			</then>
-			<else>
-				<!-- call generateAggregator for component -->
-				<generateAggregator dir="${WORKINGDIR}/${COMPONENT}"
-				                    parentpom="${pathToParentPom}parent-pom.xml"
-				                    artifactId="${COMPONENT}"
-				                    artifactVersion="${pomVersion}"
-				/>
-			</else>
-		</if>
-		<!-- summary -->
-		<length string="${modulecountstring}" property="modulecount" />
-		<length string="${aggregatorcountstring}" property="aggregatorcount" />
-		<echo level="info">${WORKINGDIR}/${COMPONENT} :: Modules: ${modulecount},  Aggregations: ${aggregatorcount}</echo>
-		<if>
-			<not>
-				<equals arg1="${show.pom.exists.warning}" arg2="" />
-			</not>
-			<then>
-				<length property="show.pom.exists.warning.count" string="${show.pom.exists.warning}" />
-				<echo level="warning">${show.pom.exists.warning.count} ${COMPONENT} pom.xml file(s) already exist. To overwrite, use -Doverwrite.existing.pom.xml=true</echo>
-			</then>
-		</if>
+				<!-- if set, compare values in tags file to values found in manifests and report discrepancies -->
+				<!--<property name="tagsFile"
+		     value="/home/nboldt/eclipse/workspace-jboss/devstudio-trunk/releng/org.jboss.ide.eclipse.releng/builders/product/versionTags/jbosstools/3.1.0.GA.tags"
+		/>-->
+
+				<if>
+					<and>
+						<isset property="tagsFile" />
+						<available file="${tagsFile}" type="file" />
+					</and>
+					<then>
+						<property file="${tagsFile}" prefix="tagsFile" />
+					</then>
+				</if>
+
+				<!-- counter variables -->
+				<var name="aggregatorcountstring" value="" />
+				<var name="modulecountstring" value="" />
+
+				<if>
+					<equals arg1="${COMPONENT}" arg2="trunk" />
+					<then>
+						<!-- call generateAggregator for overall -->
+						<generateAggregator dir="${WORKINGDIR}"
+						                    parentpom="${pathToParentPom}parent-pom.xml"
+						                    artifactId="${COMPONENT}"
+						                    artifactVersion="${pomVersion}"
+						/>
+					</then>
+					<else>
+						<!-- call generateAggregator for component -->
+						<generateAggregator dir="${WORKINGDIR}/${COMPONENT}"
+						                    parentpom="${pathToParentPom}parent-pom.xml"
+						                    artifactId="${COMPONENT}"
+						                    artifactVersion="${pomVersion}"
+						/>
+					</else>
+				</if>
+				<!-- summary -->
+				<length string="${modulecountstring}" property="modulecount" />
+				<length string="${aggregatorcountstring}" property="aggregatorcount" />
+				<echo level="info">${WORKINGDIR}/${COMPONENT} :: Modules: ${modulecount},  Aggregations: ${aggregatorcount}</echo>
+				<if>
+					<not>
+						<equals arg1="${show.pom.exists.warning}" arg2="" />
+					</not>
+					<then>
+						<length property="show.pom.exists.warning.count" string="${show.pom.exists.warning}" />
+						<echo level="warning">${show.pom.exists.warning.count} ${COMPONENT} pom.xml file(s) already exist. To overwrite, use -Doverwrite.existing.pom.xml=true</echo>
+					</then>
+				</if>
+				<var name="show.pom.exists.warning.count" unset="true" />
+				<var name="show.pom.exists.warning" value="" />
+				<var name="modulecount" unset="true" />
+				<var name="aggregatorcount" unset="true" />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="getArtifactType">
