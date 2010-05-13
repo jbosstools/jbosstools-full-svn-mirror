@@ -714,7 +714,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  </section>
  <section>
   <title>Installation From Zip file</title>
-   <para>You can download Jboss tools in a zip file from one of the pages below:</para>
+  
+  <para>Now you can install JBoss Tools using Eclipse P2 update manager and a common zip file which is 
+   one installer for all platforms.</para>
+   <para>You can download Jboss Tools in a zip file from one of the pages below:</para>
   <itemizedlist id="zip_sites">
    <listitem>
     <para>Stable Releases: <ulink url="http://www.jboss.org/tools/download/stable.html"
