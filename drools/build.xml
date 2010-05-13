@@ -15,6 +15,15 @@
 	<mkdir dir="${WORKINGDIR}" />
 	<echo level="info">WORKINGDIR = ${WORKINGDIR}</echo>
 
+	<condition property="COMMON_TOOLS" value="/home/hudson/static_build_env/jbds/tools">
+		<available file="/home/hudson/static_build_env/jbds" type="dir" />
+	</condition>
+	<condition property="COMMON_TOOLS" value="${WORKINGDIR}/../tools" else="${java.io.tmpdir}">
+		<available file="${WORKINGDIR}/../tools" type="dir" />
+	</condition>
+	<mkdir dir="${COMMON_TOOLS}" />
+	<echo level="info">COMMON_TOOLS = ${COMMON_TOOLS}</echo>
+
 	<condition property="build.xml" value="/home/hudson/static_build_env/jbds/tools/sources">
 		<available file="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml" type="file" />
 	</condition>
@@ -37,10 +46,13 @@
 			<property name="COMPONENT" value="${COMPONENT}" />
 		</ant>
 
-		<delete dir="${WORKINGDIR}/${COMPONENT}" quiet="true" includes="
+		<delete dir="${WORKINGDIR}/${COMPONENT}"
+		        quiet="true"
+		        includes="
 			LICENSE-ASL-2.0.txt, README_DEPENDENCIES.txt, 
 			plugins/*.jar
-			"/>
+			"
+		/>
 
 		<ant antfile="${build.xml}" target="renameFeatures">
 			<property name="COMPONENT" value="${COMPONENT}" />
