@@ -238,8 +238,7 @@ public class VpeDnD implements MozillaDndListener {
 	}
 
 	private void highlightDropTargets(DropResolver dropResolver, nsIDOMMouseEvent event) {
-		nsIDOMDocument document = vpeController.getVisualBuilder()
-				.getOriginalTargetNode(event).getOwnerDocument();
+		nsIDOMDocument document = vpeController.getXulRunnerEditor().getDOMDocument();
 
 		Point clientCoords = getClientCoords(event);
 
