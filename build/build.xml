@@ -1195,7 +1195,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 	<!-- rename previously built & unpacked feature dirs -->
 	<target name="renameFeatures">
-		<echo>${WORKINGDIR}/${COMPONENT}/features</echo>
+		<echo level="debug">${WORKINGDIR}/${COMPONENT}/features</echo>
 		<for param="artifactJar">
 			<path>
 				<dirset dir="${WORKINGDIR}/${COMPONENT}/features" includes="*feature_*" />
