@@ -162,6 +162,11 @@
 			<itemizedlist>
 				<listitem>
 					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1215">JBDS-1215</ulink>: The installer was unable to locate the Seam runtimes within the JBoss Enterprise Application Platform 4.3. This occurred because the Seam runtime locations bundled within the JBoss Enterprise Application Platform 4.3 had recently changed from <filename>jboss-eap-4.3/seam</filename> and <filename>jboss-eap-4.3/seamfp</filename> to being <filename>jboss-eap-4.3/seam1</filename> and <filename>jboss-eap-4.3/seam2</filename>. This version of the JBoss Developer Studio includes an updated installer that contains the new Seam runtime locations. The installer is now able to find the Seam runtimes for the latest versions of the JBoss Enterprise Application Platform 4.3.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1187">JBDS-1187</ulink>: An empty URL tag (&lt;url&gt;) caused the <guimenuitem>Classic Update</guimenuitem> option under <menuchoice><guimenuitem>Preferences</guimenuitem><guimenuitem>General</guimenuitem><guimenuitem>Capabilities</guimenuitem></menuchoice> to error upon installation of a plug-in. To fix this issue the unused URL element has been removed. The <guimenuitem>Classic Update</guimenuitem> option is now usable and installs plug-ins correctly.
 					</para>
 				</listitem>
@@ -183,6 +188,11 @@
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1091">JBDS-1091</ulink>: Two bugs were found. A problem was found in the <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in and the visibility of the <property>Instance</property> field was changed from public to private. These bugs respectively caused the JBoss Developer Studio <guilabel>Server View</guilabel> to not display all available servers on occasion after using the installer and jBPM runtimes to not be initialized correctly. The <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in has now been updated to force a refresh of the <guilabel>Server View</guilabel> post installation, which can be verified by a refresh message appearing in the log file and the <filename>org.jboss.tools.jbpm.common</filename> plug-in has been updated to set <code>public static final PreferencesManager INSTANCE = new PreferencesManager();</code>. By correcting the <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in, all installed servers now appear in the <guilabel>Server View</guilabel> directly after installation of the JBoss Developer Studio through the installer. Fixing the <filename>org.jboss.tools.jbpm.common</filename> plug-in now allows for jBPM runtimes to be initialized correctly. Both issues are fixed with this update.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1088">JBDS-1088</ulink>: When installing the JBoss Developer Studio, if a previous installation was detected a dialog box would ask if you wished to overwrite the existing directory. If a user continued with installation they would then have a mixture of the old and new product versions. To better assist users a new warning is displayed in this situation, which indicates that you cannot upgrade by installing a new version over an old version. This new dialog box ensures that a user is informed of what will happen.
 					</para>
 				</listitem>
 			</itemizedlist>
