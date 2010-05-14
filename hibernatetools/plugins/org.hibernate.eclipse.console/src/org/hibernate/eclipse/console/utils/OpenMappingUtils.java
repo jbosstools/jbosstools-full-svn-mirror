@@ -241,7 +241,6 @@ public class OpenMappingUtils {
 	 * @param table
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public static boolean tableInFile(ConsoleConfiguration consoleConfig, IFile file, Table table) {
 		EntityResolver entityResolver = consoleConfig.getEntityResolver(); 
 		Document doc = getDocument(file.getLocation().toFile(), entityResolver);
@@ -446,7 +445,6 @@ public class OpenMappingUtils {
 	 * @param element
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public static IFile searchInMappingFiles(ConsoleConfiguration consoleConfig, Object element) {
 		IFile file = null;
     	if (consoleConfig == null) {
@@ -991,7 +989,7 @@ public class OpenMappingUtils {
 		final Cfg2HbmTool tool = Cfg2HbmTool.newInstance();
 		String toolTag = ""; //$NON-NLS-1$
 		PersistentClass pc = property.getPersistentClass();
-		if (pc != null && pc.getIdentifierProperty() == property) {
+		if (pc != null && property.equals(pc.getIdentifierProperty())) {
 			if (property.isComposite()) {
 				toolTag = "composite-id"; //$NON-NLS-1$
 			} else {

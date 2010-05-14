@@ -11,23 +11,23 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.spi.PersistenceUnitTransactionType;
+import javax.persistence.mediator.x.Embeddable;
+import javax.persistence.mediator.x.Entity;
+import javax.persistence.mediator.x.MappedSuperclass;
+import javax.persistence.mediator.x.spi.PersistenceUnitTransactionType;
 
-import org.hibernate.ejb.Ejb3Configuration;
-import org.hibernate.ejb.HibernatePersistence;
-import org.hibernate.ejb.packaging.ClassFilter;
-import org.hibernate.ejb.packaging.Entry;
-import org.hibernate.ejb.packaging.FileFilter;
-import org.hibernate.ejb.packaging.Filter;
-import org.hibernate.ejb.packaging.JarVisitor;
-import org.hibernate.ejb.packaging.JarVisitorFactory;
-import org.hibernate.ejb.packaging.NamedInputStream;
-import org.hibernate.ejb.packaging.PackageFilter;
-import org.hibernate.ejb.packaging.PersistenceMetadata;
-import org.hibernate.ejb.packaging.PersistenceXmlLoader;
+import org.hibernate.mediator.x.ejb.Ejb3Configuration;
+import org.hibernate.mediator.x.ejb.HibernatePersistence;
+import org.hibernate.mediator.x.ejb.packaging.ClassFilter;
+import org.hibernate.mediator.x.ejb.packaging.Entry;
+import org.hibernate.mediator.x.ejb.packaging.FileFilter;
+import org.hibernate.mediator.x.ejb.packaging.Filter;
+import org.hibernate.mediator.x.ejb.packaging.JarVisitor;
+import org.hibernate.mediator.x.ejb.packaging.JarVisitorFactory;
+import org.hibernate.mediator.x.ejb.packaging.NamedInputStream;
+import org.hibernate.mediator.x.ejb.packaging.PackageFilter;
+import org.hibernate.mediator.x.ejb.packaging.PersistenceMetadata;
+import org.hibernate.mediator.x.ejb.packaging.PersistenceXmlLoader;
 import org.hibernate.mediator.stubs.util.CollectionHelper;
 import org.xml.sax.EntityResolver;
 
@@ -63,7 +63,7 @@ public class OpenMappingUtilsEjb3 {
 		if (xmls == null || !xmls.hasMoreElements()) {
 	    	return null;
 		}
-		final String IMPLEMENTATION_NAME = HibernatePersistence.class.getName();
+		final String IMPLEMENTATION_NAME = HibernatePersistence.CL;
 		List<String> res = null;
 		while (xmls.hasMoreElements() && res == null) {
 			URL url = xmls.nextElement();
@@ -164,9 +164,8 @@ public class OpenMappingUtilsEjb3 {
 	 * @param metadata
 	 * @throws IOException
 	 */
-	@SuppressWarnings("unchecked")
 	private static void addMetadataFromVisitor(JarVisitor visitor, String addPath, PersistenceMetadata metadata) throws IOException {
-		Set[] entries = visitor.getMatchingEntries();
+		Set<Entry>[] entries = visitor.getMatchingEntries();
 		Filter[] filters = visitor.getFilters();
 		int size = filters.length;
 		List<String> classes = metadata.getClasses();
@@ -174,14 +173,13 @@ public class OpenMappingUtilsEjb3 {
 		List<NamedInputStream> hbmFiles = metadata.getHbmfiles();
 		List<String> mappingFiles = metadata.getMappingFiles();
 		for (int index = 0; index < size; index++) {
-			for (Object o : entries[index]) {
-				Entry entry = (Entry) o;
+			for (Entry entry : entries[index]) {
 				if (filters[index] instanceof ClassFilter) {
 					classes.add(entry.getName());
 				} else if (filters[index] instanceof PackageFilter) {
 					packages.add(entry.getName());
 				} else if (filters[index] instanceof FileFilter) {
-					hbmFiles.add(new NamedInputStream(addPath + "/" + entry.getName(), //$NON-NLS-1$
+					hbmFiles.add(NamedInputStream.create(addPath + "/" + entry.getName(), //$NON-NLS-1$
 							entry.getInputStream()));
 					if (mappingFiles != null) {
 						mappingFiles.remove(entry.getName());
@@ -251,30 +249,27 @@ public class OpenMappingUtilsEjb3 {
 		int size = (detectedArtifacts[0] ? 2 : 0) + ((searchORM || detectedArtifacts[1] || mappingFilesSize > 0) ? 1 : 0);
 		Filter[] filters = new Filter[size];
 		if (detectedArtifacts[0]) {
-			filters[0] = new PackageFilter(false, null) {
+			filters[0] = PackageFilter.newInstance(false, null, new Filter.IAcceptHolder() {
 				public boolean accept(String javaElementName) {
 					return true;
 				}
-			};
-			filters[1] = new ClassFilter(
-					false, new Class[] {
-					Entity.class,
-					MappedSuperclass.class,
-					Embeddable.class}
-			) {
-				public boolean accept(String javaElementName) {
-					return true;
-				}
-			};
+			});
+			filters[1] = ClassFilter.newInstance(false, 
+				new Class[] { Entity.class, MappedSuperclass.class, Embeddable.class }, 
+				new Filter.IAcceptHolder() {
+					public boolean accept(String javaElementName) {
+						return true;
+					}
+				});
 		}
 		if (detectedArtifacts[1] || searchORM || mappingFilesSize > 0) {
-			filters[size - 1] = new FileFilter(true) {
+			filters[size - 1] = FileFilter.newInstance(true, new Filter.IAcceptHolder() {
 				public boolean accept(String javaElementName) {
 					return (detectedArtifacts[1] && javaElementName.endsWith("hbm.xml")) //$NON-NLS-1$
 							|| (searchORM && javaElementName.endsWith(META_INF_ORM_XML))
 							|| (mappingFilesSize > 0 && mappingFiles.contains(javaElementName));
 				}
-			};
+			});
 		}
 		return filters;
 	}

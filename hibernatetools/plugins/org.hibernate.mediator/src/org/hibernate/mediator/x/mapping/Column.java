@@ -7,9 +7,9 @@ import org.hibernate.mediator.x.engine.Mapping;
 public class Column extends Selectable {
 	public static final String CL = "org.hibernate.mapping.Column"; //$NON-NLS-1$
 
-	public static final int DEFAULT_LENGTH = 255;
-	public static final int DEFAULT_PRECISION = 19;
-	public static final int DEFAULT_SCALE = 2;
+	public static final int DEFAULT_LENGTH = (Integer)readStaticFieldValue(CL, "DEFAULT_LENGTH");
+	public static final int DEFAULT_PRECISION = (Integer)readStaticFieldValue(CL, "DEFAULT_PRECISION");
+	public static final int DEFAULT_SCALE = (Integer)readStaticFieldValue(CL, "DEFAULT_SCALE");
 
 	protected Column(Object column) {
 		super(column, CL);

@@ -45,6 +45,16 @@ public class HObject {
 		return obj;
 	}
 
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj instanceof HObject) {
+			return (this.obj == ((HObject)obj).obj);
+		}
+		return false;
+	}
+
 	//
 	public Object invoke(final String methodName) {
 		return invoke(methodName, new HObject[0]);

@@ -447,7 +447,15 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 			build();
 			buildSessionFactory();
 		}
-		return configStub.getEntityResolver();
+		EntityResolver res = (EntityResolver)execute(new ExecutionContext.Command() {
+			public Object execute() {
+				if (configStub != null) {
+					return configStub.getEntityResolver();
+				}
+				return null;
+			}
+		} );
+		return res;
 	}
 
 	public HQLCodeAssist getHQLCodeAssist() {

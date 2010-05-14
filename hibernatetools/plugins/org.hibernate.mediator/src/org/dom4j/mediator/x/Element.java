@@ -59,7 +59,11 @@ public class Element extends Node {
 	}
 	
 	public Attribute attribute(String name) {
-		return new Attribute(invoke(mn(), name));
+		Object obj = invoke(mn(), name);
+		if (obj == null) {
+			return null;
+		}
+		return new Attribute(obj);
 	}
 
 	public String getName() {
