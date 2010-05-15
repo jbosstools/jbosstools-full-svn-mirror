@@ -119,6 +119,31 @@
             </mediaobject>
         </figure>
         
+        
+        <para>Some project examples have dependencies which could not be automatically configured.
+            In such cases you will receive the message prompted about detected requirements (see the figure below).</para>
+ 
+        <figure>
+            <title>Prompt about Project Example Requirements</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_2a.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>You should click <emphasis><property>Details</property></emphasis> to see the list of requirements 
+            and make fixes.</para>
+        
+        <figure>
+            <title>Requirements Details Dialog</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/project_examples/pr_example_2b.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
         <para>If you have previously specified user sites (see the <link linkend="UserSites">User Sites</link> chapter) they also will be  displayed in the list of project examples  in the category that was defined in the xml file with user sites settings.  </para>
        <figure>
            <title>User Site</title>
