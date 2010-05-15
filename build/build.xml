@@ -65,14 +65,13 @@ or, to fetch fresh sources, then build anew:
 or, to (re-)run tests w/o (re-)building first:
     ant -DMAVEN_FLAGS="osgi-test:test -B -fn"
 			
-or, to build specific module(s): 
+or, to build, test, and install 1 or more specific module(s): 
     ant -DCOMPONENTS=tests,common,flow,jbpm
 
-or, to re-build a single component's update site w/o first building, testing, and installing it into the m2 repo:
-    ant -DCOMPONENT=jmx create.update.site; \
-    ant -DCOMPONENT=jbpm create.update.site
+or, to re-build a single component's update site w/o building, testing, and installing it into the m2 repo:
+    ant -DCOMPONENT=jmx create.update.site
 
-or, to re-build the overall update site w/o building first:
+or, to re-build the overall update site w/o building first (no applicable when COMPONENTS=.):
     ant create.overall.update.site -Dbuild.if.sources.unchanged=true
 
 To have hudson manage sources (rather than having this script checkout/update them) use: 
@@ -536,6 +535,12 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 </echo>
 						</then>
 					</elseif>
+					<elseif>
+						<equals arg1="${COMPONENTS.to.build}" arg2=".," />
+						<then>
+							<property name="no.overall" value="true" />
+						</then>
+					</elseif>
 				</if>
 			</then>
 			<else>
@@ -629,11 +634,16 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					</else>
 				</if>
 
-				<!-- prevent recursion: overall site component is built with create.overall.update.site, not simpler create.update.site -->
+				<!-- prevent recursion: overall site component is built with create.overall.update.site, not simpler create.update.site; also, don't rebuild the site if it's already been done by "." component -->
 				<if>
-					<not>
-						<equals arg1="@{COMPONENT}" arg2="site" />
-					</not>
+					<and>
+						<not>
+							<equals arg1="@{COMPONENT}" arg2="site" />
+						</not>
+						<not>
+							<equals arg1="@{COMPONENT}" arg2="." />
+						</not>
+					</and>
 					<then>
 						<antcall target="create.update.site">
 							<param name="COMPONENT" value="@{COMPONENT}" />
@@ -853,9 +863,14 @@ ${test.results.errors.failures.skipped}
 			</else>
 		</if>
 		<if>
-			<not>
-				<contains string="${COMPONENTS.to.check}" substring=",site" />
-			</not>
+			<and>
+				<not>
+					<equals arg1="${COMPONENTS.to.check}" arg2="." />
+				</not>
+				<not>
+					<contains string="${COMPONENTS.to.check}" substring=",site" />
+				</not>
+			</and>
 			<then>
 				<var name="COMPONENTS.to.check" value="${COMPONENTS.to.check},site" />
 			</then>
@@ -863,6 +878,44 @@ ${test.results.errors.failures.skipped}
 		<for param="COMPONENT" list="${COMPONENTS.to.check}" delimiter=",; 
 	">
 			<sequential>
+				<!-- rename any leftover site.zip files -->
+				<for param="updateZip">
+					<path>
+						<fileset dir="${WORKINGDIR}/@{COMPONENT}" includes="**/site.zip" />
+					</path>
+					<sequential>
+						<if>
+							<equals arg1="@{COMPONENT}" arg2="site" />
+							<then>
+								<var name="destinationZip"
+								     value="${WORKINGDIR}/@{COMPONENT}/site/target/JBossTools-ALL-Update-SNAPSHOT.zip"
+								/>
+							</then>
+							<else>
+								<var name="COMPONENT.name" value="" />
+								<if>
+									<equals arg1="@{COMPONENT}" arg2="." />
+									<then>
+										<var name="COMPONENT.name" value="${product.id}" />
+									</then>
+									<else>
+										<var name="COMPONENT.name" value="@{COMPONENTS}" />
+									</else>
+								</if>
+								<var name="destinationZip"
+								     value="${WORKINGDIR}/@{COMPONENT}/site/target/JBossTools-${COMPONENT.name}-Update-SNAPSHOT.zip"
+								/>
+							</else>
+						</if>
+						<!-- rename resulting update site zip -->
+						<move file="${WORKINGDIR}/@{COMPONENT}/site/target/site.zip"
+						      tofile="${destinationZip}"
+						      overwrite="true"
+						      preservelastmodified="false"
+						/>
+					</sequential>
+				</for>
+				
 				<for param="updateZip">
 					<path>
 						<fileset dir="${WORKINGDIR}/@{COMPONENT}" includes="**/JBossTools*Update*.zip" />
@@ -985,8 +1038,18 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				/>
 			</then>
 			<else>
+				<var name="COMPONENT.name" value="" />
+				<if>
+					<equals arg1="${COMPONENT}" arg2="." />
+					<then>
+						<var name="COMPONENT.name" value="${product.id}" />
+					</then>
+					<else>
+						<var name="COMPONENT.name" value="${COMPONENTS.to.build}" />
+					</else>
+				</if>
 				<var name="destinationZip"
-				     value="${WORKINGDIR}/${update.site.path}/target/JBossTools-${COMPONENTS.to.build}-Update-SNAPSHOT.zip"
+				     value="${WORKINGDIR}/${update.site.path}/target/JBossTools-${COMPONENT.name}-Update-SNAPSHOT.zip"
 				/>
 			</else>
 		</if>
@@ -1067,7 +1130,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		</if>
 	</target>
 
-	<!-- Used to build the update site of a component; requires a site.xml and pom.xml be generated first -->
+	<!-- Used to build the update site of a component; requires a site.xml and pom.xml be generated first, if not already checked in -->
 	<target name="create.update.site" depends="init">
 		<var name="site.pom.exists" unset="true" />
 		<condition property="site.pom.exists">
