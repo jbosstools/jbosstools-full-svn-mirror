@@ -12,11 +12,35 @@
             Please, note, that only JBoss Tools 3.1 or higher version includes JBoss BPEL editor.
         </para>
     </section>
+    <section>
+        <title>Prerequisites</title>
+        <para>For installation and configuring BPEL engine into a JBossAS environment
+            you will need the following: </para>
+        <itemizedlist>
+            <listitem><para> JBossAS (version 5.1.0.GA or higher), 
+                available from <ulink url="http://www.jboss.org/jbossas">
+                http://www.jboss.org/jbossas</ulink>.</para></listitem>
+                <listitem><para>RiftSaw (version 2.0 or higher), available from <ulink url="http://www.jboss.org/riftsaw">http://www.jboss.org/riftsaw</ulink>.</para></listitem>
+            <listitem><para>Ant, available from <ulink url="http://ant.apache.org">here</ulink>.</para></listitem>
+        </itemizedlist>
+        
+    </section>
     <section id="installRuntime">
         <title>Installation JBoss BPEL Runtime</title>
-        <para>If you want to deploy a BPEL project to JBoss server, 
-            you should download JBoss BPEL Runtime by yourself. The JBoss BPEL Runtime
-            is named RiftSaw. You can get it from <ulink url="http://jboss.org/riftsaw">JBoss RiftSaw page </ulink>.
-        </para>
+        <itemizedlist>
+            <listitem><para>Unpack the JBossAS installation archive into the required location.Then in the 
+                <property>${RiftSaw}/install</property> folder run the command:
+                <property>ant deploy -Ddatabase=hsql -Dws.stack=native -Dws.version=3.2.2.GA</property>  
+                It will help you to download the web service stack, and then upgrade it for JBoss AS. 
+            </para></listitem>
+            <listitem><para>Unpack the RiftSaw distribution into the location alongside the JBossAS installation.
+                * Edit the <property>install/deployment.properties</property> file to update the JBossAS location settings.
+                * From the <property>install</property> folder, run: <property>ant deploy -Ddatabase=hsql</property>
+                to deploy RiftSaw to JBossAS.
+               </para></listitem>
+           </itemizedlist>
+     
+        
+        
     </section>
 </chapter>
