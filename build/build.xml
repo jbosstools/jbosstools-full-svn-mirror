@@ -1,27 +1,27 @@
-<project default="run" basedir="." name="jbosstools build.xml">
-	<!-- Build a given list of ${COMPONENTS} -->
-
+<project default="run" basedir="." name="build.xml to wrap maven">
 	<!-- ****************************** Configuration ****************************** -->
 
-	<!-- set name of component(s) to build+test, IN ORDER -->
+	<!-- default maven version -->
+	<property name="maven.version" value="3.0-beta-1" />
+
+	<!-- set name of component(s) to build+test, IN ORDER; if no subcomponents, use "." -->
 	<property name="COMPONENTS"
 	          value="tests,common;
     flow,jbpm;
     jmx,archives,as;
-    drools,bpel,smooks,freemarker,profiler,portlet;
+    drools,bpel,smooks,freemarker,profiler,portlet,modeshape;
     xulrunner,jst,vpe,jsf;
         esb,tptp,ws;
         cdi,struts,hibernatetools,seam;
             examples,birt;
             maven"
 	/>
-	<!-- TODO: add modeshape, which reqs JDK6 -->
 
 	<!-- svn root, including trunk or branch path -->
 	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/modular_build" />
 
-	<!-- default maven version -->
-	<property name="maven.version" value="3.0-beta-1" />
+	<!-- if true, use -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository; if false, use default ~/.m2/repository; or set another path if preferred -->
+	<property name="maven.repo.local" value="true" />
 
 	<!-- name/version we're building -->
 	<property name="product.name" value="JBoss Tools" />
@@ -34,6 +34,7 @@
 	-->
 
 	<!-- TODO: connect build type (snapshot, milestone, release) to update site description (nightly, milestone, stable) -->
+	<!-- update site description :: not used if site.xml already present -->
 	<property name="update.site.description" value="Nightly Build" />
 
 	<!-- ****************************** Usage Instructions ****************************** -->
@@ -43,44 +44,36 @@ To run this script in Eclipse:
     Run As > Ant Build
 
 To run this script via commandline (build default modules + run tests, then collect test results and build per-component + overall update site zips):
-    cd /home/nboldt/workspace36/jbosstools-modular_build; ant
+    cd /path/to/checked/out/source/tree; ant
 
 or, to build everything but not *run* the tests:
-    cd /home/nboldt/workspace36/jbosstools-modular_build; \
     ant -DMAVEN_FLAGS="clean install -Dmaven.test.skip"
 		or
 	ant -Dnotests=true
 
 or, to purge the local repo (or purge then build):
-    cd /home/nboldt/workspace36/jbosstools-modular_build; \
 	ant purge -q
 		or
 	ant clean-run
 
-or, to build specific module(s): 
-    cd /home/nboldt/workspace36/jbosstools-modular_build; \
-    ant -DCOMPONENTS=tests,common,flow,jbpm
-
 or, to rebuild even if sources have not changed:
-    cd /home/nboldt/workspace36/jbosstools-modular_build; \
-    ant -DCOMPONENTS=tests,common -Dbuild.if.sources.unchanged=true
+    ant -Dbuild.if.sources.unchanged=true
 
 or, to fetch fresh sources, then build anew:
-    cd /home/nboldt/workspace36/jbosstools-modular_build; \
-	ant -DCOMPONENTS=tests,common,flow,jbpm -Dclean.sources=true
+    ant -Dclean.sources=true
 
 or, to (re-)run tests w/o (re-)building first:
-    cd /home/nboldt/workspace36/jbosstools-modular_build; \
-    ant -DCOMPONENTS=tests,common,jmx -DMAVEN_FLAGS="osgi-test:test -B -fn"
+    ant -DMAVEN_FLAGS="osgi-test:test -B -fn"
 			
-or, to re-build the overall update site w/o building first:
-    cd /home/nboldt/workspace36/jbosstools-modular_build; \
-    ant create.overall.update.site -Dbuild.if.sources.unchanged=true
+or, to build specific module(s): 
+    ant -DCOMPONENTS=tests,common,flow,jbpm
 
 or, to re-build a single component's update site w/o first building, testing, and installing it into the m2 repo:
-    cd /home/nboldt/workspace36/jbosstools-modular_build; \
-	ant -DCOMPONENT=jmx create.update.site; \
-	ant -DCOMPONENT=jbpm create.update.site
+    ant -DCOMPONENT=jmx create.update.site; \
+    ant -DCOMPONENT=jbpm create.update.site
+
+or, to re-build the overall update site w/o building first:
+    ant create.overall.update.site -Dbuild.if.sources.unchanged=true
 
 To have hudson manage sources (rather than having this script checkout/update them) use: 
 	-Dhudson.managed.sources=true
@@ -317,12 +310,22 @@ Svnant unavailable. Will use Maven to fetch sources.
 				<if>
 					<equals arg1="@{op}" arg2="up" />
 					<then>
-						<now level="info">Update @{COMPONENT}</now>
+						<now level="info">Update '@{COMPONENT}'</now>
 						<if>
 							<istrue value="${svnant.enabled}" />
 							<then>
 								<!-- remove generated site/ folder -->
-								<delete dir="${WORKINGDIR}/@{component}/site" includeemptydirs="true" quiet="true" />
+								<if>
+									<not>
+										<equals arg1="@{component}" arg2="." />
+									</not>
+									<then>
+										<delete dir="${WORKINGDIR}/@{component}/site"
+										        includeemptydirs="true"
+										        quiet="true"
+										/>
+									</then>
+								</if>
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<revert recurse="${svn.recurse}" dir="@{component}" />
 								</svn>
@@ -523,11 +526,16 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						<property name="no.tests.run" value="true" />
 						<property name="no.overall" value="true" />
 					</then>
-					<else>
-						<echo level="warning">The following components' sources have changed and will be built:
+					<elseif>
+						<not>
+							<equals arg1="${COMPONENTS.to.build}" arg2=".," />
+						</not>
+						<then>
+							<echo level="warning">The following components' sources have changed and will be built:
 	COMPONENTS.to.build = ${COMPONENTS.to.build}
 </echo>
-					</else>
+						</then>
+					</elseif>
 				</if>
 			</then>
 			<else>
@@ -570,10 +578,10 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						<now level="warning">Build overall update @{COMPONENT}</now>
 					</then>
 					<else>
-						<now level="warning">Build @{COMPONENT} component</now>
+						<now level="warning">Build '@{COMPONENT}' component</now>
 					</else>
 				</if>
-				<!-- optional extra instructions to do before a maven build -->
+				<!-- TODO if needed: optional extra instructions to do before a maven build -->
 				<loadfile property="@{COMPONENT}.pom.xml" srcfile="${WORKINGDIR}/@{COMPONENT}/pom.xml" />
 				<if>
 					<and>
@@ -584,9 +592,12 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 							/>
 						</not>
 						<available file="${WORKINGDIR}/@{COMPONENT}/build.xml" type="file" />
+						<not>
+							<equals arg1="@{COMPONENT}" arg2="." />
+						</not>
 					</and>
 					<then>
-						<echo>Run custom @{COMPONENT}/build.xml</echo>
+						<echo>Run custom '@{COMPONENT}/build.xml'</echo>
 						<ant antfile="${WORKINGDIR}/@{COMPONENT}/build.xml">
 							<property name="COMPONENT" value="@{COMPONENT}" />
 							<property name="basedir" value="${WORKINGDIR}/@{COMPONENT}" />
@@ -730,7 +741,10 @@ rm -fr /tmp/.X3-lock
 		<for param="testresultfile" delimiter=", 
 		">
 			<path>
-				<fileset dir="${basedir}/surefire-reports/" includes="**/TEST-*.xml" excludes="**/*pom.xml, **/build.xml"/>
+				<fileset dir="${basedir}/surefire-reports/"
+				         includes="**/TEST-*.xml"
+				         excludes="**/*pom.xml, **/build.xml"
+				/>
 			</path>
 			<sequential>
 				<var name="testsuite.name" unset="true" />
@@ -1055,15 +1069,25 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 	<!-- Used to build the update site of a component; requires a site.xml and pom.xml be generated first -->
 	<target name="create.update.site" depends="init">
+		<var name="site.pom.exists" unset="true" />
+		<condition property="site.pom.exists">
+			<available file="${WORKINGDIR}/${COMPONENT}/site/pom.xml" type="file" />
+		</condition>
 		<antcall target="genPomXml" />
+
+		<var name="site.sitexml.exists" unset="true" />
+		<condition property="site.sitexml.exists">
+			<available file="${WORKINGDIR}/${COMPONENT}/site/site.xml" type="file" />
+		</condition>
 		<antcall target="genSiteXml" />
+
 		<antcall target="build.update.site">
 			<param name="COMPONENTS.to.build" value="${COMPONENT}" />
 			<param name="update.site.path" value="${COMPONENT}/site" />
 		</antcall>
 	</target>
 
-	<target name="genPomXml" description="Generate a pom.xml">
+	<target name="genPomXml" description="Generate a pom.xml" unless="site.pom.exists">
 		<property name="pomDir" value="${WORKINGDIR}/${COMPONENT}/site" />
 		<property name="COMPONENT" value="${COMPONENT}" />
 		<property name="packaging" value="eclipse-update-site" />
@@ -1085,7 +1109,10 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 
 	</target>
 
-	<target name="genSiteXml" description="Generate a site.xml to contain the features in a category">
+	<target name="genSiteXml"
+	        description="Generate a site.xml to contain the features in a category"
+	        unless="site.sitexml.exists"
+	>
 		<property name="updateSiteJarDir" value="${WORKINGDIR}/${COMPONENT}/site" />
 		<property name="COMPONENT" value="${COMPONENT}" />
 		<property name="category.name" value="${product.name} ${COMPONENT} ${update.site.description} Update Site" />
