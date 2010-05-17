@@ -28,19 +28,35 @@
     <section id="installRuntime">
         <title>Installation JBoss BPEL Runtime</title>
         <itemizedlist>
-            <listitem><para>Unpack the JBossAS installation archive into the required location.Then in the 
+            <listitem>
+                <para>Unpack the JBossAS installation archive into the required location. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>Unpack the RiftSaw distribution into the location
+                    alongside the JBossAS installation:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Edit the <property>install/deployment.properties</property> file to update 
+                        the JBossAS location settings.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>From the <property>install</property> folder,
+                            run: <property>ant deploy -Ddatabase=hsql</property>
+                        to deploy RiftSaw to JBossAS.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para>Then in the 
                 <property>${RiftSaw}/install</property> folder run the command:
                 <property>ant deploy -Ddatabase=hsql -Dws.stack=native -Dws.version=3.2.2.GA</property>  
-                It will help you to download the web service stack, and then upgrade it for JBoss AS. 
-            </para></listitem>
-            <listitem><para>Unpack the RiftSaw distribution into the location alongside the JBossAS installation.
-                * Edit the <property>install/deployment.properties</property> file to update the JBossAS location settings.
-                * From the <property>install</property> folder, run: <property>ant deploy -Ddatabase=hsql</property>
-                to deploy RiftSaw to JBossAS.
-               </para></listitem>
-           </itemizedlist>
-     
-        
+                It will help you to download the web service stack, and then upgrade it for JBoss AS.
+                </para>
+            </listitem>
+                    </itemizedlist>
         
     </section>
 </chapter>
