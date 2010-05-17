@@ -17,9 +17,30 @@
 		<plugins>
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-packaging-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<format>'v'yyyyMMdd-HHmm</format>
+					<archiveSite>true</archiveSite>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tychoVersion}</version>
 				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<useNonInteractive>true</useNonInteractive>
+					<connectionType>connection</connectionType>
+					<!-- <connectionType>developerConnection</connectionType> -->
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -125,7 +146,7 @@
 		</connection>
 		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</developerConnection>
-		<url>http://anonsvn.jboss.org/repos/jbosstools/branches/${scmBranch}
+		<url>http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</url>
 	</scm>
 
@@ -199,6 +220,17 @@
 			</activation>
 			<repositories>
 				<repository>
+					<id>svnkit13</id>
+					<url>http://eclipse.svnkit.com/1.3.x/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
 					<id>subclipse16</id>
 					<url>http://subclipse.tigris.org/update_1.6.x/</url>
 					<layout>p2</layout>
@@ -239,6 +271,7 @@
 	</profiles>
 
 	<repositories>
+		<!-- TODO: add JBT nightly update site so we can build against binaries -->
 		<repository>
 			<id>galileo</id>
 			<url>http://download.eclipse.org/releases/galileo/</url>
@@ -356,8 +389,18 @@
 		</pluginRepository>
 		<pluginRepository>
 			<id>tycho</id>
-			<url>http://repository.sonatype.org/content/repositories/snapshots/
+			<url>https://repository.sonatype.org/content/repositories/snapshots/
 			</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+		<pluginRepository>
+			<id>apache-snapshots</id>
+			<url>http://repository.apache.org/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>

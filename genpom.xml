@@ -2,26 +2,33 @@
 	<!-- Configuration Start -->
 	<property name="projectName" value="org.jboss.tools" />
 	<property name="pathToParentPom" value="" />
-	<property name="COMPONENT" value="trunk" />
 	<property name="pomVersion" value="0.0.1-SNAPSHOT" />
 	<property name="dirsToExclude"
-	          value="**/*.sdk.*, **/doc*, **/releng/**, **/build/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders/**, **/contrib, **/releng/**, ."
+	          value="**/*.sdk.*, **/doc*/**, **/releng/**, **/build/**, **/download.jboss.org, **/sampleprojects/**, **/util/**, **/test, **/builders/**, **/contrib, **/releng/**, ."
 	/>
+	<property name="testClassFilesToInclude"
+	          value="**/AllTests.java, **/*AllTests*.java, **/*AllBotTests*.java, **/*TestSuite*.java"
+	/>
+
 	<property name="overwrite.existing.pom.xml" value="false" />
 	<!-- Configuration Ends -->
 
-	<!-- To run this script in Eclipse:
-			Run As > Ant Build
-	-->
-	<!-- To run this script via commandline:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; ant -f genpom.xml -q 
-		 or, to build a specific module IFF no poms already exist:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; \
-			ant -f genpom.xml -q -DCOMPONENT=xulrunner
-		 or, to build a specific module and overwrite existing pom.xml files:
-			cd /home/nboldt/workspace36/jbosstools-modular_build; \
-			ant -f genpom.xml -q -DCOMPONENT=common -Doverwrite.existing.pom.xml=true
-	-->
+	<!-- ****************************** Usage Instructions ****************************** -->
+	<target name="help" description="Usage Instructions">
+		<echo>
+To run this script in Eclipse:
+    Run As > Ant Build
+
+To run this script via commandline:
+   ant -f genpom.xml -q 
+
+or, to build a specific module IFF no poms already exist:
+    ant -f genpom.xml -q -DCOMPONENT=xulrunner
+
+or, to build a specific module and overwrite existing pom.xml files:
+    ant -f genpom.xml -q -DCOMPONENT=common -Doverwrite.existing.pom.xml=true
+</echo>
+	</target>
 
 	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
 		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
@@ -43,13 +50,35 @@
 	</target>
 
 	<!-- override for local build -->
-	<available file="/qa/tools/opt" type="dir" property="isJBossQA" />
-	<target name="local" unless="isJBossQA">
+	<condition property="isInHudson" value="true">
+		<or>
+			<contains string="${user.dir}" substring="hudson" />
+			<contains string="${user.name}" substring="hudson" />
+			<contains string="${user.home}" substring="hudson" />
+		</or>
+	</condition>
+	<target name="local" unless="isInHudson">
 		<property name="WORKINGDIR" value="${basedir}" />
 		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
 	</target>
 
 	<target name="init" depends="local">
+		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
+		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${WORKINGDIR}" />
+		<echo level="info">WORKINGDIR = ${WORKINGDIR}</echo>
+
+		<condition property="COMMON_TOOLS"
+		           value="/home/hudson/static_build_env/jbds/tools"
+		           else="${WORKINGDIR}/../tools"
+		>
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${COMMON_TOOLS}" />
+		<echo level="info">COMMON_TOOLS = ${COMMON_TOOLS}</echo>
+
 		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
 		<antcall target="get.ant-contrib" />
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -58,6 +87,8 @@
 			</classpath>
 		</taskdef>
 
+		<var name="pathToParentPomInput" value="${pathToParentPom}"/>
+		
 		<!-- = = = = = = = = = = = = = = = = =
 	      macrodef: write out a pom.xml which aggregates subdirs   
 	     = = = = = = = = = = = = = = = = = -->
@@ -101,6 +132,17 @@
 				               override="true"
 				/>
 				<echo level="verbose">   Agg dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</echo>
+				<if>
+					<and>
+						<available file="@{dir}/pom.xml" type="file" />
+						<not>
+							<istrue value="${overwrite.existing.pom.xml}" />
+						</not>
+					</and>
+					<then>
+						<var name="show.pom.exists.warning" value="${show.pom.exists.warning}1" />
+					</then>
+				</if>
 				<if>
 					<or>
 						<not>
@@ -190,6 +232,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				               override="true"
 				/>
 				<echo level="verbose">   Mod dir: ${activeDir}, artifactType: ${artifactType}, artifactId: ${artifactId}, artifactVersion: ${artifactVersion}, parentpom: @{parentpom}</echo>
+				<if>
+					<and>
+						<available file="@{dir}/pom.xml" type="file" />
+						<not>
+							<istrue value="${overwrite.existing.pom.xml}" />
+						</not>
+					</and>
+					<then>
+						<var name="show.pom.exists.warning" value="${show.pom.exists.warning}1" />
+					</then>
+				</if>
 				<if>
 					<or>
 						<not>
@@ -312,6 +365,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 							<dirset dir="@{dir}" excludes="${dirsToExclude}" includes="*" />
 						</path>
 					</then>
+					<elseif>
+						<equals arg1="${COMPONENT}" arg2="site" />
+						<then>
+							<dirname property="parent.dir" file="@{dir}" />
+							<path id="trunkDir">
+								<dirset dir="${parent.dir}" includes="site" />
+							</path>
+							<var name="parent.dir" unset="true" />
+							<var name="pathToParentPom" value="${pathToParentPom}site/" />
+						</then>
+					</elseif>
 					<else>
 						<path id="trunkDir">
 							<dirset dir="@{dir}/${pathToParentPom}"
@@ -332,12 +396,19 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 								<!-- a plugin, feature, or update site dir -->
 								<available file="@{subdir}/META-INF/MANIFEST.MF" type="file" />
 								<available file="@{subdir}/feature.xml" type="file" />
-								<available file="@{subdir}/site.xml" type="file" />
 							</or>
 							<then>
 								<!-- valid place to create a pom -->
 								<writeModulePom dir="@{subdir}" parentpom="../${pathToParentPom}@{parentpom}" />
 							</then>
+							<elseif>
+								<available file="@{subdir}/site.xml" type="file" />
+								<then>
+									<!-- valid place to create a pom -->
+									<echo level="debug">writeModulePom dir="@{subdir}" parentpom="${pathToParentPom}@{parentpom}"</echo>
+									<writeModulePom dir="@{subdir}" parentpom="${pathToParentPom}@{parentpom}" />
+								</then>
+							</elseif>
 							<else>
 								<for list="plugins tests features site" param="type" delimiter=" ">
 									<sequential>
@@ -393,69 +464,110 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	</target>
 
 	<target name="run" depends="init">
-		<if>
-			<not>
-				<available file="${WORKINGDIR}/${pathToParentPom}parent-pom.xml" type="file" />
-			</not>
-			<then>
-				<fail>Error: no parent-pom.xml found in ${WORKINGDIR}/${pathToParentPom}</fail>
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<equals arg1="${COMPONENT}" arg2="trunk" />
-			</not>
-			<then>
-				<var name="pathToParentPom" unset="true" />
-				<var name="pathToParentPom" value="../" />
-			</then>
-		</if>
-		<echo level="verbose">COMPONENT = ${COMPONENT}, pathToParentPom = ${pathToParentPom}</echo>
-
-		<!-- if set, compare values in tags file to values found in manifests and report discrepancies -->
-		<!--<property name="tagsFile"
-		     value="/home/nboldt/eclipse/workspace-jboss/devstudio-trunk/releng/org.jboss.ide.eclipse.releng/builders/product/versionTags/jbosstools/3.1.0.GA.tags"
-		/>-->
+		<var name="show.pom.exists.warning" value="" />
 
 		<if>
 			<and>
-				<isset property="tagsFile" />
-				<available file="${tagsFile}" type="file" />
+				<isset property="COMPONENT" />
+				<not>
+					<equals arg1="${COMPONENT}" arg2="" />
+				</not>
 			</and>
 			<then>
-				<property file="${tagsFile}" prefix="tagsFile" />
+				<var name="COMPONENTS" unset="true" />
+				<var name="COMPONENTS" value="${COMPONENT}" />
 			</then>
+			<elseif>
+				<not>
+					<isset property="COMPONENTS" />
+				</not>
+				<then>
+					<var name="COMPONENTS" value="trunk" />
+				</then>
+			</elseif>
 		</if>
+		<for param="COMPONENT" list="${COMPONENTS}" delimiter=",; 
+	">
+			<sequential>
+				<var name="COMPONENT" value="@{COMPONENT}" />
+				<echo level="info">COMPONENT = '${COMPONENT}'</echo>
+				<if>
+					<not>
+						<available file="${WORKINGDIR}/${pathToParentPomInput}parent-pom.xml" type="file" />
+					</not>
+					<then>
+						<fail>Error: no parent-pom.xml found in ${WORKINGDIR}/${pathToParentPomInput}</fail>
+					</then>
+				</if>
 
-		<!-- counter variables -->
-		<var name="aggregatorcountstring" value="" />
-		<var name="modulecountstring" value="" />
+				<if>
+					<not>
+						<equals arg1="${COMPONENT}" arg2="trunk" />
+					</not>
+					<then>
+						<var name="pathToParentPom" unset="true" />
+						<var name="pathToParentPom" value="../" />
+					</then>
+				</if>
+				<echo level="verbose">COMPONENT = '${COMPONENT}', pathToParentPom = ${pathToParentPom}</echo>
 
-		<if>
-			<equals arg1="${COMPONENT}" arg2="trunk" />
-			<then>
-				<!-- call generateAggregator for overall -->
-				<generateAggregator dir="${WORKINGDIR}"
-				                    parentpom="${pathToParentPom}parent-pom.xml"
-				                    artifactId="${COMPONENT}"
-				                    artifactVersion="${pomVersion}"
-				/>
-			</then>
-			<else>
-				<!-- call generateAggregator for component -->
-				<generateAggregator dir="${WORKINGDIR}/${COMPONENT}"
-				                    parentpom="${pathToParentPom}parent-pom.xml"
-				                    artifactId="${COMPONENT}"
-				                    artifactVersion="${pomVersion}"
-				/>
-			</else>
-		</if>
-		<!-- summary -->
-		<length string="${modulecountstring}" property="modulecount" />
-		<length string="${aggregatorcountstring}" property="aggregatorcount" />
-		<echo level="info">${WORKINGDIR}/${COMPONENT} :: Modules: ${modulecount},  Aggregations: ${aggregatorcount}</echo>
+				<!-- if set, compare values in tags file to values found in manifests and report discrepancies -->
+				<!--<property name="tagsFile"
+		     value="/home/nboldt/eclipse/workspace-jboss/devstudio-trunk/releng/org.jboss.ide.eclipse.releng/builders/product/versionTags/jbosstools/3.1.0.GA.tags"
+		/>-->
 
+				<if>
+					<and>
+						<isset property="tagsFile" />
+						<available file="${tagsFile}" type="file" />
+					</and>
+					<then>
+						<property file="${tagsFile}" prefix="tagsFile" />
+					</then>
+				</if>
+
+				<!-- counter variables -->
+				<var name="aggregatorcountstring" value="" />
+				<var name="modulecountstring" value="" />
+
+				<if>
+					<equals arg1="${COMPONENT}" arg2="trunk" />
+					<then>
+						<!-- call generateAggregator for overall -->
+						<generateAggregator dir="${WORKINGDIR}"
+						                    parentpom="${pathToParentPom}parent-pom.xml"
+						                    artifactId="${COMPONENT}"
+						                    artifactVersion="${pomVersion}"
+						/>
+					</then>
+					<else>
+						<!-- call generateAggregator for component -->
+						<generateAggregator dir="${WORKINGDIR}/${COMPONENT}"
+						                    parentpom="${pathToParentPom}parent-pom.xml"
+						                    artifactId="${COMPONENT}"
+						                    artifactVersion="${pomVersion}"
+						/>
+					</else>
+				</if>
+				<!-- summary -->
+				<length string="${modulecountstring}" property="modulecount" />
+				<length string="${aggregatorcountstring}" property="aggregatorcount" />
+				<echo level="info">${WORKINGDIR}/${COMPONENT} :: Modules: ${modulecount},  Aggregations: ${aggregatorcount}</echo>
+				<if>
+					<not>
+						<equals arg1="${show.pom.exists.warning}" arg2="" />
+					</not>
+					<then>
+						<length property="show.pom.exists.warning.count" string="${show.pom.exists.warning}" />
+						<echo level="warning">${show.pom.exists.warning.count} '${COMPONENT}' pom.xml file(s) already exist. To overwrite, use -Doverwrite.existing.pom.xml=true</echo>
+					</then>
+				</if>
+				<var name="show.pom.exists.warning.count" unset="true" />
+				<var name="show.pom.exists.warning" value="" />
+				<var name="modulecount" unset="true" />
+				<var name="aggregatorcount" unset="true" />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="getArtifactType">
@@ -482,7 +594,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 					<matches string="${dir}" pattern=".+/tests/.+" />
 				</and>
 				<then>
-					<var name="artifactType" value="eclipse-test-plugin" />
+					<var name="artifactType" value="eclipse-plugin" />
+					<for param="testClassFile" delimiter=", ">
+						<path>
+							<fileset dir="${dir}" includes="${testClassFilesToInclude}" />
+						</path>
+						<sequential>
+							<var name="artifactType" value="eclipse-test-plugin" />
+						</sequential>
+					</for>
 				</then>
 			</elseif>
 			<else>
@@ -735,17 +855,20 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<property name="ant.enable.asserts" value="true" />
 
 		<!-- expected values for artifactVersion tests -->
-		<property name="artifactVersion.esb/features/org.jboss.tools.esb.feature" value="1.0.0" />
-		<property name="artifactVersion.as/tests/org.jboss.ide.eclipse.as.archives.integration.test" value="1.0.0" />
-		<property name="artifactVersion.esb/plugins/org.jboss.tools.esb.core" value="2.0.0" />
+		<property name="artifactVersion.esb/features/org.jboss.tools.esb.feature" value="1.3.0-SNAPSHOT" />
+		<property name="artifactVersion.as/tests/org.jboss.ide.eclipse.as.archives.integration.test"
+		          value="2.1.0-SNAPSHOT"
+		/>
+		<property name="artifactVersion.esb/plugins/org.jboss.tools.esb.core" value="1.3.0-SNAPSHOT" />
 		<property name="artifactVersion.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui" value="0.5.0-SNAPSHOT" />
 		<property name="artifactVersion.bpel/features/org.jboss.tools.bpel.sdk.feature" value="1.0.0-SNAPSHOT" />
 		<property name="artifactVersion.bpel/plugins/org.eclipse.bpel.xpath10" value="0.5.0-SNAPSHOT" />
-		<property name="artifactVersion.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="2.1.0" />
-		<property name="artifactVersion.tests/features/org.jboss.tools.test.feature" value="2.0.0" />
-		<property name="artifactVersion.portlet/features/org.jboss.tools.portlet.test.feature" value="1.0.0" />
-		<property name="artifactVersion.jst/features/org.jboss.tools.jst.feature" value="2.0.0" />
-		<property name="artifactVersion.jst/features/org.jboss.tools.jst.web.tiles.feature" value="2.0.0" />
+		<property name="artifactVersion.vpe/plugins/org.jboss.tools.vpe.ui.palette" value="3.1.0-SNAPSHOT" />
+		<property name="artifactVersion.tests/features/org.jboss.tools.test.feature" value="3.1.0-SNAPSHOT" />
+		<property name="artifactVersion.portlet/features/org.jboss.tools.portlet.test.feature" value="1.1.0-SNAPSHOT" />
+		<property name="artifactVersion.jst/features/org.jboss.tools.jst.feature" value="3.1.0-SNAPSHOT" />
+		<property name="artifactVersion.jst/features/org.jboss.tools.jst.web.tiles.feature" value="3.1.0-SNAPSHOT" />
+		<property name="artifactVersion.drools/plugins/org.jboss.tools.flow.ruleflow" value="1.0.0" />
 
 		<!-- expected values for artifactId tests -->
 		<property name="artifactId.esb/features/org.jboss.tools.esb.feature" value="org.jboss.tools.esb.feature" />
@@ -769,12 +892,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<property name="artifactId.jst/features/org.jboss.tools.jst.web.tiles.feature"
 		          value="org.jboss.tools.jst.web.tiles.feature"
 		/>
+		<property name="artifactId.drools/plugins/org.jboss.tools.flow.ruleflow"
+		          value="org.jboss.tools.flow.ruleflow"
+		/>
 
 		<!-- expected values for artifactType tests -->
 		<property name="artifactType.esb/features/org.jboss.tools.esb.feature" value="eclipse-feature" />
 		<property name="artifactType.as/tests/org.jboss.ide.eclipse.as.archives.integration.test"
 		          value="eclipse-test-plugin"
 		/>
+		<property name="artifactType.flow/tests/org.jboss.tools.flow.common.test" value="eclipse-plugin" />
+		<property name="artifactType.jbpm/tests/org.jboss.tools.flow.jpdl4.test" value="eclipse-plugin" />
 		<property name="artifactType.esb/plugins/org.jboss.tools.esb.core" value="eclipse-plugin" />
 		<property name="artifactType.bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui" value="eclipse-plugin" />
 		<property name="artifactType.bpel/features/org.jboss.tools.bpel.sdk.feature" value="eclipse-feature" />
@@ -784,6 +912,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<property name="artifactType.portlet/features/org.jboss.tools.portlet.test.feature" value="eclipse-feature" />
 		<property name="artifactType.jst/features/org.jboss.tools.jst.feature" value="eclipse-feature" />
 		<property name="artifactType.jst/features/org.jboss.tools.jst.web.tiles.feature" value="eclipse-feature" />
+		<property name="artifactType.drools/plugins/org.jboss.tools.flow.ruleflow" value="eclipse-plugin" />
 
 		<!-- expected values for artifactOsWsArch tests -->
 		<property name="artifactOsWsArch.org.mozilla.xpcom.os" value="" />
@@ -811,7 +940,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<property name="artifactOsWsArch.org.mozilla.xulrunner.win32.win32.x86.arch" value="x86" />
 	</target>
 
-	<target name="test.all">
+	<target name="test.all" depends="init, test.expected.values">
 
 		<property name="dirs"
 		          value="
@@ -826,6 +955,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		${WORKINGDIR}/portlet/features/org.jboss.tools.portlet.test.feature
 		${WORKINGDIR}/jst/features/org.jboss.tools.jst.feature
 		${WORKINGDIR}/jst/features/org.jboss.tools.jst.web.tiles.feature
+		${WORKINGDIR}/drools/plugins/org.jboss.tools.flow.ruleflow
 		"
 		/>
 		<antcall target="test.getArtifactVersion" />
@@ -967,6 +1097,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		${WORKINGDIR}/esb/features/org.jboss.tools.esb.feature
 		${WORKINGDIR}/as/tests/org.jboss.ide.eclipse.as.archives.integration.test
 		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		${WORKINGDIR}/esb/plugins/org.jboss.tools.esb.core
+		${WORKINGDIR}/bpel/plugins/org.eclipse.bpel.apache.ode.deploy.ui
+		${WORKINGDIR}/bpel/features/org.jboss.tools.bpel.sdk.feature
+		${WORKINGDIR}/bpel/plugins/org.eclipse.bpel.xpath10
+		${WORKINGDIR}/vpe/plugins/org.jboss.tools.vpe.ui.palette
+		${WORKINGDIR}/tests/features/org.jboss.tools.test.feature
+		${WORKINGDIR}/portlet/features/org.jboss.tools.portlet.test.feature
+		${WORKINGDIR}/jst/features/org.jboss.tools.jst.feature
+		${WORKINGDIR}/jst/features/org.jboss.tools.jst.web.tiles.feature
+		${WORKINGDIR}/flow/tests/org.jboss.tools.flow.common.test
+		${WORKINGDIR}/jbpm/tests/org.jboss.tools.flow.jpdl4.test
 		"
 		/>
 		<for param="dir" list="${dirs}" delimiter=", 
