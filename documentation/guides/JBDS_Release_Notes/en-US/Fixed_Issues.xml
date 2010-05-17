@@ -72,6 +72,18 @@
 			</itemizedlist>
 		</para>
 	</formalpara>
+	<formalpara>
+		<title>Portlet</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1214">JBDS-1214</ulink>: The JBoss Enterprise Portal Platform 5.0 was not compatible with the JBoss Developer Studio when a user would generate specific JBoss Portal XML files. To allow for the JBoss Enterprise Portal Platform to work with the JBoss Developer Studio the option to remove JBoss Portal XML file creation when the user chooses JBoss Enterprise Portal Platform 5.0. If a user attempts to deploy a JBoss Portal 2 project to the JBoss Enterprise Portal Platform 5.0, the user has to remove or rename the <filename>jboss-app.xml</filename> file in order to ensure compatibility.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
 <!--	<formalpara>
 		<title>RichFaces</title>
 		<para>
