@@ -15,19 +15,11 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.ColumnLayoutData;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableLayout;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -40,9 +32,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardExportResourcesPage;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
@@ -56,17 +46,9 @@ import org.jboss.tools.vpe.resref.core.ReferenceWizardPage;
  * 
  * @author dmaliarevich
  */
-public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesPage {
+public class ExportUnknownTagsTemplatesWizardPage extends
+		WizardExportResourcesPage implements VpeImportExportWizardPage {
 
-	private static final String[] COLUMNS_NAMES = new String[] {
-		VpeUIMessages.TemplatesTableProvider_TagName, 
-		VpeUIMessages.TemplatesTableProvider_TagForDisplay,
-		VpeUIMessages.TemplatesTableProvider_URI,
-		VpeUIMessages.TemplatesTableProvider_Children};
-	private static final int[] COLUMNS_WIDTHS = new int[] {
-		50, 50, 90, 40
-	};
-	
 	private String pathString;
 	private Table tagsTable;
 	private List<VpeAnyData> tagsList;
@@ -123,7 +105,7 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 		/*
 		 * Fill the table with stored tags
 		 */
-		updateTagsTable(true);
+		VpeImportExportWizardsUtils.updateTagsTable(tagsTable, tagsList, true);
 		
 		/*
 		 * Add path output and browse button 
@@ -173,113 +155,6 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardExportResourcesP
 		 */
 	}
 
-	/**
-	 * Updates visual table with tags templates.
-	 * 
-	 * @param clearTagsTable clears current tags table
-	 */
-	private void updateTagsTable(boolean clearTagsTable) {
-		/*
-		 * Return when visual table hasn't been initialized.
-		 */
-		if(tagsTable == null || tagsTable.isDisposed()) {
-			return;
-		}
-		/*
-		 * Clear current visual table.
-		 */
-		if (clearTagsTable) {
-			tagsTable.clearAll();
-		}
-		/*
-		 * Return when tags templates list hasn't been initialized.
-		 */
-		if (tagsList == null) {
-			return;
-		}
-		/*
-		 * Remember current selection index 
-		 * and restore it at the end.
-		 */
-		int selectionIndex = tagsTable.getSelectionIndex();
-		TableItem tableItem = null;
-		for (int i = 0; i < tagsList.size(); i++) {
-			if(tagsTable.getItemCount() > i) {
-				/*
-				 * Use existed items
-				 */
-				tableItem = tagsTable.getItem(i);
-			} else {
-				/*
-				 * Add necessary item
-				 */
-				tableItem = new TableItem(tagsTable, SWT.BORDER, i);
-			}
-			/*
-			 * Fill in columns.
-			 */
-			String[] itemColumnsData = new String[tagsTable.getColumnCount()];
-			for (int j = 0; j < itemColumnsData.length; j++) {
-				/*
-				 * Getting values from tagList
-				 */
-				itemColumnsData[j] = toVisualValue(getValueAt(i, j));
-			}
-			/*
-			 * Set cells text
-			 */
-			tableItem.setText(itemColumnsData);
-
-		}
-		
-		/*
-		 * Restoring selection index
-		 */
-		if (selectionIndex > 0 ) {
-			 try {
-					tagsTable.setSelection(selectionIndex);
-				} catch (SWTException e) {
-					/*
-					 * Do nothing
-					 */
-				}
-		}
-	}
-	
-	public String getValueAt(int row, int column) {
-		String result = "List is empty"; //$NON-NLS-1$
-		if ((null != tagsList) && ((row >= 0) && (tagsList.size() > 0) && (row < tagsList.size()))) {
-			VpeAnyData tagItem = (VpeAnyData)tagsList.get(row);
-			switch(column){
-			case 0:
-				result = tagItem.getName();
-				break;
-			case 1:
-				result = tagItem.getTagForDisplay();
-				break;
-			case 2:
-				result = tagItem.getUri();
-				break;
-			case 3:
-				if(tagItem.isChildren()) {
-					result = VpeUIMessages.TemplatesTableProvider_Yes;
-				} else {
-					result = VpeUIMessages.TemplatesTableProvider_No;
-				}
-				break;
-			}
-		}
-		return result;
-	}
-	
-	private String toVisualValue(String v) {
-		if(v == null) return ""; //$NON-NLS-1$
-		if(v.indexOf('\n') >= 0) v = v.replace('\n', ' ');
-		if(v.indexOf('\t') >= 0) v = v.replace('\t', ' ');
-		if(v.indexOf('\r') >= 0) v = v.replace('\r', ' ');
-		return v;
-	}
-	
 	public void handleEvent(Event event) {
 		/*
 		 * Do nothing

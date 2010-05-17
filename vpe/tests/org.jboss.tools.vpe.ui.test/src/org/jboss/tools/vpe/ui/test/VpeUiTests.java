@@ -18,7 +18,6 @@ import org.jboss.tools.vpe.ui.test.dialog.VpeEditAnyDialogTest;
 import org.jboss.tools.vpe.ui.test.dialog.VpeResourcesDialogTest;
 import org.jboss.tools.vpe.ui.test.editor.CustomSashFormTest;
 import org.jboss.tools.vpe.ui.test.preferences.VpeEditorPreferencesPageTest;
-import org.jboss.tools.vpe.ui.test.wizard.VpeImportExportUnknownTagsWizardsTest;
 
 /**
  * @author mareshkau
@@ -33,7 +32,6 @@ public class VpeUiTests {
 		suite.addTestSuite(CustomSashFormTest.class);
 		suite.addTestSuite(VpePopupMenuTest.class);
 		suite.addTestSuite(VpeEditAnyDialogTest.class);
-		suite.addTestSuite(VpeImportExportUnknownTagsWizardsTest.class);
 		
 		return new VpeTestSetup(suite);
 	}
