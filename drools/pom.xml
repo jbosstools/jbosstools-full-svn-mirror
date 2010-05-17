@@ -15,6 +15,7 @@
 	<modules>
 		<module>plugins</module>
 		<module>features</module>
+		<module>tests</module>
 	</modules>
 	<!-- TODO: figure out how to invoke this BEFORE the dep resolution for target 
 		platform -->
