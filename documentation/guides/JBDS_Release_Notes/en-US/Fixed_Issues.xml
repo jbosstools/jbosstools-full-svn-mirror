@@ -162,6 +162,11 @@
 			<itemizedlist>
 				<listitem>
 					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1220">JBDS-1220</ulink>: Within the JBoss Developer Studio, the browse button that allowed a user to select the location of the JBoss Application Server would not default to the location where the JBoss Enterprise Application Platform was installed. The consequence of this was that a user would have to search for the installed location of the JBoss Enterprise Application Platform. Though installation of the JBoss Enterprise Application Platform is optional, if it is installed it can be assumed that this will be the Application Server a user will wish to use. In order to improve the user experience, when the JBoss Enterprise Application Platform is installed, the server location browse button will default to that directory.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1215">JBDS-1215</ulink>: The installer was unable to locate the Seam runtimes within the JBoss Enterprise Application Platform 4.3. This occurred because the Seam runtime locations bundled within the JBoss Enterprise Application Platform 4.3 had recently changed from <filename>jboss-eap-4.3/seam</filename> and <filename>jboss-eap-4.3/seamfp</filename> to being <filename>jboss-eap-4.3/seam1</filename> and <filename>jboss-eap-4.3/seam2</filename>. This version of the JBoss Developer Studio includes an updated installer that contains the new Seam runtime locations. The installer is now able to find the Seam runtimes for the latest versions of the JBoss Enterprise Application Platform 4.3.
 					</para>
 				</listitem>
@@ -193,6 +198,11 @@
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1088">JBDS-1088</ulink>: When installing the JBoss Developer Studio, if a previous installation was detected a dialog box would ask if you wished to overwrite the existing directory. If a user continued with installation they would then have a mixture of the old and new product versions. To better assist users a new warning is displayed in this situation, which indicates that you cannot upgrade by installing a new version over an old version. This new dialog box ensures that a user is informed of what will happen.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1047">JBDS-1047</ulink>: When installing the JBoss Developer Studio a user would not be warned if they were installing it as the root user on a Linux distribution. The consequence of this was that if a user uninstalled the software certain files would be left behind (such as menu items). In order to ensure a user is aware they are installing the JBoss Developer Studio as root, a warning is displayed informing them. The JBoss Developer Studio does not stop you from installing the software as the root user, rather it ensures this is what the user has intended to do.
 					</para>
 				</listitem>
 			</itemizedlist>
