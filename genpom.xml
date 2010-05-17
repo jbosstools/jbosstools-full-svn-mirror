@@ -20,6 +20,7 @@ To run this script in Eclipse:
     Run As > Ant Build
 
 To run this script via commandline:
+   cd /path/to/checked/out/source/tree; \
    ant -f genpom.xml -q 
 
 or, to build a specific module IFF no poms already exist:
