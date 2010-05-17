@@ -58,7 +58,7 @@
                  portType="tns:${processName}"
                  operation="initiate" variable="input"
                  createInstance="yes"/>
-        
+        <bpel:empty name="FIX_ME-Add_Business_Logic_Here"></bpel:empty>
         <!-- Asynchronous callback to the requester.
              Note: the callback location and correlation id is transparently handled 
              using WS-addressing.

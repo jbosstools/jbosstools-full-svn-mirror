@@ -52,7 +52,7 @@
                  portType="tns:${processName}"
                  operation="process" variable="input"
                  createInstance="yes"/>
-        
+        <bpel:empty name="FIX_ME-Add_Business_Logic_Here"></bpel:empty>
         <!-- Generate reply to synchronous request -->
         <bpel:reply name="replyOutput" 
                partnerLink="client"

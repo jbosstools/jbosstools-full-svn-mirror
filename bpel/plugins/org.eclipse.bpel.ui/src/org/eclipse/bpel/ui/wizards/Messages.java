@@ -53,4 +53,19 @@ public class Messages extends NLS {
 	public static String NewFileWizardPage2_0;
 	public static String NewFileWizardPage2_1;
 	public static String NewFileWizardPage2_2;
+	public static String NewFileWizardPage2_3;
+	public static String NewFileWizardPage1_Name;
+	public static String NewFileWizardPage2_Name;
+	public static String NewFileWizard_WSDLCustomPage_Name;
+	public static String NewFileWizard_WSDLCustomPage_Title;
+	public static String NewFileWizard_WSDLCustomPage_Description;
+	public static String NewFileWizard_WSDLCustomPage_ServiceLable;
+	public static String NewFileWizard_WSDLCustomPage_PortLabel;
+	public static String NewFileWizard_WSDLCustomPage_AddressLabel;
+	public static String NewFileWizard_WSDLCustomPage_WSDLGroup;
+	public static String NewFileWizard_WSDLCustomPage_BindingLabel;
+	
+	public static String Error_NewFileWizard_WSDLCustomPage_Name_Empty;
+	public static String Error_NewFileWizard_WSDLCustomPage_Name_Space;
+	public static String Error_NewFileWizard_WSDLCustomPage_Protocol;
 }

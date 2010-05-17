@@ -43,7 +43,7 @@ public NewFileWizardPage2(String pageName)
         super(pageName);
         setPageComplete(false);
         
-		setTitle(Messages.NewFileWizardPage1_2);
+		setTitle(Messages.NewFileWizardPage2_3);
 		setDescription(Messages.NewFileWizardPage2_0);
 		
         setImageDescriptor( BPELUIPlugin.INSTANCE.getImageDescriptor( IBPELUIConstants.ICON_WIZARD_BANNER ));
