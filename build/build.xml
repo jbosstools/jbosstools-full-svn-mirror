@@ -11,7 +11,7 @@
     jmx,archives,as;
     bpel,smooks,freemarker,profiler,portlet,modeshape;
     xulrunner,jst,vpe,jsf;
-		drools,esb,tptp,ws;
+        drools,esb,tptp,ws;
         cdi,struts,hibernatetools,seam;
             examples,birt;
             maven"
