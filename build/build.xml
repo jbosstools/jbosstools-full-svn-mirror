@@ -9,9 +9,9 @@
 	          value="tests,common;
     flow,jbpm;
     jmx,archives,as;
-    drools,bpel,smooks,freemarker,profiler,portlet,modeshape;
+    bpel,smooks,freemarker,profiler,portlet,modeshape;
     xulrunner,jst,vpe,jsf;
-        esb,tptp,ws;
+		drools,esb,tptp,ws;
         cdi,struts,hibernatetools,seam;
             examples,birt;
             maven"
