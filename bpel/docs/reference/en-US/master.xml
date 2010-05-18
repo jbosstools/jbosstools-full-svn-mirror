@@ -6,7 +6,7 @@
 <!ENTITY install SYSTEM "modules/install.xml">
 <!ENTITY detail SYSTEM "modules/detail.xml">
 <!ENTITY deploy SYSTEM "modules/deploy.xml">
-
+<!ENTITY reference SYSTEM "modules/reference.xml">
 
 ]>
 
@@ -50,4 +50,5 @@
     &install;
     &detail;
     &deploy;
+    &reference;
 </book> 

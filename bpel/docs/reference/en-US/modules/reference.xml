@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="reference">
+    <?dbhtml filename="reference.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>BPEL</keyword>
+            <keyword>JBT</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>Reference</title>
+    <para>This chapter includes detailed reference information about all BPEL tools Wizards and editors.</para>
+    <section>
+        <title>Wizards</title>
+        <section>
+            <title>New BPEL project Wizard</title>
+            <para>This wizard helps to create new BPEL project.It is available with clicking
+                <property>File->New->Other->BPEL project</property> in the menu bar.</para>
+            <figure>
+                <title>New BPEL Project Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/reference/bpel_ref_1.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>The wizard consists of only one page:</para>
+            <itemizedlist>
+                <listitem><para>On the page you can adjust the name of the project and the directory where it will be created.</para>
+                    <para>If "<property>Use default</property>" option is checked the output directory will be the workspace,
+                        othervise the user should specify it by himself using <property>Browse</property> button.</para>
+                    <figure>
+                        <title>New BPEL Project Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/reference/bpel_ref_2.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section>
+            <title>New BPEL Process file Wizard</title>
+            <para>Using New BPEL Process file Wizard user can create BPEL process file and WSDL file if it is necessary.
+            The wizard includes several pages:</para>
+            <itemizedlist>
+                <listitem><para>The first page has the following options to set:</para>
+                    <table>
+                        <title>New BPEL Process file Wizard. First Page Options.</title>   
+                        <tgroup cols="3">
+                            <colspec colnum="1" align="left" colwidth="1*"/>
+                            <colspec colnum="2" align="left" colwidth="3*"/>
+                            <colspec colnum="3" align="left" colwidth="1*"/>
+                            
+                            <thead>
+                                <row>
+                                    <entry>Option</entry>									
+                                    <entry>Description</entry>
+                                    <entry>Default</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>Name</entry>
+                                    <entry>Enter the process name.</entry>
+                                    <entry>no default value</entry>
+                                </row> 
+                              
+                                       
+                                <row>
+                                    <entry>Namespace</entry>
+                                    <entry>Enter the namespace url here</entry>
+                                    <entry>no default value</entry>
+                                </row> 
+                                
+                                <row>
+                                    <entry>Template</entry>
+                                    <entry>Select one of the provided templates: 
+                                        <itemizedlist>
+                                            <listitem><para><emphasis>Asynchronous BPEL Process</emphasis>  - 
+                                                generates the basis of orchestration logic:  receive and reply activities
+                                                are included into the process;client WSDL is generated, 
+                                                service is defined in the <property>parentlink</property> of the process.
+                                                The caller is notified asynchronously when the process completes.
+                                            </para></listitem>
+                                            <listitem><para><emphasis>Empty BPEL Process</emphasis>  - list of services participating in this BPEL process together
+                                                with the one of messages used within the process is empty.There are no any orchestration logic.</para></listitem>
+                                            <listitem><para><emphasis>Synchronous BPEL Process</emphasis>  - 
+                                                similar to Asynchronous BPEL Process temlate except the fact that here
+                                                the caller is notified asynchronously when the process completes.</para></listitem>
+                                        </itemizedlist></entry>
+                                    <entry>Asynchronous BPEL Process</entry>
+                               </row>
+                                <row>
+                                    <entry>Abstract Process</entry>
+                                    <entry>Specifies the created process as an abstract one -partially
+                                        specified processes that are not intended to be executed.</entry>
+                                    <entry>unchecked</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>      <figure>
+                        <title>New BPEL Process file Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/reference/bpel_ref_3.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    
+                </listitem>
+            </itemizedlist>
+        </section>
+        
+    </section>
+    
+</chapter>
+
