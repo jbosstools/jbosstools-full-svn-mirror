@@ -203,10 +203,10 @@ public class OpenMappingUtilsEjb3 {
 		//result[0] - detect classes
 		//result[1] - detect hbm
 		boolean[] result = { false, false };
-		String detect = overridenProperties != null ?
+		String detect = overridenProperties != null && HibernatePersistence.AUTODETECTION != null ?
 				(String) overridenProperties.get(HibernatePersistence.AUTODETECTION) : null;
-		detect = detect == null ?
-				properties.getProperty( HibernatePersistence.AUTODETECTION) : detect;
+		detect = detect == null && HibernatePersistence.AUTODETECTION != null ?
+				properties.getProperty(HibernatePersistence.AUTODETECTION) : detect;
 		if (detect == null && excludeIfNotOverriden) {
 			//not overridden through HibernatePersistence.AUTODETECTION so we comply with the spec excludeUnlistedClasses
 			return result;

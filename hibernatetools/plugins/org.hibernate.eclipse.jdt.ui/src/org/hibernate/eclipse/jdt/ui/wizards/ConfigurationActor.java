@@ -65,6 +65,7 @@ import org.hibernate.mediator.x.mapping.PrimitiveArray;
 import org.hibernate.mediator.x.mapping.Property;
 import org.hibernate.mediator.x.mapping.RootClass;
 import org.hibernate.mediator.x.mapping.SimpleValue;
+import org.hibernate.mediator.x.mapping.SingleTableSubclass;
 import org.hibernate.mediator.x.mapping.Subclass;
 import org.hibernate.mediator.x.mapping.Table;
 import org.hibernate.mediator.x.mapping.ToOne;
@@ -178,7 +179,7 @@ public class ConfigurationActor {
 				Subclass subclass = null;
 				if (pc != null){
 					if (pc.isAbstract()){
-						subclass = (Subclass)PersistentClassFactory.createPersistentClassStub(pc);
+						subclass = SingleTableSubclass.newInstance(pc);
 						if (pc instanceof RootClass && pc.getDiscriminator() == null){
 							SimpleValue discr = SimpleValue.newInstance();
 							discr.setTypeName("string"); //$NON-NLS-1$

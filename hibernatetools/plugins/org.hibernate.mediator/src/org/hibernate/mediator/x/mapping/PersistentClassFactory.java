@@ -1,5 +1,7 @@
 package org.hibernate.mediator.x.mapping;
 
+import org.hibernate.mediator.stubs.util.ClassHelper;
+
 
 public class PersistentClassFactory {
 	@SuppressWarnings("unchecked")
@@ -8,18 +10,16 @@ public class PersistentClassFactory {
 			return null;
 		}
 		final Class cl = value.getClass();
-		if (0 == RootClass.CL.compareTo(cl.getName())) {
-			return new RootClass(value);
-		//} else if (0 == PersistentClassStub.CL.compareTo(cl.getName())) {
-		//	return new PersistentClassStub(value);
-		} else if (0 == Subclass.CL.compareTo(cl.getName())) {
-			return new Subclass(value);
-		} else if (0 == JoinedSubclass.CL.compareTo(cl.getName())) {
+		if (ClassHelper.isClassOrOffspring(cl, JoinedSubclass.CL)) {
 			return new JoinedSubclass(value);
-		} else if (0 == SingleTableSubclass.CL.compareTo(cl.getName())) {
+		} else if (ClassHelper.isClassOrOffspring(cl, SingleTableSubclass.CL)) {
 			return new SingleTableSubclass(value);
-		} else if (0 == UnionSubclass.CL.compareTo(cl.getName())) {
+		} else if (ClassHelper.isClassOrOffspring(cl, UnionSubclass.CL)) {
 			return new UnionSubclass(value);
+		} else if (ClassHelper.isClassOrOffspring(cl, Subclass.CL)) {
+			return new Subclass(value);
+		} else if (ClassHelper.isClassOrOffspring(cl, RootClass.CL)) {
+			return new RootClass(value);
 		}
 		return null;
 	}

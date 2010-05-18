@@ -10,6 +10,6 @@ public class HibernatePersistence extends HObject {
 		super(hibernatePersistence, CL);
 	}
 
-	public static final String AUTODETECTION = (String)HObject.readStaticFieldValue(CL, "AUTODETECTION"); //$NON-NLS-1$
+	public static final String AUTODETECTION = (String)HObject.readStaticFieldValueNoException(CL, "AUTODETECTION"); //$NON-NLS-1$
 
 }

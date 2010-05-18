@@ -7,4 +7,8 @@ public class SingleTableSubclass extends Subclass {
 	protected SingleTableSubclass(Object singleTableSubclass) {
 		super(singleTableSubclass, CL);
 	}
+	
+	public static SingleTableSubclass newInstance(PersistentClass superclass) {
+		return new SingleTableSubclass(newInstance(CL, superclass));
+	}
 }

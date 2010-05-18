@@ -9,6 +9,10 @@ public class POJOClass extends HObject {
 		super(pojoClass, CL);
 	}
 
+	public static POJOClass newInstance(Object pojoClass) {
+		return new POJOClass(pojoClass);
+	}
+
 	public String getQualifiedDeclarationName() {
 		return (String)invoke(mn());
 	}

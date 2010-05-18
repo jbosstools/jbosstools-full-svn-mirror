@@ -266,4 +266,28 @@ public class HObject {
 			throw new HibernateConsoleRuntimeException(e);
 		}
 	}
+
+	public static final Object readStaticFieldValueNoException(final String className, String fieldName) {
+		Class<?> clazz;
+		try {
+			clazz = ReflectHelper.classForName(className);
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
+		Field fld;
+		try {
+			fld = clazz.getDeclaredField(fieldName);
+		} catch (SecurityException e) {
+			return null;
+		} catch (NoSuchFieldException e) {
+			return null;
+		}
+		try {
+			return fld.get(null);
+		} catch (IllegalArgumentException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		}
+	}
 }

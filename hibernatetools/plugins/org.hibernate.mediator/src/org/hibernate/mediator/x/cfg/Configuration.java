@@ -1,6 +1,7 @@
 package org.hibernate.mediator.x.cfg;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+
+import net.sf.cglib.proxy.MethodProxy;
 
 import org.eclipse.osgi.util.NLS;
 import org.hibernate.mediator.HibernateConsoleRuntimeException;
@@ -132,19 +135,22 @@ public class Configuration extends HObject {
 	}
 	
 	public HibernateMappingExporter createHibernateMappingExporter(File folder2Gen, final IExporterNewOutputDir enod) {
-		return new HibernateMappingExporter(this, folder2Gen) {
+		return HibernateMappingExporter.newInstance(this, folder2Gen, new HibernateMappingExporter.IExportPOJOInterceptor() {
 			@SuppressWarnings("unchecked")
-			protected void exportPOJO(Map additionalContext, POJOClass element) {
-				File outputdir4FileOld = getOutputDirectory();
+			public Object exportPOJO(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+				HibernateMappingExporter hme = HibernateMappingExporter.newInstance(obj);
+				POJOClass element = POJOClass.newInstance(args[1]);
+				File outputdir4FileOld = hme.getOutputDirectory();
 				File outputdir4FileNew = enod.getNewOutputDir(element, outputdir4FileOld);
 				if (!outputdir4FileNew.exists()) {
 					outputdir4FileNew.mkdirs();
 				}
-				setOutputDirectory(outputdir4FileNew);
-				super.exportPOJO(additionalContext, element);
-				setOutputDirectory(outputdir4FileOld);
+				hme.setOutputDirectory(outputdir4FileNew);
+				Object res = proxy.invokeSuper(obj, args);
+				hme.setOutputDirectory(outputdir4FileOld);
+				return res;
 			}
-		};
+		});
 	}
 	
 	@SuppressWarnings("unchecked")
