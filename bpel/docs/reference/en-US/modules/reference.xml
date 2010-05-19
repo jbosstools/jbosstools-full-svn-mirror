@@ -9,7 +9,7 @@
         </keywordset>
     </chapterinfo>
     <title>Reference</title>
-    <para>This chapter includes detailed reference information about all BPEL tools Wizards and editors.</para>
+    <para>This chapter includes detailed reference information about all BPEL tools wizards and editors.</para>
     <section>
         <title>Wizards</title>
         <section>
@@ -24,7 +24,7 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>The wizard consists of only one page:</para>
+            <para>It consists of only one page:</para>
             <itemizedlist>
                 <listitem><para>On the page you can adjust the name of the project and the directory where it will be created.</para>
                     <para>If "<property>Use default</property>" option is checked the output directory will be the workspace,
@@ -42,7 +42,8 @@
         </section>
         <section>
             <title>New BPEL Process file Wizard</title>
-            <para>Using New BPEL Process file Wizard user can create BPEL process file and WSDL file if it is necessary.
+            <para>Using <property>New BPEL Process file Wizard</property>
+                user can create BPEL process file and WSDL file if it is necessary.
             The wizard includes several pages:</para>
             <itemizedlist>
                 <listitem><para>The first page has the following options to set:</para>
@@ -88,7 +89,7 @@
                                                 with the one of messages used within the process is empty.There are no any orchestration logic.</para></listitem>
                                             <listitem><para><emphasis>Synchronous BPEL Process</emphasis>  - 
                                                 similar to Asynchronous BPEL Process temlate except the fact that here
-                                                the caller is notified asynchronously when the process completes.</para></listitem>
+                                                the caller is notified synchronously when the process completes.</para></listitem>
                                         </itemizedlist></entry>
                                     <entry>Asynchronous BPEL Process</entry>
                                </row>
@@ -100,7 +101,8 @@
                                 </row>
                             </tbody>
                         </tgroup>
-                    </table>      <figure>
+                    </table>  
+                    <figure>
                         <title>New BPEL Process file Wizard</title>
                         <mediaobject>
                             <imageobject>
@@ -110,10 +112,135 @@
                     </figure>
                     
                 </listitem>
+                <listitem><para>On the second page the user should select the BPEL project 
+                    and folder where the process file will be created:</para>
+                <figure>
+                    <title>New BPEL Process file Wizard</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/reference/bpel_ref_4.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                </listitem>
             </itemizedlist>
+            <note>
+                <para>Process files that are used in the BPEL project must be under the <property>bpelContent</property> folder. Only in this case 
+                    these files can be deployed to JBoss server.
+                </para>
+            </note>
         </section>
+    </section>
+    <section>
+        <title>Editors</title>
+        <section>
+            <title>Business Process Editor</title>
+            <para>Business Process Editor is intended to facilitate the process of changing and 
+                adding new logic to BPEL process file.You can open <emphasis>.bpel</emphasis> 
+                in this editor by right click the file in the project explorer and selecting  
+                <property>Open With...->Business Process Editor</property>
+            </para>
+            <figure>
+                <title>Business Process Editor</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/reference/bpel_ref_5.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>The editor consists of two tabs:<property>Design</property> tab and <property>Source</property> tab.</para>
+       <section>
+           <title>Design tab</title>
+           <para>Design tab is the main part of Business Process Editor.It consists of 3 parts:</para>
+           <itemizedlist>
+               <listitem><para>Visual Pane:</para>
+                   <figure>
+                       <title>Visual Pane of Business Process Editor</title>
+                       <mediaobject>
+                           <imageobject>
+                               <imagedata fileref="images/reference/bpel_ref_6.png"/>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>
+                   <para>The Visual Pane graphically displays the order in which the activities are executed.</para>
+               </listitem>
+               <listitem><para>Palette:</para>
+                   <figure>
+                       <title>Palette of Business Process Editor</title>
+                       <mediaobject>
+                           <imageobject>
+                               <imagedata fileref="images/reference/bpel_ref_7.png"/>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>
+                   <para>The <property>Palette</property> represents  different elements of the BPEL activities
+                       organized into functional categories.
+                       Using it the user can easily add new elements to the sequence activity.
+                       To do this,he should just click the required element and then drug
+                       and drop it to the place on the Visual Pane where it should be added.</para>
+               </listitem>
+               <listitem><para>Behavior Components View:</para>
+                  <figure>
+                      <title>Behavior Components View of Business Process Editor</title>
+                       <mediaobject>
+                           <imageobject>
+                               <imagedata fileref="images/reference/bpel_ref_8.png"/>
+                           </imageobject>
+                       </mediaobject>
+                  </figure>
+                   <para>Execution behavior components are grouped into the <property>
+                       Behavior Components View</property>.
+                       The view is also fully syncronized with Properties view where you can customize all
+                       the properties of the component.</para>
+                   <figure>
+                       <title>Process Structure View of Business Process Editor</title>
+                       <mediaobject>
+                           <imageobject>
+                               <imagedata fileref="images/reference/bpel_ref_9.png"/>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>                  
+                   <para>To add an element to some component group click plus(<inlinemediaobject>
+                       <imageobject>
+                           <imagedata fileref="images/reference/bpel_ref_10.png"/>
+                       </imageobject>
+                   </inlinemediaobject>) icon,
+                       for its deleting you should click the element and
+                       use its <property>Delete</property> option in the popup menu.</para>  
+               </listitem>
+             
+           </itemizedlist>
+           
+           
+       </section>
+            <section>
+                <title>Source tab</title>
+                <para>Source tab can be used for editing BPEL process file directly.
+                    The validation of file structure is also available.
+                 </para>
+                <figure>
+                    <title>Validation error in Source tab</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/reference/bpel_ref_11.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para>If the user wants to disable/unable validation he can do it by following
+                    <property>Window->Preferences->Validation</property>.</para>
+                <figure>
+                    <title>Validation error in Source tab</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/reference/bpel_ref_12.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>     
+            </section>
+       </section>
         
     </section>
+    
     
 </chapter>
 
