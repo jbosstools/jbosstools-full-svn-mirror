@@ -189,6 +189,11 @@
 				</listitem>
 				<listitem>
 					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1181">JBDS-1181</ulink>: When creating a <guilabel>New Process Project</guilabel> the <guilabel>Configure JBoss jBPM Runtime</guilabel> screen included a link to <guilabel>Download the JBoss jBPM package if you have none available yet.</guilabel> that would direct users to a location that did not exist. For the previous release a redirect was created after this issue was found that directed a user to the sourceforge location of the files. This version of the JBoss Developer Studio sees the removal of the link.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1168">JBDS-1168</ulink>: The JBoss Developer Studio Installer was missleading in terms of system requirements. The consequence of this was that some users were unsure if the JBoss Developer Studio supported Java 6 even though it was required for the JBoss Enterprise Application Platform 5 and which JDK distributions were supported. The text in Step 4 of installation has been updated to inform the user that the JBoss Developer Studio works with both Java 5 and 6 (though Java 6 is required for JBoss Enterprise Application Platform 5), has been tested with the OpenJDK, SunJDK and IBM JDK distributions and the misspelt <emphasis>gij Java</emphasis> has been corrected to <emphasis>gcj Java</emphasis>.
 					</para>
 				</listitem>
