@@ -125,7 +125,9 @@
         <listitem>
           <para>Select <emphasis>
               <property>Library Provided by Target Runtime</property>
-            </emphasis> as <property>Type</property> of <property>JSF Implementation Library</property>. We will use the JSF implementation that comes with JBoss server.</para>
+            </emphasis> as <property>Type</property> of <property>JSF Implementation
+              Library</property>. We will use the JSF implementation that comes with JBoss
+            server.</para>
         </listitem>
         <listitem>
           <para>Click <emphasis>
@@ -166,9 +168,9 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Select <property>JDBC Connection Properties</property>. Make sure the URL is set to
-          <emphasis>
-          <property>jdbc:hsqldb:hsql://localhost:1701</property>
+      <para>Select <property>HSQLDB Profile Properties</property>. Make sure the Database location
+        is set to <emphasis>
+          <property>hsql://localhost:1701</property>
         </emphasis></para>
       <figure>
         <title>JDBC Connection Properties</title>
@@ -180,11 +182,14 @@
       </figure>
       <para>Try click on <property>Test Connection</property> button. It probably won’t work. This
         happens if the hsql jdbc driver is not exactly the same. This can be worked around by
-        modifying the HSQLDB database driver settings. To modify the settings, click the <property
-          >“...”</property> next to the drop-down box.</para>
-      <para>The proper Driver JAR File should be listed under <property>Driver File(s)</property>.
-        Select the hsqldb.jar file found in the database/lib directory and click on <property
-          >Ok</property>.</para>
+        modifying the HSQLDB database driver settings. To modify the settings, click the Edit Driver Definition Driver(
+            <inlinemediaobject><imageobject>
+            <imagedata fileref="images/first_seam/first_seam9_1.png"/>
+          </imageobject>
+        </inlinemediaobject>) .</para>
+      <para>The proper Driver JAR File should be listed under <property>Jar List</property>. Select
+        the hsqldb.jar file found in the jbdevstudio/jboss-eap/jboss-as/common/lib/ directory and
+        click <property>Ok</property>.</para>
       <figure>
         <title>Driver Details</title>
         <mediaobject>
@@ -193,18 +198,8 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Select <property>Hypersonic DB</property> and click on <property>Ok</property>. Again,
-        this only happens if the selected hsqldb.jar is different from the running database.</para>
-      <figure>
-        <title>Hypersonic DB Selecting</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/first_seam/first_seam11.png"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
       <para>Now, the <property>Test Connection</property> should succeed. After testing the
-        connection, click on Ok.</para>
+        connection, click <emphasis><property>Ok</property></emphasis>.</para>
       <figure>
         <title>Connection Testing</title>
         <mediaobject>
