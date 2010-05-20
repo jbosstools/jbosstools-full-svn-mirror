@@ -530,13 +530,13 @@ public class OpenMappingUtils {
 	 * @param element
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public static IFile searchInEjb3MappingFiles(ConsoleConfiguration consoleConfig, Object element) {
 		IFile file = null;
     	if (consoleConfig == null) {
         	return file;
     	}
 		final ConsoleConfiguration cc2 = consoleConfig;
+		/** /
 		List<String> documentPaths = (List<String>)consoleConfig.execute(new ExecutionContext.Command() {
 			public Object execute() {
 				return OpenMappingUtilsEjb3.enumDocuments(
@@ -544,6 +544,11 @@ public class OpenMappingUtils {
 						cc2.getEntityResolver());
 			}
 		});
+		/**/
+		List<String> documentPaths = OpenMappingUtilsEjb3.enumDocuments(
+			cc2.getPreferences().getPersistenceUnitName(),
+			cc2.getEntityResolver());
+		/**/
     	if (documentPaths == null) {
         	return file;
     	}
