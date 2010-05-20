@@ -21,6 +21,7 @@ import org.eclipse.bpel.common.extension.model.ExtensionmodelFactory;
 import org.eclipse.bpel.model.CorrelationSet;
 import org.eclipse.bpel.model.messageproperties.Property;
 import org.eclipse.bpel.ui.util.BPELUtil;
+import org.eclipse.bpel.validator.Builder;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -51,13 +52,9 @@ public class BPELResourceChangeListener implements IResourceChangeListener {
 
 		public boolean visit(final IResourceDelta delta) throws CoreException {
 			IResource target = delta.getResource();
-			if (target.getType() == IResource.FILE) {
-				String ext = target.getFileExtension();
-				if (ext != null) {
-					if (ext.equals(IBPELUIConstants.EXTENSION_BPEL)) {
-						handleBPEL(delta);
-					}
-				}
+			// https://jira.jboss.org/browse/JBIDE-6006
+			if (Builder.isBPELFile(target)) {
+				handleBPEL(delta);
 			}
 			return true;
 		}

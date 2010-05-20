@@ -333,10 +333,16 @@ public class DeployUtils {
 					if (type.getId().equals(BPEL_CONTENT_TYPE))
 						return true;
 				}
+				
+				// https://jira.jboss.org/browse/JBIDE-6006
+				// this causes all kinds of nasty stack traces - see https://jira.jboss.org/browse/JBIDE-6093
+				// since this version of the ODE deployment editor is part of the same feature as the BPEL editor
+				// plugin, we'll go on the assumption that they will always be installed together. You'd have to
+				// something pretty dangerous to install one without the other.
 				// maybe the eclipse BPEL editor is not installed?
 				// fall back to using '.bpel' file extension
-				if ("bpel".equals(((IFile)res).getFileExtension()))
-					return true;
+				//if ("bpel".equals(((IFile)res).getFileExtension()))
+				//	return true;
 			}
 		}
 		catch(Exception ex)

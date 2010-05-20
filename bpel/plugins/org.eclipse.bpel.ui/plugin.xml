@@ -657,11 +657,9 @@
 	        name="BPEL Editor File"
 	        file-extensions="bpel,bpel2,xml"
 	        priority="normal">
+	      <!-- problems with XMLRootElementContentDescriber2 - had to roll my own -->
 	      <describer
-              class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber2">
-            <parameter
-                name="element"
-                value="{http://docs.oasis-open.org/wsbpel/2.0/process/executable}process"/>
+              class="org.eclipse.bpel.ui.BPELContentDescriber">
           </describer>
 	   </content-type>
 	</extension>
