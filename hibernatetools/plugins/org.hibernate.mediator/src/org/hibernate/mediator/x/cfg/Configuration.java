@@ -136,7 +136,6 @@ public class Configuration extends HObject {
 	
 	public HibernateMappingExporter createHibernateMappingExporter(File folder2Gen, final IExporterNewOutputDir enod) {
 		return HibernateMappingExporter.newInstance(this, folder2Gen, new HibernateMappingExporter.IExportPOJOInterceptor() {
-			@SuppressWarnings("unchecked")
 			public Object exportPOJO(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
 				HibernateMappingExporter hme = HibernateMappingExporter.newInstance(obj);
 				POJOClass element = POJOClass.newInstance(args[1]);

@@ -6,7 +6,7 @@ import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.CallbackFilter;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.NoOp;
+import net.sf.cglib.proxy.MethodProxy;
 
 import org.hibernate.mediator.base.HObject;
 
@@ -39,7 +39,12 @@ public class Filter extends HObject {
 	public static Enhancer createEnhancer(Class<?> clazz, MethodInterceptor mi) {
 		Enhancer e = new Enhancer();
         e.setSuperclass(clazz);
-        e.setCallbacks(new Callback[] { NoOp.INSTANCE, mi });
+		MethodInterceptor miDef = new MethodInterceptor() {
+			public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+				return proxy.invokeSuper(obj, args);
+			}
+		};
+        e.setCallbacks(new Callback[] { miDef, mi });
         e.setCallbackFilter(baseNodeFilter);
         return e;
 	}

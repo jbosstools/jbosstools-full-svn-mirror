@@ -16,7 +16,6 @@ import javax.persistence.mediator.x.Entity;
 import javax.persistence.mediator.x.MappedSuperclass;
 import javax.persistence.mediator.x.spi.PersistenceUnitTransactionType;
 
-import org.hibernate.mediator.x.ejb.Ejb3Configuration;
 import org.hibernate.mediator.x.ejb.HibernatePersistence;
 import org.hibernate.mediator.x.ejb.packaging.ClassFilter;
 import org.hibernate.mediator.x.ejb.packaging.Entry;
