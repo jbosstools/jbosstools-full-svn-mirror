@@ -174,6 +174,11 @@
 			<itemizedlist>
 				<listitem>
 					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1228">JBDS-1228</ulink>: The JBoss Developer Studio installation wizard would display incorrect step numbering, seeming to jump sporadically. This occured because steps the installer takes that are invisible to the user were still included in the displayed step numbering on each screen. In this release the step numbering has been corrected to count only the steps the user participates in.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1220">JBDS-1220</ulink>: Within the JBoss Developer Studio, the browse button that allowed a user to select the location of the JBoss Application Server would not default to the location where the JBoss Enterprise Application Platform was installed. The consequence of this was that a user would have to search for the installed location of the JBoss Enterprise Application Platform. Though installation of the JBoss Enterprise Application Platform is optional, if it is installed it can be assumed that this will be the Application Server a user will wish to use. In order to improve the user experience, when the JBoss Enterprise Application Platform is installed, the server location browse button will default to that directory.
 					</para>
 				</listitem>
