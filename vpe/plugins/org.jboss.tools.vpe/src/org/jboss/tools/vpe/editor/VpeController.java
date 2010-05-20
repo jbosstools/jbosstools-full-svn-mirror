@@ -128,7 +128,6 @@ import org.jboss.tools.vpe.resref.core.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.TaglibReferenceList;
 import org.jboss.tools.vpe.selbar.SelectionBar;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
-import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
@@ -1202,7 +1201,7 @@ public class VpeController implements INodeAdapter,
 				// so we start it's manually
 				// mareshkau
 				if (vpeDnD.isDragIconClicked(mouseEvent)) {
-					vpeDnD.dragGesture(mouseEvent);
+					vpeDnD.dragStart(mouseEvent);
 				} else {
 					selectionManager.setSelection(mouseEvent);					
 				}

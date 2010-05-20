@@ -38,6 +38,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
+import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -102,7 +103,7 @@ public class VpeDnD implements MozillaDndListener {
 		draggablePattern = new DraggablePattern(mozillaEditor);
 	}
 
-	public void dragGesture(nsIDOMEvent domEvent) {
+	public void dragStart(nsIDOMEvent domEvent) {
 		nsIDOMElement selectedElement = vpeController.getXulRunnerEditor()
 				.getLastSelectedElement();
 		// start drag sessionvpe-element
@@ -110,8 +111,6 @@ public class VpeDnD implements MozillaDndListener {
 			Point pageCoords = getPageCoords(domEvent);
 			draggablePattern.startSession(pageCoords.x, pageCoords.y);
 			startDragSession(selectedElement);
-
-			draggablePattern.closeSession();
 			domEvent.stopPropagation();
 			domEvent.preventDefault();
 		}
@@ -159,16 +158,35 @@ public class VpeDnD implements MozillaDndListener {
 		disposeDropableArea();
 		vpeController.onRefresh();
 	}
-	
+
 	public void dragExit(nsIDOMEvent domEvent) {
-//		disposeDropableArea();
-		nsIDOMNode visualNode = (nsIDOMNode) domEvent.getTarget()
-				.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
-		if (visualNode.getNodeType()==nsIDOMNode.DOCUMENT_NODE) {
-			disposeDropableArea();
+		nsIDOMNode eventTargetNode = (nsIDOMNode) domEvent.getTarget()
+			.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+		
+		if (dropableArea != null) {
+			nsIDOMNode dropTargetNode = dropableArea.getNode();
+			
+			boolean targetNodeIsTemporary = false;
+			if (eventTargetNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
+				nsIDOMElement eventTargetElement = (nsIDOMElement)
+						eventTargetNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				targetNodeIsTemporary = DndUtil.isTemporaryDndElement(eventTargetElement);
+			}
+			boolean eventTargetIsAscedantOfDropTarget = VisualDomUtil.isAscendant(eventTargetNode, dropTargetNode);
+			
+			// ignore events which are fired by the reason
+			// of drawing the dropable area
+			if (targetNodeIsTemporary || eventTargetIsAscedantOfDropTarget) {
+				disposeDropableArea();
+			}
 		}
 	}
 	
+	public void dragEnd(nsIDOMEvent domEvent) {
+		disposeDropableArea();
+		draggablePattern.closeSession();
+	}
+
 	public void selectionChanged() {
 		nsIDOMElement selectedElement = vpeController.getXulRunnerEditor()
 				.getLastSelectedElement();
@@ -247,16 +265,15 @@ public class VpeDnD implements MozillaDndListener {
 		if (originalVisualNode == null) {
 			return;
 		}
-		
-		if (dropableArea == null) {
-			dropableArea = new DropableArea(document);
-		}
+
 		Node originalSourceNode = vpeController.getDomMapping()
 				.getNearSourceNode(originalVisualNode);
-		if (originalSourceNode.getNodeType() == Node.TEXT_NODE) {
+		
+		if (originalSourceNode != null
+				&& originalSourceNode.getNodeType() == Node.TEXT_NODE) {
 			originalSourceNode = originalSourceNode.getParentNode();
 		}
-		
+
 		final Node highlightedNode;
 		final EnumSet<DropTarget> dropTargets;
 		if (dropResolver.canDrop(originalSourceNode)) {
@@ -271,14 +288,14 @@ public class VpeDnD implements MozillaDndListener {
 				dropTargets = EnumSet.of(DropTarget.BEGIN, DropTarget.END);
 			}
 		} else {
-			Node sourceNode;
+			Node sourceNode = null;
 			Node sourceNodeParent = originalSourceNode;
 			boolean nodeFound = false;
-			do {
+			while (sourceNodeParent != null && !nodeFound) {
 				sourceNode = sourceNodeParent;
 				sourceNodeParent = sourceNode.getParentNode();
 				nodeFound = dropResolver.canDrop(sourceNodeParent);
-			} while (sourceNodeParent != null && !nodeFound);
+			}
 			
 			if (nodeFound) {
 				highlightedNode = sourceNode;
@@ -289,13 +306,21 @@ public class VpeDnD implements MozillaDndListener {
 			}
 		}
 
-		dropableArea.setDropTargets(dropTargets);
-		dropableArea.setNode(
-				vpeController.getDomMapping().getNearVisualNode(highlightedNode));
-		Point mouseCoords = getPageCoords(event);
-		dropableArea.setHighlightedDropTarget(mouseCoords.x, mouseCoords.y);
-		dropableArea.setVisible(true);
-		dropableArea.redraw();
+		if (highlightedNode != null) {
+			if (dropableArea == null) {
+				dropableArea = new DropableArea(document);
+			}
+
+			dropableArea.setDropTargets(dropTargets);
+			dropableArea.setNode(
+					vpeController.getDomMapping().getNearVisualNode(highlightedNode));
+			Point mouseCoords = getPageCoords(event);
+			dropableArea.setHighlightedDropTarget(mouseCoords.x, mouseCoords.y);
+			dropableArea.setVisible(true);
+			dropableArea.redraw();
+		} else {
+			disposeDropableArea();
+		}
 	}
 
 	private Point getClientCoords(nsIDOMEvent event) {
@@ -457,11 +482,12 @@ public class VpeDnD implements MozillaDndListener {
 				if (sourceDropInfo.canDrop()) {
 					VpeDnDHelper dropper = new VpeDnDHelper();
 					dropper.setDndData(false, true);
+					Node node = sourceInnerDragInfo.getNode();
 					dropper.drop(vpeController.getPageContext(),
 							sourceInnerDragInfo, sourceDropInfo);
 
 					// select dropped node, JBIDE-6239
-					setSelectedNode(sourceInnerDragInfo.getNode());
+					setSelectedNode(node);
 
 					if (sourceInnerDragInfo != null) {
 						sourceInnerDragInfo = null;
@@ -537,6 +563,7 @@ public class VpeDnD implements MozillaDndListener {
 		}
 	}
 
+	@SuppressWarnings("restriction")
 	private Point getSourceSelectionRange(Node sourceInitNode, int sourceInitOffset) {
 		int offset=0;
 		int position=0;

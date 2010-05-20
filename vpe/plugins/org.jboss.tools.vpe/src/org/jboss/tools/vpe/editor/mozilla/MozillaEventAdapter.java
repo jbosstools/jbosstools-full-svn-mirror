@@ -54,11 +54,13 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 	private static final String KEYPRESS="keypress"; //$NON-NLS-1$
 	private static final String DBLCLICK="dblclick"; //$NON-NLS-1$
 	private static final String CONTEXTMENUEVENTTYPE="contextmenu"; //$NON-NLS-1$
-	private static final String DRAGGESTUREEVENT = "draggesture"; //$NON-NLS-1$
+//	private static final String DRAGGESTUREEVENT = "draggesture"; //$NON-NLS-1$
+	private static final String DRAGSTART = "dragstart"; //$NON-NLS-1$
 	private static final String DRAGOVEREVENT = "dragover"; //$NON-NLS-1$
 	private static final String DRAGDROPEVENT = "dragdrop"; //$NON-NLS-1$
 	private static final String DRAGENTEREVENT = "dragenter"; //$NON-NLS-1$
 	private static final String DRAGEXITEVENT = "dragexit"; //$NON-NLS-1$
+	private static final String DRAGEND = "dragend"; //$NON-NLS-1$
 
 	private EventListenerList listeners = new EventListenerList();
 	private nsIDOMEventTarget window;
@@ -107,8 +109,9 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 		if (document != null) {
 			document.addEventListener(MozillaEventAdapter.DRAGDROPEVENT, this, false);
 			document.addEventListener(MozillaEventAdapter.DRAGENTEREVENT, this, false);
+			document.addEventListener(MozillaEventAdapter.DRAGEND,this, false);
 			document.addEventListener(MozillaEventAdapter.DRAGEXITEVENT,this, false);
-			document.addEventListener(MozillaEventAdapter.DRAGGESTUREEVENT, this, false);
+			document.addEventListener(MozillaEventAdapter.DRAGSTART, this, false);
 			document.addEventListener(MozillaEventAdapter.DRAGOVEREVENT, this, false);
 			
 			document.addEventListener(MozillaEventAdapter.KEYPRESS, this, false);
@@ -136,8 +139,9 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 		if (document != null) {
 			document.removeEventListener(MozillaEventAdapter.DRAGDROPEVENT, this, false);
 			document.removeEventListener(MozillaEventAdapter.DRAGENTEREVENT, this, false);
+			document.removeEventListener(MozillaEventAdapter.DRAGEND, this, false);
 			document.removeEventListener(MozillaEventAdapter.DRAGEXITEVENT, this, false);
-			document.removeEventListener(MozillaEventAdapter.DRAGGESTUREEVENT, this, false);
+			document.removeEventListener(MozillaEventAdapter.DRAGSTART, this, false);
 			document.removeEventListener(MozillaEventAdapter.DRAGOVEREVENT, this, false);
 			
 			document.removeEventListener(MozillaEventAdapter.KEYPRESS, this, false); 
@@ -286,7 +290,7 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 					MozillaContextMenuListener.class)) {
 				listener.onShowContextMenu(0, domEvent, node);
 			}
-		} else if(DRAGGESTUREEVENT.equals(eventType)) {
+		} else if(DRAGSTART.equals(eventType)) {
 			// fix of JBIDE-4998: since drag events now are implemented by
 			// handling CLICKEVENTTYPE, there is no need to handle them here 
 			//for (DndDomEventListener listener : dndListeners) {
@@ -302,6 +306,11 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			domEvent.preventDefault();
 		} else if(DRAGENTEREVENT.equals(eventType)) {
 			//just ignore this event
+		} else if(DRAGEND.equals(eventType)) {
+			for (MozillaDndListener listener : listeners.getListeners(
+					MozillaDndListener.class)) {
+				listener.dragEnd(domEvent);
+			}
 		} else if(DRAGEXITEVENT.equals(eventType)) {
 			for (MozillaDndListener listener : listeners.getListeners(
 					MozillaDndListener.class)) {

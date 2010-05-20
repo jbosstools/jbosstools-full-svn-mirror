@@ -535,5 +535,23 @@ public class VisualDomUtil {
  		}
      	return facetChildren;
      }
+
+	/**
+	 * Returns {@code true} if and only if {@code potentialAscendant}
+	 * is an ascendant of {@code potentialDescendant}.
+	 * 
+	 * @param potentialAscendant must not be {@code null}
+	 * @param potentialDescendant may be {@code null}
+	 */
+	public static boolean isAscendant(nsIDOMNode potentialAscendant,
+			nsIDOMNode potentialDescendant) {
+		while (potentialDescendant != null) {
+			potentialDescendant = potentialDescendant.getParentNode();
+			if (potentialAscendant.equals(potentialDescendant)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }

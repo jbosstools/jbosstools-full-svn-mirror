@@ -26,7 +26,7 @@ public interface MozillaDndListener extends EventListener {
 	 * Drag gesture event handler
 	 * @param event xulrunner drag event
 	 */
-	void dragGesture(nsIDOMEvent event);
+	void dragStart(nsIDOMEvent event);
 
 	/**
 	 * Calls when drop event occurs 
@@ -35,9 +35,9 @@ public interface MozillaDndListener extends EventListener {
 	void dragDrop(nsIDOMEvent domEvent);
 // these methods are never used
 //	void dragEnter(nsIDOMEvent event);
-//	void dragExit(nsIDOMEvent event);
 //	void drop(nsIDOMEvent event);
 //	void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data);
 
 	void dragExit(nsIDOMEvent domEvent);
+	void dragEnd(nsIDOMEvent domEvent);
 }
