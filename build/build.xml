@@ -1126,7 +1126,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						<fail>Overall update site zip contains no features!</fail>
 					</then>
 					<else>
-						<echo level="info">Update site zip for ${COMPONENTS.to.build} contains no features!</echo>
+						<echo level="info"> [ERROR] Update site zip for ${COMPONENTS.to.build} contains no features!</echo>
 					</else>
 				</if>
 			</else>
