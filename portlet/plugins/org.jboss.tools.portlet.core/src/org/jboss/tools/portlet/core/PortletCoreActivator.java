@@ -38,6 +38,9 @@ public class PortletCoreActivator extends Plugin {
 	public static final String CHECK_RUNTIMES = "checkRuntimes"; //$NON-NLS-1$
 	public static final boolean DEFAULT_CHECK_RUNTIMES = true;
 
+	public static final String JSFPORTLET_LIBRARY_PROVIDER = "jsfportlet-library-provider"; //$NON-NLS-1$
+	public static final String JSFPORTLETBRIDGE_LIBRARY_PROVIDER = "jsfportletbridge-library-provider"; //$NON-NLS-1$
+	
 	public static final IOverwriteQuery OVERWRITE_ALL_QUERY = new IOverwriteQuery() {
 		public String queryOverwrite(String pathString) {
 			return IOverwriteQuery.ALL;

@@ -53,8 +53,6 @@ import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProvid
 
 public class PortletPostInstallListener implements IFacetedProjectListener {
 
-	private static final String JSFPORTLET_LIBRARY_PROVIDER = "jsfportlet-library-provider"; //$NON-NLS-1$
-	private static final String JSFPORTLETBRIDGE_LIBRARY_PROVIDER = "jsfportletbridge-library-provider"; //$NON-NLS-1$
 	private static final IProjectFacet seamFacet = ProjectFacetsManager.getProjectFacet("jst.seam"); //$NON-NLS-1$
 	private static final IOverwriteQuery OVERWRITE_NONE_QUERY = new IOverwriteQuery()
     {
@@ -104,17 +102,17 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 					ILibraryProvider libraryProvider = libraryDelegate
 							.getLibraryProvider();
 					String providerId = libraryProvider.getId();
-					if (JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)) {
+					if (PortletCoreActivator.JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)) {
 						JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig libraryConfig = (JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig) libraryDelegate
 								.getLibraryProviderOperationConfig(libraryProvider);
 						portletbridgeRuntime = libraryConfig.getPortletbridgeHome();
 					} else {
 						portletbridgeRuntime = null;
 					}
-					richfacesFromServerRuntime = JSFPORTLET_LIBRARY_PROVIDER.equals(providerId); //$NON-NLS-1$
+					richfacesFromServerRuntime = PortletCoreActivator.JSFPORTLET_LIBRARY_PROVIDER.equals(providerId); //$NON-NLS-1$
 
-					if (JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)
-							|| JSFPORTLET_LIBRARY_PROVIDER.equals(providerId)) {
+					if (PortletCoreActivator.JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)
+							|| PortletCoreActivator.JSFPORTLET_LIBRARY_PROVIDER.equals(providerId)) {
 						AbstractLibraryProviderInstallOperationConfig libraryConfig = (AbstractLibraryProviderInstallOperationConfig) libraryDelegate.getLibraryProviderOperationConfig(libraryProvider);
 						richfacesCapabilities = libraryConfig.isAddRichfacesCapabilities();
 						richfacesRuntime = libraryConfig.getRichfacesRuntime();
@@ -259,6 +257,9 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 	private void addRichfacesFromRichfacesRuntime(
 			IFacetedProject facetedProject) {
 		final boolean isSeamProject = facetedProject.hasProjectFacet(seamFacet);
+		if (!isSeamProject && !richfacesCapabilities) {
+			return;
+		}
 		File richfacesRuntimeHome = new File(richfacesRuntime);
 		File richfacesLib = new File(richfacesRuntimeHome, "lib"); //$NON-NLS-1$
 		if (!richfacesLib.exists()) {
@@ -543,6 +544,10 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 			return null;
 		}
 		List<ZipEntry> list = new ArrayList<ZipEntry>();
+		if (!isSeamProject && !richfacesCapabilities) {
+			return list;
+		}
+		
 		Enumeration<? extends ZipEntry> entries = rootEntry.entries();
 		IProject earProject = getEarProject(facetedProject.getProject(),isSeamProject);
 		
