@@ -2,7 +2,11 @@
 <chapter id="detail">
     <title>Creating and editing a BPEL project</title>
     <para>In the chapter we describe the necessary steps to create a new BPEL project and edit the BPEL files.
-          First of all, you should create a BPEL project.
+       Here and further in the guide we will create
+        a simple echo example, used to respond to a sent message with a
+        modified version of the request message being returned in a response.
+        First of all, you should create a BPEL project.
+        
     </para>
     <section id="createproject">
         <title>Creating a BPEL project</title>

@@ -7,7 +7,7 @@
 <!ENTITY detail SYSTEM "modules/detail.xml">
 <!ENTITY deploy SYSTEM "modules/deploy.xml">
 <!ENTITY reference SYSTEM "modules/reference.xml">
-
+<!ENTITY summary SYSTEM "modules/summary.xml">
 ]>
 
 <book>
@@ -51,4 +51,5 @@
     &detail;
     &deploy;
     &reference;
+    &summary;
 </book> 

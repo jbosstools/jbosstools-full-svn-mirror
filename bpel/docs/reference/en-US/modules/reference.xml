@@ -41,6 +41,23 @@
             </itemizedlist>
         </section>
         <section>
+            <title>Apache ODE Deployment Descriptor Wizard</title>
+            <para>Using this wizard user can create ODE deployment descriptor (deploy.xml) and place it in the temporary directory.It is available with clicking
+                <property>File->New->Other->Apache ODE Deployment Descriptor Wizard</property> in the menu bar.</para>
+            <figure>
+                <title>New BPEL Project Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/reference/bpel_ref_2a.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>On the page you can adjust the name of the deployment descriptor and
+                the directory where it will be created.Note,that you should use <property>
+                    /PROJECT_NAME/bpelContent</property> directory as an output one.</para>
+                                   
+        </section>
+        <section>
             <title>New BPEL Process file Wizard</title>
             <para>Using <property>New BPEL Process file Wizard</property>
                 user can create BPEL process file and WSDL file if it is necessary.
@@ -229,7 +246,7 @@
                 <para>If the user wants to disable/unable validation he can do it by following
                     <property>Window->Preferences->Validation</property>.</para>
                 <figure>
-                    <title>Validation error in Source tab</title>
+                    <title>Validation configuration</title>
                     <mediaobject>
                         <imageobject>
                             <imagedata fileref="images/reference/bpel_ref_12.png"/>
@@ -238,6 +255,129 @@
                 </figure>     
             </section>
        </section>
+      <section>
+          <title>ODE Deployment Descriptor Editor</title>
+          <para>To deploy your process in Ode you need to create a
+              simple deployment descriptor with basic information and
+              <property>ODE Deployment Descriptor Editor</property> facilitates the process of descriptor configuration.
+              You can see how the descriptor file,opened in the editor looks like on the picture below:
+          </para>
+          <figure>
+              <title>ODE Deployment Descriptor Editor</title>
+              <mediaobject>
+                  <imageobject>
+                      <imagedata fileref="images/reference/bpel_ref_13.png"/>
+                  </imageobject>
+              </mediaobject>
+          </figure> 
+          <para>The table below describes the configuration options of the
+              ODE Deployment Descriptor Editor:</para>
+          <table>
+              <title>ODE Deployment Descriptor Editor.Options.</title>   
+              <tgroup cols="3">
+                  <colspec colnum="1" align="left" colwidth="1*"/>
+                  <colspec colnum="2" align="left" colwidth="3*"/>
+                  <colspec colnum="3" align="left" colwidth="1*"/>
+                  
+                  <thead>
+                      <row>
+                          <entry>Section</entry>									
+                          <entry>Options</entry>
+                          <entry>Description</entry>
+                      </row>
+                  </thead>
+                  <tbody>
+                      <row>
+                          <entry morerows='1' valign='middle'><para> 
+                              General</para></entry>
+                          
+                          <entry>This process is</entry>
+                          <entry>Select one of the provided options: 
+                              <itemizedlist>
+                                  <listitem>
+                                      <para><emphasis>activated</emphasis> 
+                                      </para>
+                                  </listitem>
+                                  <listitem>
+                                      <para><emphasis>deactivated</emphasis></para>
+                                  </listitem>
+                                  <listitem>
+                                      <para><emphasis>retired</emphasis> 
+                                      </para>
+                                  </listitem>
+                              </itemizedlist></entry>
+                          
+                      </row> 
+                      <row><entry>Run this process in memory</entry>
+                          <entry>for performance purposes,
+                              you can define the process as being 
+                              executed only in-memory.</entry>
+                      </row>
+                      
+                      <row>
+                          <entry>Inbound Interfaces(Services)</entry>
+                          <entry>Associated Port</entry>
+                          <entry>Click Associated Port and the dropdown list with all available port names will appear.
+                              Select the one you need ,other fields will be filled automatically.
+                              This action configure the services
+                              provided by the process and 
+                              bind each service to an endpoint
+                          </entry>
+                          
+                      </row> 
+                      
+                      <row>
+                          <entry>Outbound Interfaces(Invokes)</entry>
+                          <entry>Associated Port</entry>
+                          <entry>Click Associated Port and the dropdown list with all available port names will appear.
+                              Select the one you need, other fields will be filled automatically.
+                              This action configure the services
+                              invoked by the process</entry>
+                      </row>
+                      <row>
+                          <entry>Process-level Monitoring Events</entry>
+                          <entry>  <itemizedlist>
+                              <listitem><para>
+                                  <emphasis>None</emphasis>
+                              </para></listitem>
+                              <listitem>
+                              <para>
+                                  <emphasis>All</emphasis>
+                              </para>
+                              </listitem>
+                              <listitem>
+                              <para>
+                                  <emphasis>Selected</emphasis>:
+                              </para>
+                                  <itemizedlist>
+                                      <listitem><para>Instance life cycle</para></listitem>
+                                      <listitem><para>Activity life cycle</para></listitem>
+                                      <listitem><para>Data handling</para></listitem>
+                                      <listitem><para>Scope handling</para></listitem>
+                                      <listitem><para>Correlation</para></listitem>
+                                      
+                                  </itemizedlist>
+                                  
+                              </listitem>
+                          </itemizedlist>
+                          </entry>
+                          <entry>Using ODE's deployment descriptor, it's also 
+                              possible to make events generation to 
+                              filtrate which ones get created.
+                              All option  just duplicates the default behaviour,
+                              when nothing is specified in the deployment.</entry>
+                      </row>
+                      <row>
+                          <entry>Scope-level Monitoring Events</entry>
+                          <entry>Scope</entry>
+                          <entry>This section makes it possible to
+                              define filtering for each scope of your process.
+                              </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+      </section>
         
     </section>
     
