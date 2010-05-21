@@ -10,5 +10,5 @@ rsync -aq ${WORKSPACE}/*/site/target/site.zip ${WORKSPACE}/site/${ZIPNAME}
 
 # publish to download.jboss.org
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools"; fi
-rsync -aq --delete ${WORKSPACE}/site/* $DESTINATION/builds/nightly/3.2.helios/${JOB_NAME}/
+rsync -arzq --delete ${WORKSPACE}/site/* $DESTINATION/builds/nightly/3.2.helios/${JOB_NAME}/
 
