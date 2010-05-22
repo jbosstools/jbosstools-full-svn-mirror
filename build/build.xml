@@ -544,14 +544,18 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		</if>
 	</target>
 
-	<target name="collect.test.results.for.hudson" depends="init" if="isInHudson" description="collect test results after a pure maven build so Hudson has something to see">
+	<target name="collect.test.results.for.hudson"
+	        depends="init"
+	        if="isInHudson"
+	        description="collect test results after a pure maven build so Hudson has something to see"
+	>
 		<var name="tests.results.found" value="false" />
-		<for param="test.dir" delimiter=", 
+		<for param="test.xml.files" delimiter=", 
 	">
 			<path>
-				<dirset dir="${WORKINGDIR}"
-				        includes="**/target/surefire-reports/TEST-*.xml, **/**/target/surefire-reports/TEST-*.xml"
-				        excludes="**/*NoTestsRun.xml"
+				<fileset dir="${WORKINGDIR}"
+				         includes="**/target/surefire-reports/TEST-*.xml"
+				         excludes="**/*NoTestsRun.xml"
 				/>
 			</path>
 			<sequential>
@@ -564,7 +568,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				<antcall target="collect.test.results">
 					<param name="COMPONENT" value="." />
 				</antcall>
-				<antcall target="collect.all.test.results"/>
+				<antcall target="collect.all.test.results" />
 			</then>
 			<else>
 				<antcall target="create.empty.test.results.file" />
