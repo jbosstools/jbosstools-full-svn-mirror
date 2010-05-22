@@ -781,6 +781,14 @@ rm -fr /tmp/.X3-lock
 		>
 			<fileset dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports/TEST-*.xml" />
 		</copy>
+		<if>
+			<isset property="move.test.results" />
+			<then>
+				<delete dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports" />
+			</then>
+			<else>
+			</else>
+		</if>
 	</target>
 
 	<target name="collect.all.test.results" unless="no.tests.run">
