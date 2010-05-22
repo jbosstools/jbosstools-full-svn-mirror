@@ -544,11 +544,22 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		</if>
 	</target>
 
+	<!--
+		To run this after a maven build in Hudson, set these properties:
+			basedir=${WORKSPACE}/sources
+			WORKINGDIR=${WORKSPACE}/sources
+			COMPONENT=.
+			move.test.results=true 
+	-->
 	<target name="collect.test.results.for.hudson"
 	        depends="init"
 	        if="isInHudson"
 	        description="collect test results after a pure maven build so Hudson has something to see"
 	>
+		<property name="basedir" value="${WORKSPACE}/sources" />
+		<property name="WORKINGDIR" value="${WORKSPACE}/sources" />
+		<property name="COMPONENT" value="." />
+		<property name="move.test.results" value="true" />
 		<var name="tests.results.found" value="false" />
 		<for param="test.xml.files" delimiter=", 
 	">
