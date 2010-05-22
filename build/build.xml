@@ -544,7 +544,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		</if>
 	</target>
 
-	<target name="collect.test.results.for.hudson" description="collect test results after a pure maven build so Hudson has something to see">
+	<target name="collect.test.results.for.hudson" depends="init" if="isInHudson" description="collect test results after a pure maven build so Hudson has something to see">
 		<var name="tests.results.found" value="false" />
 		<for param="test.dir">
 			<path>
