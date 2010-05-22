@@ -561,15 +561,16 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<property name="COMPONENT" value="." />
 		<property name="move.test.results" value="true" />
 		<var name="tests.results.found" value="false" />
-		<echo>basedir = ${basedir}
+		<echo level="debug">basedir = ${basedir}
 WORKINGDIR = ${WORKINGDIR}
 COMPONENT = ${COMPONENT}</echo>
+		<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
 		<for param="test.xml.files" delimiter=", 
 	">
 			<path>
 				<fileset dir="${WORKINGDIR}"
 				         includes="**/target/surefire-reports/TEST-*.xml, **/**/target/surefire-reports/TEST-*.xml"
-				         excludes="**/*NoTestsRun.xml, **/**/*NoTestsRun.xml"
+				         excludes="**/TEST-*NoTestsRun.xml, **/**/TEST-*NoTestsRun.xml"
 				/>
 			</path>
 			<sequential>
