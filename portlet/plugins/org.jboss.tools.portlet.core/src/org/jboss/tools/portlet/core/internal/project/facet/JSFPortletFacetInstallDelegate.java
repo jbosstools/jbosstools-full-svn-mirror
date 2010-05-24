@@ -349,8 +349,8 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 				if (isSeamFacet) {
 					return true;
 				}
-				if (!libraryConfig.isAddRichfacesCapabilities()) {
-					return false;
+				if (libraryConfig.isAddRichfacesCapabilities()) {
+					return true;
 				}
 			}
 			
