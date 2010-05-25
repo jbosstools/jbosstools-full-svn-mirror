@@ -8,6 +8,7 @@
 <!ENTITY deploy SYSTEM "modules/deploy.xml">
 <!ENTITY reference SYSTEM "modules/reference.xml">
 <!ENTITY summary SYSTEM "modules/summary.xml">
+<!ENTITY tasks SYSTEM "modules/tasks.xml">
 ]>
 
 <book>
@@ -48,8 +49,9 @@
     <toc/> 
     &overview;
     &install;
-    &detail;
-    &deploy;
+    &tasks;
+    <!--  &detail;
+        &deploy;-->
     &reference;
     &summary;
 </book> 

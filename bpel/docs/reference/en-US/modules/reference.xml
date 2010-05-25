@@ -105,7 +105,7 @@
                                             <listitem><para><emphasis>Empty BPEL Process</emphasis>  - list of services participating in this BPEL process together
                                                 with the one of messages used within the process is empty.There are no any orchestration logic.</para></listitem>
                                             <listitem><para><emphasis>Synchronous BPEL Process</emphasis>  - 
-                                                similar to Asynchronous BPEL Process temlate except the fact that here
+                                                similar to Asynchronous BPEL Process template except the fact that here
                                                 the caller is notified synchronously when the process completes.</para></listitem>
                                         </itemizedlist></entry>
                                     <entry>Asynchronous BPEL Process</entry>
