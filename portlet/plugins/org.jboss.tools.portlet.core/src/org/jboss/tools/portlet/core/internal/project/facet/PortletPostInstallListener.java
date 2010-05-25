@@ -414,7 +414,9 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 			IContainer folder = rootFolder.getUnderlyingFolder();
 			IContainer webinf = folder.getFolder(new Path(
 					IPortletConstants.WEB_INF_LIB));
-			deleteOldRichfacesLibs(earProject, webinf);
+			if (!addRichfacesFromRichfacesRuntime) {
+				deleteOldRichfacesLibs(earProject, webinf);
+			}
 			IPath destPath = folder.getFullPath();
 	
 			ImportOperation op = new ImportOperation( destPath,

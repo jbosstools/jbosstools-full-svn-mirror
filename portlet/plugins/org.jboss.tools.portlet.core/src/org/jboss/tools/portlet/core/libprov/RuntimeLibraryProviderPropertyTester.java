@@ -26,6 +26,12 @@ public final class RuntimeLibraryProviderPropertyTester extends PropertyTester {
 			}
 			IRuntime runtime = FacetUtil.getRuntime(primaryRuntime);
 			if (runtime != null) {
+				if ("isJSFPortletRuntime".equals(property)) { //$NON-NLS-1$
+					String id = runtime.getRuntimeType().getId();
+					if (! "org.jboss.ide.eclipse.as.runtime.eap.43".equals(id) && ! "org.jboss.ide.eclipse.as.runtime.42".equals(id)) {  //$NON-NLS-1$//$NON-NLS-2$
+						return false;
+					}
+				}
 				File location = runtime.getLocation().toFile();
 				return PortletRuntimeComponentProvider.isPortalPresent(location, runtime, property);
 			}
