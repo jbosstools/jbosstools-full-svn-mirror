@@ -1,4 +1,4 @@
-Total of 20 req'd tgzs/zips/jars.
+Total of 21 req'd tgzs/zips/jars.
 
 BIRT 2.6 -> http://www.eclipse.org/downloads/download.php?file=/birt/downloads/build_list.php 
 ->
@@ -43,17 +43,16 @@ wget "http://www.eclipse.org/downloads/download.php?file=/webtools/downloads/dro
 
 SWTBot 2.0 e36 ->
 http://www.eclipse.org/swtbot/downloads.php ->
-wget "http://www.eclipse.org/downloads/download.php?r=1&file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse-2.0.0.568-dev-e36.zip&r=1" \
- "http://www.eclipse.org/downloads/download.php?r=1&file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.test.junit4-2.0.0.568-dev-e36.zip&r=1" \
-"http://www.eclipse.org/downloads/download.php?r=1&file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.gef-2.0.0.568-dev-e36.zip&r=1"
+wget "http://www.eclipse.org/downloads/download.php?r=1&file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse-2.0.0.568-dev-e36.zip" \
+ "http://www.eclipse.org/downloads/download.php?r=1&file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.test.junit4-2.0.0.568-dev-e36.zip" \
+"http://www.eclipse.org/downloads/download.php?r=1&file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.gef-2.0.0.568-dev-e36.zip" \
+"http://www.eclipse.org/downloads/download.php?r=1&file=/technology/swtbot/helios/dev-build/swtbot-update-site-2.0.0.568-dev-e35.zip"
 
 ------------
 
-3 Custom built zips:
+5 custom built zips:
 
-Basebuilder: org.eclipse.releng.basebuilder_R36_RC1.zip
-	latest tag:
-http://wiki.eclipse.org/Platform-releng-basebuilder#Current_build_tag_for_3.6_stream_builds_.28Helios.29
+Basebuilder from latest tag (http://wiki.eclipse.org/Platform-releng-basebuilder#Current_build_tag_for_3.6_stream_builds_.28Helios.29)
 	cvs -d :pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse -q co -d
 org.eclipse.releng.basebuilder_R36_RC1 -r R36_RC1
 org.eclipse.releng.basebuilder
@@ -61,10 +60,15 @@ org.eclipse.releng.basebuilder
 ../org.eclipse.releng.basebuilder_R36_RC1.zip ./*
 
 m2eclipse-0.10.0.20100209-0800.zip
-	see m2eclipse/build.xml
+	run m2eclipse/build.xml
 
 Subvsve079.I201005121900_SVNconn222.I201005121900_SVNKit133.6648_JNA323_ECF310.v201005082345-Update.zip
-	see svn/build.xml
-	http://divby0.blogspot.com/2009/07/my-love-hate-with-svn-part-6.html
+	run svn/build.xml
+	http://divby0.blogspot.com/2010/05/my-love-hate-with-svn-part-8.html
 	http://wiki.eclipse.org/Equinox/p2/Ant_Tasks/Partial_Mirroring/Example
 
+b3 Aggregator Engine
+	ssh nickb@build.eclipse.org "cd /home/data/httpd/download.eclipse.org/modeling/emft/b3/updates-3.6; zip -9r ~/b3.aggregator-repo-0.1.0.r01001_e36.zip * -x \*.gz"
+	ssh nickb@build.eclipse.org "cd /home/data/httpd/download.eclipse.org/tools/buckminster/updates-3.6; zip -9r ~/buckminster-repo-1.3.0.r11439_e36.zip * -x \*.gz"
+	scp nickb@build.eclipse.org:~/b3.agg*.zip .
+	scp nickb@build.eclipse.org:~/buckminster*.zip .
