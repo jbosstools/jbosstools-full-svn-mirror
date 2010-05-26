@@ -54,10 +54,9 @@ wget "http://www.eclipse.org/downloads/download.php?r=1&file=/technology/swtbot/
 
 Basebuilder from latest tag (http://wiki.eclipse.org/Platform-releng-basebuilder#Current_build_tag_for_3.6_stream_builds_.28Helios.29)
 	cvs -d :pserver:anonymous@dev.eclipse.org:/cvsroot/eclipse -q co -d
-org.eclipse.releng.basebuilder_R36_RC1 -r R36_RC1
+org.eclipse.releng.basebuilder -r R36_RC1
 org.eclipse.releng.basebuilder
-	cd org.eclipse.releng.basebuilder_R36_RC1; zip -r9
-../org.eclipse.releng.basebuilder_R36_RC1.zip ./*
+	zip -r9 org.eclipse.releng.basebuilder_R36_RC1.zip org.eclipse.releng.basebuilder
 
 m2eclipse-0.10.0.20100209-0800.zip
 	run m2eclipse/build.xml
