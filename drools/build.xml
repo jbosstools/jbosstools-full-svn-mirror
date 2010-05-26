@@ -24,12 +24,16 @@
 	<mkdir dir="${COMMON_TOOLS}" />
 	<echo level="info">COMMON_TOOLS = ${COMMON_TOOLS}</echo>
 
-	<condition property="build.xml" value="/home/hudson/static_build_env/jbds/tools/sources">
+	<condition property="build.xml" value="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml">
 		<available file="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml" type="file" />
 	</condition>
-	<condition property="build.xml" value="${basedir}/../build/build.xml" else="${basedir}/../build.xml">
+	<condition property="build.xml" value="${basedir}/../build/build.xml">
 		<available file="${basedir}/../build/build.xml" type="file" />
 	</condition>
+	<condition property="build.xml" value="${basedir}/../build.xml">
+		<available file="${basedir}/../build.xml" type="file" />
+	</condition>
+	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
 
 	<target name="custom.build"
 	        description="fetch latest drools from their Hudson build + selectively unpack it"

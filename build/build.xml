@@ -660,6 +660,7 @@ COMPONENT = ${COMPONENT}</echo>
 						<ant antfile="${WORKINGDIR}/@{COMPONENT}/build.xml">
 							<property name="COMPONENT" value="@{COMPONENT}" />
 							<property name="basedir" value="${WORKINGDIR}/@{COMPONENT}" />
+							<property name="build.xml" value="${ant.file}"/>
 						</ant>
 					</then>
 				</if>
