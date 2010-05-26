@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     May 21, 2010 4:44:14 PM                                                        
+
+     project    
+     description
+                   
+     eskimo                                                                
+     ====================================================================== -->
+<project name="project" default="default">
+    <description>
+            description
+    </description>
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+	<import file="buildRequirements.xml" />
+	<property name="requirement.root" value="${basedir}" />
+	<property name="requirement.build.root" value="${basedir}/download" />
+    <target name="default" description="description">
+    	<echo>requirements=${requirements}</echo>
+    	<echo>unzipto=${basedir}/target/requirements</echo>
+        <buildRequirements requirements="${requirements}" unzipto="${basedir}/target" />
+    </target>
+
+</project>

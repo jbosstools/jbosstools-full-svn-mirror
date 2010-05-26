@@ -1,0 +1,182 @@
+<project>
+
+	<!-- just in case we're calling this standalone -->
+	<property name="build.root" value="${basedir}" />
+
+	<taskdef classpath="${basedir}/lib/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
+
+	<macrodef name="buildRequirements">
+		<attribute name="requirements" />
+		<attribute name="unzipto" />
+
+		<sequential>
+			<for list="@{requirements}" param="requirement">
+				<sequential>
+					<if>
+						<not>
+							<available file="${requirement.root}/@{requirement}/return.properties" />
+						</not>
+						<then>
+							<echo>${requirement.root}/@{requirement}/return.properties is not available</echo>
+							<unpackRequirement requirement="@{requirement}" unpackto="@{unzipto}" />
+						</then>
+					</if>
+					<if>
+						<available file="${requirement.root}/@{requirement}/return.properties" />
+						<then>
+							<echo>load properties from ${requirement.root}/@{requirement}/return.properties</echo>
+							<loadproperties srcFile="${requirement.root}/@{requirement}/return.properties" />
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="unpackRequirements">
+		<attribute name="requirements" />
+		<attribute name="unzipto" />
+		<sequential>
+			<for list="@{requirements}" param="requirement">
+				<sequential>
+					<if>
+						<available file="${requirement.root}/@{requirement}/buildRequirement.xml" />
+						<then>
+							<ant dir="${requirement.root}/@{requirement}"
+								antfile="buildRequirement.xml"
+								target="build.requirement"
+								inheritAll="true"
+							>
+								<property name="unzip.dest" value="@{unzipto}" />
+								<property name="requirement.name" value="@{requirement}" />
+							</ant>
+						</then>
+						<else>
+							<ant dir="${requirement.root}/@{requirement}"
+								antfile="${requirement.root}/generic/build.xml"
+								target="build.requirement"
+								inheritAll="true"
+							>
+								<property name="unzip.dest" value="@{unzipto}" />
+								<property name="requirement" value="@{requirement}" />
+							</ant>
+						</else>
+					</if>
+					<echo>load properties from ${requirement.root}/@{requirement}/return.properties</echo>
+					<loadproperties srcFile="${requirement.root}/@{requirement}/return.properties" />
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="downloadRequirement">
+		<attribute name="requirement" />
+		<sequential>
+			<if>
+				<available file="${requirement.root}/@{requirement}/buildRequirement.xml" />
+				<then>
+					<var name="requirement.build.xml" value="buildRequirement.xml" />
+				</then>
+				<else>
+					<var name="requirement.build.xml" value="${requirement.root}/generic/build.xml" />
+				</else>
+			</if>
+			<ant dir="${requirement.root}/@{requirement}"
+			     antfile="${requirement.build.xml}"
+			     target="download.requirement"
+			     inheritAll="true"
+			>
+				<property name="requirement.name" value="@{requirement}" />
+			</ant>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="unpackRequirement">
+		<attribute name="requirement" />
+		<attribute name="unpackto" />
+		<sequential>
+			<if>
+				<available file="${requirement.root}/@{requirement}/buildRequirement.xml" />
+				<then>
+					<var name="requirement.build.xml" value="buildRequirement.xml" />
+				</then>
+				<else>
+					<var name="requirement.build.xml" value="${requirement.root}/generic/build.xml" />
+				</else>
+			</if>
+			<ant dir="${requirement.root}/@{requirement}"
+			     antfile="${requirement.build.xml}"
+			     target="build.requirement"
+			     inheritAll="true"
+			>
+				<property name="unzip.dest" value="@{unpackto}" />
+				<property name="requirement.name" value="@{requirement}" />
+			</ant>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="downloadRequirements">
+		<attribute name="requirements" />
+		<sequential>
+			<for list="@{requirements}" param="requirement">
+				<sequential>
+					<downloadRequirement requirement="@{requirement}" />
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<!--target name="downloadRequirements">
+		<sequential>
+			<for list="${requirements}" param="requirement">
+				<sequential>
+					<echo>${requirement.root}/@{requirement}/return.properties is not available</echo>
+					<ant dir="${requirement.root}/@{requirement}"
+					     antfile="buildRequirement.xml"
+					     target="download.requirement"
+						 inheritAll="true">
+					</ant>
+				</sequential>
+			</for>
+		</sequential>
+	</target-->
+
+	<target name="getBaseRequirements">
+		<property file="build.requires" />
+		<buildRequirements requirements="${build.requires}" unzipto="${build.output.directory}" />
+	</target>
+
+	<target name="cleanRequirements">
+		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
+		<if>
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+			<then>
+				<var name="requirement.build.root" unset="true" />
+				<property name="requirement.build.root" value="/home/hudson/static_build_env/jbds/requirements" />
+				<mkdir dir="${requirement.build.root}" />
+			</then>
+		</if>
+		<echo level="debug">requirement.build.root = ${requirement.build.root}</echo>
+
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${requirement.root}" defaultexcludes="false">
+				<include name="**/return.properties" />
+			</fileset>
+			<!-- should check build.destination if builder is build instead of creating temp files in local SVN copy-->
+			<fileset dir="${build.root}/builders">
+				<include name="**/builder.built" />
+			</fileset>
+		</delete>
+	</target>
+
+	<macrodef name="buildBuilders">
+		<attribute name="builders" />
+		<sequential>
+			<for list="@{builders}" param="current-builder">
+				<sequential>
+					<runBuilder builder="@{current-builder}" />
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+</project>
