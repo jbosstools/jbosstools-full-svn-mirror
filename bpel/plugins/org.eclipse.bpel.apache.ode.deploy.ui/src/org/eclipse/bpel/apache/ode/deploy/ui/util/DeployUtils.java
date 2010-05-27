@@ -194,7 +194,7 @@ public class DeployUtils {
 
 		for (IFile file : allFiles) {
 
-			if (file.getFileExtension().equalsIgnoreCase("wsdl")) { //$NON-NLS-1$
+			if ("wsdl".equalsIgnoreCase(file.getFileExtension())) { //$NON-NLS-1$
 			// load it
 				Definition currentDef = loadWSDL(file, resourceSet);
 				// stuff it in wsdlFiles
