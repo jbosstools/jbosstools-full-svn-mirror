@@ -340,7 +340,7 @@ public class ReconciliationHelper {
 		if (nearestScopeOrProcess == null)
 			return;
 
-		TreeIterator iter = nearestScopeOrProcess.eAllContents();
+		TreeIterator<EObject> iter = nearestScopeOrProcess.eAllContents();
 		while (iter.hasNext()) {
 			Object object = iter.next();
 			
@@ -390,7 +390,7 @@ public class ReconciliationHelper {
 		if (nearestScopeOrProcess == null)
 			return;
 
-		TreeIterator iter = nearestScopeOrProcess.eAllContents();
+		TreeIterator<EObject> iter = nearestScopeOrProcess.eAllContents();
 		while (iter.hasNext()) {
 			Object object = iter.next();
 			
@@ -398,9 +398,11 @@ public class ReconciliationHelper {
 			if (object instanceof PartnerActivity) {
 				PartnerActivity partnerAct = (PartnerActivity) object;
 				Correlations correlations = partnerAct.getCorrelations();
+				if(correlations == null){
+					continue;
+				}
 				EList<Correlation> list = correlations.getChildren();
 				for (Correlation correlation : list) {
-					CorrelationSet corrSet2 = correlation.getSet();
 					if (corrSet.equals(correlation.getSet())) {
 						correlation.getElement().setAttribute(BPELConstants.AT_SET, name);
 					}
@@ -411,6 +413,9 @@ public class ReconciliationHelper {
 			else if (object instanceof OnMessage) {
 				OnMessage onMessage = (OnMessage) object;
 				Correlations correlations = onMessage.getCorrelations();
+				if(correlations == null){
+					continue;
+				}
 				EList<Correlation> list = correlations.getChildren();
 				for (Correlation correlation : list) {
 					if (corrSet.equals(correlation.getSet())) {
@@ -422,6 +427,9 @@ public class ReconciliationHelper {
 			} else if (object instanceof OnEvent) {
 				OnEvent onEvent = (OnEvent) object;
 				Correlations correlations = onEvent.getCorrelations();
+				if(correlations == null){
+					continue;
+				}
 				EList<Correlation> list = correlations.getChildren();
 				for (Correlation correlation : list) {
 					if (corrSet.equals(correlation.getSet())) {
@@ -446,7 +454,7 @@ public class ReconciliationHelper {
 		if (nearestScopeOrProcess == null)
 			return;
 
-		TreeIterator iter = nearestScopeOrProcess.eAllContents();
+		TreeIterator<EObject> iter = nearestScopeOrProcess.eAllContents();
 		while (iter.hasNext()) {
 			Object object = iter.next();
 
@@ -517,7 +525,7 @@ public class ReconciliationHelper {
 	 * @param name
 	 */
 	private static void updateVariableNameReferencesOnScope(EObject scope, Variable variable, String name) {
-		TreeIterator iter = scope.eAllContents();
+		TreeIterator<EObject> iter = scope.eAllContents();
 		while (iter.hasNext()) {
 			Object object = iter.next();
 			
