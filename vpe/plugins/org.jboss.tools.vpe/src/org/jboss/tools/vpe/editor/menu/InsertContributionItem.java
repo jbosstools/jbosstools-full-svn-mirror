@@ -23,11 +23,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
+import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor;
+import org.jboss.tools.jst.jsp.jspeditor.SourceEditorPageContext;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.jst.web.tld.URIConstants;
-import org.jboss.tools.vpe.editor.VpeEditorPart;
-import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.menu.action.ComplexAction;
 import org.jboss.tools.vpe.editor.menu.action.InsertAction2;
 import org.jboss.tools.vpe.editor.menu.action.SelectThisTagAction;
@@ -42,19 +44,20 @@ import org.w3c.dom.Node;
  */
 public class InsertContributionItem extends ContributionItem {
 
-	private final Node node;
-	private final StructuredTextEditor sourceEditor;
-	private final VpePageContext pageContext;
 	private final static String NAME_PROPERTY = "name";			//$NON-NLS-1$
 	private final static String HIDDEN_PROPERTY = "hidden"; 	//$NON-NLS-1$
 	private final static String ELEMENT_TYPE_PROPERTY 
-			= "element type"; //$NON-NLS-1$
+	= "element type"; //$NON-NLS-1$
 	private final static String END_TEXT_PROPERTY = "end text";	//$NON-NLS-1$
 	private final static String TAG_ELEMENT_TYPE = "macro";		//$NON-NLS-1$
 	private final static String TAGLIB_ELEMENT_TYPE = "sub-group"; //$NON-NLS-1$
 	private final static String LEFT_ANGLE_BRACKET = "<";		//$NON-NLS-1$
 	private final static String RIGHT_ANGLE_BRACKET = ">";		//$NON-NLS-1$
-
+	
+	private final Node node;
+	private final StructuredTextEditor sourceEditor;
+	private final JSPMultiPageEditor editor;
+	
 	/**
 	 * Creates an {@code InsertContributionItem}
 	 * to make insert actions on the currently selected node.
@@ -70,12 +73,10 @@ public class InsertContributionItem extends ContributionItem {
 	public InsertContributionItem(final Node node) {
 		this.node = node;
 
-		final JSPMultiPageEditor editor = (JSPMultiPageEditor)
+		editor = (JSPMultiPageEditor)
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 				.getActivePage().getActiveEditor();
 		this.sourceEditor = editor.getSourceEditor();
-		this.pageContext = ((VpeEditorPart) editor.getVisualEditor())
-				.getController().getPageContext();
 	}
 
 	@Override
@@ -90,7 +91,7 @@ public class InsertContributionItem extends ContributionItem {
 			final MenuManager paletteManuManager = new MenuManager(
 					insertItem.getMessage());
 			final XModelObject model = ModelUtilities.getPreferenceModel()
-				.getByPath("%Palette%"); //$NON-NLS-1$
+			.getByPath("%Palette%"); //$NON-NLS-1$
 			paletteManuManager.addMenuListener(new InsertMenuListener(
 					model, insertItem));
 			paletteManuManager.setRemoveAllWhenShown(true);
@@ -180,24 +181,37 @@ public class InsertContributionItem extends ContributionItem {
 		}
 
 		private String getPrefix(XModelObject modelObject) {
-			final List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(
-					(Node) ((IStructuredSelection) sourceEditor
-							.getSelectionProvider().getSelection())
-							.getFirstElement(), pageContext);
-
-			final String uri = modelObject
-					.getAttributeValue(URIConstants.LIBRARY_URI);
-			String prefix = null;
-			final TaglibData sourceNodeTaglib = XmlUtil
-					.getTaglibForURI(uri, taglibs);
-
-			if (sourceNodeTaglib == null) {
-				prefix = modelObject
-						.getAttributeValue(URIConstants.DEFAULT_PREFIX);
-			} else {
-				prefix = sourceNodeTaglib.getPrefix();
+			String prefix = Constants.EMPTY;
+			List<TaglibData> taglibs = null;
+			/*
+			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-5996
+			 * Get taglibs from the SourceEditorPageContext.
+			 */
+			if (sourceEditor instanceof JSPTextEditor) {
+				IVisualContext context =  ((JSPTextEditor) sourceEditor).getPageContext();
+				if (context instanceof SourceEditorPageContext) {
+					SourceEditorPageContext sourcePageContext = (SourceEditorPageContext) context;
+					taglibs = sourcePageContext.getTagLibs();
+				}
 			}
-
+			
+			if (null == taglibs) {
+				VpePlugin.getDefault().logError(
+						VpeUIMessages.CANNOT_LOAD_TAGLIBS_FROM_PAGE_CONTEXT);
+			} else {
+				final String uri = modelObject
+				.getAttributeValue(URIConstants.LIBRARY_URI);
+				
+				final TaglibData sourceNodeTaglib = XmlUtil
+				.getTaglibForURI(uri, taglibs);
+				
+				if (sourceNodeTaglib == null) {
+					prefix = modelObject
+					.getAttributeValue(URIConstants.DEFAULT_PREFIX);
+				} else {
+					prefix = sourceNodeTaglib.getPrefix();
+				}
+			}
 			return prefix;
 		}
 	}
