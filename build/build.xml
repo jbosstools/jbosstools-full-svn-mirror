@@ -18,7 +18,7 @@
 	/>
 
 	<!-- svn root, including trunk or branch path -->
-	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/trunk" />
+	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/3.2.helios" />
 
 	<!-- if true, use -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository; if false, use default ~/.m2/repository; or set another path if preferred -->
 	<property name="maven.repo.local" value="true" />
@@ -516,14 +516,7 @@ Svnant unavailable. Will use Maven to fetch sources.
 						<echo level="warning">All components up to date: nothing to do!
 To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true</echo>
 
-						<!-- create fake test result file to avoid Hudson failure -->
-						<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
-						<mkdir dir="${basedir}/surefire-reports/NoTestsRun" />
-						<echo file="${basedir}/surefire-reports/NoTestsRun/TEST-org.jboss.tools.NoTestsRun.xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;testsuite failures="0" time="0.001" errors="0" skipped="0" tests="1" name="org.jboss.tools.NoTestsRun"&gt;
-  &lt;testcase time="0.001" classname="org.jboss.tools.NoTestsRun" name="NoTestsRun"/&gt;
-&lt;/testsuite&gt;
-</echo>
+						<antcall target="create.empty.test.results.file" />
 						<property name="no.tests.run" value="true" />
 						<property name="no.overall" value="true" />
 					</then>
@@ -549,6 +542,65 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 				<antcallback target="get.all.components" return="COMPONENTS.to.build" />
 			</else>
 		</if>
+	</target>
+
+	<!--
+		To run this after a maven build in Hudson, set these properties:
+			basedir=${WORKSPACE}/sources
+			WORKINGDIR=${WORKSPACE}/sources
+			COMPONENT=.
+			move.test.results=true 
+	-->
+	<target name="collect.test.results.for.hudson"
+	        depends="init"
+	        if="isInHudson"
+	        description="collect test results after a pure maven build so Hudson has something to see"
+	>
+		<property name="basedir" value="${WORKSPACE}/sources" />
+		<property name="WORKINGDIR" value="${WORKSPACE}/sources" />
+		<property name="COMPONENT" value="." />
+		<property name="move.test.results" value="true" />
+		<var name="tests.results.found" value="false" />
+		<echo level="debug">basedir = ${basedir}
+WORKINGDIR = ${WORKINGDIR}
+COMPONENT = ${COMPONENT}</echo>
+		<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
+		<for param="test.xml.files" delimiter=", 
+	">
+			<path>
+				<fileset dir="${WORKINGDIR}"
+				         includes="**/target/surefire-reports/TEST-*.xml, **/**/target/surefire-reports/TEST-*.xml"
+				         excludes="**/TEST-*NoTestsRun.xml, **/**/TEST-*NoTestsRun.xml"
+				/>
+			</path>
+			<sequential>
+				<var name="tests.results.found" value="true" />
+			</sequential>
+		</for>
+		<if>
+			<equals arg1="${tests.results.found}" arg2="true" />
+			<then>
+				<antcall target="collect.test.results">
+					<param name="COMPONENT" value="." />
+				</antcall>
+				<antcall target="collect.all.test.results" />
+			</then>
+			<else>
+				<antcall target="create.empty.test.results.file" />
+				<property name="no.tests.run" value="true" />
+			</else>
+		</if>
+	</target>
+
+	<target name="create.empty.test.results.file">
+		<!-- create fake test result file to avoid Hudson failure -->
+		<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
+		<mkdir dir="${basedir}/surefire-reports/NoTestsRun" />
+		<echo file="${basedir}/surefire-reports/NoTestsRun/TEST-org.jboss.tools.NoTestsRun.xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;testsuite failures="0" time="0.001" errors="0" skipped="0" tests="1" name="org.jboss.tools.NoTestsRun"&gt;
+&lt;testcase time="0.001" classname="org.jboss.tools.NoTestsRun" name="NoTestsRun"/&gt;
+&lt;/testsuite&gt;
+</echo>
 	</target>
 
 	<target name="run.build">
@@ -608,6 +660,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						<ant antfile="${WORKINGDIR}/@{COMPONENT}/build.xml">
 							<property name="COMPONENT" value="@{COMPONENT}" />
 							<property name="basedir" value="${WORKINGDIR}/@{COMPONENT}" />
+							<property name="build.xml" value="${ant.file}"/>
 						</ant>
 					</then>
 				</if>
@@ -742,8 +795,14 @@ rm -fr /tmp/.X3-lock
 		      preservelastmodified="true"
 		      overwrite="true"
 		>
-			<fileset dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports/*.xml" />
+			<fileset dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports/TEST-*.xml" />
 		</copy>
+		<if>
+			<isset property="move.test.results" />
+			<then>
+				<delete dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports" />
+			</then>
+		</if>
 	</target>
 
 	<target name="collect.all.test.results" unless="no.tests.run">
@@ -754,10 +813,7 @@ rm -fr /tmp/.X3-lock
 		<for param="testresultfile" delimiter=", 
 		">
 			<path>
-				<fileset dir="${basedir}/surefire-reports/"
-				         includes="**/TEST-*.xml"
-				         excludes="**/*pom.xml, **/build.xml"
-				/>
+				<fileset dir="${basedir}/surefire-reports/" includes="**/TEST-*.xml" />
 			</path>
 			<sequential>
 				<var name="testsuite.name" unset="true" />
@@ -891,7 +947,7 @@ ${test.results.errors.failures.skipped}
 							<equals arg1="@{COMPONENT}" arg2="site" />
 							<then>
 								<var name="destinationZip"
-								     value="${WORKINGDIR}/@{COMPONENT}/site/target/JBossTools-ALL-Update-SNAPSHOT.zip"
+								     value="${WORKINGDIR}/@{COMPONENT}/site/target/jbosstools-ALL-Update-SNAPSHOT.zip"
 								/>
 							</then>
 							<else>
@@ -906,7 +962,7 @@ ${test.results.errors.failures.skipped}
 									</else>
 								</if>
 								<var name="destinationZip"
-								     value="${WORKINGDIR}/@{COMPONENT}/site/target/JBossTools-${COMPONENT.name}-Update-SNAPSHOT.zip"
+								     value="${WORKINGDIR}/@{COMPONENT}/site/target/jbosstools-${COMPONENT.name}-Update-SNAPSHOT.zip"
 								/>
 							</else>
 						</if>
@@ -918,10 +974,10 @@ ${test.results.errors.failures.skipped}
 						/>
 					</sequential>
 				</for>
-				
+
 				<for param="updateZip">
 					<path>
-						<fileset dir="${WORKINGDIR}/@{COMPONENT}" includes="**/JBossTools*Update*.zip" />
+						<fileset dir="${WORKINGDIR}/@{COMPONENT}" includes="**/jbosstools*Update*.zip" />
 					</path>
 					<sequential>
 						<propertyregex property="updateZip"
@@ -1037,7 +1093,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 			<equals arg1="${update.site.path}" arg2="site" />
 			<then>
 				<var name="destinationZip"
-				     value="${WORKINGDIR}/${update.site.path}/target/JBossTools-ALL-Update-SNAPSHOT.zip"
+				     value="${WORKINGDIR}/${update.site.path}/target/jbosstools-ALL-Update-SNAPSHOT.zip"
 				/>
 			</then>
 			<else>
@@ -1052,7 +1108,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					</else>
 				</if>
 				<var name="destinationZip"
-				     value="${WORKINGDIR}/${update.site.path}/target/JBossTools-${COMPONENT.name}-Update-SNAPSHOT.zip"
+				     value="${WORKINGDIR}/${update.site.path}/target/jbosstools-${COMPONENT.name}-Update-SNAPSHOT.zip"
 				/>
 			</else>
 		</if>
@@ -1126,7 +1182,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 						<fail>Overall update site zip contains no features!</fail>
 					</then>
 					<else>
-						<echo level="info">Update site zip for ${COMPONENTS.to.build} contains no features!</echo>
+						<echo level="info"> [ERROR] Update site zip for ${COMPONENTS.to.build} contains no features!</echo>
 					</else>
 				</if>
 			</else>
@@ -1194,10 +1250,26 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 </echo>
 
 		<mkdir dir="${updateSiteJarDir}/../features" />
+		<if>
+			<!-- special case: for tests component, we WANT test features; for everyone else, test features shouldn't be on the site -->
+			<equals arg1="${COMPONENT}" arg2="tests" />
+			<then>
+				<path id="featureJars">
+					<fileset dir="${updateSiteJarDir}/../features" includes="**/target/*.jar" />
+				</path>
+			</then>
+			<else>
+				<path id="featureJars">
+					<fileset dir="${updateSiteJarDir}/../features"
+					         includes="**/target/*.jar"
+					         excludes="**/*test*"
+					         id=""
+					/>
+				</path>
+			</else>
+		</if>
 		<for param="featureJar">
-			<path>
-				<fileset dir="${updateSiteJarDir}/../features" includes="**/target/*.jar" excludes="**/*test*" />
-			</path>
+			<path refid="featureJars" />
 			<sequential>
 				<var name="feature.jarfile" unset="true" />
 				<var name="feature.id" unset="true" />
