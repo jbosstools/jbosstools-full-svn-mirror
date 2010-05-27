@@ -802,8 +802,6 @@ rm -fr /tmp/.X3-lock
 			<then>
 				<delete dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports" />
 			</then>
-			<else>
-			</else>
 		</if>
 	</target>
 
