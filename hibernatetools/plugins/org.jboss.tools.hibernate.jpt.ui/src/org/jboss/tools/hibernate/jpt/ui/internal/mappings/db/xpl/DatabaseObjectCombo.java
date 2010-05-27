@@ -74,15 +74,7 @@ public abstract class DatabaseObjectCombo<T extends JpaNode>
 		
 		super(parentPane, subjectHolder, parent);
 	}
-	
-	protected DatabaseObjectCombo(
-			PropertyValueModel<? extends T> subjectHolder,
-			Composite parent,
-			WidgetFactory widgetFactory) {
-		
-		super(subjectHolder, parent, widgetFactory);
-	}
-	
+
 	
 	// ********** initialization **********
 	

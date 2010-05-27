@@ -38,15 +38,6 @@ public abstract class TableCombo<T extends JpaNode>
 		super(parentPane, subjectHolder, parent);
 	}
 	
-	public TableCombo(
-			PropertyValueModel<? extends T> subjectHolder,
-			Composite parent,
-			WidgetFactory widgetFactory) {
-		
-		super(subjectHolder, parent, widgetFactory);
-	}
-	
-	
 	@Override
 	protected Iterable<String> getValues_() {
 		Schema dbSchema = this.getDbSchema();

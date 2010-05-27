@@ -54,7 +54,7 @@ implements HibernateJavaJoinColumn {
 		if (this.getOwner().joinColumnsSize() != 1) {
 			return null;
 		}
-		Entity targetEntity = this.getOwner().getTargetEntity();
+		Entity targetEntity = this.getOwner().getRelationshipTarget();
 		if (targetEntity == null) {
 			return null;
 		}

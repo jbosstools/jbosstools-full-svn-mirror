@@ -111,7 +111,7 @@ public class NamingStrategyMappingTools {
 		}
 		String prefix = owner.getAttributeName();
 		if (prefix == null) {
-			Entity targetEntity = owner.getTargetEntity();
+			Entity targetEntity = owner.getRelationshipTarget();
 			if (targetEntity == null) {
 				return null;
 			}
