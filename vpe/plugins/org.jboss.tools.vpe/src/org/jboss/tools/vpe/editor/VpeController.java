@@ -1121,7 +1121,8 @@ public class VpeController implements INodeAdapter,
 						// uncommented next code
 					    // reason != nsISelectionListener.NO_REASON
 						reason == nsISelectionListener.KEYPRESS_REASON
-						|| reason == nsISelectionListener.SELECTALL_REASON)
+						|| reason == nsISelectionListener.SELECTALL_REASON
+						|| (reason & nsISelectionListener.MOUSEDOWN_REASON) == nsISelectionListener.MOUSEDOWN_REASON)
 						 {
 					if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
 						System.out
