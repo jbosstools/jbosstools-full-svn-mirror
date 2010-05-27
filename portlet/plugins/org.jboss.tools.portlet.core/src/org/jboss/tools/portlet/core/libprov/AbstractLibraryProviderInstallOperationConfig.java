@@ -117,7 +117,7 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 	public void setAddRichfacesCapabilities(boolean addRichfacesCapabilities) {
 		boolean oldValue = this.addRichfacesCapabilities;
 		this.addRichfacesCapabilities = addRichfacesCapabilities;
-		notifyListeners(IPortletConstants.PORTLETBRIDGE_HOME, oldValue, addRichfacesCapabilities);
+		notifyListeners(IPortletConstants.RICHFACES_CAPABILITIES, oldValue, addRichfacesCapabilities);
 		updatePreferences();
 	}
 	public String getRichfacesType() {
@@ -126,7 +126,7 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 	public void setRichfacesType(String richfacesType) {
 		String oldValue = this.richfacesType;
 		this.richfacesType = richfacesType;
-		notifyListeners(IPortletConstants.PORTLETBRIDGE_HOME, oldValue, richfacesType);
+		notifyListeners(IPortletConstants.RICHFACES_LIBRARIES_TYPE, oldValue, richfacesType);
 		updatePreferences();
 	}
 	public String getRichfacesRuntime() {
@@ -135,7 +135,7 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 	public void setRichfacesRuntime(String richfacesRuntime) {
 		String oldValue = this.richfacesRuntime;
 		this.richfacesRuntime = richfacesRuntime;
-		notifyListeners(IPortletConstants.PORTLETBRIDGE_HOME, oldValue, richfacesRuntime);
+		notifyListeners(IPortletConstants.RICHFACES_RUNTIME, oldValue, richfacesRuntime);
 		updatePreferences();
 	}
 }
