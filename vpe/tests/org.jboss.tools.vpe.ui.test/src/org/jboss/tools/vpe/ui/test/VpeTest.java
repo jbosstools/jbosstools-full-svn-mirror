@@ -121,19 +121,20 @@ public class VpeTest extends TestCase implements ILogListener {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-
-		boolean isJobsCheck = true;
-		while (isJobsCheck) {
-			isJobsCheck = false;
-			Job[] jobs = Job.getJobManager().find(null);
-			for (Job job : jobs) {
-				if (job instanceof StructuredRegionProcessor) {
-					TestUtil.delay(50);
-					isJobsCheck = true;
-					break;
-				}
-			}
-		}
+//Has been commented by Maksim Areshkau,
+//this lines was a fix for JBIDE-6197 and not needed under eclipse 3.6		
+//		boolean isJobsCheck = true;
+//		while (isJobsCheck) {
+//			isJobsCheck = false;
+//			Job[] jobs = Job.getJobManager().find(null);
+//			for (Job job : jobs) {
+//				if (job instanceof StructuredRegionProcessor) {
+//					TestUtil.delay(50);
+//					isJobsCheck = true;
+//					break;
+//				}
+//			}
+//		}
 
 		closeEditors();
 
