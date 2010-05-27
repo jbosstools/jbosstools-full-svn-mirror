@@ -10,6 +10,7 @@ SNAPNAME=${JOB_NAME}-Update-SNAPSHOT.zip
 # copy into workspace for archiving
 rm -fr ${WORKSPACE}/site; mkdir -p ${WORKSPACE}/site/${JOB_NAME}
 rsync -aq ${WORKSPACE}/*/site/target/site.zip ${WORKSPACE}/site/${JOB_NAME}/${ZIPNAME}
+rsync -aq ${WORKSPACE}/*/*/site/target/*Update*.zip ${WORKSPACE}/site/${JOB_NAME}/
 
 # copy into workspace for access by bucky aggregator
 rsync -aq ${WORKSPACE}/*/site/target/site.zip ${WORKSPACE}/site/${SNAPNAME}
