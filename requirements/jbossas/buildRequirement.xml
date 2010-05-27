@@ -11,26 +11,12 @@
 		<antcall target="build-all" >
 			<param name="action" value="build.requirement" />
 		</antcall>
-		<echo file="${requirement.root}/jbossas/return.properties">
-			jboss32.home=${unzip.dest}/${jboss32.build.name}
-			jboss40.home=${unzip.dest}/${jboss40.build.name}
-			jboss42.home=${unzip.dest}/${jboss42.build.name}
-			jboss50.home=${unzip.dest}/${jboss50.build.name}
-			jboss51.home=${unzip.dest}/${jboss51.build.name}
-		</echo>
 	</target>
 	
 	<target name="download.requirement">
 		<antcall target="build-all" >
 			<param name="action" value="download.requirement" />
 		</antcall>
-		<!--echo file="${requirement.root}/jbossas/return.properties">
-			jboss32.home=${unzip.dest}/${jboss32.build.name}
-			jboss40.home=${unzip.dest}/${jboss40.build.name}
-			jboss42.home=${unzip.dest}/${jboss42.build.name}
-			jboss50.home=${unzip.dest}/${jboss50.build.name}
-			jboss51.home=${unzip.dest}/${jboss51.build.name}
-		</echo-->
 	</target>
 	
 	<target name="build-all" >
