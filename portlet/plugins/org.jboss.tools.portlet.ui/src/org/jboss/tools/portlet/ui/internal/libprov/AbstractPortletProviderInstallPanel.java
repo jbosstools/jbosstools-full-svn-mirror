@@ -92,6 +92,7 @@ public abstract class AbstractPortletProviderInstallPanel extends LibraryProvide
 		addRichFacesLibraries.setSelection(richFacesLibrariesSelected);
 		enableRichfacesLibraries();
 		richFacesLibraryCombo.select(0);
+		config.setRichfacesType(richFacesLibraryCombo.getText());
 	}
 
 	private void configureRichfacesCombo() {

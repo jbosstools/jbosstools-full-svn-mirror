@@ -35,7 +35,7 @@ public class JSFPortletbridgeRuntimeProviderInstallPanel extends
 	@Override
 	protected List<String> getRichfacesTypes() {
 		List<String> types = new ArrayList<String>();
-		types.add(IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE);
+		//types.add(IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE);
 		types.add(IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES);
 		return types;
 	}
