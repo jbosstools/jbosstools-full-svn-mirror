@@ -949,7 +949,7 @@ ${test.results.errors.failures.skipped}
 							<equals arg1="@{COMPONENT}" arg2="site" />
 							<then>
 								<var name="destinationZip"
-								     value="${WORKINGDIR}/@{COMPONENT}/site/target/JBossTools-ALL-Update-SNAPSHOT.zip"
+								     value="${WORKINGDIR}/@{COMPONENT}/site/target/jbosstools-ALL-Update-SNAPSHOT.zip"
 								/>
 							</then>
 							<else>
@@ -964,7 +964,7 @@ ${test.results.errors.failures.skipped}
 									</else>
 								</if>
 								<var name="destinationZip"
-								     value="${WORKINGDIR}/@{COMPONENT}/site/target/JBossTools-${COMPONENT.name}-Update-SNAPSHOT.zip"
+								     value="${WORKINGDIR}/@{COMPONENT}/site/target/jbosstools-${COMPONENT.name}-Update-SNAPSHOT.zip"
 								/>
 							</else>
 						</if>
@@ -979,7 +979,7 @@ ${test.results.errors.failures.skipped}
 
 				<for param="updateZip">
 					<path>
-						<fileset dir="${WORKINGDIR}/@{COMPONENT}" includes="**/JBossTools*Update*.zip" />
+						<fileset dir="${WORKINGDIR}/@{COMPONENT}" includes="**/jbosstools*Update*.zip" />
 					</path>
 					<sequential>
 						<propertyregex property="updateZip"
@@ -1095,7 +1095,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 			<equals arg1="${update.site.path}" arg2="site" />
 			<then>
 				<var name="destinationZip"
-				     value="${WORKINGDIR}/${update.site.path}/target/JBossTools-ALL-Update-SNAPSHOT.zip"
+				     value="${WORKINGDIR}/${update.site.path}/target/jbosstools-ALL-Update-SNAPSHOT.zip"
 				/>
 			</then>
 			<else>
@@ -1110,7 +1110,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					</else>
 				</if>
 				<var name="destinationZip"
-				     value="${WORKINGDIR}/${update.site.path}/target/JBossTools-${COMPONENT.name}-Update-SNAPSHOT.zip"
+				     value="${WORKINGDIR}/${update.site.path}/target/jbosstools-${COMPONENT.name}-Update-SNAPSHOT.zip"
 				/>
 			</else>
 		</if>
