@@ -58,7 +58,7 @@
      
         
         <releaseinfo xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><diffmk:wrapper diffmk:change="changed">
-            Version: 1.1.0.GA
+            Version: 1.1.1.GA
         </diffmk:wrapper></releaseinfo>
   
 
@@ -74,7 +74,7 @@
  <toc xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"></toc> 
     
     
-<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/introduction.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en-US/modules/introduction.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
     <?dbhtml filename="introduction.html"?>
 
     <chapterinfo>
@@ -183,7 +183,7 @@
 
     
  
-<chapter id="tasks" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/tasks.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xreflabel="tasks">
+<chapter id="tasks" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en-US/modules/tasks.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xreflabel="tasks">
     <?dbhtml filename="tasks.html"?>
     <chapterinfo>
         <keywordset xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -202,7 +202,7 @@
     
    
    
-<section id="birt_integration_with_seam" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/birt_integration_with_seam.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<section id="birt_integration_with_seam" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en-US/modules/birt_integration_with_seam.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Adding BIRT Functionality to Standard Seam Web Project</title>
 
     <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In this section you'll know how to integrate BIRT into a Seam web project. </para>
@@ -437,7 +437,7 @@
         
 <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">To see that the application works correctly and as you expect, you need to launch it on the server.</para>
     </listitem>
-            <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Servers</property> view (If it is not open navigate to <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Windows &gt; Show View &gt; Other &gt; Server &gt; Servers</property>), select the server the application is deployed to and hit the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Start</property> button. </para></listitem>
+    <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><diffmk:wrapper diffmk:change="changed">Servers</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> view (If it is not open navigate to </diffmk:wrapper><property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><diffmk:wrapper diffmk:change="changed">Windows &gt; Show View &gt; Other &gt; Server &gt; Servers</diffmk:wrapper></property>), select the server the application is deployed to and hit the <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Start</property> button. </para></listitem>
     <listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
         <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">When the server is started, open your favourite browser and point it to <code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">http://localhost:8080/HelloBirt/helloBirt.seam</code> .</para>
     
@@ -456,7 +456,7 @@
     </section>
 </section>
    
-<section id="hibernate_datasource" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/hibernate_datasource.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<section id="hibernate_datasource" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en-US/modules/hibernate_datasource.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 
     <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Using Hibernate ODA Data Source</title>
@@ -665,7 +665,7 @@ from Employees as employees where employees.jobtitle = ?
 </section>
 
    
-<section id="birt_reports_deployment" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/birt_reports_deployment.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<section id="birt_reports_deployment" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en-US/modules/birt_reports_deployment.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Creating a Dynamic BIRT Report</title>
     
     <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The <link linkend="birt_integration_with_seam" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Adding BIRT Functionality to Standard Seam Web Project</link> 
@@ -875,14 +875,14 @@ this.queryText = this.queryText+queryString;
             </emphasis> file.</para>
     </note>
     
-    <para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In conclusion, the main goal of this document is to get you to know with a full feature set
-        that <property xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JBoss BIRT Tools</property> provide. Thus if you have some questions,
-        comments or suggestions on the topic, please feel free to ask in the 
-        <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
+    <para>In conclusion, the main goal of this document is to get you to know with a full feature set
+        that <property>JBoss BIRT Tools</property> provide. Thus if you have some questions,
+        comments or suggestions on the topic, please feel free to ask in the <ulink
+            url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss
             Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs in
         future leaving your vote on the article <ulink
             url="http://www.jboss.org/community/docs/DOC-10795">Overview of the improvements required by JBossTools/JBDS Docs users</ulink>.</para>
-
+    
 </section>
 
 
@@ -890,7 +890,7 @@ this.queryText = this.queryText+queryString;
 </chapter>
 
     
-<chapter id="framework" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/framework.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<chapter id="framework" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en-US/modules/framework.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
     <?dbhtml filename="framework.html"?>
 
     <chapterinfo>
@@ -1152,7 +1152,7 @@ this.queryText = this.queryText+queryString;
 
     
  
-<chapter id="birt_plugin_rel_resources" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en/modules/links.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xreflabel="birt_plugin_rel_resources">
+<chapter id="birt_plugin_rel_resources" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/birt/docs/en-US/modules/links.xml" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xreflabel="birt_plugin_rel_resources">
     <?dbhtml filename="links.html"?>
     <chapterinfo>
         <keywordset xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">

@@ -2,10 +2,10 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
-[<!ENTITY  jsf_struts SYSTEM "modules/jsf_struts.xml">
-<!ENTITY  jsf_struts_war SYSTEM "modules/jsf_struts_war.xml">
-<!ENTITY introduction SYSTEM "modules/introduction.xml">
-<!ENTITY workspace SYSTEM "modules/workspace.xml">
+[<!ENTITY  jsf_struts SYSTEM "jsf_struts.xml">
+<!ENTITY  jsf_struts_war SYSTEM "jsf_struts_war.xml">
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY workspace SYSTEM "workspace.xml">
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">
@@ -32,9 +32,9 @@
             <year>2010</year>
             <holder>JBoss by Red Hat</holder>
 	    </copyright>
-          <releaseinfo>
-Version: 3.0.0.GA
-</releaseinfo>
+          <releaseinfo><diffmk:wrapper diffmk:change="changed">
+Version: 3.0.1.GA
+</diffmk:wrapper></releaseinfo>
 
 <abstract>
    <title></title>
@@ -48,7 +48,7 @@ Version: 3.0.0.GA
 
 	<toc></toc>  
 
-<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Exadel-migration/en/modules/introduction.xml" xreflabel="introduction">
+<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Exadel-migration/en-US/introduction.xml" xreflabel="introduction">
  <?dbhtml filename="introduction.html"?>
  <chapterinfo>
   <keywordset>
@@ -119,7 +119,7 @@ Version: 3.0.0.GA
 </chapter>
 
 
-<chapter id="workspace" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Exadel-migration/en/modules/workspace.xml" xreflabel="workspace">
+<chapter id="workspace" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Exadel-migration/en-US/workspace.xml" xreflabel="workspace">
  <?dbhtml filename="workspace.html"?>
     <chapterinfo>
         <keywordset>
@@ -135,7 +135,7 @@ Version: 3.0.0.GA
 </chapter>
 
 
-<chapter id="jsf_struts" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Exadel-migration/en/modules/jsf_struts.xml" xreflabel="jsf_struts">
+<chapter id="jsf_struts" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Exadel-migration/en-US/jsf_struts.xml" xreflabel="jsf_struts">
  <?dbhtml filename="jsf_struts.html"?>
     <chapterinfo>
         <keywordset>
@@ -319,7 +319,7 @@ Version: 3.0.0.GA
 </chapter>
 
 
-<chapter id="jsf_struts_war" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Exadel-migration/en/modules/jsf_struts_war.xml" xreflabel="jsf_struts_war">
+<chapter id="jsf_struts_war" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Exadel-migration/en-US/jsf_struts_war.xml" xreflabel="jsf_struts_war">
   <?dbhtml filename="jsf_struts_war.html"?>
 
   <chapterinfo>
@@ -465,12 +465,13 @@ Version: 3.0.0.GA
     </itemizedlist>
 	<para>The migration process is completed</para>
     
-    <para>If there's anything we didn't cover or you can't figure
-      out, please feel free to visit our 
-     <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">
-     JBoss Developer Studio Users Forum</ulink> or
-     <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
-      your suggestions and comments.</para>
+   <para>If there&apos;s anything we didn&apos;t cover or you can&apos;t figure
+    out, please feel free to visit our <ulink
+     url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258"
+     >JBoss Developer Studio Users Forum</ulink> or <ulink
+      url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+      >JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
+    your suggestions and comments.</para>
   </section>
    
 </chapter>   

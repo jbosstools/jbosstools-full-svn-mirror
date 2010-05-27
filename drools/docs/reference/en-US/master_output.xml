@@ -2,12 +2,12 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
-[<!ENTITY introduction SYSTEM "modules/introduction.xml">
-<!ENTITY create_new_project SYSTEM "modules/create_new_project.xml">
-<!ENTITY create_new SYSTEM "modules/create_new.xml">
-<!ENTITY debugging_rules SYSTEM "modules/debugging_rules.xml">
-<!ENTITY views SYSTEM "modules/views.xml">
-<!ENTITY editors SYSTEM "modules/editors.xml">
+[<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY create_new_project SYSTEM "create_new_project.xml">
+<!ENTITY create_new SYSTEM "create_new.xml">
+<!ENTITY debugging_rules SYSTEM "debugging_rules.xml">
+<!ENTITY views SYSTEM "views.xml">
+<!ENTITY editors SYSTEM "editors.xml">
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">
@@ -59,7 +59,7 @@
     
     <toc></toc> 
     
-<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/reference/en/modules/introduction.xml" xreflabel="introduction">
+<chapter id="introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/reference/en-US/introduction.xml" xreflabel="introduction">
     <title>Introduction</title>
 
     <section id="whatisDrools">
@@ -81,7 +81,7 @@
 
         <para><property moreinfo="none">Drools Tools</property> come bundled with <property moreinfo="none">JBoss Tools</property>
             set of Eclipse plugins. How to install <property moreinfo="none">JBoss Tools</property> you can find in
-            the <ulink url="../../GettingStartedGuide/html_single/index.html#JBossToolsInstall">Getting Started Guide</ulink>.</para>
+            the Getting Started Guide.</para>
     </section>
 
     <section id="drools_key_features">
@@ -229,7 +229,7 @@
 </chapter>
 
     
-<chapter id="create_new_project" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/reference/en/modules/create_new_project.xml" xreflabel="create_new_project">
+<chapter id="create_new_project" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/reference/en-US/create_new_project.xml" xreflabel="create_new_project">
     <chapterinfo>
         <keywordset>
             <keyword>JBoss Tools</keyword>
@@ -395,19 +395,19 @@
     <section id="creating_rule">
         <title>Creating a New Rule</title>
 
-        <para>Now we are going to add a new Rule resource to the project.</para>
+        <para><diffmk:wrapper diffmk:change="changed">Now we are going to add a new Rule package to the project.</diffmk:wrapper></para>
 
         <para>You can either create an empty text <emphasis>
                 <property moreinfo="none">.drl</property>
-            </emphasis> file or make use of the special <property moreinfo="none">New Rule Resource
-                wizard</property> to do it.</para>
+        </emphasis> file or make use of the special <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">New Rule Package...</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">
+                wizard to do it.</diffmk:wrapper></para>
 
         <para>To open the wizard follow to <emphasis>
                 <property moreinfo="none">File &gt; New &gt; Rule Resource</property>
             </emphasis> or use the menu with the JBoss Drools icon on the toolbar.</para>
 
         <figure float="0">
-            <title>Opening the New Rule Resource Wizard</title>
+            <title><diffmk:wrapper diffmk:change="changed">Opening the New Rule Package Wizard</diffmk:wrapper></title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/create_new_project/create_new_project8.png"></imagedata>
@@ -422,7 +422,7 @@
             groups rules together.</para>
 
         <figure float="0">
-            <title>New Rule Resource Wizard</title>
+            <title><diffmk:wrapper diffmk:change="changed">New Rule Package Wizard</diffmk:wrapper></title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/create_new_project/create_new_project9.png"></imagedata>
@@ -444,9 +444,8 @@
     </section>
 
 </chapter>
-
     
-<chapter id="debugging_rules" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/reference/en/modules/debugging_rules.xml" xreflabel="debugging_rules">
+<chapter id="debugging_rules" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/reference/en-US/debugging_rules.xml" xreflabel="debugging_rules">
 	<chapterinfo>
 		<keywordset>
 			<keyword>JBoss Tools</keyword>
@@ -470,7 +469,11 @@
 			should happen next (step over, continue, etc). To inspect
 			the content of the working memory and agenda the Debug views can be used.</para>
 
-		<para>You can add/remove rule breakpoints in <emphasis>
+		<para><diffmk:wrapper diffmk:change="added">To create breakpoints in the Package Explorer view or Navigator view of the Drools perspective, double-click the selected 
+		    </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">.drl</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file to open it in the editor. In the example below we opened </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Sample.drl</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file.
+		</diffmk:wrapper></para>
+		
+		<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You can add/remove rule breakpoints in the </diffmk:wrapper><emphasis>
 				<property moreinfo="none">.drl</property>
 			</emphasis> files in two ways, similar to adding breakpoints to Java files:</para>
 
@@ -582,9 +585,8 @@
 		
 	</section>
 </chapter>
-
     
-<chapter id="editors" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/reference/en/modules/editors.xml" xreflabel="editors">
+<chapter id="editors" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/drools/docs/reference/en-US/editors.xml" xreflabel="editors">
     <chapterinfo>
         <keywordset>
             <keyword>JBoss Tools</keyword>
@@ -660,9 +662,9 @@
 
                     <row>
                         <entry id="sort">Sort By</entry>
-                        <entry>Using this option you can change the type of lines sorting 
-                            in the table of language message mappings.To do this select from the drop down lins the method
-                            of sorting you want and click <emphasis>Sort</emphasis> button.</entry>
+                        <entry><diffmk:wrapper diffmk:change="changed">Using this option you can change the type of lines sorting 
+                            in the table of language message mappings. To do this select from the drop down list the method
+                            of sorting you want and click </diffmk:wrapper><emphasis>Sort</emphasis> button.</entry>
                     </row>
                     <row>
                         <entry>Buttons</entry>
@@ -684,8 +686,8 @@
         </table>
         <section id="edit_wizard">
             <title>Edit language mapping Wizard</title>
-            <para>This wizard can be opened by double clicking  some line 
-                in the table of language message mappings or by clicking the <emphasis>Edit</emphasis>button.</para>
+            <para><diffmk:wrapper diffmk:change="changed">This wizard can be opened by double clicking some line 
+                in the table of language message mappings or by clicking the </diffmk:wrapper><emphasis>Edit</emphasis><diffmk:wrapper diffmk:change="changed"> button.</diffmk:wrapper></para>
             <para>On the picture below you can see all the options,Edit language mapping Wizard allow to change.</para>
             <para>Their names as well as the meaning of the options are correspond to the <link linkend="rows">rows</link> of the table.</para>
             <figure float="0">
@@ -765,8 +767,8 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Outline View is useful for big complex schemata where not all nodes are seen at one time.
-        So using your Outline view you can easly navigate between parts of a schema.  </para>
+        <para><diffmk:wrapper diffmk:change="changed">Outline View is useful for big complex schemata where not all nodes are seen at one time.
+            So using your Outline view you can easily navigate between parts of a schema.  </diffmk:wrapper></para>
         <figure float="0">
             <title>Outline view usage</title>
             <mediaobject>
@@ -900,8 +902,8 @@
                             </imageobject></inlinemediaobject></entry>
                             <entry>Gateway[converge]</entry>
                             <entry>allows you to synchronize multiple branches.
-                                A <property moreinfo="none">Gateway[diverge]</property>node should have two or more incoming connections and one
-                                outgoing connection.</entry>
+                                A <property moreinfo="none">Gateway[diverge]</property><diffmk:wrapper diffmk:change="changed"> node should have two or more incoming connections and one
+                                outgoing connection.</diffmk:wrapper></entry>
                         </row> 
                         <row>
                             <entry><inlinemediaobject>                
@@ -1113,15 +1115,10 @@
                 <para>The <property moreinfo="none">Rete Tree view</property> works only in Drools Rule Projects,
                     where the Drools Builder is set in the project properties.</para>
             </note>
-            <para>We hope, this guide helped you to get started with the JBoss BPMN 
-                Convert module. Besides, for additional information you are welcome on 
-                <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss forum</ulink>.</para>
+            <para>We hope, this guide helped you to get started with the JBoss BPMN Convert module. Besides, for additional information you are welcome on <ulink
+                url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss forum</ulink>.</para>
         </section>
         
     </section>
-   
-</chapter>
-
     
-    
-</book>
+</chapter></book>

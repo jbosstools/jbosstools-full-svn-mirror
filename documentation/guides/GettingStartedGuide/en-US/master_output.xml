@@ -2,14 +2,14 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 [
-<!ENTITY getting_started SYSTEM "modules/getting_started.xml">
-<!ENTITY  manage SYSTEM "modules/manage.xml">
-<!ENTITY first_seam  SYSTEM "modules/first_seam.xml">
-<!ENTITY jsp_application  SYSTEM "modules/jsp_application.xml">
-<!ENTITY rad_jsf_application  SYSTEM "modules/rad_jsf_application.xml">
-<!ENTITY gsg_faq  SYSTEM "modules/gsg_faq.xml">
-<!ENTITY further_reading  SYSTEM "modules/further_reading.xml">
-<!ENTITY project_examples  SYSTEM "modules/project_examples.xml">
+<!ENTITY getting_started SYSTEM "getting_started.xml">
+<!ENTITY  manage SYSTEM "manage.xml">
+<!ENTITY first_seam  SYSTEM "first_seam.xml">
+<!ENTITY jsp_application  SYSTEM "jsp_application.xml">
+<!ENTITY rad_jsf_application  SYSTEM "rad_jsf_application.xml">
+<!ENTITY gsg_faq  SYSTEM "gsg_faq.xml">
+<!ENTITY further_reading  SYSTEM "further_reading.xml">
+<!ENTITY project_examples  SYSTEM "project_examples.xml">
 
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
@@ -34,7 +34,7 @@
 
 ]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
  <bookinfo>
-  <title>Getting Started with JBoss Developer Studio</title>
+  <title>Getting Started Guide</title>
   
   <copyright>
    <year>2007</year>
@@ -43,7 +43,7 @@
    <year>2010</year>
    <holder>JBoss by Red Hat</holder>
   </copyright>
-  <releaseinfo>Version: 3.0.0.GA</releaseinfo>
+  <releaseinfo><diffmk:wrapper diffmk:change="changed">Version: 3.0.1.GA</diffmk:wrapper></releaseinfo>
  <abstract>
    <title></title>
        <para>
@@ -57,8 +57,8 @@
 
 
 
-
-<chapter id="getting_started" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/getting_started.xml" xreflabel="getting_started">
+ 
+<chapter id="getting_started" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en-US/getting_started.xml" xreflabel="getting_started">
  <?dbhtml filename="getting_started.html"?>
  <chapterinfo>
   <keywordset>
@@ -362,7 +362,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
    <listitem>
     <para>Then run in console:</para>
-    <programlisting format="linespecific" role="JAVA"><![CDATA[java -jar jbdevstudio-eap-linux-gtk-2.1.0.GA.jar
+    <programlisting format="linespecific" role="JAVA"><![CDATA[java -jar jbdevstudio-eap-linux-gtk-3.0.0.GA.jar
 ]]></programlisting>
    </listitem>
    <listitem>
@@ -411,8 +411,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <note>
    <title>Note:</title>
-   <para>JBoss Developer Studio needs Java 5 and "gij" isn't available on
-    every platform.</para>
+   <para><diffmk:wrapper diffmk:change="changed">JBoss Developer Studio 3.0 comes integrated with JBoss EAP 5.0 that requires JDK 6.0 to run 
+         and "gij" isn't available on every platform.</diffmk:wrapper></para>
   </note>
 
   <itemizedlist>
@@ -422,8 +422,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     		<property moreinfo="none">Yes</property></emphasis>   to use it in JBoss Developer Studio.</para>
     	<note>
     		<title>Note:</title>
-    		<para>JBDS 2.0.0.GA comes integrated with JBoss EAP 4.3, while the current 2.1.0.GA release of JBDS comes with JBoss EAP 5 that support EAP 5 adapter
-    		and Seam 2.2.</para>
+    	 <para><diffmk:wrapper diffmk:change="changed">Like in the previous version of JBDS, JBDS 3.0.0.GA comes integrated with JBoss EAP 5.0 
+    	       that supports EAP 5 adapter and Seam 2.2.</diffmk:wrapper></para>
     	</note>
     	
     	<para>This step lets you configure locally available JBoss Application Servers: </para> 
@@ -459,7 +459,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </itemizedlist>
   
   <itemizedlist>
-   <listitem> <para>You can also add servers one by one using the <emphasis><property moreinfo="none">Add</property></emphasis> button:</para>
+   <listitem><para><diffmk:wrapper diffmk:change="changed">You can also add servers one by one using the 
+    </diffmk:wrapper><emphasis><property moreinfo="none">Add</property></emphasis> button:</para>
    </listitem>
   </itemizedlist>
  
@@ -501,9 +502,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </mediaobject>
   </figure>
   <para></para>
-  
-   
-  
+    
   <!--  <note>
    <title>Note:</title>
    <para>The installer installs JBoss Enterprise Application Platform for running your applications
@@ -600,6 +599,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <listitem>
      <para>JBPM Tools</para>
     </listitem>
+    <listitem diffmk:change="added">
+     <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Smooks Tools</diffmk:wrapper></para>
+    </listitem>
    </itemizedlist>
 
    <para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
@@ -607,10 +609,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <itemizedlist>
     <listitem>
     	<para>Get Eclipse and Web Tools (make sure you have the 
-    		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">appropriate version of Eclipse</ulink>)</para>
+    		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">appropriate version of Eclipse</ulink><diffmk:wrapper diffmk:change="changed">).</diffmk:wrapper></para>
     </listitem>
    </itemizedlist>
-  	<para>The current version of JBoss Tools (3.1.M2) targets at Eclipse 3.5/Galileo which is available from <ulink url="http://www.eclipse.org/downloads/">eclipse.org</ulink></para>
+   <para><diffmk:wrapper diffmk:change="changed">The current version of JBoss Tools (3.1.0.GA) targets at Eclipse 3.5.2 Galileo JEE Bundle which is available from </diffmk:wrapper><ulink url="http://www.eclipse.org/downloads/">eclipse.org</ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
 
    <tip>
     <title>Tip:</title>
@@ -623,105 +625,134 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <note>
     <title>Note:</title>
-    <para>Remember to choose the download that matches your OS and use Java 5 when you run
-    it.</para>
+    <para><diffmk:wrapper diffmk:change="changed">Remember to choose the download that matches your OS and use Java 6 when you run
+    it.</diffmk:wrapper></para>
    </note>
-
-   <itemizedlist>
-    <listitem>
-     <para>Get the <ulink url="http://download.jboss.org/jbosstools/builds/nightly/latestBuild.html">latest JBoss Tools build</ulink></para>
-    </listitem>
-   </itemizedlist>
-
-   <para>Some of our newer plugins, like TPTP and BIRT, need additional drivers. On the left side of
-    the download page you can find all of the required drivers for chosen build and their versions.</para>
-   <para><diffmk:wrapper diffmk:change="added">If you need to install any standalone plug-in from JBoss Tools visit a </diffmk:wrapper><ulink diffmk:change="added" url="http://labs.jboss.com/wiki/InstallingJBossTools"><diffmk:wrapper diffmk:change="added">JBoss Tools Wiki</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> page to read
+   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If you need to install any standalone plug-in from JBoss Tools visit a </diffmk:wrapper><ulink diffmk:change="added" url="http://community.jboss.org/wiki/InstallingJBossTools"><diffmk:wrapper diffmk:change="added">JBoss Tools Wiki</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> page to read
     about dependencies between standalone plug-ins.</diffmk:wrapper></para>  
-   <section diffmk:change="added">
-    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Installation From Update Site</diffmk:wrapper></title>
+   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For more information about how to install JBoss Tools 3.0 and JBoss Tools 3.1 please read the following docs:
+   </diffmk:wrapper></para>
+   <itemizedlist>
+    <listitem><para><ulink diffmk:change="added" url="https://www.jboss.org/tools/download/installation/update_3_0.html"><diffmk:wrapper diffmk:change="added">JBoss Tools 3.0 Installation</diffmk:wrapper></ulink></para></listitem>
+    <listitem diffmk:change="added"><para><ulink diffmk:change="added" url="https://www.jboss.org/tools/download/installation/update_3_1.html"><diffmk:wrapper diffmk:change="added">JBoss Tools 3.1 Installation</diffmk:wrapper></ulink></para></listitem>
+   </itemizedlist>
+   
+   <section>
+    <title>Installation From Update Site</title>
    
    
-   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Instead of downloading installation/updating manually, it's also possible to
-    get the latest release of </diffmk:wrapper><property moreinfo="none">JBoss Tools</property><diffmk:wrapper diffmk:change="changed"> from one of our update sites: 
-    </diffmk:wrapper><itemizedlist id="sites">
+   <para>Instead of downloading installation/updating manually, it's also possible to
+    get the latest release of <property moreinfo="none">JBoss Tools</property> from one of our update sites: 
+    <itemizedlist id="sites">
      <listitem>
       <para>Stable Updates: <ulink url="http://download.jboss.org/jbosstools/updates/stable">http://download.jboss.org/jbosstools/updates/stable</ulink></para>
      </listitem>
      <listitem>
       <para> Development Updates: <ulink url="http://download.jboss.org/jbosstools/updates/development">http://download.jboss.org/jbosstools/updates/development</ulink></para>
      </listitem>
-     <listitem diffmk:change="added">
-      <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> Nightly Builds: </diffmk:wrapper><ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/updates/nightly/trunk/"><diffmk:wrapper diffmk:change="added">http://download.jboss.org/jbosstools/updates/nightly/trunk/</diffmk:wrapper></ulink></para>
+     <listitem>
+      <para> Nightly Builds: <ulink url="http://download.jboss.org/jbosstools/updates/nightly/trunk/">http://download.jboss.org/jbosstools/updates/nightly/trunk/</ulink></para>
      </listitem>
     </itemizedlist>
    </para>
 <itemizedlist>
- <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To install/update Jboss Tools from one of the update sites you should follow the steps:</diffmk:wrapper></para>
+ <note diffmk:change="added">
+  <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">During the JBT installation/updating process using some of Jboss 
+   update sites </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">No repository found containing...</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> error
+   can appear.It is a Eclipse P2 bug.To work around it try:1.Restart your Eclipse. 2.   
+   Add the update site again. 3. 
+   Do the update again.</diffmk:wrapper></para>
+ </note>
+ <para>To install/update Jboss Tools from one of the update sites you should follow the steps:</para>
  <listitem><para><diffmk:wrapper diffmk:change="changed">First, download the correct version of Eclipse 
   for your platform which is compatible with the version of JBoss
   Tools you plan to install.For example if you want to install
-  3.1.0.GA Eclipse 3.5 is required.</diffmk:wrapper></para></listitem>
- <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If you do not already have Java 5 or 6 installed and in your path,
-  download and install it.</diffmk:wrapper></para></listitem>
- <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">When Eclipse is started, go to </diffmk:wrapper><itemizedlist diffmk:change="added">
-  <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="changed">Help-&gt;Software Updates... -&gt;Available Software-&gt;Manage Sites...-&gt;Add...</diffmk:wrapper><emphasis><diffmk:wrapper diffmk:change="added">(Eclipse 3.4)</diffmk:wrapper></emphasis></para></listitem>
-  <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="added">Help-&gt;Install New Software-&gt;Add..</diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">(Eclipse 3.5)</diffmk:wrapper></emphasis></para></listitem>
+  3.1.0.GA Eclipse 3.5.2 Galileo JEE Bundle is required.</diffmk:wrapper></para></listitem>
+ <listitem><para>If you do not already have Java 5 or 6 installed and in your path,
+  download and install it.</para></listitem>
+ <listitem><para>When Eclipse is started, go to <itemizedlist>
+  <listitem><para>Help-&gt;Software Updates... -&gt;Available Software-&gt;Manage Sites...-&gt;Add...<emphasis>(Eclipse 3.4)</emphasis></para></listitem>
+  <listitem><para>Help-&gt;Install New Software-&gt;Add..<emphasis>(Eclipse 3.5)</emphasis></para></listitem>
  </itemizedlist>
  </para></listitem>
- <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="added">After clicking </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Add</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> button </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Add Site</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> View should appear.
-  In the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Location</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> field you should paste one of the update sites described
-  </diffmk:wrapper><link diffmk:change="added" linkend="sites"><diffmk:wrapper diffmk:change="added">above</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">.In </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Name</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> you can write any name you like.
-  In the end press the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Ok</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button.</diffmk:wrapper></para>
+ <listitem><para>After clicking <emphasis>Add</emphasis> button <property moreinfo="none">Add Site</property> View should appear.
+  In the <property moreinfo="none">Location</property> field you should paste one of the update sites described
+  <link linkend="sites">above</link><diffmk:wrapper diffmk:change="changed">.On some platforms,
+  you can also drag and drop the link from your browser directly into Eclipse.In </diffmk:wrapper><property moreinfo="none">Name</property> you can write any name you like.
+  In the end press the <property moreinfo="none">Ok</property> button.</para>
   <figure float="0">
-   <title><diffmk:wrapper diffmk:change="changed">Add Update Site</diffmk:wrapper></title>
+   <title>Add Update Site</title>
    <mediaobject>
     <imageobject>
-     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4a.png"></imagedata>
+     <imagedata fileref="images/getting_started/getting_started_4a.png"></imagedata>
     </imageobject>
    </mediaobject>
   </figure>
  </listitem>
- <listitem diffmk:change="added" id="from_point"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">In the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Install</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> View select features to install, then click </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Next</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
-  <figure diffmk:change="added" float="0">
-   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Jboss Tools installation</diffmk:wrapper></title>
-   <mediaobject diffmk:change="added">
-    <imageobject diffmk:change="added">
-     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4b.png"></imagedata>
-    </imageobject>
-   </mediaobject>
-  </figure>
- </listitem>
- <listitem diffmk:change="added"> <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If Jboss Tools are already installed on your Eclipse and you are doing updating but not 
-  installation the following messages will appear in your </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Details</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> section.
-  Ignore them and press </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Next.</diffmk:wrapper></emphasis></para>
-  <figure diffmk:change="added" float="0">
-   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Possible messages</diffmk:wrapper></title>
-   <mediaobject diffmk:change="added">
-    <imageobject diffmk:change="added">
-     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4c.png"></imagedata>
-    </imageobject>
-   </mediaobject>
-  </figure>
- </listitem>
- <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="changed">When you click Finish the prosses of Installation/Updating starts up. </diffmk:wrapper></para></listitem>
- <listitem diffmk:change="added"><para><diffmk:wrapper diffmk:change="changed">Install. Restart when prompted.</diffmk:wrapper></para>
+ <listitem id="from_point"><para>In the <property moreinfo="none">Install</property> View select features to install, then click <emphasis>Next</emphasis>.</para>
   <figure float="0">
-   <title><diffmk:wrapper diffmk:change="changed">Message dialog</diffmk:wrapper></title>
+   <title>Jboss Tools installation</title>
    <mediaobject>
     <imageobject>
-     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4d.png"></imagedata>
+     <imagedata fileref="images/getting_started/getting_started_4b.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ </listitem>
+ <listitem> 
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">And the system checks whether all necessary requirements and
+  dependencies are installed on your Eclipse.</diffmk:wrapper></para>
+  <figure diffmk:change="added" float="0">
+   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Requirements and
+    dependencies check</diffmk:wrapper></title>
+   <mediaobject diffmk:change="added">
+    <imageobject diffmk:change="added">
+     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_10.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure> 
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If some of them are missing an error message will appear and
+   the installation process will be terminated.
+  </diffmk:wrapper></para>
+  <note diffmk:change="added">
+   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
+   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Sometimes when a user changes the list of plugins for download and clicks
+    </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Next</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">, after required dependences check, 
+    the list of missing dependencies of the previous attempt is showed. 
+    In this case the completely close of the </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Install New Software</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> dialog can help.</diffmk:wrapper></para>
+  </note>
+  <para>If Jboss Tools are already installed on your Eclipse and you are doing updating but not 
+  installation the following messages will appear in your <emphasis>Details</emphasis> section.
+  Ignore them and press <emphasis>Next.</emphasis></para>
+  <figure float="0">
+   <title>Possible messages</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4c.png"></imagedata>
+    </imageobject>
+   </mediaobject>
+  </figure>
+ </listitem>
+ <listitem><para>When you click Finish the prosses of Installation/Updating starts up. </para></listitem>
+ <listitem><para>Install. Restart when prompted.</para>
+  <figure float="0">
+   <title>Message dialog</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4d.png"></imagedata>
     </imageobject>
    </mediaobject>
   </figure> 
  </listitem>
- <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">After fetching all the features and plugins for installation,
+ <listitem><para>After fetching all the features and plugins for installation,
   you may be prompted that your selection contains unsigned jars.
-  This is normal,simply accept the warning and continue. </diffmk:wrapper></para>
-  <figure diffmk:change="added" float="0">
-   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Warning Message</diffmk:wrapper></title>
-   <mediaobject diffmk:change="added">
-    <imageobject diffmk:change="added">
-     <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4e.png"></imagedata>
+  This is normal,simply accept the warning and continue. </para>
+  <figure float="0">
+   <title>Warning Message</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_4e.png"></imagedata>
     </imageobject>
    </mediaobject>
   </figure> 
@@ -736,36 +767,39 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   		wiki article which provides you with the necessary steps to do it correct.</para>
      </note>
  </section>
- <section diffmk:change="added">
-  <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Installation From Zip file</diffmk:wrapper></title>
-   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You can download Jboss tools in a zip file from one of the pages below:</diffmk:wrapper></para>
-  <itemizedlist diffmk:change="added" id="zip_sites">
-   <listitem diffmk:change="added">
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Stable Releases: </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.org/tools/download/stable.html"><diffmk:wrapper diffmk:change="added">http://www.jboss.org/tools/download/stable.html</diffmk:wrapper></ulink></para>
+ <section>
+  <title>Installation From Zip file</title>
+  
+  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Now you can install JBoss Tools using Eclipse P2 update manager and a common zip file which is 
+   one installer for all platforms.</diffmk:wrapper></para>
+   <para><diffmk:wrapper diffmk:change="changed">You can download Jboss Tools in a zip file from one of the pages below:</diffmk:wrapper></para>
+  <itemizedlist id="zip_sites">
+   <listitem>
+    <para>Stable Releases: <ulink url="http://www.jboss.org/tools/download/stable.html">http://www.jboss.org/tools/download/stable.html</ulink></para>
    </listitem>
-   <listitem diffmk:change="added">
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> Development Updates: </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.org/tools/download/dev.html"><diffmk:wrapper diffmk:change="added">http://www.jboss.org/tools/download/dev.html</diffmk:wrapper></ulink></para>
+   <listitem>
+    <para> Development Updates: <ulink url="http://www.jboss.org/tools/download/dev.html">http://www.jboss.org/tools/download/dev.html</ulink></para>
    </listitem>
-   <listitem diffmk:change="added">
-    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> Nightly Builds: </diffmk:wrapper><ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/updates/nightly/"><diffmk:wrapper diffmk:change="added">http://download.jboss.org/jbosstools/updates/nightly/</diffmk:wrapper></ulink></para>
+   <listitem>
+    <para> Nightly Builds: <ulink url="http://download.jboss.org/jbosstools/updates/nightly/">http://download.jboss.org/jbosstools/updates/nightly/</ulink></para>
    </listitem>
   </itemizedlist>
-  <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">When you downloaded Jboss Tools Zip please </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">DO NOT UNZIP IT</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> and follow the steps described below:</diffmk:wrapper></para>
- <itemizedlist diffmk:change="added">
-  <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">When Eclipse is started, go to </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Help -&gt; Install New Software... -&gt; Add... -&gt; Archive...</diffmk:wrapper></property></para></listitem>
-  <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Browse for the update site zip.In the </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Name</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> field you can write any name you like.
-   In the end press </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Ok</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button.</diffmk:wrapper></para>
-   <figure diffmk:change="added" float="0">
-    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Installation from a zip file</diffmk:wrapper></title>
-    <mediaobject diffmk:change="added">
-     <imageobject diffmk:change="added">
-      <imagedata diffmk:change="added" fileref="images/getting_started/getting_started_4f.png"></imagedata>
+  <para>When you downloaded Jboss Tools Zip please <emphasis>DO NOT UNZIP IT</emphasis> and follow the steps described below:</para>
+ <itemizedlist>
+  <listitem><para>When Eclipse is started, go to <property moreinfo="none">Help -&gt; Install New Software... -&gt; Add... -&gt; Archive...</property></para></listitem>
+  <listitem><para>Browse for the update site zip.In the <emphasis>Name</emphasis> field you can write any name you like.
+   In the end press <property moreinfo="none">Ok</property> button.</para>
+   <figure float="0">
+    <title>Installation from a zip file</title>
+    <mediaobject>
+     <imageobject>
+      <imagedata fileref="images/getting_started/getting_started_4f.png"></imagedata>
      </imageobject>
     </mediaobject>
    </figure> 
   </listitem>
-  <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">All the other steps are the same as it was described in the </diffmk:wrapper><link diffmk:change="added" linkend="from_point"><diffmk:wrapper diffmk:change="added">
-   Installation From Update Site section</diffmk:wrapper></link><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></para>
+  <listitem><para>All the other steps are the same as it was described in the <link linkend="from_point">
+   Installation From Update Site section</link>. </para>
   </listitem> 
  </itemizedlist>
   
@@ -863,14 +897,21 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Upgrading">
   <?dbhtml filename="Upgrading.html"?>
   <title>Upgrading</title>
-  <para>To upgrade, of course you can uninstall your current version and install the new one.</para>
- 	<para>Now it's possible to upgrade from JBDS 2.0 to 2.1 using the update site which is available at 
- 		<ulink url="is available at http://devstudio.jboss.com/updates/2.1">http://devstudio.jboss.com/updates/2.1</ulink>. 
- 		This is described more fully in the <ulink url="http://www.jboss.com/products/devstudio/update/">JBDS Update Guide</ulink>.</para>
-  <note diffmk:change="added">
-   <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
-   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">CAN NOT</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> upgrade from 2.1 to 3.0 using update site because of some platform change.Full installation is required.</diffmk:wrapper></para>
-  </note>
+  <para><diffmk:wrapper diffmk:change="added">As opposed to upgrading your JBDS from 2.0 to 2.1 using the update site, 
+        to upgrade your JBDS from 2.1 to 3.0 you have to uninstall your 2.1 version and install the new one
+        because of some platform change.</diffmk:wrapper></para>
+<!--
+  <para>Now it&apos;s possible to upgrade from JBDS 2.0 to 2.1 using the update site 
+        which is available at <ulink url="is available at 
+        http://devstudio.jboss.com/updates/2.1">http://devstudio.jboss.com/updates/2.1</ulink>. 
+ 		     This is described more fully in the 
+ 		     <ulink url="http://www.jboss.com/products/devstudio/update/">JBDS Update Guide</ulink>.</para> 
+  <note>
+   <title>Note:</title>
+   <para>You <emphasis><property>CAN NOT</property></emphasis> upgrade from 2.1 to 3.0 using update site because of some platform change. 
+         Full installation is required.</para>
+  </note> 
+-->  
  </section>
 
  <section id="Uninstalling">
@@ -890,9 +931,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Support">
   <?dbhtml filename="Support.html"?>
   <title>Support</title>
-  <para>If you have comments or questions, you can discuss them at our 
-      <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
-    Developer Studio Forum</ulink>.</para>
+     <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+         Developer Studio Forum</ulink>.</para>
   <para>When writing to the forum for questions, please include the following information:</para>
   <orderedlist continuation="restarts" inheritnum="ignore">
    <listitem>
@@ -930,9 +970,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  </section>
 
 </chapter>
-
  
-<chapter id="manage" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/manage.xml" xreflabel="manage">
+<chapter id="manage" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en-US/manage.xml" xreflabel="manage">
     <?dbhtml filename="manage.html"?>
     <chapterinfo>
         <keywordset>
@@ -948,11 +987,14 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
     <para>In this chapter we'll focus more on how to operate the <property moreinfo="none">JBoss
             AS</property> from <property moreinfo="none">JBoss Developer Studio</property>.</para>
-    <para><property moreinfo="none">JBoss Developer Studio 2.1.0.GA</property> is shipped with <property moreinfo="none">JBoss EAP 5
+    <para><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">JBoss Developer Studio 3.0.0.GA</diffmk:wrapper></property> is shipped with <property moreinfo="none">JBoss EAP 5
          </property>. When you followed the default installation of <property moreinfo="none">JBoss
-            Developer Studio</property>, you should already have a JBoss EAP 5 Server installed and
-        defined. To run JBoss AS you need JDK 1.5, JDK 6 is not formally supported yet, although
-        you may be able to start the server with it.</para>
+            Developer Studio</property><diffmk:wrapper diffmk:change="added">, you should already have a JBoss EAP 5 Server installed and
+            defined. To run JBoss AS you need preinstalled JDK 6.</diffmk:wrapper></para>
+    <note diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Note:</diffmk:wrapper></title>
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You can leave  </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JDK 1.5</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> configuration for </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBDS</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> and set </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JDK 6</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> as </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JRE</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> only for </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss EAP Server</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. For this you need on </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Windows &gt; Preferences</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> menu click </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Server &gt; Runtime Enviroments</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added">. On the opened preference page you should select </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JBoss EAP Runtime</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> and click </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Edit</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. In </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Edit Server Runtime Enviroment</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> dialog you can configure </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Jave Runtime Enviroment</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> by clicking </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JRE</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button.   </diffmk:wrapper></para>
+    </note>
 
     <section id="JBossbundled">
         <?dbhtml filename="JBossbundled.html"?>
@@ -970,7 +1012,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     		</mediaobject>
     	</figure>
     	
-    	     	<para>To read more about AS plug-in, refer to the <ulink url="../../as/html_single/index.html">Server Manager guide</ulink>.</para>
+    	     	<para>To read more about AS plug-in, refer to the Server Manager guide.</para>
         <section id="StartingServer">
             <?dbhtml filename="StartingServer.html"?>
             <title>Starting JBoss Server</title>
@@ -982,12 +1024,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             <itemizedlist>
                 <listitem>
                     <para>To launch the server click the green-with-white-arrow icon on the
-                            <property moreinfo="none">JBoss Server View </property>or right click server name in
-                        this view and select <emphasis>
+                            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Servers</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> or right click server name in
+                        this view and select </diffmk:wrapper><emphasis>
                             <property moreinfo="none">Start</property>
                         </emphasis>. If this view is not open, select <emphasis>
-                            <property moreinfo="none">Window &gt; Show View &gt; Other &gt; Server
-                                &gt; JBoss Server View</property>
+                            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Window &gt; Show View &gt; Other &gt; Server
+                                &gt; Servers</diffmk:wrapper></property>
                         </emphasis></para>
                 </listitem>
             </itemizedlist>
@@ -1013,8 +1055,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             </figure>
             <para>When the server is started you should see <emphasis>
                     <property moreinfo="none">Started</property>
-                </emphasis> in the square brackets right next its name in <property moreinfo="none">JBoss Server
-                    View</property>.</para>
+                </emphasis> in the square brackets right next its name in <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Servers</diffmk:wrapper></property>.</para>
 
             <figure float="0">
                 <title>Server is Started</title>
@@ -1025,7 +1066,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
                 </mediaobject>
             </figure>
             <!--para>To see event log after the server is started, expand <property>Event
-                    Log</property> branch beneath <property>JBoss Server View</property>:</para>
+                    Log</property> branch beneath <property>Servers</property>:</para>
             <figure>
                 <title>Event Log</title>
                 <mediaobject>
@@ -1041,7 +1082,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             <title>Stopping JBoss Server</title>
             <para>To stop the server, click the <emphasis>
                     <property moreinfo="none">Stop</property>
-                </emphasis> icon in <property moreinfo="none">JBoss Server View</property> or right click the server
+                </emphasis> icon in <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Servers</diffmk:wrapper></property> or right click the server
                 name and press <emphasis>
                     <property moreinfo="none">Stop</property>. </emphasis></para>
 
@@ -1128,9 +1169,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
                     Developer Studio</property>.</para>
             <itemizedlist>
                 <listitem>
-                    <para>Open the <property moreinfo="none">JBoss Server View</property> by selecting <emphasis>
-                            <property moreinfo="none">Window &gt; Show View &gt; Other &gt; Server
-                                &gt; JBoss Server View</property>
+                    <para>Open the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Servers</diffmk:wrapper></property> by selecting <emphasis>
+                            <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Window &gt; Show View &gt; Other &gt; Server
+                                &gt; Servers</diffmk:wrapper></property>
                         </emphasis></para>
                 </listitem>
                 <listitem>
@@ -1223,8 +1264,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>A new <property moreinfo="none">JBoss Server</property> should now appear in the <property moreinfo="none">JBoss
-                    Server view</property>.</para>
+            <para>A new <property moreinfo="none">JBoss Server</property> should now appear in the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Servers</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> view.</diffmk:wrapper></para>
             <figure float="0">
                 <title>New JBoss Server</title>
                 <mediaobject>
@@ -1240,7 +1280,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 </chapter>
  
  
-<chapter id="first_seam" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/first_seam.xml" xreflabel="first_seam">
+<chapter id="first_seam" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en-US/first_seam.xml" xreflabel="first_seam">
   <?dbhtml filename="first_seam.html"?>
   <chapterinfo>
     <keywordset>
@@ -1249,26 +1289,19 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
       <keyword>JBoss</keyword>
     </keywordset>
   </chapterinfo>
-
   <title>Write Your First Project with JBoss Developer Studio</title>
-
   <para>This chapter is a set of hands-on labs. You get step-by-step information about how the JBoss
     Developer Studio can be used during the development process.</para>
-
   <section id="create_seam_application">
     <title>Create a Seam Application</title>
-
     <para>In this section you get to know how to create a Seam project in JBDS, how to start the
       server and what a structure your project has after creating.</para>
-
     <section id="start_dev_db">
       <title>Start Development Database</title>
-
-      <para>Before opening the JBoss Developer studio you need to <ulink url="http://anonsvn.jboss.org/repos/jbosstools/trunk/documentation/guides/GettingStartedGuide/en/database.zip">download</ulink> and start a Workshop Database.</para>
-      <para>To start the database just run <property moreinfo="none">./runDBServer.sh</property> or
-          <property moreinfo="none">runDBServer.bat</property> from the database directory.</para>
+      <para><diffmk:wrapper diffmk:change="changed">Before opening the JBoss Developer studio you need to download and start </diffmk:wrapper><diffmk:wrapper diffmk:change="changed">Workshop Database</diffmk:wrapper><diffmk:wrapper diffmk:change="changed">
+        .</diffmk:wrapper></para>
+      <para>To start the database just run <property moreinfo="none">./runDBServer.sh</property><diffmk:wrapper diffmk:change="changed"> or </diffmk:wrapper><property moreinfo="none">runDBServer.bat</property> from the database directory.</para>
       <para>The end result should be a console window that looks like:</para>
-
       <figure float="0">
         <title>Starting DataBase</title>
         <mediaobject>
@@ -1277,17 +1310,13 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
     </section>
-
     <section id="create_deploy_seam">
       <title>Create and deploy Seam Web Project</title>
-
       <para>Minimize the terminal window and run the <property moreinfo="none">JBoss Developer Studio</property>
         from Applications Menu or from the desktop icon.</para>
       <para>First of all you get the Workspace Launcher. Change the default workspace location if
         it's needed. Click on <property moreinfo="none">Ok</property>. </para>
-
       <figure float="0">
         <title>Workspace Launcher Dialog</title>
         <mediaobject>
@@ -1296,18 +1325,15 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>After startup, you see the welcome page. You could read how to work with welcome pages
         in <link linkend="Welcome">previous</link> chapter. Now select <property moreinfo="none">Create
           New...</property> icon and then press on <property moreinfo="none">Create Seam Project</property>
         link.</para>
-
-      <para>The <property moreinfo="none">New Seam Project wizard</property> is started. You need to enter a name
-        (e.g., "workshop") and a location directory for your new project. The
-        wizard has an option for selecting the actual Server (and not just WTP runtime) that will be
-        used for the project. This allows the wizard to correctly identify where the needed
-        datasource and driver libraries need to go.</para>
-
+      <para>The <property moreinfo="none">New Seam Project wizard</property><diffmk:wrapper diffmk:change="changed"> is started. You need to enter a name
+        (e.g., "workshop") and a location directory for your new project. The wizard has
+        an option for selecting the actual Server (and not just WTP runtime) that will be used for
+        the project. This allows the wizard to correctly identify where the needed datasource and
+        driver libraries need to go.</diffmk:wrapper></para>
       <figure float="0">
         <title>New Seam Project Wizard</title>
         <mediaobject>
@@ -1316,13 +1342,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>All settings are already specified here, you can just modify the Configuration. Click on
         the <emphasis>
           <property moreinfo="none">Modify...</property>
         </emphasis> button to configure your custom facets pattern:</para>
-
-
       <figure float="0" id="ProjectFacetsSpecifyingScreen">
         <title>Project Facets Specifying</title>
         <mediaobject>
@@ -1331,18 +1354,15 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>On the whole the dialog allows to select the "features" you want to use in your project.
         Doing this <property moreinfo="none">JBoss Developer Studio</property> setups the appropriate tooling for
         your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any
         combination of technologies from the list. Here, for the default configuration, Dynamic Web
         Module, Java, JavaServer Faces (JSF), and Seam Facet are already selected for a typical
         database-driven web application. The default project facets should suffice.</para>
-
       <para>In the <property moreinfo="none">Project Facets</property> form you can also bring up server runtimes
         panel by clicking <property moreinfo="none"> Runtimes</property> tab on the right corner. This panel shows
         available server runtimes.</para>
-
       <figure float="0">
         <title>Runtimes Selecting</title>
         <mediaobject>
@@ -1351,17 +1371,23 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Click on <emphasis>
           <property moreinfo="none">Ok</property>
         </emphasis> and then <emphasis>
           <property moreinfo="none">Next</property>
         </emphasis> to proceed further.</para>
-
-      <para>A dynamic web application contains both web pages and Java code. The wizard will ask you
-        where you want to put those files. You can just leave the default values or choose another
-        folder.</para>
-
+      <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">A dynamic web application contains both web pages and </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Java</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> code.
+        The next wizard will ask you where you want to store Java files.</diffmk:wrapper></para>
+      <figure diffmk:change="added" float="0">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Java Build Path</diffmk:wrapper></title>
+        <mediaobject diffmk:change="added">
+          <imageobject diffmk:change="added">
+            <imagedata diffmk:change="added" fileref="images/first_seam/first_seam5a.png"></imagedata>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <para><diffmk:wrapper diffmk:change="added">Following page provides you </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Web Module Settings</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> .You can just leave
+        the default values or choose another folder.</diffmk:wrapper></para>
       <figure float="0">
         <title>Web Module Settings</title>
         <mediaobject>
@@ -1370,17 +1396,17 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>On the next form, you will be able to select where those library JARs come from. The
         easiest is just to select the JARs provided by the JBoss AS runtime associated with this
         project. That is why it is important to chose the right JBoss AS 4.2 runtime in the project
         setup window.</para>
       <itemizedlist>
         <listitem>
-          <para>Check <emphasis>
-              <property moreinfo="none">Server Supplied JSF Implementation</property>
-            </emphasis>. We will use <ulink url="../../seam/html_single/index.html#addJSFCapab">JSF
-              implementation</ulink> that comes with JBoss server</para>
+          <para><diffmk:wrapper diffmk:change="changed">Select </diffmk:wrapper><emphasis>
+              <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Library Provided by Target Runtime</diffmk:wrapper></property>
+            </emphasis><diffmk:wrapper diffmk:change="added"> as </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Type</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JSF Implementation
+              Library</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. We will use the JSF implementation that comes with JBoss
+            server.</diffmk:wrapper></para>
         </listitem>
         <listitem>
           <para>Click <emphasis>
@@ -1388,7 +1414,6 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
             </emphasis></para>
         </listitem>
       </itemizedlist>
-
       <figure float="0">
         <title>JSF Capabilities Adding</title>
         <mediaobject>
@@ -1397,11 +1422,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>Next wizard step needs more settings that previous. Let's start with
-          <property moreinfo="none">General</property> section.</para>
+      <para><diffmk:wrapper diffmk:change="changed">Next wizard step needs more settings that previous. Let's start with </diffmk:wrapper><property moreinfo="none">General</property> section.</para>
       <para>Leave the default Seam runtime and check a WAR deployment.</para>
-
       <figure float="0">
         <title>Seam Facet Setting</title>
         <mediaobject>
@@ -1410,14 +1432,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Next <property moreinfo="none">Database</property> section is a little tricky. The <property moreinfo="none">Connection
           Profile</property> needs to be edited so that the new project works properly with the
         external HSQLDB server. By default the project wizard tries to use the JBoss embedded
         HSQLDB, but the tutorial uses an external database to replicate a more real world
         development scenario. Click on <property moreinfo="none">Edit</property> to modify the Connection
         Profile.</para>
-
       <figure float="0">
         <title>DataBase Setting</title>
         <mediaobject>
@@ -1426,11 +1446,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>Select <property moreinfo="none">JDBC Connection Properties</property>. Make sure the URL is set to <emphasis>
-          <property moreinfo="none">jdbc:hsqldb:hsql://localhost:1701</property>
+      <para>Select <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">HSQLDB Profile Properties</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">. Make sure the Database location
+        is set to </diffmk:wrapper><emphasis>
+          <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">hsql://localhost:1701</diffmk:wrapper></property>
         </emphasis></para>
-
       <figure float="0">
         <title>JDBC Connection Properties</title>
         <mediaobject>
@@ -1439,16 +1458,16 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>Try click on <property moreinfo="none">Test Connection</property> button. It probably won’t work. This
+      <para>Try click on <property moreinfo="none">Test Connection</property><diffmk:wrapper diffmk:change="added"> button. It probably won’t work. This
         happens if the hsql jdbc driver is not exactly the same. This can be worked around by
-        modifying the HSQLDB database driver settings. To modify the settings, click the
-          <property moreinfo="none">“...”</property> next to the drop-down box.</para>
-
-      <para>The proper Driver JAR File should be listed under <property moreinfo="none">Driver File(s)</property>.
-        Select the hsqldb.jar file found in the database/lib directory and click on
-          <property moreinfo="none">Ok</property>.</para>
-
+        modifying the HSQLDB database driver settings. To modify the settings, click the Edit Driver Definition Driver(
+            </diffmk:wrapper><inlinemediaobject diffmk:change="added"><imageobject diffmk:change="added">
+            <imagedata diffmk:change="added" fileref="images/first_seam/first_seam9_1.png"></imagedata>
+          </imageobject>
+        </inlinemediaobject><diffmk:wrapper diffmk:change="added">) .</diffmk:wrapper></para>
+      <para>The proper Driver JAR File should be listed under <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Jar List</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">. Select
+        the hsqldb.jar file found in the jbdevstudio/jboss-eap/jboss-as/common/lib/ directory and
+        click </diffmk:wrapper><property moreinfo="none">Ok</property>.</para>
       <figure float="0">
         <title>Driver Details</title>
         <mediaobject>
@@ -1457,22 +1476,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>Select <property moreinfo="none">Hypersonic DB</property> and click on <property moreinfo="none">Ok</property>. Again,
-        this only happens if the selected hsqldb.jar is different from the running database.</para>
-
-      <figure float="0">
-        <title>Hypersonic DB Selecting</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="images/first_seam/first_seam11.png"></imagedata>
-          </imageobject>
-        </mediaobject>
-      </figure>
-
-      <para>Now, the <property moreinfo="none">Test Connection</property> should succeed. After testing the
-        connection, click on Ok.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">Now, the </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Test Connection</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> should succeed. After testing the
+        connection, click </diffmk:wrapper><emphasis diffmk:change="added"><property moreinfo="none">Ok</property></emphasis><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
       <figure float="0">
         <title>Connection Testing</title>
         <mediaobject>
@@ -1481,10 +1486,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>You can leave the <property moreinfo="none">Code Generation</property> section as is. It refers to Java
         packages in which the generated code will be placed.</para>
-
       <figure float="0">
         <title>Code Generation Setting</title>
         <mediaobject>
@@ -1493,10 +1496,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Click on <property moreinfo="none">Finish</property> button. Now, there should be a new Seam project
         called “workshop” listed in Package Explorer view.</para>
-
       <figure float="0">
         <title>"worskhop" Project in the Package Explorer</title>
         <mediaobject>
@@ -1506,32 +1507,25 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
         </mediaobject>
       </figure>
     </section>
-
     <section id="start_JBossAS">
       <title>Start JBoss Application Server</title>
-
       <para>The complete information on how to manage JBoss AS from JBoss Developer Studio you can
         read in a <link linkend="manage">corresponding chapter</link>.</para>
-      <para>Now you just need to start the server by clicking on the Start the server icon ( 
-        <inlinemediaobject>
+      <para><diffmk:wrapper diffmk:change="changed">Now you just need to start the server by clicking on the Start the server icon (
+          </diffmk:wrapper><inlinemediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam15.png"></imagedata>
           </imageobject>
-        </inlinemediaobject> ) in the
-        JBoss Server View.</para>
-
+        </inlinemediaobject><diffmk:wrapper diffmk:change="added"> ) in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Servers</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
       <para>Then run the project by selecting the project and use <emphasis><property moreinfo="none">Run As... &gt;
             Run on Server</property>.</emphasis></para>
-
       <note>
         <title>Note:</title>
         <para>If the project does not show up, then you can use a normal browser and use <emphasis>
             <property moreinfo="none">http://localhost:8080/workshop/home.seam</property>
           </emphasis> as the url.</para>
       </note>
-
       <para>Your project looks like this:</para>
-
       <figure float="0">
         <title>"workshop" Project Started</title>
         <mediaobject>
@@ -1540,30 +1534,26 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
     </section>
-
     <section id="workshop_code_overview">
       <title>Workshop Project Code Overview</title>
-
       <para>Now let's examine the project and its structure. Go back to the Package Explorer view in
         JBoss Developer Studio.</para>
-
       <para>It seems like it's not much for project but this shell application contains a login
         screen with default login logic, a menu template that can be further modified, and other
         layout templates.</para>
-
       <para>It's important to note that the business logic will reside in the <emphasis>
           <property moreinfo="none">src/hot</property>
-        </emphasis> folder, by default. And, the package naming conventions that were used in <property moreinfo="none">New Seam
-        project wizard</property> could have been changed to something different from <emphasis>
-          <property moreinfo="none">org.domain.workshop.session</property>.
-        </emphasis> Also, notice that there is a default <property moreinfo="none">Authenticator. java</property>
-        file. This is where custom security logic can be added. Seam has a nice declarative security
-        model that we will explore in a bit more detail later on. The <emphasis>
+        </emphasis><diffmk:wrapper diffmk:change="changed"> folder, by default. And, the package naming conventions that were used in
+          </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">New Seam project wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> could have been changed to something
+        different from </diffmk:wrapper><emphasis>
+          <property moreinfo="none">org.domain.workshop.session</property><diffmk:wrapper diffmk:change="changed">. </diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="changed"> Also, notice that there is a
+        default </diffmk:wrapper><property moreinfo="none">Authenticator. java</property><diffmk:wrapper diffmk:change="changed"> file. This is where custom security logic
+        can be added. Seam has a nice declarative security model that we will explore in a bit more
+        detail later on. The </diffmk:wrapper><emphasis>
           <property moreinfo="none">src/main</property>
-        </emphasis> folder is a model directory. It stores the project's JPA entity beans.</para>
-      
+        </emphasis><diffmk:wrapper diffmk:change="changed"> folder is a model directory. It stores the project's JPA entity
+        beans.</diffmk:wrapper></para>
       <figure float="0">
         <title>Project Structure</title>
         <mediaobject>
@@ -1572,12 +1562,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-        
-        <para>The view tier of the
-        application is also important. Seam uses facelets and there is a built-in facelets GUI
-        editor that has some nice WYSIWYG and component drag/drop functionality. Try this out by
-        opening <property moreinfo="none">home.xhtml</property> from <property moreinfo="none">WebContent</property> folder.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">The view tier of the application is also important. Seam uses facelets and there is a
+        built-in facelets GUI editor that has some nice WYSIWYG and component drag/drop
+        functionality. Try this out by opening </diffmk:wrapper><property moreinfo="none">home.xhtml</property> from <property moreinfo="none">WebContent</property> folder.</para>
       <figure float="0">
         <title>Facelets GUI Editor</title>
         <mediaobject>
@@ -1586,14 +1573,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Notice that the templates reside in the <emphasis>
           <property moreinfo="none">WebContent/layout</property>
         </emphasis> folder. There is a stylesheet in the <emphasis>
           <property moreinfo="none">WebContent/stylesheet</property>
         </emphasis> folder. There is also a login and default error page. The Facelet editor will be
         explored in more detail later in the lab.</para>
-
       <para>The project already has a datasource that was created per the Seam project wizard
         database settings. And, obviously all of the Seam specific configuration files and JAR
         dependencies are included and placed in the proper locations. On last noteworthy line item
@@ -1603,30 +1588,21 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
         setup/deployment process. The end result is a developer that is writing code, not spending
         days/weeks trying to figure out how to get a decent development environment and project
         build process.</para>
-
     </section>
-
   </section>
-
-
   <section id="seam_action_dev">
     <title>Seam Action Development</title>
-
     <para>Now, it’s time to write some code. The good news is that JBoss Developer Studio can also
       help out in this respect. In this section, we will create a new Seam Action POJO and facelet
       with some custom business logic and some GUI changes.</para>
-
     <section id="create_seam_action">
       <title>Create a New Seam Action</title>
-
       <para>Go to main menu bar and click on <emphasis>
           <property moreinfo="none">File &gt; New &gt; New Seam Action</property>
         </emphasis> to start the New Seam Action wizard.</para>
-
-      <para>Specify a <property moreinfo="none">Seam component name</property> (e.g., "myAction").
-        The other properties will be auto-completed for you so there is no need to change them.
-        Click on <property moreinfo="none">Finish</property>.</para>
-
+      <para>Specify a <property moreinfo="none">Seam component name</property><diffmk:wrapper diffmk:change="changed"> (e.g., "myAction"). The
+        other properties will be auto-completed for you so there is no need to change them. Click on
+          </diffmk:wrapper><property moreinfo="none">Finish</property>.</para>
       <figure float="0">
         <title>New Seam Action Wizard</title>
         <mediaobject>
@@ -1635,27 +1611,20 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Now, open the <property moreinfo="none">MyAction.java</property> file and replace the
         "myAction" method with this logic:</para>
-
       <programlisting format="linespecific"><![CDATA[public void myAction() {
 Calendar cal = Calendar.getInstance();
 log.info("myAction.myAction() action called");
 facesMessages.add("MyAction Executed on:" + cal.getTime());
 }]]></programlisting>
-
       <para>You also need to import the <property moreinfo="none">java.util.Calendar</property> class by clicking
             <emphasis><property moreinfo="none">CTRL + Shift + O</property>.</emphasis></para>
-
     </section>
-
     <section id="test_seam_action">
       <title>Test Seam Action</title>
-
       <para>The new action can be tested by browsing the workshop-test project. JBoss Developer
         Studio has already created a TestNG test case for you.</para>
-
       <figure float="0">
         <title>"workshop-test" Project</title>
         <mediaobject>
@@ -1664,14 +1633,12 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>The test case simulates a Seam component/method execution for the
-          <property moreinfo="none">MyAction.myAction()</property> logic.</para>
-      <para>To run the test case, right click on <property moreinfo="none">MyActionTest.xml</property> and click <emphasis>
+      <para><diffmk:wrapper diffmk:change="changed">The test case simulates a Seam component/method execution for the </diffmk:wrapper><property moreinfo="none">MyAction.myAction()</property> logic.</para>
+      <para>To run the test case, right click on <property moreinfo="none">MyActionTest.xml</property><diffmk:wrapper diffmk:change="changed"> and click
+          </diffmk:wrapper><emphasis>
           <property moreinfo="none">Run As &gt; TestNG Suite</property>
         </emphasis> or use the <property moreinfo="none">Run As...</property> toolbar shortcut as shown
         below.</para>
-
       <figure float="0">
         <title>TestNG Running</title>
         <mediaobject>
@@ -1680,9 +1647,7 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>With any luck, the test case will pass. Look at the TestNG view.</para>
-
       <figure float="0">
         <title>TestNG Results</title>
         <mediaobject>
@@ -1691,7 +1656,6 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Now, it’s safe to test the new Seam Action in a web browser. The fastest way to do that
         is to right click on <property moreinfo="none">myAction.xhtml</property> and use <emphasis>
           <property moreinfo="none">Run As... &gt; Run On Server</property>
@@ -1699,7 +1663,6 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
         manually enter <emphasis>
           <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> into a browser.</para>
-
       <figure float="0">
         <title>Seam Action in a Web Browser</title>
         <mediaobject>
@@ -1708,21 +1671,16 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
-
     </section>
-
     <section id="modify_seam_action">
       <title>Modify Seam Action User Interface</title>
-
       <para>Browse to <emphasis>
           <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> and click on <property moreinfo="none">myAction</property>. This executes the “myAction” method.
         This looks pretty good, but we could make this page look a little better.</para>
-
       <para>Open <emphasis>
           <property moreinfo="none">WebContent/myAction.xhtml</property>
         </emphasis> in JBoss Developer Studio to use the nice facelets editor.</para>
-
       <figure float="0">
         <title>Open Seam Action with Editor </title>
         <mediaobject>
@@ -1731,10 +1689,8 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>Right click on the "myAction!" button in the visual part of editor and
-        select <property moreinfo="none">&lt;h:commandButton&gt; Attributes</property>.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">Right click on the "myAction!" button in the visual part of editor and select
+          </diffmk:wrapper><property moreinfo="none">&lt;h:commandButton&gt; Attributes</property>.</para>
       <figure float="0">
         <title>Seam Action Editing</title>
         <mediaobject>
@@ -1743,12 +1699,10 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Change the <property moreinfo="none">value</property> of the button to something different. If desired,
         you can change any other text on the page. Then, type <emphasis>
           <property moreinfo="none">CTRL + S</property>
         </emphasis> to save the facelet.</para>
-
       <figure float="0">
         <title>Attributes Dialog</title>
         <mediaobject>
@@ -1757,14 +1711,11 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Refresh <emphasis>
           <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> and now you should see your changes.</para>
-
       <para>Notice that you did not have to publish the application. JBoss Developer Studio
         auto-published it for you.</para>
-
       <figure float="0">
         <title>Seam Action Is Modified</title>
         <mediaobject>
@@ -1773,54 +1724,41 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
-
     </section>
-
-
   </section>
-
   <section id="declarative_security">
     <title>Declarative Security</title>
-
     <para>In this section you will see how it’s easy to secure the facelets and facelet components
       in Seam. Let’s go ahead and secure the action button, then we will secure the entire
       page.</para>
-
     <section id="edit_login">
       <title>Edit Login Authentication Logic</title>
-
       <para>There is a class called <property moreinfo="none">Authenticator.java</property>. The login page will
         execute the <property moreinfo="none">Authenticator.authenticate()</property> method by default, so we’ll
         start by adding some custom login logic.</para>
       <para>Open <property moreinfo="none">Authenticator.java</property> in JBoss Developer Studio and replace the
           <property moreinfo="none">authenticate()</property> method with this code:</para>
-
-      <programlisting format="linespecific"><![CDATA[public boolean authenticate() {
-if (identity.getUsername().equals("admin")
-&& identity.getPassword().equals("password")) {
-identity.addRole("admin");
-return true;
-}
-else
-return true;
+      <programlisting format="linespecific"><![CDATA[public boolean authenticate()
+{
+  if ("admin".equals(credentials.getUsername()))
+  {
+    identity.addRole("admin");
+    return true;
+  }
+  return false;
 }]]></programlisting>
-
     </section>
     <section id="secure_seam_page">
       <title>Secure Seam Page Component</title>
-
       <para>Open <property moreinfo="none">myAction.xhtml</property> and add a new secured command button:</para>
       <programlisting format="linespecific"><![CDATA[<h:commandButton id="myActionSecured"
 value="Secured Action Button"
 action="#{myAction.myAction}"
 rendered="#{s:hasRole('admin')}"/>]]></programlisting>
-
       <para>Refresh <emphasis>
           <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> If you are not logged in you will only see one button. If you are logged in,
         there will be two buttons.</para>
-
-
       <figure float="0">
         <title>One Button on a Page</title>
         <mediaobject>
@@ -1829,10 +1767,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>The secured button is not visible because the user isn’t logged in as
-          <property moreinfo="none">"admin"</property>.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">The secured button is not visible because the user isn’t logged in as </diffmk:wrapper><property moreinfo="none">"admin"</property>.</para>
       <figure float="0">
         <title>Secured Button is Visible</title>
         <mediaobject>
@@ -1841,20 +1776,15 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>The user is logged in as <property moreinfo="none">"admin"</property>. Securing
-        components is easy but securing pages is pretty simple as well. </para>
+      <para>The user is logged in as <property moreinfo="none">"admin"</property><diffmk:wrapper diffmk:change="changed">. Securing components is
+        easy but securing pages is pretty simple as well. </diffmk:wrapper></para>
       <para>Open <emphasis>
           <property moreinfo="none">WebContent/WEB-INF/pages.xml</property>
-        </emphasis>. Then add this markup directly underneath the &lt;pages&gt;
-        element:</para>
-
+        </emphasis><diffmk:wrapper diffmk:change="changed">. Then add this markup directly underneath the &lt;pages&gt; element:</diffmk:wrapper></para>
       <programlisting format="linespecific"><![CDATA[<page view-id="/myAction.xhtml" login-required="true"/>]]></programlisting>
-
       <para>Refresh <emphasis>
           <property moreinfo="none">http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> If you are not logged in you will get bounced back to the login page.</para>
-
       <figure float="0">
         <title>Login Page</title>
         <mediaobject>
@@ -1863,36 +1793,25 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>Thus, if you enter login credentials for the
-          <property moreinfo="none">"admin"</property> user, you will be re-directed to the
-        secured page and secured component. If you enter different login credentials, page access
-        will be granted, but the secured component will not be displayed.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">Thus, if you enter login credentials for the </diffmk:wrapper><property moreinfo="none">"admin"</property><diffmk:wrapper diffmk:change="changed">
+        user, you will be re-directed to the secured page and secured component. If you enter
+        different login credentials, page access will be granted, but the secured component will not
+        be displayed.</diffmk:wrapper></para>
       <para>Congratulations! You have secured your new action both at the facelet component and page
         level. You also added custom authentication logic to the login action.</para>
-
     </section>
-
   </section>
-
   <section id="browsing_workshop_db">
     <title>Browsing Workshop Database</title>
-
     <para>In this section you get to know how to use the workshop database that was started at the
       beginning of the lab.</para>
-
     <section id="database_connectivity">
       <title>Database Connectivity Setup</title>
-
       <para>The workshop data can be browsed inside of JBoss Developer Studio.</para>
-
       <para>To open the Data Source Explorer, click on <emphasis><property moreinfo="none">Window &gt; Open Perspective
             &gt; Other &gt; Database Development</property>.</emphasis></para>
       <para>In the Data Source Explorer, expand a <property moreinfo="none">Databases</property> node and select a
-          <property moreinfo="none">Default</property> database. Right click on it, select
-          <property moreinfo="none">Connect</property> from the context menu.</para>
-
+          <property moreinfo="none">Default</property><diffmk:wrapper diffmk:change="changed"> database. Right click on it, select </diffmk:wrapper><property moreinfo="none">Connect</property> from the context menu.</para>
       <figure float="0">
         <title>Data Source Explorer</title>
         <mediaobject>
@@ -1901,14 +1820,10 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
     </section>
-
     <section id="browsing_workshop_db2">
       <title>Browse Workshop Database</title>
-
       <para>Then in the current view, drill down to the <property moreinfo="none">CUSTOMERS</property> table.</para>
-
       <figure float="0">
         <title>"CUSTOMERS" Table</title>
         <mediaobject>
@@ -1917,16 +1832,12 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Right click on <property moreinfo="none">CUSTOMERS</property>, select <emphasis>
           <property moreinfo="none">Data &gt; Sample Contents</property>
         </emphasis> to view the data in the table.</para>
-
       <para>There should be a SQL Results view on the workbench, but it could be hidden. Click on
-        the <property moreinfo="none">"Result1"</property> tab in the right side and you should
-        see the data in the CUSTOMERS table.</para>
-
-
+        the <property moreinfo="none">"Result1"</property><diffmk:wrapper diffmk:change="changed"> tab in the right side and you should see the
+        data in the CUSTOMERS table.</diffmk:wrapper></para>
       <figure float="0">
         <title>SQL Results View</title>
         <mediaobject>
@@ -1935,39 +1846,27 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <note>
         <title>Note:</title>
         <para>If you can’t find the SQL Results view tab, click on <emphasis><property moreinfo="none">Window &gt; Show
               View &gt; Other &gt; SQL Development &gt; SQL Results</property>.</emphasis></para>
       </note>
-
       <para>Congratulations! You just connected to the workshop database and queried the content
         using Database Explorer tools.</para>
-
     </section>
-
   </section>
-
   <section id="db_programming">
     <title>Database Programming</title>
-
     <para>Now, it’s time to reverse engineer the workshop database into a fully functioning Seam
       CRUD(Create Read Update Delete) application.</para>
-
     <section id="reverse_engineer_crud">
       <title>Reverse Engineer CRUD from a Running Database</title>
-
       <para>In <property moreinfo="none">JBoss Developer Studio</property>, switch to <property moreinfo="none">Seam
-          perspective</property>, and then right-click the project and select
-            <emphasis><property moreinfo="none">New &gt; Seam Generate Entities</property>.</emphasis></para>
-
-      <para>"workshop" project in the <property moreinfo="none">Seam Generate Entities
-          wizard</property> will be selected automatically. There is no need to change something
-        more, click <emphasis>
+          perspective</property><diffmk:wrapper diffmk:change="changed">, and then right-click the project and select </diffmk:wrapper><emphasis><property moreinfo="none">New &gt; Seam Generate Entities</property>.</emphasis></para>
+      <para>"workshop" project in the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Seam Generate Entities wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed">
+        will be selected automatically. There is no need to change something more, click </diffmk:wrapper><emphasis>
           <property moreinfo="none">Next</property>
         </emphasis> to proceed further.</para>
-
       <figure float="0">
         <title>Generate Seam Entities</title>
         <mediaobject>
@@ -1976,12 +1875,10 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>On the next page use the <emphasis>
           <property moreinfo="none">Include</property>
         </emphasis> button to include all the tables from the database and click <emphasis>
           <property moreinfo="none">Finish</property>.</emphasis></para>
-
       <figure float="0">
         <title>Selecting Tables</title>
         <mediaobject>
@@ -1990,11 +1887,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>After running the Generate Entities action, you will see new <emphasis>
           <property moreinfo="none">org.domain.workshop.entity</property>
         </emphasis> classes. These classes represent insert/update/delete/query logic.</para>
-
       <figure float="0">
         <title>org.domain.workshop.entity Classes</title>
         <mediaobject>
@@ -2003,13 +1898,11 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>There are also <emphasis>
           <property moreinfo="none">org.domain.workshop.entity</property>
         </emphasis> package that contains the JPA classes. These are the entity beans that are
         mapped to database tables.Note,that you can use Seam refactoring tools with Seam components.
         Read more about it in <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#seam_refactoring">Seam refactoring tools chapter</ulink> of Seam Dev Tools Reference Guide.</para>
-
       <para>Last, but not least, there are facelets for all of the CRUD screens. The best way to get
         a feel for the generated code is to open a browser and play around with the application. Go
         to <emphasis>
@@ -2017,7 +1910,6 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         </emphasis> and insert/update/delete/query a few records. There is quite a bit of AJAX in
         this application, but which we will explore further later on in the lab. For now, take note
         of the page tabs, required field logic and data table sorting in the list pages. </para>
-
       <figure float="0">
         <title>CustomersList.xhtml in the Editor</title>
         <mediaobject>
@@ -2026,20 +1918,15 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Congratulations! You now have a fully functioning CRUD application that is already AJAX
         enabled.</para>
-
     </section>
-
     <section id="use_hibernate_tools">
       <title>Use Hibernate Tools to Query Data via JPA</title>
-
       <para>Now, it's time to write some JPA queries using the Hibernate perspective in
           <property moreinfo="none">JBoss Developer Studio</property>.</para>
       <para>In the upper right corner of the workbench there is a small icon (see the figure below),
         click on it and choose <property moreinfo="none">Hibernate</property>.</para>
-
       <figure float="0">
         <title>Hibernate Perspective</title>
         <mediaobject>
@@ -2048,11 +1935,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
-      <para>Look at the Hibernate Configurations view. In the "workshop" project,
-        drill down on the <property moreinfo="none">Session Factory</property> and notice that the JPA
-        entities/attributes are listed in a nice tree view.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">Look at the Hibernate Configurations view. In the "workshop" project, drill
+        down on the </diffmk:wrapper><property moreinfo="none">Session Factory</property><diffmk:wrapper diffmk:change="changed"> and notice that the JPA entities/attributes
+        are listed in a nice tree view.</diffmk:wrapper></para>
       <figure float="0">
         <title>Hibernate Configurations View</title>
         <mediaobject>
@@ -2061,13 +1946,10 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Right click on the <property moreinfo="none">Session Factory</property> and select <property moreinfo="none">HQL
           Editor</property>. This will open a JPA query scratch pad window.</para>
-
-      <para>Write your query and click on the "Hibernate Dynamic SQL Preview" tab.
-        You should see the SQL that will be executed if this JPA query is run.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">Write your query and click on the "Hibernate Dynamic SQL Preview" tab. You
+        should see the SQL that will be executed if this JPA query is run.</diffmk:wrapper></para>
       <figure float="0">
         <title>JPA Query Editor</title>
         <mediaobject>
@@ -2076,14 +1958,11 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Run the query by clicking on the green run icon.</para>
-
-      <para>The results are listed in the "Hibernate Query Result" tab. There is a
-        "Properties" tab in the workbench that can be used to see a specific JPA
-        result. These results represent the JPA objects because our query did not specify column
-        names.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">The results are listed in the "Hibernate Query Result" tab. There is a
+        "Properties" tab in the workbench that can be used to see a specific JPA result.
+        These results represent the JPA objects because our query did not specify column
+        names.</diffmk:wrapper></para>
       <figure float="0">
         <title>Hibernate Query Result View</title>
         <mediaobject>
@@ -2092,10 +1971,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>The query can be refined, and take note that there is nice code completion in the JPA
         query editor.</para>
-
       <figure float="0">
         <title>Code Completion</title>
         <mediaobject>
@@ -2104,10 +1981,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>A refined query will return results that are more ResultSet oriented. Notice the join
         logic that JPA supports.</para>
-
       <figure float="0">
         <title>The Hibernate Query Result</title>
         <mediaobject>
@@ -2116,15 +1991,11 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
-
-      <para>There was no need to specify an <property moreinfo="none">Employees</property> table in the
-          <property moreinfo="none">from</property> part of the JPA query because JPA supports reference traversal
-        via Java class attribute references. Not only are JPA and HQL queries fully supported, but
-        Criteria based queries can also be written in the Criteria Editor. You should spend some
-        time tinkering with different queries and possibly Criteria based queries, even though the
-        instructions are not provided in this lab.</para>
-
+      <para>There was no need to specify an <property moreinfo="none">Employees</property><diffmk:wrapper diffmk:change="changed"> table in the </diffmk:wrapper><property moreinfo="none">from</property><diffmk:wrapper diffmk:change="changed"> part of the JPA query because JPA supports reference traversal via Java
+        class attribute references. Not only are JPA and HQL queries fully supported, but Criteria
+        based queries can also be written in the Criteria Editor. You should spend some time
+        tinkering with different queries and possibly Criteria based queries, even though the
+        instructions are not provided in this lab.</diffmk:wrapper></para>
       <figure float="0">
         <title>Criteria Editor</title>
         <mediaobject>
@@ -2133,19 +2004,13 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
     </section>
-
     <section id="use_hibernate_to_vizualize">
       <title>Use Hibernate Tools to visualize the Data Model</title>
-
       <para>Now, it’s time to view the data model for the workshop database.</para>
-
-      <para>In the Hibernate Configurations view, select "workshop" project and
-        expand the <property moreinfo="none">Configuration</property> node. Select the
-          <property moreinfo="none">Customers</property> entity, right click on it, choose <property moreinfo="none">Open Mapping
-          Diagram</property>.</para>
-
+      <para><diffmk:wrapper diffmk:change="changed">In the Hibernate Configurations view, select "workshop" project and expand the
+          </diffmk:wrapper><property moreinfo="none">Configuration</property><diffmk:wrapper diffmk:change="changed"> node. Select the </diffmk:wrapper><property moreinfo="none">Customers</property><diffmk:wrapper diffmk:change="changed"> entity,
+        right click on it, choose </diffmk:wrapper><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Open Mapping Diagram</diffmk:wrapper></property>.</para>
       <figure float="0">
         <title>Mapping Diagram Opening</title>
         <mediaobject>
@@ -2154,13 +2019,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
-
       <para>You see a Diagram tab for the CUSTOMERS table and any tables that have FK references.
         This is a handy way to view the data model and JPA mappings. Now, you’ve got access to
         something that the Erwin Data Modeler can’t do.</para>
-
-
       <figure float="0">
         <title>Diagram Tab</title>
         <mediaobject>
@@ -2169,26 +2030,19 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
     </section>
   </section>
-
-
   <section id="rich_components">
     <title>Rich Components</title>
-
     <para>This lab will conclude with one last AJAX twist. In this section we add a RichFaces
         <property moreinfo="none">inputNumberSlider</property> to the Order Details edit screen.</para>
-
     <section id="add_richfaces">
       <title>Add a Richfaces component to the CRUD Application</title>
-
       <para>Switch to Seam perspective, open <emphasis>
           <property moreinfo="none">WebContent/OrderdetailsEdit.xhtml</property>
         </emphasis> in JBoss Developer Studio.</para>
       <para>Change the form field values using the visual editor. Seam has generated the form field
         names that match the database column names. This is not ideal for business users.</para>
-
       <figure float="0">
         <title>Form Fields Editing</title>
         <mediaobject>
@@ -2197,11 +2051,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Also, replace the QTY Ordered input field with a <property moreinfo="none">inputNumberSlider</property>.
         You can use the JBoss Developer Studio palette or right click on the form and insert the
         RichFaces component.</para>
-
       <figure float="0">
         <title>Insert RichFaces Component from Context Menu</title>
         <mediaobject>
@@ -2210,13 +2062,10 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>One the last option is to use the source view and manually copy the inputNumberSlider
         markup listed below:</para>
-
       <programlisting format="linespecific"><![CDATA[<rich:inputNumberSlider id="quantityOrdered" required="true"
                                                                value="#{orderdetailsHome.instance.quantityordered}"/>]]></programlisting>
-
       <figure float="0">
         <title>Manually coping Source Code</title>
         <mediaobject>
@@ -2225,10 +2074,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>The end result is an edit page that has better form labels and a new RichFaces
         control.</para>
-
       <figure float="0">
         <title>The Result Page</title>
         <mediaobject>
@@ -2237,16 +2084,13 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-
       <para>Congratulations! You have completed the JBoss Developer Studio lab.</para>
-
     </section>
-
   </section>
 </chapter>
  
  
-<chapter id="jsp_application" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/jsp_application.xml" xreflabel="jsp_application">
+<chapter id="jsp_application" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en-US/jsp_application.xml" xreflabel="jsp_application">
 	<?dbhtml filename="jsp_application.html"?>
 	<chapterinfo>
 		<keywordset>
@@ -2467,12 +2311,12 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 				<property moreinfo="none">JBoss Developer Studio</property> you are saved from such a pain. All
 				you need is to start <property moreinfo="none">JBoss Server</property> and launch your application
 				in your favorite browser.</para>
-			<para>You can also create a war archive with <ulink url="../../as/html_single/index.html#Project_archivesView">JBDS's Archive Tools</ulink>
+			<para>You can also create a war archive with JBDS's Archive Tools
 				and export it to any web server.</para>
 			<section id="WarConfig">
 				<?dbhtml filename="WarConfig.html"?>
 				<title>WAR Config</title>
-				<para>Project archives managing is available through <ulink url="../../as/html_single/index.html#Project_archivesView">Project Archives view</ulink>.</para>
+				<para>Project archives managing is available through Project Archives view.</para>
 				<itemizedlist>
 					<listitem>
 						<para>Select <emphasis>
@@ -2591,8 +2435,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 			<title>JSP Page Preview</title>
 			<para><property moreinfo="none">JBDS</property> comes with JSP design-time preview features. When
 				designing JSP pages you can easily preview how they will look during runtime. You
-				can even <ulink url="../../jsf/html_single/index.html#el_exp_para">attach your stylesheet to the
-					Preview</ulink>.</para>
+				can even attach your stylesheet to the
+					Preview.</para>
 			<itemizedlist>
 				<listitem>
 					<para>Make a little change to <emphasis>
@@ -2631,9 +2475,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 					Studio</property>. You can do it by performing one of the following actions:</para>
 			<itemizedlist>
 				<listitem>
-					<para>Start JBoss Server from <ulink url="../../as/html_single/index.html#JBossServerView">JBoss
-						Server view</ulink> by clicking the Start the server icon (
-						<inlinemediaobject>
+					<para><diffmk:wrapper diffmk:change="changed">Start JBoss Server from 
+						Servers view by clicking the Start the server icon (
+						</diffmk:wrapper><inlinemediaobject>
 							<imageobject>
 								<imagedata fileref="images/jsp_application/jsp_application_18.png"></imagedata>
 							</imageobject>
@@ -2680,7 +2524,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
 </chapter>
 
  
-<chapter id="rad_jsf_application" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/rad_jsf_application.xml" xreflabel="rad_jsf_application">
+<chapter id="rad_jsf_application" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en-US/rad_jsf_application.xml" xreflabel="rad_jsf_application">
     <?dbhtml filename="rad_jsf_application.html"?>
     <chapterinfo>
         <keywordset>
@@ -2716,9 +2560,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
             project wizard and predefined templates. Follow the next steps:</para>
         <itemizedlist>
             <listitem>
-                <para>In Web Projects View (if it is not open select <emphasis>
-                        <property moreinfo="none">Window &gt; Show View &gt; Others &gt; JBoss Tools Web
-                            &gt; Web Projects View</property>) </emphasis> click <emphasis>
+                <para><diffmk:wrapper diffmk:change="changed">In Web Projects (if it is not open select </diffmk:wrapper><emphasis>
+                        <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Window &gt; Show View &gt; Others &gt; JBoss Tools Web
+                            &gt; Web Projects</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="changed">) click </diffmk:wrapper><emphasis>
                         <property moreinfo="none">Create New JSF Project</property>
                     </emphasis> button. <figure float="0">
                         <title>Create New JSF Project</title>
@@ -2740,9 +2584,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
                     </emphasis></para>
             </listitem>
         </itemizedlist>
-        <para>Our project will appear in Project Explorer and Web Projects Views. As you can see
+        <para><diffmk:wrapper diffmk:change="changed">Our project will appear in Project Explorer and Web Projects. As you can see
             JBoss Developer Studio has created for us the whole skeleton for the project with all
-            needed libraries, faces-config.xml and web.xml files.</para>
+            needed libraries, faces-config.xml and web.xml files.</diffmk:wrapper></para>
         <figure float="0">
             <title>New JSF Project</title>
             <mediaobject>
@@ -3125,14 +2969,12 @@ else
         <programlisting format="linespecific" role="JAVA"><![CDATA[import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import javax.faces.application.FacesMessage;
-import java.util.Locale;
 import java.util.ResourceBundle;
 ]]></programlisting>
         <para>The whole java bean should look as follows:</para>
         <programlisting format="linespecific" role="JAVA"><![CDATA[import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import javax.faces.application.FacesMessage;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class NumberBean 
@@ -3735,9 +3577,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             <listitem>
                 <para>Start up JBoss server by clicking on the <emphasis>
                         <property moreinfo="none">Start</property>
-                    </emphasis> icon in JBoss Server view. (If JBoss is already running, stop it by
+                </emphasis><diffmk:wrapper diffmk:change="added"> icon in </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Servers</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. (If JBoss is already running, stop it by
                     clicking on the red icon and then start it again. After the messages in the
-                    Console tabbed view stop scrolling, JBoss is available)</para>
+                    Console tabbed view stop scrolling, JBoss is available)</diffmk:wrapper></para>
             </listitem>
             <listitem>
                 <para>Right-click on project <emphasis>
@@ -3790,7 +3632,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
  
  
 
-<chapter id="project_examples" role="new" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/project_examples.xml" xreflabel="project_examples">
+<chapter id="project_examples" role="new" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en-US/project_examples.xml" xreflabel="project_examples">
     <?dbhtml filename="project_examples.html"?>
     <chapterinfo>
         <keywordset>
@@ -3806,8 +3648,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
     project that you can explore and derive some useful technology implementation lessons from. </para>
     
     <para>
-        To adjust the settings of the Project Examples feature you need to navigate to <property moreinfo="none">Windows&gt; Preferences &gt; JBoss Tools &gt; Project Examples 
-    </property>. </para>
+        To adjust the settings of the Project Examples feature you need to navigate to <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Windows&gt; Preferences &gt; JBoss Tools &gt; Project Examples</diffmk:wrapper></property>. </para>
     
     <figure float="0">
         <title>Project Examples Preferences</title>
@@ -3840,8 +3681,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
            Alternatively, if the xml is stored on your local machine, you can hit the <property moreinfo="none">Browse</property> button to select the file in the file system.</para>
         <para>Here is an example of the xml file that holds  project example settings:</para>
     
-    <programlisting format="linespecific" role="XML"><![CDATA[
-<projects>
+    <programlisting format="linespecific" role="XML"><![CDATA[<projects>
     <project>
 		<category>User Examples</category>
 		<name>User Project Example</name>
@@ -3911,6 +3751,31 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             </mediaobject>
         </figure>
         
+        
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Some project examples have dependencies which could not be automatically configured.
+            In such cases you will receive the message prompted about detected requirements (see the figure below).</diffmk:wrapper></para>
+ 
+        <figure diffmk:change="added" float="0">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Prompt about Project Example Requirements</diffmk:wrapper></title>
+            <mediaobject diffmk:change="added">
+                <imageobject diffmk:change="added">
+                    <imagedata diffmk:change="added" fileref="images/project_examples/pr_example_2a.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You should click </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Details</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> to see the list of requirements 
+            and make fixes.</diffmk:wrapper></para>
+        
+        <figure diffmk:change="added" float="0">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Requirements Details Dialog</diffmk:wrapper></title>
+            <mediaobject diffmk:change="added">
+                <imageobject diffmk:change="added">
+                    <imagedata diffmk:change="added" fileref="images/project_examples/pr_example_2b.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
         <para>If you have previously specified user sites (see the <link linkend="UserSites">User Sites</link> chapter) they also will be  displayed in the list of project examples  in the category that was defined in the xml file with user sites settings.  </para>
        <figure float="0">
            <title>User Site</title>
@@ -3953,7 +3818,17 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                 </imageobject>
             </mediaobject>
         </figure>
-
+        
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For further operation add the following code to .project files of your Web project example.</diffmk:wrapper></para>
+            <programlisting diffmk:change="added" format="linespecific" role="XML"><diffmk:wrapper diffmk:change="added"><![CDATA[<buildCommand>
+    <name>org.jboss.tools.jst.web.kb.kbbuilder</name>
+    <arguments>
+    </arguments>
+</buildCommand>
+...
+<nature>org.jboss.tools.jst.web.kb.kbnature</nature>
+]]></diffmk:wrapper></programlisting> 
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">It is needed for correct work of </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Code Assist</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> and </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">JSF EL Validation</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
     </section>
     
     <section id="QuickFixes">
@@ -3962,9 +3837,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             Project Examples Wizard has an option for making quick fixes 
             for the imported project to easily fix possible issues like  missing servers, Seam runtimes etc.
         </para>
+
         <para>To enable quick fixing option you need to check the
             <emphasis><property moreinfo="none">Show the Quick Fix dialog</property></emphasis> while choosing the <link linkend="DownloadingProjectExample">Project Example</link>.</para>
-        
         <para>When the project you selected is downloaded it will be checked for missing dependences and if there are some you will see a dialog listing the problems.</para>
         <figure float="0">
             <title>Quick Fix Dialog box</title>
@@ -3991,10 +3866,39 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>In this case(see the image above), when the <emphasis><property moreinfo="none">Finish</property></emphasis> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
+        <para><diffmk:wrapper diffmk:change="changed">In this case (see the image above), when the </diffmk:wrapper><emphasis><property moreinfo="none">Finish</property></emphasis> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
         
         <para>When the problem is fixed you will be returned to the Quick Fix dialog box with the remaining problems to be fixed.</para>
         
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">There is a possibility to fix problems before downloading. When the project example is selected you will see warning message on the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New Project Example</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> dialog.</diffmk:wrapper></para>
+        
+        <figure diffmk:change="added" float="0">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Requirements warning in the Project Example wizard</diffmk:wrapper></title>
+            <mediaobject diffmk:change="added">
+                <imageobject diffmk:change="added">
+                    <imagedata diffmk:change="added" fileref="images/project_examples/pr_example_41.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To fix the problem immediately you need to:</diffmk:wrapper></para>
+        <itemizedlist diffmk:change="added">
+            <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Click </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Details...</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> button in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New Project Example</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> dialog</diffmk:wrapper></para></listitem>
+            <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Select the problem from the list in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Requirement details</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> dialog box</diffmk:wrapper></para></listitem>
+            <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Click </diffmk:wrapper><emphasis diffmk:change="added"><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Fix</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="added"> button</diffmk:wrapper></para></listitem>
+        </itemizedlist>
+        
+        <figure diffmk:change="added" float="0">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Requirement Details Dialog box: Selecting a Fix</diffmk:wrapper></title>
+            <mediaobject diffmk:change="added">
+                <imageobject diffmk:change="added">
+                    <imagedata diffmk:change="added" fileref="images/project_examples/pr_example_42.png"></imagedata>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You will be offered a solution to the problem.</diffmk:wrapper></para>
     </section>
     
     
@@ -4002,7 +3906,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 
  
 
-<chapter id="gsg_faq" role="updated" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/gsg_faq.xml" xreflabel="gsg_faq">
+<chapter id="gsg_faq" role="updated" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en-US/gsg_faq.xml" xreflabel="gsg_faq">
     <?dbhtml filename="gsg_faq.html"?>
     <chapterinfo>
         <keywordset>
@@ -4080,6 +3984,41 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             </listitem>
         </orderedlist>
     </section>
+	
+	    <section diffmk:change="added" id="question_0x2">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Visual Editor starts OK, but the Missing Natures dialog appears</diffmk:wrapper></title>
+
+			<figure diffmk:change="added" float="0">
+			<title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Missing Nature</diffmk:wrapper></title>
+			<mediaobject diffmk:change="added">
+				<imageobject diffmk:change="added">
+					<imagedata diffmk:change="added" fileref="images/faq/missingnauture.png"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	
+	
+	<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+	
+	Some functionality of Visual Editor may not work if a project doesn't have </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">org.jboss.tools.jsf.jsfnature</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> or </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">org.jboss.tools.jst.web.kb.kbnature</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> in </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">.project</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> configuration. To fix this problem and turn off the message box execute next steps:
+</diffmk:wrapper></para>
+<orderedlist continuation="restarts" diffmk:change="added" inheritnum="ignore">
+<listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+   Right mouse button click on a project in Package Explorer.
+   </diffmk:wrapper></para></listitem>
+   <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+    Select </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Configure -&gt; Add JSF Capabilities</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> from the context menu.
+	</diffmk:wrapper></para></listitem>
+	<listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+    Configure your project using Add JSF Capabilities wizard and press Finish.
+</diffmk:wrapper></para></listitem>
+
+</orderedlist>
+<para diffmk:change="added"><diffmk:wrapper diffmk:change="added">
+If you are shure that your project does not need JSF capabilities, just disable this message box by checking </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Do not show this dialog again!</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> checkbox.
+	</diffmk:wrapper></para>
+	
+	</section>
 
     <section id="question_2">
         <title>Do I need to have JBoss Server installed to run JBoss Developer Studio?</title>
@@ -4158,8 +4097,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
     <section id="question_7">
         <title>How can I add my own tag library to the JBoss Tools Palette?</title>
 
-        <para>See <ulink url="../../jsf/html_single/index.html#AddingCustomJSFTagsToTheRedHatPalette7433">Adding Tag
-                Libraries</ulink> in Visual Web Tools Guide.</para>
+        <para><diffmk:wrapper diffmk:change="changed">See the section on Adding Tag
+                Libraries in the Visual Web Tools Guide.</diffmk:wrapper></para>
     </section>
 
     <section id="question_8">
@@ -4171,8 +4110,8 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             navigate <emphasis>
                 <property moreinfo="none">Properties &gt; Seam Settings</property>.</emphasis> Check <emphasis>
                 <property moreinfo="none">Seam support</property>
-            </emphasis> box to enable all available <ulink url="../../seam/html_single/index.html#project_pref">Seam
-                Settings</ulink>.</para>
+            </emphasis> box to enable all available Seam
+                Settings.</para>
     </section>
 
     <section id="question_9">
@@ -4223,7 +4162,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 </chapter>
 
  
-<chapter id="further_reading" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en/modules/further_reading.xml" xreflabel="further_reading">
+<chapter id="further_reading" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/GettingStartedGuide/en-US/further_reading.xml" xreflabel="further_reading">
   <?dbhtml filename="further_reading.html"?>
   <chapterinfo>
     <keywordset>
@@ -4241,7 +4180,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis>
-      <ulink url="../../seam/html_single/index.html">(html)</ulink>
     </para>
     <para> This guide helps you to understand what Seam is and how to install Seam plug-in into
       Eclipse. It tells you the necessary steps to start working with Seam Framework and assists in a
@@ -4252,14 +4190,15 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
-      <ulink url="../../jsf/html_single/index.html">(html)</ulink> provides general orientation and an overview of JBDS visual web tools functionality. This guide discusses the following topics: editors, palette, web properties view, openOn, content assist, RichFaces support.  
-    </para>
+</para>
+<para><diffmk:wrapper diffmk:change="changed">
+	provides general orientation and an overview of JBDS visual web tools functionality. This guide discusses the following topics: editors, palette, web properties view, openOn, content assist, RichFaces support.  
+    </diffmk:wrapper></para>
   </listitem>
   
   <listitem>
     <para>
       <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis>
-      <ulink url="../../as/html_single/index.html">(html)</ulink>
     </para>
     <para> This guide covers the basics of working with the JBoss server manager. You will read how to
       install runtimes and servers and quickly learn how to configure, start, stop the server and know
@@ -4270,7 +4209,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
-      <ulink url="../../jbpm/html_single/index.html">(html)</ulink>
     </para>
     <para>With jBPM Tools Reference Guide we'll help you to facilitate a cross-product
       learning and know how you can speed your development using special editors and visual designers.
@@ -4281,7 +4219,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
-      <ulink url="../../hibernatetools/html_single/index.html">(html)</ulink>
     </para>
     <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
       through Eclipse. We'll supply you with the information on how to create mapping files,
@@ -4293,7 +4230,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">ESB Editor Reference Guide</emphasis>
-      <ulink url="../../esb_ref_guide/html_single/index.html">(html)</ulink>
     </para>
     <para>This guide provides you with the information on ESB Editor and all necessary wizards for ESB
       files development.</para>
@@ -4302,7 +4238,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">JBoss Portal Tools Reference Guide</emphasis>
-      <ulink url="../../jboss_portal_tools_ref_guide/html_single/index.html">(html)</ulink>
     </para>
     <para>The guide gives a detail look at how you can easily build a Portlet Web Application with
       JBoss Tools and deploy it onto JBoss Portal.</para>
@@ -4311,7 +4246,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">JBoss WS User Guide</emphasis>
-      <ulink url="../../ws_ref_guide/html_single/index.html">(html)</ulink>
     </para>
     <para>This guide gives you practical help on JBossWS usage. You will learn how to create a web service using JBossWS runtime, find out how to create a web service client from a WSDL document using JBoss WS and also see how to set your development environment.</para>
   </listitem>
@@ -4319,7 +4253,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">Smooks Tools Reference Guide</emphasis>
-      <ulink url="../../jboss_smooks_plugin_ref_guide/html_single/index.html">(html)</ulink>
     </para>
     <para>This guide is packed with useful and easy-to-understand information about graphical, configuration and source editor pages.</para>
   </listitem>
@@ -4327,7 +4260,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">Drools Tools Reference Guide</emphasis>
-      <ulink url="../../drools_tools_ref_guide/html_single/index.html">(html)</ulink>
     </para>
     <para>The guide help you to discover how to create a new Drools project, use debugging rules and work with different editors.</para>
   </listitem>
@@ -4335,7 +4267,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">JMX Tools Reference Guide</emphasis>
-      <ulink url="../../jmx_ref_guide/html_single/index.html">(html)</ulink>
     </para>
     <para>With the help of this guide you'll explore the best practices to follow when working with MBean Explorer, MBean Editor, Connections and etc.</para>
   </listitem>
@@ -4343,7 +4274,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
     <para>
       <emphasis role="bold">Eclipse Guvnor Tools Reference Guide</emphasis>
-      <ulink url="../../guvnor_tools_ref_guide/html_single/index.html">(html)</ulink>
     </para>
     <para>The purpose of this guide is to describe briefly the functionality present in the Eclipse Guvnor Tools (EGT) for Drools 5.</para>
   </listitem>
@@ -4353,7 +4283,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   <listitem>
   <para>
     <emphasis role="bold">JSF Tools Tutorial</emphasis>
-    <ulink url="../../jsf_tools_tutorial/html_single/index.html">(html)</ulink>
   </para>
   <para> This tutorial will describe how to deal with classic/old style of JSF development and how
     to create a simple JSF application using the JBoss Developer Studio. </para>
@@ -4361,7 +4290,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   
   <listitem> <para>
     <emphasis role="bold">JSF Tools Reference Guide</emphasis>
-    <ulink url="../../jsf_tools_ref_guide/html_single/index.html">(html)</ulink>
     
   </para>
     <para> From this guide you'll discover all peculiarities of work at a JSF project. You'll
@@ -4373,7 +4301,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
   
   <listitem> <para>
     <emphasis role="bold">Struts Tools Reference Guide</emphasis>
-    <ulink url="../../struts_tools_ref_guide/html_single/index.html">(html)</ulink>
   </para>
   <para> In Struts Tools Reference Guide you will learn how to create and work with a new struts
     project. This guide also provides information about graphical editor for struts configuration
@@ -4383,7 +4310,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 <listitem>
   <para>
     <emphasis role="bold">Struts Tools Tutorial</emphasis>
-    <ulink url="../../struts_tools_tutorial/html_single/index.html">(html)</ulink>
   </para>
   <para> This tutorial will describe the classical style of Struts development, and will
   step-by-step show you how to create a simple Struts application in JBoss Developer Studio.</para>
@@ -4393,22 +4319,12 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
     <listitem> 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
-    <ulink url="../../Exadel-migration/html_single/index.html">(html)</ulink>
   </para>
   <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
   from Exadel Studio into JBoss Developer Studio. </para>
     </listitem>
-  
-  <para>If there's anything we didn't cover in this guide, 
-      please feel free to visit our
-      <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">
-      JBoss Developer Studio Users Forum</ulink> or
-      <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">
-          JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for
-    your suggestions and comments.</para>
 </itemizedlist>
-
+    <para>If there&apos;s anything we didn&apos;t cover in this guide, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for your suggestions and comments.</para>
+    
 </chapter>
- 
-
 </book>
