@@ -30,7 +30,11 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
@@ -467,13 +471,26 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			@Override
 			public void run() {
 				/*
-				 * Externalize strings action 
-				 * Show a dialog to add properties key and value
+				 * Externalize strings action .
+				 * Show a dialog to add properties key and value.
+				 * When selection is correct show the dialog
+				 * otherwise show warning message.
 				 */
-				ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
-						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-						controller);
-				dlg.open();
+				ISelection sel = controller.getSourceEditor().getSelectionProvider().getSelection();
+				if ((sel instanceof TextSelection)
+						&& (sel instanceof IStructuredSelection)
+						&& (((IStructuredSelection) sel).size() == 1)) {
+					ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
+							PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+							controller);
+					dlg.open();
+				} else {
+					MessageDialog.openWarning(
+							PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+							VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_TITLE,
+							VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_WRONG_SELECTION);
+				}
+				
 			}
 		};
 		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
