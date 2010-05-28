@@ -61,6 +61,7 @@ import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.vpe.editor.dialog.ExternalizeStringsDialog;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
@@ -114,6 +115,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_SELECTION_BAR = "icons/selbar.gif"; //$NON-NLS-1$
 	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
 	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
+	public static final String ICON_EXTERNALIZE_STRINGS= "icons/properties.gif"; //$NON-NLS-1$
 
 	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
@@ -143,6 +145,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private Action showSelectionBarAction;
 	private Action showTextFormattingAction;
 	private Action showBundleAsELAction;
+	private Action externalizeStringsAction;
 	
 	static {
 		/*
@@ -287,7 +290,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 									.getActiveShell(), fileLocation);
 					dialogNew.open();
 				} else {
-					VpePlugin.getDefault().logError("Could not open Vpe Resources Dialog."); //$NON-NLS-1$
+					VpePlugin.getDefault().logError(VpeUIMessages.COULD_NOT_OPEN_VPE_RESOURCES_DIALOG);
 				}
 			}
 		};
@@ -455,6 +458,28 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				ICON_BUNDLE_AS_EL));
 		showBundleAsELAction.setToolTipText(VpeUIMessages.SHOW_BUNDLES_AS_EL);
 		toolBarManager.add(showBundleAsELAction);
+		
+		/*
+		 * Create EXTERNALIZE STRINGS tool bar item
+		 */
+		externalizeStringsAction = new Action(VpeUIMessages.EXTENALIZE_STRINGS,
+				IAction.AS_PUSH_BUTTON) {
+			@Override
+			public void run() {
+				/*
+				 * Externalize strings action 
+				 * Show a dialog to add properties key and value
+				 */
+				ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
+						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+						controller);
+				dlg.open();
+			}
+		};
+		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				ICON_EXTERNALIZE_STRINGS));
+		externalizeStringsAction.setToolTipText(VpeUIMessages.EXTENALIZE_STRINGS);
+		toolBarManager.add(externalizeStringsAction);
 
 		updateToolbarItemsAccordingToPreferences();
 		toolBarManager.update(true);

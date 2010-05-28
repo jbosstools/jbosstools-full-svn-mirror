@@ -69,7 +69,7 @@ public class BundleMap {
      */
 	private Locale locale;
 	private BundleEntry[] bundles = new BundleEntry[0];
-    private Map<String,UsedKey> usedKeys = new HashMap<String,UsedKey>();
+	private Map<String,UsedKey> usedKeys = new HashMap<String,UsedKey>();
     
     boolean showBundleUsageAsEL = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 			IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL); 
@@ -554,7 +554,11 @@ public class BundleMap {
 		public String propertyName;
 	}
 
-	static class BundleEntry {
+	/*
+	 * https://jira.jboss.org/browse/JBIDE-6287
+	 * It was required to get access to BundleEntry class.
+	 */
+	public static class BundleEntry {
 		public ResourceBundle bundle;
 		public String uri;
 		public String prefix;
@@ -567,6 +571,13 @@ public class BundleMap {
 			this.prefix = prefix;
 			this.hashCode = hashCode;
 		}
+
+		@Override
+		public String toString() {
+			return "BundleEntry [prefix=" + prefix + ", uri=" + uri + ", hashCode=" + hashCode //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					+ ", bundle="+ bundle +"]"; //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		
 	}
 
 	static class UsedKey {
@@ -603,6 +614,10 @@ public class BundleMap {
 	 */
 	public void setShowBundleUsageAsEL(boolean showBundleUsageAsEL) {
 		this.showBundleUsageAsEL = showBundleUsageAsEL;
+	}
+	
+	public BundleEntry[] getBundles() {
+		return bundles;
 	}
 
 }
