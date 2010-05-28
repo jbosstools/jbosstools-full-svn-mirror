@@ -168,8 +168,8 @@
 	</issueManagement>
 
 	<profiles>
-		<!-- TODO: verify that this profile overrides the default profile if BUILD_NUMBER is 
-			set (by a Hudson job) -->
+		<!-- TODO: verify that this profile overrides the default profile if BUILD_NUMBER 
+			is set (by a Hudson job) -->
 		<profile>
 			<id>hudson</id>
 			<activation>
@@ -184,7 +184,8 @@
 						<artifactId>maven-osgi-packaging-plugin</artifactId>
 						<version>${tychoVersion}</version>
 						<configuration>
-							<format>'v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}-${BUILD_ALIAS}'</format>
+							<format>'v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}-${BUILD_ALIAS}'
+							</format>
 							<archiveSite>true</archiveSite>
 						</configuration>
 					</plugin>
@@ -202,6 +203,17 @@
 				<repository>
 					<id>helios</id>
 					<url>http://download.eclipse.org/releases/helios/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>webtools32</id>
+					<url>http://download.eclipse.org/webtools/repository/helios</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
