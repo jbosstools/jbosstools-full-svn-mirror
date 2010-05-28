@@ -209,7 +209,8 @@
         </mediaobject>
       </figure>
       <para>You can leave the <property>Code Generation</property> section as is. It refers to Java
-        packages in which the generated code will be placed.</para>
+      packages in which the generated code will be placed.</para>
+      
       <figure>
         <title>Code Generation Setting</title>
         <mediaobject>
@@ -218,6 +219,13 @@
           </imageobject>
         </mediaobject>
       </figure>
+
+      <tip>
+        <title>Tip:</title>
+        <para>If you want to name your web project "MyProject-war" note that the Test project name should not be "MyProject-war-test", 
+          it should be "MyProject-test".</para>
+      </tip>
+      
       <para>Click on <property>Finish</property> button. Now, there should be a new Seam project
         called “workshop” listed in Package Explorer view.</para>
       <figure>
