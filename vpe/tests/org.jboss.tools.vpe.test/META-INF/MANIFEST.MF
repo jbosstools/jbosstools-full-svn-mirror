@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.vpe.editor.template,
  org.jboss.tools.vpe.test
-Bundle-ClassPath: vpe-tests.jar
 Import-Package: org.eclipse.ui.part
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
