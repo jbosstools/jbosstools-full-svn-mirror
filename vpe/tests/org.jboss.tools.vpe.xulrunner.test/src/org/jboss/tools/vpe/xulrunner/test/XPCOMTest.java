@@ -39,7 +39,7 @@ public class XPCOMTest extends XulRunnerAbstractTest {
 		assertTrue(XPCOM.queryInterface(document, nsIDOMNSDocument.class) instanceof nsIDOMNSDocument);
 
 		try {
-			document.queryInterface(nsIDOMNSElement.NS_IDOMNSELEMENT_IID);
+			XPCOM.queryInterface(document, nsIDOMNSElement.class);
 			fail("Expected Exception XPCOMException");
 		} catch (XPCOMException e) {
 			// do nothing, it's OK
