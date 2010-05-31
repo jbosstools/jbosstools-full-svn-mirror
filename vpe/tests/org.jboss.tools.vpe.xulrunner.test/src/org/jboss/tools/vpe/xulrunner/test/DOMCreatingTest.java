@@ -1,18 +1,15 @@
 /*******************************************************************************
- * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+ * Copyright (c) 2007-2010 Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
  * Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  *
- * Contributors:
- *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ * Contributor:
+ *     Red Hat, Inc. - initial API and implementation
+ ******************************************************************************/
 package org.jboss.tools.vpe.xulrunner.test;
 
-import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
-import org.jboss.tools.vpe.xulrunner.view.XulRunnerView;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -26,19 +23,13 @@ import org.mozilla.interfaces.nsIDOMText;
  * @author Max Areshkau
  * 
  */
-public class DOMCreatingTest extends XulRunnerBrowserTest {
-
-	/**
-	 * Contains brouser instamce
-	 */
-	private XulRunnerEditor xulrunnerBrowser;
-
+public class DOMCreatingTest extends XulRunnerAbstractTest {
 	/**
 	 * Tests possability add and remove dom elements.
 	 * 
 	 */
 	public void testAddRemovingDOMElements() {
-	    	nsIDOMDocument domDocument = xulrunnerBrowser.getDOMDocument();
+	    	nsIDOMDocument domDocument = xulRunnerEditor.getDOMDocument();
 		nsIDOMElement root = domDocument.getDocumentElement();
 		nsIDOMElement child = domDocument.createElement("test-element");
 		root.appendChild(child);
@@ -61,8 +52,8 @@ public class DOMCreatingTest extends XulRunnerBrowserTest {
 		String chieldName = "H";
 		String attrName = "color";
 		String attrValue = "TEST_VALUE";
-		assertNotNull(xulrunnerBrowser);
-		nsIDOMDocument domDocument = xulrunnerBrowser.getDOMDocument();
+		assertNotNull(xulRunnerEditor);
+		nsIDOMDocument domDocument = xulRunnerEditor.getDOMDocument();
 		nsIDOMElement root = domDocument.getDocumentElement();
 
 		for (long i = root.getChildNodes().getLength() - 1; i >= 0; i--) {
@@ -103,19 +94,6 @@ public class DOMCreatingTest extends XulRunnerBrowserTest {
 		root.appendChild(text);
 		assertEquals("Dom element hasn't been created", "TEST", text
 				.getNodeValue());
-	}
-
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		waitForJobs();
-		XulRunnerView xulrunner
-			= ((XulRunnerView) PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().showView(VIEW_ID));
-		waitForJobs();
-		delay(3000);
-		
-		xulrunnerBrowser = xulrunner.getBrowser();
 	}
 
 	@Override
