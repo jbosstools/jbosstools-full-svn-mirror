@@ -26,7 +26,11 @@ public class Constants {
 	public static final String PIXEL = "px"; //$NON-NLS-1$
 	public static final String PERCENT = "%"; //$NON-NLS-1$
 	public static final String COMMA = ","; //$NON-NLS-1$
+	public static final String DOT = "."; //$NON-NLS-1$
 	public static final String FILE_PREFIX = "file://"; //$NON-NLS-1$
 	public static final String UNDERSCORE = "_"; //$NON-NLS-1$
 	public static final String ZERO_STRING = "0"; //$NON-NLS-1$
+	public static final String EQUAL = "="; //$NON-NLS-1$
+	public static final String GT = ">"; //$NON-NLS-1$
+	public static final String LT = "<"; //$NON-NLS-1$
 }

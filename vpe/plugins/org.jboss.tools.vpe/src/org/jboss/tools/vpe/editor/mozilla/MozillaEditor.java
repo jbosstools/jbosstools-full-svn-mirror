@@ -66,6 +66,7 @@ import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.dialog.ExternalizeStringsDialog;
+import org.jboss.tools.vpe.editor.dialog.ExternalizeStringsWizard;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
@@ -95,6 +96,8 @@ import org.mozilla.interfaces.nsIHTMLAbsPosEditor;
 import org.mozilla.interfaces.nsIHTMLInlineTableEditor;
 import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Node;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final File INIT_FILE = new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -477,12 +480,13 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * otherwise show warning message.
 				 */
 				ISelection sel = controller.getSourceEditor().getSelectionProvider().getSelection();
+			
 				if ((sel instanceof TextSelection)
 						&& (sel instanceof IStructuredSelection)
 						&& (((IStructuredSelection) sel).size() == 1)) {
 					ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
 							PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-							controller);
+							new ExternalizeStringsWizard(controller));
 					dlg.open();
 				} else {
 					MessageDialog.openWarning(
