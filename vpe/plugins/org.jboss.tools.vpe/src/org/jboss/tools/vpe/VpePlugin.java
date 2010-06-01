@@ -18,6 +18,7 @@ import org.eclipse.ui.IStartup;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
+import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -47,6 +48,8 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		// required to get tests running in tycho, should not affect anything during regular start
+		earlyStartup();
 	}
 
 	/**
@@ -99,8 +102,8 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 			if ("true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/earlyStartup"))) { //$NON-NLS-1$ //$NON-NLS-2$
 				logInfo("earlyStartup: XULRunner path is: " + xulRunnerPath); //$NON-NLS-1$
 			}
-		} catch (Throwable t) {
-			// Ignore this. Will catch it when use Visual Editor 
+		} catch (XulRunnerException e) {
+			logError(e);
 		}
 	}
 	

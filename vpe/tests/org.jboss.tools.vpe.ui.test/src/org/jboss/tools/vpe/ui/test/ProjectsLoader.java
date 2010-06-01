@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.ui.test;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,31 +103,20 @@ public class ProjectsLoader {
 						"Project '" + project + "' is not defined.");
 			}
 			
-			Bundle bundle = location.getBundle();
-			if (bundle == null) {
-				throw new NullPointerException(
-						"Owning bundle of '" + project + "' is null.");
+			try {
+				project = ResourcesUtils.importProject(location.getBundle(), location.getPath(), projectName, new NullProgressMonitor());
+			} catch (CoreException e) {
+				throw new RuntimeException("Project by the path='" + location.getPath()
+						+ "' cannot be imported.",e);
+			} catch (InvocationTargetException e) {
+				throw new RuntimeException("Project by the path='" + location.getPath()
+						+ "' cannot be imported.",e);
+			} catch (InterruptedException e) {
+				throw new RuntimeException("Project by the path='" + location.getPath()
+						+ "' cannot be imported.",e);
 			}
-			
-			URL rootEntry = bundle.getEntry("/");
-			if (rootEntry == null) {
-				throw new NullPointerException(
-						"Root entry to the bundle with id='"
-						+ bundle.getBundleId() + "' cannot be resolved.");
-			}
-			
-			URL resolvedRootEntry = FileLocator.resolve(rootEntry);
-			String pluginRoot = resolvedRootEntry.getPath();
-			if (pluginRoot.equals("")) {
-				throw new RuntimeException("Path to '" + resolvedRootEntry 
-						+ "' does not exist.");
-			}
-
-			String projectPath = pluginRoot + location.getPath();
-			project = ResourcesUtils.importProjectIntoWorkspace(
-						projectPath, projectName);
 			if (project == null) {
-				throw new RuntimeException("Project by the path='" + projectPath
+				throw new RuntimeException("Project by the path='" + location.getPath()
 						+ "' cannot be imported.");
 			}
 		}

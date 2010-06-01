@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.vpe.ui.test,
  org.jboss.tools.jst.jsp,
  org.jboss.tools.vpe.xulrunner,
- org.mozilla.xpcom;bundle-version="1.9.1"
+ org.mozilla.xpcom;bundle-version="1.9.1",
+ org.jboss.tools.vpe.jsp;bundle-version="3.1.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.vpe.jsp.test
 Bundle-Vendor: %Bundle-Vendor.0

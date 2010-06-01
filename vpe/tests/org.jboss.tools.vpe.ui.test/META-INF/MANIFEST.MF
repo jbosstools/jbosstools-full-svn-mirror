@@ -10,24 +10,17 @@ Require-Bundle: org.eclipse.ui,
  org.junit,
  org.eclipse.core.resources,
  org.eclipse.ui.ide,
- org.jboss.tools.common,
- org.jboss.tools.jst.web,
  org.jboss.tools.jst.jsp,
- org.jboss.tools.common.text.ext,
- org.jboss.tools.common.model,
  org.jboss.tools.vpe.xulrunner,
  org.mozilla.xpcom;bundle-version="1.9.1",
- org.jboss.tools.jst.firstrun,
- org.eclipse.wst.server.core,
  org.eclipse.jface.text,
  org.jboss.tools.common.model.ui;bundle-version="2.0.0",
- org.jboss.tools.tests;bundle-version="2.0.0";visibility:=reexport,
- org.jboss.tools.common.resref.core;bundle-version="1.0.0",
- org.mozilla.xulrunner.gtk.linux.x86;bundle-version="1.9.1";resolution:=optional
+ org.jboss.tools.tests;bundle-version="2.0.0";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/jmock-2.5.1/jmock-2.5.1.jar,
  lib/jmock-2.5.1/hamcrest-core-1.1.jar,
- lib/jmock-2.5.1/hamcrest-library-1.1.jar
+ lib/jmock-2.5.1/hamcrest-library-1.1.jar,
+ .
 Export-Package: org.hamcrest,
  org.jboss.tools.vpe.ui.test,
  org.jboss.tools.vpe.ui.test.dialog,
