@@ -214,11 +214,11 @@
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1168">JBDS-1168</ulink>: The JBoss Developer Studio Installer was missleading in terms of system requirements. The consequence of this was that some users were unsure if the JBoss Developer Studio supported Java 6 even though it was required for the JBoss Enterprise Application Platform 5 and which JDK distributions were supported. The text in Step 4 of installation has been updated to inform the user that the JBoss Developer Studio works with both Java 5 and 6 (though Java 6 is required for JBoss Enterprise Application Platform 5), has been tested with the OpenJDK, SunJDK and IBM JDK distributions and the misspelt <emphasis>gij Java</emphasis> has been corrected to <emphasis>gcj Java</emphasis>.
 					</para>
 				</listitem>
-				<listitem>
+		<!-- Reopened	<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1147">JBDS-1147</ulink>: An incorrect link to the Guvnor Rules repository was included in the JBoss Developer Studio. This bug caused the repository to become unreachable. This has been fixed by correcting the link to be <ulink url="http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav">http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav</ulink>. The JBoss Developer Studio is now able to connect to the Guvnor Rules repository.
 					</para>
-				</listitem>
+				</listitem> -->
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1091">JBDS-1091</ulink>: Two bugs were found. A problem was found in the <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in and the visibility of the <property>Instance</property> field was changed from public to private. These bugs respectively caused the JBoss Developer Studio <guilabel>Server View</guilabel> to not display all available servers on occasion after using the installer and jBPM runtimes to not be initialized correctly. The <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in has now been updated to force a refresh of the <guilabel>Server View</guilabel> post installation, which can be verified by a refresh message appearing in the log file and the <filename>org.jboss.tools.jbpm.common</filename> plug-in has been updated to set <code>public static final PreferencesManager INSTANCE = new PreferencesManager();</code>. By correcting the <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in, all installed servers now appear in the <guilabel>Server View</guilabel> directly after installation of the JBoss Developer Studio through the installer. Fixing the <filename>org.jboss.tools.jbpm.common</filename> plug-in now allows for jBPM runtimes to be initialized correctly. Both issues are fixed with this update.
