@@ -8,11 +8,11 @@ ZIPNAME=${JOB_NAME}-Update-H${BUILD_NUMBER}-${BUILD_ID}.zip
 SNAPNAME=${JOB_NAME}-Update-SNAPSHOT.zip
 
 rm -fr ${WORKSPACE}/site; mkdir -p ${WORKSPACE}/site/${JOB_NAME}
-if [[ -f ${WORKSPACE}/*/site/target/site.zip ]]; then 
+if [[ -f ${WORKSPACE}/sources/site/target/site.zip ]]; then 
 	# copy into workspace for archiving
-	rsync -aq ${WORKSPACE}/*/site/target/site.zip ${WORKSPACE}/site/${JOB_NAME}/${ZIPNAME}
+	rsync -aq ${WORKSPACE}/sources/site/target/site.zip ${WORKSPACE}/site/${JOB_NAME}/${ZIPNAME}
 	# copy into workspace for access by bucky aggregator
-	rsync -aq ${WORKSPACE}/*/site/target/site.zip ${WORKSPACE}/site/${SNAPNAME}
+	rsync -aq ${WORKSPACE}/sources/site/target/site.zip ${WORKSPACE}/site/${SNAPNAME}
 fi
 
 # if zips exist produced & renamed by ant script, copy them too
