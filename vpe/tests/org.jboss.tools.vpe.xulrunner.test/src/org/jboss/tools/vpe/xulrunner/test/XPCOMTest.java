@@ -12,7 +12,7 @@ package org.jboss.tools.vpe.xulrunner.test;
 
 import java.util.List;
 
-import org.jboss.tools.vpe.xulrunner.XPCOM;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.jsdIScript;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMDocumentView;
