@@ -10,9 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +21,6 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.SourceColumnElements;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.SourceDataTableElements;
 import org.jboss.tools.vpe.editor.template.VpeDataTableElements.VisualDataTableElements;
-import org.jboss.tools.vpe.editor.template.expression.VpeExpression;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
@@ -559,8 +558,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				if (child != null
 						&& child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 					try {
-						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
-								.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
+						nsIDOMHTMLTableCellElement cell = queryInterface(child, nsIDOMHTMLTableCellElement.class);
 						cell.setAttribute(HTML.ATTR_CLASS, classes[ind]);
 						ind = ind < (classes.length - 1) ? ind + 1 : 0;
 					} catch (XPCOMException ex) {
@@ -580,8 +578,7 @@ public class VpeDataTableCreator extends VpeAbstractCreator {
 				if (child != null
 						&& child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 					try {
-						nsIDOMHTMLTableCellElement cell = (nsIDOMHTMLTableCellElement) child
-								.queryInterface(nsIDOMHTMLTableCellElement.NS_IDOMHTMLTABLECELLELEMENT_IID);
+						nsIDOMHTMLTableCellElement cell = queryInterface(child, nsIDOMHTMLTableCellElement.class);
 						cell.removeAttribute(HTML.ATTR_CLASS);
 					} catch (XPCOMException ex) {
 						// just ignore this exception

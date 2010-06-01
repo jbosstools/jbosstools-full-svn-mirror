@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,8 +69,9 @@ public class VpeChildrenInfo {
 	 */
 	public VpeChildrenInfo createCashCopy(){
 		
-		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualParent!=null?(nsIDOMElement)(XmlUtil.createClone(this.visualParent)).
-															queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID):null);
+		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualParent != null
+				? queryInterface(XmlUtil.createClone(visualParent), nsIDOMElement.class)
+				: null);
 		childrenInfo.sourceChildren=this.sourceChildren;
 		return childrenInfo;
 	}

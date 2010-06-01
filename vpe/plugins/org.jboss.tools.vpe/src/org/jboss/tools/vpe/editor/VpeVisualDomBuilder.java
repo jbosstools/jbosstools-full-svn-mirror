@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -35,7 +37,6 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
-import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
@@ -44,7 +45,6 @@ import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.dnd.VpeDnDHelper;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
@@ -71,7 +71,6 @@ import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
-import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -315,7 +314,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			 */
 			nsIDOMElement element = null;
 			try {
-				element = (nsIDOMElement) visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				element = queryInterface(visualNewNode, nsIDOMElement.class);
 			} catch (org.mozilla.xpcom.XPCOMException e) {
 				/*
 				 * Cannot parse node to element,
@@ -549,7 +548,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (visualNewNode != null
 				&& visualNewNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 
-			nsIDOMElement visualNewElement = (nsIDOMElement) visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			nsIDOMElement visualNewElement = queryInterface(visualNewNode, nsIDOMElement.class);
 
 			if ((visualNewElement != null) && template.hasImaginaryBorder()) {
 
@@ -584,8 +583,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (sourceNode instanceof Element && visualNewNode != null
 				&& visualNewNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 
-			setTooltip((Element) sourceNode, (nsIDOMElement) visualNewNode
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+			setTooltip((Element) sourceNode, queryInterface(visualNewNode, nsIDOMElement.class));
 		}
 		if (registerFlag) {
 
@@ -839,8 +837,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 						.equalsIgnoreCase(node.getNodeName()))
 						|| (isStyle = HTML.TAG_STYLE.equalsIgnoreCase(node
 								.getNodeName()))) {
-					nsIDOMElement element = (nsIDOMElement) node
-							.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+					nsIDOMElement element = queryInterface(node, nsIDOMElement.class);
 					if ((isLink || (isStyle && ATTR_VPE_INLINE_LINK_VALUE
 							.equalsIgnoreCase(element.getAttribute(ATTR_VPE))))
 							&& YES_STRING
@@ -924,8 +921,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			return false;
 		}
 
-		if (YES_STRING.equalsIgnoreCase(((nsIDOMElement) visualNode
-				.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+		if (YES_STRING.equalsIgnoreCase((queryInterface(visualNode, nsIDOMElement.class))
 				.getAttribute(PSEUDO_ELEMENT_ATTR))) {
 			return true;
 		}
@@ -1203,11 +1199,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 		nsIDOMElement visualElement = null;
 		try {
-			visualElement = (nsIDOMElement) visualNode
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			visualElement = queryInterface(visualNode, nsIDOMElement.class);
 		} catch (XPCOMException exception) {
-			visualElement = (nsIDOMElement) visualNode.getParentNode()
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			visualElement = queryInterface(visualNode.getParentNode(), nsIDOMElement.class);
 		}
 		if (visualElement == null) {
 			return false;
@@ -1245,8 +1239,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (elementMapping == null) {
 			// may be toggle with facet
 			while (!selectedElem.getNodeName().equals(HTML.TAG_TABLE)) {
-				selectedElem = (nsIDOMElement) selectedElem.getParentNode()
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				selectedElem = queryInterface(selectedElem.getParentNode(), nsIDOMElement.class);
 			}
 			// Fixes JBIDE-1823 author dmaliarevich
 			nodeMapping = domMapping.getNodeMapping(selectedElem);
@@ -1456,8 +1449,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private boolean isLinkReplacer(nsIDOMNode node) {
 		return HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
 				&& ATTR_VPE_INLINE_LINK_VALUE
-						.equalsIgnoreCase(((nsIDOMElement) node
-								.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+						.equalsIgnoreCase((queryInterface(node, nsIDOMElement.class))
 								.getAttribute(ATTR_VPE));
 	}
 
@@ -1469,8 +1461,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				if (HTML.TAG_LINK.equalsIgnoreCase(node.getNodeName())
 						|| isLinkReplacer(node)) {
-					nsIDOMElement element = (nsIDOMElement) node
-							.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+					nsIDOMElement element = queryInterface(node, nsIDOMElement.class);
 					if (ext_val.equalsIgnoreCase(element
 							.getAttribute(VpeTemplateManager.ATTR_LINK_EXT))
 							&& href_val
@@ -1500,8 +1491,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					 * used for adding external styles to editor. If was added
 					 * external attribute, this property is true.
 					 */
-					if (!YES_STRING.equalsIgnoreCase(((nsIDOMElement) node
-							.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+					if (!YES_STRING.equalsIgnoreCase((queryInterface(node, nsIDOMElement.class))
 							.getAttribute(VpeTemplateManager.ATTR_LINK_EXT))) {
 						// int linkAddress =
 						// MozillaSupports.queryInterface(node,
@@ -1514,8 +1504,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					}
 				} else if (HTML.TAG_STYLE.equalsIgnoreCase(node.getNodeName())
 						&& (!YES_STRING
-								.equalsIgnoreCase(((nsIDOMElement) node
-										.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+								.equalsIgnoreCase((queryInterface(node, nsIDOMElement.class))
 										.getAttribute(ATTR_VPE)))) {
 					node = getHeadNode().removeChild(node);
 				}
@@ -1558,9 +1547,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 							pageContext,
 							(Element) nodeMapping.getSourceNode(),
 							getVisualDocument(),
-							(nsIDOMElement) nodeMapping.getVisualNode()
-									.queryInterface(
-											nsIDOMElement.NS_IDOMELEMENT_IID),
+							queryInterface(nodeMapping.getVisualNode(), nsIDOMElement.class),
 							((VpeElementMapping) nodeMapping).getData())
 					.getResizeConstrains();
 		}
@@ -1582,8 +1569,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	public static boolean isAnonElement(nsIDOMNode visualNode) {
 		if (visualNode != null
 				&& visualNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-			String attrValue = ((nsIDOMElement) visualNode
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID))
+			String attrValue = (queryInterface(visualNode, nsIDOMElement.class))
 					.getAttribute(MOZ_ANONCLASS_ATTR);
 
 			return attrValue != null && attrValue.length() > 0;
@@ -1673,8 +1659,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			nsIDOMNode parent = visualNode.getParentNode();
 			if (parent != null
 					&& parent.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-				nsIDOMElement element = (nsIDOMElement) parent
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				nsIDOMElement element = queryInterface(parent, nsIDOMElement.class);
 				nsIDOMAttr style = element.getAttributeNode("style"); //$NON-NLS-1$
 				if (style != null) {
 					String styleValue = style.getNodeValue();
@@ -1726,8 +1711,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		for (long i = 0; i < len; i++) {
 			nsIDOMNode child = children.item(i);
 			if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-				setTooltip(((nsIDOMElement) child
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)),
+				setTooltip((queryInterface(child, nsIDOMElement.class)),
 						titleValue);
 			}
 		}
@@ -1741,8 +1725,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			nsIDOMNode child = children.item(i);
 			if (child.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 				if (domMapping.getNodeMapping(child) == null) {
-					resetTooltip((nsIDOMElement) child
-							.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID),
+					resetTooltip(queryInterface(child, nsIDOMElement.class),
 							titleValue);
 				}
 			}
@@ -1819,9 +1802,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * Changes the mouse cursor icon in VPE to 'move'.
 	 */
 	private void showMoveCursor(boolean show) {
-		nsIDOMHTMLDocument document = (nsIDOMHTMLDocument) xulRunnerEditor
-				.getDOMDocument()
-				.queryInterface(nsIDOMHTMLDocument.NS_IDOMHTMLDOCUMENT_IID);
+		nsIDOMHTMLDocument document = queryInterface(xulRunnerEditor.getDOMDocument(),
+				nsIDOMHTMLDocument.class);
 
 		nsIDOMElement moveStyle = document.getElementById(CURSOR_MOVE_STYLE_ID);
 		// If moveStyle == null then the move cursor icon is shown
@@ -1851,11 +1833,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (HTML.TAG_INPUT.equalsIgnoreCase(targetNode.getNodeName())) {
 			return targetNode;
 		}
-		nsIDOMNSEvent nsEvent = (nsIDOMNSEvent) event.queryInterface(nsIDOMNSEvent.NS_IDOMNSEVENT_IID);
+		nsIDOMNSEvent nsEvent = queryInterface(event, nsIDOMNSEvent.class);
 		// TODO Sergey Vasilyev figure out with TmpRealOriginalTarget
 //		nsIDOMEventTarget target = nsEvent.getTmpRealOriginalTarget();	
 		nsIDOMEventTarget target = nsEvent.getOriginalTarget();
-		nsIDOMNode originalNode = (nsIDOMNode) target.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+		nsIDOMNode originalNode = queryInterface(target, nsIDOMNode.class);
 		if (VpeVisualDomBuilder.isAnonElement(originalNode)) {
 			originalNode = getLastSelectedElement(); 
 		}

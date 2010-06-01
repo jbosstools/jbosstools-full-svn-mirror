@@ -10,9 +10,12 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -97,10 +100,9 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			nsIDOMNode visualNewNode;
 			visualNewNode = creationData.getNode();
 
-			if(sourceNode instanceof Element && visualNewNode != null) {
-			
-				setTooltip((Element)sourceNode, (nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
-				correctVisualAttribute((nsIDOMElement)visualNewNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+			if(sourceNode instanceof Element && visualNewNode != null) {		
+				setTooltip((Element)sourceNode, queryInterface(visualNewNode, nsIDOMElement.class));
+				correctVisualAttribute(queryInterface(visualNewNode, nsIDOMElement.class));
 			}
 
 			

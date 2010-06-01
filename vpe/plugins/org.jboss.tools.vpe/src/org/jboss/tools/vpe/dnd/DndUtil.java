@@ -12,22 +12,22 @@
 
 package org.jboss.tools.vpe.dnd;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.util.Map.Entry;
 
 import org.eclipse.swt.events.TypedEvent;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
 import org.jboss.tools.common.model.ui.editors.dnd.context.IDNDTextEditor;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.util.HTML;
-import org.jboss.tools.vpe.xulrunner.XPCOM;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNSDocument;
-import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsIServiceManager;
@@ -237,8 +237,7 @@ public class DndUtil {
 	
 	public static nsIDOMElement getElementFromPoint(nsIDOMDocument document,
 			int clientX, int clientY) {
-		nsIDOMNSDocument nsDocument = (nsIDOMNSDocument) document
-				.queryInterface(nsIDOMNSDocument.NS_IDOMNSDOCUMENT_IID);
+		nsIDOMNSDocument nsDocument = queryInterface(document, nsIDOMNSDocument.class);
 
 		nsIDOMElement element = nsDocument.elementFromPoint(clientX, clientY);
 

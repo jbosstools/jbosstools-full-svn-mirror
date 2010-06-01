@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -29,7 +31,7 @@ public abstract class VpePseudoContentCreator {
 	}
 	
 	public static boolean isPseudoElement(nsIDOMNode visualNode) {
-		return visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE && "yes".equalsIgnoreCase(((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).getAttribute(PSEUDO_CONTENT_ATTR)); //$NON-NLS-1$
+		return visualNode != null && visualNode.getNodeType() == Node.ELEMENT_NODE && "yes".equalsIgnoreCase((queryInterface(visualNode, nsIDOMElement.class)).getAttribute(PSEUDO_CONTENT_ATTR)); //$NON-NLS-1$
 	}
 	
 	public static nsIDOMNode getContainerForPseudoContent(nsIDOMNode visualNode) {

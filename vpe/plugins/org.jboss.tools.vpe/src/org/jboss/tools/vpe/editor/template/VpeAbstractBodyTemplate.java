@@ -10,6 +10,8 @@
   ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
@@ -114,8 +116,7 @@ public abstract class VpeAbstractBodyTemplate extends VpeAbstractTemplate {
 			final nsIDOMNode nodeChild = nodeChildren.item(i);
 			if (HTML.TAG_BODY.equalsIgnoreCase(nodeChild
 					.getNodeName())) {
-				return (nsIDOMElement) nodeChild
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				return queryInterface(nodeChild, nsIDOMElement.class);
 			} else {
 				nsIDOMElement body = getBody(nodeChild);
 				if (body != null) {

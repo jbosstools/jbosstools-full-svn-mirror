@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.template;
 /**
  * @author yzhishko
  */
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIContentViewer;
@@ -133,18 +134,14 @@ public class ZoomEventManager implements IZoomEventManager{
 	private nsIMarkupDocumentViewer initMarkupViewer(XulRunnerEditor editor) {
 		try {
 			nsIDOMDocument document = editor.getDOMDocument();
-			nsIDOMDocumentView documentView = (nsIDOMDocumentView) document
-					.queryInterface(nsIDOMDocumentView.NS_IDOMDOCUMENTVIEW_IID);
+			nsIDOMDocumentView documentView = queryInterface(document, nsIDOMDocumentView.class);
 			nsIDOMAbstractView abstractView = documentView.getDefaultView();
-			nsIInterfaceRequestor requestor = (nsIInterfaceRequestor) abstractView
-					.queryInterface(nsIInterfaceRequestor.NS_IINTERFACEREQUESTOR_IID);
+			nsIInterfaceRequestor requestor = queryInterface(abstractView, nsIInterfaceRequestor.class);
 			nsIWebNavigation navigation = (nsIWebNavigation) requestor
 					.getInterface(nsIWebNavigation.NS_IWEBNAVIGATION_IID);
-			nsIDocShell docShell = (nsIDocShell) navigation
-					.queryInterface(nsIDocShell.NS_IDOCSHELL_IID);
+			nsIDocShell docShell = queryInterface(navigation, nsIDocShell.class);
 			nsIContentViewer contentViewer = docShell.getContentViewer();
-			nsIMarkupDocumentViewer markupDocumentViewer = (nsIMarkupDocumentViewer) contentViewer
-					.queryInterface(nsIMarkupDocumentViewer.NS_IMARKUPDOCUMENTVIEWER_IID);
+			nsIMarkupDocumentViewer markupDocumentViewer = queryInterface(contentViewer, nsIMarkupDocumentViewer.class);
 			return markupDocumentViewer;
 		} catch (NullPointerException e) {
 			return null;

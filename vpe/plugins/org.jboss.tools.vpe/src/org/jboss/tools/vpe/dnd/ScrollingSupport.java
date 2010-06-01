@@ -10,6 +10,8 @@
   ******************************************************************************/
 package org.jboss.tools.vpe.dnd;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
@@ -91,11 +93,9 @@ public class ScrollingSupport {
 	 * @return bounds of the {@link #xulRunnerEditor}
 	 */
 	private Rectangle getWindowBounds() {
-		nsIEmbeddingSiteWindow window = (nsIEmbeddingSiteWindow) 
-			xulRunnerEditor
-			.getWebBrowser()
-			.getContainerWindow()
-			.queryInterface(nsIEmbeddingSiteWindow.NS_IEMBEDDINGSITEWINDOW_IID);
+		nsIEmbeddingSiteWindow window = 
+			queryInterface(xulRunnerEditor.getWebBrowser().getContainerWindow(),
+			nsIEmbeddingSiteWindow.class);
 		
 		int[] xArray      = new int[1]; // Left hand corner of the outer area
 		int[] yArray      = new int[1]; // Top corner of the outer area

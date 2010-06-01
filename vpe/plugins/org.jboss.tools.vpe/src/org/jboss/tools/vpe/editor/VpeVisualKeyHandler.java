@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -33,7 +35,6 @@ import org.eclipse.wst.xml.core.internal.document.AttrImpl;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.InvalidCharacterException;
 import org.eclipse.wst.xml.core.internal.document.TextImpl;
-import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
@@ -49,7 +50,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.FlatIterator;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
-import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
+import org.jboss.tools.vpe.xulrunner.util.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -1591,7 +1592,7 @@ public class VpeVisualKeyHandler {
 			
 			currentLenght=Integer.MAX_VALUE;
 			try{
-			domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			domElement = queryInterface(nsDOMNode, nsIDOMElement.class);
 				
 			if(nearestElement==null) {
 				nearestElement=domElement;
@@ -1636,7 +1637,7 @@ public class VpeVisualKeyHandler {
 		for(nsIDOMNode nsDOMNode : elements) {
 			currentLenght=Integer.MAX_VALUE;
 			try{
-				domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				domElement = queryInterface(nsDOMNode, nsIDOMElement.class);
 
 				if(nearestElement==null) {
 					
@@ -1683,7 +1684,7 @@ public class VpeVisualKeyHandler {
 		for(nsIDOMNode nsDOMNode : elements) {
 			currentLenght=Integer.MAX_VALUE;
 				try{
-					domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+					domElement = queryInterface(nsDOMNode, nsIDOMElement.class);
 					
 					if(nearestElement==null) {
 						nearestElement=domElement;
@@ -1728,7 +1729,7 @@ public class VpeVisualKeyHandler {
 		for(nsIDOMNode nsDOMNode : elements) {
 			currentLenght=Integer.MAX_VALUE;
 			try{
-				domElement = (nsIDOMElement) nsDOMNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				domElement = queryInterface(nsDOMNode, nsIDOMElement.class);
 				
 				if(nearestElement==null) {
 					nearestElement=domElement;

@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.util;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -78,9 +80,7 @@ public class VpeStyleUtil {
      */
     public static nsIDOMCSSStyleDeclaration getStyle(nsIDOMElement element) {
     	nsIDOMElementCSSInlineStyle inlineStyle = 
-			(nsIDOMElementCSSInlineStyle)
-					element.queryInterface(nsIDOMElementCSSInlineStyle
-							.NS_IDOMELEMENTCSSINLINESTYLE_IID);
+				queryInterface(element, nsIDOMElementCSSInlineStyle.class);
     	return inlineStyle.getStyle();
     }
     

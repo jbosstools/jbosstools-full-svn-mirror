@@ -10,11 +10,13 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.dnd;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
-import org.jboss.tools.vpe.xulrunner.editor.XulRunnerVpeUtils;
+import org.jboss.tools.vpe.xulrunner.util.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
@@ -114,8 +116,7 @@ public class DraggablePattern {
 	}
 
 	public boolean isDragIconClicked(nsIDOMMouseEvent mouseEvent) {
-		nsIDOMElement targetElement = (nsIDOMElement) mouseEvent.getTarget()
-				.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		nsIDOMElement targetElement = queryInterface(mouseEvent.getTarget(), nsIDOMElement.class);
 		if (targetElement != null) {
 			return DRAG_ICON_ID.equals(targetElement.getAttribute(HTML.ATTR_ID));
 		} else {
@@ -141,11 +142,9 @@ public class DraggablePattern {
 		offsetX = nodeBounds.x - mouseStartX;
 		offsetY = nodeBounds.y - mouseStartY;
 		
-		nodeCopy = (nsIDOMElement) node.cloneNode(true)
-				.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+		nodeCopy = queryInterface(node.cloneNode(true), nsIDOMElement.class);
 		if (nodeCopy.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-			nsIDOMElement elementCopy = (nsIDOMElement) nodeCopy.queryInterface(
-					nsIDOMElement.NS_IDOMELEMENT_IID);
+			nsIDOMElement elementCopy = queryInterface(nodeCopy, nsIDOMElement.class);
 			DndUtil.setTemporaryDndElement(elementCopy, true);
 		}
 

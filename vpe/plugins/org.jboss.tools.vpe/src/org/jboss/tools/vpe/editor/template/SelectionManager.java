@@ -11,6 +11,8 @@
 
 package org.jboss.tools.vpe.editor.template;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
@@ -218,8 +220,7 @@ public class SelectionManager implements ISelectionManager {
 		}
 
 		// get nsIDOMNSUIEvent event
-		nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent) mouseEvent
-				.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
+		nsIDOMNSUIEvent nsuiEvent = queryInterface(mouseEvent, nsIDOMNSUIEvent.class);
 
 		int selectionOffset;
 		int selectionLength;

@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mozilla;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -81,8 +83,8 @@ import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
-import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEventTarget;
@@ -96,8 +98,6 @@ import org.mozilla.interfaces.nsIHTMLAbsPosEditor;
 import org.mozilla.interfaces.nsIHTMLInlineTableEditor;
 import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Node;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final File INIT_FILE = new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -854,7 +854,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					throw new RuntimeException("The content area node should by element node."); //$NON-NLS-1$
 				}
 
-				area = (nsIDOMElement) node.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				area = queryInterface(node, nsIDOMElement.class);
 				break;
 			}
 		}
@@ -924,7 +924,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		if (contentArea != null) {
 //			getContentAreaEventListener().setVisualEditor(xulRunnerEditor);
 			nsIDOMWindow window = xulRunnerEditor.getWebBrowser().getContentDOMWindow();
-			mozillaEventAdapter.attach(window, (nsIDOMEventTarget) contentArea.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID));
+			mozillaEventAdapter.attach(window, queryInterface(contentArea, nsIDOMEventTarget.class));
 		}
 	}
 
@@ -1055,15 +1055,15 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			editor = iEditingSession.getEditorForWindow(getXulRunnerEditor().getWebBrowser().getContentDOMWindow());
 			editor.setFlags(nsIPlaintextEditor.eEditorReadonlyMask);
 			//here we hide nsIHTMLObjectResizers
-			nsIHTMLObjectResizer htmlObjectResizer = (nsIHTMLObjectResizer) editor.queryInterface(nsIHTMLObjectResizer.NS_IHTMLOBJECTRESIZER_IID);
+			nsIHTMLObjectResizer htmlObjectResizer = queryInterface(editor, nsIHTMLObjectResizer.class);
 			//we disable abject resizers
 			htmlObjectResizer.hideResizers();
 			htmlObjectResizer.setObjectResizingEnabled(false);
 			//here we getting position editor and disable it's too
-			nsIHTMLAbsPosEditor htmlAbsPosEditor = (nsIHTMLAbsPosEditor) editor.queryInterface(nsIHTMLAbsPosEditor.NS_IHTMLABSPOSEDITOR_IID);
+			nsIHTMLAbsPosEditor htmlAbsPosEditor = queryInterface(editor, nsIHTMLAbsPosEditor.class);
 			htmlAbsPosEditor.setAbsolutePositioningEnabled(false);
 			//here we getting inline table editor and disable it's too
-			nsIHTMLInlineTableEditor inlineTableEditor = (nsIHTMLInlineTableEditor) editor.queryInterface(nsIHTMLInlineTableEditor.NS_IHTMLINLINETABLEEDITOR_IID);
+			nsIHTMLInlineTableEditor inlineTableEditor = queryInterface(editor, nsIHTMLInlineTableEditor.class);
 			inlineTableEditor.setInlineTableEditingEnabled(false);
 			
 		}

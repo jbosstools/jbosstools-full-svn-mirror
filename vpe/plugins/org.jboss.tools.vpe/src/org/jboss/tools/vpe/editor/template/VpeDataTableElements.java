@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -441,7 +443,7 @@ public class VpeDataTableElements {
 				nsIDOMNode child = children.item(i);
 				if (tagName.equalsIgnoreCase(child.getNodeName())) {
 					if (ind == index) {
-						return (nsIDOMElement)child.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+						return queryInterface(child, nsIDOMElement.class);
 					} else {
 						ind++;
 					}

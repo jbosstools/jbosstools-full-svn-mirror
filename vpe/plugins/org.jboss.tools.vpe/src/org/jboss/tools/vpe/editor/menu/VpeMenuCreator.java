@@ -34,7 +34,7 @@ import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.template.IZoomEventManager;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
-import org.jboss.tools.vpe.xulrunner.browser.util.DOMTreeDumper;
+import org.jboss.tools.vpe.xulrunner.util.DOMTreeDumper;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 

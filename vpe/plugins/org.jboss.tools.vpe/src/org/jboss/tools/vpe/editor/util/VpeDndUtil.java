@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.util;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.Properties;
 
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -17,7 +19,6 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.jboss.tools.common.model.XModelException;
 import org.jboss.tools.common.model.ui.dnd.DnDUtil;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
-import org.jboss.tools.common.model.ui.views.palette.PaletteInsertHelper;
 import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.vpe.VpePlugin;
 import org.mozilla.interfaces.nsIFile;
@@ -59,7 +60,7 @@ public class VpeDndUtil {
         boolean rst = true;
         
         try {
-            support.queryInterface(nsIFile.NS_IFILE_IID);
+        	queryInterface(support, nsIFile.class);
         } catch (XPCOMException e) {
             rst = false;
         }      
@@ -74,7 +75,7 @@ public class VpeDndUtil {
         boolean rst = true;
 
         try {
-            support.queryInterface(nsISupportsCString.NS_ISUPPORTSCSTRING_IID);
+        	queryInterface(support, nsISupportsCString.class);
         } catch (XPCOMException e) {
             rst = false;
         }
@@ -89,7 +90,7 @@ public class VpeDndUtil {
         boolean rst = true;
 
         try {
-            support.queryInterface(nsISupportsString.NS_ISUPPORTSSTRING_IID);
+        	queryInterface(support, nsISupportsString.class);
         } catch (XPCOMException e) {
             rst = false;
         }

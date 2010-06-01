@@ -10,13 +10,14 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
-import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.jst.web.tld.TaglibData;
@@ -176,7 +177,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	public void validate(VpePageContext pageContext, Node sourceNode, nsIDOMDocument visualDocument, VpeCreationData creationdata) {
 		if (sourceNode instanceof Element)
 			validateVisualElement(pageContext, (Element)sourceNode, visualDocument, null, creationdata.getNode()==null?null:
-				(nsIDOMElement)(creationdata.getNode().queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)), (Map<VpeTemplate,ModifyInfo>)creationdata.getData());
+				queryInterface(creationdata.getNode(), nsIDOMElement.class), (Map<VpeTemplate,ModifyInfo>)creationdata.getData());
 	}
 	@Override
 	public void setAttribute(VpePageContext pageContext, Element sourceElement, nsIDOMDocument visualDocument, nsIDOMNode visualNode, Object data, String name, String value) {

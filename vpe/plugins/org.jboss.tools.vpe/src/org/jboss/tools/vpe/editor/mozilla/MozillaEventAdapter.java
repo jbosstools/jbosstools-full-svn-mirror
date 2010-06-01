@@ -20,6 +20,7 @@ import org.jboss.tools.vpe.editor.mozilla.listener.MozillaMouseListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaScrollListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventListener;
@@ -84,10 +85,8 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 		}
 		attached = true;
 		
-		this.window = (nsIDOMEventTarget) domWindow
-				.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
-		this.document = (nsIDOMEventTarget) domWindow.getDocument()
-				.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+		this.window = XPCOM.queryInterface(domWindow, nsIDOMEventTarget.class);
+		this.document = XPCOM.queryInterface(domWindow.getDocument(), nsIDOMEventTarget.class);
 		this.contentArea = contentArea;
 		
 		if (contentArea != null) {
@@ -102,8 +101,7 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			window.addEventListener(MozillaEventAdapter.MOZAFTERPAINT, this, false);
 
 			nsISelection selection = domWindow.getSelection();
-			selectionPrivate = (nsISelectionPrivate) selection
-					.queryInterface(nsISelectionPrivate.NS_ISELECTIONPRIVATE_IID);
+			selectionPrivate = XPCOM.queryInterface(selection, nsISelectionPrivate.class);
 			selectionPrivate.addSelectionListener(this);
 		}
 		if (document != null) {
@@ -241,51 +239,44 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 	public void handleEvent(nsIDOMEvent domEvent) {
 		final String eventType = domEvent.getType();
 		if(MOUSEMOVEEVENTTYPE.equals(eventType)) {
-			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent
-					.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			nsIDOMMouseEvent mouseEvent = XPCOM.queryInterface(domEvent, nsIDOMMouseEvent.class);
 			for (MozillaMouseListener listener : listeners.getListeners(
 					MozillaMouseListener.class)) {
 				listener.mouseMove(mouseEvent);
 			}
 		} else if(MOUSEDOWNEVENTTYPE.equals(eventType)) {
-			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent
-					.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			nsIDOMMouseEvent mouseEvent = XPCOM.queryInterface(domEvent, nsIDOMMouseEvent.class);
 			for (MozillaMouseListener listener : listeners.getListeners(
 					MozillaMouseListener.class)) {
 				listener.mouseDown(mouseEvent);
 			}
 		} else if(MOUSEUPEVENTTYPE.equals(eventType)) {
-			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent
-					.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			nsIDOMMouseEvent mouseEvent = XPCOM.queryInterface(domEvent, nsIDOMMouseEvent.class);
 			for (MozillaMouseListener listener : listeners.getListeners(
 					MozillaMouseListener.class)) {
 				listener.mouseUp(mouseEvent);
 			}
 		} else if(CLICKEVENTTYPE.equals(eventType)) {
-			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent
-					.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			nsIDOMMouseEvent mouseEvent = XPCOM.queryInterface(domEvent, nsIDOMMouseEvent.class);
 			for (MozillaMouseListener listener : listeners.getListeners(
 					MozillaMouseListener.class)) {
 				listener.mouseClick(mouseEvent);
 			}
 		} else if(DBLCLICK.equals(eventType)) {
-			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) domEvent
-					.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			nsIDOMMouseEvent mouseEvent = XPCOM.queryInterface(domEvent, nsIDOMMouseEvent.class);
 			for (MozillaMouseListener listener : listeners.getListeners(
 					MozillaMouseListener.class)) {
 				listener.mouseDblClick(mouseEvent);
 			}
 		} else if(KEYPRESS.equals(eventType)) {
-			nsIDOMKeyEvent keyEvent = (nsIDOMKeyEvent) domEvent
-					.queryInterface(nsIDOMKeyEvent.NS_IDOMKEYEVENT_IID);
+			nsIDOMKeyEvent keyEvent = XPCOM.queryInterface(domEvent, nsIDOMKeyEvent.class);
 			for (MozillaKeyListener listener : listeners.getListeners(
 					MozillaKeyListener.class)) {
 				listener.keyPress(keyEvent);
 			}
 		} else if(CONTEXTMENUEVENTTYPE.equals(eventType)) {			
 			//first param are null 0, because this not used in event handler
-			nsIDOMNode node = (nsIDOMNode) domEvent.getTarget()
-					.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+			nsIDOMNode node = XPCOM.queryInterface(domEvent.getTarget(), nsIDOMNode.class);
 			for (MozillaContextMenuListener listener : listeners.getListeners(
 					MozillaContextMenuListener.class)) {
 				listener.onShowContextMenu(0, domEvent, node);
@@ -344,7 +335,7 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 	// this method is never used		
 //		boolean isXulElement(nsIDOMMouseEvent mouseEvent) {
 //			// TODO Sergey Vasilyev figure out with getTmpRealOriginalTarget
-////			nsIDOMNSEvent nsEvent = (nsIDOMNSEvent)mouseEvent.queryInterface(nsIDOMNSEvent.NS_IDOMNSEVENT_IID);
+////			nsIDOMNSEvent nsEvent = queryInterface(mouseEvent, nsIDOMNSEvent.class);
 ////			nsIDOMEventTarget target = nsEvent.getTmpRealOriginalTarget();	
 ////			int aDragNode = target.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
 ////			nsIDOMNode originalNode = nsIDOMNode.getNodeAtAddress(aDragNode);
@@ -367,7 +358,7 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 //		 * @see org.mozilla.interfaces.nsIClipboardDragDropHooks#onPasteOrDrop(org.mozilla.interfaces.nsIDOMEvent, org.mozilla.interfaces.nsITransferable)
 //		 */
 //		public boolean onPasteOrDrop(nsIDOMEvent event,	nsITransferable transferable) {
-//			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent)event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+//			nsIDOMMouseEvent mouseEvent = queryInterface(event, nsIDOMMouseEvent.class);
 //
 //			if (editorDomEventListener != null && !isXulElement(mouseEvent)) {
 //				nsIDragSession dragSession = visualEditor.getCurrentDragSession();

@@ -11,6 +11,8 @@
 ******************************************************************************/ 
 package org.jboss.tools.vpe.dnd;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.EnumSet;
 
 import org.eclipse.core.resources.IFile;
@@ -40,8 +42,8 @@ import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
-import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -61,7 +63,6 @@ import org.mozilla.xpcom.Mozilla;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 /**
  * Class responsible for Drag&Drop functionality
  * 
@@ -121,8 +122,7 @@ public class VpeDnD implements MozillaDndListener {
 	 * @param event
 	 */
 	public void dragOver(nsIDOMEvent event) {
-		final nsIDOMMouseEvent mouseEvent =
-			(nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+		final nsIDOMMouseEvent mouseEvent = queryInterface(event, nsIDOMMouseEvent.class);
 		
 		final XulRunnerEditor editor = vpeController.getXulRunnerEditor();
 		new ScrollingSupport(editor).scroll(mouseEvent);
@@ -150,26 +150,25 @@ public class VpeDnD implements MozillaDndListener {
 		if(isInnerDragSession()) {
 			// in this case it's is an internal drag
 			draggablePattern.closeSession();
-			innerDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID));
+			innerDrop(queryInterface(domEvent, nsIDOMMouseEvent.class));
 		} else {
 			//in this case it's is  external drag
-			externalDrop((nsIDOMMouseEvent)domEvent.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID), VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
+			externalDrop(queryInterface(domEvent, nsIDOMMouseEvent.class), VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
 		}
 		disposeDropableArea();
 		vpeController.onRefresh();
 	}
 
 	public void dragExit(nsIDOMEvent domEvent) {
-		nsIDOMNode eventTargetNode = (nsIDOMNode) domEvent.getTarget()
-			.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+		nsIDOMNode eventTargetNode = queryInterface(domEvent.getTarget(), nsIDOMNode.class);
 		
 		if (dropableArea != null) {
 			nsIDOMNode dropTargetNode = dropableArea.getNode();
 			
 			boolean targetNodeIsTemporary = false;
 			if (eventTargetNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-				nsIDOMElement eventTargetElement = (nsIDOMElement)
-						eventTargetNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				nsIDOMElement eventTargetElement 
+						= queryInterface(eventTargetNode, nsIDOMElement.class);
 				targetNodeIsTemporary = DndUtil.isTemporaryDndElement(eventTargetElement);
 			}
 			boolean eventTargetIsAscedantOfDropTarget = VisualDomUtil.isAscendant(eventTargetNode, dropTargetNode);
@@ -325,7 +324,7 @@ public class VpeDnD implements MozillaDndListener {
 
 	private Point getClientCoords(nsIDOMEvent event) {
 		final nsIDOMMouseEvent mouseEvent =
-			(nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			queryInterface(event, nsIDOMMouseEvent.class);
 		return new Point(mouseEvent.getClientX(), mouseEvent.getClientY());
 	}
 	
@@ -381,7 +380,7 @@ public class VpeDnD implements MozillaDndListener {
 
 	private void refreshCanDrop(nsIDOMEvent event) {
 
-		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+		nsIDOMMouseEvent mouseEvent = queryInterface(event, nsIDOMMouseEvent.class);
 		getDragService().getCurrentSession().setCanDrop(dropableArea != null
 				&& dropableArea.getHighlightedDropTarget() != null);
 		mouseEvent.preventDefault();
@@ -426,8 +425,7 @@ public class VpeDnD implements MozillaDndListener {
 			}
 			switch (dragNode.getNodeType()) {
 			case nsIDOMNode.ELEMENT_NODE: {
-				canDrag = vpeController.getVisualBuilder().canInnerDrag((nsIDOMElement) dragNode
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID));
+				canDrag = vpeController.getVisualBuilder().canInnerDrag(queryInterface(dragNode, nsIDOMElement.class));
 				break;
 			}
 			case nsIDOMNode.TEXT_NODE: {
@@ -523,8 +521,7 @@ public class VpeDnD implements MozillaDndListener {
 	
 		String aFlavor = ""; //$NON-NLS-1$
 		if (VpeDndUtil.isNsIFileInstance(aValue)) {
-			nsIFile aFile = (nsIFile) aValue
-					.queryInterface(nsIFile.NS_IFILE_IID);
+			nsIFile aFile = queryInterface(aValue, nsIFile.class);
 	
 			// because it is external, convert the path to URL
 			final String path = aFile.getPath();
@@ -532,13 +529,12 @@ public class VpeDnD implements MozillaDndListener {
 			aFlavor = DndUtil.kFileMime;
 	
 		} else if (VpeDndUtil.isNsICStringInstance(aValue)) {
-			nsISupportsCString aString = (nsISupportsCString) aValue
-					.queryInterface(nsISupportsCString.NS_ISUPPORTSCSTRING_IID);
+			nsISupportsCString aString = 
+					queryInterface(aValue, nsISupportsCString.class);
 			data = aString.getData();
 			aFlavor = DndUtil.kHTMLMime;
 		} else if (VpeDndUtil.isNsIStringInstance(aValue)) {
-			nsISupportsString aString = (nsISupportsString) aValue
-					.queryInterface(nsISupportsString.NS_ISUPPORTSSTRING_IID);
+			nsISupportsString aString = queryInterface(aValue, nsISupportsString.class);
 			data = aString.getData();
 			if (VpeController.MODEL_FLAVOR.equals(dragTransferData.getFlavor())) {
 				aFlavor = dragTransferData.getFlavor();
@@ -601,8 +597,7 @@ public class VpeDnD implements MozillaDndListener {
 	}
 
 	private Point getPageCoords(nsIDOMEvent domEvent) {
-		nsIDOMNSUIEvent nsuiEvent = (nsIDOMNSUIEvent)
-				domEvent.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
+		nsIDOMNSUIEvent nsuiEvent = queryInterface(domEvent, nsIDOMNSUIEvent.class);
 		return new Point(nsuiEvent.getPageX(), nsuiEvent.getPageY());
 	}
 

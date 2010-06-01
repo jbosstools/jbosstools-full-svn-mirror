@@ -10,6 +10,8 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.util;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -81,7 +83,7 @@ public class VisualDomUtil {
 	}
 
 	public static Point getMousePoint(nsIDOMMouseEvent mouseEvent) {
-		nsIDOMNSUIEvent uiEvent = (nsIDOMNSUIEvent) mouseEvent.queryInterface(nsIDOMNSUIEvent.NS_IDOMNSUIEVENT_IID);
+		nsIDOMNSUIEvent uiEvent = queryInterface(mouseEvent, nsIDOMNSUIEvent.class);
 		return new Point(uiEvent.getPageX(), uiEvent.getPageY());
 	}
 	
@@ -113,7 +115,7 @@ public class VisualDomUtil {
 	}
 	
 	public static nsIDOMNode getTargetNode(nsIDOMEvent event) {
-		return (nsIDOMNode) event.getTarget().queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+		return queryInterface(event.getTarget(), nsIDOMNode.class);
 	}
 	
 	public static boolean isSelectionContains(nsISelection selection, nsIDOMNode parent, int offset) {
@@ -133,7 +135,7 @@ public class VisualDomUtil {
 	}
 
 	public static boolean isRangeContains(nsIDOMRange range, nsIDOMNode parent, int offset) {
-		nsIDOMNSRange domNSRange = (nsIDOMNSRange) range.queryInterface(nsIDOMNSRange.NS_IDOMNSRANGE_IID);
+		nsIDOMNSRange domNSRange = queryInterface(range, nsIDOMNSRange.class);
 		boolean inRange = domNSRange.isPointInRange(parent, offset);
 		return inRange;
 	}
@@ -271,7 +273,7 @@ public class VisualDomUtil {
 //	public static Rectangle getBounds(nsIDOMNode node) {
 //		Rectangle bounds = null;
 //
-//		nsIAccessible accessible = (nsIAccessible) node.queryInterface(nsIAccessible.NS_IACCESSIBLE_IID);
+//		nsIAccessible accessible = queryInterface(node, nsIAccessible.class);
 //		if (accessible != null) {
 //			int[] xArray      = new int[1]; // Left hand corner of the node
 //			int[] yArray      = new int[1]; // Top corner of the node
@@ -409,7 +411,7 @@ public class VisualDomUtil {
      		for (int i = 0; i < nodeList.getLength(); i++) {
      			nsIDOMElement element = null;
      			try {
-     				element = (nsIDOMElement) nodeList.item(i).queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+     				element = queryInterface(nodeList.item(i), nsIDOMElement.class);
      			} catch (org.mozilla.xpcom.XPCOMException e) {
      				/*
      				 * Cannot parse node to element, return null.
