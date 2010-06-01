@@ -1,7 +1,7 @@
 package org.jboss.tools.vpe.xulrunner.editor;
 
 import org.eclipse.core.runtime.Platform;
-import org.jboss.tools.vpe.xulrunner.XPCOM;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.inIFlasher;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIServiceManager;

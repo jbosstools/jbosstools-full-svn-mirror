@@ -11,9 +11,12 @@
 
 package org.jboss.tools.vpe.xulrunner.editor;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import java.util.ArrayList;
+
 import org.eclipse.swt.graphics.Rectangle;
+import org.jboss.tools.vpe.xulrunner.util.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -231,7 +234,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 			return;
 		}
 
-		nsIDOMNode parentNode = (nsIDOMNode) bodyElement.queryInterface(nsIDOMNode.NS_IDOMNODE_IID);
+		nsIDOMNode parentNode = queryInterface(bodyElement, nsIDOMNode.class);
 
 		if ( parentNode == null) {
 			return;
@@ -319,7 +322,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 */
 	public void mouseMove(nsIDOMEvent event) {
 		if (isResizing) {
-			nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent)event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+			nsIDOMMouseEvent mouseEvent = queryInterface(event, nsIDOMMouseEvent.class);
 			int clientX, clientY;
 
 			clientX = mouseEvent.getClientX();
@@ -516,7 +519,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 */
 	private nsIDOMEventTarget getDOMEventTarget() {
 		
-		nsIDOMEventTarget eventTarget = (nsIDOMEventTarget) domDocument.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+		nsIDOMEventTarget eventTarget = queryInterface(domDocument, nsIDOMEventTarget.class);
 		if (eventTarget == null) {
 			throw new RuntimeException("nsIDOMEventTarget is null"); //$NON-NLS-1$
 		}
@@ -604,13 +607,13 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		
 		nsIDOMElement bodyElement = null;
 		
-		nsIDOMHTMLDocument htmlDocument = (nsIDOMHTMLDocument) domDocument.queryInterface(nsIDOMHTMLDocument.NS_IDOMHTMLDOCUMENT_IID);
+		nsIDOMHTMLDocument htmlDocument = queryInterface(domDocument, nsIDOMHTMLDocument.class);
 		
 		if ( htmlDocument != null ) {
 			 nsIDOMHTMLElement htmlBody = htmlDocument.getBody();
 			 
 			 if ( htmlBody != null ) {
-				 bodyElement = (nsIDOMElement) htmlBody.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				 bodyElement = queryInterface(htmlBody, nsIDOMElement.class);
 			 } // if
 		} // if
 		
@@ -626,7 +629,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	private nsIDOMElement createResizer(String resizerMarkerString, nsIDOMNode parentNode) {
 		nsIDOMElement aNewResizer = createAnonymousElement(XulRunnerConstants.HTML_TAG_SPAN, parentNode, XulRunnerConstants.VPE_CLASSNAME_MOZ_RESIZER, false );
 		
-		nsIDOMEventTarget evtTarget = (nsIDOMEventTarget) aNewResizer.queryInterface(nsIDOMEventTarget.NS_IDOMEVENTTARGET_IID);
+		nsIDOMEventTarget evtTarget = queryInterface(aNewResizer, nsIDOMEventTarget.class);
 		
 		evtTarget.addEventListener(XulRunnerConstants.EVENT_NAME_MOUSEDOWN, mouseListener, true);
 
@@ -730,7 +733,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @param cssPropertyValue
 	 */
 	private void setStyle(nsIDOMElement domElement, String cssPropertyName, String cssPropertyValue) {
-		nsIDOMElementCSSInlineStyle inlineStyles = (nsIDOMElementCSSInlineStyle) domElement.queryInterface(nsIDOMElementCSSInlineStyle.NS_IDOMELEMENTCSSINLINESTYLE_IID);
+		nsIDOMElementCSSInlineStyle inlineStyles = queryInterface(domElement, nsIDOMElementCSSInlineStyle.class);
 		
 	    if ( inlineStyles == null) {
 	    	return;

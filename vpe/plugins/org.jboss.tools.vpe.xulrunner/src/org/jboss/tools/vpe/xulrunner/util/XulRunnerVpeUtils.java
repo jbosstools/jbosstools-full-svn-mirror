@@ -9,7 +9,9 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.vpe.xulrunner.editor;
+package org.jboss.tools.vpe.xulrunner.util;
+
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.xulrunner.BrowserPlugin;
@@ -35,7 +37,7 @@ public class XulRunnerVpeUtils {
 				curleft += boxObject.getOffsetLeft();
 				if ( boxObject.getOffsetParent() == null)
 					return curleft;
-				boxObject = (nsIDOMNSHTMLElement) boxObject.getOffsetParent().queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
+				boxObject = queryInterface(boxObject.getOffsetParent(), nsIDOMNSHTMLElement.class);
 			}
 		} else {
 			curleft += boxObject.getOffsetLeft();
@@ -51,7 +53,7 @@ public class XulRunnerVpeUtils {
 				curleft += boxObject.getOffsetTop();
 				if ( boxObject.getOffsetParent() == null)
 					return curleft;
-				boxObject = (nsIDOMNSHTMLElement) boxObject.getOffsetParent().queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
+				boxObject = queryInterface(boxObject.getOffsetParent(), nsIDOMNSHTMLElement.class);
 			}
 		} else {
 			curleft += boxObject.getOffsetTop();
@@ -65,17 +67,13 @@ public class XulRunnerVpeUtils {
 	 */
 	static public Rectangle getElementBounds(nsIDOMNode domNode) {
 		try {
-			nsIDOMElement domElement = (nsIDOMElement) domNode
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			nsIDOMElement domElement = queryInterface(domNode, nsIDOMElement.class);
 		
-			nsIDOMNSElement htmlElement = (nsIDOMNSElement) domNode
-					.queryInterface(nsIDOMNSElement.NS_IDOMNSELEMENT_IID);
-			nsIDOMNSHTMLElement domNSHTMLElement = (nsIDOMNSHTMLElement) domNode
-					.queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
+			nsIDOMNSElement htmlElement = queryInterface(domNode, nsIDOMNSElement.class);
+			nsIDOMNSHTMLElement domNSHTMLElement = queryInterface(domNode, nsIDOMNSHTMLElement.class);
 			nsIDOMDocument document = domElement.getOwnerDocument();
 
-			nsIDOMNSDocument nsDocument = (nsIDOMNSDocument) document
-					.queryInterface(nsIDOMNSDocument.NS_IDOMNSDOCUMENT_IID);
+			nsIDOMNSDocument nsDocument = queryInterface(document, nsIDOMNSDocument.class);
 			nsIBoxObject boxObject = nsDocument.getBoxObjectFor(domElement);
 			Rectangle rectangle = new Rectangle(findPosX(domNSHTMLElement),
 														 findPosY(domNSHTMLElement),

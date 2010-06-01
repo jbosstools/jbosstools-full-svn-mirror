@@ -13,8 +13,8 @@ package org.jboss.tools.vpe.xulrunner.browser;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.URL;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
@@ -23,8 +23,8 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
-import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIPrefService;
 import org.mozilla.interfaces.nsIRequest;
@@ -95,8 +95,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
             setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
             setBoolRootPref(PREFERENCE_DISABLEWINDOWSTATUSCHANGE, true);
             
-            nsIWebBrowserSetup setup = (nsIWebBrowserSetup) webBrowser
-            	.queryInterface(nsIWebBrowserSetup.NS_IWEBBROWSERSETUP_IID);
+            nsIWebBrowserSetup setup = XPCOM.queryInterface(webBrowser, nsIWebBrowserSetup.class);
             setup.setProperty(nsIWebBrowserSetup.SETUP_IS_CHROME_WRAPPER, 1);
     
             // JBIDE-1329 Solution was contributed by Snjezana Peco
@@ -242,32 +241,32 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 	
 	public void setURL(String url) {
-		nsIWebNavigation webNavigation = (nsIWebNavigation) webBrowser.queryInterface(nsIWebNavigation.NS_IWEBNAVIGATION_IID);
+		nsIWebNavigation webNavigation = XPCOM.queryInterface(webBrowser, nsIWebNavigation.class);
 		webNavigation.loadURI(url, nsIWebNavigation.LOAD_FLAGS_NONE, null, null, null);
 	}
 	
 	public String getURL() {
-		nsIWebNavigation webNavigation = (nsIWebNavigation) webBrowser.queryInterface(nsIWebNavigation.NS_IWEBNAVIGATION_IID);
+		nsIWebNavigation webNavigation = XPCOM.queryInterface(webBrowser, nsIWebNavigation.class);
 		return webNavigation.getCurrentURI().getSpec();
 	}
 	
 	public void stop() {
-		nsIWebNavigation webNavigation = (nsIWebNavigation) webBrowser.queryInterface(nsIWebNavigation.NS_IWEBNAVIGATION_IID);
+		nsIWebNavigation webNavigation = XPCOM.queryInterface(webBrowser, nsIWebNavigation.class);
 		webNavigation.stop(nsIWebNavigation.STOP_ALL);
 	}
 	
 	public void reload() {
-		nsIWebNavigation webNavigation = (nsIWebNavigation) webBrowser.queryInterface(nsIWebNavigation.NS_IWEBNAVIGATION_IID);
+		nsIWebNavigation webNavigation = XPCOM.queryInterface(webBrowser, nsIWebNavigation.class);
 		webNavigation.reload(nsIWebNavigation.LOAD_FLAGS_NONE);
 	}
 	
 	public void goBack() {
-		nsIWebNavigation webNavigation = (nsIWebNavigation) webBrowser.queryInterface(nsIWebNavigation.NS_IWEBNAVIGATION_IID);
+		nsIWebNavigation webNavigation = XPCOM.queryInterface(webBrowser, nsIWebNavigation.class);
 		webNavigation.goBack();
 	}
 	
 	public void goForward() {
-		nsIWebNavigation webNavigation = (nsIWebNavigation) webBrowser.queryInterface(nsIWebNavigation.NS_IWEBNAVIGATION_IID);
+		nsIWebNavigation webNavigation = XPCOM.queryInterface(webBrowser, nsIWebNavigation.class);
 		webNavigation.goForward();
 	}
 

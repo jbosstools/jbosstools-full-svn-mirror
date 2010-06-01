@@ -23,7 +23,7 @@ import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.html.test.HtmlAllTests;
 import org.jboss.tools.vpe.ui.test.TestUtil;
 import org.jboss.tools.vpe.ui.test.VpeTest;
-import org.jboss.tools.vpe.xulrunner.browser.util.DOMTreeDumper;
+import org.jboss.tools.vpe.xulrunner.util.DOMTreeDumper;
 import org.mozilla.interfaces.nsIDOMDocument;
 
 /**

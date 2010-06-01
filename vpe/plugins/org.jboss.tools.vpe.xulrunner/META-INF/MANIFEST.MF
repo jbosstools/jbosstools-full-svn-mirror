@@ -11,8 +11,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.vpe.xulrunner;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
  org.jboss.tools.vpe.xulrunner.browser;uses:="org.mozilla.interfaces,org.eclipse.swt.widgets,org.mozilla.xpcom",
- org.jboss.tools.vpe.xulrunner.browser.util,
- org.jboss.tools.vpe.xulrunner.editor
+ org.jboss.tools.vpe.xulrunner.editor,
+ org.jboss.tools.vpe.xulrunner.util
 Bundle-ClassPath: .
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin

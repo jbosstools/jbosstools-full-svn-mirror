@@ -12,6 +12,7 @@
 package org.jboss.tools.vpe.xulrunner.editor;
 
 import org.eclipse.core.runtime.Platform;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventListener;
@@ -43,8 +44,7 @@ public class VpeResizerMouseListener implements nsIDOMEventListener {
 	 * @see org.mozilla.interfaces.nsIDOMEventListener#handleEvent(org.mozilla.interfaces.nsIDOMEvent)
 	 */
 	public void handleEvent(nsIDOMEvent event) {
-		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event
-				.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+		nsIDOMMouseEvent mouseEvent = XPCOM.queryInterface(event, nsIDOMMouseEvent.class);
 
 		if (mouseEvent == null) {
 			return;
@@ -90,14 +90,12 @@ public class VpeResizerMouseListener implements nsIDOMEventListener {
 
 		if (!isContextClick && (mouseEvent.getButton() == 0)
 				&& (mouseEvent.getDetail() == 1)) {
-			nsIDOMNSEvent internalEvent = (nsIDOMNSEvent) mouseEvent
-					.queryInterface(nsIDOMNSEvent.NS_IDOMNSEVENT_IID);
+			nsIDOMNSEvent internalEvent = XPCOM.queryInterface(mouseEvent, nsIDOMNSEvent.class);
 			if (internalEvent != null) {
 				org.mozilla.interfaces.nsIDOMEventTarget eventTarget = internalEvent
 						.getExplicitOriginalTarget();
 				if (eventTarget != null) {
-					nsIDOMElement domElement = (nsIDOMElement) eventTarget
-							.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+					nsIDOMElement domElement = XPCOM.queryInterface(eventTarget, nsIDOMElement.class);
 					if (domElement != null) {
 						int clientX = mouseEvent.getClientX();
 						int clientY = mouseEvent.getClientY();
@@ -120,7 +118,7 @@ public class VpeResizerMouseListener implements nsIDOMEventListener {
 		 nsIDOMEventTarget target = mouseEvent.getTarget();
 		 
 		 if (target != null ) {
-				nsIDOMElement domElement = (nsIDOMElement) target.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				nsIDOMElement domElement = XPCOM.queryInterface(target, nsIDOMElement.class);
 				if (domElement != null) {
 					int clientX = mouseEvent.getClientX();
 					int clientY = mouseEvent.getClientY();

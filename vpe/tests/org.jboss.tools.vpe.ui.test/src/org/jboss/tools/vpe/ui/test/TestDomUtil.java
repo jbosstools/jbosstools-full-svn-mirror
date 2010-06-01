@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.ui.test;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -245,8 +247,8 @@ public class TestDomUtil {
 					throw new ComparisonException("there is not : \"" + name //$NON-NLS-1$
 							+ "\" attribute"); //$NON-NLS-1$
 				
-				nsIDOMAttr vpeAttr = (nsIDOMAttr) vpeAttributes.getNamedItem(
-						name).queryInterface(nsIDOMAttr.NS_IDOMATTR_IID);
+				nsIDOMAttr vpeAttr = queryInterface(
+						vpeAttributes.getNamedItem(name), nsIDOMAttr.class);
 
 				
 

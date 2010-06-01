@@ -10,6 +10,8 @@
 ******************************************************************************/
 package org.jboss.tools.vpe.html.template;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
@@ -40,10 +42,10 @@ public class HtmlCommentTemplate extends VpeAbstractTemplate {
 	    nsIDOMNode visualNode;  
 		if (Constants.YES_STRING.equals(VpePreference.SHOW_COMMENTS_VALUE)) {
 			visualNode = visualDocument.createElement(HTML.TAG_DIV);
-			((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, COMMENT_STYLE);
+			(queryInterface(visualNode, nsIDOMElement.class)).setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, COMMENT_STYLE);
 		    String value = sourceNode.getNodeValue();
 		    nsIDOMText text = visualDocument.createTextNode(value);
-		    ((nsIDOMElement)visualNode.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID)).appendChild(text);
+		    (queryInterface(visualNode, nsIDOMElement.class)).appendChild(text);
 
 	     } else {
 	    	 visualNode = visualDocument.createComment(removeDoubleHyphens(sourceNode.getNodeValue()));

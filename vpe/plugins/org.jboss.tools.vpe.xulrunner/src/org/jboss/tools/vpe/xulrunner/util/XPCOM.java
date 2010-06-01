@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.xulrunner;
+package org.jboss.tools.vpe.xulrunner.util;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public final class XPCOM {
 	 * <pre>queryInterface(object, nsIDOMNode.class)</pre>
 	 *  
 	 * It is recommended to include the method using static import:
-	 * <pre>import static org.jboss.tools.vpe.xulrunner.XPCOM.queryInterface</pre>
+	 * <pre>import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface</pre>
 	 * 
 	 * @throws XPCOMException when the {@code object} does not support
 	 * the {@code type}.

@@ -23,9 +23,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jboss.tools.vpe.xulrunner.BrowserPlugin;
-import org.jboss.tools.vpe.xulrunner.XPCOM;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIClipboardDragDropHookList;
 import org.mozilla.interfaces.nsIComponentManager;
@@ -277,8 +277,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		nsIDocShell docShell = getDocShell();
 
 		if (docShell != null) {
-			nsIClipboardDragDropHookList hookList = (nsIClipboardDragDropHookList) docShell
-					.queryInterface(nsIClipboardDragDropHookList.NS_ICLIPBOARDDRAGDROPHOOKLIST_IID);
+			nsIClipboardDragDropHookList hookList = XPCOM.queryInterface(docShell, nsIClipboardDragDropHookList.class);
 			return hookList;
 		}
 		return null;
@@ -286,9 +285,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 	public nsIDocShell getDocShell() {
 		if (docShell == null) {
-			nsIInterfaceRequestor interfaceRequestor = (nsIInterfaceRequestor) getWebBrowser()
-					.queryInterface(
-							nsIInterfaceRequestor.NS_IINTERFACEREQUESTOR_IID);
+			nsIInterfaceRequestor interfaceRequestor = XPCOM.queryInterface(getWebBrowser(), nsIInterfaceRequestor.class);
 			docShell = (nsIDocShell) interfaceRequestor
 					.getInterface(nsIDocShell.NS_IDOCSHELL_IID);
 		}
@@ -302,8 +299,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 
 	public nsIDOMDocumentRange getDOMDocumentRange() {
-		return (nsIDOMDocumentRange) getDOMDocument().queryInterface(
-				nsIDOMDocumentRange.NS_IDOMDOCUMENTRANGE_IID);
+		return XPCOM.queryInterface(getDOMDocument(), nsIDOMDocumentRange.class);
 	}
 
 	public nsIDOMRange createDOMRange() {
@@ -437,8 +433,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		// } else
 		if (element != null) {
 			try {
-				((nsIBaseWindow) getWebBrowser().queryInterface(
-						nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
+				XPCOM.queryInterface(getWebBrowser(), nsIBaseWindow.class).repaint(true);
 			} catch (XPCOMException ex) {
 				// just ignore its
 				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
@@ -514,8 +509,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		nsIDOMElement domElement;
 		try {
 
-			domElement = (nsIDOMElement) node
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			domElement = XPCOM.queryInterface(node, nsIDOMElement.class);
 
 		} catch (XPCOMException exception) {
 			// if we can cast it's is invisible elenebt
@@ -542,8 +536,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 		try {
 
-			parentElement = (nsIDOMElement) element.getParentNode()
-					.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+			parentElement = XPCOM.queryInterface(element.getParentNode(), nsIDOMElement.class);
 		} catch (XPCOMException ex) {
 			// if parent node isn't nsIDOMElement just return null;
 			return null;
@@ -554,8 +547,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 				return parentElement;
 			} else {
 
-				parentElement = (nsIDOMElement) parentElement.getParentNode()
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				parentElement = XPCOM.queryInterface(parentElement.getParentNode(), nsIDOMElement.class);
 
 			}
 		}
@@ -598,7 +590,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 	public void showSelectionRectangle() {
 
-		// ((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(false);
+		// (queryInterface(getWebBrowser(), nsIBaseWindow.class)).repaint(false);
 
 		if (getLastSelectedElement() != null) {
 			if (scrollRegtangleFlag) {
@@ -639,7 +631,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		// //TODO Max Areshkau (may be exist passability not draw selection on
 		// resize event when we switches to other view)
 		// try {
-		// ((nsIBaseWindow)getWebBrowser().queryInterface(nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
+		// (queryInterface(getWebBrowser(), nsIBaseWindow.class)).repaint(true);
 		// } catch(XPCOMException ex) {
 		// //just ignore its
 		//				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
@@ -674,13 +666,9 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		if (node != null) {
 
 			if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-				return (nsIDOMElement) node
-						.queryInterface(nsIDOMElement.NS_IDOMELEMENT_IID);
+				return XPCOM.queryInterface(node, nsIDOMElement.class);
 			} else if (node.getNodeType() == nsIDOMNode.TEXT_NODE) {
-
-				return (nsIDOMElement) node.getParentNode().queryInterface(
-						nsIDOMElement.NS_IDOMELEMENT_IID);
-
+				return XPCOM.queryInterface(node.getParentNode(), nsIDOMElement.class);
 			}
 
 		}

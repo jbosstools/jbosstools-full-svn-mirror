@@ -10,8 +10,9 @@
  ******************************************************************************/
 
 
-package org.jboss.tools.vpe.xulrunner.browser.util;
+package org.jboss.tools.vpe.xulrunner.util;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -108,7 +109,7 @@ public class DOMTreeDumper {
      */
     public void dumpToStream(PrintStream ps, nsIDOMElement element) {
         this.ps = ps;
-        dumpNode((nsIDOMNode) element.queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
+        dumpNode(queryInterface(element, nsIDOMNode.class));
         ps.println();
         ps.flush();
     }
@@ -126,7 +127,7 @@ public class DOMTreeDumper {
         if (element == null)
             return;
 
-        dumpNode((nsIDOMNode) element.queryInterface(nsIDOMNode.NS_IDOMNODE_IID));
+        dumpNode(queryInterface(element, nsIDOMNode.class));
         ps.println();
         ps.flush();
 
@@ -186,7 +187,7 @@ public class DOMTreeDumper {
             break;
 
         case nsIDOMNode.ATTRIBUTE_NODE:
-            nsIDOMAttr attr = (nsIDOMAttr) node.queryInterface(nsIDOMAttr.NS_IDOMATTR_IID);
+            nsIDOMAttr attr = queryInterface(node, nsIDOMAttr.class);
           
             if (!(ignoredAttributes != null && listContains(ignoredAttributes,
 					attr.getName())))

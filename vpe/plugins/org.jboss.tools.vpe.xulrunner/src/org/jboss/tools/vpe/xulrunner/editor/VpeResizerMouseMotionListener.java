@@ -11,6 +11,7 @@
 
 package org.jboss.tools.vpe.xulrunner.editor;
 
+import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMEventListener;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
@@ -37,7 +38,7 @@ public class VpeResizerMouseMotionListener implements nsIDOMEventListener {
 	 * @param event a nsIDOMEvent object
 	 */
 	public void mouseMove(nsIDOMEvent event) {
-		nsIDOMMouseEvent mouseEvent = (nsIDOMMouseEvent) event.queryInterface(nsIDOMMouseEvent.NS_IDOMMOUSEEVENT_IID);
+		nsIDOMMouseEvent mouseEvent = XPCOM.queryInterface(event, nsIDOMMouseEvent.class);
 		
 		if ( mouseEvent == null ) {
 			return;
