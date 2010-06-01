@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class VpePlugin extends BaseUIPlugin implements IStartup {
+public class VpePlugin extends BaseUIPlugin {
 	public static final String PLUGIN_ID = "org.jboss.tools.vpe"; //$NON-NLS-1$
 	
 	public static final String EXTESION_POINT_VPE_TEMPLATES = "org.jboss.tools.vpe.templates"; //$NON-NLS-1$
@@ -48,8 +48,8 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		// required to get tests running in tycho, should not affect anything during regular start
-		earlyStartup();
+//		moved to vpe.xulrunner plug-in
+//		earlyStartup();
 	}
 
 	/**
@@ -95,17 +95,6 @@ public class VpePlugin extends BaseUIPlugin implements IStartup {
 		return getDefault();
 	}
 
-	public void earlyStartup() {
-		/* init xulrunner path for */ 
-		try {
-			String xulRunnerPath = XulRunnerBrowser.getXulRunnerPath();
-			if ("true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/earlyStartup"))) { //$NON-NLS-1$ //$NON-NLS-2$
-				logInfo("earlyStartup: XULRunner path is: " + xulRunnerPath); //$NON-NLS-1$
-			}
-		} catch (XulRunnerException e) {
-			logError(e);
-		}
-	}
 	
 	public static String getPluginResourcePath() {
 		Bundle bundle = Platform.getBundle(PLUGIN_ID);

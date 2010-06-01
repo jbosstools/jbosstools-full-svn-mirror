@@ -4,6 +4,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jboss.tools.common.log.BaseUIPlugin;
 import org.jboss.tools.common.log.IPluginLog;
+import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -40,6 +41,8 @@ public class BrowserPlugin extends BaseUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		// required to be here to fix tycho test execution errors
+		earlyStartup();
 	}
 
 	/*
@@ -73,5 +76,17 @@ public class BrowserPlugin extends BaseUIPlugin {
 	
 	public static IPluginLog getPluginLog() {
 		return getDefault();
+	}
+	
+	public void earlyStartup() {
+		/* init xulrunner path for */ 
+		try {
+			String xulRunnerPath = XulRunnerBrowser.getXulRunnerPath();
+//			if ("true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/earlyStartup"))) { //$NON-NLS-1$ //$NON-NLS-2$
+				logInfo("earlyStartup: XULRunner path is: " + xulRunnerPath); //$NON-NLS-1$
+//			}
+		} catch (XulRunnerException e) {
+			logError(e);
+		}
 	}
 }

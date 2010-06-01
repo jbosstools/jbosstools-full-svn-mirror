@@ -22,13 +22,13 @@ public class XulRunnerView extends ViewPart {
 	    xulrunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
 		    true, true));
 	} catch (XulRunnerException e) {
-	    BrowserPlugin.getPluginLog().logError(e);
+	    throw new RuntimeException(e);
 	}
     }
 
     @Override
     public void setFocus() {
-	xulrunnerEditor.setFocus();
+    	xulrunnerEditor.setFocus();
     }
 
     public XulRunnerEditor getBrowser() {

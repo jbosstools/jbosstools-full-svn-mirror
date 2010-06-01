@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.xulrunner.test;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.test.util.JobUtils;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.jboss.tools.vpe.xulrunner.view.XulRunnerView;
 
@@ -73,28 +74,14 @@ public abstract class XulRunnerAbstractTest extends TestCase {
 		}
 	}
 
-	/**
-	 * Wait until all background tasks are complete.
-	 */
-	public void waitForJobs() {
-		while (Job.getJobManager().currentJob() != null)
-		    delay(1000);
-	}
-	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		waitForJobs();
+		JobUtils.waitForIdle();
 		xulRunnerView
 			= ((XulRunnerView) PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().showView(VIEW_ID));
-
-		// Delay for 3 seconds so that
-		// the Favorites view can be seen.
-		waitForJobs();
-		// commented by dgolovin to get rid of jvm error [libexpat.so.0+0xeff4]
-		//delay(3000);
-		
+		JobUtils.waitForIdle();
 		xulRunnerEditor = xulRunnerView.getBrowser();
 	}
 	
