@@ -23,11 +23,6 @@
 							</para>
 						</note>
 					</listitem>
-					<listitem id="JBDS-1207" xreflabel="JBDS-1207">
-						<para>
-							<ulink url="https://jira.jboss.org/jira/browse/JBDS-1207">JBDS-1207</ulink>:An issue exists that prohibits updates related to the Web Tools Platform appearing on the JBoss Developer Studio site.
-						</para>
-					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
