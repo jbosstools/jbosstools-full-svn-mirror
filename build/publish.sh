@@ -16,9 +16,9 @@ if [[ -f ${WORKSPACE}/sources/site/target/site.zip ]]; then
 fi
 
 # if zips exist produced & renamed by ant script, copy them too
-if [[ -f ${WORKSPACE}/*/*/site/target/*Update*.zip ]]; then
-	rsync -aq ${WORKSPACE}/*/*/site/target/*Update*.zip ${WORKSPACE}/site/${JOB_NAME}/
-fi
+for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 4 -name "*Update*.zip"); do 
+	rsync -aq $z ${WORKSPACE}/site/${JOB_NAME}/
+done
 
 # publish to download.jboss.org
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools"; fi
