@@ -313,7 +313,7 @@ Svnant unavailable. Will use Maven to fetch sources.
 						<if>
 							<istrue value="${svnant.enabled}" />
 							<then>
-								<!-- remove generated site/ folder -->
+								<!-- remove generated site/ folder?
 								<if>
 									<not>
 										<equals arg1="@{component}" arg2="." />
@@ -324,12 +324,10 @@ Svnant unavailable. Will use Maven to fetch sources.
 										        quiet="true"
 										/>
 									</then>
-								</if>
-								<!-- 
+								</if> -->
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<revert recurse="${svn.recurse}" dir="@{component}" />
 								</svn>
-								-->
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<update recurse="${svn.recurse}" dir="@{component}" />
 								</svn>
@@ -660,7 +658,7 @@ COMPONENT = ${COMPONENT}</echo>
 						<ant antfile="${WORKINGDIR}/@{COMPONENT}/build.xml">
 							<property name="COMPONENT" value="@{COMPONENT}" />
 							<property name="basedir" value="${WORKINGDIR}/@{COMPONENT}" />
-							<property name="build.xml" value="${ant.file}"/>
+							<property name="build.xml" value="${ant.file}" />
 						</ant>
 					</then>
 				</if>
@@ -700,9 +698,18 @@ COMPONENT = ${COMPONENT}</echo>
 						</not>
 					</and>
 					<then>
-						<antcall target="create.update.site">
-							<param name="COMPONENT" value="@{COMPONENT}" />
-						</antcall>
+						<!-- only do this if the component's aggregate pom doesn't reference the site/ folder, and therefore hasn't already build it -->
+						<loadfile property="component.pom.xml" srcfile="${WORKINGDIR}/@{COMPONENT}/pom.xml" />
+						<if>
+							<not>
+								<contains string="${component.pom.xml}" substring="&lt;module&gt;site&lt;/module&gt;" />
+							</not>
+							<then>
+								<antcall target="create.update.site">
+									<param name="COMPONENT" value="@{COMPONENT}" />
+								</antcall>
+							</then>
+						</if>
 					</then>
 				</if>
 			</sequential>
