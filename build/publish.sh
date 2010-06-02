@@ -25,6 +25,6 @@ if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloa
 if [[ -d ${WORKSPACE}/site/${JOB_NAME} ]]; then
 	rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/builds/nightly/3.2.helios/
 fi
-if [[ -d ${WORKSPACE}/site/${SNAPNAME} ]]; then
+if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
 	rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/builds/nightly/3.2.helios/
 fi
