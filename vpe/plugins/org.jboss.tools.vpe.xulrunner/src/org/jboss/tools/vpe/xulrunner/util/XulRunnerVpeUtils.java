@@ -15,6 +15,11 @@ import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.xulrunner.BrowserPlugin;
+import org.mozilla.interfaces.nsIAccessNode;
+import org.mozilla.interfaces.nsIAccessible;
+import org.mozilla.interfaces.nsIAccessibleCoordinateType;
+import org.mozilla.interfaces.nsIAccessibleRetrieval;
+import org.mozilla.interfaces.nsIAccessibleText;
 import org.mozilla.interfaces.nsIBoxObject;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -22,6 +27,8 @@ import org.mozilla.interfaces.nsIDOMNSDocument;
 import org.mozilla.interfaces.nsIDOMNSElement;
 import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMText;
+import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
 /**
@@ -105,5 +112,70 @@ public class XulRunnerVpeUtils {
 		} catch (XPCOMException xpcomException) {
 			return new Rectangle(0, 0, 0, 0);
 		}
+	}
+	
+	/**
+	 * Returns the bounds of the selected text in given
+	 * {@code selectionContainer}.
+	 */
+	public static Rectangle getTextSelectionBounds(nsIDOMText slectionContainer) {
+		nsIAccessibleText accessibleTextAncestor = getAccessibleTextAncestor(slectionContainer);
+		if (accessibleTextAncestor == null) {
+			// cannot get selection bounds
+			return null;
+		}
+		if (accessibleTextAncestor.getSelectionCount() == 0) {
+			// no text selected
+			return null;
+		}
+		
+		int[] startOffset = new int[1];
+		int[] endOffset = new int[1];
+		accessibleTextAncestor.getSelectionBounds(0, startOffset, endOffset);
+		
+		int[] x = new int[1];
+		int[] y = new int[1];
+		int[] width = new int[1];
+		int[] height = new int[1];
+		accessibleTextAncestor.getRangeExtents(startOffset[0], endOffset[0],
+				x, y, width, height, nsIAccessibleCoordinateType.COORDTYPE_PARENT_RELATIVE);
+		
+		Rectangle ancestorBounds = getElementBounds(
+				queryInterface(accessibleTextAncestor, nsIAccessNode.class)
+						.getDOMNode());
+		
+		return new Rectangle(ancestorBounds.x + x[0], ancestorBounds.y + y[0],
+				width[0], height[0]);
+	}
+	
+	/**
+	 * Returns the nearest ancestor of given {@code node} which supports
+	 * {@link nsIAccessibleText}.
+	 */
+	private static nsIAccessibleText getAccessibleTextAncestor(nsIDOMNode node) {
+		nsIAccessibleText accessibleTextAncestor = null;
+		nsIDOMNode ancestor = node;
+		while (accessibleTextAncestor == null && ancestor != null) {
+			ancestor = ancestor.getParentNode();
+			try {
+				nsIAccessible accessibleAncestor = getAccessible(ancestor);
+				accessibleTextAncestor = queryInterface(accessibleAncestor, nsIAccessibleText.class);
+			} catch (XPCOMException e) {
+				// it's OK, accessibleTextAncestor still = null
+			}
+		}
+		
+		return accessibleTextAncestor;
+	}
+
+	/**
+	 * Returns {@link nsIAccessible} interface for given {@code node}.
+	 */
+	private static nsIAccessible getAccessible(nsIDOMNode node) {
+		return ((nsIAccessibleRetrieval)
+				Mozilla.getInstance().getServiceManager().getServiceByContractID(
+						XPCOM.NS_ACCESSIBILITYSERVICE_CONTRACTID,
+						nsIAccessibleRetrieval.NS_IACCESSIBLERETRIEVAL_IID))
+				.getAccessibleFor(node);
 	}
 }

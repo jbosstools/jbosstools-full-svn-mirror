@@ -36,6 +36,7 @@ public final class XPCOM {
 	public static final String NS_PREFSERVICE_CONTRACTID = "@mozilla.org/preferences-service;1"; //$NON-NLS-1$
 	public static final String NS_SUPPORTSSTRING_CONTRACTID = "@mozilla.org/supports-string;1"; //$NON-NLS-1$
 	public static final String NS_SUPPORTSARRAY_CONTRACTID = "@mozilla.org/supports-array;1"; //$NON-NLS-1$
+	public static final String NS_ACCESSIBILITYSERVICE_CONTRACTID = "@mozilla.org/accessibilityService;1"; //$NON-NLS-1$
 	
 	public static final String IN_FLASHER_CONTRACTID = "@mozilla.org/inspector/flasher;1"; //$NON-NLS-1$
 	/**
