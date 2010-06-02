@@ -76,7 +76,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) //$NON-NLS-1$
 			.append(".").append(Platform.getWS()) //$NON-NLS-1$
 			.append(".").append(Platform.getOS()) //$NON-NLS-1$
-			.append(Platform.OS_MACOSX.equals(Platform.getOS()) ? "" : (new StringBuffer(".")).append(Platform.getOSArch()).toString()) //$NON-NLS-1$ //$NON-NLS-2$
+			.append(".").append(Platform.getOSArch()) //$NON-NLS-1$
 			.toString();
 		
 		mozilla = Mozilla.getInstance();
@@ -84,7 +84,10 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
 //	    initXulRunner();
-	    
+	    if(Platform.OS_MACOSX.equals(Platform.getOS()) && Platform.ARCH_X86_64.equals(Platform.getOSArch())){
+	    	getXulRunnerPath();
+	    }
+		
 	    browser = new Browser(parent, SWT.MOZILLA);
 	    
 	    webBrowser = (nsIWebBrowser) browser.getWebBrowser();
