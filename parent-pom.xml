@@ -9,8 +9,8 @@
 
 	<properties>
 		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
-		<!-- <tychoVersion>0.8.0</tychoVersion> -->
 		<scmBranch>trunk</scmBranch>
+		<BUILD_ALIAS>M1</BUILD_ALIAS>
 	</properties>
 
 	<build>
@@ -20,7 +20,7 @@
 				<artifactId>maven-osgi-packaging-plugin</artifactId>
 				<version>${tychoVersion}</version>
 				<configuration>
-					<format>'v'yyyyMMdd-HHmm</format>
+					<format>'v'yyyyMMdd-HHmm'-${BUILD_ALIAS}'</format>
 					<archiveSite>true</archiveSite>
 				</configuration>
 			</plugin>
@@ -100,6 +100,17 @@
 							<artifactId>org.eclipse.sdk.ide</artifactId>
 							<version>0.0.0</version>
 						</dependency>
+						<!-- http://www.jmock.org/maven.html -->
+						<dependency>
+							<groupId>org.jmock</groupId>
+							<artifactId>jmock-legacy</artifactId>
+							<version>2.5.1</version>
+						</dependency>
+						<dependency>
+							<groupId>org.jmock</groupId>
+							<artifactId>jmock-junit4</artifactId>
+							<version>2.5.1</version>
+						</dependency>
 					</dependencies>
 					<includes>
 						<include>**/AllTests.class</include>
@@ -155,61 +166,122 @@
 		<url>https://jira.jboss.org/jira/secure/</url>
 	</issueManagement>
 
-	<profiles>
-		<profile>
+	<repositories>
+		<repository>
 			<id>helios</id>
+			<url>http://download.eclipse.org/releases/helios/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>webtools32</id>
+			<url>http://download.eclipse.org/webtools/repository/helios</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>eclipse36</id>
+			<url>http://download.eclipse.org/eclipse/updates/3.6/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>birt26r</id>
+			<url>http://download.eclipse.org/birt/update-site/2.6/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>birt26i</id>
+			<url>http://download.eclipse.org/birt/update-site/2.6-interim/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>swtbot-helios</id>
+			<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
+			</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>m2eclipse</id>
+			<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>m2eclipse-extras</id>
+			<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+	<profiles>
+		<!-- TODO: verify that this profile overrides the default profile if BUILD_NUMBER 
+			is set (by a Hudson job) -->
+		<profile>
+			<id>hudson</id>
 			<activation>
 				<property>
-					<name>helios</name>
+					<name>BUILD_NUMBER</name>
 				</property>
 			</activation>
-			<repositories>
-				<repository>
-					<id>helios</id>
-					<url>http://download.eclipse.org/releases/helios/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>eclipse36</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.6/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>birt26</id>
-					<url>http://download.eclipse.org/birt/update-site/2.6/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>swtbot-helios</id>
-					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.tycho</groupId>
+						<artifactId>maven-osgi-packaging-plugin</artifactId>
+						<version>${tychoVersion}</version>
+						<configuration>
+							<format>'v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}-${BUILD_ALIAS}'
+							</format>
+							<archiveSite>true</archiveSite>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 		<profile>
 			<id>svn-repos</id>
@@ -265,112 +337,17 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-
 			</repositories>
 		</profile>
 	</profiles>
 
-	<repositories>
-		<!-- TODO: add JBT nightly update site so we can build against binaries -->
-		<repository>
-			<id>galileo</id>
-			<url>http://download.eclipse.org/releases/galileo/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>eclipse35</id>
-			<url>http://download.eclipse.org/eclipse/updates/3.5/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>birt25r</id>
-			<url>http://download.eclipse.org/birt/update-site/2.5</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>swtbot-galileo</id>
-			<url>http://download.eclipse.org/technology/swtbot/galileo/dev-build/update-site
-			</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-
-		<repository>
-			<id>webtools</id>
-			<url>http://download.eclipse.org/webtools/updates/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>m2eclipse</id>
-			<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>m2eclipse-extras</id>
-			<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
 	<pluginRepositories>
-		<pluginRepository>
-			<id>maven-central</id>
-			<url>http://repo1.maven.org/maven2/
-			</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
 		<pluginRepository>
 			<id>sonatype-maven-central</id>
 			<url>http://repository.sonatype.org/content/repositories/central/
 			</url>
 			<snapshots>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</snapshots>
 			<releases>
 				<enabled>true</enabled>
@@ -384,7 +361,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</releases>
 		</pluginRepository>
 		<pluginRepository>
@@ -395,7 +372,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</releases>
 		</pluginRepository>
 		<pluginRepository>
@@ -405,29 +382,9 @@
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
 
-	<!-- https://issues.sonatype.org/browse/TYCHO-413: does not work - doesn't 
-		respect username & ssh key -->
-	<distributionManagement>
-		<!-- http://download.jboss.org/jbosstools/ -->
-		<!-- <repository> <id>jbosstools.internal.repo</id> <url> scp://filemgmt.jboss.org/downloads_htdocs/tools/repository/ 
-			</url> </repository> -->
-		<!-- https://sourceforge.net/projects/jboss/files/JBossTools/JBossTools3.2.x -->
-		<!-- <repository> <id>jbosstools.external.repo</id> <name>JBoss Developer 
-			Studio Repository</name> <url>scp://nickboldt,jboss@frs.sourceforge.net/home/frs/project/j/jb/jboss/JBossTools/JBossTools3.2.x/</url> 
-			</repository> -->
-
-		<!-- http://reports.qa.atl.jboss.com/binaries/RHDS/ -->
-		<!-- <repository> <id>jbds.internal.repo</id> <name>JBoss Developer Studio 
-			Repository</name> <url>scp://hudson@localhost/qa/services/http/binaries/RHDS/repository/</url> 
-			</repository> -->
-		<!-- http://devstudio.jboss.com -->
-		<!-- <repository> <id>jbds.external.repo</id> <name>JBoss Developer Studio 
-			Repository</name> <url>scp://nboldt@wallace.redhat.com/mnt/devstudio/repository/</url> 
-			</repository> -->
-	</distributionManagement>
 </project>
