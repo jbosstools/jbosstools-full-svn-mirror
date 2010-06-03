@@ -89,6 +89,7 @@
 				<configuration>
 					<!-- timeout in seconds -->
 					<surefire.timeout>900</surefire.timeout>
+					<forkedProcessTimeoutInSeconds>900</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
