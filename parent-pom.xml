@@ -87,6 +87,8 @@
 				<artifactId>maven-osgi-test-plugin</artifactId>
 				<version>${tychoVersion}</version>
 				<configuration>
+					<!-- timeout in seconds -->
+					<surefire.timeout>900</surefire.timeout>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
