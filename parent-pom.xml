@@ -234,6 +234,64 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+
+		<repository>
+			<id>galileo</id>
+			<url>http://download.eclipse.org/releases/galileo/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>eclipse35</id>
+			<url>http://download.eclipse.org/eclipse/updates/3.5/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>birt25r</id>
+			<url>http://download.eclipse.org/birt/update-site/2.5</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>swtbot-galileo</id>
+			<url>http://download.eclipse.org/technology/swtbot/galileo/dev-build/update-site
+			</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>webtools</id>
+			<url>http://download.eclipse.org/webtools/updates/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+
 		<repository>
 			<id>m2eclipse</id>
 			<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
