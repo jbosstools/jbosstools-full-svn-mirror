@@ -214,6 +214,11 @@
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1168">JBDS-1168</ulink>: The JBoss Developer Studio Installer was missleading in terms of system requirements. The consequence of this was that some users were unsure if the JBoss Developer Studio supported Java 6 even though it was required for the JBoss Enterprise Application Platform 5 and which JDK distributions were supported. The text in Step 4 of installation has been updated to inform the user that the JBoss Developer Studio works with both Java 5 and 6 (though Java 6 is required for JBoss Enterprise Application Platform 5), has been tested with the OpenJDK, SunJDK and IBM JDK distributions and the misspelt <emphasis>gij Java</emphasis> has been corrected to <emphasis>gcj Java</emphasis>.
 					</para>
 				</listitem>
+				<listitem>
+					<para>
+						<ulink url="https://jira.jboss.org/jira/browse/JBDS-1222">JBDS-1222</ulink>: A bug existed in the JBoss Developer Studio that caused stylesheets to not render correctly in the JBoss Enterprise Application Platform 5 and a <exceptionname>org.ajax4jsf.resource.ResourceNotFoundException: Static resource not found for path &lt;resource name&gt;</exceptionname> exception when using the JBoss Enterprise Portal Platform 5 to load a JSF page through a Portlet. These errors were caused by the code to load the style sheet being: <code>&lt;a:loadStyle src="resource:///stylesheet/theme.xcss"/&gt;</code> instead of <code>&lt;a:loadStyle src="/stylesheet/theme.xcss"/&gt;</code>. This issue has now been corrected for this release.
+					</para>
+				</listitem>
 		<!-- Reopened	<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1147">JBDS-1147</ulink>: An incorrect link to the Guvnor Rules repository was included in the JBoss Developer Studio. This bug caused the repository to become unreachable. This has been fixed by correcting the link to be <ulink url="http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav">http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav</ulink>. The JBoss Developer Studio is now able to connect to the Guvnor Rules repository.

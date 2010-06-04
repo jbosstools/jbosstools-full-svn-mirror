@@ -10,19 +10,7 @@
 			<title>General Known Issues</title>
 			<para>
 				<itemizedlist>
-					<listitem>
-						<para>
-							<ulink url="https://jira.jboss.org/jira/browse/JBDS-1222">JBDS-1222</ulink>: A bug exists in the JBoss Developer Studio that causes stylesheets to not render correctly in the JBoss Enterprise Application Platform 5 and a <exceptionname>org.ajax4jsf.resource.ResourceNotFoundException: Static resource not found for path &lt;resource name&gt;</exceptionname> exception when using the JBoss Enterprise Portal Platform 5 to load a JSF page through a Portlet. These errors are caused by the code to load the style sheet being: <code>&lt;a:loadStyle src="resource:///stylesheet/theme.xcss"/&gt;</code> instead of <code>&lt;a:loadStyle src="/stylesheet/theme.xcss"/&gt;</code>.
-						</para>
-						<para>
-							The current workaround for this issue is to manually remove the code <code>resource://</code> from the beginning of the stylesheet location.
-						</para>
-						<note>
-							<para>
-								This issue does not present in the JBoss Enterprise Application Platform 4.3 because of a bug that exists in it that hides this issue.
-							</para>
-						</note>
-					</listitem>
+					
 				</itemizedlist>
 			</para>
 		</formalpara>
