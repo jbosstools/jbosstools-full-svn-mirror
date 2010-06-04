@@ -1,24 +1,23 @@
 package org.jboss.tools.workingset.core.test;
 
 import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.jboss.tools.workingset.internal.core.NameToWorkingSet;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 @SuppressWarnings("nls")
-public class GroupingTest {
+public class GroupingTest extends TestCase {
 
 	static NameToWorkingSet nws = new NameToWorkingSet();
 	
 	@BeforeClass
-	static public void setup() {
-
+	public void setUp() {
 		nws.add("org\\.jboss\\.tools\\.([^\\.]+).*", "$1", true);
 		nws.add("org\\.eclipse\\.([^\\.]+).*", "eclipse", false);
 		nws.add("org\\.eclipse\\.([^\\.]+).*", "$1", true);
 		nws.add("org\\.eclipse\\.([^\\.]+).*", "shouldnotbeseen", false);
-
 	}
 	
 	@Test
@@ -60,5 +59,9 @@ public class GroupingTest {
 		assertEquals("jdt",ws[1]);		
 			
 	}
-
+	
+	@Override
+	protected void tearDown() throws Exception {
+		nws.clear();
 	}
+}
