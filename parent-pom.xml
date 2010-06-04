@@ -11,6 +11,7 @@
 		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
 		<scmBranch>trunk</scmBranch>
 		<BUILD_ALIAS>M1</BUILD_ALIAS>
+		<memoryOptions>-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=256m</memoryOptions>
 	</properties>
 
 	<build>
@@ -92,7 +93,7 @@
 					<forkedProcessTimeoutInSeconds>900</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
-					<argLine>-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=256m</argLine>
+					<argLine>${memoryOptions}</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests (?) -->
