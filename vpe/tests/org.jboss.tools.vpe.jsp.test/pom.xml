@@ -17,6 +17,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-test-plugin</artifactId>
 				<configuration>
+					<product>org.jboss.tools.tests</product>
 					<explodedBundles>
 						<bundle>org.jboss.tools.vpe</bundle>
 						<bundle>org.mozilla.xulrunner.carbon.macosx</bundle>
