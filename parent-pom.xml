@@ -199,8 +199,19 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>eclipse36</id>
+					<id>eclipse36r</id>
 					<url>http://download.eclipse.org/eclipse/updates/3.6/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>eclipse36m</id>
+					<url>http://download.eclipse.org/eclipse/updates/3.6milestones/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
