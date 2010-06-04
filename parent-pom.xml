@@ -93,6 +93,7 @@
 					<forkedProcessTimeoutInSeconds>900</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
+					<appArgLine>-plugincustomization ${basedir}/build/plugin_customization.ini</appArgLine>					
 					<argLine>${memoryOptions}</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
