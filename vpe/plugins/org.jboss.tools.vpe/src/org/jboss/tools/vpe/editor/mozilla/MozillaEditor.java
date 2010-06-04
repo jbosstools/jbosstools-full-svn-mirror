@@ -480,7 +480,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				 * otherwise show warning message.
 				 */
 				ISelection sel = controller.getSourceEditor().getSelectionProvider().getSelection();
-			
+				
 				if ((sel instanceof TextSelection)
 						&& (sel instanceof IStructuredSelection)
 						&& (((IStructuredSelection) sel).size() == 1)) {

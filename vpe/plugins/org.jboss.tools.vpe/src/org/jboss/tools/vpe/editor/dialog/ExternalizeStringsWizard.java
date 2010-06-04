@@ -10,14 +10,26 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.dialog;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
+import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class ExternalizeStringsWizard extends Wizard {
 	
+	public String ExternalizeStringsWizardPageName = "ExternalizeStringsWizardPage";
+	public String NewFileCreationPageName = "NewFileCreationPage";
+	
 	VpeController vpeController = null;
-	ExternalizeStringsWizardPage page = null;
+	ExternalizeStringsWizardPage page1 = null;
+	WizardNewFileCreationPage page2 = null;
 	
 	public ExternalizeStringsWizard(VpeController vpeController) {
 		super();
@@ -28,18 +40,56 @@ public class ExternalizeStringsWizard extends Wizard {
 	
 	@Override
 	public void addPages() {
-		page = new ExternalizeStringsWizardPage(vpeController);
-		addPage(page);
+		super.addPages();
+		page1 = new ExternalizeStringsWizardPage(
+				ExternalizeStringsWizardPageName, vpeController);
+		page2 = new WizardNewFileCreationPage(NewFileCreationPageName,
+				(IStructuredSelection) vpeController
+				.getSourceEditor().getSelectionProvider().getSelection());
+		page2.setTitle(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_TITLE);
+		page2.setDescription(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_DESCRIPTION);
+		page2.setImageDescriptor(ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_DEFAULT));
+		addPage(page1);
+		addPage(page2);
 	}
 
 	@Override
 	public boolean canFinish() {
-		return page.isPageComplete();
+		return (!page1.isNewFile() && page1.isPageComplete())
+				|| (page1.isNewFile() && page2.isPageComplete());
 	}
 
 	@Override
 	public boolean performFinish() {
-		return page.performFinish();
+		IFile bundleFile = null;
+		if (page1.isNewFile()) {
+			bundleFile = page2.createNewFile();
+		} else {
+			bundleFile = page1.getBundleFile();
+		}
+		/*
+		 * Exit when the file is null
+		 */
+		if (bundleFile == null) {
+			return false;
+		}
+		/*
+		 * Add "key=value" to the bundle
+		 */
+		if (bundleFile.exists()) {
+			InputStream is = new ByteArrayInputStream(page1.getKeyValuePair().getBytes());
+			try {
+				bundleFile.appendContents(is, false, true, null);
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+		}
+		/*
+		 * Replace text in the editor
+		 */
+		page1.replaceText();
+		
+		return true;
 	}
 
 }
