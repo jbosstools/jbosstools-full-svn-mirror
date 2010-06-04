@@ -17,7 +17,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-test-plugin</artifactId>
 				<configuration>
-					<argLine>${memoryOptions} -plugincustomization ../../../build/plugin_customization.ini</argLine>
+					<osgiArgLine>-plugincustomization ../../../build/plugin_customization.ini</osgiArgLine>
 					<explodedBundles>
 						<bundle>org.jboss.tools.vpe</bundle>
 						<bundle>org.jboss.tools.vpe.ui.test</bundle>
