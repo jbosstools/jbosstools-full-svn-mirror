@@ -4,6 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.smooks.test.csvparser.CsvParserTest;
 import org.jboss.tools.smooks.test.ediparser.EDIParserTest;
 import org.jboss.tools.smooks.test.jsonparse.JsonParserTest;
@@ -33,8 +34,8 @@ public class SmooksCoreAllTests extends TestCase {
 		
 		public SmooksPluginsLoadTest() {}
 		
-		public void testBirtPluginsAreResolvedAndActivated() {
-			testBundlesAreLoadedFor("org.jboss.tools.smooks.feature");
+		public void testOrgJbossToolsSmooksCorePluginIsResolvedAndActivated() {
+			assertPluginResolved(Platform.getBundle("org.jboss.tools.smooks.core"));
 		}
 	}
 }
