@@ -4,7 +4,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.eclipse.core.runtime.Platform;
+import org.jboss.tools.test.util.TestProjectProvider;
 import org.jboss.tools.tests.AbstractPluginsLoadTest;
+import org.osgi.framework.Bundle;
 
 public class BirtCoreTestSuite extends TestCase {
 
@@ -20,8 +23,8 @@ public class BirtCoreTestSuite extends TestCase {
 		
 		public BirtPluginsLoadTest() {}
 		
-		public void testBirtPluginsAreResolvedAndActivated() {
-			testBundlesAreLoadedFor("org.jboss.tools.birt.feature");
+		public void testOrgJbossToolsBirtCoreResolvedAndActivated() {
+			assertPluginResolved(Platform.getBundle("org.jboss.tools.birt.core"));
 		}
 	}
 }
