@@ -460,6 +460,7 @@ public class VpeController implements INodeAdapter,
 				mozillaEventAdapter.addKeyListener(this);
 				mozillaEventAdapter.addMouseListener(this);
 				mozillaEventAdapter.addSelectionListener(this);
+				mozillaEventAdapter.addSelectionListener(vpeDnD);
 				mozillaEventAdapter.addAfterPaintListener(this);
 				mozillaEventAdapter.addScrollListener(this);
 			}
@@ -479,6 +480,7 @@ public class VpeController implements INodeAdapter,
 				mozillaEventAdapter.removeKeyListener(this);
 				mozillaEventAdapter.removeMouseListener(this);
 				mozillaEventAdapter.removeSelectionListener(this);
+				mozillaEventAdapter.removeSelectionListener(vpeDnD);
 				mozillaEventAdapter.removeAfterPaintListener(this);
 				mozillaEventAdapter.removeScrollListener(this);
 			}

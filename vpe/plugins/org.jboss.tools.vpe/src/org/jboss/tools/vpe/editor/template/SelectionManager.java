@@ -234,10 +234,10 @@ public class SelectionManager implements ISelectionManager {
 			selectionLength = NodesManagingUtil.getNodeLength(targetSourceNode);
 
 		}
-
+		
+		SelectionUtil.clearSelection(selectionController);
 		SelectionUtil.setSourceSelection(getPageContext(), targetSourceNode,
 				selectionOffset, selectionLength);
-
 		// paint selection rectangle
 		getPageContext().getVisualBuilder().setSelectionRectangle(
 				targetVisualNode);

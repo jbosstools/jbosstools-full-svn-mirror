@@ -12,6 +12,7 @@ package org.jboss.tools.vpe.dnd;
 
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -28,12 +29,9 @@ import org.mozilla.interfaces.nsIDOMNode;
  * @author Yahor Radtsevich (yradtsevich)
  */
 public class DraggablePattern {
-	private static final String DRAGGING_OPACITY = "0.5";		  //$NON-NLS-1$
 	private static final int ICON_HEIGHT = 20;
 	private static final String DRAG_ICON_ID = "dragIcon";		  //$NON-NLS-1$
 	private static final String DRAG_ICON_FILE = "dragIcon.gif";  //$NON-NLS-1$
-	private static final String ABSOLUTE_POSITION = "absolute";	  //$NON-NLS-1$
-	private static final String IMPORTANT_PRIORITY = "important"; //$NON-NLS-1$
 	
 	/** @see #getTransparentDiv() */
 	private static final String TRANSPARENT_DIV_ID = "transparentDragDiv"; //$NON-NLS-1$
@@ -53,8 +51,8 @@ public class DraggablePattern {
 	private int offsetX;
 	private int offsetY;
 	private boolean sessionStarted;
-	private nsIDOMElement nodeCopy;
-	private nsIDOMElement node;
+	private nsIDOMElement draggableFragmentRepresentation;
+	private IDraggableFragment draggableFragment;
 	private final MozillaEditor mozillaEditor;
 
 	public DraggablePattern(MozillaEditor mozillaEditor) {
@@ -62,17 +60,17 @@ public class DraggablePattern {
 		this.mozillaEditor = mozillaEditor;
 	}
 
-	public void showDragIcon(nsIDOMElement element) {
-		this.node = element;
-		Rectangle bounds = XulRunnerVpeUtils.getElementBounds(element);
+	public void showDragIcon(IDraggableFragment draggableFragment) {
+		this.draggableFragment = draggableFragment;
+		Point position = draggableFragment.getPosition();
 		nsIDOMElement dragIcon = getDragIcon();
 
 		VpeStyleUtil.setElementVisible(dragIcon, true);
-		VpeStyleUtil.moveElementTo(dragIcon, bounds.x, bounds.y - ICON_HEIGHT);
+		VpeStyleUtil.moveElementTo(dragIcon, position.x, position.y - ICON_HEIGHT);
 	}
 
 	public void hideDragIcon() {
-		this.node = null;
+		this.draggableFragment = null;
 		VpeStyleUtil.setElementVisible(getDragIcon(), false);
 	}
 
@@ -124,40 +122,24 @@ public class DraggablePattern {
 		}
 	}
 
-	public nsIDOMNode getNode() {
-		return node;
-	}
-
 	public void startSession(int mouseStartX, int mouseStartY) {
 		if (sessionStarted) {
 			new IllegalStateException(
 					"Session is already started."); //$NON-NLS-1$
 		}
-		if (node == null) {
+		if (draggableFragment == null) {
 			new IllegalStateException(
 			"No node to drag."); //$NON-NLS-1$
 		}
 
-		Rectangle nodeBounds = XulRunnerVpeUtils.getElementBounds(node);
-		offsetX = nodeBounds.x - mouseStartX;
-		offsetY = nodeBounds.y - mouseStartY;
+		Point fragmentPosition = draggableFragment.getPosition();
+		offsetX = fragmentPosition.x - mouseStartX;
+		offsetY = fragmentPosition.y - mouseStartY;
 		
-		nodeCopy = queryInterface(node.cloneNode(true), nsIDOMElement.class);
-		if (nodeCopy.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-			nsIDOMElement elementCopy = queryInterface(nodeCopy, nsIDOMElement.class);
-			DndUtil.setTemporaryDndElement(elementCopy, true);
-		}
+		draggableFragmentRepresentation = draggableFragment.createRepresentation();
 
-		nsIDOMCSSStyleDeclaration nodeCopyStyle
-				= VpeStyleUtil.getStyle(nodeCopy);
-
-		nodeCopyStyle.setProperty(HTML.STYLE_PARAMETER_POSITION,
-				ABSOLUTE_POSITION, IMPORTANT_PRIORITY);
-		nodeCopyStyle.setProperty(HTML.STYLE_PARAMETER_OPACITY,
-				DRAGGING_OPACITY, IMPORTANT_PRIORITY);
-
-		setVisible(false);
-		node.getParentNode().appendChild(nodeCopy);
+		//TODO: remove the following line
+		//setVisible(false);
 		moveTo(mouseStartX, mouseStartY);
 		setVisible(true);
 		sessionStarted = true;
@@ -166,25 +148,25 @@ public class DraggablePattern {
 	public void closeSession() {
 		if (sessionStarted) {
 			setVisible(false);
-			nsIDOMNode parent = nodeCopy.getParentNode();
+			nsIDOMNode parent = draggableFragmentRepresentation.getParentNode();
 			if (parent != null) {
-				parent.removeChild(nodeCopy);
+				parent.removeChild(draggableFragmentRepresentation);
 			}
 			
 			hideDragIcon();
-			nodeCopy = null;
+			draggableFragmentRepresentation = null;
 			sessionStarted = false;
 		}
 	}
 
 	public void setVisible(boolean visible) {
-		VpeStyleUtil.setElementVisible(nodeCopy, visible);
+		VpeStyleUtil.setElementVisible(draggableFragmentRepresentation, visible);
 		VpeStyleUtil.setElementVisible(getTransparentDiv(), visible);
 		VpeStyleUtil.setElementVisible(getDragIcon(), visible);
 	}
 
 	public void moveTo(int mouseX, int mouseY) {
-		VpeStyleUtil.moveElementTo(nodeCopy, offsetX + mouseX, offsetY + mouseY);
+		VpeStyleUtil.moveElementTo(draggableFragmentRepresentation, offsetX + mouseX, offsetY + mouseY);
 		VpeStyleUtil.moveElementTo(getTransparentDiv(),
 				offsetX + mouseX - TRANSPARENT_DIV_SIZE / 2,
 				offsetY + mouseY - TRANSPARENT_DIV_SIZE / 2);

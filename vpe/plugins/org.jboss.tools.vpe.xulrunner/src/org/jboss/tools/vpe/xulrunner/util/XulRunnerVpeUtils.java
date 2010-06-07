@@ -118,8 +118,8 @@ public class XulRunnerVpeUtils {
 	 * Returns the bounds of the selected text in given
 	 * {@code selectionContainer}.
 	 */
-	public static Rectangle getTextSelectionBounds(nsIDOMText slectionContainer) {
-		nsIAccessibleText accessibleTextAncestor = getAccessibleTextAncestor(slectionContainer);
+	public static Rectangle getTextSelectionBounds(nsIDOMText selectionContainer) {
+		nsIAccessibleText accessibleTextAncestor = getAccessibleTextAncestor(selectionContainer);
 		if (accessibleTextAncestor == null) {
 			// cannot get selection bounds
 			return null;
@@ -140,11 +140,16 @@ public class XulRunnerVpeUtils {
 		accessibleTextAncestor.getRangeExtents(startOffset[0], endOffset[0],
 				x, y, width, height, nsIAccessibleCoordinateType.COORDTYPE_PARENT_RELATIVE);
 		
-		Rectangle ancestorBounds = getElementBounds(
-				queryInterface(accessibleTextAncestor, nsIAccessNode.class)
-						.getDOMNode());
+		nsIDOMNode ancestorParent = queryInterface(accessibleTextAncestor, nsIAccessNode.class)
+				.getDOMNode().getParentNode();
+		Rectangle ancestorParentBounds;
+		if (ancestorParent != null) {
+			ancestorParentBounds = getElementBounds(ancestorParent);
+		} else {
+			ancestorParentBounds = new Rectangle(0, 0, 0, 0);
+		}
 		
-		return new Rectangle(ancestorBounds.x + x[0], ancestorBounds.y + y[0],
+		return new Rectangle(ancestorParentBounds.x + x[0], ancestorParentBounds.y + y[0],
 				width[0], height[0]);
 	}
 	

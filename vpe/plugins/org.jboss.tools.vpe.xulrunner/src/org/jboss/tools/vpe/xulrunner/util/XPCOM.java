@@ -16,14 +16,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.mozilla.interfaces.nsIComponentManager;
+import org.mozilla.interfaces.nsIComponentRegistrar;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIServiceManager;
+import org.mozilla.interfaces.nsISimpleEnumerator;
 import org.mozilla.interfaces.nsISupports;
+import org.mozilla.interfaces.nsISupportsCString;
+import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
 /**
  * @author Sergey Vasilyev (svasilyev@exadel.com): initial creation.
- * @author Yahor Radtsevich (yradtsevich): method {@code queryInterface} and
- * related stuff (JBIDE-6393).
+ * @author Yahor Radtsevich (yradtsevich): methods {@link #queryInterface},
+ * {@link #printAllContractIDs(Class)},
+ * {@link #printSupportedInterfaces(nsISupports, boolean)}
+ * and related stuff (JBIDE-6393).
  */
 public final class XPCOM {
 	private XPCOM() {}
@@ -79,7 +87,7 @@ public final class XPCOM {
 		String interfaceId = getInterfaceId(type);
 		return (T) object.queryInterface(interfaceId);
 	}
-
+	
 	/**
 	 * Returns XPCOM ID for the given {@code type}
 	 * <P>
@@ -163,7 +171,7 @@ public final class XPCOM {
 	  * 
 	  * @deprecated This method tries to query every known XPCOM interface
 	  * from given object and it performs very slow (seconds).
-	  * For debug/test purposes only. Do not use it in the production code.
+	  * For debug purposes only. Do not use it in the production code.
 	  */
 	public static void printSupportedInterfaces(nsISupports object, boolean printMethods) {
 		for (Class<? extends nsISupports> type : getSupportedInterfaces(object)) {
@@ -172,6 +180,56 @@ public final class XPCOM {
 				for (Method method : type.getMethods()) {
 					System.out.println('\t' + method.getName());
 				}
+			}
+		}
+	}
+	
+	/**
+	 * Prints all XPCOM interface ID for the given type
+	 * to the {@code System.out}.
+	 * 
+	 * @deprecated For debug purposes only.
+	 */
+	public static void printAllContractIDs(Class<? extends nsISupports> type) {
+		nsIComponentManager componentManager = Mozilla.getInstance().getComponentManager();
+		nsIServiceManager serviceManager = Mozilla.getInstance().getServiceManager();
+		
+		nsISimpleEnumerator contractIDsEnumerator
+				= queryInterface(componentManager, nsIComponentRegistrar.class)
+						.enumerateContractIDs();
+
+		List<String> contractIDs = new ArrayList<String>();
+		while(contractIDsEnumerator.hasMoreElements()) {
+			contractIDs.add( queryInterface(contractIDsEnumerator.getNext(),
+					nsISupportsCString.class).getData() );
+		}
+		java.util.Collections.sort(contractIDs);
+		for (String contractID : contractIDs) {
+			boolean hasComponent = false;
+			boolean hasService = false;
+			
+			try {
+				nsISupports component = componentManager.createInstanceByContractID(
+						contractID, null, nsISupports.NS_ISUPPORTS_IID);
+				queryInterface(component, type);
+				hasService = true;
+			} catch (Throwable e) {
+				// it's OK
+			}
+			
+			try {
+				nsISupports service = 
+					serviceManager.getServiceByContractID(contractID, nsISupports.NS_ISUPPORTS_IID);//createInstanceByContractID(
+								//contractID, null, nsISupports.NS_ISUPPORTS_IID);
+				queryInterface(service, type);
+				hasService = true;
+			} catch (Throwable e) {
+				// it's OK
+			}
+			
+			if (hasComponent || hasService) {
+				System.out.print(String.format("%s (hasComponent = %s, hasService = %s)",
+						contractID, hasComponent, hasService));
 			}
 		}
 	}
