@@ -34,7 +34,6 @@ import org.jboss.tools.hibernate.jpt.core.internal.context.basic.BasicHibernateP
 public class HibernatePersistenceXmlUiFactory implements
 		PersistenceXmlUiFactory {
 
-	@Override
 	public ListIterator<JpaPageComposite> createPersistenceUnitComposites(
 			PropertyValueModel<PersistenceUnit> subjectHolder,
 			Composite parent, WidgetFactory widgetFactory) {
