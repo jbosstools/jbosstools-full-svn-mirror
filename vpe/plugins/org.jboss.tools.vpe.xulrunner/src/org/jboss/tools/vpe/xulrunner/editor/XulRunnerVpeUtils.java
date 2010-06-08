@@ -13,10 +13,7 @@ package org.jboss.tools.vpe.xulrunner.editor;
 
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.xulrunner.BrowserPlugin;
-import org.mozilla.interfaces.nsIBoxObject;
-import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMNSDocument;
 import org.mozilla.interfaces.nsIDOMNSElement;
 import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -72,15 +69,14 @@ public class XulRunnerVpeUtils {
 					.queryInterface(nsIDOMNSElement.NS_IDOMNSELEMENT_IID);
 			nsIDOMNSHTMLElement domNSHTMLElement = (nsIDOMNSHTMLElement) domNode
 					.queryInterface(nsIDOMNSHTMLElement.NS_IDOMNSHTMLELEMENT_IID);
-			nsIDOMDocument document = domElement.getOwnerDocument();
-
-			nsIDOMNSDocument nsDocument = (nsIDOMNSDocument) document
-					.queryInterface(nsIDOMNSDocument.NS_IDOMNSDOCUMENT_IID);
-			nsIBoxObject boxObject = nsDocument.getBoxObjectFor(domElement);
+//			nsIDOMDocument document = domElement.getOwnerDocument();
+//			nsIDOMNSDocument nsDocument = (nsIDOMNSDocument) document
+//					.queryInterface(nsIDOMNSDocument.NS_IDOMNSDOCUMENT_IID);
+//			nsIBoxObject boxObject = nsDocument.getBoxObjectFor(domElement);
 			Rectangle rectangle = new Rectangle(findPosX(domNSHTMLElement),
 														 findPosY(domNSHTMLElement),
-														 boxObject.getWidth(),
-														 boxObject.getHeight());
+														 htmlElement.getClientWidth(),
+														 htmlElement.getClientHeight());
 
 			if (BrowserPlugin.PRINT_ELEMENT_BOUNDS) {
 				System.out.println("getElementBounds(IDOMNode) returns "
@@ -97,10 +93,6 @@ public class XulRunnerVpeUtils {
 										htmlElement.getClientTop(), htmlElement
 												.getClientWidth(), htmlElement
 												.getClientHeight()));
-				System.out.println("nsIBoxObject getX,getY,getWidth,getHeight"
-						+ new Rectangle(boxObject.getX(), boxObject.getY(),
-								boxObject.getWidth(), boxObject.getHeight()));
-
 			}
 			return rectangle;
 
