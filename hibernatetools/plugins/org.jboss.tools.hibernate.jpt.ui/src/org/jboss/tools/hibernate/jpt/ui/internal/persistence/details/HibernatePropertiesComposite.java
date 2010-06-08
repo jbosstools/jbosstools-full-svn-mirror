@@ -387,7 +387,6 @@ public class HibernatePropertiesComposite extends Pane<BasicHibernateProperties>
 		return Messages.HibernatePropertiesComposite_hibernate;
 	}
 
-	@Override
 	public ImageDescriptor getPageImageDescriptor() {
 		// TODO hibernate tab in persistence.xml image
 		return null;
