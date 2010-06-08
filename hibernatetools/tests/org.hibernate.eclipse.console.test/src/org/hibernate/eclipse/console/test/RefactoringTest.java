@@ -534,7 +534,6 @@ public class RefactoringTest extends TestCase {
 				return null;
 			}
 
-			@Override
 			public void setAttribute(String attributeName, Set value) {
 				attributes.put(attributeName, value);
 			}
