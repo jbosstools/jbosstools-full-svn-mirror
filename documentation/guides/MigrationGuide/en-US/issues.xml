@@ -49,7 +49,7 @@
     </section>
     <section>
         <title>Problems with <emphasis>not "JBDS"</emphasis> plugins</title>
-        <para>Some additional plugins that are not supplied by JBDS and work on JBDS 2.X may not work on 3.0.0.GA.</para>
+        <para>Some additional plugins that are not supplied by JBDS and work on JBDS 2.X may not work on 3.0.0.GA</para>
         <itemizedlist>
             <listitem><para>To solve the problem check whether the plugin is compatible with Eclipse 3.5.</para></listitem>
             <listitem><para>But because such pugins are not supported by JBDS, we can not guarantee its proper work.</para></listitem>
