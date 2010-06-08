@@ -76,7 +76,7 @@
                     <row>
                         <entry id="sort">Sort By</entry>
                         <entry>Using this option you can change the type of lines sorting 
-                            in the table of language message mappings.To do this select from the drop down lins the method
+                            in the table of language message mappings. To do this select from the drop down list the method
                             of sorting you want and click <emphasis>Sort</emphasis> button.</entry>
                     </row>
                     <row>
@@ -99,8 +99,8 @@
         </table>
         <section id="edit_wizard">
             <title>Edit language mapping Wizard</title>
-            <para>This wizard can be opened by double clicking  some line 
-                in the table of language message mappings or by clicking the <emphasis>Edit</emphasis>button.</para>
+            <para>This wizard can be opened by double clicking some line 
+                in the table of language message mappings or by clicking the <emphasis>Edit</emphasis> button.</para>
             <para>On the picture below you can see all the options,Edit language mapping Wizard allow to change.</para>
             <para>Their names as well as the meaning of the options are correspond to the <link linkend="rows">rows</link> of the table.</para>
             <figure>
@@ -181,7 +181,7 @@
             </mediaobject>
         </figure>
         <para>Outline View is useful for big complex schemata where not all nodes are seen at one time.
-        So using your Outline view you can easly navigate between parts of a schema.  </para>
+            So using your Outline view you can easily navigate between parts of a schema.  </para>
         <figure>
             <title>Outline view usage</title>
             <mediaobject>
@@ -315,7 +315,7 @@
                             </imageobject></inlinemediaobject></entry>
                             <entry>Gateway[converge]</entry>
                             <entry>allows you to synchronize multiple branches.
-                                A <property>Gateway[diverge]</property>node should have two or more incoming connections and one
+                                A <property>Gateway[diverge]</property> node should have two or more incoming connections and one
                                 outgoing connection.</entry>
                         </row> 
                         <row>

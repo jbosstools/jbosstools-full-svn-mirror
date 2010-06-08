@@ -165,19 +165,19 @@
     <section id="creating_rule">
         <title>Creating a New Rule</title>
 
-        <para>Now we are going to add a new Rule resource to the project.</para>
+        <para>Now we are going to add a new Rule package to the project.</para>
 
         <para>You can either create an empty text <emphasis>
                 <property>.drl</property>
-            </emphasis> file or make use of the special <property>New Rule Resource
-                wizard</property> to do it.</para>
+        </emphasis> file or make use of the special <property>New Rule Package...</property>
+                wizard to do it.</para>
 
         <para>To open the wizard follow to <emphasis>
                 <property>File > New > Rule Resource</property>
             </emphasis> or use the menu with the JBoss Drools icon on the toolbar.</para>
 
         <figure>
-            <title>Opening the New Rule Resource Wizard</title>
+            <title>Opening the New Rule Package Wizard</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/create_new_project/create_new_project8.png"/>
@@ -192,7 +192,7 @@
             groups rules together.</para>
 
         <figure>
-            <title>New Rule Resource Wizard</title>
+            <title>New Rule Package Wizard</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/create_new_project/create_new_project9.png"/>
