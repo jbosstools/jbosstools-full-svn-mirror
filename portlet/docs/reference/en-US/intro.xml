@@ -5,8 +5,7 @@
 
 	<para>Starting from 3.0.0.Alpha1 version, JBoss set of plugins includes tools for supporting <property>JBoss Portal</property> and JSR-186/JSR-286 portlets.
 		Thus, this guide is intended to explain you how to get started and manage <property>JBoss Portlet Tools</property>.</para>
-
-    <section id="preface">
+<section>
         <title>What is JBoss Portal and Portlet Tools?</title>
         <para><property>JBoss Portal</property> provides an open source platform for hosting and
             serving a portal's Web interface, publishing and managing its content, and customizing
@@ -120,5 +119,5 @@
 		<para><property>JBoss Portlet Tools</property> is included as part of <property>JBoss Tools</property> project. 
 			Refer to <ulink url="http://www.jboss.org/tools/download/installation.html">http://www.jboss.org/tools/download/installation.html</ulink> 
 			for installation methods of <property>JBoss Tools</property>.</para>
-	</section>
+</section>
 </chapter>
