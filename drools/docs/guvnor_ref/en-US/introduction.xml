@@ -8,15 +8,7 @@
         comprehensive reference, there should be enough detail included for early adopters using
         these tools.</para>
 
-    <para>The <property>Guvnor repository</property> is not intended as a Source Code Management
-        (SCM) solution, and the <property>EGT</property> are not intended to be Eclipse “team
-        provider” extensions or replacements. Rather, the Guvnor repository is a location where
-        certain artifacts (such as rules and SOA policy definitions) are controlled (“governed”) by
-        policies defined by the deployment environment. The purpose of the <property>EGT</property>
-        is then to enable access to resources held by the Guvnor repository, so
-        they can be used in development. Thus, limited capabilities for reading, writing, adding,
-        and removing Guvnor repository resources are provided in the
-            <property>EGT</property>.</para>
+    <para>First, have a look at the key features of <property>Guvnor Tools:</property></para>
 
     <section id="drools_key_features">
         <title>Guvnor Tools Key Features</title>
@@ -82,15 +74,14 @@
 
                     <row>
                         <entry>
-                            <para>Resources from Guvnor Wizard</para>
+                            <para>Resource from Guvnor wizard</para>
                         </entry>
                         <entry>
                             <para>The wizard helps to get local copies of Guvnor repository
                                 resources.</para>
                         </entry>
                         <entry>
-                            <link linkend="resources_from_guvnor">Importing Guvnor Repository
-                                Resources</link>
+                            <link linkend="resources_from_guvnor">Resource from Guvnor wizard</link>
                         </entry>
                     </row>
 
@@ -106,7 +97,7 @@
                                 and those not associated.</para>
                         </entry>
                         <entry>
-                            <link linkend="actions">Actions for Local Guvnor Resources</link>
+                            <link linkend="actions">Managing Guvnor Resources</link>
                         </entry>
                     </row>
 
@@ -114,12 +105,23 @@
             </tgroup>
         </table>
     </section>
-
+    <section id="what_is_guvnor_tools">
+        <title>What is Guvnor Tools?</title>
+        <para>The <property>Guvnor repository</property> is not intended as a Source Code Management
+        (SCM) solution, and the <property>EGT</property> is not intended to be Eclipse “team
+        provider” extension or replacement. Rather, the Guvnor repository is a location where
+        certain artifacts (such as rules and SOA policy definitions) are controlled (“governed”) by
+        policies defined by the deployment environment. The purpose of the <property>EGT</property>
+        is then to enable access to resources held by the Guvnor repository, so
+        they can be used in development. Thus, limited capabilities for reading, writing, adding,
+        and removing Guvnor repository resources are provided in the
+            <property>EGT</property>.</para>
+    </section>
     <section id="how_to_start">
-        <title>How to start with Guvnor Tools</title>
+        <title>Requirements and Installation</title>
 
         <para><property>Guvnor Tools</property> is a part of the <property>JBoss Tools</property>
-            project. Thus to get started with <property>Guvnor Tools</property>, you should have the following:</para>
+            project. Thus to get started with Guvnor Tools, you should have the following:</para>
 
         <itemizedlist>
             <listitem>
@@ -128,50 +130,38 @@
             </listitem>
 
             <listitem>
-                <para>JBoss Server 4.2 or higher with Guvnor repository deployed. Thus, you should
-                    download <ulink
-                        url="http://download.jboss.org/drools/release/5.0.0.25561.CR1/drools-5.0.0.CR1-guvnor.zip"
-                        >Guvnor CR1</ulink> and extract it to the deploy directory of the
-                    server.</para>
+                <para>JBoss Server 4.2 or higher with Guvnor repository deployed.</para>
             </listitem>
         </itemizedlist>
-
-        <para>Now refer to the <link linkend="functionality_overview">&quot;Functionality
-                Overview&quot;</link> section to find out what you can do with Guvnor and
+        <para>To have JBoss Server with Guvnor repository deployed, you should
+            download <ulink url="http://www.jboss.org/drools/downloads.html">Drools Guvnor</ulink>.
+            When downloading you may choose either web based Guvnor to deploy to your
+            JBoss Server or Standalone Guvnor with JBoss AS.</para> 
+        <para>If you use a JBoss AS 5 and a <property>Guvnor Tools</property> doesn't work when deployed to the server,
+        you should do the following to get Guvnor Tools running:</para>
+        <orderedlist>
+            <listitem>
+                <para>Remove the  JBoss Security libraries (authorization-spi-2.0.2.CR6.jar, 
+                    identity-*, acl-spi-2.0.2.CR6.jar) from drools WAR file (not the app server itself).                    
+                    The JBoss Security libraries are provided in AS 5.</para>
+            </listitem>
+            <listitem>
+                <para>Remove the JAXP libraries (xercesImpl-2.8.0.jar, xml-apis-2.*)</para>
+            </listitem>
+            <listitem>
+                <para>Remove the EL libraries (el-*)</para>
+            </listitem>
+        </orderedlist>
+        <para>After this, Guvnor should operate as normal.            
+            During deployment, you would see the following exception in the log which indicates that the experiemental
+            JBoss Security based ACL integration has defined some EJB3/JPA stuff in guvnor that has not been configured.</para>
+        <programlisting>ERROR [AbstractKernelController] Error installing to Start: name=persistence.unit:unitName=#ACL state=Create
+java.lang.RuntimeException: Specification violation [EJB3 JPA 6.2.1.2] - You have not defined a non-jta-data-source 
+for a RESOURCE_LOCAL enabled persistence context named: ACL            
+        </programlisting>
+        <para>Now refer to the <link linkend="functionality_overview">&quot;Tasks&quot;</link> 
+            section to find out what you can do with Guvnor and
             Eclipse synchronisation tool.</para>
     </section>
 
-    <section>
-        <title>Other relevant resources on the topic</title>
-
-        <itemizedlist>
-            <listitem>
-                <para>Guvnor <ulink url="http://www.jboss.org/community/wiki/Guvnor">wiki page</ulink></para>
-            </listitem>
-            
-            <listitem>
-                <para>Drools on <ulink url="http://www.jboss.org/drools/">JBoss.org</ulink></para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://www.jboss.org/tools/">JBoss Tools Home Page</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">The latest
-                        JBossTools/JBDS documentation builds</ulink>
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    <ulink url="http://docs.jboss.org/tools/">JBossTools/JBDS
-                        release documentation</ulink></para>
-            </listitem>
-        </itemizedlist>
-
-    </section>
 </chapter>
