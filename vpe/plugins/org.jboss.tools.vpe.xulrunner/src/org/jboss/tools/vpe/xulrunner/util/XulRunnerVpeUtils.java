@@ -139,9 +139,12 @@ public class XulRunnerVpeUtils {
 		int[] height = new int[1];
 		accessibleTextAncestor.getRangeExtents(startOffset[0], endOffset[0],
 				x, y, width, height, nsIAccessibleCoordinateType.COORDTYPE_PARENT_RELATIVE);
-		
-		nsIDOMNode ancestorParent = queryInterface(accessibleTextAncestor, nsIAccessNode.class)
-				.getDOMNode().getParentNode();
+
+		nsIAccessible ancestorAccessibleParent
+				= queryInterface(accessibleTextAncestor, nsIAccessible.class).getParent();
+		nsIDOMNode ancestorParent
+				= queryInterface(ancestorAccessibleParent, nsIAccessNode.class).getDOMNode();
+
 		Rectangle ancestorParentBounds;
 		if (ancestorParent != null) {
 			ancestorParentBounds = getElementBounds(ancestorParent);
