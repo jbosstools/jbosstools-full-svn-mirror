@@ -5,6 +5,20 @@
   <title>Revision History</title>
   <simpara>
     <revhistory>
+	<revision>
+		<revnumber>1</revnumber>
+		<date>Wed Jun 09 2010</date>
+		<author>
+			<firstname>Isaac</firstname>
+			<surname>Rooskov</surname>
+			<email>irooskov@redhat.com</email>
+		</author>
+		<revdescription>
+			<simplelist>
+				<member>Updated username and password instructions</member>
+			</simplelist>
+		</revdescription>
+	</revision>
       <revision>
         <revnumber>0</revnumber>
         <date>Wed Mar 17 2010</date>
