@@ -33,7 +33,7 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTempl
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerXMLNodeGraphicalModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.model.csv.CSVModelBuilder;
 import org.jboss.tools.smooks.templating.model.xml.XMLSampleModelBuilder;
@@ -147,7 +147,7 @@ public class FreemarkerTemplateContentGraphModelProviderImpl implements IFreemar
 				String filePath = SmooksModelUtils.getFreemarkerXMLFilePath(freemarker);
 				String rootName = SmooksModelUtils.getFreemarkerXMLRootName(freemarker);
 				String newFilePath = SmooksUIUtils.parseFilePath(filePath);
-				ModelBuilder builder;
+				TemplatingModelBuilder builder;
 				
 				if (SmooksModelUtils.KEY_XML_FILE_TYPE_XSD.equals(fileType)) {
 					builder = new XSDModelBuilder(URI.createFileURI(newFilePath));

@@ -25,6 +25,8 @@ import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
 import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.InputDataTreeNodeEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.InputSourceContainerEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.OutputContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.ResourceConfigEditFactory;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksRootEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.TriggerConnectionEditPart;
@@ -34,6 +36,8 @@ import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChil
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.InputSourceContainerModel;
+import org.jboss.tools.smooks.graphical.editors.model.OutputTargetModel;
 
 /**
  * @author Dart
@@ -41,14 +45,13 @@ import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
  */
 public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartFactory {
 	private ResourceConfigEditFactory resourceConfigFactory;
-	
+
 	private boolean displayInput = true;
 
 	public SmooksEditFactory() {
 		super();
 		resourceConfigFactory = new ResourceConfigEditFactory();
 	}
-	
 
 	/**
 	 * @return the displayInput
@@ -57,21 +60,27 @@ public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartF
 		return displayInput;
 	}
 
-
-
 	/**
-	 * @param displayInput the displayInput to set
+	 * @param displayInput
+	 *            the displayInput to set
 	 */
 	public void setDisplayInput(boolean displayInput) {
 		this.displayInput = displayInput;
 	}
 
-
-
 	public EditPart createEditPart(EditPart context, Object model) {
 		EditPart editPart = null;
+
 		if (model instanceof RootModel) {
-			editPart = new SmooksRootEditPart();
+			if (model instanceof OutputTargetModel) {
+				editPart = new OutputContainerEditPart();
+			}
+			if (model instanceof InputSourceContainerModel) {
+				editPart = new InputSourceContainerEditPart();
+			}
+			if (editPart == null) {
+				editPart = new SmooksRootEditPart();
+			}
 		}
 		if (model.getClass() == TreeNodeModel.class) {
 			editPart = new TreeNodeEditPart();
@@ -86,20 +95,19 @@ public class SmooksEditFactory extends SmooksGEFEditFactory implements EditPartF
 			editPart = new InputDataContainerEditPart();
 		}
 
-		if (model instanceof AbstractResourceConfigGraphModel
-				|| model instanceof AbstractResourceConfigChildNodeGraphModel) {
+		if (model instanceof AbstractResourceConfigGraphModel || model instanceof AbstractResourceConfigChildNodeGraphModel) {
 			editPart = resourceConfigFactory.createEditPart(model);
 		}
 		if (model.getClass() == TreeNodeConnection.class) {
 			editPart = new TreeNodeConnectionEditPart();
 		}
-		if(model.getClass() == TriggerConnection.class){
+		if (model.getClass() == TriggerConnection.class) {
 			editPart = new TriggerConnectionEditPart();
 		}
-		if(model.getClass() == ValueBindingConnection.class){
+		if (model.getClass() == ValueBindingConnection.class) {
 			editPart = new ValueBindingConnectionEditPart();
 		}
-		if(model.getClass() == BeanReferenceConnection.class){
+		if (model.getClass() == BeanReferenceConnection.class) {
 			editPart = new BeanReferenceConnectionEditPart();
 		}
 		if (editPart != null) {

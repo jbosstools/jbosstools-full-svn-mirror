@@ -8,12 +8,15 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.draw2d.FreeformLayer;
-import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.tree.editpolicy.RootPanelXYLayoutEditPolicy;
+import org.jboss.tools.smooks.graphical.figures.FillLayout;
 
 /**
  * @author DartPeng
@@ -26,8 +29,11 @@ public class RootEditPart extends AbstractGraphicalEditPart implements PropertyC
 	 */
 	@Override
 	protected IFigure createFigure() {
+		
 		FreeformLayer layer =  new FreeformLayer();
-		layer.setLayoutManager(new FreeformLayout());
+		ToolbarLayout tl = new ToolbarLayout();
+		tl.setVertical(true);
+		layer.setLayoutManager(new FillLayout(((GraphicalViewer)((GraphicalEditPart)this).getViewer()).getControl()));
 		return layer;
 	}
 	
@@ -60,7 +66,7 @@ public class RootEditPart extends AbstractGraphicalEditPart implements PropertyC
 	 */
 	@Override
 	protected void createEditPolicies() {
-		this.installEditPolicy(EditPolicy.LAYOUT_ROLE, new RootPanelXYLayoutEditPolicy());
+//		this.installEditPolicy(EditPolicy.LAYOUT_ROLE, new RootPanelXYLayoutEditPolicy());
 	}
 	
 	protected List<?> getModelChildren(){

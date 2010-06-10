@@ -51,6 +51,7 @@ import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.gef.commands.CommandStackEvent;
 import org.eclipse.gef.commands.CommandStackEventListener;
 import org.eclipse.gef.dnd.TemplateTransferDropTargetListener;
+import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.editparts.FreeformGraphicalRootEditPart;
 import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.gef.ui.parts.GraphicalEditor;
@@ -64,6 +65,10 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -96,12 +101,16 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.actions.AutoLayoutAction;
 import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.commands.IgnoreException;
+import org.jboss.tools.smooks.graphical.editors.editparts.InputSourceContainerEditPart;
+import org.jboss.tools.smooks.graphical.editors.editparts.OutputContainerEditPart;
 import org.jboss.tools.smooks.graphical.editors.editparts.RightClickSelectMarqueeDragTraker;
 import org.jboss.tools.smooks.graphical.editors.editparts.SmooksGraphUtil;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataRootModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.InputSourceContainerModel;
+import org.jboss.tools.smooks.graphical.editors.model.OutputTargetModel;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
@@ -114,8 +123,8 @@ import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
  * @author Dart
  * 
  */
-public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener,
-		ISourceSynchronizeListener, IGraphicalEditorPart, ITaskNodeProvider, ISmooksModelValidateListener {
+public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelectionChangedListener, ISourceSynchronizeListener,
+		IGraphicalEditorPart, ITaskNodeProvider, ISmooksModelValidateListener {
 
 	private CommandStackListener emfCommandStackListener = null;
 
@@ -186,8 +195,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	private void createEMFCommandStackListener() {
 		emfCommandStackListener = new org.eclipse.emf.common.command.CommandStackListener() {
 			public void commandStackChanged(EventObject event) {
-				final Command mostRecentCommand = ((org.eclipse.emf.common.command.CommandStack) event.getSource())
-						.getMostRecentCommand();
+				final Command mostRecentCommand = ((org.eclipse.emf.common.command.CommandStack) event.getSource()).getMostRecentCommand();
 				final EventObject fe = event;
 				getEditorSite().getShell().getDisplay().asyncExec(new Runnable() {
 					public void run() {
@@ -197,10 +205,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 								rawCommand = ((CommandWrapper) rawCommand).getCommand();
 							}
 							int commandType = EXECUTE_COMMAND;
-							Command undoCommand = ((org.eclipse.emf.common.command.CommandStack) fe.getSource())
-									.getUndoCommand();
-							Command redoCommand = ((org.eclipse.emf.common.command.CommandStack) fe.getSource())
-									.getRedoCommand();
+							Command undoCommand = ((org.eclipse.emf.common.command.CommandStack) fe.getSource()).getUndoCommand();
+							Command redoCommand = ((org.eclipse.emf.common.command.CommandStack) fe.getSource()).getRedoCommand();
 							if (undoCommand != null || rawCommand.equals(undoCommand)) {
 								commandType = EXECUTE_COMMAND;
 							}
@@ -215,8 +221,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 										command = ((CommandWrapper) command).getCommand();
 									}
 									handleInputParamChange(command);
-									if (command instanceof SetCommand || command instanceof AddCommand
-											|| command instanceof DeleteCommand || command instanceof RemoveCommand) {
+									if (command instanceof SetCommand || command instanceof AddCommand || command instanceof DeleteCommand
+											|| command instanceof RemoveCommand) {
 										refershRecentAffectedModel(command, command.getAffectedObjects(), commandType);
 									}
 								}
@@ -224,8 +230,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 								if (rawCommand instanceof SetCommand || rawCommand instanceof AddCommand
 										|| rawCommand instanceof DeleteCommand || rawCommand instanceof RemoveCommand) {
 									handleInputParamChange(rawCommand);
-									refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects(),
-											commandType);
+									refershRecentAffectedModel(rawCommand, mostRecentCommand.getAffectedObjects(), commandType);
 								}
 							}
 						}
@@ -266,6 +271,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			mainComposite.setLayout(fillLayout);
 			super.createPartControl(mainComposite);
 			return;
+
 		}
 		super.createPartControl(parent);
 	}
@@ -288,8 +294,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	@Override
 	public void dispose() {
 		if (smooksModelProvider != null) {
-			smooksModelProvider.getEditingDomain().getCommandStack()
-					.removeCommandStackListener(emfCommandStackListener);
+			smooksModelProvider.getEditingDomain().getCommandStack().removeCommandStackListener(emfCommandStackListener);
 		}
 		super.dispose();
 	}
@@ -424,8 +429,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		getSelectionActions().add(autoLayout.getId());
 	}
 
-	private void deleteRelatedConnection(AbstractSmooksGraphicalModel effecedNode, EStructuralFeature feature,
-			SetCommand command) {
+	private void deleteRelatedConnection(AbstractSmooksGraphicalModel effecedNode, EStructuralFeature feature, SetCommand command) {
 		EObject data = (EObject) AdapterFactoryEditingDomain.unwrap(effecedNode.getData());
 
 		if (feature.equals(SmooksUIUtils.getBeanIDRefFeature(data))) {
@@ -435,7 +439,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
 				AbstractSmooksGraphicalModel target = treeNodeConnection.getTargetNode();
 				Object refValue = command.getValue();
-				if(refValue == null) continue;
+				if (refValue == null)
+					continue;
 				String refID = refValue.toString();
 				Object targetModel = AdapterFactoryEditingDomain.unwrap(target.getData());
 				if (targetModel instanceof EObject) {
@@ -531,7 +536,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 							AbstractSmooksGraphicalModel graphModel = createGraphModel(childModel);
 							if (graphModel == null)
 								continue;
-							root.addTreeNode(graphModel);
+							root.getTargetContainerModel().addTreeNode(graphModel);
 							applyGraphicalInformation(graphModel);
 							Collection<TreeNodeConnection> connections = createAllConnection(graphModel);
 							expandConnectedModels(connections);
@@ -552,7 +557,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 							if (graphModel == null)
 								continue;
 							AbstractSmooksGraphicalModel.disconnectAllConnections(graphModel);
-							root.removeTreeNode(graphModel);
+							root.getTargetContainerModel().removeTreeNode(graphModel);
 						}
 					}
 				} else {
@@ -579,7 +584,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 							if (graphModel == null)
 								continue;
 							try {
-								root.addTreeNode(graphModel);
+								root.getTargetContainerModel().addTreeNode(graphModel);
 							} catch (Throwable t) {
 								t.printStackTrace();
 							}
@@ -618,7 +623,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 							object2 = AdapterFactoryEditingDomain.unwrap(object2);
 							AbstractSmooksGraphicalModel gmodel = findGraphicalModel(object2);
 							if (gmodel != null) {
-								root.removeTreeNode(gmodel);
+								root.getTargetContainerModel().removeTreeNode(gmodel);
 								break;
 							}
 						}
@@ -661,7 +666,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 								if (graphModel == null)
 									continue;
 								node = graphModel;
-								root.addTreeNode(graphModel);
+								root.getTargetContainerModel().addTreeNode(graphModel);
 								Collection<TreeNodeConnection> connections = createAllConnection(graphModel);
 								expandConnectedModels(connections);
 								applyGraphicalInformation(graphModel);
@@ -708,6 +713,22 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		super.configureGraphicalViewer();
 		getGraphicalViewer().setEditDomain(editDomain);
 		getGraphicalViewer().setEditPartFactory(createEdtiPartFactory());
+		getGraphicalViewer().getControl().addControlListener(new ControlListener() {
+
+			public void controlResized(ControlEvent e) {
+			}
+
+			public void controlMoved(ControlEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		getGraphicalViewer().getControl().addPaintListener(new PaintListener() {
+
+			public void paintControl(PaintEvent e) {
+				// ((AbstractGraphicalEditPart)getGraphicalViewer().getRootEditPart()).getFigure().getLayoutManager().layout(null);
+			}
+		});
 
 		getGraphicalViewer().setRootEditPart(new FreeformGraphicalRootEditPart() {
 			public DragTracker getDragTracker(Request req) {
@@ -719,8 +740,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				(TransferDropTargetListener) new TemplateTransferDropTargetListener(getGraphicalViewer()));
 
 		GraphicalViewerKeyHandler keyHandler = new GraphicalViewerKeyHandler(getGraphicalViewer());
-		keyHandler.put(org.eclipse.gef.KeyStroke.getPressed(SWT.DEL, 0), this.getActionRegistry().getAction(
-				ActionFactory.DELETE.getId()));
+		keyHandler.put(org.eclipse.gef.KeyStroke.getPressed(SWT.DEL, 0), this.getActionRegistry().getAction(ActionFactory.DELETE.getId()));
 
 		ContextMenuProvider provider = getContextMenuProvider();
 		getGraphicalViewer().setContextMenu(provider);
@@ -745,6 +765,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	protected List<AbstractSmooksGraphicalModel> createInputDataGraphModel() {
 		List<AbstractSmooksGraphicalModel> inputGraphModel = new ArrayList<AbstractSmooksGraphicalModel>();
 		if (inputDataList != null && root != null) {
+			InputSourceContainerModel tcontainer = new InputSourceContainerModel();
+			root.setSourceContainerModel(tcontainer);
+			root.addTreeNode(tcontainer);
 			for (Iterator<?> iterator = inputDataList.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
 				ITreeContentProvider contentProvider = new XMLStructuredDataContentProvider();
@@ -758,9 +781,9 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				}
 				containerModel.getChildren().add((IXMLStructuredObject) object);
 				if (containerModel != null) {
-					TreeContainerModel container = new InputDataContianerModel(containerModel, contentProvider,
-							labelProvider, getSmooksModelProvider());
-					root.addTreeNode(container);
+					TreeContainerModel container = new InputDataContianerModel(containerModel, contentProvider, labelProvider,
+							getSmooksModelProvider());
+					tcontainer.addTreeNode(container);
 					inputGraphModel.add(container);
 				}
 			}
@@ -785,8 +808,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		Object obj = smooksModelProvider.getSmooksModel();
 		if (obj == null)
 			return;
-		AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider
-				.getEditingDomain();
+		OutputTargetModel targetContainer = new OutputTargetModel();
+		root.addTreeNode(targetContainer);
+		root.setTargetContainerModel(targetContainer);
+		AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) smooksModelProvider.getEditingDomain();
 		if (inputDataList != null && obj != null && obj instanceof DocumentRoot && editingDomain != null) {
 			createInputDataGraphModel();
 			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
@@ -795,7 +820,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				Object object = (Object) iterator.next();
 				AbstractSmooksGraphicalModel gmodel = createGraphModel(object);
 				if (gmodel != null) {
-					root.addTreeNode(gmodel);
+					targetContainer.addTreeNode(gmodel);
 				}
 			}
 			getGraphicalViewer().setContents(root);
@@ -832,7 +857,15 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	protected List<TreeNodeConnection> createConnectionModel() {
 		List<TreeNodeConnection> connections = new ArrayList<TreeNodeConnection>();
 		if (root != null) {
-			createConnection(root.getChildren(), connections);
+			List<AbstractSmooksGraphicalModel> children = new ArrayList<AbstractSmooksGraphicalModel>();
+			List<?> containers = root.getChildren();
+			for (Iterator<?> iterator = containers.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				if (object instanceof RootModel) {
+					children.addAll(((RootModel) object).getChildren());
+				}
+			}
+			createConnection(children, connections);
 		}
 		return connections;
 	}
@@ -870,30 +903,12 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		List<TreeNodeConnection> cs = new ArrayList<TreeNodeConnection>();
 		if (connectionModelFactory != null) {
 			if (connectionModelFactory.hasConnection(model)) {
-				Collection<TreeNodeConnection> cList = connectionModelFactory.createConnection(inputDataList,
-						getSmooksResourceList(), root, model);
+				Collection<TreeNodeConnection> cList = connectionModelFactory.createConnection(inputDataList, getSmooksResourceList(),
+						root, model);
 				if (cList != null) {
 					cs.addAll(cList);
 				}
 			}
-			// if (connectionModelFactory.hasBeanIDConnection(model)) {
-			// Collection<TreeNodeConnection> c =
-			// connectionModelFactory.createBeanIDReferenceConnection(
-			// getSmooksResourceList(), root, model);
-			// if (c != null) {
-			// cs.addAll(c);
-			// }
-			// }
-			// // for xsl template
-			//
-			// if (connectionModelFactory.hasXSLConnection(model)) {
-			// Collection<TreeNodeConnection> c =
-			// connectionModelFactory.createXSLConnection(inputDataList, root,
-			// model);
-			// if (c != null) {
-			// cs.addAll(c);
-			// }
-			// }
 		}
 		if (cs.isEmpty())
 			return null;
@@ -962,16 +977,14 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	public void createConnection(List<AbstractSmooksGraphicalModel> children, List<TreeNodeConnection> connections) {
 		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
-			if (!(abstractSmooksGraphicalModel instanceof InputDataContianerModel)) {
-				if (canCreateConnection(abstractSmooksGraphicalModel)) {
-					Collection<TreeNodeConnection> c = createConnection(abstractSmooksGraphicalModel);
-					if (c != null) {
-						connections.addAll(c);
-					}
+			if (canCreateConnection(abstractSmooksGraphicalModel)) {
+				Collection<TreeNodeConnection> c = createConnection(abstractSmooksGraphicalModel);
+				if (c != null) {
+					connections.addAll(c);
 				}
-				List<AbstractSmooksGraphicalModel> cchildren = abstractSmooksGraphicalModel.getChildren();
-				createConnection(cchildren, connections);
 			}
+			List<AbstractSmooksGraphicalModel> cchildren = abstractSmooksGraphicalModel.getChildren();
+			createConnection(cchildren, connections);
 		}
 	}
 
@@ -1033,21 +1046,15 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 		}
 		EditPart rootEditPart = getGraphicalViewer().getContents();
 		if (rootEditPart != null) {
-			List<?> childrenEditPart = rootEditPart.getChildren();
+			List<?> containers = rootEditPart.getChildren();
+			List<?> childrenEditPart = new ArrayList();
+			for (Iterator iterator = containers.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				childrenEditPart.addAll(((EditPart)object).getChildren());
+			}
 			for (Iterator<?> iterator = childrenEditPart.iterator(); iterator.hasNext();) {
 				Object object = (Object) iterator.next();
-//				Object model = ((EditPart) object).getModel();
-//				if (object instanceof InputDataContainerEditPart || model instanceof XSLTemplateGraphicalModel) {
-					SmooksUIUtils.expandGraphTree(expanedTreeNodeList, (TreeNodeEditPart) object);
-//				}
-				// if(model instanceof XSLTemplateGraphicalModel){
-				// ((TreeNodeEditPart) object).expandNode();
-				// if(!((TreeNodeEditPart) object).getChildren().isEmpty()){
-				// SmooksUIUtils.expandGraphTree(expanedTreeNodeList,
-				// (TreeNodeEditPart) ((TreeNodeEditPart)
-				// object).getChildren().get(0));
-				// }
-				// }
+				SmooksUIUtils.expandGraphTree(expanedTreeNodeList, (TreeNodeEditPart) object);
 			}
 		}
 
@@ -1061,6 +1068,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	@Override
 	protected void initializeGraphicalViewer() {
 		initGraphicalModel();
+		((GraphicalEditPart) getGraphicalViewer().getRootEditPart()).getFigure().validate();
 	}
 
 	protected void applyGraphicalInformation(AbstractSmooksGraphicalModel graphicalModel) {
@@ -1126,9 +1134,12 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 				Node node = (Node) nodeMap.get(part);
 				figureList.add(part);
 				graphAnimation.recordInit(part);
-				IMoveableModel graphicalModel = (IMoveableModel) part.getModel();
-				map.put(graphicalModel, new Point(node.x, node.y));
-				graphAnimation.recordFinal(part, new Rectangle(node.x, node.y, 0, 0));
+				Object gm = part.getModel();
+				if (gm instanceof IMoveableModel) {
+					IMoveableModel graphicalModel = (IMoveableModel) gm;
+					map.put(graphicalModel, new Point(node.x, node.y));
+					graphAnimation.recordFinal(part, new Rectangle(node.x, node.y, 0, 0));
+				}
 			}
 			IEditorSite editorSite = getEditorSite();
 
@@ -1188,7 +1199,17 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			return graph;
 		}
 		EditPart rootEditorPart = this.getGraphicalViewer().getContents();
-		List<?> children = rootEditorPart.getChildren();
+
+		List<?> containers = rootEditorPart.getChildren();
+		List children = new ArrayList();
+		for (Iterator iterator = containers.iterator(); iterator.hasNext();) {
+			Object c = (Object) iterator.next();
+			if (c instanceof OutputContainerEditPart || c instanceof InputSourceContainerEditPart) {
+				children.addAll(((AbstractGraphicalEditPart) c).getChildren());
+			}
+			// children.add(c);
+		}
+
 		// HashMap<Object, Edge> edgeMap = new HashMap<Object, Edge>();
 		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 			Object object = (Object) iterator.next();
@@ -1308,8 +1329,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 
 	public void selectionChanged(SelectionChangedEvent event) {
 		updateActions(getSelectionActions());
-		ISelectionProvider provider = ((SmooksTaskDetailsEditorSite)getSite()).getMultiPageEditor().getSite().getSelectionProvider();
-		if(provider != null){
+		ISelectionProvider provider = ((SmooksTaskDetailsEditorSite) getSite()).getMultiPageEditor().getSite().getSelectionProvider();
+		if (provider != null) {
 			provider.setSelection(event.getSelection());
 		}
 	}
@@ -1356,8 +1377,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			List<AbstractSmooksGraphicalModel> children = root.getChildren();
 			// remove all input data graph model
 			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
-				AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator
-						.next();
+				AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
 				if (abstractSmooksGraphicalModel instanceof InputDataContianerModel) {
 					inputs.add((InputDataContianerModel) abstractSmooksGraphicalModel);
 				}

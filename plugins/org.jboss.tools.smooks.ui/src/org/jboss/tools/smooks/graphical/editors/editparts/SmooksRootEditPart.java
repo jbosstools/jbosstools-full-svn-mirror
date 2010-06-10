@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.graphical.editors.editparts;
 
 import org.eclipse.gef.DefaultEditDomain;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.ui.IEditorPart;
@@ -34,7 +35,14 @@ public class SmooksRootEditPart extends RootEditPart {
 	 */
 	@Override
 	protected void createEditPolicies() {
-		this.installEditPolicy(EditPolicy.LAYOUT_ROLE, new SmooksRootEditPartLayoutEditPolicy());
+		this.installEditPolicy(EditPolicy.LAYOUT_ROLE, new SmooksRootEditPartLayoutEditPolicy(){
+
+			@Override
+			protected EditPolicy createChildEditPolicy(EditPart child) {
+				return null;
+			}
+			
+		});
 	}
 
 	protected IEditorPart getEditorPart() {

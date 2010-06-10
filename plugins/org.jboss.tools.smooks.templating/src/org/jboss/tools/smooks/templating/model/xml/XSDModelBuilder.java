@@ -31,7 +31,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.template.xml.XMLFreeMarkerTemplateBuilder;
 
@@ -56,7 +56,7 @@ import javax.xml.validation.Validator;
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class XSDModelBuilder extends ModelBuilder {
+public class XSDModelBuilder extends TemplatingModelBuilder {
 
     private Map<String, XSDElementDeclaration> elements = new LinkedHashMap<String, XSDElementDeclaration>();
     private Map<String, XSDTypeDefinition> types = new LinkedHashMap<String, XSDTypeDefinition>();
@@ -207,17 +207,17 @@ public class XSDModelBuilder extends ModelBuilder {
             parent.appendChild(element);
 
             if(typeDef instanceof XSDComplexTypeDefinition) {
-            	ModelBuilder.setElementType(element, ElementType.complex);
+            	TemplatingModelBuilder.setElementType(element, ElementType.complex);
                 processComplexType(document, element, (XSDComplexTypeDefinition) typeDef);
             } else if(typeDef instanceof XSDSimpleTypeDefinition) {
                 XSDSimpleTypeDefinition simpleTypeDef = (XSDSimpleTypeDefinition) typeDef;
                 XSDTypeDefinition loadedType = types.get(simpleTypeDef.getName());
 
                 if(loadedType instanceof XSDComplexTypeDefinition) {
-                	ModelBuilder.setElementType(element, ElementType.complex);
+                	TemplatingModelBuilder.setElementType(element, ElementType.complex);
                     processComplexType(document, element, (XSDComplexTypeDefinition) loadedType);
                 } else {
-                	ModelBuilder.setElementType(element, ElementType.simple);                	
+                	TemplatingModelBuilder.setElementType(element, ElementType.simple);                	
                 }
             } else if(typeDef != null) {
                 System.out.println("?? " + typeDef); //$NON-NLS-1$
@@ -256,7 +256,7 @@ public class XSDModelBuilder extends ModelBuilder {
         String compositorType = compositor.getName();
 
         if(particles.size() > 1 && compositorType.equals("choice")) { //$NON-NLS-1$
-            Element compositorEl = ModelBuilder.createCompositor(document);
+            Element compositorEl = TemplatingModelBuilder.createCompositor(document);
 
             compositorEl.setAttribute("type", compositorType); //$NON-NLS-1$
             setMinMax(compositorEl, minOccurs, maxOccurs);

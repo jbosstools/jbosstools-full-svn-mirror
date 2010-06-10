@@ -26,7 +26,7 @@ import java.util.Enumeration;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.template.*;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
@@ -59,7 +59,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
      * @param includeFieldNames True if field names are to be added at the start of the generated message, otherwise false.
      * @throws ModelBuilderException Error building model.
      */
-    public CSVFreeMarkerTemplateBuilder(ModelBuilder modelBuilder, char separatorChar, char quoteChar, boolean includeFieldNames) throws ModelBuilderException {
+    public CSVFreeMarkerTemplateBuilder(TemplatingModelBuilder modelBuilder, char separatorChar, char quoteChar, boolean includeFieldNames) throws ModelBuilderException {
         super(modelBuilder);
         this.separatorChar = separatorChar;
         this.quoteChar = quoteChar;
@@ -77,7 +77,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
      * @throws ModelBuilderException Error building model.
      * @throws TemplateBuilderException Error adding mappings extracted from template. 
      */
-    public CSVFreeMarkerTemplateBuilder(ModelBuilder modelBuilder, char separatorChar, char quoteChar, boolean includeFieldNames, String ftlTemplate) throws ModelBuilderException, TemplateBuilderException {
+    public CSVFreeMarkerTemplateBuilder(TemplatingModelBuilder modelBuilder, char separatorChar, char quoteChar, boolean includeFieldNames, String ftlTemplate) throws ModelBuilderException, TemplateBuilderException {
         this(modelBuilder, separatorChar, quoteChar, includeFieldNames);
         addMappings(ftlTemplate);
     }

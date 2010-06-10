@@ -38,7 +38,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.template.xml.XMLFreeMarkerTemplateBuilder;
 import org.milyn.xml.DomUtils;
@@ -50,7 +50,7 @@ import org.milyn.xml.DomUtils;
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class XMLSampleModelBuilder extends ModelBuilder {
+public class XMLSampleModelBuilder extends TemplatingModelBuilder {
 		
 	private static DocumentBuilder docBuilder;
 	private Document model;
@@ -115,7 +115,7 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 
 		if(childCount > 0) {
 			// Has child elements, therefore it's a "complex" element type...
-			ModelBuilder.setElementType(element, ElementType.complex);
+			TemplatingModelBuilder.setElementType(element, ElementType.complex);
 			
 			for(int i = 0; i < childCount; i++) {
 				Node child = children.item(i);			
@@ -128,7 +128,7 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 			}
 		} else {
 			// Has no child elements, therefore it's a "simple" element type...
-			ModelBuilder.setElementType(element, ElementType.simple);
+			TemplatingModelBuilder.setElementType(element, ElementType.simple);
 		}
 	}
 
@@ -147,19 +147,19 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 				Element earlierOccurance = childElementByNames.get(elementName);
 
 				// Mark every element as being optional and possibly being multiple...
-				ModelBuilder.setMinMax(childElement, 0, -1);
+				TemplatingModelBuilder.setMinMax(childElement, 0, -1);
 				
 				if(earlierOccurance != null) {
 					// According to the sample XML, this element is definitely a 
 					// collection item because it exists more than once, so lets mark it 
 					// such that sub mappings on this element require this collection to be mapped beforehand...
-					ModelBuilder.setEnforceCollectionSubMappingRules(earlierOccurance, true);
+					TemplatingModelBuilder.setEnforceCollectionSubMappingRules(earlierOccurance, true);
 					// And remove the duplicates...
 					removeableChildren.add(childElement);
 				} else {
 					// We've no way of knowing whether or not this element is a collection
 					// item or not, so lets not enforce the collection sub mapping rules...
-					ModelBuilder.setEnforceCollectionSubMappingRules(childElement, false);
+					TemplatingModelBuilder.setEnforceCollectionSubMappingRules(childElement, false);
 				}
 				
 				configureModelElementCardinality(childElement);

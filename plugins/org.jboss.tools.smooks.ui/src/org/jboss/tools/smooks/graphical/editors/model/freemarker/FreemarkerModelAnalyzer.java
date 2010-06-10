@@ -24,7 +24,7 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLUtils;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -120,7 +120,7 @@ public class FreemarkerModelAnalyzer {
 		if (element != null) {
 			Node parentNode = element.getParentNode();
 			if (parentNode instanceof Element) {
-				if (ModelBuilder.isCompositor(parentNode)) {
+				if (TemplatingModelBuilder.isCompositor(parentNode)) {
 					return true;
 				}
 			}
@@ -134,7 +134,7 @@ public class FreemarkerModelAnalyzer {
 			return null;
 		boolean canAdd = false;
 		TagObject tag = null;
-		if (ModelBuilder.isCompositor(element)) {
+		if (TemplatingModelBuilder.isCompositor(element)) {
 			tag = parentTag;
 		} else {
 			tag = getChildTagByName(element.getNodeName(), parentTag, ignoreNodeNames);
@@ -207,7 +207,7 @@ public class FreemarkerModelAnalyzer {
 					localName = name;
 				}
 				
-				if(ModelBuilder.isInReservedNamespace(attr)) {
+				if(TemplatingModelBuilder.isInReservedNamespace(attr)) {
 					continue;
 				}
 				

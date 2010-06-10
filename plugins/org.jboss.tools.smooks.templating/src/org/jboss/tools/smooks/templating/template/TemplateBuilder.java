@@ -34,7 +34,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.eclipse.core.runtime.Assert;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.model.ModelNodeResolver;
 import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
@@ -56,7 +56,7 @@ import org.w3c.dom.NodeList;
  */
 public abstract class TemplateBuilder {
 
-	private ModelBuilder modelBuilder;
+	private TemplatingModelBuilder modelBuilder;
 	private Document model;
 	private List<Mapping> mappings = new ArrayList<Mapping>();
 	private XPathFactory xpathFactory = XPathFactory.newInstance();
@@ -70,7 +70,7 @@ public abstract class TemplateBuilder {
 	 * @throws ModelBuilderException
 	 *             Error building model.
 	 */
-	public TemplateBuilder(ModelBuilder modelBuilder) throws ModelBuilderException {
+	public TemplateBuilder(TemplatingModelBuilder modelBuilder) throws ModelBuilderException {
 		Assert.isNotNull(modelBuilder, "modelBuilder"); //$NON-NLS-1$
 		this.modelBuilder = modelBuilder;
 		this.model = modelBuilder.buildModel();
@@ -112,13 +112,13 @@ public abstract class TemplateBuilder {
 	}
 
 	/**
-	 * Get the {@link ModelBuilder} instance associated with this
+	 * Get the {@link TemplatingModelBuilder} instance associated with this
 	 * {@link TemplateBuilder}.
 	 * 
-	 * @return The {@link ModelBuilder} instance associated with this
+	 * @return The {@link TemplatingModelBuilder} instance associated with this
 	 *         {@link TemplateBuilder}.
 	 */
-	public ModelBuilder getModelBuilder() {
+	public TemplatingModelBuilder getModelBuilder() {
 		return modelBuilder;
 	}
 
@@ -187,7 +187,7 @@ public abstract class TemplateBuilder {
 			for (Node hiddenNode : hideNodes) {
 				if (hiddenNode.getNodeType() == Node.ELEMENT_NODE) {
 					if (!isOnMappingPath((Element) hiddenNode)) {
-						ModelBuilder.unhideFragment((Element) hiddenNode);
+						TemplatingModelBuilder.unhideFragment((Element) hiddenNode);
 						showNodes.add(hiddenNode);
 					}
 				}
@@ -198,19 +198,19 @@ public abstract class TemplateBuilder {
 	}
 
 	private void addHideNodes(Node modelPath, Mapping mapping) {
-		Node parent = ModelBuilder.getParentNode(modelPath);
+		Node parent = TemplatingModelBuilder.getParentNode(modelPath);
 
 		while (parent != null) {
-			if (ModelBuilder.isCompositor(parent)) {
+			if (TemplatingModelBuilder.isCompositor(parent)) {
 				Element compositor = (Element) parent;
-				int maxOccurs = ModelBuilder.getMaxOccurs(compositor);
+				int maxOccurs = TemplatingModelBuilder.getMaxOccurs(compositor);
 				int numElementsOnMappingPath = getNumElementsOnMappingPath(compositor);
 
 				if (numElementsOnMappingPath == maxOccurs) {
 					hideUnmappedPaths(compositor, mapping);
 				}
 			}
-			parent = ModelBuilder.getParentNode(parent);
+			parent = TemplatingModelBuilder.getParentNode(parent);
 		}
 	}
 
@@ -224,7 +224,7 @@ public abstract class TemplateBuilder {
 				Element nodeToHide = (Element) child;
 				if (!isOnMappingPath(nodeToHide)) {
 					mapping.addHideNode(nodeToHide);
-					ModelBuilder.hideFragment(nodeToHide);
+					TemplatingModelBuilder.hideFragment(nodeToHide);
 				}
 			}
 		}
@@ -264,11 +264,11 @@ public abstract class TemplateBuilder {
 			throw new InvalidMappingException(
 					"Unsupported XML target node mapping.  Support XML elements and attributes only."); //$NON-NLS-1$
 		}
-		if (ModelBuilder.NAMESPACE.equals(mappingNode.getNamespaceURI())) {
+		if (TemplatingModelBuilder.NAMESPACE.equals(mappingNode.getNamespaceURI())) {
 			throw new InvalidMappingException(
-					"Unsupported XML target node mapping.  Cannot map to a reserved model node from the '" + ModelBuilder.NAMESPACE + "' namespace."); //$NON-NLS-1$ //$NON-NLS-2$
+					"Unsupported XML target node mapping.  Cannot map to a reserved model node from the '" + TemplatingModelBuilder.NAMESPACE + "' namespace."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		if (ModelBuilder.isHidden(mappingNode)) {
+		if (TemplatingModelBuilder.isHidden(mappingNode)) {
 			throw new InvalidMappingException(
 					"Illegal XML target node mapping for node '" + mappingNode + "'.  This node (or one of it's ancestors) is hidden."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -278,7 +278,7 @@ public abstract class TemplateBuilder {
 		Element collectionElement = getNearestCollectionElement(mappingNode);
 		if (collectionElement != null) {
 			CollectionMapping parentCollectionMapping = getCollectionMapping(collectionElement);
-			if (parentCollectionMapping == null && ModelBuilder.getEnforceCollectionSubMappingRules(collectionElement)) {
+			if (parentCollectionMapping == null && TemplatingModelBuilder.getEnforceCollectionSubMappingRules(collectionElement)) {
 				throw new UnmappedCollectionNodeException(collectionElement);
 			}
 		}
@@ -299,12 +299,12 @@ public abstract class TemplateBuilder {
 
 		while (nextNode != null) {
 			if (nextNode.getNodeType() == Node.ELEMENT_NODE) {
-				if(ModelBuilder.isCollection((Element) nextNode)) {					
+				if(TemplatingModelBuilder.isCollection((Element) nextNode)) {					
 					return (Element) nextNode;
 				}
 			}
 
-			nextNode = ModelBuilder.getParentNode(nextNode);
+			nextNode = TemplatingModelBuilder.getParentNode(nextNode);
 		}
 
 		return null;
@@ -347,11 +347,11 @@ public abstract class TemplateBuilder {
 		// it's attributes and
 		// child elements) i.e. it is not a parent of any of the mappings.
 
-		if (ModelBuilder.isInReservedNamespace(element)) {
+		if (TemplatingModelBuilder.isInReservedNamespace(element)) {
 			return false;
-		} else if (ModelBuilder.isHidden(element)) {
+		} else if (TemplatingModelBuilder.isHidden(element)) {
 			return false;
-		} else if (ModelBuilder.getMinOccurs(element) == 0 && !isOnMappingPath(element)) {
+		} else if (TemplatingModelBuilder.getMinOccurs(element) == 0 && !isOnMappingPath(element)) {
 			return false;
 		}
 
@@ -375,7 +375,7 @@ public abstract class TemplateBuilder {
 				if (element == pathNode) {
 					return true;
 				}
-				pathNode = ModelBuilder.getParentNode(pathNode);
+				pathNode = TemplatingModelBuilder.getParentNode(pathNode);
 			}
 		}
 
@@ -404,8 +404,8 @@ public abstract class TemplateBuilder {
 
 			if (child.getNodeType() == Node.ELEMENT_NODE) {
 				Node targetModelNode = modelNodeResolver.resolveNodeMapping(child);
-				String srcPath = element.getAttributeNS(ModelBuilder.NAMESPACE, "srcPath"); //$NON-NLS-1$
-				String collectionItemName = element.getAttributeNS(ModelBuilder.NAMESPACE, "collectionItemName"); //$NON-NLS-1$
+				String srcPath = element.getAttributeNS(TemplatingModelBuilder.NAMESPACE, "srcPath"); //$NON-NLS-1$
+				String collectionItemName = element.getAttributeNS(TemplatingModelBuilder.NAMESPACE, "collectionItemName"); //$NON-NLS-1$
 
 				addCollectionMapping(srcPath, (Element) targetModelNode, collectionItemName);
 
@@ -435,7 +435,7 @@ public abstract class TemplateBuilder {
 	}
 
 	public static void writeListStart(StringWriter writer, String srcPath, String collectionItemName) {
-		writer.write("<smk:list smk:srcPath=\"" + srcPath + "\" smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + ModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		writer.write("<smk:list smk:srcPath=\"" + srcPath + "\" smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + TemplatingModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	public static void writeListEnd(StringWriter writer) {
@@ -443,7 +443,7 @@ public abstract class TemplateBuilder {
 	}
 
 	public static boolean isListElement(Element element) {
-		if (ModelBuilder.isInReservedNamespace(element)) {
+		if (TemplatingModelBuilder.isInReservedNamespace(element)) {
 			if (DomUtils.getName(element).equals("list")) { //$NON-NLS-1$
 				return true;
 			}
@@ -473,7 +473,7 @@ public abstract class TemplateBuilder {
 
 		public String getNamespaceURI(String prefix) {
 			if (prefix.equals("smk")) { //$NON-NLS-1$
-				return ModelBuilder.NAMESPACE;
+				return TemplatingModelBuilder.NAMESPACE;
 			} else {
 				return namespaces.getProperty(prefix);
 			}

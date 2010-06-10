@@ -33,10 +33,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.model.ModelNodeResolver;
-import org.jboss.tools.smooks.templating.model.ModelBuilder.ElementType;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder.ElementType;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
 import org.jboss.tools.smooks.templating.template.*;
 import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
@@ -63,13 +63,13 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 	 * <p/>
 	 * This constructor is used when an existing template doesn't exist i.e. for creating new
 	 * templates with a new set of mappings.  When creating an {@link XMLFreeMarkerTemplateBuilder} instance to incorporate
-	 * mappings from an existing template, use the {@link #XMLFreeMarkerTemplateBuilder(ModelBuilder, String)}
+	 * mappings from an existing template, use the {@link #XMLFreeMarkerTemplateBuilder(TemplatingModelBuilder, String)}
 	 * constructor.
 	 * 
-	 * @param modelBuilder The {@link ModelBuilder} instance that describes the XML model (e.g. {@link XSDModelBuilder}).
-	 * @throws ModelBuilderException Invalid {@link ModelBuilder} instance. 
+	 * @param modelBuilder The {@link TemplatingModelBuilder} instance that describes the XML model (e.g. {@link XSDModelBuilder}).
+	 * @throws ModelBuilderException Invalid {@link TemplatingModelBuilder} instance. 
 	 */
-    public XMLFreeMarkerTemplateBuilder(ModelBuilder modelBuilder) throws ModelBuilderException {
+    public XMLFreeMarkerTemplateBuilder(TemplatingModelBuilder modelBuilder) throws ModelBuilderException {
         super(modelBuilder);
     }
 
@@ -79,12 +79,12 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 	 * Used to construct an {@link XMLFreeMarkerTemplateBuilder} instance to incorporate mappings from an
 	 * existing FreeMarker template.
 	 * 
-	 * @param modelBuilder The {@link ModelBuilder} instance that describes the XML model (e.g. {@link XSDModelBuilder}).
+	 * @param modelBuilder The {@link TemplatingModelBuilder} instance that describes the XML model (e.g. {@link XSDModelBuilder}).
 	 * @param ftlTemplate FreeMarker template from which to extract existing {@link ValueMapping mappings}.
-	 * @throws ModelBuilderException Invalid {@link ModelBuilder} instance. 
+	 * @throws ModelBuilderException Invalid {@link TemplatingModelBuilder} instance. 
 	 * @throws TemplateBuilderException Error processing FreeMarker template.
 	 */
-    public XMLFreeMarkerTemplateBuilder(ModelBuilder modelBuilder, String ftlTemplate) throws ModelBuilderException, TemplateBuilderException {
+    public XMLFreeMarkerTemplateBuilder(TemplatingModelBuilder modelBuilder, String ftlTemplate) throws ModelBuilderException, TemplateBuilderException {
         super(modelBuilder);
         addMappings(ftlTemplate);
     }
@@ -125,7 +125,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 	 */
 	private void writeElement(Element element, int indent, boolean addNewline, Writer templateWriter) {
 		try {
-			if(ModelBuilder.isInReservedNamespace(element)) {
+			if(TemplatingModelBuilder.isInReservedNamespace(element)) {
 				writeElementChildren(element, indent, templateWriter);
 			} else if(assertAddNodeToTemplate(element)) {
 				if(addNewline) {
@@ -171,12 +171,12 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 		for(int i = 0; i < attributes.getLength(); i++) {
 			Attr attribute = (Attr) attributes.item(i);
 			
-			if(!ModelBuilder.isInReservedNamespace(attribute)) {
+			if(!TemplatingModelBuilder.isInReservedNamespace(attribute)) {
 				Mapping mapping = getMapping(attribute);
 				
 				if(mapping != null) {
 					writeAttribute(attribute.getNodeName(), FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping), templateWriter); //$NON-NLS-1$
-				} else if(ModelBuilder.isRequired(attribute)) {
+				} else if(TemplatingModelBuilder.isRequired(attribute)) {
 					writeAttribute(attribute.getNodeName(), attribute.getValue(), templateWriter);
 				}
 			}				
@@ -213,16 +213,16 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 		if(children.getLength() == 0) {
 			Mapping mapping = getMapping(element);
 			
-			if(ModelBuilder.getElementType(element) == ElementType.simple) {
+			if(TemplatingModelBuilder.getElementType(element) == ElementType.simple) {
 				templateWriter.write(">"); //$NON-NLS-1$
 				if(mapping != null) {
 					templateWriter.write(FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping));
 				} else {
-					templateWriter.write(ModelBuilder.REQUIRED);
+					templateWriter.write(TemplatingModelBuilder.REQUIRED);
 				}
 			}
 		} else {
-			if(!ModelBuilder.isInReservedNamespace(element)) {
+			if(!TemplatingModelBuilder.isInReservedNamespace(element)) {
 				templateWriter.write(">"); //$NON-NLS-1$
 			}
 			for(int i = 0; i < children.getLength(); i++) {
@@ -232,7 +232,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 					numElementsWritten++;
 				}
 			}
-			if(!ModelBuilder.isInReservedNamespace(element)) {
+			if(!TemplatingModelBuilder.isInReservedNamespace(element)) {
 				templateWriter.write('\n'); //$NON-NLS-1$
 			}
 		}
@@ -241,7 +241,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 	}
 
 	private void writeElementEnd(Element element, boolean hasChildren, Writer templateWriter) throws IOException {
-		if(hasChildren || ModelBuilder.getElementType(element) == ElementType.simple) {
+		if(hasChildren || TemplatingModelBuilder.getElementType(element) == ElementType.simple) {
 			templateWriter.write("</"); //$NON-NLS-1$
 			templateWriter.write(element.getNodeName());
 			templateWriter.write(">"); //$NON-NLS-1$
@@ -295,7 +295,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 	private void addMappings(Element element, ModelNodeResolver modelNodeResolver) throws TemplateBuilderException {
 		if(TemplateBuilder.isListElement(element)) {
 			addCollectionMapping(element, modelNodeResolver);
-		} else if(!ModelBuilder.isInReservedNamespace(element)) {
+		} else if(!TemplatingModelBuilder.isInReservedNamespace(element)) {
 			String elementText = DomUtils.getAllText(element, false);
 			
 			// Handle the element itself...		
@@ -309,7 +309,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 			for(int i = 0; i < attribCount; i++) {
 				Attr attribute = (Attr) attributes.item(i);
 				
-				if(!ModelBuilder.isInReservedNamespace(attribute)) {
+				if(!TemplatingModelBuilder.isInReservedNamespace(attribute)) {
 					String attrValue = attribute.getValue();
 					
 					if(FreeMarkerUtil.isDollarVariable(attrValue)) {

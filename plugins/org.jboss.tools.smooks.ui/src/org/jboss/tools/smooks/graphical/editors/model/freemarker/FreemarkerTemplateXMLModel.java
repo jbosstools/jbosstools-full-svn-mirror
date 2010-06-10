@@ -17,7 +17,7 @@ import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.template.Mapping;
 import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
@@ -67,7 +67,7 @@ public class FreemarkerTemplateXMLModel extends TagObject implements IFreemarker
 			return false;
 		}
 		if (element != null) {
-			return ModelBuilder.isRequired(element);
+			return TemplatingModelBuilder.isRequired(element);
 		}
 		return false;
 	}
@@ -75,7 +75,7 @@ public class FreemarkerTemplateXMLModel extends TagObject implements IFreemarker
 	public boolean isManyOccurs() {
 		Element refElement = this.getReferenceElement();
 		if (refElement != null) {
-			return ModelBuilder.isCollection(refElement);
+			return TemplatingModelBuilder.isCollection(refElement);
 		}
 		return false;
 	}

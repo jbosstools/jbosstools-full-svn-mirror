@@ -54,7 +54,7 @@ public class ModelNodeResolver {
 		StringBuilder pathBuilder = new StringBuilder();
 		
 		while(node != null && node.getNodeType() != Node.DOCUMENT_NODE) {
-			if(!ModelBuilder.isInReservedNamespace(node)) {
+			if(!TemplatingModelBuilder.isInReservedNamespace(node)) {
 				if(pathBuilder.length() > 0) {
 					pathBuilder.insert(0, '/'); //$NON-NLS-1$
 				}
@@ -76,7 +76,7 @@ public class ModelNodeResolver {
 				}
 			}
 			
-			node = ModelBuilder.getParentNode(node);
+			node = TemplatingModelBuilder.getParentNode(node);
 		}
 		
 		return pathBuilder.toString();
@@ -85,7 +85,7 @@ public class ModelNodeResolver {
 	private void buildModelNodeMap(Element element, String parentPath) {
 		String elementPath = parentPath;
 		
-		if(!ModelBuilder.isInReservedNamespace(element)) {
+		if(!TemplatingModelBuilder.isInReservedNamespace(element)) {
 			String elNS = element.getNamespaceURI();
 			
 			if(parentPath.length() > 0) {
@@ -104,7 +104,7 @@ public class ModelNodeResolver {
 			int attrCount = attributes.getLength();
 			for(int i = 0; i < attrCount; i++) {
 				Attr attribute = (Attr) attributes.item(i);
-				if(!ModelBuilder.isInReservedNamespace(attribute)) {
+				if(!TemplatingModelBuilder.isInReservedNamespace(attribute)) {
 					String attrNS = attribute.getNamespaceURI();
 					if(attrNS != null && attrNS.length() > 0) {
 						modelNodeMap.put(elementPath + "/@" + getPrefix(attrNS) + ":" + attribute.getName(), attribute); //$NON-NLS-1$ //$NON-NLS-2$					

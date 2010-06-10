@@ -15,7 +15,7 @@ import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -41,7 +41,7 @@ public class FreemarkerTemplateModelLabelProvider extends XMLStructuredDataLabel
 			}
 			Node modelNode = ((FreemarkerTemplateXMLModel) element).getModelNode();
 			if (((FreemarkerTemplateXMLModel) element).isManyOccurs()) {
-				if(modelNode instanceof Element && ModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode)) {
+				if(modelNode instanceof Element && TemplatingModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode)) {
 					return imageRegistry.get(GraphicsConstants.IMAGE_XSL_FOREACH);
 				}
 			}

@@ -29,7 +29,7 @@ import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.w3c.dom.Element;
@@ -163,7 +163,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 		if (data instanceof IFreemarkerTemplateModel) {
 			Node modelNode = ((IFreemarkerTemplateModel) data).getModelNode();
 			if(modelNode instanceof Element) {
-				return ModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode);
+				return TemplatingModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode);
 			}
 		}
 		return true;

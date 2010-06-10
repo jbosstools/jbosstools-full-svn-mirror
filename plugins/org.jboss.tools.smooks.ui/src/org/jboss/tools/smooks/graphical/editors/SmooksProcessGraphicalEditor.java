@@ -47,6 +47,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -141,7 +142,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	private GraphViewer processGraphViewer;
 
-	private ScrolledPageBook pageBook;
+//	private ScrolledPageBook pageBook;
 
 	private Map<String, Object> registedTaskPages = new HashMap<String, Object>();
 
@@ -152,6 +153,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	private ProcessType process;
 
 	private Map<Object, String> smooksModelIdMap = new HashMap<Object, String>();
+	
+	private Map<String,Object> detailsControlMap = new HashMap<String, Object>();
+
+	private Composite detailsContentsComposite;
 
 	public SmooksProcessGraphicalEditor(FormEditor editor, String id, String title, ISmooksModelProvider provider) {
 		super(editor, id, title);
@@ -533,14 +538,17 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 		Section section = toolkit.createSection(taskDetailsComposite, Section.TITLE_BAR);
 		section.setText(Messages.SmooksProcessGraphicalEditor_TaskConfigurationSectionTitle);
-		pageBook = new ScrolledPageBook(section);
-		pageBook.setBackground(toolkit.getColors().getBackground());
-		section.setClient(pageBook);
+		detailsContentsComposite = toolkit.createComposite(section);
+		section.setClient(detailsContentsComposite);
+//		pageBook = new ScrolledPageBook(section);
+		section.setLayout(new FillLayout());
+//		pageBook.setBackground(toolkit.getColors().getBackground());
+//		section.setClient(pageBook);
 
-		Composite emptyComposite = pageBook.createPage(emptyKey);
-		emptyComposite.setLayout(new FillLayout());
-		createEmptyTaskPanel(emptyComposite, toolkit);
-		pageBook.showPage(emptyKey);
+//		Composite emptyComposite = pageBook.createPage(emptyKey);
+//		emptyComposite.setLayout(new FillLayout());
+//		createEmptyTaskPanel(emptyComposite, toolkit);
+//		pageBook.showPage(emptyKey);
 	}
 
 	/*
@@ -575,7 +583,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 		createTaskDetailsSection(toolkit, sashForm);
 
-		sashForm.setWeights(new int[] { 3, 7 });
+		sashForm.setWeights(new int[] { 2, 8 });
 
 		validateEnd(null);
 	}
@@ -891,20 +899,45 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	public Object getActiveEditorPage() {
-		if (pageBook != null) {
-			Control control = pageBook.getCurrentPage();
-			return control.getData();
+		if(detailsContentsComposite != null){
+			Control[] controls = detailsContentsComposite.getChildren();
+			for (int i = 0; i < controls.length; i++) {
+				Control control = controls[i];
+				if( control.isVisible()){
+					return control.getData();
+				}
+			}
 		}
+//		if (pageBook != null) {
+//			Control control = pageBook.getCurrentPage();
+//			return control.getData();
+//		}
 		return null;
+	}
+	
+	private void showEmptyPage(){
+		Control[] childrens = detailsContentsComposite.getChildren();
+		for (int i = 0; i < childrens.length; i++) {
+			Control child = childrens[i];
+			GridData gd = new GridData();
+			gd.exclude = true;
+			child.setLayoutData(gd);
+			child.setVisible(false);
+			child.setBounds(new Rectangle(0, 0, 0, 0));
+		}
+		detailsContentsComposite.setLayout(new GridLayout());
+		detailsContentsComposite.layout(false);
 	}
 
 	protected void showTaskControl(Object model) {
-		if (pageBook == null)
+		if (detailsContentsComposite == null)
 			return;
-		if (model == null)
-			pageBook.showEmptyPage();
+		if (model == null){
+			showEmptyPage();
+		}
 		final Object finalModel = model;
-		pageBook.getShell().getDisplay().syncExec(new Runnable() {
+		detailsContentsComposite.setLayout(new FillLayout());
+		detailsContentsComposite.getShell().getDisplay().syncExec(new Runnable() {
 
 			/*
 			 * (non-Javadoc)
@@ -929,34 +962,60 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 						}
 					}
 					if (id != null) {
-						if (!pageBook.hasPage(id)) {
-							Composite parent = pageBook.createPage(id);
+						if (!detailsControlMap.containsKey(id)) {
+//							Composite parent = pageBook.createPage(id);
+							Control[] childrens = detailsContentsComposite.getChildren();
+							for (int i = 0; i < childrens.length; i++) {
+								Control child = childrens[i];
+								child.setVisible(false);
+								child.setBounds(new Rectangle(0, 0, 0, 0));
+								if(child.getLayoutData() instanceof GridData){
+									((GridData)child.getLayoutData()).exclude = true;
+								}
+							}
 							Object page = getRegisteTaskPage(id);
 							if (page != null && page instanceof IEditorPart) {
 								try {
-									parent.setLayout(new FillLayout());
-
+									detailsContentsComposite.setLayout(new GridLayout());
+									Composite contentParent = toolkit.createComposite(detailsContentsComposite);
+									contentParent.setLayout(new FillLayout());
+									GridData gd = new GridData(GridData.FILL_BOTH);
+									contentParent.setLayoutData(gd);
 									ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
 											.getAdapter(ITaskNodeProvider.class);
 									if (nodeProvider != null) {
 										nodeProvider.setTaskType((TaskType) finalModel);
 									}
-									createTaskPage((IEditorPart) page, parent);
-									pageBook.showPage(id);
-									parent.setData(page);
+									createTaskPage((IEditorPart) page, contentParent);
+									detailsContentsComposite.layout(false);
+									contentParent.setData(page);
+									detailsControlMap.put(id, contentParent);
 
 								} catch (Throwable e) {
 									e.printStackTrace();
-									pageBook.removePage(id);
-									pageBook.showPage(emptyKey);
+									detailsControlMap.remove(id);
+									showEmptyPage();
 								}
 							} else {
-								Control control = createTaskPanel(parent, toolkit, id);
+								for (int i = 0; i < childrens.length; i++) {
+									Control child = childrens[i];
+									child.setVisible(false);
+									child.setBounds(new Rectangle(0, 0, 0, 0));
+									if(child.getLayoutData() instanceof GridData){
+										((GridData)child.getLayoutData()).exclude = true;
+									}
+								}
+								Control control = createTaskPanel(detailsContentsComposite, toolkit, id);
 								if (control != null) {
-									pageBook.showPage(id);
+									GridData gd = new GridData(GridData.FILL_BOTH);
+									control.setLayoutData(gd);
+									detailsContentsComposite.layout(false);
+									detailsControlMap.put(id, control);
 								} else {
-									pageBook.removePage(id);
-									pageBook.showPage(emptyKey);
+									detailsControlMap.remove(id);
+									showEmptyPage();
+//									pageBook.removePage(id);
+//									pageBook.showPage(emptyKey);
 								}
 							}
 						} else {
@@ -966,17 +1025,115 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 							if (nodeProvider != null) {
 								nodeProvider.setTaskType((TaskType) finalModel);
 							}
-							pageBook.showPage(id);
+							Control[] childrens = detailsContentsComposite.getChildren();
+							for (int i = 0; i < childrens.length; i++) {
+								Control child = childrens[i];
+								GridData gd = new GridData();
+								gd.exclude = true;
+								child.setLayoutData(gd);
+								child.setVisible(false);
+								child.setBounds(new Rectangle(0, 0, 0, 0));
+							}
+							detailsContentsComposite.setLayout(new GridLayout());
+							
+							Control contentParent = (Control)detailsControlMap.get(id);
+							contentParent.setVisible(true);
+							GridData gd = new GridData(GridData.FILL_BOTH);
+							contentParent.setLayoutData(gd);
+							detailsContentsComposite.layout(false);
 						}
 					}
 				} else {
-					// pageBook.showEmptyPage();
+					 showEmptyPage();
 				}
 			}
 
 		});
 		updateGlobalActions();
 	}
+	
+//	protected void showTaskControl(Object model) {
+//		if (pageBook == null)
+//			return;
+//		if (model == null){
+//			pageBook.showEmptyPage();
+//		}
+//		final Object finalModel = model;
+//		pageBook.setLayout(new FillLayout());
+//		pageBook.setAlwaysShowScrollBars(false);
+//		pageBook.getShell().getDisplay().syncExec(new Runnable() {
+//
+//			/*
+//			 * (non-Javadoc)
+//			 * 
+//			 * @see java.lang.Runnable#run()
+//			 */
+//			public void run() {
+//				FormToolkit toolkit = ((AbstractSmooksFormEditor) smooksModelProvider).getToolkit();
+//				if (finalModel instanceof TaskType) {
+//					String id = ((TaskType) finalModel).getId();
+//					if (!isSingltonEditor(id)) {
+//						String idref = generateTaskSpecailID((TaskType) finalModel);
+//						if (idref != null) {
+//							// idref = id + "_" + idref;
+//							if (getRegisteTaskPage(idref) == null) {
+//								IEditorPart editor = createEditorPart(finalModel);
+//								registeTaskDetailsPage(editor, idref);
+//							}
+//							id = idref;
+//						} else {
+//							id = id + "_unknown"; //$NON-NLS-1$
+//						}
+//					}
+//					if (id != null) {
+//						if (!pageBook.hasPage(id)) {
+//							Composite parent = pageBook.createPage(id);
+//							Object page = getRegisteTaskPage(id);
+//							if (page != null && page instanceof IEditorPart) {
+//								try {
+//									parent.setLayout(new FillLayout());
+//
+//									ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
+//											.getAdapter(ITaskNodeProvider.class);
+//									if (nodeProvider != null) {
+//										nodeProvider.setTaskType((TaskType) finalModel);
+//									}
+//									createTaskPage((IEditorPart) page, parent);
+//									pageBook.showPage(id);
+//									parent.setData(page);
+//
+//								} catch (Throwable e) {
+//									e.printStackTrace();
+//									pageBook.removePage(id);
+//									pageBook.showPage(emptyKey);
+//								}
+//							} else {
+//								Control control = createTaskPanel(parent, toolkit, id);
+//								if (control != null) {
+//									pageBook.showPage(id);
+//								} else {
+//									pageBook.removePage(id);
+//									pageBook.showPage(emptyKey);
+//								}
+//							}
+//						} else {
+//							Object page = getRegisteTaskPage(id);
+//							ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
+//									.getAdapter(ITaskNodeProvider.class);
+//							if (nodeProvider != null) {
+//								nodeProvider.setTaskType((TaskType) finalModel);
+//							}
+//							pageBook.showPage(id);
+//						}
+//					}
+//				} else {
+//					// pageBook.showEmptyPage();
+//				}
+//			}
+//
+//		});
+//		updateGlobalActions();
+//	}
 
 	protected IEditorSite createSite(IEditorPart editor) {
 		return new SmooksTaskDetailsEditorSite(this.getEditor(), editor, this);
@@ -1014,16 +1171,22 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		}
 		registedTaskPages.clear();
 
-		if (pageBook != null) {
-			List<TaskTypeDescriptor> tasks = TaskTypeManager.getAllTaskList();
-			for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
-				TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
-				pageBook.removePage(taskTypeDescriptor.getId(), true);
+		if (detailsContentsComposite != null) {
+			Control[] controls = detailsContentsComposite.getChildren();
+			for (int i = 0; i < controls.length; i++) {
+				Control c = controls[i];
+				c.dispose();
 			}
-			for (Iterator<String> iterator = smooksModelIdMap.values().iterator(); iterator.hasNext();) {
-				String id = (String) iterator.next();
-				pageBook.removePage(id, true);
-			}
+			detailsControlMap.clear();
+//			List<TaskTypeDescriptor> tasks = TaskTypeManager.getAllTaskList();
+//			for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
+//				TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
+//				pageBook.removePage(taskTypeDescriptor.getId(), true);
+//			}
+//			for (Iterator<String> iterator = smooksModelIdMap.values().iterator(); iterator.hasNext();) {
+//				String id = (String) iterator.next();
+//				pageBook.removePage(id, true);
+//			}
 		}
 
 		List<TaskTypeDescriptor> tasks = TaskTypeManager.getAllTaskList();
@@ -1034,48 +1197,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				this.registeTaskDetailsPage(part, taskTypeDescriptor.getId());
 			}
 		}
-
-		// registedTaskPages.clear();
-		// Collection<Object> editors = registedTaskPages.values();
-		// for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();)
-		// {
-		// Object object = (Object) iterator.next();
-		// if (object instanceof ISmooksGraphChangeListener) {
-		// ((ISourceSynchronizeListener) object).sourceChange(model);
-		// }
-		// }
 	}
 
-	// public void graphChanged(SmooksGraphicsExtType extType) {
-	// Collection<Object> editors = registedTaskPages.values();
-	// for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-	// Object object = (Object) iterator.next();
-	// if (object instanceof ISmooksGraphChangeListener) {
-	// ((ISmooksGraphChangeListener) object).graphChanged(extType);
-	// }
-	// }
-	// }
-
-	// public void graphPropertyChange(EStructuralFeature featre, Object value)
-	// {
-	// Collection<Object> editors = registedTaskPages.values();
-	// for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-	// Object object = (Object) iterator.next();
-	// if (object instanceof ISmooksGraphChangeListener) {
-	// ((ISmooksGraphChangeListener) object).graphPropertyChange(featre, value);
-	// }
-	// }
-	// }
-
-	// public void inputTypeChanged(SmooksGraphicsExtType extType) {
-	// Collection<Object> editors = registedTaskPages.values();
-	// for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
-	// Object object = (Object) iterator.next();
-	// if (object instanceof ISmooksGraphChangeListener) {
-	// ((ISmooksGraphChangeListener) object).inputTypeChanged(extType);
-	// }
-	// }
-	// }
 
 	public void propertyChanged(Object source, int propId) {
 		this.firePropertyChange(propId);
@@ -1266,7 +1389,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	private void disposeTaskDetails(Object deleteTask) {
 		final Object finalModel = deleteTask;
-		pageBook.getShell().getDisplay().syncExec(new Runnable() {
+		detailsContentsComposite.getShell().getDisplay().syncExec(new Runnable() {
 
 			/*
 			 * (non-Javadoc)
@@ -1284,12 +1407,19 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 							id = id + "_unknown"; //$NON-NLS-1$
 						}
 						if (id != null) {
-							if (pageBook.hasPage(id)) {
-								pageBook.removePage(id);
+							if(detailsControlMap.containsKey(id)){
+								((Control)detailsControlMap.get(id)).dispose();
+								detailsControlMap.remove(id);
 								Object registPage = getRegisteTaskPage(id);
 								removeTaskDetailsPage((IEditorPart) registPage, id);
 							} else {
 							}
+//							if (pageBook.hasPage(id)) {
+//								pageBook.removePage(id);
+//								Object registPage = getRegisteTaskPage(id);
+//								removeTaskDetailsPage((IEditorPart) registPage, id);
+//							} else {
+//							}
 						}
 					}
 				} else {

@@ -20,7 +20,7 @@
 package org.jboss.tools.smooks.templating.model.csv;
 
 import org.eclipse.core.runtime.Assert;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,7 +29,7 @@ import org.w3c.dom.Element;
  * CSV Model Builder.
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class CSVModelBuilder extends ModelBuilder {
+public class CSVModelBuilder extends TemplatingModelBuilder {
 
     public static final String CSV_RECORD_ELEMENT = "csv-record"; //$NON-NLS-1$
     private String[] csvFields;

@@ -56,7 +56,7 @@ import org.jboss.tools.smooks.model.javabean12.Javabean12Factory;
 import org.jboss.tools.smooks.model.javabean12.Javabean12Package;
 import org.jboss.tools.smooks.model.javabean12.ValueType;
 import org.jboss.tools.smooks.model.javabean12.WiringType;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.w3c.dom.Element;
@@ -179,7 +179,7 @@ public class JavaBeanChildGraphModel extends AbstractResourceConfigChildNodeGrap
 						if (iFreemarkerTemplateModel.isManyOccurs() && pgm.getTargetConnections().isEmpty()) {
 							Node modelNode = iFreemarkerTemplateModel.getModelNode();
 							if (modelNode instanceof Element) {
-								return !ModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode);
+								return !TemplatingModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode);
 							} else {
 								return false;
 							}

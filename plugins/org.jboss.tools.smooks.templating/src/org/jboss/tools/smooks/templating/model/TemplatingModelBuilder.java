@@ -37,7 +37,7 @@ import javax.xml.parsers.ParserConfigurationException;
  * 
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public abstract class ModelBuilder {
+public abstract class TemplatingModelBuilder {
     
     public static final String NAMESPACE = "http://www.jboss.org/xsd/tools/smooks"; // TODO: Make same as JBT eclipse extension namespace ?? //$NON-NLS-1$
     public static final String REQUIRED = "#required"; //$NON-NLS-1$

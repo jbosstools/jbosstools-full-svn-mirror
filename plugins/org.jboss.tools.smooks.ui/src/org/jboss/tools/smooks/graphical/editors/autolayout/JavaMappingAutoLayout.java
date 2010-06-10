@@ -64,7 +64,7 @@ public class JavaMappingAutoLayout implements IAutoLayout{
 				input_y =  cha;
 			}
 			inputNode.y = input_y;
-			java_x = inputNode.x + inputNode.width + INPUT_JAVA_WIDTH;
+			java_x = inputNode.x  ;
 		}
 		
 		for (Iterator<?> iterator = javaNodes.iterator(); iterator.hasNext();) {

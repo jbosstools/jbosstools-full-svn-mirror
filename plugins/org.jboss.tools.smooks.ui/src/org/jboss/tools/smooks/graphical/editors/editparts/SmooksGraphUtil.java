@@ -90,15 +90,25 @@ public class SmooksGraphUtil {
 
 	public static AbstractSmooksGraphicalModel findSmooksGraphModel(RootModel root, Object object) {
 		if (root != null && object != null) {
-			List<?> children = root.getChildren();
+			
+			List<?> rc = root.getChildren();
+			List<AbstractSmooksGraphicalModel> children = new ArrayList();
+			for (Iterator iterator = rc.iterator(); iterator.hasNext();) {
+				Object object2 = (Object) iterator.next();
+				if(object2 instanceof RootModel){
+					children.addAll( ((RootModel)object2).getChildren());
+				}
+			}
 			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
 				AbstractSmooksGraphicalModel child = (AbstractSmooksGraphicalModel) iterator.next();
-//				if (child instanceof InputDataContianerModel) {
-//					continue;
-//				}
-				AbstractSmooksGraphicalModel model = findGraphicalModel(child, object);
-				if (model != null) {
-					return model;
+				if(child instanceof RootModel){
+					AbstractSmooksGraphicalModel result = findSmooksGraphModel((RootModel)child, object);
+					if(result != null) return result;
+				}else{
+					AbstractSmooksGraphicalModel model = findGraphicalModel(child, object);
+					if (model != null) {
+						return model;
+					}
 				}
 			}
 		}
@@ -144,7 +154,12 @@ public class SmooksGraphUtil {
 				break;
 			}
 		}
-		List<AbstractSmooksGraphicalModel> children = graphRoot.getChildren();
+		List<AbstractSmooksGraphicalModel> containers = graphRoot.getChildren();
+		List<AbstractSmooksGraphicalModel> children = new ArrayList<AbstractSmooksGraphicalModel>();
+		for (Iterator<?> iterator = containers.iterator(); iterator.hasNext();) {
+			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
+			children.addAll(abstractSmooksGraphicalModel.getChildren());
+		}
 		if (model != null) {
 			AbstractSmooksGraphicalModel parentGraph = null;
 			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {

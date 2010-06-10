@@ -9,10 +9,10 @@ import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 
 public class RootModel extends AbstractSmooksGraphicalModel{
 
-	public RootModel() {
-		super(null);
-	}
-
+	private RootModel targetContainerModel = null;
+	
+	private RootModel sourceContainerModel = null;
+	
 	public static final String ADD_CHILDREN = "__pro_add_children"; //$NON-NLS-1$
 
 	public static final String REMOVE_CHILDREN = "__pro_remove_children"; //$NON-NLS-1$
@@ -20,6 +20,37 @@ public class RootModel extends AbstractSmooksGraphicalModel{
 	private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
 	private List<AbstractSmooksGraphicalModel> children;
+
+	
+	public RootModel() {
+		super(null);
+	}
+	
+	
+	
+	public RootModel getTargetContainerModel() {
+		return targetContainerModel;
+	}
+
+
+
+	public void setTargetContainerModel(RootModel targetContainerModel) {
+		this.targetContainerModel = targetContainerModel;
+	}
+
+
+
+	public RootModel getSourceContainerModel() {
+		return sourceContainerModel;
+	}
+
+
+
+	public void setSourceContainerModel(RootModel sourceContainerModel) {
+		this.sourceContainerModel = sourceContainerModel;
+	}
+
+
 
 	public List<AbstractSmooksGraphicalModel> getChildren() {
 		if (children == null) {

@@ -15,7 +15,7 @@ import java.util.List;
 
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.TemplatingModelBuilder;
 import org.jboss.tools.smooks.templating.template.Mapping;
 import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
@@ -47,7 +47,7 @@ public class FreemarkerAttrModel extends TagPropertyObject implements IFreemarke
 	public boolean isRequired() {
 		Attr element = this.getReferenceAttibute();
 		if (element != null) {
-			return ModelBuilder.isRequired(element);
+			return TemplatingModelBuilder.isRequired(element);
 		}
 		return false;
 	}
