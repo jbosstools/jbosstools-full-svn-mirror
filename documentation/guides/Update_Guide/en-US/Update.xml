@@ -58,7 +58,7 @@ consequently the ability to update using the update site, are provided to users 
       	    </listitem>
       	    <listitem>
       	      <para>
-      	        Enter the <acronym>url</acronym> of the update site in the <guilabel>Location</guilabel> field. The user has the option of the following two options:
+      	        Enter the <acronym>url</acronym> of the update site in the <guilabel>Location</guilabel> field. The following options are available:
       	      </para>
       	      <itemizedlist>
       	        <listitem>
