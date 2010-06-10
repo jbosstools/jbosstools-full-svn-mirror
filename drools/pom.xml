@@ -16,7 +16,8 @@
 		<module>plugins</module>
 		<module>features</module>
 		<module>tests</module>
-	</modules>
+                <module>site</module>
+        </modules>
 	<!-- TODO: figure out how to invoke this BEFORE the dep resolution for target 
 		platform -->
 	<!-- <build> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
