@@ -1,0 +1,3 @@
+TODO: write ant script wrapper to pass in correct variables to aggregateRepos.xml script
+TODO: create Hudson job to aggregate update site zips into a new uberzip
+
