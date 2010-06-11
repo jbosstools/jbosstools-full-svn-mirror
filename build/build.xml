@@ -324,10 +324,12 @@ Svnant unavailable. Will use Maven to fetch sources.
 										        quiet="true"
 										/>
 									</then>
-								</if> -->
+								-->
+								<!-- 
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<revert recurse="${svn.recurse}" dir="@{component}" />
 								</svn>
+								-->
 								<svn javahl="false" svnkit="true" failonerror="false">
 									<update recurse="${svn.recurse}" dir="@{component}" />
 								</svn>
