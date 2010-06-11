@@ -195,7 +195,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				} else {
 					enableBundleGroup(true);
 				}
-				setPageComplete(isPageComplete());
+				updateStatus();
 			}
 		});
 		
@@ -227,7 +227,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				
 				updateDuplicateKeyStatus();
 				updateStatus();
-				setPageComplete(isPageComplete());
 			}
 		});
 		
@@ -353,7 +352,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	
 	private boolean isDuplicatedKey(String key) {
 		boolean isDupliacted = false;
-		if ((tagsTable.getItemCount() > 0) && (null != key)) {
+		if ((tagsTable.getItemCount() > 0) && (null != key) && !isNewFile()) {
 			TableItem[] items = tagsTable.getItems();
 			for (TableItem tableItem : items) {
 				if (key.equalsIgnoreCase(tableItem.getText(0))) {
