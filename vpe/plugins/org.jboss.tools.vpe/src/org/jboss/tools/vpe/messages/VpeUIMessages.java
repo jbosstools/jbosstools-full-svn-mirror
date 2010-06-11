@@ -179,6 +179,7 @@ public final class VpeUIMessages extends NLS {
 	public static String EXTRNALIZE_STRINGS_DIALOG_DEFAULT_VALUE;
 	public static String EXTRNALIZE_STRINGS_DIALOG_PROPERTY_NAME;
 	public static String EXTRNALIZE_STRINGS_DIALOG_PROPERTY_VALUE;
+	public static String EXTRNALIZE_STRINGS_DIALOG_KEY_ALREADY_EXISTS;
 	
 	public static String COULD_NOT_OPEN_VPE_RESOURCES_DIALOG;
 	

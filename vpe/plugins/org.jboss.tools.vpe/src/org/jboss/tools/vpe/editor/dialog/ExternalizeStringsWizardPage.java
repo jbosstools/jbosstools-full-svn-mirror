@@ -63,7 +63,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	private final int DIALOG_WIDTH = 450;
 	private final int DIALOG_HEIGHT = 650;
 	private VpeController vpeController;
-	private Text textStringValue;
 	private Text propsKey;
 	private Text propsValue;
 	private Button newFile;
@@ -75,7 +74,8 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	private Group propsFilesGroup;
 	private Status propsKeyStatus;
 	private Status propsValueStatus;
-	private Status selectedTextStatus;
+	private Status rbComboStatus;
+	
 	private Table tagsTable;
 	
 	public ExternalizeStringsWizardPage(String pageName, VpeController vpeController) {
@@ -91,7 +91,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		this.bm = vpeController.getPageContext().getBundle();
 		propsKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 		propsValueStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
-		selectedTextStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+		rbComboStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 	}
 
 	public ExternalizeStringsWizardPage(String pageName) {
@@ -116,19 +116,19 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		propsStringGroup.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
 		propsStringGroup.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_PROPS_STRINGS_GROUP);
 		
-		/*
-		 * Create Text String label
-		 */
-		Label textStringLabel = new Label(propsStringGroup, SWT.NONE);
-		textStringLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
-		textStringLabel.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_TEXT_STRING);
-		/*
-		 * Create Text String value
-		 */
-		textStringValue = new Text(propsStringGroup, SWT.BORDER);
-		textStringValue.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
-		textStringValue.setText(Constants.EMPTY);
-		textStringValue.setEditable(false);
+//		/*
+//		 * Create Text String label
+//		 */
+//		Label textStringLabel = new Label(propsStringGroup, SWT.NONE);
+//		textStringLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+//		textStringLabel.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_TEXT_STRING);
+//		/*
+//		 * Create Text String value
+//		 */
+//		textStringValue = new Text(propsStringGroup, SWT.BORDER);
+//		textStringValue.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
+//		textStringValue.setText(Constants.EMPTY);
+//		textStringValue.setEditable(false);
 
 		/*
 		 * Create Properties Key label
@@ -144,15 +144,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		propsKey.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_DEFAULT_KEY);
 		propsKey.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				if ((propsKey.getText() == null) 
-						|| (Constants.EMPTY.equalsIgnoreCase(propsKey.getText().trim()))) {
-					propsKeyStatus = new Status(
-							IStatus.ERROR,
-							VpePlugin.PLUGIN_ID,
-							VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_KEY_MUST_BE_SET);
-				} else {
-					propsKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
-				}
 				updateStatus();
 			}
 		});
@@ -167,18 +158,10 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 */
 		propsValue = new Text(propsStringGroup, SWT.BORDER);
 		propsValue.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
-		propsValue.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_DEFAULT_VALUE);
+		propsValue.setText(Constants.EMPTY);
+		propsValue.setEditable(false);
 		propsValue.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				if ((propsValue.getText() == null)
-						|| (Constants.EMPTY.equalsIgnoreCase(propsValue.getText().trim()))) {
-					propsValueStatus = new Status(
-							IStatus.ERROR,
-							VpePlugin.PLUGIN_ID,
-							VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_VALUE_MUST_BE_SET);
-				} else {
-					propsValueStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
-				}
 				updateStatus();
 			}
 		});
@@ -235,8 +218,15 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				if (bundleFile != null) {
 					bundlePath = bundleFile.getFullPath().toString();
 					updateTable(bundleFile);
-				} 
+				} else {
+					VpePlugin.getDefault().logError(
+							"Could not get Bundle File for resource '" //$NON-NLS-1$
+									+ rbCombo.getText() + "'"); //$NON-NLS-1$
+				}
 				propsFile.setText(bundlePath);
+				
+				updateDuplicateKeyStatus();
+				updateStatus();
 				setPageComplete(isPageComplete());
 			}
 		});
@@ -291,7 +281,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 					VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
 		} else {
 			ISelection sel = vpeController.getSourceEditor().getSelectionProvider().getSelection();
-			if ((textStringValue != null) && (propsKey != null)
+			if ((propsValue != null) && (propsKey != null)
 					&& isSelectionCorrect(sel)) {
 				/*
 				 * TODO: One must add functionality
@@ -303,19 +293,10 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				IStructuredSelection structuredSelection = (IStructuredSelection) sel;
 				textSelection = (TextSelection) sel;
 				text = textSelection.getText();
-				if (text.trim().length() < 1) {
-					selectedTextStatus = new Status(
-							IStatus.ERROR,
-							VpePlugin.PLUGIN_ID,
-							VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_SELECTED_TEXT_IS_EMPTY);
-				} else if ((text.indexOf(Constants.GT) != -1) ||  (text.indexOf(Constants.LT) != -1)) {
-					selectedTextStatus = new Status(
-							IStatus.ERROR,
-							VpePlugin.PLUGIN_ID,
-							VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_WRONG_SELECTED_TEXT);
-				} else {
-					selectedTextStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
-				}
+				/*
+				 * Update text string field
+				 */
+				propsValue.setText(text);
 				/*
 				 * Update status message.
 				 */
@@ -341,10 +322,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 					VpePlugin.getDefault().logWarning(
 							VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
 				}
-				/*
-				 * Update text string field
-				 */
-				textStringValue.setText(text);
 				
 				/*
 				 * Initialize bundle messages field
@@ -374,12 +351,36 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		}
 	}
 	
+	private boolean isDuplicatedKey(String key) {
+		boolean isDupliacted = false;
+		if ((tagsTable.getItemCount() > 0) && (null != key)) {
+			TableItem[] items = tagsTable.getItems();
+			for (TableItem tableItem : items) {
+				if (key.equalsIgnoreCase(tableItem.getText(0))) {
+					isDupliacted = true;
+					break;
+				}
+			}
+		} 
+		return isDupliacted; 
+	}
+	
 	private void updateTable(IFile file) {
 		if ((file != null) && file.exists()) {
 		try {
+			/*
+			 * Rad file content
+			 */
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					file.getContents()));
 			String line = in.readLine();
+			/*
+			 * Clear the table
+			 */
+			tagsTable.clearAll();
+			/*
+			 * Fill in new values
+			 */
 			int i = 0;
 			while (line != null) {
 				TableItem tableItem = null;
@@ -395,10 +396,15 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				line = in.readLine();
 			}
 		} catch (CoreException e) {
-			e.printStackTrace();
+			VpePlugin.getDefault().logError(
+					"Could not load file content for '" + file + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (IOException e) {
-			e.printStackTrace();
+			VpePlugin.getDefault().logError(
+					"Could not read file: '" + file + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
 		}		
+		} else {
+			VpePlugin.getDefault().logError(
+					"Bundle File'" + file + "' does not exist!"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 	
@@ -454,8 +460,58 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 return true;
 	}
 	
+	private void updateDuplicateKeyStatus() {
+		if (isDuplicatedKey(propsKey.getText())) {
+			rbComboStatus = new Status(
+					IStatus.ERROR,
+					VpePlugin.PLUGIN_ID,
+					VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_KEY_ALREADY_EXISTS); 
+		} else {
+			rbComboStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+		}
+	}
+
+	private void updatePropertiesValueStatus() {
+		String text = propsValue.getText();
+		if ((text == null)
+				|| (Constants.EMPTY.equalsIgnoreCase(text.trim()))
+				|| (text.indexOf(Constants.GT) != -1) 
+				||  (text.indexOf(Constants.LT) != -1)) {
+			propsValueStatus = new Status(
+					IStatus.ERROR,
+					VpePlugin.PLUGIN_ID,
+					VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_WRONG_SELECTED_TEXT);
+		} else {
+			propsValueStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+		}
+	}
+	
+	private void updatePropertiesKeyStatus() {
+		if ((propsKey.getText() == null) 
+				|| (Constants.EMPTY.equalsIgnoreCase(propsKey.getText().trim()))) {
+			propsKeyStatus = new Status(
+					IStatus.ERROR,
+					VpePlugin.PLUGIN_ID,
+					VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_KEY_MUST_BE_SET);
+		} else {
+			propsKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+		}
+	}
+	
 	private void updateStatus() {
-		applyStatus(this, new IStatus[] {selectedTextStatus, propsKeyStatus, propsValueStatus});
+		/*
+		 * Update all statuses
+		 */
+		updatePropertiesKeyStatus();
+		updatePropertiesValueStatus();
+		updateDuplicateKeyStatus();
+		/*
+		 * Apply status to the dialog
+		 */
+		applyStatus(this, new IStatus[] {propsKeyStatus, propsValueStatus, rbComboStatus});
+		/*
+		 * Set page complete
+		 */
 		setPageComplete(isPageComplete());
 	}
 	
