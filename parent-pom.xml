@@ -11,7 +11,9 @@
 		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
 		<scmBranch>trunk</scmBranch>
 		<BUILD_ALIAS>M1</BUILD_ALIAS>
-		<memoryOptions>-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=256m</memoryOptions>
+		<memoryOptions>-Xms512m -Xmx1024m -XX:PermSize=256m
+			-XX:MaxPermSize=256m</memoryOptions>
+		<target.platform>e36-wtp32</target.platform>
 	</properties>
 
 	<build>
@@ -34,22 +36,20 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-scm-plugin</artifactId>
-				<version>1.0</version>
-				<configuration>
-					<useNonInteractive>true</useNonInteractive>
-					<connectionType>connection</connectionType>
-					<!-- <connectionType>developerConnection</connectionType> -->
-				</configuration>
-			</plugin>
-
-			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tychoVersion}</version>
 				<configuration>
 					<resolver>p2</resolver>
+					<target>
+						<artifact>
+							<groupId>org.jboss.tools</groupId>
+							<artifactId>target-platform</artifactId>
+							<version>0.0.1-SNAPSHOT</version>
+							<classifier>${target.platform}</classifier>
+						</artifact>
+					</target>
+					<ignoreTychoRepositories>true</ignoreTychoRepositories>
 					<environments>
 						<environment>
 							<os>macosx</os>
@@ -174,87 +174,30 @@
 		<profile>
 			<id>helios</id>
 			<activation>
-      				<activeByDefault>true</activeByDefault>
-    			</activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<target.platform>e36-wtp32</target.platform>
+			</properties>
 			<repositories>
-				<repository>
-					<id>helios</id>
-					<url>http://download.eclipse.org/releases/helios/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>webtools32</id>
-					<url>http://download.eclipse.org/webtools/repository/helios</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>eclipse36r</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.6/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>eclipse36m</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.6milestones/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>birt26r</id>
-					<url>http://download.eclipse.org/birt/update-site/2.6/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>birt26i</id>
-					<url>http://download.eclipse.org/birt/update-site/2.6-interim/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>swtbot-helios</id>
-					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
+				<!-- <repository> <id>helios</id> <url>http://download.eclipse.org/releases/helios/</url> 
+					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
+					<enabled>true</enabled> </releases> </repository> <repository> <id>webtools32</id> 
+					<url>http://download.eclipse.org/webtools/repository/helios</url> <layout>p2</layout> 
+					<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>true</enabled> 
+					</releases> </repository> <repository> <id>eclipse36r</id> <url>http://download.eclipse.org/eclipse/updates/3.6/</url> 
+					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
+					<enabled>true</enabled> </releases> </repository> <repository> <id>eclipse36m</id> 
+					<url>http://download.eclipse.org/eclipse/updates/3.6milestones/</url> <layout>p2</layout> 
+					<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>true</enabled> 
+					</releases> </repository> <repository> <id>birt26r</id> <url>http://download.eclipse.org/birt/update-site/2.6/</url> 
+					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
+					<enabled>true</enabled> </releases> </repository> <repository> <id>birt26i</id> 
+					<url>http://download.eclipse.org/birt/update-site/2.6-interim/ </url> <layout>p2</layout> 
+					<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>true</enabled> 
+					</releases> </repository> <repository> <id>swtbot-helios</id> <url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/ 
+					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
+					<releases> <enabled>true</enabled> </releases> </repository> -->
 
 				<repository>
 					<id>galileo</id>
@@ -548,5 +491,13 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
+	<dependencies>
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.6.2</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
 
 </project>
