@@ -20,10 +20,6 @@ import org.mozilla.interfaces.nsIAccessible;
 import org.mozilla.interfaces.nsIAccessibleCoordinateType;
 import org.mozilla.interfaces.nsIAccessibleRetrieval;
 import org.mozilla.interfaces.nsIAccessibleText;
-import org.mozilla.interfaces.nsIBoxObject;
-import org.mozilla.interfaces.nsIDOMDocument;
-import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMNSDocument;
 import org.mozilla.interfaces.nsIDOMNSElement;
 import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -74,18 +70,12 @@ public class XulRunnerVpeUtils {
 	 */
 	static public Rectangle getElementBounds(nsIDOMNode domNode) {
 		try {
-			nsIDOMElement domElement = queryInterface(domNode, nsIDOMElement.class);
-		
 			nsIDOMNSElement htmlElement = queryInterface(domNode, nsIDOMNSElement.class);
 			nsIDOMNSHTMLElement domNSHTMLElement = queryInterface(domNode, nsIDOMNSHTMLElement.class);
-			nsIDOMDocument document = domElement.getOwnerDocument();
-
-			nsIDOMNSDocument nsDocument = queryInterface(document, nsIDOMNSDocument.class);
-			nsIBoxObject boxObject = nsDocument.getBoxObjectFor(domElement);
 			Rectangle rectangle = new Rectangle(findPosX(domNSHTMLElement),
 														 findPosY(domNSHTMLElement),
-														 boxObject.getWidth(),
-														 boxObject.getHeight());
+														 htmlElement.getClientWidth(),
+														 htmlElement.getClientHeight());
 
 			if (BrowserPlugin.PRINT_ELEMENT_BOUNDS) {
 				System.out.println("getElementBounds(IDOMNode) returns "
@@ -102,10 +92,6 @@ public class XulRunnerVpeUtils {
 										htmlElement.getClientTop(), htmlElement
 												.getClientWidth(), htmlElement
 												.getClientHeight()));
-				System.out.println("nsIBoxObject getX,getY,getWidth,getHeight"
-						+ new Rectangle(boxObject.getX(), boxObject.getY(),
-								boxObject.getWidth(), boxObject.getHeight()));
-
 			}
 			return rectangle;
 
