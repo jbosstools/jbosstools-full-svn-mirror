@@ -13,6 +13,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<packaging>pom</packaging>
 	<modules>
 		<!-- this order is important! make sure you've run genpom.xml first! -->
+		<module>build/target-platform</module>
 		<module>tests</module>
 		<module>common</module>
 		<module>flow</module>
@@ -30,7 +31,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>jst</module>
 		<module>vpe</module>
 		<module>jsf</module>
-<!--		<module>drools</module> -->
+		<!-- NOTE: To build drools, must first bootstrap with ant script:
+		       cd drools; ant -q -->
+		<module>drools</module>
 		<module>esb</module>
 		<module>tptp</module>
 		<module>ws</module>
@@ -41,7 +44,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>examples</module>
 		<module>birt</module>
 		<module>maven</module>
-<!--		<module>site</module> -->
+		<module>site</module>
 	</modules>
 </project>
 	
