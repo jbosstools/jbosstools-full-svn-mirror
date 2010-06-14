@@ -105,40 +105,41 @@ public class XulRunnerVpeUtils {
 	 * {@code selectionContainer}.
 	 */
 	public static Rectangle getTextSelectionBounds(nsIDOMText selectionContainer) {
-//		nsIAccessibleText accessibleTextAncestor = getAccessibleTextAncestor(selectionContainer);
-//		if (accessibleTextAncestor == null) {
-//			// cannot get selection bounds
-//			return null;
-//		}
-//		if (accessibleTextAncestor.getSelectionCount() == 0) {
-//			// no text selected
-//			return null;
-//		}
-//		
-//		int[] startOffset = new int[1];
-//		int[] endOffset = new int[1];
-//		accessibleTextAncestor.getSelectionBounds(0, startOffset, endOffset);
-//		
-//		int[] x = new int[1];
-//		int[] y = new int[1];
-//		int[] width = new int[1];
-//		int[] height = new int[1];
-//		accessibleTextAncestor.getRangeExtents(startOffset[0], endOffset[0],
-//				x, y, width, height, nsIAccessibleCoordinateType.COORDTYPE_PARENT_RELATIVE);
-//
-//		nsIAccessible ancestorAccessibleParent
-//				= queryInterface(accessibleTextAncestor, nsIAccessible.class).getParent();
-//		nsIDOMNode ancestorParent
-//				= queryInterface(ancestorAccessibleParent, nsIAccessNode.class).getDOMNode();
-//
-//		Rectangle ancestorParentBounds;
-//		if (ancestorParent != null) {
-//			ancestorParentBounds = getElementBounds(ancestorParent);
-//		} else {
-//			ancestorParentBounds = new Rectangle(0, 0, 0, 0);
-//		}
-//		
-		return new Rectangle(0, 0, 0, 0);
+		nsIAccessibleText accessibleTextAncestor = getAccessibleTextAncestor(selectionContainer);
+		if (accessibleTextAncestor == null) {
+			// cannot get selection bounds
+			return null;
+		}
+		if (accessibleTextAncestor.getSelectionCount() == 0) {
+			// no text selected
+			return null;
+		}
+		
+		int[] startOffset = new int[1];
+		int[] endOffset = new int[1];
+		accessibleTextAncestor.getSelectionBounds(0, startOffset, endOffset);
+		
+		int[] x = new int[1];
+		int[] y = new int[1];
+		int[] width = new int[1];
+		int[] height = new int[1];
+		accessibleTextAncestor.getRangeExtents(startOffset[0], endOffset[0],
+				x, y, width, height, nsIAccessibleCoordinateType.COORDTYPE_PARENT_RELATIVE);
+
+		nsIAccessible ancestorAccessibleParent
+				= queryInterface(accessibleTextAncestor, nsIAccessible.class).getParent();
+		nsIDOMNode ancestorParent
+				= queryInterface(ancestorAccessibleParent, nsIAccessNode.class).getDOMNode();
+
+		Rectangle ancestorParentBounds;
+		if (ancestorParent != null) {
+			ancestorParentBounds = getElementBounds(ancestorParent);
+		} else {
+			ancestorParentBounds = new Rectangle(0, 0, 0, 0);
+		}
+		
+		return new Rectangle(ancestorParentBounds.x + x[0], ancestorParentBounds.y + y[0],
+				width[0], height[0]);
 	}
 	
 	/**
