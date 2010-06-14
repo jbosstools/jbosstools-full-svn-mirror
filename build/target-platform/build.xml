@@ -1,0 +1,33 @@
+<project default="run" basedir="." name="Install a target platform into local Eclipse">
+	<!-- To fetch a number of features remote repo(s) and mirror them locally, run this in target/platform dir:
+	
+		~/eclipse/36clean/eclipse/eclipse -nosplash -data /tmp/workspace -consolelog \
+			-application org.eclipse.ant.core.antRunner -f build.xml | tee log.txt
+	-->
+
+	<!-- what target file should be installed? -->
+	<property name="target.to.install" value="e36-wtp32.target" />
+
+	<!-- where should this target be installed? Into ${eclipse.home} or /path/to/eclipse -->
+	<!-- <property name="eclipse.install.dir" value="${eclipse.home}" /> -->
+	<property name="eclipse.install.dir" value="/home/nboldt/eclipse/36clean2/eclipse" />
+
+	<target name="init" unless="eclipse.install.dir">
+		<fail>Must set -Declipse.install.dir=/path/to/install/</fail>
+	</target>
+
+	<target name="run" depends="init" if="eclipse.install.dir">
+
+		<!-- create p2.mirror ant script -->
+		<property name="mirror" value="p2.mirror.xml" />
+		<xslt style="target2ant.xsl" in="${target.to.install}" out="${mirror}" force="true" />
+
+		<!-- run generated p2.mirror ant script -->
+		<ant antfile="p2.mirror.xml">
+			<property name="eclipse.install.dir" value="${eclipse.install.dir}" />
+		</ant>
+
+		<!-- cleanup -->
+		<delete file="${mirror}" quiet="true" />
+	</target>
+</project>
