@@ -199,13 +199,13 @@
 					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
 					<releases> <enabled>true</enabled> </releases> </repository> -->
 
+				<!-- TEMPORARY galileo reqs NOT in target platform
+					 TODO: remove these when no longer needed 
+				-->
 				<repository>
 					<id>galileo</id>
 					<url>http://download.eclipse.org/releases/galileo/</url>
 					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
@@ -214,9 +214,6 @@
 					<id>eclipse35</id>
 					<url>http://download.eclipse.org/eclipse/updates/3.5/</url>
 					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
@@ -225,9 +222,6 @@
 					<id>birt25r</id>
 					<url>http://download.eclipse.org/birt/update-site/2.5</url>
 					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
@@ -248,32 +242,6 @@
 					<id>webtools</id>
 					<url>http://download.eclipse.org/webtools/updates/</url>
 					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-
-				<repository>
-					<id>m2eclipse</id>
-					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>m2eclipse-extras</id>
-					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
@@ -419,6 +387,14 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
+				<repository>
+					<id>orbit</id>
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/</url>
+					<layout>p2</layout>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
 
 				<repository>
 					<id>m2eclipse</id>
@@ -491,13 +467,4 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-	<dependencies>
-		<dependency>
-			<groupId>wsdl4j</groupId>
-			<artifactId>wsdl4j</artifactId>
-			<version>1.6.2</version>
-			<type>jar</type>
-		</dependency>
-	</dependencies>
-
 </project>
