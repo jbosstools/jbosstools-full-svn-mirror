@@ -4,35 +4,35 @@
 <target name="e36-wtp32">
 <locations>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.platform.ide" version="3.6.0.I20100520-1744"/>
-<unit id="org.eclipse.platform.sdk" version="3.6.0.I20100520-1744"/>
-<unit id="org.eclipse.sdk.ide" version="3.6.0.I20100520-1744"/>
-<unit id="org.eclipse.releng.tools.feature.group" version="3.3.0.v20100427-44A77w31211614"/>
-<unit id="org.eclipse.swt.tools" version="3.6.0.v3611d"/>
+<unit id="org.eclipse.platform.ide" version="3.6.0"/>
+<unit id="org.eclipse.platform.sdk" version="3.6.0"/>
+<unit id="org.eclipse.sdk.ide" version="3.6.0"/>
+<unit id="org.eclipse.releng.tools.feature.group" version="3.3.0"/>
+<unit id="org.eclipse.swt.tools" version="3.6.0"/>
 <repository location="http://download.eclipse.org/eclipse/updates/3.6milestones/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.eclipse.emf.sdk.feature.group" version="2.6.0"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="3.6.0"/>
 <unit id="org.eclipse.zest.sdk.feature.group" version="1.2.0"/>
-<unit id="org.eclipse.xsd.sdk.feature.group" version="2.6.0.v20100503-1402"/>
-<unit id="org.eclipse.tptp.monitoring.runtime.feature.group" version="4.5.0.v201005032111-7T7X-7r2VNos_vYhrZgcqiTMM"/>
-<unit id="org.eclipse.tptp.platform.runtime.feature.group" version="4.7.0.v201005032111-7u84-8ksiMskubQ6UTA7XS3tcLX0"/>
-<unit id="org.eclipse.tptp.wtp.feature.group" version="4.5.0.v201005032111-54-78I8G0BlG8C88S8WCW88"/>
-<unit id="org.eclipse.tptp.birt.feature.group" version="4.5.0.v201005032111-53-78A8A09t84644E4G6G44"/>
-<unit id="org.eclipse.tptp.test.runtime.feature.group" version="4.5.0.v201005032111-7H7I-7VrO5DXI-B6opYKPuD-96gb"/>
+<unit id="org.eclipse.xsd.sdk.feature.group" version="2.6.0"/>
+<unit id="org.eclipse.tptp.monitoring.runtime.feature.group" version="4.5.0"/>
+<unit id="org.eclipse.tptp.platform.runtime.feature.group" version="4.7.0"/>
+<unit id="org.eclipse.tptp.wtp.feature.group" version="4.5.0"/>
+<unit id="org.eclipse.tptp.birt.feature.group" version="4.5.0"/>
+<unit id="org.eclipse.tptp.test.runtime.feature.group" version="4.5.0"/>
 <unit id="org.eclipse.tptp.trace.runtime.feature.group" version="4.4.0"/>
 <unit id="org.eclipse.jst.server_adapters.feature.feature.group" version="3.2.0"/>
 <unit id="org.eclipse.wst.server_adapters.feature.feature.group" version="3.2.0"/>
 <repository location="http://download.eclipse.org/releases/helios"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.10.0"/>
-<repository location="http://m2eclipse.sonatype.org/sites/m2e-extras/"/>
-</location>
-<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.maven.ide.eclipse.feature.feature.group" version="0.10.0"/>
 <repository location="http://m2eclipse.sonatype.org/sites/m2e"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.10.0"/>
+<repository location="http://m2eclipse.sonatype.org/sites/m2e-extras/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.eclipse.ecf.core.source.feature.group" version="3.2.0"/>
@@ -42,11 +42,11 @@
 <repository location="http://download.eclipse.org/rt/ecf/3.2/3.6/site.p2"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.0.0.568-dev-e36"/>
-<unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="2.0.0.568-dev-e36"/>
-<unit id="org.eclipse.swtbot.ide.feature.group" version="2.0.0.568-dev-e36"/>
-<unit id="org.eclipse.swtbot.eclipse.test.junit4.feature.group" version="2.0.0.568-dev-e36"/>
-<unit id="org.eclipse.swtbot.feature.group" version="2.0.0.568-dev-e36"/>
+<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.0.0"/>
+<unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="2.0.0"/>
+<unit id="org.eclipse.swtbot.ide.feature.group" version="2.0.0"/>
+<unit id="org.eclipse.swtbot.eclipse.test.junit4.feature.group" version="2.0.0"/>
+<unit id="org.eclipse.swtbot.feature.group" version="2.0.0"/>
 <repository location="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
@@ -56,6 +56,10 @@
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.eclipse.gef.sdk.feature.group" version="3.6.0"/>
 <repository location="http://download.eclipse.org/releases/helios"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<unit id="javax.wsdl.source" version="1.6.2"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/"/>
 </location>
 </locations>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
