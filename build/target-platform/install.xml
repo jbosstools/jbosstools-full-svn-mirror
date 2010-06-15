@@ -19,7 +19,7 @@
 	<property name="target.to.install" value="e36-wtp32.target" />
 
 	<!-- where to download and create mirror repo -->
-	<property name="repo.dir" value="/tmp/p2.mirror" />
+	<property name="repo.dir" value="${java.io.tmpdir}/p2.mirror" />
 
 	<!-- where to install target: into ${eclipse.home} or /path/to/eclipse -->
 	<!-- <property name="install.dir" value="${eclipse.home}" /> -->
@@ -28,7 +28,7 @@
 	<target name="init" unless="install.dir">
 		<fail>Must set these properties:
   -Dtarget.to.install=e36-wtp32.target
-  -Drepo.dir=/tmp/p2.mirror
+  -Drepo.dir=${java.io.tmpdir}/p2.mirror
   -Dinstall.dir=/home/nboldt/eclipse/36clean2/eclipse
 </fail>
 	</target>
@@ -37,7 +37,7 @@
 		<mkdir dir="${repo.dir}" />
 
 		<!-- create p2.mirror ant script -->
-		<property name="mirror" value="p2.mirror.xml" />
+		<property name="mirror" value="${java.io.tmpdir}/p2.mirror.xml" />
 		<xslt style="target2ant.xsl" in="${target.to.install}" out="${mirror}" force="true" />
 
 		<!-- run generated p2.mirror ant script -->
