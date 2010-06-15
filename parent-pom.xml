@@ -11,8 +11,7 @@
 		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
 		<scmBranch>trunk</scmBranch>
 		<BUILD_ALIAS>M1</BUILD_ALIAS>
-		<memoryOptions>-Xms512m -Xmx1024m -XX:PermSize=256m
-			-XX:MaxPermSize=256m</memoryOptions>
+		<memoryOptions>-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=256m</memoryOptions>
 		<target.platform>e36-wtp32</target.platform>
 	</properties>
 
