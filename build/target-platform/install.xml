@@ -48,6 +48,9 @@
 		<!-- generate a site.xml for all the features available -->
 		<antcall target="buildSiteXml" />
 
+		<!-- TODO: delete existing metadata in ${repo.dir} before regenerating it? -->
+		<delete dir="${repo.dir}" includes="artifacts.xml, artifacts.jar, content.xml, content.jar" />
+
 		<!-- generate metadata -->
 		<!-- TODO: switch to use Publisher: http://wiki.eclipse.org/Equinox/p2/Publisher#Features_and_Bundles_Publisher_Task
 		<p2.publish.featuresAndBundles
