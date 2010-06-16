@@ -14,9 +14,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -29,6 +33,7 @@ import org.eclipse.jface.viewers.ColumnLayoutData;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -47,22 +52,37 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.eclipse.wst.sse.ui.internal.provisional.extensions.ISourceEditingTextTools;
+import org.eclipse.wst.xml.core.internal.document.AttrImpl;
+import org.eclipse.wst.xml.core.internal.document.NodeImpl;
+import org.eclipse.wst.xml.core.internal.document.TextImpl;
+import org.eclipse.wst.xml.ui.internal.provisional.IDOMSourceEditingTextTools;
+import org.jboss.tools.common.model.XModel;
+import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.ui.ModelUIImages;
+import org.jboss.tools.common.model.util.EclipseResourceUtil;
+import org.jboss.tools.jst.web.project.WebProject;
+import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
 import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.bundle.BundleMap.BundleEntry;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class ExternalizeStringsWizardPage extends WizardPage {
 
 	private final int DIALOG_WIDTH = 450;
 	private final int DIALOG_HEIGHT = 650;
-	private VpeController vpeController;
+	private StructuredTextEditor editor;
 	private Text propsKey;
 	private Text propsValue;
 	private Button newFile;
@@ -78,17 +98,25 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	
 	private Table tagsTable;
 	
-	public ExternalizeStringsWizardPage(String pageName, VpeController vpeController) {
+	public ExternalizeStringsWizardPage(String pageName, StructuredTextEditor editor, BundleMap bm) {
 		/*
 		 * Setting dialog Title, Description, Image.
 		 */
 		super(pageName,
-				VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_TITLE, 
+				VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE, 
 				ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_DEFAULT));
-		setDescription(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_DESCRIPTION);
+		setDescription(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_DESCRIPTION);
 		setPageComplete(false);
-		this.vpeController = vpeController;
-		this.bm = vpeController.getPageContext().getBundle();
+		this.editor = editor;
+		if (bm != null) {
+			this.bm = bm;
+		} else {
+			/*
+			 * When BundleMap is null create it manually
+			 * with all necessary initialization
+			 */
+			this.bm = createBundleMap(editor);
+		}
 		propsKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 		propsValueStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 		rbComboStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
@@ -114,34 +142,20 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		Group propsStringGroup = new Group(composite, SWT.SHADOW_ETCHED_IN);
 		propsStringGroup.setLayout(new GridLayout(3, false));
 		propsStringGroup.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
-		propsStringGroup.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_PROPS_STRINGS_GROUP);
-		
-//		/*
-//		 * Create Text String label
-//		 */
-//		Label textStringLabel = new Label(propsStringGroup, SWT.NONE);
-//		textStringLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
-//		textStringLabel.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_TEXT_STRING);
-//		/*
-//		 * Create Text String value
-//		 */
-//		textStringValue = new Text(propsStringGroup, SWT.BORDER);
-//		textStringValue.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
-//		textStringValue.setText(Constants.EMPTY);
-//		textStringValue.setEditable(false);
+		propsStringGroup.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPS_STRINGS_GROUP);
 
 		/*
 		 * Create Properties Key label
 		 */
 		Label propsKeyLabel = new Label(propsStringGroup, SWT.NONE);
 		propsKeyLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
-		propsKeyLabel.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_PROPERTIES_KEY);
+		propsKeyLabel.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_KEY);
 		/*
 		 * Create Properties Key value
 		 */
 		propsKey = new Text(propsStringGroup, SWT.BORDER);
 		propsKey.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
-		propsKey.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_DEFAULT_KEY);
+		propsKey.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_DEFAULT_KEY);
 		propsKey.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateStatus();
@@ -152,7 +166,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 */
 		Label propsValueLabel = new Label(propsStringGroup, SWT.NONE);
 		propsValueLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
-		propsValueLabel.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_PROPERTIES_VALUE);
+		propsValueLabel.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_VALUE);
 		/*
 		 * Create Properties Value value
 		 */
@@ -171,7 +185,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 */
 		newFile = new Button(composite, SWT.CHECK);
 		newFile.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
-		newFile.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_NEW_FILE);
+		newFile.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_NEW_FILE);
 		
 		/*
 		 * Create properties string group
@@ -181,7 +195,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd.heightHint = 300; 
 		propsFilesGroup.setLayoutData(gd);
-		propsFilesGroup.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_PROPS_FILES_GROUP);
+		propsFilesGroup.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPS_FILES_GROUP);
 
 		/*
 		 * Add selection listener to New File button
@@ -204,7 +218,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 */
 		rbListLabel = new Label(propsFilesGroup, SWT.NONE);
 		rbListLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
-		rbListLabel.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_RESOURCE_BUNDLE_LIST);
+		rbListLabel.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_RESOURCE_BUNDLE_LIST);
 		/*
 		 * Create Resource Bundles combobox
 		 */
@@ -235,7 +249,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 */
 		propsFileLabel = new Label(propsFilesGroup, SWT.NONE);
 		propsFileLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false,false, 1, 1));
-		propsFileLabel.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_PROPERTIES_FILE);
+		propsFileLabel.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_FILE);
 		/*
 		 * Create Properties File path field
 		 */
@@ -255,11 +269,11 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		
         ColumnLayoutData columnLayoutData;
         TableColumn propNameColumn = new TableColumn(tagsTable, SWT.NONE);
-        propNameColumn.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_PROPERTY_NAME);
+        propNameColumn.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTY_NAME);
         columnLayoutData = new ColumnWeightData(200, true);
         layout.addColumnData(columnLayoutData);
         TableColumn propValueColumn = new TableColumn(tagsTable, SWT.NONE);
-        propValueColumn.setText(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_PROPERTY_VALUE);
+        propValueColumn.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTY_VALUE);
         columnLayoutData = new ColumnWeightData(200, true);
         layout.addColumnData(columnLayoutData);
         
@@ -275,53 +289,46 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	}
 
 	private void initializeTextFields() {
-		if ((vpeController == null) || (bm == null)){
+		if (bm == null){
 			VpePlugin.getDefault().logWarning(
-					VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
+					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
 		} else {
-			ISelection sel = vpeController.getSourceEditor().getSelectionProvider().getSelection();
+			ISelection sel = editor.getSelectionProvider().getSelection();
 			if ((propsValue != null) && (propsKey != null)
 					&& isSelectionCorrect(sel)) {
-				/*
-				 * TODO: One must add functionality
-				 * for convenient text replacement
-				 */
+				String text = Constants.EMPTY;
 				String stringToUpdate = Constants.EMPTY;
 				TextSelection textSelection = null;
-				String text = null;
 				IStructuredSelection structuredSelection = (IStructuredSelection) sel;
 				textSelection = (TextSelection) sel;
 				text = textSelection.getText();
+				Object selectedElement = structuredSelection.getFirstElement();
+				/*
+				 * When selected text in empty
+				 * parse selected element and find a string to replace.
+				 */
+				if ((text.trim().length() == 0)) {
+					if (selectedElement instanceof org.w3c.dom.Text) {
+						org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
+						if (textNode.getNodeValue().trim().length() > 0) {
+							stringToUpdate = textNode.getNodeValue();
+							editor.getSelectionProvider().setSelection(new StructuredSelection(stringToUpdate));
+						}
+					} else if (selectedElement instanceof Attr) {
+						Attr attrNode = (Attr) selectedElement;
+						if (attrNode.getNodeValue().trim().length() > 0) {
+							stringToUpdate = attrNode.getNodeValue();
+							editor.getSelectionProvider().setSelection(new StructuredSelection(stringToUpdate));
+						}
+					}
+					if ((stringToUpdate.trim().length() > 0)) {
+						text = stringToUpdate;
+					}
+				}
 				/*
 				 * Update text string field
 				 */
-				propsValue.setText(text);
-				/*
-				 * Update status message.
-				 */
-				updateStatus();
-				
-				Object selectedElement = structuredSelection.getFirstElement();
-				/*
-				 * Parse selected element and find a string to replace
-				 */
-				if (selectedElement instanceof org.w3c.dom.Text) {
-					org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
-					if ((textNode.getNodeValue().trim().length() > 0)
-							&& (text.trim().length() > 0)) {
-						stringToUpdate = textNode.getNodeValue();
-					}
-				} else if (selectedElement instanceof Attr) {
-					Attr attrNode = (Attr) selectedElement;
-					if ((attrNode.getNodeValue().trim().length() > 0)
-							&& (text.trim().length() > 0)) {
-						stringToUpdate = attrNode.getNodeValue();
-					}
-				} else {
-					VpePlugin.getDefault().logWarning(
-							VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
-				}
-				
+				propsValue.setText(text.trim());
 				/*
 				 * Initialize bundle messages field
 				 */
@@ -333,9 +340,13 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 						rbCombo.add(bundleEntry.uri);
 					}
 				}
+				/*
+				 * Update status message.
+				 */
+				updateStatus();
 			} else {
 				VpePlugin.getDefault().logWarning(
-						VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
+						VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
 			}
 		}
 	}
@@ -429,7 +440,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	}
 	
 	public boolean replaceText() {
-		StructuredTextEditor editor = vpeController.getSourceEditor();
 		IDocumentProvider prov = editor.getDocumentProvider();
 		IDocument doc = prov.getDocument(editor.getEditorInput());
 		ISelection sel = editor.getSelectionProvider().getSelection();
@@ -438,7 +448,26 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				/*
 				 * Get source text and new text
 				 */
-				final TextSelection textSel = (TextSelection) sel;
+				TextSelection textSel = (TextSelection) sel;
+				IStructuredSelection structuredSelection = (IStructuredSelection) sel;
+				Object firstElement = structuredSelection.getFirstElement();
+				int offset = 0;
+				int length = 0;
+				if ((textSel.getLength() != 0)) {
+					offset = textSel.getOffset();
+					length = textSel.getLength();
+				} else if (firstElement instanceof TextImpl) {
+					TextImpl ti = (TextImpl) firstElement;
+					offset = ti.getStartOffset();
+					length = ti.getLength();
+				} else if (firstElement instanceof AttrImpl) {
+					AttrImpl ai = (AttrImpl) firstElement;
+					/*
+					 * Get offset and length without quotes ".."
+					 */
+					offset = ai.getValueRegionStartOffset() + 1;
+					length = ai.getValueRegionText().length() - 2;
+				}
 				/*
 				 * Replace text in the editor with "key.value"
 				 */
@@ -451,7 +480,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 					}
 				}
 				String newText = "#{" + bundlePrefix + Constants.DOT + propsKey.getText() + "}"; //$NON-NLS-1$ //$NON-NLS-2$
-				doc.replace(textSel.getOffset(), textSel.getLength(), newText);
+				doc.replace(offset, length, newText);
 			} catch (BadLocationException ex) {
 				ex.printStackTrace();
 			}
@@ -464,7 +493,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			rbComboStatus = new Status(
 					IStatus.ERROR,
 					VpePlugin.PLUGIN_ID,
-					VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_KEY_ALREADY_EXISTS); 
+					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_KEY_ALREADY_EXISTS); 
 		} else {
 			rbComboStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 		}
@@ -479,7 +508,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			propsValueStatus = new Status(
 					IStatus.ERROR,
 					VpePlugin.PLUGIN_ID,
-					VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_WRONG_SELECTED_TEXT);
+					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_WRONG_SELECTED_TEXT);
 		} else {
 			propsValueStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 		}
@@ -491,7 +520,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			propsKeyStatus = new Status(
 					IStatus.ERROR,
 					VpePlugin.PLUGIN_ID,
-					VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_KEY_MUST_BE_SET);
+					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_KEY_MUST_BE_SET);
 		} else {
 			propsKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 		}
@@ -570,5 +599,77 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				&& (newFile.getSelection() == true);
 	}
 
+	private BundleMap createBundleMap(StructuredTextEditor editor) {
+		String uri = null;
+		String prefix = null;
+		int hash;
+		Map<?, ?> map = null;
+		BundleMap bm = new BundleMap();
+		bm.init(editor);
+
+		/*
+		 * Check JSF Nature
+		 */
+		boolean hasJsfProjectNatureType = false;
+		try {
+			IEditorInput ei = editor.getEditorInput();
+			if(ei instanceof IFileEditorInput) {
+				IProject project = ((IFileEditorInput)ei).getFile().getProject();
+				if (project.exists() && project.isOpen()) {
+					if (project.hasNature(WebProject.JSF_NATURE_ID)) {
+						hasJsfProjectNatureType = true;
+					}
+				}
+			}
+		} catch (CoreException e) {
+			VpePlugin.getPluginLog().logError(e);
+		}
+		
+		/*
+		 * Get Bundles from faces-config.xml
+		 */
+		if (hasJsfProjectNatureType
+				&& (editor.getEditorInput() instanceof IFileEditorInput)) {
+			IProject project = ((IFileEditorInput) editor.getEditorInput())
+			.getFile().getProject();
+			IModelNature modelNature = EclipseResourceUtil.getModelNature(project);
+			if (modelNature != null) {
+				XModel model = modelNature.getModel();
+				List<Object> l = WebPromptingProvider.getInstance().getList(model,
+						WebPromptingProvider.JSF_REGISTERED_BUNDLES, null, null);
+				if (l != null && l.size() > 1 && (l.get(1) instanceof Map)) {
+					map = (Map<?, ?>) l.get(1);
+					if ((null != map) && (map.keySet().size() > 0)) {
+						Iterator<?> it = map.keySet().iterator();
+						while (it.hasNext()) {
+							uri = it.next().toString();
+							prefix = map.get(uri).toString();
+							hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
+							bm.addBundle(hash, prefix, uri, false);
+						}
+					}
+				} 
+			}
+		}
+		
+		/*
+		 * Add bundles from <f:loadBundle> tags
+		 */
+		ISourceEditingTextTools sourceEditingTextTools = 
+			(ISourceEditingTextTools) editor
+				.getAdapter(ISourceEditingTextTools.class);
+		IDOMSourceEditingTextTools domSourceEditingTextTools = 
+			(IDOMSourceEditingTextTools) sourceEditingTextTools;
+		Document doc = domSourceEditingTextTools.getDOMDocument();
+		NodeList list = doc.getElementsByTagName("f:loadBundle"); //$NON-NLS-1$
+		for (int i = 0; i < list.getLength(); i++) {
+			Element node = (Element) list.item(i);
+			uri = node.getAttribute("basename"); //$NON-NLS-1$
+			prefix = node.getAttribute("var"); //$NON-NLS-1$
+			hash = node.hashCode();
+			bm.addBundle(hash, prefix, uri, false);
+		}
+		return bm;
+	}
 	
 }

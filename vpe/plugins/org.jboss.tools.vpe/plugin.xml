@@ -99,6 +99,13 @@
                id="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
         	</dynamic>
         </menuContribution>
+        <menuContribution
+              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor.source.EditorContext?after=org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
+        	<dynamic
+               class="org.jboss.tools.vpe.editor.menu.ExternalizeStringsContributionItem"
+               id="org.jboss.tools.vpe.editor.menu.ExternalizeStringsContributionItem">
+        	</dynamic>
+        </menuContribution>
   </extension>
   <extension
         point="org.eclipse.ui.menus">

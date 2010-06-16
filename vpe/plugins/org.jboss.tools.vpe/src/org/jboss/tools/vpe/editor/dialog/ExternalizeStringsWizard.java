@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.dialog;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.core.resources.IFile;
@@ -18,36 +19,38 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
+import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.common.model.ui.ModelUIImages;
-import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class ExternalizeStringsWizard extends Wizard {
 	
-	public String ExternalizeStringsWizardPageName = "ExternalizeStringsWizardPage";
-	public String NewFileCreationPageName = "NewFileCreationPage";
+	public String ExternalizeStringsWizardPageName = "ExternalizeStringsWizardPage"; //$NON-NLS-1$
+	public String NewFileCreationPageName = "NewFileCreationPage"; //$NON-NLS-1$
 	
-	VpeController vpeController = null;
+	StructuredTextEditor editor = null;
+	BundleMap bm = null;
 	ExternalizeStringsWizardPage page1 = null;
 	WizardNewFileCreationPage page2 = null;
 	
-	public ExternalizeStringsWizard(VpeController vpeController) {
+	public ExternalizeStringsWizard(StructuredTextEditor editor, BundleMap bm) {
 		super();
 		setHelpAvailable(false);
-		setWindowTitle(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_TITLE);
-		this.vpeController = vpeController; 
+		setWindowTitle(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE);
+		this.editor = editor; 
+		this.bm = bm;
 	}
 	
 	@Override
 	public void addPages() {
 		super.addPages();
 		page1 = new ExternalizeStringsWizardPage(
-				ExternalizeStringsWizardPageName, vpeController);
+				ExternalizeStringsWizardPageName, editor, bm);
 		page2 = new WizardNewFileCreationPage(NewFileCreationPageName,
-				(IStructuredSelection) vpeController
-				.getSourceEditor().getSelectionProvider().getSelection());
-		page2.setTitle(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_TITLE);
-		page2.setDescription(VpeUIMessages.EXTRNALIZE_STRINGS_DIALOG_DESCRIPTION);
+				(IStructuredSelection) editor.getSelectionProvider().getSelection());
+		page2.setTitle(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE);
+		page2.setDescription(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_DESCRIPTION);
 		page2.setImageDescriptor(ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_DEFAULT));
 		addPage(page1);
 		addPage(page2);
@@ -80,7 +83,11 @@ public class ExternalizeStringsWizard extends Wizard {
 			InputStream is = new ByteArrayInputStream(page1.getKeyValuePair().getBytes());
 			try {
 				bundleFile.appendContents(is, false, true, null);
+				is.close();
+				is = null;
 			} catch (CoreException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

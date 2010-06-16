@@ -59,7 +59,10 @@ import org.jboss.tools.vpe.editor.i18n.MainLocaleProvider;
 public class BundleMap {
 
 	public static final String TITLE_ATTRIBUTE_NAME = "title"; //$NON-NLS-1$
-	
+	private static final String[] JSF_PROJECT_NATURES = {
+		WebProject.JSF_NATURE_ID
+	};
+		
 	private BundleMapListener[] bundleMapListeners = new BundleMapListener[0];
 	private StructuredTextEditor editor;
 	
@@ -92,48 +95,47 @@ public class BundleMap {
 	}
 	
 	public void refreshRegisteredBundles() {
-		if (!hasJsfProjectNatureType()
-				|| !(editor.getEditorInput() instanceof IFileEditorInput)) {
-			return;
-		}
-		IProject project = ((IFileEditorInput) editor.getEditorInput())
-				.getFile().getProject();
-		IModelNature modelNature = EclipseResourceUtil.getModelNature(project);
-		if (modelNature == null) {
-			return;
-		}
-		XModel model = modelNature.getModel();
-		List<Object> l = WebPromptingProvider.getInstance().getList(model,
-				WebPromptingProvider.JSF_REGISTERED_BUNDLES, null, null);
-		if (l == null || l.size() < 2 || !(l.get(1) instanceof Map)) {
-			return;
-		}
-		Map<?, ?> map = (Map<?, ?>) l.get(1);
-		/*
-		 * Fix for https://jira.jboss.org/jira/browse/JBIDE-5218
-		 * When updating f:view's locale attribute right after template creation -
-		 * map of registered bundles is empty and couldn't be updated.
-		 * To change bundle's locale they should be accessed through 
-		 * <code>bundles</code> variable.
-		 */
-		if (map.keySet().size() > 0) {
-			Iterator<?> it = map.keySet().iterator();
-			while (it.hasNext()) {
-				String uri = it.next().toString();
-				String prefix = map.get(uri).toString();
-				int hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
-				removeBundle(hash);
-				addBundle(hash, prefix, uri, true);
+		if (hasJsfProjectNatureType()
+				&& (editor.getEditorInput() instanceof IFileEditorInput)) {
+			IProject project = ((IFileEditorInput) editor.getEditorInput())
+					.getFile().getProject();
+			IModelNature modelNature = EclipseResourceUtil
+					.getModelNature(project);
+			if (modelNature != null) {
+				XModel model = modelNature.getModel();
+				List<Object> l = WebPromptingProvider.getInstance().getList(
+						model, WebPromptingProvider.JSF_REGISTERED_BUNDLES,
+						null, null);
+				if (l != null && l.size() > 1 && (l.get(1) instanceof Map)) {
+					Map<?, ?> map = (Map<?, ?>) l.get(1);
+					/*
+					 * Fix for https://jira.jboss.org/jira/browse/JBIDE-5218
+					 * When updating f:view's locale attribute right after
+					 * template creation - map of registered bundles is empty
+					 * and couldn't be updated. To change bundle's locale they
+					 * should be accessed through <code>bundles</code> variable.
+					 */
+					if (map.keySet().size() > 0) {
+						Iterator<?> it = map.keySet().iterator();
+						while (it.hasNext()) {
+							String uri = it.next().toString();
+							String prefix = map.get(uri).toString();
+							int hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
+							removeBundle(hash);
+							addBundle(hash, prefix, uri, true);
+						}
+					} else if (bundles.length > 0) {
+						for (int i = 0; i < bundles.length; i++) {
+							String uri = bundles[i].uri;
+							String prefix = bundles[i].prefix;
+							int hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
+							removeBundle(hash);
+							addBundle(hash, prefix, uri, true);
+						}
+					}
+				}
 			}
-		} else if (bundles.length > 0) {
-			for (int i = 0; i < bundles.length; i++) {
-				String uri = bundles[i].uri;
-				String prefix = bundles[i].prefix;
-				int hash = (prefix + ":" + uri).hashCode(); //$NON-NLS-1$
-				removeBundle(hash);
-				addBundle(hash, prefix, uri, true);
-			}
-		} 
+		}
 	}
 	
 	public void clearAll() {
@@ -149,25 +151,24 @@ public class BundleMap {
 		return showBundleUsageAsEL;
 	}
 
-	private static final String[] JSF_PROJECT_NATURES = {
-			WebProject.JSF_NATURE_ID
-		};
-
 	private boolean hasJsfProjectNatureType() {
+		boolean hasJsfProjectNatureType = false;
 		try {
 			IEditorInput ei = editor.getEditorInput();
-			if(!(ei instanceof IFileEditorInput)) return false;
-			IProject project = ((IFileEditorInput)ei).getFile().getProject();
-			if (!project.exists() || !project.isOpen()) return false;
-
-			for (int i = 0; i < JSF_PROJECT_NATURES.length; i++) {
-				if (project.hasNature(JSF_PROJECT_NATURES[i])) 
-					return true;
+			if(ei instanceof IFileEditorInput) {
+				IProject project = ((IFileEditorInput)ei).getFile().getProject();
+				if (project.exists() && project.isOpen()) {
+					for (int i = 0; i < JSF_PROJECT_NATURES.length; i++) {
+						if (project.hasNature(JSF_PROJECT_NATURES[i])) 
+							hasJsfProjectNatureType = true;
+						break;
+					}
+				}
 			}
 		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
-		return false;
+		return hasJsfProjectNatureType;
 	}
 	
 	public boolean openBundle(String expression, String locale){
@@ -307,7 +308,7 @@ public class BundleMap {
 		removeBundle(hashCode, true);
 	}
 	
-	private void addBundle(int hashCode, String prefix, String uri,boolean refresh) {
+	public void addBundle(int hashCode, String prefix, String uri,boolean refresh) {
 		ResourceBundle bundle = getBundleByUrl(uri, locale);
 		BundleEntry entry = new BundleEntry(bundle, uri, prefix, hashCode);
 		if (bundle != null) {
@@ -619,5 +620,5 @@ public class BundleMap {
 	public BundleEntry[] getBundles() {
 		return bundles;
 	}
-
+	
 }
