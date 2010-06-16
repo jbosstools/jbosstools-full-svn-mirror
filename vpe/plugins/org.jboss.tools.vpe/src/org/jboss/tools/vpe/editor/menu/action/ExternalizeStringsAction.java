@@ -38,6 +38,9 @@ public class ExternalizeStringsAction extends Action {
 		if ((sel instanceof TextSelection)
 				&& (sel instanceof IStructuredSelection)
 				&& (((IStructuredSelection) sel).size() == 1)) {
+			/*
+			 * Pass null for Bundle Map that it will be created by the page itself.
+			 */
 			ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
 					PlatformUI.getWorkbench().getDisplay().getActiveShell(),
 					new ExternalizeStringsWizard(editor.getSourceEditor(), null));

@@ -122,10 +122,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		rbComboStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 	}
 
-	public ExternalizeStringsWizardPage(String pageName) {
-		super(pageName);
-	}
-
 	public void createControl(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
@@ -288,50 +284,60 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		setControl(composite);
 	}
 
+	/**
+	 * Initialize dialog's controls.
+	 * Fill in appropriate text and make validation.
+	 */
 	private void initializeTextFields() {
-		if (bm == null){
-			VpePlugin.getDefault().logWarning(
-					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
-		} else {
-			ISelection sel = editor.getSelectionProvider().getSelection();
-			if ((propsValue != null) && (propsKey != null)
-					&& isSelectionCorrect(sel)) {
-				String text = Constants.EMPTY;
-				String stringToUpdate = Constants.EMPTY;
-				TextSelection textSelection = null;
-				IStructuredSelection structuredSelection = (IStructuredSelection) sel;
-				textSelection = (TextSelection) sel;
-				text = textSelection.getText();
-				Object selectedElement = structuredSelection.getFirstElement();
-				/*
-				 * When selected text in empty
-				 * parse selected element and find a string to replace.
-				 */
-				if ((text.trim().length() == 0)) {
-					if (selectedElement instanceof org.w3c.dom.Text) {
-						org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
-						if (textNode.getNodeValue().trim().length() > 0) {
-							stringToUpdate = textNode.getNodeValue();
-							editor.getSelectionProvider().setSelection(new StructuredSelection(stringToUpdate));
-						}
-					} else if (selectedElement instanceof Attr) {
-						Attr attrNode = (Attr) selectedElement;
-						if (attrNode.getNodeValue().trim().length() > 0) {
-							stringToUpdate = attrNode.getNodeValue();
-							editor.getSelectionProvider().setSelection(new StructuredSelection(stringToUpdate));
-						}
+		ISelection sel = editor.getSelectionProvider().getSelection();
+		if (isSelectionCorrect(sel)) {
+			String text = Constants.EMPTY;
+			String stringToUpdate = Constants.EMPTY;
+			TextSelection textSelection = null;
+			IStructuredSelection structuredSelection = (IStructuredSelection) sel;
+			textSelection = (TextSelection) sel;
+			text = textSelection.getText();
+			Object selectedElement = structuredSelection.getFirstElement();
+			/*
+			 * When selected text in empty
+			 * parse selected element and find a string to replace..
+			 */
+			if ((text.trim().length() == 0)) {
+				if (selectedElement instanceof org.w3c.dom.Text) {
+					/*
+					 * ..it could be a plain text
+					 */
+					org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
+					if (textNode.getNodeValue().trim().length() > 0) {
+						stringToUpdate = textNode.getNodeValue();
+						editor.getSelectionProvider().setSelection(new StructuredSelection(stringToUpdate));
 					}
-					if ((stringToUpdate.trim().length() > 0)) {
-						text = stringToUpdate;
+				} else if (selectedElement instanceof Attr) {
+					/*
+					 * ..or an attribute's value
+					 */
+					Attr attrNode = (Attr) selectedElement;
+					if (attrNode.getNodeValue().trim().length() > 0) {
+						stringToUpdate = attrNode.getNodeValue();
+						editor.getSelectionProvider().setSelection(new StructuredSelection(stringToUpdate));
 					}
 				}
-				/*
-				 * Update text string field
-				 */
-				propsValue.setText(text.trim());
-				/*
-				 * Initialize bundle messages field
-				 */
+				if ((stringToUpdate.trim().length() > 0)) {
+					text = stringToUpdate;
+				}
+			}
+			/*
+			 * Update text string field.
+			 * Trim the text to remove line breaks and caret returns.
+			 */
+			propsValue.setText(text.trim());
+			/*
+			 * Initialize bundle messages field
+			 */
+			if (bm == null) {
+				VpePlugin.getDefault().logWarning(
+						VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_RB_IS_MISSING);
+			} else {
 				BundleEntry[] bundles = bm.getBundles();
 				Set<String> uriSet = new HashSet<String>(); 
 				for (BundleEntry bundleEntry : bundles) {
@@ -340,27 +346,38 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 						rbCombo.add(bundleEntry.uri);
 					}
 				}
-				/*
-				 * Update status message.
-				 */
-				updateStatus();
-			} else {
-				VpePlugin.getDefault().logWarning(
-						VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
 			}
-		}
-	}
-	
-	private boolean isSelectionCorrect(ISelection sel) {
-		if ((sel instanceof TextSelection)
-				&& (sel instanceof IStructuredSelection)
-				&& (((IStructuredSelection) sel).size() == 1)) {
-			return true;
+			/*
+			 * Update status message.
+			 */
+			updateStatus();
 		} else {
-			return false;
+			VpePlugin.getDefault().logWarning(
+					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
 		}
 	}
 	
+	/**
+	 * Checks user has selected a correct string.
+	 *  
+	 * @param selection the current selection
+	 * @return <code>true</code> if correct
+	 */
+	private boolean isSelectionCorrect(ISelection selection) {
+		if ((selection instanceof TextSelection)
+				&& (selection instanceof IStructuredSelection)
+				&& (((IStructuredSelection) selection).size() == 1)) {
+			return true;
+		} 
+		return false;
+	}
+	
+	/**
+	 * Checks keys in the selected resource bundle.
+	 * 
+	 * @param key the key name
+	 * @return <code>true</code> if there is a key with the specified name
+	 */
 	private boolean isDuplicatedKey(String key) {
 		boolean isDupliacted = false;
 		if ((tagsTable.getItemCount() > 0) && (null != key) && !isNewFile()) {
@@ -375,11 +392,17 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		return isDupliacted; 
 	}
 	
+	/**
+	 * Update resource bundle table according to the selected file:
+	 * it fills key and value columns.
+	 * 
+	 * @param file the resource bundle file
+	 */
 	private void updateTable(IFile file) {
 		if ((file != null) && file.exists()) {
 		try {
 			/*
-			 * Rad file content
+			 * Read the file content
 			 */
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					file.getContents()));
@@ -405,6 +428,8 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				}
 				line = in.readLine();
 			}
+			in.close();
+			in = null;
 		} catch (CoreException e) {
 			VpePlugin.getDefault().logError(
 					"Could not load file content for '" + file + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
@@ -418,6 +443,11 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		}
 	}
 	
+	/**
+	 * Enables or disables resource bundle information
+	 * 
+	 * @param enabled shows the status
+	 */
 	private void enableBundleGroup(boolean enabled) {
 			propsFilesGroup.setEnabled(enabled);
 			propsFileLabel.setEnabled(enabled);
@@ -427,19 +457,36 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			tagsTable.setEnabled(enabled);
 	}
 	
+	/**
+	 * Gets <code>key=value</code> pair
+	 * 
+	 * @return a pair <code>\nkey=value\n</code>
+	 */
 	public String getKeyValuePair() {
 		return "\n" + propsKey.getText() + Constants.EQUAL + propsValue.getText() + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
+	/**
+	 * Gets resource bundle's file
+	 * @return the file
+	 */
 	public IFile getBundleFile() {
 		return bm.getBundleFile(rbCombo.getText());
 	}
 	
+	/**
+	 * Check if "Create new file.." option is enabled
+	 * 
+	 * @return the status
+	 */
 	public boolean isNewFile() {
 		return newFile.getSelection();
 	}
 	
-	public boolean replaceText() {
+	/**
+	 * Replaces the text in the current file
+	 */
+	public void replaceText() {
 		IDocumentProvider prov = editor.getDocumentProvider();
 		IDocument doc = prov.getDocument(editor.getEditorInput());
 		ISelection sel = editor.getSelectionProvider().getSelection();
@@ -453,6 +500,11 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				Object firstElement = structuredSelection.getFirstElement();
 				int offset = 0;
 				int length = 0;
+				/*
+				 * When user selection is empty 
+				 * underlying node will e automatically selected.
+				 * Thus we need to correct replacement offsets. 
+				 */
 				if ((textSel.getLength() != 0)) {
 					offset = textSel.getOffset();
 					length = textSel.getLength();
@@ -485,9 +537,11 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				ex.printStackTrace();
 			}
 		}
-		 return true;
 	}
 	
+	/**
+	 * Update duplicate key status.
+	 */
 	private void updateDuplicateKeyStatus() {
 		if (isDuplicatedKey(propsKey.getText())) {
 			rbComboStatus = new Status(
@@ -514,6 +568,9 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		}
 	}
 	
+	/**
+	 * Update properties key status.
+	 */
 	private void updatePropertiesKeyStatus() {
 		if ((propsKey.getText() == null) 
 				|| (Constants.EMPTY.equalsIgnoreCase(propsKey.getText().trim()))) {
@@ -526,6 +583,9 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		}
 	}
 	
+	/**
+	 * Update page status.
+	 */
 	private void updateStatus() {
 		/*
 		 * Update all statuses
@@ -543,6 +603,12 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		setPageComplete(isPageComplete());
 	}
 	
+	/**
+	 * Apply status to the dialog.
+	 *
+	 * @param page the page
+	 * @param statuses all the statuses
+	 */
 	private void applyStatus(DialogPage page, IStatus[] statuses) {
 		IStatus severeStatus = statuses[0];
 		for (IStatus status : statuses) {
@@ -599,6 +665,13 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				&& (newFile.getSelection() == true);
 	}
 
+	/**
+	 * Creates new bundle map if no one was specified 
+	 * during initialization of the page.
+	 *
+	 * @param editor the source editor 
+	 * @return the new bundle map
+	 */
 	private BundleMap createBundleMap(StructuredTextEditor editor) {
 		String uri = null;
 		String prefix = null;
@@ -624,7 +697,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
 		}
-		
 		/*
 		 * Get Bundles from faces-config.xml
 		 */
@@ -651,7 +723,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				} 
 			}
 		}
-		
 		/*
 		 * Add bundles from <f:loadBundle> tags
 		 */

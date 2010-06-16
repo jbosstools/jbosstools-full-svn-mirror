@@ -17,12 +17,20 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class ExternalizeStringsContributionItem extends ActionContributionItem {
 
+	/**
+	 * Instantiates a new externalize strings contribution item.
+	 * Default constructor is used to create 
+	 * source editor context menu from plugin.xml
+	 */
 	public ExternalizeStringsContributionItem() {
 		super(new ExternalizeStringsAction());
 	}
 
 	@Override
 	public void fill(Menu parent, int index) {
+		/*
+		 * Simply sets the title
+		 */
 		getAction().setText(VpeUIMessages.EXTERNALIZE_STRINGS);
 		super.fill(parent, index);
 	}
