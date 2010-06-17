@@ -22,12 +22,11 @@
    </url>
 
    <requires>
-      <import feature="org.eclipse.tptp.monitoring.runtime" version="4.4.100" match="greaterOrEqual"/>
-      <import feature="org.eclipse.tptp.platform.runtime" version="4.5.1" match="greaterOrEqual"/>
-      <import feature="org.eclipse.tptp.monitoring.profile.server" version="4.2.200" match="greaterOrEqual"/>
-      <import feature="org.eclipse.tptp.platform.profile.server" version="4.3.200" match="greaterOrEqual"/>
-      <import feature="org.eclipse.tptp.trace.runtime" version="4.3.200" match="greaterOrEqual"/>
-      <import feature="org.eclipse.tptp.test.runtime" version="4.3.300" match="greaterOrEqual"/>
+      <import feature="org.eclipse.tptp.platform.profile.server" version="4.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.tptp.platform.instrumentation.ui" version="4.3.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.tptp.platform.core" version="4.7.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.tptp.platform.jvmti" version="4.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.tptp.platform.trace" version="4.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
