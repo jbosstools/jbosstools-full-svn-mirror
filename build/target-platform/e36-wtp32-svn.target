@@ -16,7 +16,7 @@
 <repository location="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.birt.integration.wtp.feature.group" version="2.6.0.v20100609-1954-35-7w3121171A02A65"/>
+<unit id="org.eclipse.birt.integration.wtp.feature.group" version="2.6.0.v20100617-1315-35-7w3121172802426"/>
 <repository location="http://download.eclipse.org/birt/update-site/2.6-interim/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
@@ -95,6 +95,8 @@
 <unit id="org.eclipse.rap.tooling.feature.group" version="1.3.0.20100608-1607"/>
 <unit id="org.eclipse.jst.webpageeditor.feature.feature.group" version="2.3.0.v20100526-46-9oB5855H7H"/>
 <unit id="org.eclipse.wst.server_adapters.feature.feature.group" version="3.2.0.v201005241510-51EoAkF77g8HBSc"/>
+<unit id="org.eclipse.tptp.platform.jvmti.feature.group" version="4.5.0.v201005032111-797A-8s73533E4E6E33"/>
+<unit id="org.eclipse.tptp.platform.profile.server.feature.group" version="4.5.0.v201005032111-7H7F-AkF7B77R7VBV77"/>
 <repository location="http://download.eclipse.org/releases/helios/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
@@ -106,6 +108,9 @@
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.6/"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<repository location="http://download.eclipse.org/tptp/4.7.0/TPTP-4.7.0/repo/"/>
 </location>
 </locations>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
