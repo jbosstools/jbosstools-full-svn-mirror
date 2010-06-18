@@ -19,8 +19,10 @@ if [[ -f ${WORKSPACE}/sources/site/target/site.zip ]]; then
 fi
 
 # if zips exist produced & renamed by ant script, copy them too
-for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 4 -name "*Update*.zip"); do 
-	rsync -aq $z ${WORKSPACE}/site/${JOB_NAME}/
+for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip"); do 
+	echo "$z ..."
+	unzip -q $z -d ${WORKSPACE}/site/${JOB_NAME}/
+	rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
 done
 
 # publish to download.jboss.org
