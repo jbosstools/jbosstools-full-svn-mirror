@@ -13,6 +13,7 @@
     -->
     <jb:bean beanId="order" class="example.model.Order" createOnElement="order">
         <jb:wiring property="header" beanIdRef="header" />
+    	<!-- comment -->
         <jb:wiring property="orderItems" beanIdRef="orderItems" />
     </jb:bean>
 
@@ -30,12 +31,17 @@
     -->
     <jb:bean beanId="header" class="example.model.Header" createOnElement="header">
         <jb:value property="date" decoder="Date" data="header/date">
+    		<!-- comment -->
             <jb:decodeParam name="format">EEE MMM dd HH:mm:ss z yyyy</jb:decodeParam>
             <jb:decodeParam name="locale-language">en</jb:decodeParam>
+	    	<!-- comment -->
             <jb:decodeParam name="locale-country">IE</jb:decodeParam>
         </jb:value>
+    	<!-- comment -->
         <jb:value property="customerNumber" decoder="Long" data="header/customer/@number" setterMethod="setCustomerNumber" />
+    	<!-- comment -->
         <jb:value property="customerName" data="header/customer" />
+    	<!-- comment -->
         <jb:expression property="x" setterMethod="setX" execOnElement="xEl" />
     </jb:bean>
 
@@ -45,6 +51,7 @@
     -->
     <jb:bean beanId="orderItem" class="example.model.OrderItem" createOnElement="order-item">
         <jb:value property="productId" decoder="Long" data="order-item/product" />
+    	<!-- comment -->
         <jb:value property="quantity" decoder="Integer" data="order-item/quantity" />
         <jb:value property="price" decoder="Double" data="order-item/price" />
     </jb:bean>

@@ -63,7 +63,10 @@ public abstract class SmooksModelTestCase extends TestCase {
 	public void assertModelEquals(Model<SmooksModel> model, String messageFile) throws IOException, SAXException {
 		StringWriter modelWriter = new StringWriter();
 	    model.writeModel(modelWriter);
-	    System.out.println(modelWriter);
+
+//	    System.out.println(modelWriter);
+//	    System.out.println(org.milyn.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream(messageFile)));	    
+	    
 	    XMLUnit.setIgnoreWhitespace( true );
 	    XMLAssert.assertXMLEqual(new InputStreamReader(getClass().getResourceAsStream(messageFile)), new StringReader(modelWriter.toString()));
 	}

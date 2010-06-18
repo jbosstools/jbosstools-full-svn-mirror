@@ -22,7 +22,10 @@ package org.jboss.tools.smooks.model;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.List;
+import java.util.Properties;
 
+import org.milyn.SmooksException;
 import org.milyn.javabean.dynamic.Model;
 import org.milyn.javabean.dynamic.ModelBuilder;
 import org.xml.sax.SAXException;
@@ -36,10 +39,18 @@ import org.xml.sax.SAXException;
  */
 public class SmooksModelBuilder {
 
-	private ModelBuilder modelBuilder;
-
-	public SmooksModelBuilder() throws SAXException, IOException {
-        modelBuilder = new ModelBuilder(SmooksModel.MODEL_DESCRIPTOR, false);
+	private static ModelBuilder modelBuilder;
+	
+	static {
+		ClassLoader contextClassloader = Thread.currentThread().getContextClassLoader();
+        try {
+			Thread.currentThread().setContextClassLoader(SmooksModelBuilder.class.getClassLoader());
+        	modelBuilder = new ModelBuilder(SmooksModel.MODEL_DESCRIPTOR, false);
+		} catch (Exception e) {
+			throw new SmooksException("Failed to create ModelBuilder instance for descriptor '" + SmooksModel.MODEL_DESCRIPTOR + "'.", e);
+		} finally {
+			Thread.currentThread().setContextClassLoader(contextClassloader);
+		}
 	}
 	
 	public ModelBuilder getModelBuilder() {
@@ -47,10 +58,22 @@ public class SmooksModelBuilder {
 	}
 
 	public Model<SmooksModel> readModel(InputStream configStream) throws SAXException, IOException {
-        return modelBuilder.readModel(configStream, SmooksModel.class);		
+		ClassLoader contextClassloader = Thread.currentThread().getContextClassLoader();
+        try {
+			Thread.currentThread().setContextClassLoader(SmooksModelBuilder.class.getClassLoader());
+			return modelBuilder.readModel(configStream, SmooksModel.class);		
+		} finally {
+			Thread.currentThread().setContextClassLoader(contextClassloader);
+		}
 	}
 	
 	public Model<SmooksModel> readModel(Reader configStream) throws SAXException, IOException {
-        return modelBuilder.readModel(configStream, SmooksModel.class);		
+		ClassLoader contextClassloader = Thread.currentThread().getContextClassLoader();
+        try {
+			Thread.currentThread().setContextClassLoader(SmooksModelBuilder.class.getClassLoader());
+			return modelBuilder.readModel(configStream, SmooksModel.class);		
+		} finally {
+			Thread.currentThread().setContextClassLoader(contextClassloader);
+		}
 	}
 }

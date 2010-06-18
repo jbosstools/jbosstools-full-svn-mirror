@@ -71,4 +71,8 @@ public class ParamsTest extends SmooksModelTestCase {
         params.setFilterType(StreamFilterType.SAX);
         assertModelEquals(model, "v1_1/config-01.xml");
     }
+
+	public void test_config_v11_03() throws IOException, SAXException {
+        test("v1_1/config-03.xml");
+    }
 }

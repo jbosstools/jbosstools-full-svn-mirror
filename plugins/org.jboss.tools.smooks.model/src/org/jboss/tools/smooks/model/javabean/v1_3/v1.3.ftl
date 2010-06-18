@@ -2,10 +2,12 @@
 <#if (numChildElemenst > 0)>
     <${nsp}:bean <@writeAttribs attribs="beanId,beanClass@class,createOnElement"/>>
     <#list bean.valueBindings as valueBinding>
+        <@writePreText bean=valueBinding />
     <#assign numDecodeParams = (valueBinding.decodeParams?size) >
     <#if (numDecodeParams > 0)>
         <${nsp}:value <@writeAttribs bean=valueBinding attribs="property,setterMethod,data,decoder,defaultVal@default"/>>
             <#list valueBinding.decodeParams as decodeParam>
+            <@writePreText bean=decodeParam />
             <${nsp}:decodeParam <@writeAttribs bean=decodeParam attribs="name"/>>${decodeParam.value}</${nsp}:decodeParam>
             </#list>
         </${nsp}:value>
@@ -14,9 +16,11 @@
     </#if>
     </#list>
     <#list bean.wireBindings as wireBinding>
+        <@writePreText bean=wireBinding />
         <${nsp}:wiring <@writeAttribs bean=wireBinding attribs="property,setterMethod,beanIdRef,wireOnElement"/> />
     </#list>
     <#list bean.expressionBindings as expressionBinding>
+        <@writePreText bean=expressionBinding />
         <${nsp}:expression <@writeAttribs bean=expressionBinding attribs="property,setterMethod,execOnElement,initVal"/> />
     </#list>
     </${nsp}:bean>

@@ -12,7 +12,9 @@
     Wire in the "header" and "orderItems" beans.
     -->
     <jb:bindings beanId="order" class="example.model.Order" createOnElement="order">
+        <!-- Wire in the header... -->
         <jb:wiring property="header" beanIdRef="header" />
+        <!-- Wire in the order items... -->
         <jb:wiring property="orderItems" beanIdRef="orderItems" />
     </jb:bindings>
 
@@ -29,13 +31,18 @@
     This bean is wired into the "order" bean.
     -->
     <jb:bindings beanId="header" class="example.model.Header" createOnElement="header">
+	    <!-- Date... -->
         <jb:value property="date" decoder="Date" data="header/date" dataNS="http://boohoo">
+	        <!-- Decode formatting... -->
             <jb:decodeParam name="format">EEE MMM dd HH:mm:ss z yyyy</jb:decodeParam>
             <jb:decodeParam name="locale-language">en</jb:decodeParam>
             <jb:decodeParam name="locale-country">IE</jb:decodeParam>
         </jb:value>
+	    <!-- customer num... -->
         <jb:value property="customerNumber" decoder="Long" data="header/customer/@number" setterMethod="setCustomerNumber" />
+	    <!-- customer name... -->
         <jb:value property="customerName" data="header/customer" />
+	    <!-- x by expression... -->
         <jb:expression property="x" setterMethod="setX" execOnElement="xEl" execOnElementNS="http://x" /> 
     </jb:bindings>
 

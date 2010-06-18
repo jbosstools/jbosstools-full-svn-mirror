@@ -25,4 +25,16 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>SMOOKS_CORE_SRC</name>
+			<type>2</type>
+			<locationURI>SMOOKS_CORE_SRC</locationURI>
+		</link>
+		<link>
+			<name>SMOOKS_JAVABEAN_SRC</name>
+			<type>2</type>
+			<locationURI>SMOOKS_JAVABEAN_SRC</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
