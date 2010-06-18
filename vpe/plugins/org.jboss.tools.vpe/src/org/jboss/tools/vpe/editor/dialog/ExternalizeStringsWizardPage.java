@@ -356,6 +356,12 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 						rbCombo.add(bundleEntry.uri);
 					}
 				}
+				/*
+				 * Select the first bundle if there is any in the list 
+				 */
+				if (rbCombo.getItemCount() > 0) {
+					rbCombo.select(0);
+				}
 			}
 			/*
 			 * Update status message.
