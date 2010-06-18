@@ -10,15 +10,15 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.ui.test.preferences;
 
-import junit.framework.TestCase;
-
-import org.eclipse.jface.preference.PreferenceDialog;
-import org.jboss.tools.test.util.WorkbenchUtils;
 import org.jboss.tools.tests.PreferencePageTest;
 import org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
 
-public class VpeEditorPreferencesPageTest extends PreferencePageTest  {
+public class VpeEditorPreferencesPageTest extends PreferencePageTest {
+	
+	public VpeEditorPreferencesPageTest() {
+	}
+	
 	public void testVpeEditorPreferencesPageShow() {
 		doDefaultTest(VpeEditorPreferencesPage.ID, VpeEditorPreferencesPage.class); //$NON-NLS-1$
 	}

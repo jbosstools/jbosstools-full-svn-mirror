@@ -1,5 +1,7 @@
 package org.jboss.tools.vpe.xulrunner;
 
+import java.text.MessageFormat;
+
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jboss.tools.common.log.BaseUIPlugin;
@@ -83,7 +85,7 @@ public class BrowserPlugin extends BaseUIPlugin {
 		try {
 			String xulRunnerPath = XulRunnerBrowser.getXulRunnerPath();
 //			if ("true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/earlyStartup"))) { //$NON-NLS-1$ //$NON-NLS-2$
-				logInfo("earlyStartup: XULRunner path is: " + xulRunnerPath); //$NON-NLS-1$
+				logInfo(MessageFormat.format("earlyStartup: XULRunner path is: {0}",xulRunnerPath)); //$NON-NLS-1$
 //			}
 		} catch (XulRunnerException e) {
 			logError(e);
