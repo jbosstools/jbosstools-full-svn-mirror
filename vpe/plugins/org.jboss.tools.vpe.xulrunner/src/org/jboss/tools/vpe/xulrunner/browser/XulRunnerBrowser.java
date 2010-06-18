@@ -14,6 +14,7 @@ package org.jboss.tools.vpe.xulrunner.browser;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -23,6 +24,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
+import org.jboss.tools.vpe.xulrunner.VpeXulrunnerMessages;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
@@ -51,7 +53,7 @@ import org.osgi.framework.Bundle;
 
 public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		nsIWebProgressListener, nsITooltipListener {
-	private static final String XULRUNNER_LOWER_VERSION = "1.9.2.0"; //$NON-NLS-1$
+	private static final String XULRUNNER_LOWER_VERSION = "1.9.1.0"; //$NON-NLS-1$
 	private static final String XULRUNNER_HIGHER_VERSION = "1.9.2.9"; //$NON-NLS-1$
 	// TODO Sergey Vasilyev Think. May be XULRUNNER_BUNDLE shouldn't be final?
 	private static final String XULRUNNER_BUNDLE;
@@ -92,7 +94,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	    
 	    webBrowser = (nsIWebBrowser) browser.getWebBrowser();
             if (webBrowser == null) {
-                throw new XulRunnerException("nsIWebBrowser is not available"); //$NON-NLS-1$
+                throw new XulRunnerException(VpeXulrunnerMessages.XulRunnerBrowser_notAvailable); 
             }
 
             setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
@@ -205,26 +207,25 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 
 				Bundle xulRunnerBundle = Platform.getBundle(getXulRunnerBundle());
 				if (xulRunnerBundle == null) {
-					throw new XulRunnerException("Bundle " + getXulRunnerBundle() + " is not found."); //$NON-NLS-1$ //$NON-NLS-2$
+					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_bundleNotFound,getXulRunnerBundle()));  //$NON-NLS-2$
 				}
 
 				String xulRunnerVersion = (String) xulRunnerBundle.getHeaders().get("Bundle-Version"); //$NON-NLS-1$
 				if (!greRanges[0].check(xulRunnerVersion)) {
-					throw new XulRunnerException("the version of the bundled XULRunner must be >= " + XulRunnerBrowser.XULRUNNER_LOWER_VERSION //$NON-NLS-1$
-						+ " and <= " + XulRunnerBrowser.XULRUNNER_HIGHER_VERSION); //$NON-NLS-1$
+					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_wrongVersion, xulRunnerBundle.getLocation() ,XulRunnerBrowser.XULRUNNER_LOWER_VERSION,XulRunnerBrowser.XULRUNNER_HIGHER_VERSION) ); 
 				}
 				
 				
 				URL url = xulRunnerBundle.getEntry(XULRUNNER_ENTRY);
 				if (url == null) {
-					throw new XulRunnerException("Bundle " + getXulRunnerBundle() + " doesn't contain " + XULRUNNER_ENTRY); //$NON-NLS-1$ //$NON-NLS-2$
+					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_bundleDoesNotContainXulrunner, getXulRunnerBundle(),XULRUNNER_ENTRY));  
 				}
 
 				try {
 					URL url1 = FileLocator.resolve(url);
 					xulRunnerFile = new File(FileLocator.toFileURL(url1).getFile());
 				} catch (IOException ioe) {
-					throw new XulRunnerException("Cannot get path to XULRunner from bundle " + getXulRunnerBundle(), ioe); //$NON-NLS-1$
+					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_cannotGetPathToXulrunner,getXulRunnerBundle()), ioe); 
 				}
 				
 			xulRunnerPath = xulRunnerFile.getAbsolutePath();
