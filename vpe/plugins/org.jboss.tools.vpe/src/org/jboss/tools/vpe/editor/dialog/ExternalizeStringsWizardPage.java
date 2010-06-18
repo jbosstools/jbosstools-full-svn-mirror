@@ -80,6 +80,9 @@ import org.w3c.dom.NodeList;
 
 public class ExternalizeStringsWizardPage extends WizardPage {
 
+	private final char[] REPLACED_CHARACTERS = new char[] {'~', '!', '@', '#',
+			'$', '%', '^', '&', '*', '(', ')', '-', '+', '=', '{', '}', '[', ']', ':', ';', ',', '.', '?', '\\', '/'};
+	private final char[] LINE_DELEMITERS = new char[] {'\r', '\n', '\t'};
 	private final int DIALOG_WIDTH = 450;
 	private final int DIALOG_HEIGHT = 650;
 	private StructuredTextEditor editor;
@@ -330,7 +333,14 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			 * Update text string field.
 			 * Trim the text to remove line breaks and caret returns.
 			 */
-			propsValue.setText(text.trim());
+			/*
+			 * Replace line delimiters white space
+			 */
+			for (char ch : LINE_DELEMITERS) {
+				text = text.trim().replace(ch, ' ');
+			}
+			propsValue.setText(text);
+			propsKey.setText(generatePropertyKey(text));
 			/*
 			 * Initialize bundle messages field
 			 */
@@ -741,6 +751,53 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			bm.addBundle(hash, prefix, uri, false);
 		}
 		return bm;
+	}
+	
+	/**
+	 * Generate properties key.
+	 * Replaces all non-word characters with 
+	 * underline character.
+	 *
+	 * @param text the text
+	 * @return the result string
+	 */
+	public String generatePropertyKey(String text) {
+		String result = text.trim();
+		/*
+		 * Replace all other symbols with '_'
+		 */
+		for (char ch : REPLACED_CHARACTERS) {
+			result = result.replace(ch, '_');
+		}
+		/*
+		 * Replace line delimiters white space
+		 */
+		for (char ch : LINE_DELEMITERS) {
+			result = result.replace(ch, ' ');
+		}
+		/*
+		 * Replace all white spaces with '_'
+		 */
+		result = result.replaceAll(Constants.WHITE_SPACE,
+				Constants.UNDERSCORE);
+		/*
+		 * Correct underline symbols:
+		 * show only one of them
+		 */
+		result = result.replaceAll("_+", Constants.UNDERSCORE); //$NON-NLS-1$
+		/*
+		 * Remove leading and trailing '_'
+		 */
+		if (result.startsWith(Constants.UNDERSCORE)) {
+			result = result.substring(1);
+		}
+		if (result.endsWith(Constants.UNDERSCORE)) {
+			result = result.substring(0, result.length() - 1);
+		}
+		/*
+		 * Return the result
+		 */
+		return result;
 	}
 	
 }
