@@ -646,8 +646,12 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				}
 
 				public void completed(ProgressEvent event) {
+					try{
 					MozillaEditor.this.onLoadWindow();
 					xulRunnerEditor.getBrowser().removeProgressListener(this);
+					} catch(Exception ex){
+						VpePlugin.getPluginLog().logError(ex);
+					}
 				}
 				
 			});
