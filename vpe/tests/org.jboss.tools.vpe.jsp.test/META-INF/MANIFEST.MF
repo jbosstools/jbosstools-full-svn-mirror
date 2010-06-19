@@ -7,7 +7,7 @@ Bundle-Activator: org.jboss.tools.vpe.jsp.test.JSPTestPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jboss.tools.vpe,
- org.junit;bundle-version="[3.8.2,4.0.0)",
+ org.junit,
  org.eclipse.core.resources,
  org.eclipse.ui.ide,
  org.jboss.tools.common,
