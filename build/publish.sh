@@ -14,7 +14,7 @@ for z in ${WORKSPACE}/sources/site/target/site.zip ${WORKSPACE}/sources/site/tar
 		echo "BUILD_ID = ${BUILD_ID}" > ${WORKSPACE}/site/${JOB_NAME}/BUILD_ID.txt
 	
 		# unzip into workspace for publishing as unpacked site
-		unzip -f -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
+		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
 	
 		# copy into workspace for access by bucky aggregator (same name every time)
 		rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
@@ -24,7 +24,7 @@ done
 # if zips exist produced & renamed by ant script, copy them too
 for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip"); do 
 	echo "$z ..."
-	unzip -f -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
+	unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
 	rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
 done
 
