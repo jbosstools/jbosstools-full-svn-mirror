@@ -226,18 +226,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		rbCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				IFile bundleFile = bm.getBundleFile(rbCombo.getText());
-				String bundlePath = Constants.EMPTY;
-				if (bundleFile != null) {
-					bundlePath = bundleFile.getFullPath().toString();
-					updateTable(bundleFile);
-				} else {
-					VpePlugin.getDefault().logError(
-							"Could not get Bundle File for resource '" //$NON-NLS-1$
-									+ rbCombo.getText() + "'"); //$NON-NLS-1$
-				}
-				propsFile.setText(bundlePath);
-				
+				setResourceBundlePath(rbCombo.getText());
 				updateDuplicateKeyStatus();
 				updateStatus();
 			}
@@ -361,6 +350,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				 */
 				if (rbCombo.getItemCount() > 0) {
 					rbCombo.select(0);
+					setResourceBundlePath(rbCombo.getText());
 				}
 			}
 			/*
@@ -804,6 +794,26 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 * Return the result
 		 */
 		return result;
+	}
+
+	/**
+	 * Sets the resource bundle path according to the selection
+	 * from the bundles list.
+	 *
+	 * @param bundleName the resource bundle name
+	 */
+	private void setResourceBundlePath(String bundleName) {
+		IFile bundleFile = bm.getBundleFile(bundleName);
+		String bundlePath = Constants.EMPTY;
+		if (bundleFile != null) {
+			bundlePath = bundleFile.getFullPath().toString();
+			updateTable(bundleFile);
+		} else {
+			VpePlugin.getDefault().logError(
+					"Could not get Bundle File for resource '" //$NON-NLS-1$
+							+ bundleName + "'"); //$NON-NLS-1$
+		}
+		propsFile.setText(bundlePath);
 	}
 	
 }
