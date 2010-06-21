@@ -643,7 +643,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 				public void completed(ProgressEvent event) {
 					if(MozillaEditor.this.getXulRunnerEditor().getWebBrowser()!=null){
-						//process this code only in case when editor hasn't been disposed
+						//process this code only in case when editor hasn't been disposed,
+						//see https://jira.jboss.org/browse/JBIDE-6373
 						MozillaEditor.this.onLoadWindow();
 						xulRunnerEditor.getBrowser().removeProgressListener(this);
 					}
