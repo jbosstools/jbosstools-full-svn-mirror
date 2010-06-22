@@ -44,11 +44,11 @@ for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip"); do
 done
 
 # publish to download.jboss.org
-if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools"; fi
+if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/nightly/3.2.helios"; fi
 if [[ -d ${WORKSPACE}/site/${JOB_NAME} ]]; then
-	rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/builds/nightly/3.2.helios/
+	rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/
 fi
 if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
 	# publish snapshot zip
-	rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/builds/nightly/3.2.helios/
+	rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/
 fi
