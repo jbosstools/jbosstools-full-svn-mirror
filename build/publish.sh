@@ -1,6 +1,8 @@
 #!/bin/bash
 # Hudson script used to publish Tycho-built p2 update sites
 
+# NOTE: sources MUST be checked out into ${WORKSPACE}/sources 
+
 # define target zip filename for inclusion in uberbuilder's bucky aggregator
 SNAPNAME=${JOB_NAME}-Update-SNAPSHOT.zip
 
@@ -18,6 +20,19 @@ for z in ${WORKSPACE}/sources/site/target/site.zip ${WORKSPACE}/sources/site/tar
 	
 		# copy into workspace for access by bucky aggregator (same name every time)
 		rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
+	fi
+done
+
+# if component zips exist, copy them too
+for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip"); do 
+	if [[ -f $z ]]; then
+		y=${z%%/site/target/*}; y=${y##*/}
+		echo "[$y] $z ..."
+		# unzip into workspace for publishing as unpacked site
+		mkdir -p ${WORKSPACE}/site/${JOB_NAME}/$y
+		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/$y $z
+		# copy into workspace for access by bucky aggregator (same name every time)
+		rsync -aq $z ${WORKSPACE}/site/${JOB_NAME}/${y}-Update-SNAPSHOT.zip
 	fi
 done
 
