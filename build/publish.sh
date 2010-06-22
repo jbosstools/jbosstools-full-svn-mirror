@@ -23,8 +23,8 @@ for z in ${WORKSPACE}/sources/site/target/site.zip ${WORKSPACE}/sources/site/tar
 	fi
 done
 
-# if component zips exist, copy them too
-for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip"); do 
+# if component zips exist, copy them too; first site.zip, then site_assembly.zip
+for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | sort -r); do 
 	if [[ -f $z ]]; then
 		y=${z%%/site/target/*}; y=${y##*/}
 		echo "[$y] $z ..."
