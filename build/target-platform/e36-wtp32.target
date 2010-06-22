@@ -4,23 +4,15 @@
 <target includeMode="feature" name="e36-wtp32">
 <locations>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.maven.ide.eclipse.feature.feature.group" version="0.10.0.20100209-0800"/>
 <repository location="http://m2eclipse.sonatype.org/sites/m2e/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.0.0.568-dev-e36"/>
-<unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="2.0.0.568-dev-e36"/>
-<unit id="org.eclipse.swtbot.feature.group" version="2.0.0.568-dev-e36"/>
-<unit id="org.eclipse.swtbot.ide.feature.group" version="2.0.0.568-dev-e36"/>
-<unit id="org.eclipse.swtbot.eclipse.test.junit4.feature.group" version="2.0.0.568-dev-e36"/>
 <repository location="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.birt.integration.wtp.feature.group" version="2.6.0.v20100617-1315-35-7w3121172802426"/>
 <repository location="http://download.eclipse.org/birt/update-site/2.6-interim/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.10.0.20100209-0800"/>
 <repository location="http://m2eclipse.sonatype.org/sites/m2e-extras/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
@@ -33,51 +25,12 @@
 <repository location="http://download.eclipse.org/technology/subversive/0.7/update-site/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="javax.wsdl" version="1.6.2.v201005080631"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.birt.feature.group" version="2.6.0.v20100531-9gF727DGKb0yl9AwWxpmbo35PwQ_"/>
-<unit id="org.eclipse.ecf.core.feature.group" version="3.3.0.v20100607-0607"/>
-<unit id="org.eclipse.datatools.sdk.feature.feature.group" version="1.8.0.v201005280400-7P9i0FDxNYrk4QYG-9qpz0N-vbEp"/>
-<unit id="org.eclipse.birt.osgi.runtime.sdk.feature.group" version="2.6.0.v20100427-57B-85wFdAHO16f8kRo1_ft1IUwD"/>
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.6.0.v20100607-0756"/>
-<unit id="org.eclipse.pde.junit.runtime.standalone.feature.group" version="1.0.0.v20100526"/>
-<unit id="org.eclipse.pde.api.tools.ee.fragments.feature.group" version="1.0.0.v20100427-7C-7BF9JgLWLMBMMAMsLL"/>
-<unit id="org.eclipse.gef.sdk.feature.group" version="3.6.0.v20100519-2050-7G7R-A5WNc7QL_fXBGjRZPUUiKPJ"/>
-<unit id="org.eclipse.zest.sdk.feature.group" version="1.2.0.v20100519-2050-679-8COKLDAKOXIET_YWTacZM9XR"/>
-<unit id="org.eclipse.xsd.sdk.feature.group" version="2.6.0.v20100607-0756"/>
-<unit id="org.eclipse.jdt.feature.group" version="3.6.0.v20100526-0800-7z8XFUJFMTfCWGoVuHImpms9H155"/>
-<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.2.0.v201005241510-7H7AFUIDxumQGOb7ocjUR2Pvz-28"/>
-<unit id="org.eclipse.wst.jsdt.feature.feature.group" version="1.2.0.v201005270528-7C78FGDF9JgLWLMBWz-Ose6"/>
-<unit id="org.eclipse.tptp.platform.runtime.feature.group" version="4.7.0.v201005032111-7u84-8ksiNsksbQ6UTB7dcy3RUlT"/>
-<unit id="org.eclipse.jst.jsf.apache.trinidad.tagsupport.feature.feature.group" version="2.2.100.v20100526-208Z7w312114252964"/>
-<unit id="org.eclipse.jst.ws.axis2tools.feature.feature.group" version="1.1.100.v201005241530-78-FF0DZRDKDDePSKwHj"/>
-<unit id="org.eclipse.jst.ws.cxf.feature.feature.group" version="1.0.0.v201005241530-7H777BFAKlOiOX8lGdLp-67BD"/>
-<unit id="org.eclipse.jpt.feature.feature.group" version="2.3.0.v201005260000-7N7UEwFD3wTgbU_dxVnWV"/>
-<unit id="org.eclipse.jpt.eclipselink.feature.feature.group" version="2.3.0.v201005260000-7778BgBgJ9E99RIX999A"/>
-<unit id="org.eclipse.wst.common.fproj.feature.group" version="3.2.0.v201005290030-377A78s73533D5L355B"/>
-<unit id="org.eclipse.jst.common.fproj.enablement.jdt.feature.group" version="3.2.0.v201005241600-377A78s73533C6A6B39"/>
-<unit id="org.eclipse.jst.enterprise_ui.feature.feature.group" version="3.2.0.v201005241530-7b7GHTYFSK2W9kPaFClvz0O_NQmN"/>
-<unit id="org.eclipse.wst.web_ui.feature.feature.group" version="3.2.0.v201005241510-7O7CFb3EMf84nP-FHuc10NTz--M3"/>
-<unit id="org.eclipse.wst.xsl.feature.feature.group" version="1.1.0.v201005241600-7S7WFAKFIpS---NRIS1pbfYBUIQ"/>
-<unit id="org.eclipse.jsf.feature.feature.group" version="3.2.0.v20100526-7E7I-F9JgLWLMBYy3114"/>
-<unit id="org.eclipse.jst.ws.jaxws.dom.feature.feature.group" version="1.0.0.v201005241530-5--AkF7B77NBZBgBg"/>
-<unit id="org.eclipse.jst.ws.jaxws.feature.feature.group" version="1.0.0.v201005241530-7E777BF8NcJSSJxUETx_l"/>
-<unit id="org.eclipse.jst.server_adapters.ext.feature.feature.group" version="3.2.0.v201005241530-777HFGPCcNBDiBgIc4BA8"/>
-<unit id="org.eclipse.jst.server_adapters.feature.feature.group" version="3.2.0.v201005241530-208Z7w31211419"/>
-<unit id="org.eclipse.jst.server_ui.feature.feature.group" version="3.2.0.v201005241530-7A5FEh9xFc7RCGLRBAIOJC43A"/>
-<unit id="org.eclipse.jst.web_ui.feature.feature.group" version="3.2.0.v201005250611-7F77FJJC25Skdw1pheuO_q6p-Idh"/>
-<unit id="org.eclipse.rap.tooling.feature.group" version="1.3.0.20100608-1607"/>
-<unit id="org.eclipse.jst.webpageeditor.feature.feature.group" version="2.3.0.v20100526-46-9oB5855H7H"/>
-<unit id="org.eclipse.wst.server_adapters.feature.feature.group" version="3.2.0.v201005241510-51EoAkF77g8HBSc"/>
-<unit id="org.eclipse.tptp.platform.jvmti.feature.group" version="4.5.0.v201005032111-797A-8s73533E4E6E33"/>
-<unit id="org.eclipse.tptp.platform.profile.server.feature.group" version="4.5.0.v201005032111-7H7F-AkF7B77R7VBV77"/>
-<unit id="org.eclipse.tptp.platform.profile.server.core" version="4.3.0.v201005061600"/>
 <repository location="http://download.eclipse.org/releases/helios/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.platform.ide" version="3.6.0.I20100603-1500"/>
 <repository location="http://download.eclipse.org/eclipse/updates/3.6milestones/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
@@ -91,223 +44,180 @@
 </location>
 </locations>
 <includeBundles>
-<feature id="org.eclipse.equinox.p2.user.ui"/>
-<feature id="org.eclipse.emf.ecore.edit.source"/>
-<feature id="org.eclipse.jst.ws.cxf.feature"/>
-<feature id="org.eclipse.platform"/>
-<feature id="org.eclipse.emf.mapping.ecore"/>
-<feature id="org.eclipse.wst.web_userdoc.feature"/>
-<feature id="org.eclipse.datatools.enablement.ibm.feature"/>
-<feature id="org.eclipse.emf.codegen.ecore.source"/>
-<feature id="org.eclipse.jst.ws.jaxws.dom.feature"/>
-<feature id="org.eclipse.datatools.enablement.jdt.feature"/>
-<feature id="org.eclipse.pde"/>
-<feature id="org.eclipse.emf.codegen.ecore.ui"/>
-<feature id="org.eclipse.wst.ws_core.feature"/>
-<feature id="org.eclipse.wst.common.fproj"/>
-<feature id="org.eclipse.emf.edit.ui.source"/>
-<feature id="org.eclipse.tptp.platform.probekit.doc.user"/>
-<feature id="org.eclipse.emf.converter.source"/>
-<feature id="org.eclipse.tptp.platform.core.doc.user"/>
-<feature id="org.eclipse.jst.common.fproj.enablement.jdt"/>
-<feature id="org.eclipse.emf.mapping.ecore.source"/>
-<feature id="org.eclipse.tptp.platform.runtime"/>
-<feature id="org.eclipse.emf.sdk"/>
-<feature id="org.eclipse.datatools.sqldevtools.sqlbuilder.feature"/>
-<feature id="org.eclipse.jst.ws.jaxws.feature"/>
-<feature id="org.eclipse.emf.edit.ui"/>
-<feature id="org.eclipse.datatools.enablement.mysql.feature"/>
-<feature id="org.eclipse.gef"/>
-<feature id="org.eclipse.xsd.editor"/>
-<feature id="org.eclipse.emf.doc.source"/>
-<feature id="org.eclipse.birt.report.designer.editor.xml.wtp"/>
-<feature id="org.eclipse.ecf.remoteservice.soap.feature"/>
-<feature id="org.eclipse.jst.server_adapters.feature"/>
-<feature id="org.eclipse.jst.jsf.apache.trinidad.tagsupport.feature"/>
-<feature id="org.eclipse.emf.common"/>
-<feature id="org.eclipse.datatools.sqldevtools.feature.source"/>
-<feature id="org.eclipse.pde.junit.runtime.standalone"/>
-<feature id="org.eclipse.datatools.sqldevtools.ddlgen.feature"/>
-<feature id="org.eclipse.rap.tooling"/>
-<feature id="org.eclipse.help"/>
-<plugin id="org.easymock"/>
-<feature id="org.eclipse.jst.enterprise_userdoc.feature"/>
-<feature id="org.eclipse.jst.web_userdoc.feature"/>
-<feature id="org.eclipse.tptp.platform.samples"/>
-<feature id="org.eclipse.zest.source"/>
-<feature id="org.eclipse.datatools.sqldevtools.results.feature.source"/>
-<feature id="org.eclipse.emf.databinding.edit"/>
-<feature id="org.eclipse.xsd.ecore.converter"/>
-<feature id="org.eclipse.datatools.sqldevtools.results.feature"/>
-<feature id="org.eclipse.jst.webpageeditor.feature"/>
-<feature id="org.eclipse.xsd.source"/>
-<feature id="org.eclipse.tptp.platform.trace"/>
-<feature id="org.eclipse.tptp.platform.xerces"/>
-<feature id="org.eclipse.draw2d.sdk"/>
-<feature id="org.eclipse.tptp.platform.jvmti"/>
-<feature id="org.eclipse.jpt.feature"/>
-<feature id="org.eclipse.datatools.sqltools.doc.user"/>
-<feature id="org.eclipse.ecf.osgi.services.feature"/>
-<feature id="org.eclipse.xsd.mapping.editor.source"/>
-<feature id="org.eclipse.wst.xml.xpath2.processor.feature"/>
-<feature id="org.eclipse.datatools.enablement.oda.feature"/>
-<feature id="org.eclipse.rcp"/>
-<feature id="org.eclipse.jst.server_core.feature"/>
-<feature id="org.eclipse.xsd.doc"/>
-<feature id="org.eclipse.ecf.remoteservice.feature"/>
-<feature id="org.eclipse.jst.server_adapters.ext.feature"/>
-<feature id="org.eclipse.datatools.enablement.feature"/>
-<feature id="org.eclipse.ecf.discovery.local.feature"/>
-<feature id="org.eclipse.wst.ws_wsdl15.feature"/>
-<feature id="org.eclipse.datatools.connectivity.oda.feature"/>
-<feature id="org.eclipse.wst.server_userdoc.feature"/>
-<feature id="org.eclipse.emf.mapping.ecore.editor.source"/>
-<feature id="org.eclipse.emf.codegen"/>
-<feature id="org.eclipse.emf.ecore.edit"/>
-<feature id="org.eclipse.xsd.mapping"/>
-<feature id="org.eclipse.swtbot.eclipse.test.junit4"/>
-<feature id="org.eclipse.wst.xml_core.feature"/>
-<feature id="org.eclipse.datatools.connectivity.oda.designer.feature"/>
-<feature id="org.eclipse.xsd.ecore.converter.source"/>
-<feature id="org.eclipse.wst.jsdt.feature"/>
-<feature id="org.eclipse.datatools.common.doc.user"/>
-<feature id="org.eclipse.datatools.connectivity.oda.designer.core.feature"/>
-<feature id="org.eclipse.emf.codegen.ecore.ui.source"/>
-<feature id="org.eclipse.xsd"/>
-<feature id="org.eclipse.wst.server_core.feature"/>
-<feature id="org.eclipse.datatools.enablement.apache.derby.feature"/>
-<feature id="org.eclipse.datatools.enablement.hsqldb.feature"/>
-<feature id="org.eclipse.jst.server_ui.feature"/>
-<feature id="org.eclipse.datatools.connectivity.feature"/>
-<feature id="org.eclipse.emf.ecore.editor"/>
-<feature id="org.eclipse.emf.codegen.source"/>
-<feature id="org.eclipse.wst.common_ui.feature"/>
-<feature id="org.eclipse.tptp.platform.profile.server"/>
-<feature id="org.eclipse.wst.server_ui.feature"/>
-<feature id="org.eclipse.tptp.platform.jakarta.log4j"/>
-<feature id="org.eclipse.xsd.editor.source"/>
-<feature id="org.eclipse.datatools.connectivity.oda.designer.core.feature.source"/>
-<feature id="org.eclipse.datatools.sqldevtools.sqlbuilder.feature.source"/>
-<feature id="org.eclipse.swtbot.ide"/>
-<feature id="org.eclipse.datatools.doc.user"/>
-<feature id="org.eclipse.datatools.sqldevtools.parsers.feature"/>
-<feature id="org.eclipse.tptp.platform.commons.logging"/>
-<feature id="org.eclipse.swtbot.eclipse"/>
-<feature id="org.eclipse.datatools.enablement.oracle.feature"/>
-<feature id="org.eclipse.jst.server_userdoc.feature"/>
-<feature id="org.eclipse.rcp"/>
-<feature id="org.eclipse.emf.doc"/>
-<feature id="org.eclipse.xsd.sdk"/>
-<feature id="org.eclipse.draw2d"/>
-<feature id="org.eclipse.datatools.enablement.sqlite.feature"/>
-<feature id="org.eclipse.datatools.enablement.sybase.feature"/>
-<feature id="org.eclipse.emf.codegen.ui.source"/>
-<feature id="org.eclipse.ecf.discovery.zookeeper.feature"/>
-<feature id="org.eclipse.wst.web_ui.feature"/>
-<feature id="org.eclipse.tptp.platform.integration.pde"/>
-<feature id="org.eclipse.jst.web_ui.feature"/>
-<feature id="org.eclipse.datatools.intro"/>
-<feature id="org.eclipse.datatools.enablement.sap.feature"/>
-<feature id="org.eclipse.tptp.platform.batik.pdf"/>
-<feature id="org.eclipse.birt.osgi.runtime.sdk"/>
-<feature id="org.eclipse.datatools.sqldevtools.ddl.feature"/>
-<feature id="org.eclipse.emf.mapping.ui.source"/>
-<feature id="org.eclipse.datatools.connectivity.oda.feature.source"/>
-<feature id="org.eclipse.datatools.sqldevtools.schemaobjecteditor.feature"/>
-<feature id="org.eclipse.wst.xml_userdoc.feature"/>
-<feature id="org.eclipse.birt.integration.wtp"/>
-<feature id="org.eclipse.emf.ecore"/>
-<feature id="org.eclipse.emf.source"/>
-<feature id="org.eclipse.zest"/>
-<feature id="org.eclipse.jpt.eclipselink.feature"/>
-<feature id="org.eclipse.ecf.remoteservice.sdk.feature"/>
-<feature id="org.eclipse.emf.mapping.ecore.editor"/>
-<feature id="org.eclipse.ecf.eventadmin.examples.feature"/>
-<feature id="org.eclipse.datatools.sqldevtools.parsers.feature.source"/>
-<feature id="org.eclipse.jst.web_core.feature"/>
-<feature id="org.eclipse.xsd.doc.source"/>
-<feature id="org.eclipse.emf.mapping"/>
-<feature id="org.eclipse.emf.edit.source"/>
-<feature id="org.eclipse.wst.server_adapters.feature"/>
-<feature id="org.eclipse.ecf.discovery.jmdns.feature"/>
-<feature id="org.eclipse.jst.ws.jaxws_userdoc.feature"/>
-<feature id="org.eclipse.tptp.platform.doc.user"/>
-<feature id="org.maven.ide.eclipse.wtp.feature"/>
-<feature id="org.eclipse.wst.xsl.feature"/>
-<feature id="org.eclipse.datatools.sqldevtools.data.feature"/>
-<feature id="org.eclipse.jst.ws.axis2tools.feature"/>
-<feature id="org.eclipse.ecf.eventadmin.feature"/>
-<feature id="org.eclipse.datatools.enablement.oda.designer.feature"/>
-<feature id="org.eclipse.emf.mapping.ui"/>
-<feature id="org.eclipse.ecf.remoteservice.examples.feature"/>
-<feature id="org.eclipse.ecf.datashare.feature"/>
-<feature id="org.eclipse.draw2d.source"/>
-<feature id="org.eclipse.tptp.platform.batik"/>
-<feature id="org.eclipse.platform"/>
-<feature id="org.eclipse.emf.edit"/>
-<feature id="org.eclipse.emf.databinding.source"/>
-<feature id="org.eclipse.ecf.remoteservice.rosgi.feature"/>
-<feature id="org.eclipse.emf.databinding"/>
-<feature id="org.eclipse.pde.api.tools.ee.fragments"/>
-<feature id="org.eclipse.emf.mapping.source"/>
-<feature id="org.eclipse.datatools.enablement.msft.feature"/>
-<feature id="org.eclipse.wst.common_core.feature"/>
-<feature id="org.eclipse.tptp.platform.report"/>
-<feature id="org.eclipse.emf"/>
-<feature id="org.eclipse.ecf.server.generic.feature"/>
-<plugin id="org.hamcrest.generator"/>
-<feature id="org.eclipse.datatools.sqldevtools.feature"/>
-<feature id="org.eclipse.emf.converter"/>
-<feature id="org.eclipse.gef.sdk"/>
-<feature id="org.eclipse.wst.ws_userdoc.feature"/>
-<feature id="org.eclipse.datatools.connectivity.feature.source"/>
-<feature id="org.eclipse.datatools.sqldevtools.ddlgen.feature.source"/>
-<feature id="org.eclipse.emf.codegen.ui"/>
-<feature id="org.eclipse.datatools.enablement.jdbc.feature"/>
-<feature id="org.eclipse.emf.databinding.edit.source"/>
-<feature id="org.eclipse.datatools.modelbase.feature"/>
-<feature id="org.eclipse.jst.enterprise_core.feature"/>
-<feature id="org.eclipse.tptp.platform.instrumentation.ui"/>
-<feature id="org.eclipse.zest.sdk"/>
-<feature id="org.eclipse.emf.common.source"/>
-<feature id="org.eclipse.jsf.feature"/>
-<feature id="org.eclipse.datatools.sqldevtools.ddl.feature.source"/>
-<feature id="org.eclipse.swtbot"/>
-<feature id="org.eclipse.gef.source"/>
-<feature id="org.eclipse.jdt"/>
-<feature id="org.eclipse.datatools.connectivity.doc.user"/>
-<feature id="org.eclipse.xsd.edit.source"/>
-<feature id="org.eclipse.emf.common.ui"/>
-<feature id="org.eclipse.ecf.discovery.feature"/>
-<feature id="org.eclipse.tptp.platform.probekit"/>
-<feature id="org.eclipse.wst.xml_ui.feature"/>
-<plugin id="com.thoughtworks.qdox"/>
-<feature id="org.eclipse.datatools.enablement.postgresql.feature"/>
-<feature id="org.eclipse.datatools.enablement.ingres.feature"/>
-<feature id="org.eclipse.birt.osgi.runtime"/>
-<feature id="org.eclipse.wst.web_core.feature"/>
-<feature id="org.eclipse.equinox.p2.user.ui"/>
-<feature id="org.eclipse.datatools.sdk.feature"/>
-<feature id="org.eclipse.datatools.connectivity.oda.designer.feature.source"/>
-<feature id="org.eclipse.datatools.modelbase.feature.source"/>
-<feature id="org.eclipse.ecf.remoteservice.rest.feature"/>
-<feature id="org.eclipse.emf.ecore.source"/>
-<feature id="org.eclipse.swtbot.eclipse.gef"/>
-<feature id="org.eclipse.xsd.mapping.source"/>
-<feature id="org.eclipse.birt"/>
-<feature id="org.eclipse.tptp.platform.core"/>
-<feature id="org.eclipse.ecf.discovery.slp.feature"/>
-<feature id="org.maven.ide.eclipse.feature"/>
-<feature id="org.eclipse.datatools.sqldevtools.data.feature.source"/>
-<feature id="org.eclipse.birt.osgi.runtime.source"/>
-<feature id="org.eclipse.wst.ws_ui.feature"/>
-<feature id="org.eclipse.xsd.edit"/>
-<feature id="org.eclipse.emf.codegen.ecore"/>
-<feature id="org.eclipse.emf.ecore.editor.source"/>
-<feature id="org.eclipse.emf.common.ui.source"/>
-<feature id="org.eclipse.xsd.mapping.editor"/>
-<feature id="org.eclipse.ecf.core"/>
-<feature id="org.eclipse.jst.enterprise_ui.feature"/>
+<plugin id="org.hamcrest.generator" />
+<plugin id="org.eclipse.tptp.platform.profile.server.core" />
+<plugin id="org.eclipse.platform.ide" />
+<plugin id="org.easymock" />
+<plugin id="javax.wsdl" />
+<plugin id="com.thoughtworks.qdox" />
+<feature id="org.maven.ide.eclipse.wtp.feature" />
+<feature id="org.maven.ide.eclipse.feature" />
+<feature id="org.eclipse.zest.sdk" />
+<feature id="org.eclipse.zest" />
+<feature id="org.eclipse.xsd.sdk" />
+<feature id="org.eclipse.xsd.mapping.editor" />
+<feature id="org.eclipse.xsd.mapping" />
+<feature id="org.eclipse.xsd.editor" />
+<feature id="org.eclipse.xsd.edit" />
+<feature id="org.eclipse.xsd.ecore.converter" />
+<feature id="org.eclipse.xsd.doc" />
+<feature id="org.eclipse.xsd" />
+<feature id="org.eclipse.wst.xsl.feature" />
+<feature id="org.eclipse.wst.xml.xpath2.processor.feature" />
+<feature id="org.eclipse.wst.xml_userdoc.feature" />
+<feature id="org.eclipse.wst.xml_ui.feature" />
+<feature id="org.eclipse.wst.xml_core.feature" />
+<feature id="org.eclipse.wst.ws_wsdl15.feature" />
+<feature id="org.eclipse.wst.ws_userdoc.feature" />
+<feature id="org.eclipse.wst.ws_ui.feature" />
+<feature id="org.eclipse.wst.ws_core.feature" />
+<feature id="org.eclipse.wst.web_userdoc.feature" />
+<feature id="org.eclipse.wst.web_ui.feature" />
+<feature id="org.eclipse.wst.web_core.feature" />
+<feature id="org.eclipse.wst.server_userdoc.feature" />
+<feature id="org.eclipse.wst.server_ui.feature" />
+<feature id="org.eclipse.wst.server_core.feature" />
+<feature id="org.eclipse.wst.server_adapters.feature" />
+<feature id="org.eclipse.wst.jsdt.feature" />
+<feature id="org.eclipse.wst.common_ui.feature" />
+<feature id="org.eclipse.wst.common.fproj" />
+<feature id="org.eclipse.wst.common_core.feature" />
+<feature id="org.eclipse.tptp.platform.xerces" />
+<feature id="org.eclipse.tptp.platform.trace" />
+<feature id="org.eclipse.tptp.platform.samples" />
+<feature id="org.eclipse.tptp.platform.runtime" />
+<feature id="org.eclipse.tptp.platform.report" />
+<feature id="org.eclipse.tptp.platform.profile.server" />
+<feature id="org.eclipse.tptp.platform.probekit.doc.user" />
+<feature id="org.eclipse.tptp.platform.probekit" />
+<feature id="org.eclipse.tptp.platform.jvmti" />
+<feature id="org.eclipse.tptp.platform.jakarta.log4j" />
+<feature id="org.eclipse.tptp.platform.integration.pde" />
+<feature id="org.eclipse.tptp.platform.instrumentation.ui" />
+<feature id="org.eclipse.tptp.platform.doc.user" />
+<feature id="org.eclipse.tptp.platform.core.doc.user" />
+<feature id="org.eclipse.tptp.platform.core" />
+<feature id="org.eclipse.tptp.platform.commons.logging" />
+<feature id="org.eclipse.tptp.platform.batik.pdf" />
+<feature id="org.eclipse.tptp.platform.batik" />
+<feature id="org.eclipse.swtbot.ide" />
+<feature id="org.eclipse.swtbot.eclipse.test.junit4" />
+<feature id="org.eclipse.swtbot.eclipse.gef" />
+<feature id="org.eclipse.swtbot.eclipse" />
+<feature id="org.eclipse.swtbot" />
+<feature id="org.eclipse.rcp" />
+<feature id="org.eclipse.rap.tooling" />
+<feature id="org.eclipse.platform" />
+<feature id="org.eclipse.pde.junit.runtime.standalone" />
+<feature id="org.eclipse.pde.api.tools.ee.fragments" />
+<feature id="org.eclipse.pde" />
+<feature id="org.eclipse.jst.ws.jaxws_userdoc.feature" />
+<feature id="org.eclipse.jst.ws.jaxws.feature" />
+<feature id="org.eclipse.jst.ws.jaxws.dom.feature" />
+<feature id="org.eclipse.jst.ws.cxf.feature" />
+<feature id="org.eclipse.jst.ws.axis2tools.feature" />
+<feature id="org.eclipse.jst.web_userdoc.feature" />
+<feature id="org.eclipse.jst.web_ui.feature" />
+<feature id="org.eclipse.jst.webpageeditor.feature" />
+<feature id="org.eclipse.jst.web_core.feature" />
+<feature id="org.eclipse.jst.server_userdoc.feature" />
+<feature id="org.eclipse.jst.server_ui.feature" />
+<feature id="org.eclipse.jst.server_core.feature" />
+<feature id="org.eclipse.jst.server_adapters.feature" />
+<feature id="org.eclipse.jst.server_adapters.ext.feature" />
+<feature id="org.eclipse.jst.jsf.apache.trinidad.tagsupport.feature" />
+<feature id="org.eclipse.jst.enterprise_userdoc.feature" />
+<feature id="org.eclipse.jst.enterprise_ui.feature" />
+<feature id="org.eclipse.jst.enterprise_core.feature" />
+<feature id="org.eclipse.jst.common.fproj.enablement.jdt" />
+<feature id="org.eclipse.jsf.feature" />
+<feature id="org.eclipse.jpt.feature" />
+<feature id="org.eclipse.jpt.eclipselink.feature" />
+<feature id="org.eclipse.jdt" />
+<feature id="org.eclipse.help" />
+<feature id="org.eclipse.gef.sdk" />
+<feature id="org.eclipse.gef" />
+<feature id="org.eclipse.equinox.p2.user.ui" />
+<feature id="org.eclipse.emf.sdk" />
+<feature id="org.eclipse.emf.mapping.ui" />
+<feature id="org.eclipse.emf.mapping.ecore.editor" />
+<feature id="org.eclipse.emf.mapping.ecore" />
+<feature id="org.eclipse.emf.mapping" />
+<feature id="org.eclipse.emf.edit.ui" />
+<feature id="org.eclipse.emf.edit" />
+<feature id="org.eclipse.emf.ecore.editor" />
+<feature id="org.eclipse.emf.ecore.edit" />
+<feature id="org.eclipse.emf.ecore" />
+<feature id="org.eclipse.emf.doc" />
+<feature id="org.eclipse.emf.databinding.edit" />
+<feature id="org.eclipse.emf.databinding" />
+<feature id="org.eclipse.emf.converter" />
+<feature id="org.eclipse.emf.common.ui" />
+<feature id="org.eclipse.emf.common" />
+<feature id="org.eclipse.emf.codegen.ui" />
+<feature id="org.eclipse.emf.codegen.ecore.ui" />
+<feature id="org.eclipse.emf.codegen.ecore" />
+<feature id="org.eclipse.emf.codegen" />
+<feature id="org.eclipse.emf" />
+<feature id="org.eclipse.ecf.server.generic.feature" />
+<feature id="org.eclipse.ecf.remoteservice.soap.feature" />
+<feature id="org.eclipse.ecf.remoteservice.sdk.feature" />
+<feature id="org.eclipse.ecf.remoteservice.rosgi.feature" />
+<feature id="org.eclipse.ecf.remoteservice.rest.feature" />
+<feature id="org.eclipse.ecf.remoteservice.feature" />
+<feature id="org.eclipse.ecf.remoteservice.examples.feature" />
+<feature id="org.eclipse.ecf.osgi.services.feature" />
+<feature id="org.eclipse.ecf.eventadmin.feature" />
+<feature id="org.eclipse.ecf.eventadmin.examples.feature" />
+<feature id="org.eclipse.ecf.discovery.zookeeper.feature" />
+<feature id="org.eclipse.ecf.discovery.slp.feature" />
+<feature id="org.eclipse.ecf.discovery.local.feature" />
+<feature id="org.eclipse.ecf.discovery.jmdns.feature" />
+<feature id="org.eclipse.ecf.discovery.feature" />
+<feature id="org.eclipse.ecf.datashare.feature" />
+<feature id="org.eclipse.ecf.core" />
+<feature id="org.eclipse.draw2d.sdk" />
+<feature id="org.eclipse.draw2d" />
+<feature id="org.eclipse.datatools.sqltools.doc.user" />
+<feature id="org.eclipse.datatools.sqldevtools.sqlbuilder.feature" />
+<feature id="org.eclipse.datatools.sqldevtools.schemaobjecteditor.feature" />
+<feature id="org.eclipse.datatools.sqldevtools.results.feature" />
+<feature id="org.eclipse.datatools.sqldevtools.parsers.feature" />
+<feature id="org.eclipse.datatools.sqldevtools.feature" />
+<feature id="org.eclipse.datatools.sqldevtools.ddlgen.feature" />
+<feature id="org.eclipse.datatools.sqldevtools.ddl.feature" />
+<feature id="org.eclipse.datatools.sqldevtools.data.feature" />
+<feature id="org.eclipse.datatools.sdk.feature" />
+<feature id="org.eclipse.datatools.modelbase.feature" />
+<feature id="org.eclipse.datatools.intro" />
+<feature id="org.eclipse.datatools.enablement.sybase.feature" />
+<feature id="org.eclipse.datatools.enablement.sqlite.feature" />
+<feature id="org.eclipse.datatools.enablement.sap.feature" />
+<feature id="org.eclipse.datatools.enablement.postgresql.feature" />
+<feature id="org.eclipse.datatools.enablement.oracle.feature" />
+<feature id="org.eclipse.datatools.enablement.oda.feature" />
+<feature id="org.eclipse.datatools.enablement.oda.designer.feature" />
+<feature id="org.eclipse.datatools.enablement.mysql.feature" />
+<feature id="org.eclipse.datatools.enablement.msft.feature" />
+<feature id="org.eclipse.datatools.enablement.jdt.feature" />
+<feature id="org.eclipse.datatools.enablement.jdbc.feature" />
+<feature id="org.eclipse.datatools.enablement.ingres.feature" />
+<feature id="org.eclipse.datatools.enablement.ibm.feature" />
+<feature id="org.eclipse.datatools.enablement.hsqldb.feature" />
+<feature id="org.eclipse.datatools.enablement.feature" />
+<feature id="org.eclipse.datatools.enablement.apache.derby.feature" />
+<feature id="org.eclipse.datatools.doc.user" />
+<feature id="org.eclipse.datatools.connectivity.oda.feature" />
+<feature id="org.eclipse.datatools.connectivity.oda.designer.feature" />
+<feature id="org.eclipse.datatools.connectivity.oda.designer.core.feature" />
+<feature id="org.eclipse.datatools.connectivity.feature" />
+<feature id="org.eclipse.datatools.connectivity.doc.user" />
+<feature id="org.eclipse.datatools.common.doc.user" />
+<feature id="org.eclipse.birt.report.designer.editor.xml.wtp" />
+<feature id="org.eclipse.birt.osgi.runtime.sdk" />
+<feature id="org.eclipse.birt.osgi.runtime" />
+<feature id="org.eclipse.birt.integration.wtp" />
+<feature id="org.eclipse.birt" />
 </includeBundles>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 </target>
