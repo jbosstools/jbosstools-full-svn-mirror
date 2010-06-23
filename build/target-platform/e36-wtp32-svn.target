@@ -17,8 +17,11 @@
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.eclipse.birt.integration.wtp.feature.group" version="2.6.0.v20100617-1315-35-7w3121172802426"/>
-<repository location="http://download.eclipse.org/birt/update-site/2.6-interim/"/>
+<repository location="http://download.eclipse.org/birt/update-site/2.6/"/>
 </location>
+<!-- <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<repository location="http://download.eclipse.org/birt/update-site/2.6-interim/"/>
+</location> -->
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.10.0.20100209-0800"/>
 <repository location="http://m2eclipse.sonatype.org/sites/m2e-extras/"/>
@@ -102,8 +105,11 @@
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.eclipse.platform.ide" version="3.6.0.I20100603-1500"/>
-<repository location="http://download.eclipse.org/eclipse/updates/3.6milestones/"/>
+<repository location="http://download.eclipse.org/eclipse/updates/3.6/"/>
 </location>
+<!-- <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<repository location="http://download.eclipse.org/eclipse/updates/3.6milestones/"/>
+</location> -->
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <repository location="http://download.eclipse.org/rt/ecf/3.2/3.6/site.p2"/>
 </location>
