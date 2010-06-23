@@ -11,7 +11,8 @@
 		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
 		<scmBranch>trunk</scmBranch>
 		<BUILD_ALIAS>M1</BUILD_ALIAS>
-		<memoryOptions>-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=256m</memoryOptions>
+		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
+		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
 		<target.platform>e36-wtp32</target.platform>
 	</properties>
@@ -48,11 +49,8 @@
 							<ws>cocoa</ws>
 							<arch>x86</arch>
 						</environment>
-						<!-- <environment>
-							<os>macosx</os>
-							<ws>carbon</ws>
-							<arch>x86</arch>
-						</environment> -->
+						<!-- <environment> <os>macosx</os> <ws>carbon</ws> <arch>x86</arch> 
+							</environment> -->
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
@@ -85,7 +83,7 @@
 					<forkedProcessTimeoutInSeconds>900</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
-					<argLine>${memoryOptions} ${systemProperties}</argLine>
+					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties}</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests (?) -->
@@ -210,9 +208,8 @@
 					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
 					<releases> <enabled>true</enabled> </releases> </repository> -->
 
-				<!-- TEMPORARY galileo reqs NOT in target platform
-					 TODO: remove these when no longer needed 
-				-->
+				<!-- TEMPORARY galileo reqs NOT in target platform TODO: remove these 
+					when no longer needed -->
 				<repository>
 					<id>galileo</id>
 					<url>http://download.eclipse.org/releases/galileo/</url>
@@ -257,10 +254,10 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-			</repositories>	
+			</repositories>
 		</profile>
-		<!-- Time saver for building everything form scratch 
-		     use -P helios-no-target to enable-->
+		<!-- Time saver: to build everything from scratch (without target platform); 
+			enable with -P helios-no-target -->
 		<profile>
 			<id>helios-no-target</id>
 			<repositories>
@@ -287,8 +284,9 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>eclipse36m</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.6milestones/</url>
+					<id>eclipse36</id>
+					<url>http://download.eclipse.org/eclipse/updates/3.6/
+					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -297,9 +295,13 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
+				<!-- <repository> <id>eclipse36m</id> <url>http://download.eclipse.org/eclipse/updates/3.6milestones/ 
+					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
+					<releases> <enabled>true</enabled> </releases> </repository> -->
 				<repository>
-					<id>birt26i</id>
-					<url>http://download.eclipse.org/birt/update-site/2.6-interim/</url>
+					<id>birt26</id>
+					<url>http://download.eclipse.org/birt/update-site/2.6/
+					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -308,6 +310,9 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
+				<!-- <repository> <id>birt26i</id> <url>http://download.eclipse.org/birt/update-site/2.6-interim/ 
+					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
+					<releases> <enabled>true</enabled> </releases> </repository> -->
 				<repository>
 					<id>swtbot-helios</id>
 					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
@@ -342,6 +347,24 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
+				<repository>
+					<id>orbit</id>
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<!-- <repository> <id>tptp</id> <url>http://download.eclipse.org/tptp/4.7.0/TPTP-4.7.0/repo/</url> 
+					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
+					<enabled>true</enabled> </releases> </repository> -->
+				<!-- <repository> <id>emf</id> <url>http://download.eclipse.org/modeling/emf/emf/updates/2.6/ 
+					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
+					<releases> <enabled>true</enabled> </releases> </repository> -->
 			</repositories>
 		</profile>
 
@@ -481,7 +504,8 @@
 				</repository>
 				<repository>
 					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/</url>
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
+					</url>
 					<layout>p2</layout>
 					<releases>
 						<enabled>true</enabled>
