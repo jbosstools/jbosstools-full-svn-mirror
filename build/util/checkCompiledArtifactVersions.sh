@@ -27,3 +27,5 @@ for d in tools.common tools.flow jbpm jmx archives .as bpel smooks freemarker pr
 	done
 	#echo " -- $d --"
 done
+echo ""
+echo "Baseline artifact version information stored in ${versionlist}."

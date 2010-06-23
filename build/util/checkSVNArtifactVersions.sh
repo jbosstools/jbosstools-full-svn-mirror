@@ -8,6 +8,8 @@ fi
 
 if [[ $2 ]] && [[ -f $2 ]]; then
 	versionlist=$2
+elif [[ -f /tmp/versionlist ]]; then
+	versionlist=/tmp/versionlist
 else
 	echo "Must run ${0/checkSVNArtifactVersions.sh/checkCompiledArtifactVersions.sh} against baseline (directory w/ plugin and feature jars)"
 	exit 1;
@@ -29,10 +31,10 @@ features=0
 plugins=0
 for f in $dirs; do 
 	if [[ -f ${basedir}${f}/META-INF/MANIFEST.MF ]]; then
-		(( features++ ));
+		(( plugins++ ));
 	fi
 	if [[ -f ${basedir}${f}/feature.xml ]]; then
-		(( plugins++ ));
+		(( features++ ));
 	fi
 done
 echo "Found $features features and $plugins plugins to check."
