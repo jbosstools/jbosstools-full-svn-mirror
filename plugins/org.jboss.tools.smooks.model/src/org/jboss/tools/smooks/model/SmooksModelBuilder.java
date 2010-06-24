@@ -22,8 +22,6 @@ package org.jboss.tools.smooks.model;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.util.List;
-import java.util.Properties;
 
 import org.milyn.SmooksException;
 import org.milyn.javabean.dynamic.Model;

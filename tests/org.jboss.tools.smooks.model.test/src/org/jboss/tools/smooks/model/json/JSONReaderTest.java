@@ -17,35 +17,39 @@
  *
  * (C) 2009, JBoss Inc.
  */
-package org.jboss.tools.smooks.model.edi;
+package org.jboss.tools.smooks.model.json;
 
-import org.jboss.tools.smooks.model.core.Reader;
-import org.milyn.javabean.dynamic.serialize.DefaultNamespace;
+import java.io.IOException;
+
+import org.jboss.tools.smooks.model.SmooksModelTestCase;
+import org.xml.sax.SAXException;
 
 /**
- * EDI Reader mapping model.
- * 
- * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
+ * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-@DefaultNamespace(uri = "http://www.milyn.org/xsd/smooks/edi-1.2.xsd", prefix = "csv12")
-public class EDIReader implements Reader {
+public class JSONReaderTest extends SmooksModelTestCase {
 
-	private String mappingModel;
-	private Boolean validate;
-
-	public String getMappingModel() {
-		return mappingModel;
-	}
-
-	public void setMappingModel(String mappingModel) {
-		this.mappingModel = mappingModel;
-	}
-
-	public Boolean isValidate() {
-		return validate;
+	public JSONReaderTest() throws IOException, SAXException {
+		super();
 	}
 	
-	public void setValidate(Boolean validate) {
-		this.validate = validate;
-	}	
+	public void test_v11_01() throws IOException, SAXException {
+        test("config-01.xml");
+	}
+	
+	public void test_v11_02() throws IOException, SAXException {
+        test("config-02.xml");
+	}
+	
+	public void test_v12_01() throws IOException, SAXException {
+        test("config-03.xml");
+	}
+	
+	public void test_v12_02() throws IOException, SAXException {
+        test("config-04.xml");
+	}
+	
+	public void test_v11_and_v12() throws IOException, SAXException {
+        test("config-05.xml");
+	}
 }

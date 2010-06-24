@@ -23,7 +23,7 @@ import org.jboss.tools.smooks.model.core.Reader;
 import org.milyn.javabean.dynamic.serialize.DefaultNamespace;
 
 /**
- * CSV Reader.
+ * CSV Reader mapping model.
  * 
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
