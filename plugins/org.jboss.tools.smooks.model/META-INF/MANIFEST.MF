@@ -13,6 +13,7 @@ Bundle-Activator: org.jboss.tools.smooks.model.plugin.SmooksModelActivator
 Export-Package: org.jboss.tools.smooks.model,
  org.jboss.tools.smooks.model.core,
  org.jboss.tools.smooks.model.csv,
+ org.jboss.tools.smooks.model.edi,
  org.jboss.tools.smooks.model.javabean,
  org.jboss.tools.smooks.model.plugin
 Bundle-ClassPath: .
