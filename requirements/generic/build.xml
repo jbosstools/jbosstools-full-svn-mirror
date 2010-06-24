@@ -4,7 +4,7 @@
 	<property name="driver.properties" value="${basedir}/build.properties" />
 	<loadproperties srcFile="${driver.properties}"/>
 	
-	<property name="driver.dest" value="${requirement.build.root}/${requirement}"/>
+	<property name="driver.dest" value="${requirement.download.root}/${requirement}"/>
 	
 	<target name="init" />
 	
@@ -19,22 +19,25 @@
 	<target name="unzip.archive" depends="download.archive">
 		<property name="ext" value="zip"/>
 		<echo level="debug">Unpacking ${driver.dest}/${build.archive} to ${unzip.dest}</echo>
-		<antcall target="unpack-${ext}" />
-		<!--unzip src="${driver.dest}/${build.archive}" dest="${unzip.dest}" /-->
-		<tstamp/>
-		<antcall target="post.unpack.requirement" />
+		<if>
+			<available file="${driver.dest}/${build.archive}" />
+			<then>
+				<antcall target="unpack-${ext}" />
+				<tstamp/>
+				<antcall target="post.unpack.requirement"/>
+			</then>
+		</if>
+		
 	</target>
 
 	<target name="post.unpack.requirement">
-		<!--echo file="${requirement.root}/${requirement}/return.properties"># Generated on ${DSTAMP} ${TSTAMP}
-		</echo-->
 	</target>
 	
-	<target name="unpack-tar.gz" >
+	<target name="unpack-tar.gz">
 		<untar compression="gzip" src="${driver.dest}/${build.archive}" dest="${unzip.dest}"  />
 	</target>
 	
-	<target name="unpack-zip" >
+	<target name="unpack-zip">
 		<unzip src="${driver.dest}/${build.archive}" dest="${unzip.dest}" />
 	</target>
 	
@@ -51,7 +54,7 @@
 						<checksum file="${driver.dest}/${build.archive}" property="current.md5"/>
 						<echo level="verbose">${current.md5} calculated</echo>
 						<echo level="verbose">${md5} provided</echo>
-						<condition property="archive.exists">
+						<condition property="archive.exists" >
 							<equals arg1="${current.md5}" arg2="${md5}"/>
 						</condition>
 						<if>
@@ -77,14 +80,25 @@
 	</target>
 
 	<target name="download.archive" depends="check.archive" unless="archive.exists">
-		<mkdir dir="${driver.dest}"/>
-		<get taskname="download ${requirement}"
-			src="${build.uri}/${build.archive}" 
-			dest="${driver.dest}/${build.archive}" />
-		<antcall target="post.download.requirement"/>
+		<if>
+			<or>
+				<equals arg1="${settings.offline}" arg2="true" />
+				<equals arg1="${maven.test.skip}" arg2="true" />
+			</or>
+			<then>
+				<echo>Skip download for ${build.uri}/${build.archive} because of tests are skept or build is running in offline mode</echo>			
+			</then>
+			<else>
+				<mkdir dir="${driver.dest}"/>
+				<get taskname="download ${requirement}"
+					src="${build.uri}/${build.archive}" 
+					dest="${driver.dest}/${build.archive}" />
+				<antcall target="post.download.requirement"/>
+			</else>
+		</if>
 	</target>
 
 	<target name="post.download.requirement">
 	</target>	
-	
+
 </project>

@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ====================================================================== 
-     May 21, 2010 4:44:14 PM                                                        
-
-     project    
-     description
-                   
-     eskimo                                                                
-     ====================================================================== -->
 <project name="project" default="default">
-    <description>
-            description
-    </description>
-
-    <!-- ================================= 
-          target: default              
-         ================================= -->
 	<import file="buildRequirements.xml" />
+
 	<property name="requirement.root" value="${basedir}" />
-	<property name="requirement.build.root" value="${basedir}/download" />
-    <target name="default" description="description">
-    	<echo>requirements=${requirements}</echo>
-    	<echo>unzipto=${basedir}/target/requirements</echo>
-        <buildRequirements requirements="${requirements}" unzipto="${basedir}/target" />
-    </target>
+	<property name="requirement.download.root" value="${basedir}/download" />
+	
+	<condition property="skipRequirementBuild">
+		<equals arg1="${maven.test.skip}" arg2="true"/>
+	</condition>
+	
+	<target name="default" description="description" unless="skipRequirementBuild">
+		<echo>maven.test.skip=${maven.test.skip}</echo>
+		<echo>settings.offline=${settings.offline}</echo>
+		<echo>requirements=${requirements}</echo>
+		<echo>unzipto=${basedir}/target/requirements</echo>
+		<buildRequirements requirements="${requirements}" unzipto="${basedir}/target" />
+	</target>
 
 </project>
