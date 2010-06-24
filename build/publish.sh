@@ -6,7 +6,13 @@
 # define target zip filename for inclusion in uberbuilder's bucky aggregator
 SNAPNAME=${JOB_NAME}-Update-SNAPSHOT.zip
 
+# cleanup from last time
 rm -fr ${WORKSPACE}/site; mkdir -p ${WORKSPACE}/site/${JOB_NAME}
+
+# get full build log and filter out Maven test failures
+wget http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt
+cat ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt | grep -A9  "<<< FAILURE" | egrep -v ".+at (sun.|java.).+" > ${WORKSPACE}/site/${JOB_NAME}/errorlog.txt
+
 for z in ${WORKSPACE}/sources/site/target/site.zip ${WORKSPACE}/sources/site/target/site_assembly.zip; do
 	if [[ -f $z ]]; then
 		#echo "$z ..."
