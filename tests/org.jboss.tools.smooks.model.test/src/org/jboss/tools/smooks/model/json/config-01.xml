@@ -6,6 +6,8 @@
     -->
     <json:reader>
     	<json:keyMap>
+			<json:key from="a" to="1" />
+			<json:key from="b" to="2" />
 			<json:key from="some&amp;key" to="someAndKey" />
 	    </json:keyMap>
     </json:reader>
