@@ -18,6 +18,38 @@
 	</properties>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.3</version>
+					<executions>
+						<execution>
+							<id>prepare-eclipse-base</id>
+							<phase>generate-test-resources</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<echo>Requirements build</echo>
+									<echo>requirements=${requirements}</echo>
+									<echo>maven.test.skip=${maven.test.skip}</echo>
+									<echo>settings.offline=${settings.offline}</echo>
+									
+									<ant dir="${projectRoot}/requirements" inheritAll="true" >
+										<property name="requirements" value="${requirements}" />
+										<property name="settings.offline" value="${settings.offline}" />
+									</ant> 
+
+								</tasks>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<plugins>
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
@@ -188,76 +220,13 @@
 					</plugin>
 				</plugins>
 			</build>
-			<repositories>
-				<!-- <repository> <id>helios</id> <url>http://download.eclipse.org/releases/helios/</url> 
-					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
-					<enabled>true</enabled> </releases> </repository> <repository> <id>webtools32</id> 
-					<url>http://download.eclipse.org/webtools/repository/helios</url> <layout>p2</layout> 
-					<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>true</enabled> 
-					</releases> </repository> <repository> <id>eclipse36r</id> <url>http://download.eclipse.org/eclipse/updates/3.6/</url> 
-					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
-					<enabled>true</enabled> </releases> </repository> <repository> <id>eclipse36m</id> 
-					<url>http://download.eclipse.org/eclipse/updates/3.6milestones/</url> <layout>p2</layout> 
-					<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>true</enabled> 
-					</releases> </repository> <repository> <id>birt26r</id> <url>http://download.eclipse.org/birt/update-site/2.6/</url> 
-					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
-					<enabled>true</enabled> </releases> </repository> <repository> <id>birt26i</id> 
-					<url>http://download.eclipse.org/birt/update-site/2.6-interim/ </url> <layout>p2</layout> 
-					<snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>true</enabled> 
-					</releases> </repository> <repository> <id>swtbot-helios</id> <url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository> -->
-
-				<!-- TEMPORARY galileo reqs NOT in target platform TODO: remove these 
-					when no longer needed -->
-				<repository>
-					<id>galileo</id>
-					<url>http://download.eclipse.org/releases/galileo/</url>
-					<layout>p2</layout>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>eclipse35</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.5/</url>
-					<layout>p2</layout>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>birt25r</id>
-					<url>http://download.eclipse.org/birt/update-site/2.5</url>
-					<layout>p2</layout>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>swtbot-galileo</id>
-					<url>http://download.eclipse.org/technology/swtbot/galileo/dev-build/update-site
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>webtools</id>
-					<url>http://download.eclipse.org/webtools/updates/</url>
-					<layout>p2</layout>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
 		</profile>
+
 		<!-- Time saver: to build everything from scratch (without target platform); 
-			enable with -P helios-no-target -->
+		     To enable it use -P helios-no-target in command line.
+		     Do not remove repos that contains the same artefacts, it is done for purpose
+		     to make build more stable in case one of the repos is offline.
+		-->
 		<profile>
 			<id>helios-no-target</id>
 			<repositories>
@@ -295,9 +264,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- <repository> <id>eclipse36m</id> <url>http://download.eclipse.org/eclipse/updates/3.6milestones/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository> -->
 				<repository>
 					<id>birt26</id>
 					<url>http://download.eclipse.org/birt/update-site/2.6/
@@ -310,9 +276,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- <repository> <id>birt26i</id> <url>http://download.eclipse.org/birt/update-site/2.6-interim/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository> -->
 				<repository>
 					<id>swtbot-helios</id>
 					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
@@ -359,12 +322,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- <repository> <id>tptp</id> <url>http://download.eclipse.org/tptp/4.7.0/TPTP-4.7.0/repo/</url> 
-					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
-					<enabled>true</enabled> </releases> </repository> -->
-				<!-- <repository> <id>emf</id> <url>http://download.eclipse.org/modeling/emf/emf/updates/2.6/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository> -->
 			</repositories>
 		</profile>
 
