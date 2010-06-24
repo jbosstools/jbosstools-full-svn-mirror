@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+                      xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.4.xsd"
+                      xmlns:dmb="http://www.milyn.org/xsd/smooks/dmb-1.4.xsd">
+
+    <!-- Binding configs (unmarshal)... -->
+
+    <jb:bean beanId="ediReader" class="org.jboss.tools.smooks.model.edi.EDIReader" createOnElement="reader">
+        <jb:value property="mappingModel" data="reader/@mappingModel" />
+        <jb:value property="validate" data="reader/@validate" />
+    </jb:bean>
+
+    <!-- Writers (marshal)... -->
+
+    <dmb:writer beanId="ediReader" class="org.milyn.javabean.dynamic.serialize.freemarker.FreeMarkerBeanWriter">
+        <param name="template">/org/jboss/tools/smooks/model/edi/v1_2/v1.2.ftl</param>
+    </dmb:writer>
+
+</smooks-resource-list>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+                      xmlns:edi11="http://www.milyn.org/xsd/smooks/edi-1.1.xsd"
+                      xmlns:edi12="http://www.milyn.org/xsd/smooks/edi-1.2.xsd">
+
+    <edi11:reader mappingModel="/Users/models/blah.xml" />
+
+    <edi12:reader mappingModel="/Users/models/blah.xml" validate="true" />
+
+</smooks-resource-list>

@@ -64,7 +64,7 @@ public abstract class SmooksModelTestCase extends TestCase {
 		StringWriter modelWriter = new StringWriter();
 	    model.writeModel(modelWriter);
 
-//	    System.out.println(modelWriter);
+	    System.out.println(modelWriter);
 //	    System.out.println(org.milyn.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream(messageFile)));	    
 	    
 	    XMLUnit.setIgnoreWhitespace( true );
