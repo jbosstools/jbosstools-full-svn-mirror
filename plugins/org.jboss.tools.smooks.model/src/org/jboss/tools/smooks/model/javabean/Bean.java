@@ -19,9 +19,12 @@
  */
 package org.jboss.tools.smooks.model.javabean;
 
+import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.Component;
+import org.milyn.javabean.dynamic.Model;
 import org.milyn.javabean.dynamic.serialize.DefaultNamespace;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,55 +49,77 @@ public class Bean implements Component {
         return beanId;
     }
 
-    public void setBeanId(String beanId) {
+    public Bean setBeanId(String beanId) {
         this.beanId = beanId;
+		return this;
     }
 
     public String getBeanClass() {
         return beanClass;
     }
 
-    public void setBeanClass(String beanClass) {
+    public Bean setBeanClass(String beanClass) {
         this.beanClass = beanClass;
+		return this;
     }
 
     public String getCreateOnElement() {
         return createOnElement;
     }
 
-    public void setCreateOnElement(String createOnElement) {
+    public Bean setCreateOnElement(String createOnElement) {
         this.createOnElement = createOnElement;
+		return this;
     }
 
     public String getCreateOnElementNS() {
         return createOnElementNS;
     }
 
-    public void setCreateOnElementNS(String createOnElementNS) {
+    public Bean setCreateOnElementNS(String createOnElementNS) {
         this.createOnElementNS = createOnElementNS;
+		return this;
     }
 
     public List<Value> getValueBindings() {
+    	if(valueBindings == null) {
+    		valueBindings = new ArrayList<Value>();
+    	}
         return valueBindings;
     }
 
-    public void setValueBindings(List<Value> valueBindings) {
+    public Bean setValueBindings(List<Value> valueBindings) {
         this.valueBindings = valueBindings;
+		return this;
     }
 
     public List<Wiring> getWireBindings() {
+    	if(wireBindings == null) {
+    		wireBindings = new ArrayList<Wiring>();
+    	}
         return wireBindings;
     }
 
-    public void setWireBindings(List<Wiring> wireBindings) {
+    public Bean setWireBindings(List<Wiring> wireBindings) {
         this.wireBindings = wireBindings;
+		return this;
     }
 
     public List<Expression> getExpressionBindings() {
+    	if(expressionBindings == null) {
+    		expressionBindings = new ArrayList<Expression>();
+    	}
         return expressionBindings;
     }
 
-    public void setExpressionBindings(List<Expression> expressionBindings) {
+    public Bean setExpressionBindings(List<Expression> expressionBindings) {
         this.expressionBindings = expressionBindings;
+		return this;
     }
+
+	public static Bean newInstance(Model<SmooksModel> model) {
+		Bean instance = new Bean();
+		model.registerBean(instance);
+		return instance;
+	}
 }

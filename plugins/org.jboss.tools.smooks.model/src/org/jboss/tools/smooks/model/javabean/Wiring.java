@@ -24,33 +24,57 @@ package org.jboss.tools.smooks.model.javabean;
  *
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-public class Wiring extends Binding {
+public class Wiring {
 
+    private String property;
+    private String setterMethod;
     private String beanIdRef;
     private String wireOnElement;
     private String wireOnElementNS;
+    
+    public String getProperty() {
+        return property;
+    }
+
+    public Wiring setProperty(String property) {
+        this.property = property;
+        return this;
+    }
+
+    public String getSetterMethod() {
+        return setterMethod;
+    }
+
+    public Wiring setSetterMethod(String setterMethod) {
+        this.setterMethod = setterMethod;
+        return this;
+    }
+
 
     public String getBeanIdRef() {
         return beanIdRef;
     }
 
-    public void setBeanIdRef(String beanIdRef) {
+    public Wiring setBeanIdRef(String beanIdRef) {
         this.beanIdRef = beanIdRef;
+        return this;
     }
 
     public String getWireOnElement() {
         return wireOnElement;
     }
 
-    public void setWireOnElement(String wireOnElement) {
+    public Wiring setWireOnElement(String wireOnElement) {
         this.wireOnElement = wireOnElement;
+        return this;
     }
 
     public String getWireOnElementNS() {
         return wireOnElementNS;
     }
 
-    public void setWireOnElementNS(String wireOnElementNS) {
+    public Wiring setWireOnElementNS(String wireOnElementNS) {
         this.wireOnElementNS = wireOnElementNS;
+        return this;
     }
 }

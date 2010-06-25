@@ -28,10 +28,6 @@ import org.xml.sax.SAXException;
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
 public class EDIReaderTest extends SmooksModelTestCase {
-
-	public EDIReaderTest() throws IOException, SAXException {
-		super();
-	}
 	
 	public void test_v11() throws IOException, SAXException {
         test("config-01.xml");

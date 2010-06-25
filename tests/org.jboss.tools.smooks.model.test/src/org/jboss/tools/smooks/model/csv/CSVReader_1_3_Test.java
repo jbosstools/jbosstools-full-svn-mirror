@@ -36,10 +36,6 @@ import java.io.StringWriter;
  */
 public class CSVReader_1_3_Test extends SmooksModelTestCase {
 
-    public CSVReader_1_3_Test() throws IOException, SAXException {
-        super();
-    }
-
     public void test_01() throws IOException, SAXException {
         test("v1_3/csv-config-01.xml");
     }

@@ -31,7 +31,8 @@ public class MapBinding extends Binding {
         return keyField;
     }
 
-    public void setKeyField(String keyField) {
+    public MapBinding setKeyField(String keyField) {
         this.keyField = keyField;
+        return this;
     }
 }

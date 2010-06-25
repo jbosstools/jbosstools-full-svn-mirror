@@ -24,33 +24,56 @@ package org.jboss.tools.smooks.model.javabean;
  * 
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-public class Expression extends Binding {
+public class Expression {
 
+    private String property;
+    private String setterMethod;
     private String execOnElement;
     private String execOnElementNS;
     private String initVal;
+
+    public String getProperty() {
+        return property;
+    }
+
+    public Expression setProperty(String property) {
+        this.property = property;
+        return this;
+    }
+
+    public String getSetterMethod() {
+        return setterMethod;
+    }
+
+    public Expression setSetterMethod(String setterMethod) {
+        this.setterMethod = setterMethod;
+        return this;
+    }
 
     public String getExecOnElement() {
         return execOnElement;
     }
 
-    public void setExecOnElement(String execOnElement) {
+    public Expression setExecOnElement(String execOnElement) {
         this.execOnElement = execOnElement;
+        return this;
     }
 
     public String getExecOnElementNS() {
         return execOnElementNS;
     }
 
-    public void setExecOnElementNS(String execOnElementNS) {
+    public Expression setExecOnElementNS(String execOnElementNS) {
         this.execOnElementNS = execOnElementNS;
+        return this;
     }
 
     public String getInitVal() {
         return initVal;
     }
 
-    public void setInitVal(String initVal) {
+    public Expression setInitVal(String initVal) {
         this.initVal = initVal;
+        return this;
     }
 }

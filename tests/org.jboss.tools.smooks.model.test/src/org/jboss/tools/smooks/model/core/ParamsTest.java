@@ -31,10 +31,6 @@ import java.io.IOException;
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
 public class ParamsTest extends SmooksModelTestCase {
-
-	public ParamsTest() throws IOException, SAXException {
-		super();
-	}
 	
 	public void test_manual() {
 		GlobalParams params = new GlobalParams();

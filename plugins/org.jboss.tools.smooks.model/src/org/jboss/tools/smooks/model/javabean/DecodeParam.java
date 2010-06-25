@@ -33,15 +33,17 @@ public class DecodeParam {
         return name;
     }
 
-    public void setName(String name) {
+    public DecodeParam setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public DecodeParam setValue(String value) {
         this.value = value;
+        return this;
     }
 }

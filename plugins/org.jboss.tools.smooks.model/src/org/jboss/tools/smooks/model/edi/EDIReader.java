@@ -19,7 +19,9 @@
  */
 package org.jboss.tools.smooks.model.edi;
 
+import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.Reader;
+import org.milyn.javabean.dynamic.Model;
 import org.milyn.javabean.dynamic.serialize.DefaultNamespace;
 
 /**
@@ -36,16 +38,21 @@ public class EDIReader implements Reader {
 	public String getMappingModel() {
 		return mappingModel;
 	}
-
-	public void setMappingModel(String mappingModel) {
+	public EDIReader setMappingModel(String mappingModel) {
 		this.mappingModel = mappingModel;
+		return this;
 	}
-
-	public Boolean isValidate() {
+	public Boolean getValidate() {
 		return validate;
 	}
-	
-	public void setValidate(Boolean validate) {
+	public EDIReader setValidate(Boolean validate) {
 		this.validate = validate;
-	}	
+		return this;
+	}
+	
+	public static EDIReader newInstance(Model<SmooksModel> model) {
+		EDIReader instance = new EDIReader();
+		model.registerBean(instance);
+		return instance;
+	}
 }

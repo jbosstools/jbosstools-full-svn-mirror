@@ -33,15 +33,17 @@ public abstract class Binding {
         return beanId;
     }
 
-    public void setBeanId(String beanId) {
+    public Binding setBeanId(String beanId) {
         this.beanId = beanId;
+        return this;
     }
 
     public String getBeanClass() {
         return beanClass;
     }
 
-    public void setBeanClass(String beanClass) {
+    public Binding setBeanClass(String beanClass) {
         this.beanClass = beanClass;
+        return this;
     }
 }

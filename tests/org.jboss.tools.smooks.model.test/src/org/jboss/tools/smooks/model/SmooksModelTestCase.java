@@ -27,7 +27,7 @@ import java.io.StringWriter;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.jboss.tools.smooks.model.SmooksModel;
-import org.jboss.tools.smooks.model.SmooksModelBuilder;
+import org.jboss.tools.smooks.model.SmooksEditorModelBuilder;
 import org.milyn.javabean.dynamic.Model;
 import org.xml.sax.SAXException;
 
@@ -40,18 +40,10 @@ import junit.framework.TestCase;
  */
 public abstract class SmooksModelTestCase extends TestCase {
 
-	protected SmooksModelBuilder smooksModelBuilder;
-
-    public SmooksModelTestCase() throws IOException, SAXException {
-        smooksModelBuilder = new SmooksModelBuilder();
-    }
+	protected static SmooksEditorModelBuilder smooksModelBuilder = new SmooksEditorModelBuilder();
     
-	public SmooksModelBuilder getSmooksModelBuilder() {
+	public SmooksEditorModelBuilder getSmooksModelBuilder() {
 		return smooksModelBuilder;
-	}
-	
-	public void setReportPath(String reportPath) {
-		smooksModelBuilder.getModelBuilder().setReportPath(reportPath);
 	}
 	
 	public Model<SmooksModel> test(String messageFile) throws IOException, SAXException {
@@ -64,7 +56,7 @@ public abstract class SmooksModelTestCase extends TestCase {
 		StringWriter modelWriter = new StringWriter();
 	    model.writeModel(modelWriter);
 
-	    System.out.println(modelWriter);
+//	    System.out.println(modelWriter);
 //	    System.out.println(org.milyn.io.StreamUtils.readStreamAsString(getClass().getResourceAsStream(messageFile)));	    
 	    
 	    XMLUnit.setIgnoreWhitespace( true );
@@ -72,6 +64,6 @@ public abstract class SmooksModelTestCase extends TestCase {
 	}
 
 	protected void reportTo(String reportPath) {
-		SmooksModelBuilder.modelBuilder.setReportPath(reportPath);	
+		smooksModelBuilder.getModelBuilder().setReportPath(reportPath);	
 	}	
 }

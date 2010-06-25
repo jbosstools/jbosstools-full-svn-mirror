@@ -29,10 +29,6 @@ import java.io.IOException;
  */
 public class BeanTest extends SmooksModelTestCase {
 
-	public BeanTest() throws IOException, SAXException {
-		super();
-	}
-
 	public void test_v11() throws IOException, SAXException {
         test("v1_1/config-01.xml");
     }

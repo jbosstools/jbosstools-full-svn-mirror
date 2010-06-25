@@ -28,10 +28,6 @@ import org.xml.sax.SAXException;
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
 public class JSONReaderTest extends SmooksModelTestCase {
-
-	public JSONReaderTest() throws IOException, SAXException {
-		super();
-	}
 	
 	public void test_v11_01() throws IOException, SAXException {
         test("config-01.xml");

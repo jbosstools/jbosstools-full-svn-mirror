@@ -33,11 +33,15 @@ public class Params {
 	private List<Param> params;
 	
 	public List<Param> getParams() {
+		if(params == null) {
+			params = new ArrayList<Param>();
+		}
 		return params;
 	}
 
-	public void setParams(List<Param> params) {
+	public Params setParams(List<Param> params) {
 		this.params = params;
+        return this;
 	}
 	
 	public String getParam(String name) {

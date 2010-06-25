@@ -19,8 +19,10 @@
  */
 package org.jboss.tools.smooks.model.freemarker;
 
+import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.Component;
 import org.jboss.tools.smooks.model.core.Params;
+import org.milyn.javabean.dynamic.Model;
 import org.milyn.javabean.dynamic.serialize.DefaultNamespace;
 
 /**
@@ -36,35 +38,49 @@ public class FreeMarkerTemplate implements Component {
 	private String applyOnElementNS;
 	private Boolean applyBefore;
 	private Params params;
-
+	
 	public String getTemplate() {
 		return template;
 	}
-	public void setTemplate(String template) {
+	public FreeMarkerTemplate setTemplate(String template) {
 		this.template = template;
+		return this;
 	}
 	public String getApplyOnElement() {
 		return applyOnElement;
 	}
-	public void setApplyOnElement(String applyOnElement) {
+	public FreeMarkerTemplate setApplyOnElement(String applyOnElement) {
 		this.applyOnElement = applyOnElement;
+		return this;
 	}
 	public String getApplyOnElementNS() {
 		return applyOnElementNS;
 	}
-	public void setApplyOnElementNS(String applyOnElementNS) {
+	public FreeMarkerTemplate setApplyOnElementNS(String applyOnElementNS) {
 		this.applyOnElementNS = applyOnElementNS;
+		return this;
 	}
 	public Boolean getApplyBefore() {
 		return applyBefore;
 	}
-	public void setApplyBefore(Boolean applyBefore) {
+	public FreeMarkerTemplate setApplyBefore(Boolean applyBefore) {
 		this.applyBefore = applyBefore;
+		return this;
 	}
 	public Params getParams() {
+		if(params == null) {
+			params = new Params();
+		}
 		return params;
 	}
-	public void setParams(Params params) {
+	public FreeMarkerTemplate setParams(Params params) {
 		this.params = params;
+		return this;
+	}
+	
+	public static FreeMarkerTemplate newInstance(Model<SmooksModel> model) {
+		FreeMarkerTemplate instance = new FreeMarkerTemplate();
+		model.registerBean(instance);
+		return instance;
 	}
 }

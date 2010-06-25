@@ -24,16 +24,7 @@ import java.io.IOException;
 import org.jboss.tools.smooks.model.SmooksModelTestCase;
 import org.xml.sax.SAXException;
 
-/**
- * 
- *
- * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
- */
 public class FreeMarkerTemplateTest extends SmooksModelTestCase {
-
-	public FreeMarkerTemplateTest() throws IOException, SAXException {
-		super();
-	}
 
 	public void test_01() throws IOException, SAXException {
 		test("config-01.xml");

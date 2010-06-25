@@ -76,7 +76,7 @@ import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListene
 import org.jboss.tools.smooks.configuration.validate.SmooksMarkerHelper;
 import org.jboss.tools.smooks.configuration.validate.SmooksModelValidator;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
-import org.jboss.tools.smooks.model.SmooksModelBuilder;
+import org.jboss.tools.smooks.model.SmooksEditorModelBuilder;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.provider.CommonItemProviderAdapterFactory;
 import org.jboss.tools.smooks.model.csv12.provider.Csv12ItemProviderAdapterFactory;
@@ -135,7 +135,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 
 	protected boolean graphChanged = false;
 
-	private SmooksModelBuilder modelBuilder;
+	private SmooksEditorModelBuilder modelBuilder;
 
 	// private Object smooksDOMModel;
 
@@ -145,7 +145,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		xmlDocumentTraker = new SmooksXMLEditorDocumentListener();
 		initEditingDomain();
 		
-		modelBuilder = new SmooksModelBuilder();
+		modelBuilder = new SmooksEditorModelBuilder();
 	}
 
 	/**

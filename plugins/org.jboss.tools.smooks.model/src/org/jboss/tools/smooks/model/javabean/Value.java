@@ -19,6 +19,7 @@
  */
 package org.jboss.tools.smooks.model.javabean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,51 +27,80 @@ import java.util.List;
  *
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-public class Value extends Binding {
+public class Value {
 
+    private String property;
+    private String setterMethod;
     private String data;
     private String dataNS;
     private String decoder;
     private String defaultVal;
     private List<DecodeParam> decodeParams;
+    
+    public String getProperty() {
+        return property;
+    }
+
+    public Value setProperty(String property) {
+        this.property = property;
+        return this;
+    }
+
+    public String getSetterMethod() {
+        return setterMethod;
+    }
+
+    public Value setSetterMethod(String setterMethod) {
+        this.setterMethod = setterMethod;
+        return this;
+    }
+
 
     public String getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public Value setData(String data) {
         this.data = data;
+		return this;
     }
 
     public String getDataNS() {
         return dataNS;
     }
 
-    public void setDataNS(String dataNS) {
+    public Value setDataNS(String dataNS) {
         this.dataNS = dataNS;
+		return this;
     }
 
     public String getDecoder() {
         return decoder;
     }
 
-    public void setDecoder(String decoder) {
+    public Value setDecoder(String decoder) {
         this.decoder = decoder;
+		return this;
     }
 
     public String getDefaultVal() {
         return defaultVal;
     }
 
-    public void setDefaultVal(String defaultVal) {
+    public Value setDefaultVal(String defaultVal) {
         this.defaultVal = defaultVal;
+		return this;
     }
 
     public List<DecodeParam> getDecodeParams() {
+    	if(decodeParams == null) {
+    		decodeParams = new ArrayList<DecodeParam>();
+    	}
         return decodeParams;
     }
 
-    public void setDecodeParams(List<DecodeParam> decodeParams) {
+    public Value setDecodeParams(List<DecodeParam> decodeParams) {
         this.decodeParams = decodeParams;
+		return this;
     }
 }

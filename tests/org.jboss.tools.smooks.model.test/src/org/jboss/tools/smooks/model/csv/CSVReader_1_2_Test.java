@@ -36,10 +36,6 @@ import java.io.StringWriter;
  */
 public class CSVReader_1_2_Test extends SmooksModelTestCase {
 
-    public CSVReader_1_2_Test() throws IOException, SAXException {
-        super();
-    }
-
     public void test_01() throws IOException, SAXException {
         test("v1_2/csv-config-01.xml");
     }
@@ -57,8 +53,7 @@ public class CSVReader_1_2_Test extends SmooksModelTestCase {
     }
 
     public void test_programmatic_build() throws IOException, SAXException {
-        SmooksModel smooksModel = new SmooksModel();
-        Model<SmooksModel> model = new Model<SmooksModel>(smooksModel, getSmooksModelBuilder().getModelBuilder());
+        Model<SmooksModel> model = getSmooksModelBuilder().newModel();
         CSVReader csvReader = new CSVReader();
 
         // Populate it...
@@ -74,7 +69,7 @@ public class CSVReader_1_2_Test extends SmooksModelTestCase {
         model.registerBean(csvReader).setNamespace("http://www.milyn.org/xsd/smooks/csv-1.2.xsd").setNamespacePrefix("csv12");
 
         // Add it in the appropriate place in the object graph....
-        smooksModel.getReaders().add(csvReader);
+        model.getModelRoot().getReaders().add(csvReader);
 
         ListBinding listBinding = new ListBinding();
         listBinding.setBeanId("beanX");

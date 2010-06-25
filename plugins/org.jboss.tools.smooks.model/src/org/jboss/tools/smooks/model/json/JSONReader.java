@@ -21,7 +21,9 @@ package org.jboss.tools.smooks.model.json;
 
 import java.util.Map;
 
+import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.Reader;
+import org.milyn.javabean.dynamic.Model;
 import org.milyn.javabean.dynamic.serialize.DefaultNamespace;
 
 /**
@@ -40,53 +42,68 @@ public class JSONReader implements Reader {
 	private String keyPrefixOnNumeric;
 	private String illegalElementNameCharReplacement;
 	private Boolean indent;
-
+	
 	public Map<String, String> getKeyMap() {
 		return keyMap;
 	}
-	public void setKeyMap(Map<String, String> keyMap) {
+	public JSONReader setKeyMap(Map<String, String> keyMap) {
 		this.keyMap = keyMap;
+		return this;
 	}
 	public String getRootName() {
 		return rootName;
 	}
-	public void setRootName(String rootName) {
+	public JSONReader setRootName(String rootName) {
 		this.rootName = rootName;
+		return this;
 	}
 	public String getArrayElementName() {
 		return arrayElementName;
 	}
-	public void setArrayElementName(String arrayElementName) {
+	public JSONReader setArrayElementName(String arrayElementName) {
 		this.arrayElementName = arrayElementName;
+		return this;
 	}
 	public String getNullValueReplacement() {
 		return nullValueReplacement;
 	}
-	public void setNullValueReplacement(String nullValueReplacement) {
+	public JSONReader setNullValueReplacement(String nullValueReplacement) {
 		this.nullValueReplacement = nullValueReplacement;
+		return this;
 	}
 	public String getKeyWhitspaceReplacement() {
 		return keyWhitspaceReplacement;
 	}
-	public void setKeyWhitspaceReplacement(String keyWhitspaceReplacement) {
+	public JSONReader setKeyWhitspaceReplacement(String keyWhitspaceReplacement) {
 		this.keyWhitspaceReplacement = keyWhitspaceReplacement;
+		return this;
 	}
 	public String getKeyPrefixOnNumeric() {
 		return keyPrefixOnNumeric;
 	}
-	public void setKeyPrefixOnNumeric(String keyPrefixOnNumeric) {
+	public JSONReader setKeyPrefixOnNumeric(String keyPrefixOnNumeric) {
 		this.keyPrefixOnNumeric = keyPrefixOnNumeric;
+		return this;
 	}
 	public String getIllegalElementNameCharReplacement() {
 		return illegalElementNameCharReplacement;
 	}
-	public void setIllegalElementNameCharReplacement(String illegalElementNameCharReplacement) {
+	public JSONReader setIllegalElementNameCharReplacement(
+			String illegalElementNameCharReplacement) {
 		this.illegalElementNameCharReplacement = illegalElementNameCharReplacement;
+		return this;
 	}
 	public Boolean getIndent() {
 		return indent;
 	}
-	public void setIndent(Boolean indent) {
+	public JSONReader setIndent(Boolean indent) {
 		this.indent = indent;
-	}	
+		return this;
+	}
+	
+	public static JSONReader newInstance(Model<SmooksModel> model) {
+		JSONReader instance = new JSONReader();
+		model.registerBean(instance);
+		return instance;
+	}
 }

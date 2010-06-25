@@ -19,7 +19,9 @@
  */
 package org.jboss.tools.smooks.model.csv;
 
+import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.Reader;
+import org.milyn.javabean.dynamic.Model;
 import org.milyn.javabean.dynamic.serialize.DefaultNamespace;
 
 /**
@@ -45,99 +47,117 @@ public class CSVReader implements Reader {
     private ListBinding listBinding;
     private MapBinding mapBinding;
 
-    public String getFields() {
-        return fields;
-    }
+	public String getFields() {
+		return fields;
+	}
 
-    public void setFields(String fields) {
-        this.fields = fields;
-    }
+	public CSVReader setFields(String fields) {
+		this.fields = fields;
+		return this;
+	}
 
-    public Character getSeparator() {
-        return separator;
-    }
+	public Character getSeparator() {
+		return separator;
+	}
 
-    public void setSeparator(Character separator) {
-        this.separator = separator;
-    }
+	public CSVReader setSeparator(Character separator) {
+		this.separator = separator;
+		return this;
+	}
 
-    public Character getQuote() {
-        return quote;
-    }
+	public Character getQuote() {
+		return quote;
+	}
 
-    public void setQuote(Character quote) {
-        this.quote = quote;
-    }
+	public CSVReader setQuote(Character quote) {
+		this.quote = quote;
+		return this;
+	}
 
-    public Integer getSkipLines() {
-        return skipLines;
-    }
+	public Integer getSkipLines() {
+		return skipLines;
+	}
 
-    public void setSkipLines(Integer skipLines) {
-        this.skipLines = skipLines;
-    }
+	public CSVReader setSkipLines(Integer skipLines) {
+		this.skipLines = skipLines;
+		return this;
+	}
 
-    public String getRootElementName() {
-        return rootElementName;
-    }
+	public String getRootElementName() {
+		return rootElementName;
+	}
 
-    public void setRootElementName(String rootElementName) {
-        this.rootElementName = rootElementName;
-    }
+	public CSVReader setRootElementName(String rootElementName) {
+		this.rootElementName = rootElementName;
+		return this;
+	}
 
-    public String getRecordElementName() {
-        return recordElementName;
-    }
+	public String getRecordElementName() {
+		return recordElementName;
+	}
 
-    public void setRecordElementName(String recordElementName) {
-        this.recordElementName = recordElementName;
-    }
+	public CSVReader setRecordElementName(String recordElementName) {
+		this.recordElementName = recordElementName;
+		return this;
+	}
 
-    public Boolean isIndent() {
-        return indent;
-    }
+	public Boolean getIndent() {
+		return indent;
+	}
 
-    public void setIndent(Boolean indent) {
-        this.indent = indent;
-    }
+	public CSVReader setIndent(Boolean indent) {
+		this.indent = indent;
+		return this;
+	}
 
-    public Boolean isStrict() {
-        return strict;
-    }
+	public Boolean getStrict() {
+		return strict;
+	}
 
-    public void setStrict(Boolean strict) {
-        this.strict = strict;
-    }
+	public CSVReader setStrict(Boolean strict) {
+		this.strict = strict;
+		return this;
+	}
 
-    public Boolean isValidateHeader() {
-        return validateHeader;
-    }
+	public Boolean getValidateHeader() {
+		return validateHeader;
+	}
 
-    public void setValidateHeader(Boolean validateHeader) {
-        this.validateHeader = validateHeader;
-    }
+	public CSVReader setValidateHeader(Boolean validateHeader) {
+		this.validateHeader = validateHeader;
+		return this;
+	}
 
-    public SingleBinding getSingleBinding() {
-        return singleBinding;
-    }
+	public SingleBinding getSingleBinding() {
+		return singleBinding;
+	}
 
-    public void setSingleBinding(SingleBinding singleBinding) {
-        this.singleBinding = singleBinding;
-    }
+	public CSVReader setSingleBinding(SingleBinding singleBinding) {
+		this.singleBinding = singleBinding;
+		return this;
+	}
 
-    public ListBinding getListBinding() {
-        return listBinding;
-    }
+	public ListBinding getListBinding() {
+		return listBinding;
+	}
 
-    public void setListBinding(ListBinding listBinding) {
-        this.listBinding = listBinding;
-    }
+	public CSVReader setListBinding(ListBinding listBinding) {
+		this.listBinding = listBinding;
+		return this;
+	}
 
-    public MapBinding getMapBinding() {
-        return mapBinding;
-    }
+	public MapBinding getMapBinding() {
+		return mapBinding;
+	}
 
-    public void setMapBinding(MapBinding mapBinding) {
-        this.mapBinding = mapBinding;
-    }
+	public CSVReader setMapBinding(MapBinding mapBinding) {
+		this.mapBinding = mapBinding;
+		return this;
+	}
+
+	public static CSVReader newInstance(Model<SmooksModel> model) {
+		CSVReader instance = new CSVReader();
+		model.registerBean(instance);
+		return instance;
+	}
 }
