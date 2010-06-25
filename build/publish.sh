@@ -57,8 +57,8 @@ fi
 
 # get full build log and filter out Maven test failures
 wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt
-cat ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt | grep -A9 "<<< FAI" | grep -A9 "LURE" | egrep -v ".+at (sun.|java.).+" > ${WORKSPACE}/site/${JOB_NAME}/fail_log.txt
-cat ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt | grep -A9 "<<< ERR" | grep -A9 "ROR"  | egrep -v ".+at (sun.|java.).+" > ${WORKSPACE}/site/${JOB_NAME}/errorlog.txt
+cat ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt | grep -A9 "<<< FAI" | grep -A9 "LURE" > ${WORKSPACE}/site/${JOB_NAME}/fail_log.txt
+cat ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt | grep -A9 "<<< ERR" | grep -A9 "ROR"  > ${WORKSPACE}/site/${JOB_NAME}/errorlog.txt
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt $DESTINATION/${JOB_NAME}/
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/fail_log.txt $DESTINATION/${JOB_NAME}/
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/errorlog.txt $DESTINATION/${JOB_NAME}/
