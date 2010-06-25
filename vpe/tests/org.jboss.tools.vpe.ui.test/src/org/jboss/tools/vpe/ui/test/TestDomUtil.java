@@ -156,6 +156,7 @@ public class TestDomUtil {
 					+ "\" but must be \"" + modelNode.getNodeValue().trim() //$NON-NLS-1$
 					+ "\""); //$NON-NLS-1$
 		}
+
 		// compare node's attributes
 		if (modelNode.getNodeType() == Node.ELEMENT_NODE) {
 			compareAttributes(modelNode.getAttributes(), vpeNode
@@ -283,7 +284,9 @@ public class TestDomUtil {
 									"VPE element has less style parameters [" //$NON-NLS-1$
 											+ vpeStyle.size()
 											+ "] than was specified [" //$NON-NLS-1$
-											+ xmlStyle.size() + "]."); //$NON-NLS-1$
+											+ xmlStyle.size() + "]."  //$NON-NLS-1$ 
+											+ "\n Expected: " + xmlStyle //$NON-NLS-1$ 
+											+ "\n Was: " + vpeStyle); //$NON-NLS-1$ 
 						} else {
 							if ((xmlStyle.size() > 0) && (vpeStyle.size() > 0)) {
 								for (String key : xmlStyle.keySet()) {
