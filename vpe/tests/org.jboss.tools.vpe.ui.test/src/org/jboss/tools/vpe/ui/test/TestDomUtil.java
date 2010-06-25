@@ -18,15 +18,23 @@ import java.io.FileReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jboss.tools.common.model.util.XMLUtil;
+import org.jboss.tools.jst.css.common.CSSStyleManager;
+import org.jboss.tools.jst.css.common.StyleContainer;
 import org.jboss.tools.vpe.editor.util.Constants;
+import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -36,6 +44,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.ElementCSSInlineStyle;
 
 /**
  * @author Sergey Dzmitrovich
@@ -148,7 +158,6 @@ public class TestDomUtil {
 		}
 		// compare node's attributes
 		if (modelNode.getNodeType() == Node.ELEMENT_NODE) {
-
 			compareAttributes(modelNode.getAttributes(), vpeNode
 					.getAttributes());
 		}
@@ -220,79 +229,91 @@ public class TestDomUtil {
 		for (int i = 0; i < modelAttributes.getLength(); i++) {
 			Attr modelAttr = (Attr) modelAttributes.item(i);
 			String name = modelAttr.getName();
-
 			// if the attribute has to be skipped, then do it
 			if ( name != null 
 					&& skippedAtributes.contains(name.toUpperCase()) ) {
 				continue;
 			}
-
 			// if there are limitation of attributes
 			if (ILLEGAL_ATTRIBUTES.equals(name)) {
-
 				String[] illegalAttributes = modelAttr.getNodeValue().split(
 						ILLEGAL_ATTRIBUTES_SEPARATOR);
-
 				for (String illegalAttributeName : illegalAttributes) {
 					if (vpeAttributes.getNamedItem(illegalAttributeName.trim()) != null)
 						throw new ComparisonException("illegal attribute :" //$NON-NLS-1$
 								+ illegalAttributeName);
 				}
-
 			} else {
-
-				
-				if (vpeAttributes.getNamedItem(
-						name) == null)
+				if (vpeAttributes.getNamedItem(name) == null) {
 					throw new ComparisonException("there is not : \"" + name //$NON-NLS-1$
 							+ "\" attribute"); //$NON-NLS-1$
-				
+				}
 				nsIDOMAttr vpeAttr = queryInterface(
 						vpeAttributes.getNamedItem(name), nsIDOMAttr.class);
-
-				
-
-//				if (HTML.ATTR_STYLE.equalsIgnoreCase(name)) {
-//
-//					String[] modelParameters = modelAttr.getNodeValue().split(
-//							Constants.SEMICOLON);
-//					String[] vpeParameters = vpeAttr.getNodeValue().split(
-//							Constants.SEMICOLON);
-//
-//					for (int j = 0; j < modelParameters.length; j++) {
-//						String modelParam = modelParameters[j];
-//						String vpeParam = vpeParameters[j];
-//
-//						String[] splittedModelParam = modelParam.split(
-//								Constants.COLON, 2);
-//
-//						String[] splittedVpeParam = vpeParam.split(
-//								Constants.COLON, 2);
-//
-//						if (!splittedModelParam[0].trim().equals(
-//								splittedVpeParam[0].trim())) {
-//							throw new ComparisonException(
-//									"param of style attribute is\""
-//											+ splittedVpeParam[0].trim()
-//											+ "\" but must be \""
-//											+ splittedModelParam[0].trim()
-//											+ "\"");
-//						}
-//						
-////						compareComplexStrings(splittedModelParam[0].trim(), splittedVpeParam[0].trim());
-//						
-//
-//						if (splittedModelParam.length > 1)
-//							compareComplexStrings(splittedModelParam[1].trim(),
-//									splittedVpeParam[1].trim());
-//
-//					}
-//
-//				} 
-
+				/*
+				 * By default every attribute show pass through
+				 * compareComplexStrings(..) method.
+				 * For "style" attribute there is a separate comparison.  
+				 */
+				boolean performComplexStringsComparison = true;
+				if (HTML.ATTR_STYLE.equalsIgnoreCase(name)) {
+					String xmlAttrValue = modelAttr.getNodeValue();
+					/*
+					 * Check if it is not a regular expression.
+					 * Otherwise perform Complex Strings Comparison 
+					 * as usual.
+					 */
+					if (!(xmlAttrValue.startsWith(START_REGEX)
+							&& xmlAttrValue.endsWith(END_REGEX))) {
+						performComplexStringsComparison = false;
+						/*
+						 * Parse style attribute value
+						 */
+						Map<String, String> vpeStyle = CSSStyleManager
+								.getStyleAttributes(vpeAttr.getNodeValue());
+						Map<String, String> xmlStyle = CSSStyleManager
+								.getStyleAttributes(xmlAttrValue);
+						/*
+						 * Major condition is that
+						 * all styles from the xml file should present 
+						 * in the style attribute of the vpe element. 
+						 */
+						if (xmlStyle.size() > vpeStyle.size()) {
+							throw new ComparisonException(
+									"VPE element has less style parameters [" //$NON-NLS-1$
+											+ vpeStyle.size()
+											+ "] than was specified [" //$NON-NLS-1$
+											+ xmlStyle.size() + "]."); //$NON-NLS-1$
+						} else {
+							if ((xmlStyle.size() > 0) && (vpeStyle.size() > 0)) {
+								for (String key : xmlStyle.keySet()) {
+									if (vpeStyle.containsKey(key)) {
+										if (!xmlStyle.get(key).equalsIgnoreCase(
+												vpeStyle.get(key))) {
+											throw new ComparisonException(
+													"Style value for parameter [" //$NON-NLS-1$
+													+ key
+													+ "] is different. Expected [" //$NON-NLS-1$
+													+ xmlStyle.get(key)
+													+ "] but was [" //$NON-NLS-1$
+													+ vpeStyle.get(key)
+													+ "]"); //$NON-NLS-1$
+										}
+									} else {
+										throw new ComparisonException(
+												"Style parameter [" //$NON-NLS-1$
+												+ key
+												+ "] is missing in the VPE element"); //$NON-NLS-1$
+									}
+								}
+							}
+						}
+					}
+				}
+				if (performComplexStringsComparison) {
 					compareComplexStrings(modelAttr.getNodeValue().trim(),
 							vpeAttr.getNodeValue().trim());
-
+				}
 			}
 		}
 	}

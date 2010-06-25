@@ -44,16 +44,17 @@ public abstract class ComponentContentTest extends VpeTest {
 	/**
 	 * 
 	 * there are several conditions:
-	 * 
+	 * <p>
 	 * 1) xml file which contain tests must be named 'name of test page' +
 	 * '.xml'
-	 * 
+	 * <br>
 	 * Example: test.jsp and test.jsp.xml
-	 * 
+	 * <p>
 	 * 2) a tag <test> in xml file and required element in test page must have
 	 * the same attribute "id"
-	 * 
+	 * <br>
 	 * Example: <tests>... <test id="testId" > ...<tests> - in xml file and
+	 * <br>
 	 * <html>... <x:testElement id="testId" > ... </html> - in test page
 	 * 
 	 * @param elementPagePath
