@@ -396,7 +396,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	 * @param dragetElement
 	 */
 	private void startDragSession(nsIDOMElement element) {
-		rememberDragNode((Element) getSourceNode(element));
+		rememberDragNode(getSourceNode(element));
 		nsISupportsArray transArray = (nsISupportsArray) getComponentManager()
 				.createInstanceByContractID(XPCOM.NS_SUPPORTSARRAY_CONTRACTID, null,
 						nsISupportsArray.NS_ISUPPORTSARRAY_IID);
