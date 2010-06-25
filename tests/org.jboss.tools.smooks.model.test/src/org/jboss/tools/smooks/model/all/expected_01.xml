@@ -11,7 +11,7 @@
     <jb13:bean beanId="people" class="java.util.ArrayList" createOnElement="#document">
         <jb13:wiring  beanIdRef="person" />
     </jb13:bean>
-    <jb13:bean beanId="person" class="java.util.ArrayList" createOnElement="#document">
+    <jb13:bean beanId="person" class="com.acme.Person" createOnElement="person">
         <jb13:value property="name" data="person/name" />
         <jb13:value property="address" data="person/address" />
         <jb13:value property="age" data="person/age" />

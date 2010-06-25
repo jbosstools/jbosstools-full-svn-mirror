@@ -70,7 +70,7 @@ public class SmooksModelBuilderTest extends TestCase {
 		smooksModel.getComponents().add(people);
 
 		Bean person = Bean.newInstance(model);
-		person.setBeanId("person").setBeanClass("java.util.ArrayList").setCreateOnElement("#document");
+		person.setBeanId("person").setBeanClass("com.acme.Person").setCreateOnElement("person");
 		person.getValueBindings().add(new Value().setProperty("name").setData("person/name"));
 		person.getValueBindings().add(new Value().setProperty("address").setData("person/address"));
 		person.getValueBindings().add(new Value().setProperty("age").setData("person/age"));
