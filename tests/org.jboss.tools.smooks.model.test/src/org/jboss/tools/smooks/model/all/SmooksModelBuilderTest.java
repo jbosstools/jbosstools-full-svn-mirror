@@ -48,8 +48,8 @@ import junit.framework.TestCase;
 public class SmooksModelBuilderTest extends TestCase {
 
 	public void test() throws BeanRegistrationException, IOException, SAXException {
-		SmooksEditorModelBuilder smooksModelBuilder = new SmooksEditorModelBuilder();
-		Model<SmooksModel> model = smooksModelBuilder.newModel();
+		SmooksEditorModelBuilder modelBuilder = new SmooksEditorModelBuilder();
+		Model<SmooksModel> model = modelBuilder.newModel();
 		SmooksModel smooksModel = model.getModelRoot();
 
 		// Create the global config and add it to the model...
@@ -88,5 +88,15 @@ public class SmooksModelBuilderTest extends TestCase {
 //		System.out.println(writer);
 	    XMLUnit.setIgnoreWhitespace( true );
 	    XMLAssert.assertXMLEqual(new InputStreamReader(getClass().getResourceAsStream("expected_01.xml")), new StringReader(writer.toString()));
+	    
+	    // Recreate the model from the serialized form...
+	    model = modelBuilder.readModel(new StringReader(writer.toString()));
+	    
+	    // serialize it again and check it again...
+	    writer = new StringWriter();
+		model.writeModel(writer);
+		
+	    XMLUnit.setIgnoreWhitespace( true );
+	    XMLAssert.assertXMLEqual(new InputStreamReader(getClass().getResourceAsStream("expected_01.xml")), new StringReader(writer.toString()));	    
 	}
 }
