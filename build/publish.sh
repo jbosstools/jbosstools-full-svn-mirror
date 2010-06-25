@@ -61,11 +61,16 @@ wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consol
 
 fl=${WORKSPACE}/site/${JOB_NAME}/fail_log.txt
 sed -ne "/<<< FAI/,+9 p" ${bl} | sed -e "/AILURE/,+9 s/\(.\+AILURE.\+\)/\n----------\n\n\1/g" > ${fl}
-echo "" >> ${fl}; echo -n "FAI" >> ${fl}; echo -n "LURES FOUND: "$(sed -ne "/FAI\|LURE/" ${fl} | wc -l) >> ${fl};
- 
+cnt=$(sed -ne "/FAI\|LURE/" ${fl} | wc -l)
+if [[ $cnt -gt 0 ]]; then
+	echo "" >> ${fl}; echo -n "FAI" >> ${fl}; echo -n "LURES FOUND: "$cnt >> ${fl};
+fi 
 el=${WORKSPACE}/site/${JOB_NAME}/errorlog.txt
 sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9     s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
-echo "" >> ${fl}; echo -n "ERR" >> ${fl}; echo "RORS FOUND: "$(sed -ne "/ERR\|RROR/" ${el} | wc -l) >> ${fl};
+cnt=$(sed -ne "/ERR\|RROR/" ${el} | wc -l) 
+if [[ $cnt -gt 0 ]]; then
+	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "RORS FOUND: "$cnt >> ${el};
+fi
 
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt $DESTINATION/${JOB_NAME}/
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/fail_log.txt $DESTINATION/${JOB_NAME}/
