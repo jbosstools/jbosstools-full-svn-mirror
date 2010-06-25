@@ -35,8 +35,6 @@ import org.jboss.tools.vpe.dnd.DndUtil.DragTransferData;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeSourceDropInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
-import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
-import org.jboss.tools.vpe.editor.VpeVisualInnerDragInfo;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -66,6 +64,7 @@ import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 /**
@@ -100,12 +99,6 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 
 	private VpeController vpeController;
 
-	/* TODO: yradtsevich: sourceInnerDragInfo is a state variable
-	 * that not always reflects actual state of the object
-	 * (e.g. during external Drag&Drop and text Drag&Drop).
-	 * It has to be removed from the class and corresponding
-	 * methods has to be refactored. */
-	private VpeSourceInnerDragInfo sourceInnerDragInfo = null;
 	private DraggablePattern draggablePattern;
 	private DropableArea dropableArea;
 
@@ -115,8 +108,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	}
 
 	public void dragStart(nsIDOMEvent domEvent) {
-		nsIDOMElement selectedElement = vpeController.getXulRunnerEditor()
-				.getLastSelectedElement();
+		nsIDOMElement selectedElement = getSelectedElement();
 		// start drag sessionvpe-element
 		if (isTextSelected(getVisualSelection()) || isDraggable(selectedElement)) {
 			Point pageCoords = getPageCoords(domEvent);
@@ -126,9 +118,13 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			domEvent.preventDefault();
 		}
 	}
+
+	private nsIDOMElement getSelectedElement() {
+		return vpeController.getXulRunnerEditor().getLastSelectedElement();
+	}
 	
 	/**
-	 * Calls when drag over event ocure
+	 * Called when drag over event occurs
 	 * @param event
 	 */
 	public void dragOver(nsIDOMEvent event) {
@@ -140,7 +136,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 		final DropResolver dropResolver;
 		if (isInnerDragSession()) {
 			if (isTextSelected(getVisualSelection())) {
-				dropResolver = getDropResolverForNode(vpeController.getDomMapping().getNearSourceNode(getVisualSelection().getFocusNode()));
+				dropResolver = getDropResolverForNode(getSourceNode(getVisualSelection().getFocusNode()));
 			} else {
 				dropResolver = getDropResolverForInternalDrop();
 			}
@@ -214,8 +210,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			draggablePattern.showDragIcon(new DraggableTextSelection(
 					textContainer, range.getStartOffset(), range.getEndOffset()));
 		} else {
-			nsIDOMElement selectedElement = vpeController.getXulRunnerEditor()
-					.getLastSelectedElement();
+			nsIDOMElement selectedElement = getSelectedElement();
 
 			if (isDraggable(selectedElement)) {
 				draggablePattern.showDragIcon(new DraggableElement(selectedElement));
@@ -283,7 +278,11 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	}
 
 	private DropResolver getDropResolverForInternalDrop() {
-		return getDropResolverForNode(sourceInnerDragInfo.getNode());
+		if (InnerDragBuffer.object instanceof Node) {
+			return getDropResolverForNode((Node) InnerDragBuffer.object);			
+		} else {
+			return getSimpleDropResolver(false);
+		}
 	}
 
 	private DropResolver getSimpleDropResolver(final boolean canDrop) {
@@ -323,8 +322,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			return;
 		}
 
-		Node originalSourceNode = vpeController.getDomMapping()
-				.getNearSourceNode(originalVisualNode);
+		Node originalSourceNode = getSourceNode(originalVisualNode);
 		
 		if (originalSourceNode != null
 				&& originalSourceNode.getNodeType() == Node.TEXT_NODE) {
@@ -397,12 +395,13 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	 * Starts drag session
 	 * @param dragetElement
 	 */
-	private void startDragSession(nsIDOMNode  node) {
+	private void startDragSession(nsIDOMElement element) {
+		rememberDragNode((Element) getSourceNode(element));
 		nsISupportsArray transArray = (nsISupportsArray) getComponentManager()
 				.createInstanceByContractID(XPCOM.NS_SUPPORTSARRAY_CONTRACTID, null,
 						nsISupportsArray.NS_ISUPPORTSARRAY_IID);
 		transArray.appendElement(createTransferable());
-		getDragService().invokeDragSession(node, transArray, null,
+		getDragService().invokeDragSession(element, transArray, null,
 				nsIDragService.DRAGDROP_ACTION_MOVE
 						| nsIDragService.DRAGDROP_ACTION_COPY
 						| nsIDragService.DRAGDROP_ACTION_LINK);
@@ -467,51 +466,35 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 		return getDragService().getCurrentSession().getSourceDocument() != null;
 	}
 	
+	private void rememberDragNode(Node node) {
+		InnerDragBuffer.object = node;
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				InnerDragBuffer.object = null;
+			}
+		});
+	}
+	
 	private boolean isDraggable(nsIDOMElement element) {
 		vpeController.onHideTooltip();
 	
 		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 			System.out.print("<<<<<< canInnerDrag"); //$NON-NLS-1$
 		}
-		if (sourceInnerDragInfo != null) {
-			sourceInnerDragInfo = null;
-		}
+
 		boolean canDrag = false;
-		VpeVisualInnerDragInfo dragInfo = getInnerDragInfo(element);
-		if (dragInfo != null) {
-			nsIDOMNode dragNode = dragInfo.getNode();
+
+		if (element != null) {
 			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-				System.out
-						.print(" dragNode: " + dragNode.getNodeName() + "(" + dragNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				System.out.print(" dragNode: " + element.getNodeName() + "(" + element + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
-			switch (dragNode.getNodeType()) {
-			case nsIDOMNode.ELEMENT_NODE: {
-				canDrag = vpeController.getVisualBuilder().canInnerDrag(queryInterface(dragNode, nsIDOMElement.class));
-				break;
-			}
-			case nsIDOMNode.TEXT_NODE: {
-				vpeController.getVisualBuilder();
-				canDrag = VpeVisualDomBuilder.isTextEditable(dragNode);
-				break;
-			}
-			}
+
+			canDrag = vpeController.getVisualBuilder().canInnerDrag(element);
 			if (canDrag) {
-				sourceInnerDragInfo = vpeController.getVisualBuilder()
-						.getSourceInnerDragInfo(dragInfo);
-				if (sourceInnerDragInfo.getNode() != null) {
-					InnerDragBuffer.object = sourceInnerDragInfo.getNode();
-					Display.getDefault().asyncExec(new Runnable() {
-						public void run() {
-							InnerDragBuffer.object = null;
-						}
-					});
-				} else {
-					sourceInnerDragInfo = null;
+				Node sourceNode = getSourceNode(element);
+				if (sourceNode == null) {
 					canDrag = false;
 				}
-			}
-			if (!canDrag) {
-				dragInfo.release();
 			}
 		}
 		if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
@@ -520,6 +503,10 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 		return canDrag;
 	}
 	
+	private Node getSourceNode(nsIDOMNode visualNode) {
+		return vpeController.getDomMapping().getNearSourceNode(visualNode);
+	}
+
 	private void innerDrop(nsIDOMMouseEvent event) {
 		vpeController.onHideTooltip();
 	
@@ -527,8 +514,6 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			System.out.print("<<<<<< innerDrop"); //$NON-NLS-1$
 		}
 
-		/* TODO: yradtsevich: the code needs to be refactored.
-		 * See TODO comment for sourceInnerDragInfo */
 		if (isTextSelected(getVisualSelection())) {
 			// it is inner Drag&Drop of text
 			StyledText textWidget = vpeController.getSourceEditor()
@@ -539,7 +524,8 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			textWidget.replaceTextRange(selectionRange.x, selectionRange.y, ""); //$NON-NLS-1$
 			
 			dropAny(DndUtil.kUnicodeMime, text);
-		} else if (sourceInnerDragInfo != null) {
+		} else if (InnerDragBuffer.object != null
+				&& InnerDragBuffer.object instanceof Node) {
 			VpeSourceDropInfo sourceDropInfo = getDropInfo();
 			if (sourceDropInfo.getContainer() != null) {
 				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
@@ -554,16 +540,14 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 				if (sourceDropInfo.canDrop()) {
 					VpeDnDHelper dropper = new VpeDnDHelper();
 					dropper.setDndData(false, true);
-					Node node = sourceInnerDragInfo.getNode();
+					Node node = (Node) InnerDragBuffer.object;
 					dropper.drop(vpeController.getPageContext(),
-							sourceInnerDragInfo, sourceDropInfo);
+							new VpeSourceInnerDragInfo(node, 0, 0), sourceDropInfo);
 
 					// select dropped node, JBIDE-6239
 					setSelectedNode(node);
 
-					if (sourceInnerDragInfo != null) {
-						sourceInnerDragInfo = null;
-					}
+					InnerDragBuffer.object = null;
 				}
 			}
 		}
@@ -696,14 +680,6 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 		}
 		return dragService;
 	}
-
-	private VpeVisualInnerDragInfo getInnerDragInfo(nsIDOMElement element) {
-		if (element == null) {
-			return null;
-		} else {
-			return new VpeVisualInnerDragInfo(element);
-		}
-	}
 	
 	private VpeSourceDropInfo getDropInfo() {
 		Node dropContainer = null;
@@ -713,8 +689,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 				&& dropableArea.getHighlightedDropTarget() != null) {
 			canDrop = true;
 			DropTarget dropTarget = dropableArea.getHighlightedDropTarget();
-			Node targetNode = vpeController.getDomMapping()
-					.getNearSourceNode(dropableArea.getNode());
+			Node targetNode = getSourceNode(dropableArea.getNode());
 			
 			if (dropTarget == DropTarget.BEFORE || dropTarget == DropTarget.AFTER) {
 				dropContainer = targetNode.getParentNode();

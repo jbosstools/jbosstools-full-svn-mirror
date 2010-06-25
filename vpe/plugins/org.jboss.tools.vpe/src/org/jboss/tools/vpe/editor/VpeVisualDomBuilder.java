@@ -1844,50 +1844,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return originalNode;
 	}
 
-	public VpeSourceInnerDragInfo getSourceInnerDragInfo(
-			VpeVisualInnerDragInfo visualDragInfo) {
-		nsIDOMNode visualNode = visualDragInfo.getNode();
-		int offset = visualDragInfo.getOffset();
-		int length = visualDragInfo.getLength();
-
-		VpeNodeMapping nodeMapping = domMapping.getNearNodeMapping(visualNode);
-		Node sourceNode = nodeMapping.getSourceNode();
-
-		if (sourceNode != null) {
-			switch (sourceNode.getNodeType()) {
-			case Node.TEXT_NODE:
-				int end = TextUtil.sourceInnerPosition(visualNode
-						.getNodeValue(), offset + length);
-				offset = TextUtil.sourceInnerPosition(
-						visualNode.getNodeValue(), offset);
-				length = end - offset;
-				break;
-			case Node.ELEMENT_NODE:
-				if (visualNode.getNodeType() == Node.TEXT_NODE) {
-					// it's attribute
-					sourceNode = null;
-					if (isTextEditable(visualNode)) {
-						String[] atributeNames = ((VpeElementMapping) nodeMapping)
-								.getTemplate().getOutputAttributeNames();
-						if (atributeNames != null && atributeNames.length > 0) {
-							Element sourceElement = (Element) nodeMapping
-									.getSourceNode();
-							sourceNode = sourceElement
-									.getAttributeNode(atributeNames[0]);
-							end = TextUtil.sourceInnerPosition(visualNode
-									.getNodeValue(), offset + length);
-							offset = TextUtil.sourceInnerPosition(visualNode
-									.getNodeValue(), offset);
-							length = end - offset;
-						}
-					}
-				}
-				break;
-			}
-		}
-		return new VpeSourceInnerDragInfo(sourceNode, offset, length);
-	}
-
 	public nsIDOMText getOutputTextNode(Attr attr) {
 		Element sourceElement = ((Attr) attr).getOwnerElement();
 		VpeElementMapping elementMapping = domMapping
