@@ -56,9 +56,10 @@ if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
 fi
 
 # get full build log and filter out Maven test failures
-wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt
-sed -ne "/<<< FAI/,9 p" -ne "/LURE/,9 p" ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt | uniq > ${WORKSPACE}/site/${JOB_NAME}/fail_log.txt
-sed -ne "/<<< ERR/,9 p" -ne "/ROR/,9 p"  ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt | uniq > ${WORKSPACE}/site/${JOB_NAME}/errorlog.txt
+bl=${WORKSPACE}/site/${JOB_NAME}/buildlog.txt
+wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
+sed -ne "/<<< FAI/,+9 p" ${bl} | sed -e "/AILURE/,+9 s/\(.\+AILURE.\+\)/\n----------\n\n\1/g" > ${WORKSPACE}/site/${JOB_NAME}/fail_log.txt 
+sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9     s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${WORKSPACE}/site/${JOB_NAME}/errorlog.txt
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt $DESTINATION/${JOB_NAME}/
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/fail_log.txt $DESTINATION/${JOB_NAME}/
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/errorlog.txt $DESTINATION/${JOB_NAME}/
