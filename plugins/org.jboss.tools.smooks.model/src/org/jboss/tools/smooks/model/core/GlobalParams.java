@@ -19,67 +19,32 @@
  */
 package org.jboss.tools.smooks.model.core;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.milyn.StreamFilterType;
+import org.milyn.delivery.Filter;
 
 /**
- * Params.
+ * Global Parameters.
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class Params {
-
-	private List<Param> params;
+public class GlobalParams extends Params {
 	
-	public List<Param> getParams() {
-		return params;
-	}
-
-	public void setParams(List<Param> params) {
-		this.params = params;
+	public GlobalParams setFilterType(StreamFilterType filterType) {
+		setParam(Filter.STREAM_FILTER_TYPE, filterType.toString());		
+		return this;
 	}
 	
-	public String getParam(String name) {
-		if(params == null) {
+	public StreamFilterType getFilterType() {
+		String filterType = getParam(Filter.STREAM_FILTER_TYPE);
+		
+		if(filterType == null) {
+			return null;
+		} 
+		
+		try {
+			return StreamFilterType.valueOf(filterType);
+		} catch(Exception e) {
 			return null;
 		}
-		
-		for(Param param : params) {
-			String paramName = param.getName();
-			if(paramName != null && paramName.equals(name)) {
-				return param.getValue();
-			}
-		}
-		
-		return null;
-	}
-	
-	public Params setParam(String name, String value) {
-		if(params == null) {
-			params = new ArrayList<Param>();
-		}
-		
-		removeParam(name);
-		params.add(new Param().setName(name).setValue(value));
-		return this;
-	}
-	
-	public Params removeParam(String name) {
-		if(params == null) {
-			return this;
-		}
-
-		Iterator<Param> paramsIterator = params.iterator();
-
-		while(paramsIterator.hasNext()) {
-			String paramName = paramsIterator.next().getName();
-			if(paramName != null && paramName.equals(name)) {
-				paramsIterator.remove();
-				return this;
-			}
-		}
-		
-		return this;
 	}
 }

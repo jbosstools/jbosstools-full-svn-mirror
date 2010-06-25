@@ -20,12 +20,10 @@
 package org.jboss.tools.smooks.model;
 
 import org.jboss.tools.smooks.model.core.Component;
-import org.jboss.tools.smooks.model.core.Params;
+import org.jboss.tools.smooks.model.core.GlobalParams;
 import org.jboss.tools.smooks.model.core.Reader;
-import org.milyn.javabean.dynamic.Model;
 import org.milyn.javabean.dynamic.serialize.DefaultNamespace;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,15 +37,15 @@ public class SmooksModel {
 
     public static final String MODEL_DESCRIPTOR = "org/jboss/tools/smooks/model/descriptor.properties";
 
-    private Params params;
+    private GlobalParams params;
     private List<Reader> readers = new ArrayList<Reader>();
     private List<Component> components = new ArrayList<Component>();
 
-	public Params getParams() {
+	public GlobalParams getParams() {
 		return params;
 	}
 
-	public void setParams(Params params) {
+	public void setParams(GlobalParams params) {
 		this.params = params;
 	}
 

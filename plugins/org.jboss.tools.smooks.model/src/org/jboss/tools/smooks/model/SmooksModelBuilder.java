@@ -37,7 +37,7 @@ import org.xml.sax.SAXException;
  */
 public class SmooksModelBuilder {
 
-	private static ModelBuilder modelBuilder;
+	public static ModelBuilder modelBuilder;
 	
 	static {
 		ClassLoader contextClassloader = Thread.currentThread().getContextClassLoader();

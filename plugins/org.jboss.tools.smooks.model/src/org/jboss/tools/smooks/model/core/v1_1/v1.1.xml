@@ -7,7 +7,7 @@
     Main Smooks model bean.
     -->
     <jb:bean beanId="smooksModel" class="org.jboss.tools.smooks.model.SmooksModel" createOnElement="#document">
-        <jb:wiring property="params" beanIdRef="params" />
+        <jb:wiring property="params" beanIdRef="globalParams" />
         <jb:wiring property="readers" beanIdRef="readers" />
         <jb:wiring property="components" beanIdRef="components" />
     </jb:bean>
@@ -19,7 +19,7 @@
     </jb:bean>
 
     <!-- params -->
-    <jb:bean beanId="params" class="org.jboss.tools.smooks.model.core.Params" createOnElement="/smooks-resource-list/params">
+    <jb:bean beanId="globalParams" class="org.jboss.tools.smooks.model.core.GlobalParams" createOnElement="/smooks-resource-list/params">
         <jb:wiring property="params" beanIdRef="paramsList" />
     </jb:bean>
     <jb:bean beanId="paramsList" class="java.util.ArrayList" createOnElement="/smooks-resource-list/params">
@@ -34,7 +34,7 @@
     Top level writer...
     -->
     <dmb:writer beanId="smooksModel" class="org.milyn.javabean.dynamic.serialize.freemarker.FreeMarkerBeanWriter">
-        <param name="template">/org/jboss/tools/smooks/model/core/v1.1.ftl</param>
+        <param name="template">/org/jboss/tools/smooks/model/core/v1_1/v1.1.ftl</param>
     </dmb:writer>
 
 </smooks-resource-list>

@@ -70,4 +70,8 @@ public abstract class SmooksModelTestCase extends TestCase {
 	    XMLUnit.setIgnoreWhitespace( true );
 	    XMLAssert.assertXMLEqual(new InputStreamReader(getClass().getResourceAsStream(messageFile)), new StringReader(modelWriter.toString()));
 	}
+
+	protected void reportTo(String reportPath) {
+		SmooksModelBuilder.modelBuilder.setReportPath(reportPath);	
+	}	
 }

@@ -37,7 +37,7 @@ public class ParamsTest extends SmooksModelTestCase {
 	}
 	
 	public void test_manual() {
-		Params params = new Params();
+		GlobalParams params = new GlobalParams();
 		assertEquals(null, params.getParam("a"));
 		params.removeParam("a"); // make sure there's no exception
 		params.setParam("a", "aVal");
@@ -53,7 +53,7 @@ public class ParamsTest extends SmooksModelTestCase {
 	public void test_config_v11_01() throws IOException, SAXException {
         Model<SmooksModel> model = test("v1_1/config-01.xml");
         
-        Params params = model.getModelRoot().getParams();
+        GlobalParams params = model.getModelRoot().getParams();
 		
         assertTrue(params.getFilterType() == StreamFilterType.SAX);
         
@@ -64,7 +64,7 @@ public class ParamsTest extends SmooksModelTestCase {
 	public void test_config_v11_02() throws IOException, SAXException {
         Model<SmooksModel> model = test("v1_1/config-02.xml");
         
-        Params params = model.getModelRoot().getParams();
+        GlobalParams params = model.getModelRoot().getParams();
 		
         assertTrue(params.getFilterType() == StreamFilterType.DOM);
         
