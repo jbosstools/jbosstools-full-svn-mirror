@@ -56,19 +56,19 @@ if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
 fi
 
 # get full build log and filter out Maven test failures
-bl=${WORKSPACE}/site/${JOB_NAME}/buildlog.txt
+bl=${WORKSPACE}/site/${JOB_NAME}/BUILDLOG.txt
 wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
 
-fl=${WORKSPACE}/site/${JOB_NAME}/fail_log.txt
+fl=${WORKSPACE}/site/${JOB_NAME}/FAIL_LOG.txt
 sed -ne "/<<< FAI/,+9 p" ${bl} | sed -e "/AILURE/,+9 s/\(.\+AILURE.\+\)/\n----------\n\n\1/g" > ${fl}
 cnt=$(sed -ne "/FAI\|LURE/" ${fl} | wc -l)
-if [[ $cnt -gt 0 ]]; then
+if [[ $cnt != "0" ]]; then
 	echo "" >> ${fl}; echo -n "FAI" >> ${fl}; echo -n "LURES FOUND: "$cnt >> ${fl};
 fi 
-el=${WORKSPACE}/site/${JOB_NAME}/errorlog.txt
+el=${WORKSPACE}/site/${JOB_NAME}/ERRORLOG.txt
 sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9     s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
 cnt=$(sed -ne "/ERR\|RROR/" ${el} | wc -l) 
-if [[ $cnt -gt 0 ]]; then
+if [[ $cnt != "0" ]]; then
 	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "RORS FOUND: "$cnt >> ${el};
 fi
 
