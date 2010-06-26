@@ -66,7 +66,7 @@ if [[ $cnt != "0" ]]; then
 	echo "" >> ${fl}; echo -n "FAI" >> ${fl}; echo -n "LURES FOUND: "$cnt >> ${fl};
 fi 
 el=${WORKSPACE}/site/${JOB_NAME}/ERRORLOG.txt
-sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9     s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
+sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9 s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
 cnt=$(sed -ne "/ERR\|RROR/" ${el} | wc -l) 
 if [[ $cnt != "0" ]]; then
 	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "RORS FOUND: "$cnt >> ${el};
