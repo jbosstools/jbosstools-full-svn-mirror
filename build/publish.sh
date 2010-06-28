@@ -69,7 +69,7 @@ el=${WORKSPACE}/site/${JOB_NAME}/ERRORLOG.txt
 sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9 s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
 cnt=$(sed -ne "/ERR\|RROR/ p" ${el} | wc -l) 
 if [[ $cnt != "0" ]]; then
-	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "RORS FOUND: "$cnt >> ${el};
+	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "ORS FOUND: "$cnt >> ${el};
 fi
 
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
