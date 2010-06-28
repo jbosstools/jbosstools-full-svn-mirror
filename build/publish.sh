@@ -72,6 +72,4 @@ if [[ $cnt != "0" ]]; then
 	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "RORS FOUND: "$cnt >> ${el};
 fi
 
-rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/buildlog.txt $DESTINATION/${JOB_NAME}/
-rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/fail_log.txt $DESTINATION/${JOB_NAME}/
-rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/errorlog.txt $DESTINATION/${JOB_NAME}/
+rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
