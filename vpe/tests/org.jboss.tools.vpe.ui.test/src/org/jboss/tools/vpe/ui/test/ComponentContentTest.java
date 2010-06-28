@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.ui.test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -18,6 +19,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.wst.xml.xpath.core.util.XSLTXPathHelper;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.test.util.WorkbenchUtils;
 import org.jboss.tools.vpe.editor.VpeController;
@@ -81,20 +83,31 @@ public abstract class ComponentContentTest extends VpeTest {
 				.getLocation().toFile();
 
 		// get document
+		compareContent(controller, xmlTestFile);
+
+		if (getException() != null) {
+			throw getException();
+		}
+
+	}
+	
+	protected void compareContent(VpeController controller, File xmlTestFile)
+			throws FileNotFoundException {
 		Document xmlTestDocument = TestDomUtil.getDocument(xmlTestFile);
 		assertNotNull("Can't get test file, possibly file not exists "+xmlTestFile,xmlTestDocument); //$NON-NLS-1$
 
 		List<String> ids = TestDomUtil.getTestIds(xmlTestDocument);
 
 		for (String id : ids) {
-
-			compareElements(controller, xmlTestDocument, id, id);
+			try{
+				compareElements(controller, xmlTestDocument, id, id);
+			} catch (DOMComparisonException e) {
+				String xPathToNode = XSLTXPathHelper.calculateXPathToNode(e.getNode());
+				String testFileName = xmlTestFile.getPath();
+				String message = e.getMessage();
+				fail(String.format("%s[%s]:\n%s", testFileName, xPathToNode, message)); //$NON-NLS-1$
+			}
 		}
-
-		if (getException() != null) {
-			throw getException();
-		}
-
 	}
 
 	/**
@@ -104,12 +117,11 @@ public abstract class ComponentContentTest extends VpeTest {
 	 * @param elementId
 	 * @param xmlTestId
 	 * @return
-	 * @throws ComparisonException
+	 * @throws DOMComparisonException
 	 */
-	protected void compareElements(VpeController controller,
+	private void compareElements(VpeController controller,
 			Document xmlTestDocument, String elementId, String xmlTestId)
-			throws ComparisonException {
-
+				throws DOMComparisonException {
 		// get element by id
 		nsIDOMElement vpeElement = findElementById(controller, elementId);
 		assertNotNull("Cann't find element with id="+elementId,vpeElement); //$NON-NLS-1$
@@ -125,13 +137,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		assertNotNull(xmlModelElement);
 
-		// compare DOMs
-		try {
-			TestDomUtil.compareNodes(vpeElement, xmlModelElement);
-		} catch (ComparisonException e) {
-			fail(e.getMessage());
-		}
-
+		TestDomUtil.compareNodes(vpeElement, xmlModelElement);
 	}
 
 	/**

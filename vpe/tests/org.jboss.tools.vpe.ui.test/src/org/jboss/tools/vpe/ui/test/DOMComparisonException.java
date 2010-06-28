@@ -10,31 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.ui.test;
 
+import org.w3c.dom.Node;
+
 /**
  * @author Sergey Dzmitrovich
+ * @author Yahor Radtsevich (yradtsevich)
  *
  */
-public class ComparisonException extends Exception {
-
-	/**
-	 * 
-	 */
+public class DOMComparisonException extends Exception {
 	private static final long serialVersionUID = 7127064462771778364L;
+	private Node node;
 
-	public ComparisonException() {
-		super();
-	}
-
-	public ComparisonException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public ComparisonException(String message) {
+	public DOMComparisonException(String message, Node node) {
 		super(message);
+		this.node = node;
 	}
 
-	public ComparisonException(Throwable cause) {
-		super(cause);
+	public Node getNode() {
+		return node;
 	}
-
 }
