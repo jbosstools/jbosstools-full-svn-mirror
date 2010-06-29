@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tychoVersion>0.9.0-SNAPSHOT</tychoVersion>
+		<tychoVersion>0.10.0-SNAPSHOT</tychoVersion>
 		<scmBranch>trunk</scmBranch>
 		<BUILD_ALIAS>M1</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
