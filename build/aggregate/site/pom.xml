@@ -1,0 +1,50 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<relativePath>../../../parent-pom.xml</relativePath>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>org.jboss.tools.parent.pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>site</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>eclipse-update-site</packaging>
+
+	<repositories>
+		<repository>
+			<id>jbosstools-continuous-snapshot</id>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M1.continuous/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>jbosstools-snapshot</id>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M1/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>jbosstools-pi4soa-snapshot</id>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-cbi-pi4soa/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>jbosstools-teiid-designer-snapshot</id>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>
