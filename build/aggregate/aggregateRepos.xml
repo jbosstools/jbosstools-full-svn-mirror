@@ -172,9 +172,9 @@
 			<!-- optional for UI -->
 			<!-- <arg line=" -installIU org.eclipse.b3.aggregator.editor.feature.feature.group" /> -->
 			<arg line=" -destination ${eclipse.home} -bundlepool ${eclipse.home}" />
-			<arg line=" -metadataRepository ${b3.aggregator.repo},${b3.backup.repos},file:${eclipse.home}/p2/org.eclipse.equinox.p2.engine/profileRegistry/SDKProfile.profile"
+			<arg line=" -metadataRepository ${b3.aggregator.repo},${b3.backup.repos}"
 			/>
-			<arg line=" -artifactRepository ${b3.aggregator.repo},${b3.backup.repos},file:${eclipse.home}" />
+			<arg line=" -artifactRepository ${b3.aggregator.repo},${b3.backup.repos}" />
 			<arg line=" -profileProperties org.eclipse.update.install.features=true" />
 			<arg line=" -vmargs -Declipse.p2.data.area=${eclipse.home}/p2 -Declipse.p2.MD5Check=false" />
 		</exec>
