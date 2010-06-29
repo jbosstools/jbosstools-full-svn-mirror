@@ -25,35 +25,33 @@
 	/>
 
 	<target name="init">
-		<property name="aggregateRepos.properties" value="aggregateRepos.m2eclipse.properties" />
-		<property file="${aggregateRepos.properties}" />
-		<mkdir dir="${working.dir}" />
 		<!-- set these properties in aggregateRepos.properties file:
-		eclipse.home=/home/nboldt/eclipse/35clean/eclipse
-		working.dir=${java.io.tmpdir}/build.b3.aggregator
+		# if eclipse.home not set, fetch + unpack Eclipse Helios Java bundle for 32- or 64-bit linux  
+		#eclipse.home=/home/nboldt/eclipse/35clean/eclipse
+		working.dir=${java.io.tmpdir}/b3aggr
 		repoName=JBoss Tools Nightly Aggregate Update Site
 		product.versionTag=3.1.0.v200910281633N-RC1
 		repos=\
-		jar:file:${java.io.tmpdir}/build.b3.aggregator/JBossTools-Update-3.1.0.v200910281633N-RC1.zip!/,\
-		jar:file:${java.io.tmpdir}/build.b3.aggregator/pi4soa-Update-N-SNAPSHOT.zip!/,\
-		jar:file:${java.io.tmpdir}/build.b3.aggregator/jbpm3-Update-N-SNAPSHOT.zip!/,\
-		jar:file:${java.io.tmpdir}/build.b3.aggregator/jbpm4-Update-N-SNAPSHOT.zip!/
-		#repos=\
-		#jar:file:${java.io.tmpdir}/build.b3.aggregator/JBossTools-Update-3.1.0.v200910281633N-RC1.zip!/,\
-		#ttp://hudson.qa.jboss.com/hudson/view/DevStudio/job/jbosstools-cbi-pi4soa/lastStableBuild/artifact/build/N-SNAPSHOT/pi4soa-Update-N-SNAPSHOT.zip,\
-		#http://hudson.qa.jboss.com/hudson/view/DevStudio/job/jbosstools-cbi-jbpm3/lastStableBuild/artifact/build/N-SNAPSHOT/jbpm3-Update-N-SNAPSHOT.zip,\
-		#http://hudson.qa.jboss.com/hudson/view/DevStudio/job/jbosstools-cbi-jbpm4/lastStableBuild/artifact/build/N-SNAPSHOT/jbpm4-Update-N-SNAPSHOT.zip
-		
-		associate.sites=\
-		http://download.eclipse.org/releases/galileo,\
-		http://download.eclipse.org/birt/update-site/2.5/,\
-		http://download.eclipse.org/eclipse/updates/3.5/,\
-		http://download.jboss.org/jbosstools/updates/m2eclipse/0.10/
-		# http://m2eclipse.sonatype.org/update-dev
+		http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M1-Update-SNAPSHOT.zip,\
+		http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-cbi-pi4soa-Update-SNAPSHOT.zip,\
+		http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer-Update-SNAPSHOT.zip
+		associate.sites=http://download.jboss.org/jbosstools/updates/helios/,\
+		  ...
 		-->
-		<property name="working.dir" value="/tmp/build.b3.aggregator" />
+
+		<property name="aggregateRepos.properties" value="aggregateRepos.jbosstools.properties" />
+		<property file="${aggregateRepos.properties}" />
+
+		<!-- if not set by Hudson (or in properties file), define defaults -->
+		<property name="WORKSPACE" value="${java.io.tmpdir}" />
+		<property name="working.dir" value="${WORKSPACE}/b3aggr" />
 		<property name="requirement.build.root" value="${working.dir}" />
 
+		<!-- create required dirs -->
+		<mkdir dir="${working.dir}" />
+		<mkdir dir="${requirement.build.root}" />
+
+		<!-- get Ant-Contrib -->
 		<available file="${requirement.build.root}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
 		<antcall target="get.ant-contrib" />
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -62,6 +60,57 @@
 			</classpath>
 		</taskdef>
 
+		<!-- get Eclipse for 32 or 64-bit linux -->
+		<if>
+			<not>
+				<isset property="eclipse.home" />
+			</not>
+			<then>
+				<if>
+					<os family="unix" />
+					<then>
+						<!-- Ant thinks that ${os.arch} == i386 for x86_64, so use `uname` instead -->
+						<exec executable="bash" outputproperty="arch">
+							<arg line="../util/getArch.sh" />
+						</exec>
+					</then>
+					<else>
+						<condition property="arch" value="x86_64" else="">
+							<os arch="amd64" />
+						</condition>
+					</else>
+				</if>
+				<property name="eclipse.home" value="${WORKSPACE}/eclipse" />
+				<delete dir="${eclipse.home}" includeemptydirs="true" quiet="true" />
+				<echo>Fetch + unpack fresh Eclipse into eclipse.home = ${eclipse.home}</echo>
+				<if>
+					<equals arg1="${arch}" arg2="x86_64" />
+					<then>
+						<get src="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/R/eclipse-java-helios-linux-gtk-x86_64.tar.gz&amp;r=1"
+						     dest="${WORKSPACE}/eclipse-java-helios-linux-gtk-x86_64.tar.gz"
+						     usetimestamp="true"
+						/>
+						<untar compression="gzip"
+						       dest="${WORKSPACE}"
+						       src="${WORKSPACE}/eclipse-java-helios-linux-gtk-x86_64.tar.gz"
+						/>
+					</then>
+					<else>
+						<get src="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/R/eclipse-java-helios-linux-gtk.tar.gz&amp;r=1"
+						     dest="${WORKSPACE}/eclipse-java-helios-linux-gtk.tar.gz"
+						     usetimestamp="true"
+						/>
+						<untar compression="gzip"
+						       dest="${WORKSPACE}"
+						       src="${WORKSPACE}/eclipse-java-helios-linux-gtk.tar.gz"
+						/>
+					</else>
+				</if>
+			</then>
+			<else>
+				<echo>Use pre-existing eclipse.home = ${eclipse.home}</echo>
+			</else>
+		</if>
 	</target>
 
 	<!-- prefetch remote update site zips as local archive repos -->
