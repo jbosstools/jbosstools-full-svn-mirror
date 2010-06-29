@@ -18,38 +18,6 @@
 	</properties>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<version>1.3</version>
-					<executions>
-						<execution>
-							<id>prepare-eclipse-base</id>
-							<phase>generate-test-resources</phase>
-							<goals>
-								<goal>run</goal>
-							</goals>
-							<configuration>
-								<tasks>
-									<echo>Requirements build</echo>
-									<echo>requirements=${requirements}</echo>
-									<echo>maven.test.skip=${maven.test.skip}</echo>
-									<echo>settings.offline=${settings.offline}</echo>
-									
-									<ant dir="${projectRoot}/requirements" inheritAll="true" >
-										<property name="requirements" value="${requirements}" />
-										<property name="settings.offline" value="${settings.offline}" />
-									</ant> 
-
-								</tasks>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-
 		<plugins>
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
@@ -492,6 +460,158 @@
 					</releases>
 				</repository>
 			</repositories>
+		</profile>
+		<profile>
+			<id>coverage</id>
+			<activation>
+				<property>
+					<name>coverage</name>
+				</property>
+			</activation>
+			<properties>
+				<emma.session.out.file>${project.build.directory}/emma/coverage.es</emma.session.out.file>
+				<emma.filter />
+				<emma.instrument.bundles />
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-artifacts</id>
+								<phase>package</phase>
+								<goals>
+									<goal>attach-artifact</goal>
+								</goals>
+								<configuration>
+									<artifacts>
+										<artifact>
+											<file>${emma.session.out.file}</file>
+											<type>es</type>
+										</artifact>
+									</artifacts>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+	
+					<plugin>
+						<groupId>org.sonatype.tycho</groupId>
+						<artifactId>maven-osgi-test-plugin</artifactId>
+						<version>${tychoVersion}</version>
+						<configuration>
+							<systemProperties combine.children="append">
+								<emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
+								<emma.filter>${emma.filter}</emma.filter>
+								<eclemma.instrument.bundles>${emma.instrument.bundles}</eclemma.instrument.bundles>
+							</systemProperties>
+							<frameworkExtensions>
+								<frameworkExtension>
+									<groupId>org.eclemma.runtime.equinox</groupId>
+									<artifactId>org.eclemma.runtime.equinox</artifactId>
+									<version>1.1.0.200908261008</version>
+								</frameworkExtension>
+							</frameworkExtensions>
+							<application>org.eclipse.ui.ide.workbench</application>
+							<dependencies>
+								<dependency>
+									<type>p2-installable-unit</type>
+									<artifactId>org.eclipse.sdk.ide</artifactId>
+									<version>0.0.0</version>
+								</dependency>
+							</dependencies>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<dependencies>
+							<dependency>
+								<groupId>emma</groupId>
+								<artifactId>emma_ant</artifactId>
+								<version>2.0.5312</version>
+							</dependency>
+							<dependency>
+								<groupId>emma</groupId>
+								<artifactId>emma</artifactId>
+								<version>2.0.5312</version>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<id>emma-report</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<taskdef resource="emma_ant.properties" />
+										<echo>Process emma report...</echo>
+										<!--emma enabled="true">
+											<instr metadatafile="${project.build.directory}/emma/coverage.em" mode="overwrite" instrpath="${project.build.directory}/../../../plugins/${emma.instrument.bundles}/target/classes" />
+										</emma-->
+										<emma enabled="true">
+											<report>
+												<infileset dir="${project.build.directory}/emma" includes="*.es,*.em" />
+												<txt outfile="${project.build.directory}/emma/coverage.txt" />
+												<xml outfile="${project.build.directory}/emma/coverage.xml" />
+												<!-- Could also generate an HTML report, if you want... -->
+											</report>
+										</emma>
+										<loadfile property="emma.txt"
+											srcFile="${project.build.directory}/emma/coverage.txt"
+											failonerror="false" />
+										<echo>${emma.txt}</echo>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>requirements</id>
+			<activation>
+				<file>
+					<exists>${basedir}/requirements.properties</exists>
+				</file>
+			</activation>
+			<properties>
+				<requirements.root>${basedir}/../../../requirements</requirements.root>
+				<requirement.build.root>${requirements.root}/target</requirement.build.root>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.3</version>
+						<executions>
+							<execution>
+								<id>download-plugin-requirements</id>
+								<phase>generate-test-resources</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<property file="requirements.properties" />
+										<echo>Requirements build</echo>
+										<ant dir="${basedir}/../../../requirements" inheritAll="true" >
+											<property name="requirements" value="${requirements}" />
+											<property name="settings.offline" value="${settings.offline}" />
+											<property name="skipDownload" value="${skipDownload}" />
+										</ant> 
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 
