@@ -6,16 +6,16 @@
 
 	<!-- only in JBDS -->
 	<!--
-	<feature url="features/com.jboss.jbds.product.feature_${product.versionTag}.jar"
+	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar"
 	         id="com.jboss.jbds.product.feature"
-	         version="${product.versionTag}"
+	         version="0.0.0"
 	         patch="false"
 	>
 		<category name="AllTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.runtime.feature_${runtime.versionTag}.jar"
+	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar"
 	         id="org.jboss.tools.runtime.feature"
-	         version="${runtime.versionTag}"
+	         version="0.0.0"
 	         patch="false"
 	>
 		<category name="AllTools" />
@@ -267,5 +267,23 @@
 		<description>Tools used to improve testing and performance.
 		</description>
 	</category-def>
-
+	
+	<!-- aggregated from other sources -->
+	
+	<feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="DataTools" />
+	</feature>
+	<feature url="features/org.teiid.designer.feature_0.0.0.jar" id="org.teiid.designer.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="DataTools" />
+	</feature>
+	<feature url="features/org.teiid.designer.runtime.feature_0.0.0.jar" id="org.teiid.designer.runtime.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="DataTools" />
+	</feature>
+	
 </site>
