@@ -1,10 +1,23 @@
 <project default="run" name="aggregateRepos">
-	<taskdef resource="net/sf/antcontrib/antlib.xml">
-		<classpath>
-			<pathelement path="${classpath}" />
-			<pathelement location="/usr/share/java/ant-contrib.jar" />
-		</classpath>
-	</taskdef>
+
+	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
+		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
+		<get usetimestamp="true"
+		     dest="${requirement.build.root}/ant-contrib-1.0b2-bin.zip"
+		     src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip"
+		/>
+		<touch file="${requirement.build.root}/ant-contrib-1.0b2-bin.zip" />
+		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
+		<unzip src="${requirement.build.root}/ant-contrib-1.0b2-bin.zip"
+		       dest="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_"
+		       overwrite="true"
+		/>
+		<copy file="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_/ant-contrib/lib/ant-contrib.jar"
+		      tofile="${requirement.build.root}/ant-contrib.jar"
+		      failonerror="true"
+		/>
+		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
+	</target>
 
 	<!-- Complete set of steps: init,prefetch.repo.zips,install.b3.aggregator,generate.build.file,run.build.file,add.associate.sites,zip.repo,cleanup -->
 	<target name="run"
@@ -40,6 +53,15 @@
 		-->
 		<property name="working.dir" value="/tmp/build.b3.aggregator" />
 		<property name="requirement.build.root" value="${working.dir}" />
+
+		<available file="${requirement.build.root}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
+		<antcall target="get.ant-contrib" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${requirement.build.root}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
 	</target>
 
 	<!-- prefetch remote update site zips as local archive repos -->
@@ -103,8 +125,7 @@
 			<arg line=" -destination ${eclipse.home} -bundlepool ${eclipse.home}" />
 			<arg line=" -metadataRepository ${b3.aggregator.repo},${b3.backup.repos},file:${eclipse.home}/p2/org.eclipse.equinox.p2.engine/profileRegistry/SDKProfile.profile"
 			/>
-			<arg line=" -artifactRepository ${b3.aggregator.repo},${b3.backup.repos},file:${eclipse.home}"
-			/>
+			<arg line=" -artifactRepository ${b3.aggregator.repo},${b3.backup.repos},file:${eclipse.home}" />
 			<arg line=" -profileProperties org.eclipse.update.install.features=true" />
 			<arg line=" -vmargs -Declipse.p2.data.area=${eclipse.home}/p2 -Declipse.p2.MD5Check=false" />
 		</exec>
@@ -564,7 +585,10 @@
 				<echo file="${working.dir}/output/final/content.xml" append="true">  &lt;/references>
 &lt;/repository>
 </echo>
-				<zip destfile="${working.dir}/output/final/content.jar" basedir="${working.dir}/output/final" includes="content.xml"/>
+				<zip destfile="${working.dir}/output/final/content.jar"
+				     basedir="${working.dir}/output/final"
+				     includes="content.xml"
+				/>
 				<delete file="${working.dir}/output/final/content.xml" />
 			</then>
 		</if>
