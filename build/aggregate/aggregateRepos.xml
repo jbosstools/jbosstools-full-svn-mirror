@@ -572,7 +572,7 @@
 
 	<!-- zip up the generated repo -->
 	<target name="zip.repo">
-		<zip destfile="${working.dir}/repo-from-packed-plugins.zip"
+		<zip destfile="${working.dir}/aggregate-Update-SNAPSHOT.zip"
 		     basedir="${working.dir}/output/final"
 		     update="false"
 		/>
