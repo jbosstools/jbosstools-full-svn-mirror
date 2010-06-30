@@ -40,7 +40,7 @@
 <repository location="http://download.eclipse.org/tptp/4.7.0/TPTP-4.7.0/repo/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<repository location="http://download.eclipse.org/eclipse/updates/3.6/"/>
+<repository location="http://download.eclipse.org/eclipse/updates/3.6.x/"/>
 </location>
 <!-- <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <repository location="http://download.eclipse.org/eclipse/updates/3.6milestones/"/>
@@ -53,6 +53,7 @@
 <plugin id="org.hamcrest.generator" />
 <plugin id="org.eclipse.tptp.platform.profile.server.core" />
 <plugin id="org.eclipse.platform.ide" />
+<plugin id="org.eclipse.core.runtime"/>
 <plugin id="org.easymock" />
 <plugin id="javax.wsdl" />
 <plugin id="com.thoughtworks.qdox" />
