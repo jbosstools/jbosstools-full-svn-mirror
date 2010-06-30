@@ -7,10 +7,16 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	  <artifactId>org.jboss.tools.parent.pom</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.jboss.tools</groupId>
+	<groupId>org.jboss.tools.vpe.tests</groupId>
 	<artifactId>org.jboss.tools.vpe.xulrunner.test</artifactId> 
 	<version>3.1.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
+
+	<properties>
+		<emma.filter>org.jboss.tools.vpe.xulrunner*</emma.filter>
+		<emma.instrument.bundles>org.jboss.tools.vpe.xulrunner</emma.instrument.bundles>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -33,7 +39,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 							<version>3.1.0</version>
 							<type>eclipse-plugin</type>
 						</dependency>
-					</dependencies>					
+					</dependencies>
 				</configuration>
 			</plugin>
 		</plugins>
