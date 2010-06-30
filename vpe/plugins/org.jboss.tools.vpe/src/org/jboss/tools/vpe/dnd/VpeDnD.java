@@ -524,8 +524,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			textWidget.replaceTextRange(selectionRange.x, selectionRange.y, ""); //$NON-NLS-1$
 			
 			dropAny(DndUtil.kUnicodeMime, text);
-		} else if (InnerDragBuffer.object != null
-				&& InnerDragBuffer.object instanceof Node) {
+		} else if (InnerDragBuffer.object instanceof Node) {
 			VpeSourceDropInfo sourceDropInfo = getDropInfo();
 			if (sourceDropInfo.getContainer() != null) {
 				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
