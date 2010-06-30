@@ -6,6 +6,8 @@
 # define target zip filename for inclusion in uberbuilder's bucky aggregator
 SNAPNAME=${JOB_NAME}-Update-SNAPSHOT.zip
 
+if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/nightly/3.2.helios"; fi
+
 # cleanup from last time
 rm -fr ${WORKSPACE}/site; mkdir -p ${WORKSPACE}/site/${JOB_NAME}
 
@@ -45,32 +47,32 @@ for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip"); do
 	rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
 done
 
-# publish to download.jboss.org
-if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/nightly/3.2.helios"; fi
-if [[ -d ${WORKSPACE}/site/${JOB_NAME} ]]; then
-	rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/
-fi
-if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
-	# publish snapshot zip
-	rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/
-fi
-
 # get full build log and filter out Maven test failures
 bl=${WORKSPACE}/site/${JOB_NAME}/BUILDLOG.txt
 wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
-
 fl=${WORKSPACE}/site/${JOB_NAME}/FAIL_LOG.txt
 sed -ne "/<<< FAI/,+9 p" ${bl} | sed -e "/AILURE/,+9 s/\(.\+AILURE.\+\)/\n----------\n\n\1/g" > ${fl}
-cnt=$(sed -ne "/FAI\|LURE/ p" ${fl} | wc -l)
-if [[ $cnt != "0" ]]; then
-	echo "" >> ${fl}; echo -n "FAI" >> ${fl}; echo -n "LURES FOUND: "$cnt >> ${fl};
+fc=$(sed -ne "/FAI\|LURE/ p" ${fl} | wc -l)
+if [[ $fc != "0" ]]; then
+	echo "" >> ${fl}; echo -n "FAI" >> ${fl}; echo -n "LURES FOUND: "$fc >> ${fl};
 fi 
 el=${WORKSPACE}/site/${JOB_NAME}/ERRORLOG.txt
 sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9 s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
 sed -ne "/\[ERR/,+2 p" ${bl} | sed -e "/ROR\] Fai/,+2 s/\(.\+ROR\] Fai.\+\)/\n----------\n\n\1/g" >> ${el}
-cnt=$(sed -ne "/ERR\|RROR/ p" ${el} | wc -l) 
-if [[ $cnt != "0" ]]; then
-	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "ORS FOUND: "$cnt >> ${el};
+ec=$(sed -ne "/ERR\|RROR/ p" ${el} | wc -l) 
+if [[ $ec != "0" ]]; then
+	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "ORS FOUND: "$ec >> ${el};
+fi
+rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
+
+# publish to download.jboss.org, unless errors found - avoid destroying last-good update site
+if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
+	if [[ -d ${WORKSPACE}/site/${JOB_NAME} ]]; then
+		rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/
+	fi
+	if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
+		# publish snapshot zip
+		rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/
+	fi
 fi
 
-rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
