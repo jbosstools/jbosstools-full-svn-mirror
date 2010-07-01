@@ -7,8 +7,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	  <artifactId>org.jboss.tools.parent.pom</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.jboss.tools</groupId>
-	<artifactId>portlet.tests</artifactId>
+	<groupId>org.jboss.tools.portlet</groupId>
+	<artifactId>tests</artifactId>
+	<name>portlet.tests</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
