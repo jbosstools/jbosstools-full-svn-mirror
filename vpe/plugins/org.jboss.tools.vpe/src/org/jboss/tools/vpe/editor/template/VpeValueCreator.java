@@ -115,7 +115,10 @@ public class VpeValueCreator extends VpeAbstractCreator implements VpeOutputAttr
 
 	public boolean isEditabledAtribute(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		if (outputAttrName != null && expression != null) {
-			String attrValue = sourceElement.getAttribute(outputAttrName);
+			String attrValue = null;
+			if (sourceElement.hasAttribute(outputAttrName)) {
+				attrValue = sourceElement.getAttribute(outputAttrName);
+			}
 			String exprValue;
 			try {
 				exprValue = expression.exec(pageContext, sourceElement).stringValue();
