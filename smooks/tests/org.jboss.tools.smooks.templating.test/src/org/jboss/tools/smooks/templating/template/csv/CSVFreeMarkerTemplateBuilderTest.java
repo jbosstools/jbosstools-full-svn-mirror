@@ -35,7 +35,7 @@ import org.w3c.dom.Element;
  */
 public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
 
-    public void test_all_fields_mapped_01() throws TemplateBuilderException, IOException, ModelBuilderException {
+    public void testAllFieldsMapped01() throws TemplateBuilderException, IOException, ModelBuilderException {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', false);
 
@@ -62,7 +62,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
                 template);
     }
 
-    public void test_all_fields_mapped_01_includingFieldNames() throws TemplateBuilderException, IOException, ModelBuilderException {
+    public void testAllFieldsMapped01IncludingFieldNames() throws TemplateBuilderException, IOException, ModelBuilderException {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, ',', '\"', true);
 
@@ -95,7 +95,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
      * Same as test above accept it uses different delimiters.
      * @throws ModelBuilderException 
      */
-    public void test_all_fields_mapped_02() throws TemplateBuilderException, IOException, ModelBuilderException {
+    public void testAllFieldsMapped02() throws TemplateBuilderException, IOException, ModelBuilderException {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder1 = new CSVFreeMarkerTemplateBuilder(modelBuilder, '|', '\'', false);
 
@@ -120,7 +120,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
                 template);
     }
 
-    public void test_all_fields_not_mapped() throws TemplateBuilderException, ModelBuilderException {
+    public void testAllFieldsNotMapped() throws TemplateBuilderException, ModelBuilderException {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder;
 
@@ -153,7 +153,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         }
     }
 
-    public void test_collection_not_mapped_01() throws TemplateBuilderException, ModelBuilderException {
+    public void testCollectionNotMapped01() throws TemplateBuilderException, ModelBuilderException {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder;
 
@@ -169,7 +169,7 @@ public class CSVFreeMarkerTemplateBuilderTest extends TestCase {
         }
     }
 
-    public void test_collection_not_mapped_02() throws TemplateBuilderException, ModelBuilderException {
+    public void testCollectionNotMapped02() throws TemplateBuilderException, ModelBuilderException {
         CSVModelBuilder modelBuilder = new CSVModelBuilder("firstname", "lastname", "country");
         CSVFreeMarkerTemplateBuilder builder;
 

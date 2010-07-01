@@ -35,7 +35,7 @@ import junit.framework.TestCase;
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class ObjectSerializerText extends TestCase {
+public class ObjectSerializerTest extends TestCase {
 	
 	public void test() throws IOException, SAXException {
 		Map<String, Object> beanContext = new HashMap<String, Object>();

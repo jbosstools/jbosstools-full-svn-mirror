@@ -51,9 +51,9 @@ import org.xml.sax.SAXException;
 /**
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
+public class XSDXMLFreeMarkerTemplateBuilderTest extends TestCase {
 	
-	public void test_SimplePerson_01() throws IOException, ParserConfigurationException, TemplateBuilderException,
+	public void testSimplePerson01() throws IOException, ParserConfigurationException, TemplateBuilderException,
 			SAXException, ModelBuilderException {
 		TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new File(
 				"src/org/jboss/tools/smooks/templating/template/xml/simple-person.xsd"), "person");
@@ -66,7 +66,7 @@ public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		assertEquals(theTemplate, builder2.buildTemplate());
 	}
 
-	public void test_SimplePerson_02() throws IOException, ParserConfigurationException, TemplateBuilderException,
+	public void testSimplePerson02() throws IOException, ParserConfigurationException, TemplateBuilderException,
 			SAXException, ModelBuilderException, XPathExpressionException {
 		TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new File(
 				"src/org/jboss/tools/smooks/templating/template/xml/simple-person.xsd"), "person");
@@ -93,7 +93,7 @@ public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		assertEquals(template, builder2.buildTemplate());
 	}
 
-	public void test_people_01() throws IOException, ParserConfigurationException, TemplateBuilderException,
+	public void testPeople01() throws IOException, ParserConfigurationException, TemplateBuilderException,
 			SAXException, ModelBuilderException, XPathExpressionException {
 		TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new File(
 				"src/org/jboss/tools/smooks/templating/template/xml/people.xsd"), "people");
@@ -108,7 +108,7 @@ public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		}
 	}
 
-	public void test_people_02() throws IOException, ParserConfigurationException, TemplateBuilderException,
+	public void testPeople02() throws IOException, ParserConfigurationException, TemplateBuilderException,
 			SAXException, ModelBuilderException, XPathExpressionException {
 		TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new File(
 				"src/org/jboss/tools/smooks/templating/template/xml/people.xsd"), "people");
@@ -142,7 +142,7 @@ public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		assertEquals(template, builder2.buildTemplate());
 	}
 
-	public void test_elementname() throws IOException, ModelBuilderException {
+	public void testElementName() throws IOException, ModelBuilderException {
 		File xsdFile = new File("src/org/jboss/tools/smooks/templating/template/xml/smooks1_0.xsd");
 		URI uri = URI.createFileURI(xsdFile.getCanonicalFile().toString());
 		XSDModelBuilder builder = new XSDModelBuilder(uri);
@@ -156,7 +156,7 @@ public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		//checkNodeName(document.getDocumentElement());
 	}
 
-	public void test_creature_01() throws IOException, ParserConfigurationException, TemplateBuilderException,
+	public void testCreature01() throws IOException, ParserConfigurationException, TemplateBuilderException,
 			SAXException, ModelBuilderException, XPathExpressionException {
 		TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new File(
 				"src/org/jboss/tools/smooks/templating/template/xml/creature.xsd"), "creature");
@@ -238,7 +238,7 @@ public class XSD_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		assertEquals(theTemplate, builder2.buildTemplate());
 	}
 
-	 public void test_OrderStatusRequest() throws IOException, ParserConfigurationException, ModelBuilderException, SAXException, TemplateBuilderException {
+	 public void testOrderStatusRequest() throws IOException, ParserConfigurationException, ModelBuilderException, SAXException, TemplateBuilderException {
 		 TemplateBuilder builder = TestUtil.createXSDFreeMarkerTemplateBuilder(new
 		 File("resources/xcbl40/schema/org/xcbl/path_delim/schemas/xcbl/v4_0/ordermanagement/v1_0/ordermanagement.xsd"), "OrderStatusResult");
 		 String theTemplate = builder.buildTemplate();

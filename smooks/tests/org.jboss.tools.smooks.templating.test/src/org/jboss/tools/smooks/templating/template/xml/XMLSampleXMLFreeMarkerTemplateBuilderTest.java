@@ -38,9 +38,9 @@ import org.xml.sax.SAXException;
 /**
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class XMLSample_XMLFreeMarkerTemplateBuilderTest extends TestCase {
+public class XMLSampleXMLFreeMarkerTemplateBuilderTest extends TestCase {
 
-	public void test_XML_Order_01() throws IOException, ParserConfigurationException, TemplateBuilderException, SAXException, ModelBuilderException, XPathExpressionException {
+	public void testXMLOrder01() throws IOException, ParserConfigurationException, TemplateBuilderException, SAXException, ModelBuilderException, XPathExpressionException {
 		TemplateBuilder builder = TestUtil.createXMLSampleFreeMarkerTemplateBuilder(new File("src/org/jboss/tools/smooks/templating/template/xml/order-status-01.xml"));
 		
 		Node identNode = builder.getModelNode("ns0:OrderStatusResult/ns0:OrderStatusResultHeader/ns0:BuyerParty/ns1:PartyID/ns1:Ident");		
@@ -56,7 +56,7 @@ public class XMLSample_XMLFreeMarkerTemplateBuilderTest extends TestCase {
 		assertEquals(theTemplate, builder2.buildTemplate());
 	}
 
-	public void test_XML_Order_02() throws IOException, ParserConfigurationException, TemplateBuilderException, SAXException, ModelBuilderException, XPathExpressionException {
+	public void testXMLOrder02() throws IOException, ParserConfigurationException, TemplateBuilderException, SAXException, ModelBuilderException, XPathExpressionException {
 		TemplateBuilder builder = TestUtil.createXMLSampleFreeMarkerTemplateBuilder(new File("src/org/jboss/tools/smooks/templating/template/xml/order-status-01.xml"));
 		
 		Node identNode = builder.getModelNode("ns0:OrderStatusResult/ns0:OrderStatusResultHeader/ns0:BuyerParty/ns1:PartyID/ns1:Ident");		
