@@ -46,8 +46,8 @@ public class GroupingTest extends TestCase {
 		
 		ws = nws.getWorkingSetNames("org.eclipse.jdt");		
 		assertEquals(2,ws.length);
-		assertEquals("eclipse",ws[0]);
-		assertEquals("jdt",ws[1]);
+		assertEquals("eclipse",ws[1]);
+		assertEquals("jdt",ws[0]);
 		
 	}
 	
@@ -55,8 +55,8 @@ public class GroupingTest extends TestCase {
 	public void testMultiMatch() {
 		String[] ws = nws.getWorkingSetNames("org.eclipse.jdt.ui");		
 		assertEquals(2,ws.length);
-		assertEquals("eclipse",ws[0]);
-		assertEquals("jdt",ws[1]);		
+		assertEquals("eclipse",ws[1]);
+		assertEquals("jdt",ws[0]);		
 			
 	}
 	
