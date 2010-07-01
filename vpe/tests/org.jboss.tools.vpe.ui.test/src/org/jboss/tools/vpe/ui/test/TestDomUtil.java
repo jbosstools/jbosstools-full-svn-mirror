@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,10 @@ import org.jboss.tools.common.model.util.XMLUtil;
 import org.jboss.tools.jst.css.common.CSSStyleManager;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
+import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -39,6 +43,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.css.CSSStyleDeclaration;
+import org.w3c.dom.css.ElementCSSInlineStyle;
 
 /**
  * @author Sergey Dzmitrovich
@@ -326,7 +332,23 @@ public class TestDomUtil {
 				&& modelString.endsWith(END_REGEX)) {
 			String regex = modelString.substring(START_REGEX.length(),
 					modelString.length() - END_REGEX.length());
-
+			int firstPos = regex.indexOf("url\\("); //$NON-NLS-1$
+			if (firstPos > -1) {
+				String subString = regex.substring(firstPos + 5, firstPos + 5 + 2);
+				if (!"\"?".equalsIgnoreCase(subString)) { //$NON-NLS-1$
+					String firstPart = regex.substring(0, firstPos + 5);
+					String secondPart = regex.substring(firstPos + 5, regex.length());
+					int lastPos = secondPart.indexOf("\\)"); //$NON-NLS-1$
+					if (lastPos > -1) {
+						String subs = secondPart.substring(lastPos - 2, lastPos);
+						if (!"\"?".equalsIgnoreCase(subs)) { //$NON-NLS-1$
+							String fpart = secondPart.substring(0, lastPos);
+							String spart = secondPart.substring(lastPos, secondPart.length());
+							regex = firstPart + "\"?" + fpart + "\"?" + spart; //$NON-NLS-1$ //$NON-NLS-2$
+						}
+					}
+				}
+			}
 			Matcher matcher = Pattern.compile(regex).matcher(vpeString);
 			if (!matcher.find()) {
 				throw new DOMComparisonException("string is\"" + vpeString //$NON-NLS-1$

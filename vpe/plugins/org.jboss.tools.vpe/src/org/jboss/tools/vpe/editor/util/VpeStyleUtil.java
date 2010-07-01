@@ -67,6 +67,7 @@ public class VpeStyleUtil {
     public static final String SPACE_STRING = " "; //$NON-NLS-1$
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
     public static final String SINGLE_QUOTE_STRING = "\'"; //$NON-NLS-1$
+    public static final String QUOTE_STRING = "\""; //$NON-NLS-1$
     
     public static String ATTR_URL = "url"; //$NON-NLS-1$
     public static String OPEN_BRACKET = "("; //$NON-NLS-1$
@@ -377,6 +378,7 @@ public class VpeStyleUtil {
 		for (int i = 1; i < urls.length; i++) {
 
 			urls[i] = urls[i].replace(SINGLE_QUOTE_STRING, EMPTY_STRING);
+			urls[i] = urls[i].replace(QUOTE_STRING, EMPTY_STRING);
 			urls[i] = ATTR_URL + urls[i];
 
 			int startAttr = urls[i].indexOf(ATTR_URL);
@@ -498,6 +500,7 @@ public class VpeStyleUtil {
 		String finalStr = EMPTY_STRING;
 		for (int i = 1; i < urls.length; i++) {
 			urls[i] = urls[i].replace(SINGLE_QUOTE_STRING, EMPTY_STRING);
+			urls[i] = urls[i].replace(QUOTE_STRING, EMPTY_STRING);
 			urls[i] = ATTR_URL + urls[i];
 			int startAttr = urls[i].indexOf(ATTR_URL);
 			int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
@@ -826,6 +829,7 @@ public class VpeStyleUtil {
 		try {
 			uri = new URI(resolvedValue);
 		} catch (URISyntaxException e) {
+			VpePlugin.getDefault().logWarning("Error in parsiong URI string", e); //$NON-NLS-1$
 		}
 
 		if ((uri != null) && (uri.isAbsolute()))
