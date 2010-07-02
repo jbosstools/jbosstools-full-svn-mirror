@@ -38,7 +38,8 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		<repository>
+<!--
+     		<repository>
 			<id>jbosstools-teiid-designer-snapshot</id>
 			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer/</url>
 			<layout>p2</layout>
@@ -46,5 +47,6 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+-->
 	</repositories>
 </project>

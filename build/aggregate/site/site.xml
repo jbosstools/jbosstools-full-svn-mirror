@@ -270,10 +270,11 @@
 	
 	<!-- aggregated from other sources -->
 	
-	<feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
+        <feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
-	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
+<!--
+     <feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
@@ -285,5 +286,5 @@
 		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
-	
+-->	
 </site>
