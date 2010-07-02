@@ -81,18 +81,17 @@ public class SmooksModelBuilderTest extends TestCase {
 		ftl.setTemplate("people[] : etc etc etc").setApplyOnElement("#document");
 		smooksModel.getComponents().add(ftl);
 		
-		// No serialize it....
+		// Now serialize it....
 		StringWriter writer = new StringWriter();
 		model.writeModel(writer);
 		
-//		System.out.println(writer);
 	    XMLUnit.setIgnoreWhitespace( true );
 	    XMLAssert.assertXMLEqual(new InputStreamReader(getClass().getResourceAsStream("expected_01.xml")), new StringReader(writer.toString()));
 	    
 	    // Recreate the model from the serialized form...
 	    model = modelBuilder.readModel(new StringReader(writer.toString()));
 	    
-	    // serialize it again and check it again...
+	    // Serialize it again and check it again...
 	    writer = new StringWriter();
 		model.writeModel(writer);
 		
