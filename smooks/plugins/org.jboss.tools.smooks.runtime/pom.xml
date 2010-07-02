@@ -7,7 +7,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	  <artifactId>org.jboss.tools.parent.pom</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.jboss.tool.smooks.plugins</groupId>
+	<groupId>org.jboss.tools.smooks.plugins</groupId>
 	<artifactId>org.jboss.tools.smooks.runtime</artifactId> 
 	<version>1.2.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
