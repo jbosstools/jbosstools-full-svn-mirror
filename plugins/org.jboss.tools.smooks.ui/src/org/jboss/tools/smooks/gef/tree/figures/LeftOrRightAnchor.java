@@ -3,6 +3,7 @@ package org.jboss.tools.smooks.gef.tree.figures;
 import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
+import org.jboss.tools.smooks.graphical.figures.ContainerFigure;
 
 public class LeftOrRightAnchor extends ChopboxAnchor {
 	
@@ -18,9 +19,17 @@ public class LeftOrRightAnchor extends ChopboxAnchor {
 	}
 	
 	public Point getLocation(Point reference) {
+//		if(true) return super.getLocation(reference);
 		Point p;
 		IFigure hostFigure = getOwner();
 		IFigure parent = hostFigure.getParent();
+		IFigure containerFigure = hostFigure.getParent();
+		while(containerFigure != null && !(containerFigure instanceof ContainerFigure)){
+			if(containerFigure == null || containerFigure instanceof ContainerFigure){
+				break;
+			}
+			containerFigure = containerFigure.getParent();
+		}
 		while(parent != null && !(parent instanceof TreeContainerFigure)){
 			if(parent == null || parent instanceof TreeContainerFigure){
 				break;

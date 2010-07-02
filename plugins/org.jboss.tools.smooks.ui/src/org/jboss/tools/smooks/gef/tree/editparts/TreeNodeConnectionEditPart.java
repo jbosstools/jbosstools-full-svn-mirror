@@ -303,6 +303,7 @@ public class TreeNodeConnectionEditPart extends AbstractConnectionEditPart imple
 			}
 
 			public PointList getPoints() {
+//				if(true) return super.getPoints();
 				ConnectionAnchor sourceAnchor = getSourceConnectionAnchor();
 				ConnectionAnchor targetAnchor = getTargetConnectionAnchor();
 				boolean startLeft = false;
