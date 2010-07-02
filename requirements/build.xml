@@ -4,6 +4,7 @@
 
 	<property name="requirement.root" value="${basedir}" />
 	<property name="requirement.download.root" value="${basedir}/download" />
+	<property name="requirement.build.root" value="${basedir}/target" />
 	
 	<condition property="skipRequirementBuild">
 		<equals arg1="${maven.test.skip}" arg2="true"/>
@@ -13,8 +14,8 @@
 		<echo>maven.test.skip=${maven.test.skip}</echo>
 		<echo>settings.offline=${settings.offline}</echo>
 		<echo>requirements=${requirements}</echo>
-		<echo>unzipto=${basedir}/target/requirements</echo>
-		<buildRequirements requirements="${requirements}" unzipto="${basedir}/target" />
+		<echo>unzipto=${requirement.build.root}</echo>
+		<buildRequirements requirements="${requirements}" unzipto="${requirement.build.root}" />
 	</target>
 
 </project>

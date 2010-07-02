@@ -84,9 +84,10 @@
 			<or>
 				<equals arg1="${settings.offline}" arg2="true" />
 				<equals arg1="${maven.test.skip}" arg2="true" />
+				<equals arg1="${skipDownload}" arg2="true" />
 			</or>
 			<then>
-				<echo>Skip download for ${build.uri}/${build.archive} because of tests are skept or build is running in offline mode</echo>			
+				<echo>Skip download for ${build.uri}/${build.archive}</echo>
 			</then>
 			<else>
 				<mkdir dir="${driver.dest}"/>
