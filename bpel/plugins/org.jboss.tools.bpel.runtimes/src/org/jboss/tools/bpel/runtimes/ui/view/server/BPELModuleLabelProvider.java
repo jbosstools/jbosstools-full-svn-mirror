@@ -17,6 +17,6 @@ public class BPELModuleLabelProvider extends LabelProvider {
 		if( element instanceof BPELVersionDeployment ) {
 			return new Path(((BPELVersionDeployment)element).getPath()).lastSegment();
 		}
-		return element == null ? "" : element.toString();//$NON-NLS-1$
+		return null;
 	}
 }
