@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!-- =============================================================================== 
+ # JBoss, Home of Professional Open Source. 
+ # 
+ # Copyright (c) 2000, 2009 MetaMatrix, Inc. and Red Hat, Inc. 
+ # 
+ # Some portions of this file may be copyrighted by other 
+ # contributors and licensed to Red Hat, Inc. under one or more 
+ # contributor license agreements. See the copyright.txt file in the 
+ # distribution for a full listing of individual contributors. 
+ # 
+ # This program and the accompanying materials 
+ # are made available under the terms of the Eclipse Public License v1.0 
+ # which accompanies this distribution, and is available at 
+ # http://www.eclipse.org/legal/epl-v10.html 
+ # ================================================================================== --> 
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+        <!ENTITY % CustomDTD SYSTEM "custom.dtd">
+	%CustomDTD;
+]>
+
+<book>
+  <bookinfo>
+    <title>&ProjectProduct;</title>
+    <subtitle>Users Guide</subtitle>
+    <releaseinfo>&versionNumber;
+    </releaseinfo>
+    <productnumber>&versionNumber;
+    </productnumber>
+    <issuenum>1</issuenum>
+    <mediaobject>
+      <imageobject role="fo">
+        <imagedata fileref="images/designer_logo.png" align="center" />
+      </imageobject>
+      <imageobject role="html">
+        <imagedata fileref="images/designer_logo.png" depth="3cm" />
+      </imageobject>
+    </mediaobject>
+    <copyright>
+      <year>&copyrightYear;
+      </year>
+      <holder>&copyrightHolder;
+      </holder>
+    </copyright>
+    <xi:include href="legal_notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  </bookinfo>
+  
+  <xi:include href="content/intro.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/perspectives.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/mainmenu.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/views.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/editors.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/importers.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/newmodels.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/editingmodelobjects.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/editmodelsandprojects.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/testmodels.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/searching.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/relationships.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="content/preferences.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</book>
