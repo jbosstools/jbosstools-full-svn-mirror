@@ -685,7 +685,11 @@ public class ReconciliationHelper {
 				System.err.println("trying to replace attribute on null element:" + element.getClass());
 				return;
 			}
-			if (isEqual(parseElement.getAttribute(attributeName), attributeValue)) {
+			
+			// This is a problem in eclipse3.6, if we use parseElement.getAttribute(attributeName) and the attribute is not in the parseElement,
+			// users add a element firstly, it is ok. But when users add the same element secondly, we will get a NPE. It is a eclipse xml issue.
+			// So fix as below.
+			if (parseElement.getAttributes().getNamedItem(attributeName) != null && isEqual(parseElement.getAttribute(attributeName), attributeValue)) {
 				return;
 			}
 			
