@@ -21,6 +21,11 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.4</version>
+			</plugin>
+			
+			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-packaging-plugin</artifactId>
 				<version>${tychoVersion}</version>
