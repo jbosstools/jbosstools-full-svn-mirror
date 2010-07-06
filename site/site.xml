@@ -6,16 +6,16 @@
 
 	<!-- only in JBDS -->
 	<!--
-	<feature url="features/com.jboss.jbds.product.feature_${product.versionTag}.jar"
+	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar"
 	         id="com.jboss.jbds.product.feature"
-	         version="${product.versionTag}"
+	         version="0.0.0"
 	         patch="false"
 	>
 		<category name="AllTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.runtime.feature_${runtime.versionTag}.jar"
+	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar"
 	         id="org.jboss.tools.runtime.feature"
-	         version="${runtime.versionTag}"
+	         version="0.0.0"
 	         patch="false"
 	>
 		<category name="AllTools" />
@@ -149,6 +149,12 @@
 	</feature>
 	<feature url="features/org.jboss.tools.maven.seam.feature_0.0.0.jar"
 	         id="org.jboss.tools.maven.seam.feature"
+	         version="0.0.0"
+	>
+		<category name="MavenTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.jsf.feature_0.0.0.jar"
+	         id="org.jboss.tools.maven.jsf.feature"
 	         version="0.0.0"
 	>
 		<category name="MavenTools" />
