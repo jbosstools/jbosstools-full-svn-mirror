@@ -526,10 +526,13 @@ public class AdapterFactory implements IAdapterFactory {
 	
 	
 	IFile getFileFromURI (URI uri) {
-		if (uri.isFile()) {
-			return getFileFromDeviceURI(uri);
+		if (uri != null) {
+			if (uri.isFile()) {
+				return getFileFromDeviceURI(uri);
+			}
+			return getFileFromPlatformURI(uri);
 		}
-		return getFileFromPlatformURI(uri);
+		return null;
 	}
 	
 	IFile getFileFromDeviceURI(URI uri) {
