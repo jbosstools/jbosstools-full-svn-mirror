@@ -33,15 +33,15 @@ fi
 
 # if component zips exist, copy them too; first site.zip, then site_assembly.zip
 for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | sort -r); do 
-	#if [[ -f $z ]]; then
-		y=${z%%/site/target/*}; y=${y##*/}
+	y=${z%%/site/target/*}; y=${y##*/}
+	if [[ $y != "aggregate" ]]; then # prevent duplicate nested sites
 		#echo "[$y] $z ..."
 		# unzip into workspace for publishing as unpacked site
 		mkdir -p ${WORKSPACE}/site/${JOB_NAME}/$y
 		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/$y $z
 		# copy into workspace for access by bucky aggregator (same name every time)
 		rsync -aq $z ${WORKSPACE}/site/${JOB_NAME}/${y}-Update-SNAPSHOT.zip
-	#fi
+	fi
 done
 
 # if zips exist produced & renamed by ant script, copy them too
