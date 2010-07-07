@@ -159,6 +159,22 @@
 	>
 		<category name="MavenTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.maven.cdi.feature_0.0.0.jar" 
+		 id="org.jboss.tools.maven.cdi.feature" 
+		 version="0.0.0">
+		<category name="MavenTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.hibernate.feature_0.0.0.jar" 
+		 id="org.jboss.tools.maven.hibernate.feature" 
+		 version="0.0.0">
+		<category name="MavenTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.portlet.feature_0.0.0.jar" 
+		 id="org.jboss.tools.maven.portlet.feature" 
+		 version="0.0.0">
+		<category name="MavenTools" />
+	</feature>
+
 	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar"
 	         id="org.jboss.tools.xulrunner.feature"
 	         version="0.0.0"
