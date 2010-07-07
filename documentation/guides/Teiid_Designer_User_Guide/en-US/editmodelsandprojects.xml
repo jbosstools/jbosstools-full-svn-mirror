@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"[
-<!ENTITY % CustomDTD SYSTEM "../custom.dtd">
-%CustomDTD;
-]>
+
 <chapter id="edit-models-and-projects-chapter">
   <title>Editing Models and Projects</title>
   	<para><emphasis role="bold">Go To:  <ulink url="index.html">Table of Contents</ulink></emphasis></para>
