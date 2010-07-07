@@ -159,6 +159,22 @@
 	>
 		<category name="MavenTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.maven.cdi.feature_0.0.0.jar" 
+		 id="org.jboss.tools.maven.cdi.feature" 
+		 version="0.0.0">
+		<category name="MavenTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.hibernate.feature_0.0.0.jar" 
+		 id="org.jboss.tools.maven.hibernate.feature" 
+		 version="0.0.0">
+		<category name="MavenTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.portlet.feature_0.0.0.jar" 
+		 id="org.jboss.tools.maven.portlet.feature" 
+		 version="0.0.0">
+		<category name="MavenTools" />
+	</feature>
+
 	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar"
 	         id="org.jboss.tools.xulrunner.feature"
 	         version="0.0.0"
@@ -275,12 +291,12 @@
 	</category-def>
 	
 	<!-- aggregated from other sources -->
-	
         <feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
-<!-- removed temporarily because pi4soa doesn't work w/ Eclipse 3.6. yet.
-     <feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
+	
+	<!-- removed temporarily because pi4soa doesn't work w/ Eclipse 3.6. yet.
+	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
@@ -292,5 +308,5 @@
 		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
--->	
+	-->
 </site>
