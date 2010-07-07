@@ -31,7 +31,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
-import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+//import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
 
 /**
  * 
@@ -139,7 +139,7 @@ public class SmooksConfigurationFileNewWizard extends Wizard implements INewWiza
 				FileEditorInput editorInput = new FileEditorInput(configFile);
 				try {
 					if ( fversion.equals(SmooksConstants.VERSION_1_2)) {
-						page.openEditor(editorInput, SmooksMultiFormEditor.EDITOR_ID, true);
+						page.openEditor(editorInput, "org.jboss.tools.smooks.configuration.editors.MultiPageEditor", true);
 					}
 				} catch (PartInitException e) {
 					SmooksConfigurationActivator.getDefault().log(e);
