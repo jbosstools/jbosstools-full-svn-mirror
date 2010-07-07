@@ -41,6 +41,7 @@ public class LabelEditPart extends AbstractGraphicalEditPart implements ModelLis
 	
 	protected void refreshVisuals() {
 		String text = getLabelWrapper().getText();
+		text = text == null ? "" : text;
 		Polyline polyline = (Polyline)((ConnectionEditPart)getParent()).getConnectionFigure();
 		Point location = ((LabelWrapper)getModel()).getLocation();
 		if (location == null) {
@@ -48,7 +49,7 @@ public class LabelEditPart extends AbstractGraphicalEditPart implements ModelLis
 			((LabelWrapper)getModel()).setLocation(location);
 		}
 		Label label = (Label)getFigure();
-		label.setText(text == null ? "" : text);
+		label.setText(text);
 		LabelConstraint constraint = new LabelConstraint(text, location, polyline);
 		((GraphicalEditPart)getParent()).setLayoutConstraint(this, getFigure(), constraint);
 	}
