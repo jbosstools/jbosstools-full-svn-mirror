@@ -69,10 +69,14 @@ ec=$(sed -ne "/ERR\|RROR/ p" ${el} | wc -l)
 if [[ $ec != "0" ]]; then
 	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "ORS FOUND: "$ec >> ${el};
 fi
+
+date
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
+date
 
 # publish to download.jboss.org, unless errors found - avoid destroying last-good update site
 if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
+date
 	if [[ -d ${WORKSPACE}/site/${JOB_NAME} ]]; then
 		rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/
 	fi
@@ -81,4 +85,4 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/
 	fi
 fi
-
+date
