@@ -129,10 +129,10 @@
 	<scm>
 		<connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</connection>
-			<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
-	</developerConnection>
-				<url>http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
-</url>
+		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
+		</developerConnection>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
+		</url>
 	</scm>
 
 	<issueManagement>
@@ -440,7 +440,6 @@
 				</repository>
 			</repositories>
 		</profile>
-
 		<profile>
 			<id>coverage</id>
 			<activation>
@@ -661,5 +660,4 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>
