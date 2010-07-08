@@ -85,8 +85,8 @@
 				<version>${tychoVersion}</version>
 				<configuration>
 					<!-- timeout in seconds -->
-					<surefire.timeout>900</surefire.timeout>
-					<forkedProcessTimeoutInSeconds>900</forkedProcessTimeoutInSeconds>
+					<surefire.timeout>1200</surefire.timeout>
+					<forkedProcessTimeoutInSeconds>1200</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
 					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties}
@@ -129,10 +129,10 @@
 	<scm>
 		<connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
 		</connection>
-		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
-		</developerConnection>
-		<url>http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
-		</url>
+			<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
+	</developerConnection>
+				<url>http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
+</url>
 	</scm>
 
 	<issueManagement>
@@ -176,6 +176,9 @@
 		-->
 		<profile>
 			<id>helios-no-target</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
 			<repositories>
 				<repository>
 					<id>helios</id>
@@ -271,9 +274,6 @@
 				</repository>
 			</repositories>
 		</profile>
-
-		<!-- TODO: verify that this profile overrides the default profile if BUILD_NUMBER 
-			is set (by a Hudson job) -->
 		<profile>
 			<id>hudson</id>
 			<activation>
@@ -440,6 +440,7 @@
 				</repository>
 			</repositories>
 		</profile>
+
 		<profile>
 			<id>coverage</id>
 			<activation>
@@ -615,7 +616,6 @@
 			</build>
 		</profile>
 	</profiles>
-
 	<pluginRepositories>
 		<pluginRepository>
 			<id>sonatype-maven-central</id>
@@ -661,4 +661,5 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
+
 </project>
