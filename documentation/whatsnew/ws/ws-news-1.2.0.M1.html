@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>WS tools 3.2.0 M1 What's New</title>
+</head>
+<body>
+<h1>WS tools 3.2.0 M1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Views</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>New Web Service Tester Available</b></td>
+    <td valign="top">
+    <p>A new Web Service Tester is available as a view in JBoss Tools. The tester, though still maturing a bit, provides the following functionality: </p>
+    <ul><li>Tests JAX-WS and JAX-RS services</li>
+	<li>Get the information necessary to test a web service operation from an incoming WSDL (JAX-WS only)</li>
+	<li>Show the HTTP header details for each invoke</li>
+	<li>Integrate with the TCP/IP Monitor to provide additional details about each invoke</li></ul>
+    <img src="./images/ws_tester_google_search.jpg" style="height : 374px; width : 657px;"/>
+    <p>We've also been hard at work fixing issues as we find them, such as:</p>
+    <ul><li>Handling nested WSDls and schemas imported into WSDLs. (<a href="https://jira.jboss.org/browse/JBIDE-6558">JBIDE-6558</a>)</li>
+    <li>Fixing minor issues (<a href="https://jira.jboss.org/browse/JBIDE-6544">JBIDE-6544</a>)</li>
+    <li>Using JAX-WS APIs instead of Axis APIs (<a href="https://jira.jboss.org/browse/JBIDE-6322">JBIDE-6322</a>)</li>
+    </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      
+	<hr/>
+    </td>
+  </tr>
+	
+ <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Fixes when Generating WS Projects from WSDL or Java Class Sources</b></td>
+    <td valign="top">
+    <p>We've also addressed a few issues in the Web Service wizard:</p>
+    <ol><li>Adding '--show-traces' to executables used to produce web service artifacts for additional help when debugging (<a href="https://jira.jboss.org/browse/JBIDE-6499">JBIDE-6499</a>)</li>
+    <li>Enabling generating WS source for multi-port WSDLs (<a href="https://jira.jboss.org/browse/JBIDE-6250">JBIDE-6250</a>)</li>
+
+    </td>
+  </tr>
+ 
+</table>
+
+</body>
+
+</html>
+
+
