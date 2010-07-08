@@ -11,13 +11,23 @@ if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloa
 # cleanup from last time
 rm -fr ${WORKSPACE}/site; mkdir -p ${WORKSPACE}/site/${JOB_NAME}
 
-siteZip=${WORKSPACE}/sources/site/target/site_assembly.zip
-if [[ ! -f ${WORKSPACE}/sources/site/target/site_assembly.zip ]]; then
-	siteZip=${WORKSPACE}/sources/site/target/site.zip
+# check for aggregate zip or overall zip
+z=""
+if [[ -d ${WORKSPACE}/sources/aggregate/site/target ]]; then
+	siteZip=${WORKSPACE}/sources/aggregate/site/target/site_assembly.zip
+	if [[ ! -f ${WORKSPACE}/sources/aggregate/site/target/site_assembly.zip ]]; then
+		siteZip=${WORKSPACE}/sources/aggregate/site/target/site.zip
+	fi
+	z=$siteZip
+elif [[ -d ${WORKSPACE}/sources/site/target ]]; then
+	siteZip=${WORKSPACE}/sources/site/target/site_assembly.zip
+	if [[ ! -f ${WORKSPACE}/sources/site/target/site_assembly.zip ]]; then
+		siteZip=${WORKSPACE}/sources/site/target/site.zip
+	fi
+	z=$siteZip
 fi
 
-z=$siteZip
-if [[ -f $z ]]; then
+if [[ $z != "" ]] && [[ -f $z ]] ; then
 	#echo "$z ..."
 	# note the job name, build number, and build ID of the latest snapshot zip
 	echo "JOB_NAME = ${JOB_NAME}" > ${WORKSPACE}/site/${JOB_NAME}/JOB_NAME.txt
@@ -30,6 +40,7 @@ if [[ -f $z ]]; then
 	# copy into workspace for access by bucky aggregator (same name every time)
 	rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
 fi
+z=""
 
 # if component zips exist, copy them too; first site.zip, then site_assembly.zip
 for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | sort -r); do 
