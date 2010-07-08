@@ -49,8 +49,11 @@ public class VpeCreatorUtil {
 	}
 
 	public static String getFacetName(Node node) {
-		if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-			return ((Element)node).getAttribute("name"); //$NON-NLS-1$
+		Element nodeElement = (Element)node;
+		String nameAttrName = "name"; //$NON-NLS-1$
+		if (node != null && node.getNodeType() == Node.ELEMENT_NODE && 
+				nodeElement.hasAttribute(nameAttrName)) {
+			return nodeElement.getAttribute(nameAttrName);
 		}
 		return null;
 	}
@@ -97,9 +100,14 @@ public class VpeCreatorUtil {
 
 	public static Document getIncludeDocument(Node includeNode, VpePageContext pageContext) {
 		if (isInclude(includeNode)) {
-			String pageName = ((Element)includeNode).getAttribute("page"); //$NON-NLS-1$
-			if (pageName == null) {
-				pageName = ((Element)includeNode).getAttribute("file"); //$NON-NLS-1$
+			Element includeElement = (Element)includeNode;
+			String pageAttrName = "page"; //$NON-NLS-1$
+			String fileAttrName = "file"; //$NON-NLS-1$
+			String pageName = null;
+			if (includeElement.hasAttribute(pageAttrName)) {
+				pageName = includeElement.getAttribute(pageAttrName);
+			} else if (includeElement.hasAttribute(fileAttrName)) {
+				pageName = includeElement.getAttribute(fileAttrName);
 			}
 			if (pageName != null) {
 				IDOMModel wtpModel = getWtpModelForRead(pageName, pageContext);

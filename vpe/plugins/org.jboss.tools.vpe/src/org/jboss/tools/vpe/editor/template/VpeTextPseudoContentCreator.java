@@ -42,15 +42,15 @@ public class VpeTextPseudoContentCreator extends VpePseudoContentCreator {
 		String text = this.text;
 		if (text == null) {
 			if (sourceContainer.getNodeType() == Node.ELEMENT_NODE) {
+				Element sourceElement = (Element)sourceContainer;
 				String name = null;
-				if (attrName != null) {
-					name = ((Element)sourceContainer).getAttribute(attrName);
-					if (name != null) {
-						name = name.trim();
+				if (attrName != null) {					
+					if (sourceElement.hasAttribute(attrName)) {
+						name = sourceElement.getAttribute(attrName).trim();
 					}
 				}
 				if (name == null || attrName.length() <= 0) {
-					name = ((Element)sourceContainer).getNodeName();
+					name = sourceElement.getNodeName();
 				}
 				text = MessageFormat.format(VpeUIMessages.VpeTextPseudoContentCreator_InsertContentFor, name);
 			} else {

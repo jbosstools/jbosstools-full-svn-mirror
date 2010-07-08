@@ -343,9 +343,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @param templateSection the template section
 	 */
 	private void initBreakHandler(Element templateSection) {
-		if (breakerType == BREAKER_TYPE_NONE) {
-			String typeValue = templateSection.getAttribute(ATTR_BREAKER_TYPE);
-			if (typeValue != null) {
+		if (breakerType == BREAKER_TYPE_NONE) {			
+			if (templateSection.hasAttribute(ATTR_BREAKER_TYPE)) {
+				String typeValue = templateSection.getAttribute(ATTR_BREAKER_TYPE);
 				if (ATTR_BREAKER_TYPE_IGNORE.equalsIgnoreCase(typeValue)) {
 					breakerType = BREAKER_TYPE_IGNORE;
 				} else if (ATTR_BREAKER_TYPE_SELECTITEM
