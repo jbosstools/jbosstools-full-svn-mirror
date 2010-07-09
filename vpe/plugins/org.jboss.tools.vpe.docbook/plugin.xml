@@ -5,10 +5,10 @@
          point="org.jboss.tools.vpe.templates">
       <templates
             name="Web Deployment Descriptor"
-            path="templates/docbook.xml"></templates>
+            path="templates/vpe-templates-docbook.xml"></templates>
       <templates
             name="XInclude"
-            path="templates/xinclude.xml">
+            path="templates/vpe-templates-xinclude.xml">
       </templates>
    </extension>
 
