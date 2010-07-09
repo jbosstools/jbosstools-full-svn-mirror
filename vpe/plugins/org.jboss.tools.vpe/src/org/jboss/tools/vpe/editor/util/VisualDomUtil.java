@@ -229,10 +229,10 @@ public class VisualDomUtil {
 	        return;
 	
 	    for (String attributeName : attributes) {
-	
-	        String attributeValue = sourceElement.getAttribute(attributeName);
-	        if (attributeValue != null)
+	        if (sourceElement.hasAttribute(attributeName)) {
+	        	String attributeValue = sourceElement.getAttribute(attributeName);
 	            visualElement.setAttribute(attributeName, attributeValue);
+	        }
 	    }
 	
 	}
