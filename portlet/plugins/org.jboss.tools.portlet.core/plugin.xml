@@ -245,6 +245,20 @@
      </static-preset>
    </extension>
    
+   <extension
+        point="org.eclipse.wst.common.project.facet.core.presets">
+     <static-preset id="preset.jboss.seamportlet.v22">
+	    <label>JBoss Seam Portlet Project v2.2</label>
+	    <facet id="jst.java" version="5.0" />
+	    <facet id="jst.web" version="2.5"/>
+	    <facet id="jst.jsf" version="1.2"/>
+	    <facet id="jboss.portlet" version="2.0" />
+	    <facet id="jboss.jsfportlet" version="1.0" />
+	    <facet id="jboss.seamportlet" version="1.0" />
+	    <facet id="jst.seam" version="2.2" />
+        <description>JBoss Seam Portlet Project v2.2</description>
+     </static-preset>
+   </extension>
    <!--
    <extension
         point="org.eclipse.wst.common.project.facet.core.presets">
