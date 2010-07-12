@@ -75,7 +75,7 @@ if [[ ! -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
 fi
 
 # get sources zip
-if [[ ! -f ${WORKSPACE}/sources/build/sources/target/sources.zip ]]; then
+if [[ -f ${WORKSPACE}/sources/build/sources/target/sources.zip ]]; then
 	rsync -aq ${WORKSPACE}/sources/build/sources/target/sources.zip ${WORKSPACE}/site/${JOB_NAME}/${SRCSNAME}
 fi
 
@@ -105,6 +105,9 @@ fi
 date
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
 date
+
+# generate HTML snippet for inclusion on jboss.org
+ant -f ${WORKSPACE}/build/results/build.xml "-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME}"
 
 # publish to download.jboss.org, unless errors found - avoid destroying last-good update site
 if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
