@@ -1,10 +1,20 @@
 #!/bin/bash
 # Hudson script used to publish Tycho-built p2 update sites
-
 # NOTE: sources MUST be checked out into ${WORKSPACE}/sources 
 
-# define target zip filename for inclusion in uberbuilder's bucky aggregator
-SNAPNAME=${JOB_NAME}-Update-SNAPSHOT.zip
+# releases get named differently than snapshots
+if [[ ${RELEASE} == "Yes" ]]; then
+	ZIPSUFFIX="${BUILD_ID}-H${BUILD_NUMBER}"
+else
+	ZIPSUFFIX="SNAPSHOT"
+fi
+
+# define target update zip filename
+SNAPNAME="${JOB_NAME}-Update-${ZIPSUFFIX}.zip"
+# define target sources zip filename
+SRCSNAME="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip"
+# define suffix to use for additional update sites
+SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/nightly/3.2.helios"; fi
 
@@ -51,7 +61,7 @@ for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | s
 		mkdir -p ${WORKSPACE}/site/${JOB_NAME}/$y
 		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/$y $z
 		# copy into workspace for access by bucky aggregator (same name every time)
-		rsync -aq $z ${WORKSPACE}/site/${JOB_NAME}/${y}-Update-SNAPSHOT.zip
+		rsync -aq $z ${WORKSPACE}/site/${JOB_NAME}/${y}${SUFFNAME}
 	fi
 done
 
@@ -62,6 +72,11 @@ if [[ ! -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
 		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
 		rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
 	done
+fi
+
+# get sources zip
+if [[ ! -f ${WORKSPACE}/sources/build/sources/target/sources.zip ]]; then
+	rsync -aq ${WORKSPACE}/sources/build/sources/target/sources.zip ${WORKSPACE}/site/${JOB_NAME}/${SRCSNAME}
 fi
 
 # get full build log and filter out Maven test failures
@@ -94,11 +109,12 @@ date
 # publish to download.jboss.org, unless errors found - avoid destroying last-good update site
 if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 date
+	# publish update site dir
 	if [[ -d ${WORKSPACE}/site/${JOB_NAME} ]]; then
 		rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/
 	fi
+	# publish update site zip
 	if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
-		# publish snapshot zip
 		rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/
 	fi
 fi
