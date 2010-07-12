@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jboss.tools.smooks.runtime
 Bundle-Activator: org.jboss.tools.smooks.model.plugin.SmooksModelActivator
 Export-Package: org.jboss.tools.smooks.model,
+ org.jboss.tools.smooks.model.command,
  org.jboss.tools.smooks.model.core,
  org.jboss.tools.smooks.model.csv,
  org.jboss.tools.smooks.model.edi,
@@ -18,4 +19,7 @@ Export-Package: org.jboss.tools.smooks.model,
  org.jboss.tools.smooks.model.javabean,
  org.jboss.tools.smooks.model.json,
  org.jboss.tools.smooks.model.plugin
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ libs/commons-beanutils-1.8.3.jar,
+ libs/commons-beanutils-bean-collections-1.8.3.jar,
+ libs/commons-beanutils-core-1.8.3.jar
