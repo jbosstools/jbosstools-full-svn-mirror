@@ -79,6 +79,11 @@ if [[ -f ${WORKSPACE}/sources/build/sources/target/sources.zip ]]; then
 	rsync -aq ${WORKSPACE}/sources/build/sources/target/sources.zip ${WORKSPACE}/site/${JOB_NAME}/${SRCSNAME}
 fi
 
+# generate HTML snippet for inclusion on jboss.org
+if [[ ${RELEASE} == "Yes" ]]; then
+	ant -f ${WORKSPACE}/build/results/build.xml "-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME}"
+fi
+
 # get full build log and filter out Maven test failures
 bl=${WORKSPACE}/site/${JOB_NAME}/BUILDLOG.txt
 wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
@@ -105,9 +110,6 @@ fi
 date
 rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
 date
-
-# generate HTML snippet for inclusion on jboss.org
-ant -f ${WORKSPACE}/build/results/build.xml "-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME}"
 
 # publish to download.jboss.org, unless errors found - avoid destroying last-good update site
 if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
