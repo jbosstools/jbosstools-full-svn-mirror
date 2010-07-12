@@ -1,12 +1,15 @@
 <project default="build.results">
 
-	<property name="output.dir" value="${basedir}" />
-
 	<!-- should be set by script or in Hudson -->
 	<property name="ZIPSUFFIX" value="SNAPSHOT" />
 
 	<!-- should be set by Hudson -->
 	<!-- <property name="JOB_NAME" value="jbosstools-3.2.0.M2.continuous" /> -->
+
+	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
+	<condition property="output.dir" value="${WORKSPACE}/site" else="${basedir}">
+		<available file="${WORKSPACE}/site" />
+	</condition>
 
 	<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}/../..">
 		<available file="/home/hudson/static_build_env/jbds" type="dir" />
