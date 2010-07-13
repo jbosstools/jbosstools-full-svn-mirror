@@ -25,6 +25,7 @@ public class AddCommand extends Command {
 
 	@Override
 	public void execute() {
+		if(!canExecute()) return;
 		try {
 			Object v = getPropertyValue();
 			if(!(v instanceof Collection)){
@@ -38,13 +39,13 @@ public class AddCommand extends Command {
 	}
 
 	@Override
-	public boolean canExecute() {
-		return  ( host!=null && value!=null && !added && propertyName != null);
+	public String getCommandLabel() {
+		return "AddCommand";
 	}
 
 	@Override
-	public boolean canRedo() {
-		return super.canRedo();
+	public boolean canExecute() {
+		return  ( host!=null && value!=null && !added && propertyName != null);
 	}
 
 	@Override
@@ -54,6 +55,7 @@ public class AddCommand extends Command {
 
 	@Override
 	public void undo() {
+		if(!canUndo()) return;
 		try {
 			Object v = getPropertyValue();
 			if(!(v instanceof Collection)){

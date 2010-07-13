@@ -9,43 +9,27 @@ import java.lang.reflect.Method;
  * @author Dart
  *
  */
-public class SetCommand extends Command {
+public class UnSetCommand extends Command {
 	
 	private boolean executed = false;
-	
-	public SetCommand() {
+
+	public UnSetCommand() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SetCommand(Object host, Object value, String propertyName) {
-		super(host, value, propertyName);
+	public UnSetCommand(Object host, String propertyName) {
+		super(host, null, propertyName);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public void execute(Object host , Object value , String propertyName){
 		this.host = host;
 		this.value = value;
 		this.propertyName = propertyName;
 		execute();
 	}
-
-	@Override
-	public void execute() {
-		if(!canExecute()) return;
-		super.execute();
-		try {
-			Method setter = getSetterMethod();
-			setter.invoke(host, value);
-//			PropertyDescriptor pd = PropertyUtils.getPropertyDescriptor(host, propertyName);
-//			pd.getWriteMethod().invoke(host, value);
-			value = null;
-			executed = true;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} 
-	}
-
+	
 	@Override
 	public boolean canExecute() {
 		return (host != null && !executed && propertyName != null);
@@ -60,6 +44,26 @@ public class SetCommand extends Command {
 	public boolean canUndo() {
 		return (host != null && executed && propertyName != null);
 	}
+	
+	@Override
+	public void execute() {
+		if(!canExecute()) return;
+		super.execute();
+		try {
+			Method setter = getSetterMethod();
+			setter.invoke(host, new Object[]{null});
+//			PropertyDescriptor pd = PropertyUtils.getPropertyDescriptor(host, propertyName);
+//			pd.getWriteMethod().invoke(host, value);
+			executed = true;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} 
+	}
+	
+	@Override
+	public String getCommandLabel() {
+		return "UnSetCommand";
+	}
 
 	@Override
 	public void undo() {
@@ -70,14 +74,10 @@ public class SetCommand extends Command {
 			setter.invoke(host, oldValue);
 //			PropertyDescriptor pd = PropertyUtils.getPropertyDescriptor(host, propertyName);
 //			pd.setValue(propertyName, oldValue);
-			oldValue = null;
 			executed = false;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 	}
-	@Override
-	public String getCommandLabel() {
-		return "SetCommand";
-	}
+
 }

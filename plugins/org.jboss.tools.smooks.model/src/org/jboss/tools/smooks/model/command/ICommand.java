@@ -12,4 +12,8 @@ public interface ICommand {
 	void redo();
 	
 	void undo();
+	
+	void dispose();
+	
+	String getCommandLabel();
 }

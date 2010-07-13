@@ -13,29 +13,28 @@ import org.apache.commons.beanutils.PropertyUtils;
  * 
  */
 public class Command implements ICommand {
-	
+
 	protected Object host;
 
 	protected String propertyName;
-	
+
 	protected Object value;
-	
+
 	protected Object oldValue;
-	
-	protected boolean execued = false;
-	
-	protected boolean redoed = false;
-	
-	protected boolean undoed = false;
-	
-	public Command(){
-		
+
+
+	public Command() {
+
 	}
-	
-	public Command(Object host , Object value , String propertyName ){
+
+	public Command(Object host, Object value, String propertyName) {
 		this.host = host;
 		this.propertyName = propertyName;
 		this.value = value;
+	}
+	
+	public String getCommandLabel(){
+		return null;
 	}
 
 	public Object getValue() {
@@ -62,20 +61,31 @@ public class Command implements ICommand {
 		this.propertyName = propertyName;
 	}
 
-
-	protected Object getPropertyValue() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+	protected Object getPropertyValue() throws IllegalAccessException,
+			InvocationTargetException, NoSuchMethodException {
 		return PropertyUtils.getProperty(host, propertyName);
 	}
-	
-	protected Method getSetterMethod() throws SecurityException, NoSuchMethodException{
+
+	protected Method getSetterMethod() throws SecurityException,
+			NoSuchMethodException {
 		char sc = propertyName.toCharArray()[0];
-		String us = new String(new char[]{sc});
+		String us = new String(new char[] { sc });
 		us = us.toUpperCase();
 		String n = propertyName.substring(1);
-		n = ("set" +us + n);
-		return host.getClass().getMethod(n, value.getClass());
+		n = ("set" + us + n);
+		if (value != null) {
+			return host.getClass().getMethod(n, value.getClass());
+		}else{
+			Method[] ms =  host.getClass().getMethods();
+			for (int i = 0; i < ms.length; i++) {
+				Method m = ms[i];
+				if(m.getName().equals(n)){
+					return m;
+				}
+			}
+		}
+		return null;
 	}
-	
 
 	/*
 	 * (non-Javadoc)
@@ -83,12 +93,12 @@ public class Command implements ICommand {
 	 * @see org.jboss.tools.smooks.model.command.ICommand#execute()
 	 */
 	public void execute() {
-//		if(!canExecute()) return;
+		// if(!canExecute()) return;
 		try {
 			oldValue = getPropertyValue();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	/*
@@ -97,7 +107,7 @@ public class Command implements ICommand {
 	 * @see org.jboss.tools.smooks.model.command.ICommand#canExecute()
 	 */
 	public boolean canExecute() {
-		return ( host!=null && value!=null && !execued && propertyName != null);
+		return true;
 	}
 
 	/*
@@ -106,7 +116,7 @@ public class Command implements ICommand {
 	 * @see org.jboss.tools.smooks.model.command.ICommand#canRedo()
 	 */
 	public boolean canRedo() {
-		return ( host!=null && value!=null && execued && propertyName != null);
+		return true;
 	}
 
 	/*
@@ -115,7 +125,7 @@ public class Command implements ICommand {
 	 * @see org.jboss.tools.smooks.model.command.ICommand#canUndo()
 	 */
 	public boolean canUndo() {
-		return ( host!=null && execued && propertyName != null);
+		return true;
 	}
 
 	/*
@@ -133,12 +143,15 @@ public class Command implements ICommand {
 	 * @see org.jboss.tools.smooks.model.command.ICommand#undo()
 	 */
 	public void undo() {
-//		if(!canUndo()) return;
+		// if(!canUndo()) return;
 		try {
 			value = getPropertyValue();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
+	}
+
+	public void dispose() {
 	}
 
 }
