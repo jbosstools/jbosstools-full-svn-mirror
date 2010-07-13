@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.template;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -336,11 +337,24 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		 */
 		private IMessageProvider validateTagName() {
 			Message message = null;
-			if (tagName.getText().indexOf(":") < 0) { //$NON-NLS-1$
+			String[] parts = tagName.getText().split(":"); //$NON-NLS-1$
+			if (parts.length != 2 || tagName.getText().startsWith(":") //$NON-NLS-1$
+					|| tagName.getText().endsWith(":")) { //$NON-NLS-1$
 				message = new Message(
 						MessageFormat.format(VpeUIMessages.TAG_NAME_IS_NOT_VALID,
-								tagName.getText().trim()),
-			IMessageProvider.ERROR);
+								tagName.getText().trim()), IMessageProvider.ERROR);
+			} else {
+				/*
+				 * Matcher will accept only word characters with optional numbers.
+				 */
+				 Pattern p = Pattern.compile("([a-zA-Z]+\\d*)+"); //$NON-NLS-1$
+				if ((parts[0].length() == 0) || (parts[1].length() == 0)
+						|| (!p.matcher(parts[0]).matches()) 
+						|| (!p.matcher(parts[1]).matches())) {
+					message = new Message(
+							MessageFormat.format(VpeUIMessages.TAG_NAME_IS_NOT_VALID,
+									tagName.getText().trim()), IMessageProvider.ERROR);
+				}
 			}
 			return message;
 		}
@@ -356,9 +370,13 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 				try {
 					xmlDocument.createElement(txtTagForDisplay.getText());
 				} catch (DOMException e) {
+					/*
+					 * https://jira.jboss.org/browse/JBIDE-6599
+					 * Changing warning message.
+					 */
 					return new Message(
 							MessageFormat.format(VpeUIMessages.TAG_FOR_DISPLAY_IS_NOT_VALID,
-												e.getMessage()),
+									txtTagForDisplay.getText()),
 							IMessageProvider.ERROR);
 				}
 			}
