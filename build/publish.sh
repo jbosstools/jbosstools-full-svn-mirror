@@ -80,7 +80,7 @@ if [[ -f ${WORKSPACE}/sources/build/sources/target/sources.zip ]]; then
 else
 	# create sources zip
 	pushd ${WORKSPACE}/sources
-	zip ${WORKSPACE}/site/{JOB_NAME}/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
+	zip ${WORKSPACE}/site/${JOB_NAME}/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
 	  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
 	  -x \*docs\* -x \*reference\* -x \*releng\*
 	popd
