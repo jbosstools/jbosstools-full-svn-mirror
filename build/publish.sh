@@ -18,8 +18,11 @@ SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/nightly/3.2.helios"; fi
 
+# where to create the stuff to publish
+STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
+
 # cleanup from last time
-rm -fr ${WORKSPACE}/site; mkdir -p ${WORKSPACE}/site/${JOB_NAME}
+rm -fr ${WORKSPACE}/results; mkdir -p ${STAGINGDIR}
 
 # check for aggregate zip or overall zip
 z=""
@@ -40,15 +43,16 @@ fi
 if [[ $z != "" ]] && [[ -f $z ]] ; then
 	#echo "$z ..."
 	# note the job name, build number, and build ID of the latest snapshot zip
-	echo "JOB_NAME = ${JOB_NAME}" > ${WORKSPACE}/site/${JOB_NAME}/JOB_NAME.txt
-	echo "BUILD_NUMBER = ${BUILD_NUMBER}" > ${WORKSPACE}/site/${JOB_NAME}/BUILD_NUMBER.txt
-	echo "BUILD_ID = ${BUILD_ID}" > ${WORKSPACE}/site/${JOB_NAME}/BUILD_ID.txt
+	echo "JOB_NAME = ${JOB_NAME}" > ${STAGINGDIR}/JOB_NAME.txt
+	echo "BUILD_NUMBER = ${BUILD_NUMBER}" > ${STAGINGDIR}/BUILD_NUMBER.txt
+	echo "BUILD_ID = ${BUILD_ID}" > ${STAGINGDIR}/BUILD_ID.txt
 
 	# unzip into workspace for publishing as unpacked site
-	unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
+	mkdir -p ${STAGINGDIR}/all/repo
+	unzip -u -o -q -d ${STAGINGDIR}/all/repo $z
 
 	# copy into workspace for access by bucky aggregator (same name every time)
-	rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
+	rsync -aq $z ${STAGINGDIR}/${SNAPNAME}
 fi
 z=""
 
@@ -58,29 +62,29 @@ for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | s
 	if [[ $y != "aggregate" ]]; then # prevent duplicate nested sites
 		#echo "[$y] $z ..."
 		# unzip into workspace for publishing as unpacked site
-		mkdir -p ${WORKSPACE}/site/${JOB_NAME}/$y
-		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/$y $z
+		mkdir -p ${STAGINGDIR}/$y
+		unzip -u -o -q -d ${STAGINGDIR}/$y $z
 		# copy into workspace for access by bucky aggregator (same name every time)
-		rsync -aq $z ${WORKSPACE}/site/${JOB_NAME}/${y}${SUFFNAME}
+		rsync -aq $z ${STAGINGDIR}/${y}${SUFFNAME}
 	fi
 done
 
 # if zips exist produced & renamed by ant script, copy them too
-if [[ ! -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
+if [[ ! -f ${WORKSPACE}/results/${SNAPNAME} ]]; then
 	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip"); do 
 		#echo "$z ..."
-		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
-		rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
+		unzip -u -o -q -d ${STAGINGDIR}/ $z
+		rsync -aq $z ${WORKSPACE}/results/${SNAPNAME}
 	done
 fi
 
 # get sources zip
 if [[ -f ${WORKSPACE}/sources/build/sources/target/sources.zip ]]; then
-	rsync -aq ${WORKSPACE}/sources/build/sources/target/sources.zip ${WORKSPACE}/site/${JOB_NAME}/${SRCSNAME}
+	rsync -aq ${WORKSPACE}/sources/build/sources/target/sources.zip ${STAGINGDIR}/all/${SRCSNAME}
 else
 	# create sources zip
 	pushd ${WORKSPACE}/sources
-	zip ${WORKSPACE}/site/${JOB_NAME}/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
+	zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
 	  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
 	  -x \*docs\* -x \*reference\* -x \*releng\*
 	popd
@@ -88,17 +92,18 @@ fi
 
 # generate HTML snippet for inclusion on jboss.org
 if [[ ${RELEASE} == "Yes" ]]; then
+	ANT_PARAMS="-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Doutput.dir=${WORKSPACE}/results"
 	if [[ -f ${WORKSPACE}/build/results/build.xml ]]; then
-		ant -f ${WORKSPACE}/build/results/build.xml "-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME}"
+		ant -f ${WORKSPACE}/build/results/build.xml ${ANT_PARAMS}
 	elif [[ -f ${WORKSPACE}/sources/build/results/build.xml ]]; then
-		ant -f ${WORKSPACE}/sources/build/results/build.xml "-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME}"
+		ant -f ${WORKSPACE}/sources/build/results/build.xml ${ANT_PARAMS}
 	fi
 fi
 
 # get full build log and filter out Maven test failures
-bl=${WORKSPACE}/site/${JOB_NAME}/BUILDLOG.txt
+bl=${STAGINGDIR}/BUILDLOG.txt
 wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
-fl=${WORKSPACE}/site/${JOB_NAME}/FAIL_LOG.txt
+fl=${STAGINGDIR}/FAIL_LOG.txt
 sed -ne "/<<< FAI/,+9 p" ${bl} | sed -e "/AILURE/,+9 s/\(.\+AILURE.\+\)/\n----------\n\n\1/g" > ${fl}
 sed -ne "/ FAI/ p" ${bl} | sed -e "/AILURE \[/ s/\(.\+AILURE \[.\+\)/\n----------\n\n\1/g" >> ${fl}
 sed -ne "/ SKI/ p" ${bl} | sed -e "/KIPPED \[/ s/\(.\+KIPPED \[.\+\)/\n----------\n\n\1/g" >> ${fl}
@@ -110,7 +115,7 @@ fc=$(sed -ne "/KIPPED/ p" ${fl} | wc -l)
 if [[ $fc != "0" ]]; then
 	echo "" >> ${fl}; echo -n "SKI" >> ${fl}; echo -n "PS FOUND: "$fc >> ${fl};
 fi 
-el=${WORKSPACE}/site/${JOB_NAME}/ERRORLOG.txt
+el=${STAGINGDIR}/ERRORLOG.txt
 sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9 s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
 sed -ne "/\[ERR/,+2 p" ${bl} | sed -e "/ROR\] Fai/,+2 s/\(.\+ROR\] Fai.\+\)/\n----------\n\n\1/g" >> ${el}
 ec=$(sed -ne "/ERR\|RROR/ p" ${el} | wc -l) 
@@ -118,20 +123,20 @@ if [[ $ec != "0" ]]; then
 	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "ORS FOUND: "$ec >> ${el};
 fi
 
-date
-rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
-date
-
 # publish to download.jboss.org, unless errors found - avoid destroying last-good update site
 if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 date
 	# publish update site dir
-	if [[ -d ${WORKSPACE}/site/${JOB_NAME} ]]; then
-		rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/
+	if [[ -d ${STAGINGDIR} ]]; then
+		rsync -arzq --delete ${STAGINGDIR} $DESTINATION/
 	fi
 	# publish update site zip
-	if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
-		rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/
+	if [[ -f ${WORKSPACE}/results/${SNAPNAME} ]]; then
+		rsync -arzq --delete ${WORKSPACE}/results/${SNAPNAME} $DESTINATION/
 	fi
 fi
+
 date
+rsync -arzq ${STAGINGDIR}/*LOG.txt $DESTINATION/${JOB_NAME}/
+date
+
