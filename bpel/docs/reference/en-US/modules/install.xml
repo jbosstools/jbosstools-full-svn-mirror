@@ -2,7 +2,7 @@
   <title>Installating the JBoss BPEL Tools</title>
   <section id="installeclipse">
     <title>BPEL Editor</title>
-    <para>The JBoss BPEL Editor and deployment framework are available in the community-supported distribution of JBoss Tools and are now also bundled into the commerically available JBoss Developer Studio (JBDS). As of this writing, the tools can be installed from the JBoss update site using either the Eclipse 3.5 Galileo or Eclipse 3.6 Helios releases. The Eclipse distributions can be downloaded from the <ulink url="http://eclipse.org/downloads/">Eclipse Web Site</ulink>. 
+    <para>The JBoss BPEL Editor and deployment framework are available in the community-supported distribution of JBoss Tools. As of this writing, the tools can be installed from the JBoss update site using either the Eclipse 3.5 Galileo or Eclipse 3.6 Helios releases. The Eclipse distributions can be downloaded from the <ulink url="http://eclipse.org/downloads/">Eclipse Web Site</ulink>. 
         </para>
     <para>The JBoss BPEL Editor may also be installed as a stand-alone plug-in. See <ulink url="http://www.jboss.org/tools/download/installation.html">Installing JBoss Tools</ulink> for more information.</para>
   </section>
