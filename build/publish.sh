@@ -88,7 +88,11 @@ fi
 
 # generate HTML snippet for inclusion on jboss.org
 if [[ ${RELEASE} == "Yes" ]]; then
-	ant -f ${WORKSPACE}/build/results/build.xml "-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME}"
+	if [[ -f ${WORKSPACE}/build/results/build.xml ]]; then
+		ant -f ${WORKSPACE}/build/results/build.xml "-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME}"
+	elif [[ -f ${WORKSPACE}/sources/build/results/build.xml ]]; then
+		ant -f ${WORKSPACE}/sources/build/results/build.xml "-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME}"
+	fi
 fi
 
 # get full build log and filter out Maven test failures
