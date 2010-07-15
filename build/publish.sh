@@ -91,10 +91,10 @@ zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.o
   -x \*docs\* -x \*reference\* -x \*releng\*
 popd
 
-# generate HTML snippet for inclusion on jboss.org
+# generate HTML snippet, download-snippet.txt, for inclusion on jboss.org
 if [[ ${RELEASE} == "Yes" ]]; then
-	mkdir -p ${STAGINGDIR}
-	ANT_PARAMS="-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Doutput.dir=${STAGINGDIR}"
+	mkdir -p ${STAGINGDIR}/logs
+	ANT_PARAMS="-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Doutput.dir=${STAGINGDIR}/logs"
 	if [[ -f ${WORKSPACE}/build/results/build.xml ]]; then
 		ant -f ${WORKSPACE}/build/results/build.xml ${ANT_PARAMS}
 	elif [[ -f ${WORKSPACE}/sources/build/results/build.xml ]]; then
