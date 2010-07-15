@@ -95,6 +95,11 @@
  <download os="All platforms" url="${modeshape-filename}" size="${modeshape-filesize} MB"/>
 </project>
 
+<project name="Pi Calculus for SOA" version="${ZIPSUFFIX}">
+ <description>Provides Pi Calculus for SOA</description>
+ <download os="All platforms" url="${pi4soa-filename}" size="${pi4soa-filesize} MB"/>
+</project>
+
 <project name="Portlet Tools" version="${ZIPSUFFIX}">
  <description>For supporting JBoss Portal and JSR-286 portlets</description>
  <download os="All platforms" url="${portlet-filename}" size="${portlet-filesize} MB"/>
