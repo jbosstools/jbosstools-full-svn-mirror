@@ -8,7 +8,6 @@ import junit.framework.TestCase;
 import org.jboss.tools.smooks.model.csv.CSVReader;
 import org.jboss.tools.smooks.model.javabean.Bean;
 import org.jboss.tools.smooks.model.javabean.Wiring;
-import org.junit.Assert;
 
 /**
  * @author Dart
@@ -29,10 +28,10 @@ public class CommandTest extends TestCase {
 		command3.execute();
 		command4.execute();
 		
-		Assert.assertSame(reader.getFields(), "name,address,age");
-		Assert.assertSame(reader.getRecordElementName(), "person");
-		Assert.assertSame(reader.getRootElementName(), "people");
-		Assert.assertSame(reader.getIndent(),true);
+		assertSame(reader.getFields(), "name,address,age");
+		assertSame(reader.getRecordElementName(), "person");
+		assertSame(reader.getRootElementName(), "people");
+		assertSame(reader.getIndent(),true);
 		
 		
 		
@@ -41,20 +40,20 @@ public class CommandTest extends TestCase {
 		command3.undo();
 		command4.undo();
 		
-		Assert.assertSame(reader.getFields(), null);
-		Assert.assertSame(reader.getRecordElementName(), null);
-		Assert.assertSame(reader.getRootElementName(),null);
-//		Assert.assertSame(reader.getIndent(),true);
+		assertSame(reader.getFields(), null);
+		assertSame(reader.getRecordElementName(), null);
+		assertSame(reader.getRootElementName(),null);
+//		assertSame(reader.getIndent(),true);
 		
 		command1.redo();
 		command2.redo();
 		command3.redo();
 		command4.redo();
 		
-		Assert.assertSame(reader.getFields(), "name,address,age");
-		Assert.assertSame(reader.getRecordElementName(), "person");
-		Assert.assertSame(reader.getRootElementName(), "people");
-		Assert.assertSame(reader.getIndent(),true);
+		assertSame(reader.getFields(), "name,address,age");
+		assertSame(reader.getRecordElementName(), "person");
+		assertSame(reader.getRootElementName(), "people");
+		assertSame(reader.getIndent(),true);
 		
 //		reader.setFields("name,address,age");
 //		reader.setRootElementName("people");
@@ -67,21 +66,21 @@ public class CommandTest extends TestCase {
 		Bean people = new Bean();
 		Wiring w = new Wiring();
 		
-		Assert.assertTrue(people.getWireBindings().isEmpty());
+		assertTrue(people.getWireBindings().isEmpty());
 		
 		AddCommand c = new AddCommand(people, w, "wireBindings");
 		
 		c.execute();
 		
-		Assert.assertTrue(people.getWireBindings().get(0) == w);
+		assertTrue(people.getWireBindings().get(0) == w);
 		
 		c.undo();
 		
-		Assert.assertTrue(people.getWireBindings().isEmpty());
+		assertTrue(people.getWireBindings().isEmpty());
 		
 		c.redo();
 		
-		Assert.assertTrue(people.getWireBindings().get(0) == w);
+		assertTrue(people.getWireBindings().get(0) == w);
 	}
 	
 	public void testRemoveCommand(){
@@ -90,16 +89,16 @@ public class CommandTest extends TestCase {
 		AddCommand c = new AddCommand(people, w, "wireBindings");
 		c.execute();
 		
-		Assert.assertTrue(people.getWireBindings().get(0) == w);
+		assertTrue(people.getWireBindings().get(0) == w);
 		RemoveCommand rc = new RemoveCommand(people, w, "wireBindings");
 		rc.execute();
-		Assert.assertTrue(people.getWireBindings().isEmpty());
+		assertTrue(people.getWireBindings().isEmpty());
 		
 		rc.undo();
-		Assert.assertTrue(people.getWireBindings().get(0) == w);
+		assertTrue(people.getWireBindings().get(0) == w);
 		
 		rc.redo();
-		Assert.assertTrue(people.getWireBindings().isEmpty());
+		assertTrue(people.getWireBindings().isEmpty());
 	}
 	
 	public void testUnSetCommand(){
@@ -111,26 +110,26 @@ public class CommandTest extends TestCase {
 		cc.appendCommand(c1);
 		cc.appendCommand(c2);
 		cc.execute();
-		Assert.assertTrue(people.getBeanId().equals("people"));
-		Assert.assertTrue(people.getBeanClass().equals("java.util.ArrayList"));
+		assertTrue(people.getBeanId().equals("people"));
+		assertTrue(people.getBeanClass().equals("java.util.ArrayList"));
 		
 		UnSetCommand us = new UnSetCommand(people, "beanId");
 		UnSetCommand us1 = new UnSetCommand(people, "beanClass");
 		
 		us.execute();
 		us1.execute();
-		Assert.assertTrue(people.getBeanId() == null);
-		Assert.assertTrue(people.getBeanClass() == null);
+		assertTrue(people.getBeanId() == null);
+		assertTrue(people.getBeanClass() == null);
 		
 		us.undo();
 		us1.undo();
-		Assert.assertTrue(people.getBeanId().equals("people"));
-		Assert.assertTrue(people.getBeanClass().equals("java.util.ArrayList"));
+		assertTrue(people.getBeanId().equals("people"));
+		assertTrue(people.getBeanClass().equals("java.util.ArrayList"));
 		
 		us.redo();
 		us1.redo();
-		Assert.assertTrue(people.getBeanId() == null);
-		Assert.assertTrue(people.getBeanClass() == null);
+		assertTrue(people.getBeanId() == null);
+		assertTrue(people.getBeanClass() == null);
 	}
 	
 	public void testCompositeCommand(){
@@ -146,19 +145,19 @@ public class CommandTest extends TestCase {
 		cc.appendCommand(c2);
 		
 		cc.execute();
-		Assert.assertTrue(people.getWireBindings().get(0) == w);
-		Assert.assertTrue(people.getBeanId().equals("people"));
-		Assert.assertTrue(people.getBeanClass().equals("java.util.ArrayList"));
+		assertTrue(people.getWireBindings().get(0) == w);
+		assertTrue(people.getBeanId().equals("people"));
+		assertTrue(people.getBeanClass().equals("java.util.ArrayList"));
 		
 		cc.undo();
-		Assert.assertTrue(people.getWireBindings().isEmpty());
-		Assert.assertTrue(people.getBeanId() == null);
-		Assert.assertTrue(people.getBeanClass() == null);
+		assertTrue(people.getWireBindings().isEmpty());
+		assertTrue(people.getBeanId() == null);
+		assertTrue(people.getBeanClass() == null);
 		
 		cc.redo();
-		Assert.assertTrue(people.getWireBindings().get(0) == w);
-		Assert.assertTrue(people.getBeanId().equals("people"));
-		Assert.assertTrue(people.getBeanClass().equals("java.util.ArrayList"));
+		assertTrue(people.getWireBindings().get(0) == w);
+		assertTrue(people.getBeanId().equals("people"));
+		assertTrue(people.getBeanClass().equals("java.util.ArrayList"));
 	}
 	
 	public void testCommandStatck(){
@@ -192,22 +191,22 @@ public class CommandTest extends TestCase {
 		Bean people = new Bean();
 		Wiring w = new Wiring();
 		
-		Assert.assertTrue(people.getWireBindings().isEmpty());
+		assertTrue(people.getWireBindings().isEmpty());
 		
 		SetCommand c1 = new SetCommand(people, "people", "beanId");
 		AddCommand c = new AddCommand(people, w, "wireBindings");
 		
 		
-		Assert.assertTrue(!stack.canRedo()&&!stack.canUndo());
+		assertTrue(!stack.canRedo()&&!stack.canUndo());
 		stack.execute(c);
 		
 		
-		Assert.assertTrue(people.getWireBindings().get(0) == w);
-		Assert.assertTrue(!stack.canRedo());
+		assertTrue(people.getWireBindings().get(0) == w);
+		assertTrue(!stack.canRedo());
 		stack.undo();
 		stack.execute(c1);
 		stack.undo();
-		Assert.assertTrue(people.getBeanId()==null);
+		assertTrue(people.getBeanId()==null);
 		
 	}
 }
