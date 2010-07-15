@@ -29,8 +29,6 @@ import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.Messages;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
 import org.jboss.tools.smooks.graphical.editors.SmooksMessage;
 import org.jboss.tools.smooks.model.core.Param;

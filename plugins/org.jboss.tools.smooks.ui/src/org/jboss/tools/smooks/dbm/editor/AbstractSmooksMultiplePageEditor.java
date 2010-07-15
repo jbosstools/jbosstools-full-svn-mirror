@@ -44,8 +44,6 @@ import org.jboss.tools.smooks.configuration.RuntimeDependency;
 import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.SmooksXMLEditor;
-import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
-import org.jboss.tools.smooks.editor.Messages;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
 import org.jboss.tools.smooks.model.SmooksEditorModelBuilder;
 import org.jboss.tools.smooks.model.SmooksModel;
