@@ -2,9 +2,13 @@
 # Hudson script used to publish Tycho-built p2 update sites
 # NOTE: sources MUST be checked out into ${WORKSPACE}/sources 
 
+# where to create the stuff to publish
+STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
+
 # releases get named differently than snapshots
 if [[ ${RELEASE} == "Yes" ]]; then
 	ZIPSUFFIX="${BUILD_ID}-H${BUILD_NUMBER}"
+	STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}-${ZIPSUFFIX}
 else
 	ZIPSUFFIX="SNAPSHOT"
 fi
@@ -17,9 +21,6 @@ SRCSNAME="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip"
 SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/nightly/3.2.helios"; fi
-
-# where to create the stuff to publish
-STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
 
 # cleanup from last time
 rm -fr ${WORKSPACE}/results; mkdir -p ${STAGINGDIR}
@@ -52,7 +53,7 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
 	unzip -u -o -q -d ${STAGINGDIR}/all/repo $z
 
 	# copy into workspace for access by bucky aggregator (same name every time)
-	rsync -aq $z ${STAGINGDIR}/${SNAPNAME}
+	rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
 fi
 z=""
 
@@ -70,25 +71,20 @@ for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | s
 done
 
 # if zips exist produced & renamed by ant script, copy them too
-if [[ ! -f ${WORKSPACE}/results/${SNAPNAME} ]]; then
-	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip"); do 
+if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
+	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip" | sort | tail -1); do 
 		#echo "$z ..."
 		unzip -u -o -q -d ${STAGINGDIR}/ $z
-		rsync -aq $z ${WORKSPACE}/results/${SNAPNAME}
+		rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
 	done
 fi
 
-# get sources zip
-if [[ -f ${WORKSPACE}/sources/build/sources/target/sources.zip ]]; then
-	rsync -aq ${WORKSPACE}/sources/build/sources/target/sources.zip ${STAGINGDIR}/all/${SRCSNAME}
-else
-	# create sources zip
-	pushd ${WORKSPACE}/sources
-	zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
-	  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
-	  -x \*docs\* -x \*reference\* -x \*releng\*
-	popd
-fi
+# create sources zip
+pushd ${WORKSPACE}/sources
+zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
+  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
+  -x \*docs\* -x \*reference\* -x \*releng\*
+popd
 
 # generate HTML snippet for inclusion on jboss.org
 if [[ ${RELEASE} == "Yes" ]]; then
