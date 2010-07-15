@@ -44,9 +44,10 @@ fi
 if [[ $z != "" ]] && [[ -f $z ]] ; then
 	#echo "$z ..."
 	# note the job name, build number, and build ID of the latest snapshot zip
-	echo "JOB_NAME = ${JOB_NAME}" > ${STAGINGDIR}/JOB_NAME.txt
-	echo "BUILD_NUMBER = ${BUILD_NUMBER}" > ${STAGINGDIR}/BUILD_NUMBER.txt
-	echo "BUILD_ID = ${BUILD_ID}" > ${STAGINGDIR}/BUILD_ID.txt
+	mkdir -p ${STAGINGDIR}/meta
+	echo "JOB_NAME = ${JOB_NAME}" > ${STAGINGDIR}/meta/JOB_NAME.txt
+	echo "BUILD_NUMBER = ${BUILD_NUMBER}" > ${STAGINGDIR}/meta/BUILD_NUMBER.txt
+	echo "BUILD_ID = ${BUILD_ID}" > ${STAGINGDIR}/meta/BUILD_ID.txt
 
 	# unzip into workspace for publishing as unpacked site
 	mkdir -p ${STAGINGDIR}/all/repo
@@ -100,9 +101,10 @@ if [[ ${RELEASE} == "Yes" ]]; then
 fi
 
 # get full build log and filter out Maven test failures
-bl=${STAGINGDIR}/BUILDLOG.txt
+mkdir -p ${STAGINGDIR}/logs
+bl=${STAGINGDIR}/logs/BUILDLOG.txt
 wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
-fl=${STAGINGDIR}/FAIL_LOG.txt
+fl=${STAGINGDIR}/logs/FAIL_LOG.txt
 sed -ne "/<<< FAI/,+9 p" ${bl} | sed -e "/AILURE/,+9 s/\(.\+AILURE.\+\)/\n----------\n\n\1/g" > ${fl}
 sed -ne "/ FAI/ p" ${bl} | sed -e "/AILURE \[/ s/\(.\+AILURE \[.\+\)/\n----------\n\n\1/g" >> ${fl}
 sed -ne "/ SKI/ p" ${bl} | sed -e "/KIPPED \[/ s/\(.\+KIPPED \[.\+\)/\n----------\n\n\1/g" >> ${fl}
@@ -114,7 +116,7 @@ fc=$(sed -ne "/KIPPED/ p" ${fl} | wc -l)
 if [[ $fc != "0" ]]; then
 	echo "" >> ${fl}; echo -n "SKI" >> ${fl}; echo -n "PS FOUND: "$fc >> ${fl};
 fi 
-el=${STAGINGDIR}/ERRORLOG.txt
+el=${STAGINGDIR}/logs/ERRORLOG.txt
 sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9 s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
 sed -ne "/\[ERR/,+2 p" ${bl} | sed -e "/ROR\] Fai/,+2 s/\(.\+ROR\] Fai.\+\)/\n----------\n\n\1/g" >> ${el}
 ec=$(sed -ne "/ERR\|RROR/ p" ${el} | wc -l) 
@@ -134,8 +136,5 @@ date
 		rsync -arzq --delete ${WORKSPACE}/results/${SNAPNAME} $DESTINATION/
 	fi
 fi
-
-date
-rsync -arzq ${STAGINGDIR}/*LOG.txt $DESTINATION/${JOB_NAME}/
 date
 
