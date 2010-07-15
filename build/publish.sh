@@ -45,11 +45,15 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
 	#echo "$z ..."
 	# note the job name, build number, SVN rev, and build ID of the latest snapshot zip
 	mkdir -p ${STAGINGDIR}/logs
-	METAFILE="build${BUILD_NUMBER}_rev${SVN_REVISION}_${BUILD_ID}.txt"
-	echo "JOB_NAME = ${JOB_NAME}" > ${STAGINGDIR}/logs/${METAFILE}
-	echo "BUILD_NUMBER = ${BUILD_NUMBER}" > ${STAGINGDIR}/logs/${METAFILE}
-	echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
-	echo "BUILD_ID = ${BUILD_ID}" > ${STAGINGDIR}/logs/${METAFILE}
+	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
+	echo -n "" > ${STAGINGDIR}/logs/${METAFILE}
+	if [[ ${SVN_REVISION}} ]]; then
+		METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
+		echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
+	fi
+	echo "JOB_NAME = ${JOB_NAME}" >> ${STAGINGDIR}/logs/${METAFILE}
+	echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
+	echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
 
 	# unzip into workspace for publishing as unpacked site
 	mkdir -p ${STAGINGDIR}/all/repo
