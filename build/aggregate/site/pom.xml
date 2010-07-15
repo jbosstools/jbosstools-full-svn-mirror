@@ -62,7 +62,7 @@
 	<repositories>
 		<repository>
 			<id>jbosstools-continuous-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.continuous/</url>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.continuous/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
@@ -70,7 +70,7 @@
 		</repository>
 		<repository>
 			<id>jbosstools-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2/</url>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
@@ -78,7 +78,7 @@
 		</repository>
 		<repository>
 			<id>jbosstools-pi4soa-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa/</url>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
