@@ -74,13 +74,15 @@ done
 if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip" | sort | tail -1); do 
 		#echo "$z ..."
-		unzip -u -o -q -d ${STAGINGDIR}/ $z
+		mkdir -p ${STAGINGDIR}/all
+		unzip -u -o -q -d ${STAGINGDIR}/all/ $z
 		rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
 	done
 fi
 
 # create sources zip
 pushd ${WORKSPACE}/sources
+mkdir -p ${STAGINGDIR}/all
 zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
   -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
   -x \*docs\* -x \*reference\* -x \*releng\*
@@ -88,7 +90,8 @@ popd
 
 # generate HTML snippet for inclusion on jboss.org
 if [[ ${RELEASE} == "Yes" ]]; then
-	ANT_PARAMS="-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Doutput.dir=${WORKSPACE}/results"
+	mkdir -p ${STAGINGDIR}
+	ANT_PARAMS="-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Doutput.dir=${STAGINGDIR}"
 	if [[ -f ${WORKSPACE}/build/results/build.xml ]]; then
 		ant -f ${WORKSPACE}/build/results/build.xml ${ANT_PARAMS}
 	elif [[ -f ${WORKSPACE}/sources/build/results/build.xml ]]; then
