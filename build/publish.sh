@@ -1,15 +1,29 @@
 #!/bin/bash
 # Hudson script used to publish Tycho-built p2 update sites
-
 # NOTE: sources MUST be checked out into ${WORKSPACE}/sources 
 
-# define target zip filename for inclusion in uberbuilder's bucky aggregator
-SNAPNAME=${JOB_NAME}-Update-SNAPSHOT.zip
+# where to create the stuff to publish
+STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
+
+# releases get named differently than snapshots
+if [[ ${RELEASE} == "Yes" ]]; then
+	ZIPSUFFIX="${BUILD_ID}-H${BUILD_NUMBER}"
+	STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}-${ZIPSUFFIX}
+else
+	ZIPSUFFIX="SNAPSHOT"
+fi
+
+# define target update zip filename
+SNAPNAME="${JOB_NAME}-Update-${ZIPSUFFIX}.zip"
+# define target sources zip filename
+SRCSNAME="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip"
+# define suffix to use for additional update sites
+SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/nightly/3.2.helios"; fi
 
 # cleanup from last time
-rm -fr ${WORKSPACE}/site; mkdir -p ${WORKSPACE}/site/${JOB_NAME}
+rm -fr ${WORKSPACE}/results; mkdir -p ${STAGINGDIR}
 
 # check for aggregate zip or overall zip
 z=""
@@ -29,16 +43,23 @@ fi
 
 if [[ $z != "" ]] && [[ -f $z ]] ; then
 	#echo "$z ..."
-	# note the job name, build number, and build ID of the latest snapshot zip
-	echo "JOB_NAME = ${JOB_NAME}" > ${WORKSPACE}/site/${JOB_NAME}/JOB_NAME.txt
-	echo "BUILD_NUMBER = ${BUILD_NUMBER}" > ${WORKSPACE}/site/${JOB_NAME}/BUILD_NUMBER.txt
-	echo "BUILD_ID = ${BUILD_ID}" > ${WORKSPACE}/site/${JOB_NAME}/BUILD_ID.txt
+	# note the job name, build number, SVN rev, and build ID of the latest snapshot zip
+	mkdir -p ${STAGINGDIR}/logs
+	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
+	if [[ ${SVN_REVISION}} ]]; then
+		METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
+	fi
+	echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
+	echo "JOB_NAME = ${JOB_NAME}" >> ${STAGINGDIR}/logs/${METAFILE}
+	echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
+	echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
 
 	# unzip into workspace for publishing as unpacked site
-	unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
+	mkdir -p ${STAGINGDIR}/all/repo
+	unzip -u -o -q -d ${STAGINGDIR}/all/repo $z
 
 	# copy into workspace for access by bucky aggregator (same name every time)
-	rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
+	rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
 fi
 z=""
 
@@ -48,32 +69,59 @@ for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | s
 	if [[ $y != "aggregate" ]]; then # prevent duplicate nested sites
 		#echo "[$y] $z ..."
 		# unzip into workspace for publishing as unpacked site
-		mkdir -p ${WORKSPACE}/site/${JOB_NAME}/$y
-		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/$y $z
+		mkdir -p ${STAGINGDIR}/$y
+		unzip -u -o -q -d ${STAGINGDIR}/$y $z
 		# copy into workspace for access by bucky aggregator (same name every time)
-		rsync -aq $z ${WORKSPACE}/site/${JOB_NAME}/${y}-Update-SNAPSHOT.zip
+		rsync -aq $z ${STAGINGDIR}/${y}${SUFFNAME}
 	fi
 done
 
 # if zips exist produced & renamed by ant script, copy them too
-if [[ ! -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
-	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip"); do 
+if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
+	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip" | sort | tail -1); do 
 		#echo "$z ..."
-		unzip -u -o -q -d ${WORKSPACE}/site/${JOB_NAME}/ $z
-		rsync -aq $z ${WORKSPACE}/site/${SNAPNAME}
+		mkdir -p ${STAGINGDIR}/all
+		unzip -u -o -q -d ${STAGINGDIR}/all/ $z
+		rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
 	done
 fi
 
+# create sources zip
+pushd ${WORKSPACE}/sources
+mkdir -p ${STAGINGDIR}/all
+zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
+  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
+  -x \*docs\* -x \*reference\* -x \*releng\*
+popd
+
+# generate HTML snippet, download-snippet.txt, for inclusion on jboss.org
+if [[ ${RELEASE} == "Yes" ]]; then
+	mkdir -p ${STAGINGDIR}/logs
+	ANT_PARAMS="-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Doutput.dir=${STAGINGDIR}/logs"
+	if [[ -f ${WORKSPACE}/build/results/build.xml ]]; then
+		ant -f ${WORKSPACE}/build/results/build.xml ${ANT_PARAMS}
+	elif [[ -f ${WORKSPACE}/sources/build/results/build.xml ]]; then
+		ant -f ${WORKSPACE}/sources/build/results/build.xml ${ANT_PARAMS}
+	fi
+fi
+
 # get full build log and filter out Maven test failures
-bl=${WORKSPACE}/site/${JOB_NAME}/BUILDLOG.txt
+mkdir -p ${STAGINGDIR}/logs
+bl=${STAGINGDIR}/logs/BUILDLOG.txt
 wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
-fl=${WORKSPACE}/site/${JOB_NAME}/FAIL_LOG.txt
+fl=${STAGINGDIR}/logs/FAIL_LOG.txt
 sed -ne "/<<< FAI/,+9 p" ${bl} | sed -e "/AILURE/,+9 s/\(.\+AILURE.\+\)/\n----------\n\n\1/g" > ${fl}
+sed -ne "/ FAI/ p" ${bl} | sed -e "/AILURE \[/ s/\(.\+AILURE \[.\+\)/\n----------\n\n\1/g" >> ${fl}
+sed -ne "/ SKI/ p" ${bl} | sed -e "/KIPPED \[/ s/\(.\+KIPPED \[.\+\)/\n----------\n\n\1/g" >> ${fl}
 fc=$(sed -ne "/FAI\|LURE/ p" ${fl} | wc -l)
 if [[ $fc != "0" ]]; then
 	echo "" >> ${fl}; echo -n "FAI" >> ${fl}; echo -n "LURES FOUND: "$fc >> ${fl};
 fi 
-el=${WORKSPACE}/site/${JOB_NAME}/ERRORLOG.txt
+fc=$(sed -ne "/KIPPED/ p" ${fl} | wc -l)
+if [[ $fc != "0" ]]; then
+	echo "" >> ${fl}; echo -n "SKI" >> ${fl}; echo -n "PS FOUND: "$fc >> ${fl};
+fi 
+el=${STAGINGDIR}/logs/ERRORLOG.txt
 sed -ne "/<<< ERR/,+9 p" ${bl} | sed -e "/RROR/,+9 s/\(.\+RROR.\+\)/\n----------\n\n\1/g" > ${el}
 sed -ne "/\[ERR/,+2 p" ${bl} | sed -e "/ROR\] Fai/,+2 s/\(.\+ROR\] Fai.\+\)/\n----------\n\n\1/g" >> ${el}
 ec=$(sed -ne "/ERR\|RROR/ p" ${el} | wc -l) 
@@ -81,19 +129,17 @@ if [[ $ec != "0" ]]; then
 	echo "" >> ${el}; echo -n "ERR" >> ${el}; echo "ORS FOUND: "$ec >> ${el};
 fi
 
-date
-rsync -arzq ${WORKSPACE}/site/${JOB_NAME}/*LOG.txt $DESTINATION/${JOB_NAME}/
-date
-
 # publish to download.jboss.org, unless errors found - avoid destroying last-good update site
 if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 date
-	if [[ -d ${WORKSPACE}/site/${JOB_NAME} ]]; then
-		rsync -arzq --delete ${WORKSPACE}/site/${JOB_NAME} $DESTINATION/
+	# publish update site dir
+	if [[ -d ${STAGINGDIR} ]]; then
+		rsync -arzq --delete ${STAGINGDIR} $DESTINATION/
 	fi
-	if [[ -f ${WORKSPACE}/site/${SNAPNAME} ]]; then
-		# publish snapshot zip
-		rsync -arzq --delete ${WORKSPACE}/site/${SNAPNAME} $DESTINATION/
+	# publish update site zip
+	if [[ -f ${WORKSPACE}/results/${SNAPNAME} ]]; then
+		rsync -arzq --delete ${WORKSPACE}/results/${SNAPNAME} $DESTINATION/
 	fi
 fi
 date
+
