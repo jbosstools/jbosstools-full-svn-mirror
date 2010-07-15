@@ -43,11 +43,13 @@ fi
 
 if [[ $z != "" ]] && [[ -f $z ]] ; then
 	#echo "$z ..."
-	# note the job name, build number, and build ID of the latest snapshot zip
-	mkdir -p ${STAGINGDIR}/meta
-	echo "JOB_NAME = ${JOB_NAME}" > ${STAGINGDIR}/meta/JOB_NAME.txt
-	echo "BUILD_NUMBER = ${BUILD_NUMBER}" > ${STAGINGDIR}/meta/BUILD_NUMBER.txt
-	echo "BUILD_ID = ${BUILD_ID}" > ${STAGINGDIR}/meta/BUILD_ID.txt
+	# note the job name, build number, SVN rev, and build ID of the latest snapshot zip
+	mkdir -p ${STAGINGDIR}/logs
+	METAFILE="build${BUILD_NUMBER}_rev${SVN_REVISION}_${BUILD_ID}.txt"
+	echo "JOB_NAME = ${JOB_NAME}" > ${STAGINGDIR}/logs/${METAFILE}
+	echo "BUILD_NUMBER = ${BUILD_NUMBER}" > ${STAGINGDIR}/logs/${METAFILE}
+	echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
+	echo "BUILD_ID = ${BUILD_ID}" > ${STAGINGDIR}/logs/${METAFILE}
 
 	# unzip into workspace for publishing as unpacked site
 	mkdir -p ${STAGINGDIR}/all/repo
