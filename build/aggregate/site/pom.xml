@@ -32,7 +32,7 @@
 		</repository>
 		<repository>
 			<id>jbosstools-pi4soa-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-cbi-pi4soa/</url>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
