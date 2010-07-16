@@ -29,8 +29,13 @@ import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.editors.Messages;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
 import org.jboss.tools.smooks.graphical.editors.SmooksMessage;
+import org.jboss.tools.smooks.model.command.AddCommand;
+import org.jboss.tools.smooks.model.command.SetCommand;
+import org.jboss.tools.smooks.model.command.SmooksCommandStack;
 import org.jboss.tools.smooks.model.core.Param;
 import org.jboss.tools.smooks.model.core.Params;
 
@@ -274,6 +279,8 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksEdit
 	}
 	
 	private void updateGlobalProperty(String propertyID, String value) {
+		SmooksCommandStack commandStack = smooksModelProvider.getCommandStack();
+		if(commandStack == null) throw new RuntimeException("Smooks CommandStack can't be null");
 		boolean foundProperty = false;
 		if (getSmooksVersion() == null) {
 			return;
@@ -286,7 +293,8 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksEdit
 			for (int i = 0; i < parmList.size(); i++) {
 				param = (Param) parmList.get(i);
 				if (param.getName().equals(propertyID)) {
-					param.setValue(value);
+					SetCommand sc = new SetCommand(param, value, "value");
+					commandStack.execute(sc);
 					foundProperty = true;
 					break;
 				}
@@ -296,7 +304,9 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksEdit
 			newparam = new Param();
 			newparam.setName(propertyID);
 			newparam.setValue(value);
-			parent.getParams().add(newparam);
+			AddCommand ac = new AddCommand(parent, newparam, "params");
+//			parent.getParams().add(newparam);
+			commandStack.execute(ac);
 		}
 	}
 

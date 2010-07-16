@@ -4,9 +4,11 @@
 package org.jboss.tools.smooks.dbm.editor;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,9 +46,14 @@ import org.jboss.tools.smooks.configuration.RuntimeDependency;
 import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.SmooksXMLEditor;
+import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
+import org.jboss.tools.smooks.editor.Messages;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
 import org.jboss.tools.smooks.model.SmooksEditorModelBuilder;
 import org.jboss.tools.smooks.model.SmooksModel;
+import org.jboss.tools.smooks.model.command.ISmooksCommandStackChangeListener;
+import org.jboss.tools.smooks.model.command.SmooksCommandStack;
+import org.jboss.tools.smooks.model.command.SmooksCommandStackEvent;
 import org.milyn.javabean.dynamic.Model;
 
 /**
@@ -73,6 +80,8 @@ public class AbstractSmooksMultiplePageEditor extends FormEditor implements
 	protected List<ISourceSynchronizeListener> sourceSynchronizeListener = new ArrayList<ISourceSynchronizeListener>();
 
 	protected Model<SmooksModel> smooksModel;
+	
+	protected SmooksCommandStack commandStack = new SmooksCommandStack();
 
 	public AbstractSmooksMultiplePageEditor() {
 		super();
@@ -80,6 +89,16 @@ public class AbstractSmooksMultiplePageEditor extends FormEditor implements
 		xmlDocumentTraker = new SmooksXMLEditorDocumentListener();
 		smooksEditorModelBuilder = new SmooksEditorModelBuilder();
 	}
+	
+	private void handleCommandStack(SmooksCommandStack commandStack) {
+		commandStack.addCommandStackEventListener(new ISmooksCommandStackChangeListener() {
+			
+			public void stackChanged(SmooksCommandStackEvent event) {
+				firePropertyChange(IEditorPart.PROP_DIRTY);
+				handleEMFModelChange();
+			}
+		});
+	} 
 
 	/*
 	 * (non-Javadoc)
@@ -111,6 +130,7 @@ public class AbstractSmooksMultiplePageEditor extends FormEditor implements
 			}
 		}
 	}
+	
 
 	public void addSmooksEditorInitListener(ISmooksEditorInitListener listener) {
 		this.smooksInitListener.add(listener);
@@ -152,6 +172,7 @@ public class AbstractSmooksMultiplePageEditor extends FormEditor implements
 
 		if (filePath == null)
 			throw new PartInitException(Messages.AbstractSmooksFormEditor_Exception_Cannot_Get_Input_File);
+		handleCommandStack(commandStack);
 		super.init(site, input);
 	}
 
@@ -203,6 +224,44 @@ public class AbstractSmooksMultiplePageEditor extends FormEditor implements
 		// smooksResource.getContents().add(smooksModel);
 		// }
 		// }
+	}
+	
+	protected void handleEMFModelChange() {
+		IDocument document = textEditor.getDocumentProvider().getDocument(textEditor.getEditorInput());
+
+		try {
+			StringWriter writer = new StringWriter();
+			this.smooksModel.writeModel(writer);
+
+			String newContent = writer.toString();
+//			newContent = getFormattedXMLContents(newContent);
+
+			String oldContent = document.get();
+
+			int startIndex = 0;
+			while (startIndex < newContent.length() && startIndex < oldContent.length()
+					&& newContent.charAt(startIndex) == oldContent.charAt(startIndex)) {
+				++startIndex;
+			}
+			int newEndIndex = newContent.length() - 1;
+			int oldEndIndex = oldContent.length() - 1;
+			while (newEndIndex >= startIndex && oldEndIndex >= startIndex
+					&& newContent.charAt(newEndIndex) == oldContent.charAt(oldEndIndex)) {
+				--newEndIndex;
+				--oldEndIndex;
+			}
+
+			String replacement = newContent.substring(startIndex, newEndIndex + 1);
+			int length = oldEndIndex - startIndex + 1;
+			handleEMFModelChange = true;
+			document.replace(startIndex, length, replacement);
+
+//			validator.startValidate(smooksModel.eResource().getContents(), editingDomain);
+
+		} catch (Exception exception) {
+			SmooksConfigurationActivator.getDefault().log(exception);
+		}
+
 	}
 
 	/*
@@ -561,6 +620,10 @@ public class AbstractSmooksMultiplePageEditor extends FormEditor implements
 
 	public Model<SmooksModel> getSmooksModel() {
 		return smooksModel;
+	}
+
+	public SmooksCommandStack getCommandStack() {
+		return commandStack;
 	}
 
 }

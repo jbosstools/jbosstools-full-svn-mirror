@@ -4,6 +4,7 @@
 package org.jboss.tools.smooks.dbm.editor;
 
 import org.jboss.tools.smooks.model.SmooksModel;
+import org.jboss.tools.smooks.model.command.SmooksCommandStack;
 import org.milyn.javabean.dynamic.Model;
 
 /**
@@ -12,4 +13,6 @@ import org.milyn.javabean.dynamic.Model;
  */
 public interface ISmooksModelProvider {
 	Model<SmooksModel> getSmooksModel();
+	
+	SmooksCommandStack getCommandStack();
 }

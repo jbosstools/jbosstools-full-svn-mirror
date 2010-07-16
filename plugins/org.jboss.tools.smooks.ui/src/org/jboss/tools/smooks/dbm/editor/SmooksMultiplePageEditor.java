@@ -17,6 +17,7 @@ public class SmooksMultiplePageEditor extends AbstractSmooksMultiplePageEditor {
 	@Override
 	protected void addPages() {
 		optionsPage = createSmooksConfigurationOverviewPage();
+		addSourceSynchronizeListener(optionsPage);
 		addSmooksEditorInitListener(optionsPage);
 		try {
 			int index = this.addPage(optionsPage);

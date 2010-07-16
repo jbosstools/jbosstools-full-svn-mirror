@@ -173,7 +173,9 @@ public class SmooksCommandStack {
 				saveLocation = -1; // The save point was somewhere in the redo
 									// stack
 			undoable.push(command);
-		} finally {
+		} catch(Throwable e){
+			e.printStackTrace();
+		}finally {
 			notifyListeners(command, POST_EXECUTE);
 		}
 	}

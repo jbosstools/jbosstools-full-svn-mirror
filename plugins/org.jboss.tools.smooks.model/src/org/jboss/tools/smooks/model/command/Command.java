@@ -96,8 +96,8 @@ public class Command implements ICommand {
 		// if(!canExecute()) return;
 		try {
 			oldValue = getPropertyValue();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
 		}
 	}
 
