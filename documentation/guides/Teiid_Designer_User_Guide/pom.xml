@@ -63,12 +63,12 @@
                         <groupId>org.jboss.tools</groupId>
                         <artifactId>jbosstools-jdocbook-style</artifactId>
                         <type>jdocbook-style</type>
-                        <version>1.0.0-SNAPSHOT</version>
+                        <version>1.0.0</version>
                     </dependency>
                     <dependency>
                         <groupId>org.jboss.tools</groupId>
                         <artifactId>jbosstools-docbook-xslt</artifactId>
-                        <version>1.0.0-SNAPSHOT</version>
+                        <version>1.0.0</version>
                     </dependency>
                
                     
