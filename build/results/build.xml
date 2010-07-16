@@ -93,9 +93,9 @@
 		-->
 		<for param="UPDATEZIP">
 			<path>
-				<fileset dir="${WORKINGDIR}/site">
-					<include name="*-Update-${ZIPSUFFIX}.zip" />
-					<include name="*-Sources-${ZIPSUFFIX}.zip" />
+				<fileset dir="${output.dir}">
+					<include name="**/*-Update-${ZIPSUFFIX}.zip" />
+					<include name="**/*-Sources-${ZIPSUFFIX}.zip" />
 				</fileset>
 			</path>
 			<sequential>
