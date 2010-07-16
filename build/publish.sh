@@ -20,7 +20,7 @@ SRCSNAME="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip"
 # define suffix to use for additional update sites
 SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 
-if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/nightly/3.2.helios"; fi
+if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools"; fi
 
 # cleanup from last time
 rm -fr ${WORKSPACE}/results; mkdir -p ${STAGINGDIR}
@@ -48,11 +48,15 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
 	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
 	if [[ ${SVN_REVISION} ]]; then
 		METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
+		echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
+	else
+		echo -n "" > ${STAGINGDIR}/logs/${METAFILE}
 	fi
-	echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
 	echo "JOB_NAME = ${JOB_NAME}" >> ${STAGINGDIR}/logs/${METAFILE}
 	echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
 	echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
+	echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
+	echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
 
 	# unzip into workspace for publishing as unpacked site
 	mkdir -p ${STAGINGDIR}/all/repo
@@ -97,7 +101,7 @@ popd
 # generate HTML snippet, download-snippet.txt, for inclusion on jboss.org
 if [[ ${RELEASE} == "Yes" ]]; then
 	mkdir -p ${STAGINGDIR}/logs
-	ANT_PARAMS="-DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Doutput.dir=${STAGINGDIR}/logs"
+	ANT_PARAMS="-v -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
 	if [[ -f ${WORKSPACE}/build/results/build.xml ]]; then
 		ant -f ${WORKSPACE}/build/results/build.xml ${ANT_PARAMS}
 	elif [[ -f ${WORKSPACE}/sources/build/results/build.xml ]]; then
@@ -131,14 +135,22 @@ fi
 
 # publish to download.jboss.org, unless errors found - avoid destroying last-good update site
 if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
-date
 	# publish update site dir
 	if [[ -d ${STAGINGDIR} ]]; then
-		rsync -arzq --delete ${STAGINGDIR} $DESTINATION/
+		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/nightly/3.2.helios/
 	fi
 	# publish update site zip
 	if [[ -f ${WORKSPACE}/results/${SNAPNAME} ]]; then
-		rsync -arzq --delete ${WORKSPACE}/results/${SNAPNAME} $DESTINATION/
+		date; rsync -arzq --delete ${WORKSPACE}/results/${SNAPNAME} $DESTINATION/builds/nightly/3.2.helios/
+	fi
+
+	# extra publish step for aggregate update sites ONLY
+	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
+		if [[ $1 == "trunk" ]]; then 
+			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/trunk/
+		else
+			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOB_NAME/.aggregate}/
+		fi
 	fi
 fi
 date

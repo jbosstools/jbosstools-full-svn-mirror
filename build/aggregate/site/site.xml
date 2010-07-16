@@ -102,7 +102,8 @@
 		<category name="DataTools" />
 		<category name="GeneralTools" />
 	</feature>
-	<feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
+	
+	<!-- <feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="SOATools" />
 		<category name="GeneralTools" />
@@ -117,7 +118,8 @@
 	<feature url="features/org.guvnor.tools.feature_0.0.0.jar" id="org.guvnor.tools.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="SOATools" />
-	</feature>
+	</feature> -->
+
 	<feature url="features/org.jboss.tools.project.examples.feature_0.0.0.jar"
 	         id="org.jboss.tools.project.examples.feature"
 	         version="0.0.0"
@@ -294,6 +296,7 @@
         <feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
+	
 	<!-- removed temporarily because pi4soa doesn't work w/ Eclipse 3.6. yet.
 	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
 		<category name="AllTools" />
@@ -307,5 +310,5 @@
 		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
-	-->	
+	-->
 </site>
