@@ -276,6 +276,16 @@ public class TemplatesPreferencePage extends PreferencePage implements
 				editDialog.open();
 				if(data.isChanged()) {
 					tagListWasChanged = true;
+					/*
+					 * Update all related tags if the URI was changed
+					 */
+					for (VpeAnyData tag : tagsList) {
+						if (!tag.equals(data)
+								&& tag.getName().split(":")[0] //$NON-NLS-1$
+										.equalsIgnoreCase(data.getName().split(":")[0])) { //$NON-NLS-1$
+							tag.setUri(data.getUri());
+						}
+					}
 				}
 			}
 		} else if (source == removeButton) {
