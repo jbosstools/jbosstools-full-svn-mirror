@@ -46,7 +46,7 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
 	# note the job name, build number, SVN rev, and build ID of the latest snapshot zip
 	mkdir -p ${STAGINGDIR}/logs
 	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
-	if [[ ${SVN_REVISION}} ]]; then
+	if [[ ${SVN_REVISION} ]]; then
 		METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
 	fi
 	echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
