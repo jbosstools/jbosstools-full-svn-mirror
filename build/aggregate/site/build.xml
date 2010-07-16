@@ -1,0 +1,124 @@
+<project default="custom.build" name="jbosstools aggregate site build.xml">
+
+	<!-- should be set by script or in Hudson -->
+	<property name="ZIPSUFFIX" value="SNAPSHOT" />
+
+	<!-- should be set by Hudson -->
+	<!-- <property name="JOB_NAME" value="jbosstools-3.2.0.M2.continuous" /> -->
+
+	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
+	<condition property="output.dir" value="${WORKSPACE}/results" else="${basedir}">
+		<available file="${WORKSPACE}/results" />
+	</condition>
+
+	<condition property="COMMON_TOOLS" value="/home/hudson/static_build_env/jbds/tools" else="${java.io.tmpdir}">
+		<available file="/home/hudson/static_build_env/jbds" type="dir" />
+	</condition>
+	<mkdir dir="${COMMON_TOOLS}" />
+
+	<condition property="build.xml" value="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml">
+		<available file="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml" type="file" />
+	</condition>
+	<condition property="build.xml" value="${basedir}/../../build/build.xml">
+		<available file="${basedir}/../../build/build.xml" type="file" />
+	</condition>
+	<condition property="build.xml" value="${basedir}/../../build.xml">
+		<available file="${basedir}/../../build.xml" type="file" />
+	</condition>
+	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
+
+	<property name="update.site.source.dir" value="${output.dir}/target/site" />
+
+	<target name="init">
+		<ant antfile="${build.xml}" target="init" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+	</target>
+
+	<target name="add.associate.sites">
+		<if>
+			<and>
+				<not>
+					<isset property="associate.sites" />
+				</not>
+			</and>
+			<then>
+				<!-- load associate sites from default (or alternate) properties file -->
+				<property name="associate.sites.properties" value="associate.sites.jbosstools.properties" />
+				<property file="${associate.sites.properties}" />
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<isset property="associate.sites" />
+				<not>
+					<equals arg1="${associate.sites}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<if>
+					<available file="${update.site.source.dir}/content.jar" type="file" />
+					<then>
+						<unzip src="${update.site.source.dir}/content.jar" dest="${update.site.source.dir}" />
+						<delete file="${update.site.source.dir}/content.jar" />
+					</then>
+				</if>
+				<!-- counter variable -->
+				<var name="associate.sites.0" value="" />
+				<for param="associate.site" list="${associate.sites}" delimiter=", 
+	">
+					<sequential>
+						<var name="associate.sites.0" value="${associate.sites.0}00" />
+					</sequential>
+				</for>
+				<length property="associate.sites.length" string="${associate.sites.0}" />
+
+				<loadfile srcfile="${update.site.source.dir}/content.xml" property="content.xml">
+					<filterchain>
+						<tailfilter lines="-1" skip="1" />
+					</filterchain>
+				</loadfile>
+				<echo file="${update.site.source.dir}/content.xml" message="${content.xml}" />
+				<echo file="${update.site.source.dir}/content.xml" append="true">  &lt;references size='${associate.sites.length}'>
+</echo>
+				<for param="associate.site" list="${associate.sites}" delimiter=", 
+	">
+					<sequential>
+						<!-- insert into content.xml -->
+						<echo file="${update.site.source.dir}/content.xml" append="true">    &lt;repository uri='@{associate.site}' url='@{associate.site}' type='0' options='1'/>
+    &lt;repository uri='@{associate.site}' url='@{associate.site}' type='1' options='1'/>
+</echo>
+					</sequential>
+				</for>
+				<echo file="${update.site.source.dir}/content.xml" append="true">  &lt;/references>
+&lt;/repository>
+</echo>
+				<zip destfile="${update.site.source.dir}/content.jar" basedir="${update.site.source.dir}" includes="content.xml" />
+				<delete file="${update.site.source.dir}/content.xml" />
+			</then>
+		</if>
+	</target>
+
+	<target name="unpack.zip">
+		<unzip src="${output.dir}/target/site_assembly.zip" dest="${update.site.source.dir}" />
+	</target>
+
+	<target name="pack.zip">
+		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.* index.html, web/*.css" />
+	</target>
+
+	<target name="add.web.content">
+		<!-- TODO generate correct variables in index.html -->
+		<copy todir="${update.site.source.dir}">
+			<fileset dir="${output.dir}" includes="index.html, **/*.css" />
+		</copy>
+	</target>
+
+	<!-- <target name="custom.build" description="aggregate update site extras" depends="init,unpack.zip,add.associate.sites,add.web.content,pack.zip,cleanup" /> -->
+	<target name="custom.build" description="aggregate update site extras" depends="init,add.associate.sites,add.web.content,pack.zip" />
+
+</project>
