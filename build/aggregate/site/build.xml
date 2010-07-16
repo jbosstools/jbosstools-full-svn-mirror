@@ -1,10 +1,10 @@
 <project default="custom.build" name="jbosstools aggregate site build.xml">
 
-	<!-- should be set by script or in Hudson -->
-	<property name="ZIPSUFFIX" value="SNAPSHOT" />
-
-	<!-- should be set by Hudson -->
-	<!-- <property name="JOB_NAME" value="jbosstools-3.2.0.M2.continuous" /> -->
+	<!-- pass in properties to Maven/Ant via Hudson job:
+		-DJOB_NAME=${JOB_NAME} 
+		-DBUILD_ID=${BUILD_ID} 
+		-DBUILD_NUMBER=${BUILD_NUMBER}
+	-->
 
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
 	<condition property="output.dir" value="${WORKSPACE}/results" else="${basedir}">
@@ -29,6 +29,10 @@
 
 	<property name="update.site.source.dir" value="${output.dir}/target/site" />
 
+	<!-- load properties from default (or alternate) properties file -->
+	<property name="aggregateSite.properties" value="aggregateSite.jbosstools.properties" />
+	<property file="${aggregateSite.properties}" />
+
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -38,22 +42,10 @@
 		</taskdef>
 	</target>
 
-	<target name="add.associate.sites">
+	<target name="add.associate.sites" if="associate.sites">
 		<if>
 			<and>
-				<not>
-					<isset property="associate.sites" />
-				</not>
-			</and>
-			<then>
-				<!-- load associate sites from default (or alternate) properties file -->
-				<property name="associate.sites.properties" value="associate.sites.jbosstools.properties" />
-				<property file="${associate.sites.properties}" />
-			</then>
-		</if>
-
-		<if>
-			<and>
+				<!-- Defined in aggregateSite.properties -->
 				<isset property="associate.sites" />
 				<not>
 					<equals arg1="${associate.sites}" arg2="" />
@@ -97,7 +89,9 @@
 				<echo file="${update.site.source.dir}/content.xml" append="true">  &lt;/references>
 &lt;/repository>
 </echo>
-				<zip destfile="${update.site.source.dir}/content.jar" basedir="${update.site.source.dir}" includes="content.xml" />
+				<zip destfile="${update.site.source.dir}/content.jar"
+				     basedir="${update.site.source.dir}"
+				     includes="content.xml" />
 				<delete file="${update.site.source.dir}/content.xml" />
 			</then>
 		</if>
@@ -108,17 +102,84 @@
 	</target>
 
 	<target name="pack.zip">
-		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.* index.html, web/*.css" />
+		<zip destfile="${output.dir}/target/site_assembly.zip"
+		     update="true"
+		     basedir="${update.site.source.dir}"
+		     includes="content.* index.html, web/*.css" />
+	</target>
+
+	<target name="check.target">
+		<if>
+			<or>
+				<not>
+					<available file="${output.dir}/target/site" type="dir" />
+				</not>
+				<not>
+					<available file="${output.dir}/target/site_assembly.zip" type="file" />
+				</not>
+			</or>
+			<then>
+				<fail>
+--
+This script must ONLY be called via the pom.xml in this directory, not run directly. 
+Cannot adjust an update site w/o first building it!
+--
+To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
+</fail>
+			</then>
+		</if>
 	</target>
 
 	<target name="add.web.content">
-		<!-- TODO generate correct variables in index.html -->
+		<!-- 
+		Properties needed for index.html are defined in aggregateSite.properties
+			update.site.description=Nightly Build
+			update.site.version=3.2.0.M2.2010-07-16_13-26-18-H21
+			
+		or calculated here
+			from ${JOB_NAME} = jbosstools-3.2.0.M1.aggregate get 3.2.0.M1  
+			from ${BUILD_ID} and ${BUILD_NUMBER}, get .${BUILD_ID}-H${BUILD_NUMBER}
+			default update.site.description=Nightly Build
+			default update.site.version=(null)
+		-->
+		<property name="update.site.description" value="Nightly Build" />
+		<if>
+			<and>
+				<not>
+					<isset property="update.site.version" />
+				</not>
+				<isset property="JOB_NAME" />
+				<isset property="BUILD_ID" />
+				<isset property="BUILD_NUMBER" />
+			</and>
+			<then>
+				<propertyregex override="true"
+				               property="update.site.version"
+				               defaultvalue="${JOB_NAME}"
+				               input="${JOB_NAME}"
+				               regexp="jbosstools-([0-9.]+.*).aggregate"
+				               replace=": \1.${BUILD_ID}-H${BUILD_NUMBER}" />
+			</then>
+			<else>
+				<property name="update.site.version" value="" />
+			</else>
+		</if>
+
+		<copy todir="${output.dir}" overwrite="true">
+			<fileset file="index-template.html" />
+			<mapper type="merge" to="index.html" />
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</copy>
+
 		<copy todir="${update.site.source.dir}">
 			<fileset dir="${output.dir}" includes="index.html, **/*.css" />
 		</copy>
 	</target>
 
-	<!-- <target name="custom.build" description="aggregate update site extras" depends="init,unpack.zip,add.associate.sites,add.web.content,pack.zip,cleanup" /> -->
-	<target name="custom.build" description="aggregate update site extras" depends="init,add.associate.sites,add.web.content,pack.zip" />
+	<target name="custom.build"
+	        description="aggregate update site extras"
+	        depends="init,check.target,add.associate.sites,add.web.content,pack.zip" />
 
 </project>
