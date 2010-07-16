@@ -379,7 +379,8 @@ public class MenuCreationHelper {
 	private VpeAnyData editAnyData(StructuredTextEditor sourceEditor, boolean isCorrectNS, VpeAnyData data) {
 		Shell shell = sourceEditor.getEditorPart().getSite().getShell();
 		if (isCorrectNS) {
-			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(shell, data);
+			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(shell, data, 
+					VpeTemplateManager.getInstance().getAnyTemplates());
 			editDialog.open();
 		} else {
 			MessageBox message = new MessageBox(shell, SWT.ICON_WARNING | SWT.OK);

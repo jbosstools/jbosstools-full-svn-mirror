@@ -48,6 +48,8 @@ public final class VpeUIMessages extends NLS {
 	public static String TAG_NAME_IS_NOT_VALID;
 	public static String TAG_FOR_DISPLAY_IS_NOT_VALID;
 	public static String VALUE_IS_NOT_VALID;
+	public static String TAG_NAME_ALREADY_EXISTS;
+	public static String URI_TAGLIB_NAMESPACE_ALREADY_DEFINED;
 	public static String BACKGROUND_COLOR;
 	public static String ERROR_OF_TYPE_CONVERSION;
 	public static String INCORRECT_PARAMETER_ERROR;

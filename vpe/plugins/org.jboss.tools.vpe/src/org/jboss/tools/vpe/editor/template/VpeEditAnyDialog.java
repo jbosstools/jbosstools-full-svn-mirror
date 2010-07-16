@@ -13,12 +13,19 @@ package org.jboss.tools.vpe.editor.template;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -61,18 +68,33 @@ import org.w3c.dom.Document;
  */
 public class VpeEditAnyDialog extends TitleAreaDialog {
 
+	/*
+	 * Current template
+	 */
 	private VpeAnyData data;
+	/*
+	 * List of already created templates
+	 */
+	List<VpeAnyData> tagsList;
+	Map<String, VpeAnyData> tagsNamesSet = new HashMap<String, VpeAnyData>();
 	Text tagName;
 	Text tagUri;
+	private String previousUri = Constants.EMPTY;
 	private Button childrenCheckbox;
 	private Text txtTagForDisplay;
 	private Text txtValue;
 	private Text txtStyle;
     private VpeEditAnyDialogValidator templateVerifier;
 
-	public VpeEditAnyDialog(Shell shell, VpeAnyData data) {
+	public VpeEditAnyDialog(Shell shell, VpeAnyData data, List<VpeAnyData> tagsList) {
 		super(shell);
 		this.data = data;
+		this.tagsList = tagsList; 
+		if (null != tagsList) {
+			for (VpeAnyData tag : tagsList) {
+				tagsNamesSet.put(tag.getName(), tag);
+			}
+		}
 		setHelpAvailable(false);
 	}
 
@@ -337,23 +359,74 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		 */
 		private IMessageProvider validateTagName() {
 			Message message = null;
-			String[] parts = tagName.getText().split(":"); //$NON-NLS-1$
-			if (parts.length != 2 || tagName.getText().startsWith(":") //$NON-NLS-1$
-					|| tagName.getText().endsWith(":")) { //$NON-NLS-1$
+			String name = tagName.getText().trim();
+			String[] parts = name.split(":"); //$NON-NLS-1$
+			Pattern p = Pattern.compile("([a-zA-Z]+\\d*)+"); //$NON-NLS-1$
+			/*
+			 * Reset editable property for template URI
+			 * after it has been disabled.
+			 */
+			if (!tagUri.getEditable()) {
+				tagUri.removeModifyListener(templateVerifier);
+				if ((null != data) && (null != data.getName()) &&
+						data.getName().split(":")[0].equalsIgnoreCase(parts[0])) { //$NON-NLS-1$
+					/*
+					 * Restore initial URI
+					 */
+					previousUri = data.getUri();
+				} 
+				tagUri.setText(previousUri);
+				tagUri.setEditable(true);
+				tagUri.addModifyListener(templateVerifier);
+			}
+			/*
+			 * Check if tag's name is correct
+			 */
+			if (parts.length != 2 || name.startsWith(":") //$NON-NLS-1$
+					|| name.endsWith(":")) { //$NON-NLS-1$
 				message = new Message(
 						MessageFormat.format(VpeUIMessages.TAG_NAME_IS_NOT_VALID,
-								tagName.getText().trim()), IMessageProvider.ERROR);
-			} else {
-				/*
-				 * Matcher will accept only word characters with optional numbers.
-				 */
-				 Pattern p = Pattern.compile("([a-zA-Z]+\\d*)+"); //$NON-NLS-1$
-				if ((parts[0].length() == 0) || (parts[1].length() == 0)
+								name), IMessageProvider.ERROR);
+			} else if ((parts[0].length() == 0) || (parts[1].length() == 0)
 						|| (!p.matcher(parts[0]).matches()) 
 						|| (!p.matcher(parts[1]).matches())) {
+					/*
+					 * Matcher will accept only word characters with optional numbers.
+					 */
 					message = new Message(
 							MessageFormat.format(VpeUIMessages.TAG_NAME_IS_NOT_VALID,
-									tagName.getText().trim()), IMessageProvider.ERROR);
+									name), IMessageProvider.ERROR);
+			} else if (tagsNamesSet.keySet().contains(name)
+					&& (!tagsList.contains(data) 
+						|| (tagsList.contains(data) && !data.getName().equalsIgnoreCase(name)))) {
+				/*
+				 * Find duplicate tag names.
+				 */
+				message = new Message(
+						MessageFormat.format(VpeUIMessages.TAG_NAME_ALREADY_EXISTS,
+								name), IMessageProvider.ERROR);
+			} else {
+				/*
+				 * Inform that URI for the specified taglib namespace
+				 * is already defined in another templates.
+				 */
+				for (String templateName : tagsNamesSet.keySet()) {
+					if (parts[0].equalsIgnoreCase(templateName.split(":")[0]) //$NON-NLS-1$
+							&& (!tagsList.contains(data) || (tagsList.contains(data) && !data.getName().split(":")[0].equalsIgnoreCase(parts[0])))) { //$NON-NLS-1$
+						message = new Message(
+						MessageFormat.format(VpeUIMessages.URI_TAGLIB_NAMESPACE_ALREADY_DEFINED,
+								parts[0], tagsNamesSet.get(templateName).getUri()), IMessageProvider.WARNING);
+						/*
+						 * Set the URI and disable this field.
+						 * Remove the listener to avoid dead lock
+						 */
+						tagUri.removeModifyListener(templateVerifier);
+						previousUri = tagUri.getText();
+						tagUri.setText(tagsNamesSet.get(templateName).getUri());
+						tagUri.setEditable(false);
+						tagUri.addModifyListener(templateVerifier);
+						break;
+					}
 				}
 			}
 			return message;
@@ -411,27 +484,58 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		 * @param updateMessage if it is {@code true}, the dialog's message will be updated.
 		 */
 		void validateAll(boolean updateMessage) {
-			IMessageProvider message = null;
-
-			IMessageProvider tagForDisplayMessage = validateTagForDisplay();
-			IMessageProvider valueMessage = validateValue();
-			IMessageProvider tagNameMessage = validateTagName();
-
-			if (tagNameMessage != null) {
-				message = tagNameMessage;
-			} else if (tagForDisplayMessage != null) {
-				message = tagForDisplayMessage;
-			} else if (valueMessage != null) {
-				message = valueMessage;
-			} else {
-				/*
-				 * If everything is OK - set default message
-				 */
-				setMessage(VpeUIMessages.UNKNOWN_TAGS_DIALOG_DESCRIPTION);
+			/*
+			 * Initialize the message with the description
+			 */
+			IMessageProvider message = new Message(VpeUIMessages.UNKNOWN_TAGS_DIALOG_DESCRIPTION,
+					IMessageProvider.NONE);
+			List<IMessageProvider> statuses = new ArrayList<IMessageProvider>();
+			/*
+			 * Get messages from all validators
+			 */
+			statuses.add(validateTagForDisplay());
+			statuses.add(validateValue());
+			statuses.add(validateTagName());
+			/*
+			 * Find the message with the most severe status
+			 */
+			for (IMessageProvider status : statuses) {
+				if (null != status) {
+					message = message.getMessageType() >= status.getMessageType()
+					? message : status;
+				}
 			}
+			String messageText = message.getMessage();
+			switch (message.getMessageType()) {
+			case IMessageProvider.NONE:
+				setMessage(messageText, IMessageProvider.NONE);
+				setErrorMessage(null);
+				break;
 
+			case IMessageProvider.WARNING:
+				setMessage(messageText, IMessageProvider.WARNING);
+				setErrorMessage(null);
+				break;
+
+			case IMessageProvider.INFORMATION:
+				setMessage(messageText, IMessageProvider.INFORMATION);
+				setErrorMessage(null);
+				break;
+
+			default:
+				/*
+				 * Set ERROR message
+				 */
+				if (messageText.length() == 0) {
+					messageText = null;
+				}
+				setMessage(null, IMessageProvider.NONE);
+				setErrorMessage(messageText);
+				break;
+			} // end switch
+			
 			Button okButton = getButton(IDialogConstants.OK_ID);
-			if ((message == null) || (message.getMessageType() <= IMessageProvider.INFORMATION)) {
+			if ((message == null) || (message.getMessageType() <= IMessageProvider.WARNING)) {
 				okButton.setEnabled(true);
 			} else {
 				okButton.setEnabled(false);

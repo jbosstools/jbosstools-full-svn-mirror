@@ -78,7 +78,8 @@ public class SetupTemplateAction extends Action {
 		.getWorkbench().getActiveWorkbenchWindow().getShell();
 		
 		if (isCorrectNS) {
-			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(shell, data);
+			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(shell, data, 
+					VpeTemplateManager.getInstance().getAnyTemplates());
 			editDialog.open();
 		} else {
 			MessageBox message = new MessageBox(shell, SWT.ICON_WARNING | SWT.OK);

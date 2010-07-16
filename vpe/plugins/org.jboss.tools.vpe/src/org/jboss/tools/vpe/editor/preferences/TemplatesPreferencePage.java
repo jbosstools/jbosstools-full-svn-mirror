@@ -10,7 +10,15 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.preferences;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ColumnLayoutData;
@@ -132,11 +140,14 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		return composite;
 	}
 
+	/**
+	 * Updates tags table according to the current <code>tagList</code>.
+	 */
 	private void updateTagsTable() {
 		/*
 		 * If widget is null or disposed - exit.
 		 */
-		if(tagsTable == null || tagsTable.isDisposed()) {
+		if(tagsTable == null || tagsTable.isDisposed() || tagsList == null) {
 			return;
 		}
 		/*
@@ -153,6 +164,14 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		 * Recreate table items
 		 */
 		TableItem tableItem = null;
+		/*
+		 * Sort the templates
+		 */
+		Collections.sort(tagsList, new Comparator<VpeAnyData>() {
+			public int compare(VpeAnyData o1, VpeAnyData o2) {
+				return o1.getName().compareToIgnoreCase(o2.getName());
+			}
+		});
 		for (int i = 0; i < tagsList.size(); i++) {
 			if(tagsTable.getItemCount() > i) {
 				/*
@@ -238,7 +257,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 			 * Handle add event
 			 */
 			VpeAnyData data = new VpeAnyData(Constants.EMPTY, Constants.EMPTY, Constants.EMPTY);
-			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
+			VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data, tagsList);
 			editDialog.open();
 			if(data.isChanged()) {
 				/*
@@ -253,7 +272,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 			 */
 			if (selectIndex > -1) {
 				VpeAnyData data = (VpeAnyData) tagsList.get(selectIndex);
-				VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data);
+				VpeEditAnyDialog editDialog = new VpeEditAnyDialog(getShell(), data, tagsList);
 				editDialog.open();
 				if(data.isChanged()) {
 					tagListWasChanged = true;
@@ -283,7 +302,10 @@ public class TemplatesPreferencePage extends PreferencePage implements
 	public boolean performOk() {
 		if(tagListWasChanged) {
 			/*
-			 * Commit changes to the file
+			 * Commit changes to the file.
+			 * While saving the templates' file will be rewritten from scratch.
+			 * Only the first URI will be used for templates with the same prefix,
+			 * other URI will be ignored.
 			 */
 			VpeTemplateManager.getInstance().setAnyTemplates(tagsList);
 		}
@@ -293,6 +315,12 @@ public class TemplatesPreferencePage extends PreferencePage implements
 	@Override
 	protected void performApply() {
 		performOk();
+		/*
+		 * After "Apply" button templates list should be updated
+		 * due to URI changes 
+		 */
+		tagsList = VpeTemplateManager.getInstance().getAnyTemplates();
+		updateTagsTable();
 	}
 
 	@Override

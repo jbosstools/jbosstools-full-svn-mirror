@@ -743,7 +743,9 @@ public class VpeTemplateManager {
 				}
 			}
 		}
-
+		/*
+		 * URI is set separately from the taglib section.
+		 */
 		for (Iterator<VpeAnyData> iter = anyTemplateList.iterator(); iter.hasNext();) {
 			VpeAnyData element = iter.next();
 			String prefix = element.getPrefix();
@@ -754,7 +756,6 @@ public class VpeTemplateManager {
 				element.setUri(uri);
 			}
 		}
-
 		return anyTemplateList;
 	}
 	
@@ -788,6 +789,10 @@ public class VpeTemplateManager {
 				VpeAnyData data = iter.next();
 				root.appendChild(createNewTagElement(document, data));
 				String prefix = data.getPrefix();
+				/*
+				 * While saving other URIs for the same prefixes will be ignored
+				 * only the first URI will be used for this prefix.
+				 */
 				if ((prefix != null) && (prefix.length() > 0) && !prefixSet.contains(prefix)) {
 					root = appendTaglib(prefixSet, document, root, data);
 					prefixSet.add(prefix);
