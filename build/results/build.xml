@@ -11,8 +11,11 @@
 		<available file="${WORKSPACE}/results" />
 	</condition>
 
-	<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}/../..">
+	<!-- <condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}/../..">
 		<available file="/home/hudson/static_build_env/jbds" type="dir" />
+	</condition> -->
+	<condition property="WORKINGDIR" value="${WORKSPACE}/sources" else="${basedir}/../..">
+		<available file="${WORKSPACE}/sources" type="dir" />
 	</condition>
 
 	<mkdir dir="${WORKINGDIR}" />
