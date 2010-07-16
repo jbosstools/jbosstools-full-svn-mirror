@@ -11,15 +11,12 @@
 		<available file="${WORKSPACE}/results" />
 	</condition>
 
-	<!-- <condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}/../..">
-		<available file="/home/hudson/static_build_env/jbds" type="dir" />
-	</condition> -->
 	<condition property="WORKINGDIR" value="${WORKSPACE}/sources" else="${basedir}/../..">
 		<available file="${WORKSPACE}/sources" type="dir" />
 	</condition>
+	<property name="input.dir" value="${WORKINGDIR}" />
 
 	<mkdir dir="${WORKINGDIR}" />
-	<echo level="info">WORKINGDIR = ${WORKINGDIR}</echo>
 
 	<condition property="COMMON_TOOLS" value="/home/hudson/static_build_env/jbds/tools">
 		<available file="/home/hudson/static_build_env/jbds" type="dir" />
@@ -28,7 +25,6 @@
 		<available file="${WORKINGDIR}/../tools" type="dir" />
 	</condition>
 	<mkdir dir="${COMMON_TOOLS}" />
-	<echo level="info">COMMON_TOOLS = ${COMMON_TOOLS}</echo>
 
 	<condition property="build.xml" value="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml">
 		<available file="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml" type="file" />
@@ -91,11 +87,16 @@
 			3. manually copy the contents of this file into a page under 
 				http://www.jboss.org/tools/downloads/
 		-->
+		<echo level="info">ZIPSUFFIX = ${ZIPSUFFIX}
+WORKINGDIR = ${WORKINGDIR}
+COMMON_TOOLS = ${COMMON_TOOLS}
+input.dir = ${input.dir}
+output.dir = ${output.dir}</echo>
 		<for param="UPDATEZIP">
 			<path>
-				<fileset dir="${WORKINGDIR}/site">
-					<include name="*-Update-${ZIPSUFFIX}.zip" />
-					<include name="*-Sources-${ZIPSUFFIX}.zip" />
+				<fileset dir="${input.dir}">
+					<include name="**/*-Update-${ZIPSUFFIX}.zip" />
+					<include name="**/*-Sources-${ZIPSUFFIX}.zip" />
 				</fileset>
 			</path>
 			<sequential>
@@ -145,14 +146,11 @@ COMPONENT = ${COMPONENT}</echo>
 				<property name="${COMPONENT}-filename" value="${filename}" />
 
 				<get.size file="@{UPDATEZIP}" property="${COMPONENT}-filesize" />
-
-				<!-- 
 				<var name="filesize" unset="true" />
 				<propertycopy from="${COMPONENT}-filesize" property="filesize" override="true" silent="true" />
 				<echo level="info">filesize =  ${filesize}</echo>
 				<echo level="info">filename =  ${filename}</echo>
 				<var name="filesize" unset="true" /> 
-				-->
 				<var name="filename" unset="true" />
 			</sequential>
 		</for>
