@@ -91,6 +91,8 @@
 			3. manually copy the contents of this file into a page under 
 				http://www.jboss.org/tools/downloads/
 		-->
+		<echo level="info">output.dir = ${output.dir}
+ZIPSUFFIX = ${ZIPSUFFIX}</echo>
 		<for param="UPDATEZIP">
 			<path>
 				<fileset dir="${output.dir}">
@@ -145,14 +147,11 @@ COMPONENT = ${COMPONENT}</echo>
 				<property name="${COMPONENT}-filename" value="${filename}" />
 
 				<get.size file="@{UPDATEZIP}" property="${COMPONENT}-filesize" />
-
-				<!-- 
 				<var name="filesize" unset="true" />
 				<propertycopy from="${COMPONENT}-filesize" property="filesize" override="true" silent="true" />
 				<echo level="info">filesize =  ${filesize}</echo>
 				<echo level="info">filename =  ${filename}</echo>
 				<var name="filesize" unset="true" /> 
-				-->
 				<var name="filename" unset="true" />
 			</sequential>
 		</for>
