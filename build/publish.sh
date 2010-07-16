@@ -48,11 +48,15 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
 	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
 	if [[ ${SVN_REVISION} ]]; then
 		METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
+		echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
+	else
+		echo -n "" > ${STAGINGDIR}/logs/${METAFILE}
 	fi
-	echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
 	echo "JOB_NAME = ${JOB_NAME}" >> ${STAGINGDIR}/logs/${METAFILE}
 	echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
 	echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
+	echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
+	echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
 
 	# unzip into workspace for publishing as unpacked site
 	mkdir -p ${STAGINGDIR}/all/repo
