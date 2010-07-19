@@ -35,6 +35,12 @@
 	<condition property="build.xml" value="${basedir}/../../build.xml">
 		<available file="${basedir}/../../build.xml" type="file" />
 	</condition>
+	<condition property="build.xml" value="${basedir}/../../sources/build.xml">
+		<available file="${basedir}/../../sources/build.xml" type="file" />
+	</condition>
+	<condition property="build.xml" value="${basedir}/../build.xml">
+		<available file="${basedir}/../build.xml" type="file" />
+	</condition>
 	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
 
 	<target name="init">
@@ -107,16 +113,14 @@ output.dir = ${output.dir}</echo>
 				               regexp=".+/([^/]+\.zip)"
 				               replace="\1"
 				               casesensitive="false"
-				               override="true"
-				/>
+				               override="true" />
 				<propertyregex property="COMPONENT"
 				               input="${filename}"
 				               defaultvalue="${filename}"
 				               regexp="(.+)-(Update|Sources)-${ZIPSUFFIX}\.zip"
 				               replace="\1"
 				               casesensitive="false"
-				               override="true"
-				/>
+				               override="true" />
 
 				<if>
 					<and>
@@ -150,7 +154,7 @@ COMPONENT = ${COMPONENT}</echo>
 				<propertycopy from="${COMPONENT}-filesize" property="filesize" override="true" silent="true" />
 				<echo level="info">filesize =  ${filesize}</echo>
 				<echo level="info">filename =  ${filename}</echo>
-				<var name="filesize" unset="true" /> 
+				<var name="filesize" unset="true" />
 				<var name="filename" unset="true" />
 			</sequential>
 		</for>
