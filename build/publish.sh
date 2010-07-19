@@ -102,11 +102,12 @@ popd
 if [[ ${RELEASE} == "Yes" ]]; then
 	mkdir -p ${STAGINGDIR}/logs
 	ANT_PARAMS="-v -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
-	if [[ -f ${WORKSPACE}/build/results/build.xml ]]; then
-		ant -f ${WORKSPACE}/build/results/build.xml ${ANT_PARAMS}
-	elif [[ -f ${WORKSPACE}/sources/build/results/build.xml ]]; then
-		ant -f ${WORKSPACE}/sources/build/results/build.xml ${ANT_PARAMS}
-	fi
+	for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
+		if [[ -f ${buildxml} ]]; then
+			ANT_SCRIPT=${buildxml}
+		fi
+	done
+	ant -f ${ANT_SCRIPT} ${ANT_PARAMS}
 fi
 
 # get full build log and filter out Maven test failures
