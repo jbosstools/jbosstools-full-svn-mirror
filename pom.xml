@@ -46,7 +46,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		ant -q -->
 	<!-- IF YOU REMOVE A MODULE, be sure to also remove it from site/site.xml and build/aggregate/site/site.xml 
 	     or the build will break! -->
-	<!--module>drools</module-->
+	<module>drools</module>
 	
 	<module>site</module>
 </modules>
