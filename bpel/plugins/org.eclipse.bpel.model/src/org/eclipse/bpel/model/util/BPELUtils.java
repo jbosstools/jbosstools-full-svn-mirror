@@ -185,8 +185,6 @@ public class BPELUtils {
 	 * @throws RuntimeException
 	 *             if the prefix is already set.
 	 */
-
-	@SuppressWarnings("unchecked")
 	public static void setPrefix(EObject eObject, String namespaceURI,
 			String prefix) {
 
@@ -248,6 +246,7 @@ public class BPELUtils {
 	 * @return the namespace map for the given object.
 	 */
 
+	@SuppressWarnings("unchecked")
 	static public INamespaceMap<String, String> getNamespaceMap(EObject eObject) {
 
 		if (eObject == null) {
@@ -277,11 +276,11 @@ public class BPELUtils {
 		if (object instanceof EObject) {
 			// check if *this* is already the process object
 			if (object instanceof Process)
-				return (Process)object;
-			EObject cont = ((EObject)object).eContainer();
+				return (Process) object;
+			EObject cont = ((EObject) object).eContainer();
 			while (cont != null) {
 				if (cont.eClass() == BPELPackage.eINSTANCE.getProcess())
-					return (Process)cont;
+					return (Process) cont;
 				cont = cont.eContainer();
 			}
 		}
@@ -343,7 +342,7 @@ public class BPELUtils {
 	 * @param parent
 	 * @return the reordered list.
 	 */
-
+	@SuppressWarnings("unchecked")
 	public static List<ExtensibleElement> reorderExtensibilityList(
 			List<IExtensibilityElementListHandler> extensibilityElementListHandlers,
 			ExtensibleElement parent) {
@@ -373,14 +372,15 @@ public class BPELUtils {
 	 * @return the node
 	 */
 
-	public static Node convertStringToNode(EObject parent, String s, BPELResource bpelResource) {
+	public static Node convertStringToNode(EObject parent, String s,
+			BPELResource bpelResource) {
 		// Create DOM document
 		DocumentBuilderFactory factory = new DocumentBuilderFactoryImpl();
 		factory.setNamespaceAware(true);
 		factory.setValidating(false);
 
 		StringBuilder namespaces = new StringBuilder();
-		Map<String, String> nsMap = getAllNamespacesForContext(parent);		
+		Map<String, String> nsMap = getAllNamespacesForContext(parent);
 		for (Entry<String, String> e : nsMap.entrySet()) {
 			String prefix = e.getKey();
 			String value = e.getValue();
@@ -396,15 +396,17 @@ public class BPELUtils {
 			namespaces.append("=\"");
 			namespaces.append(value);
 			namespaces.append("\" ");
-		}		
-		
+		}
+
 		String namespaceURI = bpelResource.getNamespaceURI();
 		if (bpelResource.getOptionUseNSPrefix()) {
 			String prefix = "bpws";
-			s = "<" + prefix + ":from xmlns:" + prefix + "=\"" + namespaceURI + "\" "
-					+ namespaces.toString() + ">" + s + "</" + prefix + ":from>";
+			s = "<" + prefix + ":from xmlns:" + prefix + "=\"" + namespaceURI
+					+ "\" " + namespaces.toString() + ">" + s + "</" + prefix
+					+ ":from>";
 		} else {
-			s = "<from xmlns=\"" + namespaceURI + "\" " + namespaces.toString() + ">" + s + "</from>";
+			s = "<from xmlns=\"" + namespaceURI + "\" " + namespaces.toString()
+					+ ">" + s + "</from>";
 		}
 
 		try {
@@ -465,8 +467,10 @@ public class BPELUtils {
 		String namespaceURI = DOMUtils.getNamespaceURIFromPrefix(element,
 				prefix);
 
-		// namespaceURI may be null. That's okay.
-		return new QName(namespaceURI, localPart);
+		if (prefix == null) {
+			return new QName(namespaceURI, localPart);
+		}
+		return new QName(namespaceURI, localPart, prefix);
 	}
 
 	/**
@@ -759,7 +763,7 @@ public class BPELUtils {
 			return (BPELResourceSetImpl) resourceSet;
 		}
 
-		Map map = resourceSet.getLoadOptions();
+		Map<Object, Object> map = resourceSet.getLoadOptions();
 		BPELResourceSetImpl result = (BPELResourceSetImpl) map
 				.get(BPELResourceSetImpl.SLIGHTLY_HACKED_KEY);
 		if (result == null) {
@@ -889,34 +893,34 @@ public class BPELUtils {
 				|| (child instanceof Expression && parent instanceof From)
 				|| (child instanceof Expression && parent instanceof To);
 	}
-	
+
 	public static boolean isActivityNode(Node node) {
 		String name = node.getLocalName();
-		return isBPELElement(node) && 
-			   (BPELConstants.ND_INVOKE.equals(name) ||
-			   BPELConstants.ND_ASSIGN.equals(name) ||
-			   BPELConstants.ND_WHILE.equals(name) ||
-			   BPELConstants.ND_REPEAT_UNTIL.equals(name) ||
-			   BPELConstants.ND_RECEIVE.equals(name) ||
-			   BPELConstants.ND_REPLY.equals(name) ||
-			   BPELConstants.ND_THROW.equals(name) ||
-			   BPELConstants.ND_WAIT.equals(name) ||
-			   BPELConstants.ND_SEQUENCE.equals(name) ||
-			   BPELConstants.ND_PICK.equals(name) ||
-			   BPELConstants.ND_FLOW.equals(name) ||
-			   BPELConstants.ND_SCOPE.equals(name) ||
-			   BPELConstants.ND_COMPENSATE.equals(name) ||
-			   BPELConstants.ND_RETHROW.equals(name) ||
-			   BPELConstants.ND_EXIT.equals(name) ||
-			   BPELConstants.ND_EXTENSION_ACTIVITY.equals(name) ||
-			   BPELConstants.ND_INVOKE.equals(name) ||
-			   BPELConstants.ND_FOR_EACH.equals(name) ||
-			   BPELConstants.ND_IF.equals(name) ||
-			   BPELConstants.ND_VALIDATE.equals(name) ||
-			   BPELConstants.ND_COMPENSATE_SCOPE.equals(name) ||
-			   BPELConstants.ND_EMPTY.equals(name) ||
-			   BPELConstants.ND_OPAQUEACTIVITY.equals(name));
-			
+		return isBPELElement(node)
+				&& (BPELConstants.ND_INVOKE.equals(name)
+						|| BPELConstants.ND_ASSIGN.equals(name)
+						|| BPELConstants.ND_WHILE.equals(name)
+						|| BPELConstants.ND_REPEAT_UNTIL.equals(name)
+						|| BPELConstants.ND_RECEIVE.equals(name)
+						|| BPELConstants.ND_REPLY.equals(name)
+						|| BPELConstants.ND_THROW.equals(name)
+						|| BPELConstants.ND_WAIT.equals(name)
+						|| BPELConstants.ND_SEQUENCE.equals(name)
+						|| BPELConstants.ND_PICK.equals(name)
+						|| BPELConstants.ND_FLOW.equals(name)
+						|| BPELConstants.ND_SCOPE.equals(name)
+						|| BPELConstants.ND_COMPENSATE.equals(name)
+						|| BPELConstants.ND_RETHROW.equals(name)
+						|| BPELConstants.ND_EXIT.equals(name)
+						|| BPELConstants.ND_EXTENSION_ACTIVITY.equals(name)
+						|| BPELConstants.ND_INVOKE.equals(name)
+						|| BPELConstants.ND_FOR_EACH.equals(name)
+						|| BPELConstants.ND_IF.equals(name)
+						|| BPELConstants.ND_VALIDATE.equals(name)
+						|| BPELConstants.ND_COMPENSATE_SCOPE.equals(name)
+						|| BPELConstants.ND_EMPTY.equals(name) || BPELConstants.ND_OPAQUEACTIVITY
+						.equals(name));
+
 	}
 
 	// TODO: (DU) This is here due to

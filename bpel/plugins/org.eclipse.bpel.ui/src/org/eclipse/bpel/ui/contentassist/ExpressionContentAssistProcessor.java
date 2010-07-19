@@ -323,8 +323,7 @@ public class ExpressionContentAssistProcessor
 									theStatus = -1;
 									return false;
 								}
-							}
-							else if (tempExpr.theType == ExpressionType.EXPRTYPE_FUNCTION_ARGUMENTS) {
+							} else if (tempExpr.theType == ExpressionType.EXPRTYPE_FUNCTION_ARGUMENTS) {
 								if (currChar == ')') {
 									return true;
 								}
@@ -334,13 +333,10 @@ public class ExpressionContentAssistProcessor
 							theStatus = -1;
 							return false;
 						}
-					}
-					catch (EmptyStackException e) {
+					} catch (EmptyStackException e) {
 						theStatus = -1;
 						return false;
 					}
-					theStatus = -1;
-					return false;
 				}
 				else if (currChar == ',') {
 					// could be a function argument
@@ -959,10 +955,22 @@ public class ExpressionContentAssistProcessor
 		return results.toArray(EMPTY_COMPLETION_PROPOSALS);
 	}
 	
+	String getNamespacePrefix(EObject context, String namespace)
+	{
+		String prefix = BPELUtils.getNamespacePrefix(context, namespace);
+		while ( prefix==null )
+		{
+			prefix = BPELUtil.lookupOrCreateNamespacePrefix(context, namespace, null, null);
+			if ( prefix == null )
+				throw new IllegalArgumentException("namespace prefix is null");
+		}
+		return prefix;
+	}
 	
 	/**
 	 * From model, determine list of variables the user may want to choose from.
 	 */
+	
 	ICompletionProposal[] generateVariableProposals(String context, int offset) {
 		boolean seekChildren = false;
 
@@ -992,227 +1000,234 @@ public class ExpressionContentAssistProcessor
 		Image partImg = BPELUIPlugin.INSTANCE.getImage(IBPELUIConstants.ICON_PART_16);
 		Image elementImg = BPELUIPlugin.INSTANCE.getImage(IBPELUIConstants.ICON_XSD_ELEMENT_DECLARATION_16);
 		Image attrImg = BPELUIPlugin.INSTANCE.getImage(IBPELUIConstants.ICON_XSD_ATTRIBUTE_DECLARATION_16);
-		if (seekChildren) {
-			// walk down path
-			int index = 0;
-			int level = 0;
-			int token = -1;
-			char t = 0;
-			String levelName;
-
-			while (index < context2.length()) {
-				t = context2.charAt(index);
-				if ((t == '.') || (t == '/')) {
-					levelName = context2.substring(token+1, index);
-					/*
-					// check for namespace
-					int ns = levelName.indexOf(':');
-					if (ns > -1) {
-						levelNSPrefix = levelName.substring(0, ns);
-						levelName = levelName.substring(ns+1);
-					}
-					else
-						levelNSPrefix = null;
-					 */
-					
-					// find variable
-					if (level == 0) {
-						for (int i=0; i<variables.length; i++) {
-							if (levelName.compareTo(variables[i].getName()) == 0) {
-								currVar = variables[i]; 
-								currXsdType = currVar.getType();
-								currMsg = currVar.getMessageType();
-								currXsdElem = currVar.getXSDElement();
-								
-								level++;
-								break;
-							}
+		try
+		{
+			if (seekChildren) {
+				// walk down path
+				int index = 0;
+				int level = 0;
+				int token = -1;
+				char t = 0;
+				String levelName;
+	
+				while (index < context2.length()) {
+					t = context2.charAt(index);
+					if ((t == '.') || (t == '/')) {
+						levelName = context2.substring(token+1, index);
+						/*
+						// check for namespace
+						int ns = levelName.indexOf(':');
+						if (ns > -1) {
+							levelNSPrefix = levelName.substring(0, ns);
+							levelName = levelName.substring(ns+1);
 						}
-						if (currVar == null)
-							break;
-					}
-					// traverse down
-					else {
-						boolean childFound = false;
-						if (context2.charAt(token) == '.') {
-							if (currMsg != null) {								
-								if (currMsg.getParts() != null) {	
-									for(Object next : currMsg.getParts().values()) {
-										Part item = (Part) next ;
-										if (levelName.compareTo(item.getName()) == 0) {
-											currXsdType = item.getTypeDefinition();
-											currMsg = item.getEMessage();
-											currXsdElem = item.getElementDeclaration();
+						else
+							levelNSPrefix = null;
+						 */
+						
+						// find variable
+						if (level == 0) {
+							for (int i=0; i<variables.length; i++) {
+								if (levelName.compareTo(variables[i].getName()) == 0) {
+									currVar = variables[i]; 
+									currXsdType = currVar.getType();
+									currMsg = currVar.getMessageType();
+									currXsdElem = currVar.getXSDElement();
+									
+									level++;
+									break;
+								}
+							}
+							if (currVar == null)
+								break;
+						}
+						// traverse down
+						else {
+							boolean childFound = false;
+							if (context2.charAt(token) == '.') {
+								if (currMsg != null) {								
+									if (currMsg.getParts() != null) {	
+										for(Object next : currMsg.getParts().values()) {
+											Part item = (Part) next ;
+											if (levelName.compareTo(item.getName()) == 0) {
+												currXsdType = item.getTypeDefinition();
+												currMsg = item.getEMessage();
+												currXsdElem = item.getElementDeclaration();
+												childFound = true;
+												break;
+											}
+										}
+									}
+								}
+								if (!childFound)
+									break;
+							}
+							// search for child objects
+							else if (context2.charAt(token) == '/') {
+								if (currXsdType == null) {
+									if (currXsdElem != null) {
+										currXsdType = currXsdElem.getTypeDefinition();
+									}
+								}
+								if (currXsdType instanceof XSDComplexTypeDefinition) {
+									XSDComplexTypeDefinition xsdcomplex = (XSDComplexTypeDefinition)currXsdType;
+									
+									for(Object next : XSDUtils.getChildElements(xsdcomplex)) {
+										XSDElementDeclaration elem = ((XSDElementDeclaration)next).getResolvedElementDeclaration();
+										String elemName = elem.getName();
+										if (elem.getTargetNamespace() != null) {
+											String elemNSPrefix = getNamespacePrefix(currVar, elem.getTargetNamespace());
+											if (elemNSPrefix != null) {
+												elemName = elemNSPrefix + COLON + elemName;
+											}
+										}
+	
+										if (levelName.compareTo(elemName) == 0) {
+											currXsdType = elem.getTypeDefinition();
+											currXsdElem = null;
+											currMsg = null;
+											//currXsdElem = elem.getResolvedElementDeclaration();
 											childFound = true;
 											break;
 										}
 									}
 								}
-							}
-							if (!childFound)
-								break;
-						}
-						// search for child objects
-						else if (context2.charAt(token) == '/') {
-							if (currXsdType == null) {
-								if (currXsdElem != null) {
-									currXsdType = currXsdElem.getTypeDefinition();
-								}
-							}
-							if (currXsdType instanceof XSDComplexTypeDefinition) {
-								XSDComplexTypeDefinition xsdcomplex = (XSDComplexTypeDefinition)currXsdType;
-								
-								for(Object next : XSDUtils.getChildElements(xsdcomplex)) {
-									XSDElementDeclaration elem = ((XSDElementDeclaration)next).getResolvedElementDeclaration();
-									String elemName = elem.getName();
-									if (elem.getTargetNamespace() != null) {
-										String elemNSPrefix = BPELUtils.getNamespacePrefix(currVar, elem.getTargetNamespace());
-										if (elemNSPrefix != null) {
-											elemName = elemNSPrefix + COLON + elemName;
-										}
-									}
-
-									if (levelName.compareTo(elemName) == 0) {
-										currXsdType = elem.getTypeDefinition();
-										currXsdElem = null;
-										currMsg = null;
-										//currXsdElem = elem.getResolvedElementDeclaration();
+								else if (currXsdType instanceof XSDSimpleTypeDefinition) {
+									XSDSimpleTypeDefinition xsdsimple = (XSDSimpleTypeDefinition)currXsdType;
+									//currXsdType = xsdsimple.getBaseType();
+									//XSDSimpleTypeDefinition tempsimple = xsdsimple.getBaseTypeDefinition();
+									//org.eclipse.xsd.XSDParticle temppart = xsdsimple.getComplexType();
+									//XSDSimpleTypeDefinition tempsimple2 = xsdsimple.getItemTypeDefinition();
+									String tempname = xsdsimple.getName();
+									if (levelName.compareTo(tempname) == 0) {
 										childFound = true;
-										break;
 									}
 								}
+								if (!childFound)
+									break;
 							}
-							else if (currXsdType instanceof XSDSimpleTypeDefinition) {
-								XSDSimpleTypeDefinition xsdsimple = (XSDSimpleTypeDefinition)currXsdType;
-								//currXsdType = xsdsimple.getBaseType();
-								//XSDSimpleTypeDefinition tempsimple = xsdsimple.getBaseTypeDefinition();
-								//org.eclipse.xsd.XSDParticle temppart = xsdsimple.getComplexType();
-								//XSDSimpleTypeDefinition tempsimple2 = xsdsimple.getItemTypeDefinition();
-								String tempname = xsdsimple.getName();
-								if (levelName.compareTo(tempname) == 0) {
-									childFound = true;
-								}
-							}
-							if (!childFound)
-								break;
-						}
-					}	
-					token = index;							
+						}	
+						token = index;							
+					}
+					else if (t == '@')
+						token = index;
+					
+					index++;
 				}
-				else if (t == '@')
-					token = index;
-				
-				index++;
-			}
-			// determine if last character is a special character if above is successful
-			if (index == context2.length()) {
-				// looking for parts, attributes or elements?
-				String beginsWith;
-				if ((index-1) == token)
-					beginsWith = EMPTY_STRING;
-				else
-					beginsWith = context2.substring(token+1);
-				
-				if ((context2.charAt(token) == '/') || (context2.charAt(token) == '@')) {
-					if (currXsdType == null) {
-						if (currXsdElem != null) {
-							currXsdType = currXsdElem.getTypeDefinition();
-						}
-					}					
-					if (currXsdType instanceof XSDComplexTypeDefinition) {
-						XSDComplexTypeDefinition xsdcomplex = (XSDComplexTypeDefinition)currXsdType;
-						Iterator eaIter;
-						if (context2.charAt(token) == '/')
-							eaIter = XSDUtils.getXSDElementsAndAttributes(xsdcomplex).iterator();
-						else
-							eaIter = XSDUtils.getChildAttributes(xsdcomplex).iterator();
-						Image img = null;
-						String tempReplName = null;
-						String tempDispName = null;
-						String namespace = null;
-						String nsprefix = null;
-						while (eaIter.hasNext()) {
-							Object tempEA = eaIter.next();
-
-							if (tempEA instanceof XSDAttributeDeclaration) {
-								XSDAttributeDeclaration attr = (XSDAttributeDeclaration)tempEA;
-								tempReplName = AT + attr.getName();
-								tempDispName = attr.getName();
-								namespace = attr.getTargetNamespace();
-								if ((namespace != null) && (namespace.length() > 0)) {
-									nsprefix = BPELUtils.getNamespacePrefix(currVar, namespace);
-									tempReplName = AT + nsprefix + COLON + attr.getName();
-									tempDispName = nsprefix + COLON + tempDispName;
-								}								
-								img = attrImg;
+				// determine if last character is a special character if above is successful
+				if (index == context2.length()) {
+					// looking for parts, attributes or elements?
+					String beginsWith;
+					if ((index-1) == token)
+						beginsWith = EMPTY_STRING;
+					else
+						beginsWith = context2.substring(token+1);
+					
+					if ((context2.charAt(token) == '/') || (context2.charAt(token) == '@')) {
+						if (currXsdType == null) {
+							if (currXsdElem != null) {
+								currXsdType = currXsdElem.getTypeDefinition();
 							}
-							else if (tempEA instanceof XSDElementDeclaration) {
-								XSDElementDeclaration elem = ((XSDElementDeclaration)tempEA).getResolvedElementDeclaration();
-								tempReplName = elem.getName();
-								tempDispName = tempReplName;
-								namespace = elem.getTargetNamespace();
-								if ((namespace != null) && (namespace.length() > 0)) {
-									nsprefix = BPELUtils.getNamespacePrefix(currVar, namespace);
-									tempReplName = nsprefix + COLON + tempDispName;
+						}					
+						if (currXsdType instanceof XSDComplexTypeDefinition) {
+							XSDComplexTypeDefinition xsdcomplex = (XSDComplexTypeDefinition)currXsdType;
+							@SuppressWarnings("rawtypes")
+							Iterator eaIter;
+							if (context2.charAt(token) == '/')
+								eaIter = XSDUtils.getXSDElementsAndAttributes(xsdcomplex).iterator();
+							else
+								eaIter = XSDUtils.getChildAttributes(xsdcomplex).iterator();
+							Image img = null;
+							String tempReplName = null;
+							String tempDispName = null;
+							String namespace = null;
+							String nsprefix = null;
+							while (eaIter.hasNext()) {
+								Object tempEA = eaIter.next();
+	
+								if (tempEA instanceof XSDAttributeDeclaration) {
+									XSDAttributeDeclaration attr = (XSDAttributeDeclaration)tempEA;
+									tempReplName = AT + attr.getName();
+									tempDispName = attr.getName();
+									namespace = attr.getTargetNamespace();
+									if ((namespace != null) && (namespace.length() > 0)) {
+										nsprefix = getNamespacePrefix(currVar, namespace);
+										tempReplName = AT + nsprefix + COLON + attr.getName();
+										tempDispName = nsprefix + COLON + tempDispName;
+									}								
+									img = attrImg;
+								}
+								else if (tempEA instanceof XSDElementDeclaration) {
+									XSDElementDeclaration elem = ((XSDElementDeclaration)tempEA).getResolvedElementDeclaration();
+									tempReplName = elem.getName();
 									tempDispName = tempReplName;
-								}
-								img = elementImg;
-							}
-							if (tempReplName != null) {
-								if ((beginsWith.length() == 0) || (tempDispName.startsWith(beginsWith))) {
-									int replOffset = offset-beginsWith.length();
-									int replLen = beginsWith.length();
-									if (context2.charAt(token) == '@') {
-										replOffset--;
-										replLen++;
+									namespace = elem.getTargetNamespace();
+									if ((namespace != null) && (namespace.length() > 0)) {
+										nsprefix = getNamespacePrefix(currVar, namespace);
+										tempReplName = nsprefix + COLON + tempDispName;
+										tempDispName = tempReplName;
 									}
-										
-									prop = new CompletionProposal(tempReplName, replOffset, replLen,
-											tempReplName.length(), img, tempDispName + "   " , //$NON-NLS-1$
-											null, null);
-									results.add(prop);
+									img = elementImg;
 								}
+								if (tempReplName != null) {
+									if ((beginsWith.length() == 0) || (tempDispName != null && tempDispName.startsWith(beginsWith))) {
+										int replOffset = offset-beginsWith.length();
+										int replLen = beginsWith.length();
+										if (context2.charAt(token) == '@') {
+											replOffset--;
+											replLen++;
+										}
+											
+										prop = new CompletionProposal(tempReplName, replOffset, replLen,
+												tempReplName.length(), img, tempDispName + "   " , //$NON-NLS-1$
+												null, null);
+										results.add(prop);
+									}
+								}
+								tempReplName = null;
+								tempDispName = null;
 							}
-							tempReplName = null;
-							tempDispName = null;
 						}
+//						else if (currXsdType instanceof XSDSimpleTypeDefinition) {
+//							XSDSimpleTypeDefinition simple = (XSDSimpleTypeDefinition)currXsdType;
+//							// do nothing?
+//						}
 					}
-					else if (currXsdType instanceof XSDSimpleTypeDefinition) {
-						XSDSimpleTypeDefinition simple = (XSDSimpleTypeDefinition)currXsdType;
-						// do nothing?
-					}
-				}
-				// search for parts
-				else if (context2.charAt(token) == '.') {
-					if (currMsg != null) {
-						if (currMsg.getParts() != null) {
-							for(Object next : currMsg.getParts().values() ) {													
-								Part item = (Part) next;
-								if ((beginsWith.length() == 0) || (item.getName().startsWith(beginsWith))) {
-									prop = new CompletionProposal(item.getName(), offset-beginsWith.length(), beginsWith.length(),
-											item.getName().length(), partImg, item.getName() + "   " , //$NON-NLS-1$
-											null, null);
-									results.add(prop);			
+					// search for parts
+					else if (context2.charAt(token) == '.') {
+						if (currMsg != null) {
+							if (currMsg.getParts() != null) {
+								for(Object next : currMsg.getParts().values() ) {													
+									Part item = (Part) next;
+									if ((beginsWith.length() == 0) || (item.getName().startsWith(beginsWith))) {
+										prop = new CompletionProposal(item.getName(), offset-beginsWith.length(), beginsWith.length(),
+												item.getName().length(), partImg, item.getName() + "   " , //$NON-NLS-1$
+												null, null);
+										results.add(prop);			
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}
-		//variables
-		else {
-			for (Variable v : variables) {			
-				name = v.getName();			
-				if (name.startsWith(context2)) {
-					prop = new CompletionProposal(DOLLAR + name, offset-context.length(), context.length(),
-							name.length()+1, varImg, name + "   " , //$NON-NLS-1$
-							null, null);
-					results.add(prop);
+			//variables
+			else {
+				for (Variable v : variables) {			
+					name = v.getName();			
+					if (name.startsWith(context2)) {
+						prop = new CompletionProposal(DOLLAR + name, offset-context.length(), context.length(),
+								name.length()+1, varImg, name + "   " , //$NON-NLS-1$
+								null, null);
+						results.add(prop);
+					}
 				}
 			}
 		}
-
+		catch(IllegalArgumentException ex)
+		{
+			results.toArray(EMPTY_COMPLETION_PROPOSALS);
+		}
 		
 		if (results.size() < 1) {
 			return new ICompletionProposal [] {
