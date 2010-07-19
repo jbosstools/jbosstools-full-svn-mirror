@@ -16,9 +16,9 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.common.text.ext,
  org.jboss.tools.common.model,
  org.jboss.tools.vpe.xulrunner,
- org.mozilla.xpcom;bundle-version="1.9.1",
+ org.mozilla.xpcom,
  org.jboss.tools.vpe.ui.test,
- org.jboss.tools.vpe.html;bundle-version="3.1.0"
+ org.jboss.tools.vpe.html
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin
