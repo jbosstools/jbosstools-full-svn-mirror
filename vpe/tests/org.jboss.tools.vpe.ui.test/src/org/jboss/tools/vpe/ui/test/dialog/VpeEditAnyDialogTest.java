@@ -13,6 +13,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
+import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.ui.test.VpeTest;
 
@@ -28,7 +29,8 @@ public class VpeEditAnyDialogTest extends VpeTest {
 		 */
 		VpeAnyData data = new VpeAnyData(Constants.EMPTY, Constants.EMPTY, Constants.EMPTY);
 		VpeEditAnyDialog dialog = new VpeEditAnyDialog(PlatformUI
-				.getWorkbench().getDisplay().getActiveShell(), data);
+				.getWorkbench().getDisplay().getActiveShell(), data,
+				VpeTemplateManager.getInstance().getAnyTemplates());
 		dialog.setBlockOnOpen(false);
 		int code = dialog.open();
 		/*
@@ -50,7 +52,8 @@ public class VpeEditAnyDialogTest extends VpeTest {
 		data.setName("my:tag"); //$NON-NLS-1$
 		data.setUri("http://my.uri.com/tags"); //$NON-NLS-1$
 		dialog = new VpeEditAnyDialog(PlatformUI
-				.getWorkbench().getDisplay().getActiveShell(), data);
+				.getWorkbench().getDisplay().getActiveShell(), data, 
+				VpeTemplateManager.getInstance().getAnyTemplates());
 		dialog.setBlockOnOpen(false);
 		code = dialog.open();
 		assertEquals(Window.OK, code);
