@@ -78,7 +78,6 @@ public class XulRunnerConstants {
 	
 	/** VPE_CLASS_NAME_MOZ_RESIZING_SHADOW */
 	public static final String VPE_CLASS_NAME_MOZ_RESIZING_SHADOW = "mozResizingShadow"; //$NON-NLS-1$
-
-
-
+	
+	public static final String VPE_CLASS_NAME_MOZ_RESIZING_INFO = "mozResizingInfo"; //$NON-NLS-1$
 }

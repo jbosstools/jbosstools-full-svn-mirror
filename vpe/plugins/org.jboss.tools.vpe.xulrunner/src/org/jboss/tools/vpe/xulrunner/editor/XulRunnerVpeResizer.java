@@ -15,6 +15,7 @@ import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import java.util.ArrayList;
 
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.xulrunner.util.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
@@ -33,10 +34,13 @@ import org.mozilla.interfaces.nsIDOMNode;
  * IXulRunnerVpeResizer implementation
  * @author A. Yukhovich
  */
-public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {	
+public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
+	
+	private static String RESIZING_INFO_FORMAT = "%s x %s"; //$NON-NLS-1$
+	private static Point RESIZING_INFO_OFFSET = new Point(20, 20);
+
 	/** COEFFICIENT_TYPE */
 	enum  COEFFICIENT_TYPE { X, Y, WIDTH, HEIGHT };
-	
 
 	/** RESIZER_MARKER_STRING_TOPLEFT */
 	final static private String RESIZER_MARKER_STRING_TOPLEFT = "nw"; //$NON-NLS-1$
@@ -90,6 +94,8 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	
 	/** resizingShadow */
 	private nsIDOMElement resizingShadow;
+	
+	private nsIDOMElement resizingInfo;
 	
 	/** domDocument */
 	private nsIDOMDocument domDocument;
@@ -145,7 +151,7 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		if ( resizingObject != null ) {
 			hide();
 		}
-		
+
 		resizingObject = domElement;
 
 		elementBounds = XulRunnerVpeUtils.getElementBounds(domElement);
@@ -217,9 +223,10 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		
 		setAllResizersPosition();
 		
-		resizingShadow = createShadow(bodyElement, resizingObject);
-
-		setShadowPosition(resizingShadow, elementBounds.x, elementBounds.y);
+		resizingShadow = createShadow(bodyElement);
+		setElementPosition(resizingShadow, elementBounds.x, elementBounds.y);
+		
+		resizingInfo = createResizingInfo(bodyElement);
 	}
 
 	
@@ -276,6 +283,12 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 
 		if ( resizingShadow != null ) {
 			parentNode.removeChild(resizingShadow);
+			resizingShadow = null;
+		}
+		
+		if (resizingInfo != null) {
+			parentNode.removeChild(resizingInfo);
+			resizingInfo = null;
 		}
 		
 		markerBottom = null;
@@ -287,7 +300,6 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		markerTopRight = null;
 		markerTopLeft = null;
 		
-		resizingShadow = null;
 		resizingObject = null;
 	}
 
@@ -333,11 +345,62 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 			int newWidth  = getNewResizingWidth(clientX, clientY);
 			int newHeight = getNewResizingHeight(clientX, clientY);
 			
-			setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_LEFT, newX);
-			setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_TOP, newY);
-			setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_WIDTH, newWidth);
-			setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_HEIGHT, newHeight);
-		} // if
+			Rectangle shadowBounds = new Rectangle(newX, newY, newWidth, newHeight);
+			
+			setElementBounds(resizingShadow, shadowBounds);
+			redrawResizingInfo(shadowBounds);
+		}
+	}
+	
+	private void redrawResizingInfo(Rectangle bounds) {
+		while (resizingInfo.hasChildNodes()) {
+			resizingInfo.removeChild(resizingInfo.getLastChild());
+		}
+
+		resizingInfo.appendChild(domDocument.createTextNode(
+				String.format(RESIZING_INFO_FORMAT, bounds.width, bounds.height)));
+		
+		Point position;
+		switch (usedResizeMarker) {
+		case RESIZER_MARKER_TOPLEFT:
+			position = new Point(bounds.x, bounds.y);
+			break;
+		case RESIZER_MARKER_TOP:
+			position = new Point(bounds.x + bounds.width / 2,
+					bounds.y);
+			break;
+		case RESIZER_MARKER_TOPRIGHT:
+			position = new Point(bounds.x + bounds.width,
+					bounds.y);
+			break;
+		case RESIZER_MARKER_LEFT:
+			position = new Point(bounds.x,
+					bounds.y + bounds.height / 2);
+			break;
+		case RESIZER_MARKER_RIGHT:
+			position = new Point(bounds.x + bounds.width,
+					bounds.y + bounds.height / 2);
+			break;
+		case RESIZER_MARKER_BOTTOMLEFT:
+			position = new Point(bounds.x,
+					bounds.y + bounds.height);
+			break;
+		case RESIZER_MARKER_BOTTOM:
+			position = new Point(bounds.x + bounds.width / 2,
+					bounds.y + bounds.height);
+			break;
+		case RESIZER_MARKER_BOTTOMRIGHT:
+			position = new Point(bounds.x + bounds.width,
+					bounds.y + bounds.height);
+			break;
+		default:
+			position = new Point(0, 0);
+			break;
+		}
+
+		position.x += RESIZING_INFO_OFFSET.x;
+		position.y += RESIZING_INFO_OFFSET.y;
+		setElementPosition(resizingInfo, position.x, position.y);
 	}
 
 
@@ -348,8 +411,6 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		if (isResizing) {
 			isResizing = false;
 			
-			
-			hideShadow();
 			endResizing(aX, aY);
 				
  			nsIDOMEventTarget erP = getDOMEventTarget();
@@ -388,17 +449,6 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	}
 
 	/**
-	 * Setting a position of shadow
-	 * @param shadowElement
-	 * @param aOriginalObjectX
-	 * @param aOriginalObjectY
-	 */
-	private void setShadowPosition(nsIDOMElement shadowElement, int aOriginalObjectX, int aOriginalObjectY)	{
-		setAnonymousElementPosition(aOriginalObjectX, aOriginalObjectY, shadowElement);
-	}
-
-
-	/**
 	 * create a anonymous dom-element
 	 * 
 	 * @param aTag
@@ -434,12 +484,16 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 	 * @param originalObject
 	 * @return
 	 */
-	private nsIDOMElement createShadow(nsIDOMNode parentNode,  nsIDOMElement originalObject) {
-		nsIDOMElement returnElement = null;
-		
-		returnElement = createAnonymousElement(XulRunnerConstants.HTML_TAG_SPAN, parentNode, XulRunnerConstants.VPE_CLASS_NAME_MOZ_RESIZING_SHADOW, true );
-
-		return returnElement;
+	private nsIDOMElement createShadow(nsIDOMNode parentNode) {
+		return createAnonymousElement(XulRunnerConstants.HTML_TAG_SPAN,
+				parentNode, XulRunnerConstants.VPE_CLASS_NAME_MOZ_RESIZING_SHADOW,
+				true);
+	}
+	
+	private nsIDOMElement createResizingInfo(nsIDOMNode parentNode) {
+		return createAnonymousElement(XulRunnerConstants.HTML_TAG_SPAN,
+				parentNode, XulRunnerConstants.VPE_CLASS_NAME_MOZ_RESIZING_INFO,
+				true);
 	}
 	
 	/**
@@ -486,14 +540,13 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 
 		// make the shadow appear
 		resizingShadow.removeAttribute(XulRunnerConstants.HTML_ATTR_CLASS);
-
 		// position it
-		setShadowPosition(resizingShadow, elementBounds.x, elementBounds.y);
+		setElementBounds(resizingShadow, elementBounds);
+		
+		resizingInfo.removeAttribute(XulRunnerConstants.HTML_ATTR_CLASS);
+		redrawResizingInfo(elementBounds);
+		
 
-		setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_WIDTH, elementBounds.width );
-		setStylePropertyPixels(resizingShadow, XulRunnerConstants.HTML_ATTR_HEIGHT, elementBounds.height );
-		
-		
 		if (mouseMotionListener !=  null) {
 			return;
 		}
@@ -655,49 +708,54 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		int rh = (int)((resizerHeight+ 1) / 2);
 		
 		if (markerTopLeft != null) {
-			setAnonymousElementPosition(left-resizerWidth-2, top-resizerHeight-2, markerTopLeft);
+			setElementPosition(markerTopLeft, left-resizerWidth-2, top-resizerHeight-2);
 		}
 
 		if (markerTop != null) {
-			setAnonymousElementPosition(left+width/2-rw, top-resizerHeight-2, markerTop);
+			setElementPosition(markerTop, left+width/2-rw, top-resizerHeight-2);
 		}
 
 		if (markerTopRight != null) {
-			setAnonymousElementPosition(left+width, top-resizerHeight-2, markerTopRight);
+			setElementPosition(markerTopRight, left+width, top-resizerHeight-2);
 		}
 
 		if (markerLeft != null) {
-			setAnonymousElementPosition(left-resizerWidth-2, top+height/2-rh, markerLeft);
+			setElementPosition(markerLeft, left-resizerWidth-2, top+height/2-rh);
 		}
 		
 		if (markerRight != null) {
-			setAnonymousElementPosition(left+width, top+height/2-rh, markerRight);
+			setElementPosition(markerRight, left+width, top+height/2-rh);
 		}
 		
 		if (markerBottomLeft != null) {
-			setAnonymousElementPosition(left-resizerWidth-2, top+height, markerBottomLeft);
+			setElementPosition(markerBottomLeft, left-resizerWidth-2, top+height);
 		}
 
 		if (markerBottom != null) {
-			setAnonymousElementPosition(left+width/2-rw, top+height, markerBottom);
+			setElementPosition(markerBottom, left+width/2-rw, top+height);
 		}
 
 		if (markerBottomRight != null) {
-			setAnonymousElementPosition(left+width, top+height, markerBottomRight);
+			setElementPosition(markerBottomRight, left+width, top+height);
 		}
 		
 	}
-	
-	/**
-	 * 
-	 * @param left
-	 * @param top
-	 * @param domElement
-	 */
-	private void setAnonymousElementPosition(int left, int top,nsIDOMElement domElement)	{
+
+	private void setElementPosition(nsIDOMElement domElement, int left,int top)	{
 		setStylePropertyPixels(domElement,XulRunnerConstants.HTML_ATTR_LEFT, left);
 		setStylePropertyPixels(domElement,XulRunnerConstants.HTML_ATTR_TOP, top);		
 	}
+	
+	private void setElementSize(nsIDOMElement domElement, int width,int height) {
+		setStylePropertyPixels(domElement, XulRunnerConstants.HTML_ATTR_WIDTH, width);
+		setStylePropertyPixels(domElement, XulRunnerConstants.HTML_ATTR_HEIGHT, height);
+	}
+	
+	private void setElementBounds(nsIDOMElement domElement, Rectangle bounds) {
+		setElementPosition(domElement, bounds.x, bounds.y);
+		setElementSize(domElement, bounds.width, bounds.height);
+	}
+
 	
 	/**
 	 * 
@@ -765,6 +823,11 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		if (resizingShadow == null) {
 			return;
 		}
+		resizingShadow.setAttribute(XulRunnerConstants.HTML_ATTR_CLASS, XulRunnerConstants.HTML_VALUE_HIDDEN);
+		if (resizingInfo == null) {
+			return;
+		}
+		resizingInfo.setAttribute(XulRunnerConstants.HTML_ATTR_CLASS, XulRunnerConstants.HTML_VALUE_HIDDEN);
 
 		if( activeHandle != null) {
 			activeHandle.removeAttribute(XulRunnerConstants.STRING_MOZ_ACTIVATED);
@@ -785,15 +848,6 @@ public class XulRunnerVpeResizer implements IXulRunnerVpeResizer {
 		usedResizeMarker = 0;
 	}
 	
-	/**
-	 * Hide of shadow box
-	 */
-	private void hideShadow()	{
-		if (resizingShadow != null ) {
-			resizingShadow.setAttribute(XulRunnerConstants.HTML_ATTR_CLASS, XulRunnerConstants.HTML_VALUE_HIDDEN);
-		}		
-	}
-
 	public void dispose() {
 		if (mouseMotionListener != null) {
 			nsIDOMEventTarget erP = getDOMEventTarget();
