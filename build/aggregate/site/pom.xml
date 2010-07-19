@@ -9,7 +9,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools</groupId>
-	<artifactId>org.jboss.tools.site.aggregate</artifactId> 
+	<artifactId>org.jboss.tools.site.aggregate</artifactId>
 	<name>org.jboss.tools.site</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
@@ -65,7 +65,7 @@
 	<repositories>
 		<repository>
 			<id>jbosstools-continuous-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.continuous/all/repo/</url>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M1.continuous/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
@@ -73,7 +73,7 @@
 		</repository>
 		<repository>
 			<id>jbosstools-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2/all/repo/</url>
+			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M1/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
