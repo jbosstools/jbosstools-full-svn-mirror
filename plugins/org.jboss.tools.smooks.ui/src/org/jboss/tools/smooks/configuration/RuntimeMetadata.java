@@ -184,7 +184,7 @@ public class RuntimeMetadata {
 				if (inputPath != null) {
 					String resolvedFilePath;
 					try {
-						resolvedFilePath = org.jboss.tools.smooks.dbm.utils.SmooksUIUtils.parseFilePath(inputPath.trim());
+						resolvedFilePath = SmooksUIUtils.parseFilePath(inputPath.trim());
 					} catch (Exception e) {
 						// It's not a valid config...
 						inputFile = new File(inputPath.trim());
