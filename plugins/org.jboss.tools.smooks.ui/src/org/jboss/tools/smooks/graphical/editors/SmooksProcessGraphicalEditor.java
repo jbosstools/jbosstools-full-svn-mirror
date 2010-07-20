@@ -14,7 +14,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,17 +21,8 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CommandWrapper;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.DeleteCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
-import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -67,7 +57,6 @@ import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.part.MultiPageEditorActionBarContributor;
 import org.eclipse.zest.core.viewers.GraphViewer;
@@ -80,9 +69,9 @@ import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
 import org.jboss.tools.smooks.configuration.editors.SelectorCreationDialog;
-import org.jboss.tools.smooks.configuration.editors.SmooksReaderFormPage;
+//import org.jboss.tools.smooks.configuration.editors.SmooksReaderFormPage;
 import org.jboss.tools.smooks.configuration.editors.input.InputType;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+//import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
@@ -681,12 +670,12 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		});
 	}
 
-	// public SmooksGraphicsExtType getSmooksGraphicsExtType() {
-	// if (smooksModelProvider != null) {
-	// return smooksModelProvider.getSmooksGraphicsExt();
-	// }
-	// return null;
-	// }
+	 public SmooksGraphicsExtType getSmooksGraphicsExtType() {
+	 if (smooksModelProvider != null) {
+	 return smooksModelProvider.getSmooksGraphicsExt();
+	 }
+	 return null;
+	 }
 
 	/**
 	 * @return the smooksModelProvider

@@ -16,6 +16,9 @@ public class SmooksMultiplePageEditor extends AbstractSmooksMultiplePageEditor {
 	
 	@Override
 	protected void addPages() {
+		
+		addProcessGraphicalEditor();
+		
 		optionsPage = createSmooksConfigurationOverviewPage();
 		addSourceSynchronizeListener(optionsPage);
 		addSmooksEditorInitListener(optionsPage);
@@ -25,11 +28,25 @@ public class SmooksMultiplePageEditor extends AbstractSmooksMultiplePageEditor {
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}
+		
 		super.addPages();
 	}
 
 	private SmooksConfigurationFormPage createSmooksConfigurationOverviewPage() {
 		return new SmooksConfigurationFormPage(this,
 				"options_page", Messages.SmooksMultiFormEditor_optinepage_name, this); //$NON-NLS-1$
+	}
+	private void addProcessGraphicalEditor() {
+		SmooksProcessGraphicalEditor processPage = new SmooksProcessGraphicalEditor(this,
+				"process", Messages.SmooksMultiFormEditor_processpage_name, this); //$NON-NLS-1$
+//		addSourceSynchronizeListener(processPage);
+//		addValidateListener(processPage);
+//		addSmooksEditorInitListener(processPage);
+		try {
+			int index = this.addPage(processPage);
+			setPageText(index, Messages.SmooksMultiFormEditor_processtabel_label);
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -32,8 +32,6 @@ import java.util.Set;
 import javax.xml.transform.stream.StreamSource;
 
 import org.eclipse.core.resources.IResource;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.milyn.Smooks;
 import org.milyn.SmooksException;
 import org.milyn.container.ExecutionContext;
@@ -186,7 +184,7 @@ public class RuntimeMetadata {
 				if (inputPath != null) {
 					String resolvedFilePath;
 					try {
-						resolvedFilePath = SmooksUIUtils.parseFilePath(inputPath.trim());
+						resolvedFilePath = org.jboss.tools.smooks.dbm.utils.SmooksUIUtils.parseFilePath(inputPath.trim());
 					} catch (Exception e) {
 						// It's not a valid config...
 						inputFile = new File(inputPath.trim());
@@ -203,6 +201,7 @@ public class RuntimeMetadata {
 			// Not a valid Smooks config file
 		}
 	}
+	
 
 	private void reset() {
 		isSmooksConfig = false;

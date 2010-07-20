@@ -24,6 +24,15 @@ import org.jboss.tools.smooks.graphical.editors.process.TaskType;
  * 
  */
 public class TaskTypeRules {
+	
+	public static void fillAllTask(TaskType task, List<TaskType> taskList) {
+		taskList.add(task);
+		List<TaskType> children = task.getTask();
+		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
+			TaskType taskType = (TaskType) iterator.next();
+			fillAllTask(taskType, taskList);
+		}
+	}
 
 	public boolean isNextTask(TaskType currentTask, TaskType testTask) {
 		TaskType parentTask = testTask;
@@ -42,7 +51,7 @@ public class TaskTypeRules {
 		List<TaskType> taskList = new ArrayList<TaskType>();
 		for (Iterator<?> iterator = currentList.iterator(); iterator.hasNext();) {
 			TaskType taskType = (TaskType) iterator.next();
-			SmooksUIUtils.fillAllTask(taskType, taskList);
+			TaskTypeRules.fillAllTask(taskType, taskList);
 		}
 
 		if (parentID.equals(TaskTypeManager.TASK_ID_INPUT)) {
