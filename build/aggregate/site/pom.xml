@@ -9,7 +9,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools</groupId>
-	<artifactId>org.jboss.tools.site.aggregate</artifactId> 
+	<artifactId>org.jboss.tools.site.aggregate</artifactId>
 	<name>org.jboss.tools.site</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
