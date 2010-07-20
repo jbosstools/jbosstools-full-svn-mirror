@@ -115,6 +115,13 @@ public class VpeAnyData extends VpeTemplateData {
 			return false;
 		}
 		VpeAnyData other = (VpeAnyData) obj;
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
 		if (tagForDisplay == null) {
 			if (other.tagForDisplay != null) {
 				return false;

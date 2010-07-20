@@ -91,6 +91,8 @@ public final class VpeUIMessages extends NLS {
 	public static String TemplatesPreferencePage_Add;
 	public static String TemplatesPreferencePage_Edit;
 	public static String TemplatesPreferencePage_Remove;
+	public static String TemplatesPreferencePage_Export;
+	public static String TemplatesPreferencePage_Import;
 	public static String TemplatesTableProvider_Children;
 	public static String TemplatesTableProvider_No;
 	public static String TemplatesTableProvider_TagForDisplay;

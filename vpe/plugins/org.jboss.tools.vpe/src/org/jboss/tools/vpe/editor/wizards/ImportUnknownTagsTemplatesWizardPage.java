@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.wizards;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,9 +19,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ColumnLayoutData;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TableLayout;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.WizardResourceImportPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
@@ -44,33 +43,23 @@ import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.ReferenceWizardPage;
 
-/**
- * Page for importing unknown tags templates.
- * 
- * @author dmaliarevich
- */
-public class ImportUnknownTagsTemplatesWizardPage extends
-		WizardResourceImportPage implements VpeImportExportWizardPage {
-	
+public class ImportUnknownTagsTemplatesWizardPage extends WizardPage implements
+		VpeImportExportWizardPage {
+
 	private String pathString;
 	private Table tagsTable;
 	private List<VpeAnyData> tagsList;
+	private List<VpeAnyData>  currentList; 
+	private List<VpeAnyData> importedList = new ArrayList<VpeAnyData>();
 	
-	/**
-	 * Constructor
-	 * 
-	 * @param name
-	 * @param selection
-	 */
-	public ImportUnknownTagsTemplatesWizardPage(String name,
-			IStructuredSelection selection) {
-		super(name, selection);
+	protected ImportUnknownTagsTemplatesWizardPage(String pageName, List<VpeAnyData>  currentList) {
+		super(pageName);
+		this.currentList = currentList;
 		setTitle(VpeUIMessages.IMPORT_UNKNOWN_TAGS_PAGE_TITLE);
 		setDescription(VpeUIMessages.IMPORT_UNKNOWN_TAGS_PAGE_DESCRIPTION);
 		setImageDescriptor(ReferenceWizardPage.getImageDescriptor());
 	}
-	
-	@Override
+
 	public void createControl(Composite parent) {
 		/*
 		 * Create main composite element with grid layout.
@@ -174,9 +163,8 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		 */
         setErrorMessage(null);	// should not initially have error message
         setControl(composite);
-		
 	}
-	
+
 	@Override
 	public boolean isPageComplete() {
 		boolean isPageComplete = false;
@@ -189,17 +177,16 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		return isPageComplete;
 	}
 
+	
+	
 	 public boolean finish() {
-		 /*
-		  * Currently used templates list 
-		  */
-		 List<VpeAnyData>  currentList = VpeTemplateManager.getInstance().getAnyTemplates();
-		 
 		 /*
 		  * Uploading will add only missing templates.
 		  * So here all duplicated templates will be deleted from the tagsList.
 		  */
-		 Iterator<VpeAnyData> iterator = tagsList.iterator();
+		 importedList.clear();
+		 importedList.addAll(tagsList);
+		 Iterator<VpeAnyData> iterator = importedList.iterator();
 		 while (iterator.hasNext()) {
 			VpeAnyData loadedTemplate = (VpeAnyData) iterator.next();
 			for (VpeAnyData currentTemplate : currentList) {
@@ -211,35 +198,10 @@ public class ImportUnknownTagsTemplatesWizardPage extends
 		 /*
 		  * Add unique templates to the current list.
 		  */
-		 if (currentList.addAll(tagsList)) {
-			 /*
-			  * Store loaded templates to the default auto-templates location.
-			  */
-			VpeTemplateManager.getInstance().setAnyTemplates(currentList);
-		} else {
-			/*
-			 * Log WARNING if the operation could not be performed.
-			 */
-			VpePlugin.getDefault().logWarning(VpeUIMessages.NONE_TEMPLATES_WERE_ADDED);
-		}
 		 return true;
 	 }
-	
-	@Override
-	protected void createSourceGroup(Composite parent) {
-		/*
-		 * Create nothing.
-		 */
-	}
 
-	@Override
-	protected ITreeContentProvider getFileProvider() {
-		return null;
-	}
-
-	@Override
-	protected ITreeContentProvider getFolderProvider() {
-		return null;
-	}
-
+	 public List<VpeAnyData> getImportedList() {
+			return importedList;
+		}
 }

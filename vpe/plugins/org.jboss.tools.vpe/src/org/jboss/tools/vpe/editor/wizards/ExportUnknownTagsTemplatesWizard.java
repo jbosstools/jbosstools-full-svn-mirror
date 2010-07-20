@@ -10,41 +10,31 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.wizards;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
+import java.util.List;
+
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.ui.IExportWizard;
-import org.eclipse.ui.IWorkbench;
+import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
-/**
- * Wizard that exports Unknown Tags Templates from Preference Page
- * to the vpe-templates-auto.xml file.
- * 
- * @author dmaliarevich
- */
-public class ExportUnknownTagsTemplatesWizard extends Wizard implements
-		IExportWizard {
+public class ExportUnknownTagsTemplatesWizard extends Wizard {
 
-	private IStructuredSelection selection;
 	private ExportUnknownTagsTemplatesWizardPage mainPage;
+	private List<VpeAnyData>  currentList;
 	
 	/**
 	 * Constructor
 	 */
-	public ExportUnknownTagsTemplatesWizard() {
+	public ExportUnknownTagsTemplatesWizard(List<VpeAnyData>  currentList) {
 		setWindowTitle(VpeUIMessages.EXPORT_UNKNOWN_TAGS_PAGE_TITLE);
+		this.currentList = currentList;
 	}
-
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-
-	}
-
+	
 	@Override
 	public void addPages() {
 		super.addPages();
 		mainPage = new ExportUnknownTagsTemplatesWizardPage(
 				VpeUIMessages.EXPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE,
-				selection);
+				currentList);
 		addPage(mainPage);
 	}
 

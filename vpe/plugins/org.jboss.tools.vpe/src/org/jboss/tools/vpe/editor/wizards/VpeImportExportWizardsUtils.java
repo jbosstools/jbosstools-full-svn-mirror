@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.wizards;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -33,19 +35,7 @@ public class VpeImportExportWizardsUtils {
 		/*
 		 * Return when visual table hasn't been initialized.
 		 */
-		if(tagsTable == null || tagsTable.isDisposed()) {
-			return;
-		}
-		/*
-		 * Clear current visual table.
-		 */
-		if (clearTagsTable) {
-			tagsTable.clearAll();
-		}
-		/*
-		 * Return when tags templates list hasn't been initialized.
-		 */
-		if (tagsList == null) {
+		if(tagsTable == null || tagsTable.isDisposed() || tagsList == null) {
 			return;
 		}
 		/*
@@ -53,7 +43,22 @@ public class VpeImportExportWizardsUtils {
 		 * and restore it at the end.
 		 */
 		int selectionIndex = tagsTable.getSelectionIndex();
+		/*
+		 * Clear current visual table.
+		 */
+		if (clearTagsTable) {
+			tagsTable.clearAll();
+			tagsTable.update();
+		}
 		TableItem tableItem = null;
+		/*
+		 * Sort the templates
+		 */
+		Collections.sort(tagsList, new Comparator<VpeAnyData>() {
+			public int compare(VpeAnyData o1, VpeAnyData o2) {
+				return o1.getName().compareToIgnoreCase(o2.getName());
+			}
+		});
 		for (int i = 0; i < tagsList.size(); i++) {
 			if(tagsTable.getItemCount() > i) {
 				/*

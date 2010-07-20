@@ -13,7 +13,7 @@ package org.jboss.tools.vpe.editor.template;
 public class VpeTemplateData {
 	private boolean changed = false;
 
-	private String name;
+	protected String name;
 	private boolean caseSensitive = false;
 	private boolean children = false;
 	private boolean modify = false;

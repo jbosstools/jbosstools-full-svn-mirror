@@ -17,8 +17,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ColumnLayoutData;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -28,51 +28,36 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.WizardExportResourcesPage;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.ReferenceWizardPage;
 
-/**
- * Page for exporting unknown tags templates.
- * 
- * @author dmaliarevich
- */
-public class ExportUnknownTagsTemplatesWizardPage extends
-		WizardExportResourcesPage implements VpeImportExportWizardPage {
+public class ExportUnknownTagsTemplatesWizardPage extends WizardPage implements
+		VpeImportExportWizardPage {
 
 	private String pathString;
 	private Table tagsTable;
 	private List<VpeAnyData> tagsList;
 	
-	/**
-	 * Constructor
-	 * 
-	 * @param pageName
-	 * @param selection
-	 */
-	public ExportUnknownTagsTemplatesWizardPage(String pageName,
-			IStructuredSelection selection) {
-		super(pageName, selection);
+	protected ExportUnknownTagsTemplatesWizardPage(String pageName, List<VpeAnyData>  currentList) {
+		super(pageName);
 		setTitle(VpeUIMessages.EXPORT_UNKNOWN_TAGS_PAGE_TITLE);
 		setDescription(VpeUIMessages.EXPORT_UNKNOWN_TAGS_PAGE_DESCRIPTION);
 		setImageDescriptor(ReferenceWizardPage.getImageDescriptor());
 		/*
 		 * Initialize tags list
 		 */
-		tagsList = VpeTemplateManager.getInstance().getAnyTemplates();
+		tagsList = currentList;
 	}
 
-	@Override
 	public void createControl(Composite parent) {
 		/*
 		 * Create main composite element with grid layout.
@@ -150,26 +135,12 @@ public class ExportUnknownTagsTemplatesWizardPage extends
 		/*
 		 * Finishing the initialization
 		 */
-		updateWidgetEnablements();
-        setPageComplete(determinePageCompletion());
+        setPageComplete(isPageComplete());
         setErrorMessage(null);	// should not initially have error message
         
         setControl(composite);
 	}
-
-	@Override
-	protected void createDestinationGroup(Composite parent) {
-		/*
-		 * Create nothing
-		 */
-	}
-
-	public void handleEvent(Event event) {
-		/*
-		 * Do nothing
-		 */
-	}
-
+	
 	@Override
 	public boolean isPageComplete() {
 		boolean isPageComplete = false;
@@ -187,5 +158,5 @@ public class ExportUnknownTagsTemplatesWizardPage extends
 		 VpeTemplateManager.getInstance().setAnyTemplates(templates, path);
 		 return true;
 	 }
-	
+
 }
