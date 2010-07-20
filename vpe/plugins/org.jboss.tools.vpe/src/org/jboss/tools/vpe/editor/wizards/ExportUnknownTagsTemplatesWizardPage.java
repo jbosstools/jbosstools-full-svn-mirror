@@ -153,9 +153,11 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardPage implements
 	}
 
 	 public boolean finish() {
-		 List<VpeAnyData> templates = VpeTemplateManager.getInstance().getAnyTemplates();
 		 IPath path = new Path(pathString);
-		 VpeTemplateManager.getInstance().setAnyTemplates(templates, path);
+		 /*
+		  * Export the current list to the specified location.
+		  */
+		 VpeTemplateManager.getInstance().setAnyTemplates(tagsList, path);
 		 return true;
 	 }
 
