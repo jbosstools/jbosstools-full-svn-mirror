@@ -17,7 +17,6 @@ import java.util.List;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.process.IProcessProvider;

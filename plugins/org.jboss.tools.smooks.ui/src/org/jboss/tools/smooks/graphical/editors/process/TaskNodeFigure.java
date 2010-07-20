@@ -37,7 +37,7 @@ import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphItem;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
-import org.jboss.tools.smooks.dbm.editor.SmooksProcessGraphicalEditor;
+import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 
 /**
  * @author Dart

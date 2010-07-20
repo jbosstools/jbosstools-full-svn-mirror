@@ -17,10 +17,10 @@ import java.util.List;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
-import org.jboss.tools.smooks.model.freemarker.Freemarker;
-import org.jboss.tools.smooks.model.javabean12.BeanType;
-import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
-import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+//import org.jboss.tools.smooks.model.freemarker.Freemarker;
+//import org.jboss.tools.smooks.model.javabean12.BeanType;
+//import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+//import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 
 /**
  * @author Dart
@@ -74,18 +74,18 @@ public class TaskTypeManager {
 		return null;
 	}
 
-	public static List<Object> getAssociatedSmooksElementsType(String taskID) {
-		List<Object> elementsType = new ArrayList<Object>();
-		if (taskID == null)
-			return null;
-		if (TASK_ID_JAVA_MAPPING.equals(taskID)) {
-			elementsType.add(BeanType.class);
-		}
-		if (TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskID)) {
-			elementsType.add(Freemarker.class);
-		}
-		return elementsType;
-	}
+//	public static List<Object> getAssociatedSmooksElementsType(String taskID) {
+//		List<Object> elementsType = new ArrayList<Object>();
+//		if (taskID == null)
+//			return null;
+//		if (TASK_ID_JAVA_MAPPING.equals(taskID)) {
+//			elementsType.add(BeanType.class);
+//		}
+//		if (TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskID)) {
+//			elementsType.add(Freemarker.class);
+//		}
+//		return elementsType;
+//	}
 
 	public static String getTaskLabel(TaskType task) {
 		if (task != null) {
@@ -118,31 +118,31 @@ public class TaskTypeManager {
 		return ""; //$NON-NLS-1$
 	}
 
-	/**
-	 * 
-	 * @param taskID
-	 * @param smooksResourceList
-	 * @return
-	 */
-	public static List<Object> getAssociatedSmooksElements(TaskType taskType, SmooksResourceListType smooksResourceList) {
-		List<Object> elementTypes = getAssociatedSmooksElementsType(taskType.getId());
-		List<AbstractResourceConfig> resourceConfigList = smooksResourceList.getAbstractResourceConfig();
-		List<Object> associatedElements = new ArrayList<Object>();
-		for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-			if (isSameType(abstractResourceConfig, elementTypes) && canRemove(abstractResourceConfig, taskType)) {
-				associatedElements.add(abstractResourceConfig);
-			}
-		}
-		return associatedElements;
-	}
-
-	private static boolean canRemove(AbstractResourceConfig abstractResourceConfig, TaskType taskType) {
-		if (abstractResourceConfig instanceof Freemarker) {
-			return taskType.inTheTask(abstractResourceConfig);
-		}
-		return true;
-	}
+//	/**
+//	 * 
+//	 * @param taskID
+//	 * @param smooksResourceList
+//	 * @return
+//	 */
+//	public static List<Object> getAssociatedSmooksElements(TaskType taskType, SmooksResourceListType smooksResourceList) {
+//		List<Object> elementTypes = getAssociatedSmooksElementsType(taskType.getId());
+//		List<AbstractResourceConfig> resourceConfigList = smooksResourceList.getAbstractResourceConfig();
+//		List<Object> associatedElements = new ArrayList<Object>();
+//		for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
+//			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+//			if (isSameType(abstractResourceConfig, elementTypes) && canRemove(abstractResourceConfig, taskType)) {
+//				associatedElements.add(abstractResourceConfig);
+//			}
+//		}
+//		return associatedElements;
+//	}
+//
+//	private static boolean canRemove(AbstractResourceConfig abstractResourceConfig, TaskType taskType) {
+//		if (abstractResourceConfig instanceof Freemarker) {
+//			return taskType.inTheTask(abstractResourceConfig);
+//		}
+//		return true;
+//	}
 
 	private static boolean isSameType(Object element, List<Object> elementTypes) {
 		for (Iterator<?> iterator = elementTypes.iterator(); iterator.hasNext();) {

@@ -26,7 +26,7 @@ import org.eclipse.zest.core.widgets.GraphNode;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
-import org.jboss.tools.smooks.dbm.editor.SmooksProcessGraphicalEditor;
+import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager.TaskTypeDescriptor;
 

@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="org.jboss.tools.smooks.dbm.editor.SmooksMultiplePageEditor"
+            class="org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor"
             contributorClass="org.jboss.tools.smooks.configuration.editors.SmooksMultiPageEditorContributor"
             icon="icons/smooks-sm.gif"
             id="org.jboss.tools.smooks.configuration.editors.MultiPageEditor"
