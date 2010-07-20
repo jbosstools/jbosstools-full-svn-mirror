@@ -6,6 +6,9 @@
 	<!-- should be set by Hudson -->
 	<!-- <property name="JOB_NAME" value="jbosstools-3.2.0.M2.continuous" /> -->
 
+	<!-- if a different template file (eg., a partially expanded one) should be used, feed it in here -->
+	<property name="template.file" value="download-template.xml" />
+
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
 	<condition property="output.dir" value="${WORKSPACE}/results" else="${basedir}">
 		<available file="${WORKSPACE}/results" />
@@ -89,7 +92,7 @@
 	<target name="build.results" depends="init">
 		<!-- 
 			1. resolve variables in download-template.xml to produce download.xml
-			2. XSL transform download.xml to produce download.snippet.txt
+			2. XSL transform download.xml to produce download-snippet.txt
 			3. manually copy the contents of this file into a page under 
 				http://www.jboss.org/tools/downloads/
 		-->
@@ -129,13 +132,23 @@ output.dir = ${output.dir}</echo>
 					</and>
 					<then>
 						<if>
-							<equals arg1="${filename}" arg2="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip" />
+							<!-- only set the update variable if it's NOT coming from the aggregate build -->
+							<and>
+								<equals arg1="${filename}" arg2="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip" />
+								<not>
+									<contains string="${JOB_NAME}" substring="aggregate" />
+								</not>
+							</and>
 							<then>
 								<var name="COMPONENT" unset="true" />
 								<var name="COMPONENT" value="sources" />
 							</then>
 							<elseif>
-								<equals arg1="${filename}" arg2="${JOB_NAME}-Update-${ZIPSUFFIX}.zip" />
+								<!-- only set the update variable if it's coming from the aggregate build; others should be ignored -->
+								<and>
+									<equals arg1="${filename}" arg2="${JOB_NAME}-Update-${ZIPSUFFIX}.zip" />
+									<contains string="${JOB_NAME}" substring="aggregate" />
+								</and>
 								<then>
 									<var name="COMPONENT" unset="true" />
 									<var name="COMPONENT" value="update" />
@@ -159,15 +172,67 @@ COMPONENT = ${COMPONENT}</echo>
 			</sequential>
 		</for>
 
-		<copy todir="${output.dir}" overwrite="true">
-			<fileset file="download-template.xml" />
-			<mapper type="merge" to="download.xml" />
-			<filterchain>
-				<expandproperties />
-			</filterchain>
-		</copy>
-		<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.txt" style="download.xsl" />
-		<delete file="${output.dir}/download.xml" />
+		<if>
+			<!-- default operation from template file -->
+			<equals arg1="${template.file}" arg2="download-template.xml" />
+			<then>
+				<copy todir="${output.dir}" overwrite="true">
+					<fileset file="${template.file}" />
+					<mapper type="merge" to="download.xml" />
+					<filterchain>
+						<expandproperties />
+					</filterchain>
+				</copy>
+				<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.txt" style="download.xsl" />
+				<delete file="${output.dir}/download.xml" />
+			</then>
+			<elseif>
+				<!-- use previously XLST'd file from an upstream build -->
+				<or>
+					<contains string="${template.file}" substring="http:" />
+					<contains string="${template.file}" substring="https:" />
+					<contains string="${template.file}" substring="ftp:" />
+				</or>
+				<then>
+					<propertyregex property="template.file.cleaned"
+					               input="${template.file}"
+					               defaultvalue="${template.file}"
+					               regexp=".+/([^/]+)"
+					               replace="\1"
+					               override="true" />
+					<get src="${template.file}" dest="${output.dir}/${template.file.cleaned}.in" ignoreerrors="true" />
+					<if>
+						<available file="${output.dir}/${template.file.cleaned}.in" type="file" />
+						<then>
+							<!-- use pre-existing snippet file -->
+							<copy todir="${output.dir}" overwrite="true">
+								<fileset file="${template.file.cleaned}.in" />
+								<mapper type="merge" to="download-snippet.txt" />
+								<filterchain>
+									<expandproperties />
+								</filterchain>
+							</copy>
+							<delete file="${output.dir}/${template.file.cleaned}.in" quiet="true" />
+						</then>
+						<else>
+							<!-- fall back to default template file -->
+							<var name="template.file" value="download-template.xml" />
+							<copy todir="${output.dir}" overwrite="true">
+								<fileset file="${template.file}" />
+								<mapper type="merge" to="download.xml" />
+								<filterchain>
+									<expandproperties />
+								</filterchain>
+							</copy>
+							<xslt in="${output.dir}/download.xml"
+							      out="${output.dir}/download-snippet.txt"
+							      style="download.xsl" />
+							<delete file="${output.dir}/download.xml" />
+						</else>
+					</if>
+				</then>
+			</elseif>
+		</if>
 	</target>
 
 </project>
