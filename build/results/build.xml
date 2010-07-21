@@ -124,7 +124,6 @@ output.dir = ${output.dir}</echo>
 				               replace="\1"
 				               casesensitive="false"
 				               override="true" />
-
 				<if>
 					<and>
 						<isset property="JOB_NAME" />
@@ -177,7 +176,7 @@ COMPONENT = ${COMPONENT}</echo>
 			<equals arg1="${template.file}" arg2="download-template.xml" />
 			<then>
 				<copy todir="${output.dir}" overwrite="true">
-					<fileset file="${template.file}" />
+					<fileset dir="${output.dir}" file="${template.file}" />
 					<mapper type="merge" to="download.xml" />
 					<filterchain>
 						<expandproperties />
@@ -206,7 +205,7 @@ COMPONENT = ${COMPONENT}</echo>
 						<then>
 							<!-- use pre-existing snippet file -->
 							<copy todir="${output.dir}" overwrite="true">
-								<fileset file="${template.file.cleaned}.in" />
+								<fileset dir="${output.dir}" file="${template.file.cleaned}.in" />
 								<mapper type="merge" to="download-snippet.txt" />
 								<filterchain>
 									<expandproperties />
@@ -218,7 +217,7 @@ COMPONENT = ${COMPONENT}</echo>
 							<!-- fall back to default template file -->
 							<var name="template.file" value="download-template.xml" />
 							<copy todir="${output.dir}" overwrite="true">
-								<fileset file="${template.file}" />
+								<fileset dir="${output.dir}" file="${template.file}" />
 								<mapper type="merge" to="download.xml" />
 								<filterchain>
 									<expandproperties />
