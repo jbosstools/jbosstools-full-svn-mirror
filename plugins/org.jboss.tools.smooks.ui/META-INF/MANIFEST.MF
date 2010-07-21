@@ -14,12 +14,3 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
-Export-Package: org.jboss.tools.smooks.configuration,
- org.jboss.tools.smooks.configuration.editors.uitls,
- org.jboss.tools.smooks.configuration.editors.xml,
- org.jboss.tools.smooks.editor,
- org.jboss.tools.smooks.gef.tree.figures,
- org.jboss.tools.smooks.graphical.editors,
- org.jboss.tools.smooks.graphical.editors.process,
- org.jboss.tools.smooks.launch,
- org.jboss.tools.smooks.launch.serialize
