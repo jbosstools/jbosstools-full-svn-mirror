@@ -1,4 +1,4 @@
-package org.jboss.tools.smooks.configuration;
+package org.jboss.tools.smooks.configuration.editors;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
