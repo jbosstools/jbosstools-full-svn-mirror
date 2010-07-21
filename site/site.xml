@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site pack200="true">
 	<description>
-		This is the Nightly Build Update Site for JBoss Tools 3.2.0.M1.
+		This is the Nightly Build Update Site for JBoss Tools 3.2.0.
    </description>
 
 	<!-- only in JBDS -->
