@@ -18,69 +18,30 @@
 <tr>
 		<td colspan="2">
 		<hr />
-		<h3>New Wizards</h3>
+		<h3>Wizards</h3>
 		<hr />
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" align="left">
-		<p><b>New Quilifier Type Wizard</b></p>
+		<p><b>CDI Annotation Type Wizards</b></p>
 		</td>
-		<td valign="top">
-		<p>Qualifier Type Wizard creates qualifier annotation type.</p>
+                <td align="top">
+		<p>There are now a handful of Wizards to easily create
+		various CDI specific artifacts, such as Qualifier
+		Annotation Type.</p>
 		<img src="images/CDIAnnotationWizards.png"/><br><br>
+	
+		<p>Qualifier Annotation Type Wizard:</p>
 		<img src="images/NewQualifierWizard.png"/>
 		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-6413">Related Jira</a></small></p>
-		</td>
-	</tr>
-	
-	<tr>
-		<td colspan="2">
-		<hr />
+			href="https://jira.jboss.org/jira/browse/JBIDE-6413">1</a>,
+                       <a href="https://jira.jboss.org/jira/browse/JBIDE-6414">2</a>,<a
+			href="https://jira.jboss.org/jira/browse/JBIDE-6415">3</a>,<a
+			href="https://jira.jboss.org/jira/browse/JBIDE-6416">3</a></small></p>
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="left">
-		<p><b>New Stereotype Wizard</b></p>
-		</td>
-		<td valign="top">
-		<p>Stereotype Wizard creates stereotype annotation type.</p>
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-6414">Related Jira</a></small></p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr />
-		</td>
-	</tr>
-	<tr>
-		<td valign="top" align="left">
-		<p><b>New Interceptor Binding Type Wizard</b></p>
-		</td>
-		<td valign="top">
-		<p>Interceptor Binding Type Wizard creates interceptor annotation type.</p>
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-6415">Related Jira</a></small></p>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<hr />
-		</td>
-	</tr>
-	<tr>
-		<td valign="top" align="left">
-		<p><b>New Scope Type Wizard</b></p>
-		</td>
-		<td valign="top">
-		<p>Scope Type Wizard creates scope annotation type.</p>
-		<p><small><a
-			href="https://jira.jboss.org/jira/browse/JBIDE-6416">Related Jira</a></small></p>
-		</td>
-	</tr>
-<tr>
 		<td colspan="2">
 		<hr />
 		<h3>Hyperlinks (OpenOns)</h3>
@@ -92,7 +53,8 @@
 		<p><b>OpenOn for Disposer/Producer methods</b></p>
 		</td>
 		<td valign="top">
-		<p>If user ctrl+click on Disposer (Producer) method, this OpenOn suggests opening the bound producer (disposer) method.</p>
+		<p>Producer and Disposer methods can now be navigate
+		to via OpenOn.</p>
 		<img src="images/ProducerOpenOn.png"/><br><br>
 		<img src="images/DisposerOpenOn.png"/>
 		<p><small><a
@@ -109,10 +71,13 @@
 	</tr>
 	<tr>
 		<td valign="top" align="left">
-		<p><b>Unsatisfied and ambiguous dependencies validation for CDI Injection points</b></p>
+		<p><b>Validation for CDI Injection points</b></p>
 		</td>
 		<td valign="top">
-		<p>CDI projects are validated now against the unsatisfied and ambiquos dependencies.</p>
+		<p>CDI Injection points where there are no or
+		ambigious matching injections will now be validated
+		and marked with Error or Warning based on users preference.
+		 </p>
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-6418">Related Jira</a></small></p>
 		</td>
@@ -130,8 +95,8 @@
 		<p><b>Rename action for CDI @Named beans</b></p>
 		</td>
 		<td valign="top">
-		<p>Rename action for CDI @Named beans also shows
-		all resources that has references renamed element in EL.</p>
+		<p>CDI @Named beans now be renamed via refactoring
+		and shows up when using Find References for EL Expressions.</p>
 		<p>Rename action is available from context menu on a @Named annotation in Java Source editor.</p>
 		<p><small><a
 			href="https://jira.jboss.org/jira/browse/JBIDE-5927">Related Jira</a></small></p>

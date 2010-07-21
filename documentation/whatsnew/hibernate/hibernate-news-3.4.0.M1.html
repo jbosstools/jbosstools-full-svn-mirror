@@ -11,7 +11,7 @@
 <body>
 <h1>Hibernate tools 3.4.0.M1 What's New</h1>
 
-<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../vpe/vpe-news-3.2.0.M1.html">Visual Page Editor &gt;</a></p>
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../jst/jst-news-3.2.0.M1.html">JST Tools &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 
@@ -26,12 +26,10 @@
   <tr>
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Support Dali 2.3</b></td>
     <td valign="top">
-    <p>Hibernate tools 3.4.0 support Dali 2.3 version and don't support previous ones because of the API changes.</p>
+    <p>Hibernate tools 3.4.0 now supports Eclipse JPA/Dali version
+    2.3. Previous versions cannot be supported because API has changed.</p>
 
-<p></p>
-
-
-    <p><small><a href="https://jira.jboss.org/browse/JBIDE-5847">Related jira</a></p>
+   <p><small><a href="https://jira.jboss.org/browse/JBIDE-5847">Related jira</a></p>
 
     </td>
   </tr>
@@ -43,9 +41,9 @@
   </tr>
   
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Support Jpa 2.0 in jpa projects</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Support JPA 2.0 in JPA projects</b></td>
     <td valign="top">
-    <p>Jpa projects with Hibernate platform support now hibernate jpa 2.0 implementation.</p>
+    <p>JPA projects with Hibernate platform now support Hibernate JPA 2.0 implementation.</p>
 	 <p><img src="images/jpa2_0.png"/></p>
 <p></p>
 
@@ -83,7 +81,9 @@
   <tr>
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>DDL script</b></td>
     <td valign="top">
-    <p>DDL script isn't executed after generation by default because it could clear the database data.</p>
+    <p>Schema Export when started from within Eclipse now generates DDL script by default instead of
+    directly manipulating the database to avoid manipulating existing
+    data by accident.</p>
 	<p><img src="images/ddl_generation.png"/></p>
     <p>Related jiras:<small><a href="https://jira.jboss.org/browse/JBIDE-6115">1</a>, <a href="http://opensource.atlassian.com/projects/hibernate/browse/HBX-1161">2</a></p>
     </td>
