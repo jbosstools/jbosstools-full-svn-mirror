@@ -235,7 +235,7 @@
 		</description>
 	</category-def>
 
-	<category-def name="AllTools" label="All JBoss Tools 3.2.0.M1">
+	<category-def name="AllTools" label="All JBoss Tools 3.2.0">
 		<description>
 			Contains ALL the plugins that are available from
 			JBoss Tools except those
