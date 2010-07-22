@@ -272,6 +272,17 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
+				<repository>
+                                        <id>google eclipse plugins</id>
+                                        <url>http://dl.google.com/eclipse/plugin/3.6</url>
+                                        <layout>p2</layout>
+                                        <snapshots>
+                                                <enabled>true</enabled>
+                                        </snapshots>
+                                        <releases>
+                                                <enabled>true</enabled>
+                                        </releases>
+                                </repository>
 			</repositories>
 		</profile>
 		<profile>
