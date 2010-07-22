@@ -17,22 +17,22 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 /**
- * Wizard that exports Unknown Tags Templates from Preference Page
+ * Wizard that exports User specified tag templates from Preference Page
  * to the vpe-templates-auto.xml file.
  * 
  * @author dmaliarevich
  */
-public class ExportUnknownTagsTemplatesMenuWizard extends Wizard implements
+public class ExportUserTagsTemplatesMenuWizard extends Wizard implements
 		IExportWizard {
 
 	private IStructuredSelection selection;
-	private ExportUnknownTagsTemplatesMenuWizardPage mainPage;
+	private ExportUserTagsTemplatesMenuWizardPage mainPage;
 	
 	/**
 	 * Constructor
 	 */
-	public ExportUnknownTagsTemplatesMenuWizard() {
-		setWindowTitle(VpeUIMessages.EXPORT_UNKNOWN_TAGS_PAGE_TITLE);
+	public ExportUserTagsTemplatesMenuWizard() {
+		setWindowTitle(VpeUIMessages.EXPORT_USER_TAGS_PAGE_TITLE);
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
@@ -42,8 +42,8 @@ public class ExportUnknownTagsTemplatesMenuWizard extends Wizard implements
 	@Override
 	public void addPages() {
 		super.addPages();
-		mainPage = new ExportUnknownTagsTemplatesMenuWizardPage(
-				VpeUIMessages.EXPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE,
+		mainPage = new ExportUserTagsTemplatesMenuWizardPage(
+				VpeUIMessages.EXPORT_USER_TAGS_TEMPLATES_WIZARD_PAGE,
 				selection);
 		addPage(mainPage);
 	}

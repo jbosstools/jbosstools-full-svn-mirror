@@ -37,7 +37,7 @@ public final class VpeUIMessages extends NLS {
 	public static String GENERAL;
 	public static String TEMPLATES;
 	public static String TEMPLATE;
-	public static String UNKNOWN_TAGS_DIALOG_DESCRIPTION;
+	public static String USER_SPECIFIED_TAG_DIALOG_DESCRIPTION;
 	public static String TAG_ATTRIBUTES;
 	public static String TAG_NAME;
 	public static String TAG_URI;
@@ -148,12 +148,12 @@ public final class VpeUIMessages extends NLS {
 	public static String VISUAL_APPEARANCE_GROUP_TITLE;
 	public static String CONFIRMATION_GROUP_TITLE;
 	public static String TABS_GROUP_TITLE;
-	public static String IMPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE;
-	public static String EXPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE;
-	public static String EXPORT_UNKNOWN_TAGS_PAGE_TITLE;
-	public static String EXPORT_UNKNOWN_TAGS_PAGE_DESCRIPTION;
-	public static String IMPORT_UNKNOWN_TAGS_PAGE_TITLE;
-	public static String IMPORT_UNKNOWN_TAGS_PAGE_DESCRIPTION;
+	public static String IMPORT_USER_TAGS_TEMPLATES_WIZARD_PAGE;
+	public static String EXPORT_USER_TAGS_TEMPLATES_WIZARD_PAGE;
+	public static String EXPORT_USER_TAGS_PAGE_TITLE;
+	public static String EXPORT_USER_TAGS_PAGE_DESCRIPTION;
+	public static String IMPORT_USER_TAGS_PAGE_TITLE;
+	public static String IMPORT_USER_TAGS_PAGE_DESCRIPTION;
 	public static String SELECT_ALL;
 	public static String DESELECT_ALL;
 	public static String BROWSE_BUTTON_TEXT;

@@ -44,9 +44,9 @@ import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.Constants;
-import org.jboss.tools.vpe.editor.wizards.ExportImportUnknownTagsTemplatesWizardDialog;
-import org.jboss.tools.vpe.editor.wizards.ExportUnknownTagsTemplatesWizard;
-import org.jboss.tools.vpe.editor.wizards.ImportUnknownTagsTemplatesWizard;
+import org.jboss.tools.vpe.editor.wizards.ExportImportUserTagsTemplatesWizardDialog;
+import org.jboss.tools.vpe.editor.wizards.ExportUserTagsTemplatesWizard;
+import org.jboss.tools.vpe.editor.wizards.ImportUserTagsTemplatesWizard;
 import org.jboss.tools.vpe.editor.wizards.VpeImportExportWizardsUtils;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
@@ -95,7 +95,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
         composite.setFont(parent.getFont());
         
         /*
-         * Create data-table with the list of unknown tags 
+         * Create data-table with the list of user specified templates 
          */
         tagsTable = new Table(composite,  SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         TableLayout layout = new TableLayout();
@@ -214,17 +214,17 @@ public class TemplatesPreferencePage extends PreferencePage implements
 			/*
 			 * Export templates
 			 */
-			ExportImportUnknownTagsTemplatesWizardDialog dlg = new ExportImportUnknownTagsTemplatesWizardDialog(
+			ExportImportUserTagsTemplatesWizardDialog dlg = new ExportImportUserTagsTemplatesWizardDialog(
 					PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-					new ExportUnknownTagsTemplatesWizard(tagsList));
+					new ExportUserTagsTemplatesWizard(tagsList));
 			dlg.open();
 		} else if (source == importButton) {
 			/*
 			 * Import templates
 			 */
-			ExportImportUnknownTagsTemplatesWizardDialog dlg = new ExportImportUnknownTagsTemplatesWizardDialog(
+			ExportImportUserTagsTemplatesWizardDialog dlg = new ExportImportUserTagsTemplatesWizardDialog(
 					PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-					new ImportUnknownTagsTemplatesWizard(tagsList));
+					new ImportUserTagsTemplatesWizard(tagsList));
 			dlg.open();
 			/*
 			 * Re-initialize tags list from the file

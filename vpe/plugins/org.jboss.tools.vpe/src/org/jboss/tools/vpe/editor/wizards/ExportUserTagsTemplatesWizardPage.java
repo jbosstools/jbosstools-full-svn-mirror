@@ -40,17 +40,17 @@ import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.ReferenceWizardPage;
 
-public class ExportUnknownTagsTemplatesWizardPage extends WizardPage implements
+public class ExportUserTagsTemplatesWizardPage extends WizardPage implements
 		VpeImportExportWizardPage {
 
 	private String pathString;
 	private Table tagsTable;
 	private List<VpeAnyData> tagsList;
 	
-	protected ExportUnknownTagsTemplatesWizardPage(String pageName, List<VpeAnyData>  currentList) {
+	protected ExportUserTagsTemplatesWizardPage(String pageName, List<VpeAnyData>  currentList) {
 		super(pageName);
-		setTitle(VpeUIMessages.EXPORT_UNKNOWN_TAGS_PAGE_TITLE);
-		setDescription(VpeUIMessages.EXPORT_UNKNOWN_TAGS_PAGE_DESCRIPTION);
+		setTitle(VpeUIMessages.EXPORT_USER_TAGS_PAGE_TITLE);
+		setDescription(VpeUIMessages.EXPORT_USER_TAGS_PAGE_DESCRIPTION);
 		setImageDescriptor(ReferenceWizardPage.getImageDescriptor());
 		/*
 		 * Initialize tags list
@@ -69,7 +69,7 @@ public class ExportUnknownTagsTemplatesWizardPage extends WizardPage implements
         composite.setFont(parent.getFont());
         
         /*
-         * Create datatable with the list of unknown tags 
+         * Create datatable with the list of user specified tag templates
          */
         tagsTable = new Table(composite, SWT.BORDER);
         TableLayout layout = new TableLayout();

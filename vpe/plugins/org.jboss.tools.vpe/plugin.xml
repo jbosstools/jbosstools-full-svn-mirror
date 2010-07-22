@@ -131,12 +131,12 @@
     <extension
         point="org.eclipse.ui.exportWizards">
      <wizard
-           id="org.jboss.tools.vpe.editor.wizards.ExportUnknownTagsTemplatesWizard"
-           class="org.jboss.tools.vpe.editor.wizards.ExportUnknownTagsTemplatesMenuWizard"
-           name="%exportUnknownTagsTemplatesWizardName"
+           id="org.jboss.tools.vpe.editor.wizards.ExportUserTagsTemplatesMenuWizard"
+           class="org.jboss.tools.vpe.editor.wizards.ExportUserTagsTemplatesMenuWizard"
+           name="%exportUserTagsTemplatesWizardName"
            icon="$nl$/resources/org/jboss/tools/vpe/wizards/icons/export_wizard.gif">
         <description>
-              %exportUnknownTagsTemplatesWizardDescription
+              %exportUserTagsTemplatesWizardDescription
         </description>
      </wizard>
   </extension>
@@ -144,12 +144,12 @@
     <extension
         point="org.eclipse.ui.importWizards">
      <wizard
-           id="org.jboss.tools.vpe.editor.wizards.ImportUnknownTagsTemplatesWizard"
-           class="org.jboss.tools.vpe.editor.wizards.ImportUnknownTagsTemplatesMenuWizard"
-           name="%importUnknownTagsTemplatesWizardName"
+           id="org.jboss.tools.vpe.editor.wizards.ImportUserTagsTemplatesMenuWizard"
+           class="org.jboss.tools.vpe.editor.wizards.ImportUserTagsTemplatesMenuWizard"
+           name="%importUserTagsTemplatesWizardName"
            icon="resources/org/jboss/tools/vpe/wizards/icons/import_wizard.gif">
         <description>
-              %importUnknownTagsTemplatesWizardDescription
+              %importUserTagsTemplatesWizardDescription
         </description>
      </wizard>
   </extension>

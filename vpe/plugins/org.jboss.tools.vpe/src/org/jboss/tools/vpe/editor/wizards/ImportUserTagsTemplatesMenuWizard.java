@@ -18,34 +18,34 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 /**
  * 
- * Wizard that imports Unknown Tags Templates from external xml file.
+ * Wizard that imports user specified tag templates from external xml file.
  * 
  * @author dmaliarevich
  */
-public class ImportUnknownTagsTemplatesMenuWizard extends Wizard implements
+public class ImportUserTagsTemplatesMenuWizard extends Wizard implements
 		IImportWizard {
 
 	private IStructuredSelection selection;
-	private ImportUnknownTagsTemplatesMenuWizardPage mainPage;
+	private ImportUserTagsTemplatesMenuWizardPage mainPage;
 	
 	/**
 	 * Constructor
 	 */
-	public ImportUnknownTagsTemplatesMenuWizard() {
+	public ImportUserTagsTemplatesMenuWizard() {
 		super();
-		setWindowTitle(VpeUIMessages.IMPORT_UNKNOWN_TAGS_PAGE_TITLE);
+		setWindowTitle(VpeUIMessages.IMPORT_USER_TAGS_PAGE_TITLE);
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		this.selection = selection;
-		setWindowTitle(VpeUIMessages.IMPORT_UNKNOWN_TAGS_PAGE_TITLE);
+		setWindowTitle(VpeUIMessages.IMPORT_USER_TAGS_PAGE_TITLE);
 	}
 	
 	@Override
 	public void addPages() {
 		super.addPages();
-		mainPage = new ImportUnknownTagsTemplatesMenuWizardPage(
-				VpeUIMessages.IMPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE,
+		mainPage = new ImportUserTagsTemplatesMenuWizardPage(
+				VpeUIMessages.IMPORT_USER_TAGS_TEMPLATES_WIZARD_PAGE,
 				selection);
 		addPage(mainPage);
 	}

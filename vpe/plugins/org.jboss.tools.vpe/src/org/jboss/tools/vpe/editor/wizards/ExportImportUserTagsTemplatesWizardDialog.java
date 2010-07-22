@@ -18,9 +18,9 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 
-public class ExportImportUnknownTagsTemplatesWizardDialog extends WizardDialog {
+public class ExportImportUserTagsTemplatesWizardDialog extends WizardDialog {
 
-	public ExportImportUnknownTagsTemplatesWizardDialog(Shell parentShell,
+	public ExportImportUserTagsTemplatesWizardDialog(Shell parentShell,
 			IWizard newWizard) {
 		super(parentShell, newWizard);
 		setHelpAvailable(false);
@@ -32,8 +32,8 @@ public class ExportImportUnknownTagsTemplatesWizardDialog extends WizardDialog {
 	}
 	
 	public List<VpeAnyData> getImportedList() {
-		if (getWizard() instanceof ImportUnknownTagsTemplatesWizard) {
-			return ((ImportUnknownTagsTemplatesWizard)getWizard()).getImportedList();
+		if (getWizard() instanceof ImportUserTagsTemplatesWizard) {
+			return ((ImportUserTagsTemplatesWizard)getWizard()).getImportedList();
 		} else {
 			return new ArrayList<VpeAnyData>();
 		}

@@ -7,23 +7,23 @@ import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
-public class ImportUnknownTagsTemplatesWizard extends Wizard {
+public class ImportUserTagsTemplatesWizard extends Wizard {
 
-	private ImportUnknownTagsTemplatesWizardPage mainPage;
+	private ImportUserTagsTemplatesWizardPage mainPage;
 	private List<VpeAnyData> importedList = new ArrayList<VpeAnyData>();
 	private List<VpeAnyData> currentList;
 	
-	public ImportUnknownTagsTemplatesWizard(List<VpeAnyData>  currentList) {
+	public ImportUserTagsTemplatesWizard(List<VpeAnyData>  currentList) {
 		super();
-		setWindowTitle(VpeUIMessages.IMPORT_UNKNOWN_TAGS_PAGE_TITLE);
+		setWindowTitle(VpeUIMessages.IMPORT_USER_TAGS_PAGE_TITLE);
 		this.currentList = currentList;
 	}
 	
 	@Override
 	public void addPages() {
 		super.addPages();
-		mainPage = new ImportUnknownTagsTemplatesWizardPage(
-				VpeUIMessages.IMPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE,
+		mainPage = new ImportUserTagsTemplatesWizardPage(
+				VpeUIMessages.IMPORT_USER_TAGS_TEMPLATES_WIZARD_PAGE,
 				currentList);
 		addPage(mainPage);
 	}

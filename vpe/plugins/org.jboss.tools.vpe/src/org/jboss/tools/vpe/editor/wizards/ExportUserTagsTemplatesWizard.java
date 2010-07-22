@@ -16,24 +16,24 @@ import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
-public class ExportUnknownTagsTemplatesWizard extends Wizard {
+public class ExportUserTagsTemplatesWizard extends Wizard {
 
-	private ExportUnknownTagsTemplatesWizardPage mainPage;
+	private ExportUserTagsTemplatesWizardPage mainPage;
 	private List<VpeAnyData>  currentList;
 	
 	/**
 	 * Constructor
 	 */
-	public ExportUnknownTagsTemplatesWizard(List<VpeAnyData>  currentList) {
-		setWindowTitle(VpeUIMessages.EXPORT_UNKNOWN_TAGS_PAGE_TITLE);
+	public ExportUserTagsTemplatesWizard(List<VpeAnyData>  currentList) {
+		setWindowTitle(VpeUIMessages.EXPORT_USER_TAGS_PAGE_TITLE);
 		this.currentList = currentList;
 	}
 	
 	@Override
 	public void addPages() {
 		super.addPages();
-		mainPage = new ExportUnknownTagsTemplatesWizardPage(
-				VpeUIMessages.EXPORT_UNKNOWN_TAGS_TEMPLATES_WIZARD_PAGE,
+		mainPage = new ExportUserTagsTemplatesWizardPage(
+				VpeUIMessages.EXPORT_USER_TAGS_TEMPLATES_WIZARD_PAGE,
 				currentList);
 		addPage(mainPage);
 	}

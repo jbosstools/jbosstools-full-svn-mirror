@@ -107,7 +107,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		setTitle(VpeUIMessages.TAG_ATTRIBUTES);
 		setTitleImage(ModelUIImages.getImageDescriptor(
 				ModelUIImages.WIZARD_DEFAULT).createImage(null));
-		setMessage(VpeUIMessages.UNKNOWN_TAGS_DIALOG_DESCRIPTION);
+		setMessage(VpeUIMessages.USER_SPECIFIED_TAG_DIALOG_DESCRIPTION);
 		
 		/*
 		 * Create validator
@@ -487,7 +487,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 			/*
 			 * Initialize the message with the description
 			 */
-			IMessageProvider message = new Message(VpeUIMessages.UNKNOWN_TAGS_DIALOG_DESCRIPTION,
+			IMessageProvider message = new Message(VpeUIMessages.USER_SPECIFIED_TAG_DIALOG_DESCRIPTION,
 					IMessageProvider.NONE);
 			List<IMessageProvider> statuses = new ArrayList<IMessageProvider>();
 			/*
