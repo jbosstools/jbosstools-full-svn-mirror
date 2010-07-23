@@ -1,0 +1,35 @@
+2010-07-23  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* .classpath: New file.
+	* .project: New file.
+	* .settings/org.eclipse.jdt.core.prefs: New file.
+	* build.properties: New file.
+	* contexts.xml: New file.
+	* icons/cloud.gif: New file.
+	* icons/collapseall.gif: New file.
+	* icons/delta.gif: New file.
+	* icons/folder.gif: New file.
+	* icons/image.gif: New file.
+	* icons/instance.gif: New file.
+	* icons/running.gif: New file.
+	* icons/sample.gif: New file.
+	* icons/stopped.gif: New file.
+	* META-INF/MANIFEST.MF: New file.
+	* plugin.properties: New file.
+	* plugin.xml: New file.
+	* src/org/jboss/tools/deltacloud/ui/Activator.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/SWTImagesFactory.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudPropertySource.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewContentProvider.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewLabelProvider.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVCategoryElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVImageElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstanceElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVTypeMapper.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/ImagePropertySource.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java: New file.
