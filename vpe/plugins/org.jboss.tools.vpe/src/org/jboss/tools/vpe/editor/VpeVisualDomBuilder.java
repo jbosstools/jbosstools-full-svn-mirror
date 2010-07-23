@@ -286,12 +286,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * @return {@code true} if and only if the visual representation is created and added successfully 
 	 */
 	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode, nsIDOMNode visualContainer) {
-		if (sourceNode.toString().indexOf("h:outputText/@[1568, 1603] (<h:outputText value=\"first text\" />)") > -1) {
-			System.out.println("My Out 11");
-		}
-		if (sourceNode.toString().indexOf("h:outputText/@[1153, 1188] (<h:outputText value=\"panel text\" />)") > -1) {
-			System.out.println("My Out 22");
-		}
 		try {
 		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
 // Commented as fix for JBIDE-3012.	
@@ -678,7 +672,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 */
 	protected void addChildren(VpeTemplate containerTemplate,
 			Node sourceContainer, nsIDOMNode visualContainer) {
-
+		
 		NodeList sourceNodes = sourceContainer.getChildNodes();
 		int len = sourceNodes.getLength();
 		int childrenCount = 0;
@@ -703,8 +697,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		for (int i = 0; i < childrenInfoList.size(); i++) {
 			VpeChildrenInfo info = (VpeChildrenInfo) childrenInfoList.get(i);
 			nsIDOMNode visualParent = info.getVisualParent();
-			if (visualParent == null)
+			if (visualParent == null) {
 				visualParent = visualOldContainer;
+			}
 			List<?> sourceChildren = info.getSourceChildren();
 			int childrenCount = 0;
 			if (sourceChildren != null) {
