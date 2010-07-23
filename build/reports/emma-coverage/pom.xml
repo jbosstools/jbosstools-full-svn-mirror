@@ -42,19 +42,26 @@
 							<taskdef resource="emma_ant.properties" />
 							<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
-							<echo>Process emma report...</echo>
-							<emma enabled="true">
-								<report>
-									<infileset dir="${basedir}/../../.." includes="*/tests/*/target/emma/*.es" />
-									<txt outfile="${project.build.directory}/coverage.txt" />
-									<xml outfile="${project.build.directory}/coverage.xml" />
-									<html outfile="${project.build.directory}/coverage.html" />
-								</report>
-							</emma>
-							<loadfile property="emma.txt"
-								srcFile="${project.build.directory}/coverage.txt"
-								failonerror="false" />
-							<echo>${emma.txt}</echo>
+							<if>
+								<not>
+									<isset property="maven.test.skip"/>
+								</not>
+								<then>
+									<echo>Process emma report...</echo>
+									<emma enabled="true">
+										<report>
+											<infileset dir="${basedir}/../../.." includes="*/tests/*/target/emma/*.es" />
+											<txt outfile="${project.build.directory}/coverage.txt" />
+											<xml outfile="${project.build.directory}/coverage.xml" />
+											<html outfile="${project.build.directory}/coverage.html" />
+										</report>
+									</emma>
+									<loadfile property="emma.txt"
+										srcFile="${project.build.directory}/coverage.txt"
+										failonerror="false" />
+									<echo>${emma.txt}</echo>
+								</then>
+							</if>
 						</tasks>
 					</configuration>
 				</execution>
