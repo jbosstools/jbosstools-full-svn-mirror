@@ -144,8 +144,13 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
                         addOfflineServer(server);
                     }
                 }
-            } else if ((element instanceof IFile) && new PublishedResourceHelper(getServerManager()).isPublished((IFile)element)) {
-                overlay = Activator.getDefault().getImageDescriptor(PUBLISHED_OVERLAY_IMAGE);
+            } else if (element instanceof IFile) {
+                IFile file = (IFile)element;
+
+                if (file.exists() && !file.isHidden()
+                    && new PublishedResourceHelper(getServerManager()).isPublished((IFile)element)) {
+                    overlay = Activator.getDefault().getImageDescriptor(PUBLISHED_OVERLAY_IMAGE);
+                }
             }
 
             if (overlay != null) {
