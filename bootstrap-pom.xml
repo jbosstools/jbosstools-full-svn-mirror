@@ -21,6 +21,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<version>1.3</version>
 				<configuration>
 					<checkoutDirectory>${basedir}/sources</checkoutDirectory>
+					<goalsDirectory>${basedir}/sources</goalsDirectory>
 					<goals>clean,install</goals>
 					<profiles>helios-no-target</profiles>
 				</configuration>
