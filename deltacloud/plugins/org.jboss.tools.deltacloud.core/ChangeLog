@@ -1,0 +1,24 @@
+2010-07-23  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* .classpath: New file.
+	* .project: New file.
+	* .settings/org.eclipse.jdt.core.prefs: New file.
+	* .settings/org.eclipse.pde.core.prefs: New file.
+	* build.properties: New file.
+	* lib/apache-mime4j-0.6.jar: New file.
+	* lib/commons-codec-1.3.jar: New file.
+	* lib/commons-logging-1.1.1.jar: New file.
+	* lib/deltacloudclient-1.0.jar: New file.
+	* lib/httpclient-4.0.1.jar: New file.
+	* lib/httpcore-4.0.1.jar: New file.
+	* lib/httpcore-nio-4.0.1.jar: New file.
+	* lib/httpmime-4.0.1.jar: New file.
+	* META-INF/MANIFEST.MF: New file.
+	* src/org/jboss/tools/deltacloud/core/Activator.java: New file.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java: New file.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudImage.java: New file.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: New file.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java: New file.
+	* src/org/jboss/tools/deltacloud/core/ICloudManagerListener.java: New file.
+	* src/org/jboss/tools/deltacloud/core/IImageListListener.java: New file.
+	* src/org/jboss/tools/deltacloud/core/IInstanceListListener.java: New file.
