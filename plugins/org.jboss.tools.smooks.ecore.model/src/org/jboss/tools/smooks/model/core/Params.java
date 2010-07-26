@@ -10,7 +10,9 @@ package org.jboss.tools.smooks.model.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -97,14 +99,46 @@ public class Params extends EObjectImpl implements IParams {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	public IParams setParam(String name, String value) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+	public Params setParam(String name, String value) {
+		if(params == null) {
+			params = new BasicEList<IParam>();
+		}
+		
+		removeParam(name);
+		
+		Param newParam = new Param();
+		newParam.setName(name);
+		newParam.setValue(value);
+		params.add(newParam);
+		
+		return this;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public Params removeParam(String name) {
+		if(params == null) {
+			return this;
+		}
+
+		Iterator<IParam> paramsIterator = params.iterator();
+
+		while(paramsIterator.hasNext()) {
+			String paramName = paramsIterator.next().getName();
+			if(paramName != null && paramName.equals(name)) {
+				paramsIterator.remove();
+				return this;
+			}
+		}
+		
+		return this;
+	}
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -43,12 +43,11 @@ public class GlobalParams extends Params implements IGlobalParams {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public IGlobalParams setFilterType(StreamFilterType filterType) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		setParam(Filter.STREAM_FILTER_TYPE, filterType.toString());		
+		return this;
 	}
 
 	/**
