@@ -2,7 +2,8 @@ package org.jboss.tools.deltacloud.core;
 
 import java.util.List;
 
-import org.jboss.deltacloud.client.Instance;
+import org.jboss.tools.deltacloud.core.client.Instance;
+
 
 public class DeltaCloudInstance {
 
@@ -24,8 +25,8 @@ public class DeltaCloudInstance {
 		return instance.getState().toString();
 	}
 	
-	public String getFlavorId() {
-		return instance.getFlavorId();
+	public String getProfileId() {
+		return instance.getProfileId();
 	}
 	
 	public String getRealmId() {

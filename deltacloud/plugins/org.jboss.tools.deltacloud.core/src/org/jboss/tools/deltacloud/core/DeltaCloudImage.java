@@ -1,6 +1,7 @@
 package org.jboss.tools.deltacloud.core;
 
-import org.jboss.deltacloud.client.Image;
+import org.jboss.tools.deltacloud.core.client.Image;
+
 
 public class DeltaCloudImage {
 

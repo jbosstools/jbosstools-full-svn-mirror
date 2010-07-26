@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.ListenerList;
-import org.jboss.deltacloud.client.DeltaCloudClient;
-import org.jboss.deltacloud.client.DeltaCloudClientException;
-import org.jboss.deltacloud.client.Image;
-import org.jboss.deltacloud.client.Instance;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.Image;
+import org.jboss.tools.deltacloud.core.client.Instance;
 
 public class DeltaCloud {
 	
