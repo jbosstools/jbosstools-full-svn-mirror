@@ -759,11 +759,11 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			} else {
 				Element root = FaceletUtil.findComponentElement(documentWithBundles.getDocumentElement());
 				if ((root != null) && FaceletUtil.isFacelet(root, taglibs)
-						&& root.hasAttribute("template")) {
-					String filePath= root.getAttributeNode("template").getNodeValue();
+						&& root.hasAttribute("template")) { //$NON-NLS-1$
+					String filePath= root.getAttributeNode("template").getNodeValue(); //$NON-NLS-1$
 					if (((JSPTextEditor) editor).getEditorInput() instanceof FileEditorInput) {
 						FileEditorInput fei = (FileEditorInput) ((JSPTextEditor) editor).getEditorInput();
-						IFile templateFile = (IFile) fei.getFile().getProject().getFolder("WebContent").findMember(filePath);
+						IFile templateFile = (IFile) fei.getFile().getProject().getFolder("WebContent").findMember(filePath); //$NON-NLS-1$
 						Document document = VpeCreatorUtil.getDocumentForRead(templateFile);
 						if (null != document) {
 							/*
