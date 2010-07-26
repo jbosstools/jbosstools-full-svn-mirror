@@ -12,7 +12,11 @@
 package org.jboss.tools.vpe.editor.util;
 
 import java.util.HashSet;
+import java.util.List;
 
+import org.jboss.tools.jst.web.kb.PageContextFactory;
+import org.jboss.tools.jst.web.tld.TaglibData;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -81,4 +85,48 @@ public class FaceletUtil {
 
 	}
 
+	
+	/**
+	 * Checks if this node is facelet tag 
+	 * 
+	 * @param sourceNode the node
+	 * @param taglibs specified taglibs
+	 * @return <code>true</code> if this node is facelet tag
+	 */
+	public static boolean isFacelet(Node sourceNode, List<TaglibData> taglibs) {
+		boolean isFacelet = false;
+		String sourcePrefix = sourceNode.getPrefix();
+		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);
+		if (null != sourceNodeTaglib) {
+			String sourceNodeUri = sourceNodeTaglib.getUri();
+			if (VisualDomUtil.FACELETS_URI.equalsIgnoreCase(sourceNodeUri)) {
+				isFacelet = true;
+			}
+		}
+//		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
+//		if (iEditorInput instanceof IFileEditorInput) {
+//			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
+//
+//			IFile iFile = iFileEditorInput.getFile();
+//
+//			IProject project = iFile.getProject();
+//			IModelNature nature = EclipseResourceUtil.getModelNature(project);
+//			if (nature != null) {
+//				XModel model = nature.getModel();
+//				XModelObject webXML = WebAppHelper.getWebApp(model);
+//				XModelObject param = WebAppHelper.findWebAppContextParam(
+//						webXML, "javax.faces.DEFAULT_SUFFIX"); //$NON-NLS-1$
+//				if (param != null) {
+//					String value = param.getAttributeValue("param-value"); //$NON-NLS-1$
+//
+//					if (value.length() != 0 && iFile.getName().endsWith(value)) {
+//						isFacelet = true;
+//					}
+//				}
+//			}
+//		}
+
+		return isFacelet;
+	}
+	
 }

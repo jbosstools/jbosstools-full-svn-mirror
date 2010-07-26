@@ -54,6 +54,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.provisional.extensions.ISourceEditingTextTools;
@@ -65,12 +66,18 @@ import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
+import org.jboss.tools.jst.jsp.editor.IVisualContext;
+import org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor;
+import org.jboss.tools.jst.jsp.jspeditor.SourceEditorPageContext;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
+import org.jboss.tools.jst.web.tld.TaglibData;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.bundle.BundleMap.BundleEntry;
+import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.editor.util.Constants;
+import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -729,16 +736,49 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				} 
 			}
 		}
-		/*
-		 * Add bundles from <f:loadBundle> tags
-		 */
 		ISourceEditingTextTools sourceEditingTextTools = 
 			(ISourceEditingTextTools) editor
-				.getAdapter(ISourceEditingTextTools.class);
+			.getAdapter(ISourceEditingTextTools.class);
 		IDOMSourceEditingTextTools domSourceEditingTextTools = 
 			(IDOMSourceEditingTextTools) sourceEditingTextTools;
-		Document doc = domSourceEditingTextTools.getDOMDocument();
-		NodeList list = doc.getElementsByTagName("f:loadBundle"); //$NON-NLS-1$
+		Document documentWithBundles = domSourceEditingTextTools.getDOMDocument();
+		
+		/*
+		 * When facelets are used -- get bundles from the template file
+		 */
+		if (editor instanceof JSPTextEditor) {
+			IVisualContext context =  ((JSPTextEditor) editor).getPageContext();
+			List<TaglibData> taglibs = null;
+			if (context instanceof SourceEditorPageContext) {
+				SourceEditorPageContext sourcePageContext = (SourceEditorPageContext) context;
+				taglibs = sourcePageContext.getTagLibs();
+			}
+			if (null == taglibs) {
+				VpePlugin.getDefault().logError(
+						VpeUIMessages.CANNOT_LOAD_TAGLIBS_FROM_PAGE_CONTEXT);
+			} else {
+				Element root = FaceletUtil.findComponentElement(documentWithBundles.getDocumentElement());
+				if ((root != null) && FaceletUtil.isFacelet(root, taglibs)
+						&& root.hasAttribute("template")) {
+					String filePath= root.getAttributeNode("template").getNodeValue();
+					if (((JSPTextEditor) editor).getEditorInput() instanceof FileEditorInput) {
+						FileEditorInput fei = (FileEditorInput) ((JSPTextEditor) editor).getEditorInput();
+						IFile templateFile = (IFile) fei.getFile().getProject().getFolder("WebContent").findMember(filePath);
+						Document document = VpeCreatorUtil.getDocumentForRead(templateFile);
+						if (null != document) {
+							/*
+							 * Change the document where to look bundles
+							 */
+							documentWithBundles = document;
+						}
+					}
+				}
+			}
+		}
+		/*
+		 * Add bundles from <f:loadBundle> tags on the current page
+		 */
+		NodeList list = documentWithBundles.getElementsByTagName("f:loadBundle"); //$NON-NLS-1$
 		for (int i = 0; i < list.getLength(); i++) {
 			Element node = (Element) list.item(i);
 			uri = node.getAttribute("basename"); //$NON-NLS-1$

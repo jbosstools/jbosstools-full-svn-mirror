@@ -223,14 +223,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		
 		refreshExternalLinks();
 		
-//		if (isFacelet()) {
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4398
 		 * Additional check for facelet's taglibs should be added
 		 * to distinguish it from custom tags and pages without facelets support.
 		 */
 		Element root = FaceletUtil.findComponentElement(sourceDocument.getDocumentElement());
-		if ((root != null) && (isFacelet(root))){
+		if ((root != null)
+				&& (FaceletUtil.isFacelet(root,
+						XmlUtil.getTaglibsForNode(root, pageContext)))) {
 				addNode(root, null, getContentArea());
 		} else {
 			addChildren(null, sourceDocument, getContentArea());
@@ -1944,48 +1945,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 */
 	protected nsIDOMDocument getVisualDocument() {
 		return visualEditor.getDomDocument();
-	}
-
-	/**
-	 * Check this file is facelet
-	 * 
-	 * @return this if file is facelet, otherwize false
-	 */
-	private boolean isFacelet(Node sourceNode) {
-		boolean isFacelet = false;
-		String sourcePrefix = sourceNode.getPrefix();
-		List<TaglibData> taglibs = XmlUtil.getTaglibsForNode(sourceNode, pageContext);
-		TaglibData sourceNodeTaglib = XmlUtil.getTaglibForPrefix(sourcePrefix, taglibs);
-		if (null != sourceNodeTaglib) {
-			String sourceNodeUri = sourceNodeTaglib.getUri();
-			if (VisualDomUtil.FACELETS_URI.equalsIgnoreCase(sourceNodeUri)) {
-				isFacelet = true;
-			}
-		}
-//		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
-//		if (iEditorInput instanceof IFileEditorInput) {
-//			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
-//
-//			IFile iFile = iFileEditorInput.getFile();
-//
-//			IProject project = iFile.getProject();
-//			IModelNature nature = EclipseResourceUtil.getModelNature(project);
-//			if (nature != null) {
-//				XModel model = nature.getModel();
-//				XModelObject webXML = WebAppHelper.getWebApp(model);
-//				XModelObject param = WebAppHelper.findWebAppContextParam(
-//						webXML, "javax.faces.DEFAULT_SUFFIX"); //$NON-NLS-1$
-//				if (param != null) {
-//					String value = param.getAttributeValue("param-value"); //$NON-NLS-1$
-//
-//					if (value.length() != 0 && iFile.getName().endsWith(value)) {
-//						isFacelet = true;
-//					}
-//				}
-//			}
-//		}
-
-		return isFacelet;
 	}
 
 	/**

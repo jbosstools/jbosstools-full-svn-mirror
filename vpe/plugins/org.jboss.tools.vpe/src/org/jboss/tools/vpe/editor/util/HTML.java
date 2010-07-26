@@ -67,10 +67,12 @@ public final class HTML {
 	public static final String TAG_H6 = "h6"; //$NON-NLS-1$
 	public static final String TAG_FORM = "form"; //$NON-NLS-1$
 	
-	/**Use this class if you want to wrap a text node in a span that
-	 * must not affect visual representation of the text node. 
-	 * <p/>
-	 * See also EditorOverride.css .*/
+	/*
+	 * Use this class if you want to wrap a text node in a span that
+	 * must not affect visual representation of the text node.
+	 *  
+	 * See also EditorOverride.css .
+	 */
 	public static final String CLASS_VPE_TEXT = "vpe-text"; //$NON-NLS-1$
 
 	public static final String ATTR_ID = "id"; //$NON-NLS-1$
@@ -111,10 +113,12 @@ public final class HTML {
 	public static final String ATTR_BACKGROUND = "background"; //$NON-NLS-1$
 	public static final String ATTR_BGCOLOR = "bgcolor"; //$NON-NLS-1$
 
-	/**Use this constant if you have to span a column to entire row.*/
-	/* While in HTML 4.01 standard "colspan='0'" should be used for this purpose,
+	/*
+	 * Use this constant if you have to span a column to entire row.
+	 * While in HTML 4.01 standard "colspan='0'" should be used for this purpose, 
 	 * it will not work with documents without DOCTYPE. It is the reason
-	 * why the value '100' is used.*/
+	 * why the value '100' is used.
+	 */
 	public static final String VALUE_COLSPAN_ALL = "100"; //$NON-NLS-1$
 
 	public static final String VALUE_ALIGN_TOP = "top"; //$NON-NLS-1$
