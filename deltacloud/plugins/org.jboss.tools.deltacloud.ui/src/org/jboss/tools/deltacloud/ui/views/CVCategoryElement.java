@@ -1,7 +1,5 @@
 package org.jboss.tools.deltacloud.ui.views;
 
-import java.util.ArrayList;
-
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;

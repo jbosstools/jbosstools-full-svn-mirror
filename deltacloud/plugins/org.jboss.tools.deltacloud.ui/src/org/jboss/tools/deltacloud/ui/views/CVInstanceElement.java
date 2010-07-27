@@ -10,7 +10,7 @@ public class CVInstanceElement extends CloudViewElement {
 	
 	@Override
 	public IPropertySource getPropertySource() {
-		return new InstancePropertySource(getElement());
+		return new InstancePropertySource(this, getElement());
 	}
 
 }

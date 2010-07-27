@@ -11,7 +11,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -64,9 +66,19 @@ public class DeltaCloudView extends ViewPart {
 		makeActions();
 		hookContextMenu();
 		hookDoubleClickAction();
+		hookSelection();
 		contributeToActionBars();
 	}
 
+	private void hookSelection() {
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				handleSelection();
+			}
+		});
+	}
+	
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
@@ -86,6 +98,12 @@ public class DeltaCloudView extends ViewPart {
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
+	private void handleSelection() {
+		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+		CloudViewElement element = (CloudViewElement)selection.getFirstElement();
+		// FIXME: add context menus here based on element type
+	}
+	
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(action1);
 		manager.add(new Separator());

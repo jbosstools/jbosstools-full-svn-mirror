@@ -11,7 +11,7 @@ public class InstancePropertySource implements IPropertySource {
 
 	private static final String PROPERTY_NAME = "deltacloud.views.instance.name"; //$NON-NLS-1$
 	private static final String PROPERTY_ID = "deltacloud.views.instance.id"; //$NON-NLS-1$
-	private static final String PROPERTY_STATE = "deltacloud.views.instance.state"; //$NON-NLS-1$
+	public  static final String PROPERTY_STATE = "deltacloud.views.instance.state"; //$NON-NLS-1$
 	private static final String PROPERTY_HOSTNAME = "deltacloud.views.instance.hostname"; //$NON-NLS-1$
 	private static final String PROPERTY_PROFILEID = "deltacloud.views.instance.profileid"; //$NON-NLS-1$
 	private static final String PROPERTY_REALMID = "deltacloud.views.instance.realmid"; //$NON-NLS-1$
@@ -26,9 +26,11 @@ public class InstancePropertySource implements IPropertySource {
 	
 	private IPropertyDescriptor[] propertyDescriptors;
 	private DeltaCloudInstance instance;
+	private CVInstanceElement element;
 	
-	public InstancePropertySource(Object o) {
+	public InstancePropertySource(CVInstanceElement element, Object o) {
 		instance = (DeltaCloudInstance)o;
+		this.element = element;
 	}
 	
 	@Override
@@ -80,8 +82,9 @@ public class InstancePropertySource implements IPropertySource {
 			return instance.getRealmId();
 		if (id.equals(PROPERTY_IMAGEID))
 			return instance.getImageId();
-		if (id.equals(PROPERTY_STATE))
+		if (id.equals(PROPERTY_STATE)) {
 			return instance.getState();
+		}
 		if (id.equals(PROPERTY_HOSTNAME)) {
 			List<String> hostnames = instance.getHostNames();
 			if (hostnames.size() >= 1)

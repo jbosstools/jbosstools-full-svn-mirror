@@ -45,13 +45,13 @@ public class CloudViewContentProvider implements ITreeContentProvider {
 
 	}
 
-	private void createElements() {
+	private void createElements(Viewer viewer) {
 		ArrayList<CloudViewElement> list = new ArrayList<CloudViewElement>();
 		DeltaCloudManager m = DeltaCloudManager.getDefault();
 		DeltaCloud[] clouds = m.getClouds();
 		for (int i = 0; i < clouds.length; ++i) {
 			DeltaCloud cloud = clouds[i];
-			CVCloudElement e = new CVCloudElement(cloud, cloud.getName());
+			CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), viewer);
 			CVCategoryElement c1 = new CVCategoryElement(cloud, CVMessages.getString(INSTANCE_CATEGORY_NAME),
 					CVCategoryElement.INSTANCES);
 			CVCategoryElement c2 = new CVCategoryElement(cloud, CVMessages.getString(IMAGE_CATEGORY_NAME),
@@ -65,7 +65,7 @@ public class CloudViewContentProvider implements ITreeContentProvider {
 	
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		createElements();
+		createElements(viewer);
 	}
 
 }
