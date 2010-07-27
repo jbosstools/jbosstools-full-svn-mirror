@@ -10,7 +10,6 @@ Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.core.runtime,
  org.jboss.tools.smooks.runtime,
  org.eclipse.emf.ecore
-Bundle-Activator: org.jboss.tools.smooks.model.plugin.SmooksModelActivator
 Export-Package: org.jboss.tools.smooks.model,
  org.jboss.tools.smooks.model.core
 Bundle-ClassPath: .,
