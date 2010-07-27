@@ -1,65 +1,73 @@
 package org.jboss.tools.deltacloud.core.client;
 
-import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HardwareProfile extends DeltaCloudObject
 {
 	private static final long serialVersionUID = 1L;
 
-	@XmlElement
-	private String architecture;
-	
-	@XmlElement
-	private String memory;
-	
-	@XmlElement
-	private String storage;
+	private List<Property> properties;
 	
 	private HardwareProfile()
 	{	
 	}
 
-	@SuppressWarnings("unused")
-	private void setArchitecture(String architecture)
-	{
-		this.architecture = architecture;
+	public List<Property> getProperties() {
+		if (properties == null)
+			properties = new ArrayList<Property>();
+		return properties;
 	}
-
-	@SuppressWarnings("unused")
-	private void setMemory(String memory)
-	{
-		this.memory = memory;
+	
+	private Property getNamedProperty(String name) {
+		for (Property p : properties) {
+			if (p.getName().equals(name))
+				return p;
+		}
+		return null;
 	}
-
-	@SuppressWarnings("unused")
-	private void setStorage(String storage)
-	{
-		this.storage = storage;
-	}
-
+	
 	public String getArchitecture()
 	{
-		return architecture;
+		Property p = getNamedProperty("architecture");
+		if (p != null)
+			return p.toString();
+		return null;
 	}
 
 	public String getMemory()
 	{
-		return memory;
+		Property p = getNamedProperty("memory");
+		if (p != null)
+			return p.toString();
+		return null;
 	}
-
+	
 	public String getStorage()
 	{
-		return storage;
+		Property p = getNamedProperty("storage");
+		if (p != null)
+			return p.toString();
+		return null;
 	}
+
+	public String getCPU()
+	{
+		Property p = getNamedProperty("cpu");
+		if (p != null)
+			return p.toString();
+		return null;
+	}
+	
 	
 	@Override
 	public String toString()
 	{
 		String s = "";
 		s += "Hardware-profile:\t\t" + getId() + "\n";
-		s += "Arch:\t\t" + getArchitecture() + "\n";
-		s += "Memory:\t\t" + getMemory() + "\n";
-		s += "Storage:\t" + getStorage() + "\n";
+		for (Property p : properties) {
+			s += p.getName() + ":\t\t" + p.getValue() + "\n";
+		}
 		return s;
 	}
 }

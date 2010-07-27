@@ -1,3 +1,24 @@
+2010-07-27  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/Property.java: New file.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (getProfileProperties): Renamed
+	from setProfileProperties and cpu support added.
+	(buildDeltaCloudObject): Add support for HardwareProfile.
+	(buildHardwareProfile): New method to build up a hardware profile.
+	(buildInstance): Add hardware profile support.
+	(createInstance): Change to use getProfileProperties which was renamed.
+	* src/org/jboss/tools/deltacloud/core/client/HardwareProfile.java (getArchitecture): New method. 
+	(getNamedProperty): Ditto.
+	(getCPU): Ditto.
+	(toString): Ditto.
+	(getProperties): Ditto.
+	(getMemory): Change to get the memory property.
+	(getStorage): Change to get the storage property.
+	(HardwareProfile): Make private.
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java (setCPU): New method. 
+	(getCPU): Ditto.
+	(toString): Add cpu support.
+
 2010-07-26  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/AddressList.java: New file.

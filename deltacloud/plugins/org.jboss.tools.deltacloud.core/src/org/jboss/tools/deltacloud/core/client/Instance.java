@@ -20,12 +20,13 @@ public class Instance extends DeltaCloudObject
 	
 	private String imageId;
 
-	@XmlElement(name="hardware-profile")
 	private String profileId;
 
 	private String memory;
 	
 	private String storage;
+	
+	private String cpu;
 	
 	private String realmId;
 	
@@ -72,6 +73,10 @@ public class Instance extends DeltaCloudObject
 	
 	protected void setStorage(String storage) {
 		this.storage = storage;
+	}
+
+	protected void setCPU(String cpu) {
+		this.cpu = cpu;
 	}
 	
 	protected void setRealmId(String realmId)
@@ -128,7 +133,11 @@ public class Instance extends DeltaCloudObject
 	public String getStorage() {
 		return storage;
 	}
-	
+
+	public String getCPU() {
+		return cpu;
+	}
+
 	public String getRealmId()
 	{
 		return realmId;
@@ -164,9 +173,12 @@ public class Instance extends DeltaCloudObject
 		s += "Realm:\t\t" + getRealmId() + "\n";
 		s += "Profile:\t\t" + getProfileId() + "\n";
 		if (getMemory() != null)
-		    s += "Memory:\t\t\t" + getMemory() + "\n";
+		    s += "Memory:\t\t" + getMemory() + "\n";
 		if (getStorage() != null) {
-			s += "Storage:\t\t\t" + getStorage() + "\n";
+			s += "Storage:\t\t" + getStorage() + "\n";
+		}
+		if (getCPU() != null) {
+			s += "CPU:\t\t" + getCPU() + "\n";
 		}
 		s += "State:\t\t" + getState() + "\n";
 		
