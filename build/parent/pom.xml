@@ -181,6 +181,17 @@
 			</activation>
 			<repositories>
 				<repository>
+					<id>helios-jboss-mirror</id>
+					<url>http://download.jboss.org/jbosstools/updates/helios/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
 					<id>helios</id>
 					<url>http://download.eclipse.org/releases/helios/</url>
 					<layout>p2</layout>
@@ -544,6 +555,12 @@
 								<groupId>ant-contrib</groupId>
 								<artifactId>ant-contrib</artifactId>
 								<version>1.0b3</version>
+								<exclusions>
+									<exclusion>
+										<groupId>ant</groupId>
+										<artifactId>ant</artifactId>
+									</exclusion>
+								</exclusions>
 							</dependency>
 						</dependencies>
 						<executions>
@@ -600,6 +617,19 @@
 			<build>
 				<plugins>
 					<plugin>
+						<dependencies>
+							<dependency>
+								<groupId>ant-contrib</groupId>
+								<artifactId>ant-contrib</artifactId>
+								<version>1.0b3</version>
+								<exclusions>
+									<exclusion>
+										<groupId>ant</groupId>
+										<artifactId>ant</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+						</dependencies>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<version>1.3</version>
 						<executions>
@@ -611,13 +641,19 @@
 								</goals>
 								<configuration>
 									<tasks>
-										<property file="requirements.properties" />
-										<echo>Requirements build</echo>
-										<ant dir="${basedir}/../../../requirements" inheritAll="true" >
-											<property name="requirements" value="${requirements}" />
-											<property name="settings.offline" value="${settings.offline}" />
-											<property name="skipDownload" value="${skipDownload}" />
-										</ant> 
+										<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+										<if>
+											<available file="${requirements.root}" type="dir" />
+											<then>							
+												<property file="requirements.properties" />
+												<echo>Requirements build</echo>
+												<ant dir="${requirements.root}" inheritAll="true" >
+													<property name="requirements" value="${requirements}" />
+													<property name="settings.offline" value="${settings.offline}" />
+													<property name="skipDownload" value="${skipDownload}" />
+												</ant>
+											</then>
+										</if>
 									</tasks>
 								</configuration>
 							</execution>
