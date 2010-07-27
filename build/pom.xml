@@ -1,12 +1,28 @@
 <project
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-<groupId>org.jboss</groupId>
-<artifactId>jbosstools</artifactId>
+<groupId>org.jboss.tools</groupId>
+<artifactId>build</artifactId>
 <version>0.0.1-SNAPSHOT</version>
 <packaging>pom</packaging>
+
+<profiles>
+	<profile>
+		<id>emma-coverage</id>
+		<activation>
+			<property>
+				<name>coverage</name>
+			</property>
+		</activation>
+		<modules>
+			<module>libs</module>
+			<module>reports/emma-coverage</module>
+		</modules>
+	</profile>
+</profiles>
+
+
 <modules>
-	<module>../build/libs</module>
 
 	<!-- this order is important! make sure you've run genpom.xml first! -->
 	<!-- dgolovin's order -->
@@ -45,22 +61,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		ant -q -->
 	<!-- IF YOU REMOVE A MODULE, be sure to also remove it from site/site.xml and build/aggregate/site/site.xml 
 	     or the build will break! -->
-	<!-- <module>../drools</module> -->
+	<module>../drools</module>>
 	
-	<!--module>../site</module-->
+	<module>../site</module>
 </modules>
-<profiles>
-	<profile>
-		<id>emma-coverage</id>
-		<activation>
-			<property>
-				<name>coverage</name>
-			</property>
-		</activation>
-		<modules>
-			<module>reports/emma-coverage</module>
-		</modules>
-	</profile>
-</profiles>
 </project>
 	
