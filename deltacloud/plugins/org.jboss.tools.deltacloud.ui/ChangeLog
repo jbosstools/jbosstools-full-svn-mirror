@@ -1,5 +1,14 @@
 2010-07-27  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new message
+	for disconnect cloud action.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (makeActions): Add
+	new cloud disconnect action. 
+	(fillLocalPullDown): Ditto.
+	(.run): New action to disconnect from cloud and remove from tree viewer.
+
+2010-07-27  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/views/CloudViewContentProvider.java (createElements): Add
 	viewer argument and use this when creating a CVCloudElement. 
 	(inputChanged): Pass the viewer to createElements.

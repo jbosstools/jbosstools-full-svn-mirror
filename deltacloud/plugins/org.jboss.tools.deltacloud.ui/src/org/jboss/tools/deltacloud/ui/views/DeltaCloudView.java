@@ -24,6 +24,8 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 
@@ -34,11 +36,14 @@ public class DeltaCloudView extends ViewPart {
 	 */
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.DeltaCloudView";
 	
-	public static final String COLLAPSE_ALL = "CollapseAll.label";
+	private static final String REMOVE_CLOUD = "RemoveCloud.label"; //$NON-NLS-1$
+	
+	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
 	private TreeViewer viewer;
 	private Action action1;
 	private Action action2;
+	private Action removeCloud;
 	private Action collapseall;
 	private Action doubleClickAction;
 
@@ -107,7 +112,7 @@ public class DeltaCloudView extends ViewPart {
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(action1);
 		manager.add(new Separator());
-		manager.add(action2);
+		manager.add(removeCloud);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -122,6 +127,33 @@ public class DeltaCloudView extends ViewPart {
 	}
 
 	private void makeActions() {
+		removeCloud = new Action() {
+			public void run() {
+				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+				CloudViewElement element = (CloudViewElement)selection.getFirstElement();
+				while (element != null && !(element instanceof CVCloudElement)) {
+					element = (CloudViewElement)element.getParent();
+				}
+				if (element != null) {
+					CVCloudElement cve = (CVCloudElement)element;
+					DeltaCloudManager.getDefault().removeCloud((DeltaCloud)element.getElement());
+					CloudViewContentProvider p = (CloudViewContentProvider)viewer.getContentProvider();
+					Object[] elements = p.getElements(getViewSite());
+					int index = -1;
+					for (int i = 0; i < elements.length; ++i) {
+						if (elements[i] == cve)
+							index = i;
+					}
+					if (index >= 0)
+						((TreeViewer)cve.getViewer()).remove(getViewSite(), index);
+				}
+			}
+		};
+		removeCloud.setText(CVMessages.getString(REMOVE_CLOUD));
+		removeCloud.setToolTipText(CVMessages.getString(REMOVE_CLOUD));
+		removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+	
 		action1 = new Action() {
 			public void run() {
 				showMessage("Action 1 executed");
