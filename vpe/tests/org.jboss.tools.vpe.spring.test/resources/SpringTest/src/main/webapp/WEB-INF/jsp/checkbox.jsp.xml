@@ -1,0 +1,27 @@
+<tests>
+	<test id="checkbox1">
+		<SPAN CLASS="vpe-text">
+			<INPUT TYPE="checkbox" ID="checkbox1" />
+			<LABEL>
+			</LABEL>
+		</SPAN>
+	</test>
+	<test id="checkbox2">
+		<SPAN CLASS="vpe-text">
+			<INPUT TYPE="checkbox" CLASS="tall-checkbox" ID="checkbox2"
+				STYLE="width: 30px;" />
+			<LABEL>
+				form:checkbox with id, path, cssStyle, cssClass and label
+				attributes. (Must be big square.)
+			</LABEL>
+		</SPAN>
+	</test>
+	<test id="checkbox3">
+		<SPAN CLASS="vpe-text">
+			<INPUT TYPE="checkbox" DISABLED="disabled" ID="checkbox3" />
+			<LABEL>
+				form:checkbox with id, path and disabled='true' attributes.
+			</LABEL>
+		</SPAN>
+	</test>
+</tests>

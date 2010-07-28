@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    
+    <!-- the application context definition for the springapp DispatcherServlet -->
+    
+    <bean name="/form.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/checkbox.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+        <property name="prefix" value="/WEB-INF/jsp"></property>
+        <property name="suffix" value=".jsp"></property>        
+    </bean>
+</beans>
