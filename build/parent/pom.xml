@@ -214,6 +214,117 @@
 					</releases>
 				</repository>
 				<repository>
+					<id>birt26</id>
+					<url>http://download.eclipse.org/birt/update-site/2.6/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>swtbot-helios</id>
+					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>m2eclipse</id>
+					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>m2eclipse-extras</id>
+					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>orbit</id>
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+                                        <id>google eclipse plugins</id>
+                                        <url>http://dl.google.com/eclipse/plugin/3.6</url>
+                                        <layout>p2</layout>
+                                        <snapshots>
+                                                <enabled>true</enabled>
+                                        </snapshots>
+                                        <releases>
+                                                <enabled>true</enabled>
+                                        </releases>
+                                </repository>
+			</repositories>
+		</profile>
+
+		<profile>
+			<id>helios-sp1-no-target</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>helios-jboss-mirror</id>
+					<url>http://download.jboss.org/jbosstools/updates/helios/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>helios</id>
+					<url>http://download.eclipse.org/releases/helios/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>webtools32</id>
+					<url>http://download.eclipse.org/webtools/repository/helios</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
 					<id>eclipse36</id>
 					<url>http://download.eclipse.org/eclipse/updates/3.6.x/
 					</url>
@@ -296,6 +407,7 @@
                                 </repository>
 			</repositories>
 		</profile>
+
 		<profile>
 			<id>hudson</id>
 			<activation>
