@@ -75,8 +75,8 @@ public class PortletRuntimeComponentProvider extends
 				return true;
 			}
 			// JBoss portletcontainer
-			if (exists(configFile,
-					IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL)) {
+			if (exists(configFile,IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL) ||
+					exists(configFile,IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL_SAR)) {
 				return true;
 			}
 			// GateIn Portal Server

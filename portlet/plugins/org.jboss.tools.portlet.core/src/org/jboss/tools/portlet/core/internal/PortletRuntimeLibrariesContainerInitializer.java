@@ -149,6 +149,10 @@ public class PortletRuntimeLibrariesContainerInitializer extends
 				} else {
 					libDirectory = getDirectory(location,
 						IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL);
+					if (libDirectory == null) {
+						libDirectory = getDirectory(location,
+								IPortletConstants.SERVER_DEFAULT_DEPLOY_SIMPLE_PORTAL_SAR);
+					}
 					if (libDirectory != null) {
 						libDirectory = new File(libDirectory, "lib"); //$NON-NLS-1$
 					} else {
