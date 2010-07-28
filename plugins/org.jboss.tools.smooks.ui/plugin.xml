@@ -26,4 +26,18 @@
             id="org.jboss.tools.smooks.configuration.wizards.NewConfigurationFileWizard">
       </wizard>
    </extension>
+    <extension
+          point="org.eclipse.ui.editors">
+       <editor
+             class="org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor"
+             contributorClass="org.jboss.tools.smooks.configuration.editors.SmooksMultiPageEditorContributor"
+             default="false"
+             icon="icons/smooks-sm.gif"
+             id="org.jboss.tools.smooks.ui.smookseditor"
+             name="Smooks Editor">
+          <contentTypeBinding
+                contentTypeId="org.jboss.tools.smooks.ui.smooks.contentType">
+          </contentTypeBinding>
+       </editor>
+    </extension>
 </plugin>
