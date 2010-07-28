@@ -26,10 +26,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 
-public class DeltaCloudView extends ViewPart {
+public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -37,6 +38,7 @@ public class DeltaCloudView extends ViewPart {
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.DeltaCloudView";
 	
 	private static final String REMOVE_CLOUD = "RemoveCloud.label"; //$NON-NLS-1$
+	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
@@ -44,9 +46,9 @@ public class DeltaCloudView extends ViewPart {
 	private Action action1;
 	private Action action2;
 	private Action removeCloud;
+	private Action refreshAction;
 	private Action collapseall;
 	private Action doubleClickAction;
-
 
 	/**
 	 * The constructor.
@@ -73,6 +75,7 @@ public class DeltaCloudView extends ViewPart {
 		hookDoubleClickAction();
 		hookSelection();
 		contributeToActionBars();
+		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
 
 	private void hookSelection() {
@@ -113,6 +116,7 @@ public class DeltaCloudView extends ViewPart {
 		manager.add(action1);
 		manager.add(new Separator());
 		manager.add(removeCloud);
+		manager.add(refreshAction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -152,7 +156,17 @@ public class DeltaCloudView extends ViewPart {
 		removeCloud.setText(CVMessages.getString(REMOVE_CLOUD));
 		removeCloud.setToolTipText(CVMessages.getString(REMOVE_CLOUD));
 		removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+				getImageDescriptor(ISharedImages.IMG_ELCL_REMOVE));
+
+		refreshAction = new Action() {
+			public void run() {
+				viewer.setInput(getViewSite());
+			}
+		};
+		refreshAction.setText(CVMessages.getString(REFRESH));
+		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
+		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
 	
 		action1 = new Action() {
 			public void run() {
@@ -209,5 +223,10 @@ public class DeltaCloudView extends ViewPart {
 	 */
 	public void setFocus() {
 		viewer.getControl().setFocus();
+	}
+
+	@Override
+	public void changeEvent(int type) {
+		viewer.setInput(getViewSite());
 	}
 }

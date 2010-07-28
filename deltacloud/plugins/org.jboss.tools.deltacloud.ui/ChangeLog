@@ -1,3 +1,18 @@
+2010-07-28  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: New file.
+	* plugin.properties: Add messages for connection wizard.
+	* plugin.xml: Add new connection wizard.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new messages.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (changeEvent): New method
+	to make this an ICloudManagerListener.
+	(makeActions): Add new refresh action.
+	(fillLocalPullDown): Ditto.
+	(createPartControl): Register this as DeltaCloudManager listener.
+
 2010-07-27  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new message

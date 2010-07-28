@@ -56,5 +56,19 @@
          </propertySection>
       </propertySections>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.jboss.tools.deltacloud.ui.wizard.category"
+            name="%DeltaCloudCategory">
+      </category>
+      <wizard
+            category="org.jboss.tools.deltacloud.ui.wizard.category"
+            class="org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnection"
+            icon="icons/delta.gif"
+            id="org.jboss.tools.deltacloud.ui.connection.wizard"
+            name="%NewWizard.name">
+      </wizard>
+   </extension>
 
 </plugin>
