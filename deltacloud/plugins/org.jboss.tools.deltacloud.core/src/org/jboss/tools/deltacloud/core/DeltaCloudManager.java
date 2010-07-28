@@ -35,6 +35,14 @@ public class DeltaCloudManager {
 		return clouds.toArray(new DeltaCloud[clouds.size()]);
 	}
 
+	public DeltaCloud findCloud(String name) {
+		for (DeltaCloud cloud : clouds) {
+			if (cloud.getName().equals(name))
+				return cloud;
+		}
+		return null;
+	}
+	
 	public void addCloud(DeltaCloud d) {
 		clouds.add(d);
 		notifyListeners(ICloudManagerListener.ADD_EVENT);
