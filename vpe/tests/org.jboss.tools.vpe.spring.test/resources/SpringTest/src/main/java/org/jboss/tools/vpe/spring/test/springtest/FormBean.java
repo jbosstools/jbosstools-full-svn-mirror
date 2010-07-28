@@ -1,5 +1,9 @@
 package org.jboss.tools.vpe.spring.test.springtest;
 
+/**
+ * 
+ * @author Yahor Radtsevich (yradtsevich)
+ */
 public class FormBean {
 	private boolean chechbox1Selected = false;
 	private boolean chechbox2Selected = true;
