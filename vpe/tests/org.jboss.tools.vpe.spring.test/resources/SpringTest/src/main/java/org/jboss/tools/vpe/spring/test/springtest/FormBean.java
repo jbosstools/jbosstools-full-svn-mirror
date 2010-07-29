@@ -1,7 +1,9 @@
 package org.jboss.tools.vpe.spring.test.springtest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,12 +17,15 @@ public class FormBean {
 
 	private Map<Integer, String> availableCategories = new HashMap<Integer, String>();
 	private Set<Integer> selectedCategories = new HashSet<Integer>();
+	private List<CategoryType> favoriteCategories = new ArrayList<CategoryType>();
 
 	public FormBean() {
 		for (CategoryType categoryType : CategoryType.values()) {
 			availableCategories.put(categoryType.getId(), categoryType.getName());
 		}
 		selectedCategories.add(CategoryType.Books.getId());
+		favoriteCategories.add(CategoryType.Sport);
+		favoriteCategories.add(CategoryType.Books);
 	}
 
 	public boolean isChechbox1Selected() {
@@ -61,5 +66,13 @@ public class FormBean {
 
 	public void setSelectedCategories(Set<Integer> selectedCategories) {
 		this.selectedCategories = selectedCategories;
+	}
+
+	public List<CategoryType> getFavoriteCategories() {
+		return favoriteCategories;
+	}
+
+	public void setFavoriteCategories(List<CategoryType> favoriteCategories) {
+		this.favoriteCategories = favoriteCategories;
 	}
 }

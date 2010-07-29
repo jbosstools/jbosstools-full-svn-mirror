@@ -24,9 +24,10 @@
 		<br/>form:checkboxes with id, cssStyle, cssClass, items and path attributes.  (Must look as a big square.)
 		<br/><br/>
 		<form:checkboxes id="checkboxes3" disabled="true"
-					items="${formBean.availableCategories}"
+					itemLabel="id" itemValue="id"
+					items="${formBean.favoriteCategories}"
 					path="selectedCategories" />
-		<br/>disabled form:checkboxes
+		<br/>disabled form:checkboxes with itemLabel attribute
 		<br/><br/>
 	</form:form>
 </body>
