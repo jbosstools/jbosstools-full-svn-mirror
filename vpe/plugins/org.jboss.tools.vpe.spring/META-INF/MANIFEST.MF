@@ -3,9 +3,13 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jboss.tools.vpe.spring;singleton:=true
 Bundle-Version: 3.1.0.qualifier
+Bundle-Activator: org.jboss.tools.vpe.spring.SpringTemplatePlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jboss.tools.vpe
+ org.jboss.tools.vpe,
+ org.mozilla.xpcom,
+ org.eclipse.jface.text,
+ org.jboss.tools.jst.jsp
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %vendorName
 Bundle-Localization: plugin
