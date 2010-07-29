@@ -101,4 +101,26 @@
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
+	
+	<vpe:tag name="form:input" case-sensitive="no">
+		<vpe:template children="no" modify="no">
+			<input type="text" id="{@id}" class="{@cssClass}" 
+				style="{@cssStyle}" size="{@size}" dir="{@dir}"
+				disabled="{@disabled}"  />
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:label" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<label id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+				 for="{@for}" dir="{@dir}">
+			</label>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:hidden" case-sensitive="no">
+		<vpe:template children="no" modify="no" >
+		</vpe:template>
+	</vpe:tag>
+	
 </vpe:templates>
