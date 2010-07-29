@@ -28,7 +28,7 @@ import org.w3c.dom.Node;
  * @see <a href="http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/spring-form.tld.html#spring-form.tld.select">The select tag</> 
  */
 public class SpringFormSelectTemplate extends VpeAbstractTemplate {
-
+	
 	/* (non-Javadoc)
 	 * @see org.jboss.tools.vpe.editor.template.VpeTemplate#create(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMDocument)
 	 */
@@ -47,14 +47,15 @@ public class SpringFormSelectTemplate extends VpeAbstractTemplate {
 			select.setAttribute(HTML.ATTR_DISABLED, HTML.ATTR_DISABLED);
 		}
 		
-		if (sourceElement.hasAttribute("items")) {
+		if (sourceElement.hasAttribute(Spring.ATTR_ITEMS)) {
 			// an inner 'option' tag has to be generated
-			String optionBody = sourceElement.getAttribute("items");
-			if (sourceElement.hasAttribute("itemLabel")) {
-				optionBody += '.' + sourceElement.getAttribute("itemLabel");
+			String optionBody = sourceElement.getAttribute(Spring.ATTR_ITEMS);
+			if (sourceElement.hasAttribute(Spring.ATTR_ITEM_LABEL)) {
+				optionBody += '.' + sourceElement.getAttribute(Spring.ATTR_ITEM_LABEL);
 			}
 			
 			nsIDOMElement option = visualDocument.createElement(HTML.TAG_OPTION);
+			option.appendChild(visualDocument.createTextNode(optionBody));
 			select.appendChild(option);
 		}
 		

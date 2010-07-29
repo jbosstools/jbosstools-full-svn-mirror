@@ -16,10 +16,12 @@ package org.jboss.tools.vpe.spring.template.util;
  *
  */
 public class Spring {
-	public static String ATTR_CSS_CLASS = "cssClass";			//$NON-NLS-1$
-	public static String ATTR_CSS_STYLE = "cssStyle";			//$NON-NLS-1$
+	public static final String ATTR_CSS_CLASS = "cssClass";			//$NON-NLS-1$
+	public static final String ATTR_CSS_STYLE = "cssStyle";			//$NON-NLS-1$
 	public static final String ATTR_DISABLED = "disabled";		//$NON-NLS-1$
-	public static String ATTR_ID = "id";						//$NON-NLS-1$
+	public static final String ATTR_ID = "id";						//$NON-NLS-1$
+	public static final String ATTR_ITEMS = "items"; //$NON-NLS-1$
+	public static final String ATTR_ITEM_LABEL = "itemLabel"; //$NON-NLS-1$
 	
 	public static final String VALUE_TRUE = "true"; //$NON-NLS-1$
 }
