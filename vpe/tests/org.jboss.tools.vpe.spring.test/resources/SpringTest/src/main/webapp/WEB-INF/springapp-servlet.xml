@@ -9,6 +9,7 @@
     
     <bean name="/form.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/checkbox.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/checkboxes.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>

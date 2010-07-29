@@ -1,3 +1,5 @@
+<a href="checkboxes.htm">checkboxes.htm</a>
+<br/>
 <a href="checkbox.htm">checkbox.htm</a>
 <br/>
 <a href="form.htm">form.htm</a>
