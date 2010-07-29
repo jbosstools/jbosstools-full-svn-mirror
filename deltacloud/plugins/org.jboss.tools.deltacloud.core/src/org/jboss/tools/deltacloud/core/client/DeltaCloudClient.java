@@ -244,8 +244,8 @@ public class DeltaCloudClient implements API
 			Document document = db.parse(new InputSource(new StringReader(xml)));
 					
 			instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0)));
-			instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware-profile", "href").get(0)));
-			getProfileProperties(instance, getPropertyNodes(document, "hardware-profile"));
+			instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0)));
+			getProfileProperties(instance, getPropertyNodes(document, "hardware_profile"));
 			instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0)));
 			instance.setState(getElementText(document, "state").get(0));
 			
@@ -275,7 +275,7 @@ public class DeltaCloudClient implements API
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(xml)));
 					
-			List<Node> nodes = getPropertyNodes(document, "hardware-profile");
+			List<Node> nodes = getPropertyNodes(document, "hardware_profile");
 			
 			for (Node n : nodes) {
 				Property p = new Property();

@@ -35,10 +35,10 @@ public class Instance extends DeltaCloudObject
 	
 	private List<Action> actions;
 	
-	@XmlElement(name="public-addresses")
+	@XmlElement(name="public_addresses")
 	private AddressList publicAddresses;
 	
-	@XmlElement(name="private-addresses")
+	@XmlElement(name="private_addresses")
 	private AddressList privateAddresses;
 	
 	private Instance()

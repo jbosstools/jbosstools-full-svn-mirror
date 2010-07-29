@@ -1,3 +1,14 @@
+2010-07-29  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (buildHardwareProfile): XML
+	has changed element name to hardware_profile from hardware-profile. 
+	(buildInstance): Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudObject.java (getId): Denote as
+	XMLAttribute now that id is no longer an element.
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java (publicAddresses): Change
+	XML element name to public_addresses from public-addresses.
+	(privateAddresses): Similar except for private-addresses to private_addresses.
+
 2010-07-28  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (findCloud): New
