@@ -36,7 +36,7 @@ public class PortletCoreActivator extends Plugin {
 	public static final String RESOURCES_FOLDER = "resources"; //$NON-NLS-1$
 	public static final String JSFPORTLET_FOLDER = "jsfportlet"; //$NON-NLS-1$
 	public static final String CHECK_RUNTIMES = "checkRuntimes"; //$NON-NLS-1$
-	public static final boolean DEFAULT_CHECK_RUNTIMES = true;
+	public static final boolean DEFAULT_CHECK_RUNTIMES = false;
 
 	public static final String JSFPORTLET_LIBRARY_PROVIDER = "jsfportlet-library-provider"; //$NON-NLS-1$
 	public static final String JSFPORTLETBRIDGE_LIBRARY_PROVIDER = "jsfportletbridge-library-provider"; //$NON-NLS-1$
