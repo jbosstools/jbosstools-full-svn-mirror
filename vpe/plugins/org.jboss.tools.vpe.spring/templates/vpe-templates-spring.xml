@@ -2,24 +2,21 @@
 
 <vpe:templates xmlns:vpe="http://org.jboss.org/tools/vpe/template"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<vpe:template-taglib
-		uri="http://www.springframework.org/tags/form"
+	<vpe:template-taglib uri="http://www.springframework.org/tags/form"
 		prefix="form" />
-	<vpe:template-taglib
-		uri="http://www.springframework.org/tags"
+	<vpe:template-taglib uri="http://www.springframework.org/tags"
 		prefix="spring" />
-	<vpe:template-taglib
-		uri="http://www.springframework.org/security/tags"
+	<vpe:template-taglib uri="http://www.springframework.org/security/tags"
 		prefix="security" />
 
 	<vpe:tag name="form:checkbox" case-sensitive="yes">
 		<vpe:if test="@disabled='true'">
 			<vpe:template children="no" modify="no">
 				<span class="vpe-text">
-						<input type="checkbox" id="{@id}" style="{@cssStyle}"
-							   class="{@cssClass}" disabled="disabled"/>
+					<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						disabled="disabled" />
 					<label>
-						<vpe:value expr="{@label}"/>
+						<vpe:value expr="{@label}" />
 					</label>
 				</span>
 				<vpe:dnd>
@@ -29,10 +26,64 @@
 		</vpe:if>
 		<vpe:template children="no" modify="no">
 			<span class="vpe-text">
-					<input type="checkbox" id="{@id}" style="{@cssStyle}"
-						   class="{@cssClass}"/>
+				<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}" />
 				<label>
-					<vpe:value expr="{@label}"/>
+					<vpe:value expr="{@label}" />
+				</label>
+			</span>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="form:checkboxes" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:if test="attrpresent('itemLabel')">
+				<vpe:template children="no" modify="no">
+					<span class="vpe-text">
+						<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+							disabled="disabled" />
+						<label>
+							<vpe:value expr="{@items}.{@itemLabel}" />
+						</label>
+					</span>
+					<vpe:dnd>
+						<vpe:drag start-enable="yes" />
+					</vpe:dnd>
+				</vpe:template>
+			</vpe:if>
+			<vpe:template children="no" modify="no">
+				<span class="vpe-text">
+					<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						disabled="disabled" />
+					<label>
+						<vpe:value expr="{@items}" />
+					</label>
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="attrpresent('itemLabel')">
+			<vpe:template children="no" modify="no">
+				<span class="vpe-text">
+					<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}" />
+					<label>
+						<vpe:value expr="{@items}.{@itemLabel}" />
+					</label>
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}" />
+				<label>
+					<vpe:value expr="{@items}" />
 				</label>
 			</span>
 			<vpe:dnd>
@@ -43,7 +94,7 @@
 
 	<vpe:tag name="form:form" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes">
-			<form id="{@id}" style="{@cssStyle}" class="{@cssClass}"/>
+			<form id="{@id}" style="{@cssStyle}" class="{@cssClass}" />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
