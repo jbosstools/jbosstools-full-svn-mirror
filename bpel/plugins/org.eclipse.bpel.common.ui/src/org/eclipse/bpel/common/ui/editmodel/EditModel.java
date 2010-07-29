@@ -285,7 +285,9 @@ public class EditModel {
 		
 	}
 
-	protected static IFile getIFileForURI(URI uri) {
+	// https://jira.jboss.org/browse/JBIDE-6697
+	// from eclipse.org/bpel rev 1.5 on 5/5/2010 5:13AM by smoser: fix for bidirectional PLT - > Tammo/JAX Session Feedback
+	public static IFile getIFileForURI(URI uri) {
 		String filePath = null;
 		String scheme = uri.scheme();
 		IFile file = null;

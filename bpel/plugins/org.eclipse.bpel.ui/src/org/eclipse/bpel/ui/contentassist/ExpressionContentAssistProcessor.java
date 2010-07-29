@@ -337,6 +337,10 @@ public class ExpressionContentAssistProcessor
 						theStatus = -1;
 						return false;
 					}
+					// https://jira.jboss.org/browse/JBIDE-6697
+					// These lines were removed at rev 23527 because of bad merge
+					theStatus = -1;
+					return false;
 				}
 				else if (currChar == ',') {
 					// could be a function argument

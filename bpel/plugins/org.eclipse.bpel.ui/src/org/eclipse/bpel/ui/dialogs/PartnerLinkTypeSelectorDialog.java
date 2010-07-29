@@ -184,7 +184,9 @@ public class PartnerLinkTypeSelectorDialog extends BrowseSelectorDialog {
 		
 			PortType pt = (PortType) obj;
 			CreatePartnerLinkWizard wizard = new CreatePartnerLinkWizard();
-			wizard.setPortType( pt );
+			// https://jira.jboss.org/browse/JBIDE-6697
+			// from eclipse.org/bpel rev 1.5 on 5/5/2010 5:13AM by smoser: fix for bidirectional PLT - > Tammo/JAX Session Feedback
+			wizard.setMandatoryPortType( pt );
 			
 			wizard.setBPELEditor( ModelHelper.getBPELEditor( pt ) );
 			WizardDialog dialog = new WizardDialog(getShell(), wizard);
@@ -194,13 +196,14 @@ public class PartnerLinkTypeSelectorDialog extends BrowseSelectorDialog {
 			}
 			
 			fPartnerLinkType = wizard.getPartnerLinkType();
+			if (fPartnerLinkType == null) { 
+				return ;
+			}		
+
 			if (!checkNamespace(fPartnerLinkType)){
 				return;
 			}
 			
-			if (fPartnerLinkType == null) { 
-				return ;
-			}		
 			super.okPressed();
 						
 			return ;

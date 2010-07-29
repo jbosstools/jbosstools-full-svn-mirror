@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.wizards;
 
+import java.util.List;
+
 import org.eclipse.bpel.ui.details.providers.ModelTreeLabelProvider;
 import org.eclipse.bpel.ui.details.providers.PortTypeTreeContentProvider;
 import org.eclipse.bpel.ui.details.tree.PortTypeTreeNode;
@@ -38,6 +40,8 @@ import org.eclipse.wst.wsdl.PortType;
  * @date Aug 14, 2006
  * 
  */
+//https://jira.jboss.org/browse/JBIDE-6697
+//from eclipse.org/bpel rev 1.5 on 5/5/2010 5:13AM by smoser: fix for bidirectional PLT - > Tammo/JAX Session Feedback
 public class CreatePartnerLinkTypeWizardRolePage extends WizardPage {
 
 	static final int SIZING_TEXT_FIELD_WIDTH = 250;
@@ -45,10 +49,12 @@ public class CreatePartnerLinkTypeWizardRolePage extends WizardPage {
 	Text roleName;
 	Tree portTypeTree;
 	TreeViewer portTypeViewer;
-	PortType portType;
+	PortType mandatoryPortType;
+	PortType optionalPortType;
 
-	Definition wsdlDefinition;
-
+	Definition mandatoryWsdlDefinition;
+	List<Definition> optionalWsdlDefinitions;
+	
 	private CreatePartnerLinkTypeWizardRolePage fOtherRolePage;
 
 	boolean fOptional = false;
@@ -125,8 +131,13 @@ public class CreatePartnerLinkTypeWizardRolePage extends WizardPage {
 		portTypeTree = new Tree(fields, SWT.BORDER);
 		portTypeViewer = new TreeViewer( portTypeTree );
 		portTypeViewer.setContentProvider( new PortTypeTreeContentProvider (true));
-		portTypeViewer.setLabelProvider( new ModelTreeLabelProvider() );		
-		portTypeViewer.setInput( wsdlDefinition );
+		portTypeViewer.setLabelProvider( new ModelTreeLabelProvider() );
+		if (!fOptional) {
+			portTypeViewer.setInput( mandatoryWsdlDefinition );
+		}
+		else {
+			portTypeViewer.setInput( optionalWsdlDefinitions );
+		}
 		
 		data = new GridData(GridData.FILL_BOTH);					
 		portTypeTree.setLayoutData(data);
@@ -138,11 +149,16 @@ public class CreatePartnerLinkTypeWizardRolePage extends WizardPage {
 				IStructuredSelection ssel = (IStructuredSelection) event.getSelection();
 				Object obj = ssel.getFirstElement();
 				if (obj != null && obj instanceof PortTypeTreeNode) {
-					PortTypeTreeNode pttn = (PortTypeTreeNode) obj;					
-					setPortType( (PortType) pttn.getModelObject() );
+					PortTypeTreeNode pttn = (PortTypeTreeNode) obj;	
+					if (!fOptional) {
+						setMandatoryPortType( (PortType) pttn.getModelObject() );
+					}
+					else {
+						setOptionalPortType((PortType) pttn.getModelObject());
+					}
 					setPageComplete(validatePage());
 				} else {
-					setPortType(null);
+					setMandatoryPortType(null);
 					setPageComplete(validatePage());
 				}
 			}			
@@ -157,15 +173,16 @@ public class CreatePartnerLinkTypeWizardRolePage extends WizardPage {
 		String roleNCName = roleName.getText();
 		
 		if (fOptional) {
-			if (portType == null && roleNCName.length() == 0) {
+			if (optionalPortType == null && roleNCName.length() == 0) {
 				setMessage(Messages.CreatePartnerLinkTypeWizardRolePage_2,INFORMATION);
 				return true;
 			}
 		}
-		
-		if (portType == null) {		
-			setMessage(Messages.CreatePartnerLinkTypeWizardRolePage_3,ERROR);
-			return false;
+		else {
+			if (mandatoryPortType == null) {		
+				setMessage(Messages.CreatePartnerLinkTypeWizardRolePage_3,ERROR);
+				return false;
+			}
 		}
 		
 		IInputValidator validator = BPELUtil.getNCNameValidator();
@@ -186,23 +203,34 @@ public class CreatePartnerLinkTypeWizardRolePage extends WizardPage {
 		return true;
 	}
 
-	public void setDefinition ( Definition defn ) {
-		wsdlDefinition = defn;		
+	public void setMandatoryDefinition ( Definition defn ) {
+		mandatoryWsdlDefinition = defn;		
 	}
-	
 	
 	/**
 	 * @param portType2
 	 */
 	
-	public void setPortType(PortType pt) {
-		portType = pt;		
+	public void setMandatoryPortType(PortType pt) {
+		mandatoryPortType = pt;		
 	}
 	
-	public PortType getPortType () {
-		return portType;	
+	public PortType getMandatoryPortType () {
+		return mandatoryPortType;	
 	}
 	
+	
+	public void setOptionalDefinitions ( List <Definition> defs ) {
+		optionalWsdlDefinitions = defs;		
+	}
+	
+	public void setOptionalPortType(PortType pt) {
+		optionalPortType = pt;		
+	}
+	
+	public PortType getOptionalPortType () {
+		return optionalPortType;	
+	}
 	
 	public String getRoleName () {
 		return roleName.getText();
@@ -229,7 +257,7 @@ public class CreatePartnerLinkTypeWizardRolePage extends WizardPage {
 	 */
 	public boolean isSpecified() {
 		if (fOptional) {
-			if (portType == null) {
+			if (optionalPortType == null) {
 				return false;
 			}
 		}

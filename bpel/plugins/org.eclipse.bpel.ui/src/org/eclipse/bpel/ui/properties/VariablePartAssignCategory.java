@@ -545,10 +545,14 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 		// Variable is defined using "messageType"
 		Message msg = var.getMessageType();
 		if (msg != null) {
-			XSDElementDeclaration declaration = side.getPart().getElementDeclaration();
-			if (declaration != null) {
-				uriWSDL = declaration.getSchema().getSchemaLocation();
-				rootElement = declaration.getName();
+			// https://jira.jboss.org/browse/JBIDE-6697
+			// from eclipse.org/bpel rev 1.17 on 7/23/2010 3:13AM bugzilla 302943 by gqian: apply the patch from bugzilla
+			if (side.getPart() != null) {
+				XSDElementDeclaration declaration = side.getPart().getElementDeclaration();
+				if (declaration != null) {
+					uriWSDL = declaration.getSchema().getSchemaLocation();
+					rootElement = declaration.getName();
+				}
 			}
 		}
 

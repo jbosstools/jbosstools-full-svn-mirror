@@ -334,6 +334,12 @@ public class XPathValidator extends Validator {
 		IProblem problem;
 		Expr expr = xpathExpr;
 
+		// https://jira.jboss.org/browse/JBIDE-6697
+		// from eclipse.org/bpel rev 1.13 on 7/23/2010 12:21AM by gqian: apply the patch from bugzilla 320539
+		if (expr instanceof UnaryExpr) {
+			expr = ((UnaryExpr) expr).getExpr();
+		}
+		
 		if (expr instanceof LiteralExpr) {
 			LiteralExpr lexpr = (LiteralExpr) expr;
 			try {
