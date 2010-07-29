@@ -22,7 +22,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-test-plugin</artifactId>
 				<configuration>
-					<product>org.jboss.tools.tests</product>
+					<product>org.jboss.tools.tests.product</product>
 					<explodedBundles>
 						<bundle>org.jboss.tools.vpe</bundle>
 						<bundle>org.jboss.tools.vpe.ui.test</bundle>
@@ -34,7 +34,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 					</explodedBundles>
 					<dependencies>
 						<dependency>
-							<groupId>org.jboss.tools</groupId>
+							<groupId>org.jboss.tools.vpe.plugins</groupId>
 							<artifactId>org.jboss.tools.xulrunner.initializer</artifactId>
 							<version>3.1.0</version>
 							<type>eclipse-plugin</type>
