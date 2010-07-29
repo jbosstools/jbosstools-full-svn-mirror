@@ -106,7 +106,7 @@
 		<vpe:template children="no" modify="no">
 			<input type="text" id="{@id}" class="{@cssClass}" 
 				style="{@cssStyle}" size="{@size}" dir="{@dir}"
-				disabled="{@disabled}"  />
+				disabled="{@disabled}" />
 		</vpe:template>
 	</vpe:tag>
 	
@@ -115,6 +115,11 @@
 			<label id="{@id}" class="{@cssClass}" style="{@cssStyle}"
 				 for="{@for}" dir="{@dir}">
 			</label>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+			<vpe:textFormatting use-default-formats="yes">
+			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
 	
@@ -136,6 +141,7 @@
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
+	
 		<vpe:tag name="form:option" case-sensitive="yes">
 		<vpe:if test="@disabled='true'">
 			<vpe:template children="yes" modify="yes">
@@ -152,4 +158,15 @@
 				</option>
 		</vpe:template>
 	</vpe:tag>
+
+	<vpe:tag name="form:textarea" case-sensitive="no">
+		 <vpe:template children="yes" modify="yes" 
+		 	class="org.jboss.tools.vpe.spring.template.SpringTextAreaTemplate">
+		 	<vpe:resize>
+				<vpe:width width-attr="cssStyle.width" />
+				<vpe:height height-attr="cssStyle.height" />
+			</vpe:resize>
+		</vpe:template>
+	</vpe:tag>	 
+	
 </vpe:templates>
