@@ -404,6 +404,54 @@
 			<vpe:textFormatting use-default-formats="yes">
 			</vpe:textFormatting>
 		</vpe:template>
-	</vpe:tag>	 
+	</vpe:tag>
+	
+	<vpe:tag name="spring:bind" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:escapeBody" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<div/>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="spring:hasBindErrors" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:htmlEscape" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:nestedPath" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:transform" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:eval" case-sensitive="yes">
+		<vpe:if test="attrpresent('var')">
+			<vpe:template children="no" modify="yes" />
+		</vpe:if>
+		<vpe:template children="no" modify="yes">
+			<span class="vpe-text">
+				<vpe:value expr="{@expression}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="spring:url" case-sensitive="yes">
+		<vpe:if test="attrpresent('var')">
+			<vpe:template children="no" modify="yes" />
+		</vpe:if>
+		<vpe:template children="no" modify="yes">
+			<span class="vpe-text">
+				<vpe:value expr="{@value}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>
 	
 </vpe:templates>
