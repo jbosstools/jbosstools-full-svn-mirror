@@ -405,6 +405,22 @@
 			</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
+
+	<vpe:tag name="spring:message" case-sensitive="yes">
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<vpe:value expr="{@code}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>	 
+
+	<vpe:tag name="spring:theme" case-sensitive="yes">
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<vpe:value expr="{@code}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>	 
 	
 	<vpe:tag name="spring:bind" case-sensitive="yes">
 		<vpe:template children="no" modify="no" />
