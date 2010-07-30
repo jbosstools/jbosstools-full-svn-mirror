@@ -68,6 +68,12 @@ public final class ServerManager implements IRestClient {
     private static final String REGISTRY_FILE = "serverRegistry.xml";
 
     /**
+     * The name of the system property that is set when at least one server exists. This property is used by the menus extension
+     * that is responsible for showing the ModeShape context menu items.
+     */
+    public static final String SERVER_EXISTS_PROPERTY = "org.jboss.tools.modeshape.rest.serverExists";
+
+    /**
      * The tag used when persisting a server.
      */
     private static final String SERVER_TAG = "server";
@@ -314,6 +320,15 @@ public final class ServerManager implements IRestClient {
         }
 
         if (added) {
+            // set system property if not set
+            String serverExists = System.getProperty(SERVER_EXISTS_PROPERTY);
+
+            if (serverExists == null) {
+                // value of "true" is coded in the plugin.xml as well
+                System.setProperty(SERVER_EXISTS_PROPERTY, "true");
+            }
+
+            // let listeners know of new server
             if (notifyListeners) {
                 Exception[] errors = notifyRegistryListeners(ServerRegistryEvent.createNewEvent(this, server));
                 return processRegistryListenerErrors(errors);
@@ -350,6 +365,12 @@ public final class ServerManager implements IRestClient {
         }
 
         if (removed) {
+            // remove system property if no more servers
+            if (getServers().isEmpty()) {
+                System.clearProperty(SERVER_EXISTS_PROPERTY);
+            }
+
+            // let listeners know of new server
             if (notifyListeners) {
                 Exception[] errors = notifyRegistryListeners(ServerRegistryEvent.createRemoveEvent(this, server));
                 return processRegistryListenerErrors(errors);

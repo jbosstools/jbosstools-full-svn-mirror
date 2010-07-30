@@ -12,11 +12,9 @@
 package org.jboss.tools.modeshape.rest;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
-import org.jboss.tools.modeshape.rest.IServerRegistryListener;
-import org.jboss.tools.modeshape.rest.PersistedServer;
-import org.jboss.tools.modeshape.rest.ServerManager;
-import org.jboss.tools.modeshape.rest.ServerRegistryEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.modeshape.web.jcr.rest.client.Status;
@@ -105,6 +103,12 @@ public final class ServerManagerTest {
     }
 
     @Test
+    public void shouldHaveServerExistsSystemPropertyIfThereIsARegisteredServer() {
+        this.serverManager.addServer(SERVER1);
+        assertThat(System.getProperty(ServerManager.SERVER_EXISTS_PROPERTY), notNullValue());
+    }
+
+    @Test
     public void shouldHaveOkStatusWhenUpdateServerSuccessfully() {
         this.serverManager.addServer(SERVER1);
         assertThat(this.serverManager.updateServer(SERVER1, SERVER1_UPDATE).isOk(), is(true));
@@ -148,6 +152,12 @@ public final class ServerManagerTest {
         this.serverManager.removeServer(SERVER1);
         assertThat(this.serverManager.isRegistered(SERVER1), is(false));
         assertThat(this.serverManager.getServers().isEmpty(), is(true));
+    }
+
+    @Test
+    public void shouldNotHaveServerExistsSystemPropertyIfNoRegisteredServers() {
+        // make sure initially property doesn't exist
+        assertThat(System.getProperty(ServerManager.SERVER_EXISTS_PROPERTY), nullValue());
     }
 
     @Test

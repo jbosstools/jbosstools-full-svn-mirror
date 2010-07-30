@@ -715,7 +715,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             handleServerModified();
         } else if (e.widget == this.cbxRepository) {
             handleRepositoryModified();
-        } else if (e.widget == this.cbxRepository) {
+        } else if (e.widget == this.cbxWorkspace) {
             handleWorkspaceModified();
         } else {
             assert false; // should not happen
