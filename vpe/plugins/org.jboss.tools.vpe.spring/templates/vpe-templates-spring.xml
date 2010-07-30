@@ -333,6 +333,63 @@
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
+	
+	<vpe:tag name="form:radiobuttons" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:if test="attrpresent('itemLabel')">
+				<vpe:template children="no" modify="no">
+					<span class="vpe-text">
+						<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+							disabled="disabled" name="{@path}"/>
+						<label>
+							<vpe:value expr="{@items}.{@itemLabel}" />
+						</label>
+					</span>
+					<vpe:dnd>
+						<vpe:drag start-enable="yes" />
+					</vpe:dnd>
+				</vpe:template>
+			</vpe:if>
+			<vpe:template children="no" modify="no">
+					<span class="vpe-text">
+						<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+							disabled="disabled" name="{@path}"/>
+						<label>
+							<vpe:value expr="{@items}" />
+						</label>
+					</span>
+					<vpe:dnd>
+						<vpe:drag start-enable="yes" />
+					</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="attrpresent('itemLabel')">
+			<vpe:template children="no" modify="no">
+				<span class="vpe-text">
+					<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						name="{@path}"/>
+					<label>
+						<vpe:value expr="{@items}.{@itemLabel}" />
+					</label>
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+					name="{@path}"/>
+				<label>
+					<vpe:value expr="{@items}" />
+				</label>
+			</span>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
 
 	<vpe:tag name="form:textarea" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes"
@@ -347,7 +404,6 @@
 			<vpe:textFormatting use-default-formats="yes">
 			</vpe:textFormatting>
 		</vpe:template>
-		
 	</vpe:tag>	 
 	
 </vpe:templates>
