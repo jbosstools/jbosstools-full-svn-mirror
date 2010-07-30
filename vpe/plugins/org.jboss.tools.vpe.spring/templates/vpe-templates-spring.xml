@@ -91,6 +91,17 @@
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
+	
+	<vpe:tag name="form:errors" case-sensitive="yes">
+		<vpe:template children="no" modify="no">
+			<span id="{@id}" style="{@cssStyle}" class="{@cssClass}">
+				Errors will be here.
+			</span>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
 
 	<vpe:tag name="form:form" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes">

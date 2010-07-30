@@ -10,10 +10,13 @@
     <bean name="/form.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/checkbox.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/checkboxes.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/errors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
+    	<property name="validator" ref="fieldValidator"/>
+    </bean>
+    <bean id="fieldValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.FieldValidator"/>
     
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
-        <property name="prefix" value="/WEB-INF/jsp"></property>
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>        
     </bean>
 </beans>

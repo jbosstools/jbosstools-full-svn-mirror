@@ -18,6 +18,8 @@ public class FormBean {
 	private Map<Integer, String> availableCategories = new HashMap<Integer, String>();
 	private Set<Integer> selectedCategories = new HashSet<Integer>();
 	private List<CategoryType> favoriteCategories = new ArrayList<CategoryType>();
+	
+	private String newName;
 
 	public FormBean() {
 		for (CategoryType categoryType : CategoryType.values()) {
@@ -74,5 +76,13 @@ public class FormBean {
 
 	public void setFavoriteCategories(List<CategoryType> favoriteCategories) {
 		this.favoriteCategories = favoriteCategories;
+	}
+
+	public String getNewName() {
+		return newName;
+	}
+
+	public void setNewName(String newName) {
+		this.newName = newName;
 	}
 }
