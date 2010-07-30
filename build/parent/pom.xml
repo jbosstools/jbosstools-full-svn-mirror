@@ -6,6 +6,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
+	<modules>
+		<module>../target-platform</module>
+	</modules>
 
 	<properties>
 		<!-- <tychoVersion>0.10.0-SNAPSHOT</tychoVersion> -->
@@ -24,7 +27,7 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.4</version>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-packaging-plugin</artifactId>
@@ -58,7 +61,7 @@
 						<environment>
 							<os>macosx</os>
 							<ws>carbon</ws>
-							<arch>x86</arch> 
+							<arch>x86</arch>
 						</environment>
 						<environment>
 							<os>win32</os>
@@ -149,7 +152,6 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<target.platform>e36-wtp32</target.platform>
 			</properties>
 			<build>
 				<plugins>
@@ -173,10 +175,9 @@
 		</profile>
 
 		<!-- Time saver: to build everything from scratch (without target platform); 
-		     To enable it use -P helios-no-target in command line.
-		     Do not remove repos that contains the same artefacts, it is done for purpose
-		     to make build more stable in case one of the repos is offline.
-		-->
+			To enable it use -P helios-no-target in command line. Do not remove repos 
+			that contains the same artefacts, it is done for purpose to make build more 
+			stable in case one of the repos is offline. -->
 		<profile>
 			<id>helios-no-target</id>
 			<activation>
@@ -275,16 +276,16 @@
 					</releases>
 				</repository>
 				<repository>
-                                        <id>google eclipse plugins</id>
-                                        <url>http://dl.google.com/eclipse/plugin/3.6</url>
-                                        <layout>p2</layout>
-                                        <snapshots>
-                                                <enabled>true</enabled>
-                                        </snapshots>
-                                        <releases>
-                                                <enabled>true</enabled>
-                                        </releases>
-                                </repository>
+					<id>google eclipse plugins</id>
+					<url>http://dl.google.com/eclipse/plugin/3.6</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
 			</repositories>
 		</profile>
 
@@ -398,16 +399,16 @@
 					</releases>
 				</repository>
 				<repository>
-                                        <id>google eclipse plugins</id>
-                                        <url>http://dl.google.com/eclipse/plugin/3.6</url>
-                                        <layout>p2</layout>
-                                        <snapshots>
-                                                <enabled>true</enabled>
-                                        </snapshots>
-                                        <releases>
-                                                <enabled>true</enabled>
-                                        </releases>
-                                </repository>
+					<id>google eclipse plugins</id>
+					<url>http://dl.google.com/eclipse/plugin/3.6</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
 			</repositories>
 		</profile>
 
@@ -585,33 +586,18 @@
 				</property>
 			</activation>
 			<properties>
-				<emma.session.out.file>${project.build.directory}/emma/coverage.es</emma.session.out.file>
+				<emma.session.out.file>${project.build.directory}/emma/coverage.es
+				</emma.session.out.file>
 				<emma.filter />
 				<emma.instrument.bundles />
 			</properties>
 			<build>
 				<plugins>
-					<!-- plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-artifacts</id>
-								<phase>package</phase>
-								<goals>
-									<goal>attach-artifact</goal>
-								</goals>
-								<configuration>
-									<artifacts>
-										<artifact>
-											<file>${emma.session.out.file}</file>
-											<type>es</type>
-										</artifact>
-									</artifacts>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin-->
+					<!-- plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>build-helper-maven-plugin</artifactId> 
+						<executions> <execution> <id>attach-artifacts</id> <phase>package</phase> 
+						<goals> <goal>attach-artifact</goal> </goals> <configuration> <artifacts> 
+						<artifact> <file>${emma.session.out.file}</file> <type>es</type> </artifact> 
+						</artifacts> </configuration> </execution> </executions> </plugin -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-install-plugin</artifactId>
@@ -630,9 +616,11 @@
 						<version>${tychoVersion}</version>
 						<configuration>
 							<systemProperties combine.children="append">
-								<emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
+								<emma.session.out.file>${emma.session.out.file}
+								</emma.session.out.file>
 								<emma.filter>${emma.filter}</emma.filter>
-								<eclemma.instrument.bundles>${emma.instrument.bundles}</eclemma.instrument.bundles>
+								<eclemma.instrument.bundles>${emma.instrument.bundles}
+								</eclemma.instrument.bundles>
 							</systemProperties>
 							<frameworkExtensions>
 								<frameworkExtension>
@@ -690,15 +678,17 @@
 										<taskdef resource="emma_ant.properties" />
 										<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 										<if>
-											<available file="${project.build.directory}/emma" type="dir" />
+											<available file="${project.build.directory}/emma"
+												type="dir" />
 											<then>
 												<echo>Process emma report...</echo>
-												<!-- emma enabled="true">
-													<instr metadatafile="${project.build.directory}/coverage.em" mode="overwrite" instrpath="${project.build.directory}/../../../plugins/${emma.instrument.bundles}/target/classes" />
-												</emma-->
+												<!-- emma enabled="true"> <instr metadatafile="${project.build.directory}/coverage.em" 
+													mode="overwrite" instrpath="${project.build.directory}/../../../plugins/${emma.instrument.bundles}/target/classes" 
+													/> </emma -->
 												<emma enabled="true">
 													<report>
-														<infileset dir="${project.build.directory}/emma" includes="*.es,*.em" />
+														<infileset dir="${project.build.directory}/emma"
+															includes="*.es,*.em" />
 														<txt outfile="${project.build.directory}/emma/coverage.txt" />
 														<xml outfile="${project.build.directory}/emma/coverage.xml" />
 														<html outfile="${project.build.directory}/emma/coverage.html" />
@@ -726,8 +716,10 @@
 				</file>
 			</activation>
 			<properties>
-				<requirements.root>${basedir}/../../../requirements</requirements.root>
-				<requirement.build.root>${requirements.root}/target</requirement.build.root>
+				<requirements.root>${basedir}/../../../requirements
+				</requirements.root>
+				<requirement.build.root>${requirements.root}/target
+				</requirement.build.root>
 			</properties>
 			<build>
 				<plugins>
@@ -759,10 +751,10 @@
 										<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 										<if>
 											<available file="${requirements.root}" type="dir" />
-											<then>							
+											<then>
 												<property file="requirements.properties" />
 												<echo>Requirements build</echo>
-												<ant dir="${requirements.root}" inheritAll="true" >
+												<ant dir="${requirements.root}" inheritAll="true">
 													<property name="requirements" value="${requirements}" />
 													<property name="settings.offline" value="${settings.offline}" />
 													<property name="skipDownload" value="${skipDownload}" />
