@@ -122,20 +122,112 @@
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
-	
+
 	<vpe:tag name="form:input" case-sensitive="no">
+		<vpe:if test="@disabled='true'">
+			<vpe:template children="no" modify="no">
+				<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					size="{@size}" dir="{@dir}" disabled="disabled" />
+				<vpe:resize>
+					<vpe:width width-attr="cssStyle.width" />
+					<vpe:height height-attr="cssStyle.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+				<vpe:textFormatting use-default-formats="yes">
+				</vpe:textFormatting>
+			</vpe:template>
+		</vpe:if>
 		<vpe:template children="no" modify="no">
-			<input type="text" id="{@id}" class="{@cssClass}" 
-				style="{@cssStyle}" size="{@size}" dir="{@dir}"
-				disabled="{@disabled}" />
+			<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+				size="{@size}" dir="{@dir}" />
+				<vpe:resize>
+					<vpe:width width-attr="cssStyle.width" />
+					<vpe:height height-attr="cssStyle.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+				<vpe:textFormatting use-default-formats="yes">
+				</vpe:textFormatting>
 		</vpe:template>
 	</vpe:tag>
-	
+
+	<vpe:tag name="form:password" case-sensitive="no">
+		<vpe:if test="@showPassword='true'">
+			<vpe:if test="@disabled='true'">
+				<!-- showPassword(+) and disabled(+) -->
+				<vpe:template children="no" modify="no">
+					<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+						size="{@size}" dir="{@dir}" value="{@value}" disabled="disabled" />
+					<vpe:resize>
+						<vpe:width width-attr="cssStyle.width" />
+						<vpe:height height-attr="cssStyle.height" />
+					</vpe:resize>
+					<vpe:dnd>
+						<vpe:drag start-enable="yes" />
+					</vpe:dnd>
+					<vpe:textFormatting use-default-formats="yes">
+					</vpe:textFormatting>
+				</vpe:template>
+			</vpe:if>
+			<!-- showPassword(+) and disabled(-) -->
+			<vpe:template children="no" modify="no">
+				<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					size="{@size}" dir="{@dir}" value="{@value}" />
+				<vpe:resize>
+					<vpe:width width-attr="cssStyle.width" />
+					<vpe:height height-attr="cssStyle.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+				<vpe:textFormatting use-default-formats="yes">
+				</vpe:textFormatting>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="@disabled='true'">
+			<!-- showPassword(-) and disabled(+) -->
+			<vpe:template children="no" modify="no">
+				<input type="password" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					size="{@size}" dir="{@dir}" value="{@value}" disabled="disabled" />
+				<vpe:resize>
+					<vpe:width width-attr="cssStyle.width" />
+					<vpe:height height-attr="cssStyle.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+				<vpe:textFormatting use-default-formats="yes">
+				</vpe:textFormatting>
+			</vpe:template>
+		</vpe:if>
+		<!-- showPassword(-) and disabled(-) -->
+		<vpe:template children="no" modify="no">
+			<input type="password" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+				size="{@size}" dir="{@dir}" value="{@value}" />
+			<vpe:resize>
+				<vpe:width width-attr="cssStyle.width" />
+				<vpe:height height-attr="cssStyle.height" />
+			</vpe:resize>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+			<vpe:textFormatting use-default-formats="yes">
+			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+
 	<vpe:tag name="form:label" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<label id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-				 for="{@for}" dir="{@dir}">
+			<label id="{@id}" class="{@cssClass}" style="{@cssStyle}" for="{@for}"
+				dir="{@dir}">
 			</label>
+			<vpe:resize>
+				<vpe:width width-attr="cssStyle.width" />
+				<vpe:height height-attr="cssStyle.height" />
+			</vpe:resize>
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 			</vpe:dnd>
@@ -243,13 +335,19 @@
 	</vpe:tag>
 
 	<vpe:tag name="form:textarea" case-sensitive="no">
-		 <vpe:template children="yes" modify="yes" 
-		 	class="org.jboss.tools.vpe.spring.template.SpringTextAreaTemplate">
-		 	<vpe:resize>
+		<vpe:template children="yes" modify="yes"
+			class="org.jboss.tools.vpe.spring.template.SpringTextAreaTemplate">
+			<vpe:resize>
 				<vpe:width width-attr="cssStyle.width" />
 				<vpe:height height-attr="cssStyle.height" />
 			</vpe:resize>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+			<vpe:textFormatting use-default-formats="yes">
+			</vpe:textFormatting>
 		</vpe:template>
+		
 	</vpe:tag>	 
 	
 </vpe:templates>
