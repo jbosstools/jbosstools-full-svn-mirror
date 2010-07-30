@@ -93,8 +93,18 @@
 	</vpe:tag>
 	
 	<vpe:tag name="form:errors" case-sensitive="yes">
+		<vpe:if test="@path='*'">
+			<vpe:template children="no" modify="no">
+				<span id="{@id}" style="{@cssStyle}" class="{@cssClass}">
+					Errors for all validated fields.
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
 		<vpe:template children="no" modify="no">
-			<span id="{@id}" style="{@cssStyle}" class="{@cssClass}">				
+			<span id="{@id}" style="{@cssStyle}" class="{@cssClass}">
 				<vpe:value expr="Errors for {@path} field." />
 			</span>
 			<vpe:dnd>

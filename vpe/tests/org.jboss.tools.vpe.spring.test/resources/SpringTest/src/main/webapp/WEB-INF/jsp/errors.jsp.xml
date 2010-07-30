@@ -1,0 +1,17 @@
+<tests>
+	<test id="allFieldsErrors">
+		<span id="allFieldsErrors">
+			Errors for all validated fields.
+		</span>
+	</test>
+	<test id="firstNameErrors">
+		<span id="firstNameErrors" class="red-bordered-text">
+			Errors for user.firstName field.
+		</span>
+	</test>
+	<test id="nameErrors2">
+		<span id="lastNameErrors" style="color: red;">
+			Errors for user.lastName field.
+		</span>
+	</test>
+</tests>

@@ -12,30 +12,28 @@
 <h1>Test of form:errors</h1>
 
 <form:form commandName="formBean" method="POST">
+	<form:errors id="allFieldsErrors" path="*" />
 	<table>
 		<tr>
-			<td />
-			<%-- Show errors for newName field --%>
+			<td>First Name:</td>
+			<td><form:input path="user.firstName" /></td>
 			<td>
-				<form:errors id="nameErrors1" path="newName" />
-			</td>
+				<form:errors id="firstNameErrors"
+						path="user.firstName"						
+						cssClass="red-bordered-text" />
+			</td>			
 		</tr>
 		<tr>
-			<td />
-			<%-- Show errors for newName field --%>
+			<td>Last Name:</td>
+			<td><form:input path="user.lastName" /></td>
 			<td>
-				<form:errors id="nameErrors2" path="newName"
-						cssClass="red-bordered-text"
-						cssStyle="color: green;" />
-			</td>
+				<form:errors id="lastNameErrors"
+						path="user.lastName"
+						cssStyle="color: red;" />
+			</td>			
 		</tr>
 		<tr>
-			<td>New Name:</td>
-			<td><form:input path="newName" /></td>			
-		</tr>
-		<tr>
-			<td/>
-			<td align="right"><input type="submit" value="Test" /></td>
+			<td colspan="2" align="right"><input type="submit" value="Test" /></td>
 		</tr>
 	</table>
 </form:form>

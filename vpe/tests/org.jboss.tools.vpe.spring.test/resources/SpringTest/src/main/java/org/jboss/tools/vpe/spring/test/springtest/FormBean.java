@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jboss.tools.vpe.spring.test.springtest.data.CategoryType;
+import org.jboss.tools.vpe.spring.test.springtest.data.User;
 
 public class FormBean {
 
@@ -19,7 +20,7 @@ public class FormBean {
 	private Set<Integer> selectedCategories = new HashSet<Integer>();
 	private List<CategoryType> favoriteCategories = new ArrayList<CategoryType>();
 	
-	private String newName;
+	private User user;
 
 	public FormBean() {
 		for (CategoryType categoryType : CategoryType.values()) {
@@ -78,11 +79,11 @@ public class FormBean {
 		this.favoriteCategories = favoriteCategories;
 	}
 
-	public String getNewName() {
-		return newName;
+	public User getUser() {
+		return user;
 	}
 
-	public void setNewName(String newName) {
-		this.newName = newName;
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

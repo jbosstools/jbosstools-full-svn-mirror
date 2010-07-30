@@ -42,4 +42,9 @@ public class SpringFormComponentTest extends VpeTest {
 		performTestForVpeComponent((IFile)TestUtil.getResource(
 				"src/main/webapp/WEB-INF/jsp/form.jsp", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
 	}
+
+	public void testErrors() throws Throwable {
+		performTestForVpeComponent((IFile)TestUtil.getResource(
+				"src/main/webapp/WEB-INF/jsp/errors.jsp", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
+	}
 }

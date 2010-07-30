@@ -11,6 +11,7 @@ public class FieldValidator implements Validator{
 	}
 	
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newName", "required","Name is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user.firstName", "required", "First Name is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user.lastName", "required", "Last Name is required.");
 	}
 }
