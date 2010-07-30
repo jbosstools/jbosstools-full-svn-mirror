@@ -99,6 +99,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements
 		resourceChangeListener = new SmooksResourceTraker();
 		xmlDocumentTraker = new SmooksXMLEditorDocumentListener();
 		smooksEditorModelBuilder = new SmooksEditorModelBuilder();
+		initEditingDomain();
 	}
 
 	private void handleCommandStack(CommandStack commandStack) {

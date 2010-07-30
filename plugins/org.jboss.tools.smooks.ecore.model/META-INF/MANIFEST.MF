@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jboss.tools.smooks.runtime,
  org.eclipse.emf.ecore
 Export-Package: org.jboss.tools.smooks.model,
- org.jboss.tools.smooks.model.core
+ org.jboss.tools.smooks.model.core,
+ org.jboss.tools.smooks.model.javabean
 Bundle-ClassPath: .,
  libs/commons-beanutils-1.8.3.jar,
  libs/commons-beanutils-bean-collections-1.8.3.jar,
