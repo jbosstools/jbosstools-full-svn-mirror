@@ -265,7 +265,7 @@
 				</repository>
 				<repository>
 					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -388,7 +388,7 @@
 				</repository>
 				<repository>
 					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -546,7 +546,7 @@
 				</repository>
 				<repository>
 					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository/
 					</url>
 					<layout>p2</layout>
 					<releases>
