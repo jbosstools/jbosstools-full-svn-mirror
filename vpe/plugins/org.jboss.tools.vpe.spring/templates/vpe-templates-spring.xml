@@ -123,7 +123,7 @@
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="form:input" case-sensitive="no">
+	<vpe:tag name="form:input" case-sensitive="yes">
 		<vpe:if test="@disabled='true'">
 			<vpe:template children="no" modify="no">
 				<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
@@ -154,7 +154,7 @@
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="form:password" case-sensitive="no">
+	<vpe:tag name="form:password" case-sensitive="yes">
 		<vpe:if test="@showPassword='true'">
 			<vpe:if test="@disabled='true'">
 				<!-- showPassword(+) and disabled(+) -->
@@ -219,7 +219,7 @@
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="form:label" case-sensitive="no">
+	<vpe:tag name="form:label" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes">
 			<label id="{@id}" class="{@cssClass}" style="{@cssStyle}" for="{@for}"
 				dir="{@dir}">
@@ -236,7 +236,7 @@
 		</vpe:template>
 	</vpe:tag>
 	
-	<vpe:tag name="form:hidden" case-sensitive="no">
+	<vpe:tag name="form:hidden" case-sensitive="yes">
 		<vpe:template children="no" modify="no" >
 		</vpe:template>
 	</vpe:tag>
@@ -334,7 +334,7 @@
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="form:textarea" case-sensitive="no">
+	<vpe:tag name="form:textarea" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes"
 			class="org.jboss.tools.vpe.spring.template.SpringTextAreaTemplate">
 			<vpe:resize>
