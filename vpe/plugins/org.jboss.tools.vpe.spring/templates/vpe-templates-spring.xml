@@ -423,7 +423,16 @@
 	</vpe:tag>	 
 	
 	<vpe:tag name="spring:bind" case-sensitive="yes">
-		<vpe:template children="no" modify="no" />
+		<vpe:if test="attrpresent('path')">
+			<vpe:template children="yes" modify="yes">
+				<span class="vpe-text">
+					<vpe:value expr="{@path}&lt;=" />
+				</span>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="yes" modify="yes">
+			<span class="vpe-text"/>
+		</vpe:template>
 	</vpe:tag>
 	
 	<vpe:tag name="spring:escapeBody" case-sensitive="yes">
