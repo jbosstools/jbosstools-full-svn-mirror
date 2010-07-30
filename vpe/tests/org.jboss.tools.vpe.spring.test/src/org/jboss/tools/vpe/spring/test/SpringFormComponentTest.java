@@ -37,6 +37,11 @@ public class SpringFormComponentTest extends VpeTest {
 		performTestForVpeComponent((IFile)TestUtil.getResource(
 				"src/main/webapp/WEB-INF/jsp/checkbox.jsp", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
 	}
+	
+	public void testCheckboxes() throws Throwable {
+		performTestForVpeComponent((IFile)TestUtil.getResource(
+				"src/main/webapp/WEB-INF/jsp/checkboxes.jsp", IMPORT_PROJECT_NAME)); //$NON-NLS-1$
+	}
 
 	public void testForm() throws Throwable {
 		performTestForVpeComponent((IFile)TestUtil.getResource(

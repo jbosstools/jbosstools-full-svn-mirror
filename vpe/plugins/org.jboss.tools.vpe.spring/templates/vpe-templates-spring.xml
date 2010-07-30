@@ -42,7 +42,7 @@
 			<vpe:if test="attrpresent('itemLabel')">
 				<vpe:template children="no" modify="no">
 					<span class="vpe-text">
-						<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						<input type="checkbox" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
 							disabled="disabled" />
 						<label>
 							<vpe:value expr="{@items}.{@itemLabel}" />
@@ -55,7 +55,7 @@
 			</vpe:if>
 			<vpe:template children="no" modify="no">
 				<span class="vpe-text">
-					<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+					<input type="checkbox" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
 						disabled="disabled" />
 					<label>
 						<vpe:value expr="{@items}" />
@@ -69,7 +69,7 @@
 		<vpe:if test="attrpresent('itemLabel')">
 			<vpe:template children="no" modify="no">
 				<span class="vpe-text">
-					<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}" />
+					<input type="checkbox" id="{@id}1" style="{@cssStyle}" class="{@cssClass}" />
 					<label>
 						<vpe:value expr="{@items}.{@itemLabel}" />
 					</label>
@@ -81,7 +81,7 @@
 		</vpe:if>
 		<vpe:template children="no" modify="no">
 			<span class="vpe-text">
-				<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}" />
+				<input type="checkbox" id="{@id}1" style="{@cssStyle}" class="{@cssClass}" />
 				<label>
 					<vpe:value expr="{@items}" />
 				</label>
