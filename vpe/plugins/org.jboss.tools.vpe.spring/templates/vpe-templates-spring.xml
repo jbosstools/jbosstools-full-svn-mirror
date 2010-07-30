@@ -470,4 +470,27 @@
 		</vpe:template>
 	</vpe:tag>
 	
+	<vpe:tag name="spring:param" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="security:authorize" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<div/>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="security:authentication" case-sensitive="yes">
+		<vpe:template children="no" modify="yes">
+			<span class="vpe-text">
+				<vpe:value expr="{@property}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="security:accesscontrollist" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<div/>
+		</vpe:template>
+	</vpe:tag>
 </vpe:templates>
