@@ -339,7 +339,7 @@
 			<vpe:if test="attrpresent('itemLabel')">
 				<vpe:template children="no" modify="no">
 					<span class="vpe-text">
-						<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						<input type="radio" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
 							disabled="disabled" name="{@path}"/>
 						<label>
 							<vpe:value expr="{@items}.{@itemLabel}" />
@@ -352,7 +352,7 @@
 			</vpe:if>
 			<vpe:template children="no" modify="no">
 					<span class="vpe-text">
-						<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						<input type="radio" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
 							disabled="disabled" name="{@path}"/>
 						<label>
 							<vpe:value expr="{@items}" />
@@ -366,7 +366,7 @@
 		<vpe:if test="attrpresent('itemLabel')">
 			<vpe:template children="no" modify="no">
 				<span class="vpe-text">
-					<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+					<input type="radio" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
 						name="{@path}"/>
 					<label>
 						<vpe:value expr="{@items}.{@itemLabel}" />
@@ -379,7 +379,7 @@
 		</vpe:if>
 		<vpe:template children="no" modify="no">
 			<span class="vpe-text">
-				<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+				<input type="radio" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
 					name="{@path}"/>
 				<label>
 					<vpe:value expr="{@items}" />

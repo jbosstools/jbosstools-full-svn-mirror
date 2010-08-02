@@ -14,7 +14,7 @@
 	<test id="checkboxes3">
 		<span>
 			<input id="checkboxes31" disabled="disabled" type="checkbox"/>
-			<label>${formBean.availableCategories}.id</label>
+			<label>${formBean.favoriteCategories}.id</label>
 		</span>
 	</test>
 </tests>

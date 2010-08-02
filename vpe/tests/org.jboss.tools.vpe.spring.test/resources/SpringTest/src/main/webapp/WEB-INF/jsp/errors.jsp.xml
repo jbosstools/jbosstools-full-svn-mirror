@@ -9,7 +9,7 @@
 			Errors for user.firstName field.
 		</span>
 	</test>
-	<test id="nameErrors2">
+	<test id="lastNameErrors">
 		<span id="lastNameErrors" style="color: red;">
 			Errors for user.lastName field.
 		</span>

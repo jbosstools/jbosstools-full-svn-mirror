@@ -2,13 +2,13 @@
 	<test id="radiobuttons1">
 		<span>
 			<input id="radiobuttons11" type="radio"/>
-			<label>${formBean.favoriteCategories}</label>
+			<label>${formBean.availableCategories}</label>
 		</span>
 	</test>
 	<test id="radiobuttons2">
 		<span>
 			<input id="radiobuttons21"  type="radio" class="tall-radiobuttons" style="width: 30px;"/>
-			<label>${formBean.favoriteCategories}</label>
+			<label>${formBean.availableCategories}</label>
 		</span>
 	</test>
 	<test id="radiobuttons3">

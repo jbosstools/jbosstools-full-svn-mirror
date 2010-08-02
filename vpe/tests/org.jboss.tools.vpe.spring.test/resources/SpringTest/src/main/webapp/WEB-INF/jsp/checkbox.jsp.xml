@@ -11,8 +11,7 @@
 			<INPUT TYPE="checkbox" CLASS="tall-checkbox" ID="checkbox2"
 				STYLE="width: 30px;" />
 			<LABEL>
-				form:checkbox with id, path, cssStyle, cssClass and label
-				attributes. (Must be big square.)
+				form:checkbox with id, path, cssStyle, cssClass and label attributes. (Must look as a big square.)
 			</LABEL>
 		</SPAN>
 	</test>
