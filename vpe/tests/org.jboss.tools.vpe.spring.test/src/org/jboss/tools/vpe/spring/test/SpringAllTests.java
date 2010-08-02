@@ -33,6 +33,7 @@ public class SpringAllTests {
 		TestSuite suite = new TestSuite("Tests for Vpe Spring components"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
 		suite.addTestSuite(SpringComponentTest.class);
+		suite.addTestSuite(SpringComponentContentTest.class);
 		//cleanUpTests();
 		// $JUnit-END$
 		return new VpeTestSetup(suite);

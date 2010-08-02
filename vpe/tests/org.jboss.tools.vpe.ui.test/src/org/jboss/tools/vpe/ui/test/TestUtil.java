@@ -47,7 +47,7 @@ import org.w3c.dom.Node;
 public class TestUtil {
 
 	/** The Constant COMPONENTS_PATH. */
-	private static final String COMPONENTS_PATH = "WebContent/pages"; //$NON-NLS-1$
+	public static final String COMPONENTS_PATH = "WebContent/pages/"; //$NON-NLS-1$
 
 	/** The Constant WEBCONTENT_PATH. */
 	private static final String WEBCONTENT_PATH = "WebContent"; //$NON-NLS-1$
@@ -75,9 +75,30 @@ public class TestUtil {
 		if (project != null) {
 			return project.getFolder(COMPONENTS_PATH).findMember(componentPage);
 		}
-
 		return null;
 	}
+	
+	/**
+	 * Gets the component path.
+	 * 
+	 * @param componentPage the component page
+	 * @param projectName the project name
+	 * 
+	 * @return the component path
+	 * 
+	 * @throws CoreException the core exception
+	 * @throws IOException 
+	 */
+	public static IResource getComponentFileByFullPath(String componentPage,
+			String projectName) throws CoreException, IOException {
+		IProject project = ProjectsLoader.getInstance().getProject(projectName);
+		if (project != null) {
+			return project.findMember(componentPage);
+		}
+		return null;
+	}
+	
+	
 	
 	public static IResource getResource(String path,
 			String projectName) throws CoreException, IOException {
@@ -186,21 +207,19 @@ public class TestUtil {
 	 */
 	static public void findElementsByName(nsIDOMNode node,
 			List<nsIDOMNode> elements, String name) {
-
-		// get children
+		/*
+		 * Get children
+		 */
 		nsIDOMNodeList children = node.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			nsIDOMNode child = children.item(i);
-
-			// if current child is required then add his to list
+			/*
+			 * if current child is required then add it to list
+			 */
 			if (name.equalsIgnoreCase((child.getNodeName()))) {
-
 				elements.add(child);
-
 			} else {
-
 				findElementsByName(child, elements, name);
-
 			}
 		}
 
@@ -218,7 +237,6 @@ public class TestUtil {
 	 */
 	static public void findAllElementsByName(nsIDOMNode node,
 			List<nsIDOMNode> elements, String name) {
-
 		try {
 			nsIDOMNodeList list = node.getChildNodes();
 			if (node.getNodeName().equalsIgnoreCase(name)) {

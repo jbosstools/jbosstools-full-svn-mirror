@@ -30,7 +30,7 @@ public class SpringComponentContentTest extends ComponentContentTest {
 	}
 
 	public void testCheckbox() throws Throwable {
-//		performContentTest("components/inplaceSelect/JBIDE4309.xhtml"); //$NON-NLS-1$
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/checkbox.jsp"); //$NON-NLS-1$
 	}
 	
 	@Override

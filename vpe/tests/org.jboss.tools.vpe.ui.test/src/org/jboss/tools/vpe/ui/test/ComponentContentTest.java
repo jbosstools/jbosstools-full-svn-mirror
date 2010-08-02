@@ -64,31 +64,39 @@ public abstract class ComponentContentTest extends VpeTest {
 	 * @throws Throwable
 	 */
 	protected void performContentTest(String elementPagePath) throws Throwable {
+		performContentTestByFullPath(TestUtil.COMPONENTS_PATH + elementPagePath);
+	}
+	
+	protected void performContentTestByFullPath(String elementPagePath) throws Throwable {
 		setException(null);
-
-		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
+		IFile elementPageFile = (IFile) TestUtil.getComponentFileByFullPath(
 				elementPagePath, getTestProjectName());
-
 		TestUtil.waitForIdle();
-
+		/*
+		 * Test that test file was found and exists
+		 */
+		assertNotNull("Could not find component file '"+elementPagePath+"'", elementPageFile); //$NON-NLS-1$ //$NON-NLS-2$
+		
 		IEditorPart editor = WorkbenchUtils.openEditor(elementPageFile,EDITOR_ID);
-
 		assertNotNull(editor);
-
 		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
-
-		// get xml test file
-		File xmlTestFile = TestUtil.getComponentPath(
+		/*
+		 * Get xml test file
+		 */
+		File xmlTestFile = TestUtil.getComponentFileByFullPath(
 				elementPagePath + XML_FILE_EXTENSION, getTestProjectName())
 				.getLocation().toFile();
-
-		// get document
+		/*
+		 * Test that XML test file was found and exists
+		 */
+		assertNotNull("Could not find XML component file '"+elementPagePath + XML_FILE_EXTENSION+"'", elementPageFile); //$NON-NLS-1$ //$NON-NLS-2$
+		/*
+		 * Get document
+		 */
 		compareContent(controller, xmlTestFile);
-
 		if (getException() != null) {
 			throw getException();
 		}
-
 	}
 	
 	protected void compareContent(VpeController controller, File xmlTestFile)
