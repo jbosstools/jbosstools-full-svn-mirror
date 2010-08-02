@@ -1,19 +1,19 @@
 <tests>
 	<test id="checkboxes1">
 		<span>
-			<input id="checkboxes11" name="selectedCategories" type="checkbox"/>
+			<input id="checkboxes11" type="checkbox"/>
 			<label>${formBean.availableCategories}</label>
 		</span>
 	</test>
 	<test id="checkboxes2">
 		<span>
-			<input id="checkboxes21" name="selectedCategories" class="tall-checkbox" style="width: 30px;" type="checkbox"/>
+			<input id="checkboxes21" class="tall-checkbox" style="width: 30px;" type="checkbox"/>
 			<label>${formBean.availableCategories}</label>
 		</span>
 	</test>
 	<test id="checkboxes3">
 		<span>
-			<input id="checkboxes31" name="selectedCategories" disabled="disabled" type="checkbox"/>
+			<input id="checkboxes31" disabled="disabled" type="checkbox"/>
 			<label>${formBean.availableCategories}.id</label>
 		</span>
 	</test>

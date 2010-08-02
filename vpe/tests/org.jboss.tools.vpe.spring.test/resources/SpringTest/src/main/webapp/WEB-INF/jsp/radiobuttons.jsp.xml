@@ -1,0 +1,20 @@
+<tests>
+	<test id="radiobuttons1">
+		<span>
+			<input id="radiobuttons11" type="radio"/>
+			<label>${formBean.favoriteCategories}</label>
+		</span>
+	</test>
+	<test id="radiobuttons2">
+		<span>
+			<input id="radiobuttons21"  type="radio" class="tall-radiobuttons" style="width: 30px;"/>
+			<label>${formBean.favoriteCategories}</label>
+		</span>
+	</test>
+	<test id="radiobuttons3">
+		<span>
+			<input id="radiobuttons31" disabled="disabled" type="radio"/>
+			<label>${formBean.favoriteCategories}.id</label>
+		</span>
+	</test>
+</tests>

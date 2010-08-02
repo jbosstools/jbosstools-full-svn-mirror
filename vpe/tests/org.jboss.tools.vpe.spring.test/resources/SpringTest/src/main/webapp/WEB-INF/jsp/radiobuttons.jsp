@@ -3,31 +3,32 @@
 <html>
 <head>
 	<style>
-		.tall-checkbox {
+		.tall-radiobuttons {
 			 -moz-appearance: none;
 			  height: 30px;
 		}
 	</style>
 </head>
 <body>
-	<h1>Test of form:checkboxes</h1>
+	<h1>Test of form:radiobuttons</h1>
 	
 	<form:form modelAttribute="formBean">
-		<form:checkboxes id="checkboxes1" items="${formBean.availableCategories}"
-					path="selectedCategories1" />
+		<form:radiobuttons id="radiobuttons1"
+				path="selectedCategories1" 
+				items="${formBean.availableCategories}" />
 		<br/>form:checkboxes with id, items and path attributes.
-		<br/><br/>		
-		<form:checkboxes id="checkboxes2"
-					cssClass="tall-checkbox" cssStyle="width: 30px;"
+		<br/><br/>
+		<form:radiobuttons id="radiobuttons2"
+					cssClass="tall-radiobuttons" cssStyle="width: 30px;"
 					items="${formBean.availableCategories}"
 					path="selectedCategories2" />
-		<br/>form:checkboxes with id, cssStyle, cssClass, items and path attributes.  (Must look as a big square.)
+		<br/>form:radiobuttons with id, cssStyle, cssClass, items and path attributes.  (Must look as a big circle.)
 		<br/><br/>
-		<form:checkboxes id="checkboxes3" disabled="true"
+		<form:radiobuttons id="radiobuttons3" disabled="true"
 					itemLabel="id" itemValue="id"
 					items="${formBean.favoriteCategories}"
 					path="selectedCategories3" />
-		<br/>disabled form:checkboxes with itemLabel attribute
+		<br/>disabled form:radiobuttons with itemLabel attribute
 		<br/><br/>
 	</form:form>
 </body>

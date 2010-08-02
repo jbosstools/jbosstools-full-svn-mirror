@@ -17,7 +17,9 @@ public class FormBean {
 	private boolean chechbox3Selected = false;
 
 	private Map<Integer, String> availableCategories = new HashMap<Integer, String>();
-	private Set<Integer> selectedCategories = new HashSet<Integer>();
+	private Set<Integer> selectedCategories1 = new HashSet<Integer>();
+	private Set<Integer> selectedCategories2 = new HashSet<Integer>();
+	private Set<Integer> selectedCategories3 = new HashSet<Integer>();
 	private List<CategoryType> favoriteCategories = new ArrayList<CategoryType>();
 	private String selectedCategory;
 	
@@ -27,7 +29,9 @@ public class FormBean {
 		for (CategoryType categoryType : CategoryType.values()) {
 			availableCategories.put(categoryType.getId(), categoryType.getName());
 		}
-		selectedCategories.add(CategoryType.Books.getId());
+		selectedCategories1.add(CategoryType.Sport.getId());
+		selectedCategories2.add(CategoryType.Fishing.getId());
+		selectedCategories3.add(CategoryType.Books.getId());
 		favoriteCategories.add(CategoryType.Sport);
 		favoriteCategories.add(CategoryType.Books);
 		selectedCategory = CategoryType.Sport.getName();
@@ -65,12 +69,28 @@ public class FormBean {
 		this.availableCategories = availableCategories;
 	}
 
-	public Set<Integer> getSelectedCategories() {
-		return selectedCategories;
+	public Set<Integer> getSelectedCategories1() {
+		return selectedCategories1;
 	}
 
-	public void setSelectedCategories(Set<Integer> selectedCategories) {
-		this.selectedCategories = selectedCategories;
+	public void setSelectedCategories1(Set<Integer> selectedCategories1) {
+		this.selectedCategories1 = selectedCategories1;
+	}
+
+	public Set<Integer> getSelectedCategories2() {
+		return selectedCategories2;
+	}
+
+	public void setSelectedCategories2(Set<Integer> selectedCategories2) {
+		this.selectedCategories2 = selectedCategories2;
+	}
+
+	public Set<Integer> getSelectedCategories3() {
+		return selectedCategories3;
+	}
+
+	public void setSelectedCategories3(Set<Integer> selectedCategories3) {
+		this.selectedCategories3 = selectedCategories3;
 	}
 
 	public List<CategoryType> getFavoriteCategories() {

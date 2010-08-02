@@ -43,6 +43,11 @@ public class SpringComponentTest extends VpeTest {
 		performTestForVpeComponent((IFile)TestUtil.getResource(
 				"src/main/webapp/WEB-INF/jsp/radiobutton.jsp", SpringAllTests.IMPORT_PROJECT_NAME)); //$NON-NLS-1$
 	}
+	
+	public void testRadiobuttons() throws Throwable {
+		performTestForVpeComponent((IFile)TestUtil.getResource(
+				"src/main/webapp/WEB-INF/jsp/radiobuttons.jsp", SpringAllTests.IMPORT_PROJECT_NAME)); //$NON-NLS-1$
+	}
 
 	public void testForm() throws Throwable {
 		performTestForVpeComponent((IFile)TestUtil.getResource(

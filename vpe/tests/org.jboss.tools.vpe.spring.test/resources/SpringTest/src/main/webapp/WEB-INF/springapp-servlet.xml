@@ -11,6 +11,7 @@
     <bean name="/checkbox.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/checkboxes.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/radiobutton.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/radiobuttons.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/errors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
     	<property name="validator" ref="fieldValidator"/>
     </bean>
