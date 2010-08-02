@@ -24,10 +24,15 @@ import junit.framework.TestSuite;
 
 public class SpringAllTests {
 
+	/*
+	 * Import project name
+	 */
+	public static final String IMPORT_PROJECT_NAME = "SpringTest"; //$NON-NLS-1$
+	
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Tests for Vpe Spring components"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
-		suite.addTestSuite(SpringFormComponentTest.class);
+		suite.addTestSuite(SpringComponentTest.class);
 		//cleanUpTests();
 		// $JUnit-END$
 		return new VpeTestSetup(suite);
