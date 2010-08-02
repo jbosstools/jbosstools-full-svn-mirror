@@ -19,6 +19,7 @@ public class FormBean {
 	private Map<Integer, String> availableCategories = new HashMap<Integer, String>();
 	private Set<Integer> selectedCategories = new HashSet<Integer>();
 	private List<CategoryType> favoriteCategories = new ArrayList<CategoryType>();
+	private String selectedCategory;
 	
 	private User user;
 
@@ -29,6 +30,7 @@ public class FormBean {
 		selectedCategories.add(CategoryType.Books.getId());
 		favoriteCategories.add(CategoryType.Sport);
 		favoriteCategories.add(CategoryType.Books);
+		selectedCategory = CategoryType.Sport.getName();
 	}
 
 	public boolean isChechbox1Selected() {
@@ -85,5 +87,13 @@ public class FormBean {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getSelectedCategory() {
+		return selectedCategory;
+	}
+
+	public void setSelectedCategory(String selectedCategory) {
+		this.selectedCategory = selectedCategory;
 	}
 }
