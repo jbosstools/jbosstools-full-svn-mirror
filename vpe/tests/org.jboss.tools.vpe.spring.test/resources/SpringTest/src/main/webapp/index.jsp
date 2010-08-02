@@ -6,6 +6,10 @@
 <br/>
 <a href="radiobuttons.htm">radiobuttons.htm</a>
 <br/>
+<a href="option.htm">option.htm</a>
+<br/>
+<a href="options.htm">options.htm</a>
+<br/>
 <a href="form.htm">form.htm</a>
 <br/>
 <a href="errors.htm">errors.htm</a>

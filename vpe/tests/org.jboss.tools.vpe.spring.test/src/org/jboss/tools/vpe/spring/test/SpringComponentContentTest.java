@@ -46,6 +46,14 @@ public class SpringComponentContentTest extends ComponentContentTest {
 	public void testRadiobuttons() throws Throwable {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/radiobuttons.jsp"); //$NON-NLS-1$
 	}
+	
+	public void testOption() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/option.jsp"); //$NON-NLS-1$
+	}
+	
+	public void testOptions() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/options.jsp"); //$NON-NLS-1$
+	}
 
 	public void testErrors() throws Throwable {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/errors.jsp"); //$NON-NLS-1$

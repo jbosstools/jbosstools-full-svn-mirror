@@ -276,14 +276,14 @@
 		<vpe:if test="@disabled='true'">
 			<vpe:if test="attrpresent('itemLabel')">
 				<vpe:template children="yes" modify="yes">
-					<option id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					<option id="{@id}1" class="{@cssClass}" style="{@cssStyle}"
 							dir="{@dir}" disabled="disabled">
 						<vpe:value expr="{@items}.{@itemLabel}" />
 					</option>
 				</vpe:template>
 			</vpe:if>
 			<vpe:template children="yes" modify="yes">
-				<option id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+				<option id="{@id}1" class="{@cssClass}" style="{@cssStyle}"
 						dir="{@dir}" disabled="disabled">
 					<vpe:value expr="{@items}" />
 				</option>
@@ -291,14 +291,14 @@
 		</vpe:if>
 		<vpe:if test="attrpresent('itemLabel')">
 			<vpe:template children="yes" modify="yes">
-				<option id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+				<option id="{@id}1" class="{@cssClass}" style="{@cssStyle}"
 						dir="{@dir}">
 					<vpe:value expr="{@items}.{@itemLabel}" />
 				</option>
 			</vpe:template>
 		</vpe:if>
 		<vpe:template children="yes" modify="yes">
-			<option id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+			<option id="{@id}1" class="{@cssClass}" style="{@cssStyle}"
 					dir="{@dir}">
 				<vpe:value expr="{@items}" />
 			</option>
