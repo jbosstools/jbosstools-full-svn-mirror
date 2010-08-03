@@ -323,9 +323,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
      * @param selection the current viewer selection (never <code>null</code>)
      */
     private void updateStatusLine( IStructuredSelection selection ) {
-        assert (selection.size() < 2);
-
-        String msg = (selection.isEmpty() ? "" : ((IModeShapeObject)selection.getFirstElement()).getShortDescription());
+        String msg = (selection.size() != 1 ? "" : ((IModeShapeObject)selection.getFirstElement()).getShortDescription());
         getViewSite().getActionBars().getStatusLineManager().setMessage(msg);
     }
 
