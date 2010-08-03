@@ -23,15 +23,15 @@ public class DeltaCloudManager {
 	
 	public DeltaCloud[] getClouds() {
 		// FIXME: testing only
-		if (clouds.size() == 0) {
-			try {
-				DeltaCloud x = new DeltaCloud("Red Hat Cloud", new URL("http://localhost:3001/api"), "mockuser", "mockpassword");
-				addCloud(x);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		if (clouds.size() == 0) {
+//			try {
+//				DeltaCloud x = new DeltaCloud("Red Hat Cloud", new URL("http://localhost:3001/api"), "mockuser", "mockpassword");
+//				addCloud(x);
+//			} catch (MalformedURLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 		return clouds.toArray(new DeltaCloud[clouds.size()]);
 	}
 

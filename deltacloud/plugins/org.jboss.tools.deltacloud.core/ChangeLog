@@ -1,3 +1,8 @@
+2010-08-03  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (getClouds): Remove default
+	cloud connection that was set up for testing.
+
 2010-07-29  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (buildHardwareProfile): XML
