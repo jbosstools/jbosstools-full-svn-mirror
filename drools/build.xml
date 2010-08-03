@@ -2,7 +2,7 @@
 
 	<!-- Configuration Start -->
 	<property name="COMPONENT" value="drools" />
-	<property name="drools.zip" value="drools-5.2.0.SNAPSHOT-eclipse-all.zip" />
+	<property name="drools.zip" value="drools-5.1.0-eclipse-all.zip" />
 	<!-- Configuration Ends -->
 
 	<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources">
@@ -39,7 +39,7 @@
 	        description="fetch latest drools from their Hudson build + selectively unpack it"
 	        depends="init"
 	>
-		<get src="http://hudson.qa.jboss.com/hudson/job/drools/lastStableBuild/artifact/trunk/target/${drools.zip}"
+		<get src="http://download.jboss.org/drools/release/5.1.0.34406.FINAL/${drools.zip}"
 		     dest="${WORKINGDIR}/${COMPONENT}/${drools.zip}"
 		     usetimestamp="true"
 		/>
