@@ -6,9 +6,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
-	<modules>
-		<module>../target-platform</module>
-	</modules>
 
 	<properties>
 		<!-- <tychoVersion>0.10.0-SNAPSHOT</tychoVersion> -->
@@ -265,7 +262,19 @@
 				</repository>
 				<repository>
 					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository/
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>jboss-xulrunner-1.9.2</id>
+					<url>http://download.jboss.org/jbosstools/updates/xulrunner-1.9.2/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -388,7 +397,7 @@
 				</repository>
 				<repository>
 					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository/
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -546,7 +555,7 @@
 				</repository>
 				<repository>
 					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository/
+					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
 					</url>
 					<layout>p2</layout>
 					<releases>
@@ -815,4 +824,17 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>apache-oro</groupId>
+				<artifactId>jakarta-oro</artifactId>
+				<version>2.0.8</version>
+				<scope>compile</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	
 </project>
