@@ -41,14 +41,12 @@ public class SpringFormSelectTemplate extends VpeAbstractTemplate {
 		VpeSpringUtil.copyAttribute(sourceElement, HTML.ATTR_SIZE,
 				select, HTML.ATTR_SIZE);
 		
-		if (sourceElement.hasAttribute(HTML.ATTR_MULTIPLE) && 
-				sourceElement.getAttribute(HTML.ATTR_MULTIPLE).equalsIgnoreCase(Boolean.TRUE.toString())) {
-			VpeSpringUtil.copyAttribute(sourceElement, HTML.ATTR_MULTIPLE,
-					select, HTML.ATTR_MULTIPLE);
-		}
-		
 		if (Spring.VALUE_TRUE.equals(sourceElement.getAttribute(Spring.ATTR_DISABLED))) {
 			select.setAttribute(HTML.ATTR_DISABLED, HTML.ATTR_DISABLED);
+		}
+		
+		if (!Spring.VALUE_FALSE.equals(sourceElement.getAttribute(Spring.ATTR_MULTIPLE))) {
+			select.setAttribute(HTML.ATTR_MULTIPLE, HTML.ATTR_MULTIPLE);
 		}
 		
 		if (sourceElement.hasAttribute(Spring.ATTR_ITEMS)) {
