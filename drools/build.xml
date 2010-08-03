@@ -2,7 +2,7 @@
 
 	<!-- Configuration Start -->
 	<property name="COMPONENT" value="drools" />
-	<property name="drools.zip" value="drools-5.1.0.SNAPSHOT-eclipse-all.zip" />
+	<property name="drools.zip" value="drools-5.2.0.SNAPSHOT-eclipse-all.zip" />
 	<!-- Configuration Ends -->
 
 	<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources">
