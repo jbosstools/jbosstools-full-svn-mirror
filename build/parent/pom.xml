@@ -6,6 +6,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
+	<modules>
+		<module>../target-platform</module>
+	</modules>
 
 	<properties>
 		<!-- <tychoVersion>0.10.0-SNAPSHOT</tychoVersion> -->
