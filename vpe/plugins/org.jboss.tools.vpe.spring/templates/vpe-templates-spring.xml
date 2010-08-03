@@ -127,7 +127,8 @@
 		<vpe:if test="@disabled='true'">
 			<vpe:template children="no" modify="no">
 				<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-					size="{@size}" dir="{@dir}" disabled="disabled" />
+					size="{@size}" dir="{@dir}" value="{@value}"
+					disabled="disabled" />
 				<vpe:resize>
 					<vpe:width width-attr="cssStyle.width" />
 					<vpe:height height-attr="cssStyle.height" />
@@ -141,7 +142,7 @@
 		</vpe:if>
 		<vpe:template children="no" modify="no">
 			<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-				size="{@size}" dir="{@dir}" />
+				size="{@size}" dir="{@dir}" value="{@value}"/>
 				<vpe:resize>
 					<vpe:width width-attr="cssStyle.width" />
 					<vpe:height height-attr="cssStyle.height" />

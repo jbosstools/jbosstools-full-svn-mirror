@@ -59,6 +59,34 @@ public class SpringComponentContentTest extends ComponentContentTest {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/errors.jsp"); //$NON-NLS-1$
 	}
 	
+	public void testHidden() throws Throwable {
+		performInvisibleTagTestByFullPath("src/main/webapp/WEB-INF/jsp/hidden.jsp", "hidden"); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+	
+	public void testInput() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/input.jsp"); //$NON-NLS-1$
+	}
+	
+	public void testPassword() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/password.jsp"); //$NON-NLS-1$
+	}
+	
+	public void testLabel() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/label.jsp"); //$NON-NLS-1$
+	}
+	
+	public void testTextarea() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/textarea.jsp"); //$NON-NLS-1$
+	}
+	
+	public void testMessage() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/message.jsp"); //$NON-NLS-1$
+	}
+	
+	public void testTheme() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/theme.jsp"); //$NON-NLS-1$
+	}
+	
 	@Override
 	protected String getTestProjectName() {
 		return SpringAllTests.IMPORT_PROJECT_NAME;

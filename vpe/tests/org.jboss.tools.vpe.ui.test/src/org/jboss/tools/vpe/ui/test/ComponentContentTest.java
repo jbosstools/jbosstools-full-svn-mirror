@@ -78,7 +78,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		assertNotNull("Could not find component file '"+elementPagePath+"'", elementPageFile); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		IEditorPart editor = WorkbenchUtils.openEditor(elementPageFile,EDITOR_ID);
-		assertNotNull(editor);
+		assertNotNull("Editor should be opened.", editor); //$NON-NLS-1$
 		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 		/*
 		 * Get xml test file
@@ -159,56 +159,85 @@ public abstract class ComponentContentTest extends VpeTest {
 	 */
 	protected void performInvisibleTagTest(String elementPagePath,
 			String elementId) throws Throwable {
+		performInvisibleTagTestByFullPath(TestUtil.COMPONENTS_PATH
+				+ elementPagePath, elementId);
+	}
+	
+	/**
+	 * test for invisible tags
+	 * 
+	 * @param elementPagePath
+	 *            - path to test page
+	 * @param elementId
+	 *            - id of element on page
+	 * @throws Throwable
+	 */
+	protected void performInvisibleTagTestByFullPath(String elementPagePath,
+			String elementId) throws Throwable {
 		setException(null);
-
-		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
+		
+		IFile elementPageFile = (IFile) TestUtil.getComponentFileByFullPath(
 				elementPagePath, getTestProjectName());
-
+		/*
+		 * Test that test file was found and exists
+		 */
+		assertNotNull("Could not find component file '"+elementPagePath+"'", elementPageFile); //$NON-NLS-1$ //$NON-NLS-2$
+		/*
+		 * Open the editor
+		 */
 		IEditorInput input = new FileEditorInput(elementPageFile);
-
 		TestUtil.waitForJobs();
-
 		IEditorPart editor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
-						EDITOR_ID, true);
-
-		assertNotNull(editor);
-
+		.getActiveWorkbenchWindow().getActivePage().openEditor(input,
+				EDITOR_ID, true);
+		assertNotNull("Editor should be opened.", editor); //$NON-NLS-1$
 		TestUtil.waitForJobs();
-
+		/*
+		 * Get the controller
+		 */
 		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
-
-		// find source element and check if it is not null
-		Element sourceELement = findSourceElementById(controller, elementId);
-		assertNotNull(sourceELement);
-
-		// find visual element and check if it is null
+		/*
+		 * Find source element and check if it is not null
+		 */
+		Element sourceElement = findSourceElementById(controller, elementId);
+		assertNotNull("Source node with id '" + elementId + "' was not found.", sourceElement); //$NON-NLS-1$ //$NON-NLS-2$
+		/*
+		 * Find visual element and check if it is null
+		 */
 		nsIDOMElement visualElement = findElementById(controller, elementId);
-		assertNull(visualElement);
-
-		// set show invisible tag's flag to true
+		assertNull("Source node with id '" + elementId + "' has visual representation.", visualElement); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		/*
+		 * Set show invisible tag's flag to true
+		 */
 		controller.getVisualBuilder().setShowInvisibleTags(true);
 		controller.visualRefresh();
-
-		// find visual element and check if it is not null
+		
+		/*
+		 * Find visual element and check if it is not null
+		 */
 		visualElement = findElementById(controller, elementId,TestUtil.MAX_IDLE);
 		assertNotNull(visualElement);
-
-		// generate text for invisible tag
-		String modelInvisibleTagText = generateInvisibleTagText(sourceELement
+		
+		/*
+		 * Generate text for invisible tag
+		 */
+		String modelInvisibleTagText = generateInvisibleTagText(sourceElement
 				.getNodeName());
-
-		// generate dom document and get root element
+		
+		/*
+		 * Generate dom document and get root element
+		 */
 		Element modelElement = TestDomUtil.getDocument(modelInvisibleTagText)
-				.getDocumentElement();
+		.getDocumentElement();
 		assertNotNull(modelElement);
-
+		
 		TestDomUtil.compareNodes(visualElement, modelElement);
-
+		
 		if (getException() != null) {
 			throw getException();
 		}
-
+		
 	}
 
 	/**

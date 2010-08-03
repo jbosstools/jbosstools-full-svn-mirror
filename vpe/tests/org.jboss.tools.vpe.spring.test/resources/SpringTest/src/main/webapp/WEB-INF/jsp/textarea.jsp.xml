@@ -1,0 +1,17 @@
+<tests>
+	<test id="textArea1">
+		<TEXTAREA ID="textArea1" CSSCLASS="green" CSSSTYLE="font-weight: bold;"
+			CLASS="green" STYLE="font-weight: bold;">
+			textArea 1
+			<SPAN CLASS="vpe-text">
+				textArea 1
+			</SPAN>
+		</TEXTAREA>
+	</test>
+	<test id="textArea2">
+		<TEXTAREA ID="textArea2" VALUE="textArea 2" CSSCLASS="blue"
+			CSSSTYLE="font-style: italic;" CLASS="blue" STYLE="font-style: italic;">
+		</TEXTAREA>
+	</test>
+
+</tests>
