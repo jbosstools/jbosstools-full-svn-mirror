@@ -17,6 +17,7 @@
     <bean name="/errors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
     	<property name="validator" ref="fieldValidator"/>
     </bean>
+    <bean name="/select.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean id="fieldValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.FieldValidator"/>
     
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
