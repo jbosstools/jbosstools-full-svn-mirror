@@ -1329,7 +1329,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		<propertyregex property="artifact.id"
 		               defaultvalue="${artifact.jarfile}"
 		               input="${artifact.jarfile}"
-		               regexp="([^_]+)_(\d+\.\d+\.\d+.+)\.jar"
+		               regexp="([^_]+)_(\d+\.\d+\.\d+)\.jar"
 		               replace="\1"
 		               override="true"
 		/>
@@ -1344,6 +1344,13 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		               defaultvalue="${artifact.id}"
 		               input="${artifact.id}"
 		               regexp="([^_]+)-(\d+\.\d+\.\d+.SNAPSHOT)\.jar"
+		               replace="\1"
+		               override="true"
+		/>
+		<propertyregex property="artifact.id"
+		               defaultvalue="${artifact.id}"
+		               input="${artifact.id}"
+		               regexp="([^_]+)_(\d+\.\d+\.\d+)\.jar"
 		               replace="\1"
 		               override="true"
 		/>
@@ -1694,6 +1701,15 @@ Cannot deploy - sourceDir not found in
 		          value="org.drools.eclipse"
 		/>
 		<property name="get.artifact.id.expected.drools/plugins/org.drools.eclipse.task_5.1.0.SNAPSHOT.jar"
+		          value="org.drools.eclipse.task"
+		/>
+		<property name="get.artifact.id.expected.drools/plugins/org.guvnor.tools_5.1.0.jar"
+		          value="org.guvnor.tools"
+		/>
+		<property name="get.artifact.id.expected.drools/plugins/org.drools.eclipse_5.1.0.jar"
+		          value="org.drools.eclipse"
+		/>
+		<property name="get.artifact.id.expected.drools/plugins/org.drools.eclipse.task_5.1.0.jar"
 		          value="org.drools.eclipse.task"
 		/>
 
