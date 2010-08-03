@@ -15,19 +15,24 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 
 
 public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
@@ -39,6 +44,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 	
 	private static final String REMOVE_CLOUD = "RemoveCloud.label"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
+	private static final String CREATE_INSTANCE = "CreateInstance.label"; //$NON-NLS-1$
 	
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
@@ -49,6 +55,9 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 	private Action refreshAction;
 	private Action collapseall;
 	private Action doubleClickAction;
+	private Action createInstance;
+	
+	private CloudViewElement selectedElement;
 
 	/**
 	 * The constructor.
@@ -108,8 +117,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 
 	private void handleSelection() {
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-		CloudViewElement element = (CloudViewElement)selection.getFirstElement();
-		// FIXME: add context menus here based on element type
+		selectedElement = (CloudViewElement)selection.getFirstElement();
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
@@ -120,8 +128,12 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(action2);
+		if (selectedElement instanceof CVImageElement) {
+			manager.add(createInstance);
+		} else {
+			manager.add(action1);
+			manager.add(action2);
+		}
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -158,6 +170,28 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 		removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_ELCL_REMOVE));
 
+		createInstance = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				Shell shell = viewer.getControl().getShell();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				if (obj instanceof CVImageElement) {
+					CVImageElement imageElement = (CVImageElement)obj;
+					DeltaCloudImage image = (DeltaCloudImage)imageElement.getElement();
+					CVCategoryElement images = (CVCategoryElement)imageElement.getParent();
+					CVCloudElement cloudElement = (CVCloudElement)images.getParent();
+					DeltaCloud cloud = (DeltaCloud)cloudElement.getElement();
+					IWizard wizard = new NewInstance(cloud, image);
+					WizardDialog dialog = new WizardDialog(shell, wizard);
+					dialog.create();
+					dialog.open();
+				}
+			}
+		};		
+		createInstance.setText(CVMessages.getString(CREATE_INSTANCE));
+		createInstance.setToolTipText(CVMessages.getString(CREATE_INSTANCE));
+		createInstance.setImageDescriptor(SWTImagesFactory.DESC_INSTANCE);
+		
 		refreshAction = new Action() {
 			public void run() {
 				viewer.setInput(getViewSite());

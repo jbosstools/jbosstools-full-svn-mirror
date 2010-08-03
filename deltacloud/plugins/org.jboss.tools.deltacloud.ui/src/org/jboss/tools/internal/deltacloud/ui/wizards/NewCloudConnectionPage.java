@@ -256,7 +256,6 @@ public class NewCloudConnectionPage extends WizardPage {
 	
 	@Override
 	public void createControl(Composite parent) {
-		// TODO Auto-generated method stub
 		final Composite container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
 		layout.marginHeight = 5;

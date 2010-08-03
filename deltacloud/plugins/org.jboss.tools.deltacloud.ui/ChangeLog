@@ -1,5 +1,20 @@
 2010-08-03  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/SWTImagesFactory.java: Add Delta icon.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new messages
+	for create instance.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (handleSelection): Store
+	the selected element for use in setting context menus and actions. 
+	(makeActions): Add create instance action.
+	(.run): New run method for create instance.
+	(fillContextMenu): Set create instance action for CVImageElement.
+	* src/org/jboss/tools/deltacloud/ui/wizards/WizardMessages.properties: Add new message
+	for NewInstance wizard.
+	
+2010-08-03  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (getURLValid): New
 	method. 
 	(setURLValid): Ditto. 
