@@ -12,6 +12,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -62,7 +64,10 @@ public class NewCloudConnectionPage extends WizardPage {
 	private String url;
 	private String username;
 	private String password;
+	private String cloudType;
 
+	private boolean urlValid;
+	
 	private Listener linkListener = new Listener() {
 
 		public void handleEvent(Event event) {
@@ -119,6 +124,56 @@ public class NewCloudConnectionPage extends WizardPage {
 		} else {
 			complete = false;
 		}
+		
+		// Run check for valid DeltaCloud URL in separate thread
+		String urlValue = urlText.getText();
+		if (urlValue.endsWith("api")) {
+			ISafeRunnable runner = new ISafeRunnable() {
+
+				@Override
+				public void handleException(Throwable exception) {
+					setURLValid(false);
+				}
+
+				@Override
+				public void run() throws Exception {
+					// TODO Auto-generated method stub
+					checkURL();
+				}
+			};
+			SafeRunner.run(runner);
+		} else if (urlValue.length() > 0){
+			typeText.setText(WizardMessages.getString(NONCLOUD_URL));
+			complete = false;
+		} else {
+			typeText.setText(WizardMessages.getString(UNKNOWN_TYPE_LABEL));
+			complete = false;
+		}
+		
+		username = usernameText.getText();
+		if (username.length() <= 0) {
+			complete = false;
+		}
+		password = passwordText.getText();
+		if (password.length() <= 0) {
+			complete = false;
+		}
+		if (errorFree)
+			setErrorMessage(null);
+		setPageComplete(complete & errorFree);
+	}
+	
+	@Override
+	public boolean isPageComplete() {
+		return super.isPageComplete() & getURLValid();
+	}
+	
+	
+	// Method to check the URL for validity as Delta-cloud API specifier.
+	// Since this is run in thread, it does not use the setErrorMessage()
+	// method and instead writes error messages to the typeText label.
+	private synchronized void checkURL() {
+		boolean valid = false;
 		String oldurl = url;
 		url = urlText.getText();
 		if (url.length() > 0) {
@@ -158,40 +213,45 @@ public class NewCloudConnectionPage extends WizardPage {
 							Node n = elements.item(0);
 							Node driver = n.getAttributes().getNamedItem("driver"); //$NON-NLS-1$
 							if (driver != null) {
+								valid = true;
 								String driverValue = driver.getNodeValue();
-								typeText.setText(driverValue.toUpperCase());
+								cloudType = driverValue.toUpperCase();
+							} else {
+								cloudType = WizardMessages.getString(UNKNOWN_TYPE_LABEL);
 							}
 						}
 					}
 				} catch (MalformedURLException e) {
-					errorFree = false;
-					setErrorMessage(WizardMessages.getString(INVALID_URL));
+					cloudType = WizardMessages.getString(INVALID_URL);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					errorFree = false;
-					setErrorMessage(WizardMessages.getString(NONCLOUD_URL));
+					cloudType = WizardMessages.getString(NONCLOUD_URL);
 				} catch (ParserConfigurationException e) {
-					errorFree = false;
-					setErrorMessage(WizardMessages.getString(NONCLOUD_URL));
+					cloudType = WizardMessages.getString(NONCLOUD_URL);
 				} catch (SAXException e) {
-					errorFree = false;
-					setErrorMessage(WizardMessages.getString(NONCLOUD_URL));
+					cloudType = WizardMessages.getString(NONCLOUD_URL);
 				}
+				setURLValid(valid);
 			}
-		} else {
-			complete = false;
+			typeText.setText(cloudType);
 		}
-		username = usernameText.getText();
-		if (username.length() <= 0) {
-			complete = false;
-		}
-		password = passwordText.getText();
-		if (password.length() <= 0) {
-			complete = false;
-		}
-		if (errorFree)
-			setErrorMessage(null);
-		setPageComplete(complete & errorFree);
+	}
+	
+	/**
+	 * Set whether the URL is a valid Delta-cloud API URL.
+	 * 
+	 * @param value boolean to set
+	 */
+	private synchronized void setURLValid(boolean value) {
+		urlValid = value;
+	}
+	
+	/**
+	 * Return the validity of the Delta-cloud URL.
+	 * 
+	 * @return true if URL valid, false otherwise
+	 */
+	private synchronized boolean getURLValid() {
+		return urlValid;
 	}
 	
 	@Override
@@ -221,7 +281,8 @@ public class NewCloudConnectionPage extends WizardPage {
 		typeLabel.setText(WizardMessages.getString(TYPE_LABEL));
 
 		typeText = new Label(container, SWT.NULL);
-		typeText.setText(WizardMessages.getString(UNKNOWN_TYPE_LABEL));
+		cloudType = WizardMessages.getString(UNKNOWN_TYPE_LABEL);
+		typeText.setText(cloudType);
 		
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));

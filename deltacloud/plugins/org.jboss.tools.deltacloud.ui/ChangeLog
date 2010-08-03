@@ -1,3 +1,20 @@
+2010-08-03  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (getURLValid): New
+	method. 
+	(setURLValid): Ditto. 
+	(checkURL): Ditto.  Used to check URL is valid and to get the driver info.
+	(isPageComplete): Override to check URL in addition to normal page complete flag.
+	(.handleException): New method of ISafeRunnable to use to run checkURL in thread. 
+	(.run): Ditto.
+	(createControl): Change how type label gets initially set.
+	(validate): Change to use checkURL method in safe thread when the URL at least
+	ends in "api".  Otherwise, don't bother checking the URL and don't mark the page
+	as complete.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Change
+	error message for URL as it now appears in the type label and not the error message
+	area. 
+
 2010-07-28  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java: New file.
