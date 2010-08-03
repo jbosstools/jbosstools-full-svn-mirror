@@ -161,7 +161,7 @@
 				<!-- showPassword(+) and disabled(+) -->
 				<vpe:template children="no" modify="no">
 					<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-						size="{@size}" dir="{@dir}" value="{@value}" disabled="disabled" />
+						size="{@size}" dir="{@dir}" value="{@path}" disabled="disabled" />
 					<vpe:resize>
 						<vpe:width width-attr="cssStyle.width" />
 						<vpe:height height-attr="cssStyle.height" />
@@ -176,7 +176,7 @@
 			<!-- showPassword(+) and disabled(-) -->
 			<vpe:template children="no" modify="no">
 				<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-					size="{@size}" dir="{@dir}" value="{@value}" />
+					size="{@size}" dir="{@dir}" value="{@path}" />
 				<vpe:resize>
 					<vpe:width width-attr="cssStyle.width" />
 					<vpe:height height-attr="cssStyle.height" />
@@ -192,7 +192,7 @@
 			<!-- showPassword(-) and disabled(+) -->
 			<vpe:template children="no" modify="no">
 				<input type="password" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-					size="{@size}" dir="{@dir}" value="{@value}" disabled="disabled" />
+					size="{@size}" dir="{@dir}" value="{@path}" disabled="disabled" />
 				<vpe:resize>
 					<vpe:width width-attr="cssStyle.width" />
 					<vpe:height height-attr="cssStyle.height" />
@@ -207,7 +207,7 @@
 		<!-- showPassword(-) and disabled(-) -->
 		<vpe:template children="no" modify="no">
 			<input type="password" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-				size="{@size}" dir="{@dir}" value="{@value}" />
+				size="{@size}" dir="{@dir}" value="{@path}" />
 			<vpe:resize>
 				<vpe:width width-attr="cssStyle.width" />
 				<vpe:height height-attr="cssStyle.height" />
