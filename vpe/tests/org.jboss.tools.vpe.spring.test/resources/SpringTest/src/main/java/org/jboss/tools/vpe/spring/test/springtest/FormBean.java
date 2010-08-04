@@ -24,6 +24,7 @@ public class FormBean {
 	private String selectedCategory;
 	
 	private User user;
+	private String verificationNum;
 
 	public FormBean() {
 		for (CategoryType categoryType : CategoryType.values()) {
@@ -107,6 +108,14 @@ public class FormBean {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getVerificationNum() {
+		return verificationNum;
+	}
+
+	public void setVerificationNum(String verificationNum) {
+		this.verificationNum = verificationNum;
 	}
 
 	public String getSelectedCategory() {

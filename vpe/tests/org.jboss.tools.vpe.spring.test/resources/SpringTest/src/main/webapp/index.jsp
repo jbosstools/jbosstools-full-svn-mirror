@@ -16,6 +16,8 @@
 <br/>
 <a href="bind.htm">bind.htm</a>
 <br/>
+<a href="hasBindErrors.htm">hasBindErrors.htm</a>
+<br/>
 <a href="select.htm">select.htm</a>
 <br/>
 

@@ -443,7 +443,7 @@
 	</vpe:tag>
 	
 	<vpe:tag name="spring:hasBindErrors" case-sensitive="yes">
-		<vpe:template children="no" modify="no" />
+		<vpe:template children="yes" modify="no" />
 	</vpe:tag>
 	
 	<vpe:tag name="spring:htmlEscape" case-sensitive="yes">

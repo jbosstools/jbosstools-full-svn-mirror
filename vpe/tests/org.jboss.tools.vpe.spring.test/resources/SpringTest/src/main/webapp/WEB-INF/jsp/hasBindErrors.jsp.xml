@@ -1,0 +1,69 @@
+<tests>
+	<test id="formBeanErrors">
+		<DIV ID="formBeanErrors">
+			<DIV STYLE="border: 1px solid red; width: 300px;">
+				<H2>
+					<SPAN CLASS="vpe-text">
+						Errors for all bean fields
+					</SPAN>
+				</H2>
+				<DIV CLASS="error">
+					<UL>
+						<SPAN CLASS="vpe-text">
+							<LI>
+								<SPAN CLASS="vpe-text">
+									${error.defaultMessage}
+								</SPAN>
+							</LI>
+							<LI>
+								<SPAN CLASS="vpe-text">
+									${error.defaultMessage}
+								</SPAN>
+							</LI>
+							<LI>
+								<SPAN CLASS="vpe-text">
+									${error.defaultMessage}
+								</SPAN>
+							</LI>
+						</SPAN>
+					</UL>
+				</DIV>
+			</DIV>
+		</DIV>
+	</test>
+	<test id="userErrors">
+		<DIV ID="userErrors">
+			<DIV STYLE="border: 1px solid red; width: 300px;">
+				<H2>
+					<SPAN CLASS="vpe-text">
+						Errors for all user fields only
+					</SPAN>
+				</H2>
+				<DIV CLASS="error">
+					<UL>
+						<SPAN CLASS="vpe-text">
+							formBean.user.*&lt;=
+							<SPAN CLASS="vpe-text">
+								<LI>
+									<SPAN CLASS="vpe-text">
+										${error}
+									</SPAN>
+								</LI>
+								<LI>
+									<SPAN CLASS="vpe-text">
+										${error}
+									</SPAN>
+								</LI>
+								<LI>
+									<SPAN CLASS="vpe-text">
+										${error}
+									</SPAN>
+								</LI>
+							</SPAN>
+						</SPAN>
+					</UL>
+				</DIV>
+			</DIV>
+		</DIV>
+	</test>
+</tests>

@@ -15,14 +15,18 @@
     <bean name="/option.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/options.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/errors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
-    	<property name="validator" ref="fieldValidator"/>
+    	<property name="validator" ref="userValidator"/>
     </bean>
     <bean name="/bind.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
-    	<property name="validator" ref="fieldValidator"/>
+    	<property name="validator" ref="userValidator"/>
+    </bean>
+    <bean name="/hasBindErrors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
+    	<property name="validator" ref="beanValidator"/>
     </bean>
     <bean name="/select.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/escapeBody.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
-    <bean id="fieldValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.FieldValidator"/>
+    <bean id="userValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.UserValidator"/>
+    <bean id="beanValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.BeanValidator"/>
     
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"></property>
