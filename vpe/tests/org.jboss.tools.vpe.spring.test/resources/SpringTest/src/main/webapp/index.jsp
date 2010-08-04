@@ -14,6 +14,8 @@
 <br/>
 <a href="errors.htm">errors.htm</a>
 <br/>
-<a href="select.htm">errors.htm</a>
+<a href="bind.htm">bind.htm</a>
+<br/>
+<a href="select.htm">select.htm</a>
 <br/>
 

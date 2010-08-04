@@ -1,0 +1,34 @@
+<tests>
+	<test id="validationBinding">
+		<div id="validationBinding">
+			<span class="vpe-text">
+				user.lastName&lt;=
+				<font color="red">
+					<b>
+						<span class="vpe-text">
+							${status.errorMessage}
+						</span>
+					</b>
+				</font>
+			</span>
+		</div>
+	</test>
+	<test id="outputBinding">
+		<div id="outputBinding">
+			<span class="vpe-text">
+				selectedCategory&lt;=
+				<span class="vpe-text">
+					${status.value}
+				</span>
+			</span>
+		</div>
+	</test>
+	<test id="inputBinding">
+		<div id="inputBinding">
+			<span class="vpe-text">
+				selectedCategory&lt;=
+				<input type="text" value="${status.value}" />
+			</span>
+		</div>
+	</test>
+</tests>
