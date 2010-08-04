@@ -438,7 +438,7 @@
 	
 	<vpe:tag name="spring:escapeBody" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes">
-			<div/>
+			<span class="vpe-text"/>
 		</vpe:template>
 	</vpe:tag>
 	
