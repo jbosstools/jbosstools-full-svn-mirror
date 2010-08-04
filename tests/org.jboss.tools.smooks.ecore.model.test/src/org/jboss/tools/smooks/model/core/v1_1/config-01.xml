@@ -3,7 +3,7 @@
 
     <params>
         <param name="a">aVal</param>
-        <param name="b">bVal</param>
+        <param type = "actived" name="b">bVal</param>
         <param name="stream.filter.type">SAX</param>
     </params>
 

@@ -19,6 +19,7 @@
  */
 package org.jboss.tools.smooks.model.core;
 
+import org.eclipse.emf.common.util.EList;
 import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.SmooksModelTestCase;
 import org.milyn.StreamFilterType;
@@ -26,6 +27,7 @@ import org.milyn.javabean.dynamic.Model;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
@@ -52,7 +54,15 @@ public class ParamsTest extends SmooksModelTestCase {
         GlobalParams params = model.getModelRoot().getParams();
 		
         assertTrue(params.getFilterType() == StreamFilterType.SAX);
-        
+        EList<IParam> paramList = params.getParams();
+        for (Iterator<?> iterator = paramList.iterator(); iterator.hasNext();) {
+			IParam iParam = (IParam) iterator.next();
+			if(iParam.getName().equals("b")){
+				assertTrue(iParam.getType().equals("actived"));
+			}else{
+				assertTrue(iParam.getType()==null);
+			}
+		}
         params.setFilterType(StreamFilterType.DOM);
         assertModelEquals(model, "v1_1/config-02.xml");
     }
