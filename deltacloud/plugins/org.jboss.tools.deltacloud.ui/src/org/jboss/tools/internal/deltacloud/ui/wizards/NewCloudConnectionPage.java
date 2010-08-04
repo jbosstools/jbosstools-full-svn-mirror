@@ -64,7 +64,6 @@ public class NewCloudConnectionPage extends WizardPage {
 	
 	private NewCloudConnection wizard;
 	
-	private Label errorLabel;
 	private Button testButton;
 	
 	private Text nameText;
@@ -297,7 +296,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		layout.marginWidth = 5;
 		container.setLayout(layout);
 	
-		errorLabel = new Label(container, SWT.NULL);
+		Label dummyLabel = new Label(container, SWT.NULL);
 		// errorLabel.setForeground(JFaceResources.getColorRegistry().get(JFacePreferences.ERROR_COLOR));
 		
 		Label nameLabel = new Label(container, SWT.NULL);
@@ -345,14 +344,14 @@ public class NewCloudConnectionPage extends WizardPage {
 		FormData f = new FormData();
 		f.left = new FormAttachment(0, 0);
 		f.right = new FormAttachment(100, 0);
-		errorLabel.setLayoutData(f);
+		dummyLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(errorLabel, 11);
+		f.top = new FormAttachment(dummyLabel, 11);
 		nameLabel.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(errorLabel, 8);
+		f.top = new FormAttachment(dummyLabel, 8);
 		f.left = new FormAttachment(usernameLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		nameText.setLayoutData(f);

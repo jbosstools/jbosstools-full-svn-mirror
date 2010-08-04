@@ -1,6 +1,22 @@
 2010-08-04  Jeff Johnston  <jjohnstn@redhat.com>
 
-	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (createControl): Clean
+	up format. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (NewInstancePage): Calculate
+	the possible hardware profiles using getPossibleProfiles method. 
+	(.modifyText): New method for handling name text control.
+	(getPossibleProfiles): New method.
+	(createControl): Start fleshing out actual controls.
+	(validate): New method.
+	(getProfileIds): Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new
+	messages for create instance wizard.
+
+2010-08-04  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (addPages): Add
+	this to page constructor.
 	(performTest): New method to test connection.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (checkURL): 
 	(NewCloudConnectionPage): Pass in calling wizard.
@@ -9,6 +25,7 @@
 	(validate): Clear the message area each time.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new
 	messages for connection testing purposes. 
+	
 
 2010-08-03  Jeff Johnston  <jjohnstn@redhat.com>
 
