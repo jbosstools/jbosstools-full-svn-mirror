@@ -64,6 +64,10 @@ public class SpringComponentContentTest extends ComponentContentTest {
 	public void testBind() throws Throwable {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/bind.jsp"); //$NON-NLS-1$
 	}
+
+	public void testNestedPath() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/nestedPath.jsp"); //$NON-NLS-1$
+	}
 	
 	public void testSelect() throws Throwable {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/select.jsp"); //$NON-NLS-1$

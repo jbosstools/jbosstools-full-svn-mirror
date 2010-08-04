@@ -23,6 +23,9 @@
     <bean name="/hasBindErrors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
     	<property name="validator" ref="beanValidator"/>
     </bean>
+    <bean name="/nestedPath.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
+    	<property name="validator" ref="userValidator"/>
+    </bean>
     <bean name="/select.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/escapeBody.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean id="userValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.UserValidator"/>

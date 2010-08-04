@@ -451,7 +451,7 @@
 	</vpe:tag>
 	
 	<vpe:tag name="spring:nestedPath" case-sensitive="yes">
-		<vpe:template children="no" modify="no" />
+		<vpe:template children="yes" modify="no" />
 	</vpe:tag>
 	
 	<vpe:tag name="spring:transform" case-sensitive="yes">

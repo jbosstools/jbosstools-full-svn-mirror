@@ -43,23 +43,23 @@ public class SelectionUtil {
 	 * @return
 	 */
 	public static nsIDOMNode getSelectedNode(nsISelection selection) {
-
-		if (selection.getAnchorNode() == selection.getFocusNode()) {
-			if (selection.getFocusNode() != null) {
-				if ((selection.getFocusNode().getNodeType() != nsIDOMNode.TEXT_NODE)
+		nsIDOMNode selectedNode = null;
+		nsIDOMNode focusNode = selection.getFocusNode();
+		if (selection.getAnchorNode() == focusNode) {
+			if (focusNode != null) {
+				if ((focusNode.getNodeType() != nsIDOMNode.TEXT_NODE)
 						&& (selection.getFocusOffset() != 0)) {
 
-					return selection.getFocusNode().getChildNodes().item(
+					selectedNode = focusNode.getChildNodes().item(
 							selection.getFocusOffset() - 1);
 				} else
-					return selection.getFocusNode();
+					selectedNode = selection.getFocusNode();
 			}
 		} else {
 			nsIDOMRange range = selection.getRangeAt(0);
-			nsIDOMNode visualAncestor = range.getCommonAncestorContainer();
-			return visualAncestor;
+			selectedNode = range.getCommonAncestorContainer();
 		}
-		return null;
+		return selectedNode;
 	}
 
 	/**
