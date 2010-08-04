@@ -7,10 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.ListenerList;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
+import org.jboss.tools.deltacloud.core.client.Realm;
 
 public class DeltaCloud {
 	
@@ -79,8 +81,7 @@ public class DeltaCloud {
 				instances.add(instance);
 			}
 		} catch (DeltaCloudClientException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.log(e);
 		}
 		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
 		instanceArray = instances.toArray(instanceArray);
@@ -97,10 +98,35 @@ public class DeltaCloud {
 				images.add(image);
 			}
 		} catch (DeltaCloudClientException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.log(e);
 		}
 		return images.toArray(new DeltaCloudImage[images.size()]);
+	}
+
+	public boolean testConnection() {
+		String instanceId = "madeupValue"; //$NON-NLS-1$
+		try {
+			client.listInstances(instanceId);
+			return true;
+		} catch (DeltaCloudAuthException e) {
+			return false;
+		} catch (DeltaCloudClientException e) {
+			return true;
+		}
+	}
+
+	public DeltaCloudRealm[] getRealms() {
+		ArrayList<DeltaCloudRealm> realms = new ArrayList<DeltaCloudRealm>();
+		try {
+			List<Realm> list = client.listRealms();
+			for (Iterator<Realm> i = list.iterator(); i.hasNext();) {
+				DeltaCloudRealm realm = new DeltaCloudRealm(i.next());
+				realms.add(realm);
+			}
+		} catch (DeltaCloudClientException e) {
+			Activator.log(e);
+		}
+		return realms.toArray(new DeltaCloudRealm[realms.size()]);
 	}
 
 }

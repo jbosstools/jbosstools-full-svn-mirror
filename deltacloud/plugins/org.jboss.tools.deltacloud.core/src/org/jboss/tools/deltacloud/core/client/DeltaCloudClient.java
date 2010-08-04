@@ -233,7 +233,21 @@ public class DeltaCloudClient implements API
 		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.DESTROY, RequestType.GET);
 	}
 	
-	private Instance buildInstance(String xml)
+	private void checkForErrors(Document d) throws DeltaCloudClientException
+	{
+		NodeList n = d.getElementsByTagName("error");
+		for (int i = 0; i < n.getLength();)
+		{
+			Node node = n.item(i);
+			String status = node.getAttributes().getNamedItem("status").getNodeValue();
+			if (status.equals("403"))
+				throw new DeltaCloudAuthException("Authorization error");
+			else
+				throw new DeltaCloudClientException("Connection error");
+		}
+	}
+	
+	private Instance buildInstance(String xml) throws DeltaCloudClientException
 	{
 		try
 		{
@@ -242,15 +256,17 @@ public class DeltaCloudClient implements API
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(xml)));
-					
-			instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0)));
-			instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0)));
-			getProfileProperties(instance, getPropertyNodes(document, "hardware_profile"));
-			instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0)));
-			instance.setState(getElementText(document, "state").get(0));
+		
+			checkForErrors(document);
+			
+			instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
+			instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
+			getProfileProperties(instance, getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
+			instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
+			instance.setState(getElementText(document, "state").get(0)); //$NON-NLS-1$
 			
 			ArrayList<Instance.Action> actions = new ArrayList<Instance.Action>();
-			for(String s : getAttributeValues(document, "link", "rel"))
+			for(String s : getAttributeValues(document, "link", "rel")) //$NON-NLS-1$ //$NON-NLS-2$
 			{
 				actions.add(Instance.Action.valueOf(s.toUpperCase()));
 			}
@@ -258,14 +274,16 @@ public class DeltaCloudClient implements API
 			
 			return instance;
 		}
+		catch (DeltaCloudClientException e) {
+			throw e;
+		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
-	private HardwareProfile buildHardwareProfile(String xml)
+	private HardwareProfile buildHardwareProfile(String xml) throws DeltaCloudClientException
 	{
 		try
 		{
@@ -274,36 +292,38 @@ public class DeltaCloudClient implements API
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(xml)));
-					
-			List<Node> nodes = getPropertyNodes(document, "hardware_profile");
+				
+			checkForErrors(document);
+			
+			List<Node> nodes = getPropertyNodes(document, "hardware_profile"); //$NON-NLS-1$
 			
 			for (Node n : nodes) {
 				Property p = new Property();
-				p.setName(n.getAttributes().getNamedItem("name").getNodeValue());
-				p.setValue(n.getAttributes().getNamedItem("value").getNodeValue());
-				p.setUnit(n.getAttributes().getNamedItem("unit").getNodeValue());
-				p.setKind(n.getAttributes().getNamedItem("kind").getNodeValue());
-				if (p.getKind().equals("range")) {
+				p.setName(n.getAttributes().getNamedItem("name").getNodeValue()); //$NON-NLS-1$
+				p.setValue(n.getAttributes().getNamedItem("value").getNodeValue()); //$NON-NLS-1$
+				p.setUnit(n.getAttributes().getNamedItem("unit").getNodeValue()); //$NON-NLS-1$
+				p.setKind(n.getAttributes().getNamedItem("kind").getNodeValue()) ; //$NON-NLS-1$
+				if (p.getKind().equals("range")) { //$NON-NLS-1$
 					NodeList children = n.getChildNodes();
 					for (int i = 0; i < children.getLength(); ++i) {
 						Node child = children.item(i);
-						if (child.getNodeName().equals("range")) {
-							String first = child.getAttributes().getNamedItem("first").getNodeValue();
-							String last = child.getAttributes().getNamedItem("last").getNodeValue();
+						if (child.getNodeName().equals("range")) { //$NON-NLS-1$
+							String first = child.getAttributes().getNamedItem("first").getNodeValue(); //$NON-NLS-1$
+							String last = child.getAttributes().getNamedItem("last").getNodeValue(); //$NON-NLS-1$
 							p.setRange(first, last);
 						}
 					}
 				}
-				else if (p.getKind().equals("enum")) {
+				else if (p.getKind().equals("enum")) { //$NON-NLS-1$
 					ArrayList<String> enums = new ArrayList<String>();
 					NodeList children = n.getChildNodes();
 					for (int i = 0; i < children.getLength(); ++i) {
 						Node child = children.item(i);
-						if (child.getNodeName().equals("enum")) {
+						if (child.getNodeName().equals("enum")) { //$NON-NLS-1$
 							NodeList enumChildren = child.getChildNodes();
 							for (int j = 0; j < enumChildren.getLength(); ++j) {
 								Node enumChild = enumChildren.item(j);
-								enums.add(enumChild.getAttributes().getNamedItem("value").getNodeValue());
+								enums.add(enumChild.getAttributes().getNamedItem("value").getNodeValue()); //$NON-NLS-1$
 							}
 						}
 					}
@@ -400,6 +420,8 @@ public class DeltaCloudClient implements API
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(is);
 			
+			checkForErrors(document);
+			
 			document.getElementsByTagName(path).toString(); 
 						
 			ArrayList<T> dco = new ArrayList<T>();
@@ -410,6 +432,9 @@ public class DeltaCloudClient implements API
 				dco.add(buildDeltaCloudObject(clazz, nodeList.item(i)));
 			}
 			return dco;
+		} catch (DeltaCloudClientException e) 
+		{
+			throw e;
 		}
 		catch(Exception e)
 		{
