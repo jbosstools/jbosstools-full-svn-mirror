@@ -1,5 +1,23 @@
 2010-08-04  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudHardwareProfile.java: New file.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudHardwareProperty.java: New file.
+	* src/org/jboss/tools/deltacloud/core/client/HardwareProfile.java (getArchitecture): Return
+	the value instead of using toString method.
+	(getNamedProperty): Verify that properties is not null before accessing.
+	(getCPU): Return value instead of using toString.
+	* src/org/jboss/tools/deltacloud/core/client/Property.java (Range.Range): New class.
+	(getRange): New method. 
+	(Range.getLast): Ditto.
+	(Range.getFirst): Ditto.
+	(getEnums): Ditto.
+	(toString): Fix to not include unit if it is "label".
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getProfiles): New method.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (buildHardwareProfile): Fix
+	bug with getting enum properties.
+
+2010-08-04  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudAuthException.java: New file.
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudException.java: New file.
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudRealm.java: New file.
@@ -14,7 +32,7 @@
 	printing stack trace. 
 	(getImages): Ditto.
 	(getRealms): New method.
-	(testConnection): Ditto. 
+	(testConnection): Ditto.
 
 2010-08-03  Jeff Johnston  <jjohnstn@redhat.com>
 

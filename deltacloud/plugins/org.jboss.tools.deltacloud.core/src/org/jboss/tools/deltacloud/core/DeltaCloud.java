@@ -10,6 +10,7 @@ import org.eclipse.core.runtime.ListenerList;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.Realm;
@@ -87,6 +88,22 @@ public class DeltaCloud {
 		instanceArray = instances.toArray(instanceArray);
 		notifyInstanceListListeners(instanceArray);
 		return instanceArray;
+	}
+
+	public DeltaCloudHardwareProfile[] getProfiles() {
+		ArrayList<DeltaCloudHardwareProfile> profiles = new ArrayList<DeltaCloudHardwareProfile>();
+		try {
+			List<HardwareProfile> list = client.listProfiles();
+			for (Iterator<HardwareProfile> i = list.iterator(); i.hasNext();) {
+				DeltaCloudHardwareProfile profile = new DeltaCloudHardwareProfile(i.next());
+				profiles.add(profile);
+			}
+		} catch (DeltaCloudClientException e) {
+			Activator.log(e);
+		}
+		DeltaCloudHardwareProfile[] profileArray = new DeltaCloudHardwareProfile[profiles.size()];
+		profileArray = profiles.toArray(profileArray);
+		return profileArray;
 	}
 	
 	public DeltaCloudImage[] getImages() {

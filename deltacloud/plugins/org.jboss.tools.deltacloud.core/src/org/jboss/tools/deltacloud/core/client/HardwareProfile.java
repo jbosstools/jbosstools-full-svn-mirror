@@ -20,9 +20,11 @@ public class HardwareProfile extends DeltaCloudObject
 	}
 	
 	private Property getNamedProperty(String name) {
-		for (Property p : properties) {
-			if (p.getName().equals(name))
-				return p;
+		if (properties != null) {
+			for (Property p : properties) {
+				if (p.getName().equals(name))
+					return p;
+			}
 		}
 		return null;
 	}
@@ -31,7 +33,7 @@ public class HardwareProfile extends DeltaCloudObject
 	{
 		Property p = getNamedProperty("architecture");
 		if (p != null)
-			return p.toString();
+			return p.getValue();
 		return null;
 	}
 
@@ -55,7 +57,7 @@ public class HardwareProfile extends DeltaCloudObject
 	{
 		Property p = getNamedProperty("cpu");
 		if (p != null)
-			return p.toString();
+			return p.getValue();
 		return null;
 	}
 	

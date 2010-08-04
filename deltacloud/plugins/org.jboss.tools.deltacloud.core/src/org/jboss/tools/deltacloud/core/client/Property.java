@@ -10,6 +10,24 @@ public class Property extends DeltaCloudObject {
 
 	public static enum Kind {FIXED, RANGE, ENUM};
 
+	public class Range {
+		private String first;
+		private String last;
+		
+		public Range(String first, String last) {
+			this.first = first;
+			this.last = last;
+		}
+		
+		public String getFirst() {
+			return first;
+		}
+		
+		public String getLast() {
+			return last;
+		}
+	}
+	
 	public Property() 
 	{
 	}
@@ -47,6 +65,14 @@ public class Property extends DeltaCloudObject {
 	
 	public String getValue() {
 		return value;
+	}
+	
+	public Range getRange() {
+		return new Range(first, last);
+	}
+	
+	public List<String> getEnums() {
+		return enums;
 	}
 	
 	public void setName(String name) {
@@ -87,7 +113,7 @@ public class Property extends DeltaCloudObject {
 			return s;
 		}
 		// must be "fixed"
-		return value += " " + unit;
+		return value += " " + (unit.equals("label") ? "" : unit);
 	}
 	
 }
