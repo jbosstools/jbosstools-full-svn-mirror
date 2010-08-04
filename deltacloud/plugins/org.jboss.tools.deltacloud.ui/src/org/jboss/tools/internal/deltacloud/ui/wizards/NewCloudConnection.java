@@ -8,6 +8,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 
@@ -28,7 +29,7 @@ public class NewCloudConnection extends Wizard implements INewWizard {
 	@Override
 	public void addPages() {
 		// TODO Auto-generated method stub
-		mainPage = new NewCloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME));
+		mainPage = new NewCloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME), this);
 		addPage(mainPage);
 	}
 
@@ -37,6 +38,20 @@ public class NewCloudConnection extends Wizard implements INewWizard {
 		return mainPage.isPageComplete();
 	}
 
+	public boolean performTest() {
+		String name = mainPage.getName();
+		String url = mainPage.getURL();
+		String username = mainPage.getUsername();
+		String password = mainPage.getPassword();
+		try {
+			DeltaCloud newCloud = new DeltaCloud(name, new URL(url), username, password);
+			return newCloud.testConnection();
+		} catch (MalformedURLException e) {
+			Activator.log(e);
+			return false;
+		}
+	}
+	
 	@Override
 	public boolean performFinish() {
 		String name = mainPage.getName();

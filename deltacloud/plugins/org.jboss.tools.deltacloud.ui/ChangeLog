@@ -1,3 +1,15 @@
+2010-08-04  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (addPages): 
+	(performTest): New method to test connection.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (checkURL): 
+	(NewCloudConnectionPage): Pass in calling wizard.
+	(.widgetSelected): New method for test button.
+	(createControl): Add test button and refine format layout.
+	(validate): Clear the message area each time.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new
+	messages for connection testing purposes. 
+
 2010-08-03  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java: New file.

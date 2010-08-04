@@ -14,13 +14,19 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.SafeRunner;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -45,6 +51,7 @@ public class NewCloudConnectionPage extends WizardPage {
 	private static final String USERNAME_LABEL = "UserName.label"; //$NON-NLS-1$
 	private static final String TYPE_LABEL = "Type.label"; //$NON-NLS-1$
 	private static final String PASSWORD_LABEL = "Password.label"; //$NON-NLS-1$
+	private static final String TESTBUTTON_LABEL = "TestButton.label"; //$NON-NLS-1$
 	private static final String UNKNOWN_TYPE_LABEL = "UnknownType.label"; //$NON-NLS-1$
 	private static final String EC2_USER_INFO = "EC2UserNameLink.text"; //$NON-NLS-1$
 	private static final String EC2_PASSWORD_INFO = "EC2PasswordLink.text"; //$NON-NLS-1$
@@ -52,7 +59,13 @@ public class NewCloudConnectionPage extends WizardPage {
 	private static final String INVALID_URL = "ErrorInvalidURL.text"; //$NON-NLS-1$
 	private static final String NONCLOUD_URL = "ErrorNonCloudURL.text"; //$NON-NLS-1$
 
+	private static final String TEST_SUCCESSFUL = "NewCloudConnectionTest.success"; //$NON-NLS-1$
+	private static final String TEST_FAILURE = "NewCloudConnectionTest.failure"; //$NON-NLS-1$
+	
+	private NewCloudConnection wizard;
+	
 	private Label errorLabel;
+	private Button testButton;
 	
 	private Text nameText;
 	private Text urlText;
@@ -80,9 +93,26 @@ public class NewCloudConnectionPage extends WizardPage {
 		}
 		
 	};
+
+	private SelectionListener buttonListener = new SelectionAdapter() {
+
+		public void widgetSelected(SelectionEvent event) {
+			boolean successful = false;
+			if (getURLValid()) {
+				successful = wizard.performTest();
+			}
+			if (successful) {
+				setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
+			} else {
+				setErrorMessage(WizardMessages.getString(TEST_FAILURE));
+			}
+		}
+		
+	};
 	
-	public NewCloudConnectionPage(String pageName) {
+	public NewCloudConnectionPage(String pageName, NewCloudConnection wizard) {
 		super(pageName);
+		this.wizard= wizard;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setPageComplete(false);
@@ -115,6 +145,9 @@ public class NewCloudConnectionPage extends WizardPage {
 	private void validate() {
 		boolean complete = true;
 		boolean errorFree = true;
+		
+		setMessage(null);
+		
 		name = nameText.getText();
 		if (name.length() > 0) {
 			if (DeltaCloudManager.getDefault().findCloud(name) != null) {
@@ -172,7 +205,7 @@ public class NewCloudConnectionPage extends WizardPage {
 	// Method to check the URL for validity as Delta-cloud API specifier.
 	// Since this is run in thread, it does not use the setErrorMessage()
 	// method and instead writes error messages to the typeText label.
-	private synchronized void checkURL() {
+	private synchronized boolean checkURL() {
 		boolean valid = false;
 		String oldurl = url;
 		url = urlText.getText();
@@ -232,8 +265,10 @@ public class NewCloudConnectionPage extends WizardPage {
 				}
 				setURLValid(valid);
 			}
-			typeText.setText(cloudType);
+			if (!typeText.getText().equals(cloudType))
+				typeText.setText(cloudType);
 		}
+		return valid;
 	}
 	
 	/**
@@ -295,6 +330,10 @@ public class NewCloudConnectionPage extends WizardPage {
 		passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD | SWT.SINGLE);
 		passwordText.addModifyListener(textListener);
 		
+		testButton = new Button(container, SWT.NULL);
+		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));
+		testButton.addSelectionListener(buttonListener);
+		
 		Link ec2userLink = new Link(container, SWT.NULL);
 		ec2userLink.setText(WizardMessages.getString(EC2_USER_INFO));
 		ec2userLink.addListener(SWT.Selection, linkListener);
@@ -309,7 +348,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		errorLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(errorLabel, 8);
+		f.top = new FormAttachment(errorLabel, 11);
 		nameLabel.setLayoutData(f);
 
 		f = new FormData();
@@ -339,13 +378,13 @@ public class NewCloudConnectionPage extends WizardPage {
 		typeText.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(typeText, 8);
+		f.top = new FormAttachment(typeText, 16);
 		usernameLabel.setLayoutData(f);
 		
 		f = new FormData();
 		f.left = new FormAttachment(typeText, 0, SWT.LEFT);
-		f.top = new FormAttachment(typeText, 5);
-		f.right = new FormAttachment(100, 0);
+		f.top = new FormAttachment(typeText, 13);
+		f.right = new FormAttachment(100, -70);
 		usernameText.setLayoutData(f);
 		
 		f = new FormData();
@@ -360,8 +399,17 @@ public class NewCloudConnectionPage extends WizardPage {
 		f = new FormData();
 		f.left = new FormAttachment(usernameText, 0, SWT.LEFT);
 		f.top = new FormAttachment(ec2userLink, 5);
-		f.right = new FormAttachment(100, 0);
+		f.right = new FormAttachment(100, -70);
 		passwordText.setLayoutData(f);
+		
+		f = new FormData();
+        int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
+        Point minSize = testButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+        f.width = Math.max(widthHint, minSize.x);
+		f.left = new FormAttachment(usernameText, 10);
+		f.top = new FormAttachment(usernameText, 0);
+		f.right = new FormAttachment(100, 0);
+		testButton.setLayoutData(f);
 		
 		f = new FormData();
 		f.left = new FormAttachment(passwordText, 0, SWT.LEFT);
