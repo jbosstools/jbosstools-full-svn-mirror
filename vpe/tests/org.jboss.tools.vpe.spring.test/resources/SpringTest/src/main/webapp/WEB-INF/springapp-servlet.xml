@@ -14,6 +14,7 @@
     <bean name="/radiobuttons.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/option.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/options.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/eval.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/errors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
     	<property name="validator" ref="userValidator"/>
     </bean>

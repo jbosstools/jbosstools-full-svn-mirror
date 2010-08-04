@@ -105,6 +105,10 @@ public class SpringComponentContentTest extends ComponentContentTest {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/escapeBody.jsp"); //$NON-NLS-1$
 	}
 	
+	public void testEval() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/eval.jsp"); //$NON-NLS-1$
+	}
+	
 	@Override
 	protected String getTestProjectName() {
 		return SpringAllTests.IMPORT_PROJECT_NAME;
