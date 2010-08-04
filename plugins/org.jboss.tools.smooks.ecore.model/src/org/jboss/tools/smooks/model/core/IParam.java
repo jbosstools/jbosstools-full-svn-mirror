@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.jboss.tools.smooks.model.core.IParam#getName <em>Name</em>}</li>
  *   <li>{@link org.jboss.tools.smooks.model.core.IParam#getValue <em>Value</em>}</li>
+ *   <li>{@link org.jboss.tools.smooks.model.core.IParam#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,5 +78,31 @@ public interface IParam extends EObject {
 	 * @generated
 	 */
 	void setValue(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see #setType(String)
+	 * @see org.jboss.tools.smooks.model.core.ICorePackage#getParam_Type()
+	 * @model
+	 * @generated
+	 */
+	String getType();
+
+	/**
+	 * Sets the value of the '{@link org.jboss.tools.smooks.model.core.IParam#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(String value);
 
 } // IParam

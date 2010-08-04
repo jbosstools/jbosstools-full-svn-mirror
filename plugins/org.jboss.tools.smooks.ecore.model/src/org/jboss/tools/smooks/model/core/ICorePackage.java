@@ -89,13 +89,22 @@ public interface ICorePackage extends EPackage {
 	int PARAM__VALUE = 1;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAM__TYPE = 2;
+
+	/**
 	 * The number of structural features of the '<em>Param</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAM_FEATURE_COUNT = 2;
+	int PARAM_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.jboss.tools.smooks.model.core.Params <em>Params</em>}' class.
@@ -216,6 +225,17 @@ public interface ICorePackage extends EPackage {
 	EAttribute getParam_Value();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.jboss.tools.smooks.model.core.IParam#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.jboss.tools.smooks.model.core.IParam#getType()
+	 * @see #getParam()
+	 * @generated
+	 */
+	EAttribute getParam_Type();
+
+	/**
 	 * Returns the meta object for class '{@link org.jboss.tools.smooks.model.core.IParams <em>Params</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -314,6 +334,14 @@ public interface ICorePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAM__VALUE = eINSTANCE.getParam_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAM__TYPE = eINSTANCE.getParam_Type();
 
 		/**
 		 * The meta object literal for the '{@link org.jboss.tools.smooks.model.core.Params <em>Params</em>}' class.

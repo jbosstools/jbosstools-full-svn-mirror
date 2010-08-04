@@ -6,7 +6,7 @@
     <params>
     <#list bean.params.params as param>
         <@writePreText bean=param />
-        <param name="${param.name}">${param.value}</param>
+        <param <@writeAttribs bean=param attribs="name,type"/>>${param.value}</param>
     </#list>
     </params>
 </#if>

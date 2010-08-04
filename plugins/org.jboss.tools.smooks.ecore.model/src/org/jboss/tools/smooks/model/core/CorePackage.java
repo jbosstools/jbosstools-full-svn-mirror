@@ -160,6 +160,15 @@ public class CorePackage extends EPackageImpl implements ICorePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getParam_Type() {
+		return (EAttribute)paramEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getParams() {
 		return paramsEClass;
 	}
@@ -231,6 +240,7 @@ public class CorePackage extends EPackageImpl implements ICorePackage {
 		paramEClass = createEClass(PARAM);
 		createEAttribute(paramEClass, PARAM__NAME);
 		createEAttribute(paramEClass, PARAM__VALUE);
+		createEAttribute(paramEClass, PARAM__TYPE);
 
 		paramsEClass = createEClass(PARAMS);
 		createEReference(paramsEClass, PARAMS__PARAMS);
@@ -277,6 +287,7 @@ public class CorePackage extends EPackageImpl implements ICorePackage {
 		initEClass(paramEClass, IParam.class, "Param", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParam_Name(), ecorePackage.getEString(), "name", null, 0, 1, IParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParam_Value(), ecorePackage.getEString(), "value", null, 0, 1, IParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParam_Type(), ecorePackage.getEString(), "type", null, 0, 1, IParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(paramsEClass, IParams.class, "Params", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParams_Params(), this.getParam(), null, "params", null, 0, -1, IParams.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

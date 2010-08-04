@@ -25,6 +25,7 @@
     </jb:bean>
     <jb:bean beanId="param" class="org.jboss.tools.smooks.model.core.Param" createOnElement="/smooks-resource-list/params/param">
         <jb:value property="name" data="/smooks-resource-list/params/param/@name" />
+        <jb:value property="type" data="/smooks-resource-list/params/param/@type" />
         <jb:value property="value" data="/smooks-resource-list/params/param" />
     </jb:bean>
 
