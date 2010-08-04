@@ -52,26 +52,16 @@ public class SpringTextAreaTemplate extends VpeAbstractTemplate {
 				(sourceElement.hasAttribute(Spring.ATTR_CSS_STYLE) 
 						? sourceElement.getAttribute(Spring.ATTR_CSS_STYLE) 
 						: Constants.EMPTY));
-		
 		/*
-		 * Add text children to the text area
+		 * Add value of the 'path' attribute to the textarea.
+		 * No children are allowed for the form:textarea. 
 		 */
-		final NodeList childNodes = sourceNode.getChildNodes();
-		final int childNodesLength = childNodes.getLength();
-		for (int i = 0; i < childNodesLength; i++) {
-			final Node child = childNodes.item(i);
-			if (child.getNodeType() == Node.TEXT_NODE) {
-				final nsIDOMNode text = visualDocument.createTextNode(child.getNodeValue());
-				textarea.appendChild(text);
-			}
+		if (sourceElement.hasAttribute(Spring.ATTR_PATH)) {
+			textarea.appendChild(visualDocument.createTextNode(sourceElement
+					.getAttribute(Spring.ATTR_PATH)));
 		}
 		
 		final VpeCreationData creationData = new VpeCreationData(textarea);
-
-		final VpeElementData textElementsData = new VpeElementData();
-		textElementsData.addNodeData(new NodeData(sourceNode.getLastChild(), textarea));
-		creationData.setElementData(textElementsData);
-
 		return creationData;
 	}
 

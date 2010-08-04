@@ -16,10 +16,10 @@
 </style>
 </head>
 <body>
-<form:label id="label1" cssClass="green" cssStyle="font-weight: bold;">
+<form:label id="label1" cssClass="green" cssStyle="font-weight: bold;" path="label1">
 Label 1 
 </form:label>
-<form:label id="label2" for="text" cssClass="blue" cssStyle="font-style: italic;">
+<form:label id="label2" for="text" cssClass="blue" cssStyle="font-style: italic;" path="label2">
 Label 2 
 </form:label>
 <input type="text" id="text" />

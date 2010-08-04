@@ -127,7 +127,7 @@
 		<vpe:if test="@disabled='true'">
 			<vpe:template children="no" modify="no">
 				<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-					size="{@size}" dir="{@dir}" value="{@value}"
+					size="{@size}" dir="{@dir}" value="{@path}"
 					disabled="disabled" />
 				<vpe:resize>
 					<vpe:width width-attr="cssStyle.width" />
@@ -142,7 +142,7 @@
 		</vpe:if>
 		<vpe:template children="no" modify="no">
 			<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
-				size="{@size}" dir="{@dir}" value="{@value}"/>
+				size="{@size}" dir="{@dir}" value="{@path}"/>
 				<vpe:resize>
 					<vpe:width width-attr="cssStyle.width" />
 					<vpe:height height-attr="cssStyle.height" />
@@ -393,7 +393,7 @@
 	</vpe:tag>
 
 	<vpe:tag name="form:textarea" case-sensitive="yes">
-		<vpe:template children="yes" modify="yes"
+		<vpe:template children="no" modify="no"
 			class="org.jboss.tools.vpe.spring.template.SpringTextAreaTemplate">
 			<vpe:resize>
 				<vpe:width width-attr="cssStyle.width" />

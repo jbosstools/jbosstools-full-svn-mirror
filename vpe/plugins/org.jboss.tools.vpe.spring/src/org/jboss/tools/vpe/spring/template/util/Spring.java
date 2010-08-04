@@ -22,6 +22,7 @@ public class Spring {
 	public static final String ATTR_ID = "id";						//$NON-NLS-1$
 	public static final String ATTR_ITEMS = "items"; //$NON-NLS-1$
 	public static final String ATTR_ITEM_LABEL = "itemLabel"; //$NON-NLS-1$
+	public static final String ATTR_PATH = "path"; //$NON-NLS-1$
 	public static final String ATTR_MULTIPLE = "multiple";		//$NON-NLS-1$
 	
 	public static final String VALUE_TRUE = "true"; //$NON-NLS-1$

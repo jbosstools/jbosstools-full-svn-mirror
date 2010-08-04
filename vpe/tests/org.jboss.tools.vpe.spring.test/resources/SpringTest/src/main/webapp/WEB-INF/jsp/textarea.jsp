@@ -15,9 +15,7 @@
 </style>
 </head>
 <body>
-<form:textarea id="textArea1" cssClass="green" cssStyle="font-weight: bold;">
-textArea 1 
-</form:textarea>
-<form:textarea id="textArea2" value="textArea 2" cssClass="blue" cssStyle="font-style: italic;"/>
+<form:textarea id="textArea1" cssClass="green" cssStyle="font-weight: bold;" path="textarea1" /> 
+<form:textarea id="textArea2" cssClass="blue" cssStyle="font-style: italic;" path="textarea2"/>
 </body>
 </html>
