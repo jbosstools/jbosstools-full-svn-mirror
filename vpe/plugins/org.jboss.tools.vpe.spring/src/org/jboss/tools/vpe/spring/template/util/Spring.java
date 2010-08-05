@@ -24,7 +24,12 @@ public class Spring {
 	public static final String ATTR_ITEM_LABEL = "itemLabel"; //$NON-NLS-1$
 	public static final String ATTR_PATH = "path"; //$NON-NLS-1$
 	public static final String ATTR_MULTIPLE = "multiple";		//$NON-NLS-1$
+	public static final String ATTR_NAME = "name"; //$NON-NLS-1$
+	public static final String ATTR_VALUE = "value"; //$NON-NLS-1$
+	public static final String ATTR_VAR = "var"; //$NON-NLS-1$
 	
 	public static final String VALUE_TRUE = "true"; //$NON-NLS-1$
 	public static final String VALUE_FALSE = "false"; //$NON-NLS-1$
+	
+	public static final String TAG_SPRING_PARAM = "spring:param"; //$NON-NLS-1$
 }

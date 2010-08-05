@@ -470,13 +470,8 @@
 	</vpe:tag>
 
 	<vpe:tag name="spring:url" case-sensitive="yes">
-		<vpe:if test="attrpresent('var')">
-			<vpe:template children="no" modify="yes" />
-		</vpe:if>
-		<vpe:template children="no" modify="yes">
-			<span class="vpe-text">
-				<vpe:value expr="{@value}" />
-			</span>
+		<vpe:template children="no" modify="yes"
+	       class="org.jboss.tools.vpe.spring.template.SpringUrlTemplate">
 		</vpe:template>
 	</vpe:tag>
 	
