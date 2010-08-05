@@ -114,7 +114,6 @@ public class AbstractSmooksFormEditor extends FormEditor implements
 	
 	protected void initEditingDomain() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		handleCommandStack(commandStack);
 		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
 	}
 	
@@ -196,9 +195,10 @@ public class AbstractSmooksFormEditor extends FormEditor implements
 			filePath = file.getFullPath().toPortableString();
 		}
 
-		if (filePath == null)
-			throw new PartInitException(
-					Messages.AbstractSmooksFormEditor_Exception_Cannot_Get_Input_File);
+		if (filePath == null) {
+			throw new PartInitException(Messages.AbstractSmooksFormEditor_Exception_Cannot_Get_Input_File);
+		}
+		
 		handleCommandStack(commandStack);
 		super.init(site, input);
 	}
