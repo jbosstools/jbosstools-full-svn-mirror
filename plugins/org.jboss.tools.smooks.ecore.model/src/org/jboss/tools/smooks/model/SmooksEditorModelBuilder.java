@@ -22,10 +22,15 @@ package org.jboss.tools.smooks.model;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.List;
+import java.util.Properties;
 
 import org.milyn.SmooksException;
+import org.milyn.javabean.dynamic.Descriptor;
 import org.milyn.javabean.dynamic.Model;
 import org.milyn.javabean.dynamic.ModelBuilder;
+import org.milyn.javabean.dynamic.resolvers.DefaultBindingConfigResolver;
+import org.milyn.javabean.dynamic.resolvers.DefaultSchemaResolver;
 import org.xml.sax.SAXException;
 
 /**
@@ -37,17 +42,22 @@ import org.xml.sax.SAXException;
  */
 public class SmooksEditorModelBuilder {
 
-	private ModelBuilder modelBuilder;
+	private static ModelBuilder modelBuilder;
 
-	public SmooksEditorModelBuilder() {
-		ClassLoader contextClassloader = Thread.currentThread().getContextClassLoader();
-        try {
-			Thread.currentThread().setContextClassLoader(SmooksEditorModelBuilder.class.getClassLoader());
-        	modelBuilder = new ModelBuilder(SmooksModel.MODEL_DESCRIPTOR, false);
+	static {
+		ClassLoader modelClassLoader = SmooksEditorModelBuilder.class.getClassLoader();
+		List<Properties> descriptors = Descriptor.loadDescriptors(SmooksModel.MODEL_DESCRIPTOR, modelClassLoader);
+		DefaultSchemaResolver schemaResolver = new DefaultSchemaResolver(descriptors);
+		DefaultBindingConfigResolver bindingResolver = new DefaultBindingConfigResolver(descriptors);
+		
+		schemaResolver.setClassLoader(modelClassLoader);
+		bindingResolver.setClassLoader(modelClassLoader);		
+		
+		try {
+			Descriptor descriptor = new Descriptor(descriptors, schemaResolver, bindingResolver, modelClassLoader);
+			modelBuilder = new ModelBuilder(descriptor, false);
 		} catch (Exception e) {
 			throw new SmooksException("Failed to create ModelBuilder instance for descriptor '" + SmooksModel.MODEL_DESCRIPTOR + "'.", e);
-		} finally {
-			Thread.currentThread().setContextClassLoader(contextClassloader);
 		}
 	}
 	
@@ -60,22 +70,10 @@ public class SmooksEditorModelBuilder {
 	}
 
 	public Model<SmooksModel> readModel(InputStream configStream) throws SAXException, IOException {
-		ClassLoader contextClassloader = Thread.currentThread().getContextClassLoader();
-        try {
-			Thread.currentThread().setContextClassLoader(SmooksEditorModelBuilder.class.getClassLoader());
-			return modelBuilder.readModel(configStream, SmooksModel.class);		
-		} finally {
-			Thread.currentThread().setContextClassLoader(contextClassloader);
-		}
+		return modelBuilder.readModel(configStream, SmooksModel.class);		
 	}
 	
 	public Model<SmooksModel> readModel(Reader configStream) throws SAXException, IOException {
-		ClassLoader contextClassloader = Thread.currentThread().getContextClassLoader();
-        try {
-			Thread.currentThread().setContextClassLoader(SmooksEditorModelBuilder.class.getClassLoader());
-			return modelBuilder.readModel(configStream, SmooksModel.class);		
-		} finally {
-			Thread.currentThread().setContextClassLoader(contextClassloader);
-		}
+		return modelBuilder.readModel(configStream, SmooksModel.class);		
 	}
 }
