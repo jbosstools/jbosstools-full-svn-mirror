@@ -13,10 +13,13 @@ package org.jboss.tools.vpe.editor.dialog;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -66,6 +69,7 @@ import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
+import org.jboss.tools.common.util.FileUtil;
 import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor;
 import org.jboss.tools.jst.jsp.jspeditor.SourceEditorPageContext;
@@ -105,8 +109,8 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	private Status propsKeyStatus;
 	private Status propsValueStatus;
 	private Status rbComboStatus;
-	
 	private Table tagsTable;
+	
 	
 	public ExternalizeStringsWizardPage(String pageName, StructuredTextEditor editor, BundleMap bm) {
 		/*
@@ -417,9 +421,13 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			/*
 			 * Read the file content
 			 */
+			String encoding = FileUtil.getEncoding(file);
 			BufferedReader in = new BufferedReader(new InputStreamReader(
-					file.getContents()));
-			String line = in.readLine();
+					file.getContents(), encoding));
+			Properties properties =  new Properties();
+			properties.load(in);
+			in.close();
+			in = null;
 			/*
 			 * Clear the table
 			 */
@@ -427,22 +435,16 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			/*
 			 * Fill in new values
 			 */
-			int i = 0;
-			while (line != null) {
+			int k = 0;
+			Set<String> keys = properties.stringPropertyNames();
+			List<String> keysList = new ArrayList<String>(keys);  
+			Collections.sort(keysList);
+			for (String key : keysList) {
 				TableItem tableItem = null;
-				String[] propertie = null;
-				if (line.trim().length() > 0) {
-					tableItem = new TableItem(tagsTable, SWT.BORDER, i);
-					propertie = line.trim().split("="); //$NON-NLS-1$
-					if (propertie.length < 3) {
-						tableItem.setText(propertie);
-						i++;
-					}
-				}
-				line = in.readLine();
+				tableItem = new TableItem(tagsTable, SWT.BORDER, k);
+				k++;
+				tableItem.setText(new String[] {key, properties.getProperty(key)});
 			}
-			in.close();
-			in = null;
 		} catch (CoreException e) {
 			VpePlugin.getDefault().logError(
 					"Could not load file content for '" + file + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
