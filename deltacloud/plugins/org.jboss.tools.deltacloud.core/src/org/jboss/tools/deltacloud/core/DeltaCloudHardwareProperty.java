@@ -33,7 +33,7 @@ public class DeltaCloudHardwareProperty {
 	}
 	
 	public Kind getKind() {
-		return Kind.valueOf(property.getKind());
+		return Kind.valueOf(property.getKind().toUpperCase());
 	}
 	
 	public Range getRange() {
