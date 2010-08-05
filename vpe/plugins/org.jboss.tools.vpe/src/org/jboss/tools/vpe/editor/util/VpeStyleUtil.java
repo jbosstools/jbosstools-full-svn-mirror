@@ -829,7 +829,9 @@ public class VpeStyleUtil {
 		try {
 			uri = new URI(resolvedValue);
 		} catch (URISyntaxException e) {
-			VpePlugin.getDefault().logWarning("Error in parsiong URI string", e); //$NON-NLS-1$
+	// here we process user input, and when user enter url, there possible that we will not be able parse it.
+	// so we just ignore this.
+	//		VpePlugin.getDefault().logWarning("Error in parsiong URI string", e); //$NON-NLS-1$
 		}
 
 		if ((uri != null) && (uri.isAbsolute()))
