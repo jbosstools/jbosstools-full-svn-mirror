@@ -1,3 +1,16 @@
+2010-08-05  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (.modifyText): Add
+	logic to switch ProfileComposite. 
+	(createControl): Add logic for setting up the ProfileComposite. 
+	(getProfileIds): Set up currPage.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java (ProfileComposite): Add
+	logic to set up CPUs, Memory, and Storage settings. 
+	(getMemory): Add check for decimal digits.
+	(getStorage): Ditto. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new messages
+	for ProfileComposite. 
+
 2010-08-04  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java: New file.

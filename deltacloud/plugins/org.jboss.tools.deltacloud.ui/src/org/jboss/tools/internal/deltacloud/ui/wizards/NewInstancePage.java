@@ -57,7 +57,8 @@ public class NewInstancePage extends WizardPage {
 		public void modifyText(ModifyEvent e) {
 			int index = hardware.getSelectionIndex();
 			currPage.setVisible(false);
-			profilePages[index].setVisible(true);
+			currPage = profilePages[index];
+			currPage.setVisible(true);
 		}
 	};
 	
@@ -104,7 +105,9 @@ public class NewInstancePage extends WizardPage {
 			DeltaCloudHardwareProfile p = profiles.get(i);
 			ids[i] = p.getId();
 			profilePages[i] = new ProfileComposite(p, container);
+			profilePages[i].setVisible(false);
 		}
+		currPage = profilePages[0];
 		return ids;
 	}
 	
@@ -144,14 +147,16 @@ public class NewInstancePage extends WizardPage {
 		FormLayout groupLayout = new FormLayout();
 		groupLayout.marginHeight = 0;
 		groupLayout.marginWidth = 0;
-		groupContainer.setLayout(groupLayout);		
+		groupContainer.setLayout(groupLayout);
+		
 		
 		profileIds = getProfileIds(groupContainer);
 		
 		if (profileIds.length > 0) {
 			hardware.setItems(profileIds);
 			hardware.setText(profileIds[0]);
-//			hardware.addModifyListener(comboListener);
+			profilePages[0].setVisible(true);
+			hardware.addModifyListener(comboListener);
 		}
 		
 		FormData f = new FormData();
@@ -201,6 +206,13 @@ public class NewInstancePage extends WizardPage {
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		hardware.setLayoutData(f);
+		
+		f = new FormData();
+		f.top = new FormAttachment(hardwareLabel, 8);
+		f.left = new FormAttachment(0, 0);
+		f.right = new FormAttachment(100, 0);
+		f.bottom = new FormAttachment(100, 0);
+		groupContainer.setLayoutData(f);
 		
 		setControl(container);
 	}
