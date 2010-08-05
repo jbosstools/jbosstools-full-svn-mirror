@@ -16,7 +16,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
-import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProperty;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 
 public class NewInstancePage extends WizardPage {
@@ -28,7 +27,8 @@ public class NewInstancePage extends WizardPage {
 	private static final String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private static final String IMAGE_LABEL = "Image.label"; //$NON-NLS-1$
 	private static final String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
-	private static final String HARDWARE_LABEL = "Profiles.label"; //$NON-NLS-1$
+	private static final String HARDWARE_LABEL = "Profile.label"; //$NON-NLS-1$
+	private static final String PROPERTIES_LABEL = "Properties.label"; //$NON-NLS-1$
 	private static final String NAME_ALREADY_IN_USE = "ErrorNameInUse.text"; //$NON-NLS-1$
 
 
@@ -143,7 +143,8 @@ public class NewInstancePage extends WizardPage {
 		hardwareLabel.setText(WizardMessages.getString(HARDWARE_LABEL));
 		
 		hardware = new Combo(container, SWT.READ_ONLY);
-		Composite groupContainer = new Composite(container, SWT.NULL);
+		Group groupContainer = new Group(container, SWT.BORDER);
+		groupContainer.setText(WizardMessages.getString(PROPERTIES_LABEL));
 		FormLayout groupLayout = new FormLayout();
 		groupLayout.marginHeight = 0;
 		groupLayout.marginWidth = 0;
@@ -208,7 +209,7 @@ public class NewInstancePage extends WizardPage {
 		hardware.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(hardwareLabel, 8);
+		f.top = new FormAttachment(hardware, 10);
 		f.left = new FormAttachment(0, 0);
 		f.right = new FormAttachment(100, 0);
 		f.bottom = new FormAttachment(100, 0);

@@ -5,13 +5,10 @@ import java.util.List;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -30,107 +27,74 @@ public class ProfileComposite {
 	private String cpu;
 	private String cpuDefaultValue;
 	private Label cpuLabel;
-	private Button[] cpuButtons;
+	private Spinner cpuSpinner;
+	private Combo cpuCombo;
 	private String memory;
 	private String memoryDefaultValue;
 	private Label memoryLabel;
-	private Button[] memoryButtons;
+	private Spinner memorySpinner;
+	private Combo memoryCombo;
 	private int memoryDecDigits;
 	private String storage;
 	private String storageDefaultValue;
 	private Label storageLabel;
-	private Button[] storageButtons;
+	private Spinner storageSpinner;
+	private Combo storageCombo;
 	private int storageDecDigits;
 	
-	private ModifyListener cpuSpinnerListener = new ModifyListener() {
+	private ModifyListener spinnerListener = new ModifyListener() {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			cpu = ((Spinner)e.widget).getText();
+			String value = ((Spinner)e.widget).getText();
+			if (e.widget == cpuSpinner)
+				cpu = value;
+			else if (e.widget == memorySpinner)
+				memory = value;
+			else if (e.widget == storageSpinner)
+				storage = value;
 		}
 	};
 
-	private SelectionListener cpuButtonListener = new SelectionAdapter() {
 
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			for (int i = 0; i < cpuButtons.length; ++i) {
-				Button b = cpuButtons[i];
-				if (b != e.widget) {
-					b.setSelection(false);
-				} else {
-					b.setSelection(true);
-					cpu = b.getText();
-				}
-			}
-		}
-
-	};
-
-	private ModifyListener memorySpinnerListener = new ModifyListener() {
+	private ModifyListener comboListener = new ModifyListener() {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			memory = ((Spinner)e.widget).getText();
-		}
-	};
-
-	private SelectionListener memoryButtonListener = new SelectionAdapter() {
-
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			for (int i = 0; i < memoryButtons.length; ++i) {
-				Button b = memoryButtons[i];
-				if (b != e.widget) {
-					b.setSelection(false);
-				} else {
-					b.setSelection(true);
-					memory = b.getText();
-				}
-			}
+			String value = ((Combo)e.widget).getText();
+			if (e.widget == cpuCombo)
+				cpu = value;
+			else if (e.widget == memoryCombo)
+				memory = value;
+			else if (e.widget == storageCombo)
+				storage = value;
 		}
 
 	};
-	
-	private ModifyListener storageSpinnerListener = new ModifyListener() {
 
-		@Override
-		public void modifyText(ModifyEvent e) {
-			storage = ((Spinner)e.widget).getText();
-		}
-	};
-
-	private SelectionListener storageButtonListener = new SelectionAdapter() {
-
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			for (int i = 0; i < storageButtons.length; ++i) {
-				Button b = storageButtons[i];
-				if (b != e.widget) {
-					b.setSelection(false);
-				} else {
-					b.setSelection(true);
-					storage = b.getText();
-				}
-			}
-		}
-
-	};
 
 	public ProfileComposite(DeltaCloudHardwareProfile p, Composite parent) {
 		this.profile = p;
 		container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
-		layout.marginHeight = 5;
-		layout.marginWidth = 5;
+		layout.marginHeight = 10;
+		layout.marginWidth = 10;
 		container.setLayout(layout);
 		Control cpuControl = null;
 		Control memoryControl = null;
+		Control storageControl = null;
 		
+		cpuLabel = new Label(container, SWT.NULL);
+		cpuLabel.setText(WizardMessages.getString(CPU_LABEL));
+
+		memoryLabel = new Label(container, SWT.NULL);
+		memoryLabel.setText(WizardMessages.getString(MEMORY_LABEL));
+		
+		storageLabel = new Label(container, SWT.NULL);
+		storageLabel.setText(WizardMessages.getString(STORAGE_LABEL));
+
 		DeltaCloudHardwareProperty cpuProperty = profile.getNamedProperty("cpu"); //$NON-NLS-1$
 		if (cpuProperty != null) {
-			cpuLabel = new Label(container, SWT.NULL);
-			cpuLabel.setText(WizardMessages.getString(CPU_LABEL));
 			FormData fd = new FormData();
 			fd.left = new FormAttachment(0, 0);
 			fd.top = new FormAttachment(0, 0);
@@ -139,53 +103,47 @@ public class ProfileComposite {
 				Label cpu = new Label(container, SWT.NULL);
 				cpu.setText(cpuProperty.getValue());
 				FormData f = new FormData();
-				f.left = new FormAttachment(cpuLabel, 5);
+				f.left = new FormAttachment(storageLabel, 50);
 				f.right = new FormAttachment(100, 0);
 				cpu.setLayoutData(f);
 				cpuControl = cpu;
 			} else if (cpuProperty.getKind() == DeltaCloudHardwareProperty.Kind.RANGE) {
 				cpuDefaultValue = cpuProperty.getValue();
-				Spinner cpuSpinner = new Spinner(container, SWT.READ_ONLY);
+				cpuSpinner = new Spinner(container, SWT.READ_ONLY);
 				cpuSpinner.setMinimum(Integer.valueOf(cpuProperty.getRange().getFirst()));
 				cpuSpinner.setMaximum(Integer.valueOf(cpuProperty.getRange().getLast()));
-				cpuSpinner.addModifyListener(cpuSpinnerListener);
+				cpuSpinner.addModifyListener(spinnerListener);
 				cpuSpinner.setSelection(Integer.valueOf(cpuDefaultValue));
 				FormData f = new FormData();
-				f.left = new FormAttachment(cpuLabel, 5);
+				f.width = 80;
+				f.left = new FormAttachment(storageLabel, 50);
 				cpuSpinner.setLayoutData(f);
 				cpuControl = cpuSpinner;
 			} else if (cpuProperty.getKind() == DeltaCloudHardwareProperty.Kind.ENUM) {
 				cpuDefaultValue = cpuProperty.getValue();
 				List<String> values = cpuProperty.getEnums();
-				cpuButtons = new Button[values.size()];
-				for (int i = 0; i < values.size(); ++i) {
-					Button button = new Button(container, SWT.RADIO);
-					String value = values.get(i);
-					button.setText(value);
-					if (value.equals(cpuDefaultValue))
-						button.setSelection(true);
-					button.addSelectionListener(cpuButtonListener);
-					cpuButtons[i] = button;
-					cpuControl = button;
-					FormData f = new FormData();
-					if (i % 3 == 0) {
-					   	f.left = new FormAttachment(cpuLabel, 5);
-					   	if (i > 2) {
-					   		f.top = new FormAttachment(cpuButtons[i-3]);
-					   	}
-					} else {
-						f.left = new FormAttachment(cpuButtons[i-1]);
-						if (i > 3)
-							f.top = new FormAttachment(cpuButtons[i-3]);
-					}
-					button.setLayoutData(f);
-				}
+				cpuCombo = new Combo(container, SWT.READ_ONLY | SWT.BORDER);
+				String[] items = new String[values.size()];
+				cpuCombo.setItems(values.toArray(items));
+				cpuCombo.setText(items[0]);
+				cpuCombo.addModifyListener(comboListener);
+				FormData f = new FormData();
+				f.width = 80;
+				f.left = new FormAttachment(storageLabel, 50);
+				cpuCombo.setLayoutData(f);
+				cpuControl = cpuCombo;
+			}
+			String cpuUnit = cpuProperty.getUnit();
+			if (cpuUnit != null && !cpuUnit.equals("label")) { //$NON-NLS-1$
+				Label unitLabel = new Label(container, SWT.NULL);
+				unitLabel.setText(cpuProperty.getUnit());
+				FormData f = new FormData();
+				f.left = new FormAttachment(cpuControl, 5);
+				unitLabel.setLayoutData(f);
 			}
 		}
 		DeltaCloudHardwareProperty memoryProperty = profile.getNamedProperty("memory"); //$NON-NLS-1$
 		if (memoryProperty != null) {
-			memoryLabel = new Label(container, SWT.NULL);
-			memoryLabel.setText(WizardMessages.getString(MEMORY_LABEL));
 			FormData fd = new FormData();
 			fd.left = new FormAttachment(cpuLabel, 0, SWT.LEFT);
 			fd.top = new FormAttachment(cpuLabel, 8);
@@ -195,7 +153,7 @@ public class ProfileComposite {
 				memory.setText(memoryProperty.getValue());
 				FormData f = new FormData();
 				f.top = new FormAttachment(cpuControl, 8);
-				f.left = new FormAttachment(memoryLabel, 5);
+				f.left = new FormAttachment(storageLabel, 50);
 				f.right = new FormAttachment(100, 0);
 				memory.setLayoutData(f);
 				memoryControl = memory;
@@ -207,7 +165,7 @@ public class ProfileComposite {
 					decDigitsDefault = memoryDefaultValue.length() - indexDefault - 1;
 					memoryDefaultValue = memoryDefaultValue.replace(".", ""); //$NON-NLS-1$ //$NON-NLS-2$
 				}
-				Spinner memorySpinner = new Spinner(container, SWT.READ_ONLY | SWT.BORDER);
+				memorySpinner = new Spinner(container, SWT.READ_ONLY | SWT.BORDER);
 				String first = memoryProperty.getRange().getFirst();
 				int indexFirst = first.indexOf('.');
 				int decDigitsFirst = 0;
@@ -239,62 +197,55 @@ public class ProfileComposite {
 				memorySpinner.setMinimum(Integer.valueOf(first));
 				memorySpinner.setMaximum(Integer.valueOf(last));
 				memorySpinner.setDigits(memoryDecDigits);
-				memorySpinner.addModifyListener(memorySpinnerListener);
+				memorySpinner.addModifyListener(spinnerListener);
 				memorySpinner.setSelection(Integer.valueOf(memoryDefaultValue));
 				FormData f = new FormData();
-				f.left = new FormAttachment(memoryLabel, 5);
+				f.width = 80;
+				f.left = new FormAttachment(storageLabel, 50);
 				f.top = new FormAttachment(cpuControl, 5);
 				memorySpinner.setLayoutData(f);
 				memoryControl = memorySpinner;
 			} else if (memoryProperty.getKind() == DeltaCloudHardwareProperty.Kind.ENUM) {
 				memoryDefaultValue = memoryProperty.getValue();
 				List<String> values = memoryProperty.getEnums();
-				memoryButtons = new Button[values.size()];
-				for (int i = 0; i < values.size(); ++i) {
-					Button button = new Button(container, SWT.RADIO);
-					String value = values.get(i);
-					button.setText(value);
-					if (value.equals(memoryDefaultValue))
-						button.setSelection(true);
-					button.addSelectionListener(memoryButtonListener);
-					memoryButtons[i] = button;
-					memoryControl = button;
-					FormData f = new FormData();
-					if (i % 3 == 0) {
-					   	f.left = new FormAttachment(memoryLabel, 5);
-					   	if (i > 2) {
-					   		f.top = new FormAttachment(memoryButtons[i-3]);
-					   	} else {
-					   		f.top = new FormAttachment(cpuControl);
-					   	}
-					} else {
-						f.left = new FormAttachment(memoryButtons[i-1]);
-						if (i > 3)
-							f.top = new FormAttachment(memoryButtons[i-3]);
-						else
-							f.top = new FormAttachment(cpuControl);
-					}
-					button.setLayoutData(f);
-				}
+				memoryCombo = new Combo(container, SWT.READ_ONLY | SWT.BORDER);
+				String[] items = new String[values.size()];
+				memoryCombo.setItems(values.toArray(items));
+				memoryCombo.setText(items[0]);
+				memoryCombo.addModifyListener(comboListener);
+				FormData f = new FormData();
+				f.width = 80;
+				f.left = new FormAttachment(storageLabel, 50);
+				f.top = new FormAttachment(cpuControl, 5);
+				memoryCombo.setLayoutData(f);
+				memoryControl = memoryCombo;
+			}
+			String memoryUnit = memoryProperty.getUnit();
+			if (memoryUnit != null && !memoryUnit.equals("label")) { //$NON-NLS-1$
+				Label unitLabel = new Label(container, SWT.NULL);
+				unitLabel.setText(memoryUnit);
+				FormData f = new FormData();
+				f.left = new FormAttachment(memoryControl, 3);
+				f.top = new FormAttachment(cpuControl, 8);
+				unitLabel.setLayoutData(f);
 			}
 		}
 		DeltaCloudHardwareProperty storageProperty = profile.getNamedProperty("storage"); //$NON-NLS-1$
 		if (storageProperty != null) {
-			storageLabel = new Label(container, SWT.NULL);
-			storageLabel.setText(WizardMessages.getString(STORAGE_LABEL));
 			FormData fd = new FormData();
 			fd.left = new FormAttachment(cpuLabel, 0, SWT.LEFT);
-			fd.top = new FormAttachment(memoryLabel, 8);
+			fd.top = new FormAttachment(memoryControl, 8);
 			storageLabel.setLayoutData(fd);
 			if (storageProperty.getKind() == DeltaCloudHardwareProperty.Kind.FIXED) {
 				Label storage = new Label(container, SWT.NULL);
 				storage.setText(storageProperty.getValue());
 				FormData f = new FormData();
-				f.left = new FormAttachment(storageLabel, 5);
+				f.left = new FormAttachment(storageLabel, 50);
 				f.top = new FormAttachment(memoryControl, 8);
 				f.right = new FormAttachment(100, 0);
 				storage.setLayoutData(f);
 				storage.setVisible(true);
+				storageControl = storage;
 			} else if (storageProperty.getKind() == DeltaCloudHardwareProperty.Kind.RANGE) {
 				storageDefaultValue = storageProperty.getValue();
 				int indexDefault = storageDefaultValue.indexOf('.');
@@ -335,46 +286,40 @@ public class ProfileComposite {
 				storageSpinner.setMinimum(Integer.valueOf(first));
 				storageSpinner.setMaximum(Integer.valueOf(last));
 				storageSpinner.setDigits(storageDecDigits);
-				storageSpinner.addModifyListener(storageSpinnerListener);
+				storageSpinner.addModifyListener(spinnerListener);
 				storageSpinner.setSelection(Integer.valueOf(storageDefaultValue));
 				FormData f = new FormData();
+				f.width = 80;
 				f.top = new FormAttachment(memoryControl, 5);
-				f.left = new FormAttachment(storageLabel, 5);
+				f.left = new FormAttachment(storageLabel, 50);
 				storageSpinner.setLayoutData(f);
+				storageControl = storageSpinner;
 			} else if (storageProperty.getKind() == DeltaCloudHardwareProperty.Kind.ENUM) {
 				storageDefaultValue = storageProperty.getValue();
 				List<String> values = storageProperty.getEnums();
-				storageButtons = new Button[values.size()];
-				for (int i = 0; i < values.size(); ++i) {
-					Button button = new Button(container, SWT.RADIO);
-					String value = values.get(i);
-					button.setText(value);
-					if (value.equals(storageDefaultValue))
-						button.setSelection(true);
-					button.addSelectionListener(storageButtonListener);
-					storageButtons[i] = button;
-					FormData f = new FormData();
-					if (i % 3 == 0) {
-					   	f.left = new FormAttachment(storageLabel, 5);
-					   	if (i > 2) {
-					   		f.top = new FormAttachment(storageButtons[i-3]);
-					   	} else {
-					   		f.top = new FormAttachment(memoryControl);
-					   	}
-					} else {
-						f.left = new FormAttachment(storageButtons[i-1]);
-						if (i > 3)
-							f.top = new FormAttachment(storageButtons[i-3]);
-						else
-							f.top = new FormAttachment(memoryControl);
-					}
-					button.setLayoutData(f);
-				}
+				storageCombo = new Combo(container, SWT.READ_ONLY | SWT.BORDER);
+				String[] items = new String[values.size()];
+				storageCombo.setItems(values.toArray(items));
+				storageCombo.setText(items[0]);
+				storageCombo.addModifyListener(comboListener);
+				FormData f = new FormData();
+				f.width = 80;
+				f.left = new FormAttachment(storageLabel, 50);
+				f.top = new FormAttachment(memoryControl, 5);
+				storageCombo.setLayoutData(f);
+				storageControl = storageCombo;
 			}
+			String storageUnit = storageProperty.getUnit();
+			if (storageUnit != null && !storageUnit.equals("label")) { //$NON-NLS-1$
+				Label unitLabel = new Label(container, SWT.NULL);
+				unitLabel.setText(storageUnit);
+				FormData f = new FormData();
+				f.left = new FormAttachment(storageControl, 3);
+				f.top = new FormAttachment(memoryControl, 8);
+				unitLabel.setLayoutData(f);
+			}
+
 		}
-		Label dummyLabel = new Label(container, SWT.NULL);
-		FormData fd = new FormData();
-		fd.top = new FormAttachment(storageLabel, 0);
 	}
 	
 	public void setVisible(boolean visible) {

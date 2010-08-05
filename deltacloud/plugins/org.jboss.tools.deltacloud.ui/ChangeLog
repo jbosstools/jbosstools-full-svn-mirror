@@ -1,5 +1,16 @@
 2010-08-05  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (createControl): Use a group
+	to distinguish Profile properties.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java (ProfileComposite): Do some
+	tweaking of the layout and add unit support. 
+	(.modifyText): Compact so there is one combo modify listener and one spinner modify
+	listener.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add message for
+	properties group.
+	 
+2010-08-05  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (.modifyText): Add
 	logic to switch ProfileComposite. 
 	(createControl): Add logic for setting up the ProfileComposite. 
