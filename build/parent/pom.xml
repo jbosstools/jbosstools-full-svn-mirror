@@ -781,6 +781,24 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<profile>
+			<id>jbosstools-nightly-trunk</id>
+			<repositories>
+				<repository>
+					<id>jbosstools-nightly-trunk</id>
+					<url>http://download.jboss.org/jbosstools/updates/nightly/trunk/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
 	</profiles>
 	<pluginRepositories>
 		<pluginRepository>
@@ -827,7 +845,7 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -838,6 +856,5 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
-	
+
 </project>
