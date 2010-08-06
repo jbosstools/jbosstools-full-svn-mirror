@@ -25,6 +25,8 @@ public class FormBean {
 	
 	private User user;
 	private String verificationNum;
+	
+	private String javascriptStr = "<script>alert('Hello!');</script>";
 
 	public FormBean() {
 		for (CategoryType categoryType : CategoryType.values()) {
@@ -124,5 +126,13 @@ public class FormBean {
 
 	public void setSelectedCategory(String selectedCategory) {
 		this.selectedCategory = selectedCategory;
+	}
+
+	public String getJavascriptStr() {
+		return javascriptStr;
+	}
+
+	public void setJavascriptStr(String javascriptStr) {
+		this.javascriptStr = javascriptStr;
 	}
 }

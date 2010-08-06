@@ -35,6 +35,7 @@
     <bean name="/select.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/escapeBody.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/url.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/htmlEscape.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean id="userValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.UserValidator"/>
     <bean id="beanValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.BeanValidator"/>
     

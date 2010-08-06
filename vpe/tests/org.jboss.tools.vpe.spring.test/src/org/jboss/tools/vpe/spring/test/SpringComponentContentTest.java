@@ -120,6 +120,10 @@ public class SpringComponentContentTest extends ComponentContentTest {
 	public void testTransform() throws Throwable {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/transform.jsp"); //$NON-NLS-1$
 	}
+
+	public void testHtmlEscape() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/htmlEscape.jsp"); //$NON-NLS-1$
+	}
 	
 	@Override
 	protected String getTestProjectName() {
