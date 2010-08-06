@@ -28,4 +28,7 @@
 <br/>
 <a href="htmlEscape.htm">htmlEscape.htm</a>
 <br/>
-
+<a href="authorize.htm">authorize.htm</a>
+<br/>
+<a href="authentication.htm">authentication.htm</a>
+<br/>

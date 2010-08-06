@@ -17,30 +17,27 @@
     <bean name="/eval.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/errors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
     	<property name="validator" ref="userValidator"/>
-    	<property name="successView" value="errors"/>
     </bean>
     <bean name="/bind.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
     	<property name="validator" ref="userValidator"/>
-    	<property name="successView" value="bind"/>
     </bean>
     <bean name="/hasBindErrors.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
     	<property name="validator" ref="beanValidator"/>
-    	<property name="successView" value="hasBindErrors"/>
     </bean>
     <bean name="/nestedPath.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.ErrorsController">
     	<property name="validator" ref="userValidator"/>
-    	<property name="successView" value="nestedPath"/>
     </bean>
-    <bean name="/transform.htm" class="org.jboss.tools.vpe.spring.test.springtest.controller.DayOfWeekFormController"/>
     <bean name="/select.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/escapeBody.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
     <bean name="/url.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
-    <bean name="/htmlEscape.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/authorize.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/authentication.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+    <bean name="/accesscontrollist.htm" class="org.jboss.tools.vpe.spring.test.springtest.FormController"/>
+
     <bean id="userValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.UserValidator"/>
     <bean id="beanValidator" class="org.jboss.tools.vpe.spring.test.springtest.validator.BeanValidator"/>
     
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>        
     </bean>

@@ -116,6 +116,18 @@ public class SpringComponentContentTest extends ComponentContentTest {
 	public void testUrl() throws Throwable {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/url.jsp"); //$NON-NLS-1$
 	}
+	
+	public void testAuthorize() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/authorize.jsp"); //$NON-NLS-1$
+	}
+	
+	public void testAuthentication() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/authentication.jsp"); //$NON-NLS-1$
+	}
+
+	public void testAccesscontrollist() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/accesscontrollist.jsp"); //$NON-NLS-1$
+	}
 
 	public void testTransform() throws Throwable {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/transform.jsp"); //$NON-NLS-1$
