@@ -111,6 +111,8 @@ public class DeltaCloudClient implements API
 		{
 			logger.error("Error processing request to: " + requestUrl, e);
 			throw new DeltaCloudClientException("Error processing request to: " + requestUrl, e);
+		} catch (Exception e) {
+			throw new DeltaCloudClientException(e.getMessage());
 		}
 		throw new DeltaCloudClientException("Could not execute request to:" + requestUrl);
 	}

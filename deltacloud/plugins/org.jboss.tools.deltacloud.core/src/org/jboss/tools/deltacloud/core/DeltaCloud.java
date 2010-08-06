@@ -146,4 +146,13 @@ public class DeltaCloud {
 		return realms.toArray(new DeltaCloudRealm[realms.size()]);
 	}
 
+	public boolean createInstance(String name, String imageId, String realmId, String profileId) throws DeltaCloudException {
+		try {
+			if (client.createInstance(imageId, profileId, realmId, name) != null)
+				return true;
+		} catch (DeltaCloudClientException e) {
+			throw new DeltaCloudException(e);
+		}
+		return false;
+	}
 }
