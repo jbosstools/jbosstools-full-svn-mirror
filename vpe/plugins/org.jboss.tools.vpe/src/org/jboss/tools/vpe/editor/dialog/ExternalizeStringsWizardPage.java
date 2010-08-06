@@ -431,7 +431,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			/*
 			 * Clear the table
 			 */
-			tagsTable.clearAll();
+			tagsTable.removeAll();
 			/*
 			 * Fill in new values
 			 */
