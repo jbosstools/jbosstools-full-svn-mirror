@@ -11,12 +11,14 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 
 public class NewInstancePage extends WizardPage {
 
@@ -28,7 +30,10 @@ public class NewInstancePage extends WizardPage {
 	private static final String IMAGE_LABEL = "Image.label"; //$NON-NLS-1$
 	private static final String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
 	private static final String HARDWARE_LABEL = "Profile.label"; //$NON-NLS-1$
+	private static final String REALM_LABEL = "Realm.label"; //$NON-NLS-1$
 	private static final String PROPERTIES_LABEL = "Properties.label"; //$NON-NLS-1$
+	private static final String NONE_RESPONSE = "None.response"; //$NON-NLS-1$
+	@SuppressWarnings("unused")
 	private static final String NAME_ALREADY_IN_USE = "ErrorNameInUse.text"; //$NON-NLS-1$
 
 
@@ -38,9 +43,11 @@ public class NewInstancePage extends WizardPage {
 	
 	private Text nameText;
 	private Combo hardware;
+	private Control realm;
 	private String[] profileIds;
 	private ProfileComposite currPage;
 	private ProfileComposite[] profilePages;
+	private ArrayList<String> realmIds;
 
 
 	private ModifyListener textListener = new ModifyListener() {
@@ -72,6 +79,35 @@ public class NewInstancePage extends WizardPage {
 		setPageComplete(false);
 	}
 
+	public String getHardwareProfile() {
+		return hardware.getText();
+	}
+
+	public String getRealmId() {
+		if (realm instanceof Combo) {
+			int index = ((Combo)realm).getSelectionIndex();
+			return realmIds.get(index);
+		} else {
+			return null;
+		}
+	}
+	
+	public String getCpuProperty() {
+		return currPage.getCPU();
+	}
+	
+	public String getStorageProperty() {
+		return currPage.getStorage();
+	}
+	
+	public String getMemoryProperty() {
+		return currPage.getMemory();
+	}
+	
+	public String getInstanceName() {
+		return nameText.getText();
+	}
+	
 	private void validate() {
 		boolean complete = true;
 		boolean errorFree = true;
@@ -92,7 +128,7 @@ public class NewInstancePage extends WizardPage {
 		profiles = new ArrayList<DeltaCloudHardwareProfile>();
 		DeltaCloudHardwareProfile[] allProfiles = cloud.getProfiles();
 		for (DeltaCloudHardwareProfile p : allProfiles) {
-			if (image.getArchitecture().equals(p.getArchitecture())) {
+			if (p.getArchitecture() == null || image.getArchitecture().equals(p.getArchitecture())) {
 				profiles.add(p);
 			}
 		}
@@ -136,9 +172,33 @@ public class NewInstancePage extends WizardPage {
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		
+		Label realmLabel = new Label(container, SWT.NULL);
+		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
+		
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.addModifyListener(textListener);
 
+		DeltaCloudRealm[] realms = cloud.getRealms();
+		realmIds = new ArrayList<String>();
+		ArrayList<String> realmNames = new ArrayList<String>();
+		for (int i = 0; i < realms.length; ++i) {
+			DeltaCloudRealm r = realms[i];
+			if (r.getState() == null || r.getState().equals(DeltaCloudRealm.AVAILABLE)) {
+				realmNames.add(r.getName());
+				realmIds.add(r.getId());
+			}
+		}
+		if (realmIds.size() > 0) {
+			Combo combo = new Combo(container, SWT.BORDER | SWT.READ_ONLY);
+			combo.setItems(realmNames.toArray(new String[realmNames.size()]));
+			combo.setText(realmNames.get(0));
+			realm = combo;
+		} else {
+			Label label = new Label(container, SWT.NULL);
+			label.setText(WizardMessages.getString(NONE_RESPONSE));
+			realm = label;
+		}
+		
 		Label hardwareLabel = new Label(container, SWT.NULL);
 		hardwareLabel.setText(WizardMessages.getString(HARDWARE_LABEL));
 		
@@ -168,10 +228,21 @@ public class NewInstancePage extends WizardPage {
 		f = new FormData();
 		f.top = new FormAttachment(dummyLabel, 8);
 		f.left = new FormAttachment(0, 0);
+		nameLabel.setLayoutData(f);
+		
+		f = new FormData();
+		f.top = new FormAttachment(dummyLabel, 8);
+		f.left = new FormAttachment(hardwareLabel, 5);
+		f.right = new FormAttachment(100, 0);
+		nameText.setLayoutData(f);
+		
+		f = new FormData();
+		f.top = new FormAttachment(nameText, 8);
+		f.left = new FormAttachment(0, 0);
 		imageLabel.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(dummyLabel, 8);
+		f.top = new FormAttachment(nameText, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		imageId.setLayoutData(f);
@@ -187,23 +258,23 @@ public class NewInstancePage extends WizardPage {
 		arch.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(archLabel, 8);
+		f.top = new FormAttachment(archLabel, 11);
 		f.left = new FormAttachment(0, 0);
-		nameLabel.setLayoutData(f);
+		realmLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(arch, 5);
+		f.top = new FormAttachment(arch, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
-		nameText.setLayoutData(f);
+		realm.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(nameText, 8);
+		f.top = new FormAttachment(realm, 11);
 		f.left = new FormAttachment(0, 0);
 		hardwareLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(nameText, 5);
+		f.top = new FormAttachment(realm, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		hardware.setLayoutData(f);

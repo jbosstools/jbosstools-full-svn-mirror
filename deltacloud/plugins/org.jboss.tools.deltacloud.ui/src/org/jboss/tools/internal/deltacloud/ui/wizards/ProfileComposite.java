@@ -21,6 +21,7 @@ public class ProfileComposite {
 	private static final String CPU_LABEL = "Cpu.label"; //$NON-NLS-1$
 	private static final String MEMORY_LABEL = "Memory.label"; //$NON-NLS-1$
 	private static final String STORAGE_LABEL = "Storage.label"; //$NON-NLS-1$
+	private static final String DEFAULTED = "Defaulted"; //$NON-NLS-1$
 	
 	private Composite container;
 	private DeltaCloudHardwareProfile profile;
@@ -94,11 +95,11 @@ public class ProfileComposite {
 		storageLabel.setText(WizardMessages.getString(STORAGE_LABEL));
 
 		DeltaCloudHardwareProperty cpuProperty = profile.getNamedProperty("cpu"); //$NON-NLS-1$
+		FormData fd = new FormData();
+		fd.left = new FormAttachment(0, 0);
+		fd.top = new FormAttachment(0, 0);
+		cpuLabel.setLayoutData(fd);
 		if (cpuProperty != null) {
-			FormData fd = new FormData();
-			fd.left = new FormAttachment(0, 0);
-			fd.top = new FormAttachment(0, 0);
-			cpuLabel.setLayoutData(fd);
 			if (cpuProperty.getKind() == DeltaCloudHardwareProperty.Kind.FIXED) {
 				Label cpu = new Label(container, SWT.NULL);
 				cpu.setText(cpuProperty.getValue());
@@ -134,20 +135,28 @@ public class ProfileComposite {
 				cpuControl = cpuCombo;
 			}
 			String cpuUnit = cpuProperty.getUnit();
-			if (cpuUnit != null && !cpuUnit.equals("label")) { //$NON-NLS-1$
+			if (cpuUnit != null && !cpuUnit.equals("label") && !cpuUnit.equals("count")) { //$NON-NLS-1$ //$NON-NLS-1$
 				Label unitLabel = new Label(container, SWT.NULL);
 				unitLabel.setText(cpuProperty.getUnit());
 				FormData f = new FormData();
 				f.left = new FormAttachment(cpuControl, 5);
 				unitLabel.setLayoutData(f);
 			}
+		} else {
+			Label cpu = new Label(container, SWT.NULL);
+			cpu.setText(WizardMessages.getString(DEFAULTED));
+			FormData f = new FormData();
+			f.left = new FormAttachment(storageLabel, 50);
+			f.right = new FormAttachment(100, 0);
+			cpu.setLayoutData(f);
+			cpuControl = cpu;
 		}
 		DeltaCloudHardwareProperty memoryProperty = profile.getNamedProperty("memory"); //$NON-NLS-1$
+		fd = new FormData();
+		fd.left = new FormAttachment(cpuLabel, 0, SWT.LEFT);
+		fd.top = new FormAttachment(cpuLabel, 8);
+		memoryLabel.setLayoutData(fd);
 		if (memoryProperty != null) {
-			FormData fd = new FormData();
-			fd.left = new FormAttachment(cpuLabel, 0, SWT.LEFT);
-			fd.top = new FormAttachment(cpuLabel, 8);
-			memoryLabel.setLayoutData(fd);
 			if (memoryProperty.getKind() == DeltaCloudHardwareProperty.Kind.FIXED) {
 				Label memory = new Label(container, SWT.NULL);
 				memory.setText(memoryProperty.getValue());
@@ -229,13 +238,22 @@ public class ProfileComposite {
 				f.top = new FormAttachment(cpuControl, 8);
 				unitLabel.setLayoutData(f);
 			}
+		} else {
+			Label memory = new Label(container, SWT.NULL);
+			memory.setText(WizardMessages.getString(DEFAULTED));
+			FormData f = new FormData();
+			f.top = new FormAttachment(cpuControl, 8);
+			f.left = new FormAttachment(storageLabel, 50);
+			f.right = new FormAttachment(100, 0);
+			memory.setLayoutData(f);
+			memoryControl = memory;
 		}
 		DeltaCloudHardwareProperty storageProperty = profile.getNamedProperty("storage"); //$NON-NLS-1$
+		fd = new FormData();
+		fd.left = new FormAttachment(cpuLabel, 0, SWT.LEFT);
+		fd.top = new FormAttachment(memoryControl, 8);
+		storageLabel.setLayoutData(fd);
 		if (storageProperty != null) {
-			FormData fd = new FormData();
-			fd.left = new FormAttachment(cpuLabel, 0, SWT.LEFT);
-			fd.top = new FormAttachment(memoryControl, 8);
-			storageLabel.setLayoutData(fd);
 			if (storageProperty.getKind() == DeltaCloudHardwareProperty.Kind.FIXED) {
 				Label storage = new Label(container, SWT.NULL);
 				storage.setText(storageProperty.getValue());
@@ -319,6 +337,16 @@ public class ProfileComposite {
 				unitLabel.setLayoutData(f);
 			}
 
+		} else {
+			Label storage = new Label(container, SWT.NULL);
+			storage.setText(WizardMessages.getString(DEFAULTED));
+			FormData f = new FormData();
+			f.left = new FormAttachment(storageLabel, 50);
+			f.top = new FormAttachment(memoryControl, 8);
+			f.right = new FormAttachment(100, 0);
+			storage.setLayoutData(f);
+			storage.setVisible(true);
+			storageControl = storage;
 		}
 	}
 	
