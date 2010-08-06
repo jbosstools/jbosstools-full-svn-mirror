@@ -117,6 +117,10 @@ public class SpringComponentContentTest extends ComponentContentTest {
 		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/url.jsp"); //$NON-NLS-1$
 	}
 
+	public void testTransform() throws Throwable {
+		performContentTestByFullPath("src/main/webapp/WEB-INF/jsp/transform.jsp"); //$NON-NLS-1$
+	}
+	
 	@Override
 	protected String getTestProjectName() {
 		return SpringAllTests.IMPORT_PROJECT_NAME;
