@@ -2,7 +2,6 @@
 	<test id="validationBinding">
 		<div id="validationBinding">
 			<span class="vpe-text">
-				user.lastName&lt;=
 				<font color="red">
 					<b>
 						<span class="vpe-text">
@@ -16,7 +15,6 @@
 	<test id="outputBinding">
 		<div id="outputBinding">
 			<span class="vpe-text">
-				selectedCategory&lt;=
 				<span class="vpe-text">
 					${status.value}
 				</span>
@@ -26,7 +24,6 @@
 	<test id="inputBinding">
 		<div id="inputBinding">
 			<span class="vpe-text">
-				selectedCategory&lt;=
 				<input type="text" value="${status.value}" />
 			</span>
 		</div>

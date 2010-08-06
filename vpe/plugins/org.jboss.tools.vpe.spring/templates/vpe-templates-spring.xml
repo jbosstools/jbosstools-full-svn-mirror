@@ -424,13 +424,6 @@
 	</vpe:tag>	 
 	
 	<vpe:tag name="spring:bind" case-sensitive="yes">
-		<vpe:if test="attrpresent('path')">
-			<vpe:template children="yes" modify="yes">
-				<span class="vpe-text">
-					<vpe:value expr="{@path}&lt;=" />
-				</span>
-			</vpe:template>
-		</vpe:if>
 		<vpe:template children="yes" modify="yes">
 			<span class="vpe-text"/>
 		</vpe:template>
