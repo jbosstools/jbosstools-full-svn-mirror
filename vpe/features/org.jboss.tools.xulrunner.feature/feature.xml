@@ -29,19 +29,17 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.mozilla.xulrunner.carbon.macosx.x86"
+         id="org.mozilla.xulrunner.carbon.macosx"
          os="macosx"
          ws="carbon"
-         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
          
    <plugin
-         id="org.mozilla.xulrunner.cocoa.macosx.x86"
+         id="org.mozilla.xulrunner.cocoa.macosx"
          os="macosx"
          ws="cocoa"
-         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"/>       
