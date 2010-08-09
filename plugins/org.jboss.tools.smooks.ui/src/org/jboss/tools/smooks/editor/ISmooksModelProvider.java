@@ -13,4 +13,6 @@ import org.milyn.javabean.dynamic.Model;
  */
 public interface ISmooksModelProvider extends  IEditingDomainProvider{
 	Model<SmooksModel> getSmooksModel();
+	
+	String getInputType();
 }

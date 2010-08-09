@@ -7,6 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,15 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandWrapper;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -21,6 +31,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -35,6 +46,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IEditorActionBarContributor;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPropertyListener;
@@ -58,6 +70,8 @@ import org.eclipse.zest.core.widgets.ZestStyles;
 import org.eclipse.zest.layouts.LayoutStyles;
 import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.configuration.editors.SmooksReaderFormPage;
+import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.actions.AbstractProcessGraphAction;
@@ -77,7 +91,7 @@ import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
  * @author Dart
  *
  */
-public class SmooksProcessGraphicalEditor extends FormPage implements IProcessProvider , PropertyChangeListener , IPropertyListener{
+public class SmooksProcessGraphicalEditor extends FormPage implements IProcessProvider , PropertyChangeListener , IPropertyListener , ISelectionChangedListener{
 	
 	private boolean processMapActived = false;
 
@@ -277,6 +291,115 @@ public class SmooksProcessGraphicalEditor extends FormPage implements IProcessPr
 
 	}
 	
+	public void init(IEditorSite site, IEditorInput input) {
+		super.init(site, input);
+		if (smooksModelProvider != null) {
+			this.handleCommandStack(smooksModelProvider.getEditingDomain().getCommandStack());
+		}
+
+		List<TaskTypeDescriptor> tasks = TaskTypeManager.getAllTaskList();
+		for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
+			TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
+			IEditorPart part = createEditorPart(taskTypeDescriptor.getId());
+			if (part != null && isSingltonEditor(taskTypeDescriptor.getId())) {
+				this.registeTaskDetailsPage(part, taskTypeDescriptor.getId());
+			}
+		}
+	}
+	
+	private void handleCommandStack(org.eclipse.emf.common.command.CommandStack commandStack) {
+		commandStack.addCommandStackListener(new org.eclipse.emf.common.command.CommandStackListener() {
+			public void commandStackChanged(EventObject event) {
+				final Command mostRecentCommand = ((org.eclipse.emf.common.command.CommandStack) event.getSource())
+						.getMostRecentCommand();
+				getEditorSite().getShell().getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						if (mostRecentCommand != null) {
+							Command rawCommand = mostRecentCommand;
+							while (rawCommand instanceof CommandWrapper) {
+								rawCommand = ((CommandWrapper) rawCommand).getCommand();
+							}
+							Collection<?> activeModel = rawCommand.getAffectedObjects();
+							for (Iterator<?> iterator = activeModel.iterator(); iterator.hasNext();) {
+								Object object = (Object) iterator.next();
+								if (object instanceof TaskType || object instanceof ProcessType) {
+									validateEnd(null);
+									if (getProcessGraphViewer() != null) {
+										getProcessGraphViewer().refresh();
+										getProcessGraphViewer().applyLayout();
+										break;
+									}
+								}
+							}
+							if (rawCommand instanceof CompoundCommand) {
+								List<Command> command = ((CompoundCommand) rawCommand).getCommandList();
+								for (Iterator<?> iterator = command.iterator(); iterator.hasNext();) {
+									Command command2 = (Command) iterator.next();
+									while (command2 instanceof CommandWrapper) {
+										command2 = ((CommandWrapper) command2).getCommand();
+									}
+									if (command2 instanceof DeleteCommand || command2 instanceof RemoveCommand) {
+										Collection<?> objs = ((Command) command2).getAffectedObjects();
+										for (Iterator<?> iterator2 = objs.iterator(); iterator2.hasNext();) {
+											Object object = (Object) iterator2.next();
+											object = AdapterFactoryEditingDomain.unwrap(object);
+											if (object instanceof TaskType || object instanceof ProcessType) {
+												validateEnd(null);
+												showTaskControl(null);
+												break;
+											}
+										}
+									}
+
+									if (command2 instanceof AddCommand || command2 instanceof SetCommand) {
+										Collection<?> objs = ((Command) command2).getAffectedObjects();
+										for (Iterator<?> iterator2 = objs.iterator(); iterator2.hasNext();) {
+											Object object = (Object) iterator2.next();
+											object = AdapterFactoryEditingDomain.unwrap(object);
+											if (object instanceof TaskType) {
+												validateEnd(null);
+												showTaskControl((TaskType) object);
+												break;
+											}
+										}
+									}
+								}
+							} else {
+								if (rawCommand instanceof DeleteCommand || rawCommand instanceof RemoveCommand) {
+									activeModel = rawCommand.getAffectedObjects();
+									for (Iterator<?> iterator = activeModel.iterator(); iterator.hasNext();) {
+										Object object = (Object) iterator.next();
+										object = AdapterFactoryEditingDomain.unwrap(object);
+										if (object instanceof TaskType || object instanceof ProcessType) {
+											if (getProcessGraphViewer() != null) {
+												validateEnd(null);
+												showTaskControl(null);
+												break;
+											}
+										}
+									}
+								}
+								if (rawCommand instanceof AddCommand || rawCommand instanceof SetCommand) {
+									Collection<?> objs = ((Command) rawCommand).getAffectedObjects();
+									for (Iterator<?> iterator2 = objs.iterator(); iterator2.hasNext();) {
+										Object object = (Object) iterator2.next();
+										object = AdapterFactoryEditingDomain.unwrap(object);
+										if (object instanceof TaskType) {
+											validateEnd(null);
+											showTaskControl((TaskType) object);
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+
+				});
+			}
+		});
+	}
+	
 	private void generateNextTaskActions(MenuManager addNextTaskMenuManager) {
 		List<TaskTypeDescriptor> list = TaskTypeManager.getAllTaskList();
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
@@ -375,8 +498,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements IProcessPr
 					unhighlightGraphNodes();
 					highlightGraphNode(item);
 				}
-//				showTaskControl(firstElement);
-//				SmooksProcessGraphicalEditor.this.selectionChanged(event);
+				showTaskControl(firstElement);
+				SmooksProcessGraphicalEditor.this.selectionChanged(event);
 				updateGlobalActions();
 			}
 		});
@@ -547,10 +670,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements IProcessPr
 //			SmooksJavaMappingGraphicalEditor javaMappingPart = new SmooksJavaMappingGraphicalEditor(smooksModelProvider);
 //			return javaMappingPart;
 //		}
-//		if (taskID.equals(TaskTypeManager.TASK_ID_INPUT)) {
-//			SmooksReaderFormPage readerPage = new SmooksReaderFormPage(getEditor(), "input", "input"); //$NON-NLS-1$ //$NON-NLS-2$
-//			return readerPage;
-//		}
+		if (taskID.equals(TaskTypeManager.TASK_ID_INPUT)) {
+			SmooksReaderFormPage readerPage = new SmooksReaderFormPage(getEditor(), "input", "input"); //$NON-NLS-1$ //$NON-NLS-2$
+			return readerPage;
+		}
 		return null;
 	}
 	
@@ -706,6 +829,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements IProcessPr
 							}
 						} else {
 							Object page = getRegisteTaskPage(id);
+							try{
 							ITaskNodeProvider nodeProvider = (ITaskNodeProvider) ((IEditorPart) page)
 									.getAdapter(ITaskNodeProvider.class);
 							if (nodeProvider != null) {
@@ -727,6 +851,9 @@ public class SmooksProcessGraphicalEditor extends FormPage implements IProcessPr
 							GridData gd = new GridData(GridData.FILL_BOTH);
 							contentParent.setLayoutData(gd);
 							detailsContentsComposite.layout(false);
+							}catch(Throwable t){
+								t.printStackTrace();
+							}
 						}
 					}
 				} else {
@@ -820,6 +947,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements IProcessPr
 		}
 	}
 	
+	
 	/**
 	 * @return the needupdatewhenshow
 	 */
@@ -834,11 +962,55 @@ public class SmooksProcessGraphicalEditor extends FormPage implements IProcessPr
 	public void setNeedupdatewhenshow(boolean needupdatewhenshow) {
 		this.needupdatewhenshow = needupdatewhenshow;
 	}
+	
+
+	public void validateEnd(List<Diagnostic> diagnosticResult) {
+		Collection<Object> editors = registedTaskPages.values();
+		for (Iterator<?> iterator = editors.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object instanceof ISmooksModelValidateListener) {
+				((ISmooksModelValidateListener) object).validateEnd(diagnosticResult);
+			}
+		}
+		ProcessType process = this.getProcess();
+		validateProcess(process);
+	}
+	
+	protected void validateProcess(ProcessType process) {
+		if (process != null) {
+			validateTasks(process.getTask());
+			GraphViewer viewer = this.getProcessGraphViewer();
+			if (viewer != null)
+				viewer.refresh();
+		}
+	}
+	
+	protected void validateTasks(List<TaskType> tasks) {
+		if (tasks == null)
+			return;
+		for (Iterator<?> iterator = tasks.iterator(); iterator.hasNext();) {
+			TaskType taskType = (TaskType) iterator.next();
+			validateTask(taskType);
+			validateTasks(taskType.getTask());
+		}
+	}
+
+	protected void validateTask(TaskType t) {
+		
+	}
+
 
 	public ProcessType getProcess() {
 		return this.process;
 	}
 
+	public void selectionChanged(SelectionChangedEvent event) {
+		ISelectionProvider provider = getEditor().getSite().getSelectionProvider();
+		if (provider != null) {
+			provider.setSelection(event.getSelection());
+		}
+	}
+	
 	public void propertyChanged(Object source, int propId) {
 		this.firePropertyChange(propId);
 		if (propId == PROP_DIRTY) {

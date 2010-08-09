@@ -56,9 +56,11 @@ import org.jboss.tools.smooks.configuration.RuntimeDependency;
 import org.jboss.tools.smooks.configuration.RuntimeMetadata;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.SmooksXMLEditor;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
 import org.jboss.tools.smooks.model.SmooksEditorModelBuilder;
 import org.jboss.tools.smooks.model.SmooksModel;
+import org.jboss.tools.smooks.model.core.IParam;
 import org.milyn.javabean.dynamic.Model;
 
 /**
@@ -636,6 +638,14 @@ public class AbstractSmooksFormEditor extends FormEditor implements
 
 	public EditingDomain getEditingDomain() {
 		return editingDomain;
+	}
+
+	public String getInputType() {
+		IParam inputParam = SmooksUIUtils.getInputTypeParam(smooksModel.getModelRoot());
+		if (inputParam != null) {
+			return inputParam.getValue();
+		}
+		return "";
 	}
 
 }
