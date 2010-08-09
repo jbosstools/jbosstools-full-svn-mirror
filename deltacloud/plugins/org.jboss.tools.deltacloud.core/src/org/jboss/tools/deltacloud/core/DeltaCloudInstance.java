@@ -40,4 +40,11 @@ public class DeltaCloudInstance {
 	public List<String> getHostNames() {
 		return instance.getPublicAddresses();
 	}
+	
+	public String getHostName() {
+		List<String> hostNames = getHostNames();
+		if (hostNames != null && hostNames.size() > 0)
+			return hostNames.get(0);
+		return null;
+	}
 }
