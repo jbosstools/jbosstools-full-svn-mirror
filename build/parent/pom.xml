@@ -275,6 +275,18 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
+				<repository>
+					<id>jboss-xulrunner-1.9.1.2</id>
+					<url>http://download.jboss.org/jbosstools/updates/xulrunner/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
 				<!--repository>
 					<id>jboss-xulrunner-1.9.2</id>
 					<url>http://download.jboss.org/jbosstools/updates/xulrunner-1.9.2/
