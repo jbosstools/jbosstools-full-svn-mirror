@@ -679,6 +679,7 @@ public class BPELEditor extends GraphicalEditorWithPaletteAndTray /*, IGotoMarke
 	public void arrangeEditParts(GraphicalViewer graphicalViewer) {
 		// Make a list of all FlowEditParts whose children all have no positional metadata
 		List<FlowEditPart> flowsToArrange = new ArrayList<FlowEditPart>();
+		List<Point> flowChildlocations = new ArrayList<Point>();
 
 		for (TreeIterator<EObject> it = getProcess().eAllContents(); it.hasNext(); ) {
 			EObject model = it.next();
@@ -691,6 +692,28 @@ public class BPELEditor extends GraphicalEditorWithPaletteAndTray /*, IGotoMarke
 					if (child == null) continue;
 					Point loc = ModelHelper.getLocation(child);
 					if (loc.x == Integer.MIN_VALUE)  missingLoc = true;
+					flowChildlocations.add(new Point(loc));
+				}
+				// https://jira.jboss.org/browse/JBIDE-6784
+				// The problem with the above check for a "missing location" of Flow
+				// children is that the default x & y values are zero if the extension
+				// model is missing. This would be the case if the BPEL process was
+				// imported as text from somewhere. In this case, all x/y coordinates
+				// of all Flow children will be 0, so it suffices to check if two children
+				// have the same x & y coordinates.
+				if (flowChildlocations.size()>1)
+				{
+					for ( int i=0; !missingLoc && i<flowChildlocations.size(); ++i )
+					{
+						int x = flowChildlocations.get(i).x;
+						int y = flowChildlocations.get(i).y;
+						for ( int j=i+1; !missingLoc && j<flowChildlocations.size(); ++j )
+						{
+							Point loc = flowChildlocations.get(j);
+							if (loc.x == x && loc.y==y)
+								missingLoc = true;
+						}
+					}
 				}
 				if (missingLoc) {
 					EditPart editPart = (EditPart)graphicalViewer.getEditPartRegistry().get(model); 

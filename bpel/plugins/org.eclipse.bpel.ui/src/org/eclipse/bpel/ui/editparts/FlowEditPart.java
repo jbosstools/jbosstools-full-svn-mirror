@@ -235,9 +235,14 @@ public class FlowEditPart extends CollapsableEditPart {
 		IFigure child = ((GraphicalEditPart) childEditPart).getFigure();
 		getContentPane().add(child,
 				getFigure().getLayoutManager().getConstraint(child), index);
+		//https://jira.jboss.org/browse/JBIDE-6784
+		// addChildVisual() is also called by reorderChild() to rearrange the order of children.
+		// This causes auto layout to reference a child object with a model that has no parent.
+		// The right place to auto arrange Flow children if no *.bpelex exists yet, is in
+		// BPELEditor.arrangeEditParts() after the model is loaded
 		// JBIDE-6032: force an auto layout at startup
-		if (getShowFreeformFlow() && getAutoLayout())
-			doAutoLayout(false);
+//		if (getShowFreeformFlow() && getAutoLayout())
+//			doAutoLayout(false);
 	}
 
 	protected void setFlowEditPolicies() {
