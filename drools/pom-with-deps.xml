@@ -15,6 +15,7 @@
 	<modules>
 		<!-- check out dependencies into folder parallel to this one in Hudson workspace -->
 		<module>../org.jboss.tools.ui.bot.ext</module>
+		<module>../org.jboss.tools.jst.ui.bot.test</module>
 
 		<!-- contained children -->
 		<module>plugins</module>
