@@ -163,7 +163,6 @@ public class ProfileComposite {
 				FormData f = new FormData();
 				f.top = new FormAttachment(cpuControl, 8);
 				f.left = new FormAttachment(storageLabel, 50);
-				f.right = new FormAttachment(100, 0);
 				memory.setLayoutData(f);
 				memoryControl = memory;
 			} else if (memoryProperty.getKind() == DeltaCloudHardwareProperty.Kind.RANGE) {
@@ -260,7 +259,6 @@ public class ProfileComposite {
 				FormData f = new FormData();
 				f.left = new FormAttachment(storageLabel, 50);
 				f.top = new FormAttachment(memoryControl, 8);
-				f.right = new FormAttachment(100, 0);
 				storage.setLayoutData(f);
 				storage.setVisible(true);
 				storageControl = storage;

@@ -71,9 +71,15 @@ public class NewInstance extends Wizard {
 					MessageDialogWithToggle.openOkCancelConfirm(getShell(), WizardMessages.getString(CONFIRM_CREATE_TITLE), 
 							WizardMessages.getString(CONFIRM_CREATE_MSG), 
 							WizardMessages.getString(DONT_SHOW_THIS_AGAIN_MSG), 
-							false, Activator.getDefault().getPreferenceStore(), IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE);
-				if (dialog.getReturnCode() == Dialog.CANCEL)
+							false, null, null);
+				int retCode = dialog.getReturnCode();
+				boolean toggleState = dialog.getToggleState();
+				if (retCode == Dialog.CANCEL)
 					return true;
+				// If warning turned off by user, set the preference for future usage
+				if (toggleState) {
+					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
+				}
 			}
 			result = cloud.createInstance(name, imageId, realmId, profileId);
 		} catch (DeltaCloudException e) {

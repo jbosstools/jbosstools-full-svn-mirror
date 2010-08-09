@@ -1,3 +1,18 @@
+2010-08-09  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/preferences/DeltaCloudPreferencePage.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/preferences/PreferenceMessages.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/preferences/PreferenceMessages.properties: New file.
+	* plugin.properties: Add new messages to use in plugin extensions.
+	* plugin.xml: Add perspective and preference page extensions.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (performFinish): Fix
+	logic to not use PreferenceStore with MessageDialogWithToggle dialog since it is not the
+	same as the InstanceScope preference area we are using elsewhere.  Manually use the toggle
+	value to set the preference. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java (ProfileComposite): Don't
+	make cpu, memory, or storage labels go 100% to the right. 
+
 2010-08-06  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: New file.

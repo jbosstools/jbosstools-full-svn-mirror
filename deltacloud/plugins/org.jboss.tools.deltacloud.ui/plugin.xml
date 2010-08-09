@@ -70,5 +70,22 @@
             name="%NewWizard.name">
       </wizard>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.jboss.tools.deltacloud.ui.DeltaCloudPerspective"
+            icon="icons/delta.gif"
+            id="org.jboss.tools.deltacloud.ui.perspective"
+            name="%DeltaCloudPerspective.name">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.jboss.tools.deltacloud.ui.preferences.DeltaCloudPreferencePage"
+            id="org.jboss.tools.deltacloud.ui.page1"
+            name="%Preferences.name">
+      </page>
+   </extension>
 
 </plugin>
