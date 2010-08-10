@@ -43,6 +43,8 @@ public class ProfileComposite {
 	private Combo storageCombo;
 	private int storageDecDigits;
 	
+	private int cw = 160;
+	
 	private ModifyListener spinnerListener = new ModifyListener() {
 
 		@Override
@@ -72,7 +74,6 @@ public class ProfileComposite {
 		}
 
 	};
-
 
 	public ProfileComposite(DeltaCloudHardwareProfile p, Composite parent) {
 		this.profile = p;
@@ -118,12 +119,13 @@ public class ProfileComposite {
 				FormData f = new FormData();
 				f.width = 80;
 				f.left = new FormAttachment(storageLabel, 50);
+				f.right = new FormAttachment(storageLabel, cw, SWT.RIGHT);
 				cpuSpinner.setLayoutData(f);
 				cpuControl = cpuSpinner;
 			} else if (cpuProperty.getKind() == DeltaCloudHardwareProperty.Kind.ENUM) {
 				cpuDefaultValue = cpuProperty.getValue();
 				List<String> values = cpuProperty.getEnums();
-				cpuCombo = new Combo(container, SWT.READ_ONLY | SWT.BORDER);
+				cpuCombo = new Combo(container, SWT.BORDER);
 				String[] items = new String[values.size()];
 				cpuCombo.setItems(values.toArray(items));
 				cpuCombo.setText(items[0]);
@@ -131,6 +133,7 @@ public class ProfileComposite {
 				FormData f = new FormData();
 				f.width = 80;
 				f.left = new FormAttachment(storageLabel, 50);
+				f.right = new FormAttachment(storageLabel, cw, SWT.RIGHT);
 				cpuCombo.setLayoutData(f);
 				cpuControl = cpuCombo;
 			}
@@ -210,13 +213,14 @@ public class ProfileComposite {
 				FormData f = new FormData();
 				f.width = 80;
 				f.left = new FormAttachment(storageLabel, 50);
+				f.right = new FormAttachment(storageLabel, cw, SWT.RIGHT);
 				f.top = new FormAttachment(cpuControl, 5);
 				memorySpinner.setLayoutData(f);
 				memoryControl = memorySpinner;
 			} else if (memoryProperty.getKind() == DeltaCloudHardwareProperty.Kind.ENUM) {
 				memoryDefaultValue = memoryProperty.getValue();
 				List<String> values = memoryProperty.getEnums();
-				memoryCombo = new Combo(container, SWT.READ_ONLY | SWT.BORDER);
+				memoryCombo = new Combo(container, SWT.BORDER | SWT.READ_ONLY);
 				String[] items = new String[values.size()];
 				memoryCombo.setItems(values.toArray(items));
 				memoryCombo.setText(items[0]);
@@ -224,6 +228,7 @@ public class ProfileComposite {
 				FormData f = new FormData();
 				f.width = 80;
 				f.left = new FormAttachment(storageLabel, 50);
+				f.right = new FormAttachment(storageLabel, cw, SWT.RIGHT);
 				f.top = new FormAttachment(cpuControl, 5);
 				memoryCombo.setLayoutData(f);
 				memoryControl = memoryCombo;
@@ -308,12 +313,13 @@ public class ProfileComposite {
 				f.width = 80;
 				f.top = new FormAttachment(memoryControl, 5);
 				f.left = new FormAttachment(storageLabel, 50);
+				f.right = new FormAttachment(storageLabel, cw, SWT.RIGHT);
 				storageSpinner.setLayoutData(f);
 				storageControl = storageSpinner;
 			} else if (storageProperty.getKind() == DeltaCloudHardwareProperty.Kind.ENUM) {
 				storageDefaultValue = storageProperty.getValue();
 				List<String> values = storageProperty.getEnums();
-				storageCombo = new Combo(container, SWT.READ_ONLY | SWT.BORDER);
+				storageCombo = new Combo(container, SWT.BORDER | SWT.READ_ONLY);
 				String[] items = new String[values.size()];
 				storageCombo.setItems(values.toArray(items));
 				storageCombo.setText(items[0]);
@@ -321,6 +327,7 @@ public class ProfileComposite {
 				FormData f = new FormData();
 				f.width = 80;
 				f.left = new FormAttachment(storageLabel, 50);
+				f.right = new FormAttachment(storageLabel, cw, SWT.RIGHT);
 				f.top = new FormAttachment(memoryControl, 5);
 				storageCombo.setLayoutData(f);
 				storageControl = storageCombo;

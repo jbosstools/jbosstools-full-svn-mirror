@@ -1,5 +1,19 @@
 2010-08-09  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceComparator.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java: New file.
+	* plugin.properties: Add new messages for Instances view.
+	* plugin.xml: Add new Instances view.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add column names for
+	Instances view.  Also change menu item from Create Instance to Launch Instance.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java (ProfileComposite): 
+	Fix formatting for combo box vs spinner size.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.java: Change Create Instance
+	messages to be Launch Instance. 
+
+2010-08-09  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java: New file.
 	* src/org/jboss/tools/deltacloud/ui/preferences/DeltaCloudPreferencePage.java: New file.
 	* src/org/jboss/tools/deltacloud/ui/preferences/PreferenceMessages.java: New file.
