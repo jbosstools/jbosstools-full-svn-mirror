@@ -33,6 +33,7 @@ import org.eclipse.bpel.apache.ode.deploy.model.dd.ddFactory;
 import org.eclipse.bpel.apache.ode.deploy.model.dd.ddPackage;
 import org.eclipse.bpel.apache.ode.deploy.ui.Activator;
 import org.eclipse.bpel.apache.ode.deploy.ui.editors.ODEDeployMultiPageEditor;
+import org.eclipse.bpel.apache.ode.deploy.ui.util.DeployResourceSetImpl;
 import org.eclipse.bpel.apache.ode.deploy.ui.util.DeployUtils;
 import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.bpel.model.PartnerLink;
@@ -59,6 +60,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -149,6 +151,9 @@ public class ProcessPage extends FormPage implements IResourceChangeListener {
 	private EditingDomain domain;
 	private TableViewer scopeTableViewer;
 	private Form mainform;
+	// https://jira.jboss.org/browse/JBIDE-6786
+	// we will manage this for ServiceCellEditor and PortTypeLabelProvider
+	private ResourceSetImpl resourceSet = null;
 	
 	public ProcessPage(FormEditor editor, ProcessType pt) {
 		super(editor, "ODED" + pt.getName().toString(), pt.getName().getLocalPart()); //$NON-NLS-1$
@@ -158,6 +163,8 @@ public class ProcessPage extends FormPage implements IResourceChangeListener {
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_CHANGE);
 		
 		this.domain = this.editor.getEditingDomain();
+		// https://jira.jboss.org/browse/JBIDE-6786
+		resourceSet = new DeployResourceSetImpl();
 	}
 
 	@Override
@@ -300,7 +307,8 @@ public class ProcessPage extends FormPage implements IResourceChangeListener {
 		viewer.setUseHashlookup(true);
 		viewer.setColumnProperties(columnNames);
 		viewer.setContentProvider(new PortTypeContentProvider(isInbound));
-		viewer.setLabelProvider(new PortTypeLabelProvider(ddFile.getProject(), current.eResource().getResourceSet()));
+		// https://jira.jboss.org/browse/JBIDE-6786
+		viewer.setLabelProvider(new PortTypeLabelProvider(ddFile.getProject(), resourceSet));
 		viewer.setInput(current);		
 
 	    for (int i = 0, n = t.getColumnCount(); i < n; i++) {
@@ -319,7 +327,8 @@ public class ProcessPage extends FormPage implements IResourceChangeListener {
 //		t.addListener(SWT.MouseDown, tableListener);
 
 	    // Column 2 : Associate Service (ComboBox)
-	    ServiceCellEditor sCellEditor = new ServiceCellEditor(t, ddFile.getProject(), current.eResource().getResourceSet());
+	    // https://jira.jboss.org/browse/JBIDE-6786
+	    ServiceCellEditor sCellEditor = new ServiceCellEditor(t, ddFile.getProject(), resourceSet);
 	    editors[1] = sCellEditor;
 
         // Assign the cell editors to the viewer 
@@ -606,11 +615,18 @@ public class ProcessPage extends FormPage implements IResourceChangeListener {
 	class PortTypeLabelProvider extends LabelProvider implements ITableLabelProvider {
 		
 		protected IProject bpelProject = null; 
-		protected ResourceSet resourceSet = null;
+		protected ResourceSetImpl resourceSet = null;
 		
-		public PortTypeLabelProvider(IProject bpelProject, ResourceSet resourceSet){
+		public PortTypeLabelProvider(IProject bpelProject, ResourceSetImpl resourceSet){
 			this.bpelProject = bpelProject;
-			this.resourceSet = resourceSet;
+			// https://jira.jboss.org/browse/JBIDE-6786
+			// ProcessPage allocates the resourceSet - this should never be null!
+			if (resourceSet != null) {
+				this.resourceSet = resourceSet;
+			}
+			else {
+				this.resourceSet = new ResourceSetImpl();
+			}
 		}
 		
 		public String getColumnText(Object obj, int index) {

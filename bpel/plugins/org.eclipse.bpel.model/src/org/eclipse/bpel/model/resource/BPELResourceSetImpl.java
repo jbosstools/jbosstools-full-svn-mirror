@@ -74,13 +74,24 @@ public class BPELResourceSetImpl extends ResourceSetImpl implements IResourceCha
 	@SuppressWarnings("nls")
 	public Resource getResource(URI uri, boolean loadOnDemand, String kind)  {
 
+		// https://jira.jboss.org/browse/JBIDE-6786
+		// don't bother if URI is null or empty
+		if (uri==null || uri.isEmpty())
+			return null;
+
 		Map<URI, Resource> map = getURIResourceMap();
 		
 		if (map != null) {
 			Resource resource = map.get(uri);
 			if (resource != null) {
 				if (loadOnDemand && !resource.isLoaded()) {
-					demandLoadHelper(resource);
+					// https://jira.jboss.org/browse/JBIDE-6786
+					// if load fails, mark resource as unloaded
+					try {
+						demandLoadHelper(resource);
+					} catch (Exception ex) {
+						resource.unload();
+					}
 				}
 				
 				return resource;
@@ -94,7 +105,14 @@ public class BPELResourceSetImpl extends ResourceSetImpl implements IResourceCha
 			if (theURIConverter.normalize(resource.getURI()).equals(
 					normalizedURI)) {
 				if (loadOnDemand && !resource.isLoaded()) {
-					demandLoadHelper(resource);
+					// https://jira.jboss.org/browse/JBIDE-6786
+					// if load fails, mark resource as unloaded
+					try {
+						demandLoadHelper(resource);
+					} catch (Exception ex) {
+						resource.unload();
+						break;
+					}
 				}
 
 				if (map != null) {
