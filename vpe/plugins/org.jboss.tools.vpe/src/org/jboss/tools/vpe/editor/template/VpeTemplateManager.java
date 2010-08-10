@@ -255,6 +255,11 @@ public class VpeTemplateManager {
 	
 	private Map<String,VpeTemplateSet> caseSensitiveTags = new HashMap<String,VpeTemplateSet>();
 	private Map<String,VpeTemplateSet> ignoreSensitiveTags = new HashMap<String,VpeTemplateSet>();
+	//added by Maksim Areshkau, docbook tags stored separately, because name duality
+	private Map<String,VpeTemplateSet> docbookTags = new HashMap<String,VpeTemplateSet>();
+	
+	private static final String ATTR_DOCBOOK_NAME = "docbook";
+	
 	private VpeTemplate defTemplate;
 	private VpeTemplateListener[] templateListeners = new VpeTemplateListener[0];
 	private VpeTemplateFileList templateFileList = new VpeTemplateFileList();
@@ -287,6 +292,8 @@ public class VpeTemplateManager {
 	 * Property which indicates that with this tag will be added default formats
 	 */
 	public static final String ATTR_USE_DEFAULT_FORMATS = "use-default-formats"; //$NON-NLS-1$
+	
+	private static final String DOCBOOKEDITORID="org.jboss.tools.jst.jsp.jspeditor.DocBookEditor";
 	/*
 	 * Added by Max Areshkau(mareshkau@exadel.com)
 	 */ 
@@ -337,7 +344,17 @@ public class VpeTemplateManager {
 		if (name == null) {
 			return null;
 		}
-		VpeTemplateSet set = caseSensitiveTags.get(name);
+		//added by Maksim Areshkau, as fix for docbook templates
+		//see JBIDE-6600
+		VpeTemplateSet set=null;
+		if(DOCBOOKEDITORID.equals(pageContext.getEditPart().getSite().getId())){
+			set = docbookTags.get(name);
+			if (set != null) {
+				return set.getTemplate(pageContext, sourceNode, dependencySet);
+			}
+		}
+		
+		set = caseSensitiveTags.get(name);
 		if (set != null) {
 			return set.getTemplate(pageContext, sourceNode, dependencySet);
 		}
@@ -480,9 +497,12 @@ public class VpeTemplateManager {
 	private void setTagElement(Element tagElement,IConfigurationElement confElement) {
 		String name = tagElement.getAttribute(ATTR_TAG_NAME);
 		if (name.length() > 0) {
+			boolean docbookTemplate = ATTR_VALUE_YES.equalsIgnoreCase(tagElement.getAttribute(VpeTemplateManager.ATTR_DOCBOOK_NAME));
 			boolean caseSensitive = !ATTR_VALUE_NO.equals(tagElement.getAttribute(ATTR_TAG_CASE_SENSITIVE));
 			Map<String,VpeTemplateSet> tags;
-			if (caseSensitive) {
+			if(docbookTemplate){
+				tags = docbookTags;
+			}else if (caseSensitive) {
 				tags = caseSensitiveTags;
 			} else {
 				name = name.toLowerCase();

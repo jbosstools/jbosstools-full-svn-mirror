@@ -77,7 +77,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		 */
 		assertNotNull("Could not find component file '"+elementPagePath+"'", elementPageFile); //$NON-NLS-1$ //$NON-NLS-2$
 		
-		IEditorPart editor = WorkbenchUtils.openEditor(elementPageFile,EDITOR_ID);
+		IEditorPart editor = WorkbenchUtils.openEditor(elementPageFile,getEditorID());
 		assertNotNull("Editor should be opened.", editor); //$NON-NLS-1$
 		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 		/*
@@ -189,7 +189,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		TestUtil.waitForJobs();
 		IEditorPart editor = PlatformUI.getWorkbench()
 		.getActiveWorkbenchWindow().getActivePage().openEditor(input,
-				EDITOR_ID, true);
+				getEditorID(), true);
 		assertNotNull("Editor should be opened.", editor); //$NON-NLS-1$
 		TestUtil.waitForJobs();
 		/*
@@ -262,7 +262,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		IEditorPart editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
-						EDITOR_ID, true);
+						getEditorID(), true);
 
 		assertNotNull(editor);
 

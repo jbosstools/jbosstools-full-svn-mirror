@@ -3,126 +3,126 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!--vpe:template-taglib uri="-//OASIS//DTD DocBook XML V4.3CR3//EN"/-->
 
-	<vpe:tag name="chapter" case-sensitive="yes">
+	<vpe:tag name="chapter" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="section" case-sensitive="yes">
+	<vpe:tag name="section" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="sect1" case-sensitive="yes">
+	<vpe:tag name="sect1" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="sect2" case-sensitive="yes">
+	<vpe:tag name="sect2" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="title" case-sensitive="yes">
+	<vpe:tag name="title" case-sensitive="yes" docbook="yes">
 		<vpe:template children="no" modify="yes">
 			<h1>
 				<vpe:value expr="{tagtext()}" />
 			</h1>
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="para" case-sensitive="yes">
+	<vpe:tag name="para" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<p />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="itemizedlist" case-sensitive="yes">
+	<vpe:tag name="itemizedlist" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<ul />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="listitem" case-sensitive="yes">
+	<vpe:tag name="listitem" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<li />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="ulink" case-sensitive="yes">
+	<vpe:tag name="ulink" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<a href="{@url}" />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="programlisting" case-sensitive="yes">
+	<vpe:tag name="programlisting" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<pre />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="emphasis" case-sensitive="yes">
+	<vpe:tag name="emphasis" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<em />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="tgroup" case-sensitive="yes">
+	<vpe:tag name="tgroup" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<table border="1px" />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="row" case-sensitive="yes">
+	<vpe:tag name="row" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<tr />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="entry" case-sensitive="yes">
+	<vpe:tag name="entry" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<td />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="property" case-sensitive="yes">
+	<vpe:tag name="property" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<i />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="imagedata" case-sensitive="yes">
+	<vpe:tag name="imagedata" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<img src="{src(@fileref)}" />
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="mediaobject" case-sensitive="yes">
+	<vpe:tag name="mediaobject" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="imageobject" case-sensitive="yes">
+	<vpe:tag name="imageobject" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="figure" case-sensitive="yes">
+	<vpe:tag name="figure" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="orderedlist" case-sensitive="yes">
+	<vpe:tag name="orderedlist" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<ol />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag case-sensitive="yes" name="chapterinfo">
+	<vpe:tag case-sensitive="yes" name="chapterinfo" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<vpe:any display="none" icon="no" value="{name()}" />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag case-sensitive="yes" name="note">
+	<vpe:tag case-sensitive="yes" name="note" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<vpe:any background-color="yellow" border="blue" icon="no" />
 		</vpe:template>

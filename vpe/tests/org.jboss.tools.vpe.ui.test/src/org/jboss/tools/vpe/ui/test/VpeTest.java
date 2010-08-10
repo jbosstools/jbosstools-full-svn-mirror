@@ -22,7 +22,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -31,7 +30,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.wst.sse.ui.internal.reconcile.StructuredRegionProcessor;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.jboss.tools.common.model.util.ClassLoaderUtil;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
@@ -229,7 +227,7 @@ public class VpeTest extends TestCase implements ILogListener {
 
 		IEditorPart editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
-						EDITOR_ID, true);
+						getEditorID(), true);
 		// here we wait for inintialization VPE controller
 		TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
@@ -264,7 +262,7 @@ public class VpeTest extends TestCase implements ILogListener {
 		// get editor
 		JSPMultiPageEditor part = (JSPMultiPageEditor) PlatformUI
 				.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-				.openEditor(input, EDITOR_ID, true);
+				.openEditor(input, getEditorID(), true);
 
 		assertNotNull(part);
 		return part;
@@ -436,5 +434,9 @@ public class VpeTest extends TestCase implements ILogListener {
 			return null;
 
 		return (nsIDOMElement) nodeMapping.getVisualNode();
+	}
+	
+	protected String getEditorID(){
+		return EDITOR_ID;
 	}
 }

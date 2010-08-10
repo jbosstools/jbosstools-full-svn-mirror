@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<vpe:template-taglib uri="http://www.w3.org/2001/XInclude" prefix="xi" />
 
-	<vpe:tag name="xi:include" case-sensitive="yes">
+	<vpe:tag name="xi:include" case-sensitive="yes" docbook="yes">
 			    <vpe:template children="yes" file="{@href}" class="org.jboss.tools.vpe.editor.template.VpeIncludeTemplate"/>
 	</vpe:tag>
 </vpe:templates>
