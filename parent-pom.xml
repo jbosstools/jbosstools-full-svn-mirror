@@ -6,6 +6,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
+	<modules>
+		<module>build/target-platform</module>
+	</modules>
 
 	<properties>
 		<!-- <tychoVersion>0.10.0-SNAPSHOT</tychoVersion> -->
@@ -149,7 +152,6 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<target.platform>e36-wtp32</target.platform>
 			</properties>
 			<build>
 				<plugins>
@@ -274,6 +276,18 @@
 					</releases>
 				</repository>
 				<repository>
+					<id>jboss-xulrunner-1.9.1.2</id>
+					<url>http://download.jboss.org/jbosstools/updates/xulrunner-1.9.1.2/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<!--repository>
 					<id>jboss-xulrunner-1.9.2</id>
 					<url>http://download.jboss.org/jbosstools/updates/xulrunner-1.9.2/
 					</url>
@@ -284,7 +298,7 @@
 					<releases>
 						<enabled>true</enabled>
 					</releases>
-				</repository>
+				</repository-->
 				<repository>
 					<id>google eclipse plugins</id>
 					<url>http://dl.google.com/eclipse/plugin/3.6</url>
@@ -779,6 +793,24 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<profile>
+			<id>jbosstools-nightly-trunk</id>
+			<repositories>
+				<repository>
+					<id>jbosstools-nightly-trunk</id>
+					<url>http://download.jboss.org/jbosstools/updates/nightly/trunk/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
 	</profiles>
 	<pluginRepositories>
 		<pluginRepository>
