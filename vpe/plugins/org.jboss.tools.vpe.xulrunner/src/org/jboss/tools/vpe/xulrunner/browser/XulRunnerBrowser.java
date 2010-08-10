@@ -100,8 +100,10 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
             setBoolRootPref(PREFERENCE_DISABLEOPENDURINGLOAD, true);
             setBoolRootPref(PREFERENCE_DISABLEWINDOWSTATUSCHANGE, true);
             
-            nsIWebBrowserSetup setup = XPCOM.queryInterface(webBrowser, nsIWebBrowserSetup.class);
-            setup.setProperty(nsIWebBrowserSetup.SETUP_IS_CHROME_WRAPPER, 1);
+            /* yradtsevich: the following two lines are commented due to JBIDE-6647.
+             * By some reason they were preventing of handling of Drag&Drop events. */
+//            nsIWebBrowserSetup setup = XPCOM.queryInterface(webBrowser, nsIWebBrowserSetup.class);
+//            setup.setProperty(nsIWebBrowserSetup.SETUP_IS_CHROME_WRAPPER, 1);
     
             // JBIDE-1329 Solution was contributed by Snjezana Peco
 //             webBrowser.addWebBrowserListener(this,
