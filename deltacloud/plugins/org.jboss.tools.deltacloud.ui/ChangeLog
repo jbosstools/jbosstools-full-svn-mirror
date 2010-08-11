@@ -1,5 +1,17 @@
 2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/CustomProgressMonitorDialog.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java (getAdapter): Fix warning.
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (InstancePropertySource): Ditto. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (selectedElement): Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (performFinish): Fix to
+	run a Job to monitor the progress. 
+	(WatchCreateJob): New private Job class to watch the instance creation.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new
+	messages. 
+
+2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* build.properties: Add plugin.properties to bin list.
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: New messages. 
 	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (fillContextMenu): Remove

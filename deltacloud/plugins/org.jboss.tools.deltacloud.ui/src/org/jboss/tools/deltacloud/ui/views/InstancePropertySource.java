@@ -26,11 +26,8 @@ public class InstancePropertySource implements IPropertySource {
 	
 	private IPropertyDescriptor[] propertyDescriptors;
 	private DeltaCloudInstance instance;
-	private CVInstanceElement element;
-	
 	public InstancePropertySource(CVInstanceElement element, Object o) {
 		instance = (DeltaCloudInstance)o;
-		this.element = element;
 	}
 	
 	@Override

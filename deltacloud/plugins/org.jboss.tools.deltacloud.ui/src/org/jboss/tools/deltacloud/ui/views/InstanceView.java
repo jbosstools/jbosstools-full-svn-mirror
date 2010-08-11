@@ -48,6 +48,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private TableViewer viewer;
 	private Composite container;
 	private Combo cloudSelector;
+	@SuppressWarnings("unused")
 	private DeltaCloudInstance selectedElement;
 	
 	private DeltaCloud[] clouds;

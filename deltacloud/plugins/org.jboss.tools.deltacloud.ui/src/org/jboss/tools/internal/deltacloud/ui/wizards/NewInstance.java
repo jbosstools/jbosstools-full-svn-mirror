@@ -6,15 +6,12 @@ import java.net.URLEncoder;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.progress.IProgressService;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
@@ -32,6 +29,7 @@ public class NewInstance extends Wizard {
 	private final static String CONFIRM_CREATE_MSG = "ConfirmCreate.msg"; //$NON-NLS-1$
 	private final static String DONT_SHOW_THIS_AGAIN_MSG = "DontShowThisAgain.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
+	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
 	
 	private NewInstancePage mainPage;
 	
@@ -55,6 +53,48 @@ public class NewInstance extends Wizard {
 	public boolean canFinish() {
 		return mainPage.isPageComplete();
 	}
+	
+	
+	private class WatchCreateJob extends Job {
+		
+		private DeltaCloud cloud;
+		private String instanceId;
+		private String instanceName;
+		
+		public WatchCreateJob(String title, DeltaCloud cloud, 
+				String instanceId, String instanceName) {
+			super(title);
+			this.cloud = cloud;
+			this.instanceId = instanceId;
+			this.instanceName = instanceName;
+		}
+		
+		public IStatus run(IProgressMonitor pm) {
+			if (!pm.isCanceled()){
+				try {
+					pm.beginTask(WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] {instanceName}), IProgressMonitor.UNKNOWN);
+					pm.worked(1);
+					boolean finished = false;
+					while (!finished && !pm.isCanceled()) {
+						DeltaCloudInstance instance = cloud.refreshInstance(instanceId);
+						if (!instance.getState().equals(DeltaCloudInstance.PENDING))
+							break;
+						Thread.sleep(400);
+					}
+
+				} catch (Exception e) {
+					// do nothing
+				} finally {
+					pm.done();
+				}
+				return Status.OK_STATUS;
+			}
+			else {
+				pm.done();
+				return Status.CANCEL_STATUS;
+			}
+		};
+	};
 	
 	@Override
 	public boolean performFinish() {
@@ -94,28 +134,11 @@ public class NewInstance extends Wizard {
 				result = true;
 			final String instanceId = instance.getId();
 			final String instanceName = name;
-			if (instance != null) {
-				IWorkbench wb = PlatformUI.getWorkbench();
-				IProgressService ps = wb.getProgressService();
-				try {
-					ps.busyCursorWhile(new IRunnableWithProgress() {
-						public void run(IProgressMonitor pm) {
-							pm.beginTask(WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] {instanceName}), IProgressMonitor.UNKNOWN);
-							pm.worked(1);
-							try {
-								for (int i = 0; i < 2; ++i) {
-									instance = cloud.refreshInstance(instanceId);
-									if (!instance.getState().equals(DeltaCloudInstance.PENDING))
-										break;
-								}
-							} finally {
-								pm.done();
-							}
-						}
-					});
-				} catch(Exception ex) {
-					errorMessage = ex.getLocalizedMessage();
-				}
+			if (instance != null && !instance.getState().equals(DeltaCloudInstance.PENDING)) {
+				Job job = new WatchCreateJob(WizardMessages.getString(STARTING_INSTANCE_TITLE),
+						cloud, instanceId, instanceName);
+				job.setUser(true);
+				job.schedule();
 			}
 		} catch (DeltaCloudException e) {
 			errorMessage = e.getLocalizedMessage();
