@@ -56,7 +56,7 @@ public class GlobalParams extends Params implements IGlobalParams {
 	 * @generated NOT
 	 */
 	public StreamFilterType getFilterType() {
-		String filterType = getParam(Filter.STREAM_FILTER_TYPE);
+		String filterType = getParamValue(Filter.STREAM_FILTER_TYPE);
 		
 		if(filterType == null) {
 			return null;
@@ -69,4 +69,33 @@ public class GlobalParams extends Params implements IGlobalParams {
 		}
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public IGlobalParams setDefaultSerializationOn(boolean defaultSerializationOn) {
+		setParam(Filter.DEFAULT_SERIALIZATION_ON, Boolean.toString(defaultSerializationOn));		
+		return this;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public boolean isDefaultSerializationOn() {
+		String defaultSerializationOn = getParamValue(Filter.DEFAULT_SERIALIZATION_ON);
+		
+		if(defaultSerializationOn == null) {
+			return true;
+		} 
+		
+		try {
+			// On, unless it's explicitly turned off...
+			return !defaultSerializationOn.equals("false");
+		} catch(Exception e) {
+			return true;
+		}
+	}
 } //GlobalParams

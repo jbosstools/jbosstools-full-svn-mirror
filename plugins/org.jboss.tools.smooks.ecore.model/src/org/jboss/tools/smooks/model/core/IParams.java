@@ -46,10 +46,26 @@ public interface IParams extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	IParam getParam(String name);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	IParam getParam(String name, String type);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @model nameRequired="true"
 	 * @generated
 	 */
-	String getParam(String name);
+	String getParamValue(String name);
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -58,5 +74,13 @@ public interface IParams extends EObject {
 	 * @generated
 	 */
 	IParams setParam(String name, String value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	IParams setParam(String name, String value, String type);
 
 } // IParams

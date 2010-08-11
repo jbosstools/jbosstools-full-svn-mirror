@@ -136,19 +136,7 @@ public class SmooksUIUtils {
 		SmooksModel rootModel = resourceList.getModelRoot();
 		GlobalParams params = rootModel.getParams();
 		if (params != null) {
-			EList<IParam> paramList = params.getParams();
-
-			for (Iterator<?> iterator = paramList.iterator(); iterator
-					.hasNext();) {
-				IParam paramType = (IParam) iterator.next();
-				String name = paramType.getName();
-				String value = paramType.getValue();
-				if (inputType.getType().equals(name)
-						&& inputType.getPath().equals(value)) {
-					// find the associated param
-					return paramType;
-				}
-			}
+			return params.getParam(inputType.getType(), inputType.getPath());
 		}
 		return null;
 	}
@@ -156,14 +144,7 @@ public class SmooksUIUtils {
 	public static IParam getInputTypeParam(SmooksModel resourceList) {
 		GlobalParams params = resourceList.getParams();
 		if (params != null) {
-			List<IParam> paramList = params.getParams();
-			for (Iterator<?> iterator = paramList.iterator(); iterator
-					.hasNext();) {
-				IParam paramType = (IParam) iterator.next();
-				if (SmooksModelUtils.INPUT_TYPE.equals(paramType.getName())) {
-					return paramType;
-				}
-			}
+			return params.getParam(SmooksModelUtils.INPUT_TYPE);
 		}
 		return null;
 	}

@@ -292,12 +292,24 @@ public class CorePackage extends EPackageImpl implements ICorePackage {
 		initEClass(paramsEClass, IParams.class, "Params", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getParams_Params(), this.getParam(), null, "params", null, 0, -1, IParams.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		EOperation op = addEOperation(paramsEClass, ecorePackage.getEString(), "getParam", 0, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, ecorePackage.getEString(), "name", 1, 1, IS_UNIQUE, IS_ORDERED);
-
-		op = addEOperation(paramsEClass, this.getParams(), "setParam", 1, 1, IS_UNIQUE, IS_ORDERED);
+		EOperation op = addEOperation(paramsEClass, this.getParams(), "setParam", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "name", 1, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(paramsEClass, this.getParams(), "setParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(paramsEClass, this.getParam(), "getParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(paramsEClass, this.getParam(), "getParam", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "type", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(paramsEClass, ecorePackage.getEString(), "getParamValue", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEString(), "name", 1, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(globalParamsEClass, IGlobalParams.class, "GlobalParams", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -305,6 +317,11 @@ public class CorePackage extends EPackageImpl implements ICorePackage {
 		addEParameter(op, this.getStreamFilterType(), "filterType", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		addEOperation(globalParamsEClass, this.getStreamFilterType(), "getFilterType", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		addEOperation(globalParamsEClass, ecorePackage.getEBoolean(), "isDefaultSerializationOn", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		op = addEOperation(globalParamsEClass, this.getGlobalParams(), "setDefaultSerializationOn", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEBoolean(), "defaultSerializationOn", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(componentEClass, IComponent.class, "Component", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

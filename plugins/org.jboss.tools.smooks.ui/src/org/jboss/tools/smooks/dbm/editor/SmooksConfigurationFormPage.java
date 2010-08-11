@@ -38,10 +38,12 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
 import org.jboss.tools.smooks.graphical.editors.SmooksMessage;
+import org.jboss.tools.smooks.model.core.GlobalParams;
 import org.jboss.tools.smooks.model.core.ICorePackage;
 import org.jboss.tools.smooks.model.core.IParam;
 import org.jboss.tools.smooks.model.core.Param;
 import org.jboss.tools.smooks.model.core.Params;
+import org.milyn.StreamFilterType;
 
 /**
  * @author Dart
@@ -256,7 +258,7 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksEdit
 
 	}
 	
-	protected Params getParams(){
+	protected GlobalParams getParams(){
 		if(smooksModelProvider != null){
 			return smooksModelProvider.getSmooksModel().getModelRoot().getParams();
 		}
@@ -264,21 +266,18 @@ public class SmooksConfigurationFormPage extends FormPage implements ISmooksEdit
 	}
 	
 	protected void initGlobalSettingControls() {
-		Params m = getParams();
-		if (m != null) {
-			EList<IParam> parmList = m.getParams();
-			for (int i = 0; i < parmList.size(); i++) {
-				Param param = (Param) parmList.get(i);
-				if (param.getName().equals("stream.filter.type")) { //$NON-NLS-1$
-					streamFilterTypeCombo.setText(param.getValue());
-				} else if (param.getName().equals("default.serialization.on")) { //$NON-NLS-1$
-					Boolean boolValue = Boolean.valueOf(param.getValue());
-					defaultSerializationOnCheckbox.setSelection(boolValue.booleanValue());
-				}
+		// Set defaults first...
+		streamFilterTypeCombo.setText(StreamFilterType.SAX.name());
+		defaultSerializationOnCheckbox.setSelection(true);
+		
+		GlobalParams globalParams = getParams();
+		if (globalParams != null) {
+			StreamFilterType filterType = globalParams.getFilterType();						
+
+			if(filterType != null) {
+				streamFilterTypeCombo.setText(filterType.name());
 			}
-		} else { // set defaults
-			streamFilterTypeCombo.setText("SAX"); //$NON-NLS-1$
-			defaultSerializationOnCheckbox.setSelection(true);
+			defaultSerializationOnCheckbox.setSelection(globalParams.isDefaultSerializationOn());
 		}
 	}
 	

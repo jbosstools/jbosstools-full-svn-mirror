@@ -39,9 +39,9 @@ public class ParamsTest extends SmooksModelTestCase {
 		assertEquals(null, params.getParam("a"));
 		params.removeParam("a"); // make sure there's no exception
 		params.setParam("a", "aVal");
-		assertEquals("aVal", params.getParam("a"));
+		assertEquals("aVal", params.getParamValue("a"));
 		params.setParam("a", "bVal");
-		assertEquals("bVal", params.getParam("a"));
+		assertEquals("bVal", params.getParamValue("a"));
 		params.setFilterType(StreamFilterType.SAX);
 		assertTrue(params.getFilterType() == StreamFilterType.SAX);
 		params.setFilterType(StreamFilterType.DOM);

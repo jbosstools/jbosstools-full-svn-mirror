@@ -35,4 +35,20 @@ public interface IGlobalParams extends IParams {
 	 */
 	StreamFilterType getFilterType();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation"
+	 * @generated
+	 */
+	boolean isDefaultSerializationOn();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	IGlobalParams setDefaultSerializationOn(boolean defaultSerializationOn);
+
 } // IGlobalParams

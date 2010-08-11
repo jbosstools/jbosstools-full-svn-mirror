@@ -6,9 +6,6 @@
  */
 package org.jboss.tools.smooks.model.core;
 
-
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -81,15 +78,28 @@ public class Params extends EObjectImpl implements IParams {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public String getParam(String name) {
+	public IParam getParam(String name) {
+		return getParam(name, null);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public IParam getParam(String name, String type) {
 		if(params == null) {
 			return null;
 		}
 		
 		for(IParam param : params) {
 			String paramName = param.getName();
+			String paramType = param.getType();			
 			if(paramName != null && paramName.equals(name)) {
-				return param.getValue();
+				if(type != null && !type.equals(paramType)) {
+					continue;
+				}
+				return param;
 			}
 		}
 		
@@ -101,7 +111,31 @@ public class Params extends EObjectImpl implements IParams {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public Params setParam(String name, String value) {
+	public String getParamValue(String name) {
+		IParam param = getParam(name);
+		
+		if(param == null) {
+			return null;
+		}
+		
+		return param.getValue();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public IParams setParam(String name, String value) {
+		return setParam(name, value, null);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public IParams setParam(String name, String value, String type) {
 		if(params == null) {
 			params = new BasicEList<IParam>();
 		}
@@ -111,6 +145,7 @@ public class Params extends EObjectImpl implements IParams {
 		Param newParam = new Param();
 		newParam.setName(name);
 		newParam.setValue(value);
+		newParam.setType(type);
 		params.add(newParam);
 		
 		return this;
@@ -121,7 +156,7 @@ public class Params extends EObjectImpl implements IParams {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public Params removeParam(String name) {
+	public IParams removeParam(String name) {
 		if(params == null) {
 			return this;
 		}
