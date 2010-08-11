@@ -13,6 +13,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
 
+	<properties>
+		<!-- add more inputRepo# here, then reference below; need variables so 
+			that these can be referred to in Ant script later -->
+		<inputRepo1>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.continuous</inputRepo1>
+		<inputRepo2>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2</inputRepo2>
+		<inputRepo3>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa</inputRepo3>
+		<inputRepo4>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer</inputRepo4>
+		<inputRepos>inputRepo1,inputRepo2,inputRepo3,inputRepo4</inputRepos>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -62,33 +72,35 @@
 	</build>
 
 	<repositories>
+		<!-- add more inputRepo# here, ref'd above; need variables so that these 
+			can be referred to in Ant script later -->
 		<repository>
-			<id>jbosstools-continuous-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.continuous/all/repo/</url>
+			<id>inputRepo1</id>
+			<url>${inputRepo1}/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 		<repository>
-			<id>jbosstools-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2/all/repo/</url>
+			<id>inputRepo2</id>
+			<url>${inputRepo2}/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 		<repository>
-			<id>jbosstools-pi4soa-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa/all/repo/</url>
+			<id>inputRepo3</id>
+			<url>${inputRepo3}/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 		<repository>
-			<id>jbosstools-teiid-designer-snapshot</id>
-			<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer/all/repo/</url>
+			<id>inputRepo4</id>
+			<url>${inputRepo4}/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>

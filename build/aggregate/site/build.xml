@@ -178,8 +178,49 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		</copy>
 	</target>
 
+	<!-- look for http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.continuous/logs/zip.list.txt; 
+	if found, load file and use ${ALL_ZIPS} to get list of relative path zips to fetch -->
+	<target name="collect.zips" description="collect zips from the sites we aggregated">
+		<property name="aggegate.zips.dir" value="${output.dir}/zips" />
+		<mkdir dir="${aggegate.zips.dir}" />
+		<for list="${inputRepos}" delimiter=", " keepgoing="true" param="repoURL">
+			<sequential>
+				<!-- fetch zip.list.txt file, if available -->
+				<get src="@{repoURL}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" />
+				<if>
+					<available file="${aggegate.zips.dir}/zip.list.txt" type="file" />
+					<then>
+						<!-- load zip.list.txt file, get ALL_ZIPS list -->
+						<property file="${aggegate.zips.dir}/zip.list.txt" />
+						<if>
+							<isset property="ALL_ZIPS" />
+							<then>
+								<for list="${ALL_ZIPS}" delimiter=", " keepgoing="true" param="zipPath">
+									<sequential>
+										<propertyregex override="true"
+										               property="relativePath"
+										               defaultvalue="@{zipPath}"
+										               input="@{zipPath}"
+										               regexp="(.+/)[^/]+"
+										               replace="\1" />
+										<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
+										<!-- fetch zips to local dir -->
+										<get src="@{repoURL}/@{zipPath}" dest="${aggegate.zips.dir}/@{zipPath}" />
+										<var name="relativePath" unset="true" />
+									</sequential>
+								</for>
+								<var unset="true" name="ALL_ZIPS" />
+							</then>
+						</if>
+						<delete file="${aggegate.zips.dir}/zip.list.txt" quiet="true" />
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="custom.build"
 	        description="aggregate update site extras"
-	        depends="init,check.target,add.associate.sites,add.web.content,pack.zip" />
+	        depends="init,check.target,add.associate.sites,add.web.content,pack.zip,collect.zips" />
 
 </project>
