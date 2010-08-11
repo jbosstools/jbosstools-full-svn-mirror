@@ -7,6 +7,10 @@ import org.jboss.tools.deltacloud.core.client.Instance;
 
 public class DeltaCloudInstance {
 
+	public final static String PENDING = Instance.State.PENDING.toString();
+	public final static String RUNNING = Instance.State.RUNNING.toString();
+	public final static String STOPPED = Instance.State.STOPPED.toString();
+	
 	private Instance instance;
 	
 	public DeltaCloudInstance(Instance instance) {

@@ -1,3 +1,12 @@
+2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getInstances): Make
+	instances a private field instead of local to the method. 
+	(refreshInstance): New method.
+	(createInstance): Add notification to IInstanceListListeners.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: Add static
+	strings for the various states.
+
 2010-08-09  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (getHostName): New method. 

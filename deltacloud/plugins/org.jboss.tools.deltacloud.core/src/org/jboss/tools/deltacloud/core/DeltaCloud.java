@@ -21,7 +21,7 @@ public class DeltaCloud {
 	private String username;
 	private URL url;
 	private DeltaCloudClient client;
-	
+	private ArrayList<DeltaCloudInstance> instances;
 	
 	ListenerList instanceListeners = new ListenerList();
 	ListenerList imageListeners = new ListenerList();
@@ -74,7 +74,7 @@ public class DeltaCloud {
 	}
 
 	public DeltaCloudInstance[] getInstances() {
-		ArrayList<DeltaCloudInstance> instances = new ArrayList<DeltaCloudInstance>();
+		instances = new ArrayList<DeltaCloudInstance>();
 		try {
 			List<Instance> list = client.listInstances();
 			for (Iterator<Instance> i = list.iterator(); i.hasNext();) {
@@ -89,6 +89,18 @@ public class DeltaCloud {
 		notifyInstanceListListeners(instanceArray);
 		return instanceArray;
 	}
+	
+	public DeltaCloudInstance refreshInstance(String instanceId) {
+		DeltaCloudInstance retVal = null;
+		try {
+			Instance instance = client.listInstances(instanceId);
+			retVal = new DeltaCloudInstance(instance);
+		} catch (DeltaCloudClientException e) {
+			// do nothing and return null
+		}
+		return retVal;
+	}
+	
 
 	public DeltaCloudHardwareProfile[] getProfiles() {
 		ArrayList<DeltaCloudHardwareProfile> profiles = new ArrayList<DeltaCloudHardwareProfile>();
@@ -146,13 +158,20 @@ public class DeltaCloud {
 		return realms.toArray(new DeltaCloudRealm[realms.size()]);
 	}
 
-	public boolean createInstance(String name, String imageId, String realmId, String profileId) throws DeltaCloudException {
+	public DeltaCloudInstance createInstance(String name, String imageId, String realmId, String profileId) throws DeltaCloudException {
 		try {
-			if (client.createInstance(imageId, profileId, realmId, name) != null)
-				return true;
+			Instance instance = client.createInstance(imageId, profileId, realmId, name);
+			if (instance != null) {
+				DeltaCloudInstance newInstance = new DeltaCloudInstance(instance);
+				instances.add(newInstance);
+				DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
+				instanceArray = instances.toArray(instanceArray);
+				notifyInstanceListListeners(instanceArray);
+				return newInstance;
+			}
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(e);
 		}
-		return false;
+		return null;
 	}
 }
