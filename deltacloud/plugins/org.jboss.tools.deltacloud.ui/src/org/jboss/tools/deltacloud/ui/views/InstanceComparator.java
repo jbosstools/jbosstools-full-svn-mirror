@@ -8,9 +8,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 public class InstanceComparator extends ViewerComparator {
 	
 	private final static int UP = 1;
-	private final static int DOWN = -1;
-	
-		
+			
 	private int column;
 	private int direction;
 	

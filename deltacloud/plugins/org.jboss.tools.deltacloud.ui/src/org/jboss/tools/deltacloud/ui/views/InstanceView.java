@@ -21,7 +21,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.TreeAdapter;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -41,8 +40,9 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
+import org.jboss.tools.deltacloud.core.IInstanceListListener;
 
-public class InstanceView extends ViewPart implements ICloudManagerListener {
+public class InstanceView extends ViewPart implements ICloudManagerListener, IInstanceListListener {
 
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
 	private TableViewer viewer;
@@ -54,9 +54,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener {
 	private DeltaCloud currCloud;
 	
 	private Action doubleClickAction;
+	private InstanceView parentView;
 
 	public InstanceView() {
-		// TODO Auto-generated constructor stub
+		parentView = this;
 	}
 
 	private ModifyListener cloudModifyListener = new ModifyListener() {
@@ -65,7 +66,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener {
 		public void modifyText(ModifyEvent e) {
 			int index = cloudSelector.getSelectionIndex();
 			currCloud = clouds[index];
+			currCloud.removeInstanceListListener(parentView);
 			viewer.setInput(currCloud);
+			currCloud.addInstanceListListener(parentView);
+			viewer.refresh();
 		}
 		
 	};
@@ -147,6 +151,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener {
 		table.setSortDirection(SWT.UP);
 		
 		viewer.setInput(clouds[0]);
+		currCloud.addInstanceListListener(parentView);
 
 		FormData f = new FormData();
 		f.top = new FormAttachment(0, 8);
@@ -281,6 +286,14 @@ public class InstanceView extends ViewPart implements ICloudManagerListener {
 		cloudSelector.setItems(cloudNames);
 		cloudSelector.setText(cloudNames[index]);
 		cloudSelector.addModifyListener(cloudModifyListener);
+	}
+
+	@Override
+	public void listChanged(DeltaCloudInstance[] list) {
+		currCloud.removeInstanceListListener(parentView);
+		viewer.setInput(currCloud);
+		viewer.refresh();
+		currCloud.addInstanceListListener(parentView);
 	}
 
 }

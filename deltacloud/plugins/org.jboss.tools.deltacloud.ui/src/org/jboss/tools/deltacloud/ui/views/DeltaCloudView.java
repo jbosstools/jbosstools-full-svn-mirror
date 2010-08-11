@@ -130,9 +130,8 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 	private void fillContextMenu(IMenuManager manager) {
 		if (selectedElement instanceof CVImageElement) {
 			manager.add(createInstance);
-		} else {
-			manager.add(action1);
-			manager.add(action2);
+		} else if (selectedElement instanceof CVInstanceElement){
+			//TODO: add meaningful actions here
 		}
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));

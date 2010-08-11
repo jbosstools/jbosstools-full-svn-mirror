@@ -1,3 +1,20 @@
+2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* build.properties: Add plugin.properties to bin list.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: New messages. 
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (fillContextMenu): Remove
+	all context actions for Instances for the time-being. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceComparator.java: Remove unused
+	DOWN constant.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (listChanged): New method. 
+	(.modifyText): Remove and add the Instance list listener for the current cloud.
+	(createPartControl): Add this as InstanceListListener for current cloud. 
+	(InstanceView): Make InstanceView implement IInstanceListListener. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (performFinish): Add
+	a confirmation dialog as well as use a busy indicator while waiting to confirm that the
+	new Instance has started.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: New messages.
+
 2010-08-09  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceComparator.java: New file.
