@@ -184,18 +184,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<repositories>
-				<repository>
-					<id>helios-jboss-mirror</id>
-					<url>http://download.jboss.org/jbosstools/updates/helios/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
+				<!--repository>
 					<id>helios</id>
 					<url>http://download.eclipse.org/releases/helios/</url>
 					<layout>p2</layout>
@@ -205,10 +194,32 @@
 					<releases>
 						<enabled>true</enabled>
 					</releases>
-				</repository>
+				</repository-->
 				<repository>
+					<id>jboss-helios</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/helios/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<!--repository>
 					<id>webtools32</id>
 					<url>http://download.eclipse.org/webtools/repository/helios</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository-->
+				<repository>
+					<id>jboss-webtools32</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/webtools-3.2/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -229,9 +240,21 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<repository>
+				<!--repository>
 					<id>swtbot-helios</id>
 					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository-->
+				<repository>
+					<id>jboss-swtbot-helios</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/swtbot-helios/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -263,9 +286,21 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
+				<!--repository>
+					<id>jboss-orbit</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/orbit/R20100519200754/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository-->
 				<repository>
-					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
+					<id>jboss-thirdparty</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/thirdparty/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -277,7 +312,7 @@
 				</repository>
 				<repository>
 					<id>jboss-xulrunner-1.9.1.2</id>
-					<url>http://download.jboss.org/jbosstools/updates/xulrunner-1.9.1.2/
+					<url>http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.1.2/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -289,7 +324,7 @@
 				</repository>
 				<!--repository>
 					<id>jboss-xulrunner-1.9.2</id>
-					<url>http://download.jboss.org/jbosstools/updates/xulrunner-1.9.2/
+					<url>http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.2/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -314,117 +349,15 @@
 		</profile>
 
 		<profile>
-			<id>helios-sp1-no-target</id>
+			<id>helios-maintenance-no-target</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<repositories>
 				<repository>
-					<id>helios-jboss-mirror</id>
-					<url>http://download.jboss.org/jbosstools/updates/helios/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>helios</id>
-					<url>http://download.eclipse.org/releases/helios/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>webtools32</id>
-					<url>http://download.eclipse.org/webtools/repository/helios</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>eclipse36</id>
+					<id>eclipse36x</id>
 					<url>http://download.eclipse.org/eclipse/updates/3.6.x/
 					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>birt26</id>
-					<url>http://download.eclipse.org/birt/update-site/2.6/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>swtbot-helios</id>
-					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>m2eclipse</id>
-					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>m2eclipse-extras</id>
-					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>google eclipse plugins</id>
-					<url>http://dl.google.com/eclipse/plugin/3.6</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -499,99 +432,6 @@
 					<id>subversive20</id>
 					<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/
 					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
-		<profile>
-			<id>galileo</id>
-			<repositories>
-				<repository>
-					<id>galileo</id>
-					<url>http://download.eclipse.org/releases/galileo/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>eclipse35</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.5/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>birt25r</id>
-					<url>http://download.eclipse.org/birt/update-site/2.5</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>swtbot-galileo</id>
-					<url>http://download.eclipse.org/technology/swtbot/galileo/dev-build/update-site
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>webtools</id>
-					<url>http://download.eclipse.org/webtools/updates/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>orbit</id>
-					<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/updateSite/
-					</url>
-					<layout>p2</layout>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-
-				<repository>
-					<id>m2eclipse</id>
-					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>m2eclipse-extras</id>
-					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
