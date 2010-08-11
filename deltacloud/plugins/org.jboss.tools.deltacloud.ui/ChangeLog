@@ -1,5 +1,19 @@
 2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new messages. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (listChanged): Fix problem
+	with notification loop.
+	(PerformInstanceActionThread): New class to perform instance actions. 
+	(makeActions): Add instance actions.
+	(createPartControl): Fix up notification loop. 
+	(refreshInstance): New method.
+	(fillContextMenu): Use actions of instance to populate context menu.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (inputChanged): Allow
+	setting of the instance list directly instead of calling getInstances and causing notification
+	to start again.
+	 
+2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/CustomProgressMonitorDialog.java: New file.
 	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java (getAdapter): Fix warning.
 	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (InstancePropertySource): Ditto. 

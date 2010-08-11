@@ -1,5 +1,9 @@
 package org.jboss.tools.deltacloud.ui.views;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -28,6 +32,7 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
@@ -45,16 +50,29 @@ import org.jboss.tools.deltacloud.core.IInstanceListListener;
 public class InstanceView extends ViewPart implements ICloudManagerListener, IInstanceListListener {
 
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
+	private final static String START_LABEL = "Start.label"; //$NON-NLS-1$
+	private final static String STOP_LABEL = "Stop.label"; //$NON-NLS-1$
+	private final static String REBOOT_LABEL = "Reboot.label"; //$NON-NLS-1$
+	private final static String DESTROY_LABEL = "Destroy.label"; //$NON-NLS-1$
+	
 	private TableViewer viewer;
 	private Composite container;
 	private Combo cloudSelector;
-	@SuppressWarnings("unused")
 	private DeltaCloudInstance selectedElement;
 	
 	private DeltaCloud[] clouds;
 	private DeltaCloud currCloud;
 	
+	private InstanceViewLabelAndContentProvider contentProvider;
+	
 	private Action doubleClickAction;
+	private Action startAction;
+	private Action stopAction;
+	private Action destroyAction;
+	private Action rebootAction;
+	
+	private Map<String, Action> instanceActions;
+	
 	private InstanceView parentView;
 
 	public InstanceView() {
@@ -134,8 +152,9 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		viewer.setContentProvider(new InstanceViewLabelAndContentProvider());
-		viewer.setLabelProvider(new InstanceViewLabelAndContentProvider());
+		contentProvider = new InstanceViewLabelAndContentProvider();
+		viewer.setContentProvider(contentProvider);
+		viewer.setLabelProvider(contentProvider);
 		InstanceComparator comparator = new InstanceComparator(0);
 		viewer.setComparator(comparator);
 		
@@ -151,6 +170,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		}
 		table.setSortDirection(SWT.UP);
 		
+		currCloud.removeInstanceListListener(parentView);
 		viewer.setInput(clouds[0]);
 		currCloud.addInstanceListListener(parentView);
 
@@ -220,7 +240,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
-		//TODO
+		List<String> actions = selectedElement.getActions();
+		for (String action : actions) {
+			manager.add(instanceActions.get(action));
+		}
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -229,6 +252,31 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		//TODO
 	}
 
+	private class PerformInstanceActionThread extends Thread {
+		private DeltaCloud cloud;
+		private DeltaCloudInstance instance;
+		private String action;
+		
+	 	public PerformInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance, String action) {
+	 		super();
+	 		this.cloud = cloud;
+	 		this.instance = instance;
+	 		this.action = action;
+	 	}
+	 	
+		@Override
+		public void run() {
+			cloud.performInstanceAction(instance.getId(), action);
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					refreshInstance(instance);				
+				}
+			});
+
+		}
+	}
+	
 	private void makeActions() {
 		doubleClickAction = new Action() {
 			public void run() {
@@ -237,6 +285,66 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				showMessage("Double-click detected on "+obj.toString());
 			}
 		};
+		startAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
+				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.START);
+				t.start();
+			}
+		};
+		startAction.setText(CVMessages.getString(START_LABEL));
+		startAction.setToolTipText(CVMessages.getString(START_LABEL));
+		
+		stopAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
+				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.STOP);
+				t.start();
+			}
+		};
+		stopAction.setText(CVMessages.getString(STOP_LABEL));
+		stopAction.setToolTipText(CVMessages.getString(STOP_LABEL));
+		
+		rebootAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
+				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.REBOOT);
+				t.start();
+			}
+		};
+		rebootAction.setText(CVMessages.getString(REBOOT_LABEL));
+		rebootAction.setToolTipText(CVMessages.getString(REBOOT_LABEL));
+		
+		destroyAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
+				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.DESTROY);
+				t.start();
+			}
+		};
+		destroyAction.setText(CVMessages.getString(DESTROY_LABEL));
+		destroyAction.setToolTipText(CVMessages.getString(DESTROY_LABEL));
+		
+		instanceActions = new HashMap<String, Action>();
+		instanceActions.put(DeltaCloudInstance.START, startAction);
+		instanceActions.put(DeltaCloudInstance.STOP, stopAction);
+		instanceActions.put(DeltaCloudInstance.REBOOT, rebootAction);
+		instanceActions.put(DeltaCloudInstance.DESTROY, destroyAction);
+	}
+	
+	private void refreshInstance(DeltaCloudInstance instance) {
+		DeltaCloudInstance[] instances = (DeltaCloudInstance[])contentProvider.getElements(currCloud);
+		for (int i = 0; i < instances.length; ++i) {
+			DeltaCloudInstance d = instances[i];
+			if (d == instance) {
+				currCloud.refreshInstance(d.getId());
+				break;
+			}
+		}
 	}
 	
 	private void hookDoubleClickAction() {
@@ -292,9 +400,9 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	@Override
 	public void listChanged(DeltaCloudInstance[] list) {
 		currCloud.removeInstanceListListener(parentView);
-		viewer.setInput(currCloud);
-		viewer.refresh();
+		viewer.setInput(list);
 		currCloud.addInstanceListListener(parentView);
+		viewer.refresh();
 	}
 
 }

@@ -70,8 +70,12 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (newInput != null) {
-			cloud = (DeltaCloud)newInput;
-			instances = cloud.getInstances();
+			if (newInput instanceof DeltaCloudInstance[]) {
+				instances = (DeltaCloudInstance[])newInput;
+			} else {
+				cloud = (DeltaCloud)newInput;
+				instances = cloud.getInstances();
+			}
 		}
 	}
 
