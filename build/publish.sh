@@ -90,6 +90,14 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	done
 fi
 
+METAFILE=zip.list.txt
+echo "ALL_ZIPS = \\" >> ${STAGINGDIR}/logs/${METAFILE}
+for z in $(find ${STAGINGDIR} -name "*Update*.zip") $(find ${STAGINGDIR} -name "*Sources*.zip"); do
+	# list zips in staging dir
+	echo "${z##${STAGINGDIR}/},\\"  >> ${STAGINGDIR}/logs/${METAFILE}
+done
+echo ""  >> ${STAGINGDIR}/logs/${METAFILE}
+
 # create sources zip
 pushd ${WORKSPACE}/sources
 mkdir -p ${STAGINGDIR}/all
