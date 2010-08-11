@@ -11,6 +11,11 @@ public class DeltaCloudInstance {
 	public final static String RUNNING = Instance.State.RUNNING.toString();
 	public final static String STOPPED = Instance.State.STOPPED.toString();
 	
+	public final static String START = Instance.Action.START.toString();
+	public final static String STOP = Instance.Action.STOP.toString();
+	public final static String REBOOT = Instance.Action.REBOOT.toString();
+	public final static String DESTROY = Instance.Action.DESTROY.toString();
+	
 	private Instance instance;
 	
 	public DeltaCloudInstance(Instance instance) {
@@ -27,6 +32,10 @@ public class DeltaCloudInstance {
 	
 	public String getState() {
 		return instance.getState().toString();
+	}
+	
+	public List<String> getActions() {
+		return instance.getActionNames();
 	}
 	
 	public String getProfileId() {

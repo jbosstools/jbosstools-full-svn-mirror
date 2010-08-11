@@ -90,17 +90,42 @@ public class DeltaCloud {
 		return instanceArray;
 	}
 	
+	public DeltaCloudInstance[] getCurrInstances() {
+		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
+		instanceArray = instances.toArray(instanceArray);
+		return instanceArray;
+	}
+	
 	public DeltaCloudInstance refreshInstance(String instanceId) {
 		DeltaCloudInstance retVal = null;
 		try {
 			Instance instance = client.listInstances(instanceId);
 			retVal = new DeltaCloudInstance(instance);
+			for (int i = 0; i < instances.size(); ++i) {
+				DeltaCloudInstance inst = instances.get(i);
+				if (inst.getId().equals(instanceId)) {
+					if (!inst.getState().equals(instance.getState())) {
+						instances.set(i, retVal);
+						DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
+						instanceArray = instances.toArray(instanceArray);
+						notifyInstanceListListeners(instanceArray);
+						return retVal;
+					}
+				}
+			}
 		} catch (DeltaCloudClientException e) {
 			// do nothing and return null
 		}
 		return retVal;
 	}
 	
+	public boolean performInstanceAction(String instanceId, String action) {
+		try {
+			return client.performInstanceAction(instanceId, action);
+		} catch (DeltaCloudClientException e) {
+			return false;
+		}
+	}
 
 	public DeltaCloudHardwareProfile[] getProfiles() {
 		ArrayList<DeltaCloudHardwareProfile> profiles = new ArrayList<DeltaCloudHardwareProfile>();

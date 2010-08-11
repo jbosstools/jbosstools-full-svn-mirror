@@ -1,5 +1,14 @@
 2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (performInstanceAction): New method. 
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java (getActionNames): Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getCurrInstances): Ditto.
+	(performInstanceAction): Ditto. 
+	(refreshInstance): Add notification.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (getActions): New method. 
+	
+2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getInstances): Make
 	instances a private field instead of local to the method. 
 	(refreshInstance): New method.

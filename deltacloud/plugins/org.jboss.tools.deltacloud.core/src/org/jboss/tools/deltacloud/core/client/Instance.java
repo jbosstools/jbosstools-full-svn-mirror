@@ -1,5 +1,6 @@
 package org.jboss.tools.deltacloud.core.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -151,6 +152,16 @@ public class Instance extends DeltaCloudObject
 	public List<Action> getActions()
 	{
 		return actions;
+	}
+	
+	public List<String> getActionNames()
+	{
+		ArrayList<String>names = new ArrayList<String>();
+		for (Action action : actions)
+		{
+			names.add(action.name());
+		}
+		return names;
 	}
 	
 	public List<String> getPublicAddresses()

@@ -464,6 +464,18 @@ public class DeltaCloudClient implements API
 			return JAXB.unmarshal(new StringReader(nodeToString(node)), clazz);
 		}
 	}
+
+    public boolean performInstanceAction(String instanceId, String action) throws DeltaCloudClientException
+    {
+            Instance instance = listInstances(instanceId);
+            if(instance.getActionNames().contains(action))
+            {
+                    String request = DCNS.INSTANCES + "/" + instanceId + "/" + action.toLowerCase();
+                    sendRequest(request, RequestType.POST);
+                    return true;
+            }
+            return false;
+    }
 	
 	private String nodeToString(Node node) throws DeltaCloudClientException
 	{
