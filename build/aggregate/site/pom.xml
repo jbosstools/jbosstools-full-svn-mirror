@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>org.jboss.tools.site.aggregate</artifactId>
-	<name>org.jboss.tools.site</name>
+	<name>JBoss Tools Aggregate Site</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
 
