@@ -201,7 +201,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 										               property="relativePath"
 										               defaultvalue="@{zipPath}"
 										               input="@{zipPath}"
-										               regexp="(.+/)[^/]+"
+										               regexp="(.+)/([^/]+.zip)"
 										               replace="\1" />
 										<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
 										<!-- fetch zips to local dir -->
