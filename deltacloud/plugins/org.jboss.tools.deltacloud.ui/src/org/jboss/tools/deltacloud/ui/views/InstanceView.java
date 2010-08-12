@@ -277,6 +277,27 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		}
 	}
 	
+	private class PerformDestroyInstanceActionThread extends Thread {
+		private DeltaCloud cloud;
+		private DeltaCloudInstance instance;
+		
+	 	public PerformDestroyInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance) {
+	 		super();
+	 		this.cloud = cloud;
+	 		this.instance = instance;
+	 	}
+	 	
+		@Override
+		public void run() {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					cloud.destroyInstance(instance.getId());
+				}
+			});
+		}
+	}
+	
 	private void makeActions() {
 		doubleClickAction = new Action() {
 			public void run() {
@@ -322,7 +343,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
-				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.DESTROY);
+				PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(currCloud, instance);
 				t.start();
 			}
 		};
@@ -362,7 +383,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			message);
 	}
 
-
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
@@ -380,7 +400,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		currCloud = clouds[0];
 	}
 	
-	@Override
 	public void changeEvent(int type) {
 		String currName = currCloud.getName();
 		clouds = DeltaCloudManager.getDefault().getClouds();
@@ -397,7 +416,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 
-	@Override
 	public void listChanged(DeltaCloudInstance[] list) {
 		currCloud.removeInstanceListListener(parentView);
 		viewer.setInput(list);

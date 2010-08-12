@@ -1,3 +1,12 @@
+2010-08-12  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (changeEvent): Don't
+	mark as override.
+	(listChanged): Ditto. 
+	(PerformDestroyInstanceActionThread.PerformDestroyInstanceActionThread): 
+	(PerformDestroyInstanceActionThread): New class to perform the destroy action in a
+	thread.
+
 2010-08-11  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new messages. 
