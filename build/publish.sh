@@ -90,6 +90,15 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	done
 fi
 
+# collect component zips from upstream aggregated build jobs
+if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
+	mkdir -p ${STAGINGDIR}/components
+	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Update*.zip") $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
+		mv $z ${STAGINGDIR}/components
+	done
+fi
+
+# generate list of zips in this job
 METAFILE=zip.list.txt
 echo "ALL_ZIPS = \\" >> ${STAGINGDIR}/logs/${METAFILE}
 for z in $(find ${STAGINGDIR} -name "*Update*.zip") $(find ${STAGINGDIR} -name "*Sources*.zip"); do
