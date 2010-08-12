@@ -562,9 +562,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<profile>
 		<id>drools</id>
 		<activation>
-			<property>
-				<name>drools</name>
-			</property>
+			<activeByDefault>true</activeByDefault>
 		</activation>
 		<modules>
 			<module>../drools</module>
@@ -572,14 +570,21 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	</profile>
 
 	<profile>
-		<id>site</id>
+		<id>runtime</id>
 		<activation>
-			<property>
-				<name>drools</name>
-			</property>
+			<activeByDefault>true</activeByDefault>
 		</activation>
 		<modules>
-			<module>../drools</module>
+			<module>../runtime</module>
+		</modules>
+	</profile>
+
+	<profile>
+		<id>site</id>
+		<activation>
+			<activeByDefault>true</activeByDefault>
+		</activation>
+		<modules>
 			<module>../site</module>
 		</modules>
 	</profile>
