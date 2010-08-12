@@ -191,10 +191,12 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 					<available file="${aggegate.zips.dir}/zip.list.txt" type="file" />
 					<then>
 						<!-- load zip.list.txt file, get ALL_ZIPS list -->
+						<var unset="true" name="ALL_ZIPS" />
 						<property file="${aggegate.zips.dir}/zip.list.txt" />
 						<if>
 							<isset property="ALL_ZIPS" />
 							<then>
+								<var name="relativePath" unset="true" />
 								<for list="${ALL_ZIPS}" delimiter=", " keepgoing="true" param="zipPath">
 									<sequential>
 										<propertyregex override="true"
@@ -205,13 +207,19 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 										               replace="\1" />
 										<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
 										<!-- fetch zips to local dir -->
+										<echo>repoNum = @{repoNum}
+relativePath = ${relativePath}
+zipPath = @{zipPath}
+URL = ${inputRepo@{repoNum}}/@{zipPath}
+DEST = ${aggegate.zips.dir}/@{zipPath}
+</echo>
 										<get src="${inputRepo@{repoNum}}/@{zipPath}" dest="${aggegate.zips.dir}/@{zipPath}" />
-										<var name="relativePath" unset="true" />
 									</sequential>
 								</for>
-								<var unset="true" name="ALL_ZIPS" />
+								<var name="relativePath" unset="true" />
 							</then>
 						</if>
+						<var unset="true" name="ALL_ZIPS" />
 						<delete file="${aggegate.zips.dir}/zip.list.txt" quiet="true" />
 					</then>
 				</if>
