@@ -87,7 +87,9 @@ import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.ide.IDE;
 import org.jboss.tools.smooks.configuration.SmooksModelUtils;
+import org.jboss.tools.smooks.configuration.editors.input.InputSourceType;
 import org.jboss.tools.smooks.configuration.editors.input.InputType;
+import org.jboss.tools.smooks.configuration.editors.input.InvalidInputSourceTypeException;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
@@ -150,7 +152,6 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 	private CheckboxTableViewer inputDataViewer;
 	private TreeViewer inputModelViewer;
 	private Combo readerCombo;
-	private List<Object> readerTypeList = new ArrayList<Object>();
 	private Composite readerConfigComposite;
 //	private ModelPanelCreator modelPanelCreator;
 	protected boolean lockCheck = false;
@@ -361,33 +362,20 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 	}
 	
 	private void initReaderConfigSection() {
-		Object reader = getCurrentReaderModel();
 		ISmooksModelProvider provider = getSmooksModelProvider();
-		if (provider == null)
+		
+		if (provider == null) {
 			return;
-		String type = provider.getInputType();
-		if (reader instanceof EObject && type != null) {
-//			SmooksResourceListType list = getSmooksConfigResourceList();
-//			createReaderPanel((EObject) list.getAbstractReader().get(0));
-		} else {
-			disposeCompositeControls(readerConfigComposite, null);
-			createSimpleReaderPanel(reader);
-		}
-	}
-	
-	private void createSimpleReaderPanel(Object reader){
-		Label formText = this.getManagedForm().getToolkit().createLabel(readerConfigComposite, ""); //$NON-NLS-1$
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = 50;
-		gd.horizontalSpan = 2;
-		formText.setLayoutData(gd);
-		if (reader instanceof XMLReader || reader instanceof JavaReader || reader instanceof XSDReader) {
-			formText.setText(Messages.SmooksReaderFormPage_Warning_Specify_Sample_Data);
 		}
 
-		if (reader instanceof NullReader) {
-			formText.setText(Messages.SmooksReaderFormPage_Warning_Specify_Input_Type);
-		}
+		addInputConfigControls();
+	}
+	
+	private void addInputConfigControls() {
+		disposeCompositeControls(readerConfigComposite, null);
+		
+		getCurrentInputType().getConfigurationContributor().addInputConfigControls(this, readerConfigComposite);
+		
 		readerConfigComposite.layout();
 		scrolledPageBook.reflow(false);
 	}
@@ -410,13 +398,16 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		}
 	}
 	
-	private Object getCurrentReaderModel() {
-		if (readerCombo == null || readerCombo.isDisposed())
-			return null;
-		int index = readerCombo.getSelectionIndex();
-		if (index < 0)
-			return null;
-		return readerTypeList.get(index);
+	private InputSourceType getCurrentInputType() {
+		if (readerCombo == null || readerCombo.isDisposed()) {
+			return InputSourceType.NONE;
+		}
+		
+		try {
+			return InputSourceType.fromTypeIndex(readerCombo.getSelectionIndex());
+		} catch (InvalidInputSourceTypeException e) {
+			return InputSourceType.NONE;
+		}
 	}
 	
 	protected void createInputDataSection(FormToolkit toolkit, Composite parent) {
@@ -450,7 +441,7 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		inputDataViewer.setCheckStateProvider(new ICheckStateProvider() {
 
 			public boolean isGrayed(Object element) {
-				return isIncorrectInputType((InputType) element);
+				return !isValidInputType((InputType) element);
 			}
 
 			public boolean isChecked(Object element) {
@@ -467,7 +458,7 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 					return;
 				boolean checked = event.getChecked();
 				InputType inputType = (InputType) event.getElement();
-				if (isIncorrectInputType(inputType)) {
+				if (!isValidInputType(inputType)) {
 					lockCheck = true;
 					inputDataViewer.setChecked(inputType, false);
 					lockCheck = false;
@@ -707,40 +698,20 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		return getSmooksModelProvider().getSmooksModel();
 	}
 
-	protected boolean isIncorrectInputType(InputType element) {
-		if (element == null)
-			return false;
-		if (element instanceof InputType) {
-			String type = ((InputType) element).getType();
-			int index = readerCombo.getSelectionIndex();
-			if (index == -1)
-				return true;
-
-			Object reader = readerTypeList.get(index);
-			if (reader instanceof NullReader) {
-				return true;
-			}
-			if (reader instanceof XMLReader || reader instanceof XSDReader || reader instanceof JavaReader) {
-
-			}
-
-			if (reader instanceof XMLReader) {
-				if (!SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
-					return true;
-				}
-			}
-			if (reader instanceof XSDReader) {
-				if (!SmooksModelUtils.INPUT_TYPE_XSD.equals(type)) {
-					return true;
-				}
-			}
-			if (reader instanceof JavaReader) {
-				if (!SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
-					return true;
-				}
-			}
+	protected boolean isValidInputType(InputType element) {
+		if (element == null) {
+			// not specified is OK...
+			return true;
 		}
-		return false;
+		
+		String type = element.getType();
+		int selectionIndex = readerCombo.getSelectionIndex();
+
+		try {
+			return InputSourceType.isValidIndexNamePair(selectionIndex, type);
+		} catch (InvalidInputSourceTypeException e) {
+			return false;
+		}
 	}
 
 	
@@ -783,16 +754,11 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 			return;
 
 		readerCombo.removeAll();
-		readerTypeList.clear();
 
-		readerCombo.add(Messages.SmooksReaderFormPage_NoInputComboText);
-		readerTypeList.add(new NullReader());
-		readerCombo.add(Messages.SmooksReaderFormPage_XMLReaderComboText);
-		readerTypeList.add(new XMLReader());
-		readerCombo.add(Messages.SmooksReaderFormPage_JavaReaderComboText);
-		readerTypeList.add(new JavaReader());
-		readerCombo.add(Messages.SmooksReaderFormPage_XSDReaderComboText);
-		readerTypeList.add(new XSDReader());
+		readerCombo.add(Messages.SmooksReaderFormPage_NoInputComboText, InputSourceType.NONE.getTypeIndex());
+		readerCombo.add(Messages.SmooksReaderFormPage_XMLReaderComboText, InputSourceType.XML.getTypeIndex());
+		readerCombo.add(Messages.SmooksReaderFormPage_XSDReaderComboText, InputSourceType.XSD.getTypeIndex());
+		readerCombo.add(Messages.SmooksReaderFormPage_JavaReaderComboText, InputSourceType.JAVA.getTypeIndex());
 	}
 	
 	private void initReaderCombo() {
@@ -809,45 +775,22 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		String inputType = modelProvider.getInputType();
 
 		if (inputType == null) {
-			readerCombo.select(0);
+			readerCombo.select(InputSourceType.NONE.getTypeIndex());
 			return;
-//			// for the first time to open the file.
-//			List<IComponent> compoenents = model.getModelRoot().getComponents();
-//			for (Iterator<?> iterator = compoenents.iterator(); iterator.hasNext();) {
-//				IComponent component = (IComponent) iterator.next();
-//			}
-//			if (rlist.getAbstractReader().isEmpty()) {
-//				readerCombo.select(0);
-//				return;
-//			} else {
-//			}
 		}
-		if (SmooksModelUtils.INPUT_TYPE_XML.equals(inputType)) {
-			readerCombo.select(1);
+
+		try {
+			readerCombo.select(InputSourceType.fromTypeName(inputType).getTypeIndex());
+		} catch (InvalidInputSourceTypeException e) {
+			readerCombo.select(InputSourceType.NONE.getTypeIndex());
 		}
-		if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(inputType)) {
-			readerCombo.select(2);
-		}
-		if (SmooksModelUtils.INPUT_TYPE_XSD.equals(inputType)) {
-			readerCombo.select(3);
-		}
-		return;
 	}
 	
 	private void handleReaderCombo(final Combo combo) {
 		combo.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
-				Object newreader = getCurrentReaderModel();
-				if (newreader == null)
-					return;
-				// String type = getCurrentReaderType();
-				// if (type == null) {
-				// getSmooksGraphicsExtType().eUnset(GraphPackage.Literals.SMOOKS_GRAPHICS_EXT_TYPE__INPUT_TYPE);
-				// } else {
-				// getSmooksGraphicsExtType().setInputType(type);
-				// }
-				readerChanged(newreader);
+				readerChanged();
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -857,43 +800,9 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		});
 	}
 	
-	private String getCurrentReaderType() {
-		Object reader = getCurrentReaderModel();
-		return getReaderType(reader);
-	}
-	
-	private String getReaderType(Object reader) {
-		if (reader instanceof XMLReader) {
-			return SmooksModelUtils.INPUT_TYPE_XML;
-		}
-		if (reader instanceof JavaReader) {
-			return SmooksModelUtils.INPUT_TYPE_JAVA;
-		}
-		if (reader instanceof XSDReader) {
-			return SmooksModelUtils.INPUT_TYPE_XSD;
-		}
-		if (reader instanceof EObject) {
-			Object obj = ((EObject) reader);
+	private void readerChanged() {
 
-//			if (obj instanceof CSV12Reader) {
-//				return SmooksModelUtils.INPUT_TYPE_CSV;
-//			}
-//			if (obj instanceof EDI12Reader) {
-//				return SmooksModelUtils.INPUT_TYPE_EDI_1_1;
-//			}
-//			if (obj instanceof Json12Reader) {
-//				return SmooksModelUtils.INPUT_TYPE_JSON_1_1;
-//			}
-//			if (obj instanceof ReaderType) {
-//				return SmooksModelUtils.INPUT_TYPE_CUSTOME;
-//			}
-		}
-		return null;
-	}
-	
-	private void readerChanged(Object reader) {
-
-		String type = getCurrentReaderType();
+		String type = getCurrentInputType().toTypeString();
 		String oldType = this.getSmooksModelProvider().getInputType();
 
 		if (type == null && oldType == null) {
@@ -917,8 +826,7 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 				compoundCommand.append(addparamsCommand);
 		}
 
-		IParam param = SmooksUIUtils
-				.getInputTypeParam(getSmooksConfigResourceList().getModelRoot());
+		IParam param = SmooksUIUtils.getInputTypeParam(getSmooksConfigResourceList().getModelRoot());
 		if (param == null) {
 			// add new one
 			param = ICoreFactory.eINSTANCE.createParam();
@@ -946,29 +854,12 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		if (removeCommand != null && removeCommand.canExecute()) {
 			compoundCommand.append(removeCommand);
 		}
-		if (readerConfigComposite != null) {
-			disposeCompositeControls(readerConfigComposite, null);
-			scrolledPageBook.reflow(true);
-		}
-		if (reader instanceof EObject) {
-//			Object obj = ((EObject) reader);
-//			obj = AdapterFactoryEditingDomain.unwrap(obj);
-//			Command command = AddCommand.create(getEditingDomain(), getSmooksConfigResourceList(),
-//					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_READER_GROUP, createReaderEntry(obj,
-//							false));
-//			if (command.canExecute()) {
-//				compoundCommand.append(command);
-//			}
 
-		} else {
-			createSimpleReaderPanel(reader);
-		}
+		addInputConfigControls();		
+		
 		deactiveAllInputFile(compoundCommand);
 		if (!compoundCommand.isEmpty() && compoundCommand.canExecute()) {
 			getEditingDomain().getCommandStack().execute(compoundCommand);
-			if (reader != null && reader instanceof EObject) {
-//				createReaderPanel(((EObject) reader));
-			}
 		}
 
 		if (inputDataViewer != null) {
@@ -1095,34 +986,18 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 	public void sourceChange(Object model) {
 		
 	}
-
-	private class NullReader {
-
-	}
-
-	private class XMLReader {
-
-	}
-
-	private class XSDReader {
-
-	}
-
-	private class JavaReader {
-
-	}
 	
 	private class InputDataViewerLabelProvider extends ExtentionInputLabelProvider implements ITableColorProvider {
 
 		public Color getBackground(Object element, int columnIndex) {
-			if (isIncorrectInputType((InputType) element)) {
+			if (!isValidInputType((InputType) element)) {
 				// return ColorConstants.darkGray;
 			}
 			return null;
 		}
 
 		public Color getForeground(Object element, int columnIndex) {
-			if (isIncorrectInputType((InputType) element)) {
+			if (!isValidInputType((InputType) element)) {
 				return ColorConstants.lightGray;
 			}
 			return null;
