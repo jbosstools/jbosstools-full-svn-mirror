@@ -272,7 +272,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<activeByDefault>true</activeByDefault>
 		</activation>
 		<modules>
-			<module>../jsf</module>
+			<module>../struts</module>
 		</modules>
 	</profile>
 
@@ -294,7 +294,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<activeByDefault>true</activeByDefault>
 		</activation>
 		<modules>
-			<module>../portlet</module>
+			<module>../profiler</module>
 		</modules>
 	</profile>
 
@@ -463,7 +463,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<activeByDefault>true</activeByDefault>
 		</activation>
 		<modules>
-			<module>../ws</module>
+			<module>../tptp</module>
 		</modules>
 	</profile>
 
