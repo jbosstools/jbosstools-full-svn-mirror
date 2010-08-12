@@ -183,10 +183,10 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 	<target name="collect.zips" description="collect zips from the sites we aggregated">
 		<property name="aggegate.zips.dir" value="${output.dir}/zips" />
 		<mkdir dir="${aggegate.zips.dir}" />
-		<for list="${inputRepos}" delimiter=", " keepgoing="true" param="repoURL">
+		<for list="${inputRepos}" delimiter=", " keepgoing="true" param="repoNum">
 			<sequential>
 				<!-- fetch zip.list.txt file, if available -->
-				<get src="@{repoURL}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" />
+				<get src="${inputRepo@{repoNum}}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" />
 				<if>
 					<available file="${aggegate.zips.dir}/zip.list.txt" type="file" />
 					<then>
@@ -205,7 +205,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 										               replace="\1" />
 										<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
 										<!-- fetch zips to local dir -->
-										<get src="@{repoURL}/@{zipPath}" dest="${aggegate.zips.dir}/@{zipPath}" />
+										<get src="${inputRepo@{repoNum}}/@{zipPath}" dest="${aggegate.zips.dir}/@{zipPath}" />
 										<var name="relativePath" unset="true" />
 									</sequential>
 								</for>
