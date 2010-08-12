@@ -1,5 +1,18 @@
 2010-08-12  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.java (getFormattedString): New method.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new messages.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (PerformDestroyInstanceActionThread.run):
+	Rewrite as Job run method.  
+	(PerformInstanceActionThread.run): Ditto. 
+	(PerformInstanceActionThread): Rewrite to inherit from Job. 
+	(PerformDestroyInstanceActionThread): Ditto. 
+	(PerformDestroyInstanceActionThread.PerformDestroyInstanceActionThread): Change constructor to
+	take title and task name. 
+	(PerformInstanceActionThread.PerformInstanceActionThread): Ditto. 
+
+2010-08-12  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (changeEvent): Don't
 	mark as override.
 	(listChanged): Ditto. 

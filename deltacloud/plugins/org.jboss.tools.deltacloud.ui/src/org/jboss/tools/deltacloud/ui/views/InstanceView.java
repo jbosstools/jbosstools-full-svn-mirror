@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -54,6 +58,15 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private final static String STOP_LABEL = "Stop.label"; //$NON-NLS-1$
 	private final static String REBOOT_LABEL = "Reboot.label"; //$NON-NLS-1$
 	private final static String DESTROY_LABEL = "Destroy.label"; //$NON-NLS-1$
+	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
+	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
+	private final static String STOPPING_INSTANCE_TITLE = "StoppingInstance.title"; //$NON-NLS-1$
+	private final static String STOPPING_INSTANCE_MSG = "StoppingInstance.msg"; //$NON-NLS-1$
+	private final static String REBOOTING_INSTANCE_TITLE = "RebootingInstance.title"; //$NON-NLS-1$
+	private final static String REBOOTING_INSTANCE_MSG = "RebootingInstance.msg"; //$NON-NLS-1$
+	private final static String DESTROYING_INSTANCE_TITLE = "DestroyingInstance.title"; //$NON-NLS-1$
+	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
+	
 	
 	private TableViewer viewer;
 	private Composite container;
@@ -252,50 +265,69 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		//TODO
 	}
 
-	private class PerformInstanceActionThread extends Thread {
+	private class PerformInstanceActionThread extends Job {
 		private DeltaCloud cloud;
 		private DeltaCloudInstance instance;
 		private String action;
+		private String taskName;
 		
-	 	public PerformInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance, String action) {
-	 		super();
+	 	public PerformInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance, 
+	 			String action, String title, String taskName) {
+	 		super(title);
 	 		this.cloud = cloud;
 	 		this.instance = instance;
 	 		this.action = action;
+	 		this.taskName = taskName;
 	 	}
 	 	
 		@Override
-		public void run() {
-			cloud.performInstanceAction(instance.getId(), action);
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					refreshInstance(instance);				
-				}
-			});
-
+		public IStatus run(IProgressMonitor pm) {
+			try {
+				pm.beginTask(taskName, IProgressMonitor.UNKNOWN);
+				pm.worked(1);
+				cloud.performInstanceAction(instance.getId(), action);
+				Display.getDefault().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						refreshInstance(instance);				
+					}
+				});
+			} finally {
+				pm.done();
+			}
+			return Status.OK_STATUS;
 		}
 	}
 	
-	private class PerformDestroyInstanceActionThread extends Thread {
+	private class PerformDestroyInstanceActionThread extends Job {
 		private DeltaCloud cloud;
 		private DeltaCloudInstance instance;
+		private String taskName;
 		
-	 	public PerformDestroyInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance) {
-	 		super();
+	 	public PerformDestroyInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance,
+	 			String title, String taskName) {
+	 		super(title);
 	 		this.cloud = cloud;
 	 		this.instance = instance;
+	 		this.taskName = taskName;
 	 	}
 	 	
-		@Override
-		public void run() {
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					cloud.destroyInstance(instance.getId());
-				}
-			});
-		}
+	 	@Override
+	 	public IStatus run(IProgressMonitor pm) {
+	 		try {
+	 			pm.beginTask(taskName, IProgressMonitor.UNKNOWN);
+	 			pm.worked(1);
+	 			Display.getDefault().asyncExec(new Runnable() {
+	 				@Override
+	 				public void run() {
+	 					cloud.destroyInstance(instance.getId());
+	 				}
+	 			});
+	 		} finally {
+	 			pm.done();
+	 		}
+	 		return Status.OK_STATUS;
+	 	}
 	}
 	
 	private void makeActions() {
@@ -310,8 +342,11 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
-				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.START);
-				t.start();
+				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.START,
+						CVMessages.getString(STARTING_INSTANCE_TITLE), 
+						CVMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[]{instance.getName()}));
+				t.setUser(true);
+				t.schedule();
 			}
 		};
 		startAction.setText(CVMessages.getString(START_LABEL));
@@ -321,8 +356,11 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
-				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.STOP);
-				t.start();
+				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.STOP,
+						CVMessages.getString(STOPPING_INSTANCE_TITLE), 
+						CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[]{instance.getName()}));
+				t.setUser(true);
+				t.schedule();
 			}
 		};
 		stopAction.setText(CVMessages.getString(STOP_LABEL));
@@ -332,8 +370,11 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
-				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.REBOOT);
-				t.start();
+				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.REBOOT,
+						CVMessages.getString(REBOOTING_INSTANCE_TITLE), 
+						CVMessages.getFormattedString(REBOOTING_INSTANCE_MSG, new String[]{instance.getName()}));
+				t.setUser(true);
+				t.schedule();
 			}
 		};
 		rebootAction.setText(CVMessages.getString(REBOOT_LABEL));
@@ -343,8 +384,11 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
-				PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(currCloud, instance);
-				t.start();
+				PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(currCloud, instance,
+						CVMessages.getString(DESTROYING_INSTANCE_TITLE), 
+						CVMessages.getFormattedString(DESTROYING_INSTANCE_MSG, new String[]{instance.getName()}));
+				t.setUser(true);
+				t.schedule();
 			}
 		};
 		destroyAction.setText(CVMessages.getString(DESTROY_LABEL));
