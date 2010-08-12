@@ -49,7 +49,7 @@
 		<!-- IF YOU REMOVE A MODULE, be sure to also remove it from site/site.xml 
 			and build/aggregate/site/site.xml or the build will break! -->
 		<module>drools</module>
-
+		<module>runtime</module>
 		<module>site</module>
 	</modules>
 	<profiles>
