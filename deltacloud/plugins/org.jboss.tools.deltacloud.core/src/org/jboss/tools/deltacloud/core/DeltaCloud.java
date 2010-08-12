@@ -96,6 +96,25 @@ public class DeltaCloud {
 		return instanceArray;
 	}
 	
+	public DeltaCloudInstance[] destroyInstance(String instanceId) {
+		try {
+			client.destroyInstance(instanceId);
+			for (int i = 0; i < instances.size(); ++i) {
+				DeltaCloudInstance instance = instances.get(i);
+				if (instance.getId().equals(instanceId)) {
+					instances.remove(i);
+					break;
+				}
+			}
+		} catch (DeltaCloudClientException e) {
+			return null;
+		}
+		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
+		instanceArray = instances.toArray(instanceArray);
+		notifyInstanceListListeners(instanceArray);
+		return instanceArray;
+	}
+	
 	public DeltaCloudInstance refreshInstance(String instanceId) {
 		DeltaCloudInstance retVal = null;
 		try {

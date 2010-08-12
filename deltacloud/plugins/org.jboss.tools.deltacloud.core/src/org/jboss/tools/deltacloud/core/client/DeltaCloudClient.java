@@ -25,6 +25,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -51,7 +52,7 @@ public class DeltaCloudClient implements API
 		}
 	} 
 	
-	private static enum RequestType { POST, GET };
+	private static enum RequestType { POST, GET, DELETE };
 	
 	private URL baseUrl;
 	
@@ -85,6 +86,10 @@ public class DeltaCloudClient implements API
 			if(requestType == RequestType.POST)
 			{
 				request = new HttpPost(requestUrl);
+			}
+			else if (requestType == RequestType.DELETE)
+			{
+				request = new HttpDelete(requestUrl);
 			}
 			else
 			{
@@ -229,10 +234,11 @@ public class DeltaCloudClient implements API
 	{
 		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.START, RequestType.GET);
 	}
-	
+
+	@Override
 	public void destroyInstance(String instanceId) throws DeltaCloudClientException
 	{
-		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.DESTROY, RequestType.GET);
+		sendRequest(DCNS.INSTANCES + "/" + instanceId, RequestType.DELETE);
 	}
 	
 	private void checkForErrors(Document d) throws DeltaCloudClientException
