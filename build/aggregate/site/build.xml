@@ -182,6 +182,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 	if found, load file and use ${ALL_ZIPS} to get list of relative path zips to fetch -->
 	<target name="collect.zips" description="collect zips from the sites we aggregated">
 		<property name="aggegate.zips.dir" value="${output.dir}/zips" />
+		<delete dir="${aggegate.zips.dir}" quiet="true" />
 		<mkdir dir="${aggegate.zips.dir}" />
 		<for list="${inputRepos}" delimiter=", " keepgoing="true" param="repoNum">
 			<sequential>
@@ -201,13 +202,13 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 									<sequential>
 										<propertyregex override="true"
 										               property="relativePath"
-										               defaultvalue="@{zipPath}"
+										               defaultvalue=""
 										               input="@{zipPath}"
 										               regexp="(.+)/([^/]+.zip)"
 										               replace="\1" />
 										<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
 										<!-- fetch zips to local dir -->
-										<echo>repoNum = @{repoNum}
+										<echo level="debug">repoNum = @{repoNum}
 relativePath = ${relativePath}
 zipPath = @{zipPath}
 URL = ${inputRepo@{repoNum}}/@{zipPath}
