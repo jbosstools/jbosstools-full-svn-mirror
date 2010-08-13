@@ -44,6 +44,6 @@ public class InstanceComparator extends ViewerComparator {
 		InstanceViewLabelAndContentProvider provider = (InstanceViewLabelAndContentProvider)((TableViewer)viewer).getContentProvider();
 		String s1 = provider.getColumnText(e1, column);
 		String s2 = provider.getColumnText(e2, column);
-		return s1.compareTo(s2);
+		return s1.compareToIgnoreCase(s2);
 	}
 }

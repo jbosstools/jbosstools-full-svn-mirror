@@ -7,7 +7,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -49,8 +48,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
 	private TreeViewer viewer;
-	private Action action1;
-	private Action action2;
 	private Action removeCloud;
 	private Action refreshAction;
 	private Action collapseall;
@@ -73,7 +70,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		viewer.setContentProvider(new CloudViewContentProvider());
 		viewer.setLabelProvider(new CloudViewLabelProvider());
-		viewer.setInput(getViewSite());
+		viewer.setInput(new CVRootElement(viewer));
 		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		getSite().setSelectionProvider(viewer); // for tabbed properties
 
@@ -121,8 +118,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(new Separator());
 		manager.add(removeCloud);
 		manager.add(refreshAction);
 	}
@@ -193,7 +188,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 		
 		refreshAction = new Action() {
 			public void run() {
-				viewer.setInput(getViewSite());
+				viewer.setInput(new CVRootElement(viewer));
 			}
 		};
 		refreshAction.setText(CVMessages.getString(REFRESH));
@@ -201,30 +196,11 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
 	
-		action1 = new Action() {
-			public void run() {
-				showMessage("Action 1 executed");
-			}
-		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		
-		action2 = new Action() {
-			public void run() {
-				showMessage("Action 2 executed");
-			}
-		};
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
+				@SuppressWarnings("unused")
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
 			}
 		};
 		collapseall = new Action() {
@@ -244,12 +220,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 			}
 		});
 	}
-	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			CVMessages.getString("CloudViewName"), //$NON-NLS-1$
-			message);
-	}
 
 	/**
 	 * Passing the focus request to the viewer's control.
@@ -260,6 +230,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 
 	@Override
 	public void changeEvent(int type) {
-		viewer.setInput(getViewSite());
+		viewer.setInput(new CVRootElement(viewer));
 	}
 }

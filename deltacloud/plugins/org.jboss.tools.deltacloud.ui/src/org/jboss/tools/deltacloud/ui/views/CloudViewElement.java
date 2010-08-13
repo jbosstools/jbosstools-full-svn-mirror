@@ -18,6 +18,10 @@ public abstract class CloudViewElement implements IAdaptable {
 		return children.toArray();
 	}
 	
+	protected void clearChildren() {
+		children.clear();
+	}
+	
 	public boolean hasChildren() {
 		return children.size() > 0;
 	}

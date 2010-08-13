@@ -119,16 +119,13 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		public void widgetSelected(SelectionEvent e) {
 			InstanceComparator comparator = (InstanceComparator)viewer.getComparator();
 			Table t = viewer.getTable();
-			int direction = SWT.UP;
 			if (comparator.getColumn() == column) {
 				comparator.reverseDirection();
-				if (t.getSortDirection() == SWT.UP)
-					direction = SWT.DOWN;
 			}
 			comparator.setColumn(column);
 			TableColumn tc = (TableColumn)e.getSource();
 			t.setSortColumn(tc);
-			t.setSortDirection(direction);
+			t.setSortDirection(SWT.NONE);
 			viewer.refresh();
 		}
 	
@@ -181,7 +178,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight()));
 			tc.addSelectionListener(new ColumnListener(i, viewer));
 		}
-		table.setSortDirection(SWT.UP);
+		table.setSortDirection(SWT.NONE);
 		
 		currCloud = clouds[0];
 		currCloud.removeInstanceListListener(parentView);

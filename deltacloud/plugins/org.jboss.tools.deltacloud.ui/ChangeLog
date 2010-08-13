@@ -1,5 +1,38 @@
 2010-08-13  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* icons/delta-large.gif: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVRootElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/SWTImagesFactory.java: Add large delta image. 
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewContentProvider.java (getElements): Changed
+	to just get the root element's children. 
+	(getChildren): Changed to always return the parent element's children.
+	(inputChanged): Assumes the new input is a CVRootElement and saves it for
+	later.  No longer creates clouds and categories here.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java (clearChildren): New method
+	to clear all children. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVCategoryElement.java (getChildren): Remove
+	Instances logic since it has its own element class now. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java (hasChildren): New method
+	that always returns true. 
+	(getChildren): New method to add the category elements.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (changeEvent): Set the input
+	to a new CVRootElement. 
+	(createPartControl): Ditto
+	(.run): Ditto.
+	(makeActions): Remove bogus action1 and action2. 
+	(fillLocalPullDown): Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceComparator.java (compareByColumn): Make
+	comparison ignore case. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (ColumnListener.widgetSelected): Don't
+	set sort column indicator i.e. set it to SWT.NONE. 
+	(createPartControl): Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (NewCloudConnectionPage): Set
+	title image to new delta-large icon. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (NewInstancePage): Ditto.
+	 
+2010-08-13  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (changeEvent): Set the
 	currCloud variable. 
 	(createPartControl): Ditto. 

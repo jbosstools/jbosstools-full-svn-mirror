@@ -30,12 +30,14 @@ public class SWTImagesFactory {
 	public static final String IMG_IMAGE= NAME_PREFIX + "image.gif"; //$NON-NLS-1$
 	public static final String IMG_COLLAPSE_ALL= NAME_PREFIX + "collapseall.gif"; //$NON-NLS-1$
 	public static final String IMG_DELTA= NAME_PREFIX + "delta.gif"; //$NON-NLS-1$
- 	public static final ImageDescriptor DESC_CLOUD= createManaged("", IMG_CLOUD);
+	public static final String IMG_DELTA_LARGE= NAME_PREFIX + "delta-large.gif"; //$NON-NLS-1$
+	public static final ImageDescriptor DESC_CLOUD= createManaged("", IMG_CLOUD);
 	public static final ImageDescriptor DESC_FOLDER= createManaged("", IMG_FOLDER);
 	public static final ImageDescriptor DESC_INSTANCE= createManaged("", IMG_INSTANCE);
 	public static final ImageDescriptor DESC_IMAGE= createManaged("", IMG_IMAGE);
 	public static final ImageDescriptor DESC_COLLAPSE_ALL= createManaged("", IMG_COLLAPSE_ALL);
 	public static final ImageDescriptor DESC_DELTA= createManaged("", IMG_DELTA);
+	public static final ImageDescriptor DESC_DELTA_LARGE= createManaged("", IMG_DELTA_LARGE);
 
 	private static ImageDescriptor createManaged(String prefix, String name) {
 		return createManaged(imageRegistry, prefix, name);

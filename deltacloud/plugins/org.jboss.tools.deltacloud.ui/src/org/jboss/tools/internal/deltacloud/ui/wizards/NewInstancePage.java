@@ -19,6 +19,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
+import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 public class NewInstancePage extends WizardPage {
 
@@ -76,6 +77,7 @@ public class NewInstancePage extends WizardPage {
 		getPossibleProfiles();
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
+		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
 		setPageComplete(false);
 	}
 
