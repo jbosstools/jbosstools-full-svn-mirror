@@ -47,6 +47,13 @@ public final class Messages extends NLS {
 	public static String ImportsSection_1;
 	public static String ImportsSection_2;
 	public static String ImportsSection_3;
+	// https://jira.jboss.org/browse/JBIDE-6765
+	public static String NamespacePrefixesSection;
+	public static String NamespacePrefixesSection_0;
+	public static String NamespacePrefixesSection_1;
+	public static String NamespacePrefixesSection_2;
+	public static String NamespacePrefixesSection_3;
+	public static String NamespacePrefixesSection_4;
 	public static String InputMessageAdapter_0;
 	public static String InvokeImplSection_0;
 	public static String InvokeImplSection_1;

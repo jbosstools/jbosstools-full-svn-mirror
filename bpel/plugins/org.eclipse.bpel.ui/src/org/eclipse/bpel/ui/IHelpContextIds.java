@@ -37,6 +37,8 @@ public interface IHelpContextIds {
 	public static final String PROPERTY_PAGE_COMPENSATE_IMPLEMENTATION = PREFIX + "IMP090"; //$NON-NLS-1$
 	public static final String PROPERTY_PAGE_ONEVENT_IMPLEMENTATION = PREFIX + "IMP100"; //$NON-NLS-1$
 	public static final String PROPERTY_PAGE_BPEL_IMPORTS = PREFIX + "IMT010"; //$NON-NLS-1$
+	// https://jira.jboss.org/browse/JBIDE-6765
+	public static final String PROPERTY_PAGE_BPEL_NAMESPACE_PREFIXES = PREFIX + "NST010"; //$NON-NLS-1$
 	public static final String PROPERTY_PAGE_REPEAT_ALARM = PREFIX + "RPT010"; //$NON-NLS-1$
 	public static final String PROPERTY_PAGE_WAIT_DATE = PREFIX + "WAT010"; //$NON-NLS-1$
 	public static final String PROPERTY_PAGE_WAIT_DURATION = PREFIX + "WAT020"; //$NON-NLS-1$
