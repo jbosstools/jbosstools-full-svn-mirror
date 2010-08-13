@@ -1,5 +1,11 @@
 2010-08-13  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (changeEvent): Set the
+	currCloud variable. 
+	(createPartControl): Ditto. 
+	
+2010-08-13  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (performFinish): 
 	(performTest): Pass url as String to DeltaCloudClient.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (checkURL): Don't

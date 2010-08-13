@@ -183,6 +183,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		}
 		table.setSortDirection(SWT.UP);
 		
+		currCloud = clouds[0];
 		currCloud.removeInstanceListListener(parentView);
 		viewer.setInput(clouds[0]);
 		currCloud.addInstanceListListener(parentView);
@@ -457,6 +458,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		cloudSelector.removeModifyListener(cloudModifyListener);
 		cloudSelector.setItems(cloudNames);
 		cloudSelector.setText(cloudNames[index]);
+		currCloud = clouds[index];
 		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 
