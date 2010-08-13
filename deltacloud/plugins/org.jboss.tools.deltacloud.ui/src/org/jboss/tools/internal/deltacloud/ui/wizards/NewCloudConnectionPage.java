@@ -28,6 +28,7 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
@@ -79,6 +80,18 @@ public class NewCloudConnectionPage extends WizardPage {
 	private String cloudType;
 
 	private boolean urlValid;
+	
+	private class CheckURLThread extends Thread {
+		
+		@Override
+		public void run() {
+			try {
+				checkURL();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	private Listener linkListener = new Listener() {
 
@@ -159,21 +172,9 @@ public class NewCloudConnectionPage extends WizardPage {
 		
 		// Run check for valid DeltaCloud URL in separate thread
 		String urlValue = urlText.getText();
-		if (urlValue.endsWith("api")) {
-			ISafeRunnable runner = new ISafeRunnable() {
-
-				@Override
-				public void handleException(Throwable exception) {
-					setURLValid(false);
-				}
-
-				@Override
-				public void run() throws Exception {
-					// TODO Auto-generated method stub
-					checkURL();
-				}
-			};
-			SafeRunner.run(runner);
+		if (urlValue.length() > 5) {
+			CheckURLThread t = new CheckURLThread();
+			t.start();
 		} else if (urlValue.length() > 0){
 			typeText.setText(WizardMessages.getString(NONCLOUD_URL));
 			complete = false;
@@ -204,14 +205,22 @@ public class NewCloudConnectionPage extends WizardPage {
 	// Method to check the URL for validity as Delta-cloud API specifier.
 	// Since this is run in thread, it does not use the setErrorMessage()
 	// method and instead writes error messages to the typeText label.
-	private synchronized boolean checkURL() {
+	private boolean checkURL() {
 		boolean valid = false;
 		String oldurl = url;
-		url = urlText.getText();
+		Display.getDefault().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				cloudType = typeText.getText();
+				url = urlText.getText();
+			}
+		});
+		String oldCloudType = cloudType;
 		if (url.length() > 0) {
 			if (!url.equals(oldurl)) {
 				try {
-					URL u = new URL(url + ".xml");
+					URL u = new URL(url + "/api.xml"); //$NON-NLS-1$
 					Object o = u.getContent();
 					if (o instanceof InputStream) {
 						String xml = "";
@@ -226,7 +235,7 @@ public class NewCloudConnectionPage extends WizardPage {
 								BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 								while ((line = reader.readLine()) != null) 
 								{
-									sb.append(line).append("\n");	
+									sb.append(line).append("\n"); //$NON-NLS-1$
 								}
 								xml = sb.toString();
 							}
@@ -261,11 +270,22 @@ public class NewCloudConnectionPage extends WizardPage {
 					cloudType = WizardMessages.getString(NONCLOUD_URL);
 				} catch (SAXException e) {
 					cloudType = WizardMessages.getString(NONCLOUD_URL);
+				} catch (Exception e) {
+					cloudType = WizardMessages.getString(INVALID_URL);
 				}
 				setURLValid(valid);
 			}
-			if (!typeText.getText().equals(cloudType))
-				typeText.setText(cloudType);
+			if (!oldCloudType.equals(cloudType)) {
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						testButton.setEnabled(getURLValid());
+						typeText.setText(cloudType);
+					}
+					
+				});
+			}
 		}
 		return valid;
 	}
@@ -331,6 +351,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		
 		testButton = new Button(container, SWT.NULL);
 		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));
+		testButton.setEnabled(false);
 		testButton.addSelectionListener(buttonListener);
 		
 		Link ec2userLink = new Link(container, SWT.NULL);
@@ -372,7 +393,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		
 		f = new FormData();
 		f.left = new FormAttachment(urlText, 0, SWT.LEFT);
-		f.top = new FormAttachment(urlText, 5);
+		f.top = new FormAttachment(urlText, 8);
 		f.right = new FormAttachment(100, 0);
 		typeText.setLayoutData(f);
 
@@ -382,7 +403,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		
 		f = new FormData();
 		f.left = new FormAttachment(typeText, 0, SWT.LEFT);
-		f.top = new FormAttachment(typeText, 13);
+		f.top = new FormAttachment(typeText, 10);
 		f.right = new FormAttachment(100, -70);
 		usernameText.setLayoutData(f);
 		

@@ -1,3 +1,15 @@
+2010-08-13  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (performFinish): 
+	(performTest): Pass url as String to DeltaCloudClient.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (checkURL): Don't
+	make synchronized as there is a special thread to run this now.  Also, append api to url
+	automatically on behalf of the user.  Use Display threads when accessing any UI widgets.
+	Enable the Test button if the URL is valid. 
+	(createControl): Disable Test button by default.
+	(CheckURLThread): New class based on Thread specifically for running checkURL. 
+	(validate): Use new CheckURLThread class to check the url.
+
 2010-08-12  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.java (getFormattedString): New method.
