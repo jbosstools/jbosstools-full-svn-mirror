@@ -1,3 +1,10 @@
+2010-08-13  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): Take the
+	url as a String input.  Create the URL when constructing the client and add
+	"/api" to the user-specified url. 
+	(getURL): Return the url directly. 
+
 2010-08-12  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (destroyInstance): Fix to use

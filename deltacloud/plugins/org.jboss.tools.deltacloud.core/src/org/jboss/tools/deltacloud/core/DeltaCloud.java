@@ -19,15 +19,15 @@ public class DeltaCloud {
 	
 	private String name;
 	private String username;
-	private URL url;
+	private String url;
 	private DeltaCloudClient client;
 	private ArrayList<DeltaCloudInstance> instances;
 	
 	ListenerList instanceListeners = new ListenerList();
 	ListenerList imageListeners = new ListenerList();
 	
-	public DeltaCloud(String name, URL url, String username, String passwd) throws MalformedURLException {
-		this.client = new DeltaCloudClient(url, username, passwd);
+	public DeltaCloud(String name, String url, String username, String passwd) throws MalformedURLException {
+		this.client = new DeltaCloudClient(new URL(url + "/api"), username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;
@@ -38,7 +38,7 @@ public class DeltaCloud {
 	}
 	
 	public String getURL() {
-		return url.toString();
+		return url;
 	}
 	
 	public String getUsername() {
