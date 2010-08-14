@@ -13,6 +13,7 @@ import org.eclipse.bpel.validator.IBPELMarker;
 import org.eclipse.bpel.validator.helpers.DOMNodeAdapter;
 import org.eclipse.bpel.validator.model.INode;
 import org.eclipse.bpel.validator.model.IProblem;
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -153,8 +154,17 @@ public class AdapterFactory implements IAdapterFactory {
 
 	IMarker adapt_IProblem2IMarker (IProblem problem ) {
 				
-		INode node = (INode) problem.getAttribute( IProblem.NODE );					
-		IResource resource = (IResource) getAdapter(node.nodeValue(), IResource.class );
+		IResource resource = null;
+		INode node = (INode) problem.getAttribute( IProblem.NODE );
+		if (node!=null)
+			resource = (IResource) getAdapter(node.nodeValue(), IResource.class );
+		else
+		{
+			// https://jira.jboss.org/browse/JBIDE-6825
+			// added a new ERESOURCE attribute
+			Resource modelResource = (Resource) problem.getAttribute( IProblem.ERESOURCE );
+			resource = getFileFromURI(modelResource.getURI());
+		}		
 		
 		Map<String,Object> props = new HashMap<String,Object>();
 		

@@ -43,9 +43,12 @@
          name="BPEL Validator"
          point="org.eclipse.wst.validation.validator">
       <validator>
-         <filter
+		<runStrategy
+             project="true">
+        </runStrategy>
+        <filter
                caseSensitive="false"
-               nameFilter="*.bpel"
+               nameFilter="*.wsdl"
                objectClass="org.eclipse.core.resources.IFile"/>
          <run
                async="true"

@@ -552,11 +552,17 @@ public class BPELEditor extends GraphicalEditorWithPaletteAndTray /*, IGotoMarke
 			updateTitle();
 		}
 		// Put the timestamp of the bpel file into the bpelex file.
-		IFile bpelFile = BPELUtil.getBPELFile(getProcess());
+		// https://jira.jboss.org/browse/JBIDE-6825
+		// if the Resource failed to parse then the Process is null.
+		// use the model client to get the IFile resource instead of getting it from Process
+		IFile bpelFile = getEditModelClient().getPrimaryResourceInfo().getFile();
 		long modificationStamp = bpelFile.getLocalTimeStamp();
 		ProcessExtension processExtension = (ProcessExtension)ModelHelper.getExtension(getProcess());
-   		processExtension.setModificationStamp(modificationStamp);
-   		getExtensionsResource().setModified(true);
+		if (processExtension!=null)
+		{
+			processExtension.setModificationStamp(modificationStamp);
+			getExtensionsResource().setModified(true);
+		}
    		getEditModelClient().saveAll(progressMonitor); 
 	}
 

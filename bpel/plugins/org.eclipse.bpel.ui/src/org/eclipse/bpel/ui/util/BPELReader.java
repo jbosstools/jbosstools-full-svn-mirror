@@ -71,6 +71,12 @@ public class BPELReader {
 		IFile extensionsFile = ResourcesPlugin.getWorkspace().getRoot().getFile(extensionsPath);
 
 		try {
+			// https://jira.jboss.org/browse/JBIDE-6825
+			// At this point, the ResourceInfo.load() already loaded the process file
+			// but no parsing errors were logged in the Resource. This is because demand
+			// load was used by createResource(). Force a reload here, this time with
+			// proper error logging.
+			processResource.unload();
 			processResource.load(Collections.EMPTY_MAP);
 			EList<EObject> contents = processResource.getContents();
 			if (!contents.isEmpty())
@@ -175,6 +181,8 @@ public class BPELReader {
 		IFile extensionsFile = ResourcesPlugin.getWorkspace().getRoot().getFile(extensionsPath);
 
 		try {
+			// https://jira.jboss.org/browse/JBIDE-6825
+			processResource.unload();
 			processResource.load(Collections.EMPTY_MAP);
 			EList<EObject> contents = processResource.getContents();
 			if (!contents.isEmpty())

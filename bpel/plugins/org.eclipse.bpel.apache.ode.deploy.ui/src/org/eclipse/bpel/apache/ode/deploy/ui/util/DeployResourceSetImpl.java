@@ -29,9 +29,9 @@ public class DeployResourceSetImpl extends BPELResourceSetImpl {
 	@Override
 	public Resource getResource(URI uri, boolean loadOnDemand) {
 		String name = uri.toString().toLowerCase();
-		if (name.endsWith("wsdl"))
+		if (name.endsWith("?wsdl") || name.endsWith(".wsdl"))
 			return getResource(uri,true,"wsdl");
-		if (name.endsWith("wsil"))
+		if (name.endsWith(".wsil"))
 			return getResource(uri,true,"wsil");
 		if (name.endsWith(".xsd"))
 			return getResource(uri,true,"xsd");

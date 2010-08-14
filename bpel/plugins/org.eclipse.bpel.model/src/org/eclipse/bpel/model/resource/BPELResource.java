@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.bpel.model.Process;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.xml.sax.ErrorHandler;
 
 
 /**
@@ -34,6 +35,20 @@ public interface BPELResource extends Resource {
 	 * @see org.eclipse.emf.ecore.resource.impl.ResourceImpl#doSave(OutputStream, Map)
 	 */
 	void doSave(OutputStream out, Map<?, ?> args) throws Exception;
+	
+	/**
+	 * Set an error handler for SAX Parser
+	 * @param errorHandler
+	 * @see https://jira.jboss.org/browse/JBIDE-6825
+	 */
+	void setErrorHandler(ErrorHandler errorHandler);
+	
+	/**
+	 * Return the current SAX Parser error handler
+	 * @return error handler
+	 * @see https://jira.jboss.org/browse/JBIDE-6825
+	 */
+	ErrorHandler getErrorHandler();
     
     /**
      * Returns the BPEL process contained by this resource or <code>null</code> if there is none.

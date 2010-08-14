@@ -174,6 +174,13 @@ public interface IProblem  {
 	public static final String CONTEXT = "context.name"; //$NON-NLS-1$
 
 
+	/**
+	 * In case the model is completely hoarked and we don't even have
+	 * a Process or any sort of context, we still want to be able to
+	 * report this as a problem. This is the emf Resource that is in error.
+	 * @see https://jira.jboss.org/browse/JBIDE-6825
+	 */
+	public static final String ERESOURCE = "eResource"; //$NON-NLS-1$
 	
 	/**
 	 * This is the name of the Java Resource bundle 

@@ -78,6 +78,19 @@ public class BPELResourceImpl extends XMLResourceImpl implements BPELResource {
 		validating = true;
 	}
 
+	// https://jira.jboss.org/browse/JBIDE-6825
+	public void setErrorHandler(ErrorHandler errorHandler)
+	{
+		this.errorHandler = errorHandler;
+		validating = true;
+	}
+
+	// https://jira.jboss.org/browse/JBIDE-6825
+	public ErrorHandler getErrorHandler()
+	{
+		return errorHandler;
+	}
+
 	/**
 	 * Convert the BPEL model to an XML DOM model and then write the DOM model
 	 * to the output stream.
