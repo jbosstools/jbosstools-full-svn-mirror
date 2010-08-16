@@ -24,9 +24,10 @@ package org.eclipse.bpel.ui.properties;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 //import org.eclipse.bpel.model.Import;
 import org.eclipse.bpel.model.Process;
@@ -73,7 +74,7 @@ public class NamespacePrefixesProvider extends AbstractContentProvider  {
 			while (context!=null)
 			{
 				Map<String, String> map = BPELUtils.getNamespaceMap(context);
-				for (Map.Entry e : map.entrySet())
+				for (Map.Entry<String,String> e : map.entrySet())
 				{
 					String ns = e.getValue().toString();
 					NamespacePrefixElement elem = new NamespacePrefixElement((String)e.getKey(), ns, context,null); 
@@ -148,7 +149,7 @@ public class NamespacePrefixesProvider extends AbstractContentProvider  {
 		
 		list.addAll(elements);
 		// sort list alphabetically on prefix name
-		Collections.sort(list,new Comparator()
+		Collections.sort(list,new Comparator<Object>()
 		{
 			@Override
 			public int compare(Object o1, Object o2) {
@@ -157,10 +158,16 @@ public class NamespacePrefixesProvider extends AbstractContentProvider  {
 		});
 	}
 	
-	private void recurseImports(Map<Object,Object> m, List<Object> imports, List<NamespacePrefixElement>elements)
+	@SuppressWarnings("unchecked")
+	private void recurseImports(@SuppressWarnings("rawtypes") Map m, List<Object> imports, List<NamespacePrefixElement>elements)
 	{
-		for (Map.Entry e : m.entrySet())
+		@SuppressWarnings("rawtypes")
+		Iterator iter=m.entrySet().iterator();
+		
+		while(iter.hasNext())
 		{
+			@SuppressWarnings("rawtypes")
+			Map.Entry e = (Entry) iter.next();
 			ArrayList<org.eclipse.wst.wsdl.Import> v = (ArrayList<org.eclipse.wst.wsdl.Import>)e.getValue();
 			for (org.eclipse.wst.wsdl.Import wsdlImp : v)
 			{
@@ -196,7 +203,7 @@ public class NamespacePrefixesProvider extends AbstractContentProvider  {
 							if (elem.location==null)
 							{
 								Map<Object,Object> ns = wsdlImp.getDefinition().getNamespaces();
-								for (Map.Entry ens : ns.entrySet())
+								for (Map.Entry<Object,Object> ens : ns.entrySet())
 								{
 									if (ens.getValue().equals(elem.namespace))
 									{
