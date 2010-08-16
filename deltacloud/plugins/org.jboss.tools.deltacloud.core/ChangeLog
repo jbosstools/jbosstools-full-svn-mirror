@@ -1,5 +1,12 @@
 2010-08-16  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (buildHardwareProfile): Remove
+	extraneous statements that cause unused warning. 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java: Remove extraneous import
+	that causes warning. 
+	
+2010-08-16  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* META-INF/MANIFEST.MF: Add dependency on org.eclipse.equinox.security.
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): Store
 	the password for the cloud using Secure Preferences using the cloud's url

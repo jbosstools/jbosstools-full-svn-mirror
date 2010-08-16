@@ -332,8 +332,6 @@ public class DeltaCloudClient implements API
 							for (int j = 0; j < enumChildren.getLength(); ++j) {
 								Node enumChild = enumChildren.item(j);
 								if (enumChild.getNodeName().equals("entry")) {
-									NamedNodeMap attrs = enumChild.getAttributes();
-									Node x = attrs.getNamedItem("value");
 									enums.add(enumChild.getAttributes().getNamedItem("value").getNodeValue()); //$NON-NLS-1$
 								}
 							}
