@@ -129,25 +129,39 @@ public class EditModel {
 	}
 
 	protected void fireModelDeleted(ResourceInfo sr) {
-		for (IEditModelListener next : updateListeners ) {
+		// https://jira.jboss.org/browse/JBIDE-6785
+		// Prevent concurrent list modification exception:
+		// When a resource is deleted, the BPEL editor shuts itself down for no
+		// apparently good reason (I'm sure it's to avoid some other kinds of disasters
+		// that it isn't equipped to deal with!) This causes the editor to remove itself
+		// from our update listeners list.
+		ArrayList<IEditModelListener> listeners = new ArrayList<IEditModelListener>(updateListeners.size());
+		listeners.addAll(updateListeners);
+		for (IEditModelListener next : listeners ) {
 			next.modelDeleted(sr);
 		}
 	}
 	
 	protected void fireModelReloaded(ResourceInfo sr) {
-		for (IEditModelListener next : updateListeners ) {
+		ArrayList<IEditModelListener> listeners = new ArrayList<IEditModelListener>(updateListeners.size());
+		listeners.addAll(updateListeners);
+		for (IEditModelListener next : listeners ) {
 			next.modelReloaded(sr);
 		}
 	}
 
 	protected void fireModelLocationChanged(ResourceInfo sr, IFile movedToFile) {
-		for (IEditModelListener next : updateListeners ) {
+		ArrayList<IEditModelListener> listeners = new ArrayList<IEditModelListener>(updateListeners.size());
+		listeners.addAll(updateListeners);
+		for (IEditModelListener next : listeners ) {
 			next.modelLocationChanged(sr,movedToFile);
 		}
 	}
 
 	protected void fireModelMarkersChanged (ResourceInfo sr, IMarkerDelta[] markerDelta ) {
-		for (IEditModelListener next : updateListeners ) {
+		ArrayList<IEditModelListener> listeners = new ArrayList<IEditModelListener>(updateListeners.size());
+		listeners.addAll(updateListeners);
+		for (IEditModelListener next : listeners ) {
 			next.modelMarkersChanged(sr,markerDelta );
 		}
 	}
