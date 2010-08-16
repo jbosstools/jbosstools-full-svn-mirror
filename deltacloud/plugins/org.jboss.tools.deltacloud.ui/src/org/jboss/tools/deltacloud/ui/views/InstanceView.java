@@ -98,10 +98,19 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		public void modifyText(ModifyEvent e) {
 			int index = cloudSelector.getSelectionIndex();
 			currCloud = clouds[index];
-			currCloud.removeInstanceListListener(parentView);
-			viewer.setInput(currCloud);
-			currCloud.addInstanceListListener(parentView);
-			viewer.refresh();
+			Display.getCurrent().asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					currCloud.removeInstanceListListener(parentView);
+					viewer.setInput(currCloud);
+					currCloud.addInstanceListListener(parentView);
+					viewer.refresh();
+					
+				}
+				
+			});
 		}
 		
 	};
@@ -180,10 +189,12 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		}
 		table.setSortDirection(SWT.NONE);
 		
-		currCloud = clouds[0];
-		currCloud.removeInstanceListListener(parentView);
-		viewer.setInput(clouds[0]);
-		currCloud.addInstanceListListener(parentView);
+		if (clouds.length > 0) {
+			currCloud = clouds[0];
+			currCloud.removeInstanceListListener(parentView);
+			viewer.setInput(clouds[0]);
+			currCloud.addInstanceListListener(parentView);
+		}
 
 		FormData f = new FormData();
 		f.top = new FormAttachment(0, 8);
@@ -438,24 +449,36 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			cloudNames[i] = clouds[i].getName();
 		}
 		cloudSelector.setItems(cloudNames);
-		cloudSelector.setText(cloudNames[0]);
-		currCloud = clouds[0];
+		if (clouds.length > 0) {
+			cloudSelector.setText(cloudNames[0]);
+			currCloud = clouds[0];
+		}
 	}
 	
 	public void changeEvent(int type) {
-		String currName = currCloud.getName();
+		String currName = null;
 		clouds = DeltaCloudManager.getDefault().getClouds();
+		if (currCloud != null) {
+			currName = currCloud.getName();
+		}
 		String[] cloudNames = new String[clouds.length];
 		int index = 0;
 		for (int i = 0; i < clouds.length; ++i) {
 			cloudNames[i] = clouds[i].getName();
-			if (currName.equals(cloudNames[i]))
+			if (cloudNames[i].equals(currName))
 				index = i;
 		}
 		cloudSelector.removeModifyListener(cloudModifyListener);
 		cloudSelector.setItems(cloudNames);
-		cloudSelector.setText(cloudNames[index]);
-		currCloud = clouds[index];
+		if (cloudNames.length > 0) {
+			cloudSelector.setText(cloudNames[index]);
+			currCloud = clouds[index];
+			viewer.setInput(currCloud);
+		} else {
+			currCloud = null;
+			cloudSelector.setText("");
+			viewer.setInput(new DeltaCloudInstance[0]);
+		}
 		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 

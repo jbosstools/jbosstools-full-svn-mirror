@@ -1,3 +1,16 @@
+2010-08-16  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (changeEvent): Check if
+	there any clouds and that there is a current cloud before referencing anything.  If
+	it turns out there are no longer any clouds, set the input to an empty list of
+	instances.
+	(.modifyText): Refresh the view in an async display thread.
+	(createPartControl): Check if there are any clouds before setting currCloud or accessing
+	the clouds collection.
+	(initializeCloudSelector): Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (performFinish): 
+	Create DeltaCloud with special persistence option set to true.
+
 2010-08-13  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* icons/delta-large.gif: New file.
