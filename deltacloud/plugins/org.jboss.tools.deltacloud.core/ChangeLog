@@ -1,3 +1,20 @@
+2010-08-16  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* META-INF/MANIFEST.MF: Add dependency on org.eclipse.equinox.security.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): Store
+	the password for the cloud using Secure Preferences using the cloud's url
+	and username to form the key. 
+	(getPreferencesKey): New static method to formulate a preferences key used
+	to store and retrieve a password for a cloud.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (loadClouds): 
+	New method to get persisted clouds. 
+	(getClouds): Remove test stuff that creates a sample connection to the
+	mock cloud.
+	(saveClouds): New method to persist clouds minus passwords.
+	(DeltaCloudManager): Add call to loadClouds at construction.
+	(addCloud): Call saveClouds after modifying list.
+	(removeCloud): Ditto.
+
 2010-08-13  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): Take the

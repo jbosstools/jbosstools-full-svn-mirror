@@ -7,6 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.equinox.security.storage.EncodingUtils;
+import org.eclipse.equinox.security.storage.ISecurePreferences;
+import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.equinox.security.storage.StorageException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
@@ -27,12 +31,32 @@ public class DeltaCloud {
 	ListenerList imageListeners = new ListenerList();
 	
 	public DeltaCloud(String name, String url, String username, String passwd) throws MalformedURLException {
+		this(name, url, username, passwd, false);
+	}
+
+	public DeltaCloud(String name, String url, String username, String passwd, boolean persistent) throws MalformedURLException {
 		this.client = new DeltaCloudClient(new URL(url + "/api"), username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;
+		if (persistent) {
+			ISecurePreferences root = SecurePreferencesFactory.getDefault();
+			String key = DeltaCloud.getPreferencesKey(url, username);
+			ISecurePreferences node = root.node(key);
+			try {
+				node.put("password", passwd, true /*encrypt*/);
+			} catch (StorageException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
+	public static String getPreferencesKey(String url, String username) {
+		String key = "/org/jboss/tools/deltacloud/core/"; //$NON-NLS-1$
+		key += url + "/" + username; //$NON-NLS-1$
+		return EncodingUtils.encodeSlashes(key);
+	}
+	
 	public String getName() {
 		return name;
 	}
