@@ -3,7 +3,6 @@ package org.jboss.tools.deltacloud.ui.views;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 
 public class CVCategoryElement extends CloudViewElement {
 
