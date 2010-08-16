@@ -11,6 +11,8 @@ public class DeltaCloudPerspective implements IPerspectiveFactory {
 				0.25f, IPageLayout.ID_EDITOR_AREA);
 		layout.addView(IPageLayout.ID_PROP_SHEET, IPageLayout.BOTTOM,
 				0.80f, IPageLayout.ID_EDITOR_AREA);
+		layout.addView("org.jboss.tools.deltacloud.ui.views.InstanceView", IPageLayout.BOTTOM, 
+				0.80f, IPageLayout.ID_EDITOR_AREA);
 	}
 
 }

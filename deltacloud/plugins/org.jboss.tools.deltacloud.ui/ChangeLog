@@ -1,5 +1,10 @@
 2010-08-16  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java (createInitialLayout): Add
+	Instances view to perspective and specify it appears on the bottom. 
+	
+2010-08-16  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (changeEvent): Check if
 	there any clouds and that there is a current cloud before referencing anything.  If
 	it turns out there are no longer any clouds, set the input to an empty list of
