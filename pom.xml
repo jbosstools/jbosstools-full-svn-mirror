@@ -48,6 +48,8 @@
 			ant -q -->
 		<!-- IF YOU REMOVE A MODULE, be sure to also remove it from site/site.xml 
 			and build/aggregate/site/site.xml or the build will break! -->
+		<module>gwt</module>
+		<module>deltacloud</module>
 		<module>drools</module>
 		<module>runtime</module>
 		<module>site</module>

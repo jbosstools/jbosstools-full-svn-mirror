@@ -559,6 +559,27 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		</modules>
 	</profile>
 
+       <profile>
+                <id>gwt</id>
+                <activation>
+                        <activeByDefault>true</activeByDefault>
+                </activation>
+                <modules>
+                        <module>../gwt</module>
+                </modules>
+        </profile>
+
+       <profile>
+                <id>deltacloud</id>
+                <activation>
+                        <activeByDefault>true</activeByDefault>
+                </activation>
+                <modules>
+                        <module>../deltacloud</module>
+                </modules>
+        </profile>
+
+
 	<profile>
 		<id>drools</id>
 		<activation>
