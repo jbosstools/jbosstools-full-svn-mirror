@@ -1,6 +1,5 @@
 package org.jboss.tools.deltacloud.ui.views;
 
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -84,6 +83,12 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
 
+	@Override
+	public void dispose() {
+		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
+		super.dispose();
+	}
+	
 	private void hookSelection() {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override

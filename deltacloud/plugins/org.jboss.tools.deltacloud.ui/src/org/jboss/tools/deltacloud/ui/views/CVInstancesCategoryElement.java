@@ -20,6 +20,12 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 		this.category = this;
 	}
 
+	protected void finalize() throws Throwable {
+		DeltaCloud cloud = (DeltaCloud)getElement();
+		cloud.removeInstanceListListener(this);
+		super.finalize();
+	}
+	
 	@Override
 	public Object[] getChildren() {
 		if (!initialized) {

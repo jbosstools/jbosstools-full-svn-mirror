@@ -367,26 +367,14 @@ public class ProfileComposite {
 	
 	public String getMemory() {
 		if (memory != null && !memory.equals(memoryDefaultValue)) {
-			String retVal = memory;
-			if (memoryDecDigits > 0) {
-				// Need to put back decimal point in returned value when we used the spinner
-				retVal = retVal.substring(0, retVal.length() - memoryDecDigits).concat(".").
-				concat(memory.substring(memory.length() - memoryDecDigits));
-			}
-			return retVal;
+			return memory;
 		}
 		return null;
 	}
 	
 	public String getStorage() {
 		if (storage != null && !storage.equals(storageDefaultValue)) {
-			String retVal = storage;
-			if (storageDecDigits > 0) {
-				// Need to put back decimal point in returned value when we used the spinner
-				retVal = retVal.substring(0, retVal.length() - storageDecDigits).concat(".").
-				concat(storage.substring(storage.length() - storageDecDigits));
-			}
-			return retVal;
+			return storage;
 		}
 		return null;
 	}

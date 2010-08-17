@@ -22,6 +22,14 @@
             id="org.jboss.tools.deltacloud.ui.views.InstanceView"
             name="%InstanceViewer.name">
       </view>
+      <view
+            category="org.jboss.tools.deltacloud.ui"
+            class="org.jboss.tools.deltacloud.ui.views.ImageView"
+            icon="icons/delta.gif"
+            id="org.jboss.tools.deltacloud.ui.views.ImageView"
+            name="%ImageViewer.name"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.help.contexts">

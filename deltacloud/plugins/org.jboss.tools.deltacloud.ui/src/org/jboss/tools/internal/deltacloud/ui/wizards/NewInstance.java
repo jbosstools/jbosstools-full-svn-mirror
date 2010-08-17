@@ -101,6 +101,8 @@ public class NewInstance extends Wizard {
 		String imageId = image.getId();
 		String profileId = mainPage.getHardwareProfile();
 		String realmId = mainPage.getRealmId();
+		String memory = mainPage.getMemoryProperty();
+		String storage = mainPage.getStorageProperty();
 		String name = null;
 		try {
 			name = URLEncoder.encode(mainPage.getInstanceName(), "UTF-8");
@@ -129,7 +131,7 @@ public class NewInstance extends Wizard {
 					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
 				}
 			}
-			instance = cloud.createInstance(name, imageId, realmId, profileId);
+			instance = cloud.createInstance(name, imageId, realmId, profileId, memory, storage);
 			if (instance != null)
 				result = true;
 			final String instanceId = instance.getId();

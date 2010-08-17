@@ -1,3 +1,26 @@
+2010-08-17  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/ImageComparator.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java: New file.
+	* plugin.xml: Add new Image view.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (finalize): New override
+	to ensure this class isn't registered as a listener.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add destroy messages. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVRootElement.java: (finalize): Remove this 
+	class as a cloud listener.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (dispose): Remove this class
+	as a cloud listener. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (dispose): Remove this class
+	as an instance and cloud listener. 
+	(createPartControl): Fix listener management.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (performFinish): Get
+	any hardware memory or storage settings and pass them to the new DeltaCloud createInstance
+	API. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java (getMemory): Don't
+	add in decimal point to value as widget does this automatically. 
+	(getStorage): Ditto.
+
 2010-08-16  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java: Fix warning.

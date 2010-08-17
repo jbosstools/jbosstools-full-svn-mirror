@@ -41,6 +41,11 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 	}
 
 	@Override
+	protected void finalize() throws Throwable {
+		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
+		super.finalize();
+	}
+	
 	public void changeEvent(int type) {
 		DeltaCloudManager m = DeltaCloudManager.getDefault();
 		m.removeCloudManagerListener(this);
