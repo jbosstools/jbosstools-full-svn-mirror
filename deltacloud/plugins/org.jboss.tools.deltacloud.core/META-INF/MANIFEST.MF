@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.jboss.tools.deltacloud.core.Activator
 Bundle-Vendor: Red Hat Inc.
 Require-Bundle: org.eclipse.core.runtime,
- org.apache.log4j;bundle-version="1.2.13",
  org.eclipse.equinox.security;bundle-version="1.0.100"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
@@ -19,4 +18,5 @@ Bundle-ClassPath: .,
  lib/httpclient-4.0.1.jar,
  lib/httpcore-4.0.1.jar,
  lib/httpcore-nio-4.0.1.jar,
- lib/httpmime-4.0.1.jar
+ lib/httpmime-4.0.1.jar,
+ lib/log4j-1.2.14.jar
