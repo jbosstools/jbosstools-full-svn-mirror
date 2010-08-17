@@ -226,9 +226,10 @@ public class DeltaCloud {
 		return realms.toArray(new DeltaCloudRealm[realms.size()]);
 	}
 
-	public DeltaCloudInstance createInstance(String name, String imageId, String realmId, String profileId) throws DeltaCloudException {
+	public DeltaCloudInstance createInstance(String name, String imageId, String realmId, String profileId,
+			String memory, String storage) throws DeltaCloudException {
 		try {
-			Instance instance = client.createInstance(imageId, profileId, realmId, name);
+			Instance instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
 			if (instance != null) {
 				DeltaCloudInstance newInstance = new DeltaCloudInstance(instance);
 				instances.add(newInstance);

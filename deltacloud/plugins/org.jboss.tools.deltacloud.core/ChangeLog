@@ -1,3 +1,10 @@
+2010-08-17  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (createInstance): New
+	API that takes a memory and storage setting for the hardware profile.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (createInstance): Change API to
+	accept memory and storage settings. 
+
 2010-08-16  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (buildHardwareProfile): Remove

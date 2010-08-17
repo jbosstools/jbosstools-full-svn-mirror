@@ -159,11 +159,21 @@ public class DeltaCloudClient implements API
 		String query = "?image_id=" + imageId;
 		return buildInstance(sendRequest(DCNS.INSTANCES + query, RequestType.POST));
 	}
-	
+
 	@Override
 	public Instance createInstance(String imageId, String profileId, String realmId, String name) throws DeltaCloudClientException 
 	{
-		String query = "?image_id=" + imageId + "&hardware_profile_id=" + profileId + "&realm_id=" + realmId + "&name=" + name + "&commit=create";
+		return createInstance(imageId, profileId, realmId, name, null, null);
+	}
+	
+	public Instance createInstance(String imageId, String profileId, String realmId, String name, String memory, String storage) throws DeltaCloudClientException 
+	{
+		String query = "?image_id=" + imageId + "&hwp_id=" + profileId + "&realm_id=" + realmId + "&name=" + name;
+		if (memory != null)
+			query += "&hwp_memory=" + memory;
+		if (storage != null)
+			query += "&hwp_storage=" + storage;
+		query += "&commit=create";
 		return buildInstance(sendRequest(DCNS.INSTANCES + query, RequestType.POST));
 	}
 
