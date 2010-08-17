@@ -25,6 +25,9 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
@@ -33,7 +36,8 @@ import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 
 
-public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
+public class DeltaCloudView extends ViewPart implements ICloudManagerListener, 
+ITabbedPropertySheetPageContributor {
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -237,4 +241,18 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener {
 	public void changeEvent(int type) {
 		viewer.setInput(new CVRootElement(viewer));
 	}
+
+	@Override
+	public String getContributorId() {
+        return getSite().getId();
+	}
+	
+    @SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
+        if (adapter == IPropertySheetPage.class)
+        	// If Tabbed view is desired, then change the
+        	// following to new TabbedPropertySheetPage(this)
+            return new CVPropertySheetPage();
+        return super.getAdapter(adapter);
+    }
 }

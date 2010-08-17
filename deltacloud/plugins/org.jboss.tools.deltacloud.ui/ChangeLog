@@ -1,5 +1,23 @@
 2010-08-17  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySection.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySheetNonSorter.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySheetPage.java: New file.
+	* plugin.xml: Change the PropertySection class for the Advanced Tab to point to
+	the new CVPropertySection class.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add message for owner
+	id property.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (getAdapter): New override
+	to hijack the PropertySheetPage.
+	(getContributorId): Required for an ITabbedPropertySheetPageContributor.
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (getPropertyValue): Add
+	support for owner id. 
+	(getPropertyDescriptors): Add owner id. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (fillContextMenu): Add all possible
+	actions and only enable the ones supported by the selected instance. 
+	
+2010-08-17  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/views/ImageComparator.java: New file.
 	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java: New file.
 	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java: New file.

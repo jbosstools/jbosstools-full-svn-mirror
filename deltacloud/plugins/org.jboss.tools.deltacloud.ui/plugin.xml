@@ -62,7 +62,7 @@
       <propertySections
             contributorId="org.jboss.tools.deltacloud.ui.views.CloudView">
          <propertySection
-               class="org.eclipse.ui.views.properties.tabbed.AdvancedPropertySection"
+               class="org.jboss.tools.deltacloud.ui.views.CVPropertySection"
                id="org.jboss.tools.deltacloud.ui.propertySection.advanced"
                tab="cloudview.advancedTab">
             <input

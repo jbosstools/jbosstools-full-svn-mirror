@@ -272,8 +272,17 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 
 	private void fillContextMenu(IMenuManager manager) {
 		List<String> actions = selectedElement.getActions();
+		manager.add(instanceActions.get(DeltaCloudInstance.START));
+		instanceActions.get(DeltaCloudInstance.START).setEnabled(false);
+		manager.add(instanceActions.get(DeltaCloudInstance.STOP));
+		instanceActions.get(DeltaCloudInstance.STOP).setEnabled(false);
+		manager.add(instanceActions.get(DeltaCloudInstance.REBOOT));
+		instanceActions.get(DeltaCloudInstance.REBOOT).setEnabled(false);
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(instanceActions.get(DeltaCloudInstance.DESTROY));
+		instanceActions.get(DeltaCloudInstance.DESTROY).setEnabled(false);
 		for (String action : actions) {
-			manager.add(instanceActions.get(action));
+			instanceActions.get(action).setEnabled(true);
 		}
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));

@@ -11,6 +11,7 @@ public class InstancePropertySource implements IPropertySource {
 
 	private static final String PROPERTY_NAME = "deltacloud.views.instance.name"; //$NON-NLS-1$
 	private static final String PROPERTY_ID = "deltacloud.views.instance.id"; //$NON-NLS-1$
+	public  static final String PROPERTY_OWNER = "deltacloud.views.instance.owner"; //$NON-NLS-1$
 	public  static final String PROPERTY_STATE = "deltacloud.views.instance.state"; //$NON-NLS-1$
 	private static final String PROPERTY_HOSTNAME = "deltacloud.views.instance.hostname"; //$NON-NLS-1$
 	private static final String PROPERTY_PROFILEID = "deltacloud.views.instance.profileid"; //$NON-NLS-1$
@@ -18,6 +19,7 @@ public class InstancePropertySource implements IPropertySource {
 	private static final String PROPERTY_IMAGEID = "deltacloud.views.instance.imageid"; //$NON-NLS-1$
 	private static final String PROPERTY_NAME_TITLE = "PropertyName.title"; //$NON-NLS-1$
 	private static final String PROPERTY_ID_TITLE = "PropertyId.title"; //$NON-NLS-1$
+	private static final String PROPERTY_OWNER_TITLE = "PropertyOwnerId.title"; //$NON-NLS-1$
 	private static final String PROPERTY_STATE_TITLE = "PropertyState.title"; //$NON-NLS-1$
 	private static final String PROPERTY_HOSTNAME_TITLE = "PropertyHostname.title"; //$NON-NLS-1$
 	private static final String PROPERTY_PROFILEID_TITLE = "PropertyProfileId.title"; //$NON-NLS-1$
@@ -43,6 +45,8 @@ public class InstancePropertySource implements IPropertySource {
 					CVMessages.getString(PROPERTY_NAME_TITLE));
 			PropertyDescriptor idDescriptor = new PropertyDescriptor(PROPERTY_ID, 
 					CVMessages.getString(PROPERTY_ID_TITLE));
+			PropertyDescriptor ownerDescriptor = new PropertyDescriptor(PROPERTY_OWNER, 
+					CVMessages.getString(PROPERTY_OWNER_TITLE));
 			PropertyDescriptor stateDescriptor = new PropertyDescriptor(PROPERTY_STATE, 
 					CVMessages.getString(PROPERTY_STATE_TITLE));
 			PropertyDescriptor hardwareDescriptor = new PropertyDescriptor(PROPERTY_PROFILEID, 
@@ -57,6 +61,7 @@ public class InstancePropertySource implements IPropertySource {
 			propertyDescriptors = new IPropertyDescriptor[] {
 					nameDescriptor,
 					idDescriptor,
+					ownerDescriptor,
 					stateDescriptor,
 					hostnameDescriptor,
 					hardwareDescriptor,
@@ -73,6 +78,8 @@ public class InstancePropertySource implements IPropertySource {
 			return instance.getName();
 		if (id.equals(PROPERTY_ID))
 			return instance.getId();
+		if (id.equals(PROPERTY_OWNER))
+			return instance.getOwnerId();
 		if (id.equals(PROPERTY_PROFILEID))
 			return instance.getProfileId();
 		if (id.equals(PROPERTY_REALMID))
