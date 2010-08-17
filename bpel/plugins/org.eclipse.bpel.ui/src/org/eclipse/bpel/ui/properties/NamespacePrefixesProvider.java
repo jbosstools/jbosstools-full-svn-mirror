@@ -151,7 +151,6 @@ public class NamespacePrefixesProvider extends AbstractContentProvider  {
 		// sort list alphabetically on prefix name
 		Collections.sort(list,new Comparator<Object>()
 		{
-			@Override
 			public int compare(Object o1, Object o2) {
 				return ((NamespacePrefixElement)o1).prefix.compareTo(((NamespacePrefixElement)o2).prefix);
 			}
