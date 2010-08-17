@@ -1,5 +1,9 @@
 2010-08-17  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (getOwnerId): New method.
+	
+2010-08-17  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* lib/log4j-1.2.14.jar: New file.
 	* .classpath: Add log4j jar.
 	* build.properties: Ditto.

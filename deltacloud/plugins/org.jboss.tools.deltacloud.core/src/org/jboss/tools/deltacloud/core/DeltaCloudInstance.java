@@ -30,6 +30,10 @@ public class DeltaCloudInstance {
 		return instance.getId();
 	}
 	
+	public String getOwnerId() {
+		return instance.getOwnerId();
+	}
+	
 	public String getState() {
 		return instance.getState().toString();
 	}
