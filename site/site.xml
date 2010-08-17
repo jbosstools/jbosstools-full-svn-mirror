@@ -136,6 +136,12 @@
    <feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
       <category name="AllTools"/>
    </feature>
+   <feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
+      <category name="GeneralTools"/>
+   </feature>
+   <feature url="features/org.jboss.tools.deltacloud_0.0.0.jar" id="org.jboss.tools.deltacloud" version="0.0.0">
+      <category name="CloudTools"/>
+   </feature>
    <category-def name="SDKTools" label="JBoss Tools SDK">
       <description>
          JBoss Tools SDK contains plugins where an SDK package
@@ -194,6 +200,11 @@
    <category-def name="TestPerfTools" label="Test and Performance">
       <description>
          Tools used to improve testing and performance.
+      </description>
+   </category-def>
+   <category-def name="CloudTools" label="Cloud">
+      <description>
+         Tools for Cloud Development
       </description>
    </category-def>
 </site>
