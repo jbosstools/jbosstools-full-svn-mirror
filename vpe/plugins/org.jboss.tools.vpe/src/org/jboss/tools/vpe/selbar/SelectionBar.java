@@ -132,7 +132,6 @@ public class SelectionBar implements SelectionListener {
 							.getShell(),
 							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TITLE,
 							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_MESSAGE,
-//							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE,
 							VpeUIMessages.ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
 							askConfirmationOnClosingSelectionBar(), null, null);
 					if (dialog.getReturnCode() != IDialogConstants.OK_ID) {
@@ -140,8 +139,18 @@ public class SelectionBar implements SelectionListener {
 					}
 					setAskConfirmationOnClosingSelectionBar(dialog.getToggleState());
 				}
-
+				/*
+				 * Hide the selection bar
+				 */
 				setVisible(false);
+				/*
+				 * https://jira.jboss.org/browse/JBIDE-6832
+				 * Store the state to the preferences.
+				 * Later this property will be used to restore
+				 * selection bar visibility after tabs' switching.
+				 */
+				JspEditorPlugin.getDefault().getPreferenceStore().
+					setValue(IVpePreferencesPage.SHOW_SELECTION_TAG_BAR, false);
 			}
 		};
 
@@ -201,7 +210,7 @@ public class SelectionBar implements SelectionListener {
 		this.visible = visible;
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4968
-		 * Updating VPE toolbar on selection bar changes.
+		 * Updating VPE toolbar icon on selection bar changes.
 		 */
 		if (vpeController != null) {
 			vpeController.updateVpeToolbar();

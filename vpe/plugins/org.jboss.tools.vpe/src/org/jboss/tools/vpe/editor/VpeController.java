@@ -2521,8 +2521,8 @@ public class VpeController implements INodeAdapter,
 	}
 
 	/*
-	 * https://jira.jboss.org/jira/browse/JBIDE-4968 Updating VPE toolbar on
-	 * selection bar changes.
+	 * https://jira.jboss.org/jira/browse/JBIDE-4968 
+	 * Updating VPE toolbar icon on selection bar changes.
 	 */
 	public void updateVpeToolbar() {
 		visualEditor.updateShowSelectionBarItem(selectionBar.isVisible());

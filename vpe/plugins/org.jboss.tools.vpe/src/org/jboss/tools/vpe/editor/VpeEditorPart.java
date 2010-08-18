@@ -312,6 +312,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	public void setVisualMode(int type) {
 		switch (type) {
 		case VISUALSOURCE_MODE:
+			/*
+			 * https://jira.jboss.org/browse/JBIDE-6832
+			 * Restore the state after switching from Preview, for example.
+			 */
 			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			setVerticalToolbarVisible(true);
 			/*
@@ -649,9 +653,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 
 			public void nodeChanged(XModelTreeEvent event) {
 				/*
-				* Commented to fix https://jira.jboss.org/jira/browse/JBIDE-4941 Do
-			 	* not update VPE splitting, weights, tabs for current page, do it
-			 	* for newly opened ones only.
+				* Fixes https://jira.jboss.org/jira/browse/JBIDE-4941 
+				* Do not update VPE splitting, weights, tabs for current page, 
+				* do it for newly opened ones only.
 			 	*/
 //			    fillContainer(false, null);
 			    selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
