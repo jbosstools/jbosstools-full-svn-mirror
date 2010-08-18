@@ -46,6 +46,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
@@ -85,6 +86,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private Action rebootAction;
 	
 	private Map<String, Action> instanceActions;
+	private Map<String, Job> currentPerformingActions = new HashMap<String, Job>();
 	
 	private InstanceView parentView;
 
@@ -297,14 +299,16 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		private DeltaCloudInstance instance;
 		private String action;
 		private String taskName;
+		private String expectedState;
 		
 	 	public PerformInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance, 
-	 			String action, String title, String taskName) {
+	 			String action, String title, String taskName, String expectedState) {
 	 		super(title);
 	 		this.cloud = cloud;
 	 		this.instance = instance;
 	 		this.action = action;
 	 		this.taskName = taskName;
+	 		this.expectedState = expectedState;
 	 	}
 	 	
 		@Override
@@ -312,13 +316,35 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			try {
 				pm.beginTask(taskName, IProgressMonitor.UNKNOWN);
 				pm.worked(1);
+				// To handle the user starting a new action when we haven't confirmed the last one yet,
+				// cancel the previous job and then go on performing this action
+				Job job = currentPerformingActions.get(instance.getId());
+				if (job != null) {
+					job.cancel();
+					try {
+						job.join();
+					} catch (InterruptedException e) {
+						// do nothing, this is ok
+					}
+				}
+				currentPerformingActions.put(instance.getId(), this);
 				cloud.performInstanceAction(instance.getId(), action);
-				Display.getDefault().asyncExec(new Runnable() {
+				Display.getDefault().syncExec(new Runnable() {
 					@Override
 					public void run() {
-						refreshInstance(instance);				
+						while (instance != null && !(instance.getState().equals(expectedState))
+								&& !(instance.getState().equals(DeltaCloudInstance.TERMINATED))) {
+							instance = refreshInstance(instance);
+							try {
+								Thread.sleep(300);
+							} catch (InterruptedException e) {
+								break;
+							}
+						}
 					}
 				});
+			} catch (DeltaCloudException e) {
+				// do nothing..action had problem executing..perhaps illegal
 			} finally {
 				pm.done();
 			}
@@ -371,7 +397,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
 				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.START,
 						CVMessages.getString(STARTING_INSTANCE_TITLE), 
-						CVMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[]{instance.getName()}));
+						CVMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[]{instance.getName()}),
+						DeltaCloudInstance.RUNNING);
 				t.setUser(true);
 				t.schedule();
 			}
@@ -385,7 +412,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
 				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.STOP,
 						CVMessages.getString(STOPPING_INSTANCE_TITLE), 
-						CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[]{instance.getName()}));
+						CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[]{instance.getName()}),
+						DeltaCloudInstance.STOPPED);
 				t.setUser(true);
 				t.schedule();
 			}
@@ -399,7 +427,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
 				PerformInstanceActionThread t = new PerformInstanceActionThread(currCloud, instance, DeltaCloudInstance.REBOOT,
 						CVMessages.getString(REBOOTING_INSTANCE_TITLE), 
-						CVMessages.getFormattedString(REBOOTING_INSTANCE_MSG, new String[]{instance.getName()}));
+						CVMessages.getFormattedString(REBOOTING_INSTANCE_MSG, new String[]{instance.getName()}),
+						DeltaCloudInstance.RUNNING);
 				t.setUser(true);
 				t.schedule();
 			}
@@ -428,15 +457,15 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		instanceActions.put(DeltaCloudInstance.DESTROY, destroyAction);
 	}
 	
-	private void refreshInstance(DeltaCloudInstance instance) {
+	private DeltaCloudInstance refreshInstance(DeltaCloudInstance instance) {
 		DeltaCloudInstance[] instances = (DeltaCloudInstance[])contentProvider.getElements(currCloud);
 		for (int i = 0; i < instances.length; ++i) {
 			DeltaCloudInstance d = instances[i];
-			if (d == instance) {
-				currCloud.refreshInstance(d.getId());
-				break;
+			if (d.getId().equals(instance.getId())) {
+				return currCloud.refreshInstance(d.getId());
 			}
 		}
+		return null;
 	}
 	
 	private void hookDoubleClickAction() {
@@ -501,10 +530,19 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	}
 
 	public void listChanged(DeltaCloudInstance[] list) {
-		currCloud.removeInstanceListListener(parentView);
-		viewer.setInput(list);
-		currCloud.addInstanceListListener(parentView);
-		viewer.refresh();
+		// Run following under Display thread since this can be
+		// triggered by a non-display thread notifying listeners.
+		final DeltaCloudInstance[] finalList = list;
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				currCloud.removeInstanceListListener(parentView);
+				viewer.setInput(finalList);
+				currCloud.addInstanceListListener(parentView);
+				viewer.refresh();
+			}
+		});
 	}
 
 }

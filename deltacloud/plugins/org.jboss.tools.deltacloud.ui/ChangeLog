@@ -1,3 +1,26 @@
+2010-08-18  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (listChanged): Get
+	the default display as there might not be a current one for the thread.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (listChanged): Make this run
+	under Display sync thread.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java (Column): 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (listChanged): Make this run
+	under Display sync thread. 
+	(PerformInstanceActionThread): Add expected state. 
+	(PerformInstanceActionThread.run): Look for expected state or cancelled or
+	instance because low-level refreshInstance may return a new DeltaCloudInstance. 
+	TERMINATED to stop loop.  Try syncExec method of Display thread.
+	(refreshInstance): Change logic to look at id rather than comparing actual
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (getColumnText): Add
+	check for null instance. 
+	(Column): Change the column weights.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (performFinish): Fix logic
+	to start watching job. 
+	(WatchCreateJob.run): Watch job as long as it is PENDING.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (createControl): Use the
+	realm id plus its name in the combo box because the name can be duplicated.
+
 2010-08-17  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySection.java: New file.

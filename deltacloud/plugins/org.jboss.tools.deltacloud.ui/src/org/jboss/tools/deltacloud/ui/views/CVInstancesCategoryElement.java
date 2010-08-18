@@ -52,7 +52,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 			addChild(element);
 		}
 		initialized = true;
-		Display.getCurrent().asyncExec(new Runnable() {
+		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				((TreeViewer)viewer).refresh(category, false);

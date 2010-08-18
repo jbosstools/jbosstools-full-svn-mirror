@@ -186,7 +186,7 @@ public class NewInstancePage extends WizardPage {
 		for (int i = 0; i < realms.length; ++i) {
 			DeltaCloudRealm r = realms[i];
 			if (r.getState() == null || r.getState().equals(DeltaCloudRealm.AVAILABLE)) {
-				realmNames.add(r.getName());
+				realmNames.add(r.getId() + "   [" + r.getName() + "]"); //$NON-NLS-1$ //$NON-NLS-2$
 				realmIds.add(r.getId());
 			}
 		}

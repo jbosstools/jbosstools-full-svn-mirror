@@ -18,10 +18,10 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 	private DeltaCloudImage[] images;
 
 	public enum Column {
-		NAME(0, 30), 
+		NAME(0, 20), 
 		ID(1, 20), 
 		ARCH(2, 20), 
-		DESC(3, 30);
+		DESC(3, 40);
 		
 		private int column;
 		private int weight;

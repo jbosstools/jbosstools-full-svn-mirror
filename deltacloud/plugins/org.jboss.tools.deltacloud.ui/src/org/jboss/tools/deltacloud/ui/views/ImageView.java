@@ -355,10 +355,18 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	}
 
 	public void listChanged(DeltaCloudImage[] list) {
-		currCloud.removeImageListListener(parentView);
-		viewer.setInput(list);
-		currCloud.addImageListListener(parentView);
-		viewer.refresh();
+		final DeltaCloudImage[] finalList = list;
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				currCloud.removeImageListListener(parentView);
+				viewer.setInput(finalList);
+				currCloud.addImageListListener(parentView);
+				viewer.refresh();
+			}
+			
+		});
 	}
 
 }

@@ -16,6 +16,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.osgi.service.prefs.Preferences;
@@ -77,7 +78,7 @@ public class NewInstance extends Wizard {
 					boolean finished = false;
 					while (!finished && !pm.isCanceled()) {
 						DeltaCloudInstance instance = cloud.refreshInstance(instanceId);
-						if (!instance.getState().equals(DeltaCloudInstance.PENDING))
+						if (instance != null && !instance.getState().equals(DeltaCloudInstance.PENDING))
 							break;
 						Thread.sleep(400);
 					}
@@ -85,6 +86,14 @@ public class NewInstance extends Wizard {
 				} catch (Exception e) {
 					// do nothing
 				} finally {
+					if (!pm.isCanceled()) {
+						// cause a refresh to occur to all instance watchers
+						// NOTE: this could be done also by getting current
+						// instances and refreshing the one instance, but this
+						// method is already being run in a job and we might
+						// as well get updates for all instances
+						cloud.getInstances();
+					}
 					pm.done();
 				}
 				return Status.OK_STATUS;
@@ -134,9 +143,9 @@ public class NewInstance extends Wizard {
 			instance = cloud.createInstance(name, imageId, realmId, profileId, memory, storage);
 			if (instance != null)
 				result = true;
-			final String instanceId = instance.getId();
-			final String instanceName = name;
-			if (instance != null && !instance.getState().equals(DeltaCloudInstance.PENDING)) {
+			if (instance != null && instance.getState().equals(DeltaCloudInstance.PENDING)) {
+				final String instanceId = instance.getId();
+				final String instanceName = name;
 				Job job = new WatchCreateJob(WizardMessages.getString(STARTING_INSTANCE_TITLE),
 						cloud, instanceId, instanceName);
 				job.setUser(true);

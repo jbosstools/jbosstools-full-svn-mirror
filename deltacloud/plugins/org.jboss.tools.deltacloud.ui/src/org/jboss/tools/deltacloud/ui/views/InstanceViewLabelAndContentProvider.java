@@ -18,10 +18,10 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 	private DeltaCloudInstance[] instances;
 
 	public enum Column {
-		NAME(0, 30), 
+		NAME(0, 20), 
 		ID(1, 20), 
 		STATUS(2, 20), 
-		HOSTNAME(3, 30);
+		HOSTNAME(3, 40);
 		
 		private int column;
 		private int weight;
@@ -88,15 +88,17 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 	public String getColumnText(Object element, int columnIndex) {
 		Column c = Column.getColumn(columnIndex);
 		DeltaCloudInstance i = (DeltaCloudInstance)element;
-		switch (c) {
-		case NAME:
-			return i.getName();
-		case ID:
-			return i.getId();
-		case STATUS:
-			return i.getState();
-		case HOSTNAME:
-			return i.getHostName();
+		if (i != null) {
+			switch (c) {
+			case NAME:
+				return i.getName();
+			case ID:
+				return i.getId();
+			case STATUS:
+				return i.getState();
+			case HOSTNAME:
+				return i.getHostName();
+			}
 		}
 		return "";
 	}
