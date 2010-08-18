@@ -34,7 +34,7 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("components/block/dd.html"); //$NON-NLS-1$
 	}
 
-	public void _testDiv() throws Throwable {
+	public void testDiv() throws Throwable {
 		performContentTest("components/block/div.html"); //$NON-NLS-1$
 	}
 
@@ -138,8 +138,8 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 	    performInvisibleTagTest("components/core/style.html", "style"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	public void _testTitle() throws Throwable {
-		performContentTest("components/core/title.html"); //$NON-NLS-1$
+	public void testTitle() throws Throwable {
+		performInvisibleTagTest("components/core/title.html","title"); //$NON-NLS-1$
 	}
 
 	/*
@@ -234,7 +234,7 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("components/table/colgroup.html"); //$NON-NLS-1$
 	}
 
-	public void _testTable() throws Throwable {
+	public void testTable() throws Throwable {
 		performContentTest("components/table/table.html"); //$NON-NLS-1$
 	}
 
@@ -242,7 +242,7 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("components/table/tbody.html"); //$NON-NLS-1$
 	}
 
-	public void _testTd() throws Throwable {
+	public void testTd() throws Throwable {
 		performContentTest("components/table/td.html"); //$NON-NLS-1$
 	}
 
@@ -258,7 +258,7 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("components/table/thead.html"); //$NON-NLS-1$
 	}
 
-	public void _testTr() throws Throwable {
+	public void testTr() throws Throwable {
 		performContentTest("components/table/tr.html"); //$NON-NLS-1$
 	}
 
@@ -310,7 +310,7 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("components/text/em.html"); //$NON-NLS-1$
 	}
 
-	public void _testHr() throws Throwable {
+	public void testHr() throws Throwable {
 		performContentTest("components/text/hr.html"); //$NON-NLS-1$
 	}
 
@@ -411,7 +411,7 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("components/other/wbr.html"); //$NON-NLS-1$
 	}
 	
-	public void _testXmp() throws Throwable {
+	public void testXmp() throws Throwable {
 		performContentTest("components/other/xmp.xhtml"); //$NON-NLS-1$
 	}
 

@@ -1,6 +1,6 @@
 <tests>
 	<test id="div">
-		<DIV ALIGN="left" ID="div" CLASS="divClass" STYLE="background: none repeat scroll 0% 0% grey; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; color: white; -moz-user-modify: read-write;">
+		<DIV ALIGN="left" ID="div" CLASS="divClass" STYLE="background: grey none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; color: white; -moz-user-modify: read-write;">
 <SPAN CLASS="vpe-text">
 some text
 </SPAN>

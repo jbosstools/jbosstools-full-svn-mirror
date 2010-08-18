@@ -1,10 +1,13 @@
 <tests>
 	<test id="table">
-		<TABLE WIDTH="400" CELLSPACING="0" CELLPADDING="5" BORDER="0"
+		<TABLE CELLSPACING="0" CELLPADDING="5" BORDER="0" WIDTH="400"
 			ID="table" STYLE="-moz-user-modify: read-write;">
 			<COLGROUP WIDTH="150" STYLE="-moz-user-modify: read-write;">
+				<BR VPE:PSEUDO-ELEMENT="yes"
+					STYLE="font-style: italic; color: green; -moz-user-modify: read-only;" />
+
 			</COLGROUP>
-			<COLGROUP WIDTH="50" SPAN="9" ALIGN="center"
+			<COLGROUP ALIGN="center" SPAN="9" WIDTH="50"
 				STYLE="-moz-user-modify: read-write;">
 				<COL SPAN="5" STYLE="-moz-user-modify: read-only;" />
 
@@ -13,26 +16,26 @@
 			</COLGROUP>
 			<TR STYLE="-moz-user-modify: read-write;">
 				<TD
-					STYLE="background: none repeat scroll 0% 0% rgb(176, 178, 142); -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
-					<SPAN>
+					STYLE="background: rgb(176, 178, 142) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
+					<SPAN CLASS="vpe-text">
 						Some Text
 </SPAN>
 				</TD>
 				<TD
-					STYLE="background: none repeat scroll 0% 0% rgb(204, 204, 204); -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
-					<SPAN>
+					STYLE="background: rgb(204, 204, 204) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
+					<SPAN CLASS="vpe-text">
 						Some Text
 </SPAN>
 				</TD>
 				<TD
-					STYLE="background: none repeat scroll 0% 0% rgb(176, 178, 142); -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
-					<SPAN>
+					STYLE="background: rgb(176, 178, 142) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
+					<SPAN CLASS="vpe-text">
 						Some Text
 </SPAN>
 				</TD>
 				<TD
-					STYLE="background: none repeat scroll 0% 0% rgb(204, 204, 204); -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
-					<SPAN>
+					STYLE="background: rgb(204, 204, 204) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; -moz-user-modify: read-write;">
+					<SPAN CLASS="vpe-text">
 						Some Text
 </SPAN>
 				</TD>
