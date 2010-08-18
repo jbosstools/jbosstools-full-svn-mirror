@@ -75,15 +75,16 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	public static final long NS_ERROR_FAILURE = 0x80004005L;
 	
 	static {
-		XULRUNNER_BUNDLE = (new StringBuffer("org.mozilla.xulrunner")) //$NON-NLS-1$
-			.append(".").append(Platform.getWS()) //$NON-NLS-1$
-			.append(".").append(Platform.getOS()) //$NON-NLS-1$
-			.append(".").append(Platform.getOSArch()) //$NON-NLS-1$
-			.toString();
-		
+		StringBuffer buff = new StringBuffer("org.mozilla.xulrunner");
+		buff.append(".").append(Platform.getWS()) //$NON-NLS-1$
+			.append(".").append(Platform.getOS()); //$NON-NLS-1$
+		if(! Platform.OS_MACOSX.equals(Platform.getOS())) {
+			buff.append(Platform.getOSArch());
+		}
+		XULRUNNER_BUNDLE = buff.toString();
 		mozilla = Mozilla.getInstance();
 	}
-	
+
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
 //	    initXulRunner();
 	    if(Platform.OS_MACOSX.equals(Platform.getOS())){
