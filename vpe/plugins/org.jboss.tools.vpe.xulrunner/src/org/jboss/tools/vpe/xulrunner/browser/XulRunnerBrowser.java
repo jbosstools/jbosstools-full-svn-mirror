@@ -79,7 +79,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		buff.append(".").append(Platform.getWS()) //$NON-NLS-1$
 			.append(".").append(Platform.getOS()); //$NON-NLS-1$
 		if(! Platform.OS_MACOSX.equals(Platform.getOS())) {
-			buff.append(Platform.getOSArch());
+			buff.append(".").append(Platform.getOSArch());
 		}
 		XULRUNNER_BUNDLE = buff.toString();
 		mozilla = Mozilla.getInstance();
