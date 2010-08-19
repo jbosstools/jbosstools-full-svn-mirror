@@ -37,6 +37,7 @@
         </xsd:sequence>
         <xsd:attribute name="case-sensitive" type="vpe:VPE-BOOLEAN" use="optional"/>
         <xsd:attribute name="name" use="required" type="xsd:string"/>
+        <xsd:attribute name="docbook" use="optional" type="vpe:VPE-BOOLEAN"/>
         <xsd:attribute name="haveVisualPreview" use="optional" type="vpe:VPE-BOOLEAN"/>
     </xsd:complexType>
 <!--  -->  
@@ -322,12 +323,11 @@
     </xsd:complexType>
 <!--  -->
     <xsd:complexType name="HTML_SPAN" mixed="true">
-        <xsd:choice maxOccurs="unbounded">
-           
+        <xsd:sequence maxOccurs="unbounded">
             <xsd:element name="value" type="vpe:VALUE" minOccurs="0"/>
             <xsd:element name="copy" type="vpe:COPY" minOccurs="0"/>
             <xsd:element name="input" type="vpe:HTML_INPUT" minOccurs="0" form="unqualified" />
-        </xsd:choice>
+        </xsd:sequence>
         <xsd:attribute name="style" type="xsd:string" use="optional"/>
         <xsd:attribute name="class" type="xsd:string" use="optional"/>
         <xsd:attribute name="title" type="xsd:string" use="optional"/>
@@ -346,6 +346,7 @@
         <xsd:attribute name="checked" type="xsd:string" use="optional"/>
         <xsd:attribute name="border" type="xsd:string" use="optional"/>
         <xsd:attribute name="disabled" type="xsd:string" use="optional"/>
+        <xsd:attribute name="id" type="xsd:string" use="optional"/>
     </xsd:complexType>
 <!--  -->
     <xsd:complexType name="HTML_DIV" mixed="true">
@@ -499,6 +500,8 @@
         <xsd:attribute name="class" type="xsd:string" use="optional"/>
         <xsd:attribute name="for" type="xsd:string" use="optional"/>
         <xsd:attribute name="title" type="xsd:string" use="optional"/>
+         <xsd:attribute name="id" type="xsd:string" use="optional"/>
+         <xsd:attribute name="dir" type="xsd:string" use="optional"/>
     </xsd:complexType>
 <!--  -->
     <xsd:complexType name="HTML_BUTTON" mixed="true">
