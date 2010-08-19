@@ -20,8 +20,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.IEditorPart;
-import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
+import org.jboss.tools.smooks.model.ISmooksModelProvider;
 
 /**
  * @author Dart

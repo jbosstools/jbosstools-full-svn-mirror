@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.xsd.XSDElementDeclaration;
 import org.jboss.tools.smooks.configuration.SmooksModelUtils;
+import org.jboss.tools.smooks.configuration.editors.file.AbstractFileSelectionWizardPage;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
@@ -77,7 +78,6 @@ public class XMLTemplateCreationWizardPage extends AbstractFileSelectionWizardPa
 	 * @seeorg.jboss.tools.smooks.configuration.editors.xml.
 	 * AbstractFileSelectionWizardPage#loadedTheObject(java.lang.String)
 	 */
-	@Override
 	protected Object loadedTheObject(String path) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
@@ -144,78 +144,79 @@ public class XMLTemplateCreationWizardPage extends AbstractFileSelectionWizardPa
 	 * AbstractFileSelectionWizardPage
 	 * #createFilePathText(org.eclipse.swt.widgets.Composite)
 	 */
-	@Override
+//	@Override
 	protected Text createFilePathText(Composite parent) {
-		fileTextComposite = new Composite(parent, SWT.NONE);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.grabExcessHorizontalSpace = true;
-		fileTextComposite.setLayoutData(gd);
-		GridLayout xsdtgl = new GridLayout();
-		xsdtgl.marginWidth = 0;
-		xsdtgl.marginHeight = 0;
-		xsdtgl.numColumns = 2;
-		fileTextComposite.setLayout(xsdtgl);
-
-		final Text fileText = new Text(fileTextComposite, SWT.BORDER);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		fileText.setLayoutData(gd);
-		fileText.addModifyListener(new ModifyListener() {
-
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.
-			 * swt.events.ModifyEvent)
-			 */
-			public void modifyText(ModifyEvent e) {
-				reasourceLoaded = false;
-				if (tableViewer != null) {
-					tableViewer.setInput(Collections.emptyList());
-				}
-			}
-
-		});
-		gd.grabExcessHorizontalSpace = true;
-
-		loadXSDButton = new Button(fileTextComposite, SWT.NONE);
-		loadXSDButton.setText(Messages.XMLTemplateCreationWizardPage_Button_Load);
-		loadXSDButton.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				parsingError = null;
-				reasourceLoaded = false;
-				if (fileText.getText() == null || fileText.getText().length() == 0) {
-					changeWizardPageStatus();
-					return;
-				}
-				
-				List<String> list;
-				try {
-					list = loadElement(fileText.getText());
-					if (list == null || list.isEmpty()) {
-						setErrorMessage(Messages.XMLTemplateCreationWizardPage_XSDParsingError1);
-					} else {
-						tableViewer.setInput(list);
-						reasourceLoaded = true;
-					}
-				} catch (InvocationTargetException e1) {
-					parsingError = e1.getTargetException();
-					while(parsingError instanceof InvocationTargetException){
-						parsingError = ((InvocationTargetException)parsingError).getTargetException();
-					}
-				} catch (IOException e1) {
-					parsingError = e1;
-				} catch (ModelBuilderException e1) {
-					parsingError = e1;
-				}
-				changeWizardPageStatus();
-			}
-
-		});
-		return fileText;
+//		fileTextComposite = new Composite(parent, SWT.NONE);
+//		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+//		gd.grabExcessHorizontalSpace = true;
+//		fileTextComposite.setLayoutData(gd);
+//		GridLayout xsdtgl = new GridLayout();
+//		xsdtgl.marginWidth = 0;
+//		xsdtgl.marginHeight = 0;
+//		xsdtgl.numColumns = 2;
+//		fileTextComposite.setLayout(xsdtgl);
+//
+//		final Text fileText = new Text(fileTextComposite, SWT.BORDER);
+//		gd = new GridData(GridData.FILL_HORIZONTAL);
+//		fileText.setLayoutData(gd);
+//		fileText.addModifyListener(new ModifyListener() {
+//
+//			/*
+//			 * (non-Javadoc)
+//			 * 
+//			 * @see
+//			 * org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.
+//			 * swt.events.ModifyEvent)
+//			 */
+//			public void modifyText(ModifyEvent e) {
+//				reasourceLoaded = false;
+//				if (tableViewer != null) {
+//					tableViewer.setInput(Collections.emptyList());
+//				}
+//			}
+//
+//		});
+//		gd.grabExcessHorizontalSpace = true;
+//
+//		loadXSDButton = new Button(fileTextComposite, SWT.NONE);
+//		loadXSDButton.setText(Messages.XMLTemplateCreationWizardPage_Button_Load);
+//		loadXSDButton.addSelectionListener(new SelectionAdapter() {
+//
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				super.widgetSelected(e);
+//				parsingError = null;
+//				reasourceLoaded = false;
+//				if (fileText.getText() == null || fileText.getText().length() == 0) {
+//					changeWizardPageStatus();
+//					return;
+//				}
+//				
+//				List<String> list;
+//				try {
+//					list = loadElement(fileText.getText());
+//					if (list == null || list.isEmpty()) {
+//						setErrorMessage(Messages.XMLTemplateCreationWizardPage_XSDParsingError1);
+//					} else {
+//						tableViewer.setInput(list);
+//						reasourceLoaded = true;
+//					}
+//				} catch (InvocationTargetException e1) {
+//					parsingError = e1.getTargetException();
+//					while(parsingError instanceof InvocationTargetException){
+//						parsingError = ((InvocationTargetException)parsingError).getTargetException();
+//					}
+//				} catch (IOException e1) {
+//					parsingError = e1;
+//				} catch (ModelBuilderException e1) {
+//					parsingError = e1;
+//				}
+//				changeWizardPageStatus();
+//			}
+//
+//		});
+//		return fileText;
+		return null;
 	}
 
 	private List<String> loadElement(String path) throws InvocationTargetException, IOException, ModelBuilderException {

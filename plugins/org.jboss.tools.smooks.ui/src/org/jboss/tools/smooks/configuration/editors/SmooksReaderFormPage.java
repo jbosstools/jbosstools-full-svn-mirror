@@ -10,56 +10,35 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
-
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileInfo;
-import org.eclipse.core.filesystem.IFileStore;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.ui.JavaUI;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.ICheckStateListener;
-import org.eclipse.jface.viewers.ICheckStateProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableColorProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -67,14 +46,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -85,17 +59,14 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.ide.IDE;
 import org.jboss.tools.smooks.configuration.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.input.InputSourceType;
-import org.jboss.tools.smooks.configuration.editors.input.InputType;
+import org.jboss.tools.smooks.configuration.editors.input.InputTaskPanelContributor;
+import org.jboss.tools.smooks.configuration.editors.input.InputTaskPanelContributorFactory;
 import org.jboss.tools.smooks.configuration.editors.input.InvalidInputSourceTypeException;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
-import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
-import org.jboss.tools.smooks.configuration.editors.wizard.StructuredDataSelectionWizard;
-import org.jboss.tools.smooks.configuration.editors.wizard.ViewerInitorStore;
-import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.editor.ISourceSynchronizeListener;
+import org.jboss.tools.smooks.model.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.ICoreFactory;
 import org.jboss.tools.smooks.model.core.ICorePackage;
@@ -149,15 +120,11 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		});
 	}
 
-	private CheckboxTableViewer inputDataViewer;
 	private TreeViewer inputModelViewer;
 	private Combo readerCombo;
 	private Composite readerConfigComposite;
-//	private ModelPanelCreator modelPanelCreator;
-	protected boolean lockCheck = false;
-	private Button removeInputDataButton;
-	private Button addInputDataButton;
 	private ScrolledPageBook scrolledPageBook;
+	private InputTaskPanelContributor sourceTypeConfigurationContributor;
 
 	public SmooksReaderFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
@@ -189,9 +156,7 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		final ScrolledForm form = managedForm.getForm();
 		FormToolkit toolkit = managedForm.getToolkit();
 		form.setText(""); //$NON-NLS-1$
-		// toolkit.decorateFormHeading(form.getForm());
-		// // create master details UI
-		// createMasterDetailBlock(managedForm);
+
 		Composite leftComposite = toolkit.createComposite(form.getBody());
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.widthHint = 300;
@@ -212,9 +177,8 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		rightComposite.setLayout(rgl);
 
 		createReaderSection(toolkit, leftComposite);
-		createInputDataSection(toolkit, rightComposite);
-		createReaderConfigSection(toolkit, leftComposite);
 		createInputModelViewerSection(toolkit, rightComposite);
+		createReaderConfigSection(toolkit, leftComposite);
 
 		handleReaderCombo(readerCombo);
 
@@ -224,19 +188,6 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		gridLayout.horizontalSpacing = 20;
 		gridLayout.makeColumnsEqualWidth = true;
 		form.getBody().setLayout(gridLayout);
-
-		refreshInputDataButtons();
-	}
-	
-	private void refreshInputDataButtons() {
-		this.addInputDataButton.setEnabled(true);
-		this.removeInputDataButton.setEnabled(true);
-
-		String inputType = getSmooksModelProvider().getInputType();
-		if (inputType == null || inputType.trim().equals("")) { //$NON-NLS-1$
-			this.addInputDataButton.setEnabled(false);
-			this.removeInputDataButton.setEnabled(false);
-		}
 	}
 	
 	private void createInputModelViewerSection(FormToolkit toolkit, Composite parent) {
@@ -257,17 +208,10 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		Hyperlink refreshLink = toolkit.createHyperlink(mainContainer, Messages.SmooksReaderFormPage_RefreshLinkLabel,
 				SWT.NONE);
 		refreshLink.addHyperlinkListener(new IHyperlinkListener() {
-
 			public void linkExited(HyperlinkEvent e) {
-				// TODO Auto-generated method stub
-
 			}
-
 			public void linkEntered(HyperlinkEvent e) {
-				// TODO Auto-generated method stub
-
 			}
-
 			public void linkActivated(HyperlinkEvent e) {
 				refreshInputModelView();
 			}
@@ -289,18 +233,15 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 			public void doubleClick(DoubleClickEvent event) {
 			}
 		});
-		inputModelViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
-				// currentSelection = ((IStructuredSelection)
-				// event.getSelection()).getFirstElement();
-			}
-		});
 
 		refreshInputModelView();
 
 	}
 	
 	private void refreshInputModelView() {
+		inputModelViewer.setInput(new ArrayList<Object>());
+		inputModelViewer.refresh();
+		
 		if (this.getManagedForm() != null) {
 			this.getManagedForm().getMessageManager().removeAllMessages();
 		}
@@ -352,13 +293,14 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		section.setClient(scrolledPageBook);
 
 		readerConfigComposite = scrolledPageBook.createPage(scrolledPageBook);
-		scrolledPageBook.showPage(scrolledPageBook);
-
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 2;
-		readerConfigComposite.setLayout(gl);
 
 		initReaderConfigSection();
+
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 1;
+		readerConfigComposite.setLayout(layout);
+		readerConfigComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		scrolledPageBook.showPage(scrolledPageBook);
 	}
 	
 	private void initReaderConfigSection() {
@@ -374,9 +316,11 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 	private void addInputConfigControls() {
 		disposeCompositeControls(readerConfigComposite, null);
 		
-		getCurrentInputType().getConfigurationContributor().addInputConfigControls(this, readerConfigComposite);
+		InputTaskPanelContributorFactory taskPanelContributorFactory = getCurrentInputType().getTaskPanelContributorFactory();
+		sourceTypeConfigurationContributor = taskPanelContributorFactory.newInstance(getManagedForm().getToolkit(), this, getSmooksModel());
+		sourceTypeConfigurationContributor.setInputSourceConfigComposite(readerConfigComposite);
+		sourceTypeConfigurationContributor.addInputSourceTypeConfigControls();
 		
-		readerConfigComposite.layout();
 		scrolledPageBook.reflow(false);
 	}
 	
@@ -408,251 +352,16 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		} catch (InvalidInputSourceTypeException e) {
 			return InputSourceType.NONE;
 		}
-	}
-	
-	protected void createInputDataSection(FormToolkit toolkit, Composite parent) {
-		Section section = toolkit.createSection(parent, Section.TITLE_BAR | Section.DESCRIPTION | Section.TWISTIE
-				| Section.EXPANDED);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		section.setLayoutData(gd);
-		section.setText(Messages.SmooksReaderFormPage_InputDataSectionTitle);
-		section.setDescription(Messages.SmooksReaderFormPage_InputDataSectionDes);
-		FillLayout flayout = new FillLayout();
-		section.setLayout(flayout);
-
-		Composite mainComposite = toolkit.createComposite(section, SWT.NONE);
-		GridLayout gl = new GridLayout();
-		gl.numColumns = 2;
-		mainComposite.setLayout(gl);
-		section.setClient(mainComposite);
-
-		Composite tableComposite = toolkit.createComposite(mainComposite, SWT.NONE);
-		FillLayout fillLayout = new FillLayout();
-		fillLayout.marginHeight = 1;
-		fillLayout.marginWidth = 1;
-		gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = 70;
-		tableComposite.setLayoutData(gd);
-		tableComposite.setBackground(GraphicsConstants.BORDER_CORLOR);
-		tableComposite.setLayout(fillLayout);
-
-		inputDataViewer = CheckboxTableViewer.newCheckList(tableComposite, SWT.MULTI | SWT.FULL_SELECTION);
-		// inputDataViewer.set
-		inputDataViewer.setCheckStateProvider(new ICheckStateProvider() {
-
-			public boolean isGrayed(Object element) {
-				return !isValidInputType((InputType) element);
-			}
-
-			public boolean isChecked(Object element) {
-				if (element instanceof InputType) {
-					return ((InputType) element).isActived();
-				}
-				return false;
-			}
-		});
-		inputDataViewer.addCheckStateListener(new ICheckStateListener() {
-			
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				if (lockCheck)
-					return;
-				boolean checked = event.getChecked();
-				InputType inputType = (InputType) event.getElement();
-				if (!isValidInputType(inputType)) {
-					lockCheck = true;
-					inputDataViewer.setChecked(inputType, false);
-					lockCheck = false;
-					return;
-				}
-				CompoundCommand compoundCommand = new CompoundCommand();
-				if (checked) {
-					IParam param = SmooksUIUtils.getInputTypeAssociatedParamType(inputType,
-							getSmooksConfigResourceList());
-					if (param != null) {
-						inputType.setActived(checked);
-						String value = SmooksModelUtils.INPUT_ACTIVE_TYPE;
-						Command c = SetCommand.create(getEditingDomain(), param,
-								ICorePackage.Literals.PARAM__TYPE, value);
-						if (c.canExecute())
-							compoundCommand.append(c);
-					}
-
-					Object[] checkedObjects = inputDataViewer.getCheckedElements();
-					for (int i = 0; i < checkedObjects.length; i++) {
-						InputType type = (InputType) checkedObjects[i];
-						if (type == inputType) {
-							continue;
-						}
-						type.setActived(!checked);
-						IParam param1 = SmooksUIUtils.getInputTypeAssociatedParamType(type,
-								getSmooksConfigResourceList());
-						if (param1 != null) {
-							String value1 = SmooksModelUtils.INPUT_DEACTIVE_TYPE;
-							Command c1 = SetCommand.create(getEditingDomain(), param1,
-									ICorePackage.Literals.PARAM__TYPE, value1);
-							compoundCommand.append(c1);
-						}
-
-						lockCheck = true;
-						inputDataViewer.setChecked(type, false);
-						lockCheck = false;
-					}
-
-				} else {
-					IParam param = SmooksUIUtils.getInputTypeAssociatedParamType(inputType,
-							getSmooksConfigResourceList());
-					if (param != null) {
-						String value = SmooksModelUtils.INPUT_DEACTIVE_TYPE;
-						Command c = SetCommand.create(getEditingDomain(), param,
-								ICorePackage.Literals.PARAM__TYPE, value);
-						compoundCommand.append(c);
-					}
-				}
-				try {
-					getEditingDomain().getCommandStack().execute(compoundCommand);
-				} catch (Exception e) {
-					// e.printStackTrace();
-				}
-
-				// refreshInputModelView();
-			}
-		});
-		inputDataViewer.addDoubleClickListener(new IDoubleClickListener() {
-
-			public void doubleClick(DoubleClickEvent event) {
-				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-				Object element = selection.getFirstElement();
-				if (element instanceof InputType) {
-					String type = ((InputType) element).getType();
-					String filePath = ((InputType) element).getPath();
-					if (type != null && filePath != null) {
-						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
-							IFile file = ((IFileEditorInput) getEditorInput()).getFile();
-							IJavaProject javaProject = JavaCore.create(file.getProject());
-							if (javaProject != null) {
-								try {
-									if (filePath.endsWith("[]")) { //$NON-NLS-1$
-										filePath = filePath.substring(0, filePath.length() - 2);
-									}
-									IJavaElement result = javaProject.findType(filePath);
-									if (result != null)
-										JavaUI.openInEditor(result);
-									else {
-										MessageDialog.openError(getSite().getWorkbenchWindow().getShell(),
-												Messages.SmooksReaderFormPage_CantFindTypeErrorTitle,
-												"Can't find type \"" + filePath + "\" in \"" //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-														+ javaProject.getProject().getName() + "\" project."); //$NON-NLS-1$
-									}
-								} catch (Exception e) {
-
-								}
-							}
-						} else {
-							try {
-								filePath = SmooksUIUtils.parseFilePath(filePath);
-								if (filePath != null) {
-									IFileStore fileStore = EFS.getLocalFileSystem().getStore(new Path(filePath));
-									IFileInfo fetchInfo = fileStore.fetchInfo();
-									if (!fetchInfo.isDirectory() && fetchInfo.exists()) {
-										IWorkbenchWindow window = getSite().getWorkbenchWindow();
-										IWorkbenchPage page = window.getActivePage();
-										try {
-											IDE.openEditorOnFileStore(page, fileStore);
-										} catch (PartInitException e) {
-											MessageDialog.open(MessageDialog.ERROR, window.getShell(),
-													Messages.SmooksReaderFormPage_OpenFileErrorTitle,
-													"Can't open the file : '" + filePath + "'", SWT.SHEET); //$NON-NLS-1$ //$NON-NLS-2$
-										}
-									} else {
-									}
-								}
-							} catch (Exception e) {
-								MessageDialog.open(MessageDialog.ERROR, getSite().getWorkbenchWindow().getShell(),
-										Messages.SmooksReaderFormPage_OpenFileErrorTitle,
-										"Can't open the file : '" + filePath + "'", SWT.SHEET); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-							}
-						}
-					}
-				}
-			}
-		});
-		TableColumn header = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
-		header.setText(Messages.SmooksReaderFormPage_TypeColumnText);
-		header.setWidth(100);
-		TableColumn pathColumn = new TableColumn(inputDataViewer.getTable(), SWT.NONE);
-		pathColumn.setText(Messages.SmooksReaderFormPage_PathColumnText);
-		pathColumn.setWidth(300);
-
-		// TableColumn extColumn = new TableColumn(inputDataViewer.getTable(),
-		// SWT.NONE);
-		// extColumn.setText("Extension Paramers");
-		// extColumn.setWidth(400);
-		inputDataViewer.setContentProvider(new ExtentionInputContentProvider());
-		inputDataViewer.setLabelProvider(new InputDataViewerLabelProvider());
-		inputDataViewer.getTable().setHeaderVisible(true);
-		inputDataViewer.getTable().setLinesVisible(true);
-		ISmooksModelProvider provider = getSmooksModelProvider();
-		if (provider != null) {
-			inputDataViewer.setInput(SmooksUIUtils.getInputTypeList(getSmooksConfigResourceList().getModelRoot()));
-		}
-		Composite buttonComposite = toolkit.createComposite(mainComposite, SWT.NONE);
-		gd = new GridData(GridData.FILL_VERTICAL);
-		buttonComposite.setLayoutData(gd);
-		GridLayout l = new GridLayout();
-		buttonComposite.setLayout(l);
-
-		addInputDataButton = toolkit.createButton(buttonComposite, Messages.SmooksReaderFormPage_AddButtonLabel,
-				SWT.FLAT);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		addInputDataButton.setLayoutData(gd);
-		addInputDataButton.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				showInputDataWizard();
-			}
-
-		});
-
-		removeInputDataButton = toolkit.createButton(buttonComposite, Messages.SmooksReaderFormPage_DeleteButtonLabel,
-				SWT.FLAT);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		removeInputDataButton.setLayoutData(gd);
-		removeInputDataButton.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) inputDataViewer.getSelection();
-				if (selection != null) {
-					List<?> inputs = selection.toList();
-					ISmooksModelProvider smooksModelProvider = getSmooksModelProvider();
-					for (Iterator<?> iterator = inputs.iterator(); iterator.hasNext();) {
-						InputType input = (InputType) iterator.next();
-						SmooksUIUtils.removeInputType(input, smooksModelProvider);
-					}
-					if (!inputs.isEmpty()) {
-						List<?> viewerInput = (List<?>) inputDataViewer.getInput();
-						viewerInput.removeAll(inputs);
-						// inputTypeChanged();
-						if (inputDataViewer != null) {
-							inputDataViewer.refresh();
-						}
-					}
-				}
-			}
-		});
-	}
-	
+	}	
 	
 	protected boolean handleInputParamChange(Command command) {
 		Collection<?> affectedObjects = command.getAffectedObjects();
 		boolean refreshInputModel = false;
-		for (Iterator<?> iterator2 = affectedObjects.iterator(); iterator2.hasNext();) {
-			Object object = (Object) iterator2.next();
-//			if (object instanceof AbstractReader) {
-//				refreshInputModel = true;
-//				break;
-//			}
-			if (object instanceof IParam) {
-				if (SmooksUIUtils.isInputParamType((IParam) object)) {
+		
+		for (Object affectedObject : affectedObjects) {
+
+			if (affectedObject instanceof IParam) {
+				if (InputSourceType.isValidName(((IParam)affectedObject).getName())) {
 					refreshInputModel = true;
 					break;
 				}
@@ -665,14 +374,9 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 				deletedObjs = ((RemoveCommand) command).getCollection();
 			}
 			if (deletedObjs != null) {
-				for (Iterator<?> iterator = deletedObjs.iterator(); iterator.hasNext();) {
-					Object object2 = (Object) iterator.next();
-//					if (object2 instanceof AbstractReader) {
-//						refreshInputModel = true;
-//						break;
-//					}
-					if (object2 instanceof IParam) {
-						if (SmooksUIUtils.isInputParamType((IParam) object2)) {
+				for (Object deletedObject : deletedObjs) {
+					if (deletedObject instanceof IParam) {
+						if (InputSourceType.isValidName(((IParam)deletedObject).getName())) {
 							refreshInputModel = true;
 							break;
 						}
@@ -694,24 +398,8 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 		return getSmooksModelProvider().getEditingDomain();
 	}
 
-	protected Model<SmooksModel> getSmooksConfigResourceList() {
+	protected Model<SmooksModel> getSmooksModel() {
 		return getSmooksModelProvider().getSmooksModel();
-	}
-
-	protected boolean isValidInputType(InputType element) {
-		if (element == null) {
-			// not specified is OK...
-			return true;
-		}
-		
-		String type = element.getType();
-		int selectionIndex = readerCombo.getSelectionIndex();
-
-		try {
-			return InputSourceType.isValidIndexNamePair(selectionIndex, type);
-		} catch (InvalidInputSourceTypeException e) {
-			return false;
-		}
 	}
 
 	
@@ -817,16 +505,16 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 
 		CompoundCommand compoundCommand = new CompoundCommand();
 
-		IGlobalParams params = getSmooksConfigResourceList().getModelRoot().getParams();
+		IGlobalParams params = getSmooksModel().getModelRoot().getParams();
 		if (params == null) {
 			params = ICoreFactory.eINSTANCE.createGlobalParams();
-			Command addparamsCommand = SetCommand.create(getEditingDomain(), getSmooksConfigResourceList().getModelRoot(),
+			Command addparamsCommand = SetCommand.create(getEditingDomain(), getSmooksModel().getModelRoot(),
 					ICorePackage.Literals.PARAMS, params);
 			if (addparamsCommand.canExecute())
 				compoundCommand.append(addparamsCommand);
 		}
 
-		IParam param = SmooksUIUtils.getInputTypeParam(getSmooksConfigResourceList().getModelRoot());
+		IParam param = SmooksUIUtils.getInputTypeParam(getSmooksModel().getModelRoot());
 		if (param == null) {
 			// add new one
 			param = ICoreFactory.eINSTANCE.createParam();
@@ -857,20 +545,15 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 
 		addInputConfigControls();		
 		
-		deactiveAllInputFile(compoundCommand);
 		if (!compoundCommand.isEmpty() && compoundCommand.canExecute()) {
 			getEditingDomain().getCommandStack().execute(compoundCommand);
 		}
 
-		if (inputDataViewer != null) {
-			inputDataViewer.refresh();
-		}
 		refreshInputModelView();
-		refreshInputDataButtons();
 	}
 	
 	private Command createRemoveReaderCommand() {
-		Model<SmooksModel> rlist = getSmooksConfigResourceList();
+		Model<SmooksModel> rlist = getSmooksModel();
 //		List<AbstractReader> readerList = rlist.getAbstractReader();
 		CompoundCommand compoundCommand = new CompoundCommand();
 //		for (Iterator<?> iterator = readerList.iterator(); iterator.hasNext();) {
@@ -889,118 +572,8 @@ public class SmooksReaderFormPage extends FormPage implements ISourceSynchronize
 //		}
 		return compoundCommand;
 	}
-	
-	protected void showInputDataWizard() {
-		CompoundCommand compoundCommand = new CompoundCommand();
-		// SmooksGraphicsExtType extType = getSmooksGraphicsExtType();
-		String inputType = getSmooksModelProvider().getInputType();
-		List<InputType> inputTypes = null;
-		Model<SmooksModel> smooksModel =  getSmooksConfigResourceList();
-		SmooksModel rootModel = smooksModel.getModelRoot();
-		if (inputType == null || SmooksModelUtils.INPUT_TYPE_CUSTOME.equals(inputType) || inputType.trim().equals("")) { //$NON-NLS-1$
-			StructuredDataSelectionWizard wizard = new StructuredDataSelectionWizard();
-			wizard.setInput(getEditorInput());
-			wizard.setSite(getEditorSite());
-			wizard.setForcePreviousAndNextButtons(true);
-			StructuredDataSelectionWizardDailog dialog = new StructuredDataSelectionWizardDailog(getEditorSite()
-					.getShell(), wizard);
-
-			if (dialog.show() == Dialog.OK) {
-				String type = dialog.getType();
-				String path = dialog.getPath();
-				Properties pros = dialog.getProperties();
-				inputTypes = SmooksUIUtils.recordInputDataInfomation(getEditingDomain(),rootModel.getParams() , type, path, pros, compoundCommand);
-			}
-		} else {
-			IStructuredDataSelectionWizard wizard = ViewerInitorStore.getInstance().getStructuredDataCreationWizard(
-					inputType);
-			WizardDialog dialog = new WizardDialog(getEditorSite().getShell(), wizard);
-			wizard.init(getEditorSite(), getEditorInput());
-			if (dialog.open() == Dialog.OK) {
-				String path = wizard.getStructuredDataSourcePath();
-				Properties pros = wizard.getProperties();
-				inputTypes = SmooksUIUtils.recordInputDataInfomation(getEditingDomain(), rootModel.getParams(), inputType, path, pros, compoundCommand);
-			}
-		}
-
-		if (inputTypes != null && !inputTypes.isEmpty()) {
-			InputType addedInputType = inputTypes.get(0);
-			Object obj = this.inputDataViewer.getInput();
-			if (obj != null && obj instanceof List) {
-				((List) obj).add(addedInputType);
-			}
-
-			deactiveAllInputFile(compoundCommand);
-			if (inputType.equals(SmooksModelUtils.INPUT_TYPE_CUSTOME)) {
-				// don't active the input file
-			} else {
-				addedInputType.setActived(true);
-				IParam param = addedInputType.getRelatedParameter();
-				if (param != null) {
-					String value = SmooksModelUtils.INPUT_ACTIVE_TYPE;
-					Command c = SetCommand.create(this.getEditingDomain(), param,
-							ICorePackage.Literals.PARAM__TYPE, value);
-					if (c.canExecute()) {
-						compoundCommand.append(c);
-					}
-				}
-			}
-			if (!compoundCommand.isEmpty()) {
-				getSmooksModelProvider().getEditingDomain().getCommandStack().execute(compoundCommand);
-			}
-			if (inputDataViewer != null)
-				inputDataViewer.refresh();
-		}
-	}
-	
-	private void deactiveAllInputFile(CompoundCommand command) {
-		Object viewerInput = this.inputDataViewer.getInput();
-		if (viewerInput != null && viewerInput instanceof List<?>) {
-			List<InputType> inputList = (List) viewerInput;
-			for (Iterator<?> iterator = inputList.iterator(); iterator.hasNext();) {
-				InputType inputType = (InputType) iterator.next();
-				setInputDataActiveStatus(false, inputType, command);
-			}
-		}
-	}
-	
-	private void setInputDataActiveStatus(boolean active, InputType inputType, final CompoundCommand command) {
-		inputType.setActived(active);
-		IParam param = SmooksUIUtils.getInputTypeAssociatedParamType(inputType, getSmooksConfigResourceList());
-		if (param != null) {
-			String value = SmooksModelUtils.INPUT_ACTIVE_TYPE;
-			if (!active) {
-				value = SmooksModelUtils.INPUT_DEACTIVE_TYPE;
-			}
-			Command c = SetCommand.create(this.getEditingDomain(), param, ICorePackage.Literals.PARAM__TYPE,
-					value);
-			if (command != null) {
-				command.append(c);
-			} else {
-				getEditingDomain().getCommandStack().execute(c);
-			}
-		}
-	}
-
 
 	public void sourceChange(Object model) {
 		
-	}
-	
-	private class InputDataViewerLabelProvider extends ExtentionInputLabelProvider implements ITableColorProvider {
-
-		public Color getBackground(Object element, int columnIndex) {
-			if (!isValidInputType((InputType) element)) {
-				// return ColorConstants.darkGray;
-			}
-			return null;
-		}
-
-		public Color getForeground(Object element, int columnIndex) {
-			if (!isValidInputType((InputType) element)) {
-				return ColorConstants.lightGray;
-			}
-			return null;
-		}
 	}
 }

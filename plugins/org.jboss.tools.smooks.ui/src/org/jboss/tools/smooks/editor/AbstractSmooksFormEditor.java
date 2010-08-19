@@ -58,6 +58,7 @@ import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.SmooksXMLEditor;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.graphical.editors.ISmooksEditorInitListener;
+import org.jboss.tools.smooks.model.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.SmooksEditorModelBuilder;
 import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.IParam;
@@ -233,8 +234,8 @@ public class AbstractSmooksFormEditor extends FormEditor implements
 		// create EMF resource
 		if (file != null) {
 			try {
-				smooksModel = smooksEditorModelBuilder.readModel(file
-						.getContents());
+				smooksModel = smooksEditorModelBuilder.readModel(file.getContents());
+				smooksModel.getModelRoot().setModelProvider(this);
 			} catch (Exception e) {
 				initSmooksModelException = e;
 			}
@@ -479,6 +480,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements
 			try {
 				stream = new ByteArrayInputStream(conents.getBytes());
 				this.smooksModel = smooksEditorModelBuilder.readModel(stream);
+				smooksModel.getModelRoot().setModelProvider(this);
 			} catch (Exception e) {
 				smooksModel = null;
 				exception = e;

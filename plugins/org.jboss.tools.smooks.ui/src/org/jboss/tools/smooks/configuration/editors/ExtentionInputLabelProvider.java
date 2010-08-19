@@ -10,16 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksModelUtils;
-import org.jboss.tools.smooks.configuration.editors.input.InputParameter;
-import org.jboss.tools.smooks.configuration.editors.input.InputType;
+import org.jboss.tools.smooks.model.core.IParam;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -36,8 +32,8 @@ public class ExtentionInputLabelProvider extends LabelProvider implements ITable
 	 * .Object, int)
 	 */
 	public Image getColumnImage(Object element, int columnIndex) {
-		if (element instanceof InputType) {
-			String type = ((InputType) element).getType();
+		if (element instanceof IParam) {
+			String type = ((IParam) element).getType();
 			switch (columnIndex) {
 			case 0:
 				if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
@@ -67,29 +63,14 @@ public class ExtentionInputLabelProvider extends LabelProvider implements ITable
 	 * .Object, int)
 	 */
 	public String getColumnText(Object element, int columnIndex) {
-		if (element instanceof InputType) {
-			String value = ((InputType) element).getPath();
-			if (value == null)
-				value = ""; //$NON-NLS-1$
-			String extValue = ""; //$NON-NLS-1$
-			List<InputParameter> paramers = ((InputType) element).getParameters();
-			for (Iterator<?> iterator = paramers.iterator(); iterator.hasNext();) {
-				InputParameter paramType = (InputParameter) iterator.next();
-//				if ("path".equalsIgnoreCase(paramType.getName())) {
-//					continue;
-//				}
-				extValue += paramType.getName() + "=" + paramType.getValue() + ","; //$NON-NLS-1$ //$NON-NLS-2$
-			}
-			if (extValue.length() != 0) {
-				extValue = extValue.substring(0, extValue.length() - 1);
-			}
+		if (element instanceof IParam) {
+			IParam inputTypeParam = (IParam) element;
+
 			switch (columnIndex) {
 			case 0:
-				return ((InputType) element).getType();
+				return inputTypeParam.getValue();
 			case 1:
-				return value;
-			case 2:
-				return extValue;
+				return ""; //$NON-NLS-1$
 			}
 		}
 		return ""; //$NON-NLS-1$

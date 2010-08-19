@@ -12,13 +12,14 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.jboss.tools.smooks.configuration.editors.file.AbstractFileSelectionWizardPage;
 import org.jboss.tools.smooks.configuration.editors.wizard.IStructuredDataSelectionWizard;
 
 /**
  * @author Dart
  * 
  */
-public abstract class AbstractStructuredDdataWizard extends Wizard implements IStructuredDataSelectionWizard,
+public abstract class AbstractStructuredDataWizard extends Wizard implements IStructuredDataSelectionWizard,
 		INewWizard {
 	protected IWorkbench workbench;
 
@@ -30,7 +31,7 @@ public abstract class AbstractStructuredDdataWizard extends Wizard implements IS
 
 	private IContainer folder = null;
 
-	public AbstractStructuredDdataWizard() {
+	public AbstractStructuredDataWizard() {
 		// TODO Auto-generated constructor stub
 	}
 

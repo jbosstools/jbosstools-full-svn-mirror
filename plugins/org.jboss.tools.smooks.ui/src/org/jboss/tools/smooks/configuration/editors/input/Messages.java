@@ -6,6 +6,10 @@ public class Messages extends NLS {
 	
 	public static String InputSourceType_Warning_Specify_Input_Type;
 	public static String InputSourceType_Warning_Specify_Sample_Data;
+	public static String InputSourceType_Unknown_Input_Type_Name;
+	public static String InputSourceType_Unknown_Input_Type_Index;
+	public static String XSDConfigurationContributor_XML_Schema_File;
+	public static String XSDConfigurationContributor_Root_Element_Name;
 
 	static {
 		// initialize resource bundle

@@ -39,6 +39,8 @@ public class SmooksModel {
     private GlobalParams params;
     private List<IComponent> components = new ArrayList<IComponent>();
 
+	private ISmooksModelProvider modelProvider;
+
 	public GlobalParams getParams() {
 		return params;
 	}
@@ -53,5 +55,13 @@ public class SmooksModel {
 
 	public void setComponents(List<IComponent> components) {
 		this.components = components;
+	}
+
+	public void setModelProvider(ISmooksModelProvider modelProvider) {
+		this.modelProvider = modelProvider;
+	}
+
+	public ISmooksModelProvider getModelProvider() {
+		return modelProvider;
 	}
 }

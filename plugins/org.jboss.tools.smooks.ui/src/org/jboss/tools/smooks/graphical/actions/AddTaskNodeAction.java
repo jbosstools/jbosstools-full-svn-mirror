@@ -1,9 +1,9 @@
 package org.jboss.tools.smooks.graphical.actions;
 
 import org.eclipse.ui.IEditorPart;
-import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
+import org.jboss.tools.smooks.model.ISmooksModelProvider;
 
 public class AddTaskNodeAction extends AbstractProcessGraphAction {
 	

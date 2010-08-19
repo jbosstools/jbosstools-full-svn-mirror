@@ -49,7 +49,7 @@ public class XMLObjectAnalyzer {
 			return null;
 		Element rootElement = doc.getDocumentElement();
 		TagList dco = new TagList();
-		dco.setName("Docuement"); //$NON-NLS-1$
+		dco.setName("Document"); //$NON-NLS-1$
 		dco.addRootTag(parseElement(rootElement, null, ignoreNodeNames, tagObjectClass));
 		return dco;
 	}

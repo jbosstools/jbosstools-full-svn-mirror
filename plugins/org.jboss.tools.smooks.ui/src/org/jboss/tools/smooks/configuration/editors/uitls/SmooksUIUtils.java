@@ -27,12 +27,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
@@ -43,15 +41,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
-import org.jboss.tools.smooks.configuration.editors.input.InputParameter;
-import org.jboss.tools.smooks.configuration.editors.input.InputType;
-import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.configuration.editors.input.InputSourceType;
+import org.jboss.tools.smooks.model.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.GlobalParams;
 import org.jboss.tools.smooks.model.core.ICoreFactory;
 import org.jboss.tools.smooks.model.core.ICorePackage;
 import org.jboss.tools.smooks.model.core.IParam;
-import org.milyn.javabean.dynamic.Model;
 
 /**
  * 
@@ -81,8 +77,7 @@ public class SmooksUIUtils {
 
 	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/" }; //$NON-NLS-1$ //$NON-NLS-2$
 
-	public static String parseFilePath(String path)
-			throws InvocationTargetException {
+	public static String parseFilePath(String path) {
 		if (path == null)
 			return null;
 		if (new File(path).exists()) {
@@ -102,12 +97,10 @@ public class SmooksUIUtils {
 				if (file.exists()) {
 					path = file.getLocation().toOSString();
 				} else {
-					throw new InvocationTargetException(new Exception(
-							"File : " + path + " isn't exsit")); //$NON-NLS-1$ //$NON-NLS-2$
+					throw new IllegalArgumentException("File : " + path + " isn't exsit"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			} else {
-				throw new InvocationTargetException(new Exception(
-						"This path is un-support" + path + ".")); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new IllegalArgumentException("This path is un-support" + path + "."); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 		return path;
@@ -131,16 +124,6 @@ public class SmooksUIUtils {
 		return createErrorStatus(throwable, "Error"); //$NON-NLS-1$
 	}
 
-	public static IParam getInputTypeAssociatedParamType(InputType inputType,
-			Model<SmooksModel> resourceList) {
-		SmooksModel rootModel = resourceList.getModelRoot();
-		GlobalParams params = rootModel.getParams();
-		if (params != null) {
-			return params.getParam(inputType.getType(), inputType.getPath());
-		}
-		return null;
-	}
-
 	public static IParam getInputTypeParam(SmooksModel resourceList) {
 		GlobalParams params = resourceList.getParams();
 		if (params != null) {
@@ -149,97 +132,48 @@ public class SmooksUIUtils {
 		return null;
 	}
 
-	public static List<InputType> recordInputDataInfomation(
+	public static IParam recordInputDataInfomation(
 			EditingDomain domain, GlobalParams paramsType, String type,
 			String path, Properties properties, CompoundCommand compoundCommand) {
-		List<InputType> inputTypeList = new ArrayList<InputType>();
+				
 		if (type != null && path != null && domain != null) {
 			String[] values = path.split(";"); //$NON-NLS-1$
-			if (values == null || values.length == 0) {
-				values = new String[] { path };
-			}
-			for (int i = 0; i < values.length; i++) {
-				String value = values[i];
-				value = value.trim();
-				if (value.length() == 0)
-					continue;
-				IParam inputParam = ICoreFactory.eINSTANCE.createParam();
-				InputType input = new InputType();
-				input.setPath(path);
-				input.setType(type);
-				input.setActived(false);
+			
+			if (values != null && values.length > 0) {
+				String value = values[0].trim();
+				
+				if (value.length() > 0) {
+					IParam inputParam = ICoreFactory.eINSTANCE.createParam();
+					inputParam.setName(type);
+					inputParam.setValue(path);
+	
+					List<IParam> params = generateExtParams(type, path, properties);
+					params.add(inputParam);
 
-				inputParam.setName(type);
-				inputParam.setValue(path);
-				input.setRelatedParameter(inputParam);
-				List<IParam> params = generateExtParams(type, path, properties);
-				for (Iterator<?> iterator = params.iterator(); iterator
-						.hasNext();) {
-					IParam paramType2 = (IParam) iterator.next();
-					InputParameter p = new InputParameter();
-					p.setName(getInputParameterName(input.getType(),
-							paramType2.getName()));
-					p.setValue(paramType2.getValue());
-					input.getParameters().add(p);
-					// input.setRelatedParameter(paramType2);
-				}
-				params.add(inputParam);
-				Command command = null;
-				try {
-					command = AddCommand.create(domain, paramsType,
-							ICorePackage.Literals.PARAMS__PARAMS, params);
-				} catch (Throwable t) {
-					t.printStackTrace();
-				}
-				if (command.canExecute()) {
-					if (compoundCommand != null) {
-						compoundCommand.append(command);
-					} else {
-						domain.getCommandStack().execute(command);
+					Command command = null;
+					try {
+						command = AddCommand.create(domain, paramsType, ICorePackage.Literals.PARAMS__PARAMS, params);
+					} catch (Throwable t) {
+						t.printStackTrace();
 					}
-					input.setRelatedParameter(inputParam);
-					inputTypeList.add(input);
+					if (command.canExecute()) {
+						if (compoundCommand != null) {
+							compoundCommand.append(command);
+						} else {
+							domain.getCommandStack().execute(command);
+						}
+					}
+					
+					return inputParam;
 				}
 			}
 		}
-		return inputTypeList;
+		
+		return null;
 	}
 
-	public static void removeInputType(InputType inputType,
+	public static void removeInputType(IParam inputToRemove,
 			ISmooksModelProvider smooksModelProvider) {
-		SmooksModel resourceList = smooksModelProvider.getSmooksModel()
-				.getModelRoot();
-		if (resourceList != null) {
-			GlobalParams params = resourceList.getParams();
-			if (params != null) {
-				List<IParam> paramList = params.getParams();
-				List<IParam> removingList = new ArrayList<IParam>();
-				for (Iterator<?> iterator = paramList.iterator(); iterator
-						.hasNext();) {
-					IParam paramType = (IParam) iterator.next();
-					String name = paramType.getName();
-					String value = paramType.getValue();
-					if (inputType.getType().equals(name)
-							&& inputType.getPath().equals(value)) {
-						// find the associated param
-						removingList.add(paramType);
-						continue;
-					}
-					if (isInputAssociatedParameter(paramType, inputType)) {
-						removingList.add(paramType);
-					}
-				}
-				if (!removingList.isEmpty()) {
-					Command removeCommand = RemoveCommand.create(
-							smooksModelProvider.getEditingDomain(),
-							removingList);
-					if (removeCommand.canExecute()) {
-						smooksModelProvider.getEditingDomain()
-								.getCommandStack().execute(removeCommand);
-					}
-				}
-			}
-		}
 	}
 
 	public static IJavaProject getJavaProject(EObject model) {
@@ -340,70 +274,23 @@ public class SmooksUIUtils {
 		return type + "." + name; //$NON-NLS-1$
 	}
 
-	public static List<InputType> recordInputDataInfomation(
-			EditingDomain domain, GlobalParams paramsType, String type,
-			String path, Properties properties) {
-		return recordInputDataInfomation(domain, paramsType, type, path,
-				properties, null);
-	}
-
-	public static List<InputType> getInputTypeList(SmooksModel resourceList) {
-		List<InputType> inputList = new ArrayList<org.jboss.tools.smooks.configuration.editors.input.InputType>();
-		GlobalParams params = resourceList.getParams();
-		if (params != null) {
-			List<IParam> paramList = params.getParams();
-			for (Iterator<?> iterator = paramList.iterator(); iterator
-					.hasNext();) {
-				IParam paramType = (IParam) iterator.next();
-				String type = paramType.getType();
-				if (isInputParamType(paramType)) {
-					org.jboss.tools.smooks.configuration.editors.input.InputType input = new org.jboss.tools.smooks.configuration.editors.input.InputType();
-					input.setType(paramType.getName());
-					input.setActived(SmooksModelUtils.INPUT_ACTIVE_TYPE
-							.equals(type));
-					String path = paramType.getValue();
-					if (path != null) {
-						path = path.trim();
-					}
-					input.setPath(path);
-					inputList.add(input);
-				}
-			}
-
-			for (Iterator<?> iterator = inputList.iterator(); iterator
-					.hasNext();) {
-				org.jboss.tools.smooks.configuration.editors.input.InputType input = (org.jboss.tools.smooks.configuration.editors.input.InputType) iterator
-						.next();
-				for (Iterator<?> iterator2 = paramList.iterator(); iterator2
-						.hasNext();) {
-					IParam paramType = (IParam) iterator2.next();
-					if (isInputAssociatedParameter(paramType, input)) {
-						InputParameter p = new InputParameter();
-						p.setName(getInputParameterName(input.getType(),
-								paramType.getName()));
-						p.setValue(paramType.getValue());
-						input.getParameters().add(p);
-					}
-				}
+	public static List<IParam> getInputTypeList(SmooksModel resourceList) {
+		List<IParam> inputs = new ArrayList<IParam>();
+		GlobalParams globalParams = resourceList.getParams();
+		
+		for(IParam param : globalParams.getParams()) {
+			if(InputSourceType.isValidName(param.getName())) {
+				inputs.add(param);
 			}
 		}
-		return inputList;
+		
+		return inputs;
 	}
 
 	public static boolean isInputParamType(IParam param) {
 		String type = param.getType();
 		if (SmooksModelUtils.INPUT_ACTIVE_TYPE.equals(type)
 				|| SmooksModelUtils.INPUT_DEACTIVE_TYPE.equals(type)) {
-			return true;
-		}
-		return false;
-	}
-
-	public static boolean isInputAssociatedParameter(IParam param,
-			org.jboss.tools.smooks.configuration.editors.input.InputType input) {
-		String type = input.getType();
-		String pn = param.getName();
-		if (pn != null && pn.startsWith(type) && !pn.equals(type)) {
 			return true;
 		}
 		return false;

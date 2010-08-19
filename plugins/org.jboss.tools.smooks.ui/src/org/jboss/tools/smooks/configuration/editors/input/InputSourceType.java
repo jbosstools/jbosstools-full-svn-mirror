@@ -10,7 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.input;
 
-import org.jboss.tools.smooks.configuration.editors.input.contributors.SimpleMessageContributor;
+import org.jboss.tools.smooks.configuration.editors.input.contributors.SampleDataConfigurationContributorFactory;
+import org.jboss.tools.smooks.configuration.editors.input.contributors.SimpleMessageContributorFactory;
+import org.jboss.tools.smooks.configuration.editors.input.contributors.XSDConfigurationContributorFactory;
+import org.jboss.tools.smooks.configuration.editors.input.model.JavaInputModelFactory;
+import org.jboss.tools.smooks.configuration.editors.input.model.XMLInputModelFactory;
+import org.jboss.tools.smooks.configuration.editors.input.model.XSDInputModelFactory;
 
 /**
  * Smooks filter input Source type.
@@ -20,25 +25,32 @@ import org.jboss.tools.smooks.configuration.editors.input.contributors.SimpleMes
 public enum InputSourceType {	
 	
 	// NOTE: If a new type is added, be sure and update the fromTypeIndex/fromTypeName static methods !!!
-	NONE(0, new SimpleMessageContributor(Messages.InputSourceType_Warning_Specify_Input_Type)),
-	XML(1, new SimpleMessageContributor(Messages.InputSourceType_Warning_Specify_Sample_Data)),
-	XSD(2, new SimpleMessageContributor(Messages.InputSourceType_Warning_Specify_Sample_Data)),
-	JAVA(3, new SimpleMessageContributor(Messages.InputSourceType_Warning_Specify_Sample_Data));
+	NONE(0, new SimpleMessageContributorFactory(Messages.InputSourceType_Warning_Specify_Input_Type), null),
+	XML(1, new SampleDataConfigurationContributorFactory(), new XMLInputModelFactory()),
+	XSD(2, new XSDConfigurationContributorFactory(), new XSDInputModelFactory()),
+	JAVA(3, new SimpleMessageContributorFactory(Messages.InputSourceType_Warning_Specify_Sample_Data), new JavaInputModelFactory());
 	
 	private int typeIndex;
-	private InputReaderConfigurationContributor configurationContributor;
+	private InputTaskPanelContributorFactory taskPanelContributorFactory;
+	private InputModelFactory inputModelFactory;
 	
-	InputSourceType(int typeIndex, InputReaderConfigurationContributor configurationContributor) {
+	InputSourceType(int typeIndex, InputTaskPanelContributorFactory configurationContributorFactory, InputModelFactory inputModelFactory) {
 		this.typeIndex = typeIndex;
-		this.configurationContributor = configurationContributor;
+		this.taskPanelContributorFactory = configurationContributorFactory;
+		this.inputModelFactory = inputModelFactory;
+		configurationContributorFactory.setInputSourceType(this);
 	}
 	
 	public int getTypeIndex() {
 		return typeIndex;
 	}
 	
-	public InputReaderConfigurationContributor getConfigurationContributor() {
-		return configurationContributor;
+	public InputTaskPanelContributorFactory getTaskPanelContributorFactory() {
+		return taskPanelContributorFactory;
+	}
+	
+	public InputModelFactory getInputModelFactory() {
+		return inputModelFactory;
 	}
 	
 	public boolean isType(int typeIndex) {
@@ -65,7 +77,7 @@ public enum InputSourceType {
 			return InputSourceType.NONE;
 		}		
 		
-		throw new InvalidInputSourceTypeException("");
+		throw new InvalidInputSourceTypeException(Messages.InputSourceType_Unknown_Input_Type_Index + " " + typeIndex);
 	}	
 	
 	public static InputSourceType fromTypeName(String typeName) throws InvalidInputSourceTypeException {
@@ -80,7 +92,16 @@ public enum InputSourceType {
 			return InputSourceType.NONE;
 		} 		
 				
-		throw new InvalidInputSourceTypeException("");
+		throw new InvalidInputSourceTypeException(Messages.InputSourceType_Unknown_Input_Type_Name + " " + typeName);
+	}
+	
+	public static boolean isValidName(String typeName) {
+		try {
+			fromTypeName(typeName);
+			return true;
+		} catch (InvalidInputSourceTypeException e) {
+			return false;
+		}
 	}
 	
 	public static boolean isValidIndexNamePair(int typeIndex, String typeName) throws InvalidInputSourceTypeException {		

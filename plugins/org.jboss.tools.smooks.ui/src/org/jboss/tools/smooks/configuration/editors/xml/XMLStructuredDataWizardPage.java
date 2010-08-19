@@ -3,6 +3,8 @@
  */
 package org.jboss.tools.smooks.configuration.editors.xml;
 
+import org.jboss.tools.smooks.configuration.editors.file.AbstractFileSelectionWizardPage;
+
 /**
  * @author Dart Peng Date : 2008-8-16
  */
@@ -26,7 +28,6 @@ public class XMLStructuredDataWizardPage extends AbstractFileSelectionWizardPage
 	 * org.jboss.tools.smooks.xml.ui.AbstractFileSelectionWizardPage#loadedTheObject
 	 * (java.lang.String)
 	 */
-	@Override
 	protected Object loadedTheObject(String path) throws Exception {
 		return null;
 //		XMLObjectAnalyzer analyzer = new XMLObjectAnalyzer();

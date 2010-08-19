@@ -12,7 +12,6 @@ package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jdt.core.IJavaProject;
@@ -44,8 +43,9 @@ import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.jboss.tools.smooks.configuration.SmooksModelUtils;
-import org.jboss.tools.smooks.configuration.editors.input.InputParameter;
-import org.jboss.tools.smooks.configuration.editors.input.InputType;
+import org.jboss.tools.smooks.configuration.editors.input.InputModelFactory;
+import org.jboss.tools.smooks.configuration.editors.input.InputSourceType;
+import org.jboss.tools.smooks.configuration.editors.input.InvalidInputSourceTypeException;
 import org.jboss.tools.smooks.configuration.editors.java.JavaBeanModel;
 import org.jboss.tools.smooks.configuration.editors.java.JavaBeanModelFactory;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
@@ -54,9 +54,13 @@ import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLObjectAnalyzer;
 import org.jboss.tools.smooks.configuration.editors.xml.XSDObjectAnalyzer;
-import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.model.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.SmooksModel;
+import org.jboss.tools.smooks.model.core.GlobalParams;
+import org.jboss.tools.smooks.model.core.IParam;
+import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.milyn.javabean.dynamic.Model;
+import org.w3c.dom.Document;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -251,119 +255,41 @@ public class SelectorCreationDialog extends Dialog {
 		});
 	}
 
-	public static List<Object> generateInputData(SmooksModel smooksResourceListType , IJavaProject project) {
+	public static List<Object> generateInputData(SmooksModel smooksConfigModel , IJavaProject project) {
 		currentException = null;
 		List<Object> list = new ArrayList<Object>();
-		if (smooksResourceListType != null) {
-//			IJavaProject project = SmooksUIUtils.getJavaProject(smooksResourceListType.get);
-			try {
-				List<InputType> inputLists = SmooksUIUtils.getInputTypeList(smooksResourceListType);
-				for (Iterator<?> iterator = inputLists.iterator(); iterator.hasNext();) {
-					InputType inputType = (InputType) iterator.next();
-					if (!inputType.isActived())
-						continue;
-					String type = inputType.getType();
-					String path = inputType.getPath();
-					if (type != null && path != null) {
-						path = path.trim();
-//						if (SmooksModelUtils.INPUT_TYPE_EDI_1_1.equals(type)
-//								|| SmooksModelUtils.INPUT_TYPE_EDI_1_2.equals(type)) {
-//							EDIDataParser parser = new EDIDataParser();
-//							try {
-//								TagList tl = parser.parseEDIFile(path, smooksResourceListType);
-//								if (tl != null) {
-//									list.addAll(((TagList) tl).getChildren());
-//								}
-//							} catch (Throwable t) {
-//								currentException = t;
-//							}
-//						}
-//						if (SmooksModelUtils.INPUT_TYPE_CSV.equals(type)
-//								|| SmooksModelUtils.INPUT_TYPE_CSV_1_2.equals(type)) {
-//							CSVDataParser parser = new CSVDataParser();
-//							try {
-//								TagList tl = parser.parseCSV(path, smooksResourceListType);
-//								if (tl != null) {
-//									list.addAll(((TagList) tl).getChildren());
-//								}
-//							} catch (Throwable t) {
-//								currentException = t;
-//							}
-//						}
-//						if (SmooksModelUtils.INPUT_TYPE_JSON_1_1.equals(type)
-//								|| SmooksModelUtils.INPUT_TYPE_JSON_1_2.equals(type)) {
-//							try {
-//								JsonInputDataParser parser = new JsonInputDataParser();
-//								IXMLStructuredObject tagList = parser.parseJsonFile(SmooksUIUtils.parseFilePath(path),
-//										smooksResourceListType);
-//								if (tagList instanceof TagList) {
-//									list.addAll(((TagList) tagList).getChildren());
-//								} else {
-//									list.add(tagList);
-//								}
-//							} catch (Throwable tt) {
-//								currentException = tt;
-//							}
-//						}
-						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
-							try {
-								Class<?> clazz = SmooksUIUtils.loadClass(path, project);
-								JavaBeanModel model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
-								if (model != null) {
+		
+		if (smooksConfigModel != null) {
+			GlobalParams globalParams = smooksConfigModel.getParams();
+			IParam inputType = globalParams.getParam(SmooksModelUtils.INPUT_TYPE);
+			
+			if(inputType != null) {
+				InputSourceType inputTypeEnum;
+				try {
+					inputTypeEnum = InputSourceType.fromTypeName(inputType.getValue());
+					InputModelFactory modelFactory = inputTypeEnum.getInputModelFactory();
+					
+					if(modelFactory != null) {
+						Document modelDoc = modelFactory.getModel(smooksConfigModel, project);
+						
+						if(modelDoc != null) {
+							AbstractXMLObject model = new XMLObjectAnalyzer().analyze(modelDoc, null , null);			
+							
+							if (model != null) {
+								if (model instanceof TagList) {
+									list.addAll(((TagList) model).getChildren());
+								} else {
 									list.add(model);
 								}
-							} catch (Throwable t) {
-								currentException = t;
-							}
-						}
-						if (SmooksModelUtils.INPUT_TYPE_XSD.equals(type)) {
-							try {
-								path = SmooksUIUtils.parseFilePath(path);
-								String rootElementName = null;
-								List<InputParameter> paramers = inputType.getParameters();
-								for (Iterator<?> iterator2 = paramers.iterator(); iterator2.hasNext();) {
-									InputParameter paramType = (InputParameter) iterator2.next();
-									String pn = paramType.getName();
-									if ("rootElement".equals(pn)) { //$NON-NLS-1$
-										rootElementName = paramType.getValue();
-										break;
-									}
-								}
-								if (rootElementName != null) {
-									rootElementName = rootElementName.trim();
-									list.add(new XSDObjectAnalyzer().loadElement(path, rootElementName));
-								}
-							} catch (Throwable tt) {
-								currentException = tt;
-							}
-						}
-						if (SmooksModelUtils.INPUT_TYPE_XML.equals(type)) {
-							try {
-								path = SmooksUIUtils.parseFilePath(path);
-
-								// XMLObjectAnalyzer analyzer = new
-								// XMLObjectAnalyzer();
-								// TagList doc = analyzer.analyze(path, null);
-
-								AbstractXMLObject model = new XMLObjectAnalyzer().analyze(path, null , null);
-								if (model != null) {
-									if (model instanceof TagList) {
-										list.addAll(((TagList) model).getChildren());
-									} else {
-										list.add(model);
-									}
-								}
-							} catch (Throwable e) {
-								currentException = e;
 							}
 						}
 					}
+				} catch (Exception e) {
+					currentException = e;
 				}
-			} catch (Exception e) {
-				currentException = e;
-				// SmooksConfigurationActivator.getDefault().log(e);
 			}
 		}
+		
 		return list;
 	}
 

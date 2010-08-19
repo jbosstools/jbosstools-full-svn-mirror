@@ -73,7 +73,6 @@ import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.SmooksReaderFormPage;
 import org.jboss.tools.smooks.configuration.validate.ISmooksModelValidateListener;
 import org.jboss.tools.smooks.editor.AbstractSmooksFormEditor;
-import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.actions.AbstractProcessGraphAction;
 import org.jboss.tools.smooks.graphical.actions.AddNextTaskNodeAction;
 import org.jboss.tools.smooks.graphical.actions.DeleteTaskNodeAction;
@@ -86,6 +85,7 @@ import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
 import org.jboss.tools.smooks.graphical.editors.process.TaskNodeFigure;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
+import org.jboss.tools.smooks.model.ISmooksModelProvider;
 
 /**
  * @author Dart

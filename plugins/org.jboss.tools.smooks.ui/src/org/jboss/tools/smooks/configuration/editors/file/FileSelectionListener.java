@@ -8,22 +8,18 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks.configuration.editors.input;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.forms.editor.FormPage;
+package org.jboss.tools.smooks.configuration.editors.file;
 
 /**
+ * File Selected listener.
  * 
  * @author <a href="mailto:tom.fennelly@gmail.com">tom.fennelly@gmail.com</a>
  */
-public interface InputReaderConfigurationContributor {
+public interface FileSelectionListener {
 
 	/**
-	 * Add the input configuration controls to the Input Configuration area
-	 * of the input task panel.
-	 * @param formPage The composite parent {@link FormPage}.
-	 * @param configComposite The task panel Composite.
+	 * File Selected event.
+	 * @param fileName The file name of the selected file.
 	 */
-	void addInputConfigControls(FormPage formPage, Composite configComposite);
+	void fileSelected(String fileName);
 }

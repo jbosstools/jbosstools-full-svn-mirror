@@ -14,12 +14,13 @@ import java.util.Properties;
 
 import org.jboss.tools.smooks.configuration.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor;
+import org.jboss.tools.smooks.configuration.editors.file.AbstractFileSelectionWizardPage;
 
 /**
  * @author Dart (dpeng@redhat.com)
  *
  */
-public class XSDStructuredDataWizard extends AbstractStructuredDdataWizard {
+public class XSDStructuredDataWizard extends AbstractStructuredDataWizard {
 	
 	
 	public XSDStructuredDataWizard() {

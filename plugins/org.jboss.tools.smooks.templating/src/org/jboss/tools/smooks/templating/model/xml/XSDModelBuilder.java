@@ -70,7 +70,7 @@ public class XSDModelBuilder extends TemplatingModelBuilder {
     }
 
     public Set<String> getRootElementNames() {
-        return Collections.unmodifiableSet(elements.keySet());
+        return new LinkedHashSet<String>(elements.keySet());
     }
 
     public void setRootElementName(String rootElementName) {
