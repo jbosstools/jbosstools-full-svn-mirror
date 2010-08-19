@@ -24,6 +24,10 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.rse.core.IRSESystemType;
+import org.eclipse.rse.core.model.IHost;
+import org.eclipse.rse.core.model.ISystemRegistry;
+import org.eclipse.rse.core.model.SystemStartHere;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -59,6 +63,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private final static String STOP_LABEL = "Stop.label"; //$NON-NLS-1$
 	private final static String REBOOT_LABEL = "Reboot.label"; //$NON-NLS-1$
 	private final static String DESTROY_LABEL = "Destroy.label"; //$NON-NLS-1$
+	private final static String RSE_LABEL = "ShowInRSE.label"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
 	private final static String STOPPING_INSTANCE_TITLE = "StoppingInstance.title"; //$NON-NLS-1$
@@ -84,6 +89,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private Action stopAction;
 	private Action destroyAction;
 	private Action rebootAction;
+	private Action rseAction;
 	
 	private Map<String, Action> instanceActions;
 	private Map<String, Job> currentPerformingActions = new HashMap<String, Job>();
@@ -286,6 +292,13 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		for (String action : actions) {
 			instanceActions.get(action).setEnabled(true);
 		}
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(rseAction);
+		if (selectedElement.getState().equals(DeltaCloudInstance.RUNNING) ||
+				selectedElement.getState().equals(DeltaCloudInstance.STOPPED))
+			rseAction.setEnabled(true);
+		else
+			rseAction.setEnabled(false);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -449,6 +462,18 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		};
 		destroyAction.setText(CVMessages.getString(DESTROY_LABEL));
 		destroyAction.setToolTipText(CVMessages.getString(DESTROY_LABEL));
+		
+		rseAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
+				String hostname = instance.getHostName();
+				ISystemRegistry registry = SystemStartHere.getSystemRegistry();
+				String connectionName = instance.getName() + " [" + instance.getId() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		};
+		rseAction.setText(CVMessages.getString(RSE_LABEL));
+		rseAction.setToolTipText(CVMessages.getString(RSE_LABEL));
 		
 		instanceActions = new HashMap<String, Action>();
 		instanceActions.put(DeltaCloudInstance.START, startAction);

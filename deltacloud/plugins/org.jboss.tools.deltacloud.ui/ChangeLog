@@ -1,3 +1,13 @@
+2010-08-19  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* META-INF/MANIFEST.MF: Add dependency on rse.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add connecting to RSE
+	message. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (makeActions): Add connect to
+	RSE action. 
+	(fillContextMenu): Add connect to RSE action skeleton and enable/disable depending on instance
+	state. 
+
 2010-08-18  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (listChanged): Get
