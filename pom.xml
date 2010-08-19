@@ -52,6 +52,7 @@
 		<module>deltacloud</module>
 		<module>drools</module>
 		<module>runtime</module>
+		<module>usage</module>
 		<module>site</module>
 	</modules>
 	<profiles>

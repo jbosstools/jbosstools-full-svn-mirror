@@ -601,7 +601,15 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<module>../runtime</module>
 		</modules>
 	</profile>
-
+	<profile>
+		<id>usage</id>
+		<activation>
+			<activeByDefault>true</activeByDefault>
+		</activation>
+		<modules>
+			<module>../usage</module>
+		</modules>
+	</profile>
 	<profile>
 		<id>site</id>
 		<activation>
