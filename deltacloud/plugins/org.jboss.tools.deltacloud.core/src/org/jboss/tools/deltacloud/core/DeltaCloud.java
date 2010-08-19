@@ -147,7 +147,8 @@ public class DeltaCloud {
 			for (int i = 0; i < instances.size(); ++i) {
 				DeltaCloudInstance inst = instances.get(i);
 				if (inst.getId().equals(instanceId)) {
-					if (!inst.getState().equals(instance.getState())) {
+					// FIXME: remove BOGUS state when server fixes state problems
+					if (!(instance.getState().equals(DeltaCloudInstance.BOGUS)) && !(inst.getState().equals(instance.getState()))) {
 						instances.set(i, retVal);
 						DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
 						instanceArray = instances.toArray(instanceArray);
@@ -157,16 +158,16 @@ public class DeltaCloud {
 				}
 			}
 		} catch (DeltaCloudClientException e) {
-			// do nothing and return null
+			e.printStackTrace();
 		}
 		return retVal;
 	}
 	
-	public boolean performInstanceAction(String instanceId, String action) {
+	public boolean performInstanceAction(String instanceId, String action) throws DeltaCloudException {
 		try {
 			return client.performInstanceAction(instanceId, action);
 		} catch (DeltaCloudClientException e) {
-			return false;
+			throw new DeltaCloudException(e);
 		}
 	}
 

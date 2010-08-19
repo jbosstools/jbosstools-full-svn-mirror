@@ -9,7 +9,7 @@ public class Instance extends DeltaCloudObject
 {	
 	private static final long serialVersionUID = 1L;
 	
-	public static enum State { RUNNING, STOPPED, PENDING };
+	public static enum State { RUNNING, STOPPED, PENDING, TERMINATED, BOGUS };
 	
 	public static enum Action { START, STOP, REBOOT, DESTROY };
 	
@@ -92,7 +92,11 @@ public class Instance extends DeltaCloudObject
 	
 	protected void setState(String state)
 	{
-		this.state = State.valueOf(state);
+		try {
+			this.state = State.valueOf(state);
+		} catch (Exception e) {
+			this.state = State.BOGUS;
+		}
 	}
 	
 	@SuppressWarnings("unused")

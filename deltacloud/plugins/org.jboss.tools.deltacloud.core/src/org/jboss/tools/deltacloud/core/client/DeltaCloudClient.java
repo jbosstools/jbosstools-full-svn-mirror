@@ -254,14 +254,17 @@ public class DeltaCloudClient implements API
 	private void checkForErrors(Document d) throws DeltaCloudClientException
 	{
 		NodeList n = d.getElementsByTagName("error");
-		for (int i = 0; i < n.getLength();)
+		for (int i = 0; i < n.getLength(); ++i)
 		{
 			Node node = n.item(i);
+			Node statusNode = node.getAttributes().getNamedItem("status");
+			if (statusNode != null) {
 			String status = node.getAttributes().getNamedItem("status").getNodeValue();
 			if (status.equals("403"))
 				throw new DeltaCloudAuthException("Authorization error");
 			else
 				throw new DeltaCloudClientException("Connection error");
+			}
 		}
 	}
 	
@@ -297,7 +300,8 @@ public class DeltaCloudClient implements API
 		}
 		catch(Exception e)
 		{
-			return null;
+			DeltaCloudClientException newException = new DeltaCloudClientException(e.getLocalizedMessage());
+			throw newException;
 		}
 	}
 
