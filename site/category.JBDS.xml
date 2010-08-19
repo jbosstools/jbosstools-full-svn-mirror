@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site pack200="true">
+	<!-- This file is only used by trunk/build/build.xml if building the update site with Ant. 
+    	 If building with Tycho, this file is NOT USED. See site.xml instead. --> 
 	<description>
 		This is the ${update.site.description} Update Site for ${product.name} ${product.version}.
    </description>
