@@ -117,7 +117,7 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		} else {
 			LocalCopyCallback handler = new LocalCopyCallback(server, deployPath, tempDeployPath);
 			PublishCopyUtil util = new PublishCopyUtil(handler);
-			resultList.addAll(Arrays.asList(util.publishFull(members, monitor)));
+			resultList.addAll(Arrays.asList(util.initFullPublish(members, monitor)));
 		}
 		addDeployedPathToDescriptor(server, last.getProject(), deployPath); // persist it
 		pruneList(resultList);
