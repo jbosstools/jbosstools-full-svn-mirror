@@ -89,9 +89,7 @@
 				<echo file="${update.site.source.dir}/content.xml" append="true">  &lt;/references>
 &lt;/repository>
 </echo>
-				<zip destfile="${update.site.source.dir}/content.jar"
-				     basedir="${update.site.source.dir}"
-				     includes="content.xml" />
+				<zip destfile="${update.site.source.dir}/content.jar" basedir="${update.site.source.dir}" includes="content.xml" />
 				<delete file="${update.site.source.dir}/content.xml" />
 			</then>
 		</if>
@@ -102,10 +100,7 @@
 	</target>
 
 	<target name="pack.zip">
-		<zip destfile="${output.dir}/target/site_assembly.zip"
-		     update="true"
-		     basedir="${update.site.source.dir}"
-		     includes="content.* index.html, web/*.css" />
+		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.* index.html, web/*.css" />
 	</target>
 
 	<target name="check.target">
@@ -187,12 +182,23 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<for list="${inputRepos}" delimiter=", " keepgoing="true" param="repoNum">
 			<sequential>
 				<!-- fetch zip.list.txt file, if available -->
-				<get src="${inputRepo@{repoNum}}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" />
+				<delete file="${aggegate.zips.dir}/zip.list.txt" quiet="true" />
+				<var unset="true" name="ALL_ZIPS" value="" />
+				<var unset="true" name="wget.return" value="" />
+				<!-- quieter output and return code check w/ wget instead of <get> -->
+				<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return">
+					<arg line="${inputRepo@{repoNum}}/logs/zip.list.txt -q --no-clobber" />
+				</exec>
+				<!--get src="${inputRepo@{repoNum}}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" /-->
 				<if>
-					<available file="${aggegate.zips.dir}/zip.list.txt" type="file" />
+					<and>
+						<equals arg1="${wget.return}" arg2="0" />
+						<available file="${aggegate.zips.dir}/zip.list.txt" type="file" />
+					</and>
 					<then>
 						<!-- load zip.list.txt file, get ALL_ZIPS list -->
-						<var unset="true" name="ALL_ZIPS" />
+						<var unset="true" name="ALL_ZIPS" value="" />
+						<var unset="true" name="wget.return" value="" />
 						<property file="${aggegate.zips.dir}/zip.list.txt" />
 						<if>
 							<isset property="ALL_ZIPS" />
@@ -214,13 +220,16 @@ zipPath = @{zipPath}
 URL = ${inputRepo@{repoNum}}/@{zipPath}
 DEST = ${aggegate.zips.dir}/@{zipPath}
 </echo>
-										<get src="${inputRepo@{repoNum}}/@{zipPath}" dest="${aggegate.zips.dir}/@{zipPath}" />
+										<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="false">
+											<arg line="${inputRepo@{repoNum}}/@{zipPath} -q --no-clobber" />
+										</exec>
+										<!--get src="${inputRepo@{repoNum}}/@{zipPath}" dest="${aggegate.zips.dir}/@{zipPath}" /-->
 									</sequential>
 								</for>
 								<var name="relativePath" unset="true" />
 							</then>
 						</if>
-						<var unset="true" name="ALL_ZIPS" />
+						<var unset="true" name="ALL_ZIPS" value="" />
 						<delete file="${aggegate.zips.dir}/zip.list.txt" quiet="true" />
 					</then>
 				</if>
