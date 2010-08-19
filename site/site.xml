@@ -142,6 +142,9 @@
    <feature url="features/org.jboss.tools.deltacloud_0.0.0.jar" id="org.jboss.tools.deltacloud" version="0.0.0">
       <category name="CloudTools"/>
    </feature>
+   <feature url="features/org.jboss.tools.usage_0.0.0.jar" id="org.jboss.tools.usage" version="0.0.0">
+      <category name="AllTools"/>
+   </feature>
    <category-def name="SDKTools" label="JBoss Tools SDK">
       <description>
          JBoss Tools SDK contains plugins where an SDK package
