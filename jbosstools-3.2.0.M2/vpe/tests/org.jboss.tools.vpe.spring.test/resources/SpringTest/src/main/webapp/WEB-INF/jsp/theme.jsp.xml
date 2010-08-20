@@ -1,0 +1,22 @@
+<tests>
+	<test id="theme1">
+		<SPAN CLASS="vpe-text" >
+			some.id.in.bundle
+		</SPAN>
+	</test>
+	<test id="theme2">
+		<SPAN CLASS="vpe-text" >
+			someId1, someId2, someId3
+		</SPAN>
+	</test>
+	<test id="theme3">
+		<SPAN CLASS="vpe-text" >
+			someId1 someId2 someId3
+		</SPAN>
+	</test>
+	<test id="theme4">
+		<SPAN CLASS="vpe-text" >
+			someId1 someId2 someId3
+		</SPAN>
+	</test>
+</tests>

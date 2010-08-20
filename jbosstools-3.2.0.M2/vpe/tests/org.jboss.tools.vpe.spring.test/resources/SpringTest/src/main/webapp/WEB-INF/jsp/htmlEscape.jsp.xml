@@ -1,0 +1,10 @@
+<tests>
+	<test id="htmlEscapeTrue">
+		<SPAN ID="htmlEscapeTrue">
+		</SPAN>
+	</test>
+	<test id="htmlEscapeFalse">
+		<SPAN ID="htmlEscapeFalse">
+		</SPAN>
+	</test>
+</tests>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='ISO-8859-1'?><chapter id="install">
+  <title>Installating the JBoss BPEL Tools</title>
+  <section id="installeclipse">
+    <title>BPEL Editor</title>
+    <para>The JBoss BPEL Editor and deployment framework are available in the community-supported distribution of JBoss Tools. As of this writing, the tools can be installed from the JBoss update site using either the Eclipse 3.5 Galileo or Eclipse 3.6 Helios releases. The Eclipse distributions can be downloaded from the <ulink url="http://eclipse.org/downloads/">Eclipse Web Site</ulink>. 
+        </para>
+    <para>The JBoss BPEL Editor may also be installed as a stand-alone plug-in. See <ulink url="http://www.jboss.org/tools/download/installation.html">Installing JBoss Tools</ulink> for more information.</para>
+  </section>
+  <section>
+    <title>Prerequisites</title>
+    <para>For installation and configuring BPEL engine into a JBossAS environment
+            you will need the following: </para>
+    <itemizedlist>
+      <listitem>
+        <para> JBossAS (version 5.1.0.GA or higher), 
+                available from <ulink url="http://www.jboss.org/jbossas"> http://www.jboss.org/jbossas</ulink>.</para>
+      </listitem>
+      <listitem>
+        <para>RiftSaw (version 2.0 or higher), available from <ulink url="http://www.jboss.org/riftsaw">http://www.jboss.org/riftsaw</ulink>.</para>
+      </listitem>
+      <listitem>
+        <para>Ant, available from <ulink url="http://ant.apache.org">here</ulink>.</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="installRuntime">
+    <title>BPEL (Riftsaw) Runtime</title>
+    <itemizedlist>
+      <listitem>
+        <para>Unpack the JBossAS installation archive into the required location. 
+                </para>
+      </listitem>
+      <listitem>
+        <para>Unpack the RiftSaw distribution into the location
+                    alongside the JBossAS installation:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Edit the <property>install/deployment.properties</property> file to update 
+                        the JBossAS location settings.
+                        </para>
+          </listitem>
+          <listitem>
+            <para>From the <property>install</property> folder,
+                            run: <property>ant deploy -Ddatabase=hsql</property>
+                        to deploy RiftSaw to JBossAS.
+                        </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>Then in the 
+                <property>${RiftSaw}/install</property> folder run the command:
+                <property>ant deploy -Ddatabase=hsql -Dws.stack=native -Dws.version=3.2.2.GA</property>  
+                It will help you to download the web service stack, and then upgrade it for JBoss AS.
+                </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</chapter>

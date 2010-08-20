@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin>
+   <extension
+         point="org.jboss.tools.vpe.ui.tests">
+      <tests
+            description="Unit tests for Spring support in VPE"
+            name="Spring Tests"
+            testSuite="org.jboss.tools.vpe.spring.test.SpringAllTests"/>
+      <testProject
+            name="SpringTest"
+            path="resources/SpringTest"/>
+   </extension>
+
+</plugin>

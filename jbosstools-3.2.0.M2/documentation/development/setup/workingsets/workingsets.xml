@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Birt" name="Birt">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.birt.oda" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.birt.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.birt.oda.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.birt.core" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Core/Common" name="Core/Common">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.text.xml" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.meta.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.verification.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.projecttemplates" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.el.core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.core.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.verification.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.kb.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.gef" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.verification.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.verification" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.model" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.ui.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.kb" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.resref.core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.el.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.text.ext" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.text.ext.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.resref.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.model.ui.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.model.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.common.model.test" type="4"/>
+<item elementID="=org.jboss.tools.common.el.core.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.jboss.tools.common.text.ext.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Docs" name="Docs">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/test-strategy" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/test-plan" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/toolsdocs" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.doc.development" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="ESB" name="ESB">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.esb.project.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.esb.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.esb.core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.esb.core.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.esb.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.esb.project.core" type="4"/>
+<item elementID="=org.jboss.tools.esb.project.core.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Flow" name="Flow">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.flow.jpdl4" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.flow.common" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.flow.ruleflow" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.flow.common.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.flow.jpdl4.builder" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.flow.jpdl4.feature" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Freemarker" name="Freemarker">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.freemarker" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.freemarker.feature" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Hibernate" name="Hibernate">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.hibernate.hblibs" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.hibernate.xml" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.hibernate.jpt.core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.help" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/hibernatetools.doc" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.hibernate.jpt.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.hibernate.sampleproject.mappingtypes" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.test.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.jdt.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.jdt.ui.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.console" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.hibernate.ui.view" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.hibernate.ui.veditor" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.mapper" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.jdt.apt.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.hibernate.xml.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.hibernate.eclipse.console.test" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="jbpm" name="jbpm">
+<item elementID="=org.jboss.tools.jbpm.convert" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jbpm.convert.feature" type="4"/>
+<item elementID="=org.jboss.tools.jbpm.convert.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="JMX" name="JMX">
+<item elementID="=org.jboss.tools.jmx.core" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.jboss.tools.jmx.core.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jmx.feature" type="4"/>
+<item elementID="=org.jboss.tools.jmx.ui" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.jboss.tools.jmx.ui.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.jboss.tools.jmx.ui.test.interactive" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="JSF" name="JSF">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.facelets" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.verification" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.seam" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.jsf" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.ui.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.myfaces.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.text.ext.facelets" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.verification.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.ajax4jsf" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.jsf.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.doc.user" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.richfaces.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.seam.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.facelets.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.richfaces.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.richfaces" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.text.ext.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.text.ext" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jsf.vpe.myfaces" type="4"/>
+<item elementID="=org.jboss.tools.jsf.text.ext.richfaces" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="JST" name="JST">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.firstrun" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.debug.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.ui.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.verification" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.tiles.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.debug" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.jsp" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.tiles" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web.tiles.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.web" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.jst.jsp.test" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Labs" name="Labs">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.labs.pde.sourceprovider" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Portlet" name="Portlet">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.portlet.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.portlet.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.portlet.core" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Project Archives" name="Project Archives">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.archives.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/packaging-convert" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.archives.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.archives.webtools" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.archives.core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.archives.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.archives.test.feature" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Project Examples" name="Project Examples">
+<item elementID="=org.jboss.tools.project.examples" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.project.examples.feature" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Seam" name="Seam">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.seam.gen" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.ui.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.doc.user" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.text.ext" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.pages.xml" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.xml.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.pages.xml.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.core.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.seam.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.ui.pages" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.xml" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.seam.core" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Server tools" name="Server tools">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.as.classpath.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.eclipse.as.tptp" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.as.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.as.doc.user" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.as.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.as.core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.as.ui.mbeans" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.as.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipse.as.classpath.core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.ide.eclipes.as.test.feature" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Smooks" name="Smooks">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.smooks.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.smooks.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.smooks.test" type="4"/>
+<item elementID="=org.jboss.tools.smooks.core" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/docs_smooks" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Struts" name="Struts">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.vpe.struts" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.validator.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.debug" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.vpe.struts.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.text.ext.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.text.ext" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.struts.verification" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Test/QA" name="Test/QA">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.test.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.tests" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="tptp" name="tptp">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.tptp.feature" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Visual Page Editor" name="Visual Page Editor">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.html.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.jsp.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.xulrunner.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.xulrunner.initializer" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.xulrunner" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.jsp" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.resref" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.ui.palette" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.ui.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.xulrunner.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.docbook" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.vpe.html" type="4"/>
+<item elementID="=org.jboss.tools.jsf.vpe.ajax4jsf.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=org.jboss.tools.jsf.vpe.jstl" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.xulrunner" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Webservices" name="Webservices">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.ws.core.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.ws.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.ws.feature" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.ws.core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.ws.ui.test" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.ws.creation.ui" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/org.jboss.tools.ws.creation.core" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" label="Window Working Set" name="Aggregate for window 1234775860987"/>
+</workingSetManager>

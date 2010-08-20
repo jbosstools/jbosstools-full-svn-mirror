@@ -1,0 +1,61 @@
+<tests>
+	<test id="selectManyCheckbox1">
+		<DIV>
+			<TABLE>
+				<TR>
+					<TD>
+						<SPAN STYLE="-moz-user-modify: read-write;">
+							<INPUT TYPE="checkbox" />
+							<LABEL> check1 </LABEL>
+						</SPAN>
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<SPAN STYLE="-moz-user-modify: read-write;">
+							<INPUT TYPE="checkbox" />
+							<LABEL> check2 </LABEL>
+						</SPAN>
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<SPAN STYLE="-moz-user-modify: read-write;">
+							<INPUT TYPE="checkbox" />
+							<LABEL>check3</LABEL>
+						</SPAN>
+					</TD>
+				</TR>
+			</TABLE>
+		</DIV>
+	</test >
+	<test id="selectManyCheckbox2">
+		<DIV>
+			<TABLE BORDER="2" STYLE="color: red;" CLASS="myClass">
+				<TR>
+					<TD>
+						<SPAN STYLE="-moz-user-modify: read-write;">
+							<INPUT TYPE="checkbox" />
+		
+							<LABEL>check1</LABEL>
+						</SPAN>
+					</TD>
+					<TD>
+						<SPAN STYLE="-moz-user-modify: read-write;">
+							<INPUT TYPE="checkbox" />
+		
+							<LABEL>check2</LABEL>
+						</SPAN>
+					</TD>
+					<TD>
+						<SPAN STYLE="-moz-user-modify: read-write;">
+							<INPUT TYPE="checkbox" />
+		
+							<LABEL>check3</LABEL>
+						</SPAN>
+					</TD>
+				</TR>
+			</TABLE>
+		</DIV>
+	</test>
+</tests>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<!-- 
+		First, build the JBT plugins:
+			cd ~/trunk; mvn clean install
+				or
+			cd ~/trunk; ant
+			
+		Next, run this to create RCP product from available plugins + .product definition file
+		TODO: verify this works
+			cd ~/trunk/build/product; mvn clean package
+	 -->
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+	  <relativePath>../parent-pom.xml</relativePath>
+	  <groupId>org.jboss.tools</groupId>
+	  <artifactId>org.jboss.tools.parent.pom</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>org.jboss.tools.product.pom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>JBoss Tools Product</name>
+	<packaging>eclipse-plugin</packaging>
+	<build>
+		<finalName>${project.artifactId}_${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-packaging-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<id>product-export</id>
+						<goals>
+							<goal>product-export</goal>
+						</goals>
+						<configuration>
+							<productConfigurationFile>jbds4.product
+									</productConfigurationFile>
+							<environments>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>carbon</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+

@@ -1,0 +1,11 @@
+<tests>
+	<test id="booksOption1">
+		<option id="booksOption1"></option>
+	</test>
+	<test id="booksOption2">
+		<option id="booksOption2" class="tall-option" style="width: 30px;">books selected</option>
+	</test>
+	<test id="booksOption3">
+		<option id="booksOption3" disabled="disabled"></option>
+	</test>
+</tests>

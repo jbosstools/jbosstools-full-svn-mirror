@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='ISO-8859-1'?><chapter id="overview">
+  <title>JBoss BPEL Tooling Overview</title>
+  <para>JBoss Tools now includes a BPEL (Business Process Execution Language) editor that is WS-BPEL 2.0 compliant.</para>
+  <para><footnote label="*">
+      <para>
+   <ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html">WS-BPEL 2.0</ulink> 
+   stands for Web Service Business Process Execution Language. Like EAI, BPEL is an XML-based language,
+   but BPEL is more specific and targeted. Typically, BPEL is used to &quot;orchestrate&quot; or join disparate web services into an integrated process, resulting in a seamless use of the Internet to 
+   conduct business transactions ranging from simple money exchanges to complex calculations and 
+   asset reallocation.</para>
+    </footnote>The editor is based on the Eclipse 
+        <ulink url="http://www.eclipse.org/bpel/">BPEL project </ulink> with some additional enhancements and numerous bug fixes. In addition, a deployment framework allows BPEL processes to be deployed to, and executed by the Riftsaw BPEL execution engine which
+ is based on the Apache ODE engine (version 1.3.4 as of this writing). Please refer to the <ulink url="http://jboss.org/riftsaw">Riftsaw website</ulink> for more information.</para>
+  <para>Here are just some of the new features of the JBoss Tools BPEL editor: </para>
+  <itemizedlist>
+    <listitem>
+      <para>Close integration with the Riftsaw BPEL runtime: a new Eclipse project type has been defined to allow simple, one-click deployment.</para>
+    </listitem>
+    <listitem>
+      <para>Increased reliability and language validation over the Eclipse BPEL project.</para>
+    </listitem>
+    <listitem>
+      <para>Enhanced &quot;New Process Wizard&quot; that generates a complete, ready-to-run process on a local server without additional WSDL configuration.</para>
+    </listitem>
+    <listitem>
+      <para>Improved BPEL Console for simple monitoring and control of BPEL processes.</para>
+    </listitem>
+  </itemizedlist>
+</chapter>
