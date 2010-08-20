@@ -11,7 +11,6 @@
 package org.jboss.tools.smooks.graphical.actions;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.ui.IEditorPart;
@@ -19,7 +18,6 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.process.IProcessProvider;
-import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.ISmooksModelProvider;
 

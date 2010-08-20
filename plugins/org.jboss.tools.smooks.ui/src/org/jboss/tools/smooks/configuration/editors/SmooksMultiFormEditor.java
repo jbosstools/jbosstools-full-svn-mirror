@@ -32,6 +32,8 @@ public class SmooksMultiFormEditor extends AbstractSmooksFormEditor {
 		
 		super.addPages();
 	}
+	
+	
 
 	private SmooksConfigurationFormPage createSmooksConfigurationOverviewPage() {
 		return new SmooksConfigurationFormPage(this,

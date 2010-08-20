@@ -62,6 +62,8 @@ import org.jboss.tools.smooks.model.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.SmooksEditorModelBuilder;
 import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.IParam;
+import org.jboss.tools.smooks.model.core.provider.CoreItemProviderAdapterFactory;
+import org.jboss.tools.smooks.model.javabean.provider.JavaBeanItemProviderAdapterFactory;
 import org.milyn.javabean.dynamic.Model;
 
 /**
@@ -117,6 +119,10 @@ public class AbstractSmooksFormEditor extends FormEditor implements
 	
 	protected void initEditingDomain() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		
+		adapterFactory.addAdapterFactory(new JavaBeanItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new CoreItemProviderAdapterFactory());
+		
 		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
 	}
 	

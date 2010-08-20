@@ -666,10 +666,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements IProcessPr
 //					smooksModelProvider);
 //			return freemarkerPart;
 //		}
-//		if (taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
-//			SmooksJavaMappingGraphicalEditor javaMappingPart = new SmooksJavaMappingGraphicalEditor(smooksModelProvider);
-//			return javaMappingPart;
-//		}
+		if (taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
+			SmooksJavaMappingGraphicalEditor javaMappingPart =new SmooksJavaMappingGraphicalEditor(this.smooksModelProvider);// new SmooksJavaMappingGraphicalEditor(smooksModelProvider);
+			return javaMappingPart;
+		}
 		if (taskID.equals(TaskTypeManager.TASK_ID_INPUT)) {
 			SmooksReaderFormPage readerPage = new SmooksReaderFormPage(getEditor(), "input", "input"); //$NON-NLS-1$ //$NON-NLS-2$
 			return readerPage;

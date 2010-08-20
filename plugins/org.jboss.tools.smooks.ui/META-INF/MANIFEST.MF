@@ -27,7 +27,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.filesystem,
  org.eclipse.wst.wsdl,
  javax.wsdl,
- org.jboss.tools.smooks.templating
+ org.jboss.tools.smooks.templating,
+ org.eclipse.gef,
+ org.jboss.tools.smooks.ecore.model.edit
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
