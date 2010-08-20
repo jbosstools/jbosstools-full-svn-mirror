@@ -11,8 +11,8 @@
 	</modules>
 
 	<properties>
-		<!-- <tychoVersion>0.10.0-SNAPSHOT</tychoVersion> -->
-		<tychoVersion>0.9.0</tychoVersion>
+		<tychoVersion>0.10.0-SNAPSHOT</tychoVersion>
+		<!--tychoVersion>0.9.0</tychoVersion-->
 		<scmBranch>trunk</scmBranch>
 		<BUILD_ALIAS>M2</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
@@ -231,6 +231,18 @@
 				<repository>
 					<id>birt26</id>
 					<url>http://download.eclipse.org/birt/update-site/2.6/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>jboss-drools-nightly</id>
+					<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-drools/all/repo/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
