@@ -3,22 +3,15 @@
 	<!-- This file is only used when building with Tycho.
 		If building with Ant (trunk/build/build.xml), see category.*.xml -->
 	<description>
-      JBoss Tools 3.2.0 Update Site / p2 Repo
-   	</description>
+		JBoss Tools 3.2.0 Update Site / p2 Repo
+	</description>
 
 	<!-- only in JBDS -->
 	<!--
 	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar"
-	         id="com.jboss.jbds.product.feature"
-	         version="0.0.0"
-	         patch="false"
-	>
-		<category name="AllTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar"
-	         id="org.jboss.tools.runtime.feature"
-	         version="0.0.0"
-	         patch="false"
+		id="com.jboss.jbds.product.feature"
+		version="0.0.0"
+		patch="false"
 	>
 		<category name="AllTools" />
 	</feature>
@@ -107,11 +100,8 @@
 		<category name="AllTools"/> 
 	</feature> 
 	-->
-
 	<!-- only in JBT -->
-	<feature url="features/org.jboss.tools.community.project.examples.feature_0.0.0.jar"
-	         id="org.jboss.tools.community.project.examples.feature"
-	         version="0.0.0">
+	<feature url="features/org.jboss.tools.community.project.examples.feature_0.0.0.jar" id="org.jboss.tools.community.project.examples.feature" version="0.0.0" >
 		<category name="AllTools" />
 		<category name="GeneralTools" />
 	</feature>
@@ -137,7 +127,8 @@
 		<category name="MavenTools" />
 	</feature>
 
-	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0">
+	<!-- XulRunner requires version in declaration to avoid include latest 1.9.2 in build -->
+	<feature url="features/org.mozilla.xpcom.feature_1.9.1.2a.jar" id="org.mozilla.xpcom.feature" version="1.9.1.2a">
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
@@ -174,35 +165,27 @@
 		<category name="AllTools" />
 		<category name="SOATools" />
 	</feature>
-
 	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="SOATools" />
 	</feature>
-
 	<feature url="features/org.jboss.tools.modeshape.rest.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="GeneralTools" />
 	</feature>
-
 	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
-		<category name="AllTools" />
+		<category name="AllTools"/>
 	</feature>
-
 	<feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
-		<category name="GeneralTools" />
-		<category name="AllTools" />
+		<category name="GeneralTools"/>
 	</feature>
-
-	<feature url="features/org.jboss.tools.deltacloud_0.0.0.jar" id="org.jboss.tools.deltacloud" version="0.0.0">
-		<category name="CloudTools" />
-		<category name="AllTools" />
-	</feature>
-
 	<feature url="features/org.jboss.tools.usage_0.0.0.jar" id="org.jboss.tools.usage" version="0.0.0">
-		<category name="AllTools" />
+		<category name="AllTools"/>
 	</feature>
-
+	<feature url="features/org.jboss.tools.deltacloud_0.0.0.jar" id="org.jboss.tools.deltacloud" version="0.0.0">
+		<category name="CloudTools"/>
+	</feature>
+	
 	<!-- categories - see also ../../../common/aggregateRepos.*.properties -->
 	<category-def name="SDKTools" label="JBoss Tools SDK">
 		<description>JBoss Tools SDK contains plugins where an SDK package
@@ -266,11 +249,12 @@
 		</description>
 	</category-def>
 
-	<category-def name="CloudTools" label="Cloud">
-		<description>Tools for Cloud Development
-      		</description>
+	<category-def>
+		<category-def name="CloudTools" label="Cloud">
+		<description>
+			Tools for Cloud Development
+		</description>
 	</category-def>
-
 
 	<!-- aggregated from other sources -->
 	<feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
