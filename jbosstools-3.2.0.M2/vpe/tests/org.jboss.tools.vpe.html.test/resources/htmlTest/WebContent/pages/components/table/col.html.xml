@@ -1,5 +1,0 @@
-<tests>
-	<test id="col">
-		<COL SPAN="5" ID="col" STYLE="-moz-user-modify: read-only;" />
-	</test>
-</tests>

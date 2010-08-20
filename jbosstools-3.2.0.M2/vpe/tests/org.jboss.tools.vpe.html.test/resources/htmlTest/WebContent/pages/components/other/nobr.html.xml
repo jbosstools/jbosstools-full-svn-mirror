@@ -1,9 +1,0 @@
-<tests>
-	<test id="nobr">
-		<NOBR ID="nobr" STYLE="-moz-user-modify: read-only;" >
-			<SPAN>
-				text
-			</SPAN>
-		</NOBR>
-	</test>
-</tests>

@@ -1,3 +1,0 @@
-<project default="build.requirement">
-	<import file="../seam-2.0.1.GA/buildRequirement.xml" />
-</project>

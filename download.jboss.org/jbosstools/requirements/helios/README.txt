@@ -1,4 +1,4 @@
-Total of 23 req'd tgzs/zips/jars.
+Total of 22 req'd tgzs/zips/jars.
 
 BIRT 2.6 -> http://www.eclipse.org/downloads/download.php?file=/birt/downloads/build_list.php 
 ->
@@ -33,9 +33,6 @@ Equinox 3.6 -> http://www.eclipse.org/downloads/download.php?file=/equinox/
 	http://ftp.osuosl.org/pub/eclipse/equinox/drops/R-3.6-201006080911/
 wget http://ftp.osuosl.org/pub/eclipse/equinox/drops/R-3.6-201006080911/org.eclipse.equinox.transforms.hook_1.0.200.v20100503.jar
 wget http://ftp.osuosl.org/pub/eclipse/equinox/drops/R-3.6-201006080911/org.eclipse.equinox.transforms.xslt_1.0.200.v20100503.jar
-
-RSE 3.2 -> 
-wget http://www.eclipse.org/downloads/download.php?file=/dsdp/tm/downloads/drops/R-3.2-201006071030/RSE-runtime-3.2.zip\&r=1
 
 TPTP 4.7 -> 
 http://eclipse.org/tptp/home/downloads/?buildId=TPTP-4.7.0RC1-201005171900
