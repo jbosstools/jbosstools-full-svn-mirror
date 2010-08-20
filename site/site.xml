@@ -83,7 +83,8 @@
 		<category name="DataTools" />
 		<category name="GeneralTools" />
 	</feature>
-	<feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
+	<!-- remove Drools because it's now built externally; see aggregate site.xml instead -->
+	<!--feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="SOATools" />
 		<category name="GeneralTools" />
@@ -95,7 +96,7 @@
 	<feature url="features/org.guvnor.tools.feature_0.0.0.jar" id="org.guvnor.tools.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="SOATools" />
-	</feature>
+	</feature-->
 	<feature url="features/org.jboss.tools.project.examples.feature_0.0.0.jar" id="org.jboss.tools.project.examples.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="GeneralTools" />
