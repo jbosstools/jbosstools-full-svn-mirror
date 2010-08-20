@@ -182,12 +182,11 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<for list="${inputRepos}" delimiter=", " keepgoing="true" param="repoNum">
 			<sequential>
 				<!-- fetch zip.list.txt file, if available -->
-				<delete file="${aggegate.zips.dir}/zip.list.txt" quiet="true" />
-				<var unset="true" name="ALL_ZIPS" value="" />
-				<var unset="true" name="wget.return" value="" />
+				<var unset="true" name="ALL_ZIPS" />
+				<var unset="true" name="wget.return" />
 				<!-- quieter output and return code check w/ wget instead of <get> -->
 				<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return">
-					<arg line="${inputRepo@{repoNum}}/logs/zip.list.txt -q --no-clobber" />
+					<arg line="${inputRepo@{repoNum}}/logs/zip.list.txt --no-clobber" />
 				</exec>
 				<!--get src="${inputRepo@{repoNum}}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" /-->
 				<if>
@@ -197,8 +196,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 					</and>
 					<then>
 						<!-- load zip.list.txt file, get ALL_ZIPS list -->
-						<var unset="true" name="ALL_ZIPS" value="" />
-						<var unset="true" name="wget.return" value="" />
+						<var unset="true" name="ALL_ZIPS" />
 						<property file="${aggegate.zips.dir}/zip.list.txt" />
 						<if>
 							<isset property="ALL_ZIPS" />
@@ -214,7 +212,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 										               replace="\1" />
 										<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
 										<!-- fetch zips to local dir -->
-										<echo level="debug">repoNum = @{repoNum}
+										<echo>repoNum = @{repoNum}
 relativePath = ${relativePath}
 zipPath = @{zipPath}
 URL = ${inputRepo@{repoNum}}/@{zipPath}
@@ -229,7 +227,7 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 								<var name="relativePath" unset="true" />
 							</then>
 						</if>
-						<var unset="true" name="ALL_ZIPS" value="" />
+						<var unset="true" name="ALL_ZIPS" />
 						<delete file="${aggegate.zips.dir}/zip.list.txt" quiet="true" />
 					</then>
 				</if>
