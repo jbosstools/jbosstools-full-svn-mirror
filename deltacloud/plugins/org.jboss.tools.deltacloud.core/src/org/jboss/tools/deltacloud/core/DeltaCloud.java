@@ -3,8 +3,10 @@ package org.jboss.tools.deltacloud.core;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.equinox.security.storage.EncodingUtils;
@@ -24,21 +26,24 @@ public class DeltaCloud {
 	private String name;
 	private String username;
 	private String url;
+	private String type;
 	private DeltaCloudClient client;
 	private ArrayList<DeltaCloudInstance> instances;
+	private Map<String, String> keys = new HashMap<String, String>();
 	
 	ListenerList instanceListeners = new ListenerList();
 	ListenerList imageListeners = new ListenerList();
 	
 	public DeltaCloud(String name, String url, String username, String passwd) throws MalformedURLException {
-		this(name, url, username, passwd, false);
+		this(name, url, username, passwd, null, false);
 	}
 
-	public DeltaCloud(String name, String url, String username, String passwd, boolean persistent) throws MalformedURLException {
+	public DeltaCloud(String name, String url, String username, String passwd, String type, boolean persistent) throws MalformedURLException {
 		this.client = new DeltaCloudClient(new URL(url + "/api"), username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;
+		this.type = type;
 		if (persistent) {
 			ISecurePreferences root = SecurePreferencesFactory.getDefault();
 			String key = DeltaCloud.getPreferencesKey(url, username);
@@ -67,6 +72,10 @@ public class DeltaCloud {
 	
 	public String getUsername() {
 		return username;
+	}
+	
+	public String getType() {
+		return type;
 	}
 	
 	public void addInstanceListListener(IInstanceListListener listener) {
@@ -165,6 +174,8 @@ public class DeltaCloud {
 	
 	public boolean performInstanceAction(String instanceId, String action) throws DeltaCloudException {
 		try {
+			if (action.equals(DeltaCloudInstance.STOP) && keys.get(instanceId) != null)
+				client.deleteKey(keys.get(instanceId), Activator.getDefault().getStateLocation());
 			return client.performInstanceAction(instanceId, action);
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(e);
@@ -230,9 +241,18 @@ public class DeltaCloud {
 	public DeltaCloudInstance createInstance(String name, String imageId, String realmId, String profileId,
 			String memory, String storage) throws DeltaCloudException {
 		try {
-			Instance instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
+			String keyname = "key-" + name + "-" + System.nanoTime(); //$NON-NLS-1 //$NON-NLS-2$
+			Instance instance = null;
+			if (DeltaCloudInstance.EC2_TYPE.equals(type)) {
+				client.createKey(keyname, Activator.getDefault().getStateLocation());
+				instance = client.createInstance(imageId, profileId, realmId, name, keyname, memory, storage);
+				keys.put(instance.getId(), keyname);
+			} else {
+				instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
+			}
 			if (instance != null) {
 				DeltaCloudInstance newInstance = new DeltaCloudInstance(instance);
+				newInstance.setGivenName(name);
 				instances.add(newInstance);
 				DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
 				instanceArray = instances.toArray(instanceArray);

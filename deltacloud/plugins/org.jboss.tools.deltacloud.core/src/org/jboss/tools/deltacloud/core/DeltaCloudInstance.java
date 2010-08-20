@@ -18,7 +18,10 @@ public class DeltaCloudInstance {
 	public final static String REBOOT = Instance.Action.REBOOT.toString();
 	public final static String DESTROY = Instance.Action.DESTROY.toString();
 	
+	public final static String EC2_TYPE = "EC2"; //$NON-NLS-1$
+	
 	private Instance instance;
+	private String givenName;
 	
 	public DeltaCloudInstance(Instance instance) {
 		this.instance = instance;
@@ -26,6 +29,14 @@ public class DeltaCloudInstance {
 	
 	public String getName() {
 		return instance.getName();
+	}
+	
+	public String getGivenName() {
+		return givenName;
+	}
+	
+	public void setGivenName(String name) {
+		givenName = name;
 	}
 	
 	public String getId() {

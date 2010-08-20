@@ -1,3 +1,23 @@
+2010-08-20  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (DCNS): Add KEYS.
+	(deleteKey): New method to delete a keypair.
+	(createKey): New method to create a keypair.
+	(checkForErrors): Add extra check for status 404.
+	(createInstance): New method with additional keyname parameter to create instance using a
+	specified keypair.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getType): New method. 
+	(DeltaCloud): Add type parameter and add keys collection.
+	(performInstanceAction): Add check for EC2 STOP action in which case look for a key in the key
+	collection and if found, delete it.
+	(createInstance): If EC2 cloud, create a key and pass the name to the new client createInstance
+	API that takes a keypair name.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (setGivenName): New method to store
+	the name chosen by the user in the dialog. 
+	(getGivenName): New method to get the name chosen by the user in the dialog.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (loadClouds): Add type support.
+	(saveClouds): Ditto.
+
 2010-08-18  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (checkForErrors): Make

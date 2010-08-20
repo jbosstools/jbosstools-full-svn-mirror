@@ -51,16 +51,18 @@ public class DeltaCloudManager {
 					Node nameNode = attrs.getNamedItem("name"); // $NON-NLS-1$
 					Node urlNode = attrs.getNamedItem("url"); // $NON-NLS-1$
 					Node usernameNode = attrs.getNamedItem("username"); // $NON-NLS-1$
+					Node typeNode = attrs.getNamedItem("type"); // $NON-NLS-1$
 					String name = nameNode.getNodeValue();
 					String url = urlNode.getNodeValue();
 					String username = usernameNode.getNodeValue();
+					String type = typeNode.getNodeValue();
 					String key = DeltaCloud.getPreferencesKey(url, username);
 					ISecurePreferences root = SecurePreferencesFactory.getDefault();
 					ISecurePreferences node = root.node(key);
 					String password;
 					try {
 						password = node.get("password", null); //$NON-NLS-1$
-						DeltaCloud cloud = new DeltaCloud(name, url, username, password);
+						DeltaCloud cloud = new DeltaCloud(name, url, username, password, type, false);
 						clouds.add(cloud);
 					} catch (Exception e1) {
 						Activator.log(e1);
@@ -90,7 +92,8 @@ public class DeltaCloudManager {
 				for (DeltaCloud d : clouds) {
 					p.println("<cloud name=\"" + d.getName() + "\" url=\"" //$NON-NLS-1$ //$NON-NLS-2$ 
 							+ d.getURL() +
-							"\" username=\"" + d.getUsername() + "\"/>"); //$NON-NLS-1$ //$NON-NLS-2$
+							"\" username=\"" + d.getUsername() + 
+							"\" type=\"" + d.getType() + "\"/>"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				p.println("</clouds>"); //$NON-NLS-1$
 				p.close();
