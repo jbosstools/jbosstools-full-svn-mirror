@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jboss.tools.deltacloud"
+      id="org.jboss.tools.deltacloud.feature"
       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName">
