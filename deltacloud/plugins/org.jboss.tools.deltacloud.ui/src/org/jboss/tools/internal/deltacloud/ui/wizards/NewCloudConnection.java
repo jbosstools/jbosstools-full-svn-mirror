@@ -56,8 +56,9 @@ public class NewCloudConnection extends Wizard implements INewWizard {
 		String url = mainPage.getURL();
 		String username = mainPage.getUsername();
 		String password = mainPage.getPassword();
+		String type = mainPage.getType();
 		try {
-			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, true);
+			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, type, true);
 			DeltaCloudManager.getDefault().addCloud(newCloud);
 		} catch (MalformedURLException e) {
 			Activator.log(e);

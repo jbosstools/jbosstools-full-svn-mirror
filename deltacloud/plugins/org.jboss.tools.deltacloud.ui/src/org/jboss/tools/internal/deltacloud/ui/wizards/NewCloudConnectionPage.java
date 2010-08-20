@@ -154,6 +154,10 @@ public class NewCloudConnectionPage extends WizardPage {
 		return password;
 	}
 	
+	public String getType() {
+		return typeText.getText();
+	}
+	
 	private void validate() {
 		boolean complete = true;
 		boolean errorFree = true;
