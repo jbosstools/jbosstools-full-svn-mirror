@@ -34,7 +34,7 @@ import org.jboss.tools.smooks.configuration.editors.file.FileSelectionPageCompon
 import org.jboss.tools.smooks.configuration.editors.input.InputSourceType;
 import org.jboss.tools.smooks.configuration.editors.input.InputTaskPanelContributor;
 import org.jboss.tools.smooks.configuration.editors.input.InputTaskPanelContributorFactory;
-import org.jboss.tools.smooks.configuration.editors.input.Messages;
+import org.jboss.tools.smooks.configuration.editors.input.contributors.Messages;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.model.SmooksModel;
 import org.jboss.tools.smooks.model.core.ICorePackage;
@@ -80,7 +80,7 @@ public class XSDConfigurationContributorFactory implements InputTaskPanelContrib
 			Composite xsdFileSelectionSection = new Composite(inputSourceConfigComposite, SWT.NONE);
 
 			pageSelectionComponent = new FileSelectionPageComponent(editorPart.getEditorSite().getShell(), new String[] {"xsd"});
-			pageSelectionComponent.setLabel(Messages.XSDConfigurationContributor_XML_Schema_File);
+			pageSelectionComponent.setLabel(Messages.XSDConfigurationContributorFactory_XML_Schema_File);
 			pageSelectionComponent.createControl(xsdFileSelectionSection);
 			pageSelectionComponent.addFileSelectionListener(new FileSelectionListener() {
 				public void fileSelected(String fileName) {
@@ -151,7 +151,7 @@ public class XSDConfigurationContributorFactory implements InputTaskPanelContrib
 			gd = new GridData(GridData.BEGINNING | GridData.VERTICAL_ALIGN_BEGINNING);
 			Label rootElementsLabel = new Label(xsdRootElementSelectionSection, SWT.NONE);
 	        rootElementsLabel.setLayoutData(gd);
-			rootElementsLabel.setText(Messages.XSDConfigurationContributor_Root_Element_Name);
+			rootElementsLabel.setText(Messages.XSDConfigurationContributorFactory_Root_Element_Name);
 			
 			gd = new GridData(GridData.FILL_HORIZONTAL);
 	        rootElementsDropDown = new Combo(xsdRootElementSelectionSection, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.RESIZE);

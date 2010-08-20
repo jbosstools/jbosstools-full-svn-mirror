@@ -157,7 +157,7 @@ public class SmooksUIUtils {
 	}
 
 	public static IParam recordInputDataInfomation(
-			EditingDomain domain, GlobalParams paramsType, String type,
+			EditingDomain domain, GlobalParams globalParams, String type,
 			String path, Properties properties, CompoundCommand compoundCommand) {
 				
 		if (type != null && path != null && domain != null) {
@@ -176,7 +176,7 @@ public class SmooksUIUtils {
 
 					Command command = null;
 					try {
-						command = AddCommand.create(domain, paramsType, ICorePackage.Literals.PARAMS__PARAMS, params);
+						command = AddCommand.create(domain, globalParams, ICorePackage.Literals.PARAMS__PARAMS, params);
 					} catch (Throwable t) {
 						t.printStackTrace();
 					}

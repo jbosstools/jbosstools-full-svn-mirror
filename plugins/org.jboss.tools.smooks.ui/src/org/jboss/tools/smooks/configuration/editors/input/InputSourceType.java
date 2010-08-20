@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.configuration.editors.input;
 
+import org.jboss.tools.smooks.configuration.editors.input.contributors.JavaConfigurationContributorFactory;
 import org.jboss.tools.smooks.configuration.editors.input.contributors.SampleDataConfigurationContributorFactory;
 import org.jboss.tools.smooks.configuration.editors.input.contributors.SimpleMessageContributorFactory;
 import org.jboss.tools.smooks.configuration.editors.input.contributors.XSDConfigurationContributorFactory;
@@ -28,7 +29,7 @@ public enum InputSourceType {
 	NONE(0, new SimpleMessageContributorFactory(Messages.InputSourceType_Warning_Specify_Input_Type), null),
 	XML(1, new SampleDataConfigurationContributorFactory(), new XMLInputModelFactory()),
 	XSD(2, new XSDConfigurationContributorFactory(), new XSDInputModelFactory()),
-	JAVA(3, new SimpleMessageContributorFactory(Messages.InputSourceType_Warning_Specify_Sample_Data), new JavaInputModelFactory());
+	JAVA(3, new JavaConfigurationContributorFactory(), new JavaInputModelFactory());
 	
 	private int typeIndex;
 	private InputTaskPanelContributorFactory taskPanelContributorFactory;

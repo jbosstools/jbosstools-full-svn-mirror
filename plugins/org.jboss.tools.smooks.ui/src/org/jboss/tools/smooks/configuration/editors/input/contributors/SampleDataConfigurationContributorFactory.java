@@ -91,7 +91,7 @@ public class SampleDataConfigurationContributorFactory implements InputTaskPanel
 		return new PanelContributor(toolkit, editorPart, configModel);
 	}
 	
-	private class PanelContributor implements InputTaskPanelContributor {
+	private class PanelContributor extends AbstractContributor {
 
 		private EditorPart editorPart;
 		private Model<SmooksModel> configModel;
@@ -105,6 +105,7 @@ public class SampleDataConfigurationContributorFactory implements InputTaskPanel
 		private Button removeInputDataButton;		
 
 		public PanelContributor(FormToolkit toolkit, EditorPart editorPart, Model<SmooksModel> configModel) {
+			super(editorPart, configModel);
 			this.editorPart = editorPart;
 			this.configModel = configModel;
 			this.modelProvider = configModel.getModelRoot().getModelProvider();
@@ -291,7 +292,7 @@ public class SampleDataConfigurationContributorFactory implements InputTaskPanel
 						}
 						
 						if(!compoundCommand.isEmpty()) {
-							compoundCommand.execute();
+							editingDomain.getCommandStack().execute(compoundCommand);
 						}
 						
 						if (!inputs.isEmpty()) {
@@ -310,24 +311,6 @@ public class SampleDataConfigurationContributorFactory implements InputTaskPanel
 
 			inputSourceConfigComposite.setBackgroundMode(SWT.TRANSPARENT);
 			inputSourceConfigComposite.layout();			
-		}
-
-		private void setParamType(IParam param, String typeValue, CompoundCommand compoundCommand) {
-			Command c = SetCommand.create(editingDomain, param, ICorePackage.Literals.PARAM__TYPE, typeValue);
-			if (c.canExecute()) {
-				compoundCommand.append(c);
-			}
-		}
-
-		private void removeParam(IParam param, CompoundCommand compoundCommand) {
-			List<IParam> removingList = new ArrayList<IParam>();
-
-			removingList.add(param);
-			
-			Command removeCommand = RemoveCommand.create(editingDomain, removingList);
-			if (removeCommand.canExecute()) {
-				compoundCommand.append(removeCommand);
-			}
 		}
 		
 		protected void showInputDataWizard() {
