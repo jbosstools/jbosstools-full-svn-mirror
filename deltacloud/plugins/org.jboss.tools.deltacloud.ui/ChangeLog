@@ -1,3 +1,24 @@
+2010-08-23  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java (createInitialLayout): Add Images
+	view.
+	* src/org/jboss/tools/deltacloud/ui/views/CVCategoryElement.java (getChildren): Return
+	super getChildren. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java (getChildren):  
+	(loadChildren): New method that runs a thread to load instances and images.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (getChildren): Use
+	getCurrInstances method of cloud instead of getInstances. 
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (fillLocalPullDown): Don't enable
+	the remove cloud and refresh cloud unless item selected. 
+	(.run): Change refresh action to refresh the cloud, not whole view.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java:
+	(makeActions): Add refresh view action and remove double click action.
+	(fillLocalPullDown): Add refresh view action.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java (inputChanged): Call
+	getCurrImages rather than getImages method of DeltaCloud. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.run): Add RSE action.
+
 2010-08-20  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (performFinish): Store the

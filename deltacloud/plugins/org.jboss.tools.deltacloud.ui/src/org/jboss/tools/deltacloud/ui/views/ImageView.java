@@ -6,11 +6,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -37,6 +34,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -51,6 +49,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
 	private final static String LAUNCH_INSTANCE = "CreateInstance.label"; //$NON-NLS-1$
+	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	
 	private TableViewer viewer;
 	private Composite container;
@@ -63,7 +62,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	
 	private ImageViewLabelAndContentProvider contentProvider;
 	
-	private Action doubleClickAction;
+	private Action refreshAction;
 	private Action launchAction;
 	
 	private ImageView parentView;
@@ -206,7 +205,6 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		makeActions();
 		hookContextMenu();
-		hookDoubleClickAction();
 		hookSelection();
 		contributeToActionBars();
 		
@@ -247,7 +245,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
-		//TODO
+		manager.add(refreshAction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -261,13 +259,25 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	}
 
 	private void makeActions() {
-		doubleClickAction = new Action() {
+		refreshAction = new Action() {
 			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						if (currCloud != null) {
+							currCloud.getImages();
+						}
+					}
+
+				});
+				t.start();
 			}
 		};
+		refreshAction.setText(CVMessages.getString(REFRESH));
+		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
+		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
 
 		launchAction = new Action() {
 			public void run() {
@@ -293,21 +303,6 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		launchAction.setToolTipText(CVMessages.getString(LAUNCH_INSTANCE));
 	}
 	
-	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
-	}
-	
-	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			CVMessages.getString("CloudViewName"), //$NON-NLS-1$
-			message);
-	}
-
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub

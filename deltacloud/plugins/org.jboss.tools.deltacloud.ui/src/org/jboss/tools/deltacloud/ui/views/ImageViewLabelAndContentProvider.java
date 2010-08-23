@@ -74,7 +74,7 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 				images = (DeltaCloudImage[])newInput;
 			} else {
 				cloud = (DeltaCloud)newInput;
-				images = cloud.getImages();
+				images = cloud.getCurrImages();
 			}
 		}
 	}

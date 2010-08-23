@@ -24,8 +24,9 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.rse.core.IRSECoreRegistry;
 import org.eclipse.rse.core.IRSESystemType;
-import org.eclipse.rse.core.model.IHost;
+import org.eclipse.rse.core.RSECorePlugin;
 import org.eclipse.rse.core.model.ISystemRegistry;
 import org.eclipse.rse.core.model.SystemStartHere;
 import org.eclipse.swt.SWT;
@@ -469,7 +470,21 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				DeltaCloudInstance instance = (DeltaCloudInstance)((IStructuredSelection)selection).getFirstElement();
 				String hostname = instance.getHostName();
 				ISystemRegistry registry = SystemStartHere.getSystemRegistry();
+				RSECorePlugin rsep = RSECorePlugin.getDefault();
+				IRSECoreRegistry coreRegistry = rsep.getCoreRegistry();
+				IRSESystemType[] sysTypes = coreRegistry.getSystemTypes();
+				IRSESystemType sshType = null;			
+				for (IRSESystemType sysType : sysTypes) {
+					if (sysType.getId().equals(IRSESystemType.SYSTEMTYPE_SSH_ONLY_ID))
+						sshType = sysType;
+				}
 				String connectionName = instance.getName() + " [" + instance.getId() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+				try {
+					registry.createHost(sshType, connectionName, hostname, null);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		};
 		rseAction.setText(CVMessages.getString(RSE_LABEL));

@@ -4,25 +4,25 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.IInstanceListListener;
+import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.IImageListListener;
 
-public class CVInstancesCategoryElement extends CVCategoryElement implements IInstanceListListener {
+public class CVImagesCategoryElement extends CVCategoryElement implements IImageListListener {
 
 	private Viewer viewer;
-	private CVInstancesCategoryElement category;
+	private CVImagesCategoryElement category;
 	
-	public CVInstancesCategoryElement(Object element, String name, Viewer viewer) {
+	public CVImagesCategoryElement(Object element, String name, Viewer viewer) {
 		super(element, name, CVCategoryElement.INSTANCES);
 		this.viewer = viewer;
 		DeltaCloud cloud = (DeltaCloud)getElement();
-		cloud.addInstanceListListener(this);
+		cloud.addImageListListener(this);
 		this.category = this;
 	}
 
 	protected void finalize() throws Throwable {
 		DeltaCloud cloud = (DeltaCloud)getElement();
-		cloud.removeInstanceListListener(this);
+		cloud.removeImageListListener(this);
 		super.finalize();
 	}
 	
@@ -30,25 +30,25 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 	public Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
-			cloud.removeInstanceListListener(this);
-			DeltaCloudInstance[] instances = cloud.getCurrInstances();
-			for (int i = 0; i < instances.length; ++i) {
-				DeltaCloudInstance d = instances[i];
-				CVInstanceElement element = new CVInstanceElement(d, d.getName());
+			cloud.removeImageListListener(this);
+			DeltaCloudImage[] images = cloud.getCurrImages();
+			for (int i = 0; i < images.length; ++i) {
+				DeltaCloudImage d = images[i];
+				CVImageElement element = new CVImageElement(d, d.getName());
 				addChild(element);
 			}
 			initialized = true;
-			cloud.addInstanceListListener(this);
+			cloud.addImageListListener(this);
 		}
 		return super.getChildren();
 	}
 
 	@Override
-	public void listChanged(DeltaCloudInstance[] instances) {
+	public void listChanged(DeltaCloudImage[] images) {
 		clearChildren();
-		for (int i = 0; i < instances.length; ++i) {
-			DeltaCloudInstance d = instances[i];
-			CVInstanceElement element = new CVInstanceElement(d, d.getName());
+		for (int i = 0; i < images.length; ++i) {
+			DeltaCloudImage d = images[i];
+			CVImageElement element = new CVImageElement(d, d.getName());
 			addChild(element);
 		}
 		initialized = true;

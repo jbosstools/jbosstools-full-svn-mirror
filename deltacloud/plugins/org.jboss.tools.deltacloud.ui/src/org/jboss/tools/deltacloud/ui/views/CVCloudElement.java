@@ -32,8 +32,8 @@ public class CVCloudElement extends CloudViewElement {
 			DeltaCloud cloud = (DeltaCloud)getElement();
 			CVCategoryElement c1 = new CVInstancesCategoryElement(cloud, CVMessages.getString(INSTANCE_CATEGORY_NAME),
 					viewer);
-			CVCategoryElement c2 = new CVCategoryElement(cloud, CVMessages.getString(IMAGE_CATEGORY_NAME),
-					CVCategoryElement.IMAGES);
+			CVCategoryElement c2 = new CVImagesCategoryElement(cloud, CVMessages.getString(IMAGE_CATEGORY_NAME),
+					viewer);
 			addChild(c1);
 			addChild(c2);
 		}
@@ -46,4 +46,8 @@ public class CVCloudElement extends CloudViewElement {
 		return new CloudPropertySource(getElement());
 	}
 
+	public void loadChildren() {
+		DeltaCloud cloud = (DeltaCloud)getElement();
+		cloud.loadChildren();
+	}
 }

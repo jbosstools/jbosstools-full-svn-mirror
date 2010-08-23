@@ -27,7 +27,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
-import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
@@ -128,6 +127,12 @@ ITabbedPropertySheetPageContributor {
 	
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(removeCloud);
+		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+		CloudViewElement element = (CloudViewElement)selection.getFirstElement();
+		if (element == null)
+			removeCloud.setEnabled(false);
+		else
+			removeCloud.setEnabled(true);
 		manager.add(refreshAction);
 	}
 
@@ -197,7 +202,15 @@ ITabbedPropertySheetPageContributor {
 		
 		refreshAction = new Action() {
 			public void run() {
-				viewer.setInput(new CVRootElement(viewer));
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				if (obj instanceof CloudViewElement) {
+					CloudViewElement element = (CloudViewElement)obj;
+					while (!(element instanceof CVCloudElement))
+						element = (CloudViewElement)element.getParent();
+					CVCloudElement cloud = (CVCloudElement)element;
+					cloud.loadChildren();
+				}
 			}
 		};
 		refreshAction.setText(CVMessages.getString(REFRESH));
