@@ -31,6 +31,8 @@ public class Instance extends DeltaCloudObject
 	
 	private String realmId;
 	
+	private String keyname;
+	
 	@XmlElement
 	private State state;
 	
@@ -97,6 +99,14 @@ public class Instance extends DeltaCloudObject
 		} catch (Exception e) {
 			this.state = State.BOGUS;
 		}
+	}
+	
+	public void setKey(String keyname) {
+		this.keyname = keyname;
+	}
+	
+	public String getKey() {
+		return keyname;
 	}
 	
 	@SuppressWarnings("unused")

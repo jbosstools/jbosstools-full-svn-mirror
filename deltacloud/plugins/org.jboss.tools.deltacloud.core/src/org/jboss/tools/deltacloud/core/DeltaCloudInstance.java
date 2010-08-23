@@ -51,6 +51,10 @@ public class DeltaCloudInstance {
 		return instance.getState().toString();
 	}
 	
+	public String getKey() {
+		return instance.getKey();
+	}
+	
 	public List<String> getActions() {
 		return instance.getActionNames();
 	}

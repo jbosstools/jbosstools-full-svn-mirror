@@ -63,6 +63,7 @@ public class DeltaCloudManager {
 					try {
 						password = node.get("password", null); //$NON-NLS-1$
 						DeltaCloud cloud = new DeltaCloud(name, url, username, password, type, false);
+						cloud.loadChildren();
 						clouds.add(cloud);
 					} catch (Exception e1) {
 						Activator.log(e1);

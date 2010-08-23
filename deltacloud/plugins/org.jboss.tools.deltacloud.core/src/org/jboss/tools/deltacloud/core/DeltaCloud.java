@@ -29,7 +29,9 @@ public class DeltaCloud {
 	private String type;
 	private DeltaCloudClient client;
 	private ArrayList<DeltaCloudInstance> instances;
+	private ArrayList<DeltaCloudImage> images;
 	private Map<String, String> keys = new HashMap<String, String>();
+	private Object imageLock = new Object();
 	
 	ListenerList instanceListeners = new ListenerList();
 	ListenerList imageListeners = new ListenerList();
@@ -78,6 +80,19 @@ public class DeltaCloud {
 		return type;
 	}
 	
+	public void loadChildren() {
+		Thread t = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				getImages();
+				getInstances();
+			}
+			
+		});
+		t.start();
+	}
+	
 	public void addInstanceListListener(IInstanceListListener listener) {
 		instanceListeners.add(listener);
 	}
@@ -124,6 +139,8 @@ public class DeltaCloud {
 	}
 	
 	public DeltaCloudInstance[] getCurrInstances() {
+		if (instances == null)
+			return getInstances();
 		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
 		instanceArray = instances.toArray(instanceArray);
 		return instanceArray;
@@ -156,6 +173,7 @@ public class DeltaCloud {
 			for (int i = 0; i < instances.size(); ++i) {
 				DeltaCloudInstance inst = instances.get(i);
 				if (inst.getId().equals(instanceId)) {
+					instance.setKey(inst.getKey());
 					// FIXME: remove BOGUS state when server fixes state problems
 					if (!(instance.getState().equals(DeltaCloudInstance.BOGUS)) && !(inst.getState().equals(instance.getState()))) {
 						instances.set(i, retVal);
@@ -199,19 +217,34 @@ public class DeltaCloud {
 	}
 	
 	public DeltaCloudImage[] getImages() {
-		ArrayList<DeltaCloudImage> images = new ArrayList<DeltaCloudImage>();
-		try {
-			List<Image> list = client.listImages();
-			for (Iterator<Image> i = list.iterator(); i.hasNext();) {
-				DeltaCloudImage image = new DeltaCloudImage(i.next());
-				images.add(image);
+		synchronized (imageLock) {
+			images = new ArrayList<DeltaCloudImage>();
+			try {
+				List<Image> list = client.listImages();
+				for (Iterator<Image> i = list.iterator(); i.hasNext();) {
+					DeltaCloudImage image = new DeltaCloudImage(i.next());
+					images.add(image);
+				}
+			} catch (DeltaCloudClientException e) {
+				Activator.log(e);
 			}
-		} catch (DeltaCloudClientException e) {
-			Activator.log(e);
+			DeltaCloudImage[] imageArray = new DeltaCloudImage[images.size()];
+			imageArray = images.toArray(imageArray);
+			notifyImageListListeners(imageArray);
+			return imageArray;
 		}
-		return images.toArray(new DeltaCloudImage[images.size()]);
 	}
 
+	public DeltaCloudImage[] getCurrImages() {
+		synchronized(imageLock) {
+			if (images == null)
+				return getImages();
+			DeltaCloudImage[] imageArray = new DeltaCloudImage[images.size()];
+			imageArray = images.toArray(imageArray);
+			return imageArray;
+		}
+	}
+	
 	public boolean testConnection() {
 		String instanceId = "madeupValue"; //$NON-NLS-1$
 		try {
@@ -246,6 +279,7 @@ public class DeltaCloud {
 			if (DeltaCloudInstance.EC2_TYPE.equals(type)) {
 				client.createKey(keyname, Activator.getDefault().getStateLocation());
 				instance = client.createInstance(imageId, profileId, realmId, name, keyname, memory, storage);
+				instance.setKey(keyname);
 				keys.put(instance.getId(), keyname);
 			} else {
 				instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
