@@ -277,7 +277,6 @@
 		<category name="AllTools" />
 	</feature>
 
-	<!-- removed temporarily because teiid doesn't work w/ Eclipse 3.6. yet.
 	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="DataTools" />
@@ -290,5 +289,4 @@
 		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
-	-->
 </site>
