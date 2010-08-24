@@ -8,6 +8,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<packaging>pom</packaging>
 	<modules>
 		<module>org.apache.oro.feature</module>
+		<module>org.jdom.feature</module>
 		<module>javax.wsdl.feature</module>
 	</modules>
 </project>

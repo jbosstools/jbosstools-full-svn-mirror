@@ -3,6 +3,9 @@
   <feature url="features/org.apache.oro.feature_0.0.0.jar" id="org.apache.oro.feature" version="0.0.0">
     <category name="Third party"/>
   </feature>
+  <feature url="features/org.jdom.feature_0.0.0.jar" id="org.jdom.feature" version="0.0.0">
+    <category name="Third party"/>
+  </feature>
   <feature url="features/javax.wsdl.feature_0.0.0.jar" id="javax.wsdl.feature" version="0.0.0">
     <category name="Third party"/>
   </feature>
