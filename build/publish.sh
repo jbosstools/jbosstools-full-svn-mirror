@@ -108,6 +108,7 @@ fi
 
 # generate list of zips in this job
 METAFILE=zip.list.txt
+mkdir -p ${STAGINGDIR}/logs
 echo "ALL_ZIPS = \\" >> ${STAGINGDIR}/logs/${METAFILE}
 for z in $(find ${STAGINGDIR} -name "*Update*.zip") $(find ${STAGINGDIR} -name "*Sources*.zip"); do
 	# list zips in staging dir
