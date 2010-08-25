@@ -189,13 +189,13 @@ class VpeDragAnyCommand extends DragNodeCommand2 {
 		if(testOnly) {
 			return editor != null && editor.isEditable() && dropContext.getFlavor() != null;
 		} else {
-			if(InnerDragBuffer.object instanceof Node && editor instanceof IJSPTextEditor) {
+			if(InnerDragBuffer.getInnerDragObject() instanceof Node && editor instanceof IJSPTextEditor) {
 				int offset = 0;
 				if(refChild instanceof NodeImpl) {
 					offset = ((NodeImpl)refChild).getIndex();
 				}
-				((IJSPTextEditor)editor).getVPEController().drop((Node)InnerDragBuffer.object, parentNode, offset);
-				InnerDragBuffer.object = null;
+				((IJSPTextEditor)editor).getVPEController().drop((Node)InnerDragBuffer.getInnerDragObject(), parentNode, offset);
+				InnerDragBuffer.setInnerDragObject(null);
 			} else {
 				int pos = getDropPosition(parentNode, refChild);
 				editor.selectAndReveal(pos, 0);

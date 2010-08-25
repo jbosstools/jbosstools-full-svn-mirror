@@ -278,8 +278,8 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	}
 
 	private DropResolver getDropResolverForInternalDrop() {
-		if (InnerDragBuffer.object instanceof Node) {
-			return getDropResolverForNode((Node) InnerDragBuffer.object);			
+		if (InnerDragBuffer.getInnerDragObject() instanceof Node) {
+			return getDropResolverForNode((Node) InnerDragBuffer.getInnerDragObject());			
 		} else {
 			return getSimpleDropResolver(false);
 		}
@@ -467,12 +467,13 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	}
 	
 	private void rememberDragNode(Node node) {
-		InnerDragBuffer.object = node;
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				InnerDragBuffer.object = null;
-			}
-		});
+		InnerDragBuffer.setInnerDragObject(node);
+		//commented by Maksim Areshkau as fix for https://jira.jboss.org/browse/JBIDE-6860
+//		Display.getDefault().asyncExec(new Runnable() {
+//			public void run() {
+//				InnerDragBuffer.setInnerDragObject(null);
+//			}
+//		});
 	}
 	
 	private boolean isDraggable(nsIDOMElement element) {
@@ -524,7 +525,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			textWidget.replaceTextRange(selectionRange.x, selectionRange.y, ""); //$NON-NLS-1$
 			
 			dropAny(DndUtil.kUnicodeMime, text);
-		} else if (InnerDragBuffer.object instanceof Node) {
+		} else if (InnerDragBuffer.getInnerDragObject() instanceof Node) {
 			VpeSourceDropInfo sourceDropInfo = getDropInfo();
 			if (sourceDropInfo.getContainer() != null) {
 				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
@@ -539,14 +540,14 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 				if (sourceDropInfo.canDrop()) {
 					VpeDnDHelper dropper = new VpeDnDHelper();
 					dropper.setDndData(false, true);
-					Node node = (Node) InnerDragBuffer.object;
+					Node node = (Node) InnerDragBuffer.getInnerDragObject();
 					dropper.drop(vpeController.getPageContext(),
 							new VpeSourceInnerDragInfo(node, 0, 0), sourceDropInfo);
 
 					// select dropped node, JBIDE-6239
 					setSelectedNode(node);
 
-					InnerDragBuffer.object = null;
+					InnerDragBuffer.setInnerDragObject(null);
 				}
 			}
 		}
