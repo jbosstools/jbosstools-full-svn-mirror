@@ -116,7 +116,13 @@ ITabbedPropertySheetPageContributor {
 
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
+		IMenuManager menuMgr = bars.getMenuManager();
+		menuMgr.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager manager) {
+				DeltaCloudView.this.fillLocalPullDown(manager);
+			}
+		});
+		fillLocalPullDown(menuMgr);
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
@@ -126,6 +132,7 @@ ITabbedPropertySheetPageContributor {
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
+		manager.removeAll();
 		manager.add(removeCloud);
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 		CloudViewElement element = (CloudViewElement)selection.getFirstElement();

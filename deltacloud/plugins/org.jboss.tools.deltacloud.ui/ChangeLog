@@ -1,3 +1,12 @@
+2010-08-25  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (.menuAboutToShow): New
+	listener to properly set up pull-down menu. 
+	(contributeToActionBars): Add a menu listener for pull down so we can set enabled/disabled
+	at pull-down time.
+	(fillLocalPullDown): Add check for item selected.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.run): Experiment with RSE.
+
 2010-08-23  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java: New file.

@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.rse.core.IRSECoreRegistry;
 import org.eclipse.rse.core.IRSESystemType;
 import org.eclipse.rse.core.RSECorePlugin;
+import org.eclipse.rse.core.model.IHost;
 import org.eclipse.rse.core.model.ISystemRegistry;
 import org.eclipse.rse.core.model.SystemStartHere;
 import org.eclipse.swt.SWT;
@@ -480,7 +481,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				}
 				String connectionName = instance.getName() + " [" + instance.getId() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 				try {
-					registry.createHost(sshType, connectionName, hostname, null);
+					@SuppressWarnings("unused")
+					IHost host = registry.createHost(sshType, connectionName, hostname, null);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
