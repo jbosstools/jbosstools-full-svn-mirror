@@ -176,3 +176,8 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 fi
 date
 
+# purge org.jboss.tools metadata from local m2 repo (assumes job is configured with -Dmaven.repo.local=${WORKSPACE}/m2-repo)
+if [[ -d ${WORKSPACE}/m2-repo/org/jboss/tools ]]; then
+	rm -rf ${WORKSPACE}/m2-repo/org/jboss/tools
+fi
+
