@@ -195,6 +195,18 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository-->
+                                <repository>
+                                        <id>eclipse36</id>
+                                        <url>http://download.eclipse.org/eclipse/updates/3.6.x/
+                                        </url>
+                                        <layout>p2</layout>
+                                        <snapshots>
+                                                <enabled>true</enabled>
+                                        </snapshots>
+                                        <releases>
+                                                <enabled>true</enabled>
+                                        </releases>
+                                </repository>
 				<repository>
 					<id>jboss-helios</id>
 					<url>http://download.jboss.org/jbosstools/updates/requirements/helios/</url>
@@ -231,6 +243,18 @@
 				<repository>
 					<id>birt26</id>
 					<url>http://download.eclipse.org/birt/update-site/2.6/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>jboss-drools-nightly</id>
+					<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-drools/all/repo/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
