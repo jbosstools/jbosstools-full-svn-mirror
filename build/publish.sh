@@ -108,6 +108,7 @@ fi
 
 # generate list of zips in this job
 METAFILE=zip.list.txt
+mkdir -p ${STAGINGDIR}/logs
 echo "ALL_ZIPS = \\" >> ${STAGINGDIR}/logs/${METAFILE}
 for z in $(find ${STAGINGDIR} -name "*Update*.zip") $(find ${STAGINGDIR} -name "*Sources*.zip"); do
 	# list zips in staging dir
@@ -174,4 +175,9 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 	fi
 fi
 date
+
+# purge org.jboss.tools metadata from local m2 repo (assumes job is configured with -Dmaven.repo.local=${WORKSPACE}/m2-repo)
+if [[ -d ${WORKSPACE}/m2-repo/org/jboss/tools ]]; then
+	rm -rf ${WORKSPACE}/m2-repo/org/jboss/tools
+fi
 
