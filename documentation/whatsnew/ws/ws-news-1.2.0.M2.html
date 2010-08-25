@@ -9,24 +9,30 @@
 <title>WS Tools 3.2.0 M2 What's New</title>
 </head>
 <body>
-<h1>WS Tools 3.2.0 M1 What's New</h1>
+<h1>WS tools 3.2.0 M2 What's New</h1>
 
-<p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../deltacloud/deltacloud-news-1.0.0.M2.html">Deltacloud Development Tools &gt;</a></p>
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>TBD: Category name</h3>
+      <h3>Views</h3>
 	<hr/>
     </td>
   </tr>
 
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>TBD: Feature name</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Web Service Tester Updates</b></td>
     <td valign="top">
-    TBD: Description
+    <p>In M1, we added a new Web Service Tester view to JBoss Tools. Since then, the tester has gone through a facelift. The look and feel is courtesy of the Eclipse Forms toolkit and the usability improvements to the layout will hopefully make it much easier to get around in.</p>
+    <p>Once you've typed or selected your WSDL location in the URL combo, you can select the technology you're invoking the service against. The default is JAX-WS, but you now have the JAX-RS operations built into the list - GET, POST, PUT, DELETE, and OPTIONS. OPTIONS provides a way to ping a JAX-RS service to see what operations it supports. </p>
+    <p>In addition, you now have additional options for your Response data. You can save it to a text file, open it in an editor, view it in raw form (which is the default), or view your results in an embedded web browser. This last option can be very useful when a service returns a web page with an error or warning to view.</p>
+    <img src="./images/ws_tester_m2_facelift.jpg" style="width : 756px; height : 381px;"/>
+    <p>In addition, we've added a few other bits of new functionality:</p>
+    <ul><li>Basic Authentication support if a service is secured and needs to pass along a user name and password <small><a href="http://jira.jboss.org/browse/JBIDE-6660">Related Jira</a></small></li>
+    <li>Better support for cancelling a long-running invocation <small><a href="http://jira.jboss.org/browse/JBIDE-6589">Related Jira</a></small></li></ul>
     </td>
   </tr>
 
@@ -39,9 +45,11 @@
 	
  <tr>
     <td valign="top" align="right"><a name="itemname3"
-    id="itemname3"></a><b>TBD: Feture name</b></td>
+    id="itemname3"></a><b>New JAX-RS Sample Wizard</b></td>
     <td valign="top">
-    TBD: Description
+    <p>Much like the "Create a Sample Web Service" wizard that was added in JBT 3.1, we've added a new "Create a Sample RESTful Web Service" wizard this release to quickly get you up and running.</p>
+    <img src="./images/sample_restful_ws_wizard.jpg" style=""/>
+    <p><small><a href="http://jira.jboss.org/browse/JBIDE-5723">Related Jira</a></small></p>
     </td>
   </tr>
  
