@@ -223,20 +223,34 @@ public class BundleMap {
 		return false;
 	}
 
+	/**
+	 * Gets the bundle file based on the locale 
+	 * from the loaded resource bundle.
+	 *
+	 * @param uri the uri
+	 * @return the bundle file
+	 */
 	public IFile getBundleFile(String uri){
 		IEditorInput input = editor.getEditorInput();
 		IProject project = ((FileEditorInput)input).getFile().getProject();
-		String name = uri.replace('.','/')+".properties"; //$NON-NLS-1$
-		
-		if(project == null || !project.isOpen()) return null;
+		if(project == null || !project.isOpen()) {
+			return null;
+		}
 		try {
-			if(!project.hasNature(JavaCore.NATURE_ID)) return null;
+			if(!project.hasNature(JavaCore.NATURE_ID)) {
+				return null;
+			}
 			IJavaProject javaProject = JavaCore.create(project);		
 			IClasspathEntry[] es = javaProject.getResolvedClasspath(true);
 			for (int i = 0; i < es.length; i++) {
-				if(es[i].getEntryKind() != IClasspathEntry.CPE_SOURCE) continue;
-				IFile file = (IFile)project.getWorkspace().getRoot().getFolder(es[i].getPath()).findMember("/"+name); //$NON-NLS-1$
-				if(file != null && file.exists()) return file;
+				if(es[i].getEntryKind() != IClasspathEntry.CPE_SOURCE) {
+					continue;
+				}
+				IFile file = (IFile) project.getWorkspace().getRoot()
+					.getFolder(es[i].getPath()).findMember("/" + getBundleFileName(uri)); //$NON-NLS-1$
+				if(file != null && file.exists()) {
+					return file;
+				}
 			}
 		} catch (CoreException e) {
 			VpePlugin.getPluginLog().logError(e);
@@ -245,6 +259,24 @@ public class BundleMap {
 		return null;
 	}
 	
+	/**
+	 * Gets the bundle file name.
+	 * <a href="https://jira.jboss.org/browse/JBIDE-6729">
+	 * Related Jira</a>
+	 *
+	 * @param uri the uri
+	 * @return the bundle file name
+	 */
+	private String getBundleFileName(String uri) {
+		String resultUri = uri.replace('.','/');
+		ResourceBundle bundle = getBundleByUrl(uri, locale);
+		String localeString = bundle.getLocale().toString();
+		if ((null != localeString) && (localeString.length() > 0)){
+			resultUri += "_" + localeString; //$NON-NLS-1$
+		}
+		resultUri += ".properties"; //$NON-NLS-1$
+		return resultUri;
+	}
 	
 	private ResourceBundle getBundleByUrl(String uri, Locale locale) {
 		try {
@@ -260,10 +292,9 @@ public class BundleMap {
 						return null;
 					}
 				}
-
+				
 				ClassLoader classLoader = new URLClassLoader(urls, ClassLoader.getSystemClassLoader());
 				ResourceBundle bundle = ResourceBundle.getBundle(uri, locale, classLoader);
-
 				return bundle;
 			}
 		} catch (MissingResourceException ex) {
