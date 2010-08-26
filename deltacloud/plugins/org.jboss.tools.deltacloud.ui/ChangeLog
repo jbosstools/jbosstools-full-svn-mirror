@@ -1,5 +1,10 @@
 2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.run): For RSE
+	action, set the default userid to root when the host is created.
+
+2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (listChanged): Add new
 	cloud argument.
 	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (listChanged): Ditto. 

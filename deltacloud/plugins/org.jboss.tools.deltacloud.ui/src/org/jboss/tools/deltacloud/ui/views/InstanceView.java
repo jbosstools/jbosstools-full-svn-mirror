@@ -49,6 +49,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
@@ -488,11 +489,12 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				}
 				String connectionName = instance.getName() + " [" + instance.getId() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 				try {
-					@SuppressWarnings("unused")
 					IHost host = registry.createHost(sshType, connectionName, hostname, null);
+					if (host != null)
+						host.setDefaultUserId("root"); //$NON-NLS-1$
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Activator.log(e);
 				}
 			}
 		};
