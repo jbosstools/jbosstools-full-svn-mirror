@@ -10,13 +10,17 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -120,7 +124,7 @@ public class Bean extends EObjectImpl implements IBean {
 	protected String createOnElementNS = CREATE_ON_ELEMENT_NS_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getValueBindings() <em>Value Bindings</em>}' reference list.
+	 * The cached value of the '{@link #getValueBindings() <em>Value Bindings</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getValueBindings()
@@ -130,7 +134,7 @@ public class Bean extends EObjectImpl implements IBean {
 	protected EList<IValue> valueBindings;
 
 	/**
-	 * The cached value of the '{@link #getWireBindings() <em>Wire Bindings</em>}' reference list.
+	 * The cached value of the '{@link #getWireBindings() <em>Wire Bindings</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getWireBindings()
@@ -140,7 +144,7 @@ public class Bean extends EObjectImpl implements IBean {
 	protected EList<IWiring> wireBindings;
 
 	/**
-	 * The cached value of the '{@link #getExpressionBindings() <em>Expression Bindings</em>}' reference list.
+	 * The cached value of the '{@link #getExpressionBindings() <em>Expression Bindings</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getExpressionBindings()
@@ -259,7 +263,7 @@ public class Bean extends EObjectImpl implements IBean {
 	 */
 	public EList<IValue> getValueBindings() {
 		if (valueBindings == null) {
-			valueBindings = new EObjectResolvingEList<IValue>(IValue.class, this, IJavaBeanPackage.BEAN__VALUE_BINDINGS);
+			valueBindings = new EObjectContainmentEList<IValue>(IValue.class, this, IJavaBeanPackage.BEAN__VALUE_BINDINGS);
 		}
 		return valueBindings;
 	}
@@ -271,7 +275,7 @@ public class Bean extends EObjectImpl implements IBean {
 	 */
 	public EList<IWiring> getWireBindings() {
 		if (wireBindings == null) {
-			wireBindings = new EObjectResolvingEList<IWiring>(IWiring.class, this, IJavaBeanPackage.BEAN__WIRE_BINDINGS);
+			wireBindings = new EObjectContainmentEList<IWiring>(IWiring.class, this, IJavaBeanPackage.BEAN__WIRE_BINDINGS);
 		}
 		return wireBindings;
 	}
@@ -283,9 +287,27 @@ public class Bean extends EObjectImpl implements IBean {
 	 */
 	public EList<IExpression> getExpressionBindings() {
 		if (expressionBindings == null) {
-			expressionBindings = new EObjectResolvingEList<IExpression>(IExpression.class, this, IJavaBeanPackage.BEAN__EXPRESSION_BINDINGS);
+			expressionBindings = new EObjectContainmentEList<IExpression>(IExpression.class, this, IJavaBeanPackage.BEAN__EXPRESSION_BINDINGS);
 		}
 		return expressionBindings;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case IJavaBeanPackage.BEAN__VALUE_BINDINGS:
+				return ((InternalEList<?>)getValueBindings()).basicRemove(otherEnd, msgs);
+			case IJavaBeanPackage.BEAN__WIRE_BINDINGS:
+				return ((InternalEList<?>)getWireBindings()).basicRemove(otherEnd, msgs);
+			case IJavaBeanPackage.BEAN__EXPRESSION_BINDINGS:
+				return ((InternalEList<?>)getExpressionBindings()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**

@@ -19,12 +19,24 @@
     </genClasses>
     <genClasses ecoreClass="smooks-core.ecore#//Params">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference smooks-core.ecore#//Params/params"/>
-      <genOperations ecoreOperation="smooks-core.ecore#//Params/getParam">
-        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParam/name"/>
-      </genOperations>
       <genOperations ecoreOperation="smooks-core.ecore#//Params/setParam">
         <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam/name"/>
         <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/setParam.1">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam.1/name"/>
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam.1/value"/>
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam.1/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/getParam">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParam/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/getParam.1">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParam.1/name"/>
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParam.1/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/getParamValue">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParamValue/name"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="smooks-core.ecore#//GlobalParams">
@@ -32,6 +44,10 @@
         <genParameters ecoreParameter="smooks-core.ecore#//GlobalParams/setFilterType/filterType"/>
       </genOperations>
       <genOperations ecoreOperation="smooks-core.ecore#//GlobalParams/getFilterType"/>
+      <genOperations ecoreOperation="smooks-core.ecore#//GlobalParams/isDefaultSerializationOn"/>
+      <genOperations ecoreOperation="smooks-core.ecore#//GlobalParams/setDefaultSerializationOn">
+        <genParameters ecoreParameter="smooks-core.ecore#//GlobalParams/setDefaultSerializationOn/defaultSerializationOn"/>
+      </genOperations>
     </genClasses>
     <genClasses image="false" ecoreClass="smooks-core.ecore#//Component"/>
   </genPackages>

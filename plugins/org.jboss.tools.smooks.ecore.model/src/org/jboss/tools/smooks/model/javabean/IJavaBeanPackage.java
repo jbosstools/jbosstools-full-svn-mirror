@@ -355,7 +355,7 @@ public interface IJavaBeanPackage extends EPackage {
 	int BEAN__CREATE_ON_ELEMENT_NS = ICorePackage.COMPONENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Value Bindings</b></em>' reference list.
+	 * The feature id for the '<em><b>Value Bindings</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -364,7 +364,7 @@ public interface IJavaBeanPackage extends EPackage {
 	int BEAN__VALUE_BINDINGS = ICorePackage.COMPONENT_FEATURE_COUNT + 4;
 
 	/**
-	 * The feature id for the '<em><b>Wire Bindings</b></em>' reference list.
+	 * The feature id for the '<em><b>Wire Bindings</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -373,7 +373,7 @@ public interface IJavaBeanPackage extends EPackage {
 	int BEAN__WIRE_BINDINGS = ICorePackage.COMPONENT_FEATURE_COUNT + 5;
 
 	/**
-	 * The feature id for the '<em><b>Expression Bindings</b></em>' reference list.
+	 * The feature id for the '<em><b>Expression Bindings</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -695,10 +695,10 @@ public interface IJavaBeanPackage extends EPackage {
 	EAttribute getBean_CreateOnElementNS();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.jboss.tools.smooks.model.javabean.IBean#getValueBindings <em>Value Bindings</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks.model.javabean.IBean#getValueBindings <em>Value Bindings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Value Bindings</em>'.
+	 * @return the meta object for the containment reference list '<em>Value Bindings</em>'.
 	 * @see org.jboss.tools.smooks.model.javabean.IBean#getValueBindings()
 	 * @see #getBean()
 	 * @generated
@@ -706,10 +706,10 @@ public interface IJavaBeanPackage extends EPackage {
 	EReference getBean_ValueBindings();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.jboss.tools.smooks.model.javabean.IBean#getWireBindings <em>Wire Bindings</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks.model.javabean.IBean#getWireBindings <em>Wire Bindings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Wire Bindings</em>'.
+	 * @return the meta object for the containment reference list '<em>Wire Bindings</em>'.
 	 * @see org.jboss.tools.smooks.model.javabean.IBean#getWireBindings()
 	 * @see #getBean()
 	 * @generated
@@ -717,10 +717,10 @@ public interface IJavaBeanPackage extends EPackage {
 	EReference getBean_WireBindings();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.jboss.tools.smooks.model.javabean.IBean#getExpressionBindings <em>Expression Bindings</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks.model.javabean.IBean#getExpressionBindings <em>Expression Bindings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Expression Bindings</em>'.
+	 * @return the meta object for the containment reference list '<em>Expression Bindings</em>'.
 	 * @see org.jboss.tools.smooks.model.javabean.IBean#getExpressionBindings()
 	 * @see #getBean()
 	 * @generated
@@ -984,7 +984,7 @@ public interface IJavaBeanPackage extends EPackage {
 		EAttribute BEAN__CREATE_ON_ELEMENT_NS = eINSTANCE.getBean_CreateOnElementNS();
 
 		/**
-		 * The meta object literal for the '<em><b>Value Bindings</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Value Bindings</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -992,7 +992,7 @@ public interface IJavaBeanPackage extends EPackage {
 		EReference BEAN__VALUE_BINDINGS = eINSTANCE.getBean_ValueBindings();
 
 		/**
-		 * The meta object literal for the '<em><b>Wire Bindings</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Wire Bindings</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1000,7 +1000,7 @@ public interface IJavaBeanPackage extends EPackage {
 		EReference BEAN__WIRE_BINDINGS = eINSTANCE.getBean_WireBindings();
 
 		/**
-		 * The meta object literal for the '<em><b>Expression Bindings</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Expression Bindings</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

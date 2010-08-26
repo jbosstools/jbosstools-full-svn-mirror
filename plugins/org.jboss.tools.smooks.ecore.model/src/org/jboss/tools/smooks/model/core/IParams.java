@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface IParams extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Params</b></em>' reference list.
+	 * Returns the value of the '<em><b>Params</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.core.IParam}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -36,9 +36,9 @@ public interface IParams extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Params</em>' reference list.
+	 * @return the value of the '<em>Params</em>' containment reference list.
 	 * @see org.jboss.tools.smooks.model.core.ICorePackage#getParams_Params()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<IParam> getParams();

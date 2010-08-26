@@ -117,7 +117,7 @@ public interface ICorePackage extends EPackage {
 	int PARAMS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Params</b></em>' reference list.
+	 * The feature id for the '<em><b>Params</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -145,7 +145,7 @@ public interface ICorePackage extends EPackage {
 	int GLOBAL_PARAMS = 2;
 
 	/**
-	 * The feature id for the '<em><b>Params</b></em>' reference list.
+	 * The feature id for the '<em><b>Params</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -246,10 +246,10 @@ public interface ICorePackage extends EPackage {
 	EClass getParams();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.jboss.tools.smooks.model.core.IParams#getParams <em>Params</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.jboss.tools.smooks.model.core.IParams#getParams <em>Params</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Params</em>'.
+	 * @return the meta object for the containment reference list '<em>Params</em>'.
 	 * @see org.jboss.tools.smooks.model.core.IParams#getParams()
 	 * @see #getParams()
 	 * @generated
@@ -354,7 +354,7 @@ public interface ICorePackage extends EPackage {
 		EClass PARAMS = eINSTANCE.getParams();
 
 		/**
-		 * The meta object literal for the '<em><b>Params</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Params</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

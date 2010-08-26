@@ -7,6 +7,7 @@
 package org.jboss.tools.smooks.model.core;
 
 import java.util.Collection;
+import org.eclipse.emf.common.notify.NotificationChain;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -14,8 +15,11 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -33,7 +37,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class Params extends EObjectImpl implements IParams {
 	/**
-	 * The cached value of the '{@link #getParams() <em>Params</em>}' reference list.
+	 * The cached value of the '{@link #getParams() <em>Params</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getParams()
@@ -68,7 +72,7 @@ public class Params extends EObjectImpl implements IParams {
 	 */
 	public EList<IParam> getParams() {
 		if (params == null) {
-			params = new EObjectResolvingEList<IParam>(IParam.class, this, ICorePackage.PARAMS__PARAMS);
+			params = new EObjectContainmentEList<IParam>(IParam.class, this, ICorePackage.PARAMS__PARAMS);
 		}
 		return params;
 	}
@@ -119,6 +123,20 @@ public class Params extends EObjectImpl implements IParams {
 		}
 		
 		return param.getValue();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ICorePackage.PARAMS__PARAMS:
+				return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**

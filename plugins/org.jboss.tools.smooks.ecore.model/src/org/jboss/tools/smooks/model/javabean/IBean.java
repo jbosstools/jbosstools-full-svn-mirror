@@ -138,7 +138,7 @@ public interface IBean extends IComponent {
 	void setCreateOnElementNS(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Value Bindings</b></em>' reference list.
+	 * Returns the value of the '<em><b>Value Bindings</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.javabean.IValue}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -146,15 +146,15 @@ public interface IBean extends IComponent {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value Bindings</em>' reference list.
+	 * @return the value of the '<em>Value Bindings</em>' containment reference list.
 	 * @see org.jboss.tools.smooks.model.javabean.IJavaBeanPackage#getBean_ValueBindings()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<IValue> getValueBindings();
 
 	/**
-	 * Returns the value of the '<em><b>Wire Bindings</b></em>' reference list.
+	 * Returns the value of the '<em><b>Wire Bindings</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.javabean.IWiring}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -162,15 +162,15 @@ public interface IBean extends IComponent {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Wire Bindings</em>' reference list.
+	 * @return the value of the '<em>Wire Bindings</em>' containment reference list.
 	 * @see org.jboss.tools.smooks.model.javabean.IJavaBeanPackage#getBean_WireBindings()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<IWiring> getWireBindings();
 
 	/**
-	 * Returns the value of the '<em><b>Expression Bindings</b></em>' reference list.
+	 * Returns the value of the '<em><b>Expression Bindings</b></em>' containment reference list.
 	 * The list contents are of type {@link org.jboss.tools.smooks.model.javabean.IExpression}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -178,9 +178,9 @@ public interface IBean extends IComponent {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Expression Bindings</em>' reference list.
+	 * @return the value of the '<em>Expression Bindings</em>' containment reference list.
 	 * @see org.jboss.tools.smooks.model.javabean.IJavaBeanPackage#getBean_ExpressionBindings()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<IExpression> getExpressionBindings();

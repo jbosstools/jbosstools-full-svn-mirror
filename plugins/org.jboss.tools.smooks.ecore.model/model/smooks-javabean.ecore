@@ -51,10 +51,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="createOnElement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="createOnElementNS" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valueBindings" upperBound="-1"
-        eType="#//Value"/>
+        eType="#//Value" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="wireBindings" upperBound="-1"
-        eType="#//Wiring"/>
+        eType="#//Wiring" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expressionBindings" upperBound="-1"
-        eType="#//Expression"/>
+        eType="#//Expression" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>
