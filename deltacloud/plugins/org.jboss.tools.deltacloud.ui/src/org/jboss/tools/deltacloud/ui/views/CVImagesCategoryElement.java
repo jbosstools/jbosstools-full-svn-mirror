@@ -44,7 +44,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 	}
 
 	@Override
-	public void listChanged(DeltaCloudImage[] images) {
+	public void listChanged(DeltaCloud cloud, DeltaCloudImage[] images) {
 		clearChildren();
 		for (int i = 0; i < images.length; ++i) {
 			DeltaCloudImage d = images[i];

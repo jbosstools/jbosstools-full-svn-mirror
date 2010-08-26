@@ -76,13 +76,15 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		@Override
 		public void modifyText(ModifyEvent e) {
 			int index = cloudSelector.getSelectionIndex();
+			if (currCloud != null)
+				currCloud.removeImageListListener(parentView);
 			currCloud = clouds[index];
+			viewer.setInput(new DeltaCloudImage[0]);
+			viewer.refresh();
 			Display.getCurrent().asyncExec(new Runnable() {
 
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
-					currCloud.removeImageListListener(parentView);
 					viewer.setInput(currCloud);
 					currCloud.addImageListListener(parentView);
 					viewer.refresh();
@@ -349,19 +351,21 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 
-	public void listChanged(DeltaCloudImage[] list) {
+	public void listChanged(DeltaCloud cloud, DeltaCloudImage[] list) {
 		final DeltaCloudImage[] finalList = list;
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				currCloud.removeImageListListener(parentView);
-				viewer.setInput(finalList);
-				currCloud.addImageListListener(parentView);
-				viewer.refresh();
-			}
-			
-		});
+		if (cloud.getName().equals(currCloud.getName())) {
+			Display.getDefault().syncExec(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					currCloud.removeImageListListener(parentView);
+					viewer.setInput(finalList);
+					currCloud.addImageListListener(parentView);
+					viewer.refresh();
+				}
+
+			});
+		}
 	}
 
 }

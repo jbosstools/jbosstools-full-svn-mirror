@@ -1,3 +1,23 @@
+2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (listChanged): Add new
+	cloud argument.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (listChanged): Ditto. 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (listChanged): Ditto.
+	(.modifyText): Decouple image list listener using the currCloud right away
+	before it is reset.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: 
+	(listChanged): Add new cloud argument and use to verify that the cloud matches
+	the one for the new list.
+	(makeActions): Add refresh action.
+	(.modifyText): Decouple instance list listener using the currCloud right away
+	before it is reset.
+	(fillLocalPullDown): Add refresh action.
+	(PerformInstanceActionThread.run): Don't perform refresh in a Display thread, just
+	run it in the current thread.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (inputChanged):
+	For a cloud input, use getCurrInstances rather than getInstances method of cloud. 
+
 2010-08-25  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (.menuAboutToShow): New

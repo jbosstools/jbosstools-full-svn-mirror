@@ -74,7 +74,7 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 				instances = (DeltaCloudInstance[])newInput;
 			} else {
 				cloud = (DeltaCloud)newInput;
-				instances = cloud.getInstances();
+				instances = cloud.getCurrInstances();
 			}
 		}
 	}

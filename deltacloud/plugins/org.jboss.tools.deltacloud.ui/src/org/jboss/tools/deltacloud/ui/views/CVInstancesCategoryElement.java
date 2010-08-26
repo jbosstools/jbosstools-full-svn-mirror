@@ -44,7 +44,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 	}
 
 	@Override
-	public void listChanged(DeltaCloudInstance[] instances) {
+	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] instances) {
 		clearChildren();
 		for (int i = 0; i < instances.length; ++i) {
 			DeltaCloudInstance d = instances[i];

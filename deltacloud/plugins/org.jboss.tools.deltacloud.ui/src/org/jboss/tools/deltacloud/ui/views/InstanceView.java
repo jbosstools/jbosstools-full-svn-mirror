@@ -14,11 +14,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -48,6 +45,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -74,6 +72,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private final static String REBOOTING_INSTANCE_MSG = "RebootingInstance.msg"; //$NON-NLS-1$
 	private final static String DESTROYING_INSTANCE_TITLE = "DestroyingInstance.title"; //$NON-NLS-1$
 	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
+	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	
 	
 	private TableViewer viewer;
@@ -86,7 +85,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	
 	private InstanceViewLabelAndContentProvider contentProvider;
 	
-	private Action doubleClickAction;
+	private Action refreshAction;
 	private Action startAction;
 	private Action stopAction;
 	private Action destroyAction;
@@ -107,17 +106,18 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		@Override
 		public void modifyText(ModifyEvent e) {
 			int index = cloudSelector.getSelectionIndex();
+			if (currCloud != null)
+				currCloud.removeInstanceListListener(parentView);
 			currCloud = clouds[index];
+			viewer.setInput(new DeltaCloudInstance[0]);
+			viewer.refresh();
 			Display.getCurrent().asyncExec(new Runnable() {
 
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
-					currCloud.removeInstanceListListener(parentView);
 					viewer.setInput(currCloud);
 					currCloud.addInstanceListListener(parentView);
 					viewer.refresh();
-					
 				}
 				
 			});
@@ -236,7 +236,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		makeActions();
 		hookContextMenu();
-		hookDoubleClickAction();
 		hookSelection();
 		contributeToActionBars();
 		
@@ -277,7 +276,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
-		//TODO
+		manager.add(refreshAction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -344,20 +343,15 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				}
 				currentPerformingActions.put(instance.getId(), this);
 				cloud.performInstanceAction(instance.getId(), action);
-				Display.getDefault().syncExec(new Runnable() {
-					@Override
-					public void run() {
-						while (instance != null && !(instance.getState().equals(expectedState))
-								&& !(instance.getState().equals(DeltaCloudInstance.TERMINATED))) {
-							instance = refreshInstance(instance);
-							try {
-								Thread.sleep(300);
-							} catch (InterruptedException e) {
-								break;
-							}
-						}
+				while (instance != null && !(instance.getState().equals(expectedState))
+						&& !(instance.getState().equals(DeltaCloudInstance.TERMINATED))) {
+					instance = refreshInstance(instance);
+					try {
+						Thread.sleep(300);
+					} catch (InterruptedException e) {
+						break;
 					}
-				});
+				}
 			} catch (DeltaCloudException e) {
 				// do nothing..action had problem executing..perhaps illegal
 			} finally {
@@ -399,13 +393,26 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	}
 	
 	private void makeActions() {
-		doubleClickAction = new Action() {
+		refreshAction = new Action() {
 			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						if (currCloud != null) {
+							currCloud.getImages();
+						}
+					}
+
+				});
+				t.start();
 			}
 		};
+		refreshAction.setText(CVMessages.getString(REFRESH));
+		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
+		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+		
 		startAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -510,21 +517,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		return null;
 	}
 	
-	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
-	}
-	
-	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			CVMessages.getString("CloudViewName"), //$NON-NLS-1$
-			message);
-	}
-
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
@@ -546,10 +538,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	
 	public void changeEvent(int type) {
 		String currName = null;
-		clouds = DeltaCloudManager.getDefault().getClouds();
 		if (currCloud != null) {
 			currName = currCloud.getName();
 		}
+		clouds = DeltaCloudManager.getDefault().getClouds();
 		String[] cloudNames = new String[clouds.length];
 		int index = 0;
 		for (int i = 0; i < clouds.length; ++i) {
@@ -571,20 +563,22 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 
-	public void listChanged(DeltaCloudInstance[] list) {
+	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] list) {
 		// Run following under Display thread since this can be
 		// triggered by a non-display thread notifying listeners.
 		final DeltaCloudInstance[] finalList = list;
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				currCloud.removeInstanceListListener(parentView);
-				viewer.setInput(finalList);
-				currCloud.addInstanceListListener(parentView);
-				viewer.refresh();
-			}
-		});
+		if (cloud.getName().equals(currCloud.getName())) {
+			Display.getDefault().syncExec(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					currCloud.removeInstanceListListener(parentView);
+					viewer.setInput(finalList);
+					currCloud.addInstanceListListener(parentView);
+					viewer.refresh();
+				}
+			});
+		}
 	}
 
 }
