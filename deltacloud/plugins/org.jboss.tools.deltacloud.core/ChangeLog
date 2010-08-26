@@ -1,5 +1,7 @@
 2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (createKey): Remove
+	any empty lines so the key will work with RSE.
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (notifyImageListListeners): Pass new
 	cloud argument to listeners. 
 	(notifyInstanceListListeners): Ditto. 

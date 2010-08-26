@@ -255,7 +255,11 @@ public class DeltaCloudClient implements API
 			BufferedReader reader = new BufferedReader(new StringReader(keyText.get(0)));
 			while ((line = reader.readLine()) != null) 
 			{
-				sb.append(line.trim()).append("\n");	
+				// We must trim off the white-space from the xml
+				// Complete white-space lines are to be ignored.
+				String trimmedLine = line.trim();
+				if (trimmedLine.length() > 0)
+					sb.append(trimmedLine).append("\n");	
 			}
 			FileWriter w = new FileWriter(keyFile);
 			w.write(sb.toString());
