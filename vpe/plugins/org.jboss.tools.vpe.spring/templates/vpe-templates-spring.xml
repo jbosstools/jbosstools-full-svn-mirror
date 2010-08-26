@@ -242,7 +242,7 @@
 		</vpe:template>
 	</vpe:tag>
 	
-	<vpe:tag name="form:select" case-sensetive="yes">
+	<vpe:tag name="form:select" case-sensitive="yes">
 		<vpe:template children="yes" modify="yes"
 				class="org.jboss.tools.vpe.spring.template.SpringFormSelectTemplate">
 			<vpe:resize>
