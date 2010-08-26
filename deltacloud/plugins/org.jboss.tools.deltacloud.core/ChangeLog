@@ -1,3 +1,14 @@
+2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (notifyImageListListeners): Pass new
+	cloud argument to listeners. 
+	(notifyInstanceListListeners): Ditto. 
+	(refreshInstance): Fix the check for states to be in the String realm rather than
+	the State realm.
+	* src/org/jboss/tools/deltacloud/core/IImageListListener.java: Add new cloud argument
+	to listChanged notifier method. 
+	* src/org/jboss/tools/deltacloud/core/IInstanceListListener.java: Ditto. 
+
 2010-08-23  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/Instance.java (getKey): New method.

@@ -104,7 +104,7 @@ public class DeltaCloud {
 	public void notifyInstanceListListeners(DeltaCloudInstance[] array) {
 		Object[] listeners = instanceListeners.getListeners();
 		for (int i = 0; i < listeners.length; ++i)
-			((IInstanceListListener)listeners[i]).listChanged(array);
+			((IInstanceListListener)listeners[i]).listChanged(this, array);
 	}
 	
 	public void addImageListListener(IImageListListener listener) {
@@ -118,7 +118,7 @@ public class DeltaCloud {
 	public void notifyImageListListeners(DeltaCloudImage[] array) {
 		Object[] listeners = imageListeners.getListeners();
 		for (int i = 0; i < listeners.length; ++i)
-			((IImageListListener)listeners[i]).listChanged(array);
+			((IImageListListener)listeners[i]).listChanged(this, array);
 	}
 
 	public DeltaCloudInstance[] getInstances() {
@@ -175,7 +175,7 @@ public class DeltaCloud {
 				if (inst.getId().equals(instanceId)) {
 					instance.setKey(inst.getKey());
 					// FIXME: remove BOGUS state when server fixes state problems
-					if (!(instance.getState().equals(DeltaCloudInstance.BOGUS)) && !(inst.getState().equals(instance.getState()))) {
+					if (!(retVal.getState().equals(DeltaCloudInstance.BOGUS)) && !(inst.getState().equals(retVal.getState()))) {
 						instances.set(i, retVal);
 						DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
 						instanceArray = instances.toArray(instanceArray);

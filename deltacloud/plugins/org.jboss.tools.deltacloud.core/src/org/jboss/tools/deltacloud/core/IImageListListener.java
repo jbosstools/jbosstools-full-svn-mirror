@@ -2,6 +2,6 @@ package org.jboss.tools.deltacloud.core;
 
 public interface IImageListListener {
 	
-	public void listChanged(DeltaCloudImage[] list);
+	public void listChanged(DeltaCloud cloud, DeltaCloudImage[] list);
 	
 }
