@@ -76,7 +76,10 @@ public class BPELReader {
 			// but no parsing errors were logged in the Resource. This is because demand
 			// load was used by createResource(). Force a reload here, this time with
 			// proper error logging.
-			processResource.unload();
+			// FIXME: this somehow breaks the resource change notifications, so that changes to the model
+			// don't cause the Resource to be marked dirty.
+			// This is a quick patch for JBT 3.2.0.M2, I'll fix this later
+//			processResource.unload();
 			processResource.load(Collections.EMPTY_MAP);
 			EList<EObject> contents = processResource.getContents();
 			if (!contents.isEmpty())
@@ -182,7 +185,10 @@ public class BPELReader {
 
 		try {
 			// https://jira.jboss.org/browse/JBIDE-6825
-			processResource.unload();
+			// FIXME: this somehow breaks the resource change notifications, so that changes to the model
+			// don't cause the Resource to be marked dirty.
+			// This is a quick patch for JBT 3.2.0.M2, I'll fix this later
+//			processResource.unload();
 			processResource.load(Collections.EMPTY_MAP);
 			EList<EObject> contents = processResource.getContents();
 			if (!contents.isEmpty())
