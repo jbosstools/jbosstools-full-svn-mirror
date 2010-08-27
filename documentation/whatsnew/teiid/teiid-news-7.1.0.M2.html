@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Teiid Designer What's New</title>
+</head>
+<body>
+<h1>Teiid Designer 7.1.0 M2 What's New</h1>
+<p>Last revised August 26, 2010</p>
+<p><b>Teiid Designer</b>, which is new to JBoss Tools, 
+is a visual tool that enables rapid, model-driven definition, integration, management and testing of data services without programming using the <b>Teiid</b> runtime framework.</p>
+<p>Below is simple introduction to the tool and a summary of a few basic concepts.</p>
+<p>For more details on <a href="http://www.jboss.org/teiid.html">Teiid</a> and <a href="http://www.jboss.org/teiiddesigner.html">Teiid Designer</a> visit: <a href="http://www.teiid.org">http://www.teiid.org</a></p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2"><hr /></td>
+      <h3>Teiid Designer</h3>
+	<hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p><b>Designer "modeling" Perspective</b></p></td>
+      <td valign="top">
+		  <p>The Teiid Designer perspective provides a modeling-centric
+		      explorer designed to aid in creating/editing and managing models (XMI/EMF-based) and
+		      Virtual Databases (VDBs). When deployed to Teiid server, these VDB's are treated like
+		      any other JDBC data source and queried.</p>
+		      <p><img src="images/designer-perspective.png" alt="Teiid Designer Perspective"/></p>
+		      <p>If you've been following Teiid Designer since 7.0 development you'll know that the 7.1 version
+		      reflects major changes to both Preview Data functionality and VDB editing and VDB execution. These features
+		      are now tied to standard application deployment technology through the Teiid Admin API.
+		      In Designer, the Teiid view is a window to view the contents of deployed Teiid artifacts, namely Data Sources and
+		      Virtual Databases (VDB's).</p>
+		  <p>A <strong>model</strong> is a   representation of a set of information constructs. 
+		   A familiar <strong>model</strong> is the <strong>relational</strong> <strong>model</strong>, which 
+		   defines tables composed of columns and containing records of data. Another 
+		   familiar model is the <strong>XML</strong> <strong>model</strong>, which defines hierarchical data sets. </p>
+		  <p>In <strong>Teiid Designer</strong>, models are used to define the entities, and relationships between those 
+		  entities, required to fully define the integration of information sets so that they may be accessed in a uniform manner, 
+		  using a single API and   access protocol. The file extension used for these models is '<strong>.xmi</strong>' 
+		  ( Example: NorthwindOracle.xmi ). </p>
+		  <p>Below is an example of the partial contents of a model file.</p>
+		  <p><img src="images/sample-model-file.png" alt="Sample Model File" border="1"/></p>
+		  <p>The fundamental models in <strong>Teiid Designer</strong> define the structural and data 
+		  characteristics of the information contained in data sources. These are referred to 
+		  as <strong><EM>source</EM></strong> models<span class="medium"></span>. 
+		  Teiid uses the information in <strong>source</strong> models to federate the information 
+		  in multiple sources, so that from a user's viewpoint these all appear to be in a single source.</p>
+		  <p>In addition to <strong>source</strong> models, Teiid Designer provides the ability to 
+		  define a variety of <em><strong>view</strong></em> models<span class="medium"></span>. These can be used to define 
+		  a layer of abstraction above the physical (or <strong>source</strong>) layer, so that information can 
+		  be presented to end users and consuming applications in business terms rather than as it is physically stored. 
+		  Views are mapped to sources using transformations between models. These <EM>business views</EM> can be in a 
+		  variety of forms: </p>
+		  <ul>
+		    <li><strong>Relational</strong></li>
+		    <li><strong>XML</strong></li>
+		    <li><strong>XML Service</strong></li>
+		    <li><strong>Web services</strong></li>
+		    <li><strong>Relationship </strong></li>
+		    <li><strong>Extension</strong></li>
+		    <li><strong>Function </strong></li>
+		    <li><strong>Uml 2.0 </strong></li>
+		  </ul>
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr /></td></tr>
+  <tr>
+    <td valign="top" align="left">
+    <p><b>The Virtual Database (VDB)</b></p></td>
+    <td valign="top">
+	    <p>A <strong>VDB</strong>, or <strong>Virtual Database</strong> is a container for your models and pertinent source connection data used by 
+        Teiid query engine to access your federated data.</p>
+        <p>Teiid Designer allows you to create and edit VDBs. The VDB is a zip-like file that contains sources 
+        and view models, source connection  information and index files used at runtime for data identification 
+        and a manifest to pull it all together. </p>
+        <p>VDBs contain two primary varieties of model types - source and view. Source models represent the structure 
+        and characteristics of physical data sources, whereas view models represent the structure and characteristics 
+        of abstract structures you want to expose to your applications.</p>
+        <p>Each source model must contain connectivity information in order for the <strong>Teiid</strong> engine understand which 
+        connection factory/data source instance to connect with. In particular, a "<strong>Translator</strong>" name and an existing 
+        "<strong>JNDI</strong>" name must be defined.</p>
+        <p>After a VDB is defined, it must be deployed to the <strong>Teiid</strong> query engine to be accessed. You can select a 
+        VDB in your Model Explorer and right-click select "<strong>Modeling > Deploy VDB</strong>" action or drag the VDB onto an 
+        existing server connected in your <strong>Teiid</strong> view. </p>
+    </td>
+    
+  </tr>
+  <tr><td colspan="2"><hr /></td></tr>
+  <tr>
+      <td valign="top" align="left">
+      <p><b>Teiid as JDBC Data Source</b></p></td>
+      <td valign="top">
+          <p><strong>Teiid Designer 7.1</strong> offers a JDBC Connection Profile contribution through the DTP extension point. The properties for 
+          this connection include standard JDBC inputs including URL, host, port, user-name and password.</p>
+          <p>Through this connection, you can perform standard SQL queries. The nature of Teiid VDB's allows complex, multi-source
+          modeling and data transformation, so you can design views targeted for your front-end applications and simplify or reduce
+          the work necessary to pull all that data together.</p>
+        </td>
+  </tr>
+  <tr><td colspan="2"><hr /></td></tr>
+  <tr>
+      <td valign="top" align="left">
+      <p><b>Web Services support</b></p></td>
+      <td valign="top">
+          <p><strong>Teiid Designer 7.1</strong> supports generation of deployable web service War Files. 
+          For VDB's that contain web service models, there is a contextual menu 
+option to generate a JBossWS-CXF war. This generated war can be deployed to 
+a JBossAS server with CXF enabled. The wizard will ask for a war context name, 
+target namespace, JNDI name for the deployed Teiid VDB, and location to generate 
+the war file. Once deployed, the wsdl can be obtained via <b><i>http://host:port/warContextName?wsdl</i></b></p>
+        </td>
+  </tr>
+  <tr><td colspan="2"><hr /></td></tr>
+</table>
+
+</body>
+
+</html>
+
+
