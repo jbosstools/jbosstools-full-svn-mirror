@@ -217,8 +217,7 @@ relativePath = ${relativePath}
 zipPath = @{zipPath}
 DEST = ${aggegate.zips.dir}/@{zipPath}
 </echo>
-										<echo>
-URL = ${inputRepo@{repoNum}}/@{zipPath}
+										<echo>URL = ${inputRepo@{repoNum}}/@{zipPath}
 </echo>
 										<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="false">
 											<arg line="${inputRepo@{repoNum}}/@{zipPath} -q --no-clobber" />
