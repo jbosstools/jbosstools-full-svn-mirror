@@ -55,6 +55,7 @@ import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.i18n.MainLocaleProvider;
+import org.jboss.tools.vpe.editor.util.Constants;
 
 public class BundleMap {
 
@@ -271,8 +272,19 @@ public class BundleMap {
 		String resultUri = uri.replace('.','/');
 		ResourceBundle bundle = getBundleByUrl(uri, locale);
 		String localeString = bundle.getLocale().toString();
-		if ((null != localeString) && (localeString.length() > 0)){
-			resultUri += "_" + localeString; //$NON-NLS-1$
+		if ((null != localeString) && (localeString.length() > 0)) {
+			/*
+			 * getLanguage() method in  ResourceBundle could return "en_us" string.
+			 * Bundle's file is case sensitive thus country name 
+			 * should be transformed to UpperCase. 
+			 */
+			String[] parts = localeString.split(Constants.UNDERSCORE);
+			if (parts.length == 2) {
+				parts[1] = parts[1].toUpperCase();
+			}
+			for (String part : parts) {
+				resultUri += Constants.UNDERSCORE + part;
+			}
 		}
 		resultUri += ".properties"; //$NON-NLS-1$
 		return resultUri;
