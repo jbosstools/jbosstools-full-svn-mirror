@@ -186,7 +186,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 				<var unset="true" name="wget.return" />
 				<!-- quieter output and return code check w/ wget instead of <get> -->
 				<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return">
-					<arg line="${inputRepo@{repoNum}}/logs/zip.list.txt --no-clobber" />
+					<arg line="${inputRepo@{repoNum}}/logs/zip.list.txt -q --no-clobber" />
 				</exec>
 				<!--get src="${inputRepo@{repoNum}}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" /-->
 				<if>
@@ -212,11 +212,12 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 										               replace="\1" />
 										<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
 										<!-- fetch zips to local dir -->
-										<echo>repoNum = @{repoNum}
+										<echo level="verbose">repoNum = @{repoNum}
 relativePath = ${relativePath}
 zipPath = @{zipPath}
-URL = ${inputRepo@{repoNum}}/@{zipPath}
 DEST = ${aggegate.zips.dir}/@{zipPath}
+</echo>
+										<echo>URL = ${inputRepo@{repoNum}}/@{zipPath}
 </echo>
 										<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="false">
 											<arg line="${inputRepo@{repoNum}}/@{zipPath} -q --no-clobber" />
