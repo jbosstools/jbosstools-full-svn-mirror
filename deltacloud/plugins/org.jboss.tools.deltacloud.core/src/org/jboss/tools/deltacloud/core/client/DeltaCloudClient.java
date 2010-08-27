@@ -339,6 +339,7 @@ public class DeltaCloudClient implements API
 			getProfileProperties(instance, getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
 			instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 			instance.setState(getElementText(document, "state").get(0)); //$NON-NLS-1$
+			getAuthentication(document, instance);
 			
 			ArrayList<Instance.Action> actions = new ArrayList<Instance.Action>();
 			for(String s : getAttributeValues(document, "link", "rel")) //$NON-NLS-1$ //$NON-NLS-2$
@@ -456,6 +457,31 @@ public class DeltaCloudClient implements API
 			}
 		}
 		return values;
+	}
+	
+	private void getAuthentication(Document document, Instance instance) {
+		NodeList elements = document.getElementsByTagName("authentication");
+		for (int i = 0; i < elements.getLength(); i++) 
+		{
+			Node element = elements.item(i);
+			NamedNodeMap attrs = element.getAttributes();
+			Node type = attrs.getNamedItem("type"); //$NON-NLS-1$
+			if (type.getNodeValue().equals("key")) { //$NON-NLS-1$
+				NodeList children = element.getChildNodes();
+				for (int j = 0; j < children.getLength(); ++j) {
+					Node child = children.item(j);
+					if (child.getNodeName().equals("login")) { //$NON-NLS-1$
+						NodeList loginChildren = child.getChildNodes();
+						for (int k = 0; k < loginChildren.getLength(); ++k) {
+							Node loginChild = loginChildren.item(k);
+							if (loginChild.getNodeName().equals("keyname")) { //$NON-NLS-1$
+								instance.setKey(loginChild.getTextContent());
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	private void getProfileProperties(Instance instance, List<Node> propertyNodes) {

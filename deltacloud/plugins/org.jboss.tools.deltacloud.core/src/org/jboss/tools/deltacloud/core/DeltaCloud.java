@@ -3,12 +3,12 @@ package org.jboss.tools.deltacloud.core;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
@@ -30,8 +30,8 @@ public class DeltaCloud {
 	private DeltaCloudClient client;
 	private ArrayList<DeltaCloudInstance> instances;
 	private ArrayList<DeltaCloudImage> images;
-	private Map<String, String> keys = new HashMap<String, String>();
 	private Object imageLock = new Object();
+	private Object instanceLock = new Object();
 	
 	ListenerList instanceListeners = new ListenerList();
 	ListenerList imageListeners = new ListenerList();
@@ -122,28 +122,32 @@ public class DeltaCloud {
 	}
 
 	public DeltaCloudInstance[] getInstances() {
-		instances = new ArrayList<DeltaCloudInstance>();
-		try {
-			List<Instance> list = client.listInstances();
-			for (Iterator<Instance> i = list.iterator(); i.hasNext();) {
-				DeltaCloudInstance instance = new DeltaCloudInstance(i.next());
-				instances.add(instance);
+		synchronized (instanceLock) {
+			instances = new ArrayList<DeltaCloudInstance>();
+			try {
+				List<Instance> list = client.listInstances();
+				for (Iterator<Instance> i = list.iterator(); i.hasNext();) {
+					DeltaCloudInstance instance = new DeltaCloudInstance(i.next());
+					instances.add(instance);
+				}
+			} catch (DeltaCloudClientException e) {
+				Activator.log(e);
 			}
-		} catch (DeltaCloudClientException e) {
-			Activator.log(e);
+			DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
+			instanceArray = instances.toArray(instanceArray);
+			notifyInstanceListListeners(instanceArray);
+			return instanceArray;
 		}
-		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
-		instanceArray = instances.toArray(instanceArray);
-		notifyInstanceListListeners(instanceArray);
-		return instanceArray;
 	}
 	
 	public DeltaCloudInstance[] getCurrInstances() {
-		if (instances == null)
-			return getInstances();
-		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
-		instanceArray = instances.toArray(instanceArray);
-		return instanceArray;
+		synchronized (instanceLock) {
+			if (instances == null)
+				return getInstances();
+			DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
+			instanceArray = instances.toArray(instanceArray);
+			return instanceArray;
+		}
 	}
 	
 	public DeltaCloudInstance[] destroyInstance(String instanceId) {
@@ -173,7 +177,6 @@ public class DeltaCloud {
 			for (int i = 0; i < instances.size(); ++i) {
 				DeltaCloudInstance inst = instances.get(i);
 				if (inst.getId().equals(instanceId)) {
-					instance.setKey(inst.getKey());
 					// FIXME: remove BOGUS state when server fixes state problems
 					if (!(retVal.getState().equals(DeltaCloudInstance.BOGUS)) && !(inst.getState().equals(retVal.getState()))) {
 						instances.set(i, retVal);
@@ -192,8 +195,6 @@ public class DeltaCloud {
 	
 	public boolean performInstanceAction(String instanceId, String action) throws DeltaCloudException {
 		try {
-			if (action.equals(DeltaCloudInstance.STOP) && keys.get(instanceId) != null)
-				client.deleteKey(keys.get(instanceId), Activator.getDefault().getStateLocation());
 			return client.performInstanceAction(instanceId, action);
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(e);
@@ -272,15 +273,11 @@ public class DeltaCloud {
 	}
 
 	public DeltaCloudInstance createInstance(String name, String imageId, String realmId, String profileId,
-			String memory, String storage) throws DeltaCloudException {
+			String keyname, String memory, String storage) throws DeltaCloudException {
 		try {
-			String keyname = "key-" + name + "-" + System.nanoTime(); //$NON-NLS-1 //$NON-NLS-2$
 			Instance instance = null;
-			if (DeltaCloudInstance.EC2_TYPE.equals(type)) {
-				client.createKey(keyname, Activator.getDefault().getStateLocation());
+			if (keyname != null) {
 				instance = client.createInstance(imageId, profileId, realmId, name, keyname, memory, storage);
-				instance.setKey(keyname);
-				keys.put(instance.getId(), keyname);
 			} else {
 				instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
 			}

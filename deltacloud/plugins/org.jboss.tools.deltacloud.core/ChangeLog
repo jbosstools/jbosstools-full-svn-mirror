@@ -1,3 +1,18 @@
+2010-08-27  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (buildInstance): Add
+	call to getAuthentication method. 
+	(getAuthentication): New method to get authentication items such as keyname.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getCurrInstances): Synchronize on
+	new instanceLock object. 
+	(getInstances): Ditto.
+	(performInstanceAction): Do not do any special actions for EC2 clouds, namely
+	deleting a key if stopping.
+	(refreshInstance): Do not reset the key.
+	(createInstance): Do not look for EC2 type, do not create a key, but just check if a keyname is specified.
+	Do not save the key if specified as this is done when creating the instance.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: Add MOCK type.
+
 2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (createKey): Remove
