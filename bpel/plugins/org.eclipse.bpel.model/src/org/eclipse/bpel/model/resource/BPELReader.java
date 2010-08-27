@@ -2386,7 +2386,12 @@ public class BPELReader implements ErrorHandler {
 			}
 		}
 		// Fallback is to create a new extensionActivity.
-		return BPELFactory.eINSTANCE.createExtensionActivity();
+		// https://jira.jboss.org/browse/JBIDE-6917
+		Activity activity = BPELFactory.eINSTANCE.createExtensionActivity();
+		setStandardAttributes(extensionActivityElement, activity);
+		setStandardElements(extensionActivityElement, activity);
+		activity.setElement(extensionActivityElement);
+		return activity;
 	}
 
 	

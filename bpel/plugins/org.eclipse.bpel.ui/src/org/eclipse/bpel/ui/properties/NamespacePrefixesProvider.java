@@ -73,17 +73,25 @@ public class NamespacePrefixesProvider extends AbstractContentProvider  {
 			// and collect all in-scope namespace info
 			while (context!=null)
 			{
-				Map<String, String> map = BPELUtils.getNamespaceMap(context);
-				for (Map.Entry<String,String> e : map.entrySet())
+				// https://jira.jboss.org/browse/JBIDE-6917
+				try
 				{
-					String ns = e.getValue().toString();
-					NamespacePrefixElement elem = new NamespacePrefixElement((String)e.getKey(), ns, context,null); 
-					elements.add(elem);
-					if( BPELConstants.NAMESPACE_2007.equals(ns) ||
-							process.getTargetNamespace().equals(ns))
+					Map<String, String> map = BPELUtils.getNamespaceMap(context);
+					for (Map.Entry<String,String> e : map.entrySet())
 					{
-						elem.location = process.eResource().getURI().lastSegment();
+						String ns = e.getValue().toString();
+						NamespacePrefixElement elem = new NamespacePrefixElement((String)e.getKey(), ns, context,null); 
+						elements.add(elem);
+						if( BPELConstants.NAMESPACE_2007.equals(ns) ||
+								process.getTargetNamespace().equals(ns))
+						{
+							elem.location = process.eResource().getURI().lastSegment();
+						}
 					}
+				}
+				catch (Exception e)
+				{
+					// ignore namespace map in extension activity eObjects ... for now
 				}
 				context = context.eContainer();
 			}
@@ -104,8 +112,13 @@ public class NamespacePrefixesProvider extends AbstractContentProvider  {
 					if (!imp.getLocation().startsWith("http://") && !imp.getLocation().startsWith("https://"))
 					{
 						ImportResolver r = ImportResolverRegistry.INSTANCE.getResolvers(imp.getImportType())[0];
-				    	Definition wsdl = (Definition) r.resolve(imp, ImportResolver.RESOLVE_DEFINITION).get(0);
-				    	recurseImports(wsdl.getImports(), imports, elements);
+						// https://jira.jboss.org/browse/JBIDE-6917
+						List<Object> rl = r.resolve(imp, ImportResolver.RESOLVE_DEFINITION);
+						if (rl.size()>0)
+						{
+							Definition wsdl = (Definition) rl.get(0);
+							recurseImports(wsdl.getImports(), imports, elements);
+						}
 					}
 				}
 			}

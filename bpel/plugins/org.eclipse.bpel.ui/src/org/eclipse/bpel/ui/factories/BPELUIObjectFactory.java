@@ -96,7 +96,10 @@ public class BPELUIObjectFactory extends AbstractUIObjectFactory {
 			BPELPackage.eINSTANCE.getEventHandler(),
 			BPELPackage.eINSTANCE.getOnEvent(),
 			BPELPackage.eINSTANCE.getMessageExchange(),
-			BPELPackage.eINSTANCE.getValidate() };
+			BPELPackage.eINSTANCE.getValidate(),
+			// https://jira.jboss.org/browse/JBIDE-6917
+			BPELPackage.eINSTANCE.getExtensionActivity()
+	};
 
 	protected EClass modelType;
 

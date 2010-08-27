@@ -31,6 +31,7 @@ import org.eclipse.bpel.model.MessageExchange;
 import org.eclipse.bpel.model.PartnerLink;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.Variable;
+import org.eclipse.bpel.model.resource.BPELResourceSetImpl;
 import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.adapters.AdapterNotification;
 import org.eclipse.bpel.ui.editparts.ProcessTrayEditPart;
@@ -120,6 +121,7 @@ import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocument;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.eclipse.wst.xml.core.internal.provisional.contenttype.ContentTypeIdForXML;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.w3c.dom.Document;
@@ -413,6 +415,24 @@ IGotoMarker/*, CommandStackListener*/ {
 		} catch (PartInitException e) {
 			ErrorDialog.openError(getSite().getShell(), "Error creating Design page", null, e.getStatus()); //$NON-NLS-1$
 		}
+	}
+
+	// https://jira.jboss.org/browse/JBIDE-6917
+	@Override
+	protected IEditorSite createSite(IEditorPart page) {
+		IEditorSite site = null;
+		if (page == fTextEditor) {
+			site = new org.eclipse.ui.part.MultiPageEditorSite(this, page) {
+				public String getId() {
+					// Sets this ID so nested editor is configured for BPEL source
+					return BPELResourceSetImpl.BPEL_CONTENT_TYPE;
+				}
+			};
+		}
+		else {
+			site = super.createSite(page);
+		}
+		return site;
 	}
 
 	/**

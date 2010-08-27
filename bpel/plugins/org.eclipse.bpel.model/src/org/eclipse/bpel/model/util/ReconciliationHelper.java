@@ -946,7 +946,11 @@ public class ReconciliationHelper {
         // new child as child of the <extensionActivity> element child and not the <extensionActivity> itself. 
         // This code snippet changes the parentElement to the correct subelement
         if (parent instanceof ExtensionActivity) {
-            parentElement = getExtensionActivityChildElement((Element) parentElement);
+			// https://jira.jboss.org/browse/JBIDE-6917
+			// Fix NPE
+            Node realParent = ReconciliationHelper.getExtensionActivityChildElement((Element) parentElement);
+            if (realParent!=null)
+            	parentElement = realParent;
         }
 		
 		if (child instanceof Variable) {
@@ -1379,6 +1383,9 @@ public class ReconciliationHelper {
         if (context instanceof CompensationHandler)  return ((CompensationHandler)context).getActivity();
         if (context instanceof TerminationHandler)  return ((TerminationHandler)context).getActivity();
         if (context instanceof If) return ((If) context).getActivity();
+		// https://jira.jboss.org/browse/JBIDE-6917
+		// added an Activity for Structure Activities that behave like containers
+        if (context instanceof ExtensionActivity) return ((ExtensionActivity) context).getActivity();
         System.err.println("Missing getActivity():" + context.getClass());
         throw new IllegalArgumentException();
     }

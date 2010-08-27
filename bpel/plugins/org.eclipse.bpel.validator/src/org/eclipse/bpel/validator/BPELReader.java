@@ -17,7 +17,6 @@ import java.util.Collections;
 
 import org.eclipse.bpel.common.extension.model.ExtensionMap;
 import org.eclipse.bpel.model.Process;
-import org.eclipse.bpel.model.impl.BPELFactoryImpl;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -116,12 +115,6 @@ public class BPELReader {
 		this.process = null;
 		
 		try {
-			// https://jira.jboss.org/browse/JBIDE-6825
-			// If the ResourceInfo.load() already loaded the process file
-			// but no parsing errors were logged in the Resource. This is because demand
-			// load was used by createResource(). Force a reload here, this time with
-			// proper error logging.
-			processResource.unload();
 			processResource.load (Collections.EMPTY_MAP);
 			EList contents = processResource.getContents();
 			if (!contents.isEmpty()) {

@@ -69,7 +69,20 @@ public class NodeNameFilter extends Filter implements IFilter<INode> {
 			}
 			return fNodeNames[0].equals(nn);
 		}
-		return (Arrays.binarySearch(fNodeNames, nn, QNAME_COMPARATOR) >= 0);
+		boolean valid = (Arrays.binarySearch(fNodeNames, nn, QNAME_COMPARATOR) >= 0);
+		if (!valid)
+		{
+			// https://jira.jboss.org/browse/JBIDE-6917
+			// check if this is a structured extension activity (a container)
+			node = node.parentNode();
+			if (node!=null)
+			{
+				nn = node.nodeName();
+				if (IConstants.ND_EXTENSION_ACTIVITY.equals(nn))
+					valid = (Arrays.binarySearch(fNodeNames, nn, QNAME_COMPARATOR) >= 0);
+			}
+		}
+		return valid;
 	}
 
 	/**
