@@ -1,3 +1,21 @@
+2010-08-27  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Add new constant
+	for the last EC2 key used.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Change keyname message. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (getPropertyValue):
+	Add support for keyname. 
+	(getPropertyDescriptors): Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (performFinish): Return
+	the return code of the create instance which might fail because the key is invalid in which
+	case allow the user to enter a new key. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (.widgetSelected): 
+	(createControl): Add a keyname text field and a Manage button if the cloud type is EC2.
+	(validate): Check the keyname field is filled in for EC2. 
+	(getKeyName): New method.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new
+	messages. 
+
 2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.run): For RSE

@@ -111,6 +111,7 @@ public class NewInstance extends Wizard {
 		String realmId = mainPage.getRealmId();
 		String memory = mainPage.getMemoryProperty();
 		String storage = mainPage.getStorageProperty();
+		String keyname = mainPage.getKeyName();
 		String name = null;
 		try {
 			name = URLEncoder.encode(mainPage.getInstanceName(), "UTF-8");
@@ -139,7 +140,7 @@ public class NewInstance extends Wizard {
 					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
 				}
 			}
-			instance = cloud.createInstance(name, imageId, realmId, profileId, memory, storage);
+			instance = cloud.createInstance(name, imageId, realmId, profileId, keyname, memory, storage);
 			if (instance != null)
 				result = true;
 			if (instance != null && instance.getState().equals(DeltaCloudInstance.PENDING)) {
@@ -159,7 +160,7 @@ public class NewInstance extends Wizard {
 					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG, new String[] {name, imageId, realmId, profileId}),
 					new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMessage));
 		}
-		return true;
+		return result;
 	}
 
 }

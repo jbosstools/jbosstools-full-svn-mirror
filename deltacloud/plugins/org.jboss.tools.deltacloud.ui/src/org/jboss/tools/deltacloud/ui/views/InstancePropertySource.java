@@ -14,6 +14,7 @@ public class InstancePropertySource implements IPropertySource {
 	public  static final String PROPERTY_OWNER = "deltacloud.views.instance.owner"; //$NON-NLS-1$
 	public  static final String PROPERTY_STATE = "deltacloud.views.instance.state"; //$NON-NLS-1$
 	private static final String PROPERTY_HOSTNAME = "deltacloud.views.instance.hostname"; //$NON-NLS-1$
+	private static final String PROPERTY_KEYNAME = "deltacloud.views.instance.keyname"; //$NON-NLS-1$
 	private static final String PROPERTY_PROFILEID = "deltacloud.views.instance.profileid"; //$NON-NLS-1$
 	private static final String PROPERTY_REALMID = "deltacloud.views.instance.realmid"; //$NON-NLS-1$
 	private static final String PROPERTY_IMAGEID = "deltacloud.views.instance.imageid"; //$NON-NLS-1$
@@ -22,6 +23,7 @@ public class InstancePropertySource implements IPropertySource {
 	private static final String PROPERTY_OWNER_TITLE = "PropertyOwnerId.title"; //$NON-NLS-1$
 	private static final String PROPERTY_STATE_TITLE = "PropertyState.title"; //$NON-NLS-1$
 	private static final String PROPERTY_HOSTNAME_TITLE = "PropertyHostname.title"; //$NON-NLS-1$
+	private static final String PROPERTY_KEYNAME_TITLE = "PropertyKeyname.title"; //$NON-NLS-1$
 	private static final String PROPERTY_PROFILEID_TITLE = "PropertyProfileId.title"; //$NON-NLS-1$
 	private static final String PROPERTY_REALMID_TITLE = "PropertyRealmId.title"; //$NON-NLS-1$
 	private static final String PROPERTY_IMAGEID_TITLE = "PropertyImageId.title"; //$NON-NLS-1$
@@ -57,6 +59,8 @@ public class InstancePropertySource implements IPropertySource {
 					CVMessages.getString(PROPERTY_IMAGEID_TITLE));
 			PropertyDescriptor hostnameDescriptor = new PropertyDescriptor(PROPERTY_HOSTNAME, 
 					CVMessages.getString(PROPERTY_HOSTNAME_TITLE));
+			PropertyDescriptor keyDescriptor = new PropertyDescriptor(PROPERTY_KEYNAME, 
+					CVMessages.getString(PROPERTY_KEYNAME_TITLE));
 			
 			propertyDescriptors = new IPropertyDescriptor[] {
 					nameDescriptor,
@@ -64,6 +68,7 @@ public class InstancePropertySource implements IPropertySource {
 					ownerDescriptor,
 					stateDescriptor,
 					hostnameDescriptor,
+					keyDescriptor,
 					hardwareDescriptor,
 					realmDescriptor,
 					imageDescriptor,
@@ -86,6 +91,8 @@ public class InstancePropertySource implements IPropertySource {
 			return instance.getRealmId();
 		if (id.equals(PROPERTY_IMAGEID))
 			return instance.getImageId();
+		if (id.equals(PROPERTY_KEYNAME))
+			return instance.getKey();
 		if (id.equals(PROPERTY_STATE)) {
 			return instance.getState();
 		}
