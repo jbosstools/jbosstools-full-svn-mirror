@@ -20,13 +20,17 @@
    <requires>
       <import feature="com.google.gwt.eclipse.sdkbundle.e36.feature.2.0.4" version="2.0.4" match="greaterOrEqual"/>
       <import feature="com.google.gdt.eclipse.suite.e36.feature" version="1.3.3" match="greaterOrEqual"/>
+      <import feature="org.eclipse.jst.enterprise_ui.feature" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wst.web_ui.feature" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.jst.web_ui.feature" version="3.2.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
          id="org.jboss.tools.gwt.core"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.jboss.tools.gwt.ui"
