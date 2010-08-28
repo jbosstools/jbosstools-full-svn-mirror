@@ -44,10 +44,6 @@
 		<module>modeshape</module>
 		<module>flow</module>
 		<module>jbpm</module>
-		<!-- NOTE: To build drools, must first bootstrap with ant script: cd drools; 
-			ant -q -->
-		<!-- IF YOU REMOVE A MODULE, be sure to also remove it from site/site.xml 
-			and build/aggregate/site/site.xml or the build will break! -->
 		<module>gwt</module>
 		<module>deltacloud</module>
 		<!-- NOTE: To build drools, must first bootstrap with ant script: cd drools; 
