@@ -1,3 +1,7 @@
+2010-08-30  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* META-INF/MANIFEST.MF: Back-versioning to 0.0.1 as not in 1.0.0 state yet.
+
 2010-08-27  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Add new constant
