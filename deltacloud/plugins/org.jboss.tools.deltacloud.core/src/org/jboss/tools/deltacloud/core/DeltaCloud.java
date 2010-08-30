@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Red Hat Inc..
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Red Hat Incorporated - initial API and implementation
+ *******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
 import java.net.MalformedURLException;
@@ -6,9 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;

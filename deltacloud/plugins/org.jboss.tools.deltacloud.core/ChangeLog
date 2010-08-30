@@ -1,5 +1,28 @@
 2010-08-30  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/Activator.java: Add Copyright and License info.
+	* src/org/jboss/tools/deltacloud/core/client/AddressList.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/API.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudAuthException.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientException.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudObject.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/HardwareProfile.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/Image.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/Property.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/Realm.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudException.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudHardwareProfile.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudHardwareProperty.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudImage.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudRealm.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/ICloudManagerListener.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/IImageListListener.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/IInstanceListListener.java: Ditto.
 	* META-INF/MANIFEST.MF: Back-leveling to 0.0.1 as not in 1.0.0 state yet.
 
 2010-08-27  Jeff Johnston  <jjohnstn@redhat.com>
