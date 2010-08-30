@@ -19,15 +19,49 @@
   <tr>
     <td colspan="2">
       <hr/>
-      	<h3>jbpm 4</h3>
+      	<h3>jbpm 3.x</h3>
 	  <hr/>
     </td>
   </tr>
   <tr>
-    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>New jbpm4 plugin</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Process Rename Refactoring</b></td>
     <td valign="top">
-    <p>The newly released jbpm4 plugin that supports jbpm4 with a better jPDL editor with BPMN based graphics is included in this release.</p>
-    <p>It can coexist with the jbpm3 plugin but some actions/wizards will overlap but that will be merged before the final release</p>
+    <p>The default Resource Rename Refactoring was adapted for processes. Bringing up and completing the Rename Refactoring Wizard 
+    in the Process Explorer View or in the Navigator View results in not only the file 'process.jpdl.xml' to be changed but also the file '.process.gpd.xml' which contains the graphical 
+    information. In this way the implicit reference is harder to break. This is illustrated in the screenshot below.</p>
+	<p><img src="images/rename-process-refactoring.png"/></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Process Move Refactoring</b></td>
+    <td valign="top">
+    <p>Similar to the Rename Refactoring the default Resource Move Refactoring was adapted for processes. Again, not only the
+    file 'process.jpdl.xml' is moved to the new location when bringing up and completing the Move Refactoring Wizard in the
+    Process Explorer View or in the Navigator View. The file '.process.jpdl.xml' containing the graphical information will also be moved to this new location.
+    This is illustrated in the screenshot below.</p>
+	<p><img src="images/move-process-refactoring.png"/></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>jBPM jPDL3 Perspective</b></td>
+    <td valign="top">
+    <p>As I indicated the two aforementioned refactorings are available when they are started from the Project Explorer View or
+    from the Navigator view. Unfortunately they do not yet work in the Package Explorer. Because of this fact we made the 
+    Project Explorer View the default view instead of the Package Explorer when opening the jBPM jPDL3 Perspective. This is
+    illustrated in the screenshot below. </p>
+	<p><img src="images/jBPM-jPDL3-perspective.png"/></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Process Project Layout</b></td>
+    <td valign="top">
+    <p>There has been a minor change in the layout of new process projects. The sample process is still created in the folder
+    'src/main/jpdl' but not anymore in a subfolder called 'simple'. Instead the process file ('simple.jpdl.xml') the (invisible) 
+    graphical information file ('.simple.jpdl.xml') and the image file ('simple.jpg') are now created immediately in the root of
+    'src/main/jpdl'. This is because multiple processes can now coexist in the same folder and it is not needed anymore to host them
+    in their own subfolders. This is illustrated in the image below.
+    </p>
+	<p><img src="images/jPDL3-project-new-layout.png"/></p>
     </td>
   </tr>
   <tr>
