@@ -1,5 +1,46 @@
 2010-08-30  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/Activator.java: Add Copyright and License info.
+	* src/org/jboss/tools/deltacloud/ui/CustomProgressMonitorDialog.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/preferences/DeltaCloudPreferencePage.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/preferences/PreferenceMessages.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/preferences/PreferenceMessages.properties: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/SWTImagesFactory.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudPropertySource.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewContentProvider.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewLabelProvider.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVCategoryElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVImageElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstanceElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySection.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySheetNonSorter.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySheetPage.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVRootElement.java: Ditto. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVTypeMapper.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageComparator.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImagePropertySource.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java: Ditto. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceComparator.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Ditto.
 	* META-INF/MANIFEST.MF: Back-versioning to 0.0.1 as not in 1.0.0 state yet.
 
 2010-08-27  Jeff Johnston  <jjohnstn@redhat.com>
