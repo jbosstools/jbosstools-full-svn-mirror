@@ -25,6 +25,11 @@
 			<div />
 		</vpe:template>
 	</vpe:tag>
+	<vpe:tag name="bookinfo" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<span class="vpe-text"/>
+		</vpe:template>
+	</vpe:tag>
 	<vpe:tag name="title" case-sensitive="yes" docbook="yes">
 		<vpe:template children="no" modify="yes">
 			<h1>
@@ -32,9 +37,59 @@
 			</h1>
 		</vpe:template>
 	</vpe:tag>
+	<vpe:tag name="subtitle" case-sensitive="yes" docbook="yes">
+		<vpe:template children="no" modify="yes">
+			<h2>
+				<vpe:value expr="{tagtext()}" />
+			</h2>
+		</vpe:template>
+	</vpe:tag>
+	<vpe:tag name="productname" case-sensitive="yes" docbook="yes">
+		<vpe:template children="no" modify="yes">
+			<label>
+				<vpe:value expr="{tagtext()}" />
+			</label>
+		</vpe:template>
+	</vpe:tag>
+	<vpe:tag name="productnumber" case-sensitive="yes" docbook="yes">
+		<vpe:template children="no" modify="yes">
+			<label>
+				<vpe:value expr=" {tagtext()}" />
+			</label>
+		</vpe:template>
+	</vpe:tag>
+	<vpe:tag name="edition" case-sensitive="yes" docbook="yes">
+		<vpe:template children="no" modify="yes">
+			<label>
+				<vpe:value expr=" (v.{tagtext()})" />
+			</label>
+		</vpe:template>
+	</vpe:tag>
+	<vpe:tag name="pubsnumber" case-sensitive="yes" docbook="yes">
+		<vpe:template children="no" modify="yes">
+			<div>
+				<vpe:value expr="pubsnumber: {tagtext()}" />
+			</div>
+		</vpe:template>
+	</vpe:tag>
+	<vpe:tag name="abstract" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<span class="vpe-text"/>
+		</vpe:template>
+	</vpe:tag>
 	<vpe:tag name="para" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<p />
+		</vpe:template>
+	</vpe:tag>
+	<vpe:tag name="corpauthor" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<span class="vpe-text"/>
+		</vpe:template>
+	</vpe:tag>
+	<vpe:tag name="inlinemediaobject" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<span class="vpe-text"/>
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="itemizedlist" case-sensitive="yes" docbook="yes">
