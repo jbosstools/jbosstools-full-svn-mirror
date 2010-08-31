@@ -108,7 +108,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	private Group propsFilesGroup;
 	private Status propsKeyStatus;
 	private Status propsValueStatus;
-	private Status rbComboStatus;
+	private Status duplicateKeyStatus;
 	private Table tagsTable;
 	
 	
@@ -133,7 +133,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		}
 		propsKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 		propsValueStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
-		rbComboStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+		duplicateKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 	}
 
 	public void createControl(Composite parent) {
@@ -332,8 +332,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			/*
 			 * Update text string field.
 			 * Trim the text to remove line breaks and caret returns.
-			 */
-			/*
 			 * Replace line delimiters white space
 			 */
 			for (char ch : LINE_DELEMITERS) {
@@ -363,6 +361,42 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 					rbCombo.select(0);
 					setResourceBundlePath(rbCombo.getText());
 				}
+			}
+			/*
+			 * Check the initial key value
+			 * If there is the error - add sequence number to the key
+			 */
+			updateDuplicateKeyStatus();
+			while (!duplicateKeyStatus.isOK()) {
+				int index = propsKey.getText().lastIndexOf('_');
+				String newKey = Constants.EMPTY;
+				if (index != -1) {
+					/*
+					 * String sequence at the end should be checked.
+					 * If it is a sequence number - it should be increased by 1.
+					 * If not - new number should be added.
+					 */
+					String numberString =  propsKey.getText().substring(index + 1);
+					int number;
+					try {
+						number = Integer.parseInt(numberString);
+						number++;
+						newKey = propsKey.getText().substring(0, index + 1) + number;
+					} catch (NumberFormatException e) {
+						newKey = propsKey.getText() + "_1"; //$NON-NLS-1$
+					}
+				} else {
+					/*
+					 * If the string has no sequence number - add it.
+					 */
+					newKey = propsKey.getText() + "_1"; //$NON-NLS-1$
+				}
+				/*
+				 * Set the new key text
+				 * Update the key status
+				 */
+				propsKey.setText(newKey);
+				updateDuplicateKeyStatus();
 			}
 			/*
 			 * Update status message.
@@ -559,12 +593,12 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	 */
 	private void updateDuplicateKeyStatus() {
 		if (isDuplicatedKey(propsKey.getText())) {
-			rbComboStatus = new Status(
+			duplicateKeyStatus = new Status(
 					IStatus.ERROR,
 					VpePlugin.PLUGIN_ID,
 					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_KEY_ALREADY_EXISTS); 
 		} else {
-			rbComboStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+			duplicateKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
 		}
 	}
 
@@ -611,7 +645,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		/*
 		 * Apply status to the dialog
 		 */
-		applyStatus(this, new IStatus[] {propsKeyStatus, propsValueStatus, rbComboStatus});
+		applyStatus(this, new IStatus[] {propsKeyStatus, propsValueStatus, duplicateKeyStatus});
 		/*
 		 * Set page complete
 		 */
