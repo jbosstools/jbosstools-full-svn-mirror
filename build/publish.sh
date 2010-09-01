@@ -2,6 +2,9 @@
 # Hudson script used to publish Tycho-built p2 update sites
 # NOTE: sources MUST be checked out into ${WORKSPACE}/sources 
 
+# to use timestamp when naming dirs instead of ${BUILD_ID}-H${BUILD_NUMBER}, use:
+# BUILD_ID=2010-08-31_19-16-10; timestamp=$(echo $BUILD_ID | tr -d "_-"); timestamp=${timestamp:0:12}; echo $timestamp; # 201008311916
+
 # where to create the stuff to publish
 STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
 
