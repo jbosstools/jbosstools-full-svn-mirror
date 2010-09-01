@@ -148,7 +148,8 @@ public final class PublishedLocationsDialog extends MessageDialog {
                                      ServerManager serverManager,
                                      IFile file,
                                      Collection<Workspace> workspaces ) {
-        super(parentShell, RestClientI18n.publishedLocationsDialogTitle.text(), Activator.getDefault().getImage(ModeShape_IMAGE_16x),
+        super(parentShell, RestClientI18n.publishedLocationsDialogTitle.text(),
+              Activator.getDefault().getImage(ModeShape_IMAGE_16x),
               RestClientI18n.publishedLocationsDialogMsg.text(file.getFullPath()), MessageDialog.INFORMATION,
               new String[] {IDialogConstants.OK_LABEL}, 0);
 
@@ -244,6 +245,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
         this.btnCopy = new Button(panel, SWT.PUSH);
         this.btnCopy.setText(RestClientI18n.publishedLocationsDialogCopyUrlButton.text());
         this.btnCopy.setToolTipText(RestClientI18n.publishedLocationsDialogCopyUrlButtonToolTip.text());
+        this.btnCopy.setEnabled(false);
         this.btnCopy.addSelectionListener(new SelectionAdapter() {
             /**
              * {@inheritDoc}
