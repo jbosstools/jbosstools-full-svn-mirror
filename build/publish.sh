@@ -2,13 +2,15 @@
 # Hudson script used to publish Tycho-built p2 update sites
 # NOTE: sources MUST be checked out into ${WORKSPACE}/sources 
 
+# to use timestamp when naming dirs instead of ${BUILD_ID}-H${BUILD_NUMBER}, use:
+# BUILD_ID=2010-08-31_19-16-10; timestamp=$(echo $BUILD_ID | tr -d "_-"); timestamp=${timestamp:0:12}; echo $timestamp; # 201008311916
+
 # where to create the stuff to publish
 STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
 
 # releases get named differently than snapshots
 if [[ ${RELEASE} == "Yes" ]]; then
 	ZIPSUFFIX="${BUILD_ID}-H${BUILD_NUMBER}"
-	STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}-${ZIPSUFFIX}
 else
 	ZIPSUFFIX="SNAPSHOT"
 fi
@@ -161,10 +163,23 @@ fi
 if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 	# publish build dir (including update sites/zips/logs/metadata
 	if [[ -d ${STAGINGDIR} ]]; then
-		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/nightly/3.2.helios/; # create a new unique dir
-		if [[ ${RELEASE} == "Yes" ]]; then
-			date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/nightly/3.2.helios/${JOB_NAME} # replace existing snapshot dir
+		
+		# if an aggregate build, put output elsewhere on disk
+		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
+			if [[ $1 == "trunk" ]]; then
+				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/trunk/${BUILD_ID}-H${BUILD_NUMBER}/
+			else
+				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOB_NAME/.aggregate}/${BUILD_ID}-H${BUILD_NUMBER}/
+			fi
+		else
+			# if a release build, create a named dir
+			if [[ ${RELEASE} == "Yes" ]]; then
+				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/3.2.helios/${JOB_NAME}-${ZIPSUFFIX}/
+			fi
 		fi
+
+		# and create/replace a snapshot dir w/ static URL
+		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/nightly/3.2.helios/
 	fi
 
 	# extra publish step for aggregate update sites ONLY
@@ -182,4 +197,3 @@ date
 if [[ -d ${WORKSPACE}/m2-repo/org/jboss/tools ]]; then
 	rm -rf ${WORKSPACE}/m2-repo/org/jboss/tools
 fi
-
