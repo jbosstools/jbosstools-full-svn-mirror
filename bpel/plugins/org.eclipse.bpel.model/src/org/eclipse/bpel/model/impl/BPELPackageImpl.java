@@ -2728,18 +2728,6 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * https://jira.jboss.org/browse/JBIDE-6917
-	 * The SampleStructuredActivity example needs an Activity container
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getExtensionActivity_Activity() {
-		return (EReference) extensionActivityEClass.getEStructuralFeatures()
-				.get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -3492,7 +3480,6 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 		createEReference(extensionsEClass, EXTENSIONS__CHILDREN);
 
 		extensionActivityEClass = createEClass(EXTENSION_ACTIVITY);
-		createEReference(extensionActivityEClass, EXTENSION_ACTIVITY__ACTIVITY);
 
 		fromPartEClass = createEClass(FROM_PART);
 		createEReference(fromPartEClass, FROM_PART__TO_VARIABLE);
@@ -4752,11 +4739,6 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 				extensionActivityEClass,
 				ExtensionActivity.class,
 				"ExtensionActivity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getExtensionActivity_Activity(),
-				this.getActivity(),
-				null,
-				"activity", null, 1, 1, ExtensionActivity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				fromPartEClass,

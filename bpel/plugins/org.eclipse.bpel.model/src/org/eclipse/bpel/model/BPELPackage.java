@@ -5540,26 +5540,13 @@ public interface BPELPackage extends EPackage {
 	int EXTENSION_ACTIVITY__SOURCES = ACTIVITY__SOURCES;
 
 	/**
-	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * https://jira.jboss.org/browse/JBIDE-6917
-	 * The SampleStructuredActivity example needs an Activity container
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTENSION_ACTIVITY__ACTIVITY = ACTIVITY_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>Extension Activity</em>' class.
 	 * <!-- begin-user-doc -->
-	 * https://jira.jboss.org/browse/JBIDE-6917
-	 * The SampleStructuredActivity example needs an Activity container
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION_ACTIVITY_FEATURE_COUNT = ACTIVITY_FEATURE_COUNT + 1;
+	int EXTENSION_ACTIVITY_FEATURE_COUNT = ACTIVITY_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -9157,19 +9144,6 @@ public interface BPELPackage extends EPackage {
 	EClass getExtensionActivity();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.bpel.model.ExtensionActivity#getActivity <em>Activity</em>}'.
-	 * <!-- begin-user-doc -->
-	 * https://jira.jboss.org/browse/JBIDE-6917
-	 * The SampleStructuredActivity example needs an Activity container
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Activity</em>'.
-	 * @see org.eclipse.bpel.model.ExtensionActivity#getActivity()
-	 * @see #getExtensionActivity()
-	 * @generated
-	 */
-	EReference getExtensionActivity_Activity();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.bpel.model.FromPart <em>From Part</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11612,17 +11586,6 @@ public interface BPELPackage extends EPackage {
 		 * @generated
 		 */
 		EClass EXTENSION_ACTIVITY = eINSTANCE.getExtensionActivity();
-
-		/**
-		 * The meta object literal for the '<em><b>Activity</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * https://jira.jboss.org/browse/JBIDE-6917
-		 * The SampleStructuredActivity example needs an Activity container
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EXTENSION_ACTIVITY__ACTIVITY = eINSTANCE
-				.getExtensionActivity_Activity();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.bpel.model.impl.FromPartImpl <em>From Part</em>}' class.

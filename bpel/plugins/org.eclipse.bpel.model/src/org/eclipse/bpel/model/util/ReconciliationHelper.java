@@ -92,6 +92,7 @@ import org.eclipse.bpel.model.impl.VariablesImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.wst.wsdl.WSDLElement;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
@@ -1385,7 +1386,15 @@ public class ReconciliationHelper {
         if (context instanceof If) return ((If) context).getActivity();
 		// https://jira.jboss.org/browse/JBIDE-6917
 		// added an Activity for Structure Activities that behave like containers
-        if (context instanceof ExtensionActivity) return ((ExtensionActivity) context).getActivity();
+        if (context instanceof ExtensionActivity)
+        {
+        	ExtensionActivity ea = (ExtensionActivity)context;
+        	for (EStructuralFeature sf : ea.eClass().getEAllStructuralFeatures())
+        	{
+        		if (sf.getName().equals("activity"))
+        			return (Activity) ea.eGet(sf);
+        	}
+        }
         System.err.println("Missing getActivity():" + context.getClass());
         throw new IllegalArgumentException();
     }
