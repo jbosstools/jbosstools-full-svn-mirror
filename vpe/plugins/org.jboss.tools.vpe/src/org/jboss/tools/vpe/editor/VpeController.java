@@ -2248,6 +2248,14 @@ public class VpeController implements INodeAdapter,
 			return;
 		}
 
+		/*
+		 * Enable/disable "Externalize strings" toolbar icon
+		 */
+		updateExternalizeStringsToolbarIconState();
+		
+		/*
+		 * Update Text Formatting Toolbar state
+		 */
 		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			if (toolbarFormatControllerManager != null)
 				toolbarFormatControllerManager.selectionChanged();
@@ -2528,6 +2536,16 @@ public class VpeController implements INodeAdapter,
 		visualEditor.updateShowSelectionBarItem(selectionBar.isVisible());
 	}
 
+	/**
+	 * Update Externalize Strings toolbar icon state.
+	 * <p>
+	 * Enables the button when suitable text is selected.
+	 * Disabled otherwise.
+	 */
+	public void updateExternalizeStringsToolbarIconState() {
+		visualEditor.updateExternalizeStringsToolbarIconState();
+	}
+	
 	public IZoomEventManager getZoomEventManager() {
 		return zoomEventManager;
 	}

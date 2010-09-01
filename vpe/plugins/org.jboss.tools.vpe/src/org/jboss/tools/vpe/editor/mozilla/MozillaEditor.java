@@ -78,6 +78,7 @@ import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -98,6 +99,7 @@ import org.mozilla.interfaces.nsIHTMLAbsPosEditor;
 import org.mozilla.interfaces.nsIHTMLInlineTableEditor;
 import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
+import org.w3c.dom.Attr;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final File INIT_FILE = new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -474,29 +476,16 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			@Override
 			public void run() {
 				/*
-				 * Externalize strings action .
+				 * Externalize strings action.
 				 * Show a dialog to add properties key and value.
 				 * When selection is correct show the dialog
-				 * otherwise show warning message.
+				 * otherwise the toolbar icon will be disabled.
 				 */
-				StructuredTextEditor editor  = controller.getSourceEditor();
-				ISelection sel = editor.getSelectionProvider().getSelection();
-				
-				if ((sel instanceof TextSelection)
-						&& (sel instanceof IStructuredSelection)
-						&& (((IStructuredSelection) sel).size() == 1)) {
-					ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
-							PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-							new ExternalizeStringsWizard(
-									editor, controller.getPageContext().getBundle()));
-					dlg.open();
-				} else {
-					MessageDialog.openWarning(
-							PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-							VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE,
-							VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_WRONG_SELECTION);
-				}
-				
+				ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
+						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+						new ExternalizeStringsWizard(controller.getSourceEditor(), 
+								controller.getPageContext().getBundle()));
+				dlg.open();
 			}
 		};
 		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
@@ -521,6 +510,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				showSelectionBarAction = null;
 				showTextFormattingAction = null;
 				showBundleAsELAction = null;
+				externalizeStringsAction = null;
 			}
 		});
 		return verBar;
@@ -1138,5 +1128,58 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	public MozillaTooltipListener getTooltipListener() {
 		return tooltipListener;
+	}
+	
+	
+	/**
+	 * Update Externalize Strings toolbar icon state.
+	 * <p>
+	 * Enables the button when suitable text is selected.
+	 * Disabled otherwise.
+	 */
+	public void updateExternalizeStringsToolbarIconState() {
+		StructuredTextEditor editor = controller.getSourceEditor();
+		ISelection sel = editor.getSelectionProvider().getSelection();
+		String stringToUpdate = Constants.EMPTY;
+		if ((sel instanceof TextSelection)
+				&& (sel instanceof IStructuredSelection)
+				&& (((IStructuredSelection) sel).size() == 1)) {
+			String text = Constants.EMPTY;
+			TextSelection textSelection = null;
+			IStructuredSelection structuredSelection = (IStructuredSelection) sel;
+			textSelection = (TextSelection) sel;
+			text = textSelection.getText();
+			Object selectedElement = structuredSelection.getFirstElement();
+			/*
+			 * When selected text is empty parse selected element and find a
+			 * string to replace..
+			 */
+			if ((text.trim().length() == 0)) {
+				if (selectedElement instanceof org.w3c.dom.Text) {
+					/*
+					 * ..it could be a plain text
+					 */
+					org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
+					if (textNode.getNodeValue().trim().length() > 0) {
+						stringToUpdate = textNode.getNodeValue();
+					}
+				} else if (selectedElement instanceof Attr) {
+					/*
+					 * ..or an attribute's value
+					 */
+					Attr attrNode = (Attr) selectedElement;
+					if (attrNode.getNodeValue().trim().length() > 0) {
+						stringToUpdate = attrNode.getNodeValue();
+					}
+				}
+			} else {
+				stringToUpdate = text;
+			}
+		}
+		if ((stringToUpdate.length() > 0)) {
+			externalizeStringsAction.setEnabled(true);
+		} else {
+			externalizeStringsAction.setEnabled(false);
+		}
 	}
 }

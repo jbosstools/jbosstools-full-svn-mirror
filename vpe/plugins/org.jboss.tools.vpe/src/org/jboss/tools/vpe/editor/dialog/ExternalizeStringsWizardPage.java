@@ -166,11 +166,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		propsKey = new Text(propsStringGroup, SWT.BORDER);
 		propsKey.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
 		propsKey.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_DEFAULT_KEY);
-		propsKey.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				updateStatus();
-			}
-		});
+		
 		/*
 		 * Create Properties Value  label
 		 */
@@ -184,11 +180,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		propsValue.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
 		propsValue.setText(Constants.EMPTY);
 		propsValue.setEditable(false);
-		propsValue.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				updateStatus();
-			}
-		});
 
 		/*
 		 * Create New File Checkbox
@@ -206,22 +197,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		gd.heightHint = 300; 
 		propsFilesGroup.setLayoutData(gd);
 		propsFilesGroup.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPS_FILES_GROUP);
-
-		/*
-		 * Add selection listener to New File button
-		 */
-		newFile.addSelectionListener( new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				boolean selected = ((Button)e.getSource()).getSelection();
-				if (selected) {
-					enableBundleGroup(false);
-				} else {
-					enableBundleGroup(true);
-				}
-				updateStatus();
-			}
-		});
 		
 		/*
 		 * Create Resource Bundles List label
@@ -234,14 +209,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 */
 		rbCombo = new Combo(propsFilesGroup, SWT.NONE);
 		rbCombo.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
-		rbCombo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				setResourceBundlePath(rbCombo.getText());
-				updateDuplicateKeyStatus();
-				updateStatus();
-			}
-		});
 		
 		/*
 		 * Create Properties File label
@@ -279,7 +246,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		/*
 		 * Initialize all fields with real values.
 		 */
-		initializeTextFields();
+		initializeFieldsAndAddLIsteners();
 		
 		/*
 		 * Wizard Page control should be initialized.
@@ -291,7 +258,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 	 * Initialize dialog's controls.
 	 * Fill in appropriate text and make validation.
 	 */
-	private void initializeTextFields() {
+	private void initializeFieldsAndAddLIsteners() {
 		ISelection sel = editor.getSelectionProvider().getSelection();
 		if (isSelectionCorrect(sel)) {
 			String text = Constants.EMPTY;
@@ -302,7 +269,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			text = textSelection.getText();
 			Object selectedElement = structuredSelection.getFirstElement();
 			/*
-			 * When selected text in empty
+			 * When selected text is empty
 			 * parse selected element and find a string to replace..
 			 */
 			if ((text.trim().length() == 0)) {
@@ -393,15 +360,52 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				}
 				/*
 				 * Set the new key text
-				 * Update the key status
 				 */
 				propsKey.setText(newKey);
 				updateDuplicateKeyStatus();
 			}
 			/*
-			 * Update status message.
+			 * https://jira.jboss.org/browse/JBIDE-6945
+			 * Set the greeting message only.
+			 * All the validation will take place in the fields' listeners
+			 * after user enters some new values. 
 			 */
-			updateStatus();
+			setMessage(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_ENTER_KEY_NAME,
+					IMessageProvider.INFORMATION);
+
+			/*
+			 * Add selection listeners to the fields
+			 */
+			propsKey.addModifyListener(new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					updateStatus();
+				}
+			});
+			propsValue.addModifyListener(new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					updateStatus();
+				}
+			});
+			newFile.addSelectionListener( new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					boolean selected = ((Button)e.getSource()).getSelection();
+					if (selected) {
+						enableBundleGroup(false);
+					} else {
+						enableBundleGroup(true);
+					}
+					updateStatus();
+				}
+			});
+			rbCombo.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					setResourceBundlePath(rbCombo.getText());
+					updateDuplicateKeyStatus();
+					updateStatus();
+				}
+			});
 		} else {
 			VpePlugin.getDefault().logWarning(
 					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
