@@ -41,23 +41,23 @@ elif [[ -d ${WORKSPACE}/sources/site/target ]]; then
 	z=$siteZip
 fi
 
-if [[ $z != "" ]] && [[ -f $z ]] ; then
-	#echo "$z ..."
-	# note the job name, build number, SVN rev, and build ID of the latest snapshot zip
-	mkdir -p ${STAGINGDIR}/logs
-	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
-	if [[ ${SVN_REVISION} ]]; then
-		METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
-		echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
-	else
-		echo -n "" > ${STAGINGDIR}/logs/${METAFILE}
-	fi
-	echo "JOB_NAME = ${JOB_NAME}" >> ${STAGINGDIR}/logs/${METAFILE}
-	echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
-	echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
-	echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
-	echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
+# note the job name, build number, SVN rev, and build ID of the latest snapshot zip
+mkdir -p ${STAGINGDIR}/logs
+METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
+if [[ ${SVN_REVISION} ]]; then
+	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
+	echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
+else
+	echo -n "" > ${STAGINGDIR}/logs/${METAFILE}
+fi
+echo "JOB_NAME = ${JOB_NAME}" >> ${STAGINGDIR}/logs/${METAFILE}
+echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
+echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
+echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
+echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
 
+#echo "$z ..."
+if [[ $z != "" ]] && [[ -f $z ]] ; then
 	# unzip into workspace for publishing as unpacked site
 	mkdir -p ${STAGINGDIR}/all/repo
 	unzip -u -o -q -d ${STAGINGDIR}/all/repo $z
