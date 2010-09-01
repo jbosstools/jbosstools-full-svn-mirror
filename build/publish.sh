@@ -163,7 +163,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 	if [[ -d ${STAGINGDIR} ]]; then
 		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/nightly/3.2.helios/; # create a new unique dir
 		if [[ ${RELEASE} == "Yes" ]]; then
-			date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/3.2.helios/${JOB_NAME}/ # update existing snapshot dir
+			date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/nightly/3.2.helios/${JOB_NAME} # replace existing snapshot dir
 		fi
 	fi
 
