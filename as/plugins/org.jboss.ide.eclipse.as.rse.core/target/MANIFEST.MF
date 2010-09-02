@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Export-Package: org.jboss.ide.eclipse.as.rse.core
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.rse.core,org.ecli
+ pse.rse.subsystems.files.core,org.eclipse.rse.services,org.eclipse.rs
+ e.services.files.ftp,org.eclipse.rse.services.local,org.eclipse.rse.s
+ ervices.ssh,org.jboss.ide.eclipse.as.core,org.jboss.ide.eclipse.as.wt
+ p.core,org.eclipse.wst.server.core,org.eclipse.wst.common.project.fac
+ et.core,org.eclipse.core.resources,org.eclipse.wst.common.modulecore,
+ org.eclipse.wst.common.emfworkbench.integration,org.eclipse.jem.util,
+ org.jboss.ide.eclipse.archives.webtools;resolution:=optional
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 0.9.0.v20100816-2135-M2
+Bundle-Name: Core
+Bundle-Activator: org.jboss.ide.eclipse.as.rse.core.RSECorePlugin
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.jboss.ide.eclipse.as.rse.core;singleton:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

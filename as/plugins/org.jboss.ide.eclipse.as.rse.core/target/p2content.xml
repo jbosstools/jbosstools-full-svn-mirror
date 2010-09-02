@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='org.jboss.ide.eclipse.as.rse.core' version='0.9.0.v20100816-2135-M2'>
+    <update id='org.jboss.ide.eclipse.as.rse.core' range='[0.0.0,0.9.0.v20100816-2135-M2)' severity='0'/>
+    <properties size='4'>
+      <property name='org.eclipse.equinox.p2.name' value='Core'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.ide.eclipse.as.rse.core'/>
+      <property name='maven-version' value='0.9.0-SNAPSHOT'/>
+    </properties>
+    <provides size='4'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jboss.ide.eclipse.as.rse.core' version='0.9.0.v20100816-2135-M2'/>
+      <provided namespace='osgi.bundle' name='org.jboss.ide.eclipse.as.rse.core' version='0.9.0.v20100816-2135-M2'/>
+      <provided namespace='java.package' name='org.jboss.ide.eclipse.as.rse.core' version='0.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='16'>
+      <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.rse.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.rse.subsystems.files.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.rse.services' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.rse.services.files.ftp' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.rse.services.local' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.rse.services.ssh' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.jboss.ide.eclipse.as.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.jboss.ide.eclipse.as.wtp.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.wst.server.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.wst.common.project.facet.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.resources' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.wst.common.modulecore' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.wst.common.emfworkbench.integration' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jem.util' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.jboss.ide.eclipse.archives.webtools' range='0.0.0' optional='true'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jboss.ide.eclipse.as.rse.core' version='0.9.0.v20100816-2135-M2'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-Name: Core&#xA;Bundle-Version: 0.9.0.v20100816-2135-M2&#xA;Bundle-Activator: org.jboss.ide.eclipse.as.rse.core.RSECorePlugin&#xA;Created-By: Apache Maven&#xA;Archiver-Version: Plexus Archiver&#xA;Require-Bundle: org.eclipse.core.runtime,org.eclipse.rse.core,org.eclipse.rse.subsystems.files.core,org.eclipse.rse.services,org.eclipse.rse.services.files.ftp,org.eclipse.rse.services.local,org.eclipse.rse.services.ssh,org.jboss.ide.eclipse.as.core,org.jboss.ide.eclipse.as.wtp.core,org.eclipse.wst.server.core,org.eclipse.wst.common.project.facet.core,org.eclipse.core.resources,org.eclipse.wst.common.modulecore,org.eclipse.wst.common.emfworkbench.integration,org.eclipse.jem.util,org.jboss.ide.eclipse.archives.webtools;resolution:=optional&#xA;Export-Package: org.jboss.ide.eclipse.as.rse.core&#xA;Bundle-SymbolicName: org.jboss.ide.eclipse.as.rse.core;singleton:=true&#xA;Built-By: rob&#xA;Manifest-Version: 1.0&#xA;Build-Jdk: 1.6.0_14&#xA;Bundle-ActivationPolicy: lazy&#xA;Bundle-ManifestVersion: 2&#xA;Bundle-RequiredExecutionEnvironment: JavaSE-1.6&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>

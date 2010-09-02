@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='1'>
+  <artifact classifier='osgi.bundle' id='org.jboss.ide.eclipse.as.rse.core' version='0.9.0.v20100816-2135-M2'>
+    <properties size='6'>
+      <property name='artifact.size' value='14206'/>
+      <property name='download.size' value='14206'/>
+      <property name='download.md5' value='68625223f4fc4bfd60ec555f42bbb9e2'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.ide.eclipse.as.rse.core'/>
+      <property name='maven-version' value='0.9.0-SNAPSHOT'/>
+    </properties>
+  </artifact>
+</artifacts>
