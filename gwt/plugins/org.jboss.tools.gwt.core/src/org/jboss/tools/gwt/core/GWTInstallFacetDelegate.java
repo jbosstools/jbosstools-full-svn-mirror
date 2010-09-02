@@ -48,7 +48,6 @@ import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.jboss.tools.common.EclipseUtil;
 import org.jboss.tools.common.log.LogHelper;
-import org.jboss.tools.common.model.project.ProjectHome;
 import org.jboss.tools.gwt.core.internal.GWTCoreActivator;
 import org.jboss.tools.gwt.core.util.ProjectUtils;
 import org.jboss.tools.usage.util.StatusUtils;
@@ -67,7 +66,6 @@ public class GWTInstallFacetDelegate implements IDelegate {
 			addNature(javaProject, monitor);
 			addClasspathContainer(javaProject, monitor);
 
-//			IPath webContentPath = ProjectHome.getFirstWebContentPath(project);
 			IPath webContentPath = ProjectUtils.getWebContentRootPath(javaProject.getProject());
 			Assert.isTrue(webContentPath != null && !webContentPath.isEmpty(),
 					MessageFormat
@@ -122,7 +120,7 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		IFolder outputWorkspaceFolder = javaProject.getProject().getWorkspace().getRoot().getFolder(
 				outputFolderProjectPath);
 		if (!outputWorkspaceFolder.exists()) {
-			outputWorkspaceFolder.create(false, true, monitor);
+			outputWorkspaceFolder.create(true, true, monitor);
 		}
 		javaProject.setOutputLocation(outputWorkspaceFolder.getFullPath(), new NullProgressMonitor());
 	}
