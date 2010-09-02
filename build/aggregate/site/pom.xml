@@ -17,9 +17,9 @@
 		<!-- add more inputRepo# here, then reference below; need variables so 
 			that these can be referred to in Ant script later -->
 		<inputRepo1>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.nightly</inputRepo1>
-		<inputRepo2>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa</inputRepo3>
-		<inputRepo3>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer</inputRepo4>
-		<inputRepo4>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-drools</inputRepo5>
+		<inputRepo2>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa</inputRepo2>
+		<inputRepo3>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer</inputRepo3>
+		<inputRepo4>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-drools</inputRepo4>
 		<inputRepos>1,2,3,4</inputRepos>
 	</properties>
 
