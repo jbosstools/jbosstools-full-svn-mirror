@@ -11,9 +11,30 @@
 package org.jboss.tools.smooks.configuration.editors;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
 
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.dialogs.Dialog;
@@ -60,6 +81,8 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.milyn.Smooks;
+import org.milyn.payload.JavaSource;
 
 /**
  * @author Dart (dpeng@redhat.com)
@@ -307,10 +330,11 @@ public class SelectorCreationDialog extends Dialog {
 						if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(type)) {
 							try {
 								Class<?> clazz = SmooksUIUtils.loadClass(path, project);
-								JavaBeanModel model = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
-								if (model != null) {
-									list.add(model);
-								}
+								Document newmodel = getModel(clazz);
+								if (newmodel != null) {
+									TagList tagList = new XMLObjectAnalyzer().analyze(newmodel, null , null);
+									list.addAll(tagList.getChildren());
+								} 
 							} catch (Throwable t) {
 								currentException = t;
 							}
@@ -514,4 +538,140 @@ public class SelectorCreationDialog extends Dialog {
 		return super.close();
 	}
 
+	public static class JavaGraphBuilder {
+
+	    public <T> T buildGraph(Class<T> messageType) {
+	        try {
+	            return buildObject(messageType);
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+	            throw new IllegalArgumentException("Unable to construct an instance of '" + messageType.getName() + "'", e);
+	        }
+	    }
+
+	    private <T> T buildObject(Class<T> objectType) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+
+	        if(String.class.isAssignableFrom(objectType)) {
+	            return objectType.cast("x");
+	        } else if(Number.class.isAssignableFrom(objectType)) {
+	            return objectType.getConstructor(String.class).newInstance("1");
+	        } else if(objectType.isPrimitive()) {
+	            return (T) primitiveToObjectMap.get(objectType);
+	        } else if(objectType == Object.class) {
+	            // don't construct raw Object types... leave them and just return null...
+	            return null;
+	        }
+
+	        T messageInstance = objectType.newInstance();
+
+	        // populate all the fields...
+	        Method[] methods = objectType.getMethods();
+	        for(Method method : methods) {
+	            if(method.getName().startsWith("set") && method.getParameterTypes().length == 1) {
+	                Class<?> propertyType = method.getParameterTypes()[0];
+	                Object propertyInstance = null;
+
+	                if(Collection.class.isAssignableFrom(propertyType)) {
+	                    propertyInstance = buildCollection(method, propertyType);
+	                } else if(propertyType.isArray()) {
+		                propertyInstance = buildArray(method, propertyType);
+	                } else {
+	                    propertyInstance = buildObject(propertyType);
+	                }
+
+	                if(propertyInstance != null) {
+	                    method.invoke(messageInstance, propertyInstance);
+	                }
+	            }
+	        }
+
+	        return messageInstance;
+	    }
+
+		private Object buildArray(Method method, Class<?> propertyType) throws ArrayIndexOutOfBoundsException, IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+			Class<?> arrayType = propertyType.getComponentType();
+	        Object[] arrayObj = (Object[]) Array.newInstance(arrayType, 1);
+	        
+	        Array.set(arrayObj, 0, buildObject(arrayType));
+			
+			return arrayObj;
+		}
+
+		private Object buildCollection(Method method, Class<?> propertyType) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+			Type genericType = method.getGenericParameterTypes()[0];
+
+			if(genericType instanceof ParameterizedType) {
+			    ParameterizedType genericTypeClass = (ParameterizedType) genericType;
+			    Collection collection = null;
+
+			    if(!propertyType.isInterface()) {
+			    	// It's a concrete Collection type... just create an instance...
+			    	collection = (Collection) propertyType.newInstance();
+				}else if(List.class.isAssignableFrom(propertyType)) {
+					collection = new ArrayList();
+			    } else if(Set.class.isAssignableFrom(propertyType)) {
+					collection = new LinkedHashSet();
+				}
+				
+				if(collection != null) {
+					collection.add(buildObject((Class<Object>) genericTypeClass.getActualTypeArguments()[0]));
+				    return collection;
+				}
+			}
+			
+			return null;
+		}
+	    
+	    private static final Map<Class, Object> primitiveToObjectMap;
+
+	    static {
+	        primitiveToObjectMap = new HashMap<Class, Object>();
+	        primitiveToObjectMap.put(int.class, 1);
+	        primitiveToObjectMap.put(long.class, 1L);
+	        primitiveToObjectMap.put(boolean.class, true);
+	        primitiveToObjectMap.put(float.class, 1f);
+	        primitiveToObjectMap.put(double.class, 1d);
+	        primitiveToObjectMap.put(char.class, '1');
+	        primitiveToObjectMap.put(byte.class, Byte.parseByte("1"));
+	        primitiveToObjectMap.put(short.class, 1);
+	    }
+
+	}
+
+	public static Document getModel(Class<?> theModelClass) throws Exception {
+		try {
+			Object objectGraph = graphBuilder.buildGraph(theModelClass);
+			DOMResult domResult = new DOMResult();
+			
+			// Filter a populated object model through an actual smooks runtime instance.
+			// this ensures that the generated model will be exactly the same as that seen
+			// by the smooks instance at runtime...
+			smooksRuntime.filterSource(new JavaSource(objectGraph), domResult);
+			
+			return (Document) domResult.getNode();
+		} catch (Exception e) {
+			throw new Exception("Error build project classpath.", e);  //$NON-NLS-1$
+		}
+	}
+
+	private static JavaGraphBuilder graphBuilder = new JavaGraphBuilder();
+	private static Smooks smooksRuntime = new Smooks();
+	
+	private static void printDocumentAsXML ( Document document ) {
+		// Use a Transformer for output
+		TransformerFactory tFactory =
+			TransformerFactory.newInstance();
+		Transformer transformer;
+		try {
+			transformer = tFactory.newTransformer();
+			DOMSource source = new DOMSource(document);
+			StreamResult result = new StreamResult(System.out);
+			transformer.transform(source, result);
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+
+	}
 }
