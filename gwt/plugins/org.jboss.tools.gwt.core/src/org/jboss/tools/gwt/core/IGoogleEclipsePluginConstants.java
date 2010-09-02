@@ -18,7 +18,7 @@ package org.jboss.tools.gwt.core;
  */
 public class IGoogleEclipsePluginConstants {
 
-	public static final String GWT_NATURE = "com.google.gwt.eclipse.core.gwtNature";
+	public static final String GWT_NATURE = "com.google.gwt.eclipse.core.gwtNature"; //$NON-NLS-1$
 
 	/** The gwt class path container id. */
 	public static final String GWT_CONTAINER_ID = "com.google.gwt.eclipse.core.GWT_CONTAINER"; //$NON-NLS-1$

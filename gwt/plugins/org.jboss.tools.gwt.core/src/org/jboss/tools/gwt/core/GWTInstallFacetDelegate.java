@@ -48,8 +48,10 @@ import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.jboss.tools.common.EclipseUtil;
 import org.jboss.tools.common.log.LogHelper;
+import org.jboss.tools.common.model.project.ProjectHome;
 import org.jboss.tools.gwt.core.internal.GWTCoreActivator;
 import org.jboss.tools.gwt.core.util.ProjectUtils;
+import org.jboss.tools.usage.util.StatusUtils;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
@@ -60,38 +62,27 @@ public class GWTInstallFacetDelegate implements IDelegate {
 	public void execute(IProject project, IProjectFacetVersion projectFacetVersion, Object config,
 			IProgressMonitor monitor) throws CoreException {
 		try {
-
-			GWTInstallDataModelProvider dataModel = (GWTInstallDataModelProvider) config;
 			IJavaProject javaProject = JavaCore.create(project);
 
 			addNature(javaProject, monitor);
-
 			addClasspathContainer(javaProject, monitor);
 
-			IPath webContentPath = ProjectUtils.getWebContentRootPath(javaProject.getProject());
+			IPath webContentPath = ProjectHome.getFirstWebContentPath(project);
+//			IPath webContentPath = ProjectUtils.getWebContentRootPath(javaProject.getProject());
 			Assert.isTrue(webContentPath != null && !webContentPath.isEmpty(),
 					MessageFormat
 							.format("no web content folder was found in project {0}", javaProject.getElementName()));
 
-			IScopeContext projectScope = new ProjectScope(project);
-			createWebApplicationPreferences(
-					projectScope.getNode(IGoogleEclipsePluginConstants.GDT_PLUGIN_ID),
-					webContentPath, javaProject, monitor);
-
+			createWebApplicationPreferences(project, webContentPath, javaProject, monitor);
 			configureOutputFolder(webContentPath, javaProject, monitor);
 
 			List<IPath> srcFolderPaths = ProjectUtils.getSourceFolders(javaProject);
-			Assert.isTrue(srcFolderPaths.size() > 0,
-					MessageFormat.format("no source folders were found in project {0}", javaProject.getElementName()));
+			GWTInstallDataModelProvider dataModel = (GWTInstallDataModelProvider) config;
 			createSample(srcFolderPaths, webContentPath, dataModel, javaProject, monitor);
 
 			configureWebXml(project, monitor);
-
-		} catch (BackingStoreException e) {
-			LogHelper.logError(GWTCoreActivator.getDefault(), "Could not store preferences.", e);
 		} catch (Exception e) {
-
-			LogHelper.logError(GWTCoreActivator.getDefault(), "Could not create gwt facet.", e);
+			throw new CoreException(StatusUtils.getErrorStatus(GWTCoreActivator.PLUGIN_ID, "Could not create gwt facet.", e));
 		}
 	}
 
@@ -109,12 +100,15 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		ProjectUtils.addClasspathEntry(javaProject, entry, monitor);
 	}
 
-	private void createWebApplicationPreferences(IEclipsePreferences preferences, IPath webContentPath,
+	private void createWebApplicationPreferences(IProject project, IPath webContentPath,
 			IJavaProject javaProject, IProgressMonitor monitor) throws BackingStoreException, CoreException {
 		monitor.subTask("creating web application preferences");
 
-		preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_KEY, webContentPath.makeRelativeTo(
-				javaProject.getPath()).toString());
+		IScopeContext projectScope = new ProjectScope(project);
+		IEclipsePreferences preferences = projectScope.getNode(IGoogleEclipsePluginConstants.GDT_PLUGIN_ID);
+
+		preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_KEY, 
+				webContentPath.makeRelativeTo(javaProject.getPath()).toString());
 		preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_ISOUTPUT_KEY,
 				IGoogleEclipsePluginConstants.WAR_SRCDIR_ISOUTPUT_DEFAULTVALUE);
 		preferences.flush();
@@ -137,8 +131,12 @@ public class GWTInstallFacetDelegate implements IDelegate {
 			GWTInstallDataModelProvider dataModel, final IJavaProject javaProject, IProgressMonitor monitor)
 			throws IOException, CoreException {
 
-		if (dataModel.isGenerateSampleCode()) {
+		if (srcPaths.size() <= 0) {
+			LogHelper.logWarning(GWTCoreActivator.PLUGIN_ID, MessageFormat.format("no source folders were found in project {0}", javaProject.getElementName()));
+			return;
+		}
 
+		if (dataModel.isGenerateSampleCode()) {
 			monitor.subTask("creating sample code");
 
 			javaProject.getProject().getWorkspace().run(new IWorkspaceRunnable() {
@@ -153,7 +151,7 @@ public class GWTInstallFacetDelegate implements IDelegate {
 						unzipWebContent(webContentPath, javaProject);
 
 					} catch (IOException e) {
-						LogHelper.logError(GWTCoreActivator.getDefault(), "Could not create gwt facet", e);
+						LogHelper.logError(GWTCoreActivator.PLUGIN_ID, "Could not create gwt facet", e);
 					}
 				}
 
@@ -228,7 +226,6 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		}, webXmlPath);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void createServletMapping(String urlPattern, Servlet servlet, WebApp webApp) {
 		ServletMapping mapping = WebFactory.eINSTANCE.createServletMapping();
 		mapping.setServletName(servlet.getServletName());
@@ -238,7 +235,6 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		webApp.getServletMappings().add(mapping);
 	}
 
-	@SuppressWarnings("unchecked")
 	private Servlet createServlet(String servletName, String servletClass, WebApp webApp) {
 		Servlet servlet = WebFactory.eINSTANCE.createServlet();
 		servlet.setServletName(servletName);
@@ -247,7 +243,6 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		return servlet;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void addWelcomePage(String welcomeFileUrl, WebApp webApp) {
 		List<WelcomeFileList> welcomeList = webApp.getWelcomeFileLists();
 		WelcomeFileList welcomeFileList = null;

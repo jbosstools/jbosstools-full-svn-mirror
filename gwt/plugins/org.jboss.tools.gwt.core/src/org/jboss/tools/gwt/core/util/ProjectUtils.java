@@ -39,7 +39,7 @@ import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 /**
  * A class that holds various utility methods that help to deal with projects.
  * 
- * @author adietish.
+ * @author Andre Dietisheim
  * 
  * @see IProject
  */
@@ -81,26 +81,27 @@ public class ProjectUtils {
 		javaProject.setRawClasspath(newClasspath, monitor);
 	}
 
-	/**
-	 * Returns the path of the web content folder in the given project. The path
-	 * returned is relative to the workspace.
-	 * 
-	 * @param project
-	 *            the project to return the web content folder for
-	 * @return the path of the web content folder (relative to the workspace)
-	 */
-	public static IPath getWebContentRootPath(IProject project) {
-		if (!ModuleCoreNature.isFlexibleProject(project))
-			return project.getFullPath();
-		IPath path = null;
-		IVirtualComponent component = ComponentCore.createComponent(project);
-		if (component != null && component.exists()) {
-			path = component.getRootFolder().getWorkspaceRelativePath();
-		} else {
-			path = project.getFullPath();
-		}
-		return path;
-	}
+//	/**
+//	 * Returns the path of the web content folder in the given project. The path
+//	 * returned is relative to the workspace.
+//	 * 
+//	 * @param project
+//	 *            the project to return the web content folder for
+//	 * @return the path of the web content folder (relative to the workspace)
+//	 */
+//	public static IPath getWebContentRootPath(IProject project) {
+//		if (!ModuleCoreNature.isFlexibleProject(project)) {
+//			return project.getFullPath();
+//		}
+//		IPath path = null;
+//		IVirtualComponent component = ComponentCore.createComponent(project);
+//		if (component != null && component.exists()) {
+//			path = component.getRootFolder().getWorkspaceRelativePath();
+//		} else {
+//			path = project.getFullPath();
+//		}
+//		return path;
+//	}
 
 	/**
 	 * Unzips the given ZipInputStream to the given folder.
