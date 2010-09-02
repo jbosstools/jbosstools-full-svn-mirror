@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogPage;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -29,8 +32,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -103,16 +104,15 @@ public class NewInstancePage extends WizardPage {
 	private SelectionListener manageListener = new SelectionAdapter() {
 
 		public void widgetSelected(SelectionEvent event) {
-			Display d = Display.getDefault();
-			Shell shell = new Shell(d);
-			FileDialog f = new FileDialog(shell, SWT.NULL);
-			f.setFilterNames(new String[] {WizardMessages.getString(PEM_NAME)});
-			f.setFilterExtensions(new String[] {"*.pem"}); //$NON-NLS-1$
-			String keyname = f.open();
-			if (keyname != null && keyname.length() > 0) {
-				keyname = keyname.substring(0, keyname.length() - 4);
+			Shell shell = getShell();
+			ManageKeys wizard = new ManageKeys(cloud, ".pem");  //$NON-NLS-1$
+			WizardDialog dialog = new CustomWizardDialog(shell, wizard,
+					IDialogConstants.OK_LABEL);
+			dialog.create();
+			dialog.open();
+			String keyname = wizard.getKeyName();
+			if (keyname != null)
 				keyText.setText(keyname);
-			}
 		}
 	
 	};

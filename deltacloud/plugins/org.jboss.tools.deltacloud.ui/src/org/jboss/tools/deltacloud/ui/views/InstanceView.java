@@ -411,7 +411,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 					@Override
 					public void run() {
 						if (currCloud != null) {
-							currCloud.getImages();
+							currCloud.getInstances();
 						}
 					}
 
