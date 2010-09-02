@@ -67,8 +67,8 @@ public class GWTInstallFacetDelegate implements IDelegate {
 			addNature(javaProject, monitor);
 			addClasspathContainer(javaProject, monitor);
 
-			IPath webContentPath = ProjectHome.getFirstWebContentPath(project);
-//			IPath webContentPath = ProjectUtils.getWebContentRootPath(javaProject.getProject());
+//			IPath webContentPath = ProjectHome.getFirstWebContentPath(project);
+			IPath webContentPath = ProjectUtils.getWebContentRootPath(javaProject.getProject());
 			Assert.isTrue(webContentPath != null && !webContentPath.isEmpty(),
 					MessageFormat
 							.format("no web content folder was found in project {0}", javaProject.getElementName()));
