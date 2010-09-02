@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>What's New</title>
+</head>
+<body>
+<h1>Deltacloud Development Tools 0.0.1.M2 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	href="../gwt/gwt-news-1.0.0.M2.html">GWT Integration &gt;</a></p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>General</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Deltacloud Tools</b></td>
+		<td valign="top">
+		<p>Introducing a set of tools to access clouds via the Deltacloud REST API.  The Deltacloud Tools provides methods for viewing images, creating instances, performing actions on instances, and connecting via ssh to an instance via Eclipse Remote System Explorer, all using the Deltacloud REST API.  Simply connect to a deltacloud server via its URL and supply a userid and password and it will appear in the Cloud Viewer which provides a tree view of the cloud with Images and Instances shown.  Clicking on an object in the Cloud View causes details to be shown in the Eclipse Properties Viewer.  Note that multiple deltacloud servers can be connected at one time.  A separate Images View provides a table view of all images in a specified cloud and allows launching a new instance based on a particular image.  As well there is an Instances View which provides a table of all instances in the cloud and allows starting, stopping, and rebooting of selected instances.  The Instances View also provides support for connecting via ssh to a running Instance using the Eclipse Remote System Explorer.  From the Remote System Explorer perspective one can view and manipulate files on the external instance as if they were local files on the current machine.  Accessing the remote Instance requires authentication support such as an EC2 .pem key file.  The Deltacloud tools provides a dialog for managing such key files though only one is necessary per user.  Any key file must be specified in the Eclipse SSH2 private keys list prior to actually performing the ssh connection.  This is easy to do via the Network Preferences dialog found under General Preferences.</p>
+		<img src="./images/cloudconnection.png" alt="" />
+		<img src="./images/imagesview.png" alt="" />
+		<img src="./images/instancesview.png" alt="" />
+		<img src="./images/propertiesview.png" alt="" />
+		<img src="./images/createInstance.png" alt="" />
+		<img src="./images/managekeys.png" alt="" />
+		<p><small><a
+			href="#">Related Jira</a></small></p>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+</html>
+
+
