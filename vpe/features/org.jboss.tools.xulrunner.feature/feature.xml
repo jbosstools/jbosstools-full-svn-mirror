@@ -2,7 +2,7 @@
 <feature
       id="org.jboss.tools.xulrunner.feature"
       label="%featureName"
-      version="1.9.2.qualifier"
+      version="1.9.12.qualifier"
       provider-name="%providerName"
       plugin="org.jboss.tools.xulrunner">
 
@@ -35,14 +35,14 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-         
+
    <plugin
          id="org.mozilla.xulrunner.cocoa.macosx"
          os="macosx"
          ws="cocoa"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>       
+         version="0.0.0"/>
 
    <plugin
          id="org.mozilla.xulrunner.gtk.linux.x86"
