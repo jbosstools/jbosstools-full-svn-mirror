@@ -8,6 +8,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	</parent>
 	<groupId>org.jboss.tools.vpe.features</groupId>
 	<artifactId>org.jboss.tools.xulrunner.feature</artifactId> 
-	<version>1.9.2.qualifier</version>
+	<version>1.9.12.qualifier</version>
 	<packaging>eclipse-feature</packaging>
 </project>
