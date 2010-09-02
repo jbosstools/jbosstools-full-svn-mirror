@@ -39,7 +39,7 @@ import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 /**
  * A class that holds various utility methods that help to deal with projects.
  * 
- * @author adietish.
+ * @author Andre Dietisheim
  * 
  * @see IProject
  */
@@ -90,8 +90,9 @@ public class ProjectUtils {
 	 * @return the path of the web content folder (relative to the workspace)
 	 */
 	public static IPath getWebContentRootPath(IProject project) {
-		if (!ModuleCoreNature.isFlexibleProject(project))
+		if (!ModuleCoreNature.isFlexibleProject(project)) {
 			return project.getFullPath();
+		}
 		IPath path = null;
 		IVirtualComponent component = ComponentCore.createComponent(project);
 		if (component != null && component.exists()) {
