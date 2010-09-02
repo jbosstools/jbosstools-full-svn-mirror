@@ -1,3 +1,13 @@
+2010-09-01  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (deleteKey): Change
+	arguments to just the key name is given.  Don't delete any file. 
+	(createKey): Change the directory argument to just be a String instead of an IPath.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (deleteKey): New method.
+	(createKey): Ditto.
+	(refreshInstance): Remove stack trace on error since a pending cloud start will
+	result in not found until the cloud actually is running.
+
 2010-08-30  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/Activator.java: Add Copyright and License info.

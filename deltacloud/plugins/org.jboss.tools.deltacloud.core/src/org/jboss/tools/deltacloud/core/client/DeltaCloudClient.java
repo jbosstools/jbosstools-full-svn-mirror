@@ -43,7 +43,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -247,14 +247,14 @@ public class DeltaCloudClient implements API
 		return JAXB.unmarshal(sendRequest(DCNS.REALMS + "/" + realmId, RequestType.GET), Realm.class);
 	}
 
-	public void createKey(String keyname, IPath keyStoreLocation) throws DeltaCloudClientException {
+	public void createKey(String keyname, String keyStoreLocation) throws DeltaCloudClientException {
 		String xml = sendRequest(DCNS.KEYS + "?name=" + keyname, RequestType.POST);
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(xml)));
 			List<String> keyText = getElementText(document, "pem"); //$NON-NLS-1$
-			File keyFile = keyStoreLocation.append(keyname + ".pem").toFile(); //$NON-NLS-1$
+			File keyFile = Path.fromOSString(keyStoreLocation).append(keyname + ".pem").toFile(); //$NON-NLS-1$
 			if (!keyFile.exists())
 				keyFile.createNewFile();
 			keyFile.setReadable(false, false);
@@ -279,14 +279,8 @@ public class DeltaCloudClient implements API
 		}
 	}
 
-	public void deleteKey(String keyname, IPath keyStoreLocation) throws DeltaCloudClientException {
-		try {
-			File keyFile = keyStoreLocation.append(keyname + ".pem").toFile(); //$NON-NLS-1$
-			if (keyFile.exists())
-				keyFile.delete();
-		} finally {
-			sendRequest(DCNS.KEYS + "/" + keyname, RequestType.DELETE);
-		}
+	public void deleteKey(String keyname) throws DeltaCloudClientException {
+		sendRequest(DCNS.KEYS + "/" + keyname, RequestType.DELETE);
 	}
 	
 	@Override

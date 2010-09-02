@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
@@ -176,6 +177,22 @@ public class DeltaCloud {
 		notifyInstanceListListeners(instanceArray);
 		return instanceArray;
 	}
+
+	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
+		try {
+			client.createKey(keyname, keystoreLocation);
+		} catch (DeltaCloudClientException e) {
+			throw new DeltaCloudException(e);
+		}
+	}
+	
+	public void deleteKey(String keyname) throws DeltaCloudException {
+		try {
+			client.deleteKey(keyname);
+		} catch (DeltaCloudClientException e) {
+			throw new DeltaCloudException(e);
+		}
+	}
 	
 	public DeltaCloudInstance refreshInstance(String instanceId) {
 		DeltaCloudInstance retVal = null;
@@ -196,7 +213,7 @@ public class DeltaCloud {
 				}
 			}
 		} catch (DeltaCloudClientException e) {
-			e.printStackTrace();
+			// will get here when a pending instance is being checked
 		}
 		return retVal;
 	}
