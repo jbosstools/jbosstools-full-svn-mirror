@@ -25,7 +25,6 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IScopeContext;
@@ -44,54 +43,64 @@ import org.eclipse.jst.javaee.web.ServletMapping;
 import org.eclipse.jst.javaee.web.WebApp;
 import org.eclipse.jst.javaee.web.WebFactory;
 import org.eclipse.jst.javaee.web.WelcomeFileList;
+import org.eclipse.wst.common.componentcore.ModuleCoreNature;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.jboss.tools.common.EclipseUtil;
 import org.jboss.tools.common.log.LogHelper;
+import org.jboss.tools.common.model.project.ProjectHome;
 import org.jboss.tools.gwt.core.internal.GWTCoreActivator;
 import org.jboss.tools.gwt.core.util.ProjectUtils;
 import org.jboss.tools.usage.util.StatusUtils;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
- * @author adietish
+ * @author Andre Dietisheim
  */
 public class GWTInstallFacetDelegate implements IDelegate {
 
 	public void execute(IProject project, IProjectFacetVersion projectFacetVersion, Object config,
 			IProgressMonitor monitor) throws CoreException {
-		try {
-			IJavaProject javaProject = JavaCore.create(project);
+		IJavaProject javaProject = JavaCore.create(project);
 
-			addNature(javaProject, monitor);
-			addClasspathContainer(javaProject, monitor);
+		addGwtNature(javaProject, monitor);
+		addClasspathContainer(javaProject, monitor);
 
-			IPath webContentPath = ProjectUtils.getWebContentRootPath(javaProject.getProject());
-			Assert.isTrue(webContentPath != null && !webContentPath.isEmpty(),
-					MessageFormat
-							.format("no web content folder was found in project {0}", javaProject.getElementName()));
+		addModuleCoreNature(project, monitor);
+		IPath webContentPath = getWebContentFolder(project, monitor);
 
-			createWebApplicationPreferences(project, webContentPath, javaProject, monitor);
-			configureOutputFolder(webContentPath, javaProject, monitor);
+		createWebApplicationPreferences(project, webContentPath, javaProject, monitor);
+		configureOutputFolder(webContentPath, javaProject, monitor);
 
-			List<IPath> srcFolderPaths = ProjectUtils.getSourceFolders(javaProject);
-			GWTInstallDataModelProvider dataModel = (GWTInstallDataModelProvider) config;
-			createSample(srcFolderPaths, webContentPath, dataModel, javaProject, monitor);
+		List<IPath> srcFolderPaths = ProjectUtils.getSourceFolders(javaProject);
+		GWTInstallDataModelProvider dataModel = (GWTInstallDataModelProvider) config;
+		createSample(srcFolderPaths, webContentPath, dataModel, javaProject, monitor);
 
-			configureWebXml(project, monitor);
-		} catch (Exception e) {
-			throw new CoreException(StatusUtils.getErrorStatus(GWTCoreActivator.PLUGIN_ID, "Could not create gwt facet.", e));
-		}
+		configureWebXml(project, monitor);
 	}
 
-	private void addNature(IJavaProject javaProject, IProgressMonitor monitor) throws CoreException {
-		monitor.subTask("adding gwt nature");
+	private IPath getWebContentFolder(IProject project, IProgressMonitor monitor) throws CoreException {
+		IPath webContentPath = ProjectHome.getFirstWebContentPath(project);
+		Assert.isTrue(webContentPath != null && !webContentPath.isEmpty(),
+				MessageFormat
+						.format("No web content folder was found in project {0}", project.getName()));
+		return webContentPath;
+	}
+
+	private void addGwtNature(IJavaProject javaProject, IProgressMonitor monitor) throws CoreException {
+		monitor.subTask("Adding GWT nature");
 
 		EclipseUtil.addNatureToProject(javaProject.getProject(), IGoogleEclipsePluginConstants.GWT_NATURE);
 	}
 
+	private void addModuleCoreNature(IProject project, IProgressMonitor monitor) throws CoreException {
+		monitor.subTask("Adding module core nature");
+
+		ModuleCoreNature.addModuleCoreNatureIfNecessary(project, monitor);
+	}
+
 	private void addClasspathContainer(IJavaProject javaProject, IProgressMonitor monitor) throws CoreException {
-		monitor.subTask("adding gwt container to classpath");
+		monitor.subTask("Adding gwt container to classpath");
 
 		IClasspathEntry entry = JavaCore.newContainerEntry(new Path(IGoogleEclipsePluginConstants.GWT_CONTAINER_ID),
 				false);
@@ -99,43 +108,52 @@ public class GWTInstallFacetDelegate implements IDelegate {
 	}
 
 	private void createWebApplicationPreferences(IProject project, IPath webContentPath,
-			IJavaProject javaProject, IProgressMonitor monitor) throws BackingStoreException, CoreException {
-		monitor.subTask("creating web application preferences");
+			IJavaProject javaProject, IProgressMonitor monitor) throws CoreException {
+		try {
+			monitor.subTask("creating web application preferences");
 
-		IScopeContext projectScope = new ProjectScope(project);
-		IEclipsePreferences preferences = projectScope.getNode(IGoogleEclipsePluginConstants.GDT_PLUGIN_ID);
+			IScopeContext projectScope = new ProjectScope(project);
+			IEclipsePreferences preferences = projectScope.getNode(IGoogleEclipsePluginConstants.GDT_PLUGIN_ID);
 
-		preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_KEY, 
-				webContentPath.makeRelativeTo(javaProject.getPath()).toString());
-		preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_ISOUTPUT_KEY,
-				IGoogleEclipsePluginConstants.WAR_SRCDIR_ISOUTPUT_DEFAULTVALUE);
-		preferences.flush();
+			preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_KEY, webContentPath.makeRelativeTo(project.getFullPath()).toString());
+			preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_ISOUTPUT_KEY,
+					IGoogleEclipsePluginConstants.WAR_SRCDIR_ISOUTPUT_DEFAULTVALUE);
+			preferences.flush();
+		} catch (BackingStoreException e) {
+			throw new CoreException(StatusUtils.getErrorStatus(GWTCoreActivator.PLUGIN_ID,
+					"Could not save project preferences", e));
+		}
 	}
 
-	private void configureOutputFolder(IPath webContentProjectPath, IJavaProject javaProject, IProgressMonitor monitor)
+	private void configureOutputFolder(IPath webContentProjectPath, final IJavaProject javaProject, IProgressMonitor monitor)
 			throws CoreException, JavaModelException {
-		monitor.subTask("configuring output folder");
-		IPath outputFolderProjectPath = webContentProjectPath.append(new Path(
-				IGoogleEclipsePluginConstants.OUTPUT_FOLDER_DEFAULTVALUE));
-		IFolder outputWorkspaceFolder = javaProject.getProject().getWorkspace().getRoot().getFolder(
-				outputFolderProjectPath);
-		if (!outputWorkspaceFolder.exists()) {
-			outputWorkspaceFolder.create(true, true, monitor);
-		}
-		javaProject.setOutputLocation(outputWorkspaceFolder.getFullPath(), new NullProgressMonitor());
+		IProject project = javaProject.getProject();
+		monitor.subTask("Configuring output folder");
+		IPath outputFolderProjectPath = webContentProjectPath.append(new Path(IGoogleEclipsePluginConstants.OUTPUT_FOLDER_DEFAULTVALUE));
+		final IFolder outputWorkspaceFolder = project.getWorkspace().getRoot().getFolder(outputFolderProjectPath);
+		project.getWorkspace().run(
+				new IWorkspaceRunnable() {
+					public void run(IProgressMonitor monitor) throws CoreException {
+						if (!outputWorkspaceFolder.exists()) {
+							ProjectUtils.create(outputWorkspaceFolder, monitor);
+						}
+						javaProject.setOutputLocation(outputWorkspaceFolder.getFullPath(), monitor);
+					}
+				}, monitor);
 	}
 
 	private void createSample(final List<IPath> srcPaths, final IPath webContentPath,
 			GWTInstallDataModelProvider dataModel, final IJavaProject javaProject, IProgressMonitor monitor)
-			throws IOException, CoreException {
+			throws CoreException {
 
 		if (srcPaths.size() <= 0) {
-			LogHelper.logWarning(GWTCoreActivator.PLUGIN_ID, MessageFormat.format("no source folders were found in project {0}", javaProject.getElementName()));
+			LogHelper.logWarning(GWTCoreActivator.PLUGIN_ID,
+					MessageFormat.format("No source folders were found in project {0}", javaProject.getElementName()));
 			return;
 		}
 
 		if (dataModel.isGenerateSampleCode()) {
-			monitor.subTask("creating sample code");
+			monitor.subTask("Creating sample code");
 
 			javaProject.getProject().getWorkspace().run(new IWorkspaceRunnable() {
 				public void run(IProgressMonitor monitor) throws CoreException {
@@ -149,7 +167,8 @@ public class GWTInstallFacetDelegate implements IDelegate {
 						unzipWebContent(webContentPath, javaProject);
 
 					} catch (IOException e) {
-						LogHelper.logError(GWTCoreActivator.PLUGIN_ID, "Could not create gwt facet", e);
+						throw new CoreException(StatusUtils.getErrorStatus(GWTCoreActivator.PLUGIN_ID,
+								"Could not unzip samples", e));
 					}
 				}
 

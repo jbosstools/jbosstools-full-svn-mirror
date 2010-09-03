@@ -24,8 +24,10 @@ import java.util.zip.ZipInputStream;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.AssertionFailedException;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -81,27 +83,6 @@ public class ProjectUtils {
 		javaProject.setRawClasspath(newClasspath, monitor);
 	}
 
-	/**
-	 * Returns the path of the web content folder in the given project. The path
-	 * returned is relative to the workspace.
-	 * 
-	 * @param project
-	 *            the project to return the web content folder for
-	 * @return the path of the web content folder (relative to the workspace)
-	 */
-	public static IPath getWebContentRootPath(IProject project) {
-		if (!ModuleCoreNature.isFlexibleProject(project)) {
-			return project.getFullPath();
-		}
-		IPath path = null;
-		IVirtualComponent component = ComponentCore.createComponent(project);
-		if (component != null && component.exists()) {
-			path = component.getRootFolder().getWorkspaceRelativePath();
-		} else {
-			path = project.getFullPath();
-		}
-		return path;
-	}
 
 	/**
 	 * Unzips the given ZipInputStream to the given folder.
@@ -203,5 +184,27 @@ public class ProjectUtils {
 		return inputStream;
 	}
 
+	/**
+	 * Creates the given resource and all its parents (recursively)
+	 * 
+	 * @param resource
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	public static void create(IResource resource, IProgressMonitor monitor) throws CoreException {
+		if (resource.exists())
+			return;
+		create(resource.getParent(), monitor);
+
+		switch (resource.getType()) {
+		case IResource.FOLDER:
+			((IFolder) resource).create(IResource.NONE, true, null);
+			break;
+		case IResource.PROJECT:
+			((IProject) resource).create(monitor);
+			((IProject) resource).open(monitor);
+			break;
+		}
+	}
 
 }
