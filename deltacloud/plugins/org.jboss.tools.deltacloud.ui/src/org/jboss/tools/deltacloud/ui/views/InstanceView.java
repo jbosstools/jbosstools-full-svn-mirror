@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -37,6 +38,7 @@ import org.eclipse.rse.core.RSECorePlugin;
 import org.eclipse.rse.core.model.IHost;
 import org.eclipse.rse.core.model.ISystemRegistry;
 import org.eclipse.rse.core.model.SystemStartHere;
+import org.eclipse.rse.core.subsystems.IConnectorService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -59,13 +61,15 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
+import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
+import org.osgi.service.prefs.Preferences;
 
 public class InstanceView extends ViewPart implements ICloudManagerListener, IInstanceListListener {
 
@@ -83,6 +87,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private final static String REBOOTING_INSTANCE_MSG = "RebootingInstance.msg"; //$NON-NLS-1$
 	private final static String DESTROYING_INSTANCE_TITLE = "DestroyingInstance.title"; //$NON-NLS-1$
 	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
+	private final static String RSE_CONNECTING_MSG = "ConnectingRSE.msg"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	
 	
@@ -120,6 +125,12 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			if (currCloud != null)
 				currCloud.removeInstanceListListener(parentView);
 			currCloud = clouds[index];
+			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+			try {
+				prefs.put(IDeltaCloudPreferenceConstants.LAST_CLOUD_INSTANCE_VIEW, currCloud.getName());
+			} catch(Exception exc) {
+				// do nothing
+			}
 			viewer.setInput(new DeltaCloudInstance[0]);
 			viewer.refresh();
 			Display.getCurrent().asyncExec(new Runnable() {
@@ -219,10 +230,9 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		}
 		table.setSortDirection(SWT.NONE);
 		
-		if (clouds.length > 0) {
-			currCloud = clouds[0];
+		if (currCloud != null) {
 			currCloud.removeInstanceListListener(parentView);
-			viewer.setInput(clouds[0]);
+			viewer.setInput(currCloud);
 			currCloud.addInstanceListListener(parentView);
 		}
 
@@ -500,8 +510,26 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				String connectionName = instance.getName() + " [" + instance.getId() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 				try {
 					IHost host = registry.createHost(sshType, connectionName, hostname, null);
-					if (host != null)
+					if (host != null) {
 						host.setDefaultUserId("root"); //$NON-NLS-1$
+						IConnectorService[] services = host.getConnectorServices();
+						if (services.length > 0) {
+							final IConnectorService service = services[0];
+							Job connect = new Job(CVMessages.getFormattedString(RSE_CONNECTING_MSG, connectionName)) {
+								@Override
+								protected IStatus run(IProgressMonitor monitor) {
+									try {
+										service.connect(monitor);
+										return Status.OK_STATUS;
+									} catch(Exception e) {
+										return Status.CANCEL_STATUS;
+									}
+								}
+							};
+							connect.setUser(true);
+							connect.schedule();
+						}
+					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					Activator.log(e);
@@ -536,15 +564,22 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	}
 	
 	private void initializeCloudSelector() {
+		int defaultIndex = 0;
 		clouds = DeltaCloudManager.getDefault().getClouds();
 		String[] cloudNames = new String[clouds.length];
+		// If we have saved the last cloud used from a previous session,
+		// default to using that cloud to start unless it no longer exists
+		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+		String lastCloudUsed = prefs.get(IDeltaCloudPreferenceConstants.LAST_CLOUD_INSTANCE_VIEW, "");
 		for (int i = 0; i < clouds.length; ++i) {
 			cloudNames[i] = clouds[i].getName();
+			if (cloudNames[i].equals(lastCloudUsed))
+				defaultIndex = i;
 		}
 		cloudSelector.setItems(cloudNames);
 		if (clouds.length > 0) {
-			cloudSelector.setText(cloudNames[0]);
-			currCloud = clouds[0];
+			cloudSelector.setText(cloudNames[defaultIndex]);
+			currCloud = clouds[defaultIndex];
 		}
 	}
 	
@@ -571,7 +606,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			currCloud = null;
 			cloudSelector.setText("");
 			viewer.setInput(new DeltaCloudInstance[0]);
-		}
+		}				
 		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 

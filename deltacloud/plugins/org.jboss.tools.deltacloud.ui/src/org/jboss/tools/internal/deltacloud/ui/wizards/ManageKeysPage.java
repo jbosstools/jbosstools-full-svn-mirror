@@ -2,6 +2,8 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -153,6 +155,12 @@ public class ManageKeysPage extends WizardPage {
 				hasError = true;
 				setErrorMessage(WizardMessages.getString(INVALID_DIRECTORY));
 			} else {
+				Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+				try {
+					prefs.put(IDeltaCloudPreferenceConstants.DEFAULT_KEY_DIR, directory.getText());
+				} catch(Exception e) {
+					// do nothing
+				}
 				loadFileList();
 			}
 		}
@@ -165,6 +173,14 @@ public class ManageKeysPage extends WizardPage {
 		File dir = new File(directory.getText());
 		if (dir.exists() && dir.isDirectory()) {
 			File[] files = dir.listFiles(extensionFilter);
+			Arrays.sort(files, new Comparator<File>() {
+				@Override
+				public int compare(File arg0, File arg1) {
+					String name0 = arg0.getName();
+					String name1 = arg1.getName();
+					return name0.compareTo(name1);
+				}
+			});
 			fileList.removeAll();
 			for (File f : files) {
 				fileList.add(f.getName());
@@ -270,6 +286,7 @@ public class ManageKeysPage extends WizardPage {
         fileList.setLayoutData(f);
 	
         setControl(container);
+		loadFileList();
 	}
 
 }

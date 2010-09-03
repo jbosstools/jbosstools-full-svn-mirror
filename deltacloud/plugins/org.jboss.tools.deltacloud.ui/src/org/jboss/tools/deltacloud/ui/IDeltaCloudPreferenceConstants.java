@@ -15,5 +15,7 @@ public interface IDeltaCloudPreferenceConstants {
 	public final static String DONT_CONFIRM_CREATE_INSTANCE = "dont_confirm_create_instance"; //$NON-NLS-1$
 	public final static String LAST_EC2_KEYNAME = "last_ec2_keyname"; //$NON-NLS-1$
 	public final static String DEFAULT_KEY_DIR = "default_key_directory"; //$NON-NLS-1$
+	public final static String LAST_CLOUD_INSTANCE_VIEW = "last_cloud_instance_view"; //$NON-NLS-1$
+	public final static String LAST_CLOUD_IMAGE_VIEW = "last_cloud_image_view"; //$NON-NLS-1$
 
 }

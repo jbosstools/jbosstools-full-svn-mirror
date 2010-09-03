@@ -1,5 +1,28 @@
 2010-09-03  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Add constants
+	for saving last cloud looked at in Instances and Images view. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new messages. 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (.modifyText): Set the
+	last cloud preference when the cloud changes.
+	(createPartControl): Set the initial values from the current cloud set by
+	initializeCloudSelector.
+	(initializeCloudSelector): Use last cloud preference if the cloud is in the list.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (changeEvent):
+	White-space changes.
+	(.modifyText): Save the last cloud preference when the cloud changes.
+	(createPartControl): Set the initial values from the current cloud set by
+	initializeCloudSelector.
+	(initializeCloudSelector): Use last cloud preference if the cloud is in the list.
+	(.run): For RSE connection, try and make the connection within a Job.
+	(..run): New Job action for connecting to hostname via RSE. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java (.compare): 
+	(loadFileList): Add alphabetical sort.
+	(createControl): Use default directory preference to set initial directory.
+	(validate): Save directory as default if it is valid.
+	
+2010-09-03  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (WatchCreateJob.run): Add
 	instance logic fixed.
 

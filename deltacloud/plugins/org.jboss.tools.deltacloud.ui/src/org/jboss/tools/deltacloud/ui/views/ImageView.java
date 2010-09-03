@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -53,7 +54,10 @@ import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.core.IImageListListener;
+import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
+import org.osgi.service.prefs.Preferences;
 
 public class ImageView extends ViewPart implements ICloudManagerListener, IImageListListener {
 
@@ -89,6 +93,13 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			if (currCloud != null)
 				currCloud.removeImageListListener(parentView);
 			currCloud = clouds[index];
+			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+			try {
+				prefs.put(IDeltaCloudPreferenceConstants.LAST_CLOUD_IMAGE_VIEW, currCloud.getName());
+			} catch(Exception exc) {
+				// do nothing
+			}
+
 			viewer.setInput(new DeltaCloudImage[0]);
 			viewer.refresh();
 			Display.getCurrent().asyncExec(new Runnable() {
@@ -189,10 +200,9 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		}
 		table.setSortDirection(SWT.NONE);
 		
-		if (clouds.length > 0) {
-			currCloud = clouds[0];
+		if (currCloud != null) {
 			currCloud.removeImageListListener(parentView);
-			viewer.setInput(clouds[0]);
+			viewer.setInput(currCloud);
 			currCloud.addImageListListener(parentView);
 		}
 
@@ -322,15 +332,22 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	}
 	
 	private void initializeCloudSelector() {
+		int defaultIndex = 0;
 		clouds = DeltaCloudManager.getDefault().getClouds();
 		String[] cloudNames = new String[clouds.length];
+		// If we have saved the last cloud used from a previous session,
+		// default to using that cloud to start unless it no longer exists
+		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+		String lastCloudUsed = prefs.get(IDeltaCloudPreferenceConstants.LAST_CLOUD_IMAGE_VIEW, "");
 		for (int i = 0; i < clouds.length; ++i) {
 			cloudNames[i] = clouds[i].getName();
+			if (cloudNames[i].equals(lastCloudUsed))
+				defaultIndex = i;
 		}
 		cloudSelector.setItems(cloudNames);
 		if (clouds.length > 0) {
-			cloudSelector.setText(cloudNames[0]);
-			currCloud = clouds[0];
+			cloudSelector.setText(cloudNames[defaultIndex]);
+			currCloud = clouds[defaultIndex];
 		}
 	}
 	
