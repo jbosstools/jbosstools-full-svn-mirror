@@ -12,14 +12,17 @@ package org.jboss.ide.eclipse.as.core.server.internal.launch;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.ServerUtil;
+import org.jboss.ide.eclipse.as.core.JBossServerCorePlugin;
 import org.jboss.ide.eclipse.as.core.publishers.LocalPublishMethod;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerPublishMethodType;
 import org.jboss.ide.eclipse.as.core.server.internal.DeployableServerBehavior;
-import org.jboss.ide.eclipse.as.core.util.DeploymentPreferenceLoader;
+import org.jboss.ide.eclipse.as.core.server.internal.JBossServerBehavior;
 import org.jboss.ide.eclipse.as.core.util.ServerConverter;
 
 public class JBossServerStartupLaunchConfiguration extends AbstractJBossLaunchConfigType {
@@ -45,9 +48,39 @@ public class JBossServerStartupLaunchConfiguration extends AbstractJBossLaunchCo
 		IJBossServerPublishMethodType type = beh.createPublishMethod().getPublishMethodType();
 		if( type.getId().equals(LocalPublishMethod.LOCAL_PUBLISH_METHOD)) {
 			del = new LocalJBossServerStartupLaunchUtil();
+		} else {
+			del = new NullLaunchDelegate();
 		}
 		return del;
 	}
+	
+	protected static class NullLaunchDelegate implements StartLaunchDelegate {
+
+		public void actualLaunch(
+				JBossServerStartupLaunchConfiguration launchConfig,
+				ILaunchConfiguration configuration, String mode,
+				ILaunch launch, IProgressMonitor monitor) throws CoreException {
+			JBossServerBehavior beh = LocalJBossServerStartupLaunchUtil.getServerBehavior(configuration);
+			beh.setServerStarted();
+			IStatus warn = new Status(IStatus.WARNING, JBossServerCorePlugin.PLUGIN_ID, "Starting and stopping of remote servers is not yet supported"); //$NON-NLS-1$
+			JBossServerCorePlugin.getDefault().getLog().log(warn);
+		}
+
+		public boolean preLaunchCheck(ILaunchConfiguration configuration,
+				String mode, IProgressMonitor monitor) throws CoreException {
+			return true;
+		}
+
+		public void preLaunch(ILaunchConfiguration configuration, String mode,
+				ILaunch launch, IProgressMonitor monitor) throws CoreException {
+		}
+
+		public void postLaunch(ILaunchConfiguration configuration, String mode,
+				ILaunch launch, IProgressMonitor monitor) throws CoreException {
+		}
+		
+	}
+	
 	public void actualLaunch(ILaunchConfiguration configuration, 
 			String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
 		getDelegate(configuration).actualLaunch(this, configuration, mode, launch, monitor);

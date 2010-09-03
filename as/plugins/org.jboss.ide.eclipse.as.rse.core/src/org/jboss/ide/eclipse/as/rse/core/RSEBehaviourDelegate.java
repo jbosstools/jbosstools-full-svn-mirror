@@ -9,8 +9,7 @@ public class RSEBehaviourDelegate extends AbstractJBossBehaviourDelegate {
 
 	@Override
 	public void stop(boolean force) {
-		// TODO Auto-generated method stub
-		
+		getActualBehavior().setServerStopped();
 	}
 
 	@Override
