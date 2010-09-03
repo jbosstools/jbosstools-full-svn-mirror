@@ -81,12 +81,13 @@ public class NewInstance extends Wizard {
 		
 		public IStatus run(IProgressMonitor pm) {
 			if (!pm.isCanceled()){
+				DeltaCloudInstance instance = null;
 				try {
 					pm.beginTask(WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] {instanceName}), IProgressMonitor.UNKNOWN);
 					pm.worked(1);
 					boolean finished = false;
 					while (!finished && !pm.isCanceled()) {
-						DeltaCloudInstance instance = cloud.refreshInstance(instanceId);
+						instance = cloud.refreshInstance(instanceId);
 						if (instance != null && !instance.getState().equals(DeltaCloudInstance.PENDING))
 							break;
 						Thread.sleep(400);
@@ -96,12 +97,7 @@ public class NewInstance extends Wizard {
 					// do nothing
 				} finally {
 					if (!pm.isCanceled()) {
-						// cause a refresh to occur to all instance watchers
-						// NOTE: this could be done also by getting current
-						// instances and refreshing the one instance, but this
-						// method is already being run in a job and we might
-						// as well get updates for all instances
-						cloud.getInstances();
+						cloud.addReplaceInstance(instance);
 					}
 					pm.done();
 				}

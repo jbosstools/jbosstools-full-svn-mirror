@@ -1,3 +1,8 @@
+2010-09-03  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (WatchCreateJob.run): Add
+	instance logic fixed.
+
 2010-09-01  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CustomWizardDialog.java: New file.
