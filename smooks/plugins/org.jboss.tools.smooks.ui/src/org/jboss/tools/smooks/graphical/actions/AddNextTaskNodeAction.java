@@ -11,6 +11,7 @@
 package org.jboss.tools.smooks.graphical.actions;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
@@ -53,7 +54,14 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 
 	protected void addFreemarkerTemplateTask(IWizard currentWizard, SmooksResourceListType resourceList) {
 		if (currentWizard instanceof FreemarkerTemplateParametersProvider) {
+			List<TaskType> selectedTask = getCurrentSelectedTask();
+			
+			if(selectedTask == null || selectedTask.isEmpty()) {
+				// No node properly selected in the Task Detail panel...
+				return;
+			}
 
+			TaskType parentTask = selectedTask.get(0);
 			Freemarker freemarker = FreemarkerFactory.eINSTANCE.createFreemarker();
 
 			Map<String, String> parameters = ((FreemarkerTemplateParametersProvider) currentWizard).getParameters();
@@ -77,15 +85,22 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 				freemarker.getParam().add(param);
 			}
 
+			// Add the templateDataProvider param...
+			ParamType param = SmooksFactory.eINSTANCE.createParamType();
+			param.setName(SmooksModelUtils.TEMPLATE_DATA_PROVIDER_PARAM_NAME);
+			param.setStringValue(parentTask.getId());
+			freemarker.getParam().add(param);
+
 			Command addFreemarkerCommand = AddCommand.create(this.provider.getEditingDomain(), resourceList,
 					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
 							.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER, freemarker));
 
 			if (addFreemarkerCommand.canExecute()) {
 				provider.getEditingDomain().getCommandStack().execute(addFreemarkerCommand);
-				TaskType parentTask = this.getCurrentSelectedTask().get(0);
-				TaskType childTask = ProcessFactory.eINSTANCE.createTemplateTask();
-				childTask.addSmooksModel(freemarker);
+				TaskType childTask = ProcessFactory.eINSTANCE.createTaskType();
+				
+				childTask.setId(getTaskID());
+				childTask.addTaskResource(freemarker);
 				childTask.setType(type);
 				parentTask.addTask(childTask);
 			}
@@ -97,7 +112,7 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 		super.run();
 		if (this.provider != null) {
 			SmooksResourceListType resourceList = SmooksUIUtils.getSmooks11ResourceListType(provider.getSmooksModel());
-			if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
+			if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE) || taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
 				// open wizard
 				TemplateMessageTypeWizard wizard = new TemplateMessageTypeWizard();
 				WizardDialog dialog = new WizardDialog(editorPart.getSite().getShell(), wizard);

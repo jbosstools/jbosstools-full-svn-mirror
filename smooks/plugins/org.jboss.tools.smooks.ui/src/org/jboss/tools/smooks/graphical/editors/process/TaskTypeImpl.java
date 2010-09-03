@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '
@@ -40,7 +41,7 @@ public class TaskTypeImpl implements TaskType {
 
 	private Object parent;
 
-	private List<Object> smooksModel = null;
+	private List<AbstractResourceConfig> taskResources = null;
 
 	private int problemType = IFieldMarker.TYPE_NONE;
 
@@ -106,14 +107,11 @@ public class TaskTypeImpl implements TaskType {
 		this.parent = parent;
 	}
 
-	/**
-	 * @return the smooksModel
-	 */
-	public List<Object> getSmooksModel() {
-		if (smooksModel == null) {
-			smooksModel = new ArrayList<Object>();
+	public List<AbstractResourceConfig> getTaskResources() {
+		if (taskResources == null) {
+			taskResources = new ArrayList<AbstractResourceConfig>();
 		}
-		return smooksModel;
+		return taskResources;
 	}
 
 	/**
@@ -305,16 +303,19 @@ public class TaskTypeImpl implements TaskType {
 		return result.toString();
 	}
 
-	public void addSmooksModel(Object smooksModel) {
-		getSmooksModel().add(smooksModel);
+	public void addTaskResource(AbstractResourceConfig smooksResource) {
+		getTaskResources().add(smooksResource);
 	}
 
-	public boolean inTheTask(Object smooksModel) {
-		return true;
+	public boolean inTheTask(AbstractResourceConfig smooksResource) {
+		if(taskResources == null) {
+			return false;
+		}
+		return taskResources.contains(smooksResource);
 	}
 
-	public void removeSmooksModel(Object smooksModel) {
-		getSmooksModel().remove(smooksModel);
+	public void removeTaskResource(AbstractResourceConfig smooksResource) {
+		getTaskResources().remove(smooksResource);
 	}
 
 } // TaskTypeImpl

@@ -69,7 +69,7 @@ public class FreemarkerTemplateGraphicalModelFactory extends GraphicalModelFacto
 					if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_XML.equals(messageType)) {
 						templateLP = new FreemarkerTemplateModelLabelProvider();
 					}
-					if (taskType.inTheTask(model)) {
+					if (taskType.inTheTask((Freemarker)model)) {
 						graphModel = new FreemarkerTemplateGraphicalModel(model, new FreemarkerContentProvider(
 								contentProvider), templateLP, provider);
 						((TreeContainerModel) graphModel).setHeaderVisable(true);

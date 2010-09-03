@@ -888,20 +888,6 @@ public class SmooksReaderFormPage extends FormPage implements ISmooksModelValida
 				getEditingDomain().getCommandStack().execute(c);
 			}
 		}
-		// if (command == null)
-		// this.inputTypeChanged();
-		// SmooksGraphicsExtType ext = getSmooksGraphicsExtType();
-		// if (ext != null) {
-		// List<ISmooksGraphChangeListener> listeners = ((SmooksGraphicsExtType)
-		// ext).getChangeListeners();
-		// for (Iterator<?> iterator = listeners.iterator();
-		// iterator.hasNext();) {
-		// ISmooksGraphChangeListener smooksGraphChangeListener =
-		// (ISmooksGraphChangeListener) iterator.next();
-		// smooksGraphChangeListener.inputTypeChanged((SmooksGraphicsExtType)
-		// ext);
-		// }
-		// }
 	}
 
 	protected void createInputDataSection(FormToolkit toolkit, Composite parent) {

@@ -17,6 +17,7 @@ import java.util.Map;
  *
  */
 public interface FreemarkerTemplateParametersProvider {
+	
 	Map<String,String> getParameters();
 	
 	String getTemplateType();

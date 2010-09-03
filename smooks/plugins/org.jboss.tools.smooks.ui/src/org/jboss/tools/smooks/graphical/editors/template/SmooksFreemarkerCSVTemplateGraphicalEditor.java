@@ -53,7 +53,7 @@ public class SmooksFreemarkerCSVTemplateGraphicalEditor extends SmooksFreemarker
 				if (SmooksModelUtils.KEY_CSV_FIELDS.equals(((ParamType) object).getName())) {
 					if (parent instanceof Freemarker) {
 						TaskType task = this.getTaskType();
-						if (task != null && task.inTheTask(parent)) {
+						if (task != null && task.inTheTask((Freemarker)parent)) {
 							autoLayout(true);
 							break;
 						}

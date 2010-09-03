@@ -64,9 +64,7 @@ public class ProcessAnalyzer {
 			// for freemarker template
 			if (abstractResourceConfig instanceof Freemarker) {
 
-				TaskType task = ProcessFactory.eINSTANCE.createTaskType();
-				task.setId(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE);
-				task.setName(TaskTypeManager.getTaskLabel(task));
+				TaskType task = toTaskType((Freemarker) abstractResourceConfig);
 				tasks.add(task);
 
 				String refid = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig).getParam(),
@@ -85,10 +83,26 @@ public class ProcessAnalyzer {
 //					SmooksModelUtils.addParam(task, idParam);
 				}
 
-				taskIDs.add(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE);
+				taskIDs.add(task.getId());
 			}
 		}
 		return tasks;
+	}
+	
+	public static TaskType toTaskType(Freemarker freeMarker) {
+		String messageType = SmooksModelUtils.getParamValue(freeMarker.getParam(), SmooksModelUtils.KEY_TEMPLATE_TYPE);
+		TaskType task = ProcessFactory.eINSTANCE.createTaskType();
+			
+		task.setType(messageType);
+		if(SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_XML.equals(messageType)) {
+			task.setId(TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE);
+		} else if(SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(messageType)) {
+			task.setId(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE);
+		}
+		task.setName(TaskTypeManager.getTaskLabel(task));
+		task.addTaskResource(freeMarker);
+		
+		return task; 
 	}
 
 //	private SmooksGraphicsExtType getSmooksGraphicsType(SmooksResourceListType resouceList) {

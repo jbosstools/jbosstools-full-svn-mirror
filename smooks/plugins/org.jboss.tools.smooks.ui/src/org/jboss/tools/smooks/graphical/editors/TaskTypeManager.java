@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
-import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
@@ -44,10 +43,10 @@ public class TaskTypeManager {
 		if (parentId == null)
 			return null;
 		if (parentId.equals(TaskTypeManager.TASK_ID_INPUT)) {
-			return new String[] { TaskTypeManager.TASK_ID_JAVA_MAPPING };
+			return new String[] { TaskTypeManager.TASK_ID_JAVA_MAPPING, TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE, TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE};
 		}
 		if (parentId.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
-			return new String[] { TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE };
+			return new String[] { TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE, TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE };
 		}
 		return null;
 	}
@@ -64,6 +63,8 @@ public class TaskTypeManager {
 					GraphicsConstants.IMAGE_INPUT_TASK));
 			allTaskList.add(new TaskTypeDescriptor(TASK_ID_JAVA_MAPPING, Messages.TaskTypeManager_JavaMappingTaskLabel,
 					GraphicsConstants.IMAGE_JAVA_AMPPING_TASK));
+			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_XML_TEMPLATE,
+					Messages.TaskTypeManager_ApplyTemplateTaskLabel, GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
 			allTaskList.add(new TaskTypeDescriptor(TASK_ID_FREEMARKER_CSV_TEMPLATE,
 					Messages.TaskTypeManager_ApplyTemplateTaskLabel, GraphicsConstants.IMAGE_APPLY_FREEMARKER_TASK));
 		}
@@ -81,7 +82,7 @@ public class TaskTypeManager {
 		if (TASK_ID_JAVA_MAPPING.equals(taskID)) {
 			elementsType.add(BeanType.class);
 		}
-		if (TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskID)) {
+		if (TASK_ID_FREEMARKER_XML_TEMPLATE.equals(taskID) || TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskID)) {
 			elementsType.add(Freemarker.class);
 		}
 		return elementsType;
@@ -91,11 +92,8 @@ public class TaskTypeManager {
 		if (task != null) {
 			String taskId = task.getId();
 			if (taskId != null) {
-				if (taskId.equals(TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
-					String messageType = ""; //$NON-NLS-1$
-					if (task instanceof TemplateAppyTaskNode) {
-						messageType = ((TemplateAppyTaskNode) task).getType();
-					}
+				if (taskId.equals(TASK_ID_FREEMARKER_XML_TEMPLATE) || taskId.equals(TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
+					String messageType = task.getType();
 					if (messageType == null)
 						messageType = ""; //$NON-NLS-1$
 					if (messageType.length() > 0){

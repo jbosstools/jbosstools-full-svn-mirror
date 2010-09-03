@@ -24,8 +24,4 @@ public class ProcessFactory {
 	public ProcessType createProcessType(){
 		return new ProcessTypeImpl();
 	}
-	
-	public TemplateAppyTaskNode createTemplateTask(){
-		return new TemplateAppyTaskNode();
-	}
 }

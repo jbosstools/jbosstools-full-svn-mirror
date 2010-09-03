@@ -10,6 +10,8 @@ package org.jboss.tools.smooks.graphical.editors.process;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 
+import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Task Type</b></em>'.
@@ -154,10 +156,12 @@ public interface TaskType {
 	 */
 	void setType(String value);
 	
-	boolean inTheTask(Object smooksModel);
+	boolean inTheTask(AbstractResourceConfig smooksResource);
 	
-	void addSmooksModel(Object smooksModel);
+	List<AbstractResourceConfig> getTaskResources();
 	
-	void removeSmooksModel(Object smooksModel);
+	void addTaskResource(AbstractResourceConfig smooksResource);
+	
+	void removeTaskResource(AbstractResourceConfig smooksResource);
 
 } // TaskType

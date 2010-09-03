@@ -44,6 +44,8 @@ public class SmooksModelUtils {
 
 	public static final String KEY_TEMPLATE_TYPE = "messageType"; //$NON-NLS-1$
 
+	public static final String TEMPLATE_DATA_PROVIDER_PARAM_NAME = "templateDataProvider"; //$NON-NLS-1$
+	
 	public static final String FREEMARKER_TEMPLATE_TYPE_CSV = "CSV"; //$NON-NLS-1$
 
 	public static final String FREEMARKER_TEMPLATE_TYPE_XML = "XML"; //$NON-NLS-1$

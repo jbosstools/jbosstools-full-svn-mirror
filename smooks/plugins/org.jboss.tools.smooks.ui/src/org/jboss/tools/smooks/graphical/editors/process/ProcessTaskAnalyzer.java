@@ -10,13 +10,17 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.process;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
+import org.jboss.tools.smooks.graphical.editors.ProcessAnalyzer;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
+import org.jboss.tools.smooks.model.smooks.ElementVisitor;
+import org.jboss.tools.smooks.model.smooks.ParamType;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
 import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
@@ -28,8 +32,11 @@ public class ProcessTaskAnalyzer {
 
 	public void analyzeTaskNode(ProcessType process, SmooksResourceListType resourceList) {
 		process.getTask().clear();
-		if (resourceList == null)
+		
+		if (resourceList == null) {
 			return;
+		}
+		
 		// Input task node must be in process:
 		TaskType inputTask = ProcessFactory.eINSTANCE.createTaskType();
 		inputTask.setId(TaskTypeManager.TASK_ID_INPUT);
@@ -38,37 +45,70 @@ public class ProcessTaskAnalyzer {
 		process.addTask(inputTask);
 
 		List<AbstractResourceConfig> resourceConfigList = resourceList.getAbstractResourceConfig();
+		TaskType javaMappingTask = getJavaMappingTask(resourceConfigList);
+		List<TaskType> templatingTasks = getTemplatingTasks(resourceConfigList);
 
-		// the java mapping is the next task node of input task:
-		TaskType javaMappingTask = null;
-		for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-			if (abstractResourceConfig instanceof BeanType) {
-				javaMappingTask = ProcessFactory.eINSTANCE.createTaskType();
-				javaMappingTask.setId(TaskTypeManager.TASK_ID_JAVA_MAPPING);
-				javaMappingTask.setName(TaskTypeManager.getTaskLabel(javaMappingTask));
-				inputTask.addTask(javaMappingTask);
-				break;
-			}
+		// Connect the Java Mappings task to the input task...
+		if (javaMappingTask != null) {
+			inputTask.addTask(javaMappingTask);
 		}
 
-		// the apply template is the next task node of java mapping task:
-		if (javaMappingTask != null) {
-			for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
-				AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-				if (abstractResourceConfig instanceof Freemarker) {
-					String messageType = SmooksModelUtils.getParamValue(((Freemarker) abstractResourceConfig)
-							.getParam(), SmooksModelUtils.KEY_TEMPLATE_TYPE);
-					if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(messageType)
-							|| SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_XML.equals(messageType)) {
-						TemplateAppyTaskNode templateTask = (TemplateAppyTaskNode) ProcessFactory.eINSTANCE
-								.createTemplateTask();
-						templateTask.setType(messageType);
-						templateTask.addSmooksModel(abstractResourceConfig);
-						templateTask.setName(TaskTypeManager.getTaskLabel(templateTask));
-						javaMappingTask.addTask(templateTask);
+		// Connect the Templating tasks to the Input and Java Mappings task as appropriate...
+		for(TaskType templatingTask : templatingTasks) {
+			AbstractResourceConfig templatingResource = templatingTask.getTaskResources().get(0);
+			
+			if(templatingResource instanceof Freemarker) {
+				Freemarker freemarkerResource = (Freemarker) templatingResource;
+				EList<ParamType> params = freemarkerResource.getParam();
+				
+				if(SmooksModelUtils.getParam(params, SmooksModelUtils.KEY_TEMPLATE_TYPE) != null) {
+					ParamType templateDataProvider = SmooksModelUtils.getParam(params, SmooksModelUtils.TEMPLATE_DATA_PROVIDER_PARAM_NAME);
+					
+					if(templateDataProvider == null || TaskTypeManager.TASK_ID_JAVA_MAPPING.equals(templateDataProvider.getStringValue())) {
+						if(javaMappingTask != null) {
+							javaMappingTask.addTask(templatingTask);
+						}
+					} else if(templateDataProvider != null && TaskTypeManager.TASK_ID_INPUT.equals(templateDataProvider.getStringValue())) {
+						inputTask.addTask(templatingTask);
 					}
 				}
+			}
+		}		
+	}
+
+	private TaskType getJavaMappingTask(List<AbstractResourceConfig> resourceConfigList) {
+		return getTask(BeanType.class, TaskTypeManager.TASK_ID_JAVA_MAPPING, resourceConfigList);
+	}
+
+	private List<TaskType> getTemplatingTasks(List<AbstractResourceConfig> resourceConfigList) {
+		List<TaskType> taskList = new ArrayList<TaskType>();
+		
+		addFreeMarkerTasks(resourceConfigList, taskList);
+		
+		return taskList;
+	}
+
+	private TaskType getTask(Class<? extends ElementVisitor> resourceType, String taskId, List<AbstractResourceConfig> resourceConfigList) {
+		TaskType task = null;
+
+		for (AbstractResourceConfig abstractResourceConfig : resourceConfigList) {
+			if (resourceType.isInstance(abstractResourceConfig)) {
+				if(task == null) {
+					task = ProcessFactory.eINSTANCE.createTaskType();
+					task.setId(taskId);
+					task.setName(TaskTypeManager.getTaskLabel(task));
+				}
+				task.addTaskResource(abstractResourceConfig);
+			}
+		}
+		
+		return task;
+	}
+
+	private void addFreeMarkerTasks(List<AbstractResourceConfig> resourceConfigList, List<TaskType> taskList) {
+		for (AbstractResourceConfig resourceConfig : resourceConfigList) {
+			if (resourceConfig instanceof Freemarker) {
+				taskList.add(ProcessAnalyzer.toTaskType((Freemarker) resourceConfig));
 			}
 		}
 	}

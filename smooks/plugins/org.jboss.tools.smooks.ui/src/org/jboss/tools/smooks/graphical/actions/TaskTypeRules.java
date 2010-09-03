@@ -49,13 +49,15 @@ public class TaskTypeRules {
 			// if (!SmooksConstants.TASK_ID_JAVA_MAPPING.equals(taskID))
 			return false;
 		}
-		if (parentID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
-			if (!TaskTypeManager.TASK_ID_JAVA_MAPPING.equals(currentTask.getId())) {
-				return false;
+		if (parentID.equals(TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE) || parentID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
+			if (TaskTypeManager.TASK_ID_INPUT.equals(currentTask.getId())) {
+				return true;
+			} else if (TaskTypeManager.TASK_ID_JAVA_MAPPING.equals(currentTask.getId())) {
+				return true;
 			}else{
 				for (Iterator<?> iterator = taskList.iterator(); iterator.hasNext();) {
 					TaskType taskType = (TaskType) iterator.next();
-					if (TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskType.getId())) {
+					if (parentID.equals(taskType.getId())) {
 						return false;
 					}
 				}

@@ -99,7 +99,6 @@ import org.jboss.tools.smooks.graphical.editors.process.ProcessTaskAnalyzer;
 import org.jboss.tools.smooks.graphical.editors.process.ProcessType;
 import org.jboss.tools.smooks.graphical.editors.process.TaskNodeFigure;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
-import org.jboss.tools.smooks.graphical.editors.process.TemplateAppyTaskNode;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerCSVTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
@@ -431,10 +430,18 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 	private void generateNextTaskActions(MenuManager addNextTaskMenuManager) {
 		List<TaskTypeDescriptor> list = TaskTypeManager.getAllTaskList();
+		
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			TaskTypeDescriptor taskTypeDescriptor = (TaskTypeDescriptor) iterator.next();
-			AddNextTaskNodeAction addNextInputAction = new AddNextTaskNodeAction(taskTypeDescriptor.getId(),
-					taskTypeDescriptor.getLabel(), smooksModelProvider, this);
+			
+			if(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskTypeDescriptor.getId())) {
+				// Bit of a hack to stop adding of the "Apply Template" action multiple times.
+				// Will have been added for XML, so ignore the CSV... Both actions will trigger 
+				// the same wizard anyway....
+				continue;
+			}
+			
+			AddNextTaskNodeAction addNextInputAction = new AddNextTaskNodeAction(taskTypeDescriptor.getId(), taskTypeDescriptor.getLabel(), smooksModelProvider, this);
 			this.processPanelActions.add(addNextInputAction);
 			addNextTaskMenuManager.add(addNextInputAction);
 		}
@@ -738,40 +745,29 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		return null;
 	}
 
-	protected IEditorPart createEditorPart(Object taskID) {
-		if (taskID instanceof TemplateAppyTaskNode) {
-			String type = ((TemplateAppyTaskNode) taskID).getType();
-			SmooksFreemarkerTemplateGraphicalEditor freemarkerPart = new SmooksFreemarkerCSVTemplateGraphicalEditor(
-					smooksModelProvider);
-			if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_CSV.equals(type)) {
-				freemarkerPart = new SmooksFreemarkerCSVTemplateGraphicalEditor(smooksModelProvider);
-
-			}
-			if (SmooksModelUtils.FREEMARKER_TEMPLATE_TYPE_XML.equals(type)) {
-				freemarkerPart = new SmooksFreemarkerTemplateGraphicalEditor(smooksModelProvider);
-
-			}
-			return freemarkerPart;
-		}
+	protected IEditorPart createEditorPart(String taskID) {
 		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
-			SmooksFreemarkerTemplateGraphicalEditor freemarkerPart = new SmooksFreemarkerCSVTemplateGraphicalEditor(
-					smooksModelProvider);
-			return freemarkerPart;
+			return new SmooksFreemarkerCSVTemplateGraphicalEditor(smooksModelProvider);
+		}
+		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE)) {
+			return new SmooksFreemarkerTemplateGraphicalEditor(smooksModelProvider);
 		}
 		if (taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
-			SmooksJavaMappingGraphicalEditor javaMappingPart = new SmooksJavaMappingGraphicalEditor(smooksModelProvider);
-			return javaMappingPart;
+			return new SmooksJavaMappingGraphicalEditor(smooksModelProvider);
+		}
+		if (taskID.equals(TaskTypeManager.TASK_ID_INPUT)) {
+			return new SmooksReaderFormPage(getEditor(), "input", "input"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		if (taskID.equals(TaskTypeManager.TASK_ID_INPUT)) {
-			SmooksReaderFormPage readerPage = new SmooksReaderFormPage(getEditor(), "input", "input"); //$NON-NLS-1$ //$NON-NLS-2$
-			return readerPage;
-		}
 		return null;
 	}
 
+	protected IEditorPart createEditorPart(TaskType taskType) {
+		return createEditorPart(taskType.getId());
+	}
+
 	protected boolean isSingltonEditor(Object taskID) {
-		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
+		if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE) || taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
 			return false;
 		}
 		return true;
@@ -874,10 +870,13 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected String generateTaskSpecailID(TaskType task) {
-		if (task instanceof TemplateAppyTaskNode) {
-			if (!((TemplateAppyTaskNode) task).getSmooksModel().isEmpty()
-					&& ((TemplateAppyTaskNode) task).getSmooksModel().size() == 1) {
-				Object freemarker = ((TemplateAppyTaskNode) task).getSmooksModel().get(0);
+		String taskId = task.getId();
+		
+		if (taskId.equals(TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE) || taskId.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
+			List<AbstractResourceConfig> taskResources = task.getTaskResources();
+			if (!taskResources.isEmpty() && taskResources.size() == 1) {
+				Object freemarker = taskResources.get(0);
+				
 				String taskID = smooksModelIdMap.get(freemarker);
 				if (taskID == null) {
 					String tempstamp = String.valueOf(System.currentTimeMillis());
@@ -920,7 +919,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 						if (idref != null) {
 							// idref = id + "_" + idref;
 							if (getRegisteTaskPage(idref) == null) {
-								IEditorPart editor = createEditorPart(finalModel);
+								IEditorPart editor = createEditorPart((TaskType)finalModel);
 								registeTaskDetailsPage(editor, idref);
 							}
 							id = idref;
@@ -1148,9 +1147,11 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	}
 
 	protected void validateTask(TaskType t) {
-		if (t == null)
+		if (t == null) {
 			return;
-		final TaskType task = t;
+		}
+		
+		final TaskType task = t;		
 
 		task.setProblemType(IFieldMarker.TYPE_NONE);
 		task.cleanProblemMessages();
@@ -1205,36 +1206,25 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			}
 		}
 
-		if (TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(id)) {
+		if (TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE.equals(id) || TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(id)) {
+			Freemarker freeMarker = (Freemarker) task.getTaskResources().get(0);
+			String templateDataProvider = SmooksModelUtils.getParamValue(freeMarker.getParam(), SmooksModelUtils.TEMPLATE_DATA_PROVIDER_PARAM_NAME);
 			SmooksResourceListType sr = getSmooksResourceListType();
 			List<AbstractResourceConfig> rcs = sr.getAbstractResourceConfig();
-			boolean correct = false;
-			boolean multipleTemplate = false;
-			int freemarkerCount = 0;
-			for (Iterator<?> iterator = rcs.iterator(); iterator.hasNext();) {
-				AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
-				if (abstractResourceConfig instanceof BeanType) {
-					correct = true;
-					// break;
+
+			if(templateDataProvider == null || templateDataProvider.trim().equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
+				for (AbstractResourceConfig abstractResourceConfig : rcs) {
+					if (abstractResourceConfig instanceof BeanType) {
+						// Found a Java Mapping... we're ok....
+						return;
+					}
 				}
-				if (abstractResourceConfig instanceof Freemarker) {
-					freemarkerCount++;
-				}
-				if (freemarkerCount > 1) {
-					multipleTemplate = true;
-					// break;
-				}
-				if (!correct && multipleTemplate) {
-					break;
-				}
-			}
-			if (!correct) {
+
+				// No Java Mappings in the config... warn...
 				task.setProblemType(IFieldMarker.TYPE_WARINING);
-				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_4);
-			}
-			if (multipleTemplate) {
-				task.setProblemType(IFieldMarker.TYPE_ERROR);
-				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_ValidationError_MultipleTemplate);
+				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_Validation_No_Java_Mapping);
+			} else if(templateDataProvider != null && templateDataProvider.trim().equals(TaskTypeManager.TASK_ID_INPUT)) {
+				// TODO: https://jira.jboss.org/browse/JBIDE-6991
 			}
 		}
 	}

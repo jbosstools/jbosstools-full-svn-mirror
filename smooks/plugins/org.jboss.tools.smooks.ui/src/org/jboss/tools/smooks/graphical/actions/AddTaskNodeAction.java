@@ -9,12 +9,15 @@ public class AddTaskNodeAction extends AbstractProcessGraphAction {
 	
 	protected String taskID = null;
 	
-	
 	protected TaskTypeRules rules = new TaskTypeRules();
 
 	public AddTaskNodeAction(String taskID, String text, ISmooksModelProvider provider, IEditorPart editorPart) {
 		super(text, provider,editorPart);
 		this.taskID = taskID;
+	}
+	
+	public String getTaskID() {
+		return taskID;
 	}
 
 	@Override
