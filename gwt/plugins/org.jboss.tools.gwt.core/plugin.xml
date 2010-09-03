@@ -23,7 +23,7 @@
 	           </requires>
                <requires
         	         facet="jst.java"
-    	             version="5.0">
+    	             version="[5.0">
 	           </requires>
          	</and>
          </constraint>
@@ -32,16 +32,16 @@
             facet="jboss.gwt"
             version="1.4.0">
          <constraint>
-         	<or>
+         	<and>
                <requires
         	         facet="jst.web"
     	             version="[2.4">
 	           </requires>
                <requires
         	         facet="jst.java"
-    	             version="5.0">
+    	             version="[5.0">
 	           </requires>
-         	</or>
+         	</and>
          </constraint>
       </project-facet-version>
       <action
