@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: DeltaCloud Core
+Bundle-Name: DeltaCloud Core (Experimental)
 Bundle-SymbolicName: org.jboss.tools.deltacloud.core
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.jboss.tools.deltacloud.core.Activator
