@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Red Hat Inc..
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Red Hat Incorporated - initial API and implementation
+ *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.io.UnsupportedEncodingException;
@@ -16,7 +26,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.osgi.service.prefs.Preferences;
@@ -72,12 +81,13 @@ public class NewInstance extends Wizard {
 		
 		public IStatus run(IProgressMonitor pm) {
 			if (!pm.isCanceled()){
+				DeltaCloudInstance instance = null;
 				try {
 					pm.beginTask(WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] {instanceName}), IProgressMonitor.UNKNOWN);
 					pm.worked(1);
 					boolean finished = false;
 					while (!finished && !pm.isCanceled()) {
-						DeltaCloudInstance instance = cloud.refreshInstance(instanceId);
+						instance = cloud.refreshInstance(instanceId);
 						if (instance != null && !instance.getState().equals(DeltaCloudInstance.PENDING))
 							break;
 						Thread.sleep(400);
@@ -87,12 +97,7 @@ public class NewInstance extends Wizard {
 					// do nothing
 				} finally {
 					if (!pm.isCanceled()) {
-						// cause a refresh to occur to all instance watchers
-						// NOTE: this could be done also by getting current
-						// instances and refreshing the one instance, but this
-						// method is already being run in a job and we might
-						// as well get updates for all instances
-						cloud.getInstances();
+						cloud.addReplaceInstance(instance);
 					}
 					pm.done();
 				}
@@ -112,6 +117,7 @@ public class NewInstance extends Wizard {
 		String realmId = mainPage.getRealmId();
 		String memory = mainPage.getMemoryProperty();
 		String storage = mainPage.getStorageProperty();
+		String keyname = mainPage.getKeyName();
 		String name = null;
 		try {
 			name = URLEncoder.encode(mainPage.getInstanceName(), "UTF-8");
@@ -140,7 +146,7 @@ public class NewInstance extends Wizard {
 					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
 				}
 			}
-			instance = cloud.createInstance(name, imageId, realmId, profileId, memory, storage);
+			instance = cloud.createInstance(name, imageId, realmId, profileId, keyname, memory, storage);
 			if (instance != null)
 				result = true;
 			if (instance != null && instance.getState().equals(DeltaCloudInstance.PENDING)) {

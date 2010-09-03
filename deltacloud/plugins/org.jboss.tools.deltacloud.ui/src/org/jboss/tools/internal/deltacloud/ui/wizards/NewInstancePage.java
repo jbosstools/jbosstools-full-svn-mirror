@@ -1,25 +1,50 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Red Hat Inc..
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Red Hat Incorporated - initial API and implementation
+ *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.util.ArrayList;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogPage;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
+import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.osgi.service.prefs.Preferences;
 
 public class NewInstancePage extends WizardPage {
 
@@ -32,7 +57,12 @@ public class NewInstancePage extends WizardPage {
 	private static final String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
 	private static final String HARDWARE_LABEL = "Profile.label"; //$NON-NLS-1$
 	private static final String REALM_LABEL = "Realm.label"; //$NON-NLS-1$
+	private static final String KEY_LABEL = "Key.label"; //$NON-NLS-1$
+	private static final String MANAGE_BUTTON_LABEL = "ManageButton.label"; //$NON-NLS-1$
 	private static final String PROPERTIES_LABEL = "Properties.label"; //$NON-NLS-1$
+	
+	private static final String PEM_NAME = "Pem.name"; //$NON-NLS-1$
+	
 	private static final String NONE_RESPONSE = "None.response"; //$NON-NLS-1$
 	@SuppressWarnings("unused")
 	private static final String NAME_ALREADY_IN_USE = "ErrorNameInUse.text"; //$NON-NLS-1$
@@ -43,14 +73,15 @@ public class NewInstancePage extends WizardPage {
 	private ArrayList<DeltaCloudHardwareProfile> profiles;
 	
 	private Text nameText;
+	private Text keyText;
 	private Combo hardware;
+	private Button keyManage;
 	private Control realm;
 	private String[] profileIds;
 	private ProfileComposite currPage;
 	private ProfileComposite[] profilePages;
 	private ArrayList<String> realmIds;
-
-
+	
 	private ModifyListener textListener = new ModifyListener() {
 
 		@Override
@@ -68,6 +99,22 @@ public class NewInstancePage extends WizardPage {
 			currPage = profilePages[index];
 			currPage.setVisible(true);
 		}
+	};
+	
+	private SelectionListener manageListener = new SelectionAdapter() {
+
+		public void widgetSelected(SelectionEvent event) {
+			Shell shell = getShell();
+			ManageKeys wizard = new ManageKeys(cloud, ".pem");  //$NON-NLS-1$
+			WizardDialog dialog = new CustomWizardDialog(shell, wizard,
+					IDialogConstants.OK_LABEL);
+			dialog.create();
+			dialog.open();
+			String keyname = wizard.getKeyName();
+			if (keyname != null)
+				keyText.setText(keyname);
+		}
+	
 	};
 	
 	public NewInstancePage(DeltaCloud cloud, DeltaCloudImage image) {
@@ -110,6 +157,10 @@ public class NewInstancePage extends WizardPage {
 		return nameText.getText();
 	}
 	
+	public String getKeyName() {
+		return keyText.getText();
+	}
+	
 	private void validate() {
 		boolean complete = true;
 		boolean errorFree = true;
@@ -119,6 +170,20 @@ public class NewInstancePage extends WizardPage {
 		String name = nameText.getText();
 		if (name.length() == 0) {
 			complete = false;
+		}
+
+		if (cloud.getType().equals(DeltaCloudInstance.EC2_TYPE)) {
+			String keyname = keyText.getText();
+			if (keyname.length() == 0)
+				complete = false;
+			else {
+				Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+				try {
+				    prefs.put(IDeltaCloudPreferenceConstants.LAST_EC2_KEYNAME, keyname);
+				} catch (Exception e) {
+					// ignore
+				}
+			}
 		}
 		
 		if (errorFree)
@@ -177,9 +242,11 @@ public class NewInstancePage extends WizardPage {
 		Label realmLabel = new Label(container, SWT.NULL);
 		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
 		
+
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.addModifyListener(textListener);
-
+		
+	
 		DeltaCloudRealm[] realms = cloud.getRealms();
 		realmIds = new ArrayList<String>();
 		ArrayList<String> realmNames = new ArrayList<String>();
@@ -270,13 +337,51 @@ public class NewInstancePage extends WizardPage {
 		f.right = new FormAttachment(100, 0);
 		realm.setLayoutData(f);
 
+		Control control = realm;
+		
+		if (cloud.getType().equals(DeltaCloudInstance.EC2_TYPE)) {
+			Label keyLabel = new Label(container, SWT.NULL);
+			keyLabel.setText(WizardMessages.getString(KEY_LABEL));
+
+			keyText = new Text(container, SWT.BORDER | SWT.SINGLE);
+			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+			String defaultKeyname = prefs.get(IDeltaCloudPreferenceConstants.LAST_EC2_KEYNAME, "");
+			keyText.setText(defaultKeyname);
+			keyText.addModifyListener(textListener);
+
+			keyManage = new Button(container, SWT.NULL);
+			keyManage.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
+			keyManage.addSelectionListener(manageListener);
+
+			f = new FormData();
+			f.top = new FormAttachment(realm, 11);
+			f.left = new FormAttachment(0, 0);
+			keyLabel.setLayoutData(f);
+
+			f = new FormData();
+	        int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
+	        Point minSize = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+	        f.width = Math.max(widthHint, minSize.x);
+			f.top = new FormAttachment(realm, 8);
+			f.right = new FormAttachment(realm, 0, SWT.RIGHT);
+			keyManage.setLayoutData(f);
+
+			f = new FormData();
+			f.top = new FormAttachment(realm, 8);
+			f.left = new FormAttachment(hardwareLabel, 5);
+			f.right = new FormAttachment(keyManage, -10);
+			keyText.setLayoutData(f);
+			
+			control = keyText;
+		}
+		
 		f = new FormData();
-		f.top = new FormAttachment(realm, 11);
+		f.top = new FormAttachment(control, 11);
 		f.left = new FormAttachment(0, 0);
 		hardwareLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(realm, 8);
+		f.top = new FormAttachment(control, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		hardware.setLayoutData(f);

@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Red Hat Inc..
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Red Hat Incorporated - initial API and implementation
+ *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.jface.action.Action;
@@ -27,7 +37,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
-import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
@@ -117,7 +126,13 @@ ITabbedPropertySheetPageContributor {
 
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
+		IMenuManager menuMgr = bars.getMenuManager();
+		menuMgr.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager manager) {
+				DeltaCloudView.this.fillLocalPullDown(manager);
+			}
+		});
+		fillLocalPullDown(menuMgr);
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
@@ -127,7 +142,14 @@ ITabbedPropertySheetPageContributor {
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
+		manager.removeAll();
 		manager.add(removeCloud);
+		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+		CloudViewElement element = (CloudViewElement)selection.getFirstElement();
+		if (element == null)
+			removeCloud.setEnabled(false);
+		else
+			removeCloud.setEnabled(true);
 		manager.add(refreshAction);
 	}
 
@@ -197,7 +219,15 @@ ITabbedPropertySheetPageContributor {
 		
 		refreshAction = new Action() {
 			public void run() {
-				viewer.setInput(new CVRootElement(viewer));
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				if (obj instanceof CloudViewElement) {
+					CloudViewElement element = (CloudViewElement)obj;
+					while (!(element instanceof CVCloudElement))
+						element = (CloudViewElement)element.getParent();
+					CVCloudElement cloud = (CVCloudElement)element;
+					cloud.loadChildren();
+				}
 			}
 		};
 		refreshAction.setText(CVMessages.getString(REFRESH));

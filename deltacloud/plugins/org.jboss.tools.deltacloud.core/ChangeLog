@@ -1,3 +1,106 @@
+2010-09-03  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (addReplaceInstance): New method.
+	
+2010-09-01  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (deleteKey): Change
+	arguments to just the key name is given.  Don't delete any file. 
+	(createKey): Change the directory argument to just be a String instead of an IPath.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (deleteKey): New method.
+	(createKey): Ditto.
+	(refreshInstance): Remove stack trace on error since a pending cloud start will
+	result in not found until the cloud actually is running.
+
+2010-08-30  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/Activator.java: Add Copyright and License info.
+	* src/org/jboss/tools/deltacloud/core/client/AddressList.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/API.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudAuthException.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientException.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudObject.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/HardwareProfile.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/Image.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/Property.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/client/Realm.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudException.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudHardwareProfile.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudHardwareProperty.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudImage.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudRealm.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/ICloudManagerListener.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/IImageListListener.java: Ditto.
+	* src/org/jboss/tools/deltacloud/core/IInstanceListListener.java: Ditto.
+	* META-INF/MANIFEST.MF: Back-leveling to 0.0.1 as not in 1.0.0 state yet.
+
+2010-08-27  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (buildInstance): Add
+	call to getAuthentication method. 
+	(getAuthentication): New method to get authentication items such as keyname.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getCurrInstances): Synchronize on
+	new instanceLock object. 
+	(getInstances): Ditto.
+	(performInstanceAction): Do not do any special actions for EC2 clouds, namely
+	deleting a key if stopping.
+	(refreshInstance): Do not reset the key.
+	(createInstance): Do not look for EC2 type, do not create a key, but just check if a keyname is specified.
+	Do not save the key if specified as this is done when creating the instance.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: Add MOCK type.
+
+2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (createKey): Remove
+	any empty lines so the key will work with RSE.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (notifyImageListListeners): Pass new
+	cloud argument to listeners. 
+	(notifyInstanceListListeners): Ditto. 
+	(refreshInstance): Fix the check for states to be in the String realm rather than
+	the State realm.
+	* src/org/jboss/tools/deltacloud/core/IImageListListener.java: Add new cloud argument
+	to listChanged notifier method. 
+	* src/org/jboss/tools/deltacloud/core/IInstanceListListener.java: Ditto. 
+
+2010-08-23  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java (getKey): New method.
+	(setKey): Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getCurrInstances): Fix to
+	call getInstances if there aren't any instances yet.  
+	(getCurrImages): New method.
+	(refreshInstance): Pass any instance key into the new instance.
+	(getImages): Synchronize on imageLock.
+	(loadChildren): New method that loads the children in a thread.
+	(createInstance): Save the key if generated into the instance.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (getKey): New method. 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (loadClouds): Ditto.
+
+2010-08-20  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (DCNS): Add KEYS.
+	(deleteKey): New method to delete a keypair.
+	(createKey): New method to create a keypair.
+	(checkForErrors): Add extra check for status 404.
+	(createInstance): New method with additional keyname parameter to create instance using a
+	specified keypair.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getType): New method. 
+	(DeltaCloud): Add type parameter and add keys collection.
+	(performInstanceAction): Add check for EC2 STOP action in which case look for a key in the key
+	collection and if found, delete it.
+	(createInstance): If EC2 cloud, create a key and pass the name to the new client createInstance
+	API that takes a keypair name.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (setGivenName): New method to store
+	the name chosen by the user in the dialog. 
+	(getGivenName): New method to get the name chosen by the user in the dialog.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (loadClouds): Add type support.
+	(saveClouds): Ditto.
+
 2010-08-18  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (checkForErrors): Make

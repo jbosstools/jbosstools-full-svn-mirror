@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Red Hat Inc..
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Red Hat Incorporated - initial API and implementation
+ *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.jface.viewers.Viewer;
@@ -32,8 +42,8 @@ public class CVCloudElement extends CloudViewElement {
 			DeltaCloud cloud = (DeltaCloud)getElement();
 			CVCategoryElement c1 = new CVInstancesCategoryElement(cloud, CVMessages.getString(INSTANCE_CATEGORY_NAME),
 					viewer);
-			CVCategoryElement c2 = new CVCategoryElement(cloud, CVMessages.getString(IMAGE_CATEGORY_NAME),
-					CVCategoryElement.IMAGES);
+			CVCategoryElement c2 = new CVImagesCategoryElement(cloud, CVMessages.getString(IMAGE_CATEGORY_NAME),
+					viewer);
 			addChild(c1);
 			addChild(c2);
 		}
@@ -46,4 +56,8 @@ public class CVCloudElement extends CloudViewElement {
 		return new CloudPropertySource(getElement());
 	}
 
+	public void loadChildren() {
+		DeltaCloud cloud = (DeltaCloud)getElement();
+		cloud.loadChildren();
+	}
 }

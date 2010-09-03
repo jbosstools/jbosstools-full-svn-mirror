@@ -1,6 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Red Hat Inc..
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Red Hat Incorporated - initial API and implementation
+ *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,6 +43,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.Path;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -43,7 +56,7 @@ public class DeltaCloudClient implements API
 	
 	private static enum DCNS
 	{ 
-		INSTANCES, REALMS, IMAGES, HARDWARE_PROFILES, START, STOP, REBOOT, DESTROY;
+		INSTANCES, REALMS, IMAGES, HARDWARE_PROFILES, KEYS, START, STOP, REBOOT, DESTROY;
 		
 		@Override
 		public String toString()
@@ -163,16 +176,23 @@ public class DeltaCloudClient implements API
 	@Override
 	public Instance createInstance(String imageId, String profileId, String realmId, String name) throws DeltaCloudClientException 
 	{
-		return createInstance(imageId, profileId, realmId, name, null, null);
+		return createInstance(imageId, profileId, realmId, name, null, null, null);
 	}
-	
+
 	public Instance createInstance(String imageId, String profileId, String realmId, String name, String memory, String storage) throws DeltaCloudClientException 
+	{
+		return createInstance(imageId, profileId, realmId, name, null, memory, storage);
+	}
+
+	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyname, String memory, String storage) throws DeltaCloudClientException 
 	{
 		String query = "?image_id=" + imageId + "&hwp_id=" + profileId + "&realm_id=" + realmId + "&name=" + name;
 		if (memory != null)
 			query += "&hwp_memory=" + memory;
 		if (storage != null)
 			query += "&hwp_storage=" + storage;
+		if (keyname != null)
+			query += "&keyname=" + keyname;
 		query += "&commit=create";
 		return buildInstance(sendRequest(DCNS.INSTANCES + query, RequestType.POST));
 	}
@@ -227,6 +247,42 @@ public class DeltaCloudClient implements API
 		return JAXB.unmarshal(sendRequest(DCNS.REALMS + "/" + realmId, RequestType.GET), Realm.class);
 	}
 
+	public void createKey(String keyname, String keyStoreLocation) throws DeltaCloudClientException {
+		String xml = sendRequest(DCNS.KEYS + "?name=" + keyname, RequestType.POST);
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document document = db.parse(new InputSource(new StringReader(xml)));
+			List<String> keyText = getElementText(document, "pem"); //$NON-NLS-1$
+			File keyFile = Path.fromOSString(keyStoreLocation).append(keyname + ".pem").toFile(); //$NON-NLS-1$
+			if (!keyFile.exists())
+				keyFile.createNewFile();
+			keyFile.setReadable(false, false);
+			keyFile.setWritable(true, true);
+			keyFile.setReadable(true, true);
+			StringBuffer sb = new StringBuffer();
+			String line;
+			BufferedReader reader = new BufferedReader(new StringReader(keyText.get(0)));
+			while ((line = reader.readLine()) != null) 
+			{
+				// We must trim off the white-space from the xml
+				// Complete white-space lines are to be ignored.
+				String trimmedLine = line.trim();
+				if (trimmedLine.length() > 0)
+					sb.append(trimmedLine).append("\n");	
+			}
+			FileWriter w = new FileWriter(keyFile);
+			w.write(sb.toString());
+			w.close();
+		} catch (Exception e) {
+			throw new DeltaCloudClientException(e);
+		}
+	}
+
+	public void deleteKey(String keyname) throws DeltaCloudClientException {
+		sendRequest(DCNS.KEYS + "/" + keyname, RequestType.DELETE);
+	}
+	
 	@Override
 	public void rebootInstance(String instanceId) throws DeltaCloudClientException
 	{
@@ -262,6 +318,8 @@ public class DeltaCloudClient implements API
 			String status = node.getAttributes().getNamedItem("status").getNodeValue();
 			if (status.equals("403"))
 				throw new DeltaCloudAuthException("Authorization error");
+			else if (status.equals("404"))
+				throw new DeltaCloudClientException("Not found");
 			else
 				throw new DeltaCloudClientException("Connection error");
 			}
@@ -285,6 +343,7 @@ public class DeltaCloudClient implements API
 			getProfileProperties(instance, getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
 			instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 			instance.setState(getElementText(document, "state").get(0)); //$NON-NLS-1$
+			getAuthentication(document, instance);
 			
 			ArrayList<Instance.Action> actions = new ArrayList<Instance.Action>();
 			for(String s : getAttributeValues(document, "link", "rel")) //$NON-NLS-1$ //$NON-NLS-2$
@@ -402,6 +461,31 @@ public class DeltaCloudClient implements API
 			}
 		}
 		return values;
+	}
+	
+	private void getAuthentication(Document document, Instance instance) {
+		NodeList elements = document.getElementsByTagName("authentication");
+		for (int i = 0; i < elements.getLength(); i++) 
+		{
+			Node element = elements.item(i);
+			NamedNodeMap attrs = element.getAttributes();
+			Node type = attrs.getNamedItem("type"); //$NON-NLS-1$
+			if (type.getNodeValue().equals("key")) { //$NON-NLS-1$
+				NodeList children = element.getChildNodes();
+				for (int j = 0; j < children.getLength(); ++j) {
+					Node child = children.item(j);
+					if (child.getNodeName().equals("login")) { //$NON-NLS-1$
+						NodeList loginChildren = child.getChildNodes();
+						for (int k = 0; k < loginChildren.getLength(); ++k) {
+							Node loginChild = loginChildren.item(k);
+							if (loginChild.getNodeName().equals("keyname")) { //$NON-NLS-1$
+								instance.setKey(loginChild.getTextContent());
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	private void getProfileProperties(Instance instance, List<Node> propertyNodes) {

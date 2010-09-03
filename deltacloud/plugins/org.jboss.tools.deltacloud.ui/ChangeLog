@@ -1,3 +1,148 @@
+2010-09-03  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (WatchCreateJob.run): Add
+	instance logic fixed.
+
+2010-09-01  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CustomWizardDialog.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeys.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Add a constant
+	for default key directory. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (..run): Fix to getInstances,
+	not getImages.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (.widgetSelected):
+	Open ManageKeysDialog when Manage button is pressed. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new
+	messages.
+
+2010-08-30  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/Activator.java: Add Copyright and License info.
+	* src/org/jboss/tools/deltacloud/ui/CustomProgressMonitorDialog.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/preferences/DeltaCloudPreferencePage.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/preferences/PreferenceMessages.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/preferences/PreferenceMessages.properties: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/SWTImagesFactory.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudPropertySource.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewContentProvider.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewLabelProvider.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVCategoryElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVImageElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstanceElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySection.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySheetNonSorter.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVPropertySheetPage.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVRootElement.java: Ditto. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVTypeMapper.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageComparator.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImagePropertySource.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java: Ditto. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceComparator.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfileComposite.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.java: Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Ditto.
+	* META-INF/MANIFEST.MF: Back-versioning to 0.0.1 as not in 1.0.0 state yet.
+
+2010-08-27  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Add new constant
+	for the last EC2 key used.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Change keyname message. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (getPropertyValue):
+	Add support for keyname. 
+	(getPropertyDescriptors): Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (performFinish): Return
+	the return code of the create instance which might fail because the key is invalid in which
+	case allow the user to enter a new key. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (.widgetSelected): 
+	(createControl): Add a keyname text field and a Manage button if the cloud type is EC2.
+	(validate): Check the keyname field is filled in for EC2. 
+	(getKeyName): New method.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new
+	messages. 
+
+2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.run): For RSE
+	action, set the default userid to root when the host is created.
+
+2010-08-26  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (listChanged): Add new
+	cloud argument.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (listChanged): Ditto. 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (listChanged): Ditto.
+	(.modifyText): Decouple image list listener using the currCloud right away
+	before it is reset.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: 
+	(listChanged): Add new cloud argument and use to verify that the cloud matches
+	the one for the new list.
+	(makeActions): Add refresh action.
+	(.modifyText): Decouple instance list listener using the currCloud right away
+	before it is reset.
+	(fillLocalPullDown): Add refresh action.
+	(PerformInstanceActionThread.run): Don't perform refresh in a Display thread, just
+	run it in the current thread.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (inputChanged):
+	For a cloud input, use getCurrInstances rather than getInstances method of cloud. 
+
+2010-08-25  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (.menuAboutToShow): New
+	listener to properly set up pull-down menu. 
+	(contributeToActionBars): Add a menu listener for pull down so we can set enabled/disabled
+	at pull-down time.
+	(fillLocalPullDown): Add check for item selected.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.run): Experiment with RSE.
+
+2010-08-23  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java (createInitialLayout): Add Images
+	view.
+	* src/org/jboss/tools/deltacloud/ui/views/CVCategoryElement.java (getChildren): Return
+	super getChildren. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java (getChildren):  
+	(loadChildren): New method that runs a thread to load instances and images.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (getChildren): Use
+	getCurrInstances method of cloud instead of getInstances. 
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (fillLocalPullDown): Don't enable
+	the remove cloud and refresh cloud unless item selected. 
+	(.run): Change refresh action to refresh the cloud, not whole view.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java:
+	(makeActions): Add refresh view action and remove double click action.
+	(fillLocalPullDown): Add refresh view action.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java (inputChanged): Call
+	getCurrImages rather than getImages method of DeltaCloud. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.run): Add RSE action.
+
+2010-08-20  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (performFinish): Store the
+	type of cloud connection when it is created for real.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (getType): New method.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (performFinish): Return true on
+	failure so dialog closes. 
+
 2010-08-19  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* META-INF/MANIFEST.MF: Add dependency on rse.
@@ -7,7 +152,7 @@
 	RSE action. 
 	(fillContextMenu): Add connect to RSE action skeleton and enable/disable depending on instance
 	state. 
-
+	
 2010-08-18  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (listChanged): Get

@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2010 Red Hat Inc..
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Red Hat Incorporated - initial API and implementation
+ *******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
 import java.util.List;
@@ -18,7 +28,11 @@ public class DeltaCloudInstance {
 	public final static String REBOOT = Instance.Action.REBOOT.toString();
 	public final static String DESTROY = Instance.Action.DESTROY.toString();
 	
+	public final static String EC2_TYPE = "EC2"; //$NON-NLS-1$
+	public final static String MOCK_TYPE = "MOCK"; //$NON-NLS-1$
+	
 	private Instance instance;
+	private String givenName;
 	
 	public DeltaCloudInstance(Instance instance) {
 		this.instance = instance;
@@ -26,6 +40,14 @@ public class DeltaCloudInstance {
 	
 	public String getName() {
 		return instance.getName();
+	}
+	
+	public String getGivenName() {
+		return givenName;
+	}
+	
+	public void setGivenName(String name) {
+		givenName = name;
 	}
 	
 	public String getId() {
@@ -38,6 +60,10 @@ public class DeltaCloudInstance {
 	
 	public String getState() {
 		return instance.getState().toString();
+	}
+	
+	public String getKey() {
+		return instance.getKey();
 	}
 	
 	public List<String> getActions() {
