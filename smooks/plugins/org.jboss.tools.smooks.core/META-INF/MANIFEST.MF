@@ -46,8 +46,5 @@ Export-Package: org.jboss.tools.smooks,
  org.jboss.tools.smooks.model.smooks,
  org.jboss.tools.smooks.model.smooks.impl,
  org.jboss.tools.smooks.model.smooks.provider,
- org.jboss.tools.smooks.model.smooks.util,
- org.jboss.tools.smooks10.model.smooks.util,
- org.jboss.tools.smooks10.model.smooks.util.filters
-Bundle-Vendor: %Bundle-Vendor.0
+ org.jboss.tools.smooks.model.smooks.util
 Bundle-Localization: plugin
