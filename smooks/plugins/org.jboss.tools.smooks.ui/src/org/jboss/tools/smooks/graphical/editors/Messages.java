@@ -19,6 +19,7 @@ public class Messages extends NLS {
 	public static String SmooksJavaMappingGraphicalEditor_NullLabel;
 	public static String SmooksJavaMappingGraphicalEditor_WarningMessage1;
 	public static String SmooksProcessGraphicalEditor_Validation_No_Java_Mapping;
+	public static String SmooksProcessGraphicalEditor_Validation_No_DomModelCreator;
 	public static String SmooksProcessGraphicalEditor_AddTaskActionText;
 	public static String SmooksProcessGraphicalEditor_FormText;
 	public static String SmooksProcessGraphicalEditor_TaskConfigurationSectionTitle;

@@ -102,6 +102,7 @@ import org.jboss.tools.smooks.graphical.editors.process.TaskNodeFigure;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerCSVTemplateGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.template.SmooksFreemarkerTemplateGraphicalEditor;
+import org.jboss.tools.smooks.model.ModelFilter;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
@@ -1156,6 +1157,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		task.setProblemType(IFieldMarker.TYPE_NONE);
 		task.cleanProblemMessages();
 		String id = task.getId();
+		SmooksResourceListType resourceList = getSmooksResourceListType();
+		
 		if (TaskTypeManager.TASK_ID_INPUT.equals(id)) {
 			// check the input data
 			List<InputType> inputLists = SmooksUIUtils.getInputTypeList(getSmooksResourceListType());
@@ -1224,7 +1227,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 				task.setProblemType(IFieldMarker.TYPE_WARINING);
 				task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_Validation_No_Java_Mapping);
 			} else if(templateDataProvider != null && templateDataProvider.trim().equals(TaskTypeManager.TASK_ID_INPUT)) {
-				// TODO: https://jira.jboss.org/browse/JBIDE-6991
+				if(ModelFilter.DomModelCreator.execute(resourceList).isEmpty()) {
+					task.setProblemType(IFieldMarker.TYPE_WARINING);
+					task.addProblemMessage(Messages.SmooksProcessGraphicalEditor_Validation_No_DomModelCreator);
+				}
 			}
 		}
 	}
