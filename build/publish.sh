@@ -166,11 +166,15 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		
 		# if an aggregate build, put output elsewhere on disk
 		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
+			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > /tmp/latestBuild.html
 			if [[ $1 == "trunk" ]]; then
 				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/trunk/${BUILD_ID}-H${BUILD_NUMBER}/
+				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/trunk/
 			else
+				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOB_NAME/.aggregate}/
 				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOB_NAME/.aggregate}/${BUILD_ID}-H${BUILD_NUMBER}/
 			fi
+			rm -f /tmp/latestBuild.html
 		else
 			# if a release build, create a named dir
 			if [[ ${RELEASE} == "Yes" ]]; then
