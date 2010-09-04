@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.gef.EditPartFactory;
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
@@ -31,7 +32,6 @@ import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemp
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 

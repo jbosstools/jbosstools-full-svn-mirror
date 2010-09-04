@@ -64,6 +64,7 @@ import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.csv12.CSVDataParser;
 import org.jboss.tools.smooks.configuration.editors.edireader12.EDIDataParser;
 import org.jboss.tools.smooks.configuration.editors.input.InputParameter;
@@ -80,7 +81,6 @@ import org.jboss.tools.smooks.configuration.editors.xml.XSDObjectAnalyzer;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.model.smooks.DocumentRoot;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.milyn.Smooks;
 import org.milyn.payload.JavaSource;
 

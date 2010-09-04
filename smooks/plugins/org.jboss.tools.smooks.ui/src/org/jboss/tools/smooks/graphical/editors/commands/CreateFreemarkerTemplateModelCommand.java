@@ -36,20 +36,6 @@ public class CreateFreemarkerTemplateModelCommand extends GEFAdapterCommand {
 
 	@Override
 	public void execute() {
-//		if (firstTime) {
-//			XSLTemplateCreationWizard wizard = new XSLTemplateCreationWizard(provider, null);
-//			final WizardDialog dialog = new WizardDialog(editorPart.getSite().getShell(), wizard);
-//			if(dialog.open() == Dialog.OK){
-//				if (collections instanceof FeatureMap.Entry) {
-//					collections = FeatureMapUtil.createEntry(((FeatureMap.Entry) collections)
-//							.getEStructuralFeature(), wizard.getXslModel());
-//				}
-//				emfCommand = AddCommand.create(domain, owner, feature, collections);
-//			}else{
-//				throw new IgnoreException();
-//			}
-//			firstTime = false;
-//		}
 		super.execute();
 	}
 

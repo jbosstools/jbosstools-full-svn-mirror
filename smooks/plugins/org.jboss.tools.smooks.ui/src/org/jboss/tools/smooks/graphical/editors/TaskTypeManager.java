@@ -14,8 +14,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
+import org.jboss.tools.smooks.model.ModelFilter;
+import org.jboss.tools.smooks.model.filters.FreemarkerFilter;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
 import org.jboss.tools.smooks.model.smooks.AbstractResourceConfig;
@@ -122,16 +125,27 @@ public class TaskTypeManager {
 	 * @param smooksResourceList
 	 * @return
 	 */
-	public static List<Object> getAssociatedSmooksElements(TaskType taskType, SmooksResourceListType smooksResourceList) {
+	public static List<Object> getAssociatedResourceDeletes(TaskType taskType, SmooksResourceListType smooksResourceList) {
 		List<Object> elementTypes = getAssociatedSmooksElementsType(taskType.getId());
 		List<AbstractResourceConfig> resourceConfigList = smooksResourceList.getAbstractResourceConfig();
 		List<Object> associatedElements = new ArrayList<Object>();
-		for (Iterator<?> iterator = resourceConfigList.iterator(); iterator.hasNext();) {
-			AbstractResourceConfig abstractResourceConfig = (AbstractResourceConfig) iterator.next();
+		
+		for (AbstractResourceConfig abstractResourceConfig : resourceConfigList) {
 			if (isSameType(abstractResourceConfig, elementTypes) && canRemove(abstractResourceConfig, taskType)) {
 				associatedElements.add(abstractResourceConfig);
 			}
 		}
+		
+		if(TASK_ID_FREEMARKER_XML_TEMPLATE.equals(taskType.getId()) || TASK_ID_FREEMARKER_CSV_TEMPLATE.equals(taskType.getId())) {
+			Freemarker resource = (Freemarker) taskType.getTaskResources().get(0);
+			FreemarkerFilter ftlFilter = new FreemarkerFilter().addExclude(resource);
+			
+			if(ftlFilter.execute(smooksResourceList).isEmpty()) {
+				// If there's no other Freemarker resources... remove any DomModelCreator resources too...
+				associatedElements.addAll(ModelFilter.DomModelCreator.execute(smooksResourceList));
+			}
+		}
+		
 		return associatedElements;
 	}
 

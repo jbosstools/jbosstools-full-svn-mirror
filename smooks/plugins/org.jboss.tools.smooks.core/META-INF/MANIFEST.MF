@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.jboss.tools.smooks.core,
+Export-Package: org.jboss.tools.smooks,
+ org.jboss.tools.smooks.core,
  org.jboss.tools.smooks.model.common,
  org.jboss.tools.smooks.model.common.impl,
  org.jboss.tools.smooks.model.common.provider,
@@ -46,6 +47,7 @@ Export-Package: org.jboss.tools.smooks.core,
  org.jboss.tools.smooks.model.smooks.impl,
  org.jboss.tools.smooks.model.smooks.provider,
  org.jboss.tools.smooks.model.smooks.util,
- org.jboss.tools.smooks10.model.smooks.util
+ org.jboss.tools.smooks10.model.smooks.util,
+ org.jboss.tools.smooks10.model.smooks.util.filters
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin

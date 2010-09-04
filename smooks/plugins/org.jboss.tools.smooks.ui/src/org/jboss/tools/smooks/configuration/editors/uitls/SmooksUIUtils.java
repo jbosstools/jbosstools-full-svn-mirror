@@ -121,6 +121,7 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.SmooksConstants;
 import org.jboss.tools.smooks.configuration.actions.AddSmooksResourceAction;
@@ -172,7 +173,6 @@ import org.jboss.tools.smooks.model.smooks.ResourceConfigType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * 
@@ -3242,6 +3242,9 @@ public class SmooksUIUtils {
 		}
 		if (model instanceof Freemarker) {
 			return FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER;
+		}
+		if (model instanceof ResourceConfigType) {
+			return SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG;
 		}
 		return null;
 	}

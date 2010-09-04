@@ -15,12 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IEditorPart;
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
@@ -28,14 +30,17 @@ import org.jboss.tools.smooks.graphical.editors.process.ProcessFactory;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.graphical.wizard.TemplateMessageTypeWizard;
 import org.jboss.tools.smooks.graphical.wizard.freemarker.FreemarkerTemplateParametersProvider;
+import org.jboss.tools.smooks.model.ModelFilter;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerFactory;
 import org.jboss.tools.smooks.model.freemarker.FreemarkerPackage;
 import org.jboss.tools.smooks.model.smooks.ParamType;
+import org.jboss.tools.smooks.model.smooks.ResourceConfigType;
+import org.jboss.tools.smooks.model.smooks.ResourceType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
+import org.milyn.delivery.DomModelCreator;
 
 /**
  * @author Dart
@@ -91,12 +96,21 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 			param.setStringValue(parentTask.getId());
 			freemarker.getParam().add(param);
 
-			Command addFreemarkerCommand = AddCommand.create(this.provider.getEditingDomain(), resourceList,
+			CompoundCommand compoundCommand = new CompoundCommand();
+			compoundCommand.append(AddCommand.create(this.provider.getEditingDomain(), resourceList,
 					SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
-							.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER, freemarker));
+							.createEntry(FreemarkerPackage.Literals.DOCUMENT_ROOT__FREEMARKER, freemarker)));
+			
+			// If the template is connected from the input, create a 
+			// DomNodeModel configuration, if one doesn't already exist...
+			if(TaskTypeManager.TASK_ID_INPUT.equals(parentTask.getId().trim())) {
+				if(ModelFilter.DomModelCreator.execute(resourceList).isEmpty()) {
+					compoundCommand.append(createDomNodeModelConfig(resourceList));
+				}
+			}
 
-			if (addFreemarkerCommand.canExecute()) {
-				provider.getEditingDomain().getCommandStack().execute(addFreemarkerCommand);
+			if (compoundCommand.canExecute()) {
+				provider.getEditingDomain().getCommandStack().execute(compoundCommand);
 				TaskType childTask = ProcessFactory.eINSTANCE.createTaskType();
 				
 				childTask.setId(getTaskID());
@@ -105,6 +119,19 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 				parentTask.addTask(childTask);
 			}
 		}
+	}
+
+	private Command createDomNodeModelConfig(SmooksResourceListType resourceList) {
+		ResourceConfigType resourceConfig = SmooksFactory.eINSTANCE.createResourceConfigType();
+		ResourceType resource = SmooksFactory.eINSTANCE.createResourceType();
+		
+		resourceConfig.setSelector("#document");
+		resource.setValue(DomModelCreator.class.getName());
+		resourceConfig.setResource(resource);
+
+		return AddCommand.create(this.provider.getEditingDomain(), resourceList,
+				SmooksPackage.Literals.SMOOKS_RESOURCE_LIST_TYPE__ABSTRACT_RESOURCE_CONFIG_GROUP, FeatureMapUtil
+						.createEntry(SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG, resourceConfig));
 	}
 
 	@Override

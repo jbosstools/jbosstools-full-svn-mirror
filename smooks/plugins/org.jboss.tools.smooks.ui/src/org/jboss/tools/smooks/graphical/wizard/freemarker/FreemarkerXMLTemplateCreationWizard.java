@@ -10,8 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.wizard.freemarker;
 
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLTemplateCreationWizardPage;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart

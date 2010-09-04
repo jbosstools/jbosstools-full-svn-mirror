@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.smooks10.model.smooks.util;
+package org.jboss.tools.smooks;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -124,7 +124,7 @@ public class SmooksModelUtils {
 
 	public static EStructuralFeature ELEMENT_BINDING = ExtendedMetaData.INSTANCE.demandFeature(
 			"http://www.milyn.org/xsd/smooks-1.0.xsd", "binding", true); //$NON-NLS-1$ //$NON-NLS-2$
-
+	
 	// public static AnyType addBindingTypeToParamType(ParamType param, String
 	// property, String selector, String type,
 	// String uri) {
@@ -758,5 +758,4 @@ public class SmooksModelUtils {
 		return id;
 
 	}
-
 }

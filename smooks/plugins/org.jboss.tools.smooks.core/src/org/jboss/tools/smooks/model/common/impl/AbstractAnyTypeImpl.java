@@ -20,9 +20,9 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl;
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.model.common.AbstractAnyType;
 import org.jboss.tools.smooks.model.common.CommonPackage;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '

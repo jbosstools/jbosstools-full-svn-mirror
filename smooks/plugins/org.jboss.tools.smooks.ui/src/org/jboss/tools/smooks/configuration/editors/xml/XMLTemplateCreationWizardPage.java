@@ -37,10 +37,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.xsd.XSDElementDeclaration;
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 import org.xml.sax.SAXException;
 
 /**

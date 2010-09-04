@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.configuration.editors.csv12.CSV12InputDataWizard;
 import org.jboss.tools.smooks.configuration.editors.edireader12.EDIDataWizard;
@@ -27,7 +28,6 @@ import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataContent
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataLabelProvider;
 import org.jboss.tools.smooks.configuration.editors.xml.XMLStructuredDataWizard;
 import org.jboss.tools.smooks.configuration.editors.xml.XSDStructuredDataWizard;
-import org.jboss.tools.smooks10.model.smooks.util.SmooksModelUtils;
 
 /**
  * @author Dart Peng

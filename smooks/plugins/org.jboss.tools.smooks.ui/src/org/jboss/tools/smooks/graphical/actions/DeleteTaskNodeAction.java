@@ -81,7 +81,7 @@ public class DeleteTaskNodeAction extends AbstractProcessGraphAction {
 					if (listType != null) {
 						for (Iterator<?> iterator = allTask.iterator(); iterator.hasNext();) {
 							TaskType taskType = (TaskType) iterator.next();
-							List<Object> elements = TaskTypeManager.getAssociatedSmooksElements(taskType, listType);
+							List<Object> elements = TaskTypeManager.getAssociatedResourceDeletes(taskType, listType);
 							if (elements != null && !elements.isEmpty()) {
 								associatedElements.addAll(elements);
 							}
