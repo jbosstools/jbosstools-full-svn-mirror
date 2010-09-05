@@ -59,7 +59,6 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	@Override
 	protected EditPartFactory createEdtiPartFactory() {
 		FreemarkerTemplateEditFactory factory = new FreemarkerTemplateEditFactory();
-		((FreemarkerTemplateEditFactory) factory).setDisplayInput(false);
 		return factory;
 	}
 
@@ -215,16 +214,5 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	@Override
 	public String getID() {
 		return ID;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#
-	 * createInputDataGraphModel()
-	 */
-	@Override
-	protected List<AbstractSmooksGraphicalModel> createInputDataGraphModel() {
-		return Collections.emptyList();
 	}
 }
