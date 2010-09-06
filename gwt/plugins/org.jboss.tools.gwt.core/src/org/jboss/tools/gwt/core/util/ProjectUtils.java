@@ -24,8 +24,10 @@ import java.util.zip.ZipInputStream;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.AssertionFailedException;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -54,7 +56,7 @@ public class ProjectUtils {
 	/** Signals the end of a stream. */
 	private static final int EOS = -1;
 
-	public static IPath getWebXmlPath() {	
+	public static IPath getWebXmlPath() {
 		return new Path(WEB_INF_FOLDER).append(WEB_XML_FILE);
 	}
 
@@ -188,14 +190,16 @@ public class ProjectUtils {
 		IFolder folder = project.getWorkspace().getRoot().getFolder(path);
 		return folder.getLocation().toFile();
 	}
-	
+
 	/**
 	 * Returns a resource as stream while checking whether the resource exists.
-	 *
-	 * @param resourceName the resource name
+	 * 
+	 * @param resourceName
+	 *            the resource name
 	 * @return the input stream
 	 * 
-	 * @throws AssertionFailedException if the resource's not found
+	 * @throws AssertionFailedException
+	 *             if the resource's not found
 	 */
 	public static InputStream checkedGetResourceStream(String resourceName, Class<?> clazz) {
 		InputStream inputStream = clazz.getResourceAsStream(resourceName);
@@ -203,5 +207,26 @@ public class ProjectUtils {
 		return inputStream;
 	}
 
+	/**
+	 * Creates the given resource and all its parents (recursively)
+	 * 
+	 * @param resource
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	public static void create(IResource resource, IProgressMonitor monitor) throws CoreException {
+		if (resource.exists())
+			return;
+		create(resource.getParent(), monitor);
 
+		switch (resource.getType()) {
+		case IResource.FOLDER:
+			((IFolder) resource).create(IResource.NONE, true, null);
+			break;
+		case IResource.PROJECT:
+			((IProject) resource).create(monitor);
+			((IProject) resource).open(monitor);
+			break;
+		}
+	}
 }
