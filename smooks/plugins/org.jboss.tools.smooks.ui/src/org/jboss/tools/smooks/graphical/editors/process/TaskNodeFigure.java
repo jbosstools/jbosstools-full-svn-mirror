@@ -44,6 +44,8 @@ import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
  * 
  */
 public class TaskNodeFigure extends Figure {
+
+	private TaskType task;
 	
 	private Label problemTooltip;
 
@@ -67,16 +69,22 @@ public class TaskNodeFigure extends Figure {
 
 	private Rectangle imageSourceRectangle = null;
 
-	public TaskNodeFigure(SmooksProcessGraphicalEditor graph, Image image, String labelText) {
+	public TaskNodeFigure(TaskType task, SmooksProcessGraphicalEditor graph, Image image, String text) {
 		super();
+		this.task = task;
+		this.processGraphicalViewerEditor = graph;		
 		this.image = image;
-		this.labelText = labelText;
-		this.processGraphicalViewerEditor = graph;
+		this.labelText = text;
 		this.problemTooltip = new Label();
+		
 		initFigure();
 		hookTaskNodeFigure();
 	}
 	
+	public TaskType getTask() {
+		return task;
+	}
+
 	public void setProblemMessage(String message){
 		if(message == null){
 			this.setToolTip(null);
@@ -192,8 +200,12 @@ public class TaskNodeFigure extends Figure {
 		((Clickable) addTaskFigure).addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent event) {
-				if (!showAddFigure)
+				if (!showAddFigure) {
 					return;
+				}
+				
+				processGraphicalViewerEditor.showTaskControl(task);
+				
 				Graph g = processGraphicalViewerEditor.getProcessGraphViewer().getGraphControl();
 				processGraphicalViewerEditor.setNeedupdatewhenshow(false);
 				List<?> nodes = g.getNodes();

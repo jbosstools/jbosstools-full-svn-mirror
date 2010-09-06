@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 
 /**
@@ -70,11 +71,19 @@ public abstract class AbstractProcessGraphAction extends Action implements ISele
 	}
 	
 	protected List<TaskType> getCurrentSelectedTask(){
+		if(editorPart instanceof SmooksProcessGraphicalEditor) {
+			TaskType currentlySelectedTask = ((SmooksProcessGraphicalEditor)editorPart).getCurrentlySelectedTask();
+			if(currentlySelectedTask != null) {
+				List<TaskType> selectedTasks = new ArrayList<TaskType>();				
+				selectedTasks.add(currentlySelectedTask);
+				return selectedTasks;
+			}
+		}
+		
 		if(currentSelection != null){
 			List<TaskType> selectedTasks = new ArrayList<TaskType>();
-			List<?> selections = ((IStructuredSelection)currentSelection).toList();
-			for (Iterator<?> iterator = selections.iterator(); iterator.hasNext();) {
-				Object object = (Object) iterator.next();
+			List<?> selections = ((IStructuredSelection) currentSelection).toList();
+			for (Object object : selections) {
 				if(object != null && object instanceof TaskType){
 					selectedTasks.add((TaskType)object);
 				}

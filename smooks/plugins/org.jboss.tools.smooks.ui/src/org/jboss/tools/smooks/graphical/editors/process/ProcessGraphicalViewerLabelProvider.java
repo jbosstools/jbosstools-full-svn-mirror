@@ -87,7 +87,7 @@ public class ProcessGraphicalViewerLabelProvider extends LabelProvider implement
 			// if(TaskTypeManager.TASK_ID_INPUT.equals(((TaskType)element).getId())){
 			Image image = getImage(element);
 			String text = getText(element);
-			return new TaskNodeFigure(processEditor, image, text);
+			return new TaskNodeFigure((TaskType)element, processEditor, image, text);
 			// }
 		}
 		return null;

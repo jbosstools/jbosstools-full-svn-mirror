@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.template;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 

@@ -150,6 +150,8 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 	protected boolean needupdatewhenshow = true;
 
 	private ProcessType process;
+	
+	private TaskType currentlySelectedTask = null;
 
 	private Map<Object, String> smooksModelIdMap = new HashMap<Object, String>();
 
@@ -342,8 +344,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 						updateProcessActions(processGraphViewer.getSelection());
 						fillProcessMenu(manager);
 					} else {
-						for (Iterator<?> iterator = processPanelActions.iterator(); iterator.hasNext();) {
-							IAction action = (IAction) iterator.next();
+						for (IAction action : processPanelActions) {
 							if (action.isEnabled() && !(action instanceof DeleteTaskNodeAction)) {
 								manager.add(action);
 							}
@@ -898,7 +899,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 		return null;
 	}
 
-	protected void showTaskControl(Object model) {
+	public void showTaskControl(Object model) {
 		if (pageBook == null)
 			return;
 		if (model == null)
@@ -969,6 +970,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 							pageBook.showPage(id);
 						}
 					}
+					currentlySelectedTask = (TaskType) finalModel;
 				} else {
 					// pageBook.showEmptyPage();
 				}
@@ -976,6 +978,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 		});
 		updateGlobalActions();
+	}
+	
+	public TaskType getCurrentlySelectedTask() {
+		return currentlySelectedTask;
 	}
 
 	protected IEditorSite createSite(IEditorPart editor) {
