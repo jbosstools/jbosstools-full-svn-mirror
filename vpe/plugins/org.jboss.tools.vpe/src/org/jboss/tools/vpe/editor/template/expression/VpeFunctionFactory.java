@@ -30,6 +30,7 @@ public class VpeFunctionFactory {
 	private static final String FUNC_PARENT_ATTR_VALUE = "parentattrvalue";//$NON-NLS-1$
 	private static final String FUNC_HAS_CHILDREN = "haschildren";//$NON-NLS-1$
 	private static final String FUNC_HAS_CONTENT = "hascontent";//$NON-NLS-1$
+	private static final String FUNC_IS_LAST_CHILD = "isLastChild";//$NON-NLS-1$
 
 	private static Map<String,Class<?>> clsMap = new HashMap<String,Class<?>>();
 
@@ -84,6 +85,8 @@ public class VpeFunctionFactory {
 			return VpeFunctionHasChildren.class;
 		} else if (FUNC_HAS_CONTENT.equals(name)) {
 			return VpeFunctionHasContent.class;
+		} else if (FUNC_IS_LAST_CHILD.equals(name)) {
+			return VpeFunctionIsLastChild.class;
 		} else if(VpeFunctionTldVersionCheck.FUNCTION_NAME.equals(name)) {
 			return VpeFunctionTldVersionCheck.class;
 		}
