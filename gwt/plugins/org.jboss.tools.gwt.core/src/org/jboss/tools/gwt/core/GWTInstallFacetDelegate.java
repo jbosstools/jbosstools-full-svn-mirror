@@ -56,6 +56,8 @@ import org.jboss.tools.common.model.project.ProjectHome;
 import org.jboss.tools.common.util.FileUtil;
 import org.jboss.tools.gwt.core.internal.GWTCoreActivator;
 import org.jboss.tools.gwt.core.util.ProjectUtils;
+import org.jboss.tools.gwt.core.util.ResourceUtils;
+import org.jboss.tools.gwt.core.util.ZipUtils;
 import org.jboss.tools.usage.util.StatusUtils;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -66,6 +68,8 @@ import org.osgi.service.prefs.BackingStoreException;
  * @author Andre Dietisheim
  */
 public class GWTInstallFacetDelegate implements IDelegate {
+
+	private static final String GWTSERVLETJAR_FOLDER_PATTERN = "gwt-{0}.{1}.{2}";
 
 	public void execute(IProject project, IProjectFacetVersion projectFacetVersion, Object config,
 			IProgressMonitor monitor) throws CoreException {
@@ -79,10 +83,11 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		createWebApplicationPreferences(project, webContentPath, javaProject, monitor);
 		configureOutputFolder(webContentPath, javaProject, monitor);
 
-		List<IPath> srcFolderPaths = ProjectUtils.getSourceFolders(javaProject);
 		GWTInstallDataModelProvider dataModel = (GWTInstallDataModelProvider) config;
-		createSample(srcFolderPaths, webContentPath, dataModel, javaProject, monitor);
-
+		if (dataModel.isGenerateSampleCode()) {
+			List<IPath> srcFolderPaths = ProjectUtils.getSourceFolders(javaProject);
+			createSample(srcFolderPaths, webContentPath, javaProject, monitor);
+		}
 		configureWebXml(project, monitor);
 	}
 
@@ -139,15 +144,15 @@ public class GWTInstallFacetDelegate implements IDelegate {
 				new IWorkspaceRunnable() {
 					public void run(IProgressMonitor monitor) throws CoreException {
 						if (!outputWorkspaceFolder.exists()) {
-							ProjectUtils.create(outputWorkspaceFolder, monitor);
+							ResourceUtils.create(outputWorkspaceFolder, monitor);
 						}
 						javaProject.setOutputLocation(outputWorkspaceFolder.getFullPath(), monitor);
 					}
 				}, monitor);
 	}
 
-	private void createSample(final List<IPath> srcPaths, final IPath webContentPath,
-			GWTInstallDataModelProvider dataModel, final IJavaProject javaProject, IProgressMonitor monitor)
+	private void createSample(final List<IPath> srcPaths, final IPath webContentPath, final IJavaProject javaProject,
+			IProgressMonitor monitor)
 			throws CoreException {
 
 		if (srcPaths.size() <= 0) {
@@ -156,56 +161,52 @@ public class GWTInstallFacetDelegate implements IDelegate {
 			return;
 		}
 
-		if (dataModel.isGenerateSampleCode()) {
-			monitor.subTask("Creating sample code");
+		monitor.subTask("Creating sample code");
 
-			javaProject.getProject().getWorkspace().run(new IWorkspaceRunnable() {
-				public void run(IProgressMonitor monitor) throws CoreException {
-					try {
-						/**
-						 * TODO: it is not secure to take the first
-						 * source-folder that was found (there might be several
-						 * of them).
-						 */
-						unzipSrc(srcPaths.get(0), javaProject);
-						unzipWebContent(webContentPath, javaProject);
-						copyGwtServlet(javaProject, webContentPath, monitor);
+		javaProject.getProject().getWorkspace().run(new IWorkspaceRunnable() {
+			public void run(IProgressMonitor monitor) throws CoreException {
+				try {
+					/**
+					 * TODO: it is not secure to take the first source-folder
+					 * that was found (there might be several of them).
+					 */
+					unzipSrc(srcPaths.get(0), javaProject);
+					unzipWebContent(webContentPath, javaProject);
+					copyGwtServlet(javaProject, webContentPath, monitor);
 
-					} catch (IOException e) {
-						throw new CoreException(StatusUtils.getErrorStatus(GWTCoreActivator.PLUGIN_ID,
+				} catch (IOException e) {
+					throw new CoreException(StatusUtils.getErrorStatus(GWTCoreActivator.PLUGIN_ID,
 								"Could not unzip samples", e));
-					}
 				}
+			}
+		}, monitor);
 
-			}, monitor);
-
-			javaProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, monitor);
-		}
+		javaProject.getProject().refreshLocal(IResource.DEPTH_INFINITE, monitor);
 	}
 
 	private void unzipSrc(final IPath srcFolderPath, final IJavaProject javaProject) throws IOException {
 		ZipInputStream inputStream = new ZipInputStream(new BufferedInputStream(
-				ProjectUtils.checkedGetResourceStream(IGoogleEclipsePluginConstants.SAMPLE_HELLO_SRC_ZIP_FILENAME,
-						getClass())));
-		ProjectUtils.unzipToFolder(inputStream, ProjectUtils.getFile(srcFolderPath, javaProject.getProject()));
+				getClass().getResourceAsStream(IGoogleEclipsePluginConstants.SAMPLE_HELLO_SRC_ZIP_FILENAME)));
+		ZipUtils.unzipToFolder(inputStream, ResourceUtils.getFile(srcFolderPath, javaProject.getProject()));
 	}
 
 	private void unzipWebContent(IPath webContentPath, IJavaProject javaProject) throws IOException {
 		ZipInputStream zipInputStream = new ZipInputStream(new BufferedInputStream(
-				ProjectUtils.checkedGetResourceStream(
-						IGoogleEclipsePluginConstants.SAMPLE_HELLO_WEBCONTENT_ZIP_FILENAME, getClass())));
-		ProjectUtils.unzipToFolder(zipInputStream, ProjectUtils.getFile(webContentPath, javaProject.getProject()));
+				getClass().getResourceAsStream(IGoogleEclipsePluginConstants.SAMPLE_HELLO_WEBCONTENT_ZIP_FILENAME)));
+		ZipUtils.unzipToFolder(zipInputStream, ResourceUtils.getFile(webContentPath, javaProject.getProject()));
 	}
 
-	private void copyGwtServlet(IJavaProject javaProject, IPath webContentPath, IProgressMonitor monitor) throws IOException, CoreException {
+	private void copyGwtServlet(IJavaProject javaProject, IPath webContentPath, IProgressMonitor monitor)
+			throws IOException, CoreException {
 		FileUtil.copy(getGwtServletJar(), getGwtServletDestination(javaProject, webContentPath, monitor));
 	}
 
-	private FileOutputStream getGwtServletDestination(IJavaProject javaProject, IPath webContentPath, IProgressMonitor monitor)
+	private FileOutputStream getGwtServletDestination(IJavaProject javaProject, IPath webContentPath,
+			IProgressMonitor monitor)
 			throws CoreException, FileNotFoundException {
 		IPath webInfLibPath = webContentPath.append(new Path(IGoogleEclipsePluginConstants.WEB_INF_LIB));
 		IWorkspaceRoot workspaceRoot = javaProject.getProject().getWorkspace().getRoot();
-		ProjectUtils.create(workspaceRoot.getFolder(webInfLibPath), monitor);
+		ResourceUtils.create(workspaceRoot.getFolder(webInfLibPath), monitor);
 		IPath gwtServletFilePath = webInfLibPath.append(IGoogleEclipsePluginConstants.GWT_SERVLET_NAME);
 		File file = new File(workspaceRoot.getFile(gwtServletFilePath).getLocationURI());
 		return new FileOutputStream(file);
@@ -214,23 +215,17 @@ public class GWTInstallFacetDelegate implements IDelegate {
 	private InputStream getGwtServletJar() throws CoreException, IOException {
 		Bundle gwtBundle = getGwtSdkBundle(GWTCoreActivator.getDefault().getBundle().getBundleContext());
 		Assert.isTrue(gwtBundle != null,
-				MessageFormat.format("GWT SDK bundle was not found. Could not copy {0}", IGoogleEclipsePluginConstants.GWT_SERVLET_NAME));
+				MessageFormat.format("GWT SDK bundle was not found. Could not copy {0}",
+						IGoogleEclipsePluginConstants.GWT_SERVLET_NAME));
 		String gwtSdkVersion = getGwtServletFolder(gwtBundle);
 		IPath gwtServletPath = new Path(gwtSdkVersion).append(IGoogleEclipsePluginConstants.GWT_SERVLET_NAME);
 		return gwtBundle.getEntry(gwtServletPath.toFile().toString()).openStream();
 	}
-	
+
 	private String getGwtServletFolder(Bundle bundle) {
 		Version bundleVersion = bundle.getVersion();
-		return new StringBuilder()
-		.append("gwt")
-		.append("-")
-		.append(bundleVersion.getMajor())
-		.append(".")
-		.append(bundleVersion.getMinor())
-		.append(".")
-		.append(bundleVersion.getMicro())
-		.toString();	
+		return MessageFormat.format(GWTSERVLETJAR_FOLDER_PATTERN, bundleVersion.getMajor(), bundleVersion.getMinor(),
+				bundleVersion.getMicro());
 	}
 
 	private Bundle getGwtSdkBundle(BundleContext bundleContext) {
@@ -252,31 +247,14 @@ public class GWTInstallFacetDelegate implements IDelegate {
 	 *            the monitor to inform on progress
 	 */
 	protected void configureWebXml(final IProject project, IProgressMonitor monitor) {
-		IModelProvider modelProvider = ModelProviderManager.getModelProvider(project);
-		Object modelObject = modelProvider.getModelObject();
-		if (!(modelObject instanceof WebApp)) {
-			// TODO log
-			return;
-		}
-
 		monitor.subTask("configuring web.xml");
 
-		IPath webXmlPath = ProjectUtils.getWebXmlPath();
-		boolean exists = project.getProjectRelativePath().append(webXmlPath).toFile().exists();
-		if (!exists) {
-			webXmlPath = IModelProvider.FORCESAVE;
-		}
+		IModelProvider modelProvider = ModelProviderManager.getModelProvider(project);
+		IPath webXmlPath = ProjectUtils.getWebXmlPath(project);
 		modelProvider.modify(new Runnable() {
 
 			public void run() {
-				IModelProvider modelProvider = ModelProviderManager.getModelProvider(project);
-				Object modelObject = modelProvider.getModelObject();
-				if (!(modelObject instanceof WebApp)) {
-					// TODO log
-					return;
-				}
-				WebApp webApp = (WebApp) modelObject;
-
+				WebApp webApp = ProjectUtils.getWebApp(project);
 				Servlet servlet = createServlet(
 						IGoogleEclipsePluginConstants.SERVLET_NAME,
 						IGoogleEclipsePluginConstants.SERVLET_CLASS,
