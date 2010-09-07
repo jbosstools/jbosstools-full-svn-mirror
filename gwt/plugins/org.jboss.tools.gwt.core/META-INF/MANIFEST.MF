@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: JBoss Tools GWT (experimental)
+Bundle-Name: JBoss Tools GWT (Experimental)
 Bundle-SymbolicName: org.jboss.tools.gwt.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.jboss.tools.gwt.core.internal.GWTCoreActivator
