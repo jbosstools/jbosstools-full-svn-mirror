@@ -11,7 +11,11 @@
 package org.jboss.tools.gwt.core;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.zip.ZipInputStream;
@@ -19,6 +23,7 @@ import java.util.zip.ZipInputStream;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.Assert;
@@ -43,15 +48,18 @@ import org.eclipse.jst.javaee.web.ServletMapping;
 import org.eclipse.jst.javaee.web.WebApp;
 import org.eclipse.jst.javaee.web.WebFactory;
 import org.eclipse.jst.javaee.web.WelcomeFileList;
-import org.eclipse.wst.common.componentcore.ModuleCoreNature;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.jboss.tools.common.EclipseUtil;
 import org.jboss.tools.common.log.LogHelper;
 import org.jboss.tools.common.model.project.ProjectHome;
+import org.jboss.tools.common.util.FileUtil;
 import org.jboss.tools.gwt.core.internal.GWTCoreActivator;
 import org.jboss.tools.gwt.core.util.ProjectUtils;
 import org.jboss.tools.usage.util.StatusUtils;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Version;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
@@ -66,7 +74,6 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		addGwtNature(javaProject, monitor);
 		addClasspathContainer(javaProject, monitor);
 
-		addModuleCoreNature(project, monitor);
 		IPath webContentPath = getWebContentFolder(project, monitor);
 
 		createWebApplicationPreferences(project, webContentPath, javaProject, monitor);
@@ -93,12 +100,6 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		EclipseUtil.addNatureToProject(javaProject.getProject(), IGoogleEclipsePluginConstants.GWT_NATURE);
 	}
 
-	private void addModuleCoreNature(IProject project, IProgressMonitor monitor) throws CoreException {
-		monitor.subTask("Adding module core nature");
-
-		ModuleCoreNature.addModuleCoreNatureIfNecessary(project, monitor);
-	}
-
 	private void addClasspathContainer(IJavaProject javaProject, IProgressMonitor monitor) throws CoreException {
 		monitor.subTask("Adding gwt container to classpath");
 
@@ -115,7 +116,8 @@ public class GWTInstallFacetDelegate implements IDelegate {
 			IScopeContext projectScope = new ProjectScope(project);
 			IEclipsePreferences preferences = projectScope.getNode(IGoogleEclipsePluginConstants.GDT_PLUGIN_ID);
 
-			preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_KEY, webContentPath.makeRelativeTo(project.getFullPath()).toString());
+			preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_KEY,
+					webContentPath.makeRelativeTo(project.getFullPath()).toString());
 			preferences.put(IGoogleEclipsePluginConstants.WAR_SRCDIR_ISOUTPUT_KEY,
 					IGoogleEclipsePluginConstants.WAR_SRCDIR_ISOUTPUT_DEFAULTVALUE);
 			preferences.flush();
@@ -125,11 +127,13 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		}
 	}
 
-	private void configureOutputFolder(IPath webContentProjectPath, final IJavaProject javaProject, IProgressMonitor monitor)
+	private void configureOutputFolder(IPath webContentProjectPath, final IJavaProject javaProject,
+			IProgressMonitor monitor)
 			throws CoreException, JavaModelException {
 		IProject project = javaProject.getProject();
 		monitor.subTask("Configuring output folder");
-		IPath outputFolderProjectPath = webContentProjectPath.append(new Path(IGoogleEclipsePluginConstants.OUTPUT_FOLDER_DEFAULTVALUE));
+		IPath outputFolderProjectPath = webContentProjectPath.append(new Path(
+				IGoogleEclipsePluginConstants.OUTPUT_FOLDER_DEFAULTVALUE));
 		final IFolder outputWorkspaceFolder = project.getWorkspace().getRoot().getFolder(outputFolderProjectPath);
 		project.getWorkspace().run(
 				new IWorkspaceRunnable() {
@@ -165,6 +169,7 @@ public class GWTInstallFacetDelegate implements IDelegate {
 						 */
 						unzipSrc(srcPaths.get(0), javaProject);
 						unzipWebContent(webContentPath, javaProject);
+						copyGwtServlet(javaProject, webContentPath, monitor);
 
 					} catch (IOException e) {
 						throw new CoreException(StatusUtils.getErrorStatus(GWTCoreActivator.PLUGIN_ID,
@@ -190,6 +195,51 @@ public class GWTInstallFacetDelegate implements IDelegate {
 				ProjectUtils.checkedGetResourceStream(
 						IGoogleEclipsePluginConstants.SAMPLE_HELLO_WEBCONTENT_ZIP_FILENAME, getClass())));
 		ProjectUtils.unzipToFolder(zipInputStream, ProjectUtils.getFile(webContentPath, javaProject.getProject()));
+	}
+
+	private void copyGwtServlet(IJavaProject javaProject, IPath webContentPath, IProgressMonitor monitor) throws IOException, CoreException {
+		FileUtil.copy(getGwtServletJar(), getGwtServletDestination(javaProject, webContentPath, monitor));
+	}
+
+	private FileOutputStream getGwtServletDestination(IJavaProject javaProject, IPath webContentPath, IProgressMonitor monitor)
+			throws CoreException, FileNotFoundException {
+		IPath webInfLibPath = webContentPath.append(new Path(IGoogleEclipsePluginConstants.WEB_INF_LIB));
+		IWorkspaceRoot workspaceRoot = javaProject.getProject().getWorkspace().getRoot();
+		ProjectUtils.create(workspaceRoot.getFolder(webInfLibPath), monitor);
+		IPath gwtServletFilePath = webInfLibPath.append(IGoogleEclipsePluginConstants.GWT_SERVLET_NAME);
+		File file = new File(workspaceRoot.getFile(gwtServletFilePath).getLocationURI());
+		return new FileOutputStream(file);
+	}
+
+	private InputStream getGwtServletJar() throws CoreException, IOException {
+		Bundle gwtBundle = getGwtSdkBundle(GWTCoreActivator.getDefault().getBundle().getBundleContext());
+		Assert.isTrue(gwtBundle != null,
+				MessageFormat.format("GWT SDK bundle was not found. Could not copy {0}", IGoogleEclipsePluginConstants.GWT_SERVLET_NAME));
+		String gwtSdkVersion = getGwtServletFolder(gwtBundle);
+		IPath gwtServletPath = new Path(gwtSdkVersion).append(IGoogleEclipsePluginConstants.GWT_SERVLET_NAME);
+		return gwtBundle.getEntry(gwtServletPath.toFile().toString()).openStream();
+	}
+	
+	private String getGwtServletFolder(Bundle bundle) {
+		Version bundleVersion = bundle.getVersion();
+		return new StringBuilder()
+		.append("gwt")
+		.append("-")
+		.append(bundleVersion.getMajor())
+		.append(".")
+		.append(bundleVersion.getMinor())
+		.append(".")
+		.append(bundleVersion.getMicro())
+		.toString();	
+	}
+
+	private Bundle getGwtSdkBundle(BundleContext bundleContext) {
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (bundle.getSymbolicName().contains(IGoogleEclipsePluginConstants.GWT_SDK_BUNDLENAME)) {
+				return bundle;
+			}
+		}
+		return null;
 	}
 
 	/**

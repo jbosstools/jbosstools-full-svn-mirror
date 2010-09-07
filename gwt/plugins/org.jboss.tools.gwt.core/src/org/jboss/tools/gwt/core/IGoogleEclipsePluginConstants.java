@@ -55,4 +55,11 @@ public class IGoogleEclipsePluginConstants {
 	public static final String SERVLET_MAPPING = "/gwt_jboss/greet"; //$NON-NLS-1$
 
 	public static final String WELCOME_FILE = "Gwt_jboss.html"; //$NON-NLS-1$
+
+	public static final String GWT_SDK_BUNDLENAME = "com.google.gwt.eclipse.sdkbundle"; //$NON-NLS-1$
+
+	public static final String GWT_SERVLET_NAME = "gwt-servlet.jar"; //$NON-NLS-1$
+
+	public static final String WEB_INF_LIB = "/WEB-INF/lib"; //$NON-NLS-1$;
+	
 }
