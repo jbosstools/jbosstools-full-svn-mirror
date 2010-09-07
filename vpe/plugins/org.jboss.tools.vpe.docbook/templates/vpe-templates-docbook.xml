@@ -97,7 +97,7 @@
 			<div />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="keywordset" case-sensitive="yes">
+	<vpe:tag name="keywordset" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div/>
 		</vpe:template>
@@ -136,12 +136,12 @@
 			<div />
 		</vpe:template>
 	</vpe:tag>  
-	<vpe:tag name="book" case-sensitive="yes">
+	<vpe:tag name="book" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div/>
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="bookinfo" case-sensitive="yes">
+	<vpe:tag name="bookinfo" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div/>
 		</vpe:template>
@@ -297,7 +297,7 @@
 			</div>
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="abstract" case-sensitive="yes">
+	<vpe:tag name="abstract" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div/>
 		</vpe:template>
@@ -317,12 +317,12 @@
 			<p />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="corpauthor" case-sensitive="yes">
+	<vpe:tag name="corpauthor" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div/>
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="inlinemediaobject" case-sensitive="yes">
+	<vpe:tag name="inlinemediaobject" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div/>
 		</vpe:template>
