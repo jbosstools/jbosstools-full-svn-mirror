@@ -85,6 +85,7 @@ public class NewInstance extends Wizard {
 				try {
 					pm.beginTask(WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] {instanceName}), IProgressMonitor.UNKNOWN);
 					pm.worked(1);
+					cloud.registerActionJob(instanceId, this);
 					boolean finished = false;
 					while (!finished && !pm.isCanceled()) {
 						instance = cloud.refreshInstance(instanceId);
@@ -96,9 +97,8 @@ public class NewInstance extends Wizard {
 				} catch (Exception e) {
 					// do nothing
 				} finally {
-					if (!pm.isCanceled()) {
-						cloud.addReplaceInstance(instance);
-					}
+					cloud.addReplaceInstance(instance);
+					cloud.removeActionJob(instanceId, this);
 					pm.done();
 				}
 				return Status.OK_STATUS;

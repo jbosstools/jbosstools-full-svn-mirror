@@ -287,6 +287,7 @@ public class ManageKeysPage extends WizardPage {
 	
         setControl(container);
 		loadFileList();
+		validate();
 	}
 
 }

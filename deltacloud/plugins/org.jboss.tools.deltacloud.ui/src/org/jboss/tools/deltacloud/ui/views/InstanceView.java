@@ -348,12 +348,13 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	 	
 		@Override
 		public IStatus run(IProgressMonitor pm) {
+			String id = instance.getId();
 			try {
 				pm.beginTask(taskName, IProgressMonitor.UNKNOWN);
 				pm.worked(1);
 				// To handle the user starting a new action when we haven't confirmed the last one yet,
 				// cancel the previous job and then go on performing this action
-				Job job = currentPerformingActions.get(instance.getId());
+				Job job = cloud.getActionJob(id);
 				if (job != null) {
 					job.cancel();
 					try {
@@ -362,8 +363,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 						// do nothing, this is ok
 					}
 				}
-				currentPerformingActions.put(instance.getId(), this);
-				cloud.performInstanceAction(instance.getId(), action);
+				currentPerformingActions.put(id, this);
+				cloud.performInstanceAction(id, action);
 				while (instance != null && !(instance.getState().equals(expectedState))
 						&& !(instance.getState().equals(DeltaCloudInstance.TERMINATED))) {
 					instance = refreshInstance(instance);
@@ -376,6 +377,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			} catch (DeltaCloudException e) {
 				// do nothing..action had problem executing..perhaps illegal
 			} finally {
+				cloud.removeActionJob(id, this);
 				pm.done();
 			}
 			return Status.OK_STATUS;
@@ -397,9 +399,22 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	 	
 	 	@Override
 	 	public IStatus run(IProgressMonitor pm) {
+	 		String id = instance.getId();
 	 		try {
 	 			pm.beginTask(taskName, IProgressMonitor.UNKNOWN);
 	 			pm.worked(1);
+				// To handle the user starting a new action when we haven't confirmed the last one yet,
+				// cancel the previous job and then go on performing this action
+				Job job = cloud.getActionJob(id);
+				if (job != null) {
+					job.cancel();
+					try {
+						job.join();
+					} catch (InterruptedException e) {
+						// do nothing, this is ok
+					}
+				}
+				cloud.registerActionJob(id, this);
 	 			Display.getDefault().asyncExec(new Runnable() {
 	 				@Override
 	 				public void run() {
@@ -407,6 +422,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	 				}
 	 			});
 	 		} finally {
+	 			cloud.removeActionJob(id, this);
 	 			pm.done();
 	 		}
 	 		return Status.OK_STATUS;
