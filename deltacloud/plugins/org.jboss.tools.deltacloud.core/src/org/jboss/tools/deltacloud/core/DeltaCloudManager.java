@@ -156,7 +156,7 @@ public class DeltaCloudManager {
 		// includes the password.
 		if (!found) {
 			ISecurePreferences root = SecurePreferencesFactory.getDefault();
-			String key = DeltaCloud.getPreferencesKey(d.getURL(), d.getUsername());
+			String key = DeltaCloud.getPreferencesKey(url, userName);
 			ISecurePreferences node = root.node(key);
 			node.clear();
 		}

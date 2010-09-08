@@ -1,3 +1,13 @@
+2010-09-08  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* .classpath: Fix to remove error messages.
+	* META-INF/MANIFEST.MF: Move deltaclient.jar to end of dependencies.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getActionJob): New method.
+	(registerActionJob): Ditto.
+	(removeActionJob): Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (removeCloud): Use cached
+	username and url.
+
 2010-09-03  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (addReplaceInstance): New method.

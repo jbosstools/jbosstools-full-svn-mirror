@@ -13,10 +13,13 @@ package org.jboss.tools.deltacloud.core;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
@@ -38,8 +41,10 @@ public class DeltaCloud {
 	private DeltaCloudClient client;
 	private ArrayList<DeltaCloudInstance> instances;
 	private ArrayList<DeltaCloudImage> images;
+	private Map<String, Job> actionJobs;
 	private Object imageLock = new Object();
 	private Object instanceLock = new Object();
+	private Object actionLock = new Object();
 	
 	ListenerList instanceListeners = new ListenerList();
 	ListenerList imageListeners = new ListenerList();
@@ -129,6 +134,31 @@ public class DeltaCloud {
 			((IImageListListener)listeners[i]).listChanged(this, array);
 	}
 
+	public Job getActionJob(String id) {
+		synchronized (actionLock) {
+			Job j = null;
+			if (actionJobs != null) {
+				return actionJobs.get(id);
+			}
+			return j;
+		}
+	}
+
+	public void registerActionJob(String id, Job j) {
+		synchronized (actionLock) {
+			if (actionJobs == null)
+				actionJobs = new HashMap<String, Job>();
+			actionJobs.put(id, j);
+		}
+	}
+
+	public void removeActionJob(String id, Job j) {
+		synchronized (actionLock) {
+			if (actionJobs != null && actionJobs.get(id) == j)
+				actionJobs.remove(id);
+		}
+	}
+	
 	public DeltaCloudInstance[] getInstances() {
 		synchronized (instanceLock) {
 			instances = new ArrayList<DeltaCloudInstance>();
