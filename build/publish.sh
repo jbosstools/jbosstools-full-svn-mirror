@@ -8,6 +8,9 @@
 # where to create the stuff to publish
 STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
 
+# https://jira.jboss.org/browse/JBIDE-6956 "jbosstools-3.2.0.M2" is too verbose, use "3.2.0.M2" instead
+JOBNAMEREDUX=${JOB_NAME/.aggregate}; JOBNAMEREDUX=${JOBNAMEREDUX/jbosstools-}
+
 # releases get named differently than snapshots
 if [[ ${RELEASE} == "Yes" ]]; then
 	ZIPSUFFIX="${BUILD_ID}-H${BUILD_NUMBER}"
@@ -101,7 +104,7 @@ zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.o
 popd
 
 # collect component zips from upstream aggregated build jobs
-if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
+if [[ ${JOBNAMEREDUX} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
 	mkdir -p ${STAGINGDIR}/components
 	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Update*.zip") $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
 		mv $z ${STAGINGDIR}/components
@@ -122,7 +125,7 @@ echo ""  >> ${STAGINGDIR}/logs/${METAFILE}
 if [[ ${RELEASE} == "Yes" ]]; then
 	mkdir -p ${STAGINGDIR}/logs
 	ANT_PARAMS="-v -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
-	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then # reuse snippet from upstream build
+	if [[ ${JOBNAMEREDUX} != ${JOB_NAME} ]]; then # reuse snippet from upstream build
 		ANT_PARAMS="${ANT_PARAMS} -Dtemplate.file=http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/${JOB_NAME/.aggregate/.continuous}/logs/download-snippet.txt"
 	fi
 	for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
@@ -165,14 +168,14 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 	if [[ -d ${STAGINGDIR} ]]; then
 		
 		# if an aggregate build, put output elsewhere on disk
-		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
+		if [[ ${JOBNAMEREDUX} != ${JOB_NAME} ]]; then
 			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > /tmp/latestBuild.html
 			if [[ $1 == "trunk" ]]; then
 				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/trunk/${BUILD_ID}-H${BUILD_NUMBER}/
 				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/trunk/
 			else
-				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOB_NAME/.aggregate}/
-				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOB_NAME/.aggregate}/${BUILD_ID}-H${BUILD_NUMBER}/
+				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
+				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
 			fi
 			rm -f /tmp/latestBuild.html
 		else
@@ -187,11 +190,11 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 	fi
 
 	# extra publish step for aggregate update sites ONLY
-	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
+	if [[ ${JOBNAMEREDUX} != ${JOB_NAME} ]]; then
 		if [[ $1 == "trunk" ]]; then 
 			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/trunk/
 		else
-			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOB_NAME/.aggregate}/
+			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOBNAMEREDUX}/
 		fi
 	fi
 fi
