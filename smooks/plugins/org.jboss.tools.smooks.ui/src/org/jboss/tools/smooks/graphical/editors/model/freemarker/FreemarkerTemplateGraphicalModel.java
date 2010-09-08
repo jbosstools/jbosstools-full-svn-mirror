@@ -30,6 +30,7 @@ import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigGrap
 import org.jboss.tools.smooks.graphical.editors.template.FreemarkerTemplateContentGraphModelProviderImpl;
 import org.jboss.tools.smooks.graphical.editors.template.IFreemarkerTemplateContentGraphModelProvider;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
+import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
@@ -87,6 +88,28 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 		return templateBuilder;
 	}
 
+	public void changeFreemarkerContents() {
+		Template template = null;
+		
+		if (data instanceof Freemarker) {
+			template = ((Freemarker) data).getTemplate();
+		}
+		
+		if (template == null) {
+			return;
+		}
+		
+		if (templateBuilder != null) {
+			String content = null;
+			try {
+				content = templateBuilder.buildTemplate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			SmooksModelUtils.setCDATAToSmooksType(domainProvider.getEditingDomain(), template, content);
+		}
+	}
+	
 	protected IFreemarkerTemplateContentGraphModelProvider createFreemarkerTemplateContentGraphModelProvider() {
 		return new FreemarkerTemplateContentGraphModelProviderImpl();
 	}
@@ -104,6 +127,11 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 				this.getChildrenWithoutDynamic().add(abstractSmooksGraphicalModel);
 				abstractSmooksGraphicalModel.setParent(this);
 			}
+		}
+		
+		Template template = freemarker.getTemplate();
+		if(template.getValue() == null) {
+			SmooksModelUtils.setCDATAToSmooksType(domainProvider.getEditingDomain(), template, "<noMappings/>"); //$NON-NLS-1$
 		}
 	}
 
