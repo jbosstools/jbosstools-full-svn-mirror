@@ -17,6 +17,7 @@ import java.net.*;
 
 import org.w3c.dom.*;
 import org.xml.sax.Attributes;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -99,8 +100,13 @@ public class MetaLibLoader {
 			stream1 = url.openStream();
 			stream2 = new BufferedInputStream(stream1, 16384);
 		
-		
 			Element g = parse(stream2);
+			if(g == null) {
+				ModelPlugin.getPluginLog().logError("SAX parser failed to load meta resource " + name);
+				stream1 = url.openStream();
+				stream2 = new BufferedInputStream(stream1, 16384);
+				g = XMLUtilities.getElement(stream2, new EmptyResolver());
+			}
 			if(g == null) {
 				ModelPlugin.getPluginLog().logInfo("Corrupted meta resource " + name); //$NON-NLS-1$
 			} else {
@@ -158,7 +164,9 @@ public class MetaLibLoader {
 		p.parse(stream);
 		Element g = p.documentElement;
 		g = XMLUtilities.getUniqueChild(g, "XModelEntityGroup"); //$NON-NLS-1$
-		p.documentElement.removeChild(g);
+		if(g != null) {
+			p.documentElement.removeChild(g);
+		}
 		return g;
     }
 
@@ -241,14 +249,35 @@ class Parser implements ContentHandler {
 			ModelPlugin.getPluginLog().logError(e);
     	}
 	}
+   
+    XMLReader newInstance() throws SAXException {
+    	try {
+    	    return (XMLReader) ModelPlugin.getDefault().getBundle().loadClass(DEFAULT_SAX_PARSER_CLASS_NAME).newInstance();
+    	} catch (ClassNotFoundException e1) {
+    	    throw new SAXException("SAX2 driver class " + DEFAULT_SAX_PARSER_CLASS_NAME +
+    				   " not found", e1);
+    	} catch (IllegalAccessException e2) {
+    	    throw new SAXException("SAX2 driver class " + DEFAULT_SAX_PARSER_CLASS_NAME +
+    				   " found but cannot be loaded", e2);
+    	} catch (InstantiationException e3) {
+    	    throw new SAXException("SAX2 driver class " + DEFAULT_SAX_PARSER_CLASS_NAME +
+    	   " loaded but cannot be instantiated (no empty public constructor?)",
+    				   e3);
+    	} catch (ClassCastException e4) {
+    	    throw new SAXException("SAX2 driver class " + DEFAULT_SAX_PARSER_CLASS_NAME +
+    				   " does not implement XMLReader", e4);
+    	}
+    }
 	
     XMLReader createParser() {
         DefaultHandler handler = new DefaultHandler();
         XMLReader parserInstance = null;
 
         try {
-            parserInstance = XMLReaderFactory.createXMLReader(DEFAULT_SAX_PARSER_CLASS_NAME);
+            parserInstance = newInstance();
+            	//XMLReaderFactory.createXMLReader(DEFAULT_SAX_PARSER_CLASS_NAME);
         } catch (SAXException e) {
+        	ModelPlugin.getPluginLog().logError("default parser failed: " + e.getMessage());        	
         	return null;
         }
 
@@ -260,14 +289,6 @@ class Parser implements ContentHandler {
         SAXValidator.setFeature(parserInstance, VALIDATION_DYNAMIC_FEATURE_ID, false);
         SAXValidator.setFeature(parserInstance, FATAL_ERROR_PROCESSING_FEATURE_ID, false);
 
-        class EmptyHandler implements org.apache.xerces.xni.parser.XMLEntityResolver {
-
-			public XMLInputSource resolveEntity(XMLResourceIdentifier id)
-					throws XNIException, IOException {
-				return new XMLInputSource(id.getPublicId(), id.getBaseSystemId(), id.getBaseSystemId(), new StringReader(""), null);
-			}
-        	
-        }
         try {
         	if(MetaLibLoader.validateMetaXML) {
         		parserInstance.setProperty(ENTITY_RESOLVER_PROPERTY_ID, new XMLEntityResolverImpl());
@@ -331,4 +352,19 @@ class Parser implements ContentHandler {
 
 	public void startPrefixMapping(String prefix, String uri) throws SAXException {}
 
+}
+
+class EmptyHandler implements org.apache.xerces.xni.parser.XMLEntityResolver {
+
+	public XMLInputSource resolveEntity(XMLResourceIdentifier id)
+			throws XNIException, IOException {
+		return new XMLInputSource(id.getPublicId(), id.getBaseSystemId(), id.getBaseSystemId(), new StringReader(""), null);
+	}
+	
+}
+
+class EmptyResolver implements EntityResolver {
+	public InputSource resolveEntity(String publicID, String systemID) throws SAXException, IOException {
+		return new InputSource(new StringReader("")); //$NON-NLS-1$
+	}
 }
