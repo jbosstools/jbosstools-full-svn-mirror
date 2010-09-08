@@ -1,5 +1,6 @@
 2010-09-08  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: Fix warning.
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (PerformInstanceActionThread.run): Register
 	action Job with cloud and cancel any currently running action Job. 
 	(PerformDestroyInstanceActionThread.run): Ditto.

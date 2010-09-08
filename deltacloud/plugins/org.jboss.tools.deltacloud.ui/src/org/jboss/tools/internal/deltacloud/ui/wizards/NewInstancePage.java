@@ -14,8 +14,6 @@ import java.util.ArrayList;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.IDialogPage;
-import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -60,8 +58,6 @@ public class NewInstancePage extends WizardPage {
 	private static final String KEY_LABEL = "Key.label"; //$NON-NLS-1$
 	private static final String MANAGE_BUTTON_LABEL = "ManageButton.label"; //$NON-NLS-1$
 	private static final String PROPERTIES_LABEL = "Properties.label"; //$NON-NLS-1$
-	
-	private static final String PEM_NAME = "Pem.name"; //$NON-NLS-1$
 	
 	private static final String NONE_RESPONSE = "None.response"; //$NON-NLS-1$
 	@SuppressWarnings("unused")
