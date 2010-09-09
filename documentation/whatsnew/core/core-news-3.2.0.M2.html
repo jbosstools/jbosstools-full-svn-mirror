@@ -14,7 +14,7 @@
 <tr>
 	<td>
 	<p align="right"><a href="../index.html">&lt; Main Index</a> <a
-		href="../as/as-news-3.2.0.M2.html">JBoss AS Tools &gt;</a></p>
+		href="../usage/usage-news-3.2.0.M2.html">Usage Plugins &gt;</a></p>
 	</td>
 </tr>
 </table>
@@ -30,28 +30,40 @@
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Usage Reporting</b></td>
 		<td valign="top">
 			<p>
-				3.2.0.M2 comes a component that shall allow us to better fullfill our customers needs and expectations. The usage reporting plugin collects data about the local eclipse installation and reports them anonymously. 
-				We collect the version, plugins, etc. and report them to a google analytics account.
+				We've added a usage plugin that will
+	allow us to get anonymous usage statistics for JBoss Tools
+	usage. More details about how it works can be found <a href="http://jboss.org/tools/usage">here</a>.
 			</p>
-		<p><img src="../images/usage-reporting-google-analytics.png" style=" width : 982px;"/></p>
+
+		  <p>The following screenshot shows what details we
+		get for screen resolutions after a few days of nightly
+		build usage.</p> <p><img
+		src="../images/usage-reporting-google-analytics.png"/></p>
 		<p><small><a
-			href="https://jira.jboss.org/browse/JBIDE-6376">Related Jira</a></small></p>
-		</td>
-	</tr>
-	<tr>
-    	<td colspan="2">
-			<hr/>
-    	</td>
-    </tr>
-	<tr>
-		<td valign="top" align="left"><a name="itemname2" id="itemname2"></a><b>Runtime detection</b></td>
-		<td valign="top">
+		 href="https://jira.jboss.org/browse/JBIDE-6376">Related
+		Jira</a></small></p> </td> </tr> <tr> <td colspan="2">
+		<hr/> </td> </tr> <tr> <td valign="top"
+		align="left"><a name="itemname2"
+		id="itemname2"></a><b>Runtime detection</b></td> <td
+		valign="top"> <p>We have added a "Search and install
+		runtimes" feature to JBoss Tools similar to what
+		previously only were available from JBoss Developer
+		Studio installer.</p> <p>The feature is available
+		under JBoss Tools Preferences and allows you add any
+		time to scan for additional runtimes and servers
+		instead of configuring each individual runtime
+		manually.</p> <p> The "Search" action recognizes JBoss
+		AS server, JBoss EAP/EPP/SOA, Seam, a standalone Seam,
+		JBPM and Drools runtime.  There is a filter to export
+		JBoss Runtime preferences that can be used within the
+		standard Eclipse Export wizard.  The standard Eclipse
+		Export wizard doesn't export any JBPM and WTP server
+		configurations. The Export/Import action within the
+		Runtime preference page will export/import those
+		configurations too.</p>
+		  
 		<p><img src="../images/jbide6119.png"/></p>
-		<p>The "Search" action recognizes JBoss AS server, JBoss EAP/EPP/SOA, Seam, a standalone Seam, JBPM and Drools runtime.
-There is a filter to export JBoss Runtime preferences that can be used within the standard Eclipse Export wizard.
-The standard Eclipse Export wizard doesn't export any JBPM and WTP server configurations. The Export/Import action within the Runtime preference page will export/import those configurations too.</p>
-		<p><small><a
-			href="https://jira.jboss.org/browse/JBIDE-6119">Related Jira</a></small></p>
+		<p><small><a href="https://jira.jboss.org/browse/JBIDE-6119">Related Jira</a></small></p>
 		</td>
 	</tr>
 </table>
