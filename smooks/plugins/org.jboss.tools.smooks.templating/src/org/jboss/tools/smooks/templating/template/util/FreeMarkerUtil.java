@@ -71,44 +71,71 @@ public class FreeMarkerUtil {
 		return (variable.startsWith("${") && variable.endsWith("}")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
-	public static String toFreeMarkerVariable(ValueMapping mapping) {
-		StringBuilder builder = new StringBuilder();
-		Properties encodeProperties = mapping.getEncodeProperties();
-		String rawFormatting;
-		
-		if(encodeProperties == null) {
-			encodeProperties = new Properties();
-		}
-				
-		builder.append("${" + mapping.getSrcPath() + "!?"); //$NON-NLS-1$ //$NON-NLS-2$
-		
-		rawFormatting = encodeProperties.getProperty(ValueMapping.RAW_FORMATING_KEY);
-		if(rawFormatting != null) {
-			builder.append(rawFormatting);			
-			builder.append("}");			 //$NON-NLS-1$
+	public static String toFreeMarkerVariable(ValueMapping mapping, boolean isNodeModelSource) {
+		if(isNodeModelSource) {
+			return "${" + FreeMarkerUtil.toPath(mapping.getSrcPath(), true) + "}";
 		} else {
-			Class<?> valueType = mapping.getValueType();
-			if(valueType != null) {
-				
-				if(valueType == java.util.Date.class) {
-					String format = encodeProperties.getProperty(DateDecoder.FORMAT);
-					if(format != null) {					
-						builder.append("string('" + format + "')}");								 //$NON-NLS-1$ //$NON-NLS-2$
+			StringBuilder builder = new StringBuilder();
+			Properties encodeProperties = mapping.getEncodeProperties();
+			String rawFormatting;
+			
+			if(encodeProperties == null) {
+				encodeProperties = new Properties();
+			}
+					
+			builder.append("${" + mapping.getSrcPath() + "!?"); //$NON-NLS-1$ //$NON-NLS-2$
+			
+			rawFormatting = encodeProperties.getProperty(ValueMapping.RAW_FORMATING_KEY);
+			if(rawFormatting != null) {
+				builder.append(rawFormatting);			
+				builder.append("}");			 //$NON-NLS-1$
+			} else {
+				Class<?> valueType = mapping.getValueType();
+				if(valueType != null) {
+					
+					if(valueType == java.util.Date.class) {
+						String format = encodeProperties.getProperty(DateDecoder.FORMAT);
+						if(format != null) {					
+							builder.append("string('" + format + "')}");								 //$NON-NLS-1$ //$NON-NLS-2$
+						} else {
+							builder.append("string.medium}");								 //$NON-NLS-1$
+						}
+					} else if(Number.class.isAssignableFrom(valueType)) {
+						builder.append("c}");								 //$NON-NLS-1$
+					} else if(valueType == Double.TYPE || valueType == Float.TYPE || valueType == Integer.TYPE || valueType == Long.TYPE || valueType == Short.TYPE) {
+						builder.append("c}");								 //$NON-NLS-1$
 					} else {
-						builder.append("string.medium}");								 //$NON-NLS-1$
+						builder.append("string}");			 //$NON-NLS-1$
 					}
-				} else if(Number.class.isAssignableFrom(valueType)) {
-					builder.append("c}");								 //$NON-NLS-1$
-				} else if(valueType == Double.TYPE || valueType == Float.TYPE || valueType == Integer.TYPE || valueType == Long.TYPE || valueType == Short.TYPE) {
-					builder.append("c}");								 //$NON-NLS-1$
 				} else {
 					builder.append("string}");			 //$NON-NLS-1$
 				}
-			} else {
-				builder.append("string}");			 //$NON-NLS-1$
 			}
+			
+			return builder.toString();
 		}
-		
-		return builder.toString();
+	}
+
+	public static String toPath(String srcPath, boolean nodeModelSource) {
+		if(nodeModelSource) {
+			StringBuilder builder = new StringBuilder();
+			String[] tokens = srcPath.split("\\.");
+			
+			builder.append(".vars[\"").append(tokens[0]).append("\"]");
+			if(tokens.length > 1) {
+				builder.append("[\"");
+				for(int i = 1; i < tokens.length; i++) {
+					if(i > 1) {
+						builder.append("/");
+					}
+					builder.append(tokens[i]);
+				}
+				builder.append("\"]");
+			}
+			
+			return builder.toString();
+		} else {
+			return srcPath;
+		}
 	}
 }

@@ -39,8 +39,8 @@ import org.jboss.tools.smooks.templating.model.ModelNodeResolver;
 import org.jboss.tools.smooks.templating.model.ModelBuilder.ElementType;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
 import org.jboss.tools.smooks.templating.template.*;
-import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
+import org.jboss.tools.smooks.templating.template.freemarker.FreeMarkerTemplateBuilder;
 import org.jboss.tools.smooks.templating.template.util.FreeMarkerUtil;
 import org.milyn.xml.DomUtils;
 import org.milyn.xml.XmlUtil;
@@ -54,7 +54,7 @@ import freemarker.template.Template;
  * 
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
+public class XMLFreeMarkerTemplateBuilder extends FreeMarkerTemplateBuilder {
 	
 	private boolean omitXMLDeclaration = false;
 
@@ -138,7 +138,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 				if(mapping instanceof CollectionMapping) {
 					collectionMapping = (CollectionMapping) mapping;
 					TemplateBuilder.writeIndent(indent, templateWriter);			
-					templateWriter.write("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					templateWriter.write("<#list " + FreeMarkerUtil.toPath(collectionMapping.getSrcPath(), isNodeModelSource()) + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 				
 				TemplateBuilder.writeIndent(indent, templateWriter);			
@@ -175,7 +175,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 				Mapping mapping = getMapping(attribute);
 				
 				if(mapping != null) {
-					writeAttribute(attribute.getNodeName(), FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping), templateWriter); //$NON-NLS-1$
+					writeAttribute(attribute.getNodeName(), FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping, isNodeModelSource()), templateWriter); //$NON-NLS-1$
 				} else if(ModelBuilder.isRequired(attribute)) {
 					writeAttribute(attribute.getNodeName(), attribute.getValue(), templateWriter);
 				}
@@ -216,7 +216,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 			if(ModelBuilder.getElementType(element) == ElementType.simple) {
 				templateWriter.write(">"); //$NON-NLS-1$
 				if(mapping != null) {
-					templateWriter.write(FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping));
+					templateWriter.write(FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping, isNodeModelSource()));
 				} else {
 					templateWriter.write(ModelBuilder.REQUIRED);
 				}
@@ -342,7 +342,7 @@ public class XMLFreeMarkerTemplateBuilder extends TemplateBuilder {
 			}
 
 			String[] tokens = description.split(" +?"); //$NON-NLS-1$
-			TemplateBuilder.writeListStart(templateRewriteBuffer, tokens[1], tokens[3]);
+			TemplateBuilder.writeListStart(templateRewriteBuffer, FreeMarkerUtil.toPath(tokens[1], isNodeModelSource()), tokens[3]);
 
 			Enumeration<TemplateElement> children = element.children();			
 			while(children != null && children.hasMoreElements()) {

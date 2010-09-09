@@ -31,6 +31,7 @@ import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.template.*;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
 import org.jboss.tools.smooks.templating.template.exception.UnmappedCollectionNodeException;
+import org.jboss.tools.smooks.templating.template.freemarker.FreeMarkerTemplateBuilder;
 import org.jboss.tools.smooks.templating.template.util.FreeMarkerUtil;
 import org.milyn.xml.DomUtils;
 
@@ -45,7 +46,7 @@ import freemarker.template.Template;
  *
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
-public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
+public class CSVFreeMarkerTemplateBuilder extends FreeMarkerTemplateBuilder {
 
     private char separatorChar;
     private char quoteChar;
@@ -196,7 +197,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
                 template.append('\n');
             }
 
-            template.append("<#list " + collectionMapping.getSrcPath() + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            template.append("<#list " + FreeMarkerUtil.toPath(collectionMapping.getSrcPath(), isNodeModelSource()) + " as " + collectionMapping.getCollectionItemName() + ">\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             int fieldIndex = 0;
             for(int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
@@ -209,7 +210,7 @@ public class CSVFreeMarkerTemplateBuilder extends TemplateBuilder {
 
                     if(fieldMapping != null) {
                         template.append(quoteChar);
-                        template.append(FreeMarkerUtil.toFreeMarkerVariable((ValueMapping) fieldMapping)); //$NON-NLS-1$
+                        template.append(FreeMarkerUtil.toFreeMarkerVariable((ValueMapping) fieldMapping, isNodeModelSource())); //$NON-NLS-1$
                         template.append(quoteChar);
                     }
 

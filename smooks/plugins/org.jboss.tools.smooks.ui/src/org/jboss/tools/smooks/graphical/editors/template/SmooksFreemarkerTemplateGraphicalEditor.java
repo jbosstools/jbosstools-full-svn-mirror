@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.template;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,12 +23,15 @@ import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.ConnectionModelFactory;
 import org.jboss.tools.smooks.graphical.editors.GraphicalModelFactory;
+import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPaletteRootCreator.SmooksModelCreationFactory;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
+import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
+import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
@@ -213,5 +217,21 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	@Override
 	public String getID() {
 		return ID;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#createInputDataGraphModel()
+	 */
+	@Override
+	protected List<AbstractSmooksGraphicalModel> createInputDataGraphModel() {
+		TaskType task = getTaskType();
+		Freemarker taskConfig = (Freemarker) task.getTaskResources().get(0);
+		String templateDataProvider = SmooksModelUtils.getParamValue(taskConfig.getParam(), SmooksModelUtils.TEMPLATE_DATA_PROVIDER_PARAM_NAME);
+		
+		if(templateDataProvider != null && templateDataProvider.trim().equals(TaskTypeManager.TASK_ID_INPUT)) {
+			return super.createInputDataGraphModel();
+		} else {
+			return Collections.EMPTY_LIST;
+		}
 	}
 }

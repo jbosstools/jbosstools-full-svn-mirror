@@ -5,16 +5,25 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
+import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.templating.template.CollectionMapping;
+import org.w3c.dom.Node;
 
 public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 
 	protected ITreeContentProvider contentProvider;
 
 	protected ILabelProvider labelProvider;
+	
+	protected List<TreeNodeConnection> connections;
 
 	public TreeNodeModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
 		super(data);
@@ -130,6 +139,68 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 
 	public boolean canLinkWithTarget(Object model) {
 		return true;
+	}
+	
+	public boolean isValidValueNode() {
+		Object unwrappedData = AdapterFactoryEditingDomain.unwrap(data);
+
+		if (unwrappedData instanceof TagPropertyObject) {
+			return true;
+		} else if(unwrappedData instanceof TagObject) {
+			TagObject tagObject = (TagObject) unwrappedData;
+			return tagObject.getChildren().isEmpty();
+		}
+		
+		return false;
+	}
+	
+	public boolean isValidCollectionNode() {
+		Object unwrappedData = AdapterFactoryEditingDomain.unwrap(data);
+
+		if(unwrappedData instanceof TagObject) {
+			TagObject tagObject = (TagObject) unwrappedData;
+			return !tagObject.getChildren().isEmpty();
+		}
+		
+		return false;
+	}
+	
+	public List<TreeNodeConnection> getConnections() {
+		if(connections == null) {
+			connections = new ArrayList<TreeNodeConnection>();
+		}
+		return connections;
+	}
+
+	public void setConnections(List<TreeNodeConnection> connections) {
+		this.connections = connections;
+	}
+
+	protected TreeNodeConnection getConnection() {
+		if(connections == null || connections.isEmpty()) {
+			return null;
+		} else if(connections.size() > 1) {
+			throw new IllegalStateException("Invalid call to getConnection() for node that has multiple connections.  May be a source node?  Use getConnections()."); //$NON-NLS-1$	
+		}
+		
+		return connections.get(0);
+	}
+
+	protected TreeNodeConnection getParentCollectionConnection() {
+		AbstractSmooksGraphicalModel parentObj = getParent();
+		
+		if(parentObj == null || !(parentObj instanceof TreeNodeModel)) {
+			return null;
+		}
+		
+		TreeNodeModel parentNode = (TreeNodeModel) parentObj;
+		TreeNodeConnection parentConnection = parentNode.getConnection();
+		
+		if(parentConnection != null && parentConnection.getData() instanceof CollectionMapping) {
+			return parentConnection;
+		}
+		
+		return parentNode.getParentCollectionConnection();
 	}
 
 	public void setText(String text) {

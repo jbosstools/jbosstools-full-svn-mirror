@@ -18,10 +18,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
+import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
+import org.jboss.tools.smooks.gef.common.RootModel;
 import org.jboss.tools.smooks.gef.tree.model.IConnectableNode;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
+import org.w3c.dom.Node;
 
 /**
  * @author Dart
@@ -89,6 +93,19 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 		this.parent = parent;
 	}
 
+	public AbstractSmooksGraphicalModel getModelRootNode() {
+		
+		AbstractSmooksGraphicalModel modelRootParent = parent;
+		while(true) {
+			if(modelRootParent.getParent() == null || modelRootParent.getParent() instanceof RootModel) {
+				break;
+			}
+			modelRootParent = modelRootParent.getParent();
+		}
+		
+		return modelRootParent;
+	}
+
 	//
 	// protected AbstractSmooksGraphicalModel createChildModel(Object model,
 	// ITreeContentProvider contentProvider,
@@ -115,6 +132,16 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 		this.severity = severity;
 		support.firePropertyChange(PRO_SEVERITY_CHANGED, old, this.severity);
 	}
+	
+    public Node getNode() {
+		if (data instanceof TagObject) {
+			return ((TagObject) data).getReferenceElement();
+		}		
+		if (data instanceof TagPropertyObject) {
+			return ((TagPropertyObject) data).getReferenceAttibute();
+		}		
+    	return null;
+    }
 
 	public List<AbstractSmooksGraphicalModel> getChildren() {
 		if (children == null) {

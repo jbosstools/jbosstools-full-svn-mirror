@@ -435,7 +435,7 @@ public abstract class TemplateBuilder {
 	}
 
 	public static void writeListStart(StringWriter writer, String srcPath, String collectionItemName) {
-		writer.write("<smk:list smk:srcPath=\"" + srcPath + "\" smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + ModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		writer.write("<smk:list smk:srcPath='" + srcPath + "' smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + ModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	public static void writeListEnd(StringWriter writer) {

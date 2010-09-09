@@ -10,8 +10,15 @@ import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
 import org.jboss.tools.smooks.configuration.editors.IFieldMarker;
+import org.jboss.tools.smooks.configuration.editors.IXMLStructuredObject;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
+import org.jboss.tools.smooks.templating.template.CollectionMapping;
+import org.milyn.xml.DomUtils;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * @author DartPeng
@@ -136,7 +143,62 @@ public class TreeNodeConnection implements IValidatableModel{
 		}
 		this.severity = severity;
 		support.firePropertyChange(AbstractSmooksGraphicalModel.PRO_SEVERITY_CHANGED, old, this.severity);
+	}	
+
+	public String getTargetConnectionObjectRef() {
+		TreeNodeModel sourceNodeModel = (TreeNodeModel) sourceNode;
+		TreeNodeModel targetNodeModel = (TreeNodeModel) targetNode;
+		Node sourceDOMNode = sourceNodeModel.getNode();
+		
+		// This will only work for sources that are modeled hierarchically with TagObjects etc i.e. not Java
+		if(sourceDOMNode == null) {
+			throw new IllegalStateException("Invalid call to getTargetConnectionObjectRef() for non AbstractXMLObject connection source."); //$NON-NLS-1$
+		}
+
+		StringBuilder builder = new StringBuilder();
+		
+		// We first need to determine whether or not there's a parent Collection connection
+		// on target side of the mapping...
+		TreeNodeConnection parentConnection = targetNodeModel.getParentCollectionConnection();
+		if(parentConnection != null) {
+			// If there's a parent Collection connection on the target side of the mapping,
+			// we need to locate the other side of that connection on the source model
+			// and then create an objectRef string based on the nodes between the source side of the parent
+			// connection and the source side of the connection associated with this node connection.
+			CollectionMapping collectionMapping = (CollectionMapping) parentConnection.getData();
+			Node sourceCollectionDomNode = ((TreeNodeModel)parentConnection.getSourceNode()).getNode();
+			
+			// Work back to collection node...
+			Node currentNode = sourceDOMNode;
+			while(currentNode != null && currentNode != sourceCollectionDomNode) {
+				if(currentNode.getNodeType() != Node.ATTRIBUTE_NODE && currentNode.getNodeType() != Node.ELEMENT_NODE) {
+					currentNode = currentNode.getParentNode();
+					continue;
+				}
+				
+				if(builder.length() > 0) {
+					builder.insert(0, '.');
+				}
+				if(currentNode.getNodeType() == Node.ATTRIBUTE_NODE) {
+					builder.insert(0, "@" + ((Attr)currentNode).getNodeName());				
+				} else if(currentNode.getNodeType() == Node.ELEMENT_NODE) {
+					builder.insert(0, DomUtils.getName((Element)currentNode));				
+				}
+				currentNode = currentNode.getParentNode();
+			}
+
+			if(currentNode == sourceCollectionDomNode) {
+				builder.insert(0, collectionMapping.getCollectionItemName() + ".");
+			}
+		} else {
+			// No parent connection... just use the connection source path...
+			builder.append(SmooksUIUtils.generateFullPath((IXMLStructuredObject) sourceNodeModel.getData(), "."));				
+		}
+		
+		if(builder.length() > 1 && builder.charAt(0) == '.') {
+			builder.deleteCharAt(0);
+		}
+		
+		return builder.toString();
 	}
-	
-	
 }

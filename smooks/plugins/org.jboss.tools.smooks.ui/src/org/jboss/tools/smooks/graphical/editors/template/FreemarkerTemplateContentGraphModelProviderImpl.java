@@ -27,6 +27,7 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.CSVNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerCSVNodeGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerModelAnalyzer;
@@ -42,6 +43,7 @@ import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.csv.CSVFreeMarkerTemplateBuilder;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
+import org.jboss.tools.smooks.templating.template.freemarker.FreeMarkerTemplateBuilder;
 import org.jboss.tools.smooks.templating.template.xml.XMLFreeMarkerTemplateBuilder;
 import org.w3c.dom.Document;
 
@@ -51,7 +53,7 @@ import org.w3c.dom.Document;
  */
 public class FreemarkerTemplateContentGraphModelProviderImpl implements IFreemarkerTemplateContentGraphModelProvider {
 
-	private TemplateBuilder templateBuilder = null;
+	private FreeMarkerTemplateBuilder templateBuilder = null;
 
 	/*
 	 * (non-Javadoc)
@@ -163,6 +165,12 @@ public class FreemarkerTemplateContentGraphModelProviderImpl implements IFreemar
 				} catch (Exception e) {
 					templateBuilder = new XMLFreeMarkerTemplateBuilder(builder);
 				}
+			}
+			String templateProvider = SmooksModelUtils.getParamValue(freemarker.getParam(), SmooksModelUtils.TEMPLATE_DATA_PROVIDER_PARAM_NAME);
+			if(templateProvider != null) {
+				templateBuilder.setNodeModelSource(templateProvider.trim().equals(TaskTypeManager.TASK_ID_INPUT));
+			} else {
+				templateBuilder.setNodeModelSource(false);
 			}
 		}
 		return templateBuilder;

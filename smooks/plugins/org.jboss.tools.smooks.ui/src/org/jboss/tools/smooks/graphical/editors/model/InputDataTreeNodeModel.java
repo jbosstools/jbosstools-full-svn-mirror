@@ -15,6 +15,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
@@ -69,16 +70,29 @@ public class InputDataTreeNodeModel extends TreeNodeModel {
 	 */
 	@Override
 	public boolean canLinkWithTarget(Object model) {
-		Object data = ((AbstractSmooksGraphicalModel) model).getData();
-		data = AdapterFactoryEditingDomain.unwrap(data);
-		if (data instanceof EObject) {
+		TreeNodeModel targetNode = (TreeNodeModel) model;
+		
+		if(targetNode == this || targetNode.getModelRootNode() == getModelRootNode()) {
+			return false;
+		}
+		
+		Object data = AdapterFactoryEditingDomain.unwrap(targetNode.getData());
+
+		if (data instanceof TagPropertyObject) {
+			// Only OK to link to an attribute from a valid Value node...
+			return isValidValueNode();
+		} else if(data instanceof TagObject) {
+			if(targetNode.isValidValueNode()) {
+				return isValidValueNode();
+			} else if(targetNode.isValidCollectionNode()) {
+				return isValidCollectionNode();				
+			}
+		} else if (data instanceof EObject) {
 			if (SmooksUIUtils.getSelectorFeature((EObject) data) != null) {
 				return true;
 			}
 		}
-		if (data instanceof TagPropertyObject) {
-			return true;
-		}
+		
 		return false;
 	}
 

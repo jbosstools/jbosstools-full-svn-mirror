@@ -10,13 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
-import org.jboss.tools.smooks.model.javabean12.BeanType;
 
 /**
  * @author Dart
@@ -28,25 +25,6 @@ public class FreemarkerXMLNodeGraphicalModel extends FreemarkerTemplateNodeGraph
 			ILabelProvider labelProvider, IEditingDomainProvider domainProvider) {
 		super(data, contentProvider, labelProvider, domainProvider);
 		// TODO Auto-generated constructor stub
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.jboss.tools.smooks.graphical.editors.model.freemarker.
-	 * FreemarkerTemplateNodeGraphicalModel
-	 * #isCollectionConnection(org.jboss.tools
-	 * .smooks.gef.tree.model.TreeNodeConnection)
-	 */
-	@Override
-	protected boolean isCollectionConnection(TreeNodeConnection connection) {
-		AbstractSmooksGraphicalModel sourceGraph = connection.getSourceNode();
-		Object data = sourceGraph.getData();
-		data = AdapterFactoryEditingDomain.unwrap(data);
-		if (data instanceof BeanType) {
-
-		}
-		return super.isCollectionConnection(connection);
 	}
 
 	/*
