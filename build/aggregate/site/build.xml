@@ -173,7 +173,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		</copy>
 	</target>
 
-	<!-- look for http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.continuous/logs/zip.list.txt; 
+	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2.0.M2.continuous/logs/zip.list.txt; 
 	if found, load file and use ${ALL_ZIPS} to get list of relative path zips to fetch -->
 	<target name="collect.zips" description="collect zips from the sites we aggregated">
 		<property name="aggegate.zips.dir" value="${output.dir}/zips" />

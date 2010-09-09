@@ -126,7 +126,7 @@ if [[ ${RELEASE} == "Yes" ]]; then
 	mkdir -p ${STAGINGDIR}/logs
 	ANT_PARAMS="-v -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
 	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then # reuse snippet from upstream build
-		ANT_PARAMS="${ANT_PARAMS} -Dtemplate.file=http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/${JOB_NAME/.aggregate/.continuous}/logs/download-snippet.txt"
+		ANT_PARAMS="${ANT_PARAMS} -Dtemplate.file=http://download.jboss.org/jbosstools/builds/staging/${JOB_NAME/.aggregate/.continuous}/logs/download-snippet.txt"
 	fi
 	for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
 		if [[ -f ${buildxml} ]]; then
@@ -181,12 +181,12 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		else
 			# if a release build, create a named dir
 			if [[ ${RELEASE} == "Yes" ]]; then
-				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/3.2.helios/${JOB_NAME}-${ZIPSUFFIX}/
+				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}-${ZIPSUFFIX}/
 			fi
 		fi
 
 		# and create/replace a snapshot dir w/ static URL
-		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/nightly/3.2.helios/
+		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/staging/
 	fi
 
 	# extra publish step for aggregate update sites ONLY

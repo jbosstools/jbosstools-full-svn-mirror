@@ -16,10 +16,10 @@
 	<properties>
 		<!-- add more inputRepo# here, then reference below; need variables so 
 			that these can be referred to in Ant script later -->
-		<inputRepo1>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.Beta1.nightly</inputRepo1>
-		<inputRepo2>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa</inputRepo2>
-		<inputRepo3>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer</inputRepo3>
-		<inputRepo4>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-drools</inputRepo4>
+		<inputRepo1>http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2.0.Beta1.nightly</inputRepo1>
+		<inputRepo2>http://download.jboss.org/jbosstools/builds/staging/jbosstools-pi4soa</inputRepo2>
+		<inputRepo3>http://download.jboss.org/jbosstools/builds/staging/jbosstools-teiid-designer</inputRepo3>
+		<inputRepo4>http://download.jboss.org/jbosstools/builds/staging/jbosstools-drools</inputRepo4>
 		<inputRepos>1,2,3,4</inputRepos>
 	</properties>
 

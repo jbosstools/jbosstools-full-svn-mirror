@@ -254,7 +254,7 @@
 				</repository>
 				<repository>
 					<id>jboss-drools-nightly</id>
-					<url>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-drools/all/repo/
+					<url>http://download.jboss.org/jbosstools/builds/staging/jbosstools-drools/all/repo/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
