@@ -18,16 +18,17 @@ import java.util.EnumSet;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
+import org.eclipse.wst.xml.core.internal.document.NodeContainer;
+import org.eclipse.wst.xml.xpath.core.util.XSLTXPathHelper;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.filesystems.XFileObject;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
+import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editors.dnd.DropUtils;
 import org.jboss.tools.common.model.ui.editors.dnd.context.IDNDTextEditor;
-import org.jboss.tools.common.model.ui.editors.dnd.context.InnerDragBuffer;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.jst.web.tld.model.TLDUtil;
 import org.jboss.tools.vpe.VpeDebug;
@@ -42,6 +43,7 @@ import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
+import org.jboss.tools.vpe.xulrunner.editor.IVpeSelectionListener;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
@@ -64,7 +66,6 @@ import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 /**
@@ -75,32 +76,37 @@ import org.w3c.dom.NodeList;
  */
 // NOTE: the code has been cleaned after SVN revision 21574, many methods
 // have been removed. To find the old code refer to older revisions.
-public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
+public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVpeSelectionListener {
 	private static final String TAG_TAGLIB = "taglib"; //$NON-NLS-1$
 
-	/*
-     * Default transfer data
-     */
-	private static final String VPE_ELEMENT = ""; //$NON-NLS-1$
-
-	/**
-	 *  service manager */
 	private nsIServiceManager serviceManager;
-
-	/**
-	 * component manager
-	 */
 	private nsIComponentManager componentManager;
-
-	/**
-	 * drag service
-	 */
 	private nsIDragService dragService;
-
 	private VpeController vpeController;
-
 	private DraggablePattern draggablePattern;
 	private DropableArea dropableArea;
+
+	/** The Constant FLAVORS. */
+	private static final String[] FLAVORS =  { 
+		ModelTransfer.MODEL,
+		DndUtil.kUnicodeMime,
+		DndUtil.kHTMLMime,
+		DndUtil.kAOLMailMime,
+		DndUtil.kPNGImageMime,
+		DndUtil.kJPEGImageMime,
+		DndUtil.kGIFImageMime,
+		DndUtil.kFileMime,
+		DndUtil.kURLMime,
+		DndUtil.kURLDataMime,
+		DndUtil.kURLDescriptionMime,
+		DndUtil.kNativeImageMime,
+		DndUtil.kNativeHTMLMime,
+		DndUtil.kFilePromiseURLMime,
+		DndUtil.kFilePromiseMime,
+		DndUtil.kFilePromiseDirectoryMime,
+		DndUtil.kTextMime
+	};
+	
 
 	public VpeDnD(VpeController vpeController, MozillaEditor mozillaEditor) {
 		this.vpeController = vpeController;
@@ -163,7 +169,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			innerDrop(queryInterface(domEvent, nsIDOMMouseEvent.class));
 		} else {
 			//in this case it's is  external drag
-			externalDrop(queryInterface(domEvent, nsIDOMMouseEvent.class), VpeController.MODEL_FLAVOR, ""); //$NON-NLS-1$
+			externalDrop(queryInterface(domEvent, nsIDOMMouseEvent.class)); //$NON-NLS-1$
 		}
 		disposeDropableArea();
 		vpeController.onRefresh();
@@ -255,7 +261,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 
 	private DropResolver getDropResolverForExternalDrop() {
 		if (getDragService().getCurrentSession()
-				.isDataFlavorSupported(VpeController.MODEL_FLAVOR)) {
+				.isDataFlavorSupported(ModelTransfer.MODEL)) {
 			XModelObject object = PreferenceModelUtilities.getPreferenceModel()
 					.getModelBuffer().source();
 			if (object.getFileType() == XFileObject.FILE
@@ -278,8 +284,9 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	}
 
 	private DropResolver getDropResolverForInternalDrop() {
-		if (InnerDragBuffer.getInnerDragObject() instanceof Node) {
-			return getDropResolverForNode((Node) InnerDragBuffer.getInnerDragObject());			
+		Node node = DndUtil.getNodeFromDragSession(vpeController.getPageContext());
+		if (node != null) {
+				return getDropResolverForNode(node);
 		} else {
 			return getSimpleDropResolver(false);
 		}
@@ -396,11 +403,10 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	 * @param dragetElement
 	 */
 	private void startDragSession(nsIDOMElement element) {
-		rememberDragNode(getSourceNode(element));
 		nsISupportsArray transArray = (nsISupportsArray) getComponentManager()
 				.createInstanceByContractID(XPCOM.NS_SUPPORTSARRAY_CONTRACTID, null,
 						nsISupportsArray.NS_ISUPPORTSARRAY_IID);
-		transArray.appendElement(createTransferable());
+		transArray.appendElement(createTransferable(getSourceNode(element)));
 		getDragService().invokeDragSession(element, transArray, null,
 				nsIDragService.DRAGDROP_ACTION_MOVE
 						| nsIDragService.DRAGDROP_ACTION_COPY
@@ -412,27 +418,33 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	 * 
 	 * @return transferable object
 	 */
-	private nsITransferable createTransferable() {
+	private nsITransferable createTransferable(Node node) {
 		
 		nsITransferable iTransferable = (nsITransferable) getComponentManager()
 						.createInstanceByContractID(XPCOM.NS_TRANSFERABLE_CONTRACTID, null,
 								nsITransferable.NS_ITRANSFERABLE_IID);
-		nsISupportsString transferData = (nsISupportsString) getComponentManager()
-		.createInstanceByContractID(XPCOM.NS_SUPPORTSSTRING_CONTRACTID, null,
-				nsISupportsString.NS_ISUPPORTSSTRING_IID);
-		String data=VPE_ELEMENT;
-		transferData.setData(data);
-		iTransferable.setTransferData(VpeController.MODEL_FLAVOR, transferData, data.length());
-		iTransferable.setTransferData("text/plain", transferData, data.length()); //$NON-NLS-1$
-		iTransferable.setTransferData("text/unicode", transferData,data.length()*2); //$NON-NLS-1$
-		iTransferable.setTransferData("text/html", transferData, data.length()*2); //$NON-NLS-1$
-		iTransferable.setTransferData("text/xml", transferData, data.length()*2); //$NON-NLS-1$
-		iTransferable.setTransferData("text/rtf", transferData, data.length()*2); //$NON-NLS-1$
-		iTransferable.setTransferData("text/enriched", transferData, data.length()*2); //$NON-NLS-1$
-		iTransferable.setTransferData("text/richtext", transferData, data.length()*2); //$NON-NLS-1$
-		iTransferable.setTransferData("text/t140", transferData, data.length()*2); //$NON-NLS-1$
+		
+		String nodeSource = ((NodeContainer)node).getSource();
+		nsISupportsString nodeSourceData = createNsISupportsString(nodeSource);
+		int nodeSourceDataLength = nodeSource.length() * 2;
+		iTransferable.setTransferData(ModelTransfer.MODEL, nodeSourceData, nodeSourceDataLength);
+		iTransferable.setTransferData("text/html", nodeSourceData, nodeSourceDataLength); //$NON-NLS-1$
+		iTransferable.setTransferData("text/unicode", nodeSourceData, nodeSourceDataLength); //$NON-NLS-1$
+		
+		String xPath = XSLTXPathHelper.calculateXPathToNode(node);
+		nsISupportsString xPathData = createNsISupportsString(xPath);
+		iTransferable.setTransferData(DndUtil.VPE_XPATH_FLAVOR, xPathData, xPath.length() * 2);
 		
 		return iTransferable;
+	}
+
+	private nsISupportsString createNsISupportsString(String data) {
+		nsISupportsString xulString = (nsISupportsString) getComponentManager()
+				.createInstanceByContractID(XPCOM.NS_SUPPORTSSTRING_CONTRACTID, null,
+				nsISupportsString.NS_ISUPPORTSSTRING_IID);
+		xulString.setData(data);
+		
+		return xulString;
 	}
 
 	private void refreshCanDrop(nsIDOMEvent event) {
@@ -464,16 +476,6 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 	
 	private boolean isInnerDragSession() {
 		return getDragService().getCurrentSession().getSourceDocument() != null;
-	}
-	
-	private void rememberDragNode(Node node) {
-		InnerDragBuffer.setInnerDragObject(node);
-		//commented by Maksim Areshkau as fix for https://jira.jboss.org/browse/JBIDE-6860
-//		Display.getDefault().asyncExec(new Runnable() {
-//			public void run() {
-//				InnerDragBuffer.setInnerDragObject(null);
-//			}
-//		});
 	}
 	
 	private boolean isDraggable(nsIDOMElement element) {
@@ -525,29 +527,29 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 			textWidget.replaceTextRange(selectionRange.x, selectionRange.y, ""); //$NON-NLS-1$
 			
 			dropAny(DndUtil.kUnicodeMime, text);
-		} else if (InnerDragBuffer.getInnerDragObject() instanceof Node) {
-			VpeSourceDropInfo sourceDropInfo = getDropInfo();
-			if (sourceDropInfo.getContainer() != null) {
-				if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-					System.out
-							.print("  container: " + sourceDropInfo.getContainer().getNodeName() + //$NON-NLS-1$
-									"(" + sourceDropInfo.getContainer() //$NON-NLS-1$
-									+ ")" + //$NON-NLS-1$
-									"  offset: " //$NON-NLS-1$
-									+ sourceDropInfo.getOffset());
-				}
-				
-				if (sourceDropInfo.canDrop()) {
-					VpeDnDHelper dropper = new VpeDnDHelper();
-					dropper.setDndData(false, true);
-					Node node = (Node) InnerDragBuffer.getInnerDragObject();
-					dropper.drop(vpeController.getPageContext(),
-							new VpeSourceInnerDragInfo(node, 0, 0), sourceDropInfo);
-
-					// select dropped node, JBIDE-6239
-					setSelectedNode(node);
-
-					InnerDragBuffer.setInnerDragObject(null);
+		} else {
+			Node node = DndUtil.getNodeFromDragSession(vpeController.getPageContext());
+			if (node != null) {
+				VpeSourceDropInfo sourceDropInfo = getDropInfo();
+				if (sourceDropInfo.getContainer() != null) {
+					if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
+						System.out
+								.print("  container: " + sourceDropInfo.getContainer().getNodeName() + //$NON-NLS-1$
+										"(" + sourceDropInfo.getContainer() //$NON-NLS-1$
+										+ ")" + //$NON-NLS-1$
+										"  offset: " //$NON-NLS-1$
+										+ sourceDropInfo.getOffset());
+					}
+					
+					if (sourceDropInfo.canDrop()) {
+						VpeDnDHelper dropper = new VpeDnDHelper();
+						dropper.setDndData(false, true);
+						dropper.drop(vpeController.getPageContext(),
+								new VpeSourceInnerDragInfo(node, 0, 0), sourceDropInfo);
+	
+						// select dropped node, JBIDE-6239
+						setSelectedNode(node);
+					}
 				}
 			}
 		}
@@ -567,14 +569,12 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 						sourceNodeBounds.getEndOffset());
 	}
 
-	private void externalDrop(nsIDOMMouseEvent mouseEvent, String flavor, String data) {
+	private void externalDrop(nsIDOMMouseEvent mouseEvent) {
 		vpeController.onHideTooltip();
 	
-
-	
-		final DragTransferData dragTransferData = DndUtil.getDragTransferData();
+		final DragTransferData dragTransferData = DndUtil.getDragTransferData(FLAVORS);
 		final nsISupports aValue = dragTransferData.getValue();
-	
+		String data = ""; //$NON-NLS-1$
 		String aFlavor = ""; //$NON-NLS-1$
 		if (VpeDndUtil.isNsIFileInstance(aValue)) {
 			nsIFile aFile = queryInterface(aValue, nsIFile.class);
@@ -592,7 +592,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener {
 		} else if (VpeDndUtil.isNsIStringInstance(aValue)) {
 			nsISupportsString aString = queryInterface(aValue, nsISupportsString.class);
 			data = aString.getData();
-			if (VpeController.MODEL_FLAVOR.equals(dragTransferData.getFlavor())) {
+			if (ModelTransfer.MODEL.equals(dragTransferData.getFlavor())) {
 				aFlavor = dragTransferData.getFlavor();
 			} else {
 				aFlavor = DndUtil.kURLMime;

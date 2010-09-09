@@ -13,6 +13,10 @@ package org.jboss.tools.vpe.editor.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.transform.TransformerException;
+
+import org.eclipse.wst.xml.xpath.core.util.XSLTXPathHelper;
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
@@ -107,5 +111,19 @@ public class SourceDomUtil {
 	            }
 	        }
 	        return facetElement;
+	}
+
+	/**
+	 * Returns source node by its XPath.
+	 */
+	public static Node getNodeByXPath(VpePageContext pageContext, String xPath) {
+		Node node = null;
+		try {
+			node = XSLTXPathHelper.selectSingleNode(
+					pageContext.getSourceBuilder().getSourceDocument(), xPath);
+		} catch (TransformerException e) {
+			VpePlugin.reportProblem(e);
+		}
+		return node;
 	}
 }

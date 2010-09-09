@@ -11,6 +11,8 @@
 
 package org.jboss.tools.vpe.xulrunner.editor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.eclipse.swt.SWT;
@@ -40,7 +42,6 @@ import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsIInterfaceRequestor;
 import org.mozilla.interfaces.nsISelection;
-import org.mozilla.interfaces.nsISelectionListener;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITooltipListener;
@@ -57,6 +58,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 	/** IVpeResizeListener */
 	private IVpeResizeListener resizeListener;
+	
+	private List<IVpeSelectionListener> selectionListeners = new ArrayList<IVpeSelectionListener>();
 
 	/** IXulRunnerVpeResizer */
 	private IXulRunnerVpeResizer xulRunnerVpeResizer;
@@ -110,8 +113,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * Scroll selection into view flag
 	 */
 	private boolean scrollRegtangleFlag = false;
-
-	private nsISelectionListener selectionListener;
 
 	private Listener eventListenet = new Listener() {
 
@@ -259,7 +260,21 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			getIXulRunnerVpeResizer().addResizeListener(resizeListener);
 		}
 	}
-
+	
+	public void addSelectionListener(IVpeSelectionListener selectionListener) {
+		selectionListeners.add(selectionListener);
+	}
+	
+	public void removeSelectionListener(IVpeSelectionListener selectionListener) {
+		selectionListeners.remove(selectionListener);
+	}
+	
+	private void fireSelectionListeners() {
+		for (IVpeSelectionListener listener : selectionListeners) {
+			listener.selectionChanged();
+		}
+	}
+	
 	public void onLoadWindow() {
 		addResizerListener();
 	}
@@ -476,6 +491,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		// setLastSelectedElement(element);
 		setLastSelectedNode(node);
 		lastResizerConstrains = resizerConstrains;
+		
+		fireSelectionListeners();
 	}
 
 	/**

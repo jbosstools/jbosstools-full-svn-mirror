@@ -1333,7 +1333,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		int resizerConstrains = getResizerConstrains(visualElement);
 		visualEditor.setSelectionRectangle(visualElement, resizerConstrains,
 				scroll);
-		this.visualEditor.getController().getVpeDnD().selectionChanged();
 	}
 
     /**

@@ -15,14 +15,18 @@ package org.jboss.tools.vpe.dnd;
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.swt.events.TypedEvent;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
 import org.jboss.tools.common.model.ui.editors.dnd.context.IDNDTextEditor;
-import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.jst.web.kb.PageContextFactory;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.SourceDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -32,8 +36,10 @@ import org.mozilla.interfaces.nsIDragService;
 import org.mozilla.interfaces.nsIDragSession;
 import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
+import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
+import org.w3c.dom.Node;
 
 
 /**
@@ -91,28 +97,9 @@ public class DndUtil {
 
     /** The Constant kFilePromiseDirectoryMime. */
     public static final String kFilePromiseDirectoryMime = "application/x-moz-file-promise-dir"; //$NON-NLS-1$
-
-    /** The Constant FLAVORS. */
-    public static final String[] FLAVORS =  { 
-    	VpeController.MODEL_FLAVOR,
-    	kTextMime,
-    	kUnicodeMime,
-    	kHTMLMime,
-    	kAOLMailMime,
-    	kPNGImageMime,
-    	kJPEGImageMime,
-    	kGIFImageMime,
-    	kFileMime,
-    	kURLMime,
-    	kURLDataMime,
-    	kURLDescriptionMime,
-    	kNativeImageMime,
-    	kNativeHTMLMime,
-    	kFilePromiseURLMime,
-    	kFilePromiseMime,
-    	kFilePromiseDirectoryMime
-    };
-
+    
+	public static final String VPE_XPATH_FLAVOR = "vpe/xpath"; //$NON-NLS-1$
+    
     /**
      * The Constructor.
      */
@@ -136,25 +123,39 @@ public class DndUtil {
      * Returns an instance of {@link DragTransferData}
      * for the current DnD session.
      */
-    public static DragTransferData getDragTransferData() {
-        final nsIDragSession dragSession = getCurrentDragSession();
-        final List<String> supportedDataFlavors
-        		= getSupportedDataFlavors(dragSession);
+	public static DragTransferData getDragTransferData(String... flavors) {
+		nsIDragSession dragSession = getCurrentDragSession();
+		String []supportedFlavors = getSupportedDataFlavors(dragSession, flavors);
+		if (supportedFlavors.length > 0) {
+	        nsITransferable iTransferable = createTransferable(supportedFlavors);
+	
+	        String[] aFlavor = new String[1];
+	        nsISupports[] aValue = new nsISupports[1];
+	        long[] aDataLen = new long[1];
+	        
+	        dragSession.getData(iTransferable, 0);
+	        iTransferable.getAnyTransferData(aFlavor, aValue, aDataLen);
+	        return new DragTransferData(aFlavor[0], aValue[0], aDataLen[0]);
+		} else {
+			return null;
+		}
+	}
+	
+	public static String getDragTransferDataAsString(String... flavors) {
+		DragTransferData transferData = getDragTransferData(flavors);
+		if (transferData == null || transferData.getValue() == null) {
+			return null;
+		}
+		
+		nsISupports value = transferData.getValue();
+		if (VpeDndUtil.isNsIStringInstance(value)) {
+			return queryInterface(value, nsISupportsString.class).getData();
+		} else {
+			return null;
+		}
+	}
 
-        final nsITransferable iTransferable
-        		= createTransferable(supportedDataFlavors);
-
-        String[] aFlavor = new String[1];
-        nsISupports[] aValue = new nsISupports[1];
-        long[] aDataLen = new long[1];
-        
-        dragSession.getData(iTransferable, 0);
-        iTransferable.getAnyTransferData(aFlavor, aValue, aDataLen);
-        return new DragTransferData(aFlavor[0], aValue[0], aDataLen[0]);
-    }
-
-	public static nsITransferable createTransferable(
-			final List<String> supportedDataFlavors) {
+	public static nsITransferable createTransferable(String... flavors) {
 		final nsIComponentManager componentManager
         		= Mozilla.getInstance().getComponentManager();
 
@@ -163,22 +164,22 @@ public class DndUtil {
         				XPCOM.NS_TRANSFERABLE_CONTRACTID, null,
         				nsITransferable.NS_ITRANSFERABLE_IID);
 
-        for (final String flavor : supportedDataFlavors) {
+        for (final String flavor : flavors) {
         	iTransferable.addDataFlavor(flavor);
         }
 
 		return iTransferable;
 	}
 
-	private static List<String> getSupportedDataFlavors(
-			final nsIDragSession dragSession) {
+	public static String []getSupportedDataFlavors(
+			final nsIDragSession dragSession, String... flavors) {
 		final List<String> supportedDataFlavors = new ArrayList<String>();
-        for (final String flavor : FLAVORS) {
+        for (final String flavor : flavors) {
         	if (dragSession.isDataFlavorSupported(flavor)) {
         		supportedDataFlavors.add(flavor);
         	}
         }
-		return supportedDataFlavors;
+		return supportedDataFlavors.toArray(new String[supportedDataFlavors.size()]);
 	}
 
 	public static nsIDragSession getCurrentDragSession() {
@@ -262,5 +263,14 @@ public class DndUtil {
 		}
 
 		return element;
+	}
+	
+	public static Node getNodeFromDragSession(VpePageContext pageContext) {
+		String xPath = DndUtil.getDragTransferDataAsString(VPE_XPATH_FLAVOR);
+		if (xPath != null) {
+			return SourceDomUtil.getNodeByXPath(pageContext, xPath);
+		} else {
+			return null;
+		}
 	}
 }

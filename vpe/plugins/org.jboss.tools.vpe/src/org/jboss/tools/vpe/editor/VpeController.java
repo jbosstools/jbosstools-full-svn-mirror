@@ -217,7 +217,6 @@ public class VpeController implements INodeAdapter,
 	 */
 	private IKeyEventHandler keyEventHandler;
 
-	public final static String MODEL_FLAVOR = ModelTransfer.MODEL;
 	// contains vpe update delau time in miliseconds
 	private int vpeUpdateDelayTime;
 
@@ -244,6 +243,7 @@ public class VpeController implements INodeAdapter,
 		visualBuilder = new VpeVisualDomBuilder(domMapping, this, visualEditor,
 				pageContext);
 		vpeDnD = new VpeDnD(this, visualEditor);
+		visualEditor.getXulRunnerEditor().addSelectionListener(vpeDnD);
 		pageContext.setSourceDomBuilder(sourceBuilder);
 		pageContext.setVisualDomBuilder(visualBuilder);
 		IDOMModel sourceModel = (IDOMModel) getModel();

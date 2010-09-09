@@ -29,8 +29,10 @@ import org.eclipse.wst.xml.ui.internal.dnd.XMLDragAndDropManager;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
-import org.jboss.tools.common.model.ui.editors.dnd.context.InnerDragBuffer;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
+import org.jboss.tools.jst.jsp.editor.IVisualContext;
+import org.jboss.tools.vpe.dnd.DndUtil;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.dnd.context.xpl.DragNodeCommand2;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -189,13 +191,17 @@ class VpeDragAnyCommand extends DragNodeCommand2 {
 		if(testOnly) {
 			return editor != null && editor.isEditable() && dropContext.getFlavor() != null;
 		} else {
-			if(InnerDragBuffer.getInnerDragObject() instanceof Node && editor instanceof IJSPTextEditor) {
+			Node dragNode = null;
+			IVisualContext pageContext = editor.getVPEController().getPageContext();
+			if (pageContext instanceof VpePageContext) {
+				dragNode = DndUtil.getNodeFromDragSession((VpePageContext) pageContext);
+			}
+			if(dragNode != null && editor instanceof IJSPTextEditor) {
 				int offset = 0;
 				if(refChild instanceof NodeImpl) {
 					offset = ((NodeImpl)refChild).getIndex();
 				}
-				((IJSPTextEditor)editor).getVPEController().drop((Node)InnerDragBuffer.getInnerDragObject(), parentNode, offset);
-				InnerDragBuffer.setInnerDragObject(null);
+				((IJSPTextEditor)editor).getVPEController().drop(dragNode, parentNode, offset);
 			} else {
 				int pos = getDropPosition(parentNode, refChild);
 				editor.selectAndReveal(pos, 0);
