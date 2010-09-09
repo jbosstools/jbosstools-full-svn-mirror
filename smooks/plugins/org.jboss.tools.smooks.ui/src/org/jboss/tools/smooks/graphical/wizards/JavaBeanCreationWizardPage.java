@@ -12,6 +12,7 @@ package org.jboss.tools.smooks.graphical.wizards;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -200,6 +201,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 		viewer.addCheckStateListener(new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
+				modelClassStringList.clear();
 				Object element = event.getElement();
 				CheckboxTreeViewer viewer = (CheckboxTreeViewer) event
 						.getSource();
@@ -234,6 +236,11 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 					for (Iterator<?> iterator = ((JavaBeanModel) model)
 							.getChildren().iterator(); iterator.hasNext();) {
 						JavaBeanModel child = (JavaBeanModel) iterator.next();
+						if(containts(child)){
+							continue;
+						}else{
+							record(child);
+						}
 						viewer.setChecked(child, flag);
 						checkChildren(child, flag);
 					}
@@ -245,9 +252,31 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				ITreeContentProvider provider = (ITreeContentProvider) viewer
 						.getContentProvider();
 				Object parent = provider.getParent(element);
+				if(containts(parent)){
+					return;
+				}else{
+					record(parent);
+				}
 				if (parent != null && !viewer.getChecked(parent)) {
 					viewer.setChecked(parent, true);
 					checkParents(parent, viewer);
+				}
+			}
+			
+			private List<Class> modelClassStringList = new ArrayList<Class>();
+			
+			private boolean containts(Object model){
+				if(model instanceof JavaBeanModel){
+					Class clazz = ((JavaBeanModel)model).getBeanClass();
+					return modelClassStringList.contains(clazz);
+				}
+				return false;
+			}
+			
+			private void record(Object model){
+				if(model instanceof JavaBeanModel){
+					Class clazz = ((JavaBeanModel)model).getBeanClass();
+					modelClassStringList.add(clazz);
 				}
 			}
 		});
@@ -418,7 +447,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 					if(!isCollection) {
 						viewer.setInput(javaBeanModel.getChildren());
 					}
-					viewer.setCheckedElements(javaBeanModel.getChildren().toArray());
+//					viewer.setCheckedElements(javaBeanModel.getChildren().toArray());
 				} else {
 					viewer.setInput(""); //$NON-NLS-1$
 				}
