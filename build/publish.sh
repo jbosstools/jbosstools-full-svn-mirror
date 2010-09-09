@@ -200,6 +200,19 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 fi
 date
 
+# generate md5sums in a single file 
+if [[ ${RELEASE} == "Yes" ]]; then
+	md5sumsFile=${STAGINGDIR}/all/${JOB_NAME}-md5sums-${BUILD_ID}-H${BUILD_NUMBER}.txt
+	echo "# Update Site Zips" > ${md5sumsFile}
+	echo "# ----------------" >> ${md5sumsFile}
+	md5sum $(find . -name "*Update*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
+	echo "  " >> ${md5sumsFile}
+	echo "# Source Zips" >> ${md5sumsFile}
+	echo "# -----------" >> ${md5sumsFile}
+	md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
+	echo " " >> ${md5sumsFile}
+fi
+
 # purge org.jboss.tools metadata from local m2 repo (assumes job is configured with -Dmaven.repo.local=${WORKSPACE}/m2-repo)
 if [[ -d ${WORKSPACE}/m2-repo/org/jboss/tools ]]; then
 	rm -rf ${WORKSPACE}/m2-repo/org/jboss/tools
