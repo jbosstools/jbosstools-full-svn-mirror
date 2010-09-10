@@ -9,8 +9,8 @@ filename="$1"; filename=${filename##*/}
 wget -N "$1" 
 svn ci -m "$0 $1"
 
-# Push to sftp://jbossqa@filemgmt.jboss.org/htdocs/jbosstools/examples
-scp $filename jbossqa@filemgmt.jboss.org:/htdocs/jbosstools/examples/
+# Push to sftp://tools@filemgmt.jboss.org/downloads_htdocs/tools/examples/
+scp $filename tools@filemgmt.jboss.org:/downloads_htdocs/tools/examples/
 
 konqueror --profile "JBT jbossqa@filemgmt index-files"
 
