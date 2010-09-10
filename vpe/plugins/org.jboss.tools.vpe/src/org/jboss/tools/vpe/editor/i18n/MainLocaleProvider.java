@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.i18n;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -80,19 +81,22 @@ public class MainLocaleProvider implements ILocaleProvider {
 					.getFile().getProject();
 	
 			try {
-				String[] natures = project.getDescription().getNatureIds();
-				for (String natureId : natures) {
-					for (ILocaleProvider provider : getProviders(natureId)) {
-						Locale locale = provider.getLocale(editor);
-						if (locale != null) {
-							localeString = provider.getLocaleString();
-							return locale;
+				if(project.isAccessible()) {
+					String[] natures = project.getDescription().getNatureIds();
+					for (String natureId : natures) {
+						for (ILocaleProvider provider : getProviders(natureId)) {
+							Locale locale = provider.getLocale(editor);
+							if (locale != null) {
+								localeString = provider.getLocaleString();
+								return locale;
+							}
 						}
 					}
 				}
 			} catch (CoreException e) {
 				VpePlugin.getPluginLog().logError(
-						"CoreException occured.", e); //$NON-NLS-1$
+						MessageFormat.format("Error in getting locale for {0}.",((IFileEditorInput)editorInput)
+								.getFile().getLocation().toOSString()), e); //$NON-NLS-1$
 			}
 		}
 	
