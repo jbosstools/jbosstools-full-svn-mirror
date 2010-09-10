@@ -17,10 +17,6 @@
       %license
    </license>
 
-   <url>
-      <update label="%updateSiteName" url="http://download.jboss.org/jbosstools/updates/stable/galileo/"/>
-   </url>
-
    <requires>
       <import feature="org.eclipse.tptp.platform.profile.server" version="4.5.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.tptp.platform.instrumentation.ui" version="4.3.0" match="greaterOrEqual"/>
