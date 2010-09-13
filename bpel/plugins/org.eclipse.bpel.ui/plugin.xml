@@ -669,7 +669,7 @@
 	   		base-type="org.eclipse.core.runtime.xml"
 	        id="org.eclipse.bpel.contenttype"
 	        name="BPEL Editor File"
-	        file-extensions="bpel,bpel2,xml"
+	        file-extensions="bpel,bpel2"
 	        priority="normal">
 	      <!-- problems with XMLRootElementContentDescriber2 - had to roll my own -->
 	      <describer

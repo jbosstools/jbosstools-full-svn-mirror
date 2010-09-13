@@ -50,7 +50,7 @@
             base-type="org.eclipse.core.runtime.xml"
             default-charset="UTF-8"
             file-extensions="bpel,bpel2"
-            id="org.eclipse.bpel.common.ui.bpel.content-type"
+            id="org.eclipse.bpel.contenttype"
             name="BPEL Process"
             priority="normal"/>
    </extension>
