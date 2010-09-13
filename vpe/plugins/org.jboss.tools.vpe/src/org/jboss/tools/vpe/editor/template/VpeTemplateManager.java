@@ -244,6 +244,9 @@ public class VpeTemplateManager {
 	public static final String ATTR_LINK_HREF = "href"; //$NON-NLS-1$
 	public static final String ATTR_LINK_REL = "rel"; //$NON-NLS-1$
 	public static final String ATTR_LINK_EXT = "ext"; //$NON-NLS-1$
+	
+	//added by Denis Vinnichek, for tags which are defined with regexp
+	static final String ATTR_TAG_MATCHING_MODE = "matching-mode"; //$NON-NLS-1$
 
 	private static VpeTemplateManager instance = null;
 	private static Object monitor = new Object();
@@ -257,8 +260,10 @@ public class VpeTemplateManager {
 	private Map<String,VpeTemplateSet> ignoreSensitiveTags = new HashMap<String,VpeTemplateSet>();
 	//added by Maksim Areshkau, docbook tags stored separately, because name duality
 	private Map<String,VpeTemplateSet> docbookTags = new HashMap<String,VpeTemplateSet>();
+	//added by Denis Vinnichek, for tags which are defined with regexp
+	private Map<String,VpeTemplateSet> matchingTags = new HashMap<String,VpeTemplateSet>();
 	
-	private static final String ATTR_DOCBOOK_NAME = "docbook";
+	private static final String ATTR_DOCBOOK_NAME = "docbook"; //$NON-NLS-1$
 	
 	private VpeTemplate defTemplate;
 	private VpeTemplateListener[] templateListeners = new VpeTemplateListener[0];
@@ -362,6 +367,18 @@ public class VpeTemplateManager {
 		if (set != null) {
 			return set.getTemplate(pageContext, sourceNode, dependencySet);
 		}
+		//added by Denis Vinnichek, for tags which are defined with regexp
+		if (matchingTags.entrySet() != null) {
+			for (Map.Entry<String,VpeTemplateSet> entry : matchingTags.entrySet()) {
+				if (name.matches(entry.getKey())) {
+					set = entry.getValue();
+					if (set != null) {
+						return set.getTemplate(pageContext, sourceNode, dependencySet);
+					}
+				}
+			}
+		}
+		
 		return null;
 	}
 
@@ -495,18 +512,27 @@ public class VpeTemplateManager {
 	}
 	
 	private void setTagElement(Element tagElement,IConfigurationElement confElement) {
+		
 		String name = tagElement.getAttribute(ATTR_TAG_NAME);
+		
 		if (name.length() > 0) {
-			boolean docbookTemplate = ATTR_VALUE_YES.equalsIgnoreCase(tagElement.getAttribute(VpeTemplateManager.ATTR_DOCBOOK_NAME));
+			
+			boolean docbookTemplate = ATTR_VALUE_YES.equalsIgnoreCase(tagElement.getAttribute(ATTR_DOCBOOK_NAME));
 			boolean caseSensitive = !ATTR_VALUE_NO.equals(tagElement.getAttribute(ATTR_TAG_CASE_SENSITIVE));
+			boolean matchingMode = ATTR_VALUE_YES.equals(tagElement.getAttribute(ATTR_TAG_MATCHING_MODE));
 			Map<String,VpeTemplateSet> tags;
-			if(docbookTemplate){
-				tags = docbookTags;
-			}else if (caseSensitive) {
-				tags = caseSensitiveTags;
+			
+			if (!matchingMode) {
+				if(docbookTemplate){
+					tags = docbookTags;
+				}else if (caseSensitive) {
+					tags = caseSensitiveTags;
+				} else {
+					name = name.toLowerCase();
+					tags = ignoreSensitiveTags;
+				}
 			} else {
-				name = name.toLowerCase();
-				tags = ignoreSensitiveTags;
+				tags = matchingTags;
 			}
 			
 			VpeTemplateSet set = (VpeTemplateSet) tags.get(name);
@@ -886,6 +912,8 @@ public class VpeTemplateManager {
 			if (templateFileList.isChanged()) {
 				caseSensitiveTags.clear();
 				ignoreSensitiveTags.clear();
+				matchingTags.clear();
+				docbookTags.clear();
 				defTemplate = null;
 				loadImpl();
 				fireTemplateReloaded();

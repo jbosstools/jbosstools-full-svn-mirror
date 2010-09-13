@@ -39,6 +39,7 @@
         <xsd:attribute name="name" use="required" type="xsd:string"/>
         <xsd:attribute name="docbook" use="optional" type="vpe:VPE-BOOLEAN"/>
         <xsd:attribute name="haveVisualPreview" use="optional" type="vpe:VPE-BOOLEAN"/>
+        <xsd:attribute name="matching-mode" use="optional" type="vpe:VPE-BOOLEAN"/>
     </xsd:complexType>
 <!--  -->  
     <xsd:complexType name="TEMPLATE">

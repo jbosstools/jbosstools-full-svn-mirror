@@ -116,26 +116,11 @@
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="sect1" case-sensitive="yes" docbook="yes">
+	<vpe:tag name="sect[0-9]*" matching-mode="yes">
 		<vpe:template children="yes" modify="yes">
 			<div />
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="sect2" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<div />
-		</vpe:template>
-	</vpe:tag>
-	<vpe:tag name="sect3" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<div />
-		</vpe:template>
-	</vpe:tag>  
-	<vpe:tag name="sect4" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<div />
-		</vpe:template>
-	</vpe:tag>  
 	<vpe:tag name="book" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div/>
@@ -238,12 +223,7 @@
 			<div/>
 		</vpe:template>
 	</vpe:tag>
-	<vpe:tag name="toclevel1" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<div/>
-		</vpe:template>
-	</vpe:tag>
-	<vpe:tag name="toclevel2" case-sensitive="yes" docbook="yes">
+	<vpe:tag name="toclevel[0-9]*" matching-mode="yes">
 		<vpe:template children="yes" modify="yes">
 			<div/>
 		</vpe:template>
