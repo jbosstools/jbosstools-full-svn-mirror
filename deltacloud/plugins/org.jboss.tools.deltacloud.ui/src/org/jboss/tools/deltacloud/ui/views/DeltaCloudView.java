@@ -16,6 +16,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -56,6 +57,8 @@ ITabbedPropertySheetPageContributor {
 	private static final String REMOVE_CLOUD = "RemoveCloud.label"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	private static final String CREATE_INSTANCE = "CreateInstance.label"; //$NON-NLS-1$
+	private static final String CONFIRM_CLOUD_DELETE_TITLE = "ConfirmCloudDelete.title"; //$NON-NLS-1$
+	private static final String CONFIRM_CLOUD_DELETE_MSG = "ConfirmCloudDelete.msg"; //$NON-NLS-1$
 	
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
@@ -177,16 +180,22 @@ ITabbedPropertySheetPageContributor {
 				}
 				if (element != null) {
 					CVCloudElement cve = (CVCloudElement)element;
-					DeltaCloudManager.getDefault().removeCloud((DeltaCloud)element.getElement());
-					CloudViewContentProvider p = (CloudViewContentProvider)viewer.getContentProvider();
-					Object[] elements = p.getElements(getViewSite());
-					int index = -1;
-					for (int i = 0; i < elements.length; ++i) {
-						if (elements[i] == cve)
-							index = i;
+					Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+					boolean confirmed = MessageDialog.openConfirm(shell, 
+							CVMessages.getString(CONFIRM_CLOUD_DELETE_TITLE),
+							CVMessages.getFormattedString(CONFIRM_CLOUD_DELETE_MSG, cve.getName()));
+					if (confirmed) {
+						DeltaCloudManager.getDefault().removeCloud((DeltaCloud)element.getElement());
+						CloudViewContentProvider p = (CloudViewContentProvider)viewer.getContentProvider();
+						Object[] elements = p.getElements(getViewSite());
+						int index = -1;
+						for (int i = 0; i < elements.length; ++i) {
+							if (elements[i] == cve)
+								index = i;
+						}
+						if (index >= 0)
+							((TreeViewer)cve.getViewer()).remove(getViewSite(), index);
 					}
-					if (index >= 0)
-						((TreeViewer)cve.getViewer()).remove(getViewSite(), index);
 				}
 			}
 		};

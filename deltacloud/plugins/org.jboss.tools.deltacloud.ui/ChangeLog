@@ -1,3 +1,10 @@
+2010-09-13  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new messages
+	for disconnecting a cloud.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (.run): Add confirmation
+	dialog when disconnecting a cloud.
+
 2010-09-08  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: Fix warning.
