@@ -43,7 +43,7 @@ public class TagObject extends AbstractXMLObject {
 			if (attribute.getParentNode() == parentElement) {
 				return;
 			}
-			parentElement.appendChild(attribute);
+			parentElement.setAttributeNode(attribute);
 		}
 	}
 

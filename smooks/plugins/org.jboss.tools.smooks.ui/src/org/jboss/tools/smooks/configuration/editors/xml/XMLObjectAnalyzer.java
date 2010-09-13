@@ -188,6 +188,7 @@ public class XMLObjectAnalyzer {
 				if (localName == null) {
 					localName = name;
 				}
+				pro.setReferenceAttibute(attr);
 				pro.setName(localName);
 				pro.setValue(value);
 				pro.setNamespaceURI(attr.getNamespaceURI());
