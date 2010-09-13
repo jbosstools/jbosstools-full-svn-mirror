@@ -12,6 +12,6 @@ Export-Package: org.jboss.tools.birt.oda,
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.datatools.connectivity.oda;bundle-version="[3.1.0,4.0.0)",
  org.eclipse.datatools.connectivity.oda.profile;bundle-version="[3.0.4,4.0.0)",
- org.hibernate.eclipse;resolution:=optional
+ org.hibernate.eclipse
 Eclipse-LazyStart: true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
