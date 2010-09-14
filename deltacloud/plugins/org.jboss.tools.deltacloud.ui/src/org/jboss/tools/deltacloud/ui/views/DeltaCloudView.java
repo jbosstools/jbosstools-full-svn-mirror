@@ -162,6 +162,7 @@ ITabbedPropertySheetPageContributor {
 		} else if (selectedElement instanceof CVInstanceElement){
 			//TODO: add meaningful actions here
 		}
+		manager.add(removeCloud);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}

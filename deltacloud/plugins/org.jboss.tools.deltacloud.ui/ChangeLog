@@ -1,3 +1,12 @@
+2010-09-14  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java (createInitialLayout): Fix
+	initial view placement by putting all the bottom views into a single folder.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Fix message for
+	refreshing of cloud.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (fillContextMenu): Add
+	disconnect cloud for any object. 
+
 2010-09-13  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new messages
