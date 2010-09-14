@@ -247,9 +247,15 @@ public class ManageKeysPage extends WizardPage {
 			}
 		});
 		
+		Point p1 = dirLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point p2 = directory.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point p3 = browseButton.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		int centering = (p2.y - p1.y + 1) / 2;
+		int centering2 = (p3.y - p2.y + 1) / 2;
+
 		FormData f = new FormData();
 		f.left = new FormAttachment(0, 5);
-		f.top = new FormAttachment(0, 8);
+		f.top = new FormAttachment(0, 5 + centering + centering2);
 		dirLabel.setLayoutData(f);
 		
 		f = new FormData();
@@ -259,7 +265,7 @@ public class ManageKeysPage extends WizardPage {
 		
 		f = new FormData();
 		f.left = new FormAttachment(dirLabel, 5);
-		f.top = new FormAttachment(0, 5);
+		f.top = new FormAttachment(0, 5 + centering2);
 		f.right = new FormAttachment(browseButton, -10);
 		directory.setLayoutData(f);
 		

@@ -1,5 +1,15 @@
 2010-09-14  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (createPartControl): For vertical
+	centering, calculate the actual height difference between widgets and divide by
+	2 to find centering offset.  Do not hard-code a value for this. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (createPartControl): Ditto. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java (createControl): Ditto. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (createControl): Ditto. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (createControl): Ditto.
+	
+2010-09-14  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/DeltaCloudPerspective.java (createInitialLayout): Fix
 	initial view placement by putting all the bottom views into a single folder.
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Fix message for

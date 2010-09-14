@@ -340,9 +340,15 @@ public class NewCloudConnectionPage extends WizardPage {
 		
 		Label urlLabel = new Label(container, SWT.NULL);
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
+		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		System.out.println("p1 is x:" + p1.x + " y:" + p1.y);
 		
 		urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		urlText.addModifyListener(textListener);
+		Point p2 = urlText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		System.out.println("p2 text is x:" + p2.x + " y:" + p2.y);
+		
+		int centering = (p2.y - p1.y + 1) / 2;
 
 		Label typeLabel = new Label(container, SWT.NULL);
 		typeLabel.setText(WizardMessages.getString(TYPE_LABEL));
@@ -382,7 +388,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		dummyLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(dummyLabel, 11);
+		f.top = new FormAttachment(dummyLabel, 8 + centering);
 		nameLabel.setLayoutData(f);
 
 		f = new FormData();
@@ -392,7 +398,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		nameText.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(nameText, 8);
+		f.top = new FormAttachment(nameText, 5 + centering);
 		urlLabel.setLayoutData(f);
 		
 		f = new FormData();
@@ -402,17 +408,17 @@ public class NewCloudConnectionPage extends WizardPage {
 		urlText.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(urlText, 8);
+		f.top = new FormAttachment(urlText, 5 + centering);
 		typeLabel.setLayoutData(f);
 		
 		f = new FormData();
 		f.left = new FormAttachment(urlText, 0, SWT.LEFT);
-		f.top = new FormAttachment(urlText, 8);
+		f.top = new FormAttachment(urlText, 5 + centering);
 		f.right = new FormAttachment(100, 0);
 		typeText.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(typeText, 16);
+		f.top = new FormAttachment(typeText, 10 + centering);
 		usernameLabel.setLayoutData(f);
 		
 		f = new FormData();
@@ -427,7 +433,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		ec2userLink.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(ec2userLink, 8);
+		f.top = new FormAttachment(ec2userLink, 5 + centering);
 		passwordLabel.setLayoutData(f);
 
 		f = new FormData();

@@ -285,13 +285,17 @@ public class NewInstancePage extends WizardPage {
 			hardware.addModifyListener(comboListener);
 		}
 		
+		Point p1 = nameLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		int centering = (p2.y - p1.y + 1) / 2;
+		
 		FormData f = new FormData();
 		f.left = new FormAttachment(0, 0);
 		f.right = new FormAttachment(100, 0);
 		dummyLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(dummyLabel, 8);
+		f.top = new FormAttachment(dummyLabel, 8 + centering);
 		f.left = new FormAttachment(0, 0);
 		nameLabel.setLayoutData(f);
 		
@@ -323,7 +327,7 @@ public class NewInstancePage extends WizardPage {
 		arch.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(archLabel, 11);
+		f.top = new FormAttachment(arch, 8 + centering);
 		f.left = new FormAttachment(0, 0);
 		realmLabel.setLayoutData(f);
 		
@@ -348,9 +352,11 @@ public class NewInstancePage extends WizardPage {
 			keyManage = new Button(container, SWT.NULL);
 			keyManage.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
 			keyManage.addSelectionListener(manageListener);
+			Point p3 = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+			int centering2 = (p3.y - p2.y + 1) / 2;
 
 			f = new FormData();
-			f.top = new FormAttachment(realm, 11);
+			f.top = new FormAttachment(realm, 8 + centering + centering2);
 			f.left = new FormAttachment(0, 0);
 			keyLabel.setLayoutData(f);
 
@@ -363,7 +369,7 @@ public class NewInstancePage extends WizardPage {
 			keyManage.setLayoutData(f);
 
 			f = new FormData();
-			f.top = new FormAttachment(realm, 8);
+			f.top = new FormAttachment(realm, 8 + centering2);
 			f.left = new FormAttachment(hardwareLabel, 5);
 			f.right = new FormAttachment(keyManage, -10);
 			keyText.setLayoutData(f);
@@ -372,7 +378,7 @@ public class NewInstancePage extends WizardPage {
 		}
 		
 		f = new FormData();
-		f.top = new FormAttachment(control, 11);
+		f.top = new FormAttachment(control, 8 + centering);
 		f.left = new FormAttachment(0, 0);
 		hardwareLabel.setLayoutData(f);
 		

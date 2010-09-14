@@ -33,6 +33,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -206,8 +207,12 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			currCloud.addImageListListener(parentView);
 		}
 
+		Point p1 = cloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point p2 = cloudSelector.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		int centering = (p2.y - p1.y + 1) / 2;
+
 		FormData f = new FormData();
-		f.top = new FormAttachment(0, 8);
+		f.top = new FormAttachment(0, 5 + centering);
 		f.left = new FormAttachment(0, 30);
 		cloudSelectorLabel.setLayoutData(f);
 		
