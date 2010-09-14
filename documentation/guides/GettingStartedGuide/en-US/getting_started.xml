@@ -107,6 +107,11 @@
      <entry><para>JBossWeb Service</para></entry>
      <entry><para>JBoss WS is a web service framework developed as a part of the JBoss Application Server. It implements the JAX-WS specification that defines a programming model and run-time architecture for implementing web services in Java, targeted at the Java Platform, Enterprise Edition 5 (Java EE 5).</para></entry>
     </row>
+    
+    <row>
+     <entry><para>Usage reporting</para></entry>
+     <entry><para>The usage plug-in anonymously gathers information on how you use the provided tools. This information is used to improve and shape the JBoss Developer Studio product to better cater to your needs. For more information refer to <xref linkend="Reporting_Usage"/>.</para></entry>
+    </row>
    </tbody>
   </tgroup>
  </table>
@@ -874,6 +879,11 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      Uninstaller</para>
    </listitem>
   </itemizedlist>
+ </section>
+
+ <section id="Reporting_Usage">
+   <title>Reporting Usage</title>
+   <para>The JBoss Developer Studio now includes a usage plug-in that anonymously reports information back to JBoss. The plug-in is not enabled by default. To enable, make sure the <guilabel>Report usage of JBoss Tools to JBoss Tools team.</guilabel> box is ticked. Once enabled, the plug-in will remain active until turned off. To turn the active plug-in off, navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Usage Reporting Preferences</guimenuitem></menuchoice>.</para>
  </section>
 
  <section id="Support">
