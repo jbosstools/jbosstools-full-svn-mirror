@@ -11,6 +11,8 @@
 package org.jboss.tools.vpe.selbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.compare.Splitter;
@@ -19,6 +21,7 @@ import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -53,13 +56,13 @@ import org.jboss.tools.common.model.ui.attribute.adapter.IModelPropertyEditorAda
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
-import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * This class create and manage the Selection Bar under the VPE.
@@ -69,7 +72,7 @@ import org.w3c.dom.Node;
  * @author erick
  * @author yradtsevich
  */
-public class SelectionBar implements SelectionListener {
+public class SelectionBar{
     /**
 	 *
 	 */
@@ -330,7 +333,7 @@ public class SelectionBar implements SelectionListener {
 			}
 		}
 	}
-
+	
 	/**
      * Cleans {@link #selBar} and adds to it buttons which
      * appropriate the {@code node} and all its ancestors.
@@ -347,31 +350,85 @@ public class SelectionBar implements SelectionListener {
 		// for now dropDownMenu = null
 
 		int elementCounter = 0;
-		while (node != null
-				&& (node.getNodeType() == Node.ELEMENT_NODE
-						|| node.getNodeType() == Node.COMMENT_NODE)) {
+		while ((node != null)
+				&& ((node.getNodeType() == Node.ELEMENT_NODE)
+						|| (node.getNodeType() == Node.COMMENT_NODE))) {
 			addNodeListenerTo(node);
-
+			
+			/*
+			 * If there is no DDM -- item will be added to line
+			 */
 			if (dropDownMenu == null) {
-				ToolItem item = new ToolItem(selBar, SWT.FLAT | SWT.CHECK, 1);
-				item.addSelectionListener(this);
+				ToolItem item;
+				NodeList children = node.getChildNodes();
+				List<Node> list = new ArrayList<Node>();
+				for (int i = 0; i < children.getLength(); i++) {
+					if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
+						list.add(children.item(i));
+					}
+				}
+				/*
+				 * for the last tag -- show check button
+				 */
+				if ((elementCounter == 0) && (list.size() == 0)){
+					 item = new ToolItem(selBar, SWT.FLAT | SWT.CHECK, 1);
+					item.addSelectionListener(new SelectionListener() {
+						public void widgetSelected(SelectionEvent e) {
+							handleSelectionEvent(e);
+						}
+						public void widgetDefaultSelected(SelectionEvent e) {
+							handleSelectionEvent(e);
+						}
+					});
+				} else {
+					/*
+					 * Create DropDownMenu button
+					 */
+					item = new ToolItem(selBar, SWT.DROP_DOWN, 1);
+					DropdownSelectionListener listenerOne = new DropdownSelectionListener(item);
+					for (Node node2 : list) {
+						listenerOne.add(node2);
+					}
+					item.addSelectionListener(listenerOne);
+				}
 				item.setData(node);
 				item.setText(node.getNodeName());
-
+				/*
+				 * When the item does not fit to the bar --
+				 * put it to the DDM
+				 */
 				if (!isItemShown(selBar.getItem(elementCounter + 1))) {
 					item.dispose();
 					dropDownMenu = new Menu(selBar);
 				}
 			}
 
+			/*
+			 * After the DDM has been created
+			 * all other items will be added to the DDM
+			 * as they do not fit to the selection bar any more. 
+			 */
 			if (dropDownMenu != null) {
 				MenuItem menuItem = new MenuItem(dropDownMenu, SWT.CHECK, 0);
-				menuItem.addSelectionListener(this);
+				menuItem.addSelectionListener(new SelectionListener() {
+					public void widgetSelected(SelectionEvent e) {
+						handleSelectionEvent(e);
+					}
+					public void widgetDefaultSelected(SelectionEvent e) {
+						handleSelectionEvent(e);
+					}
+				});
 				menuItem.setText(node.getNodeName());
 				menuItem.setData(node);
 			}
 
+			/*
+			 * Count the elements
+			 */
 			elementCounter++;
+			/*
+			 * Get the parent to put it to the bar
+			 */
 			node = node.getParentNode();
 		}
 		itemCount = elementCounter;
@@ -522,7 +579,7 @@ public class SelectionBar implements SelectionListener {
 		}
 	}
 
-    public void widgetSelected(SelectionEvent e) {
+    public void handleSelectionEvent(SelectionEvent e) {
     	Widget widget = e.widget;
     	
     	/* ensure that the ToolItem or MenuItem is selected
@@ -547,6 +604,77 @@ public class SelectionBar implements SelectionListener {
 		st.append(" Parent Composite: " + cmpToolBar.getBounds().width); //$NON-NLS-1$
 		st.append(" Bar : " + selBar.getBounds().width); //$NON-NLS-1$
 		return st.toString();
+	}
+    
+    /**
+     ********************************************************************************************* 
+     * This class provides the "drop down" functionality for the selection bar.
+     *********************************************************************************************/ 
+	class DropdownSelectionListener extends SelectionAdapter {
+		private ToolItem dropdown;
+		private Menu menu;
+		private boolean shown = false;
+		/**
+		 * Constructs a DropdownSelectionListener
+		 * 
+		 * @param dropdown
+		 *            the dropdown this listener belongs to
+		 */
+		public DropdownSelectionListener(ToolItem dropdown) {
+			this.dropdown = dropdown;
+			menu = new Menu(dropdown.getParent().getShell());
+		}
+
+		/**
+		 * Adds an item to the dropdown list
+		 * 
+		 * @param item
+		 *            the item to add
+		 */
+		public void add(Node node) {
+			MenuItem menuItem = new MenuItem(menu, SWT.NONE);
+			menuItem.setText(node.getNodeName());
+			menuItem.setData(node);
+			menuItem.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent event) {
+					handleSelectionEvent(event);
+				}
+			});
+		}
+
+		/**
+		 * Called when either the button itself or the dropdown arrow is clicked
+		 * 
+		 * @param event
+		 *            the event that trigged this call
+		 */
+		public void widgetSelected(SelectionEvent event) {
+			/*
+			 * If they clicked the arrow, we show the list or close it
+			 */
+			if (event.detail == SWT.ARROW) {
+				if (shown) {
+					menu.setVisible(false);
+					shown = false;
+				} else {
+					/*
+					 * Determine where to put the dropdown list and show it
+					 */
+					ToolItem item = (ToolItem) event.widget;
+					Rectangle rect = item.getBounds();
+					Point pt = item.getParent().toDisplay(
+							new Point(rect.x, rect.y));
+					menu.setLocation(pt.x, pt.y + rect.height);
+					menu.setVisible(true);
+					shown = true;
+				}
+			} else {
+				/*
+				 * User pushed the button; take appropriate action
+				 */
+				handleSelectionEvent(event);
+			}
+		}
 	}
 }
 
@@ -670,4 +798,5 @@ class NodeListener implements INodeAdapter {
     public void notifyChanged(INodeNotifier notifier, int eventType, Object changedFeature, Object oldValue, Object newValue, int pos) {
    		selectionBar.updateNodes(false);
     }
-}
+    }
+
