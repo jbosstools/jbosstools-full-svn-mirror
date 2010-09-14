@@ -110,7 +110,7 @@
     
     <row>
      <entry><para>Usage reporting</para></entry>
-     <entry><para>The usage plug-in anonymously gathers information on how you use the provided tools. This information is used to improve and shape the JBoss Developer Studio product to better cater to your needs. For more information refer to <xref linkend="Reporting_Usage"/>.</para></entry>
+     <entry><para>The usage plug-in anonymously gathers information on how you use the provided tools. This information is used to improve and shape the JBoss Developer Studio product to better cater to your needs. For more information refer to <xref linkend="Usage_Reporting"/>.</para></entry>
     </row>
    </tbody>
   </tgroup>
@@ -881,9 +881,20 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </itemizedlist>
  </section>
 
- <section id="Reporting_Usage">
+ <section id="Usage_Reporting">
    <title>Reporting Usage</title>
-   <para>The JBoss Developer Studio now includes a usage plug-in that anonymously reports information back to JBoss. The plug-in is not enabled by default. To enable, make sure the <guilabel>Report usage of JBoss Tools to JBoss Tools team.</guilabel> box is ticked. Once enabled, the plug-in will remain active until turned off. To turn the active plug-in off, navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Usage Reporting Preferences</guimenuitem></menuchoice>.</para>
+   <para>
+      The JBoss Developer Studio now includes a usage plug-in that anonymously reports information back to JBoss. The plug-in is not enabled by default. To enable, make sure the <guilabel>Report usage of JBoss Tools to JBoss Tools team.</guilabel> box is ticked.
+  </para>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="images/getting_started/usage_plug-in_1.png"/>
+    </imageobject>
+    <caption>Usage plug-in pop-up</caption>
+  </mediaobject>
+   <para>
+      Once enabled, the plug-in will remain active until turned off. To turn the active plug-in off, navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Usage Reporting Preferences</guimenuitem></menuchoice>.
+   </para>
  </section>
 
  <section id="Support">
