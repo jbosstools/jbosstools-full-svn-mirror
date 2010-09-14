@@ -127,6 +127,10 @@ public class AdapterFactory implements IAdapterFactory {
 		if (r == null) {
 			return null;
 		}
+		// Bugzilla 323858 and JBIDE-6472
+		else if ( r.getURI()==null ) {
+			return null;
+		}
 		return getFileFromURI ( r.getURI() );		
 	}
 
