@@ -2,6 +2,7 @@ package org.eclipse.bpel.apache.ode.deploy.ui.wizards;
 
 import java.io.File;
 
+import org.eclipse.bpel.apache.ode.deploy.ui.util.DeployUtils;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -111,7 +112,7 @@ public class ODEDeployWizardPage extends WizardPage {
 			if (obj instanceof IResource) {
 				IProject project;
 				project = ((IResource) obj).getProject();
-			    IContainer bpelContent = project.getFolder("bpelContent");
+			    IContainer bpelContent = project.getFolder(DeployUtils.getWebContentRootPath(project));
 			    if (bpelContent != null) {
 			    	containerText.setText(bpelContent.getFullPath().toString());	
 			    } else {

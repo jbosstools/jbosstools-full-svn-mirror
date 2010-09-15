@@ -44,6 +44,9 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.wst.common.componentcore.ComponentCore;
+import org.eclipse.wst.common.componentcore.ModuleCoreNature;
+import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.wsdl.Definition;
 import org.eclipse.wst.wsdl.Port;
 import org.eclipse.wst.wsdl.Service;
@@ -247,7 +250,7 @@ public class DeployUtils {
 			}
 		};
 		try {
-			IResource[] reses = project.getFolder("bpelContent").members();
+			IResource[] reses = project.getFolder(getWebContentRootPath(project)).members();
 			for (IResource res : reses) {
 				res.accept(visitor);
 
@@ -359,4 +362,19 @@ public class DeployUtils {
 		}
 		return false;	
 	}
+	
+		public static IPath getWebContentRootPath(IProject project) {
+				if (project == null)
+					return null;
+		
+				if (!ModuleCoreNature.isFlexibleProject(project))
+					return null;
+		
+				IPath path = null;
+				IVirtualComponent component = ComponentCore.createComponent(project);
+				if (component != null && component.exists()) {
+					path = component.getRootFolder().getProjectRelativePath();
+				}
+				return path;
+			}
 }

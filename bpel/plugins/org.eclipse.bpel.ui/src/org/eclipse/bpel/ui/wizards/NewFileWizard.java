@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Display;
@@ -30,6 +31,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
+import org.eclipse.wst.common.componentcore.ComponentCore;
+import org.eclipse.wst.common.componentcore.ModuleCoreNature;
+import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 
 /**
  * Wizard for the new process template.
@@ -220,7 +224,7 @@ public class NewFileWizard extends Wizard implements INewWizard {
 			project = container.getProject();
 		}
 		if (project != null) {
-			IContainer bpelContent = project.getFolder("bpelContent");
+			IContainer bpelContent = project.getFolder(getWebContentRootPath(project));
 			if (bpelContent != null) {
 				return bpelContent;
 			}
@@ -228,6 +232,21 @@ public class NewFileWizard extends Wizard implements INewWizard {
 		return null;
 	}
 
+		static IPath getWebContentRootPath(IProject project) {
+				if (project == null)
+					return null;
+		
+				if (!ModuleCoreNature.isFlexibleProject(project))
+					return null;
+		
+				IPath path = null;
+				IVirtualComponent component = ComponentCore.createComponent(project);
+				if (component != null && component.exists()) {
+					path = component.getRootFolder().getProjectRelativePath();
+				}
+				return path;
+			}
+	
 	/**
 	 * 
 	 * Final condition for the wizard to finish

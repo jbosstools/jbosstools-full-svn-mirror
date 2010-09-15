@@ -360,7 +360,7 @@ public class ImportsSection extends BPELPropertySection {
 		if (result.length < 1) {
 			return;
 		}
-
+		
 		AddImportCommand cmd = new AddImportCommand(BPELUtils
 				.getProcess(getInput()), result[0]);
 		if (cmd.canDoExecute() && cmd.wouldCreateDuplicateImport() == false) {
