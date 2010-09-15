@@ -31,6 +31,13 @@
       </wizard>
    </extension>
    
+   <extension point="org.eclipse.wst.common.project.facet.ui.wizardPages">
+    <wizard-pages action="bpel.facet.core.install">
+      <page class="org.jboss.tools.bpel.runtimes.ui.wizards.BPELFacetInstallPage"/>
+    </wizard-pages>
+  </extension>
+
+   
 <!--=========================================================================-->
 <!-- BPEL ModuleType							 							 -->
 <!--=========================================================================-->   
@@ -72,10 +79,13 @@
                <conflicts group="modules"/>
             </and>
           </constraint>
-		  <action type="install">
-		    <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetInstallDelegate"/>
-		  </action>
-		</project-facet-version>
+        </project-facet-version>
+                
+        <action facet="jbt.bpel.facet.core" version="2.0" type="INSTALL" id="bpel.facet.core.install">
+               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetInstallDelegate"/>
+               <config-factory class="org.jboss.tools.bpel.runtimes.facets.BPELFacetInstallDataModelProvider"/>
+        </action>
+
 			
 		<category id="bpel.category">
 		  <label>%BPEL_FACET_CATEGORY_LABEL</label>

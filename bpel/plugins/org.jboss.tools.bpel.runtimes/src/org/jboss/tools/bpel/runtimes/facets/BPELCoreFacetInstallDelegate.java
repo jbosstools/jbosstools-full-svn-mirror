@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jst.common.project.facet.WtpUtils;
 import org.eclipse.wst.common.componentcore.internal.util.IComponentImplFactory;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
+import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
 import org.jboss.ide.eclipse.as.wtp.core.util.VCFUtil;
@@ -60,12 +61,15 @@ public class BPELCoreFacetInstallDelegate implements IDelegate {
 			IProgressMonitor progMon) throws CoreException {
 
 		progMon.beginTask("Configuring ...", 300); //$NON-NLS-1$
-
+		IDataModel model = (IDataModel)obj;
+		String contentRoot = (String)model.getProperty(IBPELModuleFacetConstants.BPEL_CONTENT_FOLDER);
+		contentRoot = (contentRoot == null || "".equals(contentRoot)) ? IBPELModuleFacetConstants.BPEL_CONTENT_DEFAULT_FOLDER : contentRoot;
+		
 		// add natures
 		WtpUtils.addNatures(proj);
 
 		// Create the content folder
-		IFolder bpelContent = proj.getFolder(IBPELModuleFacetConstants.BPEL_CONTENT);
+		IFolder bpelContent = proj.getFolder(contentRoot);
 		bpelContent.create(true,true, null);
 		
 		// create the virtual component
@@ -75,17 +79,10 @@ public class BPELCoreFacetInstallDelegate implements IDelegate {
 		progMon.worked(100);
 
 		// Add the resource mapping to bpelContent
-		newComponent.getRootFolder().createLink(new Path("/" + IBPELModuleFacetConstants.BPEL_CONTENT), 0, null);
-		
-		// Add an output folder mapping
-		IVirtualComponent outputFoldersComponent = new OutputFoldersVirtualComponent(
-				proj, newComponent);
-		VCFUtil.addReference(outputFoldersComponent, newComponent, "/", null);
+		newComponent.getRootFolder().createLink(new Path("/" + contentRoot), 0, null);
 		progMon.worked(100);
-
 		// Add builder
 		addBuilder(proj, new SubProgressMonitor(progMon, 100));
-		
 		progMon.done();
 	}
 
