@@ -11,8 +11,6 @@
 package org.jboss.tools.vpe.selbar;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.compare.Splitter;
@@ -49,11 +47,6 @@ import org.eclipse.ui.internal.IWorkbenchGraphicConstants;
 import org.eclipse.ui.internal.WorkbenchImages;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
-import org.jboss.tools.common.meta.XAttribute;
-import org.jboss.tools.common.model.XModelObject;
-import org.jboss.tools.common.model.ui.attribute.adapter.AdapterFactory;
-import org.jboss.tools.common.model.ui.attribute.adapter.IModelPropertyEditorAdapter;
-import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.editor.VpeController;
@@ -385,7 +378,12 @@ public class SelectionBar{
 					 * Create DropDownMenu button
 					 */
 					item = new ToolItem(selBar, SWT.DROP_DOWN, 1);
-					DropdownSelectionListener listenerOne = new DropdownSelectionListener(item);
+					final DropdownSelectionListener listenerOne = new DropdownSelectionListener(item);
+					item.addDisposeListener(new DisposeListener() {
+						public void widgetDisposed(DisposeEvent e) {
+							listenerOne.disposeMenu();
+						}
+					});
 					for (Node node2 : list) {
 						listenerOne.add(node2);
 					}
@@ -622,7 +620,14 @@ public class SelectionBar{
 		 */
 		public DropdownSelectionListener(ToolItem dropdown) {
 			this.dropdown = dropdown;
-			menu = new Menu(dropdown.getParent().getShell());
+			menu = new Menu(dropdown.getParent());
+		}
+		
+		public void disposeMenu() {
+			if (menu != null) {
+				menu.dispose();
+				menu = null;
+			}
 		}
 
 		/**
