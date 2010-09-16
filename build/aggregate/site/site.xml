@@ -250,12 +250,6 @@
       		</description>
 	</category-def>
 
-	<category-def name="Savara" label="Savara">
-		<description>Tooling support for the Savara "Testable Architecture" capabilities.
-      		</description>
-	</category-def>
-
-
 	<!-- aggregated from other sources -->
 	<feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
 		<category name="AllTools" />
@@ -287,13 +281,16 @@
 		<category name="DataTools" />
 	</feature>
 	<feature url="features/org.jboss.savara.tools.feature_0.0.0.jar" id="org.jboss.savara.tools.feature" version="0.0.0">
-		<category name="Savara" />
+		<category name="AllTools" />
+		<category name="SOATools" />
 	</feature>
 	<feature url="features/org.scribble.protocol.feature_0.0.0.jar" id="org.scribble.protocol.feature" version="0.0.0">
-		<category name="Savara" />
+		<category name="AllTools" />
+		<category name="SOATools" />
 	</feature>
 	<feature url="features/org.jboss.savara.experimental.feature_0.0.0.jar" id="org.jboss.savara.experimental.feature" version="0.0.0">
-		<category name="Savara" />
+		<category name="AllTools" />
+		<category name="SOATools" />
 	</feature>
 
 </site>
