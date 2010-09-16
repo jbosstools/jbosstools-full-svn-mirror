@@ -76,7 +76,7 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		IJavaProject javaProject = JavaCore.create(project);
 
 		addGwtNature(javaProject, monitor);
-		addClasspathContainer(javaProject, monitor);
+		addGWTClasspathContainer(javaProject, monitor);
 
 		IPath webContentPath = getWebContentFolder(project, monitor);
 
@@ -105,7 +105,7 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		EclipseUtil.addNatureToProject(javaProject.getProject(), IGoogleEclipsePluginConstants.GWT_NATURE);
 	}
 
-	private void addClasspathContainer(IJavaProject javaProject, IProgressMonitor monitor) throws CoreException {
+	private void addGWTClasspathContainer(IJavaProject javaProject, IProgressMonitor monitor) throws CoreException {
 		monitor.subTask("Adding gwt container to classpath");
 
 		IClasspathEntry entry = JavaCore.newContainerEntry(new Path(IGoogleEclipsePluginConstants.GWT_CONTAINER_ID),
