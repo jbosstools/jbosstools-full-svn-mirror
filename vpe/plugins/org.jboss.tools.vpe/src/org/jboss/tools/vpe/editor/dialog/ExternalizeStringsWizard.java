@@ -48,7 +48,11 @@ public class ExternalizeStringsWizard extends Wizard {
 		page1 = new ExternalizeStringsWizardPage(
 				ExternalizeStringsWizardPageName, editor, bm);
 		page2 = new WizardNewFileCreationPage(NewFileCreationPageName,
-				(IStructuredSelection) editor.getSelectionProvider().getSelection());
+				(IStructuredSelection) editor.getSelectionProvider().getSelection()) {
+			protected InputStream getInitialContents() {
+				return new ByteArrayInputStream(page1.getKeyValuePair().getBytes());
+			}
+		};
 		page2.setTitle(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE);
 		page2.setDescription(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_DESCRIPTION);
 		page2.setImageDescriptor(ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_DEFAULT));
@@ -77,9 +81,10 @@ public class ExternalizeStringsWizard extends Wizard {
 			return false;
 		}
 		/*
-		 * Add "key=value" to the bundle
+		 * Add "key=value" to the bundle if file is not new,
+		 * If it is new, it got input by getInitialContent()
 		 */
-		if (bundleFile.exists()) {
+		if (bundleFile.exists() && !page1.isNewFile()) {
 			InputStream is = new ByteArrayInputStream(page1.getKeyValuePair().getBytes());
 			try {
 				bundleFile.appendContents(is, false, true, null);
