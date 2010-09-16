@@ -341,12 +341,10 @@ public class NewCloudConnectionPage extends WizardPage {
 		Label urlLabel = new Label(container, SWT.NULL);
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		System.out.println("p1 is x:" + p1.x + " y:" + p1.y);
-		
+	
 		urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		urlText.addModifyListener(textListener);
 		Point p2 = urlText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		System.out.println("p2 text is x:" + p2.x + " y:" + p2.y);
 		
 		int centering = (p2.y - p1.y + 1) / 2;
 
