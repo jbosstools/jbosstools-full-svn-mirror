@@ -80,7 +80,7 @@ public class GWTInstallFacetDelegate implements IDelegate {
 
 		IPath webContentPath = getWebContentFolder(project, monitor);
 
-		createWebApplicationPreferences(project, webContentPath, javaProject, monitor);
+		setGoogleWebApplicationPreferences(project, webContentPath, javaProject, monitor);
 		configureOutputFolder(webContentPath, javaProject, monitor);
 
 		GWTInstallDataModelProvider dataModel = (GWTInstallDataModelProvider) config;
@@ -113,7 +113,7 @@ public class GWTInstallFacetDelegate implements IDelegate {
 		ProjectUtils.addClasspathEntry(javaProject, entry, monitor);
 	}
 
-	private void createWebApplicationPreferences(IProject project, IPath webContentPath,
+	private void setGoogleWebApplicationPreferences(IProject project, IPath webContentPath,
 			IJavaProject javaProject, IProgressMonitor monitor) throws CoreException {
 		try {
 			monitor.subTask("creating web application preferences");
