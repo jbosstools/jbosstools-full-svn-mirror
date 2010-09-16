@@ -15,23 +15,130 @@ import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.xulrunner.BrowserPlugin;
-//import org.mozilla.interfaces.nsIAccessNode;
-//import org.mozilla.interfaces.nsIAccessible;
-//import org.mozilla.interfaces.nsIAccessibleCoordinateType;
-//import org.mozilla.interfaces.nsIAccessibleRetrieval;
-//import org.mozilla.interfaces.nsIAccessibleText;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerConstants;
+import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
+import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMElementCSSInlineStyle;
+import org.mozilla.interfaces.nsIDOMHTMLDocument;
+import org.mozilla.interfaces.nsIDOMHTMLElement;
 import org.mozilla.interfaces.nsIDOMNSElement;
 import org.mozilla.interfaces.nsIDOMNSHTMLElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMText;
-import org.mozilla.xpcom.Mozilla;
 import org.mozilla.xpcom.XPCOMException;
 
 /**
  * @author dsakovich@exadel.com
  */
 public class XulRunnerVpeUtils {
+	/**
+	 * Get root element
+	 * 
+	 * @return root element
+	 */
+	public static nsIDOMElement getRootElement(nsIDOMDocument domDocument) {
+		
+		nsIDOMElement bodyElement = null;
+		
+		nsIDOMHTMLDocument htmlDocument = queryInterface(domDocument, nsIDOMHTMLDocument.class);
+		
+		if ( htmlDocument != null ) {
+			 nsIDOMHTMLElement htmlBody = htmlDocument.getBody();
+			 
+			 if ( htmlBody != null ) {
+				 bodyElement = queryInterface(htmlBody, nsIDOMElement.class);
+			 } // if
+		} // if
+		
+		return bodyElement;
+	}
+	
+	public static void setElementPosition(nsIDOMElement domElement, int left,int top)	{
+		setStylePropertyPixels(domElement,XulRunnerConstants.HTML_ATTR_LEFT, left);
+		setStylePropertyPixels(domElement,XulRunnerConstants.HTML_ATTR_TOP, top);		
+	}
+	
+	public static void setElementSize(nsIDOMElement domElement, int width,int height) {
+		setStylePropertyPixels(domElement, XulRunnerConstants.HTML_ATTR_WIDTH, width);
+		setStylePropertyPixels(domElement, XulRunnerConstants.HTML_ATTR_HEIGHT, height);
+	}
+	
+	public static void setElementBounds(nsIDOMElement domElement, Rectangle bounds) {
+		setElementPosition(domElement, bounds.x, bounds.y);
+		setElementSize(domElement, bounds.width, bounds.height);
+	}
 
+	/**
+	 * 
+	 * @param aElement
+	 * @param aProperty
+	 * @param aValue
+	 */
+	public static void setStylePropertyPixels(nsIDOMElement aElement, String aProperty, int aValue) {
+		setStyle(aElement, aProperty, aValue + "px"); //$NON-NLS-1$
+	}
+	
+	/**
+	 * Set style for nsIDOMElement
+	 * @param domElement 
+	 * @param cssPropertyName
+	 * @param cssPropertyValue
+	 */
+	public static void setStyle(nsIDOMElement domElement, String cssPropertyName, String cssPropertyValue) {
+		nsIDOMElementCSSInlineStyle inlineStyles = queryInterface(domElement, nsIDOMElementCSSInlineStyle.class);
+		
+	    if ( inlineStyles == null) {
+	    	return;
+	    }
+
+	    nsIDOMCSSStyleDeclaration cssDecl = inlineStyles.getStyle();
+
+	    if ( cssDecl == null) {
+	    	return;
+	    }
+
+	    if (cssPropertyValue.length() == 0 ) {
+			// an empty value means we have to remove the property
+	    	cssDecl.removeProperty(cssPropertyName);
+	    }  else {
+			// let's recreate the declaration as it was
+	    	String priority = cssDecl.getPropertyPriority(cssPropertyName);
+	    	cssDecl.setProperty(cssPropertyName, cssPropertyValue, priority);
+	    }
+	}
+
+	/**
+	 * create a anonymous dom-element
+	 * 
+	 * @param aTag
+	 *            a tag of dom element
+	 * @param aParentNode
+	 * @param aAnonClass
+	 * @param isCreatedHidden
+	 * @return
+	 */
+	public static nsIDOMElement createAnonymousElement(nsIDOMDocument domDocument,
+			String aTag, nsIDOMNode aParentNode, String aAnonClass, boolean isCreatedHidden) {
+		nsIDOMElement element = null;
+	
+		element = domDocument.createElement(aTag);
+		
+		// add the "hidden" class if needed
+		if (isCreatedHidden) {
+			element.setAttribute(XulRunnerConstants.HTML_ATTR_CLASS, XulRunnerConstants.HTML_VALUE_HIDDEN);
+		}
+		
+		// add an _moz_anonclass attribute if needed
+		if ( aAnonClass.length() != 0  ) {
+			element.setAttribute(XulRunnerConstants.STRING_MOZ_ANONCLASS, aAnonClass);
+		}		
+		
+		aParentNode.appendChild(element);
+		
+		return element;
+	}
+	
 	private static int findPosX(nsIDOMNSHTMLElement boxObject) {
 		int curleft = 0;
 		

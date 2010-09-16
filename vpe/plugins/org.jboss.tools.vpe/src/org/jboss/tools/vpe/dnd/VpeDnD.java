@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.dnd;
 
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
+import java.text.MessageFormat;
 import java.util.EnumSet;
 
 import org.eclipse.core.resources.IFile;
@@ -43,8 +44,10 @@ import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
+import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.xulrunner.editor.IVpeSelectionListener;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
+import org.jboss.tools.vpe.xulrunner.editor.XulRunnerHint;
 import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -85,6 +88,10 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 	private VpeController vpeController;
 	private DraggablePattern draggablePattern;
 	private DropableArea dropableArea;
+	private XulRunnerHint dropHint;
+	
+	/** Offset of dropHint related to mouse cursor*/
+	private static final Point DROP_HINT_OFFSET = new Point(20, -10);
 
 	/** The Constant FLAVORS. */
 	private static final String[] FLAVORS =  { 
@@ -169,9 +176,10 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 			innerDrop(queryInterface(domEvent, nsIDOMMouseEvent.class));
 		} else {
 			//in this case it's is  external drag
-			externalDrop(queryInterface(domEvent, nsIDOMMouseEvent.class)); //$NON-NLS-1$
+			externalDrop(queryInterface(domEvent, nsIDOMMouseEvent.class));
 		}
 		disposeDropableArea();
+		disposeDropHint();
 		vpeController.onRefresh();
 	}
 
@@ -193,12 +201,14 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 			// of drawing the dropable area
 			if (targetNodeIsTemporary || eventTargetIsAscedantOfDropTarget) {
 				disposeDropableArea();
+				disposeDropHint();
 			}
 		}
 	}
 	
 	public void dragEnd(nsIDOMEvent domEvent) {
 		disposeDropableArea();
+		disposeDropHint();
 		draggablePattern.closeSession();
 	}
 
@@ -368,6 +378,8 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 			}
 		}
 
+		Point mouseCoords = getPageCoords(event);
+		
 		if (highlightedNode != null) {
 			if (dropableArea == null) {
 				dropableArea = new DropableArea(document);
@@ -376,12 +388,50 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 			dropableArea.setDropTargets(dropTargets);
 			dropableArea.setNode(
 					vpeController.getDomMapping().getNearVisualNode(highlightedNode));
-			Point mouseCoords = getPageCoords(event);
 			dropableArea.setHighlightedDropTarget(mouseCoords.x, mouseCoords.y);
 			dropableArea.setVisible(true);
 			dropableArea.redraw();
 		} else {
 			disposeDropableArea();
+			disposeDropHint();
+		}
+		
+		if (highlightedNode != null && dropableArea.getHighlightedDropTarget() != null) {
+			if (dropHint == null) {
+				dropHint = new XulRunnerHint(document);
+			}
+			String dropHintValue = null;
+			switch (dropableArea.getHighlightedDropTarget()) {
+			case BEFORE:
+				dropHintValue = MessageFormat.format(
+						VpeUIMessages.VpeDnD_PLACE_BEFORE_INSIDE,
+						highlightedNode.getNodeName(),
+						highlightedNode.getParentNode().getNodeName());
+				break;
+			case AFTER:
+				dropHintValue = MessageFormat.format(
+						VpeUIMessages.VpeDnD_PLACE_AFTER_INSIDE,
+						highlightedNode.getNodeName(),
+						highlightedNode.getParentNode().getNodeName());
+				break;
+			case BEGIN:
+				dropHintValue = MessageFormat.format(
+						VpeUIMessages.VpeDnD_PLACE_AT_THE_BEGINNING_OF,
+						highlightedNode.getNodeName());
+				break;
+			case END:
+				dropHintValue = MessageFormat.format(
+						VpeUIMessages.VpeDnD_PLACE_AT_THE_END_OF,
+						highlightedNode.getNodeName());
+				break;
+			}
+
+			dropHint.setHint(dropHintValue);
+			dropHint.setPosition(new Point(mouseCoords.x + DROP_HINT_OFFSET.x,
+					mouseCoords.y + DROP_HINT_OFFSET.y));
+			dropHint.redraw();
+		} else {
+			disposeDropHint();
 		}
 	}
 
@@ -395,6 +445,13 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 		if (dropableArea != null) {
 			dropableArea.dispose();
 			dropableArea = null;
+		}
+	}
+	
+	private void disposeDropHint() {
+		if (dropHint != null) {
+			dropHint.dispose();
+			dropHint = null;
 		}
 	}
 

@@ -69,6 +69,10 @@ public final class VpeUIMessages extends NLS {
 	public static String CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE;
 	public static String VPE_UPDATE_JOB_TITLE;
 	public static String VPE_VISUAL_REFRESH_JOB;
+	public static String VpeDnD_PLACE_AFTER_INSIDE;
+	public static String VpeDnD_PLACE_AT_THE_BEGINNING_OF;
+	public static String VpeDnD_PLACE_AT_THE_END_OF;
+	public static String VpeDnD_PLACE_BEFORE_INSIDE;
 	public static String VpeExpressionBuilder_ClosingApostropheNotFound;
 	public static String VpeExpressionBuilder_ClosingBracketNotFound;
 	public static String VpeExpressionBuilder_FunctionNotFound;

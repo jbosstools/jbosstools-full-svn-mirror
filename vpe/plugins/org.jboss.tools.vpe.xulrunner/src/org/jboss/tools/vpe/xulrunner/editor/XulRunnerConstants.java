@@ -23,8 +23,7 @@ public class XulRunnerConstants {
 
 	
 	/** HTML attributes */
-	
-	/** HTML_ATTR_CLASS */
+	public static final String HTML_ATTR_STYLE = "style"; //$NON-NLS-1$
 	public static final String HTML_ATTR_CLASS = "class"; //$NON-NLS-1$
 
 	/** HTML_ATTR_ANONLOCATION */
@@ -47,6 +46,8 @@ public class XulRunnerConstants {
 	
 	/** HTML_VALUE_HIDDEN */
 	public static final String HTML_VALUE_HIDDEN = "hidden"; //$NON-NLS-1$
+	
+	public static final String HTML_VALUE_VISIBILITY_HIDDEN = "visibility:hidden"; //$NON-NLS-1$
 
 	/** HTML_VALUE_TRUE */
 	public static final String HTML_VALUE_TRUE = "true"; //$NON-NLS-1$
