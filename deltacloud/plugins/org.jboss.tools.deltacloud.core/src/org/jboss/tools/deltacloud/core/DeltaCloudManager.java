@@ -164,6 +164,11 @@ public class DeltaCloudManager {
 		notifyListeners(ICloudManagerListener.REMOVE_EVENT);
 	}
 	
+	public void notifyCloudRename() {
+		saveClouds();
+		notifyListeners(ICloudManagerListener.RENAME_EVENT);
+	}
+	
 	public void addCloudManagerListener(ICloudManagerListener listener) {
 		if (cloudManagerListeners == null)
 			cloudManagerListeners = new ListenerList(ListenerList.IDENTITY);

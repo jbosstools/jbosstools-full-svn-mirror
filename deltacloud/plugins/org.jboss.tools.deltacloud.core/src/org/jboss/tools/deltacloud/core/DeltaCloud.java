@@ -70,6 +70,22 @@ public class DeltaCloud {
 			}
 		}
 	}
+	
+	public void editCloud(String name, String url, String username, String passwd, String type) throws MalformedURLException {
+		this.client = new DeltaCloudClient(new URL(url + "/api"), username, passwd); //$NON-NLS-1$
+		this.url = url;
+		this.name = name;
+		this.username = username;
+		this.type = type;
+		ISecurePreferences root = SecurePreferencesFactory.getDefault();
+		String key = DeltaCloud.getPreferencesKey(url, username);
+		ISecurePreferences node = root.node(key);
+		try {
+			node.put("password", passwd, true /*encrypt*/);
+		} catch (StorageException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static String getPreferencesKey(String url, String username) {
 		String key = "/org/jboss/tools/deltacloud/core/"; //$NON-NLS-1$
