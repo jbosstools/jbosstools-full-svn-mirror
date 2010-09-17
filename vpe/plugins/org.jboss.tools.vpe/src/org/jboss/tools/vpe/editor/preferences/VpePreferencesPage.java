@@ -144,10 +144,6 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 		addField(new BooleanFieldEditor(ASK_TAG_ATTRIBUTES_ON_TAG_INSERT,
 				VpeUIMessages.ASK_TAG_ATTRIBUTES_ON_TAG_INSERT,
 				confirmationGroup));
-		addField(new BooleanFieldEditor(
-				ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
-				VpeUIMessages.ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
-				confirmationGroup));
 		addField(new BooleanFieldEditor(INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
 				VpeUIMessages.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
 				confirmationGroup));
