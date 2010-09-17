@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
@@ -58,6 +59,7 @@ import org.jboss.tools.gwt.core.internal.GWTCoreActivator;
 import org.jboss.tools.gwt.core.util.ProjectUtils;
 import org.jboss.tools.gwt.core.util.ResourceUtils;
 import org.jboss.tools.gwt.core.util.ZipUtils;
+import org.jboss.tools.usage.util.BundleUtils;
 import org.jboss.tools.usage.util.StatusUtils;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -88,9 +90,31 @@ public class GWTInstallFacetDelegate implements IDelegate {
 			List<IPath> srcFolderPaths = ProjectUtils.getSourceFolders(javaProject);
 			createSample(srcFolderPaths, webContentPath, javaProject, monitor);
 		}
+
 		configureWebXml(project, monitor);
+
+		addGWTDesignerNatureAndBuilder(project, monitor);
 	}
 
+	private void addGWTDesignerNatureAndBuilder(IProject project, IProgressMonitor monitor) throws CoreException {
+		if (isGWTDesignerInstalled(GWTCoreActivator.getDefault().getBundle().getBundleContext())) {
+
+			monitor.subTask("Adding GWT Designer nature");
+			EclipseUtil.addNatureToProject(project.getProject(), IGWTDesignerConstants.GWTDESIGNER_NATURE);		
+
+			monitor.subTask("Adding GWT Designer builder");
+			EclipseUtil.addBuilderToProject(project.getProject(), IGWTDesignerConstants.GWTDESIGNER_BUILDER);		
+		}
+		
+	}
+
+	private boolean isGWTDesignerInstalled(BundleContext bundleContext) {
+		ArrayList<Bundle> gwtDesignerBundles = new ArrayList<Bundle>();
+		BundleUtils.getBundles(
+				new BundleUtils.BundleSymbolicNameFilter(IGWTDesignerConstants.GWTDESIGNER_PLUGIN_REGEXP), gwtDesignerBundles, bundleContext.getBundles());
+		return gwtDesignerBundles.size() > 0;
+	}
+	
 	private IPath getWebContentFolder(IProject project, IProgressMonitor monitor) throws CoreException {
 		IPath webContentPath = ProjectHome.getFirstWebContentPath(project);
 		Assert.isTrue(webContentPath != null && !webContentPath.isEmpty(),
