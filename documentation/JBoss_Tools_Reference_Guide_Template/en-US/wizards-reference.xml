@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="reference-wizards">
+  <title>Wizards</title>
+   <para>
+    There are currently two wizards available in JSF Tools. They include:  
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        New JSF Project and;
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        New Faces Config.
+      </para>
+    </listitem>
+  </itemizedlist>  
+  <xi:include href="new_jsf_project_wizard-reference.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="new_faces_config_wizard-reference.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="another_wizard-reference.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+</section>

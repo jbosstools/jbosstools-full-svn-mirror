@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="error_and_warning_messages-state_management">
+  <title>State management</title>
+  <para>
+    The procedures listed in <xref linkend="tasks-state_management"></xref> may return the following errors:
+  </para>
+     <note><title>***Design Note***</title>
+      <para>
+         Itemize according to the relevant task relating to the parent concept - State Management. 
+         Perhaps chunk this down into individual sections depending on the extent of the content - for Context Sensitive Help. 
+      </para>
+  </note>
+   <formalpara><title>Error messages</title>
+  <para>
+  </para>
+  </formalpara>
+  <variablelist>
+   <title>Relevant State Management Task</title>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error. 
+			</para>
+			<para>
+			  This task is described in <xref linkend="hints-placeholder_for_a_link"></xref>  
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error 
+			</para>
+			<para>
+			  This task is described in <xref linkend="hints-placeholder_for_a_link"></xref>  
+			</para>
+		</listitem>
+	</varlistentry>
+  </variablelist>
+  <formalpara><title>Warning messages</title>
+  <para>
+  </para>
+  </formalpara>
+   <variablelist>
+    <title>Relevant State Management Task</title>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error. 
+			</para>
+			<para>
+			  This task is described in <xref linkend="hints-placeholder_for_a_link"></xref>  
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error 
+			</para>
+			<para>
+			  This task is described in <xref linkend="hints-placeholder_for_a_link"></xref>  
+			</para>
+		</listitem>
+	</varlistentry>
+  </variablelist> 
+  <para>&FEEDBACK-error_and_warning_messages-state_management;</para>
+</section>

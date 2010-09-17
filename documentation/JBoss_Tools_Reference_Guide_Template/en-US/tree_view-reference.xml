@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="reference-faces-config_file-tree_view">
+  <title>Tree view</title>
+  <para>
+    The elements and attributes within the faces-config file can be edited with the aid of labelled text fields by using the <guilabel>Tree</guilabel> view. Editing the file in this way is described in <xref linkend="proc-jsf-editor_faces-config"></xref>. 
+  </para>
+  
+  <figure id="figure-jsf-faces-config_file-tree_view">
+    <title>JSF Tools faces-config.xml editor - Tree View - Connection</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/image-jsf-create_new_connection_04.png" format="PNG"/>
+        </imageobject>
+      <textobject>
+        <para>The faces-config.xml editor - Tree View - Connection</para>
+      </textobject>
+    </mediaobject>
+  </figure>
+  <note><title>**Design Note***</title>
+       <para>
+        A link to the relevant "Documentation navigation" section (as in the tasks section) would be relevant where the editor relates to a single feature (or concept) detailed in the Concepts chapter. The Hibernate Tools Reference Guide contains an example. The Hibernate mapping editor is linked to the Mapping section of the "Document navigation" chapter.    
+       </para>
+        
+  </note>
+  <para>&FEEDBACK-reference-faces-config_file-tree_view;</para>
+</section>

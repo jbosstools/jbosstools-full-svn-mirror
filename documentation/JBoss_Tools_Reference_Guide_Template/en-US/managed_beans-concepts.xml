@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="concepts-managed_beans">
+  <title>Managed beans</title>
+  <note><title>***Design Note***</title>
+      <para>
+         For a concept being discussed, begin with a general introduction to the concept where possible (if the concept being discussed is not specific to the Tool for instance). The "general" discussion can then be reused as a concept on its own or act as a preamble to other Tools that implement the concept/feature.   
+      </para>
+   </note>  
+  
+  <para>
+    A Managed Bean or MBean is a JavaBean which is created using dependency injection.....
+  </para>
+  <xi:include href="managed_beans_and_java_server_faces-concepts.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+</section>
