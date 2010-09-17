@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -170,7 +171,6 @@ public class VpeController implements INodeAdapter,
 	private Attr lastRemovedAttr;
 	private String lastRemovedAttrName;
 	private boolean mouseUpSelectionReasonFlag;
-	private boolean mouseDownSelectionFlag;
 	private boolean sourceChangeFlag;
 	private boolean commentNodeChanged;
 	private int commentRemoveCount = 0;
@@ -1114,7 +1114,7 @@ public class VpeController implements INodeAdapter,
 		if (switcher
 				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
 			try {
-				mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) > 0;
+				mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) != 0;
 				if (
 						// commited by Dzmitrovich - experimental
 						// TODO check selection and if are appear errors then
@@ -1217,14 +1217,8 @@ public class VpeController implements INodeAdapter,
 			return;
 		}
 		try {
-
 			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
 				System.out.println("<<< mouseUp"); //$NON-NLS-1$
-			}
-			if (mouseDownSelectionFlag) {
-				mouseEvent.preventDefault();
-				mouseEvent.stopPropagation();
-				mouseDownSelectionFlag = false;
 			}
 		} finally {
 			switcher.stopActiveEditor();
@@ -1239,12 +1233,13 @@ public class VpeController implements INodeAdapter,
 		try {
 			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 			if (visualNode != null) {
+				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+					System.out.println(MessageFormat.format(
+							"<<< mouseClick  visualNode: {0} ({1})", //$NON-NLS-1$
+							visualNode.getNodeName(),
+							visualNode));
+				}
 				if (!mouseUpSelectionReasonFlag) {
-					if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-						System.out
-								.println("<<< mouseClick  visualNode: " + visualNode.getNodeName() + //$NON-NLS-1$
-										" (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$
-					}
 					if (visualBuilder.isContentArea(visualNode)) {
 						// selectionBuilder.setClickContentAreaSelection();
 					}
