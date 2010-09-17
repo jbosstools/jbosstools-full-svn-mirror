@@ -606,8 +606,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	
 	public void changeEvent(int type) {
 		String currName = null;
+		int currIndex = 0;
 		if (currCloud != null) {
 			currName = currCloud.getName();
+			currIndex = cloudSelector.getSelectionIndex();
 		}
 		clouds = DeltaCloudManager.getDefault().getClouds();
 		String[] cloudNames = new String[clouds.length];
@@ -616,6 +618,9 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			cloudNames[i] = clouds[i].getName();
 			if (cloudNames[i].equals(currName))
 				index = i;
+		}
+		if (type == ICloudManagerListener.RENAME_EVENT) {
+			index = currIndex; // no change in cloud displayed
 		}
 		cloudSelector.removeModifyListener(cloudModifyListener);
 		cloudSelector.setItems(cloudNames);

@@ -52,7 +52,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-public class NewCloudConnectionPage extends WizardPage {
+public class CloudConnectionPage extends WizardPage {
 
 	private static final String DESCRIPTION = "NewCloudConnection.desc"; //$NON-NLS-1$
 	private static final String TITLE = "NewCloudConnection.title"; //$NON-NLS-1$
@@ -72,7 +72,7 @@ public class NewCloudConnectionPage extends WizardPage {
 	private static final String TEST_SUCCESSFUL = "NewCloudConnectionTest.success"; //$NON-NLS-1$
 	private static final String TEST_FAILURE = "NewCloudConnectionTest.failure"; //$NON-NLS-1$
 	
-	private NewCloudConnection wizard;
+	private CloudConnection wizard;
 	
 	private Button testButton;
 	
@@ -87,6 +87,11 @@ public class NewCloudConnectionPage extends WizardPage {
 	private String username;
 	private String password;
 	private String cloudType;
+	
+	private String defaultName = "";
+	private String defaultURL = "";
+	private String defaultUsername = "";
+	private String defaultPassword = "";
 
 	private boolean urlValid;
 	
@@ -131,9 +136,25 @@ public class NewCloudConnectionPage extends WizardPage {
 		
 	};
 	
-	public NewCloudConnectionPage(String pageName, NewCloudConnection wizard) {
+	public CloudConnectionPage(String pageName, CloudConnection wizard) {
 		super(pageName);
 		this.wizard= wizard;
+		setDescription(WizardMessages.getString(DESCRIPTION));
+		setTitle(WizardMessages.getString(TITLE));
+		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
+		setPageComplete(false);
+	}
+	
+	public CloudConnectionPage(String pageName, String defaultName, String defaultURL, 
+			String defaultUsername, String defaultPassword, String defaultCloudType, 
+			CloudConnection wizard) {
+		super(pageName);
+		this.wizard= wizard;
+		this.defaultName = defaultName;
+		this.defaultURL = defaultURL;
+		this.defaultUsername = defaultUsername;
+		this.defaultPassword = defaultPassword;
+		this.cloudType = defaultCloudType;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -176,9 +197,11 @@ public class NewCloudConnectionPage extends WizardPage {
 		
 		name = nameText.getText();
 		if (name.length() > 0) {
-			if (DeltaCloudManager.getDefault().findCloud(name) != null) {
-				errorFree = false;
-				setErrorMessage(WizardMessages.getString(NAME_ALREADY_IN_USE));
+			if (!name.equals(defaultName)) {
+				if (DeltaCloudManager.getDefault().findCloud(name) != null) {
+					errorFree = false;
+					setErrorMessage(WizardMessages.getString(NAME_ALREADY_IN_USE));
+				}
 			}
 		} else {
 			complete = false;
@@ -336,40 +359,47 @@ public class NewCloudConnectionPage extends WizardPage {
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		nameText.setText(defaultName);
 		nameText.addModifyListener(textListener);
 		
 		Label urlLabel = new Label(container, SWT.NULL);
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-	
+		
 		urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		urlText.setText(defaultURL);
+		if (!defaultURL.equals(""))
+			setURLValid(true);
 		urlText.addModifyListener(textListener);
 		Point p2 = urlText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		
+
 		int centering = (p2.y - p1.y + 1) / 2;
 
 		Label typeLabel = new Label(container, SWT.NULL);
 		typeLabel.setText(WizardMessages.getString(TYPE_LABEL));
 
 		typeText = new Label(container, SWT.NULL);
-		cloudType = WizardMessages.getString(UNKNOWN_TYPE_LABEL);
+		if (cloudType == null)
+			cloudType = WizardMessages.getString(UNKNOWN_TYPE_LABEL);
 		typeText.setText(cloudType);
 		
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 
 		usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		usernameText.setText(defaultUsername);
 		usernameText.addModifyListener(textListener);
 
 		Label passwordLabel = new Label(container, SWT.NULL);
 		passwordLabel.setText(WizardMessages.getString(PASSWORD_LABEL));
 
 		passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD | SWT.SINGLE);
+		passwordText.setText(defaultPassword);
 		passwordText.addModifyListener(textListener);
 		
 		testButton = new Button(container, SWT.NULL);
 		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));
-		testButton.setEnabled(false);
+		testButton.setEnabled(!defaultName.equals(""));
 		testButton.addSelectionListener(buttonListener);
 		
 		Link ec2userLink = new Link(container, SWT.NULL);
@@ -455,6 +485,7 @@ public class NewCloudConnectionPage extends WizardPage {
 		ec2pwLink.setLayoutData(f);
 		
 		setControl(container);
+		validate();
 }
 
 }

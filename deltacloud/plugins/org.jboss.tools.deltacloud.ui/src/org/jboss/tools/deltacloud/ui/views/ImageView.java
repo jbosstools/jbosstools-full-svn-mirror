@@ -358,9 +358,11 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	
 	public void changeEvent(int type) {
 		String currName = null;
+		int currIndex = 0;
 		clouds = DeltaCloudManager.getDefault().getClouds();
 		if (currCloud != null) {
 			currName = currCloud.getName();
+			currIndex = cloudSelector.getSelectionIndex();
 		}
 		String[] cloudNames = new String[clouds.length];
 		int index = 0;
@@ -368,6 +370,9 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			cloudNames[i] = clouds[i].getName();
 			if (cloudNames[i].equals(currName))
 				index = i;
+		}
+		if (type == ICloudManagerListener.RENAME_EVENT) {
+			index = currIndex; // no change in cloud displayed
 		}
 		cloudSelector.removeModifyListener(cloudModifyListener);
 		cloudSelector.setItems(cloudNames);

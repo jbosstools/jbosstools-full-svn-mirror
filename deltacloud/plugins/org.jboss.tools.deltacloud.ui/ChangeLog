@@ -1,3 +1,24 @@
+2010-09-17  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java: Renamed.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java: New name.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnection.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnection.java: New file.
+	* META-INF/MANIFEST.MF: Add dependency on equinox security for editing cloud connection and
+	restoring saved password. 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add messages.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (fillLocalPullDown): Add edit
+	cloud connection action.
+	(fillContextMenu): Ditto.
+	(makeActions): Add new edit cloud connection action.
+	(.run): New edit cloud action.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (changeEvent): Add check for rename
+	cloud event. 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (changeEvent): Ditto. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (addPages): Use
+	new renamed CloudConnectionPage class.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new messages.
+
 2010-09-16  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionPage.java (createControl): Remove

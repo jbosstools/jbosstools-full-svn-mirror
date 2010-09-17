@@ -12,6 +12,8 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.MalformedURLException;
 
+import org.eclipse.equinox.security.storage.ISecurePreferences;
+import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -20,13 +22,15 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 
-public class NewCloudConnection extends Wizard implements INewWizard, CloudConnection {
+public class EditCloudConnection extends Wizard implements INewWizard, CloudConnection {
 
-	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
+	private static final String MAINPAGE_NAME = "EditCloudConnection.name"; //$NON-NLS-1$
 	private CloudConnectionPage mainPage;
+	private DeltaCloud cloud;
 	
-	public NewCloudConnection() {
+	public EditCloudConnection(DeltaCloud cloud) {
 		super();
+		this.cloud = cloud;
 	}
 	
 	@Override
@@ -36,8 +40,18 @@ public class NewCloudConnection extends Wizard implements INewWizard, CloudConne
 
 	@Override
 	public void addPages() {
-		// TODO Auto-generated method stub
-		mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME), this);
+		String password = "";
+		String key = DeltaCloud.getPreferencesKey(cloud.getURL(), cloud.getUsername());
+		ISecurePreferences root = SecurePreferencesFactory.getDefault();
+		ISecurePreferences node = root.node(key);
+		try {
+			password = node.get("password", null); //$NON-NLS-1$
+		} catch (Exception e) {
+			Activator.log(e);
+		}
+		mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME), 
+				cloud.getName(), cloud.getURL(), cloud.getUsername(), password,
+				cloud.getType(), this);
 		addPage(mainPage);
 	}
 
@@ -68,8 +82,10 @@ public class NewCloudConnection extends Wizard implements INewWizard, CloudConne
 		String password = mainPage.getPassword();
 		String type = mainPage.getType();
 		try {
-			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, type, true);
-			DeltaCloudManager.getDefault().addCloud(newCloud);
+			String oldName = cloud.getName();
+			cloud.editCloud(name, url, username, password, type);
+			if (!name.equals(oldName))
+				DeltaCloudManager.getDefault().notifyCloudRename();
 		} catch (MalformedURLException e) {
 			Activator.log(e);
 		}

@@ -43,6 +43,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnection;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 
 
@@ -55,6 +56,7 @@ ITabbedPropertySheetPageContributor {
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.DeltaCloudView";
 	
 	private static final String REMOVE_CLOUD = "RemoveCloud.label"; //$NON-NLS-1$
+	private static final String EDIT_CLOUD = "EditCloud.label"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	private static final String CREATE_INSTANCE = "CreateInstance.label"; //$NON-NLS-1$
 	private static final String CONFIRM_CLOUD_DELETE_TITLE = "ConfirmCloudDelete.title"; //$NON-NLS-1$
@@ -68,6 +70,7 @@ ITabbedPropertySheetPageContributor {
 	private Action collapseall;
 	private Action doubleClickAction;
 	private Action createInstance;
+	private Action editCloud;
 	
 	private CloudViewElement selectedElement;
 
@@ -146,6 +149,7 @@ ITabbedPropertySheetPageContributor {
 	
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.removeAll();
+		manager.add(editCloud);
 		manager.add(removeCloud);
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 		CloudViewElement element = (CloudViewElement)selection.getFirstElement();
@@ -162,6 +166,7 @@ ITabbedPropertySheetPageContributor {
 		} else if (selectedElement instanceof CVInstanceElement){
 			//TODO: add meaningful actions here
 		}
+		manager.add(editCloud);
 		manager.add(removeCloud);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -226,6 +231,27 @@ ITabbedPropertySheetPageContributor {
 		createInstance.setText(CVMessages.getString(CREATE_INSTANCE));
 		createInstance.setToolTipText(CVMessages.getString(CREATE_INSTANCE));
 		createInstance.setImageDescriptor(SWTImagesFactory.DESC_INSTANCE);
+		
+		editCloud = new Action() {
+			public void run() {
+				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+				CloudViewElement element = (CloudViewElement)selection.getFirstElement();
+				while (element != null && !(element instanceof CVCloudElement)) {
+					element = (CloudViewElement)element.getParent();
+				}
+				if (element != null) {
+					CVCloudElement cloudElement = (CVCloudElement)element;
+					DeltaCloud cloud = (DeltaCloud)cloudElement.getElement();
+					IWizard wizard = new EditCloudConnection(cloud);
+					Shell shell = viewer.getControl().getShell();
+					WizardDialog dialog = new WizardDialog(shell, wizard);
+					dialog.create();
+					dialog.open();
+				}
+			}
+		};		
+		editCloud.setText(CVMessages.getString(EDIT_CLOUD));
+		editCloud.setToolTipText(CVMessages.getString(EDIT_CLOUD));
 		
 		refreshAction = new Action() {
 			public void run() {
