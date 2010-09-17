@@ -36,15 +36,15 @@ import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.InvalidCharacterException;
 import org.eclipse.wst.xml.core.internal.document.TextImpl;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
+import org.jboss.tools.jst.jsp.selection.SourceSelectionBuilder;
+import org.jboss.tools.jst.jsp.selection.SourceSelection;
+import org.jboss.tools.jst.jsp.selection.SelectedNodeInfo;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
-import org.jboss.tools.vpe.editor.selection.VpeSelectedNodeInfo;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
 import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.util.FlatIterator;
@@ -210,8 +210,8 @@ public class VpeVisualKeyHandler {
 	}
 
 	private boolean selectToBegin() {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			Node focusNode = selection.getFocusNode();
 			int focusOffset = selection.getFocusOffset();
@@ -225,8 +225,8 @@ public class VpeVisualKeyHandler {
 	}
 	
 	private boolean selectToEnd() {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			Node focusNode = selection.getFocusNode();
 			int focusOffset = selection.getFocusOffset();
@@ -247,7 +247,7 @@ public class VpeVisualKeyHandler {
 	}
 	
 	private boolean deleteRight() {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
 		if (processNonCollapsedSelection(sourceSelectionBuilder, VK_DELETE)) {
 			return true;
 		}
@@ -256,7 +256,7 @@ public class VpeVisualKeyHandler {
 			return true;
 		}
 		
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			if (!selection.isCollapsed()) {
 				return false;
@@ -289,7 +289,7 @@ public class VpeVisualKeyHandler {
 		return false;
 	}
 
-	private boolean deleteRightCharOrElement(VpeSourceSelectionBuilder sourceSelectionBuilder, VpeSourceSelection selection, Node node) {
+	private boolean deleteRightCharOrElement(SourceSelectionBuilder sourceSelectionBuilder, SourceSelection selection, Node node) {
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			int a = 1;
 			if (!hasNoEmptyChildren(node)) {
@@ -357,7 +357,7 @@ public class VpeVisualKeyHandler {
 	 * @return
 	 */
 
-	private VpeSourceSelection deleteRightChar(VpeSourceSelectionBuilder sourceSelectionBuilder, VpeSourceSelection selection) {
+	private SourceSelection deleteRightChar(SourceSelectionBuilder sourceSelectionBuilder, SourceSelection selection) {
 		boolean atLeastOneCharIsDeleted  = false;
 		Node focusNode = null;
 		while (selection != null && (focusNode = selection.getFocusNode()) != null) {
@@ -432,14 +432,14 @@ public class VpeVisualKeyHandler {
 		return selection;
 	}
 
-	private boolean processNonCollapsedSelection(VpeSourceSelectionBuilder sourceSelectionBuilder, long keyCode) {
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+	private boolean processNonCollapsedSelection(SourceSelectionBuilder sourceSelectionBuilder, long keyCode) {
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			List selectedNodes = selection.getSelectedNodes();
 			int focusOffset = -1;
 			if (!selection.isCollapsed()) {
 				for (int i = 0; i < selectedNodes.size(); i++) {
-					VpeSelectedNodeInfo nodeInfo = (VpeSelectedNodeInfo)selectedNodes.get(i);
+					SelectedNodeInfo nodeInfo = (SelectedNodeInfo)selectedNodes.get(i);
 					focusOffset = processNode(nodeInfo, keyCode, selection);
 				}
 				Node commonAncestor = selection.getCommonAncestor();
@@ -454,8 +454,8 @@ public class VpeVisualKeyHandler {
 		return false;
 	}
 
-	private boolean processAttributeSelection(VpeSourceSelectionBuilder sourceSelectionBuilder, long keyCode) {
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+	private boolean processAttributeSelection(SourceSelectionBuilder sourceSelectionBuilder, long keyCode) {
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			if (selection.getFocusAttribute() != null) {
 				AttrImpl attr = (AttrImpl)selection.getFocusAttribute();
@@ -516,7 +516,7 @@ public class VpeVisualKeyHandler {
 	}
 
 	private boolean deleteLeft() {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
 		if (processNonCollapsedSelection(sourceSelectionBuilder, VK_BACK_SPACE)) {
 			return true;
 		}
@@ -525,7 +525,7 @@ public class VpeVisualKeyHandler {
 			return true;
 		}
 		
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			if (!selection.isCollapsed()) {
 				return false;
@@ -570,7 +570,7 @@ public class VpeVisualKeyHandler {
 		return false;
 	}
 
-	private boolean deleteLeftCharOrElement(VpeSourceSelectionBuilder sourceSelectionBuilder, VpeSourceSelection selection, Node node) {
+	private boolean deleteLeftCharOrElement(SourceSelectionBuilder sourceSelectionBuilder, SourceSelection selection, Node node) {
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 			if (!hasNoEmptyChildren(node)) {
 				AttrImpl attr = (AttrImpl)getVisualNodeSourceAttribute(node);
@@ -677,13 +677,13 @@ public class VpeVisualKeyHandler {
 			}
 			if (focusNodeOffset > 0) {
 				focusNodeOffset--;
-				return VpeSourceSelectionBuilder.getSourceNodeAt(this.sourceEditor,focusNodeOffset);
+				return SourceSelectionBuilder.getSourceNodeAt(this.sourceEditor,focusNodeOffset);
 			}
 		}
 		return null;
 	}
 
-	private VpeSourceSelection deleteLeftChar(VpeSourceSelectionBuilder sourceSelectionBuilder, VpeSourceSelection selection) {
+	private SourceSelection deleteLeftChar(SourceSelectionBuilder sourceSelectionBuilder, SourceSelection selection) {
 		boolean atLeastOneCharIsDeleted = false;
 		Node focusNode = null;
 		while (selection != null && (focusNode = selection.getFocusNode()) != null) {
@@ -985,13 +985,13 @@ public class VpeVisualKeyHandler {
 	}
 
 	private boolean handleKey(nsIDOMKeyEvent keyEvent) {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
 		processNonCollapsedSelection(sourceSelectionBuilder, keyEvent.getCharCode());
 		processAttributeSelection(sourceSelectionBuilder, keyEvent.getCharCode());
 
 		boolean isEditable = false;
 		int start = 0;
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			Node sourceNode = selection.getFocusNode();
 			if (sourceNode != null) {
@@ -1042,8 +1042,8 @@ public class VpeVisualKeyHandler {
 
 	private boolean _nonctrlKeyPressHandler(nsIDOMKeyEvent keyEvent) {
 		ITextFormatter formatter = null;
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			long keyCode = keyEvent.getKeyCode();
 			List selectedNodes = selection.getSelectedNodes();
@@ -1051,7 +1051,7 @@ public class VpeVisualKeyHandler {
 				case VK_ENTER:
 					if (!selection.isCollapsed()) {
 						for (int i = 0; i < selectedNodes.size(); i++) {
-							VpeSelectedNodeInfo nodeInfo = (VpeSelectedNodeInfo)selectedNodes.get(i);
+							SelectedNodeInfo nodeInfo = (SelectedNodeInfo)selectedNodes.get(i);
 							processNode(nodeInfo, keyCode, selection);
 						}
 						Node commonAncestor = selection.getCommonAncestor();
@@ -1107,13 +1107,13 @@ public class VpeVisualKeyHandler {
 	private boolean split() {
 		ITextFormatter formatter = null;
 		IRegion region = null;
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null) {
 			List selectedNodes = selection.getSelectedNodes();
 			if (!selection.isCollapsed()) {
 				for (int i = 0; i < selectedNodes.size(); i++) {
-					VpeSelectedNodeInfo nodeInfo = (VpeSelectedNodeInfo)selectedNodes.get(i);
+					SelectedNodeInfo nodeInfo = (SelectedNodeInfo)selectedNodes.get(i);
 					processNode(nodeInfo, VK_ENTER, selection);
 				}
 				Node commonAncestor = selection.getCommonAncestor();
@@ -1214,7 +1214,7 @@ public class VpeVisualKeyHandler {
 		}
 	}
 	
-	private int processNode(VpeSelectedNodeInfo nodeInfo, long keyCode, VpeSourceSelection selection) {
+	private int processNode(SelectedNodeInfo nodeInfo, long keyCode, SourceSelection selection) {
 		Node node = nodeInfo.getNode();
 		if (domMapping.getNodeMapping(node) != null) {
 			int type = node.getNodeType();
@@ -1259,7 +1259,7 @@ public class VpeVisualKeyHandler {
 		return null;
 	}
 	
-	private void goToParentTemplate(Node node, VpeSourceSelection selection, long keyCode) {
+	private void goToParentTemplate(Node node, SourceSelection selection, long keyCode) {
 		ITextFormatter formatter = null;
 		VpeNodeMapping nearNodeMapping = domMapping.getNearParentMapping(node);
 		if (nearNodeMapping != null && nearNodeMapping instanceof VpeElementMapping) {
@@ -1298,8 +1298,8 @@ public class VpeVisualKeyHandler {
 	}
 	
 	private boolean moveForward() {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null && selection.isCollapsed()) {
 			Node node = getNextNode(selection.getStartNode());
 			if (node != null) {
@@ -1432,8 +1432,8 @@ public class VpeVisualKeyHandler {
 	}
 
 	private boolean moveBack() {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(sourceEditor);
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(sourceEditor);
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection != null && selection.isCollapsed()) {
 			Node node = getPrevNode(selection.getStartNode());
 			if (node != null) {

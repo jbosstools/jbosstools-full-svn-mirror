@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.editor.selection;
+package org.jboss.tools.jst.jsp.selection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,24 +20,23 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.AttrImpl;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
-import org.jboss.tools.vpe.VpePlugin;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-public class VpeSourceSelectionBuilder {
+public class SourceSelectionBuilder {
 	StructuredTextEditor sourceEditor;
 
-	public VpeSourceSelectionBuilder(StructuredTextEditor sourceEditor) {
+	public SourceSelectionBuilder(StructuredTextEditor sourceEditor) {
 		this.sourceEditor = sourceEditor;
 	}
 
-	public VpeSourceSelection getSelection() {
+	public SourceSelection getSelection() {
 		Point range = sourceEditor.getTextViewer().getSelectedRange();
 		int anchorPosition = range.x;
 		int focusPosition = range.x + range.y;
 		boolean extendFlag = range.y != 0;
-		boolean reversionFlag = extendFlag && anchorPosition == VpeSelectionHelper.getCaretOffset(sourceEditor);
+		boolean reversionFlag = extendFlag && anchorPosition == SelectionHelper.getCaretOffset(sourceEditor);
 		if (reversionFlag) {
 			anchorPosition = focusPosition;
 			focusPosition = range.x;
@@ -58,11 +57,11 @@ public class VpeSourceSelectionBuilder {
 			anchorOffset = focusOffset;
 		}
 
-		VpeSourceSelection selection = null;
+		SourceSelection selection = null;
 		if (reversionFlag) {
-			selection = new VpeSourceSelection(focusNode, focusOffset, anchorNode, anchorOffset);
+			selection = new SourceSelection(focusNode, focusOffset, anchorNode, anchorOffset);
 		} else {
-			selection = new VpeSourceSelection(anchorNode, anchorOffset, focusNode, focusOffset);
+			selection = new SourceSelection(anchorNode, anchorOffset, focusNode, focusOffset);
 		}
 		List selectedNodes = null;
 		if (focusNode instanceof IDOMElement) {
@@ -87,7 +86,7 @@ public class VpeSourceSelectionBuilder {
 		}
 
 		if (selectedNodes == null) {
-			selectedNodes = VpeSelectionHelper.getTextWidgetSelectedNodes(sourceEditor.getModel(), sourceEditor.getSelectionProvider());
+			selectedNodes = SelectionHelper.getTextWidgetSelectedNodes(sourceEditor.getModel(), sourceEditor.getSelectionProvider());
 		}
 		if (selectedNodes != null && selectedNodes.size() == 1) {
 			Object node = selectedNodes.get(0);

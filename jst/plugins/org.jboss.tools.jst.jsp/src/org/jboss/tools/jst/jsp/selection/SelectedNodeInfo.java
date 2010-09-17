@@ -8,19 +8,19 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.editor.selection;
+package org.jboss.tools.jst.jsp.selection;
 
 import org.w3c.dom.Node;
 
-public class VpeSelectedNodeInfo {
+public class SelectedNodeInfo {
 	private Node node;
 	private int startOffset;
 	private int endOffset;
 
-	public VpeSelectedNodeInfo(Node node) {
+	public SelectedNodeInfo(Node node) {
 		this.node = node;
 	}
-	public VpeSelectedNodeInfo(Node node, int startOffset, int endOffset) {
+	public SelectedNodeInfo(Node node, int startOffset, int endOffset) {
 		this(node);
 		this.startOffset = startOffset;
 		this.endOffset = endOffset;

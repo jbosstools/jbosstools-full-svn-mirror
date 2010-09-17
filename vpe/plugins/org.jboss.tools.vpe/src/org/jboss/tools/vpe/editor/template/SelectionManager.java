@@ -16,16 +16,17 @@ import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
+import org.jboss.tools.jst.jsp.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
-import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -71,7 +72,7 @@ public class SelectionManager implements ISelectionManager {
 		if (selectedVisualNode == null)
 			return;
 
-		VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
+		VpeNodeMapping nodeMapping = VpeNodesManagingUtil.getNodeMapping(
 				getDomMapping(), selectedVisualNode);
 
 		if (nodeMapping == null)
@@ -161,7 +162,7 @@ public class SelectionManager implements ISelectionManager {
 		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 
 		// get element mapping
-		VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
+		VpeNodeMapping nodeMapping = VpeNodesManagingUtil.getNodeMapping(
 				getDomMapping(), visualNode);
 
 		if (nodeMapping == null)

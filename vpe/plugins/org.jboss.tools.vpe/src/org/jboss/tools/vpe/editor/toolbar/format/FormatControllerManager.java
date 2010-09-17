@@ -22,14 +22,14 @@ import org.eclipse.wst.xml.core.internal.document.TextImpl;
 import org.w3c.dom.Node;
 
 import org.jboss.tools.common.reporting.ProblemReportingHelper;
+import org.jboss.tools.jst.jsp.selection.SourceSelectionBuilder;
+import org.jboss.tools.jst.jsp.selection.SourceSelection;
+import org.jboss.tools.jst.jsp.selection.SelectedNodeInfo;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
-import org.jboss.tools.vpe.editor.selection.VpeSelectedNodeInfo;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.textformating.FormatData;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
@@ -50,7 +50,7 @@ public class FormatControllerManager {
 	private FormatData currentFormatData;
 	private Node currentSelectedNode;
 	private Node currentSelectedElement; // Parent node If currentSelectedNode is Text.
-	private VpeSelectedNodeInfo currentSelectedNodeInfo;
+	private SelectedNodeInfo currentSelectedNodeInfo;
 	private boolean controllerNotifedSelectionChange = false;
 	private String currentSelectedTagValue;
 	private boolean ignoreSelectionChanges = false;
@@ -76,7 +76,7 @@ public class FormatControllerManager {
 	public void selectionChanged() {
 		List cleanNodesList = getCleanSelectedNodesList();
 		if(cleanNodesList.size()==1) {
-			VpeSelectedNodeInfo newNodeInfo = (VpeSelectedNodeInfo)cleanNodesList.get(0);
+			SelectedNodeInfo newNodeInfo = (SelectedNodeInfo)cleanNodesList.get(0);
 			if(newNodeInfo!=null) {
 				 Node newNode = newNodeInfo.getNode();
 				 if(currentSelectedNode == newNode && newNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -162,7 +162,7 @@ public class FormatControllerManager {
 		}
 	}
 
-	private TextFormatingData getParentFormatingDataForTextNode(VpeSelectedNodeInfo selectedNodeInfo) {
+	private TextFormatingData getParentFormatingDataForTextNode(SelectedNodeInfo selectedNodeInfo) {
 		Node selectedNode = selectedNodeInfo.getNode();
 		if(selectedNode instanceof TextImpl) {
 //				int startOffset = selectedNodeInfo.getStartOffset()>selectedNodeInfo.getEndOffset()?selectedNodeInfo.getEndOffset():selectedNodeInfo.getStartOffset();
@@ -237,16 +237,16 @@ public class FormatControllerManager {
 	/**
 	 * @return
 	 */
-	public VpeSelectedNodeInfo computeSelectedNode() {
+	public SelectedNodeInfo computeSelectedNode() {
 		List nodes = getCleanSelectedNodesList();
 		if(nodes.size()==0) {
 			return null;
 		}
-		return (VpeSelectedNodeInfo)nodes.get(0);
+		return (SelectedNodeInfo)nodes.get(0);
 	}
 
 	private List getCleanSelectedNodesList() {
-		VpeSourceSelection selection = getSelection();
+		SourceSelection selection = getSelection();
 		if(selection==null) {
 			return new ArrayList();
 		}
@@ -259,7 +259,7 @@ public class FormatControllerManager {
 		ArrayList nodes = new ArrayList(dirtyNodesList.size());
 		HashSet parentNodes = new HashSet();
 		for(int i=0; i<dirtyNodesList.size(); i++) {
-			VpeSelectedNodeInfo nodeInfo = (VpeSelectedNodeInfo)dirtyNodesList.get(i);
+			SelectedNodeInfo nodeInfo = (SelectedNodeInfo)dirtyNodesList.get(i);
 			Node node = nodeInfo.getNode();
 			if(parentNodes.contains(node.getParentNode())) {
 				// Ignore child node.
@@ -288,8 +288,8 @@ public class FormatControllerManager {
 	/**
 	 * @return current selection
 	 */
-	public VpeSourceSelection getSelection() {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(vpeController.getSourceEditor());
+	public SourceSelection getSelection() {
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(vpeController.getSourceEditor());
 		return sourceSelectionBuilder.getSelection();
 	}
 
@@ -331,7 +331,7 @@ public class FormatControllerManager {
 	/**
 	 * @return Returns the currentSelectedNodeInfo.
 	 */
-	public VpeSelectedNodeInfo getCurrentSelectedNodeInfo() {
+	public SelectedNodeInfo getCurrentSelectedNodeInfo() {
 		return currentSelectedNodeInfo;
 	}
 

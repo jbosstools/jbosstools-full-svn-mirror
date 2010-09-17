@@ -12,8 +12,8 @@ package org.jboss.tools.vpe.editor.menu.action;
 
 
 import org.eclipse.jface.action.Action;
+import org.jboss.tools.jst.jsp.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.menu.VpeMenuUtil;
-import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Node;
 

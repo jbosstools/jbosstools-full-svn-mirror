@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jboss.tools.jst.jsp.util.NodesManagingUtil;
 import org.jboss.tools.vpe.VpePlugin;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.w3c.dom.Node;

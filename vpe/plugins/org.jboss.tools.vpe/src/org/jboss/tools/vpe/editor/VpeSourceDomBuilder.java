@@ -34,16 +34,17 @@ import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.tools.common.text.ext.hyperlink.AbstractHyperlink;
 import org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor;
+import org.jboss.tools.jst.jsp.selection.SelectionHelper;
+import org.jboss.tools.jst.jsp.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
-import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.HTML;
-import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
+import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
@@ -209,7 +210,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	}
 
 	Node getSelectedNode() {
-		List nodes = VpeSelectionHelper.getTextWidgetSelectedNodes(model,
+		List nodes = SelectionHelper.getTextWidgetSelectedNodes(model,
 				selectionManager);
 		// selectionManager.getSelectedNodes();
 		if (nodes != null && nodes.size() > 0) {
@@ -308,7 +309,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	 * 		   false otherwise
 	 */
 	private boolean openOnOnVisualNode(nsIDOMNode visualNode) {
-		VpeNodeMapping nodeMapping = NodesManagingUtil.getNodeMapping(
+		VpeNodeMapping nodeMapping = VpeNodesManagingUtil.getNodeMapping(
 				this.domMapping, visualNode);
 		if (nodeMapping != null && nodeMapping instanceof VpeElementMapping) {
 

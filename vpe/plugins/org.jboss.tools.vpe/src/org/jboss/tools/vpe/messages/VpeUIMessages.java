@@ -29,8 +29,6 @@ public final class VpeUIMessages extends NLS {
 	public static String PREFERENCES;
 	public static String REFRESH;
 	public static String PAGE_DESIGN_OPTIONS;
-	public static String HIDE_SELECTION_BAR;
-	public static String SHOW_SELECTION_BAR;
 	public static String MOZILLA_LOADING_ERROR;
 	public static String MOZILLA_LOADING_ERROR_LINK_TEXT;
 	public static String MOZILLA_LOADING_ERROR_LINK;
@@ -64,9 +62,6 @@ public final class VpeUIMessages extends NLS {
 	public static String ITALIC;
 	public static String UNDERLINE;
 	public static String FOREGROUND_COLOR;
-	public static String CONFIRM_SELECTION_BAR_DIALOG_TITLE;
-	public static String CONFIRM_SELECTION_BAR_DIALOG_MESSAGE;
-	public static String CONFIRM_SELECTION_BAR_DIALOG_TOGGLE_MESSAGE;
 	public static String VPE_UPDATE_JOB_TITLE;
 	public static String VPE_VISUAL_REFRESH_JOB;
 	public static String VpeDnD_PLACE_AFTER_INSIDE;

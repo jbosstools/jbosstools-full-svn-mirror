@@ -19,6 +19,7 @@ import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
+import org.jboss.tools.jst.jsp.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
@@ -147,7 +148,7 @@ public class SelectionUtil {
 		// if focus node also contain anchor point (selected only 1 element)
 		if (focusNode != null
 				&& NodesManagingUtil.isNodeContainsPosition(focusNode, anchor)) {
-			return NodesManagingUtil.getNodeMapping(domMapping, focusNode);
+			return VpeNodesManagingUtil.getNodeMapping(domMapping, focusNode);
 		}
 		return null;
 	}
@@ -278,7 +279,7 @@ public class SelectionUtil {
 			if (focusNode != null) {
 				// if (NodesManagingUtil.isNodeContainsPosition(focusNode,
 				// anchor)) {
-				return NodesManagingUtil.getNodeMapping(domMapping, focusNode);
+				return VpeNodesManagingUtil.getNodeMapping(domMapping, focusNode);
 				// }
 			}
 		} finally {

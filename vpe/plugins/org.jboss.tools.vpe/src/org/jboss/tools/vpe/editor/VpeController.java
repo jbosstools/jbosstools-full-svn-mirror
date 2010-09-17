@@ -84,6 +84,7 @@ import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
 import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.jsp.selection.SelectionHelper;
 import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.tld.URIConstants;
@@ -106,7 +107,6 @@ import org.jboss.tools.vpe.editor.mozilla.listener.MozillaScrollListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
-import org.jboss.tools.vpe.editor.selection.VpeSelectionHelper;
 import org.jboss.tools.vpe.editor.template.IKeyEventHandler;
 import org.jboss.tools.vpe.editor.template.ISelectionManager;
 import org.jboss.tools.vpe.editor.template.IZoomEventManager;
@@ -126,7 +126,6 @@ import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
 import org.jboss.tools.vpe.resref.core.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.TaglibReferenceList;
-import org.jboss.tools.vpe.selbar.SelectionBar;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -188,7 +187,6 @@ public class VpeController implements INodeAdapter,
 	private RelativeFolderReferenceList relativeFolderReferenceListListener;
 	private VpeIncludeList includeList = new VpeIncludeList();
 	private FormatControllerManager toolbarFormatControllerManager = null;
-	private SelectionBar selectionBar = null;
 	private XModelTreeListenerSWTSync optionsListener;
 	// Added by Max Areshkau Fix for JBIDE-1479
 	private UIJob job = null;
@@ -315,7 +313,7 @@ public class VpeController implements INodeAdapter,
 		// sourceEditor.getViewerSelectionManager();
 		// selectionManager.addNodeSelectionListener(this);
 		// selectionManager.addTextSelectionListener(this);
-		StyledText textWidget = VpeSelectionHelper
+		StyledText textWidget = SelectionHelper
 				.getSourceTextWidget(sourceEditor);
 		if (textWidget != null) {
 			textWidget.addSelectionListener(this);
@@ -404,7 +402,7 @@ public class VpeController implements INodeAdapter,
 			// sourceEditor.getViewerSelectionManager();
 			// selectionManager.removeNodeSelectionListener(this);
 			// selectionManager.removeTextSelectionListener(this);
-			StyledText textWidget = VpeSelectionHelper
+			StyledText textWidget = SelectionHelper
 					.getSourceTextWidget(sourceEditor);
 			if (textWidget != null) {
 				textWidget.removeSelectionListener(this);
@@ -2209,10 +2207,6 @@ public class VpeController implements INodeAdapter,
 		toolbarFormatControllerManager = formatControllerManager;
 	}
 
-	public void setSelectionBarController(SelectionBar selectionBar) {
-		this.selectionBar = selectionBar;
-	}
-
 	public IStructuredModel getModel() {
 		return sourceEditor.getModel();
 	}
@@ -2239,8 +2233,6 @@ public class VpeController implements INodeAdapter,
 	 * (!switcher.startActiveEditor)
 	 */
 	public void selectionChanged(SelectionChangedEvent event) {
-		if (selectionBar != null)
-			selectionBar.updateNodes(false);
 		// FIX for JBIDE-2114
 		if (!isVisualEditorVisible()) {
 			// selection event doesn't changes a content
@@ -2526,14 +2518,6 @@ public class VpeController implements INodeAdapter,
 	 */
 	public ISelectionManager getSelectionManager() {
 		return selectionManager;
-	}
-
-	/*
-	 * https://jira.jboss.org/jira/browse/JBIDE-4968 
-	 * Updating VPE toolbar icon on selection bar changes.
-	 */
-	public void updateVpeToolbar() {
-		visualEditor.updateShowSelectionBarItem(selectionBar.isVisible());
 	}
 
 	/**

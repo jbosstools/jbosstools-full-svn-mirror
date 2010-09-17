@@ -13,8 +13,8 @@ package org.jboss.tools.vpe.editor.template;
 import java.util.Map;
 
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
+import org.jboss.tools.jst.jsp.selection.SourceSelection;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -109,7 +109,7 @@ public interface VpeCreator {
 	 * @param formatter Formatter of text.
 	 * @return <code>true</code> if the key is treated, <code>false</code> otherwise.
 	 */
-	boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument, Node sourceNode, Object data, long charCode, VpeSourceSelection selection, ITextFormatter formatter);
+	boolean nonctrlKeyPressHandler(VpePageContext pageContext, Document sourceDocument, Node sourceNode, Object data, long charCode, SourceSelection selection, ITextFormatter formatter);
 
 	Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Map<VpeTemplate,?> visualNodeMap);
 }

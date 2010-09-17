@@ -16,14 +16,14 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import org.jboss.tools.jst.jsp.selection.SourceSelection;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMNode;
 
 public class VpeBreackerHelper {
 
-	public static boolean selectItem(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, VpeSourceSelection selection) {
+	public static boolean selectItem(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, nsIDOMNode visualNode, Object data, long charCode, SourceSelection selection) {
 		Attr attr = selection.getFocusAttribute();
 		if (attr != null) {
 			Point range = selection.getFocusAttributeRange();
@@ -51,7 +51,7 @@ public class VpeBreackerHelper {
 		return false;
 	}
 
-	public static boolean breakInline(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, VpeSourceSelection selection) {
+	public static boolean breakInline(VpePageContext pageContext, Document sourceDocument,  Node sourceNode, Node visualNode, Object data, int charCode, SourceSelection selection) {
 		Attr attr = selection.getFocusAttribute();
 		if (attr != null) {
 			Point range = selection.getFocusAttributeRange();

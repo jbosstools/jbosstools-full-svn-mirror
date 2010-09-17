@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.editor.selection;
+package org.jboss.tools.jst.jsp.selection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,10 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.jboss.tools.jst.jsp.util.NodesManagingUtil;
+import org.w3c.dom.Node;
 
-public class VpeSelectionHelper {
+public class SelectionHelper {
 
 	public static StyledText getSourceTextWidget(StructuredTextEditor sourceEditor) {
 		if (sourceEditor != null && sourceEditor.getTextViewer() != null && sourceEditor.getTextViewer().getTextWidget() != null && !sourceEditor.getTextViewer().getTextWidget().isDisposed()) {
@@ -54,6 +56,21 @@ public class VpeSelectionHelper {
 		}
 		return selectedNodes;
 	}
+	/**
+	 * select node completely
+	 * 
+	 * @param pageContext
+	 * @param node
+	 */
+	public static void setSourceSelection(StructuredTextEditor structuredTextEditor, Node node) {
 
+		int start = NodesManagingUtil.getStartOffsetNode(node);
+		int length = NodesManagingUtil.getNodeLength(node);
+
+		structuredTextEditor.getTextViewer()
+				.setSelectedRange(start, length);
+		structuredTextEditor.getTextViewer().revealRange(
+				start, length);
+	}
 
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.editor.selection;
+package org.jboss.tools.jst.jsp.selection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.eclipse.swt.graphics.Point;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
-public class VpeSourceSelection {
+public class SourceSelection {
 	private Node startNode;
 	private int startOffset;
 	private Node endNode;
@@ -27,7 +27,7 @@ public class VpeSourceSelection {
 	private Attr focusAttribute;
 	private Point focusAttributeRange;
 
-	public VpeSourceSelection(Node startNode, int startOffset, Node endNode, int endOffset) {
+	public SourceSelection(Node startNode, int startOffset, Node endNode, int endOffset) {
 		this.startNode = startNode;
 		this.startOffset = startOffset;
 		this.endNode = endNode;
@@ -46,21 +46,21 @@ public class VpeSourceSelection {
 		if (nextNode != null) nodes = new ArrayList();
 //		Node commonAncestor = getCommonAncestor();
 		while (nextNode != null) {
-			VpeSelectedNodeInfo nextNodeInfo = null;
+			SelectedNodeInfo nextNodeInfo = null;
 			int type = nextNode.getNodeType();
 			if (type == Node.TEXT_NODE || type == Node.COMMENT_NODE) {
 				if (nextNode == startNode && nextNode == endNode) {
-					nextNodeInfo = new VpeSelectedNodeInfo(nextNode, startOffset, endOffset);
+					nextNodeInfo = new SelectedNodeInfo(nextNode, startOffset, endOffset);
 				} else if (nextNode == startNode) {
-					nextNodeInfo = new VpeSelectedNodeInfo(nextNode, startOffset, nextNode.getNodeValue().length());
+					nextNodeInfo = new SelectedNodeInfo(nextNode, startOffset, nextNode.getNodeValue().length());
 				} else if (nextNode == endNode) {
-					nextNodeInfo = new VpeSelectedNodeInfo(nextNode, 0, endOffset);
+					nextNodeInfo = new SelectedNodeInfo(nextNode, 0, endOffset);
 				} else {
-					nextNodeInfo = new VpeSelectedNodeInfo(nextNode, 0, nextNode.getNodeValue().length());
+					nextNodeInfo = new SelectedNodeInfo(nextNode, 0, nextNode.getNodeValue().length());
 				}
 			} else if (nextNode.getNodeType() == Node.ELEMENT_NODE) {
 				if (!inParents(nextNode, endNode)) {
-					nextNodeInfo = new VpeSelectedNodeInfo(nextNode);
+					nextNodeInfo = new SelectedNodeInfo(nextNode);
 				}
 			}
 			if (nextNodeInfo != null) nodes.add(nextNodeInfo);

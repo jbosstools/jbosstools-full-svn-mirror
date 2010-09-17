@@ -12,6 +12,7 @@ package org.jboss.tools.vpe.editor.template;
 
 import org.eclipse.jface.text.IRegion;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
+import org.jboss.tools.jst.jsp.selection.SourceSelection;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceDropInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
@@ -19,7 +20,6 @@ import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -99,7 +99,7 @@ public interface VpeTemplate {
 	 */
 	boolean nonctrlKeyPressHandler(VpePageContext pageContext,
 			Document sourceDocument, Node sourceNode, nsIDOMNode visualNode,
-			Object data, long charCode, VpeSourceSelection selection,
+			Object data, long charCode, SourceSelection selection,
 			ITextFormatter formatter);
 
 	/**

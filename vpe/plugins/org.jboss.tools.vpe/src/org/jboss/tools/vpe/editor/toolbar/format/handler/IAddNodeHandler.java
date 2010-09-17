@@ -12,7 +12,7 @@ package org.jboss.tools.vpe.editor.toolbar.format.handler;
 
 import org.w3c.dom.Node;
 
-import org.jboss.tools.vpe.editor.selection.VpeSelectedNodeInfo;
+import org.jboss.tools.jst.jsp.selection.SelectedNodeInfo;
 import org.jboss.tools.vpe.editor.template.textformating.FormatData;
 
 /**
@@ -26,5 +26,5 @@ public interface IAddNodeHandler {
 	 * @param node is Node which is adding children.
 	 * @param selectedNode is Node which is selected.
 	 */
-	public void run(FormatData formatData, Node node, VpeSelectedNodeInfo selectedNode);
+	public void run(FormatData formatData, Node node, SelectedNodeInfo selectedNode);
 }

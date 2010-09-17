@@ -22,6 +22,8 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
+import org.jboss.tools.jst.jsp.selection.SourceSelection;
+import org.jboss.tools.jst.jsp.util.NodesManagingUtil;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnDHelper;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
@@ -31,13 +33,12 @@ import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementData;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.template.resize.VpeResizer;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
 import org.jboss.tools.vpe.editor.util.Constants;
-import org.jboss.tools.vpe.editor.util.NodesManagingUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
+import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -503,7 +504,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 */
 	public boolean nonctrlKeyPressHandler(VpePageContext pageContext,
 			Document sourceDocument, Node sourceNode, nsIDOMNode visualNode,
-			Object data, long charCode, VpeSourceSelection selection,
+			Object data, long charCode, SourceSelection selection,
 			ITextFormatter formatter) {
 		switch (breakerType) {
 		case BREAKER_TYPE_IGNORE:
@@ -534,7 +535,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 */
 	private boolean nonctrlKeyPressHandlerImpl(VpePageContext pageContext,
 			Document sourceDocument, Node sourceNode, nsIDOMNode visualNode,
-			Object data, long charCode, VpeSourceSelection selection,
+			Object data, long charCode, SourceSelection selection,
 			ITextFormatter formatter) {
 		clearRegionToFormat();
 		Node focusNode = selection.getFocusNode();
@@ -1435,7 +1436,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 				&& nodeData.getSourceNode().getNodeValue() != null)
 			return pageContext.getBundle().openBundle(
 					nodeData.getSourceNode().getNodeValue(),
-					NodesManagingUtil.getPageLocale(pageContext, nodeData
+					VpeNodesManagingUtil.getPageLocale(pageContext, nodeData
 							.getSourceNode()));
 
 		return false;

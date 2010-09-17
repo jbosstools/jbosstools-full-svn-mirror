@@ -41,7 +41,6 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IReusableEditor;
@@ -80,10 +79,9 @@ import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaPreview;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
+import org.jboss.tools.vpe.editor.xpl.CustomSashForm.ICustomSashFormListener;
 import org.jboss.tools.vpe.editor.xpl.EditorSettings;
 import org.jboss.tools.vpe.editor.xpl.SashSetting;
-import org.jboss.tools.vpe.editor.xpl.CustomSashForm.ICustomSashFormListener;
-import org.jboss.tools.vpe.selbar.SelectionBar;
 
 @SuppressWarnings("restriction")
 public class VpeEditorPart extends EditorPart implements ITextEditor,
@@ -101,7 +99,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private ControlListener controlListener;
 	private XModelTreeListener listener;
 	private XModelObject optionsObject;
-	private SelectionBar selectionBar = new SelectionBar();
+//	private SelectionBar selectionBar = new SelectionBar();
 	private ActivationListener activationListener = new ActivationListener();
 	private int visualMode = 0;
 	private EditorPart multiPageEditor;
@@ -316,7 +314,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			 * https://jira.jboss.org/browse/JBIDE-6832
 			 * Restore the state after switching from Preview, for example.
 			 */
-			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+//			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			setVerticalToolbarVisible(true);
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
@@ -344,7 +342,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 //			break;
 
 		case SOURCE_MODE:
-			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+//			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			setVerticalToolbarVisible(false);
 			if (sourceContent != null) {
 				sourceContent.setVisible(true);
@@ -374,9 +372,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			break;
 
 		case PREVIEW_MODE:
-			if (selectionBar != null) {
-				selectionBar.setVisible(false);
-			}
+//			if (selectionBar != null) {
+//				selectionBar.setVisible(false);
+//			}
 			setVerticalToolbarVisible(false);
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
@@ -504,7 +502,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		/*
 		 * Creating selection bar at the bottom of the editor
 		 */
-		selectionBar.createToolBarComposite(cmpEdTl, true);
+//		selectionBar.createToolBarComposite(cmpEdTl, true);
 		
 		//container = new SashForm(cmpEd, SWT.VERTICAL);
 		/*
@@ -658,7 +656,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				* do it for newly opened ones only.
 			 	*/
 //			    fillContainer(false, null);
-			    selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+//			    selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
 			}
 
 			public void structureChanged(XModelTreeEvent event) {
@@ -878,8 +876,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				visualEditor.setEditorLoadWindowListener(null);
 				VpeController vpeController = new VpeController(
 						VpeEditorPart.this);
-				selectionBar.setVpeController(vpeController);
-				vpeController.setSelectionBarController(selectionBar);
+//				selectionBar.setVpeController(vpeController);
+//				vpeController.setSelectionBarController(selectionBar);
 				vpeController.init(sourceEditor, visualEditor);
 			}
 		});
@@ -971,10 +969,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			previewContent = null;
 		}
 		
-		if (selectionBar != null) {
-			selectionBar.dispose();
-			selectionBar = null;
-		}
+//		if (selectionBar != null) {
+//			selectionBar.dispose();
+//			selectionBar = null;
+//		}
 		activeEditor = null;
 		multiPageEditor = null;
 		super.dispose();
@@ -1174,13 +1172,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				doVisualRefresh = true;
 			}
 			
-			boolean presfShowSelectionBar = JspEditorPlugin.getDefault()
-					.getPreferenceStore().getBoolean(
-							IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
-			if (presfShowSelectionBar != selectionBar.isVisible()) {
-				selectionBar.setVisible(presfShowSelectionBar);
-				doVisualRefresh = true;
-			}
+//			if (presfShowSelectionBar != selectionBar.isVisible()) {
+//				selectionBar.setVisible(presfShowSelectionBar);
+//				doVisualRefresh = true;
+//			}
 	
 			boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault()
 					.getPreferenceStore().getBoolean(
@@ -1213,13 +1208,13 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 	}
 	
-	public void updateSelectionBar(boolean isSelectionBarVisible) {
-		if (selectionBar != null) {
-			selectionBar.setVisible(isSelectionBarVisible);
-		} else {
-			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized."); //$NON-NLS-1$
-		}
-	}
+//	public void updateSelectionBar(boolean isSelectionBarVisible) {
+//		if (selectionBar != null) {
+//			selectionBar.setVisible(isSelectionBarVisible);
+//		} else {
+//			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized."); //$NON-NLS-1$
+//		}
+//	}
 
 	private void deactivateServices() {
 		IWorkbench workbench = PlatformUI.getWorkbench();

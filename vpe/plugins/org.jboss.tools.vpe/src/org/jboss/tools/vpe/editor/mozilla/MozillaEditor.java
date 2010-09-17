@@ -121,12 +121,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_ORIENTATION_SOURCE_LEFT_DISABLED = "icons/source_left_disabled.gif"; //$NON-NLS-1$
 	public static final String ICON_SHOW_BORDER_FOR_UNKNOWN_TAGS = "icons/border.gif"; //$NON-NLS-1$
 	public static final String ICON_NON_VISUAL_TAGS = "icons/non-visusal-tags.gif"; //$NON-NLS-1$
-	public static final String ICON_SELECTION_BAR = "icons/selbar.gif"; //$NON-NLS-1$
 	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
 	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
 	public static final String ICON_EXTERNALIZE_STRINGS= "icons/properties.gif"; //$NON-NLS-1$
 
-	static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
+	//static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
@@ -151,7 +150,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private Action rotateEditorsAction;
 	private Action showBorderAction;
 	private Action showNonVisualTagsAction;
-	private Action showSelectionBarAction;
 	private Action showTextFormattingAction;
 	private Action showBundleAsELAction;
 	private Action externalizeStringsAction;
@@ -406,26 +404,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				ICON_NON_VISUAL_TAGS));
 		showNonVisualTagsAction.setToolTipText(VpeUIMessages.SHOW_NON_VISUAL_TAGS);
 		toolBarManager.add(showNonVisualTagsAction);
-		
-		/*
-		 * Create SHOW SELECTION BAR tool bar item
-		 */
-		showSelectionBarAction = new Action(VpeUIMessages.SHOW_SELECTION_BAR,
-				IAction.AS_CHECK_BOX) {
-			@Override
-			public void run() {
-				/*
-				 * Update Selection Bar 
-				 */
-				controller.getPageContext().getEditPart().updateSelectionBar(this.isChecked());
-				JspEditorPlugin.getDefault().getPreferenceStore().
-				setValue(IVpePreferencesPage.SHOW_SELECTION_TAG_BAR, this.isChecked());
-			}
-		};
-		showSelectionBarAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
-				ICON_SELECTION_BAR));
-		showSelectionBarAction.setToolTipText(VpeUIMessages.SHOW_SELECTION_BAR);
-		toolBarManager.add(showSelectionBarAction);
 
 		/*
 		 * Create SHOW TEXT FORMATTING tool bar item
@@ -507,7 +485,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				rotateEditorsAction = null;;
 				showBorderAction = null;
 				showNonVisualTagsAction = null;
-				showSelectionBarAction = null;
 				showTextFormattingAction = null;
 				showBundleAsELAction = null;
 				externalizeStringsAction = null;
@@ -1080,8 +1057,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
 		boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
-		boolean prefsShowSelectionBar = JspEditorPlugin.getDefault().getPreferenceStore()
-				.getBoolean(IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
 		boolean prefsShowTextFormatting = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
 		boolean prefsShowBundlesAsEL = JspEditorPlugin.getDefault().getPreferenceStore()
@@ -1092,9 +1067,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 		if (showNonVisualTagsAction != null) {
 			showNonVisualTagsAction.setChecked(prefsShowNonVisualTags);
-		}
-		if (showSelectionBarAction != null) {
-			showSelectionBarAction.setChecked(prefsShowSelectionBar);
 		}
 		if (showTextFormattingAction != null) {
 			showTextFormattingAction.setChecked(prefsShowTextFormatting);
@@ -1108,10 +1080,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					MozillaEditor.class, layoutIcons.get(prefsOrientation)));
 			rotateEditorsAction.setToolTipText(layoutNames.get(prefsOrientation));
 		}
-	}
-
-	public void updateShowSelectionBarItem(boolean checked) {
-		showSelectionBarAction.setChecked(checked);
 	}
 
 	public void setResizeListener(MozillaResizeListener resizeListener) {

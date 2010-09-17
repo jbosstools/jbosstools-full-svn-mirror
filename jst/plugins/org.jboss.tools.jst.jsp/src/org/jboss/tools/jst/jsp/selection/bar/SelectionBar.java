@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.selbar;
+package org.jboss.tools.jst.jsp.selection.bar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,8 @@ import java.util.List;
 import org.eclipse.compare.Splitter;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -47,13 +49,13 @@ import org.eclipse.ui.internal.IWorkbenchGraphicConstants;
 import org.eclipse.ui.internal.WorkbenchImages;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
+import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
-import org.jboss.tools.vpe.editor.VpeController;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelection;
-import org.jboss.tools.vpe.editor.selection.VpeSourceSelectionBuilder;
-import org.jboss.tools.vpe.editor.util.SelectionUtil;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
+import org.jboss.tools.jst.jsp.selection.SelectionHelper;
+import org.jboss.tools.jst.jsp.selection.SourceSelection;
+import org.jboss.tools.jst.jsp.selection.SourceSelectionBuilder;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -64,8 +66,9 @@ import org.w3c.dom.NodeList;
  *
  * @author erick
  * @author yradtsevich
+ * @author mareshkau
  */
-public class SelectionBar{
+public class SelectionBar implements ISelectionChangedListener{
     /**
 	 *
 	 */
@@ -74,7 +77,6 @@ public class SelectionBar{
 	private Splitter splitter;
 
 	private boolean resizeListenerAdded = false;
-    private VpeController vpeController = null;
     private ToolBar selBar = null;
     private FormData selBarData;
 //    private Composite closeBar = null;
@@ -83,12 +85,18 @@ public class SelectionBar{
 //    private Composite arrowBar;
     private Composite cmpToolBar = null;
     private Composite cmpTlEmpty = null;
-	private List<VisibilityListener> visibilityListeners = new ArrayList<VisibilityListener>(1);
+    private StructuredTextEditor textEditor;
+
+	public SelectionBar(StructuredTextEditor textEditor) {
+		super();
+		this.textEditor = textEditor;
+		this.textEditor.getTextViewer().addSelectionChangedListener(this);
+	}
 
 	/**
 	 * Visibility state of the {@code SelectionBar}.
 	 */
-	private boolean visible;
+	private static boolean visible;
 
 	private ImageButton arrowButton;
 	private Node currentSelectedNode = null;
@@ -126,9 +134,9 @@ public class SelectionBar{
 							PlatformUI.getWorkbench()
 							.getActiveWorkbenchWindow()
 							.getShell(),
-							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TITLE,
-							VpeUIMessages.CONFIRM_SELECTION_BAR_DIALOG_MESSAGE,
-							VpeUIMessages.ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
+							JstUIMessages.CONFIRM_SELECTION_BAR_DIALOG_TITLE,
+							JstUIMessages.CONFIRM_SELECTION_BAR_DIALOG_MESSAGE,
+							JstUIMessages.ASK_CONFIRMATION_ON_CLOSING_SELECTION_BAR,
 							askConfirmationOnClosingSelectionBar(), null, null);
 					if (dialog.getReturnCode() != IDialogConstants.OK_ID) {
 						return;
@@ -139,19 +147,11 @@ public class SelectionBar{
 				 * Hide the selection bar
 				 */
 				setVisible(false);
-				/*
-				 * https://jira.jboss.org/browse/JBIDE-6832
-				 * Store the state to the preferences.
-				 * Later this property will be used to restore
-				 * selection bar visibility after tabs' switching.
-				 */
-				JspEditorPlugin.getDefault().getPreferenceStore().
-					setValue(IVpePreferencesPage.SHOW_SELECTION_TAG_BAR, false);
 			}
 		};
 
 		ImageButton closeButton = new ImageButton(cmpToolBar, closeImage,
-				VpeUIMessages.HIDE_SELECTION_BAR);
+				JstUIMessages.HIDE_SELECTION_BAR);
 		closeButton.addSelectionListener(closeListener);
 		FormData closeBarData = new FormData();
 		closeBarData.right = new FormAttachment(100);
@@ -169,13 +169,7 @@ public class SelectionBar{
 		createArrowButton();
 		cmpToolBar.layout();
 		setVisible(visible);
-
 		return splitter;
-	}
-
-	public boolean getAlwaysVisibleOption() {
-		return JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
-				IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
 	}
 
 	public void setAskConfirmationOnClosingSelectionBar(boolean askConfirmation) {
@@ -204,14 +198,14 @@ public class SelectionBar{
 		splitter.getParent().layout(true, true);
 
 		this.visible = visible;
-		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-4968
-		 * Updating VPE toolbar icon on selection bar changes.
-		 */
-		if (vpeController != null) {
-			vpeController.updateVpeToolbar();
-		}
-		fireVisibilityListeners();
+//		/*
+//		 * https://jira.jboss.org/jira/browse/JBIDE-4968
+//		 * Updating VPE toolbar icon on selection bar changes.
+//		 */
+//		if (vpeController != null) {
+//			vpeController.updateVpeToolbar();
+//		}
+//		fireVisibilityListeners();
 	}
 
 	/**
@@ -221,57 +215,57 @@ public class SelectionBar{
 		return visible;
 	}
 
-    /**
-     * Adds the listener to the collection of listeners who will
-     * be notified when the {@code #visible} state is changed.
-     *
-     * @param listener the listener which should be notified
-     *
-     * @see VisibilityListener
-     * @see VisibilityEvent
-     */
-    public void addVisibilityListener(VisibilityListener listener) {
-    	visibilityListeners.add(listener);
-    }
-
-    /**
-     * Removes the listener from the collection of listeners who will
-     * be notified when the {@link #visible} state is changed.
-     *
-     * @param listener the listener which should be removed
-     *
-     * @see VisibilityListener
-     */
-    public void removeVisibilityListener(VisibilityListener listener) {
-    	visibilityListeners.remove(listener);
-    }
-
-    /**
-     * Fires all registered instances of {@code VisibilityListener} by
-     * sending them {@link VisibilityEvent}.
-     *
-     * @see #addVisibilityListener(VisibilityListener)
-     * @see #removeVisibilityListener(VisibilityListener)
-     */
-    private void fireVisibilityListeners() {
-		VisibilityEvent event = new VisibilityEvent(this);
-		for (VisibilityListener listener : visibilityListeners) {
-			listener.visibilityChanged(event);
-		}
-	}
-
-	public void setVpeController(VpeController vpeController) {
-		this.vpeController = vpeController;
-	}
+//    /**
+//     * Adds the listener to the collection of listeners who will
+//     * be notified when the {@code #visible} state is changed.
+//     *
+//     * @param listener the listener which should be notified
+//     *
+//     * @see VisibilityListener
+//     * @see VisibilityEvent
+//     */
+//    public void addVisibilityListener(VisibilityListener listener) {
+//    	visibilityListeners.add(listener);
+//    }
+//
+//    /**
+//     * Removes the listener from the collection of listeners who will
+//     * be notified when the {@link #visible} state is changed.
+//     *
+//     * @param listener the listener which should be removed
+//     *
+//     * @see VisibilityListener
+//     */
+//    public void removeVisibilityListener(VisibilityListener listener) {
+//    	visibilityListeners.remove(listener);
+//    }
+//
+//    /**
+//     * Fires all registered instances of {@code VisibilityListener} by
+//     * sending them {@link VisibilityEvent}.
+//     *
+//     * @see #addVisibilityListener(VisibilityListener)
+//     * @see #removeVisibilityListener(VisibilityListener)
+//     */
+//    private void fireVisibilityListeners() {
+//		VisibilityEvent event = new VisibilityEvent(this);
+//		for (VisibilityListener listener : visibilityListeners) {
+//			listener.visibilityChanged(event);
+//		}
+//	}
+//
+//	public void setVpeController(VpeController vpeController) {
+//		this.vpeController = vpeController;
+//	}
 
 	/**
 	 * Updates buttons in the selection bar and the drop-down menu
 	 * according to the source selection.
 	 */
     public void updateNodes(boolean forceUpdate) {
-		VpeSourceSelectionBuilder sourceSelectionBuilder = new VpeSourceSelectionBuilder(
-				vpeController.getSourceEditor());
-		VpeSourceSelection selection = sourceSelectionBuilder.getSelection();
+		SourceSelectionBuilder sourceSelectionBuilder = new SourceSelectionBuilder(
+				textEditor);
+		SourceSelection selection = sourceSelectionBuilder.getSelection();
 		if (selection == null) {
 			return;
 		}
@@ -379,15 +373,15 @@ public class SelectionBar{
 					 */
 					item = new ToolItem(selBar, SWT.DROP_DOWN, 1);
 					final DropdownSelectionListener listenerOne = new DropdownSelectionListener(item);
-					item.addDisposeListener(new DisposeListener() {
-						public void widgetDisposed(DisposeEvent e) {
-							listenerOne.disposeMenu();
-						}
-					});
 					for (Node node2 : list) {
 						listenerOne.add(node2);
 					}
 					item.addSelectionListener(listenerOne);
+					item.addDisposeListener(new DisposeListener(){
+						public void widgetDisposed(DisposeEvent e) {
+							listenerOne.disposeMenu();
+						}
+				});
 				}
 				item.setData(node);
 				item.setText(node.getNodeName());
@@ -484,7 +478,7 @@ public class SelectionBar{
 				IWorkbenchGraphicConstants.IMG_LCL_RENDERED_VIEW_MENU);
 
 		arrowButton = new ImageButton(selBar, hoverImage,
-				VpeUIMessages.SelectionBar_MoreNodes);
+				JstUIMessages.SelectionBar_MoreNodes);
 		arrowButton.setEnabled(false);
 		arrowButton.addSelectionListener(
 				new Listener() {
@@ -588,7 +582,7 @@ public class SelectionBar{
     		((MenuItem)widget).setSelection(true);
     	}
 
-    	SelectionUtil.setSourceSelection(vpeController.getPageContext(),
+    	SelectionHelper.setSourceSelection(textEditor,
 				(Node) widget.getData());
 	}
 
@@ -612,6 +606,13 @@ public class SelectionBar{
 		private ToolItem dropdown;
 		private Menu menu;
 		private boolean shown = false;
+		
+		public void disposeMenu() {
+			if (menu != null) {
+				menu.dispose();
+				menu = null;
+			}
+		}
 		/**
 		 * Constructs a DropdownSelectionListener
 		 * 
@@ -620,14 +621,7 @@ public class SelectionBar{
 		 */
 		public DropdownSelectionListener(ToolItem dropdown) {
 			this.dropdown = dropdown;
-			menu = new Menu(dropdown.getParent());
-		}
-		
-		public void disposeMenu() {
-			if (menu != null) {
-				menu.dispose();
-				menu = null;
-			}
+			menu = new Menu(dropdown.getParent().getShell());
 		}
 
 		/**
@@ -680,6 +674,11 @@ public class SelectionBar{
 				handleSelectionEvent(event);
 			}
 		}
+	}
+
+	@Override
+	public void selectionChanged(SelectionChangedEvent event) {
+		updateNodes(true);
 	}
 }
 
