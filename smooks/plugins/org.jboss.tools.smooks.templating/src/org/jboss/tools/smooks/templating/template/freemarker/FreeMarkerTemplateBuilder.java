@@ -12,7 +12,13 @@ package org.jboss.tools.smooks.templating.template.freemarker;
 
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
+import org.jboss.tools.smooks.templating.template.CollectionMapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
+import org.jboss.tools.smooks.templating.template.ValueMapping;
+import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
+import org.jboss.tools.smooks.templating.template.util.FreeMarkerUtil;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * Abstract FreeMarker template builder.
@@ -33,4 +39,16 @@ public abstract class FreeMarkerTemplateBuilder extends TemplateBuilder {
 	public void setNodeModelSource(boolean nodeModelSource) {
 		this.nodeModelSource = nodeModelSource;
 	}
+
+	@Override
+	public ValueMapping addValueMapping(String srcPath, Node modelPath) throws InvalidMappingException {
+		return super.addValueMapping(FreeMarkerUtil.normalizePath(srcPath), modelPath);
+	}
+
+	@Override
+	public CollectionMapping addCollectionMapping(String srcCollectionPath, Element modelCollectionPath, String collectionItemName) throws InvalidMappingException {
+		return super.addCollectionMapping(FreeMarkerUtil.normalizePath(srcCollectionPath), modelCollectionPath, collectionItemName);
+	}
+	
+	
 }

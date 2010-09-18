@@ -73,4 +73,16 @@ public abstract class Mapping {
 	    hideNodes.add(node);
 	}
 
+	public boolean isParentNodeMapping(Mapping mapping) {
+		Node parentNode = mapping.getMappingNode().getParentNode();
+		
+		while(parentNode != null) {
+			if(parentNode == getMappingNode()) {
+				return true;
+			}
+			parentNode = parentNode.getParentNode();
+		}
+		
+		return false;
+	}
 }

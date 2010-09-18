@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.smooks.configuration.editors.xml.TagList;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.gef.common.RootModel;
@@ -409,5 +410,98 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 			messages = new ArrayList<String>();
 		}
 		return messages;
+	}
+
+	public TreeNodeModel getModelNode(String srcPath) {
+		String[] pathTokens = srcPath.split("\\.");
+		
+		if(pathTokens.length > 0) {
+			return getModeNode(pathTokens, 0);
+		}
+		
+		return null;
+	}	
+
+	public TreeNodeModel getModelNode(Node queryNode) {
+		List<AbstractSmooksGraphicalModel> thisNodeChildren = getChildren();
+		
+		if(thisNodeChildren != null) {
+			for(AbstractSmooksGraphicalModel childNode : thisNodeChildren) {
+				if(!(childNode instanceof TreeNodeModel)) {
+					continue;
+				}
+							
+				Object childData = childNode.getData();
+				
+				if(queryNode.getNodeType() == Node.ELEMENT_NODE) {
+					if(childData instanceof TagObject && ((TagObject)childData).getReferenceElement() == queryNode) {
+						return (TreeNodeModel) childNode;
+					}
+				} else if(queryNode.getNodeType() == Node.ATTRIBUTE_NODE) {
+					if(childData instanceof TagPropertyObject && ((TagPropertyObject)childData).getReferenceAttibute() == queryNode) {
+						return (TreeNodeModel) childNode;						
+					}
+				}
+
+				if(childData instanceof TagObject || childData instanceof TagList) {
+					TreeNodeModel matchedNode = childNode.getModelNode(queryNode);
+					if(matchedNode != null) {
+						return matchedNode;
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	public TreeNodeModel getModeNode(String[] pathTokens, int checkNodeIndex) {
+		String nodeName = pathTokens[checkNodeIndex];
+		boolean isAttribute = (nodeName.charAt(0) == '@');
+		
+		if(isAttribute) {
+			nodeName = nodeName.substring(1);
+		}
+		
+		List<AbstractSmooksGraphicalModel> thisNodeChildren = getChildren();
+		if(thisNodeChildren != null) {
+			for(AbstractSmooksGraphicalModel childNode : thisNodeChildren) {
+				if(!(childNode instanceof TreeNodeModel)) {
+					continue;
+				}
+				
+				Object childData = childNode.getData();
+				boolean isMatch = false;
+				
+				if(isAttribute) {
+					if(childData instanceof TagPropertyObject) {
+						TagPropertyObject tagProp = (TagPropertyObject) childData;
+						if(tagProp.getName().equals(nodeName)) {
+							isMatch = true;
+						}
+					}
+				} else {
+					if(childData instanceof TagObject) {
+						TagObject tagObj = (TagObject) childData;
+						if(tagObj.getName().equals(nodeName)) {
+							isMatch = true;
+						}
+						
+					}
+				}
+				
+				if(isMatch) {
+					if(checkNodeIndex == pathTokens.length - 1) {
+						// This is the node... return it...
+						return (TreeNodeModel) childNode;
+					} else {
+						// Drill into this child node and continue searching...
+						return childNode.getModeNode(pathTokens, checkNodeIndex + 1);
+					}
+				}
+			}
+		}
+
+		return null;
 	}
 }

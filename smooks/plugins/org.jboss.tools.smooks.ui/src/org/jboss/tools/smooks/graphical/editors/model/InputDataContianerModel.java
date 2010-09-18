@@ -10,9 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
+import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 
@@ -75,5 +78,39 @@ public class InputDataContianerModel extends TreeContainerModel {
 		return false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#getChildrenWithoutDynamic()
+	 */
+	@Override
+	public List<AbstractSmooksGraphicalModel> getChildrenWithoutDynamic() {
+		// TODO Auto-generated method stub
+		return super.getChildrenWithoutDynamic();
+	}
 	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.tree.model.TreeNodeModel#getChildren()
+	 */
+	@Override
+	public List<AbstractSmooksGraphicalModel> getChildren() {
+		// TODO Auto-generated method stub
+		return super.getChildren();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#addChild(org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
+	 */
+	@Override
+	public void addChild(AbstractSmooksGraphicalModel node) {
+		// TODO Auto-generated method stub
+		super.addChild(node);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel#addChild(int, org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
+	 */
+	@Override
+	public void addChild(int index, AbstractSmooksGraphicalModel node) {
+		// TODO Auto-generated method stub
+		super.addChild(index, node);
+	}
 }

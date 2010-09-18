@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.template;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -21,19 +23,22 @@ import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.ConnectionModelFactory;
 import org.jboss.tools.smooks.graphical.editors.GraphicalModelFactory;
-import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPaletteRootCreator.SmooksModelCreationFactory;
 import org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
+import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.template.Mapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -50,7 +55,15 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 
 	public SmooksFreemarkerTemplateGraphicalEditor(ISmooksModelProvider provider) {
 		super(provider);
-		// TODO Auto-generated constructor stub
+		
+	}
+
+	private boolean isConnectedDirectlyToInputTask() {		
+		Object parentTask = getTaskType().getParent();
+		if(parentTask instanceof TaskType && ((TaskType) parentTask).getId().equals(TaskTypeManager.TASK_ID_INPUT)) {
+			return true;
+		}
+		return false;
 	}
 
 	/*
@@ -63,6 +76,61 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	protected EditPartFactory createEdtiPartFactory() {
 		FreemarkerTemplateEditFactory factory = new FreemarkerTemplateEditFactory();
 		return factory;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.smooks.graphical.editors.SmooksGraphicalEditorPart#createAllConnection(org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel)
+	 */
+	@Override
+	public Collection<TreeNodeConnection> createConnection(AbstractSmooksGraphicalModel model) {
+		if(isConnectedDirectlyToInputTask()) {
+			return createInputToTemplateConnections(model);
+		} else {
+			return super.createConnection(model);
+		}
+	}
+
+	private Collection<TreeNodeConnection> createInputToTemplateConnections(AbstractSmooksGraphicalModel model) {
+		List<AbstractSmooksGraphicalModel> mappingModels = root.getChildren();
+		
+		// Should be 2 models in the mappingModels list. First should be the passed in model (the Input),
+		// while the second should be the FreeMarker (target) model.
+		if(mappingModels.size() == 2) {
+			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = mappingModels.get(0);
+			if(abstractSmooksGraphicalModel == model && abstractSmooksGraphicalModel instanceof InputDataContianerModel) {
+				InputDataContianerModel inputModel = (InputDataContianerModel) abstractSmooksGraphicalModel;
+
+				abstractSmooksGraphicalModel = mappingModels.get(1);
+				if(abstractSmooksGraphicalModel instanceof FreemarkerTemplateGraphicalModel) {
+					FreemarkerTemplateGraphicalModel freemarkerModel = (FreemarkerTemplateGraphicalModel) abstractSmooksGraphicalModel;
+					TemplateBuilder templateBuilder = freemarkerModel.getTemplateBuilder();
+					List<Mapping> mappings = templateBuilder.getMappings();
+					List<TreeNodeConnection> connections = new ArrayList<TreeNodeConnection>();
+					
+					for(Mapping mapping : mappings) {
+						TreeNodeModel connectionSource = inputModel.getModelNode(templateBuilder.resolveMappingSrcPath(mapping));
+						TreeNodeModel connectionTarget = freemarkerModel.getModelNode(mapping.getMappingNode());
+						
+						if(connectionSource != null && connectionTarget != null) {
+							TreeNodeConnection connection = new TreeNodeConnection(connectionSource, connectionTarget);
+							
+							connectionSource.getSourceConnections().add(connection);
+							connectionSource.fireConnectionChanged();
+							connectionTarget.getTargetConnections().add(connection);
+							connectionTarget.fireConnectionChanged();
+							
+							connection.setData(mapping);
+							connections.add(connection);
+						}
+					}
+								
+					return connections;
+				}
+			}
+		}
+		
+		// Yes... not "nice" but
+		throw new RuntimeException("");		
 	}
 
 	@Override
@@ -224,11 +292,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 	 */
 	@Override
 	protected List<AbstractSmooksGraphicalModel> createInputDataGraphModel() {
-		TaskType task = getTaskType();
-		Freemarker taskConfig = (Freemarker) task.getTaskResources().get(0);
-		String templateDataProvider = SmooksModelUtils.getParamValue(taskConfig.getParam(), SmooksModelUtils.TEMPLATE_DATA_PROVIDER_PARAM_NAME);
-		
-		if(templateDataProvider != null && templateDataProvider.trim().equals(TaskTypeManager.TASK_ID_INPUT)) {
+		if(isConnectedDirectlyToInputTask()) {
 			return super.createInputDataGraphModel();
 		} else {
 			return Collections.EMPTY_LIST;

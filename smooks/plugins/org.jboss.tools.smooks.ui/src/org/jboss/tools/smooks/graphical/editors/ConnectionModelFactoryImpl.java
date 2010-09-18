@@ -95,8 +95,7 @@ public class ConnectionModelFactoryImpl implements ConnectionModelFactory {
 			if (data != null) {
 				String beanid = data.toString();
 				Collection<EObject> beanIdRefModelList = SmooksUIUtils.getBeanIdRefModelList(rootModel);
-				for (Iterator<?> iterator = beanIdRefModelList.iterator(); iterator.hasNext();) {
-					EObject eObject = (EObject) iterator.next();
+				for (EObject eObject : beanIdRefModelList) {
 					EStructuralFeature idRefFeature = SmooksUIUtils.getBeanIDRefFeature(eObject);
 					if (idRefFeature == null)
 						continue;

@@ -791,8 +791,7 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			createInputDataGraphModel();
 			SmooksResourceListType listType = ((DocumentRoot) obj).getSmooksResourceList();
 			List<?> arcList = listType.getAbstractResourceConfig();
-			for (Iterator<?> iterator = arcList.iterator(); iterator.hasNext();) {
-				Object object = (Object) iterator.next();
+			for (Object object : arcList) {
 				AbstractSmooksGraphicalModel gmodel = createGraphModel(object);
 				if (gmodel != null) {
 					root.addTreeNode(gmodel);
@@ -868,35 +867,22 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	public Collection<TreeNodeConnection> createConnection(AbstractSmooksGraphicalModel model) {
 		ConnectionModelFactory connectionModelFactory = getConnectionModelFactory();
 		List<TreeNodeConnection> cs = new ArrayList<TreeNodeConnection>();
+		ISmooksModelProvider p = getSmooksModelProvider();
+
 		if (connectionModelFactory != null) {
 			if (connectionModelFactory.hasConnection(model)) {
-				Collection<TreeNodeConnection> cList = connectionModelFactory.createConnection(inputDataList,
-						getSmooksResourceList(), root, model);
+				Collection<TreeNodeConnection> cList = connectionModelFactory.createConnection(inputDataList, getSmooksResourceList(), root, model);
+				
 				if (cList != null) {
 					cs.addAll(cList);
 				}
 			}
-			// if (connectionModelFactory.hasBeanIDConnection(model)) {
-			// Collection<TreeNodeConnection> c =
-			// connectionModelFactory.createBeanIDReferenceConnection(
-			// getSmooksResourceList(), root, model);
-			// if (c != null) {
-			// cs.addAll(c);
-			// }
-			// }
-			// // for xsl template
-			//
-			// if (connectionModelFactory.hasXSLConnection(model)) {
-			// Collection<TreeNodeConnection> c =
-			// connectionModelFactory.createXSLConnection(inputDataList, root,
-			// model);
-			// if (c != null) {
-			// cs.addAll(c);
-			// }
-			// }
 		}
-		if (cs.isEmpty())
+		
+		if (cs.isEmpty()) {
 			return null;
+		}
+		
 		return cs;
 	}
 
@@ -960,19 +946,31 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	}
 
 	public void createConnection(List<AbstractSmooksGraphicalModel> children, List<TreeNodeConnection> connections) {
-		for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
-			AbstractSmooksGraphicalModel abstractSmooksGraphicalModel = (AbstractSmooksGraphicalModel) iterator.next();
-			if (!(abstractSmooksGraphicalModel instanceof InputDataContianerModel)) {
-				if (canCreateConnection(abstractSmooksGraphicalModel)) {
-					Collection<TreeNodeConnection> c = createConnection(abstractSmooksGraphicalModel);
-					if (c != null) {
-						connections.addAll(c);
+		Object parentTask = taskType.getParent();
+		
+		if(parentTask instanceof TaskType) {
+			if(((TaskType) parentTask).getId().equals(TaskTypeManager.TASK_ID_INPUT)) {
+				for (AbstractSmooksGraphicalModel abstractSmooksGraphicalModel : children) {
+					if (abstractSmooksGraphicalModel instanceof InputDataContianerModel) {
+						createConnection(abstractSmooksGraphicalModel);
+						break;
+					}
+				}				
+			} else if(((TaskType) parentTask).getId().equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
+				for (AbstractSmooksGraphicalModel abstractSmooksGraphicalModel : children) {
+					if (!(abstractSmooksGraphicalModel instanceof InputDataContianerModel)) {
+						if (canCreateConnection(abstractSmooksGraphicalModel)) {
+							Collection<TreeNodeConnection> c = createConnection(abstractSmooksGraphicalModel);
+							if (c != null) {
+								connections.addAll(c);
+							}
+						}
+						List<AbstractSmooksGraphicalModel> cchildren = abstractSmooksGraphicalModel.getChildren();
+						createConnection(cchildren, connections);
 					}
 				}
-				List<AbstractSmooksGraphicalModel> cchildren = abstractSmooksGraphicalModel.getChildren();
-				createConnection(cchildren, connections);
 			}
-		}
+		}		
 	}
 
 	private boolean canCreateConnection(AbstractSmooksGraphicalModel model) {

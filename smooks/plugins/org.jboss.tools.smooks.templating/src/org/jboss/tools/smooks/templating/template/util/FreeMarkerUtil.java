@@ -20,6 +20,8 @@
 package org.jboss.tools.smooks.templating.template.util;
 
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
@@ -134,6 +136,16 @@ public class FreeMarkerUtil {
 			}
 			
 			return builder.toString();
+		} else {
+			return srcPath;
+		}
+	}
+	
+	private static Pattern varsPattern = Pattern.compile(".vars\\[\"(.*)\"\\]\\[\"(.*)\"\\]");
+	public static String normalizePath(String srcPath) {
+		Matcher matcher = varsPattern.matcher(srcPath);
+		if(matcher.matches()) {
+			return matcher.group(1) + "." + matcher.group(2).replace('/', '.');
 		} else {
 			return srcPath;
 		}

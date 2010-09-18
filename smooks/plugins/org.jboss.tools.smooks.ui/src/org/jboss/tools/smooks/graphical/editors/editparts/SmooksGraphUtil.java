@@ -90,12 +90,7 @@ public class SmooksGraphUtil {
 
 	public static AbstractSmooksGraphicalModel findSmooksGraphModel(RootModel root, Object object) {
 		if (root != null && object != null) {
-			List<?> children = root.getChildren();
-			for (Iterator<?> iterator = children.iterator(); iterator.hasNext();) {
-				AbstractSmooksGraphicalModel child = (AbstractSmooksGraphicalModel) iterator.next();
-//				if (child instanceof InputDataContianerModel) {
-//					continue;
-//				}
+			for (AbstractSmooksGraphicalModel child : root.getChildren()) {
 				AbstractSmooksGraphicalModel model = findGraphicalModel(child, object);
 				if (model != null) {
 					return model;

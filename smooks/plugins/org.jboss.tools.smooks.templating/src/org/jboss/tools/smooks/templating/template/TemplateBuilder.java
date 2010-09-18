@@ -434,6 +434,57 @@ public abstract class TemplateBuilder {
 		}
 	}
 
+	/**
+	 * Resolves the full model source path for the specified mapping.
+	 * <p/>
+	 * Takes enclosing {@link CollectionMappings} into account.
+	 * @param mapping The mapping.
+	 * @return The fully resolved path.
+	 */
+	public String resolveMappingSrcPath(Mapping mapping) {
+		String[] srcPathTokens = mapping.getSrcPath().split("\\.");
+		
+		if(srcPathTokens.length > 1) {
+			CollectionMapping parentCollection = findParentCollection(srcPathTokens[0], mapping);
+			if(parentCollection != null) {
+				StringBuilder pathBuilder = new StringBuilder();
+				
+				pathBuilder.append(resolveMappingSrcPath(parentCollection));
+				for(int i = 1; i < srcPathTokens.length; i++) {
+					pathBuilder.append('.');
+					pathBuilder.append(srcPathTokens[i]);
+				}
+				
+				return pathBuilder.toString();
+			}
+		}
+		
+		// No parent collection, so just pass back the path...
+		return mapping.getSrcPath();
+	}
+
+	public CollectionMapping findParentCollection(String collectionName, Mapping mapping) {
+		CollectionMapping parentCollection = findCollection(collectionName);
+		
+		if(parentCollection != null) {
+			if(parentCollection.isParentNodeMapping(mapping)) {
+				return parentCollection;
+			}
+		}
+		
+		return null;
+	}
+
+	public CollectionMapping findCollection(String collectionName) {
+		for(Mapping mapping : mappings) {
+			if(mapping instanceof CollectionMapping && ((CollectionMapping) mapping).getCollectionItemName().equals(collectionName)) {
+				return (CollectionMapping) mapping;
+			}
+		}
+		
+		return null;
+	}
+
 	public static void writeListStart(StringWriter writer, String srcPath, String collectionItemName) {
 		writer.write("<smk:list smk:srcPath='" + srcPath + "' smk:collectionItemName=\"" + collectionItemName + "\" xmlns:smk=\"" + ModelBuilder.NAMESPACE + "\">"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}

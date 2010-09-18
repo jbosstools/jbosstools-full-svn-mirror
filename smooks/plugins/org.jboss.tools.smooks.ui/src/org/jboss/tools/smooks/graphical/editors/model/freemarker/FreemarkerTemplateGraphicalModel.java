@@ -34,6 +34,7 @@ import org.jboss.tools.smooks.model.freemarker.Template;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
+import org.w3c.dom.Node;
 
 /**
  * @author Dart
@@ -130,7 +131,8 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 		}
 		
 		Template template = freemarker.getTemplate();
-		if(template.getValue() == null) {
+		String templateData = template.getCDATA();
+		if(templateData == null) {
 			SmooksModelUtils.setCDATAToSmooksType(domainProvider.getEditingDomain(), template, "<noMappings/>"); //$NON-NLS-1$
 		}
 	}
