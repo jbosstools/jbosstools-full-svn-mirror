@@ -288,9 +288,5 @@
 		<category name="AllTools" />
 		<category name="SOATools" />
 	</feature>
-	<feature url="features/org.jboss.savara.experimental.feature_0.0.0.jar" id="org.jboss.savara.experimental.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
 
 </site>
