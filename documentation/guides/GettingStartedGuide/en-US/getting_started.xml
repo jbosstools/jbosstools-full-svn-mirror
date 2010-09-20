@@ -899,19 +899,99 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      The gathered data allows JBoss to see how the tools are being used and where they are being used geographically. Currently we are looking into the operating systems being used, screen resolution and how often the tooling environment is started. In the future geographic information will assist in focussing translation resources to areas where the developer environment is most used.
    </para>
    <para>
-     The plug-in uses Google Analytics to track and report data by acting as if you were visiting the site http://jboss.org/tools/usage/. To provide a guide to the type of information being collected refer to <xref linkend="Collected_information_guide"/>.
+     The plug-in uses Google Analytics to track and report data by acting as if you were visiting the site http://jboss.org/tools/usage/. To view the type of information being collected, refer to <xref linkend="Collected_information_guide"/>.
    </para>
-   <figure id="Collected_information_guide">
-     <title>Collected information guide</title>
-   <mediaobject>
-    <imageobject>
-      <imagedata fileref="images/getting_started/usage_plug-in_2.png"/>
-    </imageobject>
-  </mediaobject>
-  </figure>
    <para>
      To view the sourcecode of the usage plug-in visit <ulink url="http://anonsvn.jboss.org/repos/jbosstools/trunk/usage/">http://anonsvn.jboss.org/repos/jbosstools/trunk/usage/</ulink>.
    </para>
+      <section id="Collected_information_guide">
+	 <title>Collected information guide</title>
+	 <para>
+	    Outlined is the information type being reported and the Goolge Analytics fieds implemented to gather this information.
+	 </para>
+	 <variablelist>
+	    <varlistentry>
+	       <term>Installed components</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Keyword</guilabel> field has been modified to report the installed JBoss Tools components. Sample returned values include: JBoss AS, Drools, Teiid and ModeShape.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Visitor Type</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Visitor Type</guilabel> field reports if the current user is new or returning.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Language</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Language</guilabel> field reports the localized language the product is being used in. Sample returned values include: en-US, de-DE and fr-FR.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Locations</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Locations</guilabel> field reports the geographical location where the product is being used. Sample returned values include: Munich, Wroclaw and Moscow.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Eclipse interface and version</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Browser</guilabel> field has been modified to report the Eclipse interface and version being used. Sample returned values include: JBoss Developer Studio: 3.0.0 and JBoss Developer Studio: 3.0.1.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Operating System</term>
+	       <listitem>
+		  <para>
+		      The <guilabel>Operating System</guilabel> field reports the Operating System the product is running on. Sample returned values include: Linux, Macintosh and Windows.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Screen colors</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Screen colors</guilabel> field reports the color depth being used. Sample returned values include: 32-bit and 24-bit. 
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Screen resolution</term>
+	       <listitem>
+		  <para>
+		      The <guilabel>Screen resolution</guilabel> field reports the resolution being used. Sample returned values include: 2048x1536 and 1920x1080.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Java version</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Flash version</guilabel> field has been modified to report the Java version used. Sample returned values include: 1.6.0_20 and 1.5.0_9.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Connection speed</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Connection speed</guilabel> field reports the type of internet connection being used. Sample returned values include: T1, Cable and DSL.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	 </variablelist>
+      </section>
  </section>
 
  <section id="Support">
