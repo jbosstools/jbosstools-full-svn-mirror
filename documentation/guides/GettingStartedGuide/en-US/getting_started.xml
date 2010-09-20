@@ -919,10 +919,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 	       </listitem>
 	    </varlistentry>
 	    <varlistentry>
-	       <term>Visitor Type</term>
+	       <term>Visitor type</term>
 	       <listitem>
 		  <para>
-		     The <guilabel>Visitor Type</guilabel> field reports if the current user is new or returning.
+		     The <guilabel>Visitor type</guilabel> field reports if the current user is new or returning.
 		  </para>
 	       </listitem>
 	    </varlistentry>
