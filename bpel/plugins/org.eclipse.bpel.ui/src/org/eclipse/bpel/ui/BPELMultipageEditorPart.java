@@ -1300,12 +1300,10 @@ IGotoMarker/*, CommandStackListener*/ {
 	// The proper way to do this is to implement the eclipse refactoring framework for bpel files.
 	public class RefactoringListener implements IResourceChangeListener {
 
-		@Override
 		public void resourceChanged(IResourceChangeEvent event) {
 			
 			IResourceDeltaVisitor dv = new IResourceDeltaVisitor() {
 
-				@Override
 				public boolean visit(IResourceDelta delta) throws CoreException {
 					IPath newPath = delta.getMovedToPath();
 					if (delta.getKind()==IResourceDelta.REMOVED && newPath!=null) {
