@@ -251,7 +251,9 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
      * Opens a dialog to edit server properties.
      */
     void handleDoubleClick() {
-        this.editAction.run();
+        if (this.editAction.isEnabled()) {
+            this.editAction.run();
+        }
     }
 
     /**
@@ -293,7 +295,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see org.jboss.tools.modeshape.rest.IServerRegistryListener#serverRegistryChanged(org.jboss.tools.modeshape.rest.ServerRegistryEvent)
      */
     @Override
