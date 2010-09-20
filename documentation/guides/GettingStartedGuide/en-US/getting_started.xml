@@ -904,7 +904,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
      To view the sourcecode of the usage plug-in visit <ulink url="http://anonsvn.jboss.org/repos/jbosstools/trunk/usage/">http://anonsvn.jboss.org/repos/jbosstools/trunk/usage/</ulink>.
    </para>
-      <section id="Collected__usage_information_guide">
+      <section id="Collected_usage_information_guide">
 	 <title>Collected usage information guide</title>
 	 <para>
 	    Outlined is the information type being reported and the Goolge Analytics fieds implemented to gather this information.
