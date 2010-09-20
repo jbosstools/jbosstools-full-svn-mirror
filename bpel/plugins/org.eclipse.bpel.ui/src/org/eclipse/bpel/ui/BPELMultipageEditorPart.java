@@ -27,6 +27,7 @@ import org.eclipse.bpel.common.ui.editmodel.ResourceInfo;
 import org.eclipse.bpel.model.Activity;
 import org.eclipse.bpel.model.CorrelationSet;
 import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.Import;
 import org.eclipse.bpel.model.MessageExchange;
 import org.eclipse.bpel.model.PartnerLink;
 import org.eclipse.bpel.model.Process;
@@ -50,6 +51,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -63,6 +65,7 @@ import org.eclipse.draw2d.parts.ScrollableThumbnail;
 import org.eclipse.draw2d.parts.Thumbnail;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gef.ContextMenuProvider;
@@ -80,6 +83,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.IPostSelectionProvider;
@@ -341,6 +345,8 @@ IGotoMarker/*, CommandStackListener*/ {
 
 	// refactoring listeners
 	protected IResourceChangeListener postBuildRefactoringListener;
+	// https://jira.jboss.org/browse/JBIDE-6365
+	protected IResourceChangeListener preBuildRefactoringListener;
 
 	BPELModelReconcileAdapter bpelModelReconcileAdapter;
 
@@ -499,6 +505,12 @@ IGotoMarker/*, CommandStackListener*/ {
 		if (this.postBuildRefactoringListener != null) {
 			IWorkspace workspace = ResourcesPlugin.getWorkspace();
 			workspace.removeResourceChangeListener(this.postBuildRefactoringListener);
+		}
+
+		// https://jira.jboss.org/browse/JBIDE-6365
+		if (this.preBuildRefactoringListener != null) {
+			IWorkspace workspace = ResourcesPlugin.getWorkspace();
+			workspace.removeResourceChangeListener(this.preBuildRefactoringListener);
 		}
 
 		IStructuredModel model = this.fTextEditor.getModel();
@@ -1038,6 +1050,10 @@ IGotoMarker/*, CommandStackListener*/ {
 			}
 		};
 		workspace.addResourceChangeListener(this.postBuildRefactoringListener, IResourceChangeEvent.POST_BUILD);
+
+		// https://jira.jboss.org/browse/JBIDE-6365
+		this.preBuildRefactoringListener = new RefactoringListener();
+		workspace.addResourceChangeListener(this.preBuildRefactoringListener, IResourceChangeEvent.PRE_BUILD);
 	}
 
 	/*
@@ -1277,5 +1293,54 @@ IGotoMarker/*, CommandStackListener*/ {
 	@Override
 	public IEditorPart getActiveEditor() {
 		return super.getActiveEditor();
+	}
+	
+	// https://jira.jboss.org/browse/JBIDE-6365
+	// TODO: this is just a quick hack to get past the problem of import files being moved/renamed.
+	// The proper way to do this is to implement the eclipse refactoring framework for bpel files.
+	public class RefactoringListener implements IResourceChangeListener {
+
+		@Override
+		public void resourceChanged(IResourceChangeEvent event) {
+			
+			IResourceDeltaVisitor dv = new IResourceDeltaVisitor() {
+
+				@Override
+				public boolean visit(IResourceDelta delta) throws CoreException {
+					IPath newPath = delta.getMovedToPath();
+					if (delta.getKind()==IResourceDelta.REMOVED && newPath!=null) {
+						// a file was moved or renamed - check if it's an imported file
+						List<Import> imports = process.getImports();
+						for (Import imp : imports)
+						{
+							IPath path = new Path(imp.getLocation());
+							IPath folder = ((IFileEditorInput)getEditorInput()).getFile().getFullPath().removeLastSegments(1);
+							if (!path.isAbsolute()) {
+								// need absolute path
+								path = folder.append(path);
+							}
+							if (path.equals(delta.getResource().getFullPath())) {
+								IPath relPath = newPath.makeRelativeTo(folder);
+								imp.setLocation(relPath.toString());
+
+								Display.getDefault().asyncExec( new Runnable() {
+								    public void run() {
+										doSave(null);
+								    }
+								});
+							}
+						}
+					}
+					return true;
+				}
+			};
+			
+			try {
+				event.getDelta().accept(dv);
+			} catch (CoreException e) {
+				BPELUIPlugin.log(e);
+			}
+		}
+	
 	}
 }
