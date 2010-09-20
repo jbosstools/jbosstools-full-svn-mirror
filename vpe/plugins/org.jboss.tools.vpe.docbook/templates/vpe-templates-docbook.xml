@@ -523,9 +523,9 @@
 	</vpe:tag>
 	<vpe:tag name="citetitle" case-sensitive="yes" docbook="yes">
 		<vpe:template children="no" modify="yes">
-			<i>
-				<vpe:value expr="{tagtext()}" />
-			</i>
+			<span>
+				<i><vpe:value expr="{tagtext()}" /></i>
+			</span>
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="term" case-sensitive="yes" docbook="yes">
@@ -624,14 +624,14 @@
 	<vpe:tag name="important" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div style="background-color: #ECF3FF; border: 1px solid black;">
-				<h2>Important</h2>
+				<h2><vpe:value expr="Important" /></h2>
 			</div>
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="warning" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
-			<div style="background-color: #ECF3FF; border: 1px solid red">
-				<h2>Warning</h2>
+			<div style="background-color: #ECF3FF; border: 1px solid red;">
+				<h2><vpe:value expr="Warning" /></h2>
 			</div>
 		</vpe:template>
 	</vpe:tag>
@@ -808,14 +808,14 @@
 	<vpe:tag name="answer" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div>
-				<b>A: </b>
+				<b><vpe:value expr="A: " /></b>
 			</div>
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="question" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
 			<div>
-				<b>Q: </b>
+				<b><vpe:value expr="Q: " /></b>
 			</div>
 		</vpe:template>
 	</vpe:tag>
@@ -1957,7 +1957,7 @@
 	</vpe:tag>
 	<vpe:tag name="sbr" matching-mode="yes">
 		<vpe:template children="no" modify="yes">
-			<br />
+			<div />
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="screenco" matching-mode="yes">
@@ -2181,7 +2181,7 @@
 	</vpe:tag>
 	<vpe:tag name="tbody" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
-			<tbody/>
+			<div/>
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="td" case-sensitive="yes" docbook="yes">
@@ -2223,22 +2223,17 @@
 	</vpe:tag>
 	<vpe:tag name="tfoot" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
-			<tfoot/>
-		</vpe:template>
-	</vpe:tag>
-	<vpe:tag name="tgroup" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<tgroup/>
+			<div/>
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="th" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
-			<th/>
+			<div/>
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="thead" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
-			<thead/>
+			<div/>
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="titleabbrev" case-sensitive="yes" docbook="yes">
