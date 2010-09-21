@@ -79,6 +79,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 	private Button collectionClassBrowseButton;
 
 	private Text colllectionClassText;
+	
+	private ICheckStateListener checkStateListener = null;
 
 	public JavaBeanCreationWizardPage(String pageName, String title,
 			ImageDescriptor titleImage, IJavaProject project,
@@ -126,7 +128,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 
 		createBeanClassControls(mainComposite);
 
-		//createBeanTypeControls(mainComposite);
+		// createBeanTypeControls(mainComposite);
 
 		Label seperator = new Label(mainComposite, SWT.HORIZONTAL
 				| SWT.SEPARATOR);
@@ -198,7 +200,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 			}
 		});
 
-		viewer.addCheckStateListener(new ICheckStateListener() {
+		checkStateListener = new ICheckStateListener() {
 
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				modelClassStringList.clear();
@@ -232,13 +234,14 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 			}
 
 			private void checkChildren(JavaBeanModel model, boolean flag) {
+				((JavaBeanModel) model).getChildren();
 				if (((JavaBeanModel) model).isExpaned()) {
 					for (Iterator<?> iterator = ((JavaBeanModel) model)
 							.getChildren().iterator(); iterator.hasNext();) {
 						JavaBeanModel child = (JavaBeanModel) iterator.next();
-						if(containts(child)){
+						if (containts(child)) {
 							continue;
-						}else{
+						} else {
 							record(child);
 						}
 						viewer.setChecked(child, flag);
@@ -252,9 +255,9 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				ITreeContentProvider provider = (ITreeContentProvider) viewer
 						.getContentProvider();
 				Object parent = provider.getParent(element);
-				if(containts(parent)){
+				if (containts(parent)) {
 					return;
-				}else{
+				} else {
 					record(parent);
 				}
 				if (parent != null && !viewer.getChecked(parent)) {
@@ -262,24 +265,26 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 					checkParents(parent, viewer);
 				}
 			}
-			
+
 			private List<Class> modelClassStringList = new ArrayList<Class>();
-			
-			private boolean containts(Object model){
-				if(model instanceof JavaBeanModel){
-					Class clazz = ((JavaBeanModel)model).getBeanClass();
+
+			private boolean containts(Object model) {
+				if (model instanceof JavaBeanModel) {
+					Class clazz = ((JavaBeanModel) model).getBeanClass();
 					return modelClassStringList.contains(clazz);
 				}
 				return false;
 			}
-			
-			private void record(Object model){
-				if(model instanceof JavaBeanModel){
-					Class clazz = ((JavaBeanModel)model).getBeanClass();
+
+			private void record(Object model) {
+				if (model instanceof JavaBeanModel) {
+					Class clazz = ((JavaBeanModel) model).getBeanClass();
 					modelClassStringList.add(clazz);
 				}
 			}
-		});
+		}; 
+		
+		viewer.addCheckStateListener(checkStateListener);
 	}
 
 	public Object[] getSelectionProperties() {
@@ -439,13 +444,20 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				isCollection = isCollectionClass(beanClass);
 				Class<?> clazz = loader.loadClass(beanClass);
 
-				javaBeanModel = JavaBeanModelFactory.getJavaBeanModelWithLazyLoad(clazz);
+				javaBeanModel = JavaBeanModelFactory
+						.getJavaBeanModelWithLazyLoad(clazz);
 				if (javaBeanModel != null) {
 					if (beanID != null) {
 						javaBeanModel.setName(beanID);
 					}
-					if(!isCollection) {
+					if (!isCollection) {
 						viewer.setInput(javaBeanModel.getChildren());
+					}
+					Object[] nodes = javaBeanModel.getChildren().toArray();
+					for (int i = 0; i < nodes.length; i++) {
+						Object node = nodes[i];
+						viewer.setChecked(node, true);
+						checkStateListener.checkStateChanged(new CheckStateChangedEvent(viewer, node, true));
 					}
 //					viewer.setCheckedElements(javaBeanModel.getChildren().toArray());
 				} else {
@@ -508,7 +520,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				String classString = JavaTypeFieldDialog.openJavaTypeDialog(
 						getShell(), project,
 						IJavaElementSearchConstants.CONSIDER_CLASSES);
-				beanClassText.setText(classString);
+				if (classString != null)
+					beanClassText.setText(classString);
 			}
 
 		});
@@ -542,7 +555,7 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				Text t = (Text) e.getSource();
 				beanID = t.getText();
 				updateWizardPageStatus();
-				if(javaBeanModel != null){
+				if (javaBeanModel != null) {
 					javaBeanModel.setName(beanID);
 				}
 			}
