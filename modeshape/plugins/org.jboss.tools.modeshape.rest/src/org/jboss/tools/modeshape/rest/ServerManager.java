@@ -19,9 +19,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import javax.jcr.nodetype.NodeType;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -37,6 +39,7 @@ import org.modeshape.common.util.Logger;
 import org.modeshape.web.jcr.rest.client.IRestClient;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
+import org.modeshape.web.jcr.rest.client.domain.QueryRow;
 import org.modeshape.web.jcr.rest.client.domain.Repository;
 import org.modeshape.web.jcr.rest.client.domain.Server;
 import org.modeshape.web.jcr.rest.client.domain.Workspace;
@@ -241,6 +244,7 @@ public final class ServerManager implements IRestClient {
      * @throws RuntimeException if the server is not registered
      * @see #isRegistered(Server)
      */
+    @Override
     public Collection<Repository> getRepositories( Server server ) throws Exception {
         CheckArg.isNotNull(server, "server");
 
@@ -265,6 +269,7 @@ public final class ServerManager implements IRestClient {
      * @see org.modeshape.web.jcr.rest.client.IRestClient#getUrl(java.io.File, java.lang.String,
      *      org.modeshape.web.jcr.rest.client.domain.Workspace)
      */
+    @Override
     public URL getUrl( File file,
                        String path,
                        Workspace workspace ) throws Exception {
@@ -278,6 +283,7 @@ public final class ServerManager implements IRestClient {
      * @throws RuntimeException if the server is not registered
      * @see #isRegistered(Server)
      */
+    @Override
     public Collection<Workspace> getWorkspaces( Repository repository ) throws Exception {
         CheckArg.isNotNull(repository, "repository");
 
@@ -484,6 +490,7 @@ public final class ServerManager implements IRestClient {
      *      java.lang.String, java.io.File)
      * @see #isRegistered(Server)
      */
+    @Override
     public Status publish( Workspace workspace,
                            String path,
                            File file ) {
@@ -626,6 +633,7 @@ public final class ServerManager implements IRestClient {
      *      java.lang.String, java.io.File)
      * @see #isRegistered(Server)
      */
+    @Override
     public Status unpublish( Workspace workspace,
                              String path,
                              File file ) {
@@ -683,6 +691,70 @@ public final class ServerManager implements IRestClient {
         // unexpected problem removing server from registry
         return new Status(Severity.ERROR, RestClientI18n.serverManagerRegistryUpdateRemoveError.text(status.getMessage()),
                           status.getException());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws UnsupportedOperationException if this method is called
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#getNodeTypes(org.modeshape.web.jcr.rest.client.domain.Workspace)
+     */
+    @Override
+    public Map<String, NodeType> getNodeTypes( Workspace workspace ) throws Exception {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <strong>This method is unsupported and should not be called.</strong>
+     * 
+     * @throws UnsupportedOperationException if this method is called
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
+     *      java.lang.String, java.lang.String)
+     */
+    @Override
+    public List<QueryRow> query( Workspace arg0,
+                                 String arg1,
+                                 String arg2 ) throws Exception {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <strong>This method is unsupported and should not be called.</strong>
+     * 
+     * @throws UnsupportedOperationException if this method is called
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
+     *      java.lang.String, java.lang.String, int, int)
+     */
+    @Override
+    public List<QueryRow> query( Workspace arg0,
+                                 String arg1,
+                                 String arg2,
+                                 int arg3,
+                                 int arg4 ) throws Exception {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <strong>This method is unsupported and should not be called.</strong>
+     * 
+     * @throws UnsupportedOperationException if this method is called
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
+     *      java.lang.String, java.lang.String, int, int, java.util.Map)
+     */
+    @Override
+    public List<QueryRow> query( Workspace arg0,
+                                 String arg1,
+                                 String arg2,
+                                 int arg3,
+                                 int arg4,
+                                 Map<String, String> arg5 ) throws Exception {
+        throw new UnsupportedOperationException();
     }
 
 }
