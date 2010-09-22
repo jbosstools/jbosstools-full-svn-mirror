@@ -11,9 +11,7 @@
 package org.jboss.tools.vpe.dnd;
 
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.xulrunner.util.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -27,16 +25,18 @@ public class DraggableTextSelection extends AbstractDraggableFragment {
 	private final nsIDOMText selectionContainer;
 	private final int startOffset;
 	private final int endOffset;
+	private Point position;
 
 	/**
 	 * NOTE: selectionContainer must contain really selected text. It will
 	 * not work if real selection range do not math offsets.
 	 */
-	public DraggableTextSelection(nsIDOMText selectionContainer,
+	public DraggableTextSelection(nsIDOMText selectionContainer, Point position,
 			int startOffset, int endOffset) {
 		this.selectionContainer = selectionContainer;
 		this.startOffset = startOffset;
 		this.endOffset = endOffset;
+		this.position = position;
 	}
 	
 
@@ -62,7 +62,6 @@ public class DraggableTextSelection extends AbstractDraggableFragment {
 	 * @see org.jboss.tools.vpe.dnd.IDraggableFragment#getPosition()
 	 */
 	public Point getPosition() {
-		Rectangle bounds = XulRunnerVpeUtils.getTextSelectionBounds(selectionContainer); 
-		return new Point(bounds.x, bounds.y);
+		return position;
 	}
 }
