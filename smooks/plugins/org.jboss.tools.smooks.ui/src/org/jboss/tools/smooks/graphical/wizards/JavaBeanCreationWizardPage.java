@@ -49,6 +49,7 @@ import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanContentPr
 import org.jboss.tools.smooks.configuration.editors.javabean12.JavabeanlabelProvider;
 import org.jboss.tools.smooks.configuration.editors.uitls.JavaTypeFieldDialog;
 import org.jboss.tools.smooks.configuration.editors.uitls.ProjectClassLoader;
+import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 
 /**
  * @author Dart
@@ -271,6 +272,9 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 			private boolean containts(Object model) {
 				if (model instanceof JavaBeanModel) {
 					Class clazz = ((JavaBeanModel) model).getBeanClass();
+					if(JavaBeanModelFactory.isPrimitiveObject(clazz)){
+						return false;
+					}
 					return modelClassStringList.contains(clazz);
 				}
 				return false;
