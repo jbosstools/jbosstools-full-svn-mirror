@@ -184,7 +184,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<repositories>
-				<!--repository>
+				<repository>
 					<id>helios</id>
 					<url>http://download.eclipse.org/releases/helios/</url>
 					<layout>p2</layout>
@@ -194,7 +194,7 @@
 					<releases>
 						<enabled>true</enabled>
 					</releases>
-				</repository-->
+				</repository>
                                 <repository>
                                         <id>eclipse36</id>
                                         <url>http://download.eclipse.org/eclipse/updates/3.6.x/
@@ -218,7 +218,7 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!--repository>
+				<repository>
 					<id>webtools32</id>
 					<url>http://download.eclipse.org/webtools/repository/helios</url>
 					<layout>p2</layout>
@@ -228,7 +228,7 @@
 					<releases>
 						<enabled>true</enabled>
 					</releases>
-				</repository-->
+				</repository>
 				<repository>
 					<id>jboss-webtools32</id>
 					<url>http://download.jboss.org/jbosstools/updates/requirements/webtools-3.2/</url>
