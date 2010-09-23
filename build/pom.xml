@@ -413,6 +413,8 @@
 			<id>seam-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../jmx</module>
+				<module>../archives</module>
 				<module>../as</module>
 				<module>../hibernatetools</module>
 				<module>../common</module>
