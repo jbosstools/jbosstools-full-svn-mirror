@@ -217,7 +217,7 @@ public abstract class ValidationErrorManager implements IValidationErrorManager 
 	 * @param markerOwner
 	 * @return
 	 */
-	public static IMarker addError(String message, int severity, String[] messageArguments, int length, int offset, IResource target, TextFileDocumentProvider documentProvider, String markerId, Class markerOwner) {
+	public static IMarker addError(String message, int severity, Object[] messageArguments, int length, int offset, IResource target, TextFileDocumentProvider documentProvider, String markerId, Class markerOwner) {
 		IMarker marker = null;
 		int lineNumber = 1;
 		try {
@@ -228,8 +228,8 @@ public abstract class ValidationErrorManager implements IValidationErrorManager 
 					lineNumber = doc.getLineOfOffset(offset) + 1;
 				}
 			}
-//			marker = addTask(markerOwner.getName().intern(), target, lineNumber, MessageFormat.format(message, messageArguments),
-//					severity, null, markerId, offset, length);
+			marker = addTask(markerOwner.getName().intern(), target, lineNumber, MessageFormat.format(message, messageArguments),
+					severity, null, markerId, offset, length);
 		} catch (BadLocationException e) {
 			WebKbPlugin.getDefault().logError(
 					NLS.bind(KbMessages.EXCEPTION_DURING_CREATING_MARKER, target.getFullPath()), e);
