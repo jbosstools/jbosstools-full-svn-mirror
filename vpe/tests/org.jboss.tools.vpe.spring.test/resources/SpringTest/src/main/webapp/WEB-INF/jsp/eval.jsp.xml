@@ -1,0 +1,12 @@
+<tests>
+	<test id="eval1">
+		<DIV ID="eval1">
+			<SPAN CLASS="vpe-text">
+				T(org.jboss.tools.vpe.spring.test.springtest.data.CategoryType).values()
+			</SPAN>
+		</DIV>
+	</test>
+	<test id="eval2">
+		<DIV ID="eval2"></DIV>
+	</test>
+</tests>

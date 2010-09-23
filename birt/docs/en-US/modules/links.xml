@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+ 
+<chapter id="birt_plugin_rel_resources" xreflabel="birt_plugin_rel_resources">
+    <?dbhtml filename="links.html"?>
+    <chapterinfo>
+        <keywordset>
+
+            <keyword>Eclipse</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>JBoss Tools</keyword>
+                   <keyword>BIRT Integration</keyword>
+        </keywordset>
+    </chapterinfo>
+
+
+        <title>Other Relevant Resources on the Topic</title>
+
+        <para>All JBoss Developer Studio/JBoss Tools release documentation you can find at <ulink url="http://docs.jboss.org/tools/">http://docs.jboss.org/tools</ulink> in the corresponding release directory.</para>
+        <para>The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">http://download.jboss.org/jbosstools/nightly-docs</ulink>.
+
+</para>
+
+</chapter>

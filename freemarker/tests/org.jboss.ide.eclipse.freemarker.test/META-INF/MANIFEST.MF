@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Freemarker Tests
+Bundle-SymbolicName: org.jboss.ide.eclipse.freemarker.test
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.jboss.ide.eclipse.freemarker.test.Activator
+Bundle-Vendor: JBoss by RedHat
+Require-Bundle: org.eclipse.core.runtime,
+ org.junit,
+ org.jboss.tools.tests;bundle-version="2.0.0",
+ org.eclipse.jface;bundle-version="3.5.0",
+ org.jboss.ide.eclipse.freemarker;bundle-version="1.1.0",
+ org.eclipse.core.resources;bundle-version="3.5.1",
+ org.eclipse.ui;bundle-version="3.5.1",
+ org.eclipse.ui.workbench.texteditor;bundle-version="3.5.0",
+ org.eclipse.text;bundle-version="3.5.0",
+ org.eclipse.jface.text;bundle-version="3.5.1"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Export-Package: org.jboss.ide.eclipse.freemarker.editor.test,
+ org.jboss.ide.eclipse.freemarker.preferences.test,
+ org.jboss.ide.eclipse.freemarker.test

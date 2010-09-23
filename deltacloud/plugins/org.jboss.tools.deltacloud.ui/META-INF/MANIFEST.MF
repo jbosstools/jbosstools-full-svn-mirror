@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Deltacloud UI (Experimental)
+Bundle-SymbolicName: org.jboss.tools.deltacloud.ui; singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: org.jboss.tools.deltacloud.ui.Activator
+Bundle-Vendor: Red Hat Inc.
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.equinox.security;bundle-version="1.0.100",
+ org.eclipse.core.runtime,
+ org.eclipse.ui.views;bundle-version="3.4.1",
+ org.eclipse.ui.views.properties.tabbed;bundle-version="3.5.0",
+ org.jboss.tools.deltacloud.core;bundle-version="0.0.1",
+ org.eclipse.rse.core;bundle-version="3.1.1"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

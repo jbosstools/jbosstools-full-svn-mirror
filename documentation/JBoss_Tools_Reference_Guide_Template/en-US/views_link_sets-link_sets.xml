@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="link_sets-views_link_sets">
+  <title>Views link sets</title>
+  <para>
+    The following sections list the links relating to views tasks and concepts.
+  </para>
+  <xi:include href="web_projects_view_links-link_sets.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="web_development_perspective_palette_view_links-link_sets.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="template_one_links-link_sets.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+</section>

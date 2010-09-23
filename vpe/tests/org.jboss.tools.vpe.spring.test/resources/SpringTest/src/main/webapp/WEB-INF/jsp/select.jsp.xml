@@ -1,0 +1,14 @@
+<tests>
+	<test id="select1">
+		<SELECT ID="select1" STYLE="background-color: black;" CLASS="yellow-text">
+			<OPTION>${formBean.availableCategories}</OPTION>
+		</SELECT>
+	</test>
+	<test id="select2">
+		<SELECT ID="select2" SIZE="2" MULTIPLE="multiple">
+			<OPTION ID="booksOption2">books selected</OPTION>
+			<OPTION ID="sportOption2">sport selected</OPTION>
+			<OPTION ID="fishingOption2">fishing selected</OPTION>
+		</SELECT>
+	</test>
+</tests>

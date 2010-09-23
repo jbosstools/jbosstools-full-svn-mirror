@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="link_sets-views_link_sets-web_projects_view_links">
+  <title>Web projects view links</title>
+  <note>
+    <title>***Design Note***</title>
+     <para>
+      Note that this is an alternative format where descriptions are included. It would be best not to include such a format as the content will be extensive due to the multitude of options available on some interfaces. Also this is a link set so information shouldn't be placed here.
+      </para> 
+     <para>
+      This content has been preserved for now as we need to decide whether to include such descriptions and if so where to place such content within the document.
+     </para>
+  </note> 
+  <para>
+    Component descriptions and links to further tasks relating to the web projects view are listed here: 
+  </para>
+  
+ <figure id="figure-Web_projects_view_links">
+    <title>Web Development Perspective - Web Projects View</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/image-jbt-web_projects_view_01.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <para>Web Projects View</para>
+        </textobject>
+    </mediaobject>
+  </figure>
+  <note><title>***Design Note***</title>
+    <para>
+      Listed below are the links that link to further tasks or information relating to to the web projects view.
+    </para>
+    <para>
+  	  * Use the "Placeholder_for_a_link section" as as a reminder that all relevant links haven't been included (or uncommented). You can search for the "placeholder" to ensure all links have been included.
+    </para>
+  </note>
+  	 
+  <variablelist>
+  	<title>Web Development View - Web Projects </title>
+	<varlistentry>
+		<term>WebContent</term>
+		<listitem>
+			<para>
+			  This option lists the content deployed to the server. The available navigation options include: <!--  Details are available in <xref linkend="sect-Reference_Guide_Template-Hints-Placeholder_for_a_link"></xref> -->
+			</para>
+			<itemizedlist>
+			  <listitem>
+			    <para>
+			      <guilabel>META-INF</guilabel>: This folder includes the <filename>MANIFEST.MF</filename> file ......
+			    </para>
+			  </listitem>
+			  <listitem>
+			    <para>
+			      <guilabel>pages</guilabel>: This folder lists the jsp pages which will be deployed to the server. Clicking on a jsp page renders the page in the jsp files editor <xref linkend="hints-placeholder_for_a_link"></xref>. 
+			    </para>
+			  </listitem>
+			  <listitem>
+			    <para>
+			      <guilabel>WEB-INF</guilabel>: This folder lists the classes for the project.
+			    </para>
+			  </listitem>		  
+			</itemizedlist>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Tag Libraries</term>
+		<listitem>
+			<para>
+			  This option lists the tag libraries associated with the project. Clicking on a library file renders the file in the JBoss Tools Tag Library Editor <xref linkend="hints-placeholder_for_a_link"></xref>.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Resource Bundles</term>
+		<listitem>
+			<para>
+			  This option lists the resources associated with the project. Details are available in <xref linkend="hints-placeholder_for_a_link"></xref>
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Configuration</term>
+		<listitem>
+			<para>
+			  This option lists the configuration settings (<filename>faces-config.xml</filename>) for the project. Clicking on a config file renders the file in the Faces Config Editor <xref linkend="hints-placeholder_for_a_link"></xref>.
+			</para>
+		</listitem>
+	</varlistentry>
+    <varlistentry>
+		<term>Beans</term>
+		<listitem>
+			<para>
+			  This option lists the Beans defined within the project. Clicking on a Bean file renders the file in a standard Java file editor.
+			</para>
+		</listitem>
+	</varlistentry>
+    <varlistentry>
+		<term>Tiles</term>
+		<listitem>
+			<para>
+			  This option lists the tiles associated with the project. Details are available in <xref linkend="hints-placeholder_for_a_link"></xref>
+			</para>
+		</listitem>
+	</varlistentry>
+    <varlistentry>
+		<term>web.xml</term>
+		<listitem>
+			<para>
+			  This option lists the web.xml settings and parameters. Clicking on the <guilabel>web.xml</guilabel> label or any sub item, renders the file in the <guilabel>Web XML Editor</guilabel> <xref linkend="proc-jsf-editor_faces-config"></xref>.
+			</para>
+		</listitem>
+	</varlistentry>
+  </variablelist>
+  <note><title>Design Note</title>
+    <para>
+      It will be best to omit the descriptions and just link to the Concepts section and Tasks as this is a major documentation task (many descriptions for many views).
+    </para>
+  </note>
+  <para>&FEEDBACK-link_sets-views_link_sets-web_projects_view_links;</para>
+</section>

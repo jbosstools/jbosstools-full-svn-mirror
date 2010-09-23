@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="link_sets-views_link_sets-template_one_links">
+  <title>Template one links</title>
+  <para>
+    Links to further information and tasks relating to the concept (as mentioned in Template One) are listed here: 
+  </para>
+     <note><title>***Design Note***</title>
+      <para>
+        Listed below are the links that link to further tasks relating to "The Task" discussed in JSF_TemplateOne
+      </para>
+      <para>
+  	    * Use the "Placeholder_for_a_link section" as as a reminder that all relevant links haven't been included (or uncommented). You can search for the "placeholder" to ensure all links have been included.
+      </para>
+  </note>
+  
+  <variablelist>
+		    <title>Concepts</title>
+			<varlistentry>
+			  <term>Concept A</term>
+	          <listitem>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+		      </listitem>
+	        </varlistentry>
+	       <varlistentry>
+			  <term>Concept B</term>
+	          <listitem>
+		  		<para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+		      </listitem>
+		   </varlistentry>
+	</variablelist>
+	<variablelist>
+		    <title>Tasks</title>
+			<varlistentry>
+			  <term>Task A</term>
+	          <listitem>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+		      </listitem>
+	        </varlistentry>
+	       <varlistentry>
+			  <term>Task B</term>
+	          <listitem>
+		  		<para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+		      </listitem>
+		   </varlistentry>
+	</variablelist>
+	
+	 <variablelist>
+		    <title>References</title>
+			<varlistentry>
+			  <term>Reference A</term>
+	          <listitem>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+		      </listitem>
+	        </varlistentry>
+	       <varlistentry>
+			  <term>Reference B</term>
+	          <listitem>
+		  		<para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+			    <para><xref linkend="hints-placeholder_for_a_link"></xref>.</para>
+		      </listitem>
+		   </varlistentry>
+	</variablelist>
+  <para>&FEEDBACK-link_sets-views_link_sets-template_one_links;</para>
+</section>

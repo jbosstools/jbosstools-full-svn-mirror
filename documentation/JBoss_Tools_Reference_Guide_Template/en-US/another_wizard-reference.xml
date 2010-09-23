@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="reference-wizards-another_wizard">
+  <title>Another wizard</title>
+   <para>
+    The user has the option to define/create a .....project/file. The use of this wizard is discussed in <xref linkend="proc-jsf-template_one"/>
+  </para>
+  
+  <para>
+    Some brief and useful information regarding the project/file and the wizard in general.Include an image below (recycled from the procedure/task):
+  </para>
+  <figure id="figure-reference-wizards-another_wizard">
+    <title>JSF Tools New Faces Config</title>
+      <mediaobject>
+        <imageobject>
+        	<imagedata fileref="images/image-jsf-new_faces_config_01.png" format="PNG"/>
+        </imageobject>
+       	<textobject>
+        	<para>The New Faces Config Dialog.</para>
+    	</textobject>
+  	</mediaobject>
+  </figure> 
+  <note><title>***Design Note***</title>
+    <para>
+      For reference material relating to material covered in the Concepts chapter link to the relevant "Document navigation section" 
+    </para>
+  </note>  
+  <formalpara><title>Related material</title>
+    <para>
+      Further tasks and information relating to this task are accessible from:  <xref linkend="hints-placeholder_for_a_link"/>.
+    </para>
+  </formalpara>
+  <para>&FEEDBACK-reference-wizards-another_wizard;</para>
+</section>
