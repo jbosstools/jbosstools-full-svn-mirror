@@ -123,7 +123,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_NON_VISUAL_TAGS = "icons/non-visusal-tags.gif"; //$NON-NLS-1$
 	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
 	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
-	public static final String ICON_EXTERNALIZE_STRINGS= "icons/properties.gif"; //$NON-NLS-1$
+	public static final String ICON_EXTERNALIZE_STRINGS= "icons/externalize.png"; //$NON-NLS-1$
 
 	//static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
