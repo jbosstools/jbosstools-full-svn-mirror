@@ -5,14 +5,14 @@
 ]>
 <bookinfo id="book-Cloud_Tools_Reference_Guide-Cloud_Tools_Reference_Guide">
 	<title>Cloud Tools Reference Guide</title>
-	<subtitle>short description</subtitle>
-	<productname>Documentation</productname>
-	<productnumber>0.1</productnumber>
+	<subtitle>Providing documentation of the tools used to interact with your cloud computing instances.</subtitle>
+	<productname>JBoss Developer Studio</productname>
+	<productnumber>4.0</productnumber>
 	<edition>0</edition>
 	<pubsnumber>0</pubsnumber>
 	<abstract>
 		<para>
-			A short overview and summary of the book&#39;s subject and purpose, traditionally no more than one paragraph long. Note: the abstract will appear in the front matter of your book and will also be placed in the description field of the book&#39;s RPM spec file.
+			The Cloud Tools Reference Guide provides documentation of the tools used to interact with your cloud computing instances, including the Deltacloud API.
 		</para>
 	</abstract>
 	<corpauthor>
