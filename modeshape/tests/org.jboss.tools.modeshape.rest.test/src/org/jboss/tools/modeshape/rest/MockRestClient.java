@@ -34,7 +34,6 @@ public final class MockRestClient implements IRestClient {
      *
      * @see org.modeshape.web.jcr.rest.client.IRestClient#getNodeTypes(org.modeshape.web.jcr.rest.client.domain.Workspace)
      */
-    @Override
     public Map<String, NodeType> getNodeTypes( Workspace arg0 ) throws Exception {
         return null;
     }
@@ -44,7 +43,6 @@ public final class MockRestClient implements IRestClient {
      * 
      * @see org.modeshape.web.jcr.rest.client.IRestClient#getRepositories(org.modeshape.web.jcr.rest.client.domain.Server)
      */
-    @Override
     public Collection<Repository> getRepositories( Server server ) throws Exception {
         return null;
     }
@@ -55,7 +53,6 @@ public final class MockRestClient implements IRestClient {
      * @see org.modeshape.web.jcr.rest.client.IRestClient#getUrl(java.io.File, java.lang.String,
      *      org.modeshape.web.jcr.rest.client.domain.Workspace)
      */
-    @Override
     public URL getUrl( File file,
                        String path,
                        Workspace workspace ) throws Exception {
@@ -67,7 +64,6 @@ public final class MockRestClient implements IRestClient {
      * 
      * @see org.modeshape.web.jcr.rest.client.IRestClient#getWorkspaces(org.modeshape.web.jcr.rest.client.domain.Repository)
      */
-    @Override
     public Collection<Workspace> getWorkspaces( Repository repository ) throws Exception {
         return null;
     }
@@ -91,7 +87,6 @@ public final class MockRestClient implements IRestClient {
      * @see org.modeshape.web.jcr.rest.client.IRestClient#unpublish(org.modeshape.web.jcr.rest.client.domain.Workspace,
      *      java.lang.String, java.io.File)
      */
-    @Override
     public Status unpublish( Workspace workspace,
                              String path,
                              File file ) {
@@ -104,7 +99,6 @@ public final class MockRestClient implements IRestClient {
      * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
      *      java.lang.String, java.lang.String)
      */
-    @Override
     public List<QueryRow> query( Workspace arg0,
                                  String arg1,
                                  String arg2 ) throws Exception {
@@ -117,7 +111,6 @@ public final class MockRestClient implements IRestClient {
      * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
      *      java.lang.String, java.lang.String, int, int)
      */
-    @Override
     public List<QueryRow> query( Workspace arg0,
                                  String arg1,
                                  String arg2,
@@ -132,7 +125,6 @@ public final class MockRestClient implements IRestClient {
      * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
      *      java.lang.String, java.lang.String, int, int, java.util.Map)
      */
-    @Override
     public List<QueryRow> query( Workspace arg0,
                                  String arg1,
                                  String arg2,
