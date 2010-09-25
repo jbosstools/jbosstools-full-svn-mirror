@@ -265,7 +265,7 @@
 		<category name="SOATools" />
 	</feature>
 	<feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
-		<category name="AllTools" />
+		<category name="SOATools" />
 	</feature>
 
 	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
@@ -285,8 +285,6 @@
 		<category name="SOATools" />
 	</feature>
 	<feature url="features/org.scribble.protocol.feature_0.0.0.jar" id="org.scribble.protocol.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
 	</feature>
 
 </site>
