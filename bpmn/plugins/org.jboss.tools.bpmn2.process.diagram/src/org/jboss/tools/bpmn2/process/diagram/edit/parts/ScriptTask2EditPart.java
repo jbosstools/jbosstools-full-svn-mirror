@@ -4,42 +4,42 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
-import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
+import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
+import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ResizableShapeEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.XYLayoutEditPolicy;
+import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
+import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
-import org.jboss.tools.bpmn2.process.diagram.edit.policies.SubProcess2CanonicalEditPolicy;
-import org.jboss.tools.bpmn2.process.diagram.edit.policies.SubProcess2ItemSemanticEditPolicy;
+import org.jboss.tools.bpmn2.process.diagram.edit.policies.ScriptTask2ItemSemanticEditPolicy;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2VisualIDRegistry;
 import org.jboss.tools.bpmn2.process.diagram.providers.Bpmn2ElementTypes;
 
 /**
  * @generated
  */
-public class SubProcess2EditPart extends ShapeNodeEditPart {
+public class ScriptTask2EditPart extends ShapeNodeEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 3001;
+	public static final int VISUAL_ID = 3016;
 
 	/**
 	 * @generated
@@ -54,7 +54,7 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public SubProcess2EditPart(View view) {
+	public ScriptTask2EditPart(View view) {
 		super(view);
 	}
 
@@ -62,15 +62,9 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected void createDefaultEditPolicies() {
-		installEditPolicy(EditPolicyRoles.CREATION_ROLE,
-				new CreationEditPolicy());
 		super.createDefaultEditPolicies();
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-				new SubProcess2ItemSemanticEditPolicy());
-		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
-				new DragDropEditPolicy());
-		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-				new SubProcess2CanonicalEditPolicy());
+				new ScriptTask2ItemSemanticEditPolicy());
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -80,14 +74,23 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
-		XYLayoutEditPolicy lep = new XYLayoutEditPolicy() {
+		org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
 			protected EditPolicy createChildEditPolicy(EditPart child) {
-				EditPolicy result = super.createChildEditPolicy(child);
+				EditPolicy result = child
+						.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
 				if (result == null) {
-					return new ResizableShapeEditPolicy();
+					result = new NonResizableEditPolicy();
 				}
 				return result;
+			}
+
+			protected Command getMoveChildrenCommand(Request request) {
+				return null;
+			}
+
+			protected Command getCreateCommand(CreateRequest request) {
+				return null;
 			}
 		};
 		return lep;
@@ -97,25 +100,70 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected IFigure createNodeShape() {
-		return primaryShape = new ExpandedSubprocessFigureDescriptor() {
-			protected boolean useLocalCoordinates() {
-				return true;
-			}
-		};
+		return primaryShape = new TaskFigureDescriptor();
 	}
 
 	/**
 	 * @generated
 	 */
-	public ExpandedSubprocessFigureDescriptor getPrimaryShape() {
-		return (ExpandedSubprocessFigureDescriptor) primaryShape;
+	public TaskFigureDescriptor getPrimaryShape() {
+		return (TaskFigureDescriptor) primaryShape;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected boolean addFixedChild(EditPart childEditPart) {
+		if (childEditPart instanceof ScriptTaskName2EditPart) {
+			((ScriptTaskName2EditPart) childEditPart)
+					.setLabel(getPrimaryShape().getFigureName());
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected boolean removeFixedChild(EditPart childEditPart) {
+		if (childEditPart instanceof ScriptTaskName2EditPart) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected void addChildVisual(EditPart childEditPart, int index) {
+		if (addFixedChild(childEditPart)) {
+			return;
+		}
+		super.addChildVisual(childEditPart, -1);
+	}
+
+	/**
+	 * @generated
+	 */
+	protected void removeChildVisual(EditPart childEditPart) {
+		if (removeFixedChild(childEditPart)) {
+			return;
+		}
+		super.removeChildVisual(childEditPart);
+	}
+
+	/**
+	 * @generated
+	 */
+	protected IFigure getContentPaneFor(IGraphicalEditPart editPart) {
+		return getContentPane();
 	}
 
 	/**
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(240, 240);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(80, 40);
 		return result;
 	}
 
@@ -144,16 +192,9 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 	 */
 	protected IFigure setupContentPane(IFigure nodeShape) {
 		if (nodeShape.getLayoutManager() == null) {
-			nodeShape.setLayoutManager(new FreeformLayout() {
-
-				public Object getConstraint(IFigure figure) {
-					Object result = constraints.get(figure);
-					if (result == null) {
-						result = new Rectangle(0, 0, -1, -1);
-					}
-					return result;
-				}
-			});
+			ConstrainedToolbarLayout layout = new ConstrainedToolbarLayout();
+			layout.setSpacing(5);
+			nodeShape.setLayoutManager(layout);
 		}
 		return nodeShape; // use nodeShape itself as contentPane
 	}
@@ -202,6 +243,14 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 		if (primaryShape instanceof Shape) {
 			((Shape) primaryShape).setLineStyle(style);
 		}
+	}
+
+	/**
+	 * @generated
+	 */
+	public EditPart getPrimaryChildEditPart() {
+		return getChildBySemanticHint(Bpmn2VisualIDRegistry
+				.getType(ScriptTaskName2EditPart.VISUAL_ID));
 	}
 
 	/**
@@ -265,7 +314,7 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof ScriptTaskEditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
-		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.SubProcess2EditPart) {
+		if (targetEditPart instanceof SubProcess2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof UserTask2EditPart) {
@@ -304,7 +353,7 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof IntermediateCatchEvent5EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
-		if (targetEditPart instanceof ScriptTask2EditPart) {
+		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof UserTaskEditPart) {
@@ -358,7 +407,7 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof ScriptTaskEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.SubProcess2EditPart) {
+		if (targetEditPart instanceof SubProcess2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof UserTask2EditPart) {
@@ -403,7 +452,7 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof TextAnnotation2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof ScriptTask2EditPart) {
+		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		return types;
@@ -568,29 +617,48 @@ public class SubProcess2EditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class ExpandedSubprocessFigureDescriptor extends RoundedRectangle {
+	public class TaskFigureDescriptor extends RoundedRectangle {
 
 		/**
 		 * @generated
 		 */
-		private RoundedRectangle fFigureExpandedSubprocessFigure;
+		private WrappingLabel fFigureName;
 
 		/**
 		 * @generated
 		 */
-		public ExpandedSubprocessFigureDescriptor() {
-			this.setLayoutManager(new XYLayout());
+		public TaskFigureDescriptor() {
+			this.setLayoutManager(new StackLayout());
 			this.setCornerDimensions(new Dimension(getMapMode().DPtoLP(8),
 					getMapMode().DPtoLP(8)));
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(240),
-					getMapMode().DPtoLP(240)));
+			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(80),
+					getMapMode().DPtoLP(40)));
+			this.setMinimumSize(new Dimension(getMapMode().DPtoLP(80),
+					getMapMode().DPtoLP(40)));
+
+			this.setBorder(new MarginBorder(getMapMode().DPtoLP(5),
+					getMapMode().DPtoLP(5), getMapMode().DPtoLP(5),
+					getMapMode().DPtoLP(5)));
+			createContents();
 		}
 
 		/**
 		 * @generated
 		 */
-		public RoundedRectangle getFigureExpandedSubprocessFigure() {
-			return fFigureExpandedSubprocessFigure;
+		private void createContents() {
+
+			fFigureName = new WrappingLabel();
+			fFigureName.setText("");
+
+			this.add(fFigureName);
+
+		}
+
+		/**
+		 * @generated
+		 */
+		public WrappingLabel getFigureName() {
+			return fFigureName;
 		}
 
 	}

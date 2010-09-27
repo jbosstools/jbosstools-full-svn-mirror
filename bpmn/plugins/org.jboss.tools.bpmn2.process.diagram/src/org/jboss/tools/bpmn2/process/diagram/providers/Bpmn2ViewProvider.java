@@ -64,6 +64,10 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEd
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGatewayEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskName2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskNameEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.SequenceFlowEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskEditPart;
@@ -186,11 +190,13 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 				case DataObjectEditPart.VISUAL_ID:
 				case TextAnnotationEditPart.VISUAL_ID:
 				case SubProcessEditPart.VISUAL_ID:
+				case ScriptTask2EditPart.VISUAL_ID:
 				case StartEvent2EditPart.VISUAL_ID:
 				case EndEvent2EditPart.VISUAL_ID:
 				case EndEvent3EditPart.VISUAL_ID:
 				case IntermediateCatchEvent2EditPart.VISUAL_ID:
 				case IntermediateCatchEvent3EditPart.VISUAL_ID:
+				case ScriptTaskEditPart.VISUAL_ID:
 				case SubProcess2EditPart.VISUAL_ID:
 				case UserTask2EditPart.VISUAL_ID:
 				case ServiceTask2EditPart.VISUAL_ID:
@@ -234,6 +240,7 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 				|| DataObjectEditPart.VISUAL_ID == visualID
 				|| TextAnnotationEditPart.VISUAL_ID == visualID
 				|| SubProcessEditPart.VISUAL_ID == visualID
+				|| ScriptTaskEditPart.VISUAL_ID == visualID
 				|| SubProcess2EditPart.VISUAL_ID == visualID
 				|| UserTask2EditPart.VISUAL_ID == visualID
 				|| ServiceTask2EditPart.VISUAL_ID == visualID
@@ -248,7 +255,8 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 				|| IntermediateThrowEvent2EditPart.VISUAL_ID == visualID
 				|| IntermediateCatchEvent5EditPart.VISUAL_ID == visualID
 				|| DataObject2EditPart.VISUAL_ID == visualID
-				|| TextAnnotation2EditPart.VISUAL_ID == visualID;
+				|| TextAnnotation2EditPart.VISUAL_ID == visualID
+				|| ScriptTask2EditPart.VISUAL_ID == visualID;
 	}
 
 	/**
@@ -353,6 +361,9 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		case SubProcessEditPart.VISUAL_ID:
 			return createSubProcess_2016(domainElement, containerView, index,
 					persisted, preferencesHint);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return createScriptTask_2017(domainElement, containerView, index,
+					persisted, preferencesHint);
 		case SubProcess2EditPart.VISUAL_ID:
 			return createSubProcess_3001(domainElement, containerView, index,
 					persisted, preferencesHint);
@@ -398,6 +409,9 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return createTextAnnotation_3015(domainElement, containerView,
 					index, persisted, preferencesHint);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return createScriptTask_3016(domainElement, containerView, index,
+					persisted, preferencesHint);
 		}
 		// can't happen, provided #provides(CreateNodeViewOperation) is correct
 		return null;
@@ -1137,6 +1151,52 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
+	public Node createScriptTask_2017(EObject domainElement,
+			View containerView, int index, boolean persisted,
+			PreferencesHint preferencesHint) {
+		Shape node = NotationFactory.eINSTANCE.createShape();
+		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
+		node.setType(Bpmn2VisualIDRegistry
+				.getType(ScriptTaskEditPart.VISUAL_ID));
+		ViewUtil.insertChildView(containerView, node, index, persisted);
+		node.setElement(domainElement);
+		stampShortcut(containerView, node);
+		// initializeFromPreferences 
+		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
+				.getPreferenceStore();
+
+		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+				FigureUtilities.RGBToInteger(lineRGB));
+		FontStyle nodeFontStyle = (FontStyle) node
+				.getStyle(NotationPackage.Literals.FONT_STYLE);
+		if (nodeFontStyle != null) {
+			FontData fontData = PreferenceConverter.getFontData(prefStore,
+					IPreferenceConstants.PREF_DEFAULT_FONT);
+			nodeFontStyle.setFontName(fontData.getName());
+			nodeFontStyle.setFontHeight(fontData.getHeight());
+			nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
+			nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
+			org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
+					.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
+					.intValue());
+		}
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5009 = createLabel(node,
+				Bpmn2VisualIDRegistry.getType(ScriptTaskNameEditPart.VISUAL_ID));
+		return node;
+	}
+
+	/**
+	 * @generated
+	 */
 	public Node createSubProcess_3001(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
@@ -1784,6 +1844,52 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		Node label5008 = createLabel(node,
 				Bpmn2VisualIDRegistry
 						.getType(TextAnnotationText2EditPart.VISUAL_ID));
+		return node;
+	}
+
+	/**
+	 * @generated
+	 */
+	public Node createScriptTask_3016(EObject domainElement,
+			View containerView, int index, boolean persisted,
+			PreferencesHint preferencesHint) {
+		Shape node = NotationFactory.eINSTANCE.createShape();
+		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
+		node.setType(Bpmn2VisualIDRegistry
+				.getType(ScriptTask2EditPart.VISUAL_ID));
+		ViewUtil.insertChildView(containerView, node, index, persisted);
+		node.setElement(domainElement);
+		// initializeFromPreferences 
+		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
+				.getPreferenceStore();
+
+		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+				FigureUtilities.RGBToInteger(lineRGB));
+		FontStyle nodeFontStyle = (FontStyle) node
+				.getStyle(NotationPackage.Literals.FONT_STYLE);
+		if (nodeFontStyle != null) {
+			FontData fontData = PreferenceConverter.getFontData(prefStore,
+					IPreferenceConstants.PREF_DEFAULT_FONT);
+			nodeFontStyle.setFontName(fontData.getName());
+			nodeFontStyle.setFontHeight(fontData.getHeight());
+			nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
+			nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
+			org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
+					.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
+					.intValue());
+		}
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5010 = createLabel(node,
+				Bpmn2VisualIDRegistry
+						.getType(ScriptTaskName2EditPart.VISUAL_ID));
 		return node;
 	}
 

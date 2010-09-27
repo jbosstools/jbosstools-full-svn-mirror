@@ -38,6 +38,10 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEd
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGatewayEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskName2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskNameEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.SequenceFlowEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskEditPart;
@@ -239,6 +243,10 @@ public class Bpmn2VisualIDRegistry {
 					domainElement.eClass())) {
 				return SubProcessEditPart.VISUAL_ID;
 			}
+			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ScriptTaskEditPart.VISUAL_ID;
+			}
 			break;
 		case SubProcessEditPart.VISUAL_ID:
 			if (Bpmn2Package.eINSTANCE.getSubProcess().isSuperTypeOf(
@@ -309,6 +317,10 @@ public class Bpmn2VisualIDRegistry {
 					domainElement.eClass())) {
 				return TextAnnotation2EditPart.VISUAL_ID;
 			}
+			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ScriptTask2EditPart.VISUAL_ID;
+			}
 			break;
 		case SubProcess2EditPart.VISUAL_ID:
 			if (Bpmn2Package.eINSTANCE.getSubProcess().isSuperTypeOf(
@@ -378,6 +390,10 @@ public class Bpmn2VisualIDRegistry {
 			if (Bpmn2Package.eINSTANCE.getTextAnnotation().isSuperTypeOf(
 					domainElement.eClass())) {
 				return TextAnnotation2EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ScriptTask2EditPart.VISUAL_ID;
 			}
 			break;
 		}
@@ -454,6 +470,9 @@ public class Bpmn2VisualIDRegistry {
 			if (SubProcessEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
+			if (ScriptTaskEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
 			break;
 		case UserTaskEditPart.VISUAL_ID:
 			if (UserTaskNameEditPart.VISUAL_ID == nodeVisualID) {
@@ -521,6 +540,14 @@ public class Bpmn2VisualIDRegistry {
 			if (TextAnnotation2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
+			if (ScriptTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case ScriptTaskEditPart.VISUAL_ID:
+			if (ScriptTaskNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
 			break;
 		case SubProcess2EditPart.VISUAL_ID:
 			if (SubProcess2EditPart.VISUAL_ID == nodeVisualID) {
@@ -568,6 +595,9 @@ public class Bpmn2VisualIDRegistry {
 			if (TextAnnotation2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
+			if (ScriptTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
 			break;
 		case UserTask2EditPart.VISUAL_ID:
 			if (UserTaskName2EditPart.VISUAL_ID == nodeVisualID) {
@@ -586,6 +616,11 @@ public class Bpmn2VisualIDRegistry {
 			break;
 		case TextAnnotation2EditPart.VISUAL_ID:
 			if (TextAnnotationText2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case ScriptTask2EditPart.VISUAL_ID:
+			if (ScriptTaskName2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			break;

@@ -40,6 +40,8 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEd
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGatewayEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.StartEvent2EditPart;
@@ -67,7 +69,7 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 		IGraphicalEditPart editPart = (IGraphicalEditPart) host
 				.getAdapter(IGraphicalEditPart.class);
 		if (editPart instanceof ProcessEditPart) {
-			ArrayList<IElementType> types = new ArrayList<IElementType>(16);
+			ArrayList<IElementType> types = new ArrayList<IElementType>(17);
 			types.add(Bpmn2ElementTypes.UserTask_2001);
 			types.add(Bpmn2ElementTypes.ServiceTask_2002);
 			types.add(Bpmn2ElementTypes.StartEvent_2003);
@@ -84,10 +86,11 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 			types.add(Bpmn2ElementTypes.DataObject_2014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_2015);
 			types.add(Bpmn2ElementTypes.SubProcess_2016);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			return types;
 		}
 		if (editPart instanceof SubProcessEditPart) {
-			ArrayList<IElementType> types = new ArrayList<IElementType>(15);
+			ArrayList<IElementType> types = new ArrayList<IElementType>(16);
 			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
@@ -103,10 +106,11 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
 			types.add(Bpmn2ElementTypes.DataObject_3014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_3015);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 			return types;
 		}
 		if (editPart instanceof SubProcess2EditPart) {
-			ArrayList<IElementType> types = new ArrayList<IElementType>(15);
+			ArrayList<IElementType> types = new ArrayList<IElementType>(16);
 			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
@@ -122,6 +126,7 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
 			types.add(Bpmn2ElementTypes.DataObject_3014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_3015);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 			return types;
 		}
 		return Collections.EMPTY_LIST;
@@ -193,6 +198,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 			return ((SubProcessEditPart) sourceEditPart)
 					.getMARelTypesOnSource();
 		}
+		if (sourceEditPart instanceof ScriptTaskEditPart) {
+			return ((ScriptTaskEditPart) sourceEditPart)
+					.getMARelTypesOnSource();
+		}
 		if (sourceEditPart instanceof SubProcess2EditPart) {
 			return ((SubProcess2EditPart) sourceEditPart)
 					.getMARelTypesOnSource();
@@ -247,6 +256,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 		}
 		if (sourceEditPart instanceof TextAnnotation2EditPart) {
 			return ((TextAnnotation2EditPart) sourceEditPart)
+					.getMARelTypesOnSource();
+		}
+		if (sourceEditPart instanceof ScriptTask2EditPart) {
+			return ((ScriptTask2EditPart) sourceEditPart)
 					.getMARelTypesOnSource();
 		}
 		return Collections.EMPTY_LIST;
@@ -318,6 +331,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 			return ((SubProcessEditPart) targetEditPart)
 					.getMARelTypesOnTarget();
 		}
+		if (targetEditPart instanceof ScriptTaskEditPart) {
+			return ((ScriptTaskEditPart) targetEditPart)
+					.getMARelTypesOnTarget();
+		}
 		if (targetEditPart instanceof SubProcess2EditPart) {
 			return ((SubProcess2EditPart) targetEditPart)
 					.getMARelTypesOnTarget();
@@ -372,6 +389,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 		}
 		if (targetEditPart instanceof TextAnnotation2EditPart) {
 			return ((TextAnnotation2EditPart) targetEditPart)
+					.getMARelTypesOnTarget();
+		}
+		if (targetEditPart instanceof ScriptTask2EditPart) {
+			return ((ScriptTask2EditPart) targetEditPart)
 					.getMARelTypesOnTarget();
 		}
 		return Collections.EMPTY_LIST;
@@ -450,6 +471,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 			return ((SubProcessEditPart) sourceEditPart)
 					.getMARelTypesOnSourceAndTarget(targetEditPart);
 		}
+		if (sourceEditPart instanceof ScriptTaskEditPart) {
+			return ((ScriptTaskEditPart) sourceEditPart)
+					.getMARelTypesOnSourceAndTarget(targetEditPart);
+		}
 		if (sourceEditPart instanceof SubProcess2EditPart) {
 			return ((SubProcess2EditPart) sourceEditPart)
 					.getMARelTypesOnSourceAndTarget(targetEditPart);
@@ -508,6 +533,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 		}
 		if (sourceEditPart instanceof TextAnnotation2EditPart) {
 			return ((TextAnnotation2EditPart) sourceEditPart)
+					.getMARelTypesOnSourceAndTarget(targetEditPart);
+		}
+		if (sourceEditPart instanceof ScriptTask2EditPart) {
+			return ((ScriptTask2EditPart) sourceEditPart)
 					.getMARelTypesOnSourceAndTarget(targetEditPart);
 		}
 		return Collections.EMPTY_LIST;
@@ -584,6 +613,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 			return ((SubProcessEditPart) targetEditPart)
 					.getMATypesForSource(relationshipType);
 		}
+		if (targetEditPart instanceof ScriptTaskEditPart) {
+			return ((ScriptTaskEditPart) targetEditPart)
+					.getMATypesForSource(relationshipType);
+		}
 		if (targetEditPart instanceof SubProcess2EditPart) {
 			return ((SubProcess2EditPart) targetEditPart)
 					.getMATypesForSource(relationshipType);
@@ -642,6 +675,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 		}
 		if (targetEditPart instanceof TextAnnotation2EditPart) {
 			return ((TextAnnotation2EditPart) targetEditPart)
+					.getMATypesForSource(relationshipType);
+		}
+		if (targetEditPart instanceof ScriptTask2EditPart) {
+			return ((ScriptTask2EditPart) targetEditPart)
 					.getMATypesForSource(relationshipType);
 		}
 		return Collections.EMPTY_LIST;
@@ -718,6 +755,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 			return ((SubProcessEditPart) sourceEditPart)
 					.getMATypesForTarget(relationshipType);
 		}
+		if (sourceEditPart instanceof ScriptTaskEditPart) {
+			return ((ScriptTaskEditPart) sourceEditPart)
+					.getMATypesForTarget(relationshipType);
+		}
 		if (sourceEditPart instanceof SubProcess2EditPart) {
 			return ((SubProcess2EditPart) sourceEditPart)
 					.getMATypesForTarget(relationshipType);
@@ -776,6 +817,10 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 		}
 		if (sourceEditPart instanceof TextAnnotation2EditPart) {
 			return ((TextAnnotation2EditPart) sourceEditPart)
+					.getMATypesForTarget(relationshipType);
+		}
+		if (sourceEditPart instanceof ScriptTask2EditPart) {
+			return ((ScriptTask2EditPart) sourceEditPart)
 					.getMATypesForTarget(relationshipType);
 		}
 		return Collections.EMPTY_LIST;

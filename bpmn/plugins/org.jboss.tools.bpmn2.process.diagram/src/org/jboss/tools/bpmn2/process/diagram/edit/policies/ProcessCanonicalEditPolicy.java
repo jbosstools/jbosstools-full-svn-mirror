@@ -61,6 +61,8 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEd
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGatewayEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.SequenceFlowEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskEditPart;
@@ -149,6 +151,7 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 		case DataObjectEditPart.VISUAL_ID:
 		case TextAnnotationEditPart.VISUAL_ID:
 		case SubProcessEditPart.VISUAL_ID:
+		case ScriptTaskEditPart.VISUAL_ID:
 			return true;
 		}
 		return false;
@@ -532,6 +535,17 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
+		case ScriptTaskEditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getScriptTask_2017ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
 		case SubProcess2EditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
@@ -690,6 +704,17 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
 						.getTextAnnotation_3015ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case ScriptTask2EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getScriptTask_3016ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$

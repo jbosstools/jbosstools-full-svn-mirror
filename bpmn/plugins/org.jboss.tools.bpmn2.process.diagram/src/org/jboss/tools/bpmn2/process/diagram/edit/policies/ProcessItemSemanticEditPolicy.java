@@ -16,6 +16,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateCatchEven
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateCatchEventCreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateThrowEventCreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.ParallelGatewayCreateCommand;
+import org.jboss.tools.bpmn2.process.diagram.edit.commands.ScriptTaskCreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.ServiceTaskCreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.StartEvent2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.StartEventCreateCommand;
@@ -92,6 +93,9 @@ public class ProcessItemSemanticEditPolicy extends
 		}
 		if (Bpmn2ElementTypes.SubProcess_2016 == req.getElementType()) {
 			return getGEFWrapper(new SubProcessCreateCommand(req));
+		}
+		if (Bpmn2ElementTypes.ScriptTask_2017 == req.getElementType()) {
+			return getGEFWrapper(new ScriptTaskCreateCommand(req));
 		}
 		return super.getCreateCommand(req);
 	}

@@ -41,6 +41,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4E
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.StartEvent3EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.StartEvent4EditPart;
@@ -120,6 +121,7 @@ public class SubProcess2CanonicalEditPolicy extends CanonicalEditPolicy {
 		case IntermediateCatchEvent5EditPart.VISUAL_ID:
 		case DataObject2EditPart.VISUAL_ID:
 		case TextAnnotation2EditPart.VISUAL_ID:
+		case ScriptTask2EditPart.VISUAL_ID:
 			return true;
 		}
 		return false;

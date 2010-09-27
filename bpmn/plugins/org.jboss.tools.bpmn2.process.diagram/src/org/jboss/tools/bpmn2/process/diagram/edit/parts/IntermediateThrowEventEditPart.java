@@ -263,6 +263,9 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof SubProcessEditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
+		if (targetEditPart instanceof ScriptTaskEditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
 		if (targetEditPart instanceof SubProcess2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
@@ -300,6 +303,9 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof IntermediateCatchEvent5EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof ScriptTask2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof UserTaskEditPart) {
@@ -350,6 +356,9 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof SubProcessEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
+		if (targetEditPart instanceof ScriptTaskEditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
 		if (targetEditPart instanceof SubProcess2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
@@ -395,6 +404,9 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof TextAnnotation2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
+		if (targetEditPart instanceof ScriptTask2EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
 		return types;
 	}
 
@@ -418,6 +430,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2012);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2013);
 			types.add(Bpmn2ElementTypes.SubProcess_2016);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
@@ -431,6 +444,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
 			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 		} else if (relationshipType == Bpmn2ElementTypes.Association_4002) {
 			types.add(Bpmn2ElementTypes.UserTask_2001);
 			types.add(Bpmn2ElementTypes.ServiceTask_2002);
@@ -448,6 +462,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.DataObject_2014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_2015);
 			types.add(Bpmn2ElementTypes.SubProcess_2016);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
@@ -463,6 +478,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
 			types.add(Bpmn2ElementTypes.DataObject_3014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_3015);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 		}
 		return types;
 	}
@@ -497,6 +513,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2012);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2013);
 			types.add(Bpmn2ElementTypes.SubProcess_2016);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
@@ -510,6 +527,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
 			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 		} else if (relationshipType == Bpmn2ElementTypes.Association_4002) {
 			types.add(Bpmn2ElementTypes.UserTask_2001);
 			types.add(Bpmn2ElementTypes.ServiceTask_2002);
@@ -527,6 +545,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.DataObject_2014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_2015);
 			types.add(Bpmn2ElementTypes.SubProcess_2016);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
@@ -542,6 +561,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
 			types.add(Bpmn2ElementTypes.DataObject_3014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_3015);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 		}
 		return types;
 	}

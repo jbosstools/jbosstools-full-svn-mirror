@@ -37,6 +37,8 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEd
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGatewayEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.SequenceFlowEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskEditPart;
@@ -163,6 +165,11 @@ public class Bpmn2ElementTypes {
 	/**
 	 * @generated
 	 */
+	public static final IElementType ScriptTask_2017 = getElementType("org.eclipse.bpmn2.diagram.ScriptTask_2017"); //$NON-NLS-1$
+
+	/**
+	 * @generated
+	 */
 	public static final IElementType SubProcess_3001 = getElementType("org.eclipse.bpmn2.diagram.SubProcess_3001"); //$NON-NLS-1$
 
 	/**
@@ -234,6 +241,11 @@ public class Bpmn2ElementTypes {
 	 * @generated
 	 */
 	public static final IElementType TextAnnotation_3015 = getElementType("org.eclipse.bpmn2.diagram.TextAnnotation_3015"); //$NON-NLS-1$
+
+	/**
+	 * @generated
+	 */
+	public static final IElementType ScriptTask_3016 = getElementType("org.eclipse.bpmn2.diagram.ScriptTask_3016"); //$NON-NLS-1$
 
 	/**
 	 * @generated
@@ -402,6 +414,9 @@ public class Bpmn2ElementTypes {
 			elements.put(SubProcess_2016,
 					Bpmn2Package.eINSTANCE.getSubProcess());
 
+			elements.put(ScriptTask_2017,
+					Bpmn2Package.eINSTANCE.getScriptTask());
+
 			elements.put(SubProcess_3001,
 					Bpmn2Package.eINSTANCE.getSubProcess());
 
@@ -443,6 +458,9 @@ public class Bpmn2ElementTypes {
 			elements.put(TextAnnotation_3015,
 					Bpmn2Package.eINSTANCE.getTextAnnotation());
 
+			elements.put(ScriptTask_3016,
+					Bpmn2Package.eINSTANCE.getScriptTask());
+
 			elements.put(SequenceFlow_4001,
 					Bpmn2Package.eINSTANCE.getSequenceFlow());
 
@@ -482,6 +500,7 @@ public class Bpmn2ElementTypes {
 			KNOWN_ELEMENT_TYPES.add(DataObject_2014);
 			KNOWN_ELEMENT_TYPES.add(TextAnnotation_2015);
 			KNOWN_ELEMENT_TYPES.add(SubProcess_2016);
+			KNOWN_ELEMENT_TYPES.add(ScriptTask_2017);
 			KNOWN_ELEMENT_TYPES.add(SubProcess_3001);
 			KNOWN_ELEMENT_TYPES.add(UserTask_3002);
 			KNOWN_ELEMENT_TYPES.add(ServiceTask_3004);
@@ -497,6 +516,7 @@ public class Bpmn2ElementTypes {
 			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_3013);
 			KNOWN_ELEMENT_TYPES.add(DataObject_3014);
 			KNOWN_ELEMENT_TYPES.add(TextAnnotation_3015);
+			KNOWN_ELEMENT_TYPES.add(ScriptTask_3016);
 			KNOWN_ELEMENT_TYPES.add(SequenceFlow_4001);
 			KNOWN_ELEMENT_TYPES.add(Association_4002);
 		}
@@ -542,6 +562,8 @@ public class Bpmn2ElementTypes {
 			return TextAnnotation_2015;
 		case SubProcessEditPart.VISUAL_ID:
 			return SubProcess_2016;
+		case ScriptTaskEditPart.VISUAL_ID:
+			return ScriptTask_2017;
 		case SubProcess2EditPart.VISUAL_ID:
 			return SubProcess_3001;
 		case UserTask2EditPart.VISUAL_ID:
@@ -572,6 +594,8 @@ public class Bpmn2ElementTypes {
 			return DataObject_3014;
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return TextAnnotation_3015;
+		case ScriptTask2EditPart.VISUAL_ID:
+			return ScriptTask_3016;
 		case SequenceFlowEditPart.VISUAL_ID:
 			return SequenceFlow_4001;
 		case AssociationEditPart.VISUAL_ID:

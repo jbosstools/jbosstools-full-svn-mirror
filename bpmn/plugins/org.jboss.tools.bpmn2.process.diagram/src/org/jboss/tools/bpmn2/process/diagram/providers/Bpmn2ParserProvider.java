@@ -15,6 +15,8 @@ import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectName2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectNameEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskName2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskNameEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskName2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskNameEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.TextAnnotationText2EditPart;
@@ -105,6 +107,24 @@ public class Bpmn2ParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
+	private IParser scriptTaskName_5009Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getScriptTaskName_5009Parser() {
+		if (scriptTaskName_5009Parser == null) {
+			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
+					.getFlowElement_Name() };
+			MessageFormatParser parser = new MessageFormatParser(features);
+			scriptTaskName_5009Parser = parser;
+		}
+		return scriptTaskName_5009Parser;
+	}
+
+	/**
+	 * @generated
+	 */
 	private IParser userTaskName_5005Parser;
 
 	/**
@@ -177,6 +197,24 @@ public class Bpmn2ParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
+	private IParser scriptTaskName_5010Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getScriptTaskName_5010Parser() {
+		if (scriptTaskName_5010Parser == null) {
+			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
+					.getFlowElement_Name() };
+			MessageFormatParser parser = new MessageFormatParser(features);
+			scriptTaskName_5010Parser = parser;
+		}
+		return scriptTaskName_5010Parser;
+	}
+
+	/**
+	 * @generated
+	 */
 	protected IParser getParser(int visualID) {
 		switch (visualID) {
 		case UserTaskNameEditPart.VISUAL_ID:
@@ -187,6 +225,8 @@ public class Bpmn2ParserProvider extends AbstractProvider implements
 			return getDataObjectName_5003Parser();
 		case TextAnnotationTextEditPart.VISUAL_ID:
 			return getTextAnnotationText_5004Parser();
+		case ScriptTaskNameEditPart.VISUAL_ID:
+			return getScriptTaskName_5009Parser();
 		case UserTaskName2EditPart.VISUAL_ID:
 			return getUserTaskName_5005Parser();
 		case ServiceTaskName2EditPart.VISUAL_ID:
@@ -195,6 +235,8 @@ public class Bpmn2ParserProvider extends AbstractProvider implements
 			return getDataObjectName_5007Parser();
 		case TextAnnotationText2EditPart.VISUAL_ID:
 			return getTextAnnotationText_5008Parser();
+		case ScriptTaskName2EditPart.VISUAL_ID:
+			return getScriptTaskName_5010Parser();
 		}
 		return null;
 	}

@@ -38,12 +38,10 @@ public class Bpmn2PaletteFactory {
 		PaletteGroup paletteContainer = new PaletteGroup(
 				Messages.Nodes1Group_title);
 		paletteContainer.setId("createNodes1Group"); //$NON-NLS-1$
-		paletteContainer.add(createUserTask1CreationTool());
-		paletteContainer.add(createServiceTask2CreationTool());
-		paletteContainer.add(createSubProcess3CreationTool());
-		paletteContainer.add(createGateways4Group());
-		paletteContainer.add(createEvents5Group());
-		paletteContainer.add(createArtifacts6Group());
+		paletteContainer.add(createActivities1Group());
+		paletteContainer.add(createGateways2Group());
+		paletteContainer.add(createEvents3Group());
+		paletteContainer.add(createArtifacts4Group());
 		return paletteContainer;
 	}
 
@@ -61,15 +59,17 @@ public class Bpmn2PaletteFactory {
 	}
 
 	/**
-	 * Creates "Artifacts" palette tool group
+	 * Creates "Activities" palette tool group
 	 * @generated
 	 */
-	private PaletteContainer createArtifacts6Group() {
-		PaletteGroup paletteContainer = new PaletteGroup(
-				Messages.Artifacts6Group_title);
-		paletteContainer.setId("createArtifacts6Group"); //$NON-NLS-1$
-		paletteContainer.add(createDataObject1CreationTool());
-		paletteContainer.add(createTextAnnotation2CreationTool());
+	private PaletteContainer createActivities1Group() {
+		PaletteStack paletteContainer = new PaletteStack(
+				Messages.Activities1Group_title, null, null);
+		paletteContainer.setId("createActivities1Group"); //$NON-NLS-1$
+		paletteContainer.add(createUserTask1CreationTool());
+		paletteContainer.add(createServiceTask2CreationTool());
+		paletteContainer.add(createScriptTask3CreationTool());
+		paletteContainer.add(createSubProcess4CreationTool());
 		return paletteContainer;
 	}
 
@@ -87,6 +87,33 @@ public class Bpmn2PaletteFactory {
 	}
 
 	/**
+	 * Creates "Events" palette tool group
+	 * @generated
+	 */
+	private PaletteContainer createEvents3Group() {
+		PaletteGroup paletteContainer = new PaletteGroup(
+				Messages.Events3Group_title);
+		paletteContainer.setId("createEvents3Group"); //$NON-NLS-1$
+		paletteContainer.add(createStartEvents1Group());
+		paletteContainer.add(createIntermediateEvents2Group());
+		paletteContainer.add(createEndEvents3Group());
+		return paletteContainer;
+	}
+
+	/**
+	 * Creates "Artifacts" palette tool group
+	 * @generated
+	 */
+	private PaletteContainer createArtifacts4Group() {
+		PaletteGroup paletteContainer = new PaletteGroup(
+				Messages.Artifacts4Group_title);
+		paletteContainer.setId("createArtifacts4Group"); //$NON-NLS-1$
+		paletteContainer.add(createDataObject1CreationTool());
+		paletteContainer.add(createTextAnnotation2CreationTool());
+		return paletteContainer;
+	}
+
+	/**
 	 * Creates "Intermediate Events" palette tool group
 	 * @generated
 	 */
@@ -98,20 +125,6 @@ public class Bpmn2PaletteFactory {
 		paletteContainer.add(createMessageThrow2CreationTool());
 		paletteContainer.add(createTimerCatch3CreationTool());
 		paletteContainer.add(createErrorCatch4CreationTool());
-		return paletteContainer;
-	}
-
-	/**
-	 * Creates "Events" palette tool group
-	 * @generated
-	 */
-	private PaletteContainer createEvents5Group() {
-		PaletteGroup paletteContainer = new PaletteGroup(
-				Messages.Events5Group_title);
-		paletteContainer.setId("createEvents5Group"); //$NON-NLS-1$
-		paletteContainer.add(createStartEvents1Group());
-		paletteContainer.add(createIntermediateEvents2Group());
-		paletteContainer.add(createEndEvents3Group());
 		return paletteContainer;
 	}
 
@@ -133,11 +146,11 @@ public class Bpmn2PaletteFactory {
 	 * Creates "Gateways" palette tool group
 	 * @generated
 	 */
-	private PaletteContainer createGateways4Group() {
+	private PaletteContainer createGateways2Group() {
 		PaletteStack paletteContainer = new PaletteStack(
-				Messages.Gateways4Group_title, null, null);
-		paletteContainer.setId("createGateways4Group"); //$NON-NLS-1$
-		paletteContainer.setDescription(Messages.Gateways4Group_desc);
+				Messages.Gateways2Group_title, null, null);
+		paletteContainer.setId("createGateways2Group"); //$NON-NLS-1$
+		paletteContainer.setDescription(Messages.Gateways2Group_desc);
 		paletteContainer.add(createExclusive1CreationTool());
 		paletteContainer.add(createParallel2CreationTool());
 		return paletteContainer;
@@ -202,13 +215,29 @@ public class Bpmn2PaletteFactory {
 	/**
 	 * @generated
 	 */
-	private ToolEntry createSubProcess3CreationTool() {
+	private ToolEntry createScriptTask3CreationTool() {
+		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
+		types.add(Bpmn2ElementTypes.ScriptTask_3016);
+		types.add(Bpmn2ElementTypes.ScriptTask_2017);
+		NodeToolEntry entry = new NodeToolEntry(
+				Messages.ScriptTask3CreationTool_title, null, types);
+		entry.setId("createScriptTask3CreationTool"); //$NON-NLS-1$
+		entry.setSmallIcon(Bpmn2ElementTypes
+				.getImageDescriptor(Bpmn2ElementTypes.ScriptTask_3016));
+		entry.setLargeIcon(entry.getSmallIcon());
+		return entry;
+	}
+
+	/**
+	 * @generated
+	 */
+	private ToolEntry createSubProcess4CreationTool() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
 		types.add(Bpmn2ElementTypes.SubProcess_2016);
 		types.add(Bpmn2ElementTypes.SubProcess_3001);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.SubProcess3CreationTool_title, null, types);
-		entry.setId("createSubProcess3CreationTool"); //$NON-NLS-1$
+				Messages.SubProcess4CreationTool_title, null, types);
+		entry.setId("createSubProcess4CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(Bpmn2ElementTypes
 				.getImageDescriptor(Bpmn2ElementTypes.SubProcess_2016));
 		entry.setLargeIcon(entry.getSmallIcon());

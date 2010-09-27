@@ -13,6 +13,7 @@ import org.eclipse.bpmn2.ExclusiveGateway;
 import org.eclipse.bpmn2.IntermediateCatchEvent;
 import org.eclipse.bpmn2.IntermediateThrowEvent;
 import org.eclipse.bpmn2.ParallelGateway;
+import org.eclipse.bpmn2.ScriptTask;
 import org.eclipse.bpmn2.SequenceFlow;
 import org.eclipse.bpmn2.ServiceTask;
 import org.eclipse.bpmn2.StartEvent;
@@ -291,6 +292,19 @@ public class ElementInitializers {
 	/**
 	 * @generated
 	 */
+	public void init_ScriptTask_2017(ScriptTask instance) {
+		try {
+			Object value_0 = id_ScriptTask_2017(instance);
+			instance.setId((String) value_0);
+		} catch (RuntimeException e) {
+			Bpmn2DiagramEditorPlugin.getInstance().logError(
+					"Element initialization failed", e); //$NON-NLS-1$						
+		}
+	}
+
+	/**
+	 * @generated
+	 */
 	public void init_SubProcess_3001(SubProcess instance) {
 		try {
 			Object value_0 = id_SubProcess_3001(instance);
@@ -528,6 +542,19 @@ public class ElementInitializers {
 	/**
 	 * @generated
 	 */
+	public void init_ScriptTask_3016(ScriptTask instance) {
+		try {
+			Object value_0 = id_ScriptTask_3016(instance);
+			instance.setId((String) value_0);
+		} catch (RuntimeException e) {
+			Bpmn2DiagramEditorPlugin.getInstance().logError(
+					"Element initialization failed", e); //$NON-NLS-1$						
+		}
+	}
+
+	/**
+	 * @generated
+	 */
 	public void init_SequenceFlow_4001(SequenceFlow instance) {
 		try {
 			Object value_0 = id_SequenceFlow_4001(instance);
@@ -755,6 +782,13 @@ public class ElementInitializers {
 	/**
 	 * @generated not
 	 */
+	private String id_ScriptTask_2017(ScriptTask self) {
+		return EcoreUtil.generateUUID();
+	}
+
+	/**
+	 * @generated not
+	 */
 	private String id_SubProcess_3001(SubProcess self) {
 		return EcoreUtil.generateUUID();
 	}
@@ -930,6 +964,13 @@ public class ElementInitializers {
 	 * @generated not
 	 */
 	private String id_TextAnnotation_3015(TextAnnotation self) {
+		return EcoreUtil.generateUUID();
+	}
+
+	/**
+	 * @generated not
+	 */
+	private String id_ScriptTask_3016(ScriptTask self) {
 		return EcoreUtil.generateUUID();
 	}
 

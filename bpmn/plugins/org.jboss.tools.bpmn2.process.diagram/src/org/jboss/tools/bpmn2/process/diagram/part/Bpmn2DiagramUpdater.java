@@ -21,6 +21,7 @@ import org.eclipse.bpmn2.IntermediateCatchEvent;
 import org.eclipse.bpmn2.IntermediateThrowEvent;
 import org.eclipse.bpmn2.ParallelGateway;
 import org.eclipse.bpmn2.Process;
+import org.eclipse.bpmn2.ScriptTask;
 import org.eclipse.bpmn2.SequenceFlow;
 import org.eclipse.bpmn2.ServiceTask;
 import org.eclipse.bpmn2.StartEvent;
@@ -52,6 +53,8 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEd
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGatewayEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.SequenceFlowEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskEditPart;
@@ -162,6 +165,10 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
+			if (visualID == ScriptTaskEditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
 		}
 		for (Iterator<?> it = modelElement.getArtifacts().iterator(); it
 				.hasNext();) {
@@ -244,6 +251,10 @@ public class Bpmn2DiagramUpdater {
 				continue;
 			}
 			if (visualID == DataObject2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == ScriptTask2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -332,6 +343,10 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
+			if (visualID == ScriptTask2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
 		}
 		for (Iterator<?> it = modelElement.getArtifacts().iterator(); it
 				.hasNext();) {
@@ -385,6 +400,8 @@ public class Bpmn2DiagramUpdater {
 			return getTextAnnotation_2015ContainedLinks(view);
 		case SubProcessEditPart.VISUAL_ID:
 			return getSubProcess_2016ContainedLinks(view);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return getScriptTask_2017ContainedLinks(view);
 		case SubProcess2EditPart.VISUAL_ID:
 			return getSubProcess_3001ContainedLinks(view);
 		case UserTask2EditPart.VISUAL_ID:
@@ -415,6 +432,8 @@ public class Bpmn2DiagramUpdater {
 			return getDataObject_3014ContainedLinks(view);
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return getTextAnnotation_3015ContainedLinks(view);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return getScriptTask_3016ContainedLinks(view);
 		case SequenceFlowEditPart.VISUAL_ID:
 			return getSequenceFlow_4001ContainedLinks(view);
 		case AssociationEditPart.VISUAL_ID:
@@ -460,6 +479,8 @@ public class Bpmn2DiagramUpdater {
 			return getTextAnnotation_2015IncomingLinks(view);
 		case SubProcessEditPart.VISUAL_ID:
 			return getSubProcess_2016IncomingLinks(view);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return getScriptTask_2017IncomingLinks(view);
 		case SubProcess2EditPart.VISUAL_ID:
 			return getSubProcess_3001IncomingLinks(view);
 		case UserTask2EditPart.VISUAL_ID:
@@ -490,6 +511,8 @@ public class Bpmn2DiagramUpdater {
 			return getDataObject_3014IncomingLinks(view);
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return getTextAnnotation_3015IncomingLinks(view);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return getScriptTask_3016IncomingLinks(view);
 		case SequenceFlowEditPart.VISUAL_ID:
 			return getSequenceFlow_4001IncomingLinks(view);
 		case AssociationEditPart.VISUAL_ID:
@@ -535,6 +558,8 @@ public class Bpmn2DiagramUpdater {
 			return getTextAnnotation_2015OutgoingLinks(view);
 		case SubProcessEditPart.VISUAL_ID:
 			return getSubProcess_2016OutgoingLinks(view);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return getScriptTask_2017OutgoingLinks(view);
 		case SubProcess2EditPart.VISUAL_ID:
 			return getSubProcess_3001OutgoingLinks(view);
 		case UserTask2EditPart.VISUAL_ID:
@@ -565,6 +590,8 @@ public class Bpmn2DiagramUpdater {
 			return getDataObject_3014OutgoingLinks(view);
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return getTextAnnotation_3015OutgoingLinks(view);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return getScriptTask_3016OutgoingLinks(view);
 		case SequenceFlowEditPart.VISUAL_ID:
 			return getSequenceFlow_4001OutgoingLinks(view);
 		case AssociationEditPart.VISUAL_ID:
@@ -719,6 +746,14 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getScriptTask_2017ContainedLinks(
+			View view) {
+		return Collections.emptyList();
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getSubProcess_3001ContainedLinks(
 			View view) {
 		SubProcess modelElement = (SubProcess) view.getElement();
@@ -835,6 +870,14 @@ public class Bpmn2DiagramUpdater {
 	 * @generated
 	 */
 	public static List<Bpmn2LinkDescriptor> getTextAnnotation_3015ContainedLinks(
+			View view) {
+		return Collections.emptyList();
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List<Bpmn2LinkDescriptor> getScriptTask_3016ContainedLinks(
 			View view) {
 		return Collections.emptyList();
 	}
@@ -1114,6 +1157,22 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getScriptTask_2017IncomingLinks(
+			View view) {
+		ScriptTask modelElement = (ScriptTask) view.getElement();
+		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
+				.find(view.eResource().getResourceSet().getResources());
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getIncomingTypeModelFacetLinks_SequenceFlow_4001(
+				modelElement, crossReferences));
+		result.addAll(getIncomingTypeModelFacetLinks_Association_4002(
+				modelElement, crossReferences));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getSubProcess_3001IncomingLinks(
 			View view) {
 		SubProcess modelElement = (SubProcess) view.getElement();
@@ -1353,6 +1412,22 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getScriptTask_3016IncomingLinks(
+			View view) {
+		ScriptTask modelElement = (ScriptTask) view.getElement();
+		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
+				.find(view.eResource().getResourceSet().getResources());
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getIncomingTypeModelFacetLinks_SequenceFlow_4001(
+				modelElement, crossReferences));
+		result.addAll(getIncomingTypeModelFacetLinks_Association_4002(
+				modelElement, crossReferences));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getSequenceFlow_4001IncomingLinks(
 			View view) {
 		SequenceFlow modelElement = (SequenceFlow) view.getElement();
@@ -1575,6 +1650,18 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getScriptTask_2017OutgoingLinks(
+			View view) {
+		ScriptTask modelElement = (ScriptTask) view.getElement();
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getOutgoingTypeModelFacetLinks_SequenceFlow_4001(modelElement));
+		result.addAll(getOutgoingTypeModelFacetLinks_Association_4002(modelElement));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getSubProcess_3001OutgoingLinks(
 			View view) {
 		SubProcess modelElement = (SubProcess) view.getElement();
@@ -1749,6 +1836,18 @@ public class Bpmn2DiagramUpdater {
 			View view) {
 		TextAnnotation modelElement = (TextAnnotation) view.getElement();
 		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getOutgoingTypeModelFacetLinks_Association_4002(modelElement));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List<Bpmn2LinkDescriptor> getScriptTask_3016OutgoingLinks(
+			View view) {
+		ScriptTask modelElement = (ScriptTask) view.getElement();
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getOutgoingTypeModelFacetLinks_SequenceFlow_4001(modelElement));
 		result.addAll(getOutgoingTypeModelFacetLinks_Association_4002(modelElement));
 		return result;
 	}

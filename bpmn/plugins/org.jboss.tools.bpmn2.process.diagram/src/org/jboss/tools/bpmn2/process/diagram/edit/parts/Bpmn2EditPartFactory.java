@@ -91,6 +91,12 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 			case SubProcessEditPart.VISUAL_ID:
 				return new SubProcessEditPart(view);
 
+			case ScriptTaskEditPart.VISUAL_ID:
+				return new ScriptTaskEditPart(view);
+
+			case ScriptTaskNameEditPart.VISUAL_ID:
+				return new ScriptTaskNameEditPart(view);
+
 			case SubProcess2EditPart.VISUAL_ID:
 				return new SubProcess2EditPart(view);
 
@@ -147,6 +153,12 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 
 			case TextAnnotationText2EditPart.VISUAL_ID:
 				return new TextAnnotationText2EditPart(view);
+
+			case ScriptTask2EditPart.VISUAL_ID:
+				return new ScriptTask2EditPart(view);
+
+			case ScriptTaskName2EditPart.VISUAL_ID:
+				return new ScriptTaskName2EditPart(view);
 
 			case SequenceFlowEditPart.VISUAL_ID:
 				return new SequenceFlowEditPart(view);

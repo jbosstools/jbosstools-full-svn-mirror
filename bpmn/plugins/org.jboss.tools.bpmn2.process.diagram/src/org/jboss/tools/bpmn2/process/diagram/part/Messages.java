@@ -253,7 +253,7 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String Artifacts6Group_title;
+	public static String Activities1Group_title;
 
 	/**
 	 * @generated
@@ -263,12 +263,17 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String IntermediateEvents2Group_title;
+	public static String Events3Group_title;
 
 	/**
 	 * @generated
 	 */
-	public static String Events5Group_title;
+	public static String Artifacts4Group_title;
+
+	/**
+	 * @generated
+	 */
+	public static String IntermediateEvents2Group_title;
 
 	/**
 	 * @generated
@@ -278,12 +283,12 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String Gateways4Group_title;
+	public static String Gateways2Group_title;
 
 	/**
 	 * @generated
 	 */
-	public static String Gateways4Group_desc;
+	public static String Gateways2Group_desc;
 
 	/**
 	 * @generated
@@ -308,7 +313,12 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String SubProcess3CreationTool_title;
+	public static String ScriptTask3CreationTool_title;
+
+	/**
+	 * @generated
+	 */
+	public static String SubProcess4CreationTool_title;
 
 	/**
 	 * @generated
@@ -404,6 +414,16 @@ public class Messages extends NLS {
 	 * @generated
 	 */
 	public static String NavigatorGroupName_IntermediateCatchEvent_2010_outgoinglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_ScriptTask_2017_incominglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_ScriptTask_2017_outgoinglinks;
 
 	/**
 	 * @generated
@@ -504,6 +524,16 @@ public class Messages extends NLS {
 	 * @generated
 	 */
 	public static String NavigatorGroupName_ExclusiveGateway_2005_outgoinglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_ScriptTask_3016_incominglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_ScriptTask_3016_outgoinglinks;
 
 	/**
 	 * @generated

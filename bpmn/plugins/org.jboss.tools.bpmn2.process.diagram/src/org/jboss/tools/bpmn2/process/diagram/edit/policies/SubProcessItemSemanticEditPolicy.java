@@ -26,6 +26,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateCatchEven
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateCatchEvent5CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateThrowEvent2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.ParallelGateway2CreateCommand;
+import org.jboss.tools.bpmn2.process.diagram.edit.commands.ScriptTask2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.SequenceFlowCreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.SequenceFlowReorientCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.ServiceTask2CreateCommand;
@@ -44,6 +45,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4E
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.SequenceFlowEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.StartEvent3EditPart;
@@ -118,6 +120,9 @@ public class SubProcessItemSemanticEditPolicy extends
 		}
 		if (Bpmn2ElementTypes.TextAnnotation_3015 == req.getElementType()) {
 			return getGEFWrapper(new TextAnnotation2CreateCommand(req));
+		}
+		if (Bpmn2ElementTypes.ScriptTask_3016 == req.getElementType()) {
+			return getGEFWrapper(new ScriptTask2CreateCommand(req));
 		}
 		return super.getCreateCommand(req);
 	}
@@ -829,6 +834,52 @@ public class SubProcessItemSemanticEditPolicy extends
 				for (Iterator<?> it = node.getSourceEdges().iterator(); it
 						.hasNext();) {
 					Edge outgoingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+				}
+				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
+						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
+				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
+				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
+				break;
+			case ScriptTask2EditPart.VISUAL_ID:
+				for (Iterator<?> it = node.getTargetEdges().iterator(); it
+						.hasNext();) {
+					Edge incomingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+				}
+				for (Iterator<?> it = node.getSourceEdges().iterator(); it
+						.hasNext();) {
+					Edge outgoingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
 					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
 						DestroyElementRequest r = new DestroyElementRequest(
 								outgoingLink.getElement(), false);
