@@ -13,10 +13,13 @@ package org.jboss.tools.vpe.xulrunner.util;
 
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.xulrunner.BrowserPlugin;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerConstants;
 import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
+import org.mozilla.interfaces.nsIDOMClientRect;
+import org.mozilla.interfaces.nsIDOMClientRectList;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMElementCSSInlineStyle;
@@ -139,67 +142,73 @@ public class XulRunnerVpeUtils {
 		return element;
 	}
 	
-	private static int findPosX(nsIDOMNSHTMLElement boxObject) {
-		int curleft = 0;
-		
-		if (boxObject.getOffsetParent() != null) {
-			while (true) {
-				curleft += boxObject.getOffsetLeft();
-				if ( boxObject.getOffsetParent() == null)
-					return curleft;
-				boxObject = queryInterface(boxObject.getOffsetParent(), nsIDOMNSHTMLElement.class);
-			}
-		} else {
-			curleft += boxObject.getOffsetLeft();
+	
+	private static Point getDocumentPos(nsIDOMNSHTMLElement boxElement) {
+		int x = 0;
+		int y = 0;
+		nsIDOMNSHTMLElement curBoxElement = boxElement;
+		while (curBoxElement != null) {
+			x += curBoxElement.getOffsetLeft();
+			y += curBoxElement.getOffsetTop();
+			curBoxElement = getOffsetParent(curBoxElement);
 		}
-		return curleft;
+		
+		return new Point(x, y);
 	}
 
-	private static int findPosY(nsIDOMNSHTMLElement boxObject) {
-		int curleft = 0;
-		
-		if (boxObject.getOffsetParent() != null) {
-			while (true) {
-				curleft += boxObject.getOffsetTop();
-				if ( boxObject.getOffsetParent() == null)
-					return curleft;
-				boxObject = queryInterface(boxObject.getOffsetParent(), nsIDOMNSHTMLElement.class);
-			}
+	private static nsIDOMNSHTMLElement getOffsetParent(
+			nsIDOMNSHTMLElement boxElement) {
+		nsIDOMElement offsetParent = boxElement.getOffsetParent();
+		if (offsetParent != null) {
+			return queryInterface(offsetParent, nsIDOMNSHTMLElement.class);
 		} else {
-			curleft += boxObject.getOffsetTop();
+			return null;
 		}
-		return curleft;
+	}
+	
+	private static Point getClientSize(nsIDOMNSElement element) {
+		int width = 0;
+		int height = 0;
+		nsIDOMClientRectList clientRects = element.getClientRects();
+		if (clientRects.getLength() > 0) {
+			nsIDOMClientRect firstRect = clientRects.item(0);
+			width = (int) firstRect.getWidth();
+			height = (int) firstRect.getHeight();
+		}
+		
+		return new Point(width, height);
 	}
 
 	/**
 	 * @param domElement
 	 * @return Rectangle
 	 */
-	static public Rectangle getElementBounds(nsIDOMNode domNode) {
+	static public Rectangle getElementBounds(nsIDOMNode node) {
 		try {
-			nsIDOMNSElement htmlElement = queryInterface(domNode, nsIDOMNSElement.class);
-			nsIDOMNSHTMLElement domNSHTMLElement = queryInterface(domNode, nsIDOMNSHTMLElement.class);
-			Rectangle rectangle = new Rectangle(findPosX(domNSHTMLElement),
-														 findPosY(domNSHTMLElement),
-														 htmlElement.getClientWidth(),
-														 htmlElement.getClientHeight());
+			nsIDOMNSElement element = queryInterface(node, nsIDOMNSElement.class);
+			nsIDOMNSHTMLElement htmlElement = queryInterface(node, nsIDOMNSHTMLElement.class);
+			Point documentPos = getDocumentPos(htmlElement);
+			Point clientSize = getClientSize(element);
+			Rectangle rectangle = new Rectangle(documentPos.x, documentPos.y,
+												clientSize.x, clientSize.y);
 
 			if (BrowserPlugin.PRINT_ELEMENT_BOUNDS) {
 				System.out.println("getElementBounds(IDOMNode) returns "
 						+ rectangle);
 				System.out
 						.println("nsIDOMNSHTMLElement getOffsetLeft,getOffsetTop,getOffsetWidth,getOffsetHeight"
-								+ new Rectangle(domNSHTMLElement.getOffsetLeft(),
-										domNSHTMLElement.getOffsetTop(), domNSHTMLElement
-												.getOffsetWidth(), domNSHTMLElement
+								+ new Rectangle(htmlElement.getOffsetLeft(),
+										htmlElement.getOffsetTop(), htmlElement
+												.getOffsetWidth(), htmlElement
 												.getOffsetHeight()));
 				System.out
 						.println("nsIDOMNSElement getClientLeft,getClientTop,getClientWidth,getClientHeight"
-								+ new Rectangle(htmlElement.getClientLeft(),
-										htmlElement.getClientTop(), htmlElement
-												.getClientWidth(), htmlElement
+								+ new Rectangle(element.getClientLeft(),
+										element.getClientTop(), element
+												.getClientWidth(), element
 												.getClientHeight()));
 			}
+
 			return rectangle;
 
 		} catch (XPCOMException xpcomException) {
