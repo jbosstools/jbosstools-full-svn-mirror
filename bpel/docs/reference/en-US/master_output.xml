@@ -2,13 +2,13 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
-[<!ENTITY  overview SYSTEM "modules/overview.xml">
-<!ENTITY install SYSTEM "modules/install.xml">
-<!ENTITY detail SYSTEM "modules/detail.xml">
-<!ENTITY deploy SYSTEM "modules/deploy.xml">
-<!ENTITY reference SYSTEM "modules/reference.xml">
-<!ENTITY summary SYSTEM "modules/summary.xml">
-<!ENTITY tasks SYSTEM "modules/tasks.xml">
+[<!ENTITY  overview SYSTEM "overview.xml">
+<!ENTITY install SYSTEM "install.xml">
+<!ENTITY detail SYSTEM "detail.xml">
+<!ENTITY deploy SYSTEM "deploy.xml">
+<!ENTITY reference SYSTEM "reference.xml">
+<!ENTITY summary SYSTEM "summary.xml">
+<!ENTITY tasks SYSTEM "tasks.xml">
 ]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
     
      <bookinfo>
