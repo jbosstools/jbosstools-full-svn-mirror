@@ -45,7 +45,7 @@
    <year>2010</year>
    <holder>JBoss by Red Hat</holder>
   </copyright>
-  <releaseinfo>Version: 3.0.1.GA</releaseinfo>
+  <releaseinfo>Version: 3.2.0.Beta</releaseinfo>
  <abstract>
    <title/>
        <para>
@@ -56,7 +56,6 @@
  
 </bookinfo>
  <toc/> 
-
 
 
  &getting_started;
