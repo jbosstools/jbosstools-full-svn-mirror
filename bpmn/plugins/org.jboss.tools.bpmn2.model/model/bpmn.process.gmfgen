@@ -28,7 +28,7 @@
         itemSemanticEditPolicyClassName="SubProcess2ItemSemanticEditPolicy"
         notationViewFactoryClassName="SubProcessViewFactory"
         canonicalEditPolicyClassName="SubProcess2CanonicalEditPolicy"
-        childNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.1 //@diagram/@childNodes.2 //@diagram/@childNodes.3 //@diagram/@childNodes.4 //@diagram/@childNodes.5 //@diagram/@childNodes.6 //@diagram/@childNodes.7 //@diagram/@childNodes.8 //@diagram/@childNodes.9 //@diagram/@childNodes.10 //@diagram/@childNodes.11 //@diagram/@childNodes.12 //@diagram/@childNodes.13 //@diagram/@childNodes.14"
+        childNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.1 //@diagram/@childNodes.2 //@diagram/@childNodes.3 //@diagram/@childNodes.4 //@diagram/@childNodes.5 //@diagram/@childNodes.6 //@diagram/@childNodes.7 //@diagram/@childNodes.8 //@diagram/@childNodes.9 //@diagram/@childNodes.10 //@diagram/@childNodes.11 //@diagram/@childNodes.12 //@diagram/@childNodes.13 //@diagram/@childNodes.14 //@diagram/@childNodes.15"
         graphicalNodeEditPolicyClassName="SubProcess2GraphicalNodeEditPolicy"
         createCommandClassName="SubProcess2CreateCommand"
         containers="//@diagram/@childNodes.0 //@diagram/@topLevelNodes.15">
@@ -722,6 +722,7 @@
         visualID="3015"
         editPartClassName="TextAnnotation2EditPart"
         itemSemanticEditPolicyClassName="TextAnnotation2ItemSemanticEditPolicy"
+        notationViewFactoryClassName="TextAnnotationViewFactory"
         canonicalEditPolicyClassName="TextAnnotation2CanonicalEditPolicy"
         graphicalNodeEditPolicyClassName="TextAnnotation2GraphicalNodeEditPolicy"
         createCommandClassName="TextAnnotation2CreateCommand"
@@ -760,7 +761,8 @@
       <labels
           visualID="5008"
           editPartClassName="TextAnnotationText2EditPart"
-          itemSemanticEditPolicyClassName="TextAnnotationText2ItemSemanticEditPolicy">
+          itemSemanticEditPolicyClassName="TextAnnotationText2ItemSemanticEditPolicy"
+          notationViewFactoryClassName="TextAnnotationTextViewFactory">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -773,6 +775,66 @@
             editPattern="">
           <metaFeatures
               href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/TextAnnotation/text"/>
+        </modelFacet>
+      </labels>
+    </childNodes>
+    <childNodes
+        visualID="3016"
+        editPartClassName="ScriptTask2EditPart"
+        itemSemanticEditPolicyClassName="ScriptTask2ItemSemanticEditPolicy"
+        notationViewFactoryClassName="ScriptTaskViewFactory"
+        canonicalEditPolicyClassName="ScriptTask2CanonicalEditPolicy"
+        graphicalNodeEditPolicyClassName="ScriptTask2GraphicalNodeEditPolicy"
+        createCommandClassName="ScriptTask2CreateCommand"
+        containers="//@diagram/@childNodes.0 //@diagram/@topLevelNodes.15">
+      <diagramRunTimeClass
+          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+      <elementType
+          xsi:type="gmfgen:MetamodelType"
+          editHelperClassName="ScriptTaskEditHelper"/>
+      <viewmap
+          xsi:type="gmfgen:InnerClassViewmap"
+          className="TaskFigureDescriptor"
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TaskFigureDescriptor extends org.eclipse.draw2d.RoundedRectangle {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureName; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TaskFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setCornerDimensions(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(8)&#xA;, getMapMode().DPtoLP(8)&#xA;));&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(80)&#xA;, getMapMode().DPtoLP(40)&#xA;));&#xA;this.setMinimumSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(80)&#xA;, getMapMode().DPtoLP(40)&#xA;));&#xA;&#xA;this.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureName = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureName.setText(&quot;&quot;);&#xA;&#xA;this.add(fFigureName);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureName() {&#xA;&#x9;&#x9;return fFigureName;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;">
+        <attributes
+            xsi:type="gmfgen:DefaultSizeAttributes"
+            width="80"
+            height="40"/>
+      </viewmap>
+      <modelFacet>
+        <metaClass
+            href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/ScriptTask"/>
+        <containmentMetaFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/FlowElementsContainer/flowElements"/>
+        <childMetaFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/FlowElementsContainer/flowElements"/>
+        <modelElementInitializer
+            xsi:type="gmfgen:GenFeatureSeqInitializer">
+          <initializers
+              xsi:type="gmfgen:GenFeatureValueSpec"
+              value="//@expressionProviders/@providers.0/@expressions.32">
+            <feature
+                href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/BaseElement/id"/>
+          </initializers>
+        </modelElementInitializer>
+      </modelFacet>
+      <labels
+          visualID="5010"
+          editPartClassName="ScriptTaskName2EditPart"
+          itemSemanticEditPolicyClassName="ScriptTaskName2ItemSemanticEditPolicy"
+          notationViewFactoryClassName="ScriptTaskNameViewFactory"
+          elementIcon="true">
+        <diagramRunTimeClass
+            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+        <viewmap
+            xsi:type="gmfgen:ParentAssignedViewmap"
+            getterName="getFigureName"
+            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel"/>
+        <modelFacet
+            xsi:type="gmfgen:FeatureLabelModelFacet"
+            parser="//@labelParsers/@implementations.0">
+          <metaFeatures
+              href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/FlowElement/name"/>
         </modelFacet>
       </labels>
     </childNodes>
@@ -1530,7 +1592,7 @@
         itemSemanticEditPolicyClassName="SubProcessItemSemanticEditPolicy"
         notationViewFactoryClassName="SubProcessViewFactory"
         canonicalEditPolicyClassName="SubProcessCanonicalEditPolicy"
-        childNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.1 //@diagram/@childNodes.2 //@diagram/@childNodes.3 //@diagram/@childNodes.4 //@diagram/@childNodes.5 //@diagram/@childNodes.6 //@diagram/@childNodes.7 //@diagram/@childNodes.8 //@diagram/@childNodes.9 //@diagram/@childNodes.10 //@diagram/@childNodes.11 //@diagram/@childNodes.12 //@diagram/@childNodes.13 //@diagram/@childNodes.14"
+        childNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.1 //@diagram/@childNodes.2 //@diagram/@childNodes.3 //@diagram/@childNodes.4 //@diagram/@childNodes.5 //@diagram/@childNodes.6 //@diagram/@childNodes.7 //@diagram/@childNodes.8 //@diagram/@childNodes.9 //@diagram/@childNodes.10 //@diagram/@childNodes.11 //@diagram/@childNodes.12 //@diagram/@childNodes.13 //@diagram/@childNodes.14 //@diagram/@childNodes.15"
         graphicalNodeEditPolicyClassName="SubProcessGraphicalNodeEditPolicy"
         createCommandClassName="SubProcessCreateCommand">
       <diagramRunTimeClass
@@ -1566,6 +1628,65 @@
         </modelElementInitializer>
       </modelFacet>
     </topLevelNodes>
+    <topLevelNodes
+        visualID="2017"
+        editPartClassName="ScriptTaskEditPart"
+        itemSemanticEditPolicyClassName="ScriptTaskItemSemanticEditPolicy"
+        notationViewFactoryClassName="ScriptTaskViewFactory"
+        canonicalEditPolicyClassName="ScriptTaskCanonicalEditPolicy"
+        graphicalNodeEditPolicyClassName="ScriptTaskGraphicalNodeEditPolicy"
+        createCommandClassName="ScriptTaskCreateCommand">
+      <diagramRunTimeClass
+          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+      <elementType
+          xsi:type="gmfgen:SpecializationType"
+          metamodelType="//@diagram/@childNodes.15/@elementType"/>
+      <viewmap
+          xsi:type="gmfgen:InnerClassViewmap"
+          className="TaskFigureDescriptor"
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TaskFigureDescriptor extends org.eclipse.draw2d.RoundedRectangle {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureName; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TaskFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setCornerDimensions(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(8)&#xA;, getMapMode().DPtoLP(8)&#xA;));&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(80)&#xA;, getMapMode().DPtoLP(40)&#xA;));&#xA;this.setMinimumSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(80)&#xA;, getMapMode().DPtoLP(40)&#xA;));&#xA;&#xA;this.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureName = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureName.setText(&quot;&quot;);&#xA;&#xA;this.add(fFigureName);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureName() {&#xA;&#x9;&#x9;return fFigureName;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;">
+        <attributes
+            xsi:type="gmfgen:DefaultSizeAttributes"
+            width="80"
+            height="40"/>
+      </viewmap>
+      <modelFacet>
+        <metaClass
+            href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/ScriptTask"/>
+        <containmentMetaFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/FlowElementsContainer/flowElements"/>
+        <childMetaFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/FlowElementsContainer/flowElements"/>
+        <modelElementInitializer
+            xsi:type="gmfgen:GenFeatureSeqInitializer">
+          <initializers
+              xsi:type="gmfgen:GenFeatureValueSpec"
+              value="//@expressionProviders/@providers.0/@expressions.32">
+            <feature
+                href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/BaseElement/id"/>
+          </initializers>
+        </modelElementInitializer>
+      </modelFacet>
+      <labels
+          visualID="5009"
+          editPartClassName="ScriptTaskNameEditPart"
+          itemSemanticEditPolicyClassName="ScriptTaskNameItemSemanticEditPolicy"
+          notationViewFactoryClassName="ScriptTaskNameViewFactory"
+          elementIcon="true">
+        <diagramRunTimeClass
+            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+        <viewmap
+            xsi:type="gmfgen:ParentAssignedViewmap"
+            getterName="getFigureName"
+            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel"/>
+        <modelFacet
+            xsi:type="gmfgen:FeatureLabelModelFacet"
+            parser="//@labelParsers/@implementations.0">
+          <metaFeatures
+              href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/FlowElement/name"/>
+        </modelFacet>
+      </labels>
+    </topLevelNodes>
     <links
         visualID="4001"
         editPartClassName="SequenceFlowEditPart"
@@ -1594,7 +1715,7 @@
             xsi:type="gmfgen:GenFeatureSeqInitializer">
           <initializers
               xsi:type="gmfgen:GenFeatureValueSpec"
-              value="//@expressionProviders/@providers.0/@expressions.32">
+              value="//@expressionProviders/@providers.0/@expressions.33">
             <feature
                 href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/BaseElement/id"/>
           </initializers>
@@ -1633,7 +1754,7 @@
             xsi:type="gmfgen:GenFeatureSeqInitializer">
           <initializers
               xsi:type="gmfgen:GenFeatureValueSpec"
-              value="//@expressionProviders/@providers.0/@expressions.33">
+              value="//@expressionProviders/@providers.0/@expressions.34">
             <feature
                 href="../../org.eclipse.bpmn2/model/BPMN20.genmodel#//bpmn2/BaseElement/id"/>
           </initializers>
@@ -1648,17 +1769,26 @@
       <groups
           title="Nodes">
         <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="User Task"
-            genNodes="//@diagram/@topLevelNodes.0 //@diagram/@childNodes.1"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Service Task"
-            genNodes="//@diagram/@topLevelNodes.1 //@diagram/@childNodes.2"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Sub-Process"
-            genNodes="//@diagram/@topLevelNodes.15 //@diagram/@childNodes.0"/>
+            xsi:type="gmfgen:ToolGroup"
+            title="Activities"
+            stack="true">
+          <entries
+              xsi:type="gmfgen:ToolEntry"
+              title="User Task"
+              genNodes="//@diagram/@topLevelNodes.0 //@diagram/@childNodes.1"/>
+          <entries
+              xsi:type="gmfgen:ToolEntry"
+              title="Service Task"
+              genNodes="//@diagram/@topLevelNodes.1 //@diagram/@childNodes.2"/>
+          <entries
+              xsi:type="gmfgen:ToolEntry"
+              title="Script Task"
+              genNodes="//@diagram/@childNodes.15 //@diagram/@topLevelNodes.16"/>
+          <entries
+              xsi:type="gmfgen:ToolEntry"
+              title="Sub-Process"
+              genNodes="//@diagram/@topLevelNodes.15 //@diagram/@childNodes.0"/>
+        </entries>
         <entries
             xsi:type="gmfgen:ToolGroup"
             title="Gateways"
@@ -1890,6 +2020,9 @@
         parent="//@diagram/@childNodes.0"
         child="//@diagram/@childNodes.14"/>
     <childReferences
+        parent="//@diagram/@childNodes.0"
+        child="//@diagram/@childNodes.15"/>
+    <childReferences
         parent="//@diagram/@topLevelNodes.15"
         child="//@diagram/@childNodes.0"/>
     <childReferences
@@ -1938,10 +2071,16 @@
         parent="//@diagram/@topLevelNodes.15"
         child="//@diagram/@childNodes.14"/>
     <childReferences
+        parent="//@diagram/@topLevelNodes.15"
+        child="//@diagram/@childNodes.15"/>
+    <childReferences
         parent="//@diagram"
         child="//@diagram/@topLevelNodes.15"/>
     <childReferences
         parent="//@diagram"
+        child="//@diagram/@topLevelNodes.16"/>
+    <childReferences
+        parent="//@diagram"
         child="//@diagram/@links.0"
         groupName="links"
         groupIcon="icons/linksNavigatorGroup.gif"/>
@@ -2115,6 +2254,18 @@
         groupIcon="icons/incomingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.0"
+        child="//@diagram/@topLevelNodes.16"
+        referenceType="out_target"
+        groupName="target"
+        groupIcon="icons/linkTargetNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@topLevelNodes.16"
+        child="//@diagram/@links.0"
+        referenceType="in_source"
+        groupName="incoming links"
+        groupIcon="icons/incomingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.0"
         child="//@diagram/@childNodes.0"
         referenceType="out_target"
         groupName="target"
@@ -2265,6 +2416,18 @@
         groupIcon="icons/linkTargetNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@childNodes.12"
+        child="//@diagram/@links.0"
+        referenceType="in_source"
+        groupName="incoming links"
+        groupIcon="icons/incomingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.0"
+        child="//@diagram/@childNodes.15"
+        referenceType="out_target"
+        groupName="target"
+        groupIcon="icons/linkTargetNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@childNodes.15"
         child="//@diagram/@links.0"
         referenceType="in_source"
         groupName="incoming links"
@@ -2439,6 +2602,18 @@
         groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.0"
+        child="//@diagram/@topLevelNodes.16"
+        referenceType="in_source"
+        groupName="source"
+        groupIcon="icons/linkSourceNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@topLevelNodes.16"
+        child="//@diagram/@links.0"
+        referenceType="out_target"
+        groupName="outgoing links"
+        groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.0"
         child="//@diagram/@childNodes.0"
         referenceType="in_source"
         groupName="source"
@@ -2589,6 +2764,18 @@
         groupIcon="icons/linkSourceNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@childNodes.12"
+        child="//@diagram/@links.0"
+        referenceType="out_target"
+        groupName="outgoing links"
+        groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.0"
+        child="//@diagram/@childNodes.15"
+        referenceType="in_source"
+        groupName="source"
+        groupIcon="icons/linkSourceNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@childNodes.15"
         child="//@diagram/@links.0"
         referenceType="out_target"
         groupName="outgoing links"
@@ -2792,6 +2979,18 @@
         groupIcon="icons/incomingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.1"
+        child="//@diagram/@topLevelNodes.16"
+        referenceType="out_target"
+        groupName="target"
+        groupIcon="icons/linkTargetNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@topLevelNodes.16"
+        child="//@diagram/@links.1"
+        referenceType="in_source"
+        groupName="incoming links"
+        groupIcon="icons/incomingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.1"
         child="//@diagram/@childNodes.0"
         referenceType="out_target"
         groupName="target"
@@ -2966,6 +3165,18 @@
         groupIcon="icons/linkTargetNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@childNodes.14"
+        child="//@diagram/@links.1"
+        referenceType="in_source"
+        groupName="incoming links"
+        groupIcon="icons/incomingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.1"
+        child="//@diagram/@childNodes.15"
+        referenceType="out_target"
+        groupName="target"
+        groupIcon="icons/linkTargetNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@childNodes.15"
         child="//@diagram/@links.1"
         referenceType="in_source"
         groupName="incoming links"
@@ -3188,6 +3399,18 @@
         groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@links.1"
+        child="//@diagram/@topLevelNodes.16"
+        referenceType="in_source"
+        groupName="source"
+        groupIcon="icons/linkSourceNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@topLevelNodes.16"
+        child="//@diagram/@links.1"
+        referenceType="out_target"
+        groupName="outgoing links"
+        groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.1"
         child="//@diagram/@childNodes.0"
         referenceType="in_source"
         groupName="source"
@@ -3362,6 +3585,18 @@
         groupIcon="icons/linkSourceNavigatorGroup.gif"/>
     <childReferences
         parent="//@diagram/@childNodes.14"
+        child="//@diagram/@links.1"
+        referenceType="out_target"
+        groupName="outgoing links"
+        groupIcon="icons/outgoingLinksNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@links.1"
+        child="//@diagram/@childNodes.15"
+        referenceType="in_source"
+        groupName="source"
+        groupIcon="icons/linkSourceNavigatorGroup.gif"/>
+    <childReferences
+        parent="//@diagram/@childNodes.15"
         child="//@diagram/@links.1"
         referenceType="out_target"
         groupName="outgoing links"
@@ -3493,13 +3728,15 @@
           body="EcoreUtil.generateUUID()"/>
       <expressions
           body="EcoreUtil.generateUUID()"/>
+      <expressions
+          body="EcoreUtil.generateUUID()"/>
     </providers>
   </expressionProviders>
   <labelParsers
       extensibleViaService="true">
     <implementations
         xsi:type="gmfgen:PredefinedParser"
-        uses="//@diagram/@topLevelNodes.0/@labels.0/@modelFacet //@diagram/@topLevelNodes.1/@labels.0/@modelFacet //@diagram/@topLevelNodes.13/@labels.0/@modelFacet //@diagram/@topLevelNodes.14/@labels.0/@modelFacet //@diagram/@childNodes.1/@labels.0/@modelFacet //@diagram/@childNodes.2/@labels.0/@modelFacet //@diagram/@childNodes.13/@labels.0/@modelFacet //@diagram/@childNodes.14/@labels.0/@modelFacet"/>
+        uses="//@diagram/@topLevelNodes.0/@labels.0/@modelFacet //@diagram/@topLevelNodes.1/@labels.0/@modelFacet //@diagram/@topLevelNodes.13/@labels.0/@modelFacet //@diagram/@topLevelNodes.14/@labels.0/@modelFacet //@diagram/@childNodes.1/@labels.0/@modelFacet //@diagram/@childNodes.2/@labels.0/@modelFacet //@diagram/@childNodes.13/@labels.0/@modelFacet //@diagram/@childNodes.14/@labels.0/@modelFacet //@diagram/@childNodes.15/@labels.0/@modelFacet //@diagram/@topLevelNodes.16/@labels.0/@modelFacet"/>
   </labelParsers>
   <contextMenus
       context="//@diagram">

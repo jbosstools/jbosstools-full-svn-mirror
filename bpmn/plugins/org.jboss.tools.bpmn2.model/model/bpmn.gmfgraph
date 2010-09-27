@@ -631,12 +631,17 @@
       <accessors
           figure="//@figures.0/@descriptors.18/@actualFigure"/>
     </descriptors>
+    <descriptors
+        name="EventBasedGatewayFigureDescriptor"/>
   </figures>
   <nodes
       name="UserTask"
       figure="TaskFigureDescriptor"/>
   <nodes
       name="ServiceTask"
+      figure="TaskFigureDescriptor"/>
+  <nodes
+      name="ScriptTask"
       figure="TaskFigureDescriptor"/>
   <nodes
       name="StartEvent"

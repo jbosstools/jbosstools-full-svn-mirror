@@ -9,14 +9,22 @@
         xsi:type="gmftool:ToolGroup"
         title="Nodes">
       <tools
-          xsi:type="gmftool:CreationTool"
-          title="User Task"/>
-      <tools
-          xsi:type="gmftool:CreationTool"
-          title="Service Task"/>
-      <tools
-          xsi:type="gmftool:CreationTool"
-          title="Sub-Process"/>
+          xsi:type="gmftool:ToolGroup"
+          title="Activities"
+          stack="true">
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="User Task"/>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Service Task"/>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Script Task"/>
+        <tools
+            xsi:type="gmftool:CreationTool"
+            title="Sub-Process"/>
+      </tools>
       <tools
           xsi:type="gmftool:ToolGroup"
           title="Gateways"

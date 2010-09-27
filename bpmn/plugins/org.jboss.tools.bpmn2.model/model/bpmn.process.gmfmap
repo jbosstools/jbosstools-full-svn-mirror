@@ -32,7 +32,7 @@
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.0"/>
       <diagramNode
           href="bpmn.gmfgraph#UserTask"/>
     </ownedChild>
@@ -64,7 +64,7 @@
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.1"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.1"/>
       <diagramNode
           href="bpmn.gmfgraph#ServiceTask"/>
     </ownedChild>
@@ -92,7 +92,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.0/@tools.0"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.0/@tools.0"/>
       <diagramNode
           href="bpmn.gmfgraph#StartEvent"/>
     </ownedChild>
@@ -129,7 +129,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.0/@tools.1"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.0/@tools.1"/>
       <diagramNode
           href="bpmn.gmfgraph#MessageStartEvent"/>
     </ownedChild>
@@ -157,7 +157,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.2/@tools.0"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.2/@tools.0"/>
       <diagramNode
           href="bpmn.gmfgraph#EndEvent"/>
     </ownedChild>
@@ -182,7 +182,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.3/@tools.0"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.1/@tools.0"/>
       <diagramNode
           href="bpmn.gmfgraph#ExclusiveGateway"/>
     </ownedChild>
@@ -207,7 +207,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.3/@tools.1"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.1/@tools.1"/>
       <diagramNode
           href="bpmn.gmfgraph#ParallelGateway"/>
     </ownedChild>
@@ -244,7 +244,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.2/@tools.1"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.2/@tools.1"/>
       <diagramNode
           href="bpmn.gmfgraph#MessageEndEvent"/>
     </ownedChild>
@@ -281,7 +281,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.2/@tools.2"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.2/@tools.2"/>
       <diagramNode
           href="bpmn.gmfgraph#TerminateEndEvent"/>
     </ownedChild>
@@ -318,7 +318,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.1/@tools.0"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.0"/>
       <diagramNode
           href="bpmn.gmfgraph#MessageCatchIntermediateEvent"/>
     </ownedChild>
@@ -355,7 +355,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.1/@tools.1"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.1"/>
       <diagramNode
           href="bpmn.gmfgraph#MessageThrowIntermediateEvent"/>
     </ownedChild>
@@ -392,7 +392,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.1/@tools.2"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.2"/>
       <diagramNode
           href="bpmn.gmfgraph#TimerCatchIntermediateEvent"/>
     </ownedChild>
@@ -429,7 +429,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.4/@tools.1/@tools.3"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.3"/>
       <diagramNode
           href="bpmn.gmfgraph#ErrorCatchIntermediateEvent"/>
     </ownedChild>
@@ -463,7 +463,7 @@
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.5/@tools.0"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.3/@tools.0"/>
       <diagramNode
           href="bpmn.gmfgraph#DataObject"/>
     </ownedChild>
@@ -496,7 +496,7 @@
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.5/@tools.1"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.3/@tools.1"/>
       <diagramNode
           href="bpmn.gmfgraph#TextAnnotation"/>
     </ownedChild>
@@ -521,7 +521,7 @@
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.3"/>
       <diagramNode
           href="bpmn.gmfgraph#ExpandedSubprocess"/>
       <children
@@ -604,6 +604,43 @@
         <containmentFeature
             href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//SubProcess/artifacts"/>
       </children>
+      <children
+          referencedChild="//@nodes.16/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+    <ownedChild>
+      <domainMetaElement
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ScriptTask"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
+          <value
+              body="EcoreUtil.generateUUID()"
+              language="java"/>
+        </initializers>
+      </domainInitializer>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="bpmn.gmfgraph#RoundedRectangleLabel"/>
+        <features
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElement/name"/>
+      </labelMappings>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.2"/>
+      <diagramNode
+          href="bpmn.gmfgraph#ScriptTask"/>
     </ownedChild>
   </nodes>
   <links>
