@@ -74,7 +74,6 @@ public final class MockRestClient implements IRestClient {
      * @see org.modeshape.web.jcr.rest.client.IRestClient#publish(org.modeshape.web.jcr.rest.client.domain.Workspace,
      *      java.lang.String, java.io.File)
      */
-    @Override
     public Status publish( Workspace workspace,
                            String path,
                            File file ) {
