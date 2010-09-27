@@ -590,9 +590,7 @@
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="colspec" case-sensitive="yes" docbook="yes">
-		<vpe:template children="no" modify="yes">
-			<vpe:any />
-		</vpe:template>
+		<vpe:template children="no" modify="yes"/>
 	</vpe:tag>
 	<vpe:tag name="application" case-sensitive="yes" docbook="yes">
 		<vpe:template children="no" modify="yes">
