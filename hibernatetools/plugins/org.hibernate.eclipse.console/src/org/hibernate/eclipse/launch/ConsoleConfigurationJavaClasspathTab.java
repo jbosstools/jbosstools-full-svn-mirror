@@ -28,7 +28,19 @@ import org.hibernate.eclipse.console.HibernateConsolePlugin;
  */
 public class ConsoleConfigurationJavaClasspathTab extends JavaClasspathTab {
 
+	/**
+	 * validation process should include check for successful creation
+	 * of configuration xml file for Hibernate Console Configuration.
+	 */
 	protected boolean configurationFileWillBeCreated = false;
+	// for validation process optimization:
+	// presave last time validated configuration and validate result,
+	// to avoid several unnecessary validation -> buildWith for ConsoleConfig
+	// is rather slow operation (for classpaths with many jar files) - 
+	// so several time rebuild is visible for GUI performance operation.
+	protected ILaunchConfiguration lastValidatedLaunchConfig = null;
+	protected String lastErrorMessage = null;
+	protected boolean lastRes = false;
 	
 	public boolean isShowBootpath() {
 		return false;
@@ -37,6 +49,10 @@ public class ConsoleConfigurationJavaClasspathTab extends JavaClasspathTab {
 	public boolean isValid(ILaunchConfiguration launchConfig) {
 		if (!super.isValid(launchConfig)) {
 			return false;
+		}
+		if (lastValidatedLaunchConfig != null && lastValidatedLaunchConfig.contentsEqual(launchConfig)) {
+			setErrorMessage(lastErrorMessage);
+			return lastRes;
 		}
 		setErrorMessage(null);
 		setMessage(null);
@@ -65,7 +81,7 @@ public class ConsoleConfigurationJavaClasspathTab extends JavaClasspathTab {
 		}
 		if (resUserClasses && resExistArchive) {
 			boolean flagTryToBuild = true;
-			ConsoleConfiguration ccTest = new ConsoleConfiguration(new EclipseLaunchConsoleConfigurationPreferences(launchConfig));
+			final ConsoleConfiguration ccTest = new ConsoleConfiguration(new EclipseLaunchConsoleConfigurationPreferences(launchConfig));
 			if (configurationFileWillBeCreated) {
 				// do not make a try to build console configuration in case of "configurationFileWillBeCreated" and
 				// exception to resolve the file
@@ -82,14 +98,32 @@ public class ConsoleConfigurationJavaClasspathTab extends JavaClasspathTab {
 					resUserClasses = false;
 					setErrorMessage(ex.getMessage());
 				}
+				// accurate reset for ccTest after buildWith, should avoid possible "leaks"
+				try {
+					ccTest.reset();
+				} catch (Exception ex) {
+					if (resUserClasses) {
+						resUserClasses = false;
+						setErrorMessage(ex.getMessage());
+					}
+				}
+				try {
+					lastValidatedLaunchConfig = launchConfig.getWorkingCopy();
+				} catch (CoreException e1) {
+					lastValidatedLaunchConfig = null;
+				}
 			}
 		}
-		return resUserClasses && resExistArchive;
+		final boolean res = resUserClasses && resExistArchive;
+		if (lastValidatedLaunchConfig != null) {
+			lastErrorMessage = getErrorMessage();
+			lastRes = res;
+		}
+		return res;
 	}
 
 	public void initializeFrom(ILaunchConfiguration configuration) {
-
-		super.initializeFrom( configuration );
+		super.initializeFrom(configuration);
 	}
 
 	public boolean canSave() {
