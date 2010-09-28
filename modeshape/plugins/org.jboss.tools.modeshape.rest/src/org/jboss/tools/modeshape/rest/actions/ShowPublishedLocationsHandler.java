@@ -9,9 +9,8 @@
 package org.jboss.tools.modeshape.rest.actions;
 
 import java.util.Set;
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -31,27 +30,7 @@ import org.modeshape.web.jcr.rest.client.domain.Workspace;
  * The <code>ShowPublishedLocationsHandler</code> displays a dialog that shows information on which ModeShape repositories a
  * {@link org.eclipse.core.resources.IFile file} has been published to.
  */
-public final class ShowPublishedLocationsHandler implements IHandler {
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.core.commands.IHandler#addHandlerListener(org.eclipse.core.commands.IHandlerListener)
-     */
-    @Override
-    public void addHandlerListener( IHandlerListener handlerListener ) {
-        // nothing to do
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.core.commands.IHandler#dispose()
-     */
-    @Override
-    public void dispose() {
-        // nothing to do
-    }
+public final class ShowPublishedLocationsHandler extends AbstractHandler {
 
     /**
      * {@inheritDoc}
@@ -88,36 +67,6 @@ public final class ShowPublishedLocationsHandler implements IHandler {
 
         // per javadoc must return null
         return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.core.commands.IHandler#isEnabled()
-     */
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.core.commands.IHandler#isHandled()
-     */
-    @Override
-    public boolean isHandled() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.core.commands.IHandler#removeHandlerListener(org.eclipse.core.commands.IHandlerListener)
-     */
-    @Override
-    public void removeHandlerListener( IHandlerListener handlerListener ) {
-        // nothing to do
     }
 
 }

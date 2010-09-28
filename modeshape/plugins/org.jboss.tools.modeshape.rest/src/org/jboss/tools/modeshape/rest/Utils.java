@@ -20,9 +20,6 @@ import java.util.TreeSet;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISharedImages;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
@@ -49,41 +46,6 @@ public final class Utils {
         }
 
         return value.toString();
-    }
-
-    /**
-     * Sizes the shell to the minimum of it's current size or the width and height display percentages.
-     * 
-     * @param shell the shell being resized (if necessary) and located
-     * @param widthPercentage a number between 1 and 100 indicating a percentage of the screen size (defaults to 50 if bad value)
-     * @param heightPercentage a number between 1 and 100 indicating a percentage of the screen size (defaults to 50 if bad value)
-     */
-    public static void centerAndSizeShellRelativeToDisplay( Shell shell,
-                                                            int widthPercentage,
-                                                            int heightPercentage ) {
-        if ((widthPercentage < 1) || (widthPercentage > 100)) {
-            widthPercentage = 50;
-        }
-
-        if ((heightPercentage < 1) || (heightPercentage > 100)) {
-            heightPercentage = 50;
-        }
-
-        // size
-        Rectangle shellBounds = shell.getBounds();
-        Rectangle displayBounds = shell.getDisplay().getClientArea();
-        int scaledWidth = displayBounds.width * widthPercentage / 100;
-        int scaledHeight = displayBounds.height * heightPercentage / 100;
-        shell.setSize(Math.min(scaledWidth, shellBounds.width), Math.min(scaledHeight, shellBounds.height));
-        Point size = shell.getSize();
-
-        // center
-        int excessX = displayBounds.width - size.x;
-        int excessY = displayBounds.height - size.y;
-        int x = displayBounds.x + (excessX / 2);
-        int y = displayBounds.y + (excessY / 2);
-
-        shell.setLocation(x, y);
     }
 
     /**

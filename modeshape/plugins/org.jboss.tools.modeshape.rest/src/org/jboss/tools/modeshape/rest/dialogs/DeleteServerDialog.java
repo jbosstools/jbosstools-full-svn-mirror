@@ -24,7 +24,6 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
-import org.jboss.tools.modeshape.rest.Utils;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.domain.IModeShapeObject;
 import org.modeshape.web.jcr.rest.client.domain.Server;
@@ -53,9 +52,9 @@ public final class DeleteServerDialog extends MessageDialog {
      */
     public DeleteServerDialog( Shell parentShell,
                                Collection<Server> serversBeingDeleted ) {
-        super(parentShell, RestClientI18n.deleteServerDialogTitle.text(), Activator.getDefault().getImage(ModeShape_IMAGE_16x), null,
-              MessageDialog.QUESTION, new String[] {IDialogConstants.OK_LABEL, IDialogConstants.CANCEL_LABEL}, 0);
-        
+        super(parentShell, RestClientI18n.deleteServerDialogTitle.text(), Activator.getDefault().getImage(ModeShape_IMAGE_16x),
+              null, MessageDialog.QUESTION, new String[] {IDialogConstants.OK_LABEL, IDialogConstants.CANCEL_LABEL}, 0);
+
         CheckArg.isNotNull(serversBeingDeleted, "serversBeingDeleted");
         this.serversBeingDeleted = serversBeingDeleted;
 
@@ -109,17 +108,6 @@ public final class DeleteServerDialog extends MessageDialog {
         }
 
         return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.jface.dialogs.Dialog#initializeBounds()
-     */
-    @Override
-    protected void initializeBounds() {
-        super.initializeBounds();
-        Utils.centerAndSizeShellRelativeToDisplay(getShell(), 75, 75);
     }
 
 }

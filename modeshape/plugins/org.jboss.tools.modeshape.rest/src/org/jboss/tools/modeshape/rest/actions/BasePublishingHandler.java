@@ -24,7 +24,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
-import org.jboss.tools.modeshape.rest.Utils;
 import org.jboss.tools.modeshape.rest.jobs.PublishJob.Type;
 import org.jboss.tools.modeshape.rest.wizards.PublishWizard;
 import org.modeshape.web.jcr.rest.client.Status;
@@ -103,7 +102,6 @@ abstract class BasePublishingHandler implements IHandler {
                 protected void initializeBounds() {
                     super.initializeBounds();
                     getShell().setImage(Activator.getDefault().getImage(ModeShape_IMAGE_16x));
-                    Utils.centerAndSizeShellRelativeToDisplay(getShell(), 75, 75);
                 }
             };
 

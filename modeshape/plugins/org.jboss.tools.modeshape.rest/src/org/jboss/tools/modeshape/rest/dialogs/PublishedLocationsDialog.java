@@ -49,7 +49,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
-import org.jboss.tools.modeshape.rest.Utils;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
@@ -319,17 +318,6 @@ public final class PublishedLocationsDialog extends MessageDialog {
         if (this.btnCopy.getEnabled() != enable) {
             this.btnCopy.setEnabled(enable);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.jface.dialogs.Dialog#initializeBounds()
-     */
-    @Override
-    protected void initializeBounds() {
-        super.initializeBounds();
-        Utils.centerAndSizeShellRelativeToDisplay(getShell(), 75, 75);
     }
 
     // ===========================================================================================================================
