@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -18,7 +21,16 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
+import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateNodeGraphicalModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateXMLModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
+import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.template.TemplateBuilder;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * @author Dart
@@ -26,14 +38,15 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
  */
 public class InputDataTreeNodeModel extends TreeNodeModel {
 
-	public InputDataTreeNodeModel(Object data, ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
+	public InputDataTreeNodeModel(Object data,
+			ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
 		super(data, contentProvider, labelProvider);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	protected TreeNodeModel createChildModel(Object model, ITreeContentProvider contentProvider,
-			ILabelProvider labelProvider) {
+	protected TreeNodeModel createChildModel(Object model,
+			ITreeContentProvider contentProvider, ILabelProvider labelProvider) {
 		return new InputDataTreeNodeModel(model, contentProvider, labelProvider);
 	}
 
@@ -71,28 +84,71 @@ public class InputDataTreeNodeModel extends TreeNodeModel {
 	@Override
 	public boolean canLinkWithTarget(Object model) {
 		TreeNodeModel targetNode = (TreeNodeModel) model;
-		
-		if(targetNode == this || targetNode.getModelRootNode() == getModelRootNode()) {
+		System.out.println(targetNode);
+		if (targetNode == this
+				|| targetNode.getModelRootNode() == getModelRootNode()) {
 			return false;
 		}
-		
-		Object data = AdapterFactoryEditingDomain.unwrap(targetNode.getData());
 
+		Object data = AdapterFactoryEditingDomain.unwrap(targetNode.getData());
+		AbstractSmooksGraphicalModel pm = targetNode;
+		while (pm != null && !(pm instanceof FreemarkerTemplateGraphicalModel)) {
+			pm = pm.getParent();
+		}
+		if (data instanceof IFreemarkerTemplateModel && pm instanceof FreemarkerTemplateGraphicalModel) {
+			TemplateBuilder builder = ((FreemarkerTemplateGraphicalModel) pm).getTemplateBuilder();
+			if (((IFreemarkerTemplateModel) data).isHidden(builder)) {
+				return false;
+			}
+
+			if (data instanceof FreemarkerTemplateXMLModel) {
+				if (!((FreemarkerTemplateXMLModel) data).getXMLNodeChildren().isEmpty()) {
+					return false;
+				}
+			}
+			
+			List<TreeNodeConnection> exsitingConnection = targetNode.getTargetConnections();
+			if (!exsitingConnection.isEmpty())
+				return false;
+			for (Iterator<?> iterator = exsitingConnection.iterator(); iterator.hasNext();) {
+				TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
+				if (treeNodeConnection.getSourceNode() == this) {
+					return false;
+				}
+			}
+
+			AbstractSmooksGraphicalModel pgm = targetNode;
+			while (pgm != null && pgm instanceof FreemarkerTemplateNodeGraphicalModel) {
+				Object pd = ((FreemarkerTemplateNodeGraphicalModel) pgm).getData();
+				if (pd instanceof IFreemarkerTemplateModel) {
+					IFreemarkerTemplateModel iFreemarkerTemplateModel = (IFreemarkerTemplateModel) pd;
+					if (iFreemarkerTemplateModel.isManyOccurs() && pgm.getTargetConnections().isEmpty()) {
+						Node modelNode = iFreemarkerTemplateModel.getModelNode();
+						if (modelNode instanceof Element) {
+							return !ModelBuilder.getEnforceCollectionSubMappingRules((Element) modelNode);
+						} else {
+							return false;
+						}
+					}
+				}
+				pgm = pgm.getParent();
+			}
+		}
 		if (data instanceof TagPropertyObject) {
 			// Only OK to link to an attribute from a valid Value node...
 			return isValidValueNode();
-		} else if(data instanceof TagObject) {
-			if(targetNode.isValidValueNode()) {
+		} else if (data instanceof TagObject) {
+			if (targetNode.isValidValueNode()) {
 				return isValidValueNode();
-			} else if(targetNode.isValidCollectionNode()) {
-				return isValidCollectionNode();				
+			} else if (targetNode.isValidCollectionNode()) {
+				return isValidCollectionNode();
 			}
 		} else if (data instanceof EObject) {
 			if (SmooksUIUtils.getSelectorFeature((EObject) data) != null) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
