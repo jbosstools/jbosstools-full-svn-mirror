@@ -384,6 +384,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		startAction.setToolTipText(CVMessages.getString(START_LABEL));
 		startAction.setImageDescriptor(SWTImagesFactory.DESC_START);
 		startAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_STARTD);
+		startAction.setEnabled(false);
 		
 		stopAction = new Action() {
 			public void run() {
@@ -401,6 +402,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		stopAction.setToolTipText(CVMessages.getString(STOP_LABEL));
 		stopAction.setImageDescriptor(SWTImagesFactory.DESC_STOP);
 		stopAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_STOPD);
+		stopAction.setEnabled(false);
 		
 		rebootAction = new Action() {
 			public void run() {
@@ -418,6 +420,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		rebootAction.setToolTipText(CVMessages.getString(REBOOT_LABEL));
 		rebootAction.setImageDescriptor(SWTImagesFactory.DESC_REBOOT);
 		rebootAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_REBOOTD);
+		rebootAction.setEnabled(false);
 		
 		destroyAction = new Action() {
 			public void run() {
@@ -437,6 +440,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		ImageDescriptor delete_disabled = ImageDescriptor.createFromImage(sharedImages.getImage(ISharedImages.IMG_ETOOL_DELETE_DISABLED));
 		destroyAction.setImageDescriptor(delete);
 		destroyAction.setDisabledImageDescriptor(delete_disabled);
+		destroyAction.setEnabled(false);
 		
 		rseAction = new Action() {
 			public void run() {

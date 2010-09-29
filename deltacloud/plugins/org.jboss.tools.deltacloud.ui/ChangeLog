@@ -1,5 +1,14 @@
 2010-09-29  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (makeActions): 
+	Add actions 	for starting, stopping, rebooting, and destroying an instance.
+	(fillLocalPullDown): Don't ever disable removeCloud action.
+	(fillContextMenu): Add instance actions appropriate for the selected instance.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (makeActions): Disable
+	starting, stopping, rebooting, and destroy actions by default.  
+	 
+2010-09-29  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/views/PerformDestroyInstanceActionThread.java: New file.
 	* src/org/jboss/tools/deltacloud/ui/views/PerformInstanceActionThread.java: New file.
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: Remove action thread classes as they
