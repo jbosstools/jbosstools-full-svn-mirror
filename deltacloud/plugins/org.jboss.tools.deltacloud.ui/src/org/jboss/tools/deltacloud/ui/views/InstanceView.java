@@ -64,7 +64,6 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
@@ -112,7 +111,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private Action rseAction;
 	
 	private Map<String, Action> instanceActions;
-	private Map<String, Job> currentPerformingActions = new HashMap<String, Job>();
 	
 	private InstanceView parentView;
 
@@ -349,106 +347,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		manager.add(instanceActions.get(DeltaCloudInstance.DESTROY));
 	}
 
-	private class PerformInstanceActionThread extends Job {
-		private DeltaCloud cloud;
-		private DeltaCloudInstance instance;
-		private String action;
-		private String taskName;
-		private String expectedState;
-		
-	 	public PerformInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance, 
-	 			String action, String title, String taskName, String expectedState) {
-	 		super(title);
-	 		this.cloud = cloud;
-	 		this.instance = instance;
-	 		this.action = action;
-	 		this.taskName = taskName;
-	 		this.expectedState = expectedState;
-	 	}
-	 	
-		@Override
-		public IStatus run(IProgressMonitor pm) {
-			String id = instance.getId();
-			try {
-				pm.beginTask(taskName, IProgressMonitor.UNKNOWN);
-				pm.worked(1);
-				// To handle the user starting a new action when we haven't confirmed the last one yet,
-				// cancel the previous job and then go on performing this action
-				Job job = cloud.getActionJob(id);
-				if (job != null) {
-					job.cancel();
-					try {
-						job.join();
-					} catch (InterruptedException e) {
-						// do nothing, this is ok
-					}
-				}
-				currentPerformingActions.put(id, this);
-				cloud.performInstanceAction(id, action);
-				while (instance != null && !(instance.getState().equals(expectedState))
-						&& !(instance.getState().equals(DeltaCloudInstance.TERMINATED))) {
-					instance = refreshInstance(instance);
-					try {
-						Thread.sleep(300);
-					} catch (InterruptedException e) {
-						break;
-					}
-				}
-			} catch (DeltaCloudException e) {
-				// do nothing..action had problem executing..perhaps illegal
-			} finally {
-				cloud.removeActionJob(id, this);
-				pm.done();
-			}
-			return Status.OK_STATUS;
-		}
-	}
-	
-	private class PerformDestroyInstanceActionThread extends Job {
-		private DeltaCloud cloud;
-		private DeltaCloudInstance instance;
-		private String taskName;
-		
-	 	public PerformDestroyInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance,
-	 			String title, String taskName) {
-	 		super(title);
-	 		this.cloud = cloud;
-	 		this.instance = instance;
-	 		this.taskName = taskName;
-	 	}
-	 	
-	 	@Override
-	 	public IStatus run(IProgressMonitor pm) {
-	 		String id = instance.getId();
-	 		try {
-	 			pm.beginTask(taskName, IProgressMonitor.UNKNOWN);
-	 			pm.worked(1);
-				// To handle the user starting a new action when we haven't confirmed the last one yet,
-				// cancel the previous job and then go on performing this action
-				Job job = cloud.getActionJob(id);
-				if (job != null) {
-					job.cancel();
-					try {
-						job.join();
-					} catch (InterruptedException e) {
-						// do nothing, this is ok
-					}
-				}
-				cloud.registerActionJob(id, this);
-	 			Display.getDefault().asyncExec(new Runnable() {
-	 				@Override
-	 				public void run() {
-	 					cloud.destroyInstance(instance.getId());
-	 				}
-	 			});
-	 		} finally {
-	 			cloud.removeActionJob(id, this);
-	 			pm.done();
-	 		}
-	 		return Status.OK_STATUS;
-	 	}
-	}
-	
 	private void makeActions() {
 		refreshAction = new Action() {
 			public void run() {
@@ -591,17 +489,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		instanceActions.put(DeltaCloudInstance.STOP, stopAction);
 		instanceActions.put(DeltaCloudInstance.REBOOT, rebootAction);
 		instanceActions.put(DeltaCloudInstance.DESTROY, destroyAction);
-	}
-	
-	private DeltaCloudInstance refreshInstance(DeltaCloudInstance instance) {
-		DeltaCloudInstance[] instances = (DeltaCloudInstance[])contentProvider.getElements(currCloud);
-		for (int i = 0; i < instances.length; ++i) {
-			DeltaCloudInstance d = instances[i];
-			if (d.getId().equals(instance.getId())) {
-				return currCloud.refreshInstance(d.getId());
-			}
-		}
-		return null;
 	}
 	
 	@Override

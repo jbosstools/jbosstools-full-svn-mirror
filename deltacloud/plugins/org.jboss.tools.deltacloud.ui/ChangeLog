@@ -1,5 +1,13 @@
 2010-09-29  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/PerformDestroyInstanceActionThread.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/PerformInstanceActionThread.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: Remove action thread classes as they
+	are now external so they can be used from the Cloud Viewer as well.
+	(refreshInstance): Removed. 
+
+2010-09-29  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* icons/reboot.gif: New file.
 	* icons/rebootd.gif: New file.
 	* icons/runningd.gif: New file.
