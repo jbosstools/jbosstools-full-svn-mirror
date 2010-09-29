@@ -96,6 +96,11 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			contentArea.addEventListener(MozillaEventAdapter.MOUSEMOVEEVENTTYPE, this, false); 
 			contentArea.addEventListener(MozillaEventAdapter.CONTEXTMENUEVENTTYPE, this, false);
 			contentArea.addEventListener(MozillaEventAdapter.DBLCLICK, this, false);
+			
+			/* yradtsevich: JBIDE-7198: 'dragstart' event has to be added
+			 * just to contentArea, rather than to document. Otherwise
+			 * the event is fired also on the scrollbars. */
+			contentArea.addEventListener(MozillaEventAdapter.DRAGSTART, this, false);
 		}
 		if (window != null) {
 			window.addEventListener(MozillaEventAdapter.MOZAFTERPAINT, this, false);
@@ -109,7 +114,6 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			document.addEventListener(MozillaEventAdapter.DRAGENTEREVENT, this, false);
 			document.addEventListener(MozillaEventAdapter.DRAGEND,this, false);
 			document.addEventListener(MozillaEventAdapter.DRAGEXITEVENT,this, false);
-			document.addEventListener(MozillaEventAdapter.DRAGSTART, this, false);
 			document.addEventListener(MozillaEventAdapter.DRAGOVEREVENT, this, false);
 			
 			document.addEventListener(MozillaEventAdapter.KEYPRESS, this, false);
@@ -132,6 +136,9 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			contentArea.removeEventListener(MozillaEventAdapter.MOUSEMOVEEVENTTYPE, this, false); 
 			contentArea.removeEventListener(MozillaEventAdapter.CONTEXTMENUEVENTTYPE, this, false);
 			contentArea.removeEventListener(MozillaEventAdapter.DBLCLICK, this, false);
+			
+			contentArea.removeEventListener(MozillaEventAdapter.DRAGSTART, this, false);
+			
 			contentArea = null;
 		}
 		if (document != null) {
@@ -139,7 +146,6 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 			document.removeEventListener(MozillaEventAdapter.DRAGENTEREVENT, this, false);
 			document.removeEventListener(MozillaEventAdapter.DRAGEND, this, false);
 			document.removeEventListener(MozillaEventAdapter.DRAGEXITEVENT, this, false);
-			document.removeEventListener(MozillaEventAdapter.DRAGSTART, this, false);
 			document.removeEventListener(MozillaEventAdapter.DRAGOVEREVENT, this, false);
 			
 			document.removeEventListener(MozillaEventAdapter.KEYPRESS, this, false); 
