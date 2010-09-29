@@ -17,7 +17,7 @@
 		<BUILD_ALIAS>Beta2</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
-		<systemProperties></systemProperties>
+		<systemProperties>-Dusage_reporting_enabled=false</systemProperties>
 		<target.platform>e36-wtp32</target.platform>
 	</properties>
 
