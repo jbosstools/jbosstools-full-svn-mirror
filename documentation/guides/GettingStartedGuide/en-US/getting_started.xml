@@ -935,10 +935,10 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 	       </listitem>
 	    </varlistentry>
 	    <varlistentry>
-	       <term>Locations</term>
+	       <term>Location fields</term>
 	       <listitem>
 		  <para>
-		     The <guilabel>Locations</guilabel> field reports the geographical location where the product is being used. Sample returned values include: Munich, Wroclaw and Moscow.
+		     The location fields report the geographical location where the product is being used based on the continent, country and city. Sample returned values include: Europe (continent), Germany (country) and Munich (city).
 		  </para>
 	       </listitem>
 	    </varlistentry>
@@ -954,7 +954,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 	       <term>Operating System</term>
 	       <listitem>
 		  <para>
-		      The <guilabel>Operating System</guilabel> field reports the Operating System the product is running on. Sample returned values include: Linux, Macintosh and Windows.
+		      The <guilabel>Operating System</guilabel> field reports the Operating System and its version that the product is running on (with no version reporting currently available for Linux distributions). Sample returned values include: Linux, Macintosh 10.4, Macintosh 10.6,  Windows XP and Windows 7.
 		  </para>
 	       </listitem>
 	    </varlistentry>
