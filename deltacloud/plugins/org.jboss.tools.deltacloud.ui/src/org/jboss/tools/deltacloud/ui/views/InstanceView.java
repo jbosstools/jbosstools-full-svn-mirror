@@ -26,6 +26,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -70,6 +71,7 @@ import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
+import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.osgi.service.prefs.Preferences;
 
 public class InstanceView extends ViewPart implements ICloudManagerListener, IInstanceListListener {
@@ -299,6 +301,16 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private void handleSelection() {
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 		selectedElement = (DeltaCloudInstance)selection.getFirstElement();
+		instanceActions.get(DeltaCloudInstance.START).setEnabled(false);
+		instanceActions.get(DeltaCloudInstance.STOP).setEnabled(false);
+		instanceActions.get(DeltaCloudInstance.REBOOT).setEnabled(false);
+		instanceActions.get(DeltaCloudInstance.DESTROY).setEnabled(false);
+		if (selectedElement != null) {
+			List<String> actions = selectedElement.getActions();
+			for (String action : actions) {
+				instanceActions.get(action).setEnabled(true);
+			}
+		}
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
@@ -331,7 +343,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) {
-		//TODO
+		manager.add(instanceActions.get(DeltaCloudInstance.START));
+		manager.add(instanceActions.get(DeltaCloudInstance.STOP));
+		manager.add(instanceActions.get(DeltaCloudInstance.REBOOT));
+		manager.add(instanceActions.get(DeltaCloudInstance.DESTROY));
 	}
 
 	private class PerformInstanceActionThread extends Job {
@@ -469,6 +484,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		};
 		startAction.setText(CVMessages.getString(START_LABEL));
 		startAction.setToolTipText(CVMessages.getString(START_LABEL));
+		startAction.setImageDescriptor(SWTImagesFactory.DESC_START);
+		startAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_STARTD);
 		
 		stopAction = new Action() {
 			public void run() {
@@ -484,6 +501,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		};
 		stopAction.setText(CVMessages.getString(STOP_LABEL));
 		stopAction.setToolTipText(CVMessages.getString(STOP_LABEL));
+		stopAction.setImageDescriptor(SWTImagesFactory.DESC_STOP);
+		stopAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_STOPD);
 		
 		rebootAction = new Action() {
 			public void run() {
@@ -499,6 +518,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		};
 		rebootAction.setText(CVMessages.getString(REBOOT_LABEL));
 		rebootAction.setToolTipText(CVMessages.getString(REBOOT_LABEL));
+		rebootAction.setImageDescriptor(SWTImagesFactory.DESC_REBOOT);
+		rebootAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_REBOOTD);
 		
 		destroyAction = new Action() {
 			public void run() {
@@ -513,6 +534,11 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		};
 		destroyAction.setText(CVMessages.getString(DESTROY_LABEL));
 		destroyAction.setToolTipText(CVMessages.getString(DESTROY_LABEL));
+		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
+		ImageDescriptor delete = ImageDescriptor.createFromImage(sharedImages.getImage(ISharedImages.IMG_ETOOL_DELETE));
+		ImageDescriptor delete_disabled = ImageDescriptor.createFromImage(sharedImages.getImage(ISharedImages.IMG_ETOOL_DELETE_DISABLED));
+		destroyAction.setImageDescriptor(delete);
+		destroyAction.setDisabledImageDescriptor(delete_disabled);
 		
 		rseAction = new Action() {
 			public void run() {
