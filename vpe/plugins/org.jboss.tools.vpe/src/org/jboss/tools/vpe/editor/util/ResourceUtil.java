@@ -11,7 +11,7 @@
 
 package org.jboss.tools.vpe.editor.util;
 
-import org.jboss.tools.vpe.editor.bundle.BundleMap;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 /**

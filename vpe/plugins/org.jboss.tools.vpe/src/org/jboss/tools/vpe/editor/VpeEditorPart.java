@@ -69,6 +69,7 @@ import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.ui.editor.IModelObjectEditorInput;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.jspeditor.StorageRevisionEditorInputAdapter;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
@@ -95,6 +96,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	protected EditorSettings editorSettings;
 	private StructuredTextEditor sourceEditor = null;
 	private MozillaEditor visualEditor;
+	private BundleMap bundleMap;
 	private IEditorPart activeEditor;
 	private ControlListener controlListener;
 	private XModelTreeListener listener;
@@ -245,9 +247,10 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public VpeEditorPart(EditorPart multiPageEditor,
-			StructuredTextEditor textEditor, boolean visualMode) {
+			StructuredTextEditor textEditor, boolean visualMode, BundleMap bundleMap) {
 		sourceEditor = textEditor;
 		// this.visualMode = visualMode;
+		this.bundleMap = bundleMap;
 		this.multiPageEditor = multiPageEditor;
 	}
 
@@ -876,9 +879,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 				visualEditor.setEditorLoadWindowListener(null);
 				VpeController vpeController = new VpeController(
 						VpeEditorPart.this);
-//				selectionBar.setVpeController(vpeController);
-//				vpeController.setSelectionBarController(selectionBar);
-				vpeController.init(sourceEditor, visualEditor);
+				vpeController.init(sourceEditor, visualEditor, bundleMap);
 			}
 		});
 		

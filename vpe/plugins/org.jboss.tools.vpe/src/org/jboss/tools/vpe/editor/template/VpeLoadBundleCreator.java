@@ -17,7 +17,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import org.jboss.tools.vpe.editor.bundle.BundleMap;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.mozilla.interfaces.nsIDOMDocument;

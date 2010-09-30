@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.i18n;
+package org.jboss.tools.jst.jsp.i18n;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -23,12 +23,14 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
-import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
 
 /**
  * Aggregates extensions of all {@code localeProvider} extension points.
@@ -43,19 +45,20 @@ public class MainLocaleProvider implements ILocaleProvider {
 	private static final String ELEMENT_NATURE = "nature"; //$NON-NLS-1$
 	private static final String ATTRIBUTE_ID = "id"; //$NON-NLS-1$
 	private static final String ATTRIBUTE_CLASS = "class"; //$NON-NLS-1$
-	private static final String ELEMENT_LOCALE_PROVIDER
-			= "localeProvider"; //$NON-NLS-1$
+	private static final String ELEMENT_LOCALE_PROVIDER = "localeProvider"; //$NON-NLS-1$
 	private Map<String, ? extends List<IExtension>> natureToExtensions;
 	private Map<IExtension, ILocaleProvider> extensionToProvider
 			= new HashMap<IExtension, ILocaleProvider>();
-	private IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
-			.getExtensionPoint(VpePlugin.EXTESION_POINT_LOCALE_PROVIDER);
+	private IExtensionPoint extensionPoint;
 	private static MainLocaleProvider instance;
 
 	private String localeString = ""; //$NON-NLS-1$
 	
+	/**
+	 *  The constructor
+	 */
 	private MainLocaleProvider() {
-		// private constructor
+		extensionPoint = RegistryFactory.getRegistry().getExtensionPoint(JspEditorPlugin.EXTESION_POINT_LOCALE_PROVIDER);
 		initNatureExtensionsMap();
 	}
 
@@ -94,9 +97,9 @@ public class MainLocaleProvider implements ILocaleProvider {
 					}
 				}
 			} catch (CoreException e) {
-				VpePlugin.getPluginLog().logError(
+				JspEditorPlugin.getPluginLog().logError(
 						MessageFormat.format("Error in getting locale for {0}.",((IFileEditorInput)editorInput)
-								.getFile().getLocation().toOSString()), e); //$NON-NLS-1$
+								.getFile().getLocation().toOSString()), e);
 			}
 		}
 	
@@ -178,11 +181,11 @@ public class MainLocaleProvider implements ILocaleProvider {
 				}
 			}
 		} catch (InvalidRegistryObjectException e) {
-			VpePlugin.getPluginLog().logError(
+			JspEditorPlugin.getPluginLog().logError(
 					"The extension registry object " //$NON-NLS-1$
 					+ "is no longer valid.", e); //$NON-NLS-1$
 		} catch (CoreException e) {
-			VpePlugin.getPluginLog().logError(
+			JspEditorPlugin.getPluginLog().logError(
 					"CoreException occured.", e); //$NON-NLS-1$
 		}
 		return provider;

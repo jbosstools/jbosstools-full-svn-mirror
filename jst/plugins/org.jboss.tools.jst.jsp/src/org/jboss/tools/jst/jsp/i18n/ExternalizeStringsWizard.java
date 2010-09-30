@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.dialog;
+package org.jboss.tools.jst.jsp.i18n;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -21,8 +21,8 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.common.model.ui.ModelUIImages;
-import org.jboss.tools.vpe.editor.bundle.BundleMap;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 
 public class ExternalizeStringsWizard extends Wizard {
 	
@@ -37,7 +37,7 @@ public class ExternalizeStringsWizard extends Wizard {
 	public ExternalizeStringsWizard(StructuredTextEditor editor, BundleMap bm) {
 		super();
 		setHelpAvailable(false);
-		setWindowTitle(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE);
+		setWindowTitle(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE);
 		this.editor = editor; 
 		this.bm = bm;
 	}
@@ -53,8 +53,8 @@ public class ExternalizeStringsWizard extends Wizard {
 				return new ByteArrayInputStream(page1.getKeyValuePair().getBytes());
 			}
 		};
-		page2.setTitle(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE);
-		page2.setDescription(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_DESCRIPTION);
+		page2.setTitle(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE);
+		page2.setDescription(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_DESCRIPTION);
 		page2.setImageDescriptor(ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_DEFAULT));
 		addPage(page1);
 		addPage(page2);

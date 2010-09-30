@@ -2,8 +2,6 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension-point id="templates" name="Path to xml file with templates definitionj" schema="schema/templates.exsd"/>
-   <extension-point id="localeProvider" name="Locale provider for an opened file" schema="schema/localeProvider.exsd"/>
-
 
    <extension point="org.jboss.tools.common.model.meta">
       <meta path="meta/vpe.meta"/>
@@ -99,13 +97,6 @@
                id="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
         	</dynamic>
         </menuContribution>
-        <menuContribution
-              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor.source.EditorContext?after=org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
-        	<dynamic
-               class="org.jboss.tools.vpe.editor.menu.ExternalizeStringsContributionItem"
-               id="org.jboss.tools.vpe.editor.menu.ExternalizeStringsContributionItem">
-        	</dynamic>
-        </menuContribution>
   </extension>
   <extension
         point="org.eclipse.ui.menus">
@@ -124,13 +115,6 @@
         	<dynamic
                class="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem"
                id="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
-        	</dynamic>
-        </menuContribution>
-        <menuContribution
-              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor.source.EditorContext?after=org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
-        	<dynamic
-               class="org.jboss.tools.vpe.editor.menu.ExternalizeStringsContributionItem"
-               id="org.jboss.tools.vpe.editor.menu.ExternalizeStringsContributionItem">
         	</dynamic>
         </menuContribution>
   </extension>

@@ -13,13 +13,14 @@ package org.jboss.tools.vpe.editor;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualEditorFactory;
 
 public class VpeEditorPartFactory implements IVisualEditorFactory {
 
-	public IVisualEditor createVisualEditor(final EditorPart multiPageEditor, StructuredTextEditor textEditor, boolean visualMode) {
-		return new VpeEditorPart(multiPageEditor, textEditor, visualMode){
+	public IVisualEditor createVisualEditor(final EditorPart multiPageEditor, StructuredTextEditor textEditor, boolean visualMode, BundleMap bundleMap) {
+		return new VpeEditorPart(multiPageEditor, textEditor, visualMode, bundleMap) {
 			public void doSave(IProgressMonitor monitor){
 				multiPageEditor.doSave(monitor);
 			}

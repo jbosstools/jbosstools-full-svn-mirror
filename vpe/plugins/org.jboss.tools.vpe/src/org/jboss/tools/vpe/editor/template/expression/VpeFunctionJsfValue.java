@@ -10,7 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.expression;
 
-import org.jboss.tools.vpe.editor.bundle.BundleMap;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Node;
 

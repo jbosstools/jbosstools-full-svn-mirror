@@ -8,12 +8,11 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.menu;
+package org.jboss.tools.jst.jsp.i18n;
 
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.swt.widgets.Menu;
-import org.jboss.tools.vpe.editor.menu.action.ExternalizeStringsAction;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 
 public class ExternalizeStringsContributionItem extends ActionContributionItem {
 
@@ -31,7 +30,7 @@ public class ExternalizeStringsContributionItem extends ActionContributionItem {
 		/*
 		 * Simply sets the title
 		 */
-		getAction().setText(VpeUIMessages.EXTERNALIZE_STRINGS);
+		getAction().setText(JstUIMessages.EXTERNALIZE_STRINGS);
 		super.fill(parent, index);
 	}
 	

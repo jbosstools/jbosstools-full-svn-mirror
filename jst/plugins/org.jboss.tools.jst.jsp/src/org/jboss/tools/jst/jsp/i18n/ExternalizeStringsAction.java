@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.menu.action;
+package org.jboss.tools.jst.jsp.i18n;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -17,9 +17,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
-import org.jboss.tools.vpe.editor.dialog.ExternalizeStringsDialog;
-import org.jboss.tools.vpe.editor.dialog.ExternalizeStringsWizard;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 
 public class ExternalizeStringsAction extends Action {
 
@@ -48,8 +46,8 @@ public class ExternalizeStringsAction extends Action {
 		} else {
 			MessageDialog.openWarning(
 					PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE,
-					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_WRONG_SELECTION);
+					JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE,
+					JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_WRONG_SELECTION);
 		}
 	}
 

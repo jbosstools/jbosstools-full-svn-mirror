@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.editor.bundle;
+package org.jboss.tools.jst.jsp.bundle;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,12 +50,11 @@ import org.jboss.tools.common.model.options.PreferenceModelUtilities;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.i18n.MainLocaleProvider;
+import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
-import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.editor.i18n.MainLocaleProvider;
-import org.jboss.tools.vpe.editor.util.Constants;
 
 public class BundleMap {
 
@@ -167,7 +166,7 @@ public class BundleMap {
 				}
 			}
 		} catch (CoreException e) {
-			VpePlugin.getPluginLog().logError(e);
+			JspEditorPlugin.getPluginLog().logError(e);
 		}
 		return hasJsfProjectNatureType;
 	}
@@ -254,7 +253,7 @@ public class BundleMap {
 				}
 			}
 		} catch (CoreException e) {
-			VpePlugin.getPluginLog().logError(e);
+			JspEditorPlugin.getPluginLog().logError(e);
 			return null;
 		}
 		return null;
@@ -300,7 +299,7 @@ public class BundleMap {
 						file = new File(javaSources[i]).getCanonicalFile();
 						urls[i] = file.toURL();
 					} catch (IOException ioe) {
-						VpePlugin.reportProblem(ioe);
+						JspEditorPlugin.getDefault().logError(ioe);
 						return null;
 					}
 				}
@@ -458,44 +457,50 @@ public class BundleMap {
 		return is;
 	}
 	
-	public String getBundleValue(String name){
-		if(showBundleUsageAsEL) {
-			return name;
-		}
-		List<ELInstance> is = parseJSFExpression(name);
-		if(is == null) return null;
-		StringBuffer sb = new StringBuffer();
-		int index = 0;
-		for (ELInstance i: is) {
-			int start = i.getStartPosition();
-			sb.append(name.substring(index, start));
-			index = start;
-			if(i.getExpression() instanceof ELInvocationExpression) {
-				ELInvocationExpression expr = (ELInvocationExpression)i.getExpression();
-				String[] values = getCall(expr);
-				if(values != null) {
-					String value = getBundleValue(values[0], values[1]);
-					if(value != null) {
-						sb.append(value);
-						index = i.getEndPosition();
+	public String getBundleValue(String name) {
+//		System.out.println("\n1 BM -> getBundleValue -> " + name);
+//		System.out.println("2 BM -> showBundleUsageAsEL = "
+//				+ showBundleUsageAsEL);
+		String bundleValue = name;
+		if (!showBundleUsageAsEL) {
+			List<ELInstance> is = parseJSFExpression(name);
+			if (is != null) {
+				StringBuffer sb = new StringBuffer();
+				int index = 0;
+				for (ELInstance i : is) {
+					int start = i.getStartPosition();
+					sb.append(name.substring(index, start));
+					index = start;
+					if (i.getExpression() instanceof ELInvocationExpression) {
+						ELInvocationExpression expr = (ELInvocationExpression) i
+								.getExpression();
+						String[] values = getCall(expr);
+						if (values != null) {
+							String value = getBundleValue(values[0], values[1]);
+							if (value != null) {
+								sb.append(value);
+								index = i.getEndPosition();
+							}
+
+						}
 					}
-					
+					if (index < i.getEndPosition()) {
+						// fix has been added by Maksim Areshkau
+						// https://jira.jboss.org/jira/browse/JBIDE-6064
+						if (name.length() > i.getEndPosition()) {
+							sb.append(name.substring(index, i.getEndPosition()));
+							index = i.getEndPosition();
+						} else {
+							sb.append(name.substring(index, name.length()));
+							index = name.length();
+						}
+					}
 				}
-			}
-			if(index < i.getEndPosition()) {
-				//fix has been added by Maksim Areshkau
-				// https://jira.jboss.org/jira/browse/JBIDE-6064
-				if(name.length()>i.getEndPosition()) {
-					sb.append(name.substring(index, i.getEndPosition()));
-					index = i.getEndPosition();
-				}else {
-					sb.append(name.substring(index, name.length()));
-					index =name.length();
-				}
+				bundleValue = sb.append(name.substring(index)).toString();
 			}
 		}
-		sb.append(name.substring(index));
-		return sb.toString();
+//		System.out.println("3 BM -> getBundleValue -> " + bundleValue);
+		return bundleValue;
 	}
 	
 	String[] getCall(ELInvocationExpression expr) {

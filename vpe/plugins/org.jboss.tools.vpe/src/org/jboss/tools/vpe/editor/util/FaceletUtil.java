@@ -46,27 +46,21 @@ public class FaceletUtil {
 	 * @return
 	 */
 	public static Element findComponentElement(Element root) {
-
 		if(root==null) {
-			
 			return null;
 		}
 		NodeList children = root.getChildNodes();
-
 		for (int i = 0; i < children.getLength(); i++) {
 			Node child = children.item(i);
 			if (child.getNodeType() == Node.ELEMENT_NODE) {
-
 				Element trimmedElement = findComponentElement((Element) child);
 				if (trimmedElement != null)
 					return trimmedElement;
-
 			}
 		}
-
-		if (componentElements.contains(root.getLocalName()))
+		if (componentElements.contains(root.getLocalName())) {
 			return root;
-
+		}
 		return null;
 	}
 
@@ -76,13 +70,9 @@ public class FaceletUtil {
 	 * @return
 	 */
 	public static Element getRootFaceletElement(Document document) {
-
 		Element root = document.getDocumentElement();
-
 		Element component = findComponentElement(root);
-
 		return component != null ? component : root;
-
 	}
 
 	
@@ -106,9 +96,7 @@ public class FaceletUtil {
 //		IEditorInput iEditorInput = pageContext.getEditPart().getEditorInput();
 //		if (iEditorInput instanceof IFileEditorInput) {
 //			IFileEditorInput iFileEditorInput = (IFileEditorInput) iEditorInput;
-//
 //			IFile iFile = iFileEditorInput.getFile();
-//
 //			IProject project = iFile.getProject();
 //			IModelNature nature = EclipseResourceUtil.getModelNature(project);
 //			if (nature != null) {
@@ -118,14 +106,12 @@ public class FaceletUtil {
 //						webXML, "javax.faces.DEFAULT_SUFFIX"); //$NON-NLS-1$
 //				if (param != null) {
 //					String value = param.getAttributeValue("param-value"); //$NON-NLS-1$
-//
 //					if (value.length() != 0 && iFile.getName().endsWith(value)) {
 //						isFacelet = true;
 //					}
 //				}
 //			}
 //		}
-
 		return isFacelet;
 	}
 	

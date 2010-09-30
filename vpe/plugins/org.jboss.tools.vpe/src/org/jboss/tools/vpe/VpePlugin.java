@@ -30,7 +30,6 @@ public class VpePlugin extends BaseUIPlugin {
 	public static final String PLUGIN_ID = "org.jboss.tools.vpe"; //$NON-NLS-1$
 	
 	public static final String EXTESION_POINT_VPE_TEMPLATES = "org.jboss.tools.vpe.templates"; //$NON-NLS-1$
-	public static final String EXTESION_POINT_LOCALE_PROVIDER = "org.jboss.tools.vpe.localeProvider"; //$NON-NLS-1$
 	
 	//The shared instance.
 	private static VpePlugin plugin;

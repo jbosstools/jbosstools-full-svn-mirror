@@ -81,6 +81,7 @@ import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.common.resref.core.ResourceReferenceListListener;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
 import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
@@ -92,7 +93,6 @@ import org.jboss.tools.jst.web.tld.URIConstants;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnD;
-import org.jboss.tools.vpe.editor.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
@@ -178,8 +178,8 @@ public class VpeController implements INodeAdapter,
 	private int commentRemoveCount = 0;
 	private int commentAddCount = 0;
 	private VpePageContext pageContext;
-	private BundleMap bundle;
 	private VpeEditorPart editPart;
+	private BundleMap bundleMap;
 	public static final int LEFT_BUTTON = 0;
 
 	private CSSReferenceList cssReferenceListListener;
@@ -226,17 +226,17 @@ public class VpeController implements INodeAdapter,
 		dropWindow = new VpeDropWindow(editPart.getSite().getShell());
 	}
 
-	void init(StructuredTextEditor sourceEditor, MozillaEditor visualEditor) {
+	void init(StructuredTextEditor sourceEditor, MozillaEditor visualEditor, BundleMap bundleMap) {
 		this.sourceEditor = sourceEditor;
+		this.bundleMap = bundleMap;
 		if (sourceEditor instanceof IJSPTextEditor) {
 			((IJSPTextEditor) sourceEditor).setVPEController(this);
 			dropWindow.setEditor((IJSPTextEditor) sourceEditor);
 		}
 		this.visualEditor = visualEditor;
 		visualEditor.setController(this);
-		bundle = new BundleMap();
-		bundle.init(sourceEditor);
-		pageContext = new VpePageContext(bundle, editPart);
+		bundleMap.init(sourceEditor);
+		pageContext = new VpePageContext(bundleMap, editPart);
 		domMapping = new VpeDomMapping(pageContext);
 		sourceBuilder = new VpeSourceDomBuilder(domMapping, this,
 				VpeTemplateManager.getInstance(), sourceEditor, pageContext);
@@ -977,8 +977,8 @@ public class VpeController implements INodeAdapter,
 				model.removeModelLifecycleListener(this);
 				IDOMModel sourceModel = (IDOMModel) getModel();
 				sourceModel.addModelLifecycleListener(this);
-				bundle.clearAll();
-				bundle.refresh();
+				bundleMap.clearAll();
+				bundleMap.refresh();
 				// visualBuilder.setSelectionRectangle(null);
 				IDOMDocument sourceDocument = sourceModel.getDocument();
 				// JBIDE-1457
@@ -1721,8 +1721,8 @@ public class VpeController implements INodeAdapter,
 
 		VpeTemplateManager.getInstance().reload();
 
-		if (bundle != null) {
-			bundle.refresh();
+		if (bundleMap != null) {
+			bundleMap.refresh();
 			if (pageContext != null) {
 				if (!switcher
 						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {

@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.vpe.editor.bundle;
+package org.jboss.tools.jst.jsp.bundle;
 
 public interface BundleMapListener {
 	public void bundleKeyChanged(String bundlePrefix, String key, String value);

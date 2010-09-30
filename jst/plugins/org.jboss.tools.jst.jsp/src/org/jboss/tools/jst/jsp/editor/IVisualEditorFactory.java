@@ -12,9 +12,12 @@ package org.jboss.tools.jst.jsp.editor;
 
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 
 public interface IVisualEditorFactory {
 	
-	public IVisualEditor createVisualEditor(EditorPart multiPageEditor, StructuredTextEditor textEditor, boolean visualMode);
+	public IVisualEditor createVisualEditor(EditorPart multiPageEditor,
+			StructuredTextEditor textEditor, boolean visualMode,
+			BundleMap bundleMap);
 
 }

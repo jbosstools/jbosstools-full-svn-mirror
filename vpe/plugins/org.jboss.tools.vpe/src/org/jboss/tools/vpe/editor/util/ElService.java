@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.common.el.core.ELReferenceList;
 import org.jboss.tools.common.el.core.GlobalELReferenceList;
 import org.jboss.tools.common.resref.core.ResourceReference;
-import org.jboss.tools.vpe.editor.bundle.BundleMap;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;

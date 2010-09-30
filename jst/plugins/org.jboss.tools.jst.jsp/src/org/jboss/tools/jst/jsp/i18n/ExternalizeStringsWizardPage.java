@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.editor.dialog;
+package org.jboss.tools.jst.jsp.i18n;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,30 +59,31 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.wst.sse.core.internal.provisional.StructuredModelManager;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.provisional.extensions.ISourceEditingTextTools;
 import org.eclipse.wst.xml.core.internal.document.AttrImpl;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.document.TextImpl;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.eclipse.wst.xml.ui.internal.provisional.IDOMSourceEditingTextTools;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.util.FileUtil;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
+import org.jboss.tools.jst.jsp.bundle.BundleMap.BundleEntry;
 import org.jboss.tools.jst.jsp.editor.IVisualContext;
 import org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor;
 import org.jboss.tools.jst.jsp.jspeditor.SourceEditorPageContext;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
+import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
+import org.jboss.tools.jst.jsp.util.FaceletsUtil;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.jst.web.project.list.WebPromptingProvider;
 import org.jboss.tools.jst.web.tld.TaglibData;
-import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.editor.bundle.BundleMap;
-import org.jboss.tools.vpe.editor.bundle.BundleMap.BundleEntry;
-import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
-import org.jboss.tools.vpe.editor.util.Constants;
-import org.jboss.tools.vpe.editor.util.FaceletUtil;
-import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -117,9 +118,9 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 * Setting dialog Title, Description, Image.
 		 */
 		super(pageName,
-				VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE, 
+				JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_TITLE, 
 				ModelUIImages.getImageDescriptor(ModelUIImages.WIZARD_DEFAULT));
-		setDescription(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_DESCRIPTION);
+		setDescription(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_DESCRIPTION);
 		setPageComplete(false);
 		this.editor = editor;
 		if (bm != null) {
@@ -131,9 +132,9 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			 */
 			this.bm = createBundleMap(editor);
 		}
-		propsKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
-		propsValueStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
-		duplicateKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+		propsKeyStatus = new Status(IStatus.OK, JspEditorPlugin.PLUGIN_ID, Constants.EMPTY);
+		propsValueStatus = new Status(IStatus.OK, JspEditorPlugin.PLUGIN_ID, Constants.EMPTY);
+		duplicateKeyStatus = new Status(IStatus.OK, JspEditorPlugin.PLUGIN_ID, Constants.EMPTY);
 	}
 
 	public void createControl(Composite parent) {
@@ -152,27 +153,27 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		Group propsStringGroup = new Group(composite, SWT.SHADOW_ETCHED_IN);
 		propsStringGroup.setLayout(new GridLayout(3, false));
 		propsStringGroup.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
-		propsStringGroup.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPS_STRINGS_GROUP);
+		propsStringGroup.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPS_STRINGS_GROUP);
 
 		/*
 		 * Create Properties Key label
 		 */
 		Label propsKeyLabel = new Label(propsStringGroup, SWT.NONE);
 		propsKeyLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
-		propsKeyLabel.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_KEY);
+		propsKeyLabel.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_KEY);
 		/*
 		 * Create Properties Key value
 		 */
 		propsKey = new Text(propsStringGroup, SWT.BORDER);
 		propsKey.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1));
-		propsKey.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_DEFAULT_KEY);
+		propsKey.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_DEFAULT_KEY);
 		
 		/*
 		 * Create Properties Value  label
 		 */
 		Label propsValueLabel = new Label(propsStringGroup, SWT.NONE);
 		propsValueLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
-		propsValueLabel.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_VALUE);
+		propsValueLabel.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_VALUE);
 		/*
 		 * Create Properties Value value
 		 */
@@ -186,7 +187,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 */
 		newFile = new Button(composite, SWT.CHECK);
 		newFile.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
-		newFile.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_NEW_FILE);
+		newFile.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_NEW_FILE);
 		
 		/*
 		 * Create properties string group
@@ -196,14 +197,14 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd.heightHint = 300; 
 		propsFilesGroup.setLayoutData(gd);
-		propsFilesGroup.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPS_FILES_GROUP);
+		propsFilesGroup.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPS_FILES_GROUP);
 		
 		/*
 		 * Create Resource Bundles List label
 		 */
 		rbListLabel = new Label(propsFilesGroup, SWT.NONE);
 		rbListLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
-		rbListLabel.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_RESOURCE_BUNDLE_LIST);
+		rbListLabel.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_RESOURCE_BUNDLE_LIST);
 		/*
 		 * Create Resource Bundles combobox
 		 */
@@ -215,7 +216,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 */
 		propsFileLabel = new Label(propsFilesGroup, SWT.NONE);
 		propsFileLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false,false, 1, 1));
-		propsFileLabel.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_FILE);
+		propsFileLabel.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTIES_FILE);
 		/*
 		 * Create Properties File path field
 		 */
@@ -235,11 +236,11 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		
         ColumnLayoutData columnLayoutData;
         TableColumn propNameColumn = new TableColumn(tagsTable, SWT.NONE);
-        propNameColumn.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTY_NAME);
+        propNameColumn.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTY_NAME);
         columnLayoutData = new ColumnWeightData(200, true);
         layout.addColumnData(columnLayoutData);
         TableColumn propValueColumn = new TableColumn(tagsTable, SWT.NONE);
-        propValueColumn.setText(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTY_VALUE);
+        propValueColumn.setText(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_PROPERTY_VALUE);
         columnLayoutData = new ColumnWeightData(200, true);
         layout.addColumnData(columnLayoutData);
         
@@ -310,8 +311,8 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			 * Initialize bundle messages field
 			 */
 			if (bm == null) {
-				VpePlugin.getDefault().logWarning(
-						VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_RB_IS_MISSING);
+				JspEditorPlugin.getDefault().logWarning(
+						JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_RB_IS_MISSING);
 			} else {
 				BundleEntry[] bundles = bm.getBundles();
 				Set<String> uriSet = new HashSet<String>(); 
@@ -370,9 +371,14 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			 * All the validation will take place in the fields' listeners
 			 * after user enters some new values. 
 			 */
-			setMessage(VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_ENTER_KEY_NAME,
+			setMessage(JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_ENTER_KEY_NAME,
 					IMessageProvider.INFORMATION);
-
+			/*
+			 * Update the Buttons state.
+			 * When all the fields are correct -- 
+			 * then user should be abke to  press OK
+			 */
+			setPageComplete(isPageComplete());
 			/*
 			 * Add selection listeners to the fields
 			 */
@@ -407,8 +413,8 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				}
 			});
 		} else {
-			VpePlugin.getDefault().logWarning(
-					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
+			JspEditorPlugin.getDefault().logWarning(
+					JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_INITIALIZATION_ERROR);
 		}
 	}
 	
@@ -484,14 +490,14 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				tableItem.setText(new String[] {key, properties.getProperty(key)});
 			}
 		} catch (CoreException e) {
-			VpePlugin.getDefault().logError(
+			JspEditorPlugin.getDefault().logError(
 					"Could not load file content for '" + file + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (IOException e) {
-			VpePlugin.getDefault().logError(
+			JspEditorPlugin.getDefault().logError(
 					"Could not read file: '" + file + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
 		}		
 		} else {
-			VpePlugin.getDefault().logError(
+			JspEditorPlugin.getDefault().logError(
 					"Bundle File'" + file + "' does not exist!"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
@@ -599,10 +605,10 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		if (isDuplicatedKey(propsKey.getText())) {
 			duplicateKeyStatus = new Status(
 					IStatus.ERROR,
-					VpePlugin.PLUGIN_ID,
-					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_KEY_ALREADY_EXISTS); 
+					JspEditorPlugin.PLUGIN_ID,
+					JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_KEY_ALREADY_EXISTS); 
 		} else {
-			duplicateKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+			duplicateKeyStatus = new Status(IStatus.OK, JspEditorPlugin.PLUGIN_ID, Constants.EMPTY);
 		}
 	}
 
@@ -614,10 +620,10 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				||  (text.indexOf(Constants.LT) != -1)) {
 			propsValueStatus = new Status(
 					IStatus.ERROR,
-					VpePlugin.PLUGIN_ID,
-					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_WRONG_SELECTED_TEXT);
+					JspEditorPlugin.PLUGIN_ID,
+					JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_WRONG_SELECTED_TEXT);
 		} else {
-			propsValueStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+			propsValueStatus = new Status(IStatus.OK, JspEditorPlugin.PLUGIN_ID, Constants.EMPTY);
 		}
 	}
 	
@@ -629,10 +635,10 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				|| (Constants.EMPTY.equalsIgnoreCase(propsKey.getText().trim()))) {
 			propsKeyStatus = new Status(
 					IStatus.ERROR,
-					VpePlugin.PLUGIN_ID,
-					VpeUIMessages.EXTERNALIZE_STRINGS_DIALOG_KEY_MUST_BE_SET);
+					JspEditorPlugin.PLUGIN_ID,
+					JstUIMessages.EXTERNALIZE_STRINGS_DIALOG_KEY_MUST_BE_SET);
 		} else {
-			propsKeyStatus = new Status(IStatus.OK, VpePlugin.PLUGIN_ID, Constants.EMPTY);
+			propsKeyStatus = new Status(IStatus.OK, JspEditorPlugin.PLUGIN_ID, Constants.EMPTY);
 		}
 	}
 	
@@ -705,7 +711,6 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 		 * and "key=value" exists.
 		 */
 		if ((getErrorMessage() == null)
-				&& (getMessage() == null)
 				&& ((rbCombo.getSelectionIndex() != -1) || isNewFile())) {
 			isPageComplete = true;
 		}
@@ -748,7 +753,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				}
 			}
 		} catch (CoreException e) {
-			VpePlugin.getPluginLog().logError(e);
+			JspEditorPlugin.getPluginLog().logError(e);
 		}
 		/*
 		 * Get Bundles from faces-config.xml
@@ -794,17 +799,27 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 				taglibs = sourcePageContext.getTagLibs();
 			}
 			if (null == taglibs) {
-				VpePlugin.getDefault().logError(
-						VpeUIMessages.CANNOT_LOAD_TAGLIBS_FROM_PAGE_CONTEXT);
+				JspEditorPlugin.getDefault().logError(
+						JstUIMessages.CANNOT_LOAD_TAGLIBS_FROM_PAGE_CONTEXT);
 			} else {
-				Element root = FaceletUtil.findComponentElement(documentWithBundles.getDocumentElement());
-				if ((root != null) && FaceletUtil.isFacelet(root, taglibs)
+				Element root = FaceletsUtil.findComponentElement(documentWithBundles.getDocumentElement());
+				if ((root != null) && FaceletsUtil.isFacelet(root, taglibs)
 						&& root.hasAttribute("template")) { //$NON-NLS-1$
 					String filePath= root.getAttributeNode("template").getNodeValue(); //$NON-NLS-1$
 					if (((JSPTextEditor) editor).getEditorInput() instanceof FileEditorInput) {
 						FileEditorInput fei = (FileEditorInput) ((JSPTextEditor) editor).getEditorInput();
 						IFile templateFile = (IFile) fei.getFile().getProject().getFolder("WebContent").findMember(filePath); //$NON-NLS-1$
-						Document document = VpeCreatorUtil.getDocumentForRead(templateFile);
+						Document document = null;
+						try {
+							IDOMModel wtpModel = (IDOMModel)StructuredModelManager.getModelManager().getModelForRead(templateFile);
+							if (wtpModel != null) {
+								document = wtpModel.getDocument();
+							}
+						} catch(IOException e) {
+							JspEditorPlugin.getPluginLog().logError(e);
+						} catch(CoreException e) {
+							JspEditorPlugin.getPluginLog().logError(e);
+						}
 						if (null != document) {
 							/*
 							 * Change the document where to look bundles
@@ -889,7 +904,7 @@ public class ExternalizeStringsWizardPage extends WizardPage {
 			bundlePath = bundleFile.getFullPath().toString();
 			updateTable(bundleFile);
 		} else {
-			VpePlugin.getDefault().logError(
+			JspEditorPlugin.getDefault().logError(
 					"Could not get Bundle File for resource '" //$NON-NLS-1$
 							+ bundleName + "'"); //$NON-NLS-1$
 		}
