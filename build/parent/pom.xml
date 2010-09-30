@@ -174,6 +174,27 @@
 			</build>
 		</profile>
 
+		<!-- Time saver: to build everything from scratch from a single local repo on Hudson cluster -->
+		<profile>
+			<id>helios-local-target</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>helios</id>
+					<url>file://home/hudson/static_build_env/jbds/target-platform/e36-wtp322.target/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
 		<!-- Time saver: to build everything from scratch (without target platform); 
 			To enable it use -P helios-no-target in command line. Do not remove repos 
 			that contains the same artefacts, it is done for purpose to make build more 
