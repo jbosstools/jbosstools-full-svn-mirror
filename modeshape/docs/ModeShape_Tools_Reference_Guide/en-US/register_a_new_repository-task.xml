@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!--<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "ModeShape_Tools_Reference_Guide.ent">
+%BOOK_ENTITIES;
+]>-->
+
+<section id="sect-ModeShape_Tools_Reference_Guide-Tasks-Register_a_new_repository">
+   <title>Register a new repository</title>
+	 <para>
+		Registering a new repository is achieved through the <guilabel>ModeShape</guilabel> view. To open the <guilabel>ModeShape</guilabel> view navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem></menuchoice>. From the <guilabel>Show View</guilabel> dialog select the <guimenuitem>ModeShape</guimenuitem> folder followed by the <guimenuitem>ModeShape</guimenuitem> view and click <guibutton>OK</guibutton>.
+	</para>
+	<figure>
+	   <title>Selecting the ModeShape view</title>
+	    <mediaobject>
+		  <imageobject>
+			<imagedata fileref="images/Show_View-ModeShape.png"/>
+		  </imageobject>
+	    </mediaobject>
+        </figure>
+	<para>
+	    To add a ModeShape repository, click on the <guilabel>Create a new server</guilabel> icon that appears in the <guilabel>Modeshape</guilabel> view. This view is located in the lower section of your interface, along with other views such as <guilabel>Severs</guilabel> and <guilabel>Console</guilabel>.
+        </para>
+	<figure>
+	   <title>Adding a new server for ModeShape repositories</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/ModeShape_View-Create_a_new_server.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   The <guilabel>New Server</guilabel> dialog will then appear asking for the URL of the server to connect and your authentication information. You can test your connection to the server by clicking the <guibutton>Test</guibutton> button and then clicking the <guibutton>Finish</guibutton> button to add the server to the <guilabel>ModeShape</guilabel> view. 
+        </para>
+	<figure>
+	   <title>The New Server dialog</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/ModeShape_View-New_Server.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+</section>
+
