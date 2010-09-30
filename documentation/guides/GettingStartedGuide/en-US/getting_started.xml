@@ -911,10 +911,19 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 	 </para>
 	 <variablelist>
 	    <varlistentry>
+	       <term>Version</term>
+	       <listitem>
+		  <para>
+		     The <guilabel>Content</guilabel> field has been modified to report the installed JBoss Developer Studio version. Sample returned values include: jbdevstudio-linux-gtk-x86_64-4.0.0.v201009301221R-H20-Beta1.jar and jbdevstudio-linux-gtk-3.0.2.v201009161622R-H138-GA.jar.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	 <variablelist>
+	    <varlistentry>
 	       <term>Installed components</term>
 	       <listitem>
 		  <para>
-		     The <guilabel>Keyword</guilabel> field has been modified to report the installed JBoss Tools components. Sample returned values include: JBoss AS, Drools, Teiid and ModeShape.
+		     The <guilabel>Keyword</guilabel> field has been modified to report the installed JBoss Developer Studio components. Sample returned values include: JBoss AS, Drools, Teiid and ModeShape.
 		  </para>
 	       </listitem>
 	    </varlistentry>
@@ -954,7 +963,15 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 	       <term>Operating System</term>
 	       <listitem>
 		  <para>
-		      The <guilabel>Operating System</guilabel> field reports the Operating System and its version that the product is running on (with no version reporting currently available for Linux distributions). Sample returned values include: Linux, Macintosh 10.4, Macintosh 10.6,  Windows XP and Windows 7.
+		     The <guilabel>Operating System</guilabel> field reports the Operating System and its version that the product is running on (with Linux distribution version reporting conducted through the <guilabel>User Defined Value</guilabel> field). Sample returned values include: Linux, Macintosh 10.4, Macintosh 10.6,  Windows XP and Windows 7.
+		  </para>
+	       </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	       <term>Linux distribution version</term>
+	       <listitem>
+		  <para>
+		      The <guilabel>User Defined Value</guilabel> field reports the distribution and version of Linux, if one is being used as the Operating System. Sample returned values include: Red Hat Enterprise Linux 5.4 and Fedora 13.
 		  </para>
 	       </listitem>
 	    </varlistentry>
