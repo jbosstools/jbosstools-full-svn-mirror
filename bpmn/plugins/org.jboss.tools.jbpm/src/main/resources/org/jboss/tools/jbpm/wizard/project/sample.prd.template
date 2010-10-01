@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_KyIMcc0AEd-jEMnzz1kFRw" type="bpmn2" name="sample.prd" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_U0QYsM0AEd-jEMnzz1kFRw" type="2003" fontName="Sans">
+    <element xmi:type="bpmn2:StartEvent" href="sample.bpmn2#_U0GnsM0AEd-jEMnzz1kFRw"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U0QYsc0AEd-jEMnzz1kFRw" x="72" y="27"/>
+  </children>
+  <children xmi:type="notation:Shape" xmi:id="_WZEaYM0AEd-jEMnzz1kFRw" type="2017" fontName="Sans">
+    <children xmi:type="notation:DecorationNode" xmi:id="_WZFogM0AEd-jEMnzz1kFRw" type="5009"/>
+    <element xmi:type="bpmn2:ScriptTask" href="sample.bpmn2#_WZB-IM0AEd-jEMnzz1kFRw"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WZFBcM0AEd-jEMnzz1kFRw" x="162" y="18" width="106"/>
+  </children>
+  <children xmi:type="notation:Shape" xmi:id="_a3r6wM0AEd-jEMnzz1kFRw" type="2004" fontName="Sans">
+    <element xmi:type="bpmn2:EndEvent" href="sample.bpmn2#_a3pegM0AEd-jEMnzz1kFRw"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_a3r6wc0AEd-jEMnzz1kFRw" x="324" y="27"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_KyIMcs0AEd-jEMnzz1kFRw"/>
+  <element xmi:type="bpmn2:Process" href="sample.bpmn2#_KyKosc0AEd-jEMnzz1kFRw"/>
+  <edges xmi:type="notation:Connector" xmi:id="_WZQnoM0AEd-jEMnzz1kFRw" type="4001" source="_U0QYsM0AEd-jEMnzz1kFRw" target="_WZEaYM0AEd-jEMnzz1kFRw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_WZQnoc0AEd-jEMnzz1kFRw" fontName="Sans"/>
+    <element xmi:type="bpmn2:SequenceFlow" href="sample.bpmn2#_WZPZgM0AEd-jEMnzz1kFRw"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_WZQnos0AEd-jEMnzz1kFRw" points="[0, 0, 0, -60]$[0, 60, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_ZS6VUM0AEd-jEMnzz1kFRw" type="4001" source="_WZEaYM0AEd-jEMnzz1kFRw" target="_a3r6wM0AEd-jEMnzz1kFRw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_ZS6VUc0AEd-jEMnzz1kFRw" fontName="Sans"/>
+    <element xmi:type="bpmn2:SequenceFlow" href="sample.bpmn2#_ZS2q8M0AEd-jEMnzz1kFRw"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ZS6VUs0AEd-jEMnzz1kFRw" points="[0, 0, 0, -60]$[0, 60, 0, 0]"/>
+  </edges>
+</notation:Diagram>

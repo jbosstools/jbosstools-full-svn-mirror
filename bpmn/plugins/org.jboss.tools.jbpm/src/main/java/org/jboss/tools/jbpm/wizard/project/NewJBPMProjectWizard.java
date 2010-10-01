@@ -286,7 +286,7 @@ public class NewJBPMProjectWizard extends BasicNewResourceWizard {
             throws CoreException, JavaModelException, IOException {
     	try {
 	    	if (extraPage.createProcessFile()) {
-	    		createRuleFlow(project, monitor);
+	    		createProcess(project, monitor);
 	    	}
 	    	if (extraPage.createJavaProcessFile()) {
 	    		createProcessSampleLauncher(project);
@@ -299,12 +299,19 @@ public class NewJBPMProjectWizard extends BasicNewResourceWizard {
     /**
      * Create the sample process file.
      */
-    private void createRuleFlow(IJavaProject project, IProgressMonitor monitor) throws CoreException {
-
-	    String fileName = "org/jboss/tools/jbpm/wizard/project/sample.bpmn.template";
+    private void createProcess(IJavaProject project, IProgressMonitor monitor) throws CoreException {
+	    String fileName = "org/jboss/tools/jbpm/wizard/project/sample.bpmn2.template";
         IFolder folder = project.getProject().getFolder("src/main/resources");
-        IFile file = folder.getFile("sample.bpmn");
+        IFile file = folder.getFile("sample.bpmn2");
         InputStream inputstream = getClass().getClassLoader().getResourceAsStream(fileName);
+        if (!file.exists()) {
+            file.create(inputstream, true, monitor);
+        } else {
+            file.setContents(inputstream, true, false, monitor);
+        }
+	    fileName = "org/jboss/tools/jbpm/wizard/project/sample.prd.template";
+        file = folder.getFile("sample.prd");
+        inputstream = getClass().getClassLoader().getResourceAsStream(fileName);
         if (!file.exists()) {
             file.create(inputstream, true, monitor);
         } else {

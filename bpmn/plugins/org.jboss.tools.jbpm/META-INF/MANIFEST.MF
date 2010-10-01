@@ -7,19 +7,9 @@ Bundle-Activator: org.jboss.tools.jbpm.JBPMEclipsePlugin
 Bundle-Vendor: JBoss, a division of Red Hat
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.resources,
- org.eclipse.debug.core,
  org.eclipse.debug.ui,
- org.eclipse.jface.text,
- org.eclipse.ui,
- org.eclipse.ui.console,
- org.eclipse.ui.editors,
- org.eclipse.ui.forms,
  org.eclipse.ui.ide,
- org.eclipse.ui.views,
  org.eclipse.ui.views.properties.tabbed,
- org.eclipse.ui.workbench.texteditor,
- com.ibm.icu,
  org.eclipse.jdt.core,
  org.eclipse.jdt.ui
 Eclipse-LazyStart: true
