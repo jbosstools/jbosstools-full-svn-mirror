@@ -14,6 +14,8 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -29,8 +31,10 @@ public class DeltaCloudPreferencePage extends PreferencePage implements
 		IWorkbenchPreferencePage {
 
 	private final static String LAUNCH_WARN = "LaunchWarnPreference.msg"; //$NON-NLS-1$
+	private final static String AUTO_CONNECT = "AutoConnectPreference.msg"; //$NON-NLS-1$
 	
 	private Button warnLaunch;
+	private Button autoConnect;
 	
 	public DeltaCloudPreferencePage() {
 		// TODO Auto-generated constructor stub
@@ -61,6 +65,11 @@ public class DeltaCloudPreferencePage extends PreferencePage implements
 			prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, warnLaunch.getSelection());
 		}
 		
+		boolean oldConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
+		if (oldConnect != autoConnect.getSelection()) {
+			prefs.putBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, autoConnect.getSelection());
+		}
+		
 		try {
 			prefs.flush();
 		} catch (BackingStoreException e) {
@@ -82,6 +91,15 @@ public class DeltaCloudPreferencePage extends PreferencePage implements
 		warnLaunch = new Button(container, SWT.CHECK);
 		warnLaunch.setText(PreferenceMessages.getString(LAUNCH_WARN));
 		warnLaunch.setSelection(prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, false));
+
+		autoConnect = new Button(container, SWT.CHECK);
+		autoConnect.setText(PreferenceMessages.getString(AUTO_CONNECT));
+		autoConnect.setSelection(prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true));
+		
+		FormData f = new FormData();
+		f.top = new FormAttachment(warnLaunch, 10);
+		f.left = new FormAttachment(warnLaunch, 0,  SWT.LEFT);
+		autoConnect.setLayoutData(f);
 		
 		return container;
 	}

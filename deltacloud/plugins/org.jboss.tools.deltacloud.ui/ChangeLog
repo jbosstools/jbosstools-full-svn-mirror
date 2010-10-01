@@ -1,3 +1,17 @@
+2010-10-01  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Add new constant
+	for auto-connect to RSE.
+	* src/org/jboss/tools/deltacloud/ui/preferences/DeltaCloudPreferencePage.java (performOk): Add
+	auto-connect support.
+	(createContents): Ditto.
+	* src/org/jboss/tools/deltacloud/ui/preferences/PreferenceMessages.properties: Add message for
+	auto-connect preference.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance.java (WatchCreateJob.run): If
+	auto-connect is true, connect to RSE.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new message
+	for auto-connect progress.
+
 2010-09-29  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (makeActions): 
