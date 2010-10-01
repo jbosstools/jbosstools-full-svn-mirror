@@ -178,7 +178,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
 			fi
 			rm -f /tmp/latestBuild.html
-		else
+		#else
 			# COMMENTED OUT as this uses too much disk space
 			# if a release build, create a named dir
 			#if [[ ${RELEASE} == "Yes" ]]; then
