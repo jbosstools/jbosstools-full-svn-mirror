@@ -179,10 +179,11 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			fi
 			rm -f /tmp/latestBuild.html
 		else
+			# COMMENTED OUT as this uses too much disk space
 			# if a release build, create a named dir
-			if [[ ${RELEASE} == "Yes" ]]; then
-				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}-${ZIPSUFFIX}/
-			fi
+			#if [[ ${RELEASE} == "Yes" ]]; then
+			#	date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}-${ZIPSUFFIX}/
+			#fi
 		fi
 
 		# and create/replace a snapshot dir w/ static URL
