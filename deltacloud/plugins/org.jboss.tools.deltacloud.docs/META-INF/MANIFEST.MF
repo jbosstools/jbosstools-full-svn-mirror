@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Deltacloud_docs
-Bundle-SymbolicName: org.jboss.tools.deltacloud_docs; singleton:=true
+Bundle-SymbolicName: org.jboss.tools.deltacloud.docs; singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: Red Hat Inc.
 Bundle-Localization: plugin
