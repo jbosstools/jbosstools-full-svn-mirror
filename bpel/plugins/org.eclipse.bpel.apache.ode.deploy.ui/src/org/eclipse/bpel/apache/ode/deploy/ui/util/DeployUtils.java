@@ -209,9 +209,16 @@ public class DeployUtils {
 		// Add WSDLs that were resolved as imports, to the list
 		for (Resource res : resourceSet.getResources())
 		{
-			Definition def = (Definition)res.getContents().get(0);
-			if (!wsdlFiles.contains(def))
-				wsdlFiles.add(def);
+			// https://jira.jboss.org/browse/JBIDE-6613
+			// fix a dumb mistake: XSDs don't have Definitions
+			// and will cause this to throw a class cast exception
+			Object obj = res.getContents().get(0);
+			if ( obj instanceof Definition )
+			{
+				Definition def = (Definition)obj;
+				if (!wsdlFiles.contains(def))
+					wsdlFiles.add(def);
+			}
 		}
 
 		return wsdlFiles;
@@ -229,8 +236,11 @@ public class DeployUtils {
 			if (DeployUtils.isBPELFile(file)) {
 				// load it
 				Process currentProcess = loadBPEL(file, resourceSet);
-				// stuff it in bpelFiles
-				bpelFiles.add(currentProcess);
+				// https://jira.jboss.org/browse/JBIDE-6613
+				// make sure the BPEL is valid.
+				if (currentProcess!=null)
+					// stuff it in bpelFiles
+					bpelFiles.add(currentProcess);
 			}
 		}
 
