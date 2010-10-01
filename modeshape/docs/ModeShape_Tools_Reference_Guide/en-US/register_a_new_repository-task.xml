@@ -20,7 +20,7 @@
 	<para>
 	    To add a ModeShape repository, click on the <guilabel>Create a new server</guilabel> icon that appears in the <guilabel>Modeshape</guilabel> view. This view is located in the lower section of your interface, along with other views such as <guilabel>Severs</guilabel> and <guilabel>Console</guilabel>.
         </para>
-	<figure>
+	<figure id="Adding_a_new_server_for_ModeShape_repositories">
 	   <title>Adding a new server for ModeShape repositories</title>
 	   <mediaobject>
 	      <imageobject>
@@ -39,5 +39,11 @@
 	      </imageobject>
 	   </mediaobject>
 	</figure>
+	<para>
+	   Once the server with the ModeShape repository has been added three new options become available within the <guilabel>ModeShape</guilabel> view. These options allow you to <guilabel>Edit server properties</guilabel>, <guilabel>Delete a server from the server registry</guilabel> and <guilabel>Reconnect to the selected server</guilabel>. To perform one of these actions either right-click on a server and select from the presented menu of actions, or use the buttons beside the <guilabel>Create a new server</guilabel> button seen in <xref linkend="Adding_a_new_server_for_ModeShape_repositories"/>.
+	</para>
+	<para>
+	    The <guilabel>ModeShape</guilabel> view also allows you to remove files from a workspace in an environment where the registry is being persisted from session to session.
+        </para>
 </section>
 
