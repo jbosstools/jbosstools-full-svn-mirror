@@ -13,9 +13,12 @@ package org.jboss.tools.vpe.dnd;
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
+import org.jboss.tools.vpe.xulrunner.util.XulRunnerVpeUtils;
+import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -26,7 +29,7 @@ import org.mozilla.interfaces.nsIDOMNode;
  * @author Yahor Radtsevich (yradtsevich)
  */
 public class DraggablePattern {
-	public static final int ICON_HEIGHT = 20;
+	private static final int ICON_HEIGHT = 20;
 	private static final String DRAG_ICON_ID = "dragIcon";		  //$NON-NLS-1$
 	private static final String DRAG_ICON_FILE = "dragIcon.gif";  //$NON-NLS-1$
 	

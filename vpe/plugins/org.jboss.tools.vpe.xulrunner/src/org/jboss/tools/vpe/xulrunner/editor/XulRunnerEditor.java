@@ -350,36 +350,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		nsISelection selection = domWindow.getSelection();
 		return selection;
 	}
-	
-	/**
-	 * Returns {@code true} if and only if the text selection exists and
-	 * it is containing in single #text node.
-	 */
-	public boolean isTextSelected() {
-		nsISelection selection = getSelection();
-		if (selection.getRangeCount() == 0) {
-			// nothing selected
-			return false;
-		}
-	
-		nsIDOMRange range = selection.getRangeAt(0);
-		nsIDOMNode container = range.getStartContainer();
-		if (!container.equals(range.getEndContainer())) {
-			// more than one node selected
-			return false;
-		}
-		if (container.getNodeType() != nsIDOMNode.TEXT_NODE) {
-			// not text node is selected
-			return false;
-		}
-		if (range.getStartOffset() == range.getEndOffset()) {
-			// no text selected
-			return false;
-		}
-		
-		return true;
-	}
-	
+
 	/**
 	 * Function created to restore functionality of MozillaBrowser
 	 * 

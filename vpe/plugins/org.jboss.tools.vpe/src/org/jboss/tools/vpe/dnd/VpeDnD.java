@@ -69,7 +69,6 @@ import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 /**
@@ -123,26 +122,9 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 
 	public void dragStart(nsIDOMEvent domEvent) {
 		nsIDOMElement selectedElement = getSelectedElement();
-		Point pageCoords = getPageCoords(domEvent);
-		
-		/* for selected text the drag icon is shown
-		 * when a drag action begins.  */
-		if (vpeController.getXulRunnerEditor().isTextSelected()) {
-			nsISelection selection = vpeController.getXulRunnerEditor().getSelection();
-			nsIDOMRange range = selection.getRangeAt(0);
-			nsIDOMText textContainer = queryInterface(
-					range.getStartContainer(), nsIDOMText.class);
-			
-			draggablePattern.showDragIcon(new DraggableTextSelection(
-					textContainer,
-					new Point(pageCoords.x - DraggablePattern.ICON_HEIGHT / 2,
-							pageCoords.y + DraggablePattern.ICON_HEIGHT / 2),
-					range.getStartOffset(), range.getEndOffset()));
-		}
-		
 		// start drag sessionvpe-element
-		if (vpeController.getXulRunnerEditor().isTextSelected()
-				|| isDraggable(selectedElement)) {
+		if (isTextSelected(getVisualSelection()) || isDraggable(selectedElement)) {
+			Point pageCoords = getPageCoords(domEvent);
 			draggablePattern.startSession(pageCoords.x, pageCoords.y);
 			startDragSession(selectedElement);
 			domEvent.stopPropagation();
@@ -153,8 +135,8 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 	private nsIDOMElement getSelectedElement() {
 		return vpeController.getXulRunnerEditor().getLastSelectedElement();
 	}
-
-	/**Draggable Text
+	
+	/**
 	 * Called when drag over event occurs
 	 * @param event
 	 */
@@ -166,10 +148,8 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 		
 		final DropResolver dropResolver;
 		if (isInnerDragSession()) {
-			if (vpeController.getXulRunnerEditor().isTextSelected()) {
-				dropResolver = getDropResolverForNode(getSourceNode(
-						vpeController.getXulRunnerEditor()
-								.getSelection().getFocusNode()));
+			if (isTextSelected(getVisualSelection())) {
+				dropResolver = getDropResolverForNode(getSourceNode(getVisualSelection().getFocusNode()));
 			} else {
 				dropResolver = getDropResolverForInternalDrop();
 			}
@@ -237,16 +217,54 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 	}
 
 	private void refreshDraggablePattern() {
-		nsIDOMElement selectedElement = getSelectedElement();
-
-		if (!vpeController.getXulRunnerEditor().isTextSelected() &&
-				isDraggable(selectedElement)) {
-			draggablePattern.showDragIcon(new DraggableElement(selectedElement));
+		nsISelection selection = getVisualSelection();
+		if (isTextSelected(selection)) {
+			nsIDOMRange range = selection.getRangeAt(0);
+			nsIDOMText textContainer = queryInterface(
+					range.getStartContainer(), nsIDOMText.class);
+			
+			draggablePattern.showDragIcon(new DraggableTextSelection(
+					textContainer, range.getStartOffset(), range.getEndOffset()));
 		} else {
-			draggablePattern.hideDragIcon();
+			nsIDOMElement selectedElement = getSelectedElement();
+
+			if (isDraggable(selectedElement)) {
+				draggablePattern.showDragIcon(new DraggableElement(selectedElement));
+			} else {
+				draggablePattern.hideDragIcon();
+			}
 		}
 	}
 	
+	private nsISelection getVisualSelection() {
+		return vpeController.getXulRunnerEditor().getWebBrowser()
+				.getContentDOMWindow().getSelection();
+	}
+
+	private boolean isTextSelected(nsISelection selection) {
+		if (selection.getRangeCount() == 0) {
+			// nothing selected
+			return false;
+		}
+
+		nsIDOMRange range = selection.getRangeAt(0);
+		nsIDOMNode container = range.getStartContainer();
+		if (!container.equals(range.getEndContainer())) {
+			// more than one node selected
+			return false;
+		}
+		if (container.getNodeType() != nsIDOMNode.TEXT_NODE) {
+			// not text node is selected
+			return false;
+		}
+		if (range.getStartOffset() == range.getEndOffset()) {
+			// no text selected
+			return false;
+		}
+		
+		return true;
+	}
+
 	public boolean isDragIconClicked(nsIDOMMouseEvent mouseEvent) {
 		return draggablePattern.isDragIconClicked(mouseEvent);
 	}
@@ -445,19 +463,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 		nsISupportsArray transArray = (nsISupportsArray) getComponentManager()
 				.createInstanceByContractID(XPCOM.NS_SUPPORTSARRAY_CONTRACTID, null,
 						nsISupportsArray.NS_ISUPPORTSARRAY_IID);
-		
-		Node node = getSourceNode(element);
-		String text;
-		if (node instanceof Element && node instanceof NodeContainer) {
-			text = ((NodeContainer)node).getSource();
-		} else {
-			StyledText textWidget = vpeController.getSourceEditor()
-					.getTextViewer().getTextWidget();
-			text = textWidget.getSelectionText();
-		}
-		String xPath = XSLTXPathHelper.calculateXPathToNode(node);
-		transArray.appendElement(createTransferable(text, xPath));
-		
+		transArray.appendElement(createTransferable(getSourceNode(element)));
 		getDragService().invokeDragSession(element, transArray, null,
 				nsIDragService.DRAGDROP_ACTION_MOVE
 						| nsIDragService.DRAGDROP_ACTION_COPY
@@ -469,17 +475,20 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 	 * 
 	 * @return transferable object
 	 */
-	private nsITransferable createTransferable(String text, String xPath) {
+	private nsITransferable createTransferable(Node node) {
 		
 		nsITransferable iTransferable = (nsITransferable) getComponentManager()
 						.createInstanceByContractID(XPCOM.NS_TRANSFERABLE_CONTRACTID, null,
 								nsITransferable.NS_ITRANSFERABLE_IID);
-
-		nsISupportsString nodeSourceData = createNsISupportsString(text);
-		int nodeSourceDataLength = text.length() * 2;
+		
+		String nodeSource = ((NodeContainer)node).getSource();
+		nsISupportsString nodeSourceData = createNsISupportsString(nodeSource);
+		int nodeSourceDataLength = nodeSource.length() * 2;
 		iTransferable.setTransferData(ModelTransfer.MODEL, nodeSourceData, nodeSourceDataLength);
 		iTransferable.setTransferData("text/html", nodeSourceData, nodeSourceDataLength); //$NON-NLS-1$
 		iTransferable.setTransferData("text/unicode", nodeSourceData, nodeSourceDataLength); //$NON-NLS-1$
+		
+		String xPath = XSLTXPathHelper.calculateXPathToNode(node);
 		nsISupportsString xPathData = createNsISupportsString(xPath);
 		iTransferable.setTransferData(DndUtil.VPE_XPATH_FLAVOR, xPathData, xPath.length() * 2);
 		
@@ -565,7 +574,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 			System.out.print("<<<<<< innerDrop"); //$NON-NLS-1$
 		}
 
-		if (vpeController.getXulRunnerEditor().isTextSelected()) {
+		if (isTextSelected(getVisualSelection())) {
 			// it is inner Drag&Drop of text
 			StyledText textWidget = vpeController.getSourceEditor()
 					.getTextViewer().getTextWidget();
