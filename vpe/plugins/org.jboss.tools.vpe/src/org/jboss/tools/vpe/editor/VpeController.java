@@ -128,7 +128,6 @@ import org.jboss.tools.vpe.resref.core.CSSReferenceList;
 import org.jboss.tools.vpe.resref.core.RelativeFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.TaglibReferenceList;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
-import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMEvent;
@@ -136,7 +135,6 @@ import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionListener;
 import org.w3c.dom.Attr;
@@ -1204,6 +1202,8 @@ public class VpeController implements INodeAdapter,
 				// mareshkau
 				if (vpeDnD.isDragIconClicked(mouseEvent)) {
 					vpeDnD.dragStart(mouseEvent);
+				} else {
+					selectionManager.setSelection(mouseEvent);					
 				}
 			}
 		} finally {
@@ -1231,13 +1231,6 @@ public class VpeController implements INodeAdapter,
 			return;
 		}
 		try {
-			// if text is selected, then there is no need to select any element 
-			if (!xulRunnerEditor.isTextSelected() ||
-						!xulRunnerEditor.getSelection().containsNode(
-									queryInterface(mouseEvent.getTarget(), nsIDOMNode.class), true)) {
-				selectionManager.setSelection(mouseEvent);
-			};
-			
 			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
 			if (visualNode != null) {
 				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {

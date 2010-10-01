@@ -288,10 +288,11 @@ public class MozillaEventAdapter implements nsIDOMEventListener, nsISelectionLis
 				listener.onShowContextMenu(0, domEvent, node);
 			}
 		} else if(DRAGSTART.equals(eventType)) {
-			for (MozillaDndListener listener : listeners.getListeners(
-					MozillaDndListener.class)) {
-				listener.dragStart(domEvent);
-			}
+			// fix of JBIDE-4998: since drag events now are implemented by
+			// handling CLICKEVENTTYPE, there is no need to handle them here 
+			//for (DndDomEventListener listener : dndListeners) {
+			//	listener.dragGesture(domEvent);
+			//}
 		} else if(DRAGDROPEVENT.equals(eventType)) {
 			// calls when drop event occure		 
 			for (MozillaDndListener listener : listeners.getListeners(
