@@ -888,7 +888,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </para>
   <mediaobject>
     <imageobject>
-      <imagedata fileref="images/getting_started/usage_plug-in_1.png"/>
+      <imagedata fileref="images/getting_started/usage_plug-in_1_JBDS.png"/>
     </imageobject>
     <caption>Usage plug-in pop-up</caption>
   </mediaobject>
