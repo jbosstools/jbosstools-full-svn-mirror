@@ -12,6 +12,7 @@ package org.eclipse.bpel.validator;
 
 import java.util.List;
 
+import javax.wsdl.OperationType;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
@@ -25,9 +26,15 @@ import org.eclipse.bpel.model.util.ImportResolver;
 import org.eclipse.bpel.model.util.ImportResolverRegistry;
 import org.eclipse.bpel.model.util.WSDLUtil;
 import org.eclipse.bpel.model.util.XSDUtil;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.wst.wsdl.Definition;
+import org.eclipse.wst.wsdl.Fault;
+import org.eclipse.wst.wsdl.Input;
 import org.eclipse.wst.wsdl.Message;
+import org.eclipse.wst.wsdl.Operation;
+import org.eclipse.wst.wsdl.Output;
 import org.eclipse.wst.wsdl.Part;
 import org.eclipse.wst.wsdl.PortType;
 import org.eclipse.xsd.XSDAttributeDeclaration;
@@ -36,6 +43,7 @@ import org.eclipse.xsd.XSDElementDeclaration;
 import org.eclipse.xsd.XSDSchema;
 import org.eclipse.xsd.XSDSimpleTypeDefinition;
 import org.eclipse.xsd.XSDTypeDefinition;
+import org.eclipse.xsd.impl.XSDNamedComponentImpl;
 
 /**
  * 
@@ -496,6 +504,11 @@ public class EmfModelQuery {
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
+		// https://jira.jboss.org/browse/JBIDE-7116
+		// quick exit
+		if (src==dst)
+			return true;
+		
 		Message srcMsg = null;
 		Message dstMsg = null;
 		
@@ -508,7 +521,8 @@ public class EmfModelQuery {
 		
 		// both messages, and both non null - check if same.
 		if (srcMsg != null && dstMsg != null) {
-			return srcMsg.equals(dstMsg);
+			// https://jira.jboss.org/browse/JBIDE-7116
+			return compatibleType(srcMsg, dstMsg);
 		}
 		
 		// either source OR destination is not a message, check for the XSDElement variant.
@@ -532,7 +546,8 @@ public class EmfModelQuery {
 			}
 			
 			Part part = (Part) parts.get(0);
-			return srcXSD.equals( part.getElementDeclaration() );			
+			// https://jira.jboss.org/browse/JBIDE-7116
+			return compatibleType(srcXSD, part.getElementDeclaration());			
 		}
 		
 		// destination is XSD element, source message may have 1 part defined as that element
@@ -544,7 +559,8 @@ public class EmfModelQuery {
 			}
 			
 			Part part = (Part) parts.get(0);
-			return dstXSD.equals( part.getElementDeclaration() );						
+			// https://jira.jboss.org/browse/JBIDE-7116
+			return compatibleType(dstXSD, part.getElementDeclaration());						
 		}
 		
 		// otherwise, incompatible partner activity messages
@@ -583,6 +599,11 @@ public class EmfModelQuery {
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
+		// https://jira.jboss.org/browse/JBIDE-7116
+		// quick exit
+		if (src==dst)
+			return true;
+		
 		Message srcMsg = null;
 		Message dstMsg = null;
 		
@@ -595,7 +616,8 @@ public class EmfModelQuery {
 		
 		// both messages, and both non null - check if same.
 		if (srcMsg != null && dstMsg != null) {
-			return srcMsg.equals(dstMsg);
+			// https://jira.jboss.org/browse/JBIDE-7116
+			return compatibleType(srcMsg, dstMsg);
 		}
 		
 		// either source OR destination is not a message, check for the XSDElement variant.
@@ -611,7 +633,8 @@ public class EmfModelQuery {
 		}
 		
 		if (srcXSD != null && dstXSD != null) {
-			return srcXSD.equals(dstXSD);
+			// https://jira.jboss.org/browse/JBIDE-7116
+			return compatibleType(srcXSD, dstXSD);
 		}
 		
 		XSDTypeDefinition srcType = null;
@@ -625,8 +648,8 @@ public class EmfModelQuery {
 		}
 		
 		if (srcType != null && dstType != null) {
-			
-			if (srcType.equals(dstType)) {
+			//https://jira.jboss.org/browse/JBIDE-7116
+			if (compatibleType(srcType, dstType)) {
 				return true;
 			}
 			
@@ -636,17 +659,166 @@ public class EmfModelQuery {
 			XSDTypeDefinition baseType = srcType.getBaseType();			
 			do {
 				// System.out.println("Checking: " + dstType + " against baseType: " + baseType);
-				if (dstType.equals(baseType)) {
+				// https://jira.jboss.org/browse/JBIDE-7116
+				if (compatibleType(dstType, baseType)) {
 					return true;
 				}
 				baseType = baseType.getBaseType();
-			} while ( baseType.equals(baseType.getBaseType()) == false );								
+			} while ( !compatibleType(baseType,baseType.getBaseType()) );
+			
+			return false;
 		}
+		
+		PortType srcPort = null;
+		PortType dstPort = null;
+		if (src instanceof PortType)
+			srcPort = (PortType)src;
+		if (dst instanceof PortType)
+			dstPort = (PortType)dst;
+		if (srcPort != null && dstPort != null)
+			return compatibleType(srcPort, dstPort);
 		
 		// otherwise, incompatible partner activity messages
 		return false;
 	}
+	
+	// https://jira.jboss.org/browse/JBIDE-7116
+	// new: compare contents of messages
+	public static boolean compatibleType(Message src, Message dst) {
+		assertTrue(src != null, CONTEXT_MSG);
+		assertTrue(dst != null, CONTEXT_MSG);
+		
+		if (src==dst)
+			return true;
+		
+		if (!src.getQName().equals(dst.getQName()))
+			return false;
+		URI uri1 = src.eResource().getURI();
+		URI uri2 = dst.eResource().getURI();
+		if (src.eResource().getURI().equals(dst.eResource().getURI()))
+			return true;
+		
+		EList<Part> parts1 = src.getEParts();
+		EList<Part> parts2 = dst.getEParts();
+		if (parts1.size() != parts2.size())
+			return false;
+		
+		for (int i=0; i<parts1.size(); ++i) {
+			Part part1 = parts1.get(i);
+			Part part2 = parts2.get(i);
+			if (!part1.getName().equals(part2.getName()))
+				return false;
+			if (!compatibleType(part1.getTypeDefinition(), part2.getTypeDefinition()))
+				return false;
+		}
+		
+		return true;
+	}
+	
+	// https://jira.jboss.org/browse/JBIDE-7116
+	// new: compare XSDElementDeclaractions
+	public static boolean compatibleType(XSDElementDeclaration src, XSDElementDeclaration dst) {
+		assertTrue(src != null, CONTEXT_MSG);
+		assertTrue(dst != null, CONTEXT_MSG);
+		
+		if (src==dst)
+			return true;
+		
+		// TODO: currently just doing a rudimentary name-only compare
+		// need to add XSD compare/diff when the eclipse MDT project builds one
+		return XSDNamedComponentImpl.Comparator.getInstance().compare(src,dst) == 0;
+	}
+	
+	// https://jira.jboss.org/browse/JBIDE-7116
+	// new: compare XSDTypeDefinitions
+	public static boolean compatibleType(XSDTypeDefinition src, XSDTypeDefinition dst) {
+		assertTrue(src != null, CONTEXT_MSG);
+		assertTrue(dst != null, CONTEXT_MSG);
+		
+		if (src==dst)
+			return true;
 
+		// rudimentary name-only compare
+		return XSDNamedComponentImpl.Comparator.getInstance().compare(src,dst) == 0;
+	}
+	
+	// https://jira.jboss.org/browse/JBIDE-7116
+	// new: compare PortTypes
+	public static boolean compatibleType(PortType src, PortType dst) {
+		assertTrue(src != null, CONTEXT_MSG);
+		assertTrue(dst != null, CONTEXT_MSG);
+		
+		if (src==dst)
+			return true;
+		
+		// do portTypes have to be defined in the same WSDL?
+//		URI uri1 = src.eResource().getURI();
+//		URI uri2 = dst.eResource().getURI();
+//		if ( !src.eResource().getURI().equals(dst.eResource().getURI()) )
+//			return false;
+		
+		// check names
+		if (src.getQName()==null || !src.getQName().equals(dst.getQName()))
+			return false;
+		
+		// check operations
+		EList<Operation> ops1 = src.getEOperations();
+		EList<Operation> ops2 = dst.getEOperations();
+		if (ops1.size()!=ops2.size())
+			return false;
+		for (int i=0; i<ops1.size(); ++i) {
+			Operation op1 = ops1.get(i);
+			Operation op2 = ops2.get(i);
+			if (!compatibleType(op1, op2))
+				return false;
+		}
+		return true;
+	}
+	
+	// https://jira.jboss.org/browse/JBIDE-7116
+	// new: compare Operations
+	public static boolean compatibleType(Operation src, Operation dst) {
+		assertTrue(src != null, CONTEXT_MSG);
+		assertTrue(dst != null, CONTEXT_MSG);
+		
+		if (src==dst)
+			return true;
+		
+		if (src.getName()==null || !src.getName().equals(dst.getName()))
+			return false;
+		
+		if (!src.getStyle().equals(dst.getStyle()))
+			return false;
+		
+		// check inputs, outputs and faults
+		Input in1 = src.getEInput();
+		Input in2 = dst.getEInput();
+		if (in1!=null && in2!=null) {
+			if (!compatibleType(in1.getEMessage(), in2.getEMessage()))
+				return false;
+		}
+		else if ( (in1==null) != (in2==null) )
+			return false;
+		
+		Output out1 = src.getEOutput();
+		Output out2 = dst.getEOutput();
+		if (out1!=null && out2!=null) {
+			if (!compatibleType(out1.getEMessage(), out2.getEMessage()))
+				return false;
+		}
+		else if ( (out1==null) != (out2==null) )
+			return false;
+		
+		EList<Fault> faults1 = src.getEFaults();
+		EList<Fault> faults2 = dst.getEFaults();
+		if (faults1.size() != faults2.size())
+			return false;
+		for (int i=0; i<faults1.size(); ++i) {
+			if (!compatibleType(faults1.get(i).getEMessage(), faults2.get(i).getEMessage()))
+				return false;
+		}
+		return true;
+	}
 	/**
 	 * @param eObj the object
 	 * @return returns if simple type, false otherwise.
