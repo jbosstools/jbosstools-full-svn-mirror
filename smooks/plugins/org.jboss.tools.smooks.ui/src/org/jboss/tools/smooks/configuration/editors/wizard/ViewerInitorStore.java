@@ -261,7 +261,7 @@ public class ViewerInitorStore {
 		csv12ViewerInitor.setLabelProvider(new XMLStructuredDataLabelProvider());
 		csv12ViewerInitor.setTreeContentProvider(new XMLStructuredDataContentProvider());
 		csv12ViewerInitor.setStructuredDataLoadWizard(new CSV12InputDataWizard());
-		// map.put(typeID, csv12ViewerInitor);
+		map.put(typeID, csv12ViewerInitor);
 
 		// for EDI 1.1
 		BaseViewerInitor ediViewerInitor = new BaseViewerInitor();
