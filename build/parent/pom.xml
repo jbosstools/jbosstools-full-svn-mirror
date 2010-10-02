@@ -44,7 +44,41 @@
 				<version>${tychoVersion}</version>
 				<extensions>true</extensions>
 			</plugin>
-
+			
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-packaging-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<environments>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>carbon</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -193,6 +227,37 @@
 					</releases>
 				</repository>
 			</repositories>
+		</profile>
+
+		<profile>
+			<id>jbds-no-target</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<!--repositories>
+				<repository>
+					<id>jbosstools</id>
+					<url>jar:file:///home/eskimo/Projects/jbds-build/jbosstools-src/adt.builder/downloads/toTransform/jbdevstudio-Update-4.0.0.v201009250226N-Beta1.zip!/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>eclipse-rcp</id>
+					<url>jar:file:///home/eskimo/Projects/jbds-build/jbosstools-src/adt.builder/downloads/rcp.zip!/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories-->
 		</profile>
 
 		<!-- Time saver: to build everything from scratch (without target platform); 
