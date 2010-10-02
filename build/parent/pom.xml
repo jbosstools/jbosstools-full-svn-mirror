@@ -217,6 +217,7 @@
 			<repositories>
 				<repository>
 					<id>helios</id>
+					<!-- could also use http://download.jboss.org/jbosstools/updates/target-platform/latest/ -->
 					<url>file://home/hudson/static_build_env/jbds/target-platform/e36-wtp322.target/</url>
 					<layout>p2</layout>
 					<snapshots>
