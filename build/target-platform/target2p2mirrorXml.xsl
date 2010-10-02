@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	version="2.0">
+<!-- 
+	This XSLT is used by target2p2mirror.xml to generate a p2.mirror ant script from a .target file
+-->	
 	<xsl:output method="xml" indent="yes" encoding="UTF-8"
 		version="1.0" />
-	<xsl:decimal-format decimal-separator="."
-		grouping-separator="," />
 
-	<xsl:param name="verbose" select="'${verbose}'" />
-	<xsl:param name="followStrict" select="'${followStrict}'" />
-	<xsl:param name="destination" select="'file:${repo.dir}'" />
+	<!-- if useLatest = true, omit versions from p2.mirror script to fetch latest version available; 
+		 if useLatest = false, include versions and fetch specific versions requested. -->
+	<xsl:param name="useLatest" select="'true'" as="xs:string"/>
 
-	<xsl:variable name="platformFilter"
-		select="concat(/target/environment/os/text(), ',', /target/environment/ws/text(), ',', /target/environment/arch/text())" />
-
+	<xsl:param name="verbose" select="'${verbose}'" as="xs:string"/>
+	<xsl:param name="followStrict" select="'${followStrict}'" as="xs:string"/>
+	<xsl:param name="destination" select="'file:${repo.dir}'" as="xs:string"/>
+	
 	<xsl:template match="target">
 		<project name="Download target platform" default="download.target.platform">
 			<target name="help">
 				<echo>
+					Generated with useLatest = <xsl:value-of select="$useLatest"/>
+					
+					---
+					
 					Use followStrict="true" to prevent downloading all
 					requirements not included in the target platform
 					or
@@ -24,17 +30,16 @@
 
 					To run this script:
 
-					./eclipse -vm /opt/jdk1.6.0/bin/java -nosplash
-					-data \
+					/abs/path/to/eclipse -vm /opt/jdk1.6.0/bin/java -nosplash -data \
 					/tmp/workspace -consolelog -application \
-					org.eclipse.ant.core.antRunner -f out.xml \
+					org.eclipse.ant.core.antRunner -f *.target.p2mirror.xml \
 					-Ddebug=true \
-					-DfollowStrict=false \
+					-DfollowStrict=true \
 					-Drepo.dir=/tmp/REPO/
 </echo>
 			</target>
 			<target name="init" unless="repo.dir">
-				<fail>Must set -Drepo.dir=/path/to/download/artifacts/</fail>
+				<fail>Must set -Drepo.dir=/abs/path/to/download/artifacts/</fail>
 			</target>
 			<target name="download.target.platform" depends="init"
 				description="Download from target platform definition" if="repo.dir">
@@ -42,7 +47,8 @@
 				<property name="followStrict" value="false" />
 				<echo level="info">Download features/plugins into ${repo.dir}</echo>
 				<p2.mirror destination="{$destination}" verbose="{$verbose}">
-					<slicingOptions includeFeatures="true" followStrict="{$followStrict}" />
+					<!-- should we add latestVersionOnly="true" to <slicingOptions> ? -->
+					<slicingOptions includeFeatures="true" followStrict="{$followStrict}"/>
 					<source>
 						<xsl:apply-templates select="//repository" />
 					</source>
@@ -60,7 +66,14 @@
 	</xsl:template>
 
 	<xsl:template match="//unit">
-		<iu id="{@id}" version="{@version}" />
+		<xsl:choose>
+			<xsl:when test="$useLatest='true'">
+				<iu id="{@id}" version="" />
+			</xsl:when>
+			<xsl:otherwise>
+				<iu id="{@id}" version="{@version}" />
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="//plugin">
