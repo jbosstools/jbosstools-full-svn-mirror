@@ -3,7 +3,7 @@
 		<category>Teiid Designer</category>
 		<name>Parts</name>
 		<included-projects>
-		Parts Project
+		PartsProject
 		</included-projects>		
 		<shortDescription>Parts Model Project Set Example</shortDescription>
 		<description>
@@ -16,5 +16,6 @@
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/dflorian/teiid-designer/parts_modelProjectSet.zip
 		</url>
+		<perspectiveId>modelerPerspective</perspectiveId>
 	</project>
 </projects>
