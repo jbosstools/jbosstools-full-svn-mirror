@@ -234,6 +234,10 @@ public class VpeController implements INodeAdapter,
 		this.visualEditor = visualEditor;
 		visualEditor.setController(this);
 		bundleMap.init(sourceEditor);
+		/*
+		 * Update the toolbar item state
+		 */
+		updateExternalizeStringsToolbarIconState();
 		pageContext = new VpePageContext(bundleMap, editPart);
 		domMapping = new VpeDomMapping(pageContext);
 		sourceBuilder = new VpeSourceDomBuilder(domMapping, this,
