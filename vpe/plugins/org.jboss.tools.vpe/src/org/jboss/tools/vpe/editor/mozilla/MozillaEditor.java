@@ -66,6 +66,7 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsDialog;
 import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsWizard;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
@@ -449,7 +450,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create EXTERNALIZE STRINGS tool bar item
 		 */
-		externalizeStringsAction = new Action(VpeUIMessages.EXTERNALIZE_STRINGS,
+		externalizeStringsAction = new Action(JstUIMessages.EXTERNALIZE_STRINGS,
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
@@ -468,7 +469,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		};
 		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
 				ICON_EXTERNALIZE_STRINGS));
-		externalizeStringsAction.setToolTipText(VpeUIMessages.EXTERNALIZE_STRINGS);
+		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS);
 		toolBarManager.add(externalizeStringsAction);
 
 		updateToolbarItemsAccordingToPreferences();
