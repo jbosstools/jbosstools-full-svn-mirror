@@ -17,10 +17,10 @@ if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloa
 # get zip name from zip.list.txt
 path=$(wget -q http://download.jboss.org/jbosstools/builds/staging/${JOBNAMEREDUX}/logs/zip.list.txt -O - | egrep -- "-Update-" | head -1 | sed "s#,\\\\##"); 
 
-echo "Fetch ${path} as ${JOBNAMEREDUX}-Update.zip"
+#echo "Fetch ${path} as ${JOBNAMEREDUX}-Update.zip"
 # to test locally, may need to use --protocol=29 and -P instead of -q
 date; rsync -arzq --rsh=ssh ${DESTINATION}/builds/staging/${JOBNAMEREDUX}/${path} ${JOBNAMEREDUX}-Update.zip
 
-echo "Publish ${path} as ${JOBNAMEREDUX}-Update.zip"
+#echo "Publish ${path} as ${JOBNAMEREDUX}-Update.zip"
 # to test locally, may need to use --protocol=29 and -P instead of -q
 date; rsync -arzq --rsh=ssh ${JOBNAMEREDUX}-Update.zip ${DESTINATION}/updates/staging/
