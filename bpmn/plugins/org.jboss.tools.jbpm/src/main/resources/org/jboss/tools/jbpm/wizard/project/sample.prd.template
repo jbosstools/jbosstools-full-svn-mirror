@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_KyIMcc0AEd-jEMnzz1kFRw" type="bpmn2" name="sample.prd" measurementUnit="Pixel">
-  <children xmi:type="notation:Shape" xmi:id="_U0QYsM0AEd-jEMnzz1kFRw" type="2003" fontName="Sans">
-    <element xmi:type="bpmn2:StartEvent" href="sample.bpmn2#_U0GnsM0AEd-jEMnzz1kFRw"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_U0QYsc0AEd-jEMnzz1kFRw" x="72" y="27"/>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_PQawUc-rEd-xCJtU6N_r3Q" type="bpmn2" name="sample.prd" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_UVSYYM-rEd-xCJtU6N_r3Q" type="2003" fontName="Lucida Grande">
+    <element xmi:type="bpmn2:StartEvent" href="sample.bpmn2#_UVGyMM-rEd-xCJtU6N_r3Q"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UVSYYc-rEd-xCJtU6N_r3Q" x="44" y="32"/>
   </children>
-  <children xmi:type="notation:Shape" xmi:id="_WZEaYM0AEd-jEMnzz1kFRw" type="2017" fontName="Sans">
-    <children xmi:type="notation:DecorationNode" xmi:id="_WZFogM0AEd-jEMnzz1kFRw" type="5009"/>
-    <element xmi:type="bpmn2:ScriptTask" href="sample.bpmn2#_WZB-IM0AEd-jEMnzz1kFRw"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WZFBcM0AEd-jEMnzz1kFRw" x="162" y="18" width="106"/>
+  <children xmi:type="notation:Shape" xmi:id="_WTXOoM-rEd-xCJtU6N_r3Q" type="2017" fontName="Lucida Grande">
+    <children xmi:type="notation:DecorationNode" xmi:id="_WTbgEM-rEd-xCJtU6N_r3Q" type="5009"/>
+    <element xmi:type="bpmn2:ScriptTask" href="sample.bpmn2#_WTS9MM-rEd-xCJtU6N_r3Q"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WTXOoc-rEd-xCJtU6N_r3Q" x="126" y="24" width="109"/>
   </children>
-  <children xmi:type="notation:Shape" xmi:id="_a3r6wM0AEd-jEMnzz1kFRw" type="2004" fontName="Sans">
-    <element xmi:type="bpmn2:EndEvent" href="sample.bpmn2#_a3pegM0AEd-jEMnzz1kFRw"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_a3r6wc0AEd-jEMnzz1kFRw" x="324" y="27"/>
+  <children xmi:type="notation:Shape" xmi:id="_XkJhEM-rEd-xCJtU6N_r3Q" type="2004" fontName="Lucida Grande">
+    <element xmi:type="bpmn2:EndEvent" href="sample.bpmn2#_XkHr4M-rEd-xCJtU6N_r3Q"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_XkJhEc-rEd-xCJtU6N_r3Q" x="292" y="32"/>
   </children>
-  <styles xmi:type="notation:DiagramStyle" xmi:id="_KyIMcs0AEd-jEMnzz1kFRw"/>
-  <element xmi:type="bpmn2:Process" href="sample.bpmn2#_KyKosc0AEd-jEMnzz1kFRw"/>
-  <edges xmi:type="notation:Connector" xmi:id="_WZQnoM0AEd-jEMnzz1kFRw" type="4001" source="_U0QYsM0AEd-jEMnzz1kFRw" target="_WZEaYM0AEd-jEMnzz1kFRw">
-    <styles xmi:type="notation:FontStyle" xmi:id="_WZQnoc0AEd-jEMnzz1kFRw" fontName="Sans"/>
-    <element xmi:type="bpmn2:SequenceFlow" href="sample.bpmn2#_WZPZgM0AEd-jEMnzz1kFRw"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_WZQnos0AEd-jEMnzz1kFRw" points="[0, 0, 0, -60]$[0, 60, 0, 0]"/>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_PQbXYM-rEd-xCJtU6N_r3Q"/>
+  <element xmi:type="bpmn2:Process" href="sample.bpmn2#com.sample.bpmn.hello"/>
+  <edges xmi:type="notation:Connector" xmi:id="_YICRQM-rEd-xCJtU6N_r3Q" type="4001" source="_UVSYYM-rEd-xCJtU6N_r3Q" target="_WTXOoM-rEd-xCJtU6N_r3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_YICRQc-rEd-xCJtU6N_r3Q" fontName="Lucida Grande"/>
+    <element xmi:type="bpmn2:SequenceFlow" href="sample.bpmn2#_YHxykM-rEd-xCJtU6N_r3Q"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YICRQs-rEd-xCJtU6N_r3Q" points="[0, 0, 0, -60]$[0, 60, 0, 0]"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_YIu00M-rEd-xCJtU6N_r3Q" id="(0.0375,0.475)"/>
   </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_ZS6VUM0AEd-jEMnzz1kFRw" type="4001" source="_WZEaYM0AEd-jEMnzz1kFRw" target="_a3r6wM0AEd-jEMnzz1kFRw">
-    <styles xmi:type="notation:FontStyle" xmi:id="_ZS6VUc0AEd-jEMnzz1kFRw" fontName="Sans"/>
-    <element xmi:type="bpmn2:SequenceFlow" href="sample.bpmn2#_ZS2q8M0AEd-jEMnzz1kFRw"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ZS6VUs0AEd-jEMnzz1kFRw" points="[0, 0, 0, -60]$[0, 60, 0, 0]"/>
+  <edges xmi:type="notation:Connector" xmi:id="_YqZXcM-rEd-xCJtU6N_r3Q" type="4001" source="_WTXOoM-rEd-xCJtU6N_r3Q" target="_XkJhEM-rEd-xCJtU6N_r3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_YqZXcc-rEd-xCJtU6N_r3Q" fontName="Lucida Grande"/>
+    <element xmi:type="bpmn2:SequenceFlow" href="sample.bpmn2#_YqVtEM-rEd-xCJtU6N_r3Q"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YqZXcs-rEd-xCJtU6N_r3Q" points="[40, -12, -70, 20]$[100, -30, -10, 2]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_aei1oM-rEd-xCJtU6N_r3Q" id="(0.875,0.475)"/>
   </edges>
 </notation:Diagram>
