@@ -140,6 +140,7 @@ public final class HTML {
 	public static final String VALUE_CLEAR_BOTH = "both"; //$NON-NLS-1$
 	public static final String VALUE_INLINE = "inline"; //$NON-NLS-1$
 	public static final String VALUE_BLOCK = "block"; //$NON-NLS-1$
+	public static final String VALUE_HREF_ANCHOR = "#"; //$NON-NLS-1$
 
 	public static final String STYLE_PARAMETER_DISPLAY = "display"; //$NON-NLS-1$
 	public static final String STYLE_VALUE_DEFAULT_DISPLAY = "";	//$NON-NLS-1$

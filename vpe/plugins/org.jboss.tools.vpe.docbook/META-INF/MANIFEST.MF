@@ -6,6 +6,8 @@ Bundle-Version: 3.1.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jboss.tools.jst.jsp,
+ org.mozilla.xpcom,
+ org.eclipse.jface.text,
  org.jboss.tools.vpe
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor.0
