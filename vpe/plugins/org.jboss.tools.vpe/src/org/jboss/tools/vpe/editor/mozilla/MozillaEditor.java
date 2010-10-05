@@ -36,6 +36,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
@@ -65,6 +66,7 @@ import org.eclipse.ui.part.EditorPart;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsDialog;
+import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsUtils;
 import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsWizard;
 import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
@@ -101,6 +103,7 @@ import org.mozilla.interfaces.nsIHTMLInlineTableEditor;
 import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
 	protected static final File INIT_FILE = new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1100,6 +1103,55 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 	
 	
+//	/**
+//	 * Update Externalize Strings toolbar icon state.
+//	 * <p>
+//	 * Enables the button when suitable text is selected.
+//	 * Disabled otherwise.
+//	 */
+//	public void updateExternalizeStringsToolbarIconState() {
+//		StructuredTextEditor editor = controller.getSourceEditor();
+//		ISelection sel = editor.getSelectionProvider().getSelection();
+//		String stringToUpdate = Constants.EMPTY;
+//		if (ExternalizeStringsUtils.isSelectionCorrect(sel)) {
+//			String text = Constants.EMPTY;
+//			TextSelection textSelection = null;
+//			IStructuredSelection structuredSelection = (IStructuredSelection) sel;
+//			textSelection = (TextSelection) sel;
+//			text = textSelection.getText();
+//			Object selectedElement = structuredSelection.getFirstElement();
+//			/*
+//			 * When selected text is empty parse selected element and find a
+//			 * string to replace..
+//			 */
+//			if ((text.trim().length() == 0)) {
+//				if (selectedElement instanceof org.w3c.dom.Text) {
+//					/*
+//					 * ..it could be a plain text
+//					 */
+//					org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
+//					if (textNode.getNodeValue().trim().length() > 0) {
+//						stringToUpdate = textNode.getNodeValue();
+//					}
+//				} else if (selectedElement instanceof Attr) {
+//					/*
+//					 * ..or an attribute's value
+//					 */
+//					Attr attrNode = (Attr) selectedElement;
+//					if (attrNode.getNodeValue().trim().length() > 0) {
+//						stringToUpdate = attrNode.getNodeValue();
+//					}
+//				}
+//			} else {
+//				stringToUpdate = text;
+//			}
+//		}
+//		if ((stringToUpdate.length() > 0)) {
+//			externalizeStringsAction.setEnabled(true);
+//		} else {
+//			externalizeStringsAction.setEnabled(false);
+//		}
+//	}
 //	/**
 //	 * Update Externalize Strings toolbar icon state.
 //	 * <p>
