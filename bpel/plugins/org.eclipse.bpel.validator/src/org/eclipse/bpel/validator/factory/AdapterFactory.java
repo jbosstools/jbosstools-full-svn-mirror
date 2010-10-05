@@ -142,6 +142,9 @@ public class AdapterFactory implements IAdapterFactory {
 			// Find the EObject reference to the emf model in the hierarchy of
 			// the
 			EObject eObj = (EObject) top.getUserData("emf.model");
+			// https://jira.jboss.org/browse/JBIDE-7116
+			if (eObj==null)
+				eObj = (EObject) elm.getUserData("emf.model");
 
 			result = adapt_EObject2IResource(eObj);
 		}
@@ -175,32 +178,43 @@ public class AdapterFactory implements IAdapterFactory {
 		//message && fix  		
 		String msg  = problem.getAttribute(IProblem.MESSAGE);
 		String rule = problem.getAttribute(IProblem.RULE);
-				
-		props.put("bpel.validation.rule", rule);
+
+		// https://jira.jboss.org/browse/JBIDE-7116
+		// fix ugliness in DEBUG mode (see "org.eclipse.bpel.validator.builder" buildCommand in .project)
+		if (rule!=null)
+			props.put("bpel.validation.rule", rule);
 		
 		if (DEBUG) {
-			Throwable t = problem.getAttribute(IProblem.EXCEPTION);
 			String emsg = msg;
-			emsg += " (rule=";
-			emsg += rule;			
-			
-			if (t != null) {
-				emsg += "; stack=";
-				
-				int count = 0;
-				for(StackTraceElement e : t.getStackTrace()) {
-					emsg += "[" + count + "]";
-					emsg += e.getClassName() + ".";
-					emsg += e.getMethodName() + "@" + e.getLineNumber();
-					count += 1;
-					if (count > 2) {
-						break;
-					}
-					emsg += "/";
+			Throwable t = problem.getAttribute(IProblem.EXCEPTION);
+			if (rule!=null || t!=null) {
+
+				emsg += "(DEBUG: ";
+				if (rule!=null) {
+					emsg += "rule=";
+					emsg += rule;
 				}
-			}
 			
-			emsg += ")";			
+				if (t != null) {
+					if (rule!=null)
+						emsg += "; ";
+					emsg += "stack=";
+					
+					int count = 0;
+					for(StackTraceElement e : t.getStackTrace()) {
+						emsg += "[" + count + "]";
+						emsg += e.getClassName() + ".";
+						emsg += e.getMethodName() + "@" + e.getLineNumber();
+						count += 1;
+						if (count > 2) {
+							break;
+						}
+						emsg += "/";
+					}
+				}
+			
+				emsg += ")";
+			}
 			props.put(IMarker.MESSAGE, emsg);
 			
 		} else {

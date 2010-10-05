@@ -107,12 +107,16 @@ public class Builder extends IncrementalProjectBuilder {
 			bDebug = toBoolean(args.get("debug"),false);
 		}
 		
+
 		AdapterFactory.DEBUG = bDebug;
 		if (bDebug) {
 			p("Clear error messages from the cache ... (will re-load)");
 			Messages.clear();			
-		} 
-
+		}
+		
+		// https://jira.jboss.org/browse/JBIDE-7116
+		clearCach();
+		
 		IProject myProject = this.getProject();
 		IResourceDelta resourceDelta = this.getDelta(myProject);
 		
@@ -192,6 +196,14 @@ public class Builder extends IncrementalProjectBuilder {
 	@SuppressWarnings("unchecked")
 	public void validate (IResource resource, IProgressMonitor monitor) throws CoreException {
 		
+		// https://jira.jboss.org/browse/JBIDE-7116
+		// enable element location tracking for error reporting
+		// TODO: move this to somewhere more appropriate when fixing JBIDE-6839
+		Map<Object, Object> loadOptions = fResourceSet.getLoadOptions();
+		loadOptions.put("TRACK_LOCATION", Boolean.TRUE);
+		fResourceSet.setLoadOptions(loadOptions);
+		
+
 		switch (resource.getType()) {
 		
 		case IResource.FOLDER :
