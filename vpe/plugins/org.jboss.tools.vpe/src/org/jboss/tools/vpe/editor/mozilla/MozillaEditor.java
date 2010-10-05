@@ -124,7 +124,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_NON_VISUAL_TAGS = "icons/non-visusal-tags.gif"; //$NON-NLS-1$
 	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
 	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
-	public static final String ICON_EXTERNALIZE_STRINGS= "icons/externalize.png"; //$NON-NLS-1$
+//	public static final String ICON_EXTERNALIZE_STRINGS= "icons/externalize.png"; //$NON-NLS-1$
 
 	//static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
@@ -153,7 +153,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private Action showNonVisualTagsAction;
 	private Action showTextFormattingAction;
 	private Action showBundleAsELAction;
-	private Action externalizeStringsAction;
+//	private Action externalizeStringsAction;
 	
 	static {
 		/*
@@ -450,27 +450,27 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create EXTERNALIZE STRINGS tool bar item
 		 */
-		externalizeStringsAction = new Action(JstUIMessages.EXTERNALIZE_STRINGS,
-				IAction.AS_PUSH_BUTTON) {
-			@Override
-			public void run() {
-				/*
-				 * Externalize strings action.
-				 * Show a dialog to add properties key and value.
-				 * When selection is correct show the dialog
-				 * otherwise the toolbar icon will be disabled.
-				 */
-				ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
-						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-						new ExternalizeStringsWizard(controller.getSourceEditor(), 
-								controller.getPageContext().getBundle()));
-				dlg.open();
-			}
-		};
-		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
-				ICON_EXTERNALIZE_STRINGS));
-		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS);
-		toolBarManager.add(externalizeStringsAction);
+//		externalizeStringsAction = new Action(JstUIMessages.EXTERNALIZE_STRINGS,
+//				IAction.AS_PUSH_BUTTON) {
+//			@Override
+//			public void run() {
+//				/*
+//				 * Externalize strings action.
+//				 * Show a dialog to add properties key and value.
+//				 * When selection is correct show the dialog
+//				 * otherwise the toolbar icon will be disabled.
+//				 */
+//				ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
+//						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+//						new ExternalizeStringsWizard(controller.getSourceEditor(), 
+//								controller.getPageContext().getBundle()));
+//				dlg.open();
+//			}
+//		};
+//		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+//				ICON_EXTERNALIZE_STRINGS));
+//		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS);
+//		toolBarManager.add(externalizeStringsAction);
 
 		updateToolbarItemsAccordingToPreferences();
 		toolBarManager.update(true);
@@ -488,7 +488,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				showNonVisualTagsAction = null;
 				showTextFormattingAction = null;
 				showBundleAsELAction = null;
-				externalizeStringsAction = null;
+//				externalizeStringsAction = null;
 			}
 		});
 		return verBar;
@@ -1100,55 +1100,55 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 	
 	
-	/**
-	 * Update Externalize Strings toolbar icon state.
-	 * <p>
-	 * Enables the button when suitable text is selected.
-	 * Disabled otherwise.
-	 */
-	public void updateExternalizeStringsToolbarIconState() {
-		StructuredTextEditor editor = controller.getSourceEditor();
-		ISelection sel = editor.getSelectionProvider().getSelection();
-		String stringToUpdate = Constants.EMPTY;
-		if ((sel instanceof TextSelection)
-				&& (sel instanceof IStructuredSelection)
-				&& (((IStructuredSelection) sel).size() == 1)) {
-			String text = Constants.EMPTY;
-			TextSelection textSelection = null;
-			IStructuredSelection structuredSelection = (IStructuredSelection) sel;
-			textSelection = (TextSelection) sel;
-			text = textSelection.getText();
-			Object selectedElement = structuredSelection.getFirstElement();
-			/*
-			 * When selected text is empty parse selected element and find a
-			 * string to replace..
-			 */
-			if ((text.trim().length() == 0)) {
-				if (selectedElement instanceof org.w3c.dom.Text) {
-					/*
-					 * ..it could be a plain text
-					 */
-					org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
-					if (textNode.getNodeValue().trim().length() > 0) {
-						stringToUpdate = textNode.getNodeValue();
-					}
-				} else if (selectedElement instanceof Attr) {
-					/*
-					 * ..or an attribute's value
-					 */
-					Attr attrNode = (Attr) selectedElement;
-					if (attrNode.getNodeValue().trim().length() > 0) {
-						stringToUpdate = attrNode.getNodeValue();
-					}
-				}
-			} else {
-				stringToUpdate = text;
-			}
-		}
-		if ((stringToUpdate.length() > 0)) {
-			externalizeStringsAction.setEnabled(true);
-		} else {
-			externalizeStringsAction.setEnabled(false);
-		}
-	}
+//	/**
+//	 * Update Externalize Strings toolbar icon state.
+//	 * <p>
+//	 * Enables the button when suitable text is selected.
+//	 * Disabled otherwise.
+//	 */
+//	public void updateExternalizeStringsToolbarIconState() {
+//		StructuredTextEditor editor = controller.getSourceEditor();
+//		ISelection sel = editor.getSelectionProvider().getSelection();
+//		String stringToUpdate = Constants.EMPTY;
+//		if ((sel instanceof TextSelection)
+//				&& (sel instanceof IStructuredSelection)
+//				&& (((IStructuredSelection) sel).size() == 1)) {
+//			String text = Constants.EMPTY;
+//			TextSelection textSelection = null;
+//			IStructuredSelection structuredSelection = (IStructuredSelection) sel;
+//			textSelection = (TextSelection) sel;
+//			text = textSelection.getText();
+//			Object selectedElement = structuredSelection.getFirstElement();
+//			/*
+//			 * When selected text is empty parse selected element and find a
+//			 * string to replace..
+//			 */
+//			if ((text.trim().length() == 0)) {
+//				if (selectedElement instanceof org.w3c.dom.Text) {
+//					/*
+//					 * ..it could be a plain text
+//					 */
+//					org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
+//					if (textNode.getNodeValue().trim().length() > 0) {
+//						stringToUpdate = textNode.getNodeValue();
+//					}
+//				} else if (selectedElement instanceof Attr) {
+//					/*
+//					 * ..or an attribute's value
+//					 */
+//					Attr attrNode = (Attr) selectedElement;
+//					if (attrNode.getNodeValue().trim().length() > 0) {
+//						stringToUpdate = attrNode.getNodeValue();
+//					}
+//				}
+//			} else {
+//				stringToUpdate = text;
+//			}
+//		}
+//		if ((stringToUpdate.length() > 0)) {
+//			externalizeStringsAction.setEnabled(true);
+//		} else {
+//			externalizeStringsAction.setEnabled(false);
+//		}
+//	}
 }
