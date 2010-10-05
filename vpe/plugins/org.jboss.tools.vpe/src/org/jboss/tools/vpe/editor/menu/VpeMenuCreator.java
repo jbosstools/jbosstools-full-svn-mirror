@@ -22,7 +22,6 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
-import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsContributionItem;
 import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -92,7 +91,7 @@ public class VpeMenuCreator {
 		 * https://jira.jboss.org/browse/JBIDE-7222
 		 * Adding ExternalizeStrings dialog to the VPE context menu
 		 */
-		menuManager.add(new ExternalizeStringsContributionItem());
+//		menuManager.add(new ExternalizeStringsContributionItem());
 		addSeparator();
 		if (topLevelMenu) {
 			addZoomActions();
