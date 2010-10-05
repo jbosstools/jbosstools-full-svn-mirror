@@ -42,6 +42,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
+import org.jboss.tools.vpe.editor.util.SourceDomUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDndUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
@@ -488,7 +489,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 		iTransferable.setTransferData("text/html", nodeSourceData, nodeSourceDataLength); //$NON-NLS-1$
 		iTransferable.setTransferData("text/unicode", nodeSourceData, nodeSourceDataLength); //$NON-NLS-1$
 		
-		String xPath = XSLTXPathHelper.calculateXPathToNode(node);
+		String xPath = SourceDomUtil.getXPath(node);
 		nsISupportsString xPathData = createNsISupportsString(xPath);
 		iTransferable.setTransferData(DndUtil.VPE_XPATH_FLAVOR, xPathData, xPath.length() * 2);
 		

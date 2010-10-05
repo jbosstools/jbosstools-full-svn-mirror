@@ -13,15 +13,13 @@ package org.jboss.tools.vpe.editor.util;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.transform.TransformerException;
-
 import org.eclipse.wst.xml.xpath.core.util.XSLTXPathHelper;
-import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.proxy.VpeProxyUtil;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -114,16 +112,73 @@ public class SourceDomUtil {
 	}
 
 	/**
-	 * Returns source node by its XPath.
+	 * Returns a XPath expression given a DOM Node.
+	 * 
+	 * @param node The DOM Node to create the XPath expression.
+	 * 
+	 * @see XSLTXPathHelper#calculateXPathToNode(Node)
 	 */
-	public static Node getNodeByXPath(VpePageContext pageContext, String xPath) {
-		Node node = null;
+	public static String getXPath(Node node) {
+		return XSLTXPathHelper.calculateXPathToNode(node);
+	}
+	
+	/**
+	 * Inverse function for {@link #getXPath(Node)}.
+	 * 
+	 * @param document ancestor document for xPath
+	 * @param xPath XPath to a node in one of the following form:
+	 * <code>
+	 * <br>&nbsp;"/html/body/table/tr/td",
+	 * <br>&nbsp;"/html/body/table/tr/td[1]",
+	 * <br>&nbsp;"/html/body/table/tr/td[1]/@onclick".</code>
+	 * 
+	 * @return node for the given {@code xPath}, or {@code null}
+	 * if the node is not found.
+	 */
+	public static Node getNodeByXPath(Document document, String xPath) {
+		Node currentNode = document;
 		try {
-			node = XSLTXPathHelper.selectSingleNode(
-					pageContext.getSourceBuilder().getSourceDocument(), xPath);
-		} catch (TransformerException e) {
-			VpePlugin.reportProblem(e);
+			String[] nodeNames = xPath.split("/"); //$NON-NLS-1$
+			
+			// begin from 1 to skip the first element which is empty
+			for (int i = 1; i < nodeNames.length; i++) {
+				String nodeName = nodeNames[i];
+				if (nodeName.charAt(0) != '@') {
+					currentNode = currentNode.getFirstChild();
+					if (nodeName.charAt(nodeName.length() - 1) != ']') {
+						while (currentNode.getNodeType() != Node.ELEMENT_NODE 
+								|| !currentNode.getNodeName().equals(nodeName)) {
+							currentNode = currentNode.getNextSibling();
+						}
+					} else {
+						int openingBracketIndex = nodeName.lastIndexOf('[');
+						String stringPosition = nodeName.substring(
+								openingBracketIndex + 1,
+								nodeName.length() - 1);
+						nodeName = nodeName.substring(0, openingBracketIndex);
+						
+						int position = Integer.parseInt(stringPosition);
+						int curPosition = 0;
+						while (true) {
+							if (currentNode.getNodeType() == Node.ELEMENT_NODE 
+									&& currentNode.getNodeName().equals(nodeName)) {
+								++curPosition;
+								if (curPosition == position) {
+									break;
+								}
+							}
+							currentNode = currentNode.getNextSibling();
+						}
+					}
+				} else {
+					String attributeName = nodeName.substring(1, nodeName.length());
+					currentNode = currentNode.getAttributes().getNamedItem(attributeName);
+				}
+			}
+		} catch (Exception e) {
+			return null;
 		}
-		return node;
+
+		return currentNode;
 	}
 }

@@ -24,6 +24,7 @@ import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.test.util.WorkbenchUtils;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.vpe.editor.util.SourceDomUtil;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Document;
@@ -110,7 +111,7 @@ public abstract class ComponentContentTest extends VpeTest {
 			try{
 				compareElements(controller, xmlTestDocument, id, id);
 			} catch (DOMComparisonException e) {
-				String xPathToNode = XSLTXPathHelper.calculateXPathToNode(e.getNode());
+				String xPathToNode = SourceDomUtil.getXPath(e.getNode());
 				String testFileName = xmlTestFile.getPath();
 				String message = e.getMessage();
 				fail(String.format("%s[%s]:\n%s", testFileName, xPathToNode, message)); //$NON-NLS-1$

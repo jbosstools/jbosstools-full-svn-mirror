@@ -268,7 +268,8 @@ public class DndUtil {
 	public static Node getNodeFromDragSession(VpePageContext pageContext) {
 		String xPath = DndUtil.getDragTransferDataAsString(VPE_XPATH_FLAVOR);
 		if (xPath != null) {
-			return SourceDomUtil.getNodeByXPath(pageContext, xPath);
+			return SourceDomUtil.getNodeByXPath(
+					pageContext.getSourceBuilder().getSourceDocument(), xPath);
 		} else {
 			return null;
 		}
