@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -257,8 +258,7 @@ public class CloudConnectionPage extends WizardPage {
 		if (url.length() > 0) {
 			if (!url.equals(oldurl)) {
 				try {
-					URL u = new URL(url + "/api.xml"); //$NON-NLS-1$
-					Object o = u.getContent();
+					Object o = getURLContent(url);
 					if (o instanceof InputStream) {
 						String xml = "";
 						InputStream is = (InputStream)o;
@@ -325,6 +325,13 @@ public class CloudConnectionPage extends WizardPage {
 			}
 		}
 		return valid;
+	}
+	
+	private Object getURLContent(String url) throws IOException {
+		URL u = new URL(url);
+		URLConnection connection = u.openConnection();
+		connection.setRequestProperty("Accept", "application/xml;q=1.0"); //$NON-NLS-1$
+		return connection.getContent();
 	}
 	
 	/**
