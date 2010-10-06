@@ -54,9 +54,11 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
+import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
+import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 import org.osgi.service.prefs.Preferences;
 
@@ -65,10 +67,13 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
 	private final static String LAUNCH_INSTANCE = "CreateInstance.label"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
-	
+	private static final String FILTER = "Filter.label"; //$NON-NLS-1$
+	private static final String FILTERED_LABEL = "Filtered.label"; //$NON-NLS-1$
+	private static final String FILTERED_TOOLTIP = "FilteredImages.tooltip"; //$NON-NLS-1$	
 	private TableViewer viewer;
 	private Composite container;
 	private Combo cloudSelector;
+	private Label filterLabel;
 	@SuppressWarnings("unused")
 	private DeltaCloudImage selectedElement;
 	
@@ -78,6 +83,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	private ImageViewLabelAndContentProvider contentProvider;
 	
 	private Action refreshAction;
+	private Action filterAction;
 	private Action launchAction;
 	
 	private ImageView parentView;
@@ -175,6 +181,10 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			}
 		});
 		
+		filterLabel = new Label(container, SWT.NULL);
+		filterLabel.setText(CVMessages.getString(FILTERED_LABEL));
+		filterLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
+		
 		Composite tableArea = new Composite(container, SWT.NULL);
 		TableColumnLayout tableLayout = new TableColumnLayout();
 		tableArea.setLayout(tableLayout);
@@ -205,6 +215,8 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			currCloud.removeImageListListener(parentView);
 			viewer.setInput(currCloud);
 			currCloud.addImageListListener(parentView);
+			IImageFilter filter = currCloud.getImageFilter();
+			filterLabel.setVisible(!filter.toString().equals(IImageFilter.ALL_STRING));
 		}
 
 		Point p1 = cloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -220,6 +232,11 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		f.top = new FormAttachment(0, 5);
 		f.left = new FormAttachment(cloudSelectorLabel, 5);
 		cloudSelector.setLayoutData(f);
+		
+		f = new FormData();
+		f.top = new FormAttachment(0, 5 + centering);
+		f.right = new FormAttachment(100, -10);
+		filterLabel.setLayoutData(f);
 
 		f = new FormData();
 		f.top = new FormAttachment(cloudSelector, 8);
@@ -273,6 +290,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(refreshAction);
+		manager.add(filterAction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -305,6 +323,30 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
 		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+		
+		filterAction = new Action() {
+			public void run() {
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						Shell shell = viewer.getControl().getShell();
+						IWizard wizard = new ImageFilter(currCloud);
+						WizardDialog dialog = new WizardDialog(shell, wizard);
+						dialog.create();
+						dialog.open();
+						if (!currCloud.getImageFilter().toString().equals(IImageFilter.ALL_STRING))
+							filterLabel.setVisible(true);
+						else
+							filterLabel.setVisible(false);
+					}
+					
+				});
+			}
+		};
+		filterAction.setText(CVMessages.getString(FILTER));
+		filterAction.setToolTipText(CVMessages.getString(FILTER));
 
 		launchAction = new Action() {
 			public void run() {
@@ -320,7 +362,6 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 						WizardDialog dialog = new WizardDialog(shell, wizard);
 						dialog.create();
 						dialog.open();
-						
 					}
 					
 				});

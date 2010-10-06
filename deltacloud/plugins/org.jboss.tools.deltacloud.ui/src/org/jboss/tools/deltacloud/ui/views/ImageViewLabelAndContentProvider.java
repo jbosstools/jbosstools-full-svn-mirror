@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.IImageFilter;
 
 public class ImageViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider, ITableLabelProvider {
 
@@ -81,14 +83,25 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (newInput != null) {
 			if (newInput instanceof DeltaCloudImage[]) {
-				images = (DeltaCloudImage[])newInput;
+				images = filter((DeltaCloudImage[])newInput);
 			} else {
 				cloud = (DeltaCloud)newInput;
-				images = cloud.getCurrImages();
+				images = filter(cloud.getCurrImages());
 			}
 		}
 	}
 
+	private DeltaCloudImage[] filter(DeltaCloudImage[] input) {
+		ArrayList<DeltaCloudImage> array = new ArrayList<DeltaCloudImage>();
+		IImageFilter f = cloud.getImageFilter();
+		for (int i = 0; i < input.length; ++i) {
+			DeltaCloudImage image = input[i];
+			if (f.isVisible(image))
+				array.add(image);
+		}
+		return array.toArray(new DeltaCloudImage[array.size()]);
+	}
+	
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		return null;

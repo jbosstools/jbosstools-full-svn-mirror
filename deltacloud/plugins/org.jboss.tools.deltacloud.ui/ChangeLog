@@ -1,3 +1,26 @@
+2010-10-06  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilter.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterPage.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (listChanged): 
+	Apply filtering.
+	(getChildren): Ditto.
+	(filter): New method.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: 
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (handleSelection): 
+	Disable set of global actions when nothing is selected.
+	(makeActions): Create image filtering action.
+	(fillLocalPullDown): Add image filtering action.
+	(fillContextMenu): Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (makeActions): Create image
+	filtering action.
+	(fillLocalPullDown): Add image filtering action.
+	(createPartControl): Add a filtered label that pops up when the list is filtered.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java (inputChanged): 
+	Apply filtering.
+	(filter): New method.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new messages.
+
 2010-10-06  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (checkURL): changed url and added accept headers  

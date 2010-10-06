@@ -10,11 +10,14 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
 
 public class CVImagesCategoryElement extends CVCategoryElement implements IImageListListener {
@@ -41,7 +44,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
 			cloud.removeImageListListener(this);
-			DeltaCloudImage[] images = cloud.getCurrImages();
+			DeltaCloudImage[] images = filter(cloud.getCurrImages());
 			for (int i = 0; i < images.length; ++i) {
 				DeltaCloudImage d = images[i];
 				CVImageElement element = new CVImageElement(d, d.getName());
@@ -54,8 +57,9 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 	}
 
 	@Override
-	public void listChanged(DeltaCloud cloud, DeltaCloudImage[] images) {
+	public void listChanged(DeltaCloud cloud, DeltaCloudImage[] newImages) {
 		clearChildren();
+		DeltaCloudImage[] images = filter(newImages);
 		for (int i = 0; i < images.length; ++i) {
 			DeltaCloudImage d = images[i];
 			CVImageElement element = new CVImageElement(d, d.getName());
@@ -69,5 +73,18 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 			}
 		});
 	}
+	
+	public DeltaCloudImage[] filter(DeltaCloudImage[] input) {
+		ArrayList<DeltaCloudImage> array = new ArrayList<DeltaCloudImage>();
+		DeltaCloud cloud = (DeltaCloud)getElement();
+		IImageFilter f = cloud.getImageFilter();
+		for (int i = 0; i < input.length; ++i) {
+			DeltaCloudImage image = input[i];
+			if (f.isVisible(image))
+				array.add(image);
+		}
+		return array.toArray(new DeltaCloudImage[array.size()]);
 
+	}
+	
 }

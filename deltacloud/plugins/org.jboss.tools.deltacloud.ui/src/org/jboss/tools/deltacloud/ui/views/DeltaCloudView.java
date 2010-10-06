@@ -34,6 +34,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
@@ -50,6 +51,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnection;
+import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 
 
@@ -79,6 +81,7 @@ ITabbedPropertySheetPageContributor {
 	private final static String REBOOTING_INSTANCE_MSG = "RebootingInstance.msg"; //$NON-NLS-1$
 	private final static String DESTROYING_INSTANCE_TITLE = "DestroyingInstance.title"; //$NON-NLS-1$
 	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
+	private final static String IMAGE_FILTER = "ImageFilter.label"; //$NON-NLS-1$
 	
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
@@ -93,6 +96,7 @@ ITabbedPropertySheetPageContributor {
 	private Action doubleClickAction;
 	private Action createInstance;
 	private Action editCloud;
+	private Action imageFilterAction;
 	
 	private Map<String, Action> instanceActions;
 	
@@ -169,6 +173,10 @@ ITabbedPropertySheetPageContributor {
 	private void handleSelection() {
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 		selectedElement = (CloudViewElement)selection.getFirstElement();
+		editCloud.setEnabled(selectedElement != null);
+		removeCloud.setEnabled(selectedElement != null);
+		refreshAction.setEnabled(selectedElement != null);
+		imageFilterAction.setEnabled(selectedElement != null);
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
@@ -176,6 +184,7 @@ ITabbedPropertySheetPageContributor {
 		manager.add(editCloud);
 		manager.add(removeCloud);
 		manager.add(refreshAction);
+		manager.add(imageFilterAction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -192,6 +201,7 @@ ITabbedPropertySheetPageContributor {
 		}
 		manager.add(editCloud);
 		manager.add(removeCloud);
+		manager.add(imageFilterAction);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -406,6 +416,35 @@ ITabbedPropertySheetPageContributor {
 		instanceActions.put(DeltaCloudInstance.STOP, stopAction);
 		instanceActions.put(DeltaCloudInstance.REBOOT, rebootAction);
 		instanceActions.put(DeltaCloudInstance.DESTROY, destroyAction);
+		
+		imageFilterAction = new Action() {
+			public void run() {
+				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+				CloudViewElement element = (CloudViewElement)selection.getFirstElement();
+				while (element != null && !(element instanceof CVCloudElement)) {
+					element = (CloudViewElement)element.getParent();
+				}
+				if (element != null) {
+					CVCloudElement cve = (CVCloudElement)element;
+					final DeltaCloud cloud = (DeltaCloud)cve.getElement();
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							Shell shell = viewer.getControl().getShell();
+							IWizard wizard = new ImageFilter(cloud);
+							WizardDialog dialog = new WizardDialog(shell, wizard);
+							dialog.create();
+							dialog.open();
+						}
+
+					});
+				}
+			}
+		};
+		imageFilterAction.setText(CVMessages.getString(IMAGE_FILTER));
+		imageFilterAction.setToolTipText(CVMessages.getString(IMAGE_FILTER));
 		
 		doubleClickAction = new Action() {
 			public void run() {
