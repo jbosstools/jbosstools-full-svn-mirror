@@ -21,7 +21,7 @@ import org.jboss.tools.vpe.docbook.template.util.Docbook;
 public class DocbookNoteTemplate extends ElementWithGeneratedOutputTemplate {
 	
 	@Override
-	public String getGeneratedText() {
+	protected String getGeneratedText() {
 		return Docbook.ELEMENT_NOTE.toUpperCase();
 	}
 

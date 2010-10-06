@@ -14,15 +14,22 @@ package org.jboss.tools.vpe.docbook.template;
 import org.jboss.tools.vpe.docbook.template.util.Docbook;
 
 /**
- * Class for <tip>
+ * Class for <warning>
  * 
  * @author Denis Vinnichek (dvinnichek)
  */
-public class DocbookTipTemplate extends ElementWithGeneratedOutputTemplate {
+public class DocbookWarningTemplate extends ElementWithGeneratedOutputTemplate {
+
+	private static final String BORDER = "1px solid red"; //$NON-NLS-1$
 
 	@Override
 	protected String getGeneratedText() {
-		return Docbook.ELEMENT_TIP.toUpperCase();
+		return Docbook.ELEMENT_WARNING.toUpperCase();
+	}
+
+	@Override
+	protected String getBorder() {
+		return BORDER;
 	}
 
 }

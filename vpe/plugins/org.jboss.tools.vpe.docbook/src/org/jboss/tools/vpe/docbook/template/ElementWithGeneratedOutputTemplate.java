@@ -46,8 +46,8 @@ public abstract class ElementWithGeneratedOutputTemplate extends
 
 		nsIDOMCSSStyleDeclaration style = VpeStyleUtil.getStyle(div);
 		style.setProperty(HTML.STYLE_PARAMETER_BACKGROUND_COLOR,
-				BACKGROUND_COLOR, HTML.STYLE_PRIORITY_DEFAULT);
-		style.setProperty(HTML.STYLE_PARAMETER_BORDER, BORDER,
+				getBackgroundColor(), HTML.STYLE_PRIORITY_DEFAULT);
+		style.setProperty(HTML.STYLE_PARAMETER_BORDER, getBorder(),
 				HTML.STYLE_PRIORITY_DEFAULT);
 
 		NodeList titleElements = sourceElement
@@ -61,5 +61,13 @@ public abstract class ElementWithGeneratedOutputTemplate extends
 		return new VpeCreationData(div);
 	}
 
-	public abstract String getGeneratedText();
+	protected abstract String getGeneratedText();
+
+	protected String getBackgroundColor() {
+		return BACKGROUND_COLOR;
+	}
+
+	protected String getBorder() {
+		return BORDER;
+	}
 }

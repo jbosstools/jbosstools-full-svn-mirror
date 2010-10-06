@@ -24,4 +24,5 @@ public class Docbook {
 	public static final String ELEMENT_TITLE = "title"; //$NON-NLS-1$
 	public static final String ELEMENT_TIP = "tip"; //$NON-NLS-1$
 	public static final String ELEMENT_NOTE = "note"; //$NON-NLS-1$
+	public static final String ELEMENT_WARNING = "warning"; //$NON-NLS-1$
 }

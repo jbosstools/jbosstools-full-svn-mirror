@@ -622,11 +622,8 @@
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="warning" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<div id="{@id}" style="background-color: #ECF3FF; border: 1px solid red;">
-				<h2><vpe:value expr="Warning" /></h2>
-			</div>
-		</vpe:template>
+		<vpe:template children="yes" modify="yes"
+					class="org.jboss.tools.vpe.docbook.template.DocbookWarningTemplate" />
 	</vpe:tag>
 	<vpe:tag name="exceptionname" case-sensitive="yes" docbook="yes">
 		<vpe:template children="no" modify="yes">
