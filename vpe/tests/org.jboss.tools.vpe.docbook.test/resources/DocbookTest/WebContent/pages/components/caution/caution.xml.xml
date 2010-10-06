@@ -1,0 +1,29 @@
+<tests>
+	<test id="caution01">
+		<DIV ID="caution01"	STYLE="border: 1px solid black; background-color: rgb(236, 243, 255);">
+			<H1>
+				<SPAN>
+					No User Servicable Parts Inside
+				</SPAN>
+			</H1>
+			<P>
+				<SPAN>
+					Breaking this seal voids all warranties.
+				</SPAN>
+			</P>
+		</DIV>
+	</test>
+	<test id="caution02">
+		<DIV ID="caution02"
+			STYLE="border: 1px solid black; background-color: rgb(236, 243, 255);">
+			<H1>
+				CAUTION
+			</H1>
+			<P>
+				<SPAN>
+					Breaking this seal voids all warranties.
+				</SPAN>
+			</P>
+		</DIV>
+	</test>
+</tests>

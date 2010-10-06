@@ -25,4 +25,6 @@ public class Docbook {
 	public static final String ELEMENT_TIP = "tip"; //$NON-NLS-1$
 	public static final String ELEMENT_NOTE = "note"; //$NON-NLS-1$
 	public static final String ELEMENT_WARNING = "warning"; //$NON-NLS-1$
+	public static final String ELEMENT_CAUTION = "caution"; //$NON-NLS-1$
+	public static final String ELEMENT_IMPORTANT = "important"; //$NON-NLS-1$
 }
