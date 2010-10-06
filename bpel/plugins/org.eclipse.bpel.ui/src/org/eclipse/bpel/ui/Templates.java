@@ -63,19 +63,26 @@ public class Templates {
 	static final String BUNDLE_DIRECTORY = "/"; //$NON-NLS-1$
 
 	/** Key or property under which the name of the template is present */
-	static final String PROPERTY_NAME = "name"; //$NON-NLS-1$
+	public static final String PROPERTY_NAME = "name"; //$NON-NLS-1$
 
 	/** The key name of the template */
-	static final String PROPERTY_KEY = "key"; //$NON-NLS-1$
+	public static final String PROPERTY_KEY = "key"; //$NON-NLS-1$
+	
+	// https://jira.jboss.org/browse/JBIDE-7165
+	/** All of the known template keys */
+	public static final String TEMPLATE_KEY_ASYNC = "async";
+	public static final String TEMPLATE_KEY_SYNC = "sync";
+	public static final String TEMPLATE_KEY_EMPTY = "empty";
+	/** Add more above, as new templates are created */
 
 	/**
 	 * Key or property under which the encoding information for the template
 	 * resources is present
 	 */
-	static final String PROPERTY_ENCODING = "encoding"; //$NON-NLS-1$
+	public static final String PROPERTY_ENCODING = "encoding"; //$NON-NLS-1$
 
 	/** Key or property under which the description of the template is present */
-	static final String PROPERTY_DESCRIPTION = "description"; //$NON-NLS-1$
+	public static final String PROPERTY_DESCRIPTION = "description"; //$NON-NLS-1$
 
 	/** avoid empty string */
 	static final String EMPTY = ""; //$NON-NLS-1$
@@ -191,6 +198,8 @@ public class Templates {
 			mTemplateByName.put(name, template);
 			String id = props.getProperty(PROPERTY_KEY);
 			if (id != null) {
+				// https://jira.jboss.org/browse/JBIDE-7165
+				template.mKey = id;
 				mTemplateByKey.put(id, template);
 			}
 
@@ -340,6 +349,10 @@ public class Templates {
 
 	public class Template {
 
+		// https://jira.jboss.org/browse/JBIDE-7165
+		/** Template key so we don't have to worry about using localized names everywhere */
+		String mKey;
+		
 		/** Name of the process template */
 		String mName;
 
@@ -356,6 +369,14 @@ public class Templates {
 		 */
 		public String getName() {
 			return mName;
+		}
+
+		/**
+		 * @return the key
+		 * @see https://jira.jboss.org/browse/JBIDE-7165
+		 */
+		public String getKey() {
+			return mKey;
 		}
 
 		void add(TemplateResource resource) {
@@ -476,18 +497,26 @@ public class Templates {
 			int start = src.indexOf("</definitions>");
 			if (start > 0) {
 				StringBuffer ss = new StringBuffer(src.substring(0, start));
-				if ("Asynchronous BPEL Process".equals(args.get("type"))) {
-					if ("soap".equals(args.get("protocol"))) {
+				// https://jira.jboss.org/browse/JBIDE-7165
+				// use key instead of [possibly] localized template name
+				Object key = args.get(Templates.PROPERTY_KEY);
+				String protocol = (String) args.get("protocol");
+				if (protocol!=null)
+					protocol = protocol.toLowerCase();
+				if (Templates.TEMPLATE_KEY_ASYNC.equals(key)) {
+					if ("soap".equals(protocol)) {
 						ss.append(WSDLServiceDetail.Async_SOAPDetail);
 					} else {
 						ss.append(WSDLServiceDetail.Async_HTTPDetail);
 					}
-				} else if ("Synchronous BPEL Process".equals(args.get("type"))) {
-					if ("soap".equals(args.get("protocol"))) {
+				} else if (Templates.TEMPLATE_KEY_SYNC.equals(key)) {
+					if ("soap".equals(protocol)) {
 						ss.append(WSDLServiceDetail.Sync_SOAPDetail);
 					} else {
 						ss.append(WSDLServiceDetail.Sync_HTTPDetail);
 					}
+				} else if (Templates.TEMPLATE_KEY_EMPTY.equals(key)) {
+					ss.append(WSDLServiceDetail.Empty_Detail);
 				}
 				ss.append("</definitions>");
 				src = ss.toString();

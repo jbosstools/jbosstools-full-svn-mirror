@@ -6,26 +6,18 @@
          xmlns:tns="${namespace}"
          xmlns:bpel="${bpelNamespace}"
          >
-         
-    <!-- ================================================================= -->         
-    <!-- PARTNERLINKS                                                      -->
-    <!-- List of services participating in this BPEL process               -->
-    <!-- ================================================================= -->         
-    <bpel:partnerLinks>       
-    </bpel:partnerLinks>
-  
-    <!-- ================================================================= -->         
-    <!-- VARIABLES                                                         -->
-    <!-- List of messages and XML documents used within this BPEL process  -->
-    <!-- ================================================================= -->         
-    <bpel:variables>
-    </bpel:variables>
 
-    <!-- ================================================================= -->         
-    <!-- ORCHESTRATION LOGIC                                               -->
-    <!-- Set of activities coordinating the flow of messages across the    -->
-    <!-- services integrated within this business process                  -->
-    <!-- ================================================================= -->         
-    <bpel:sequence/>    
+    <!-- Import the client WSDL -->
+	<bpel:import location="${processName}Artifacts.wsdl" namespace="${namespace}" 
+	        importType="http://schemas.xmlsoap.org/wsdl/" />
+
+	<!-- ================================================================= -->         
+	<!-- ORCHESTRATION LOGIC                                               -->
+	<!-- Set of activities coordinating the flow of messages across the    -->
+	<!-- services integrated within this business process                  -->
+	<!-- ================================================================= -->         
+	<bpel:sequence name="main">
+		<bpel:empty name="Empty"></bpel:empty>
+	</bpel:sequence>    
 </bpel:process>
 

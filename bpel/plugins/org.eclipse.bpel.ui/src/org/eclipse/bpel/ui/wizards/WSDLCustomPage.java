@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
+import org.eclipse.bpel.ui.Templates;
+import org.eclipse.bpel.ui.Templates.Template;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -23,14 +25,19 @@ public class WSDLCustomPage extends WizardPage {
 	/** Service name field */
 	private Text serviceNameField;
 
+	// https://jira.jboss.org/browse/JBIDE-7165
+	// make labels class variables so we can hide them for the "Empty" template
 	/** Port name field */
+	private Label portNameLabel;
 	private Text portNameField;
 
 	/** Address name field */
+	private Label addressLabel;
 	private Text addressField;
 
 	/** binding protocol */
-	Combo bindingField;
+	private Label bindingLabel;
+	private Combo bindingField;
 
 	private Map<String, String> mArgs = new HashMap<String, String>();
 
@@ -98,9 +105,9 @@ public class WSDLCustomPage extends WizardPage {
 		serviceNameField.addListener(SWT.Modify, validateListner);
 
 		// new port label
-		Label portLabel = new Label(fields, SWT.NONE);
-		portLabel.setText(Messages.NewFileWizard_WSDLCustomPage_PortLabel);
-		portLabel.setFont(parent.getFont());
+		portNameLabel = new Label(fields, SWT.NONE);
+		portNameLabel.setText(Messages.NewFileWizard_WSDLCustomPage_PortLabel);
+		portNameLabel.setFont(parent.getFont());
 
 		// new port name entry field
 		portNameField = new Text(fields, SWT.BORDER);
@@ -111,7 +118,7 @@ public class WSDLCustomPage extends WizardPage {
 		portNameField.addListener(SWT.Modify, validateListner);
 
 		// new address label
-		Label addressLabel = new Label(fields, SWT.NONE);
+		addressLabel = new Label(fields, SWT.NONE);
 		addressLabel
 				.setText(Messages.NewFileWizard_WSDLCustomPage_AddressLabel);
 		addressLabel.setFont(parent.getFont());
@@ -124,7 +131,7 @@ public class WSDLCustomPage extends WizardPage {
 		addressField.setFont(parent.getFont());
 		addressField.addListener(SWT.Modify, validateListner);
 
-		Label bindingLabel = new Label(fields, SWT.NONE);
+		bindingLabel = new Label(fields, SWT.NONE);
 		bindingLabel
 				.setText(Messages.NewFileWizard_WSDLCustomPage_BindingLabel);
 		bindingLabel.setFont(parent.getFont());
@@ -141,36 +148,76 @@ public class WSDLCustomPage extends WizardPage {
 		bindingField.addListener(SWT.Modify, validateListner);
 	}
 
+	// https://jira.jboss.org/browse/JBIDE-7165
+	// show or hide additional WSDL parameters depending on whether the template is the "Empty"
+	@Override
+	public void setVisible(boolean visible) {
+		// TODO Auto-generated method stub
+		super.setVisible(visible);
+		Template template = ((NewFileWizard)getWizard()).getSelectedTemplate();
+		if ( template==null || Templates.TEMPLATE_KEY_EMPTY.equals(template.getKey()) ) {
+			// this is an Empty BPEL process, so no ports or bindings will be generated.
+			// Hide the Port Name, Service Address and Binding controls
+			portNameLabel.setVisible(false);
+			portNameField.setVisible(false);
+			
+			addressLabel.setVisible(false);
+			addressField.setVisible(false);
+			
+			bindingLabel.setVisible(false);
+			bindingField.setVisible(false);
+		}
+		else {
+			portNameLabel.setVisible(true);
+			portNameField.setVisible(true);
+			
+			addressLabel.setVisible(true);
+			addressField.setVisible(true);
+			
+			bindingLabel.setVisible(true);
+			bindingField.setVisible(true);
+		}
+	}
+
 	protected boolean validatePage() {
+		setErrorMessage(null);
+
 		String serviceName = serviceNameField.getText().trim();
 		if (isEmptyOrSpace(serviceName, "Service Name")) {
 			return false;
 		}
-		String portName = portNameField.getText().trim();
-		if (isEmptyOrSpace(portName, "Port Name")) {
-			return false;
-		}
-		String addressName = addressField.getText().trim();
-		if (isEmptyOrSpace(addressName, "Service Address")) {
-			return false;
-		}
-		String protocol = bindingField.getText().trim();
-		if (!("SOAP".equals(protocol) || "HTTP".equals(protocol))) {
-			setErrorMessage(Messages.Error_NewFileWizard_WSDLCustomPage_Protocol);
-			return false;
-		}
-		setErrorMessage(null);
+		
+		// https://jira.jboss.org/browse/JBIDE-7165
+		Template template = ((NewFileWizard)getWizard()).getSelectedTemplate();
+		if ( template!=null && !Templates.TEMPLATE_KEY_EMPTY.equals(template.getKey()) ) {
+			String portName = portNameField.getText().trim();
+			if (isEmptyOrSpace(portName, "Port Name")) {
+				return false;
+			}
+			String addressName = addressField.getText().trim();
+			if (isEmptyOrSpace(addressName, "Service Address")) {
+				return false;
+			}
+			String protocol = bindingField.getText().trim();
+			if (!("SOAP".equals(protocol) || "HTTP".equals(protocol))) {
+				setErrorMessage(Messages.Error_NewFileWizard_WSDLCustomPage_Protocol);
+				return false;
+			}
 
+			// Template arguments
+			mArgs.put("portName", portName); //$NON-NLS-1$
+			mArgs.put("address", addressName); //$NON-NLS-1$
+			mArgs.put("protocol", protocol.toLowerCase()); //$NON-NLS-1$
+			if("SOAP".equals(protocol)){
+				mArgs.put("protocolNamespace", SOAP_NAMESPACE);
+			} else {
+				mArgs.put("protocolNamespace", HTTP_NAMESPACE);
+			}
+		}
+		
 		// Template arguments
 		mArgs.put("serviceName", serviceName); //$NON-NLS-1$
-		mArgs.put("portName", portName); //$NON-NLS-1$
-		mArgs.put("address", addressName); //$NON-NLS-1$
-		mArgs.put("protocol", protocol.toLowerCase()); //$NON-NLS-1$
-		if("SOAP".equals(protocol)){
-			mArgs.put("protocolNamespace", SOAP_NAMESPACE);
-		} else {
-			mArgs.put("protocolNamespace", HTTP_NAMESPACE);
-		}
+
 		return true;
 	}
 

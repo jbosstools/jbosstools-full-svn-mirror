@@ -21,6 +21,7 @@ import java.util.Map;
 import org.eclipse.bpel.model.util.BPELConstants;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
+import org.eclipse.bpel.ui.Templates;
 import org.eclipse.bpel.ui.Templates.Template;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
@@ -205,12 +206,15 @@ public class NewFileWizardPage1 extends WizardPage {
 
 			public void handleEvent(Event event) {
 				String val = processTemplateField.getText().trim();
-				mArgs.put("type", val);
+				// https://jira.jboss.org/browse/JBIDE-7165
+				mArgs.put(Templates.PROPERTY_NAME, val);
 				Template template = BPELUIPlugin.INSTANCE.getTemplates()
 						.getTemplateByName(val);
 				if (template != null) {
 					String txt = template.getDescription();
 					templateDescription.setText(txt == null ? EMPTY : txt);
+					// https://jira.jboss.org/browse/JBIDE-7165
+					mArgs.put(Templates.PROPERTY_KEY, template.getKey());
 				}
 
 			}
