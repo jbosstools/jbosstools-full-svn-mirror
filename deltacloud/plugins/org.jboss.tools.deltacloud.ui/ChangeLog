@@ -1,3 +1,7 @@
+2010-10-06  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (getURLContent): 
+
 2010-10-01  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/IDeltaCloudPreferenceConstants.java: Add new constant
