@@ -258,7 +258,7 @@ public class CloudConnectionPage extends WizardPage {
 		if (url.length() > 0) {
 			if (!url.equals(oldurl)) {
 				try {
-					Object o = getURLContent(url);
+					Object o = getURLContent(url + "/api?format=xml"); //$NON-NLS-1$ 
 					if (o instanceof InputStream) {
 						String xml = "";
 						InputStream is = (InputStream)o;
