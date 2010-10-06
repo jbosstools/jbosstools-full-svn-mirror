@@ -1,6 +1,6 @@
 2010-10-06  André Dietisheim  <adietish@redhat.com>
 
-	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (getURLContent): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (checkURL): changed url and added accept headers  
 
 2010-10-01  Jeff Johnston  <jjohnstn@redhat.com>
 
