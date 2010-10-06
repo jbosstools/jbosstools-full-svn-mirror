@@ -41,6 +41,7 @@ public class DeltaCloud {
 	private DeltaCloudClient client;
 	private ArrayList<DeltaCloudInstance> instances;
 	private ArrayList<DeltaCloudImage> images;
+	private IImageFilter imageFilter;
 	private Map<String, Job> actionJobs;
 	private Object imageLock = new Object();
 	private Object instanceLock = new Object();
@@ -50,15 +51,23 @@ public class DeltaCloud {
 	ListenerList imageListeners = new ListenerList();
 	
 	public DeltaCloud(String name, String url, String username, String passwd) throws MalformedURLException {
-		this(name, url, username, passwd, null, false);
+		this(name, url, username, passwd, null, false, IImageFilter.ALL_STRING);
 	}
 
-	public DeltaCloud(String name, String url, String username, String passwd, String type, boolean persistent) throws MalformedURLException {
+	public DeltaCloud(String name, String url, String username, String passwd, 
+			String type, boolean persistent) throws MalformedURLException {
+		this(name, url, username, passwd, null, persistent, IImageFilter.ALL_STRING);
+	}
+
+	public DeltaCloud(String name, String url, String username, String passwd, 
+			String type, boolean persistent, String imageFilterRules) throws MalformedURLException {
 		this.client = new DeltaCloudClient(new URL(url + "/api"), username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;
 		this.type = type;
+		imageFilter = new ImageFilter();
+		imageFilter.setRules(imageFilterRules);
 		if (persistent) {
 			ISecurePreferences root = SecurePreferencesFactory.getDefault();
 			String key = DeltaCloud.getPreferencesKey(url, username);
@@ -109,6 +118,24 @@ public class DeltaCloud {
 		return type;
 	}
 	
+	public IImageFilter getImageFilter() {
+		return imageFilter;
+	}
+	
+	public void createImageFilter(String ruleString) {
+		String rules = getImageFilter().toString();
+		if (IImageFilter.ALL_STRING.equals(ruleString))
+			imageFilter = new AllImageFilter();
+		else {
+			imageFilter = new ImageFilter();
+			imageFilter.setRules(ruleString);
+		}
+		if (!rules.equals(ruleString)) {
+			save();
+			notifyImageListListeners(getCurrImages());
+		}
+	}
+	
 	public void loadChildren() {
 		Thread t = new Thread(new Runnable() {
 
@@ -120,6 +147,11 @@ public class DeltaCloud {
 			
 		});
 		t.start();
+	}
+	
+	private void save() {
+		// Currently we have to save all clouds instead of just this one
+		DeltaCloudManager.getDefault().saveClouds();
 	}
 	
 	public void addInstanceListListener(IInstanceListListener listener) {

@@ -62,17 +62,24 @@ public class DeltaCloudManager {
 					Node urlNode = attrs.getNamedItem("url"); // $NON-NLS-1$
 					Node usernameNode = attrs.getNamedItem("username"); // $NON-NLS-1$
 					Node typeNode = attrs.getNamedItem("type"); // $NON-NLS-1$
+					Node imageFilterNode = attrs.getNamedItem("imagefilter"); //$NON-NLS-1$
 					String name = nameNode.getNodeValue();
 					String url = urlNode.getNodeValue();
 					String username = usernameNode.getNodeValue();
 					String type = typeNode.getNodeValue();
 					String key = DeltaCloud.getPreferencesKey(url, username);
+					String imageFilterRules = null;
+					if (imageFilterNode != null)
+						imageFilterRules = imageFilterNode.getNodeValue();
+					else
+						imageFilterRules = IImageFilter.ALL_STRING;
 					ISecurePreferences root = SecurePreferencesFactory.getDefault();
 					ISecurePreferences node = root.node(key);
 					String password;
 					try {
 						password = node.get("password", null); //$NON-NLS-1$
-						DeltaCloud cloud = new DeltaCloud(name, url, username, password, type, false);
+						DeltaCloud cloud = new DeltaCloud(name, url, username, password, type, 
+								false, imageFilterRules);
 						cloud.loadChildren();
 						clouds.add(cloud);
 					} catch (Exception e1) {
@@ -90,7 +97,7 @@ public class DeltaCloudManager {
 		}
 	}
 
-	private void saveClouds() {
+	public void saveClouds() {
 		try {
 			IPath stateLocation = Activator.getDefault().getStateLocation();
 			File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
@@ -104,7 +111,8 @@ public class DeltaCloudManager {
 					p.println("<cloud name=\"" + d.getName() + "\" url=\"" //$NON-NLS-1$ //$NON-NLS-2$ 
 							+ d.getURL() +
 							"\" username=\"" + d.getUsername() + 
-							"\" type=\"" + d.getType() + "\"/>"); //$NON-NLS-1$ //$NON-NLS-2$
+							"\" type=\"" + d.getType() + 
+							"\" imagefilter=\"" + d.getImageFilter() + "\"/>"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				p.println("</clouds>"); //$NON-NLS-1$
 				p.close();
