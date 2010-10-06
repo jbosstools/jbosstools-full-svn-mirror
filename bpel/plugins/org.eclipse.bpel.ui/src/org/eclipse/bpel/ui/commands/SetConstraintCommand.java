@@ -53,7 +53,8 @@ public class SetConstraintCommand extends AutoUndoCommand {
 
 	@Override
 	public String getLabel() {
-		if (newSize == null || oldSize.equals(newSize))
+		// https://jira.jboss.org/browse/JBIDE-7250
+		if (newSize == null || newSize.equals(oldSize))
 			return IBPELUIConstants.CMD_REPOSITION_NODE;
 		return IBPELUIConstants.CMD_RESIZE_NODE;
 	}

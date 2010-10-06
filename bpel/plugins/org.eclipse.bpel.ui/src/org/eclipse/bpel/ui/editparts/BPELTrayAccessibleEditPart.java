@@ -31,7 +31,9 @@ public class BPELTrayAccessibleEditPart extends TrayAccessibleEditPart {
 		if (labeledElement != null) {
 			childType = labeledElement.getTypeLabel(part.getModel());
 			displayName = labeledElement.getLabel(part.getModel());
-			if (childType != null && displayName.equals(childType)) {
+			// https://jira.jboss.org/browse/JBIDE-7250
+			// prevent possible NPE
+			if (childType != null && childType.equals(displayName)) {
 				childType = null;
 			}
 		} else {
