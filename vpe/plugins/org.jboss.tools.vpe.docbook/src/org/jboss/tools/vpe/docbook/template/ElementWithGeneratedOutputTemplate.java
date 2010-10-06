@@ -36,7 +36,6 @@ public abstract class ElementWithGeneratedOutputTemplate extends
 	private static final String BACKGROUND_COLOR = "rgb(236, 243, 255)"; //$NON-NLS-1$
 	private static final String BORDER = "1px solid black"; //$NON-NLS-1$
 
-	@Override
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 

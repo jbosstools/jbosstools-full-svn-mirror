@@ -37,7 +37,6 @@ public class DocbookXrefTemplate extends VpeAbstractTemplate {
 	private static final String XREF_WITH_PARAM = OPEN_TAG
 			+ "xref linkend=\"{0}\"/>"; //$NON-NLS-1$
 
-	@Override
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 
