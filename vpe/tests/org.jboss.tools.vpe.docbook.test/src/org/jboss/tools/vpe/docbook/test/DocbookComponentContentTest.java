@@ -44,6 +44,10 @@ public class DocbookComponentContentTest extends ComponentContentTest {
 		performContentTest("components/note/note.xml"); //$NON-NLS-1$
 	}
 
+	public void testTip() throws Throwable {
+		performContentTest("components/tip/tip.xml"); //$NON-NLS-1$
+	}
+
 	@Override
 	protected String getTestProjectName() {
 		return DocbookAllTests.IMPORT_PROJECT_NAME;

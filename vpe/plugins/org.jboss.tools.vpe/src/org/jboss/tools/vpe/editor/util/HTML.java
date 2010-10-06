@@ -153,6 +153,7 @@ public final class HTML {
 	public static final String STYLE_PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BACKGROUND_IMAGE = "background-image"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BACKGROUND_COLOR = "background-color"; //$NON-NLS-1$
+	public static final String STYLE_PARAMETER_BORDER = "border"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BORDER_WIDTH = "border-width"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_BORDER_STYLE = "border-style"; //$NON-NLS-1$
 	public static final String STYLE_PARAMETER_MAX_HEIGHT = "max-height"; //$NON-NLS-1$	

@@ -9,19 +9,20 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.vpe.docbook.template.util;
+package org.jboss.tools.vpe.docbook.template;
+
+import org.jboss.tools.vpe.docbook.template.util.Docbook;
 
 /**
- * @author Denis Vinnichek (dvinnichek)
+ * Class for <tip>
  * 
+ * @author Denis Vinnichek (dvinnichek)
  */
-public class Docbook {
+public class DocbookTipTemplate extends ElementWithGeneratedOutputTemplate {
 
-	public static final String ATTR_XREFLABEL = "xreflabel"; //$NON-NLS-1$
-	public static final String ATTR_LINKEND = "linkend"; //$NON-NLS-1$
-	public static final String ATTR_ENDTERM = "endterm"; //$NON-NLS-1$
+	@Override
+	public String getGeneratedText() {
+		return Docbook.ELEMENT_TIP.toUpperCase();
+	}
 
-	public static final String ELEMENT_TITLE = "title"; //$NON-NLS-1$
-	public static final String ELEMENT_TIP = "tip"; //$NON-NLS-1$
-	public static final String ELEMENT_NOTE = "note"; //$NON-NLS-1$
 }

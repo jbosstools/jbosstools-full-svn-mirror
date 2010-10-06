@@ -394,15 +394,12 @@
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="note" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<!-- vpe:any background-color="yellow" border="blue" icon="no" /-->
-			<div id="{@id}" style="background-color: yellow; border: 1 px solid blue;" />
-		</vpe:template>			
+		<vpe:template children="yes" modify="yes"
+					class="org.jboss.tools.vpe.docbook.template.DocbookNoteTemplate"/>
 	</vpe:tag>
 	<vpe:tag name="tip" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<div id="{@id}" />
-		</vpe:template>
+		<vpe:template children="yes" modify="yes"
+					class="org.jboss.tools.vpe.docbook.template.DocbookTipTemplate"/>
 	</vpe:tag>
 	<vpe:tag name="preface" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
@@ -641,16 +638,6 @@
 	<vpe:tag name="xref" case-sensitive="yes" docbook="yes">
 		<vpe:template children="no" modify="yes"
 					class="org.jboss.tools.vpe.docbook.template.DocbookXrefTemplate" />
-	<!--
-		<vpe:if test="attrpresent('linkend')">
-			<vpe:template children="no" modify="yes">
-				<span id="{@id}"><vpe:value expr="&lt;xref linkend='{@linkend}' /&gt;" /></span>
-			</vpe:template>
-		</vpe:if>
-		<vpe:template children="no" modify="yes">
-			<a href="#{@linkend}">XRef</a>
-		</vpe:template>
-	-->
 	</vpe:tag>
 	<vpe:tag name="legalnotice" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
