@@ -1,0 +1,14 @@
+<tests>
+	<test id="noteEl">
+		<DIV ID="noteEl" STYLE="background-color: yellow;">
+			<H1>
+				<SPAN>Upcoming Changes</SPAN>
+			</H1>
+			<P>
+				<SPAN>
+					Future versions of this feature may not be backward-compatible. Consider implementing the revised interface now.
+				</SPAN>
+			</P>
+		</DIV>
+	</test>
+</tests>

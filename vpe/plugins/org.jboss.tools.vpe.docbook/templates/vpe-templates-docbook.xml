@@ -394,7 +394,7 @@
 		</vpe:template>
 	</vpe:tag>
 	<vpe:tag name="note" case-sensitive="yes" docbook="yes">
-		<vpe:template children="no" modify="yes">
+		<vpe:template children="yes" modify="yes">
 			<!-- vpe:any background-color="yellow" border="blue" icon="no" /-->
 			<div id="{@id}" style="background-color: yellow; border: 1 px solid blue;" />
 		</vpe:template>			
