@@ -3,7 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.3CR3/docbookx.dtd"
 
 [<!ENTITY  Preface SYSTEM "Preface.xml">
-<!--<!ENTITY Introduction SYSTEM "Introduction.xml"> -->
+<!ENTITY Introduction SYSTEM "Introduction.xml">
+<!ENTITY Concepts SYSTEM "Concepts.xml">
 <!ENTITY Tasks SYSTEM "Tasks.xml">
 <!ENTITY Revision_History SYSTEM "Revision_History.xml">
 ]>
@@ -47,7 +48,8 @@
     
     <toc/> 
  <!--   &Preface; -->
- <!--   &Introduction; -->
+    &Introduction;
+    &Concepts;
     &Tasks;
     &Revision_History;
 

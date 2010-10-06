@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!--<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "ModeShape_Tools_Reference_Guide.ent">
+%BOOK_ENTITIES;
+]>-->
+
+<section id="sect-ModeShape_Tools_Reference_Guide-Tasks-Publish_or_unpublish_a_resource">
+   <title>Publish or unpublish a resorce</title>
+	 <para>
+	    Having registered your ModeShape instances in <xref linkend="sect-ModeShape_Tools_Reference_Guide-Tasks-Register_a_new_repository"/>, you can now publish files to the repositories.
+	</para>
+	<para>
+	    Right-clicking on one or more projects, folders, or files in your Eclipse workspace will display the context menu for those files. This menu will now include a ModeShape submenu that allows you to publish or unpublish the resources to your ModeShape repository.
+        </para>
+	<para>
+	   When only one resource is selected you can also view the locations where that resource has been published. The published locations of a resource can be viewed by right-clicking on an individual resource and navigating the ModeShape context submenu to the <guimenuitem>Show Published Locations</guimenuitem> option.
+        </para>
+	<figure>
+	   <title>ModeShape context submenu</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/ModeShape_context_submenu.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   To assist with the publishing or unpublishing of your resource, a wizard will appear when either of these options are selected.
+        </para>
+	<figure id="ModeShape_publishing_wizard">
+	   <title>ModeShape publishing wizard</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/Publish_Wizard.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   The publishing wizard (shown in <xref linkend="ModeShape_publishing_wizard"/>) and unpublishing wizard allows you to choose which ModeShape repository to interact with and displays the selected files the operation will be performed on. When a project or folder is selected all their included files are acted upon. 
+        </para>
+	<para>
+	   When publishing or unpublishing files, you can see the operation output in the <guilabel>Console</guilabel> view. The type of information that you can view includes the repository where the operation took place, how long the operation took, the outcome for each file included in the operation, a hyperlink that allows you to open the file in an Eclipse editor, and a ModeShape repository workspace URL.
+        </para>
+	<figure id="publish_unpublish_console_output">
+	   <title>Console output</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/publish_unpublish_console_output.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   If you wish for certain folders or file types to never be published or unpublished, these conditions can be set through the ModeShape preferences dialog explained in <xref linkend="sect-ModeShape_Tools_Reference_Guide-Tasks-Setting_preferences"/> 
+        </para>
+</section>
+

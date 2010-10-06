@@ -5,7 +5,7 @@
 ]>
 <bookinfo id="book-ModeShape_Tools_Reference_Guide-ModeShape_Tools_Reference_Guide">
 	<title>ModeShape Tools Reference Guide</title>
-	<subtitle>short description</subtitle>
+	<subtitle>ModeShape tools allow you to interact with the contents of numerious ModeShape repositories.</subtitle>
 	<productname>JBoss Developer Studio</productname>
 	<productnumber>4.0</productnumber>
 	<edition>4.0.0</edition>
