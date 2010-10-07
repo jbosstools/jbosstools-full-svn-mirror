@@ -1102,7 +1102,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return tooltipListener;
 	}
 	
-	
 //	/**
 //	 * Update Externalize Strings toolbar icon state.
 //	 * <p>
@@ -1114,57 +1113,6 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 //		ISelection sel = editor.getSelectionProvider().getSelection();
 //		String stringToUpdate = Constants.EMPTY;
 //		if (ExternalizeStringsUtils.isSelectionCorrect(sel)) {
-//			String text = Constants.EMPTY;
-//			TextSelection textSelection = null;
-//			IStructuredSelection structuredSelection = (IStructuredSelection) sel;
-//			textSelection = (TextSelection) sel;
-//			text = textSelection.getText();
-//			Object selectedElement = structuredSelection.getFirstElement();
-//			/*
-//			 * When selected text is empty parse selected element and find a
-//			 * string to replace..
-//			 */
-//			if ((text.trim().length() == 0)) {
-//				if (selectedElement instanceof org.w3c.dom.Text) {
-//					/*
-//					 * ..it could be a plain text
-//					 */
-//					org.w3c.dom.Text textNode = (org.w3c.dom.Text) selectedElement;
-//					if (textNode.getNodeValue().trim().length() > 0) {
-//						stringToUpdate = textNode.getNodeValue();
-//					}
-//				} else if (selectedElement instanceof Attr) {
-//					/*
-//					 * ..or an attribute's value
-//					 */
-//					Attr attrNode = (Attr) selectedElement;
-//					if (attrNode.getNodeValue().trim().length() > 0) {
-//						stringToUpdate = attrNode.getNodeValue();
-//					}
-//				}
-//			} else {
-//				stringToUpdate = text;
-//			}
-//		}
-//		if ((stringToUpdate.length() > 0)) {
-//			externalizeStringsAction.setEnabled(true);
-//		} else {
-//			externalizeStringsAction.setEnabled(false);
-//		}
-//	}
-//	/**
-//	 * Update Externalize Strings toolbar icon state.
-//	 * <p>
-//	 * Enables the button when suitable text is selected.
-//	 * Disabled otherwise.
-//	 */
-//	public void updateExternalizeStringsToolbarIconState() {
-//		StructuredTextEditor editor = controller.getSourceEditor();
-//		ISelection sel = editor.getSelectionProvider().getSelection();
-//		String stringToUpdate = Constants.EMPTY;
-//		if ((sel instanceof TextSelection)
-//				&& (sel instanceof IStructuredSelection)
-//				&& (((IStructuredSelection) sel).size() == 1)) {
 //			String text = Constants.EMPTY;
 //			TextSelection textSelection = null;
 //			IStructuredSelection structuredSelection = (IStructuredSelection) sel;
