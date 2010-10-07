@@ -1,3 +1,16 @@
+2010-10-07  Jeff Johnston  <jjohnstn@redhat.com>
+
+	[JBIDE-7181]
+	* src/org/jboss/tools/deltacloud/core/AllFieldMatcher.java (toString): Fix to
+	return proper regex for ALL text.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): Default to
+	ALL rules if image filter regex does not parse.
+	* src/org/jboss/tools/deltacloud/core/FieldMatcher.java (FieldMatcher): Add a
+	throws statement.
+	* src/org/jboss/tools/deltacloud/core/IImageFilter.java: Fix ALL string.
+	* src/org/jboss/tools/deltacloud/core/ImageFilter.java (setRules): Adds a
+	throws statement.
+
 2010-10-07  André Dietisheim  <adietish@redhat.com>
 
 	* lib/deltacloudclient-1.0.jar: [JBIDE-7259] removed unneeded jar from classpath

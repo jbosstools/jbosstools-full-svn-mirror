@@ -9,7 +9,7 @@ public class AllFieldMatcher implements IFieldMatcher {
 	
 	@Override
 	public String toString() {
-		return "*"; //$NON-NLS-1$
+		return ".*"; //$NON-NLS-1$
 	}
 
 }

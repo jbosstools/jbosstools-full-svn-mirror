@@ -1,5 +1,7 @@
 package org.jboss.tools.deltacloud.core;
 
+import java.util.regex.PatternSyntaxException;
+
 public class ImageFilter implements IImageFilter {
 
 	private IFieldMatcher nameRule;
@@ -16,24 +18,24 @@ public class ImageFilter implements IImageFilter {
 	}
 
 	@Override
-	public void setRules(String ruleString) {
+	public void setRules(String ruleString) throws PatternSyntaxException {
 		String[] tokens = ruleString.split(";");
-		if (tokens[0].equals("*")) {
+		if (tokens[0].equals(".*")) { //$NON-NLS-1$
 			nameRule = new AllFieldMatcher();
 		} else {
 			nameRule = new FieldMatcher(tokens[0]);
 		}
-		if (tokens[1].equals("*")) {
+		if (tokens[1].equals(".*")) { //$NON-NLS-1$
 			idRule = new AllFieldMatcher();
 		} else {
 			idRule = new FieldMatcher(tokens[1]);
 		}
-		if (tokens[2].equals("*")) {
+		if (tokens[2].equals(".*")) { //$NON-NLS-1$
 			archRule = new AllFieldMatcher();
 		} else {
 			archRule = new FieldMatcher(tokens[2]);
 		}
-		if (tokens[3].equals("*")) {
+		if (tokens[3].equals(".*")) { //$NON-NLS-1$
 			descRule = new AllFieldMatcher();
 		} else {
 			descRule = new FieldMatcher(tokens[3]);

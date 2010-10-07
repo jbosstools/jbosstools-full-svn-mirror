@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.jobs.Job;
@@ -67,7 +68,11 @@ public class DeltaCloud {
 		this.username = username;
 		this.type = type;
 		imageFilter = new ImageFilter();
-		imageFilter.setRules(imageFilterRules);
+		try {
+			imageFilter.setRules(imageFilterRules);
+		} catch (PatternSyntaxException e) {
+			imageFilter.setRules(IImageFilter.ALL_STRING);
+		}
 		if (persistent) {
 			ISecurePreferences root = SecurePreferencesFactory.getDefault();
 			String key = DeltaCloud.getPreferencesKey(url, username);

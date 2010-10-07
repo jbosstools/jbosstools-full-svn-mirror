@@ -2,13 +2,14 @@ package org.jboss.tools.deltacloud.core;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class FieldMatcher implements IFieldMatcher {
 
 	private String rule;
 	private Pattern pattern;
 	
-	public FieldMatcher(String rule) {
+	public FieldMatcher(String rule) throws PatternSyntaxException {
 		this.rule = rule;
 		pattern = Pattern.compile(rule);
 	}
