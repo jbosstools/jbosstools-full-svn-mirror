@@ -1,5 +1,7 @@
 package org.jboss.tools.smooks.graphical.actions;
 
+import java.util.List;
+
 import org.eclipse.ui.IEditorPart;
 import org.jboss.tools.smooks.editor.ISmooksModelProvider;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
@@ -35,12 +37,16 @@ public class AddTaskNodeAction extends AbstractProcessGraphAction {
 	@Override
 	public void update() {
 		this.setEnabled(false);
-		if (this.getCurrentSelectedTask() != null && this.getCurrentSelectedTask().size() == 1) {
-			TaskType currentTask = this.getCurrentSelectedTask().get(0);
-			String taskID = currentTask.getId();
-			if (taskID != null) {
-				if (taskID.equals(TaskTypeManager.TASK_ID_INPUT) || taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING))
-					this.setEnabled(true);
+		List<TaskType> currentSelectedTask = this.getCurrentSelectedTask();
+		if (currentSelectedTask != null && currentSelectedTask.size() == 1) {
+			TaskType currentTask = currentSelectedTask.get(0);
+			
+			if(currentTask.getTask().isEmpty()) {
+				String taskID = currentTask.getId();
+				if (taskID != null) {
+					if (taskID.equals(TaskTypeManager.TASK_ID_INPUT) || taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING))
+						this.setEnabled(true);
+				}
 			}
 		}
 	}
