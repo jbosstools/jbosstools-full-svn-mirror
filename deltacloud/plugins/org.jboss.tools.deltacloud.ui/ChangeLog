@@ -1,9 +1,13 @@
+2010-10-07  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java: 
+	[JBIDE-7259] Refactored CloudConnectionPage, created CloudType class. 
+
 2010-10-06  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilter.java: New file.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterPage.java: New file.
-	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (listChanged): 
-	Apply filtering.
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (listChanged): Apply filtering.
 	(getChildren): Ditto.
 	(filter): New method.
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: 
@@ -20,7 +24,7 @@
 	Apply filtering.
 	(filter): New method.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new messages.
-
+	
 2010-10-06  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (checkURL): changed url and added accept headers  

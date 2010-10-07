@@ -1,3 +1,7 @@
+2010-10-07  André Dietisheim  <adietish@redhat.com>
+
+	* lib/deltacloudclient-1.0.jar: [JBIDE-7259] removed unneeded jar from classpath
+
 2010-10-06  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/AllFieldMatcher.java: New file.

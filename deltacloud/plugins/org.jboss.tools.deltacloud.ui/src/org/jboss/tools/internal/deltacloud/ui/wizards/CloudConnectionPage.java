@@ -10,18 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.wizard.WizardPage;
@@ -47,11 +36,6 @@ import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 public class CloudConnectionPage extends WizardPage {
 
@@ -63,12 +47,9 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String TYPE_LABEL = "Type.label"; //$NON-NLS-1$
 	private static final String PASSWORD_LABEL = "Password.label"; //$NON-NLS-1$
 	private static final String TESTBUTTON_LABEL = "TestButton.label"; //$NON-NLS-1$
-	private static final String UNKNOWN_TYPE_LABEL = "UnknownType.label"; //$NON-NLS-1$
 	private static final String EC2_USER_INFO = "EC2UserNameLink.text"; //$NON-NLS-1$
 	private static final String EC2_PASSWORD_INFO = "EC2PasswordLink.text"; //$NON-NLS-1$
 	private static final String NAME_ALREADY_IN_USE = "ErrorNameInUse.text"; //$NON-NLS-1$
-	private static final String INVALID_URL = "ErrorInvalidURL.text"; //$NON-NLS-1$
-	private static final String NONCLOUD_URL = "ErrorNonCloudURL.text"; //$NON-NLS-1$
 
 	private static final String TEST_SUCCESSFUL = "NewCloudConnectionTest.success"; //$NON-NLS-1$
 	private static final String TEST_FAILURE = "NewCloudConnectionTest.failure"; //$NON-NLS-1$
@@ -87,7 +68,7 @@ public class CloudConnectionPage extends WizardPage {
 	private String url;
 	private String username;
 	private String password;
-	private String cloudType;
+	private String cloudTypeLabel;
 	
 	private String defaultName = "";
 	private String defaultURL = "";
@@ -155,7 +136,7 @@ public class CloudConnectionPage extends WizardPage {
 		this.defaultURL = defaultURL;
 		this.defaultUsername = defaultUsername;
 		this.defaultPassword = defaultPassword;
-		this.cloudType = defaultCloudType;
+		this.cloudTypeLabel = defaultCloudType;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -214,10 +195,10 @@ public class CloudConnectionPage extends WizardPage {
 			CheckURLThread t = new CheckURLThread();
 			t.start();
 		} else if (urlValue.length() > 0){
-			typeText.setText(WizardMessages.getString(NONCLOUD_URL));
+			typeText.setText(WizardMessages.getString(CloudType.NONCLOUD_URL));
 			complete = false;
 		} else {
-			typeText.setText(WizardMessages.getString(UNKNOWN_TYPE_LABEL));
+			typeText.setText(WizardMessages.getString(CloudType.UNKNOWN_TYPE_LABEL));
 			complete = false;
 		}
 		
@@ -243,95 +224,35 @@ public class CloudConnectionPage extends WizardPage {
 	// Method to check the URL for validity as Delta-cloud API specifier.
 	// Since this is run in thread, it does not use the setErrorMessage()
 	// method and instead writes error messages to the typeText label.
-	private boolean checkURL() {
-		boolean valid = false;
+	private void checkURL() {
 		String oldurl = url;
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				cloudType = typeText.getText();
+				cloudTypeLabel = typeText.getText();
 				url = urlText.getText();
 			}
 		});
-		String oldCloudType = cloudType;
+		String oldCloudType = cloudTypeLabel;
 		if (url.length() > 0) {
 			if (!url.equals(oldurl)) {
-				try {
-					Object o = getURLContent(url + "/api?format=xml"); //$NON-NLS-1$ 
-					if (o instanceof InputStream) {
-						String xml = "";
-						InputStream is = (InputStream)o;
-						try
-						{
-							if (is != null)
-							{
-								StringBuilder sb = new StringBuilder();
-								String line;
-
-								BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-								while ((line = reader.readLine()) != null) 
-								{
-									sb.append(line).append("\n"); //$NON-NLS-1$
-								}
-								xml = sb.toString();
-							}
-						}
-						finally
-						{
-							is.close();
-						}
-
-						DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-						DocumentBuilder db = dbf.newDocumentBuilder();
-						Document document = db.parse(new InputSource(new StringReader(xml)));
-
-						NodeList elements = document.getElementsByTagName("api");  //$NON-NLS-1$
-						if (elements.getLength() > 0) {
-							Node n = elements.item(0);
-							Node driver = n.getAttributes().getNamedItem("driver"); //$NON-NLS-1$
-							if (driver != null) {
-								valid = true;
-								String driverValue = driver.getNodeValue();
-								cloudType = driverValue.toUpperCase();
-							} else {
-								cloudType = WizardMessages.getString(UNKNOWN_TYPE_LABEL);
-							}
-						}
-					}
-				} catch (MalformedURLException e) {
-					cloudType = WizardMessages.getString(INVALID_URL);
-				} catch (IOException e) {
-					cloudType = WizardMessages.getString(NONCLOUD_URL);
-				} catch (ParserConfigurationException e) {
-					cloudType = WizardMessages.getString(NONCLOUD_URL);
-				} catch (SAXException e) {
-					cloudType = WizardMessages.getString(NONCLOUD_URL);
-				} catch (Exception e) {
-					cloudType = WizardMessages.getString(INVALID_URL);
-				}
-				setURLValid(valid);
+				CloudType cloudType = new CloudType(url);
+				cloudTypeLabel = cloudType.getLabel();
+				setURLValid(cloudType.isValid());
 			}
-			if (!oldCloudType.equals(cloudType)) {
+			if (!oldCloudType.equals(cloudTypeLabel)) {
 				Display.getDefault().asyncExec(new Runnable() {
 
 					@Override
 					public void run() {
 						testButton.setEnabled(getURLValid());
-						typeText.setText(cloudType);
+						typeText.setText(cloudTypeLabel);
 					}
 					
 				});
 			}
 		}
-		return valid;
-	}
-	
-	private Object getURLContent(String url) throws IOException {
-		URL u = new URL(url);
-		URLConnection connection = u.openConnection();
-		connection.setRequestProperty("Accept", "application/xml;q=1.0"); //$NON-NLS-1$
-		return connection.getContent();
 	}
 	
 	/**
@@ -386,9 +307,9 @@ public class CloudConnectionPage extends WizardPage {
 		typeLabel.setText(WizardMessages.getString(TYPE_LABEL));
 
 		typeText = new Label(container, SWT.NULL);
-		if (cloudType == null)
-			cloudType = WizardMessages.getString(UNKNOWN_TYPE_LABEL);
-		typeText.setText(cloudType);
+		if (cloudTypeLabel == null)
+			cloudTypeLabel = WizardMessages.getString(CloudType.UNKNOWN_TYPE_LABEL);
+		typeText.setText(cloudTypeLabel);
 		
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
