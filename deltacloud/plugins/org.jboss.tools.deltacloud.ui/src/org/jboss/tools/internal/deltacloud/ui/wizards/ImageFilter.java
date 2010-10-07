@@ -2,7 +2,6 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 
 public class ImageFilter extends Wizard {
 

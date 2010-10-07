@@ -1,13 +1,19 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -22,16 +28,23 @@ public class ImageFilterPage extends WizardPage {
 	private final static String FILTER_LABEL = "ImageFilter.label"; //$NON-NLS-1$
 	private final static String EMPTY_RULE = "ErrorFilterEmptyRule.msg"; //$NON-NLS-1$
 	private final static String INVALID_SEMICOLON = "ErrorFilterSemicolon.msg"; //$NON-NLS-1$
+	private final static String FIELD_ERROR = "ErrorFieldError.msg"; //$NON-NLS-1$
 	private final static String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private final static String ID_LABEL = "Id.label"; //$NON-NLS-1$
 	private final static String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
 	private final static String DESC_LABEL = "Desc.label"; //$NON-NLS-1$
+	private final static String DEFAULT_LABEL = "DefaultButton.label"; //$NON-NLS-1$
 	
 	private DeltaCloud cloud;
 	private Text nameText;
 	private Text idText;
 	private Text archText;
 	private Text descText;
+	
+	private Button defaultName;
+	private Button defaultId;
+	private Button defaultArch;
+	private Button defaultDesc;
 	
 	public ImageFilterPage(DeltaCloud cloud) {
 		super(WizardMessages.getString(NAME));
@@ -67,6 +80,23 @@ public class ImageFilterPage extends WizardPage {
 		}
 	};
 	
+	private SelectionAdapter ButtonListener = new SelectionAdapter() {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			Button b = (Button)e.widget;
+			if (b == defaultName)
+				nameText.setText(".*"); //$NON-NLS-1$
+			else if (b == defaultId)
+				idText.setText(".*"); //$NON-NLS-1$
+			else if (b == defaultArch)
+				archText.setText(".*"); //$NON-NLS-1$
+			else if (b == defaultDesc)
+				descText.setText(".*"); //$NON-NLS-1$
+				
+		}
+	
+	};
+	
 	private void validate() {
 		boolean complete = true;
 		boolean error = false;
@@ -85,6 +115,44 @@ public class ImageFilterPage extends WizardPage {
 			setErrorMessage(WizardMessages.getString(INVALID_SEMICOLON));
 			error = true;
 		}
+		
+		try {
+			@SuppressWarnings("unused")
+			Pattern p = Pattern.compile(nameText.getText());
+		} catch (PatternSyntaxException e) {
+			setErrorMessage(WizardMessages.getFormattedString(FIELD_ERROR, 
+					new String[]{WizardMessages.getString(NAME_LABEL), 
+					e.getLocalizedMessage()}));
+			error = true;
+		}
+		try {
+			@SuppressWarnings("unused")
+			Pattern p = Pattern.compile(idText.getText());
+		} catch (PatternSyntaxException e) {
+			setErrorMessage(WizardMessages.getFormattedString(FIELD_ERROR, 
+					new String[]{WizardMessages.getString(ID_LABEL), 
+					e.getLocalizedMessage()}));
+			error = true;
+		}
+		try {
+			@SuppressWarnings("unused")
+			Pattern p = Pattern.compile(archText.getText());
+		} catch (PatternSyntaxException e) {
+			setErrorMessage(WizardMessages.getFormattedString(FIELD_ERROR, 
+					new String[]{WizardMessages.getString(ARCH_LABEL), 
+					e.getLocalizedMessage()}));
+			error = true;
+		}
+		try {
+			@SuppressWarnings("unused")
+			Pattern p = Pattern.compile(descText.getText());
+		} catch (PatternSyntaxException e) {
+			setErrorMessage(WizardMessages.getFormattedString(FIELD_ERROR, 
+					new String[]{WizardMessages.getString(DESC_LABEL), 
+					e.getLocalizedMessage()}));
+			error = true;
+		}
+		
 		if (!error)
 			setErrorMessage(null);
 		setPageComplete(complete && !error);
@@ -107,6 +175,10 @@ public class ImageFilterPage extends WizardPage {
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.setText(cloud.getImageFilter().getNameRule().toString());
 		nameText.addModifyListener(Listener);
+		
+		defaultName = new Button(container, SWT.NULL);
+		defaultName.setText(WizardMessages.getString(DEFAULT_LABEL));
+		defaultName.addSelectionListener(ButtonListener);
 
 		Label idLabel = new Label(container, SWT.NULL);
 		idLabel.setText(WizardMessages.getString(ID_LABEL));
@@ -115,6 +187,10 @@ public class ImageFilterPage extends WizardPage {
 		idText.setText(cloud.getImageFilter().getIdRule().toString());
 		idText.addModifyListener(Listener);
 
+		defaultId = new Button(container, SWT.NULL);
+		defaultId.setText(WizardMessages.getString(DEFAULT_LABEL));
+		defaultId.addSelectionListener(ButtonListener);
+
 		Label archLabel = new Label(container, SWT.NULL);
 		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
 		
@@ -122,6 +198,10 @@ public class ImageFilterPage extends WizardPage {
 		archText.setText(cloud.getImageFilter().getArchRule().toString());
 		archText.addModifyListener(Listener);
 		
+		defaultArch = new Button(container, SWT.NULL);
+		defaultArch.setText(WizardMessages.getString(DEFAULT_LABEL));
+		defaultArch.addSelectionListener(ButtonListener);
+
 		Label descLabel = new Label(container, SWT.NULL);
 		descLabel.setText(WizardMessages.getString(DESC_LABEL));
 
@@ -129,57 +209,82 @@ public class ImageFilterPage extends WizardPage {
 		descText.setText(cloud.getImageFilter().getDescRule().toString());
 		descText.addModifyListener(Listener);
 		
+		defaultDesc = new Button(container, SWT.NULL);
+		defaultDesc.setText(WizardMessages.getString(DEFAULT_LABEL));
+		defaultDesc.addSelectionListener(ButtonListener);
+
 		Point p1 = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		
+		Point p3 = defaultName.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		int centering = (p2.y - p1.y + 1) / 2;
-		
+		int centering2 = (p3.y - p2.y + 1) / 2;
+
 		FormData f = new FormData();
 		f.top = new FormAttachment(0);
 		label.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(label, 8 + centering);
+		f.top = new FormAttachment(label, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		nameLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(label, 8);
-		f.left = new FormAttachment(archLabel, 5);
+		f.top = new FormAttachment(label, 11);
 		f.right = new FormAttachment(100);
+		defaultName.setLayoutData(f);
+		
+		f = new FormData();
+		f.top = new FormAttachment(label, 11 + centering2);
+		f.left = new FormAttachment(archLabel, 5);
+		f.right = new FormAttachment(defaultName, -10);
 		nameText.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(nameLabel, 8 + centering);
+		f.top = new FormAttachment(nameLabel, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		idLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(nameLabel, 8);
-		f.left = new FormAttachment(archLabel, 5);
+		f.top = new FormAttachment(nameLabel, 11);
 		f.right = new FormAttachment(100);
+		defaultId.setLayoutData(f);
+
+		f = new FormData();
+		f.top = new FormAttachment(nameLabel, 11 + centering2);
+		f.left = new FormAttachment(archLabel, 5);
+		f.right = new FormAttachment(defaultId, -10);
 		idText.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(idLabel, 8 + centering);
+		f.top = new FormAttachment(idLabel, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		archLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(idLabel, 8);
-		f.left = new FormAttachment(archLabel, 5);
+		f.top = new FormAttachment(idLabel, 11);
 		f.right = new FormAttachment(100);
+		defaultArch.setLayoutData(f);
+
+		f = new FormData();
+		f.top = new FormAttachment(idLabel, 11 + centering2);
+		f.left = new FormAttachment(archLabel, 5);
+		f.right = new FormAttachment(defaultArch, -10);
 		archText.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(archLabel, 8 + centering);
+		f.top = new FormAttachment(archLabel, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		descLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(archLabel, 8);
-		f.left = new FormAttachment(archLabel, 5);
+		f.top = new FormAttachment(archLabel, 11);
 		f.right = new FormAttachment(100);
+		defaultDesc.setLayoutData(f);
+
+		f = new FormData();
+		f.top = new FormAttachment(archLabel, 11 + centering2);
+		f.left = new FormAttachment(archLabel, 5);
+		f.right = new FormAttachment(defaultDesc, -10);
 		descText.setLayoutData(f);
 
 		setControl(container);

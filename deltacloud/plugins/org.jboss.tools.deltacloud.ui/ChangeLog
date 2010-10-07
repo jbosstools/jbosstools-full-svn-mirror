@@ -1,3 +1,13 @@
+2010-10-07  Jeff Johnston  <jjohnstn@redhat.com>
+
+	[JBIDE-7181]
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilter.java: Fix import
+	warning.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterPage.java: 
+	(createControl): Add Default buttons for each field.
+	(validate): Add regex parsing check. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new messages.
+
 2010-10-07  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java: 
