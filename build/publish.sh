@@ -63,7 +63,7 @@ wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consol
 #  ...
 # At revision 25538
 rl=${STAGINGDIR}/logs/SVN_REVISION.txt
-sed -ne "/Updating http.\+\|Checking out http.\+\|At revision \d\+/ p" ${bl} " > ${rl}
+sed -ne "/Updating \(http.\+\)\|Checking out \(http.\+\)\|At revision \(\d\+\)/" ${bl} > ${rl}
 
 METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
 if [[ ${SVN_REVISION} ]]; then
