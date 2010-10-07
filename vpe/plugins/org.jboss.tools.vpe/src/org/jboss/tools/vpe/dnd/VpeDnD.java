@@ -23,7 +23,6 @@ import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.document.NodeContainer;
-import org.eclipse.wst.xml.xpath.core.util.XSLTXPathHelper;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.filesystems.XFileObject;
 import org.jboss.tools.common.model.options.PreferenceModelUtilities;
@@ -70,6 +69,7 @@ import org.mozilla.interfaces.nsISupportsString;
 import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.Mozilla;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 /**
@@ -549,8 +549,8 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
 				System.out.print(" dragNode: " + element.getNodeName() + "(" + element + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
-
-			canDrag = vpeController.getVisualBuilder().canInnerDrag(element);
+			
+			canDrag = canInnerDrag(element);
 			if (canDrag) {
 				Node sourceNode = getSourceNode(element);
 				if (sourceNode == null) {
@@ -562,6 +562,22 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 			System.out.println("  canDrag: " + canDrag); //$NON-NLS-1$
 		}
 		return canDrag;
+	}
+	
+	private boolean canInnerDrag(nsIDOMElement visualDragElement) {
+		VpeNodeMapping domMapping = vpeController.getDomMapping()
+				.getNodeMapping(visualDragElement);
+		if (domMapping instanceof VpeElementMapping) {
+			VpeElementMapping elementMapping = (VpeElementMapping) domMapping;
+			if (elementMapping.getSourceNode() instanceof Element) {
+				return elementMapping.getTemplate().canInnerDrag(
+						vpeController.getPageContext(),
+						(Element) elementMapping.getSourceNode(),
+						vpeController.getXulRunnerEditor().getDOMDocument(),
+						visualDragElement, elementMapping.getData());
+			}
+		}
+		return false;
 	}
 	
 	private Node getSourceNode(nsIDOMNode visualNode) {

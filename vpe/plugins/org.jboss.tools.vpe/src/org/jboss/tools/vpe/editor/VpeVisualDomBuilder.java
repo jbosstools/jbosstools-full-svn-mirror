@@ -1301,21 +1301,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
-	public boolean canInnerDrag(nsIDOMElement visualDragElement) {
-		VpeNodeMapping node = domMapping.getNodeMapping(visualDragElement);
-		if (node instanceof VpeElementMapping) {
-			VpeElementMapping elementMapping = (VpeElementMapping) node;
-			if (elementMapping != null
-					&& elementMapping.getSourceNode() instanceof Element) {
-				return elementMapping.getTemplate().canInnerDrag(pageContext,
-						(Element) elementMapping.getSourceNode(),
-						getVisualDocument(), visualDragElement,
-						elementMapping.getData());
-			}
-		}
-		return false;
-	}
-
 	public void innerDrop(Node dragNode, Node container, int offset) {
 		VpeNodeMapping mapping = domMapping.getNearNodeMapping(container);
 		if (mapping != null) {
