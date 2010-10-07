@@ -952,7 +952,10 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 			if(((TaskType) parentTask).getId().equals(TaskTypeManager.TASK_ID_INPUT) && !taskType.getId().equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
 				for (AbstractSmooksGraphicalModel abstractSmooksGraphicalModel : children) {
 					if (abstractSmooksGraphicalModel instanceof InputDataContianerModel) {
-						createConnection(abstractSmooksGraphicalModel);
+						Collection<TreeNodeConnection> c = createConnection(abstractSmooksGraphicalModel);
+						if (c != null) {
+							connections.addAll(c);
+						}
 						break;
 					}
 				}				
