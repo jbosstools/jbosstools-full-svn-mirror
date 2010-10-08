@@ -633,6 +633,14 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			
 		} catch (Throwable t) {
+			/*
+			 * https://jira.jboss.org/browse/JBIDE-6690
+			 * Disable VPE toolbar
+			 */
+			verBar.setEnabled(false);
+			/*
+			 * Show the exception
+			 */
 			showXulRunnerException(cmpEd, t);
 		}
 		
