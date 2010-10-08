@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.IInstanceFilter;
 
 public class InstanceViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider, ITableLabelProvider {
 
@@ -81,14 +83,25 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (newInput != null) {
 			if (newInput instanceof DeltaCloudInstance[]) {
-				instances = (DeltaCloudInstance[])newInput;
+				instances = filter((DeltaCloudInstance[])newInput);
 			} else {
 				cloud = (DeltaCloud)newInput;
-				instances = cloud.getCurrInstances();
+				instances = filter(cloud.getCurrInstances());
 			}
 		}
 	}
 
+	private DeltaCloudInstance[] filter(DeltaCloudInstance[] input) {
+		ArrayList<DeltaCloudInstance> array = new ArrayList<DeltaCloudInstance>();
+		IInstanceFilter f = cloud.getInstanceFilter();
+		for (int i = 0; i < input.length; ++i) {
+			DeltaCloudInstance instance = input[i];
+			if (f.isVisible(instance))
+				array.add(instance);
+		}
+		return array.toArray(new DeltaCloudInstance[array.size()]);
+	}
+	
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		return null;

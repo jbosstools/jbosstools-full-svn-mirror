@@ -1,3 +1,31 @@
+2010-10-08  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilter.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterPage.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (getChildren): Add
+	filtering.
+	(listChanged): Ditto.
+	(filter): New method.
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add new instance filtering
+	messages.
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (handleSelection): Add enablement
+	of instances filter.
+	(fillLocalPullDown): Add instances filtering.
+	(fillContextMenu): Ditto.
+	(makeActions): Add instances filtering action.  Disable all cloud-wide actions based on whether
+	an item is selected or not.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (createPartControl): Add filtered
+	label.
+	(fillLocalPullDown): Add filtering action.
+	(makeActions): Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (inputChanged): 
+	Add filtering support.
+	(filter): New method.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterPage.java (.widgetSelected): Fix
+	default values to be wildcards.
+	(validate): Remove regex checking of input rules.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new messages.
+
 2010-10-07  Jeff Johnston  <jjohnstn@redhat.com>
 
 	[JBIDE-7181]

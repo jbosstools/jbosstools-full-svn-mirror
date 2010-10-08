@@ -1,8 +1,5 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -28,7 +25,6 @@ public class ImageFilterPage extends WizardPage {
 	private final static String FILTER_LABEL = "ImageFilter.label"; //$NON-NLS-1$
 	private final static String EMPTY_RULE = "ErrorFilterEmptyRule.msg"; //$NON-NLS-1$
 	private final static String INVALID_SEMICOLON = "ErrorFilterSemicolon.msg"; //$NON-NLS-1$
-	private final static String FIELD_ERROR = "ErrorFieldError.msg"; //$NON-NLS-1$
 	private final static String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private final static String ID_LABEL = "Id.label"; //$NON-NLS-1$
 	private final static String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
@@ -85,14 +81,13 @@ public class ImageFilterPage extends WizardPage {
 		public void widgetSelected(SelectionEvent e) {
 			Button b = (Button)e.widget;
 			if (b == defaultName)
-				nameText.setText(".*"); //$NON-NLS-1$
+				nameText.setText("*"); //$NON-NLS-1$
 			else if (b == defaultId)
-				idText.setText(".*"); //$NON-NLS-1$
+				idText.setText("*"); //$NON-NLS-1$
 			else if (b == defaultArch)
-				archText.setText(".*"); //$NON-NLS-1$
+				archText.setText("*"); //$NON-NLS-1$
 			else if (b == defaultDesc)
-				descText.setText(".*"); //$NON-NLS-1$
-				
+				descText.setText("*"); //$NON-NLS-1$
 		}
 	
 	};
@@ -113,43 +108,6 @@ public class ImageFilterPage extends WizardPage {
 				archText.getText().contains(";") ||
 				descText.getText().contains(";")) {
 			setErrorMessage(WizardMessages.getString(INVALID_SEMICOLON));
-			error = true;
-		}
-		
-		try {
-			@SuppressWarnings("unused")
-			Pattern p = Pattern.compile(nameText.getText());
-		} catch (PatternSyntaxException e) {
-			setErrorMessage(WizardMessages.getFormattedString(FIELD_ERROR, 
-					new String[]{WizardMessages.getString(NAME_LABEL), 
-					e.getLocalizedMessage()}));
-			error = true;
-		}
-		try {
-			@SuppressWarnings("unused")
-			Pattern p = Pattern.compile(idText.getText());
-		} catch (PatternSyntaxException e) {
-			setErrorMessage(WizardMessages.getFormattedString(FIELD_ERROR, 
-					new String[]{WizardMessages.getString(ID_LABEL), 
-					e.getLocalizedMessage()}));
-			error = true;
-		}
-		try {
-			@SuppressWarnings("unused")
-			Pattern p = Pattern.compile(archText.getText());
-		} catch (PatternSyntaxException e) {
-			setErrorMessage(WizardMessages.getFormattedString(FIELD_ERROR, 
-					new String[]{WizardMessages.getString(ARCH_LABEL), 
-					e.getLocalizedMessage()}));
-			error = true;
-		}
-		try {
-			@SuppressWarnings("unused")
-			Pattern p = Pattern.compile(descText.getText());
-		} catch (PatternSyntaxException e) {
-			setErrorMessage(WizardMessages.getFormattedString(FIELD_ERROR, 
-					new String[]{WizardMessages.getString(DESC_LABEL), 
-					e.getLocalizedMessage()}));
 			error = true;
 		}
 		

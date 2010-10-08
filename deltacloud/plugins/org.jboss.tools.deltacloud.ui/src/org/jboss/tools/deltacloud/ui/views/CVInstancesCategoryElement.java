@@ -10,11 +10,15 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
 
 public class CVInstancesCategoryElement extends CVCategoryElement implements IInstanceListListener {
@@ -41,7 +45,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
 			cloud.removeInstanceListListener(this);
-			DeltaCloudInstance[] instances = cloud.getCurrInstances();
+			DeltaCloudInstance[] instances = filter(cloud.getCurrInstances());
 			for (int i = 0; i < instances.length; ++i) {
 				DeltaCloudInstance d = instances[i];
 				CVInstanceElement element = new CVInstanceElement(d, d.getName());
@@ -54,8 +58,9 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 	}
 
 	@Override
-	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] instances) {
+	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] newInstances) {
 		clearChildren();
+		DeltaCloudInstance[] instances = filter(newInstances);
 		for (int i = 0; i < instances.length; ++i) {
 			DeltaCloudInstance d = instances[i];
 			CVInstanceElement element = new CVInstanceElement(d, d.getName());
@@ -68,6 +73,18 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 				((TreeViewer)viewer).refresh(category, false);
 			}
 		});
+	}
+
+	private DeltaCloudInstance[] filter(DeltaCloudInstance[] input) {
+		ArrayList<DeltaCloudInstance> array = new ArrayList<DeltaCloudInstance>();
+		DeltaCloud cloud = (DeltaCloud)getElement();
+		IInstanceFilter f = cloud.getInstanceFilter();
+		for (int i = 0; i < input.length; ++i) {
+			DeltaCloudInstance instance = input[i];
+			if (f.isVisible(instance))
+				array.add(instance);
+		}
+		return array.toArray(new DeltaCloudInstance[array.size()]);
 	}
 
 }

@@ -52,6 +52,7 @@ import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnection;
 import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
+import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 
 
@@ -82,6 +83,7 @@ ITabbedPropertySheetPageContributor {
 	private final static String DESTROYING_INSTANCE_TITLE = "DestroyingInstance.title"; //$NON-NLS-1$
 	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
 	private final static String IMAGE_FILTER = "ImageFilter.label"; //$NON-NLS-1$
+	private final static String INSTANCE_FILTER = "InstanceFilter.label"; //$NON-NLS-1$
 	
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
@@ -97,6 +99,7 @@ ITabbedPropertySheetPageContributor {
 	private Action createInstance;
 	private Action editCloud;
 	private Action imageFilterAction;
+	private Action instanceFilterAction;
 	
 	private Map<String, Action> instanceActions;
 	
@@ -177,6 +180,7 @@ ITabbedPropertySheetPageContributor {
 		removeCloud.setEnabled(selectedElement != null);
 		refreshAction.setEnabled(selectedElement != null);
 		imageFilterAction.setEnabled(selectedElement != null);
+		instanceFilterAction.setEnabled(selectedElement != null);
 	}
 	
 	private void fillLocalPullDown(IMenuManager manager) {
@@ -185,6 +189,7 @@ ITabbedPropertySheetPageContributor {
 		manager.add(removeCloud);
 		manager.add(refreshAction);
 		manager.add(imageFilterAction);
+		manager.add(instanceFilterAction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -202,6 +207,7 @@ ITabbedPropertySheetPageContributor {
 		manager.add(editCloud);
 		manager.add(removeCloud);
 		manager.add(imageFilterAction);
+		manager.add(instanceFilterAction);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
@@ -446,6 +452,35 @@ ITabbedPropertySheetPageContributor {
 		imageFilterAction.setText(CVMessages.getString(IMAGE_FILTER));
 		imageFilterAction.setToolTipText(CVMessages.getString(IMAGE_FILTER));
 		
+		instanceFilterAction = new Action() {
+			public void run() {
+				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+				CloudViewElement element = (CloudViewElement)selection.getFirstElement();
+				while (element != null && !(element instanceof CVCloudElement)) {
+					element = (CloudViewElement)element.getParent();
+				}
+				if (element != null) {
+					CVCloudElement cve = (CVCloudElement)element;
+					final DeltaCloud cloud = (DeltaCloud)cve.getElement();
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							Shell shell = viewer.getControl().getShell();
+							IWizard wizard = new InstanceFilter(cloud);
+							WizardDialog dialog = new WizardDialog(shell, wizard);
+							dialog.create();
+							dialog.open();
+						}
+
+					});
+				}
+			}
+		};
+		instanceFilterAction.setText(CVMessages.getString(INSTANCE_FILTER));
+		instanceFilterAction.setToolTipText(CVMessages.getString(INSTANCE_FILTER));
+		
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -461,6 +496,12 @@ ITabbedPropertySheetPageContributor {
 		collapseall.setText(CVMessages.getString(COLLAPSE_ALL));
 		collapseall.setToolTipText(CVMessages.getString(COLLAPSE_ALL));
 		collapseall.setImageDescriptor(SWTImagesFactory.DESC_COLLAPSE_ALL);
+
+		editCloud.setEnabled(selectedElement != null);
+		removeCloud.setEnabled(selectedElement != null);
+		refreshAction.setEnabled(selectedElement != null);
+		imageFilterAction.setEnabled(selectedElement != null);
+		instanceFilterAction.setEnabled(selectedElement != null);
 	}
 
 	private void hookDoubleClickAction() {

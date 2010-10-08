@@ -33,6 +33,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.rse.core.IRSECoreRegistry;
 import org.eclipse.rse.core.IRSESystemType;
 import org.eclipse.rse.core.RSECorePlugin;
@@ -56,6 +58,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
@@ -67,10 +70,12 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
+import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
 import org.osgi.service.prefs.Preferences;
 
 public class InstanceView extends ViewPart implements ICloudManagerListener, IInstanceListListener {
@@ -91,11 +96,15 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
 	private final static String RSE_CONNECTING_MSG = "ConnectingRSE.msg"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
+	private static final String FILTER = "Filter.label"; //$NON-NLS-1$
+	private static final String FILTERED_LABEL = "Filtered.label"; //$NON-NLS-1$
+	private static final String FILTERED_TOOLTIP = "FilteredImages.tooltip"; //$NON-NLS-1$	
 	
 	
 	private TableViewer viewer;
 	private Composite container;
 	private Combo cloudSelector;
+	private Label filterLabel;
 	private DeltaCloudInstance selectedElement;
 	
 	private DeltaCloud[] clouds;
@@ -104,6 +113,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private InstanceViewLabelAndContentProvider contentProvider;
 	
 	private Action refreshAction;
+	private Action filterAction;
 	private Action startAction;
 	private Action stopAction;
 	private Action destroyAction;
@@ -204,6 +214,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				e.doit = false;
 			}
 		});
+		
+		filterLabel = new Label(container, SWT.NULL);
+		filterLabel.setText(CVMessages.getString(FILTERED_LABEL));
+		filterLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
 		
 		Composite tableArea = new Composite(container, SWT.NULL);
 		TableColumnLayout tableLayout = new TableColumnLayout();
@@ -313,6 +327,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(refreshAction);
+		manager.add(filterAction);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
@@ -367,6 +382,30 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
 		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+		
+		filterAction = new Action() {
+			public void run() {
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						Shell shell = viewer.getControl().getShell();
+						IWizard wizard = new InstanceFilter(currCloud);
+						WizardDialog dialog = new WizardDialog(shell, wizard);
+						dialog.create();
+						dialog.open();
+						if (!currCloud.getInstanceFilter().toString().equals(IInstanceFilter.ALL_STRING))
+							filterLabel.setVisible(true);
+						else
+							filterLabel.setVisible(false);
+					}
+					
+				});
+			}
+		};
+		filterAction.setText(CVMessages.getString(FILTER));
+		filterAction.setToolTipText(CVMessages.getString(FILTER));
 		
 		startAction = new Action() {
 			public void run() {
