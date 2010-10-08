@@ -1349,6 +1349,10 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 			}
 		}
 	}
+	
+	public List<IAction> getProcessPanelActionList(){
+		return processPanelActions;
+	}
 
 	public IAction getAction(String actionId) {
 		if (processMapActived) {

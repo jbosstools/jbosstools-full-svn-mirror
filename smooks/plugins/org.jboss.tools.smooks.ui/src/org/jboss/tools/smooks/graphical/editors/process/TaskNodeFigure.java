@@ -28,6 +28,7 @@ import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -37,6 +38,7 @@ import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphItem;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
+import org.jboss.tools.smooks.graphical.actions.DeleteTaskNodeAction;
 import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 
@@ -101,29 +103,6 @@ public class TaskNodeFigure extends Figure {
 	}
 
 	private void hookTaskNodeFigure() {
-		// this.addMouseMotionListener(new MouseMotionListener() {
-		//
-		// public void mouseDragged(MouseEvent me) {
-		// }
-		//
-		// public void mouseEntered(MouseEvent me) {
-		// showAddFigure = true;
-		// imageSourceRectangle = null;
-		// addTaskFigure.repaint();
-		// }
-		//
-		// public void mouseExited(MouseEvent me) {
-		// showAddFigure = false;
-		// addTaskFigure.repaint();
-		// }
-		//
-		// public void mouseHover(MouseEvent me) {
-		// }
-		//
-		// public void mouseMoved(MouseEvent me) {
-		// }
-		//
-		// });
 		addTaskFigure.addMouseMotionListener(new MouseMotionListener() {
 
 			public void mouseDragged(MouseEvent me) {
@@ -187,6 +166,36 @@ public class TaskNodeFigure extends Figure {
 					// imageSourceRectangle = new Rectangle(rect.x + feet,
 					// rect.y + feet, rect.width - feet * 2,
 					// rect.height - feet * 2);
+				}else{
+					Graph g = processGraphicalViewerEditor.getProcessGraphViewer()
+							.getGraphControl();
+					processGraphicalViewerEditor.setNeedupdatewhenshow(false);
+					List<?> nodes = g.getNodes();
+					for (Iterator<?> iterator = nodes.iterator(); iterator
+							.hasNext();) {
+						GraphItem item = (GraphItem) iterator.next();
+						if (item instanceof CGraphNode) {
+							if (TaskNodeFigure.this == ((CGraphNode) item)
+									.getFigure()) {
+								processGraphicalViewerEditor
+										.updateProcessActions(new StructuredSelection(
+												item.getData()));
+								break;
+							}
+						}
+					}
+					List<IAction> actionsList = processGraphicalViewerEditor.getProcessPanelActionList();
+					boolean hideAddIcon = true;
+					for (IAction iAction : actionsList) {
+						if(iAction.isEnabled() && !(iAction instanceof DeleteTaskNodeAction)){
+							hideAddIcon = false;
+							break;
+						}
+					}
+					if(hideAddIcon){
+						graphics.fillRectangle(rect);
+						return;
+					}
 				}
 				Image image = SmooksConfigurationActivator.getDefault()
 						.getImageRegistry()

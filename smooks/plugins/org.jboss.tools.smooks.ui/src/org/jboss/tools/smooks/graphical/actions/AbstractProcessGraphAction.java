@@ -71,15 +71,6 @@ public abstract class AbstractProcessGraphAction extends Action implements ISele
 	}
 	
 	protected List<TaskType> getCurrentSelectedTask(){
-		if(editorPart instanceof SmooksProcessGraphicalEditor) {
-			TaskType currentlySelectedTask = ((SmooksProcessGraphicalEditor)editorPart).getCurrentlySelectedTask();
-			if(currentlySelectedTask != null) {
-				List<TaskType> selectedTasks = new ArrayList<TaskType>();				
-				selectedTasks.add(currentlySelectedTask);
-				return selectedTasks;
-			}
-		}
-		
 		if(currentSelection != null){
 			List<TaskType> selectedTasks = new ArrayList<TaskType>();
 			List<?> selections = ((IStructuredSelection) currentSelection).toList();
@@ -89,6 +80,14 @@ public abstract class AbstractProcessGraphAction extends Action implements ISele
 				}
 			}
 			return selectedTasks;
+		}
+		if(editorPart instanceof SmooksProcessGraphicalEditor) {
+			TaskType currentlySelectedTask = ((SmooksProcessGraphicalEditor)editorPart).getCurrentlySelectedTask();
+			if(currentlySelectedTask != null) {
+				List<TaskType> selectedTasks = new ArrayList<TaskType>();				
+				selectedTasks.add(currentlySelectedTask);
+				return selectedTasks;
+			}
 		}
 		return null;
 	}
