@@ -1,3 +1,25 @@
+2010-10-08  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/AllInstanceFilter.java: New file.
+	* src/org/jboss/tools/deltacloud/core/IInstanceFilter.java: New file.
+	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java: New file.
+	* src/org/jboss/tools/deltacloud/core/AllFieldMatcher.java (toString): Switch back
+	to non-regex, just a wildcard.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): Add instance
+	filter rules to constructor.
+	(getInstanceFilter): New method.
+	(createInstanceFilter): Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (loadClouds): Add instance
+	filter support.
+	(saveClouds): Ditto.
+	* src/org/jboss/tools/deltacloud/core/FieldMatcher.java (FieldMatcher): Use the input
+	string to form a regex where all non-alphanumeric characters are escaped and wildcards
+	are expanded to a reluctant any character matcher.
+	(transform): New method to transform the input rule into a regex.
+	* src/org/jboss/tools/deltacloud/core/IImageFilter.java: Fix ALL_STRING.
+	* src/org/jboss/tools/deltacloud/core/ImageFilter.java (setRules): Fix checking for
+	AllFieldMatchers.
+
 2010-10-07  Jeff Johnston  <jjohnstn@redhat.com>
 
 	[JBIDE-7181]

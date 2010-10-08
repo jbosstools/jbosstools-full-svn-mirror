@@ -43,6 +43,7 @@ public class DeltaCloud {
 	private ArrayList<DeltaCloudInstance> instances;
 	private ArrayList<DeltaCloudImage> images;
 	private IImageFilter imageFilter;
+	private IInstanceFilter instanceFilter;
 	private Map<String, Job> actionJobs;
 	private Object imageLock = new Object();
 	private Object instanceLock = new Object();
@@ -52,16 +53,17 @@ public class DeltaCloud {
 	ListenerList imageListeners = new ListenerList();
 	
 	public DeltaCloud(String name, String url, String username, String passwd) throws MalformedURLException {
-		this(name, url, username, passwd, null, false, IImageFilter.ALL_STRING);
+		this(name, url, username, passwd, null, false, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
 	}
 
 	public DeltaCloud(String name, String url, String username, String passwd, 
 			String type, boolean persistent) throws MalformedURLException {
-		this(name, url, username, passwd, null, persistent, IImageFilter.ALL_STRING);
+		this(name, url, username, passwd, null, persistent, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
 	}
 
 	public DeltaCloud(String name, String url, String username, String passwd, 
-			String type, boolean persistent, String imageFilterRules) throws MalformedURLException {
+			String type, boolean persistent, 
+			String imageFilterRules, String instanceFilterRules) throws MalformedURLException {
 		this.client = new DeltaCloudClient(new URL(url + "/api"), username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
@@ -72,6 +74,12 @@ public class DeltaCloud {
 			imageFilter.setRules(imageFilterRules);
 		} catch (PatternSyntaxException e) {
 			imageFilter.setRules(IImageFilter.ALL_STRING);
+		}
+		instanceFilter = new InstanceFilter();
+		try {
+			instanceFilter.setRules(instanceFilterRules);
+		} catch (PatternSyntaxException e) {
+			instanceFilter.setRules(IInstanceFilter.ALL_STRING);
 		}
 		if (persistent) {
 			ISecurePreferences root = SecurePreferencesFactory.getDefault();
@@ -121,6 +129,24 @@ public class DeltaCloud {
 	
 	public String getType() {
 		return type;
+	}
+	
+	public IInstanceFilter getInstanceFilter() {
+		return instanceFilter;
+	}
+	
+	public void createInstanceFilter(String ruleString) {
+		String rules = getInstanceFilter().toString();
+		if (IInstanceFilter.ALL_STRING.equals(ruleString))
+			instanceFilter = new AllInstanceFilter();
+		else {
+			instanceFilter = new InstanceFilter();
+			instanceFilter.setRules(ruleString);
+		}
+		if (!rules.equals(ruleString)) {
+			save();
+			notifyInstanceListListeners(getCurrInstances());
+		}
 	}
 	
 	public IImageFilter getImageFilter() {

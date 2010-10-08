@@ -63,6 +63,7 @@ public class DeltaCloudManager {
 					Node usernameNode = attrs.getNamedItem("username"); // $NON-NLS-1$
 					Node typeNode = attrs.getNamedItem("type"); // $NON-NLS-1$
 					Node imageFilterNode = attrs.getNamedItem("imagefilter"); //$NON-NLS-1$
+					Node instanceFilterNode = attrs.getNamedItem("instancefilter"); //$NON-NLS-1$
 					String name = nameNode.getNodeValue();
 					String url = urlNode.getNodeValue();
 					String username = usernameNode.getNodeValue();
@@ -73,13 +74,18 @@ public class DeltaCloudManager {
 						imageFilterRules = imageFilterNode.getNodeValue();
 					else
 						imageFilterRules = IImageFilter.ALL_STRING;
+					String instanceFilterRules = null;
+					if (instanceFilterNode != null)
+						instanceFilterRules = instanceFilterNode.getNodeValue();
+					else
+						instanceFilterRules = IInstanceFilter.ALL_STRING;
 					ISecurePreferences root = SecurePreferencesFactory.getDefault();
 					ISecurePreferences node = root.node(key);
 					String password;
 					try {
 						password = node.get("password", null); //$NON-NLS-1$
 						DeltaCloud cloud = new DeltaCloud(name, url, username, password, type, 
-								false, imageFilterRules);
+								false, imageFilterRules, instanceFilterRules);
 						cloud.loadChildren();
 						clouds.add(cloud);
 					} catch (Exception e1) {
@@ -112,7 +118,8 @@ public class DeltaCloudManager {
 							+ d.getURL() +
 							"\" username=\"" + d.getUsername() + 
 							"\" type=\"" + d.getType() + 
-							"\" imagefilter=\"" + d.getImageFilter() + "\"/>"); //$NON-NLS-1$ //$NON-NLS-2$
+							"\" imagefilter=\"" + d.getImageFilter() + 
+							"\" instancefilter=\"" + d.getInstanceFilter() + "\"/>"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				p.println("</clouds>"); //$NON-NLS-1$
 				p.close();

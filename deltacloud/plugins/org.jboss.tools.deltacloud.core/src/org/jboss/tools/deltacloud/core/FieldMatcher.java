@@ -11,7 +11,24 @@ public class FieldMatcher implements IFieldMatcher {
 	
 	public FieldMatcher(String rule) throws PatternSyntaxException {
 		this.rule = rule;
-		pattern = Pattern.compile(rule);
+		String regexRule = transform(rule);
+		pattern = Pattern.compile(regexRule);
+	}
+
+	private String transform(String rule) {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < rule.length(); ++i) {
+			char ch = rule.charAt(i);
+			if (Character.isLetterOrDigit(ch))
+				buffer.append(ch);
+			else if (ch == '*') {
+				buffer.append(".*?");
+			} else {
+				buffer.append('\\');
+				buffer.append(ch);
+			}
+		}
+		return buffer.toString();
 	}
 	
 	@Override
