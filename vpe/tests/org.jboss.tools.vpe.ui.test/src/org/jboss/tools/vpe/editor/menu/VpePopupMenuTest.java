@@ -26,6 +26,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -53,7 +54,8 @@ public class VpePopupMenuTest extends VpeTest {
 			VpeUIMessages.INSERT_AFTER,
 			VpeUIMessages.INSERT_INTO,
 			VpeUIMessages.REPLACE_WITH,
-			VpeUIMessages.STRIP_TAG_MENU_ITEM
+			VpeUIMessages.STRIP_TAG_MENU_ITEM, 
+			JstUIMessages.EXTERNALIZE_STRINGS
 	};
 	private static final Point CODE_POINT = new Point(14, 25);
 
