@@ -637,7 +637,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			 * https://jira.jboss.org/browse/JBIDE-6690
 			 * Disable VPE toolbar
 			 */
-			verBar.setEnabled(false);
+			if (verBar != null) {
+				verBar.setEnabled(false);
+			}
 			/*
 			 * Show the exception
 			 */
