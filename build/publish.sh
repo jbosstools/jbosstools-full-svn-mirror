@@ -48,6 +48,30 @@ fi
 
 # note the job name, build number, SVN rev, and build ID of the latest snapshot zip
 mkdir -p ${STAGINGDIR}/logs
+bl=${STAGINGDIR}/logs/BUILDLOG.txt
+wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
+
+# JBDS-1361 - instead of SVN_REVISION, scrape ${bl} (BUILDLOG.txt)
+# Updating http://anonsvn.jboss.org/repos/tdesigner/branches/7.1
+#  ...
+# At revision 1063
+# Updating http://anonsvn.jboss.org/repos/jbosstools/trunk/build
+#  ...
+# At revision 25503
+#  -- or -- 
+# Checking out https://svn.jboss.org/repos/jbosstools/branches/jbosstools-3.2.0.Beta1
+#  ...
+# At revision 25538
+rl=${STAGINGDIR}/logs/SVN_REVISION.txt
+
+# convert input above to:
+# http://anonsvn.jboss.org/repos/tdesigner/branches/7.1@1063
+# http://anonsvn.jboss.org/repos/jbosstools/trunk/build@25503
+# https://svn.jboss.org/repos/jbosstools/branches/jbosstools-3.2.0.Beta1@25538
+sed -ne "/Updating \(http.\+\)\|Checking out \(http.\+\)\|At revision \([0-9]\+\)/ p" ${bl} | \
+   sed -e "/At revision/ s/At revision /\@/" | sed -e N -e '/http/ s/\n//' | \
+   sed -e "/Checking out\|Updating/,+1 s/\(Checking out \|Updating \)\(.\+\)/\2/g" > ${rl}
+
 METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
 if [[ ${SVN_REVISION} ]]; then
 	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
@@ -136,10 +160,9 @@ if [[ ${RELEASE} == "Yes" ]]; then
 	ant -f ${ANT_SCRIPT} ${ANT_PARAMS}
 fi
 
-# get full build log and filter out Maven test failures
+# ${bl} is full build log; see above
 mkdir -p ${STAGINGDIR}/logs
-bl=${STAGINGDIR}/logs/BUILDLOG.txt
-wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
+# filter out Maven test failures
 fl=${STAGINGDIR}/logs/FAIL_LOG.txt
 # ignore warning lines and checksum failures
 sed -ne "/\[WARNING\]\|CHECKSUM FAILED/ ! p" ${bl} | sed -ne "/<<< FAI/,+9 p" | sed -e "/AILURE/,+9 s/\(.\+AILURE.\+\)/\n----------\n\n\1/g" > ${fl}
