@@ -63,7 +63,14 @@ wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consol
 #  ...
 # At revision 25538
 rl=${STAGINGDIR}/logs/SVN_REVISION.txt
-sed -ne "/Updating \(http.\+\)\|Checking out \(http.\+\)\|At revision \(\d\+\)/" ${bl} > ${rl}
+
+# convert input above to:
+# http://anonsvn.jboss.org/repos/tdesigner/branches/7.1@1063
+# http://anonsvn.jboss.org/repos/jbosstools/trunk/build@25503
+# https://svn.jboss.org/repos/jbosstools/branches/jbosstools-3.2.0.Beta1@25538
+sed -ne "/Updating \(http.\+\)\|Checking out \(http.\+\)\|At revision \([0-9]\+\)/ p" ${bl} | \
+   sed -e "/At revision/ s/At revision /\@/" | sed -e N -e '/http/ s/\n//' | \
+   sed -e "/Checking out\|Updating/,+1 s/\(Checking out \|Updating \)\(.\+\)/\2/g" > ${rl}
 
 METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
 if [[ ${SVN_REVISION} ]]; then
