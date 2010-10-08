@@ -438,7 +438,7 @@ Requires m2eclipse and JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.51, org.jboss.ide.eclipse.as.runtime.50, org.jboss.ide.eclipse.as.runtime.42</property>
-				<property name="eclipse-projects">photoalbum,photoalbum-ear,photoalbum-ejb</property>
+				<property name="eclipse-projects">simple</property>
 				<property name="description">This project example requires JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x</property>
 			</fix>
 			<fix type="plugin">
@@ -928,32 +928,4 @@ Java POJOs.</description>
 		</fixes>
 	</project>
 	
-	<project>
-		<category>RESTEasy</category>
-		<name>simple</name>
-		<included-projects>
-		simple
-		</included-projects>
-
-		<shortDescription>RESTEasy Simple Example</shortDescription>
-		<description>This project is a simple example showing usage of @Path, @GET, PUT, POST, and @PathParam. It uses pure streaming output and includes the 'simple' project. 
-Requires m2eclipse and JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x.
-		</description>
-		<size>16939</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/resteasy-examples/resteasySimple.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.51, org.jboss.ide.eclipse.as.runtime.50, org.jboss.ide.eclipse.as.runtime.42</property>
-				<property name="eclipse-projects">photoalbum,photoalbum-ear,photoalbum-ejb</property>
-				<property name="description">This project example requires JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions"> 0.10.0</property>
-				<property name="description">This project example requires m2eclipse. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
-			</fix>
-		</fixes>
-	</project>
 </projects>
