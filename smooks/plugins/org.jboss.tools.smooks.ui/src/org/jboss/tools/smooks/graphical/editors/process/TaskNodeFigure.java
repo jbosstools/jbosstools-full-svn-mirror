@@ -38,6 +38,7 @@ import org.eclipse.zest.core.widgets.GraphItem;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
 import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
+import org.jboss.tools.smooks.graphical.editors.TaskTypeManager;
 
 /**
  * @author Dart
@@ -46,7 +47,7 @@ import org.jboss.tools.smooks.graphical.editors.SmooksProcessGraphicalEditor;
 public class TaskNodeFigure extends Figure {
 
 	private TaskType task;
-	
+
 	private Label problemTooltip;
 
 	private IFigure mainFigure;
@@ -69,26 +70,27 @@ public class TaskNodeFigure extends Figure {
 
 	private Rectangle imageSourceRectangle = null;
 
-	public TaskNodeFigure(TaskType task, SmooksProcessGraphicalEditor graph, Image image, String text) {
+	public TaskNodeFigure(TaskType task, SmooksProcessGraphicalEditor graph,
+			Image image, String text) {
 		super();
 		this.task = task;
-		this.processGraphicalViewerEditor = graph;		
+		this.processGraphicalViewerEditor = graph;
 		this.image = image;
 		this.labelText = text;
 		this.problemTooltip = new Label();
-		
+
 		initFigure();
 		hookTaskNodeFigure();
 	}
-	
+
 	public TaskType getTask() {
 		return task;
 	}
 
-	public void setProblemMessage(String message){
-		if(message == null){
+	public void setProblemMessage(String message) {
+		if (message == null) {
 			this.setToolTip(null);
-		}else{
+		} else {
 			this.problemTooltip.setText(message);
 			this.setToolTip(problemTooltip);
 		}
@@ -173,25 +175,34 @@ public class TaskNodeFigure extends Figure {
 				super.paintFigure(graphics);
 				Rectangle rect = getBounds();
 				Point center = rect.getCenter();
-				if (!showAddFigure) {
-//					int feet = 4;
+				String taskId = task.getId();
+				if (!showAddFigure
+						|| TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE
+								.equals(taskId)
+						|| TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE
+								.equals(taskId)) {
+					// int feet = 4;
 					graphics.fillRectangle(rect);
 					return;
 					// imageSourceRectangle = new Rectangle(rect.x + feet,
 					// rect.y + feet, rect.width - feet * 2,
 					// rect.height - feet * 2);
 				}
-				Image image = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
-						GraphicsConstants.IMAGE_ADD_TASK_BUTTON);
+				Image image = SmooksConfigurationActivator.getDefault()
+						.getImageRegistry()
+						.get(GraphicsConstants.IMAGE_ADD_TASK_BUTTON);
 				if (image != null) {
-//					System.out.println(center.x - image.getBounds().width / 2);
-					Point location = new Point(center.x - image.getBounds().width / 2, center.y
+					// System.out.println(center.x - image.getBounds().width /
+					// 2);
+					Point location = new Point(center.x
+							- image.getBounds().width / 2, center.y
 							- image.getBounds().height / 2);
 					graphics.drawImage(image, location);
 					if (imageSourceRectangle == null) {
-//						graphics.drawImage(image, getLocation());
+						// graphics.drawImage(image, getLocation());
 					} else {
-//						graphics.drawImage(image, sourceRectangle, imageSourceRectangle);
+						// graphics.drawImage(image, sourceRectangle,
+						// imageSourceRectangle);
 					}
 				}
 			}
@@ -203,22 +214,28 @@ public class TaskNodeFigure extends Figure {
 				if (!showAddFigure) {
 					return;
 				}
-				
+
 				processGraphicalViewerEditor.showTaskControl(task);
-				
-				Graph g = processGraphicalViewerEditor.getProcessGraphViewer().getGraphControl();
+
+				Graph g = processGraphicalViewerEditor.getProcessGraphViewer()
+						.getGraphControl();
 				processGraphicalViewerEditor.setNeedupdatewhenshow(false);
 				List<?> nodes = g.getNodes();
-				for (Iterator<?> iterator = nodes.iterator(); iterator.hasNext();) {
+				for (Iterator<?> iterator = nodes.iterator(); iterator
+						.hasNext();) {
 					GraphItem item = (GraphItem) iterator.next();
 					if (item instanceof CGraphNode) {
-						if (TaskNodeFigure.this == ((CGraphNode) item).getFigure()) {
-							processGraphicalViewerEditor.updateProcessActions(new StructuredSelection(item.getData()));
+						if (TaskNodeFigure.this == ((CGraphNode) item)
+								.getFigure()) {
+							processGraphicalViewerEditor
+									.updateProcessActions(new StructuredSelection(
+											item.getData()));
 							break;
 						}
 					}
 				}
-				Menu menu = processGraphicalViewerEditor.getProcessGraphViewer().getGraphControl().getMenu();
+				Menu menu = processGraphicalViewerEditor
+						.getProcessGraphViewer().getGraphControl().getMenu();
 				menu.setVisible(true);
 				// processGraphicalViewerEditor.setNeedupdatewhenshow(true);
 			}
@@ -249,7 +266,8 @@ public class TaskNodeFigure extends Figure {
 
 		};
 		if (image != null) {
-			imageFigure.setSize(new Dimension(image.getBounds().width, image.getBounds().height));
+			imageFigure.setSize(new Dimension(image.getBounds().width, image
+					.getBounds().height));
 		} else {
 			imageFigure.setSize(24, 24);
 		}
