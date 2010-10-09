@@ -4,19 +4,20 @@
 %BOOK_ENTITIES;
 ]>
 <book>
+
   <xi:include href="Book_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="Preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-<!--   <xi:include href="template_overview.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> -->
- <!--  <xi:include href="legal_notices.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />  -->
- <!--   <xi:include href="latest_developments.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />  
+  <xi:include href="template_overview.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="legal_notices.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="latest_developments.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />  
   <xi:include href="getting_started.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="concepts.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="reference.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="error_and_warning_messages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-  <xi:include href="hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> -->
+  <xi:include href="hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
  <!--  <xi:include href="link_sets.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />  -->
- <!--   <xi:include href="document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />  -->
+  <xi:include href="document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <index />
 </book>

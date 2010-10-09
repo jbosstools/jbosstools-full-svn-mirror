@@ -23,8 +23,7 @@
         </row>
       </thead>  
       <tbody>
-        <row>
-          
+        <row>          
           <entry><xref linkend="concepts-managed_beans-managed_beans_and_java_server_faces"></xref></entry>
           <entry><xref linkend="proc-jsf-new_managed_bean"></xref></entry>
           <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>

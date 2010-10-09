@@ -12,7 +12,7 @@
 	<pubsnumber>0</pubsnumber>
 	<abstract>
 	  <para>
-	    This template has been developed to assist in the generation of JBoss Tools reference material. The design is similar to the DITA format for topic based authoring with modifications detailed in <xref linkend="template_overview"></xref>. Design notes have been included throughout the document to assist developers and writers in contributing to the material. JBoss Tools reference material will be incorporated into Eclipse help and this template is an initial step towards this goal. 
+	    This template has been developed to assist in the generation of JBoss Tools reference material. The design is similar to the DITA format for topic based authoring with modifications detailed in the Template overview chapter. Design notes have been included throughout the document to assist developers and writers in contributing to the material. JBoss Tools reference material will be incorporated into Eclipse help and this template is an initial step towards this goal. 
 	  </para>
 	</abstract>
 	<corpauthor>
@@ -32,10 +32,6 @@
         </xi:include>
       </xi:fallback>
     </xi:include>
-    
-    <!-- 
-	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	-->
-	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+    <xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </bookinfo>
 

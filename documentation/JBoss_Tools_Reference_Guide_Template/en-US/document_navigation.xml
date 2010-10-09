@@ -19,10 +19,10 @@
       The links to the tasks link to the proc-procedure_name id rather than the "task" section id. This way, the links and the procedures can be moved to a new document and still function (the "task" section id might change but the procedure id will remain constant as this is largely based on the dialog title).
     </para>
   </note>
-     <xi:include href="managed_beans-document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-<!--    <xi:include href="user_interface_components-document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="managed_beans-document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="user_interface_components-document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="state_management-document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="ajax_support-document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
   <xi:include href="another_concept-document_navigation.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-   -->
+
 </chapter>

@@ -5,10 +5,43 @@
 ]>
 <section id="document_navigation-user_interface_components-custom">
   <title>Custom</title>
- 
-  <para>
-
-  </para>
+  <table id="table-document_navigation-user_interface_components-custom_01" frame='all'>
+    <title>Base user interface components</title>
+    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+      <colspec colname='c1' colwidth="1*"/>
+      <colspec colname='c2' colwidth="1*"/>
+      <colspec colname='c3' colwidth="1*"/>
+      <thead>
+        <row>
+          <entry>Concepts</entry>
+          <entry>Tasks</entry>
+          <entry>Reference</entry>
+        </row>
+      </thead>
+      <tbody>
+        <row>
+          <entry><xref linkend="concepts-user_interface_components-custom"></xref></entry>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+        </row>
+        <row>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+        </row>
+        <row>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+        </row>
+        <row>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </table>
   <para>&FEEDBACK-document_navigation-user_interface_components-custom;</para>
 
 </section>
