@@ -156,7 +156,6 @@
 	</feature>
 
 	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
-		<category name="AllTools" />
 		<category name="SOATools" />
 	</feature>
 
@@ -269,15 +268,12 @@
 	</feature>
 
 	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
-		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
 	<feature url="features/org.teiid.designer.feature_0.0.0.jar" id="org.teiid.designer.feature" version="0.0.0">
-		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
 	<feature url="features/org.teiid.designer.runtime.feature_0.0.0.jar" id="org.teiid.designer.runtime.feature" version="0.0.0">
-		<category name="AllTools" />
 		<category name="DataTools" />
 	</feature>
 	<feature url="features/org.jboss.savara.tools.feature_0.0.0.jar" id="org.jboss.savara.tools.feature" version="0.0.0">
