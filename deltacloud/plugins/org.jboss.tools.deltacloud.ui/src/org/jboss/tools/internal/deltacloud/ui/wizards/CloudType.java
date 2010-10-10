@@ -32,15 +32,19 @@ import org.xml.sax.SAXException;
 
 public class CloudType {
 
-	private static final String DOCUMENT_ELEMENT_DRIVER = "driver";
-	private static final String DOCUMENT_ELEMENT_API = "api";
-	private static final String URLCONNECTION_ENCODING = "UTF-8";
+	private static final String HTTPHEADER_KEY_ACCEPT = "Accept"; //$NON-NLS-1$
+	private static final String HTTPHEADER_VALUE_ACCEPTXML = "application/xml;q=1.0"; //$NON-NLS-1$
+	private static final String DOCUMENT_ELEMENT_DRIVER = "driver"; //$NON-NLS-1$
+	private static final String DOCUMENT_ELEMENT_API = "api"; //$NON-NLS-1$
+	private static final String URLCONNECTION_ENCODING = "UTF-8"; //$NON-NLS-1$
+	
 	public static final String UNKNOWN_TYPE_LABEL = "UnknownType.label"; //$NON-NLS-1$
 	private static final String INVALID_URL = "ErrorInvalidURL.text"; //$NON-NLS-1$
-	static final String NONCLOUD_URL = "ErrorNonCloudURL.text"; //$NON-NLS-1$
+	private static final String NONCLOUD_URL = "ErrorNonCloudURL.text"; //$NON-NLS-1$
 
-	private String label;
+	private String label = WizardMessages.getString(UNKNOWN_TYPE_LABEL);
 	private boolean isValid;
+	private String url;
 
 	public CloudType(String url) {
 		init(url);
@@ -55,17 +59,16 @@ public class CloudType {
 	 *            the cloud instance url to connect to
 	 */
 	private void init(String url) {
+		this.url = url;
 		try {
 			Object o = getURLContent(url + "/api?format=xml"); //$NON-NLS-1$ 
 			if (o instanceof InputStream) {
-				DocumentBuilderFactory dbf = DocumentBuilderFactory
-						.newInstance();
+				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 				DocumentBuilder db = dbf.newDocumentBuilder();
-				Document document = db.parse(new InputSource(new StringReader(
-						getXML((InputStream) o))));
+				Document document = db.parse(
+						new InputSource(new StringReader(getXML((InputStream) o))));
 
-				NodeList elements = document
-						.getElementsByTagName(DOCUMENT_ELEMENT_API); //$NON-NLS-1$
+				NodeList elements = document.getElementsByTagName(DOCUMENT_ELEMENT_API); //$NON-NLS-1$
 				if (elements.getLength() > 0) {
 					Node n = elements.item(0);
 					Node driver = n.getAttributes().getNamedItem(
@@ -74,8 +77,6 @@ public class CloudType {
 						isValid = true;
 						String driverValue = driver.getNodeValue();
 						label = driverValue.toUpperCase();
-					} else {
-						label = WizardMessages.getString(UNKNOWN_TYPE_LABEL);
 					}
 				}
 			}
@@ -92,17 +93,14 @@ public class CloudType {
 		}
 	}
 
-	private String getXML(InputStream is) throws UnsupportedEncodingException,
-			IOException {
+	private String getXML(InputStream is) throws UnsupportedEncodingException, IOException {
 		try {
 			if (is == null) {
 				return "";
 			}
 			StringBuilder sb = new StringBuilder();
-			String line;
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, URLCONNECTION_ENCODING));
+			String line = "";
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is, URLCONNECTION_ENCODING));
 			while ((line = reader.readLine()) != null) {
 				sb.append(line).append("\n"); //$NON-NLS-1$
 			}
@@ -120,10 +118,14 @@ public class CloudType {
 		return label;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+	
 	private Object getURLContent(String url) throws IOException {
 		URL u = new URL(url);
 		URLConnection connection = u.openConnection();
-		connection.setRequestProperty("Accept", "application/xml;q=1.0"); //$NON-NLS-1$ $NON-NLS-2$
+		connection.setRequestProperty(HTTPHEADER_KEY_ACCEPT, HTTPHEADER_VALUE_ACCEPTXML); //$NON-NLS-1$ $NON-NLS-2$
 		return connection.getContent();
 	}
 }

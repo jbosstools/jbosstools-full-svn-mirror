@@ -12,11 +12,19 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.URL;
 
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IValueChangeListener;
+import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -26,16 +34,15 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 
 public class CloudConnectionPage extends WizardPage {
 
@@ -53,42 +60,30 @@ public class CloudConnectionPage extends WizardPage {
 
 	private static final String TEST_SUCCESSFUL = "NewCloudConnectionTest.success"; //$NON-NLS-1$
 	private static final String TEST_FAILURE = "NewCloudConnectionTest.failure"; //$NON-NLS-1$
-	
+
 	private CloudConnection wizard;
-	
-	private Button testButton;
-	
+
+	// private Button testButton;
+
 	private Text nameText;
 	private Text urlText;
-	private Label typeText;
+	private Label typeLabel;
 	private Text usernameText;
 	private Text passwordText;
-	
+
 	private String name;
 	private String url;
 	private String username;
 	private String password;
 	private String cloudTypeLabel;
-	
+
 	private String defaultName = "";
 	private String defaultURL = "";
 	private String defaultUsername = "";
 	private String defaultPassword = "";
 
-	private boolean urlValid;
-	
-	private class CheckURLThread extends Thread {
-		
-		@Override
-		public void run() {
-			try {
-				checkURL();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
+	private CloudConnectionModel connectionModel;
+
 	private Listener linkListener = new Listener() {
 
 		public void handleEvent(Event event) {
@@ -99,39 +94,40 @@ public class CloudConnectionPage extends WizardPage {
 				Activator.log(e);
 			}
 		}
-		
+
 	};
 
 	private SelectionListener buttonListener = new SelectionAdapter() {
 
 		public void widgetSelected(SelectionEvent event) {
-			boolean successful = false;
-			if (getURLValid()) {
-				successful = wizard.performTest();
-			}
-			if (successful) {
-				setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
-			} else {
-				setErrorMessage(WizardMessages.getString(TEST_FAILURE));
-			}
+			// boolean successful = false;
+			// if (getURLValid()) {
+			// successful = wizard.performTest();
+			// }
+			// if (successful) {
+			// setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
+			// } else {
+			// setErrorMessage(WizardMessages.getString(TEST_FAILURE));
+			// }
 		}
-		
+
 	};
-	
+
 	public CloudConnectionPage(String pageName, CloudConnection wizard) {
 		super(pageName);
-		this.wizard= wizard;
+		this.wizard = wizard;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
-		setPageComplete(false);
+		// setPageComplete(false);
+		this.connectionModel = new CloudConnectionModel();
 	}
-	
-	public CloudConnectionPage(String pageName, String defaultName, String defaultURL, 
-			String defaultUsername, String defaultPassword, String defaultCloudType, 
+
+	public CloudConnectionPage(String pageName, String defaultName, String defaultURL,
+			String defaultUsername, String defaultPassword, String defaultCloudType,
 			CloudConnection wizard) {
 		super(pageName);
-		this.wizard= wizard;
+		this.wizard = wizard;
 		this.defaultName = defaultName;
 		this.defaultURL = defaultURL;
 		this.defaultUsername = defaultUsername;
@@ -143,193 +139,117 @@ public class CloudConnectionPage extends WizardPage {
 		setPageComplete(false);
 	}
 
-	private ModifyListener textListener = new ModifyListener() {
-
-		@Override
-		public void modifyText(ModifyEvent e) {
-			validate();
-		}
-	};
-	
 	public String getName() {
-		return name;
+		return connectionModel.getName();
 	}
-	
+
 	public String getURL() {
-		return url;
+		return connectionModel.getUrl();
 	}
-	
+
 	public String getUsername() {
-		return username;
+		return connectionModel.getUsername();
 	}
-	
+
 	public String getPassword() {
-		return password;
+		return connectionModel.getPassword();
 	}
-	
+
 	public String getType() {
-		return typeText.getText();
+		return connectionModel.getCloudType();
 	}
-	
-	private void validate() {
-		boolean complete = true;
-		boolean errorFree = true;
-		
-		setMessage(null);
-		
-		name = nameText.getText();
-		if (name.length() > 0) {
-			if (!name.equals(defaultName)) {
-				if (DeltaCloudManager.getDefault().findCloud(name) != null) {
-					errorFree = false;
-					setErrorMessage(WizardMessages.getString(NAME_ALREADY_IN_USE));
-				}
-			}
-		} else {
-			complete = false;
-		}
-		
-		// Run check for valid DeltaCloud URL in separate thread
-		String urlValue = urlText.getText();
-		if (urlValue.length() > 5) {
-			CheckURLThread t = new CheckURLThread();
-			t.start();
-		} else if (urlValue.length() > 0){
-			typeText.setText(WizardMessages.getString(CloudType.NONCLOUD_URL));
-			complete = false;
-		} else {
-			typeText.setText(WizardMessages.getString(CloudType.UNKNOWN_TYPE_LABEL));
-			complete = false;
-		}
-		
-		username = usernameText.getText();
-		if (username.length() <= 0) {
-			complete = false;
-		}
-		password = passwordText.getText();
-		if (password.length() <= 0) {
-			complete = false;
-		}
-		if (errorFree)
-			setErrorMessage(null);
-		setPageComplete(complete & errorFree);
-	}
-	
-	@Override
-	public boolean isPageComplete() {
-		return super.isPageComplete() & getURLValid();
-	}
-	
-	
-	// Method to check the URL for validity as Delta-cloud API specifier.
-	// Since this is run in thread, it does not use the setErrorMessage()
-	// method and instead writes error messages to the typeText label.
-	private void checkURL() {
-		String oldurl = url;
-		Display.getDefault().syncExec(new Runnable() {
 
-			@Override
-			public void run() {
-				cloudTypeLabel = typeText.getText();
-				url = urlText.getText();
-			}
-		});
-		String oldCloudType = cloudTypeLabel;
-		if (url.length() > 0) {
-			if (!url.equals(oldurl)) {
-				CloudType cloudType = new CloudType(url);
-				cloudTypeLabel = cloudType.getLabel();
-				setURLValid(cloudType.isValid());
-			}
-			if (!oldCloudType.equals(cloudTypeLabel)) {
-				Display.getDefault().asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						testButton.setEnabled(getURLValid());
-						typeText.setText(cloudTypeLabel);
-					}
-					
-				});
-			}
-		}
-	}
-	
-	/**
-	 * Set whether the URL is a valid Delta-cloud API URL.
-	 * 
-	 * @param value boolean to set
-	 */
-	private synchronized void setURLValid(boolean value) {
-		urlValid = value;
-	}
-	
-	/**
-	 * Return the validity of the Delta-cloud URL.
-	 * 
-	 * @return true if URL valid, false otherwise
-	 */
-	private synchronized boolean getURLValid() {
-		return urlValid;
-	}
-	
 	@Override
 	public void createControl(Composite parent) {
+		DataBindingContext dbc = new DataBindingContext();
+		WizardPageSupport.create(this, dbc);
+
 		final Composite container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
 		layout.marginHeight = 5;
 		layout.marginWidth = 5;
 		container.setLayout(layout);
-	
+
 		Label dummyLabel = new Label(container, SWT.NULL);
-		// errorLabel.setForeground(JFaceResources.getColorRegistry().get(JFacePreferences.ERROR_COLOR));
-		
+
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.setText(defaultName);
-		nameText.addModifyListener(textListener);
-		
+		Binding nameTextBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observe(nameText),
+				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_NAME)
+						.observe(connectionModel),
+				new UpdateValueStrategy().setBeforeSetValidator(new MandatoryStringValidator("name must be defined")),
+				null);
+		ControlDecorationSupport.create(nameTextBinding, SWT.LEFT|SWT.TOP);
+
 		Label urlLabel = new Label(container, SWT.NULL);
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		
+
 		urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		urlText.setText(defaultURL);
-		if (!defaultURL.equals(""))
-			setURLValid(true);
-		urlText.addModifyListener(textListener);
-		Point p2 = urlText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-
-		int centering = (p2.y - p1.y + 1) / 2;
-
-		Label typeLabel = new Label(container, SWT.NULL);
-		typeLabel.setText(WizardMessages.getString(TYPE_LABEL));
-
-		typeText = new Label(container, SWT.NULL);
-		if (cloudTypeLabel == null)
-			cloudTypeLabel = WizardMessages.getString(CloudType.UNKNOWN_TYPE_LABEL);
-		typeText.setText(cloudTypeLabel);
+		Binding urlTextBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observeDelayed(500, urlText),
+				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL)
+						.observe(connectionModel));
 		
+		final Label typeLabel = new Label(container, SWT.NULL);
+		UpdateValueStrategy url2TypeStrategy = new UpdateValueStrategy();
+		url2TypeStrategy.setConverter(new CloudConnectionModel.CloudTypeConverter());
+		url2TypeStrategy.setBeforeSetValidator(new CloudConnectionModel.CloudTypeValidator());
+		Binding urlBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observeDelayed(100, urlText),
+				BeanProperties.value(CloudConnectionModel.PROPERTY_CLOUDTYPE).observe(connectionModel),
+				url2TypeStrategy,
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
+		urlBinding.getValidationStatus().addValueChangeListener(new IValueChangeListener() {
+
+			@Override
+			public void handleValueChange(ValueChangeEvent event) {
+				IStatus status = (IStatus) event.diff.getNewValue();
+				if (status.isOK()) {
+					typeLabel.setText(connectionModel.getCloudType());
+				} else {
+					typeLabel.setText("");
+				}
+			}
+		});
+		ControlDecorationSupport.create(urlBinding, SWT.LEFT|SWT.TOP);
+
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 
+		DataBindingContext credentialsDbc = new DataBindingContext();
+
 		usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		usernameText.setText(defaultUsername);
-		usernameText.addModifyListener(textListener);
+		credentialsDbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observe(usernameText),
+				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_USERNAME).observe(
+						connectionModel));
 
 		Label passwordLabel = new Label(container, SWT.NULL);
 		passwordLabel.setText(WizardMessages.getString(PASSWORD_LABEL));
 
 		passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD | SWT.SINGLE);
-		passwordText.setText(defaultPassword);
-		passwordText.addModifyListener(textListener);
-		
-		testButton = new Button(container, SWT.NULL);
+		credentialsDbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observe(passwordText),
+				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_PASSWORD).observe(
+						connectionModel));
+
+		final Button testButton = new Button(container, SWT.NULL);
 		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));
-		testButton.setEnabled(!defaultName.equals(""));
+		testButton.setEnabled(false);
+		urlBinding.getValidationStatus().addValueChangeListener(new IValueChangeListener() {
+
+			@Override
+			public void handleValueChange(ValueChangeEvent event) {
+				IStatus status = (IStatus) event.diff.getNewValue();
+				testButton.setEnabled(status.isOK());
+			}
+		});
 		testButton.addSelectionListener(buttonListener);
-		
+
 		Link ec2userLink = new Link(container, SWT.NULL);
 		ec2userLink.setText(WizardMessages.getString(EC2_USER_INFO));
 		ec2userLink.addListener(SWT.Selection, linkListener);
@@ -337,12 +257,15 @@ public class CloudConnectionPage extends WizardPage {
 		Link ec2pwLink = new Link(container, SWT.NULL);
 		ec2pwLink.setText(WizardMessages.getString(EC2_PASSWORD_INFO));
 		ec2pwLink.addListener(SWT.Selection, linkListener);
-		
+
 		FormData f = new FormData();
 		f.left = new FormAttachment(0, 0);
 		f.right = new FormAttachment(100, 0);
 		dummyLabel.setLayoutData(f);
-		
+
+		Point p2 = urlText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		int centering = (p2.y - p1.y + 1) / 2;
+
 		f = new FormData();
 		f.top = new FormAttachment(dummyLabel, 8 + centering);
 		nameLabel.setLayoutData(f);
@@ -352,11 +275,11 @@ public class CloudConnectionPage extends WizardPage {
 		f.left = new FormAttachment(usernameLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		nameText.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(nameText, 5 + centering);
 		urlLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.left = new FormAttachment(nameText, 0, SWT.LEFT);
 		f.top = new FormAttachment(nameText, 5);
@@ -366,23 +289,23 @@ public class CloudConnectionPage extends WizardPage {
 		f = new FormData();
 		f.top = new FormAttachment(urlText, 5 + centering);
 		typeLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.left = new FormAttachment(urlText, 0, SWT.LEFT);
 		f.top = new FormAttachment(urlText, 5 + centering);
 		f.right = new FormAttachment(100, 0);
-		typeText.setLayoutData(f);
+		typeLabel.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(typeText, 10 + centering);
+		f.top = new FormAttachment(typeLabel, 10 + centering);
 		usernameLabel.setLayoutData(f);
-		
+
 		f = new FormData();
-		f.left = new FormAttachment(typeText, 0, SWT.LEFT);
-		f.top = new FormAttachment(typeText, 10);
+		f.left = new FormAttachment(typeLabel, 0, SWT.LEFT);
+		f.top = new FormAttachment(typeLabel, 10);
 		f.right = new FormAttachment(100, -70);
 		usernameText.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.left = new FormAttachment(usernameText, 0, SWT.LEFT);
 		f.top = new FormAttachment(usernameText, 5);
@@ -397,23 +320,22 @@ public class CloudConnectionPage extends WizardPage {
 		f.top = new FormAttachment(ec2userLink, 5);
 		f.right = new FormAttachment(100, -70);
 		passwordText.setLayoutData(f);
-		
+
 		f = new FormData();
-        int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-        Point minSize = testButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-        f.width = Math.max(widthHint, minSize.x);
+		int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
+		Point minSize = testButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+		f.width = Math.max(widthHint, minSize.x);
 		f.left = new FormAttachment(usernameText, 10);
 		f.top = new FormAttachment(usernameText, 0);
 		f.right = new FormAttachment(100, 0);
 		testButton.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.left = new FormAttachment(passwordText, 0, SWT.LEFT);
 		f.top = new FormAttachment(passwordText, 5);
 		ec2pwLink.setLayoutData(f);
-		
-		setControl(container);
-		validate();
-}
 
+		setControl(container);
+		// validate();
+	}
 }
