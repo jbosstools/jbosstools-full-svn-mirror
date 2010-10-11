@@ -19,8 +19,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,12 +28,7 @@ import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.IJobChangeListener;
-import org.eclipse.core.runtime.jobs.Job;
 import org.jboss.tools.deltacloud.ui.common.databinding.ObservablePojo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -49,7 +42,7 @@ public class CloudConnectionModel extends ObservablePojo {
 	public static final String PROPERTY_NAME = "name";
 	public static final String PROPERTY_PASSWORD = "password";
 	public static final String PROPERTY_USERNAME = "username";
-	public static final String PROPERTY_CLOUDTYPE = "cloudType";
+	public static final String PROPERTY_TYPE = "type";
 
 	public static final String UNKNOWN_TYPE_LABEL = "UnknownType.label"; //$NON-NLS-1$
 	public static final String INVALID_URL = "ErrorInvalidURL.text"; //$NON-NLS-1$
@@ -95,11 +88,10 @@ public class CloudConnectionModel extends ObservablePojo {
 					Document document = db.parse(
 							new InputSource(new StringReader(getXML((InputStream) o))));
 
-					NodeList elements = document.getElementsByTagName(DOCUMENT_ELEMENT_API); //$NON-NLS-1$
+					NodeList elements = document.getElementsByTagName(DOCUMENT_ELEMENT_API);
 					if (elements.getLength() > 0) {
 						Node n = elements.item(0);
-						Node driver = n.getAttributes().getNamedItem(
-								DOCUMENT_ELEMENT_DRIVER); //$NON-NLS-1$
+						Node driver = n.getAttributes().getNamedItem(DOCUMENT_ELEMENT_DRIVER);
 						if (driver != null) {
 							String driverValue = driver.getNodeValue();
 							cloudType = driverValue.toUpperCase();
@@ -140,7 +132,7 @@ public class CloudConnectionModel extends ObservablePojo {
 		private Object getURLContent(String url) throws IOException {
 			URL u = new URL(url);
 			URLConnection connection = u.openConnection();
-			connection.setRequestProperty(HTTPHEADER_KEY_ACCEPT, HTTPHEADER_VALUE_ACCEPTXML); //$NON-NLS-1$ $NON-NLS-2$
+			connection.setRequestProperty(HTTPHEADER_KEY_ACCEPT, HTTPHEADER_VALUE_ACCEPTXML); 
 			return connection.getContent();
 		}
 
@@ -194,11 +186,11 @@ public class CloudConnectionModel extends ObservablePojo {
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_URL, this.url, this.url = url);
 	}
 
-	public String getCloudType() {
+	public String getType() {
 		return cloudType;
 	}
 
-	public void setCloudType(String cloudType) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_CLOUDTYPE, this.cloudType, this.cloudType = cloudType);
+	public void setType(String cloudType) {
+		getPropertyChangeSupport().firePropertyChange(PROPERTY_TYPE, this.cloudType, this.cloudType = cloudType);
 	}
 }

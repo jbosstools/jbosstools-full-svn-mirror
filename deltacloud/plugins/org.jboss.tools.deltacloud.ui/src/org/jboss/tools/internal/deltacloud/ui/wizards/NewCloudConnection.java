@@ -48,9 +48,9 @@ public class NewCloudConnection extends Wizard implements INewWizard, CloudConne
 
 	public boolean performTest() {
 		String name = mainPage.getName();
-		String url = mainPage.getURL();
-		String username = mainPage.getUsername();
-		String password = mainPage.getPassword();
+		String url = mainPage.getModel().getUrl();
+		String username = mainPage.getModel().getUsername();
+		String password = mainPage.getModel().getPassword();
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password);
 			return newCloud.testConnection();
@@ -63,10 +63,10 @@ public class NewCloudConnection extends Wizard implements INewWizard, CloudConne
 	@Override
 	public boolean performFinish() {
 		String name = mainPage.getName();
-		String url = mainPage.getURL();
-		String username = mainPage.getUsername();
-		String password = mainPage.getPassword();
-		String type = mainPage.getType();
+		String url = mainPage.getModel().getUrl();
+		String username = mainPage.getModel().getUsername();
+		String password = mainPage.getModel().getPassword();
+		String type = mainPage.getModel().getType();
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, type, true);
 			DeltaCloudManager.getDefault().addCloud(newCloud);

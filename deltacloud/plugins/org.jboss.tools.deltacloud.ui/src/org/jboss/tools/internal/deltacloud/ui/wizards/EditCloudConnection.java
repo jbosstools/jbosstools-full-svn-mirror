@@ -62,9 +62,9 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 
 	public boolean performTest() {
 		String name = mainPage.getName();
-		String url = mainPage.getURL();
-		String username = mainPage.getUsername();
-		String password = mainPage.getPassword();
+		String url = mainPage.getModel().getUrl();
+		String username = mainPage.getModel().getUsername();
+		String password = mainPage.getModel().getPassword();
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password);
 			return newCloud.testConnection();
@@ -77,10 +77,10 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 	@Override
 	public boolean performFinish() {
 		String name = mainPage.getName();
-		String url = mainPage.getURL();
-		String username = mainPage.getUsername();
-		String password = mainPage.getPassword();
-		String type = mainPage.getType();
+		String url = mainPage.getModel().getUrl();
+		String username = mainPage.getModel().getUsername();
+		String password = mainPage.getModel().getPassword();
+		String type = mainPage.getModel().getType();
 		try {
 			String oldName = cloud.getName();
 			cloud.editCloud(name, url, username, password, type);

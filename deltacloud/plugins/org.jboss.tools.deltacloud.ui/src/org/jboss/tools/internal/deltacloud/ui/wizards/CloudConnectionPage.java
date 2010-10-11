@@ -18,6 +18,8 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.databinding.validation.IValidator;
+import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -27,7 +29,6 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -40,8 +41,10 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.deltacloud.ui.common.databinding.validator.CompositeValidator;
 import org.jboss.tools.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 
 public class CloudConnectionPage extends WizardPage {
@@ -51,7 +54,6 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String URL_LABEL = "Url.label"; //$NON-NLS-1$
 	private static final String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private static final String USERNAME_LABEL = "UserName.label"; //$NON-NLS-1$
-	private static final String TYPE_LABEL = "Type.label"; //$NON-NLS-1$
 	private static final String PASSWORD_LABEL = "Password.label"; //$NON-NLS-1$
 	private static final String TESTBUTTON_LABEL = "TestButton.label"; //$NON-NLS-1$
 	private static final String EC2_USER_INFO = "EC2UserNameLink.text"; //$NON-NLS-1$
@@ -61,27 +63,12 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String TEST_SUCCESSFUL = "NewCloudConnectionTest.success"; //$NON-NLS-1$
 	private static final String TEST_FAILURE = "NewCloudConnectionTest.failure"; //$NON-NLS-1$
 
-	private CloudConnection wizard;
-
-	// private Button testButton;
-
-	private Text nameText;
-	private Text urlText;
-	private Label typeLabel;
-	private Text usernameText;
-	private Text passwordText;
-
-	private String name;
-	private String url;
-	private String username;
-	private String password;
-	private String cloudTypeLabel;
-
 	private String defaultName = "";
-	private String defaultURL = "";
+	private String defaultUrl = "";
 	private String defaultUsername = "";
 	private String defaultPassword = "";
-
+	private String defaultType = "";
+	
 	private CloudConnectionModel connectionModel;
 
 	private Listener linkListener = new Listener() {
@@ -94,71 +81,36 @@ public class CloudConnectionPage extends WizardPage {
 				Activator.log(e);
 			}
 		}
-
-	};
-
-	private SelectionListener buttonListener = new SelectionAdapter() {
-
-		public void widgetSelected(SelectionEvent event) {
-			// boolean successful = false;
-			// if (getURLValid()) {
-			// successful = wizard.performTest();
-			// }
-			// if (successful) {
-			// setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
-			// } else {
-			// setErrorMessage(WizardMessages.getString(TEST_FAILURE));
-			// }
-		}
-
 	};
 
 	public CloudConnectionPage(String pageName, CloudConnection wizard) {
 		super(pageName);
-		this.wizard = wizard;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
-		// setPageComplete(false);
 		this.connectionModel = new CloudConnectionModel();
 	}
 
-	public CloudConnectionPage(String pageName, String defaultName, String defaultURL,
-			String defaultUsername, String defaultPassword, String defaultCloudType,
+	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl,
+			String defaultUsername, String defaultPassword, String defaultType,
 			CloudConnection wizard) {
 		super(pageName);
-		this.wizard = wizard;
 		this.defaultName = defaultName;
-		this.defaultURL = defaultURL;
+		this.defaultUrl = defaultUrl;
 		this.defaultUsername = defaultUsername;
 		this.defaultPassword = defaultPassword;
-		this.cloudTypeLabel = defaultCloudType;
+		this.connectionModel = new CloudConnectionModel();
+		this.defaultType = defaultType;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
 		setPageComplete(false);
 	}
 
-	public String getName() {
-		return connectionModel.getName();
+	public CloudConnectionModel getModel() {
+		return connectionModel;
 	}
-
-	public String getURL() {
-		return connectionModel.getUrl();
-	}
-
-	public String getUsername() {
-		return connectionModel.getUsername();
-	}
-
-	public String getPassword() {
-		return connectionModel.getPassword();
-	}
-
-	public String getType() {
-		return connectionModel.getCloudType();
-	}
-
+	
 	@Override
 	public void createControl(Composite parent) {
 		DataBindingContext dbc = new DataBindingContext();
@@ -172,88 +124,66 @@ public class CloudConnectionPage extends WizardPage {
 
 		Label dummyLabel = new Label(container, SWT.NULL);
 
+		// name
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
-		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		Text nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.setText(defaultName);
-		Binding nameTextBinding = dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observe(nameText),
-				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_NAME)
-						.observe(connectionModel),
-				new UpdateValueStrategy().setBeforeSetValidator(new MandatoryStringValidator("name must be defined")),
-				null);
-		ControlDecorationSupport.create(nameTextBinding, SWT.LEFT|SWT.TOP);
+		bindName(dbc, nameText);
 
+		// url
 		Label urlLabel = new Label(container, SWT.NULL);
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-
-		urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		Binding urlTextBinding = dbc.bindValue(
+		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		urlText.setText(defaultUrl);
+		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(500, urlText),
 				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL)
-						.observe(connectionModel));
-		
-		final Label typeLabel = new Label(container, SWT.NULL);
+				.observe(connectionModel));
+
+		// cloud type
+		Label typeLabel = new Label(container, SWT.NULL);
+		typeLabel.setText(defaultType);
 		UpdateValueStrategy url2TypeStrategy = new UpdateValueStrategy();
 		url2TypeStrategy.setConverter(new CloudConnectionModel.CloudTypeConverter());
 		url2TypeStrategy.setBeforeSetValidator(new CloudConnectionModel.CloudTypeValidator());
-		Binding urlBinding = dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(100, urlText),
-				BeanProperties.value(CloudConnectionModel.PROPERTY_CLOUDTYPE).observe(connectionModel),
-				url2TypeStrategy,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		urlBinding.getValidationStatus().addValueChangeListener(new IValueChangeListener() {
-
-			@Override
-			public void handleValueChange(ValueChangeEvent event) {
-				IStatus status = (IStatus) event.diff.getNewValue();
-				if (status.isOK()) {
-					typeLabel.setText(connectionModel.getCloudType());
-				} else {
-					typeLabel.setText("");
-				}
-			}
-		});
-		ControlDecorationSupport.create(urlBinding, SWT.LEFT|SWT.TOP);
+		Binding urlBinding = bindCloudTypeLabel(dbc, urlText, typeLabel, url2TypeStrategy);
 
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 
 		DataBindingContext credentialsDbc = new DataBindingContext();
 
-		usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		// username
+		Text usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		usernameText.setText(defaultUsername);
 		credentialsDbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(usernameText),
 				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_USERNAME).observe(
 						connectionModel));
 
+		// password
 		Label passwordLabel = new Label(container, SWT.NULL);
 		passwordLabel.setText(WizardMessages.getString(PASSWORD_LABEL));
-
-		passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD | SWT.SINGLE);
+		Text passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD | SWT.SINGLE);
+		passwordText.setText(defaultPassword);
 		credentialsDbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(passwordText),
 				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_PASSWORD).observe(
 						connectionModel));
-
+		// test button
 		final Button testButton = new Button(container, SWT.NULL);
 		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));
 		testButton.setEnabled(false);
-		urlBinding.getValidationStatus().addValueChangeListener(new IValueChangeListener() {
+		bindTestButton(urlBinding, testButton);
 
-			@Override
-			public void handleValueChange(ValueChangeEvent event) {
-				IStatus status = (IStatus) event.diff.getNewValue();
-				testButton.setEnabled(status.isOK());
-			}
-		});
-		testButton.addSelectionListener(buttonListener);
-
+		// ec2 user link
 		Link ec2userLink = new Link(container, SWT.NULL);
 		ec2userLink.setText(WizardMessages.getString(EC2_USER_INFO));
 		ec2userLink.addListener(SWT.Selection, linkListener);
 
+		// ec2 pw link
 		Link ec2pwLink = new Link(container, SWT.NULL);
 		ec2pwLink.setText(WizardMessages.getString(EC2_PASSWORD_INFO));
 		ec2pwLink.addListener(SWT.Selection, linkListener);
@@ -337,5 +267,77 @@ public class CloudConnectionPage extends WizardPage {
 
 		setControl(container);
 		// validate();
+	}
+
+	private void bindTestButton(Binding urlBinding, final Button testButton) {
+		urlBinding.getValidationStatus().addValueChangeListener(new IValueChangeListener() {
+
+			@Override
+			public void handleValueChange(ValueChangeEvent event) {
+				IStatus status = (IStatus) event.diff.getNewValue();
+				testButton.setEnabled(status.isOK());
+			}
+		});
+		
+		testButton.addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent event) {
+				// boolean successful = false;
+				// if (getURLValid()) {
+				// successful = wizard.performTest();
+				// }
+				// if (successful) {
+				// setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
+				// } else {
+				// setErrorMessage(WizardMessages.getString(TEST_FAILURE));
+				// }
+			}
+		});
+	}
+
+	private Binding bindCloudTypeLabel(DataBindingContext dbc, Text urlText, final Label typeLabel,
+			UpdateValueStrategy url2TypeStrategy) {
+		Binding urlBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observeDelayed(100, urlText),
+				BeanProperties.value(CloudConnectionModel.PROPERTY_TYPE).observe(connectionModel),
+				url2TypeStrategy,
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
+		urlBinding.getValidationStatus().addValueChangeListener(new IValueChangeListener() {
+
+			@Override
+			public void handleValueChange(ValueChangeEvent event) {
+				IStatus status = (IStatus) event.diff.getNewValue();
+				if (status.isOK()) {
+					typeLabel.setText(connectionModel.getType());
+				} else {
+					typeLabel.setText("");
+				}
+			}
+		});
+		ControlDecorationSupport.create(urlBinding, SWT.LEFT | SWT.TOP);
+		return urlBinding;
+	}
+
+	private void bindName(DataBindingContext dbc, final Text nameText) {
+		Binding nameTextBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observe(nameText),
+				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_NAME)
+						.observe(connectionModel),
+				new UpdateValueStrategy().setBeforeSetValidator(
+						new CompositeValidator(
+								new MandatoryStringValidator("name must be defined"),
+								new IValidator() {
+
+									@Override
+									public IStatus validate(Object value) {
+										if (nameText.getText() != null && DeltaCloudManager.getDefault().findCloud(nameText.getText()) != null) {
+											return ValidationStatus.error(NAME_ALREADY_IN_USE);
+										} else {
+											return ValidationStatus.ok();
+										}
+									}
+								})),
+				null);
+		ControlDecorationSupport.create(nameTextBinding, SWT.LEFT | SWT.TOP);
 	}
 }
