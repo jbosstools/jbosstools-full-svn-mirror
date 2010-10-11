@@ -11,6 +11,7 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.URL;
+import java.text.MessageFormat;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -41,6 +42,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.common.log.LogHelper;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
@@ -59,48 +61,52 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String EC2_USER_INFO = "EC2UserNameLink.text"; //$NON-NLS-1$
 	private static final String EC2_PASSWORD_INFO = "EC2PasswordLink.text"; //$NON-NLS-1$
 	private static final String NAME_ALREADY_IN_USE = "ErrorNameInUse.text"; //$NON-NLS-1$
-
+	private static final String COULD_NOT_OPEN_BROWSER = "ErrorCouldNotOpenBrowser.text"; //$NON-NLS-1$
 	private static final String TEST_SUCCESSFUL = "NewCloudConnectionTest.success"; //$NON-NLS-1$
 	private static final String TEST_FAILURE = "NewCloudConnectionTest.failure"; //$NON-NLS-1$
 
-	private String defaultName = "";
-	private String defaultUrl = "";
-	private String defaultUsername = "";
-	private String defaultPassword = "";
-	private String defaultType = "";
+	private String defaultName = ""; //$NON-NLS-1$
+	private String defaultUrl = ""; //$NON-NLS-1$
+	private String defaultUsername = ""; //$NON-NLS-1$
+	private String defaultPassword = ""; //$NON-NLS-1$
+	private String defaultType = ""; //$NON-NLS-1$
 	
 	private CloudConnectionModel connectionModel;
-
+	private CloudConnection cloudConnection;
+	
 	private Listener linkListener = new Listener() {
 
 		public void handleEvent(Event event) {
+			String urlString = event.text;
 			try {
-				URL url = new URL(event.text);
+				URL url = new URL(urlString);
 				PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(url);
 			} catch (Exception e) {
-				Activator.log(e);
+				LogHelper.logError(Activator.getDefault(), WizardMessages.getFormattedString(COULD_NOT_OPEN_BROWSER, urlString), e);
 			}
 		}
 	};
 
-	public CloudConnectionPage(String pageName, CloudConnection wizard) {
+	public CloudConnectionPage(String pageName, CloudConnection cloudConnection) {
 		super(pageName);
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
 		this.connectionModel = new CloudConnectionModel();
+		this.cloudConnection = cloudConnection;
 	}
 
 	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl,
 			String defaultUsername, String defaultPassword, String defaultType,
-			CloudConnection wizard) {
+			CloudConnection cloudConnection) {
 		super(pageName);
 		this.defaultName = defaultName;
 		this.defaultUrl = defaultUrl;
 		this.defaultUsername = defaultUsername;
 		this.defaultPassword = defaultPassword;
-		this.connectionModel = new CloudConnectionModel();
 		this.defaultType = defaultType;
+		this.connectionModel = new CloudConnectionModel();
+		this.cloudConnection = cloudConnection;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -282,15 +288,12 @@ public class CloudConnectionPage extends WizardPage {
 		testButton.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent event) {
-				// boolean successful = false;
-				// if (getURLValid()) {
-				// successful = wizard.performTest();
-				// }
-				// if (successful) {
-				// setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
-				// } else {
-				// setErrorMessage(WizardMessages.getString(TEST_FAILURE));
-				// }
+				 boolean successful = cloudConnection.performTest();
+				 if (successful) {
+				 setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
+				 } else {
+				 setErrorMessage(WizardMessages.getString(TEST_FAILURE));
+				 }
 			}
 		});
 	}
