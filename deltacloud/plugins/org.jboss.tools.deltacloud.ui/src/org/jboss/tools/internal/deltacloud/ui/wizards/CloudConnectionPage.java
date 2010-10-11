@@ -52,6 +52,10 @@ import org.jboss.tools.deltacloud.ui.common.databinding.validator.CompositeValid
 import org.jboss.tools.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.deltacloud.ui.common.swt.JFaceUtils;
 
+/**
+ * @author Jeff Jonhston
+ * @author André Dietisheim
+ */
 public class CloudConnectionPage extends WizardPage {
 
 	private static final String DESCRIPTION = "NewCloudConnection.desc"; //$NON-NLS-1$
@@ -333,7 +337,7 @@ public class CloudConnectionPage extends WizardPage {
 	 *            the url text widget
 	 * @param typeLabel
 	 *            the cloud type label to display the cloud type in
-	 * @return 
+	 * @return
 	 * @return the binding that was created
 	 */
 	private Binding bindCloudTypeLabel(DataBindingContext dbc, Text urlText, final Label typeLabel) {
