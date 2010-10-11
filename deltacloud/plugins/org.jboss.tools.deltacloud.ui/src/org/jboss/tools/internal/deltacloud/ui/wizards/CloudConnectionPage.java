@@ -58,6 +58,7 @@ import org.jboss.tools.deltacloud.ui.common.swt.JFaceUtils;
  */
 public class CloudConnectionPage extends WizardPage {
 
+	private static final int CLOUDTYPE_CHECK_DELAY = 500;
 	private static final String DESCRIPTION = "NewCloudConnection.desc"; //$NON-NLS-1$
 	private static final String TITLE = "NewCloudConnection.title"; //$NON-NLS-1$
 	private static final String URL_LABEL = "Url.label"; //$NON-NLS-1$
@@ -71,6 +72,8 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String COULD_NOT_OPEN_BROWSER = "ErrorCouldNotOpenBrowser.text"; //$NON-NLS-1$
 	private static final String TEST_SUCCESSFUL = "NewCloudConnectionTest.success"; //$NON-NLS-1$
 	private static final String TEST_FAILURE = "NewCloudConnectionTest.failure"; //$NON-NLS-1$
+	private static final String MUST_ENTER_A_NAME = "ErrorMustNameConnection.text"; //$NON-NLS-1$
+	private static final String MUST_ENTER_A_URL = "ErrorMustProvideUrl.text"; //$NON-NLS-1$;
 
 	private String defaultName = ""; //$NON-NLS-1$
 	private String defaultUrl = ""; //$NON-NLS-1$
@@ -148,9 +151,12 @@ public class CloudConnectionPage extends WizardPage {
 		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		urlText.setText(defaultUrl);
 		dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(500, urlText),
+				WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY, urlText),
 				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL)
-						.observe(connectionModel));
+						.observe(connectionModel),
+				new UpdateValueStrategy().setAfterGetValidator(new MandatoryStringValidator(
+						WizardMessages.getString(MUST_ENTER_A_URL))),
+				null);
 
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
@@ -371,14 +377,15 @@ public class CloudConnectionPage extends WizardPage {
 						.observe(connectionModel),
 				new UpdateValueStrategy().setBeforeSetValidator(
 						new CompositeValidator(
-								new MandatoryStringValidator("name must be defined"),
+								new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_NAME)),
 								new IValidator() {
 
 									@Override
 									public IStatus validate(Object value) {
 										if (nameText.getText() != null
 												&& DeltaCloudManager.getDefault().findCloud(nameText.getText()) != null) {
-											return ValidationStatus.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
+											return ValidationStatus
+													.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
 										} else {
 											return ValidationStatus.ok();
 										}
