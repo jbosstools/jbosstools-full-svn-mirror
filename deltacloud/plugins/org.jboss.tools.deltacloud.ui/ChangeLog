@@ -1,7 +1,7 @@
 2010-10-11  André Dietisheim  <adietish@redhat.com>
 
-	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java : added decorations, (switched to databinding) corrected page validity, added wizard messages
-	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Added new messages.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java : [JBIDE-7282] [JBIDE-7283] [JBIDE-7284] added decorations, (switched to databinding) corrected page validity, added wizard messages
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: [JBIDE-7282] [JBIDE-7283] [JBIDE-7284] Added new messages.
 
 2010-10-08  Jeff Johnston  <jjohnstn@redhat.com>
 
