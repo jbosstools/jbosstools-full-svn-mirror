@@ -2,7 +2,7 @@
 	<!-- ****************************** Configuration ****************************** -->
 
 	<!-- default maven version -->
-	<property name="maven.version" value="3.0-beta-3" />
+	<property name="maven.version" value="3.0" />
 
 	<!-- set name of component(s) to build+test, IN ORDER; if no subcomponents, use "." -->
 	<property name="COMPONENTS"
