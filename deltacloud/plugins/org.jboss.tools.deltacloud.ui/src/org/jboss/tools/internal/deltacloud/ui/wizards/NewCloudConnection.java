@@ -31,12 +31,10 @@ public class NewCloudConnection extends Wizard implements INewWizard, CloudConne
 	
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void addPages() {
-		// TODO Auto-generated method stub
 		mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME), this);
 		addPage(mainPage);
 	}
@@ -62,7 +60,7 @@ public class NewCloudConnection extends Wizard implements INewWizard, CloudConne
 	
 	@Override
 	public boolean performFinish() {
-		String name = mainPage.getName();
+		String name = mainPage.getModel().getName();
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();

@@ -36,6 +36,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+/**
+ * @author Andre Dietisheim
+ */
 public class CloudConnectionModel extends ObservablePojo {
 
 	public static final String PROPERTY_URL = "url";
@@ -135,7 +138,6 @@ public class CloudConnectionModel extends ObservablePojo {
 			connection.setRequestProperty(HTTPHEADER_KEY_ACCEPT, HTTPHEADER_VALUE_ACCEPTXML); 
 			return connection.getContent();
 		}
-
 	}
 
 	public static class CloudTypeValidator implements IValidator {

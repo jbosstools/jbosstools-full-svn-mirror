@@ -35,7 +35,6 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 	
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -91,5 +90,4 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 		}
 		return true;
 	}
-
 }
