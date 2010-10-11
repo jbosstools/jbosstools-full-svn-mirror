@@ -1,3 +1,8 @@
+2010-10-11  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java : added decorations, (switched to databinding) corrected page validity, added wizard messages
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Added new messages.
+
 2010-10-08  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilter.java: New file.
