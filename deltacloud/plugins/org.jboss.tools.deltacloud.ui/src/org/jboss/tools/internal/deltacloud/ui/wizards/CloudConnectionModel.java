@@ -156,6 +156,14 @@ public class CloudConnectionModel extends ObservablePojo {
 		}
 	}
 
+	
+	public CloudConnectionModel(String name, String url, String username, String password) {
+		this.name = name;
+		this.url = url;
+		this.username = username;
+		this.password = password;
+	}
+
 	public String getUsername() {
 		return username;
 	}
