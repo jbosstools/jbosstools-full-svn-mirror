@@ -11,6 +11,7 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -217,34 +218,7 @@ ITabbedPropertySheetPageContributor {
 	}
 
 	private void makeActions() {
-		removeCloud = new Action() {
-			public void run() {
-				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-				CloudViewElement element = (CloudViewElement)selection.getFirstElement();
-				while (element != null && !(element instanceof CVCloudElement)) {
-					element = (CloudViewElement)element.getParent();
-				}
-				if (element != null) {
-					CVCloudElement cve = (CVCloudElement)element;
-					Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-					boolean confirmed = MessageDialog.openConfirm(shell, 
-							CVMessages.getString(CONFIRM_CLOUD_DELETE_TITLE),
-							CVMessages.getFormattedString(CONFIRM_CLOUD_DELETE_MSG, cve.getName()));
-					if (confirmed) {
-						DeltaCloudManager.getDefault().removeCloud((DeltaCloud)element.getElement());
-						CloudViewContentProvider p = (CloudViewContentProvider)viewer.getContentProvider();
-						Object[] elements = p.getElements(getViewSite());
-						int index = -1;
-						for (int i = 0; i < elements.length; ++i) {
-							if (elements[i] == cve)
-								index = i;
-						}
-						if (index >= 0)
-							((TreeViewer)cve.getViewer()).remove(getViewSite(), index);
-					}
-				}
-			}
-		};
+		removeCloud = new RemoveAction();
 		removeCloud.setText(CVMessages.getString(REMOVE_CLOUD));
 		removeCloud.setToolTipText(CVMessages.getString(REMOVE_CLOUD));
 		removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
@@ -537,4 +511,43 @@ ITabbedPropertySheetPageContributor {
             return new CVPropertySheetPage();
         return super.getAdapter(adapter);
     }
+
+    /**
+     * A JFace action that removes the clouds that are selected in the tree viewer.
+     */
+    private class RemoveAction extends Action {
+
+		public void run() {
+			IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+			for (Iterator<?> iterator = selection.toList().iterator(); iterator.hasNext(); ) {
+				CloudViewElement element = (CloudViewElement) iterator.next();
+				remove(element);
+			}
+		}
+
+		private void remove(CloudViewElement element) {
+			while (element != null && !(element instanceof CVCloudElement)) {
+				element = (CloudViewElement)element.getParent();
+			}
+			if (element != null) {
+				CVCloudElement cve = (CVCloudElement)element;
+				Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+				boolean confirmed = MessageDialog.openConfirm(shell, 
+						CVMessages.getString(CONFIRM_CLOUD_DELETE_TITLE),
+						CVMessages.getFormattedString(CONFIRM_CLOUD_DELETE_MSG, cve.getName()));
+				if (confirmed) {
+					DeltaCloudManager.getDefault().removeCloud((DeltaCloud)element.getElement());
+					CloudViewContentProvider p = (CloudViewContentProvider)viewer.getContentProvider();
+					Object[] elements = p.getElements(getViewSite());
+					int index = -1;
+					for (int i = 0; i < elements.length; ++i) {
+						if (elements[i] == cve)
+							index = i;
+					}
+					if (index >= 0)
+						((TreeViewer)cve.getViewer()).remove(getViewSite(), index);
+				}
+			}
+		}
+	}
 }
