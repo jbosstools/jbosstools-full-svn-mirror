@@ -75,12 +75,6 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String MUST_ENTER_A_NAME = "ErrorMustNameConnection.text"; //$NON-NLS-1$
 	private static final String MUST_ENTER_A_URL = "ErrorMustProvideUrl.text"; //$NON-NLS-1$;
 
-	private String defaultName = ""; //$NON-NLS-1$
-	private String defaultUrl = ""; //$NON-NLS-1$
-	private String defaultUsername = ""; //$NON-NLS-1$
-	private String defaultPassword = ""; //$NON-NLS-1$
-	private String defaultType = ""; //$NON-NLS-1$
-
 	private CloudConnectionModel connectionModel;
 	private CloudConnection cloudConnection;
 
@@ -103,7 +97,7 @@ public class CloudConnectionPage extends WizardPage {
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
-		this.connectionModel = new CloudConnectionModel();
+		this.connectionModel = new CloudConnectionModel("", "", "", "");
 		this.cloudConnection = cloudConnection;
 	}
 
@@ -111,12 +105,7 @@ public class CloudConnectionPage extends WizardPage {
 			String defaultUsername, String defaultPassword, String defaultType,
 			CloudConnection cloudConnection) {
 		super(pageName);
-		this.defaultName = defaultName;
-		this.defaultUrl = defaultUrl;
-		this.defaultUsername = defaultUsername;
-		this.defaultPassword = defaultPassword;
-		this.defaultType = defaultType;
-		this.connectionModel = new CloudConnectionModel();
+		this.connectionModel = new CloudConnectionModel(defaultName, defaultUrl, defaultUsername, defaultPassword);
 		this.cloudConnection = cloudConnection;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
@@ -141,7 +130,6 @@ public class CloudConnectionPage extends WizardPage {
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		Text nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		nameText.setText(defaultName);
 		bindName(dbc, nameText);
 
 		// url
@@ -149,7 +137,6 @@ public class CloudConnectionPage extends WizardPage {
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		urlText.setText(defaultUrl);
 		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY, urlText),
 				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL)
@@ -160,14 +147,12 @@ public class CloudConnectionPage extends WizardPage {
 
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
-		typeLabel.setText(defaultType);
 		Binding urlBinding = bindCloudTypeLabel(dbc, urlText, typeLabel);
 
 		// username
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 		Text usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		usernameText.setText(defaultUsername);
 		ControlDecoration usernameDecoration = JFaceUtils.createDecoration(usernameText, TEST_FAILURE);
 		IObservableValue usernameObservable = WidgetProperties.text(SWT.Modify).observe(usernameText);
 		dbc.bindValue(
@@ -179,7 +164,6 @@ public class CloudConnectionPage extends WizardPage {
 		Label passwordLabel = new Label(container, SWT.NULL);
 		passwordLabel.setText(WizardMessages.getString(PASSWORD_LABEL));
 		Text passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD | SWT.SINGLE);
-		passwordText.setText(defaultPassword);
 		ControlDecoration passwordDecoration = JFaceUtils.createDecoration(passwordText, TEST_FAILURE);
 		ISWTObservableValue passwordTextObservable = WidgetProperties.text(SWT.Modify).observe(passwordText);
 		dbc.bindValue(
