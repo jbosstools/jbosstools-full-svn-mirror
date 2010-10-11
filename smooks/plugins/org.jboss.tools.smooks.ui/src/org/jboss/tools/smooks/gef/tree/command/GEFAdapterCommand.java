@@ -22,28 +22,26 @@ public class GEFAdapterCommand extends Command {
 	protected org.eclipse.emf.common.command.Command emfCommand;
 
 	protected EditingDomain domain;
-	
+
 	protected Object owner;
-	
+
 	protected Object collections;
-	
+
 	protected Object feature;
-	
+
 	protected int x;
-	
+
 	protected int y;
-	
+
 	protected int width;
-	
+
 	protected int height;
 
-	public GEFAdapterCommand(EditingDomain domain, org.eclipse.emf.common.command.Command emfCommand) {
+	public GEFAdapterCommand(EditingDomain domain,
+			org.eclipse.emf.common.command.Command emfCommand) {
 		this.emfCommand = emfCommand;
 		this.domain = domain;
 	}
-	
-	
-	
 
 	/**
 	 * @return the x
@@ -52,18 +50,13 @@ public class GEFAdapterCommand extends Command {
 		return x;
 	}
 
-
-
-
 	/**
-	 * @param x the x to set
+	 * @param x
+	 *            the x to set
 	 */
 	public void setX(int x) {
 		this.x = x;
 	}
-
-
-
 
 	/**
 	 * @return the y
@@ -72,18 +65,13 @@ public class GEFAdapterCommand extends Command {
 		return y;
 	}
 
-
-
-
 	/**
-	 * @param y the y to set
+	 * @param y
+	 *            the y to set
 	 */
 	public void setY(int y) {
 		this.y = y;
 	}
-
-
-
 
 	/**
 	 * @return the width
@@ -92,18 +80,13 @@ public class GEFAdapterCommand extends Command {
 		return width;
 	}
 
-
-
-
 	/**
-	 * @param width the width to set
+	 * @param width
+	 *            the width to set
 	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}
-
-
-
 
 	/**
 	 * @return the height
@@ -112,54 +95,37 @@ public class GEFAdapterCommand extends Command {
 		return height;
 	}
 
-
-
-
 	/**
-	 * @param height the height to set
+	 * @param height
+	 *            the height to set
 	 */
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
-
-
-
 	public Object getOwner() {
 		return owner;
 	}
-
-
 
 	public void setOwner(Object owner) {
 		this.owner = owner;
 	}
 
-
-
 	public Object getCollections() {
 		return collections;
 	}
-
-
 
 	public void setCollections(Object collections) {
 		this.collections = collections;
 	}
 
-
-
 	public Object getFeature() {
 		return feature;
 	}
 
-
-
 	public void setFeature(Object feature) {
 		this.feature = feature;
 	}
-
-
 
 	/*
 	 * (non-Javadoc)
@@ -209,7 +175,7 @@ public class GEFAdapterCommand extends Command {
 	 * @see org.eclipse.gef.commands.Command#execute()
 	 */
 	@Override
-	public void execute(){
+	public void execute() {
 		if (emfCommand != null && domain != null) {
 			domain.getCommandStack().execute(emfCommand);
 			return;

@@ -394,7 +394,14 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		adapterFactory.addAdapterFactory(new Javabean12ItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new Csv12ItemProviderAdapterFactory());
 
-		BasicCommandStack commandStack = new BasicCommandStack();
+		BasicCommandStack commandStack = new BasicCommandStack(){
+
+			@Override
+			protected void handleError(Exception exception) {
+				super.handleError(exception);
+			}
+			
+		};
 		handleCommandStack(commandStack);
 		editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
 	}
