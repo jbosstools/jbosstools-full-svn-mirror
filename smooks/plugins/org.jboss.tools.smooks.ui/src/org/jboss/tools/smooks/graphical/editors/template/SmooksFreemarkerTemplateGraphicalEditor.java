@@ -104,27 +104,28 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 				if(abstractSmooksGraphicalModel instanceof FreemarkerTemplateGraphicalModel) {
 					FreemarkerTemplateGraphicalModel freemarkerModel = (FreemarkerTemplateGraphicalModel) abstractSmooksGraphicalModel;
 					TemplateBuilder templateBuilder = freemarkerModel.getTemplateBuilder();
-					List<Mapping> mappings = templateBuilder.getMappings();
-					List<TreeNodeConnection> connections = new ArrayList<TreeNodeConnection>();
-					
-					for(Mapping mapping : mappings) {
-						TreeNodeModel connectionSource = inputModel.getModelNode(templateBuilder.resolveMappingSrcPath(mapping));
-						TreeNodeModel connectionTarget = freemarkerModel.getModelNode(mapping.getMappingNode());
+					if (templateBuilder != null) {
+						List<Mapping> mappings = templateBuilder.getMappings();
+						List<TreeNodeConnection> connections = new ArrayList<TreeNodeConnection>();
 						
-						if(connectionSource != null && connectionTarget != null) {
-							TreeNodeConnection connection = new TreeNodeConnection(connectionSource, connectionTarget);
+						for(Mapping mapping : mappings) {
+							TreeNodeModel connectionSource = inputModel.getModelNode(templateBuilder.resolveMappingSrcPath(mapping));
+							TreeNodeModel connectionTarget = freemarkerModel.getModelNode(mapping.getMappingNode());
 							
-							connectionSource.getSourceConnections().add(connection);
-							connectionSource.fireConnectionChanged();
-							connectionTarget.getTargetConnections().add(connection);
-							connectionTarget.fireConnectionChanged();
-							
-							connection.setData(mapping);
-							connections.add(connection);
-						}
-					}
+							if(connectionSource != null && connectionTarget != null) {
+								TreeNodeConnection connection = new TreeNodeConnection(connectionSource, connectionTarget);
 								
-					return connections;
+								connectionSource.getSourceConnections().add(connection);
+								connectionSource.fireConnectionChanged();
+								connectionTarget.getTargetConnections().add(connection);
+								connectionTarget.fireConnectionChanged();
+								
+								connection.setData(mapping);
+								connections.add(connection);
+							}
+						}
+						return connections;
+					}
 				}
 			}
 		}
