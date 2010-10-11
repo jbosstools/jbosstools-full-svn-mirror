@@ -11,21 +11,23 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.URL;
-import java.text.MessageFormat;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -48,6 +50,7 @@ import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.common.databinding.validator.CompositeValidator;
 import org.jboss.tools.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
+import org.jboss.tools.deltacloud.ui.common.swt.JFaceUtils;
 
 public class CloudConnectionPage extends WizardPage {
 
@@ -70,10 +73,10 @@ public class CloudConnectionPage extends WizardPage {
 	private String defaultUsername = ""; //$NON-NLS-1$
 	private String defaultPassword = ""; //$NON-NLS-1$
 	private String defaultType = ""; //$NON-NLS-1$
-	
+
 	private CloudConnectionModel connectionModel;
 	private CloudConnection cloudConnection;
-	
+
 	private Listener linkListener = new Listener() {
 
 		public void handleEvent(Event event) {
@@ -82,7 +85,8 @@ public class CloudConnectionPage extends WizardPage {
 				URL url = new URL(urlString);
 				PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(url);
 			} catch (Exception e) {
-				LogHelper.logError(Activator.getDefault(), WizardMessages.getFormattedString(COULD_NOT_OPEN_BROWSER, urlString), e);
+				LogHelper.logError(Activator.getDefault(),
+						WizardMessages.getFormattedString(COULD_NOT_OPEN_BROWSER, urlString), e);
 			}
 		}
 	};
@@ -113,10 +117,6 @@ public class CloudConnectionPage extends WizardPage {
 		setPageComplete(false);
 	}
 
-	public CloudConnectionModel getModel() {
-		return connectionModel;
-	}
-	
 	@Override
 	public void createControl(Composite parent) {
 		DataBindingContext dbc = new DataBindingContext();
@@ -146,7 +146,7 @@ public class CloudConnectionPage extends WizardPage {
 		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(500, urlText),
 				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL)
-				.observe(connectionModel));
+						.observe(connectionModel));
 
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
@@ -159,13 +159,13 @@ public class CloudConnectionPage extends WizardPage {
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 
-		DataBindingContext credentialsDbc = new DataBindingContext();
-
 		// username
 		Text usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		usernameText.setText(defaultUsername);
-		credentialsDbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observe(usernameText),
+		ControlDecoration usernameDecoration = JFaceUtils.createDecoration(usernameText, TEST_FAILURE);
+		IObservableValue usernameObservable = WidgetProperties.text(SWT.Modify).observe(usernameText);
+		dbc.bindValue(
+				usernameObservable,
 				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_USERNAME).observe(
 						connectionModel));
 
@@ -174,15 +174,23 @@ public class CloudConnectionPage extends WizardPage {
 		passwordLabel.setText(WizardMessages.getString(PASSWORD_LABEL));
 		Text passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD | SWT.SINGLE);
 		passwordText.setText(defaultPassword);
-		credentialsDbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observe(passwordText),
+		ControlDecoration passwordDecoration = JFaceUtils.createDecoration(passwordText, TEST_FAILURE);
+		ISWTObservableValue passwordTextObservable = WidgetProperties.text(SWT.Modify).observe(passwordText);
+		dbc.bindValue(
+				passwordTextObservable,
 				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_PASSWORD).observe(
 						connectionModel));
 		// test button
 		final Button testButton = new Button(container, SWT.NULL);
 		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));
 		testButton.setEnabled(false);
-		bindTestButton(urlBinding, testButton);
+		urlBinding.getValidationStatus().addValueChangeListener(enableButtonOnUrlValidityChanges(testButton));
+
+		CredentialsTestAdapter credentialsTestAdapter = new CredentialsTestAdapter(usernameDecoration,
+				passwordDecoration);
+		testButton.addSelectionListener(credentialsTestAdapter);
+		usernameObservable.addValueChangeListener(credentialsTestAdapter);
+		passwordTextObservable.addValueChangeListener(credentialsTestAdapter);
 
 		// ec2 user link
 		Link ec2userLink = new Link(container, SWT.NULL);
@@ -272,40 +280,35 @@ public class CloudConnectionPage extends WizardPage {
 		ec2pwLink.setLayoutData(f);
 
 		setControl(container);
-		// validate();
 	}
 
-	private void bindTestButton(Binding urlBinding, final Button testButton) {
-		urlBinding.getValidationStatus().addValueChangeListener(new IValueChangeListener() {
+	/**
+	 * Enables/Disables credentials test button on url validity changes.
+	 * 
+	 * @param testButton
+	 *            the test button
+	 * @return the i value change listener
+	 */
+	private IValueChangeListener enableButtonOnUrlValidityChanges(final Button testButton) {
+		return new IValueChangeListener() {
 
 			@Override
 			public void handleValueChange(ValueChangeEvent event) {
 				IStatus status = (IStatus) event.diff.getNewValue();
 				testButton.setEnabled(status.isOK());
 			}
-		});
-		
-		testButton.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(SelectionEvent event) {
-				 boolean successful = cloudConnection.performTest();
-				 if (successful) {
-				 setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
-				 } else {
-				 setErrorMessage(WizardMessages.getString(TEST_FAILURE));
-				 }
-			}
-		});
+		};
 	}
 
-	private Binding bindCloudTypeLabel(DataBindingContext dbc, Text urlText, final Label typeLabel,
-			UpdateValueStrategy url2TypeStrategy) {
-		Binding urlBinding = dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(100, urlText),
-				BeanProperties.value(CloudConnectionModel.PROPERTY_TYPE).observe(connectionModel),
-				url2TypeStrategy,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		urlBinding.getValidationStatus().addValueChangeListener(new IValueChangeListener() {
+	/**
+	 * Displays the cloud type in the given if the given binding is valid.
+	 * 
+	 * @param typeLabel
+	 *            the type label
+	 * @return the value change listener
+	 */
+	private IValueChangeListener displayCloudTypeOnUrlValidityChanges(final Label typeLabel) {
+		return new IValueChangeListener() {
 
 			@Override
 			public void handleValueChange(ValueChangeEvent event) {
@@ -316,7 +319,17 @@ public class CloudConnectionPage extends WizardPage {
 					typeLabel.setText("");
 				}
 			}
-		});
+		};
+	}
+
+	private Binding bindCloudTypeLabel(DataBindingContext dbc, Text urlText, final Label typeLabel,
+			UpdateValueStrategy url2TypeStrategy) {
+		Binding urlBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observeDelayed(100, urlText),
+				BeanProperties.value(CloudConnectionModel.PROPERTY_TYPE).observe(connectionModel),
+				url2TypeStrategy,
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
+		urlBinding.getValidationStatus().addValueChangeListener(displayCloudTypeOnUrlValidityChanges(typeLabel));
 		ControlDecorationSupport.create(urlBinding, SWT.LEFT | SWT.TOP);
 		return urlBinding;
 	}
@@ -333,7 +346,8 @@ public class CloudConnectionPage extends WizardPage {
 
 									@Override
 									public IStatus validate(Object value) {
-										if (nameText.getText() != null && DeltaCloudManager.getDefault().findCloud(nameText.getText()) != null) {
+										if (nameText.getText() != null
+												&& DeltaCloudManager.getDefault().findCloud(nameText.getText()) != null) {
 											return ValidationStatus.error(NAME_ALREADY_IN_USE);
 										} else {
 											return ValidationStatus.ok();
@@ -342,5 +356,53 @@ public class CloudConnectionPage extends WizardPage {
 								})),
 				null);
 		ControlDecorationSupport.create(nameTextBinding, SWT.LEFT | SWT.TOP);
+	}
+
+	public CloudConnectionModel getModel() {
+		return connectionModel;
+	}
+
+	private class CredentialsTestAdapter extends SelectionAdapter implements IValueChangeListener {
+
+		private ControlDecoration[] controlDecorations;
+
+		public CredentialsTestAdapter(ControlDecoration... controlDecorations) {
+			this.controlDecorations = controlDecorations;
+			setDecorations(false);
+		}
+
+		public void widgetSelected(SelectionEvent event) {
+			boolean success = cloudConnection.performTest();
+			setMessage(success);
+			setDecorations(!success);
+		}
+
+		private void setMessage(boolean success) {
+			if (success) {
+				CloudConnectionPage.this.setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
+			} else {
+				CloudConnectionPage.this.setErrorMessage(WizardMessages.getString(TEST_FAILURE));
+			}
+		}
+
+		private void clearMessage() {
+			CloudConnectionPage.this.setMessage(""); //$NON-NLS-1$
+		}
+
+		private void setDecorations(boolean visible) {
+			for (ControlDecoration controlDecoration : controlDecorations) {
+				if (visible) {
+					controlDecoration.show();
+				} else {
+					controlDecoration.hide();
+				}
+			}
+		}
+
+		@Override
+		public void handleValueChange(ValueChangeEvent event) {
+			setDecorations(false);
+			clearMessage();
+		}
 	}
 }
