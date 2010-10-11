@@ -151,15 +151,11 @@ public class CloudConnectionPage extends WizardPage {
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
 		typeLabel.setText(defaultType);
-		UpdateValueStrategy url2TypeStrategy = new UpdateValueStrategy();
-		url2TypeStrategy.setConverter(new CloudConnectionModel.CloudTypeConverter());
-		url2TypeStrategy.setBeforeSetValidator(new CloudConnectionModel.CloudTypeValidator());
-		Binding urlBinding = bindCloudTypeLabel(dbc, urlText, typeLabel, url2TypeStrategy);
-
-		Label usernameLabel = new Label(container, SWT.NULL);
-		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
+		Binding urlBinding = bindCloudTypeLabel(dbc, urlText, typeLabel);
 
 		// username
+		Label usernameLabel = new Label(container, SWT.NULL);
+		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 		Text usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		usernameText.setText(defaultUsername);
 		ControlDecoration usernameDecoration = JFaceUtils.createDecoration(usernameText, TEST_FAILURE);
@@ -283,7 +279,7 @@ public class CloudConnectionPage extends WizardPage {
 	}
 
 	/**
-	 * Enables/Disables credentials test button on url validity changes.
+	 * Enables/Disables (credentials) test button on url validity changes.
 	 * 
 	 * @param testButton
 	 *            the test button
@@ -307,33 +303,63 @@ public class CloudConnectionPage extends WizardPage {
 	 *            the type label
 	 * @return the value change listener
 	 */
-	private IValueChangeListener displayCloudTypeOnUrlValidityChanges(final Label typeLabel) {
-		return new IValueChangeListener() {
+	private class CloudTypeAdapter implements IValueChangeListener {
 
-			@Override
-			public void handleValueChange(ValueChangeEvent event) {
-				IStatus status = (IStatus) event.diff.getNewValue();
-				if (status.isOK()) {
-					typeLabel.setText(connectionModel.getType());
-				} else {
-					typeLabel.setText("");
-				}
+		private Label typeLabel;
+
+		public CloudTypeAdapter(Label typeLabel) {
+			this.typeLabel = typeLabel;
+		}
+
+		@Override
+		public void handleValueChange(ValueChangeEvent event) {
+			IStatus status = (IStatus) event.diff.getNewValue();
+			if (status.isOK()) {
+				typeLabel.setText(connectionModel.getType());
+			} else {
+				typeLabel.setText("");
 			}
-		};
+		}
 	}
 
-	private Binding bindCloudTypeLabel(DataBindingContext dbc, Text urlText, final Label typeLabel,
-			UpdateValueStrategy url2TypeStrategy) {
-		Binding urlBinding = dbc.bindValue(
+	/**
+	 * Binds the given cloud type label to the given url text widget. Attaches a
+	 * listener to the url text widget Adds a validity decorator to the url text
+	 * widget.
+	 * 
+	 * @param dbc
+	 *            the databinding context to use
+	 * @param urlText
+	 *            the url text widget
+	 * @param typeLabel
+	 *            the cloud type label to display the cloud type in
+	 * @return 
+	 * @return the binding that was created
+	 */
+	private Binding bindCloudTypeLabel(DataBindingContext dbc, Text urlText, final Label typeLabel) {
+		UpdateValueStrategy updateStrategy = new UpdateValueStrategy();
+		updateStrategy.setConverter(new CloudConnectionModel.CloudTypeConverter());
+		updateStrategy.setBeforeSetValidator(new CloudConnectionModel.CloudTypeValidator());
+
+		Binding binding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(100, urlText),
 				BeanProperties.value(CloudConnectionModel.PROPERTY_TYPE).observe(connectionModel),
-				url2TypeStrategy,
+				updateStrategy,
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		urlBinding.getValidationStatus().addValueChangeListener(displayCloudTypeOnUrlValidityChanges(typeLabel));
-		ControlDecorationSupport.create(urlBinding, SWT.LEFT | SWT.TOP);
-		return urlBinding;
+		binding.getValidationStatus().addValueChangeListener(new CloudTypeAdapter(typeLabel));
+		ControlDecorationSupport.create(binding, SWT.LEFT | SWT.TOP);
+		return binding;
 	}
 
+	/**
+	 * Bind the given name text wdiget to the cloud connection model. Attaches
+	 * validators to the binding that enforce unique user input.
+	 * 
+	 * @param dbc
+	 *            the databinding context to use
+	 * @param nameText
+	 *            the name text widget to bind
+	 */
 	private void bindName(DataBindingContext dbc, final Text nameText) {
 		Binding nameTextBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(nameText),
