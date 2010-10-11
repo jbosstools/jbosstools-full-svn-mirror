@@ -378,7 +378,7 @@ public class CloudConnectionPage extends WizardPage {
 									public IStatus validate(Object value) {
 										if (nameText.getText() != null
 												&& DeltaCloudManager.getDefault().findCloud(nameText.getText()) != null) {
-											return ValidationStatus.error(NAME_ALREADY_IN_USE);
+											return ValidationStatus.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
 										} else {
 											return ValidationStatus.ok();
 										}
