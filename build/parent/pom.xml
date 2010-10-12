@@ -217,7 +217,7 @@
 			</activation>
 			<repositories>
 				<repository>
-					<id>helios</id>
+					<id>jbosstools-target-platform-repo</id>
 					<url>${target.platform.URL}</url>
 					<layout>p2</layout>
 					<snapshots>
