@@ -37,21 +37,6 @@
 				<configuration>
 					<format>'v'yyyyMMdd-HHmm'-${BUILD_ALIAS}'</format>
 					<archiveSite>true</archiveSite>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tychoVersion}</version>
-				<extensions>true</extensions>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
-				<artifactId>maven-osgi-packaging-plugin</artifactId>
-				<version>${tychoVersion}</version>
-				<configuration>
 					<environments>
 						<environment>
 							<os>macosx</os>
@@ -81,6 +66,14 @@
 					</environments>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<extensions>true</extensions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -751,8 +744,85 @@
 				</repository>
 			</repositories>
 		</profile>
-
+		<profile>
+			<id>dgolovin</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>helios</id>
+					<url>file:///media/Data/updates/helios-sp1</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>birt26</id>
+					<url>http://download.eclipse.org/birt/update-site/2.6/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>jboss-swtbot-helios</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/swtbot-helios/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>m2eclipse-extras</id>
+					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>jboss-xulrunner-1.9.1.2</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.1.2/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>google eclipse plugins</id>
+					<url>http://dl.google.com/eclipse/plugin/3.6</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
 	</profiles>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>sonatype-maven-central</id>
