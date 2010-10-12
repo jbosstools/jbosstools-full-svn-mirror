@@ -230,6 +230,27 @@
 			</repositories>
 		</profile>
 
+		<!-- Time saver: to build everything from scratch from a single repo containing all deps in .target -->
+		<profile>
+			<id>helios-remote-target</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-target-platform-repo</id>
+					<url>http://download.jboss.org/jbosstools/updates/target-platform/latest/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
 		<profile>
 			<id>jbds-no-target</id>
 			<activation>
