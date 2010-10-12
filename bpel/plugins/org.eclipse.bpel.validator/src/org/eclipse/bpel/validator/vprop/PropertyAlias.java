@@ -100,8 +100,9 @@ public class PropertyAlias extends CValidator {
 	 * A <vprop:propertyAlias> element MUST use one of the three following
 	 * combinations of attributes:
 	 * 
-	 * messageType and part, 
-	 * type or element 
+	 * 1. both messageType and part 
+	 * 2. type
+	 * 3. element 
 	 */
 	
 	@ARule(
@@ -127,7 +128,9 @@ public class PropertyAlias extends CValidator {
 			// good
 			fDuplicateKey = nn + "/messageType/" + fMessageTypeName + "/" + fMessagePartName + "/" + fPropertyName;
 
-		} else if (isEmpty(fMessageTypeName) && isEmpty(fMessageTypeName) ) {
+		// https://jira.jboss.org/browse/JBIDE-7107
+		// sheesh! fix a typo
+		} else if (isEmpty(fMessageTypeName) && isEmpty(fMessagePartName) ) {
 			
 			if (isEmpty(fTypeName) && isNonEmpty(fElementName)) {
 				// good, element name
@@ -181,8 +184,9 @@ public class PropertyAlias extends CValidator {
 		
 		IProblem problem;
 		INode typeNode = null;
-				
-		if (isNonEmpty(fMessageTypeName) ) {			
+
+		// https://jira.jboss.org/browse/JBIDE-7107				
+		if (isNonEmpty(fMessageTypeName) && isNonEmpty(fMessagePartName)) {			
 			// good			
 			INode msgType = mModelQuery.lookup(mNode.rootNode(), 
 					IModelQueryLookups.LOOKUP_NODE_MESSAGE_TYPE,fMessageTypeName);
@@ -205,14 +209,17 @@ public class PropertyAlias extends CValidator {
 					problem.fill("BPELC_MSG__PART",
 						toString(mNode.nodeName()),
 						fMessagePartName,
-						msgType
+						fMessageTypeName
 					);
 				}
 				
 			}
-			
-		} if (isNonEmpty(fElementName)) {
-			// good, element name
+
+		// https://jira.jboss.org/browse/JBIDE-7107
+		// reversed type and element...
+		// wow, Michal must have been tired when he was writing this ;)
+		} else if (isNonEmpty(fTypeName)) {
+			// good, type name
 			
 			typeNode = mModelQuery.lookup(mNode.rootNode(), 
 					IModelQueryLookups.LOOKUP_NODE_XSD_TYPE, fTypeName);
@@ -227,8 +234,8 @@ public class PropertyAlias extends CValidator {
 				);
 			}
 				
-		} else if (isNonEmpty(fTypeName) ) {
-			// good, type name
+		} else if (isNonEmpty(fElementName) ) {
+			// good, element name
 						
 			typeNode = mModelQuery.lookup(mNode.rootNode(), 
 					IModelQueryLookups.LOOKUP_NODE_XSD_ELEMENT, fElementName);

@@ -216,8 +216,18 @@ public class CorrSetImplSection extends BPELPropertySection  {
 					BPELEditor bpelEditor = getBPELEditor();
 					Shell shell = bpelEditor.getEditorSite().getShell();
 					EditMessagePropertyDialog dialog = new EditMessagePropertyDialog(shell, property, null, bpelEditor, fWidgetFactory);
-					if (dialog.open() == Window.OK) {
-						if (property != null) {
+					int rtn = dialog.open(); 
+					if (rtn == Window.OK) {
+						// https://jira.jboss.org/browse/JBIDE-7107
+						// this fixes a nasty bug caused by manual editing of the ProcessArtifacts.wsdl
+						if (property != null && dialog.getProperty()!=null) {
+							if (property.eIsProxy()) {
+								// the Propery is not resolved (it was probably removed from the WSDL)
+								// remove the old Property before adding the newly created one.
+								Command cmd = new RemovePropertyCommand((CorrelationSet)getInput(), property);
+								getCommandFramework().execute(wrapInShowContextCommand(cmd));
+								property = dialog.getProperty();
+							}
 							Command cmd = new AddPropertyCommand((CorrelationSet)getInput(), property);
 							getCommandFramework().execute(wrapInShowContextCommand(cmd));
 							propertyViewer.setSelection(new StructuredSelection(property));

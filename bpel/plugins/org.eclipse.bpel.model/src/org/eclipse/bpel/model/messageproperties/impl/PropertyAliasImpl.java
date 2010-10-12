@@ -38,6 +38,8 @@ import org.eclipse.wst.wsdl.Message;
 import org.eclipse.wst.wsdl.Part;
 import org.eclipse.wst.wsdl.internal.impl.DefinitionImpl;
 import org.eclipse.xsd.XSDElementDeclaration;
+import org.eclipse.xsd.XSDNamedComponent;
+import org.eclipse.xsd.XSDSimpleTypeDefinition;
 import org.eclipse.xsd.XSDTypeDefinition;
 import org.w3c.dom.Element;
 
@@ -681,16 +683,20 @@ public class PropertyAliasImpl extends ExtensibilityElementImpl implements
 								.getAttribute(MessagepropertiesConstants.PROPERTY_ALIAS_PROPERTY_NAME_ATTRIBUTE));
 				// resolve the qname to a property
 				// TODO could this reference an imported property?
-				for (Iterator i = definition.getExtensibilityElements()
-						.iterator(); i.hasNext();) {
-					ExtensibilityElement extensibilityElement = (ExtensibilityElement) i
-							.next();
-					if (extensibilityElement instanceof Property) {
-						Property property = (Property) extensibilityElement;
-						if (property.getQName().equals(qname)
-								&& property != getPropertyName()) {
-							setPropertyName(property);
-							break;
+				// https://jira.jboss.org/browse/JBIDE-7107
+				// check for null QName
+				if (qname!=null) {
+					for (Iterator i = definition.getExtensibilityElements()
+							.iterator(); i.hasNext();) {
+						ExtensibilityElement extensibilityElement = (ExtensibilityElement) i
+								.next();
+						if (extensibilityElement instanceof Property) {
+							Property property = (Property) extensibilityElement;
+							if (property.getQName().equals(qname)
+									&& property != getPropertyName()) {
+								setPropertyName(property);
+								break;
+							}
 						}
 					}
 				}
@@ -704,14 +710,26 @@ public class PropertyAliasImpl extends ExtensibilityElementImpl implements
 						definition,
 						element
 								.getAttribute(MessagepropertiesConstants.PROPERTY_ALIAS_MESSAGE_TYPE_ATTRIBUTE));
-				Message newMessage = (messageQName != null) ? (Message) definition
-						.getMessage(messageQName)
-						: null;
-				if (newMessage != null && newMessage != getMessageType())
-					setMessageType(newMessage);
+				if (messageQName!=null) {
+					Message newMessage = (Message) definition.getMessage(messageQName);
+					if (newMessage != null && newMessage != getMessageType())
+						setMessageType(newMessage);
+				}
 			}
 		} else {
 			setMessageType(null);
+		}
+
+		if (element != null
+				&& element
+						.hasAttribute(MessagepropertiesConstants.PROPERTY_ALIAS_PART_ATTRIBUTE)) {
+			if (definition != null) {
+				String part = element.getAttribute(MessagepropertiesConstants.PROPERTY_ALIAS_PART_ATTRIBUTE);
+				if (part != null && part != getPart())
+					setPart(part);
+			}
+		} else {
+			setType(null);
 		}
 
 		if (element != null
@@ -722,11 +740,13 @@ public class PropertyAliasImpl extends ExtensibilityElementImpl implements
 						definition,
 						element
 								.getAttribute(MessagepropertiesConstants.PROPERTY_ALIAS_TYPE_ATTRIBUTE));
-				XSDTypeDefinition newType = ((DefinitionImpl) definition)
-						.resolveTypeDefinition(typeQName.getNamespaceURI(),
-								typeQName.getLocalPart());
-				if (newType != null && newType != getType())
-					setType(newType);
+				if (typeQName!=null) {
+					XSDTypeDefinition newType = ((DefinitionImpl) definition)
+							.resolveTypeDefinition(typeQName.getNamespaceURI(),
+									typeQName.getLocalPart());
+					if (newType != null && newType != getType())
+						setType(newType);
+				}
 			}
 		} else {
 			setType(null);
@@ -740,13 +760,14 @@ public class PropertyAliasImpl extends ExtensibilityElementImpl implements
 						definition,
 						element
 								.getAttribute(MessagepropertiesConstants.PROPERTY_ALIAS_XSD_ELEMENT_ATTRIBUTE));
-				XSDElementDeclaration newElement = ((DefinitionImpl) definition)
-						.resolveElementDeclaration(elementQName
-								.getNamespaceURI(), elementQName.getLocalPart());
-				if (newElement != null && newElement != getXSDElement()) {
-					setXSDElement(newElement);
+				if (elementQName!=null) {
+					XSDElementDeclaration newElement = ((DefinitionImpl) definition)
+							.resolveElementDeclaration(elementQName
+									.getNamespaceURI(), elementQName.getLocalPart());
+					if (newElement != null && newElement != getXSDElement()) {
+						setXSDElement(newElement);
+					}
 				}
-
 			}
 		} else {
 			setXSDElement(null);
@@ -792,27 +813,102 @@ public class PropertyAliasImpl extends ExtensibilityElementImpl implements
 									+ qname.getLocalPart());
 			}
 
+			// handle "messageType" and "part" addressing
 			if (eAttribute == null
 					|| eAttribute == MessagepropertiesPackage.eINSTANCE
 							.getPropertyAlias_MessageType()) {
 				Message message = (Message) getMessageType();
 				QName qname = (message == null) ? null : message.getQName();
-				if (qname != null)
+				if (qname != null) {
 					niceSetAttributeURIValue(
 							theElement,
 							MessagepropertiesConstants.PROPERTY_ALIAS_MESSAGE_TYPE_ATTRIBUTE,
 							qname.getNamespaceURI() + "#"
 									+ qname.getLocalPart());
+
+					// https://jira.jboss.org/browse/JBIDE-7107
+					// make sure the "element" and "type" attributes get removed
+					niceSetAttributeURIValue(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_XSD_ELEMENT_ATTRIBUTE,
+							null);
+					niceSetAttributeURIValue(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_TYPE_ATTRIBUTE,
+							null);
+				}
 			}
 
 			if (eAttribute == null
 					|| eAttribute == MessagepropertiesPackage.eINSTANCE
-							.getPropertyAlias_Part())
-				niceSetAttribute(
-						theElement,
-						MessagepropertiesConstants.PROPERTY_ALIAS_PART_ATTRIBUTE,
-						getPart());
+							.getPropertyAlias_Part()) {
+				
+				if (getPart()!=null) {
+					niceSetAttribute(
+							theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_PART_ATTRIBUTE,
+							getPart());
+	
+					// make sure the "element" and "type" attributes get removed
+					niceSetAttributeURIValue(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_XSD_ELEMENT_ATTRIBUTE,
+							null);
+					niceSetAttributeURIValue(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_TYPE_ATTRIBUTE,
+							null);
+				}
+			}
+			
+			// https://jira.jboss.org/browse/JBIDE-7107
+			// added type and element handling
+			// handle "type" addressing
+			if (eAttribute == null
+					|| eAttribute == MessagepropertiesPackage.eINSTANCE
+							.getPropertyAlias_Type()) {
+				Object type = getType();
+				if (type instanceof XSDTypeDefinition) {
+					XSDTypeDefinition xsdType = (XSDTypeDefinition) type;
+					String uri = xsdType.getURI();
 
+					niceSetAttributeURIValue(theElement,
+						MessagepropertiesConstants.PROPERTY_ALIAS_TYPE_ATTRIBUTE,
+						uri);
+					
+					// make sure the "element", "messageType" and "part" attributes get removed
+					niceSetAttributeURIValue(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_XSD_ELEMENT_ATTRIBUTE,
+							null);
+					niceSetAttributeURIValue(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_MESSAGE_TYPE_ATTRIBUTE,
+							null);
+					niceSetAttribute(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_PART_ATTRIBUTE,
+							null);
+				}
+			}
+			
+			// handle "element" addressing
+			if (eAttribute == null
+					|| eAttribute == MessagepropertiesPackage.eINSTANCE
+							.getPropertyAlias_XSDElement()) {
+				Object elem = getXSDElement();
+				if (elem instanceof XSDElementDeclaration) {
+					XSDElementDeclaration xsdElement = (XSDElementDeclaration) elem;
+					String uri = xsdElement.getURI();
+					niceSetAttributeURIValue(theElement,
+						MessagepropertiesConstants.PROPERTY_ALIAS_XSD_ELEMENT_ATTRIBUTE,
+						uri);
+					
+					// make sure the "type", "messageType" and "part" attributes get removed
+					niceSetAttributeURIValue(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_TYPE_ATTRIBUTE,
+							null);
+					niceSetAttributeURIValue(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_MESSAGE_TYPE_ATTRIBUTE,
+							null);
+					niceSetAttribute(theElement,
+							MessagepropertiesConstants.PROPERTY_ALIAS_PART_ATTRIBUTE,
+							null);
+				}
+			}
 		}
 	}
 

@@ -315,7 +315,17 @@ public final class Messages extends NLS {
 	public static String EditMessagePropertyDialog_3;
 	public static String EditMessagePropertyDialog_4;
 	public static String EditMessagePropertyDialog_9;
+
+	// https://jira.jboss.org/browse/JBIDE-7107
+	public static String EditMessagePropertyDialog_11;
+	public static String EditMessagePropertyDialog_12;
+	public static String EditMessagePropertyDialog_13;
+	public static String EditMessagePropertyDialog_15;
+	public static String EditMessagePropertyDialog_16;
+	
 	public static String EditMessagePropertyDialog_Type_1;
+	public static String EditMessagePropertyDialog_Element_1;
+	public static String EditMessagePropertyDialog_Message_1;
 	public static String EditPropertyAliasDialog_10;
 	public static String EditPropertyAliasDialog_3;
 	public static String EditPropertyAliasDialog_4;

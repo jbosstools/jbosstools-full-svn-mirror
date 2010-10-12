@@ -609,7 +609,9 @@ public class VariableTypeSelector extends Composite {
 		DecoratedLabel label = new DecoratedLabel(composite,SWT.LEFT);
 		label.setText(Messages.VariableTypeSelector_Data_Type_2);
 		wf.adapt(label);
-		dataTypeLabel = new StatusLabel2( label );		 
+		dataTypeLabel = new StatusLabel2( label );
+		// https://jira.jboss.org/browse/JBIDE-7107
+		dataTypeLabel.getLabel().setBackground(this.getBackground());
 		dataTypeNameText = createHyperlink(composite, "", SWT.NONE); //$NON-NLS-1$
 		dataTypeNameText.setToolTipText(Messages.VariableTypeSelector_3);
 		dataTypeNameText.addHyperlinkListener(new HyperlinkAdapter() {
@@ -642,7 +644,8 @@ public class VariableTypeSelector extends Composite {
 		data = new FlatFormData();
 		data.left = new FlatFormAttachment(0,IDetailsAreaConstants.HSPACE);
 		data.right = new FlatFormAttachment(dataTypeNameText, -IDetailsAreaConstants.HSPACE);
-		// data.top = new FlatFormAttachment(dataTypeNameText, IDetailsAreaConstants.VSPACE, SWT.TOP);
+		// https://jira.jboss.org/browse/JBIDE-7107
+		data.top = new FlatFormAttachment(dataTypeNameText, -IDetailsAreaConstants.VSPACE, SWT.TOP);
 		data.bottom = new FlatFormAttachment(dataTypeNameText,0,SWT.BOTTOM);
 		dataTypeLabel.setLayoutData(data);
 				
@@ -677,8 +680,11 @@ public class VariableTypeSelector extends Composite {
 		dataTypeTreeLabel.setLayoutData(data);
 
 		data = new FlatFormData();
-		data.left = new FlatFormAttachment(0, BPELUtil.calculateLabelWidth(dataTypeLabel.getLabel(), STANDARD_LABEL_WIDTH_SM));
-		data.top = new FlatFormAttachment(dataTypeTreeLabel,0, SWT.TOP);
+		// https://jira.jboss.org/browse/JBIDE-7107
+//		data.left = new FlatFormAttachment(0, BPELUtil.calculateLabelWidth(dataTypeLabel.getLabel(), STANDARD_LABEL_WIDTH_SM));
+//		data.top = new FlatFormAttachment(dataTypeTreeLabel,0, SWT.TOP);
+		data.left = new FlatFormAttachment(dataTypeTreeLabel,0, SWT.LEFT);
+		data.top = new FlatFormAttachment(dataTypeTreeLabel,0, SWT.BOTTOM);
 		data.right = new FlatFormAttachment(100,  -IDetailsAreaConstants.HSPACE) ;		
 		data.bottom = new FlatFormAttachment(100, -IDetailsAreaConstants.HSPACE);	
 		dataTypeTree.setLayoutData(data);						

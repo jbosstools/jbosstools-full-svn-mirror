@@ -53,6 +53,9 @@ public final class MessagepropertiesConstants
 
     public static final String PROPERTY_NAME_ATTRIBUTE = "name";
     public static final String PROPERTY_TYPE_ATTRIBUTE = "type";
+    // https://jira.jboss.org/browse/JBIDE-7107
+    // added to allow "element" addressing for <property> and <propertyAlias>
+    public static final String PROPERTY_XSD_ELEMENT_ATTRIBUTE = "element";
     public static final String PROPERTY_ALIAS_PROPERTY_NAME_ATTRIBUTE = "propertyName";
     public static final String PROPERTY_ALIAS_MESSAGE_TYPE_ATTRIBUTE = "messageType";
     public static final String PROPERTY_ALIAS_PART_ATTRIBUTE = "part";

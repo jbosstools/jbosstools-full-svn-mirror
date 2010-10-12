@@ -61,35 +61,24 @@ public class Definitions extends Validator {
 		
 		for (EObject obj : unresolved) {
 			String location = "unkonwn";
-			int startLine = 1, startCol = 1;
-			Node node = null;
+			// https://jira.jboss.org/browse/JBIDE-7107
+			// line/column gathering was moved to ModelQuery class
 			if (obj instanceof Import) {
 				location = ((Import)obj).getLocationURI();
-				node = ((Import)obj).getElement();
-				startLine = WSDLParser.getStartLine(node);
-				startCol = WSDLParser.getStartColumn(node);
 			}
 			else if ( obj instanceof XSDImportImpl ) {
 				location = ((XSDImportImpl)obj).getSchemaLocation();
-				node = ((XSDImportImpl)obj).getElement();
-				startLine = XSDParser.getStartLine(node);
-				startCol = XSDParser.getStartColumn(node);
 			}
 			else if ( obj instanceof XSDIncludeImpl ) {
 				location = ((XSDIncludeImpl)obj).getSchemaLocation();
-				node = ((XSDIncludeImpl)obj).getElement();
-				startLine = XSDParser.getStartLine(node);
-				startCol = XSDParser.getStartColumn(node);
 			}
 			
 			IProblem problem = createWarning( (INode)mModelQuery.adapt(obj,INode.class,IModelQuery.ADAPT_HINT_NONE) );
 			
 			problem.fill("BPELC_IMPORT__UNRESOVED",  //$NON-NLS-1$
 					toString(mNode.nodeName()),
-					location,
-					definition.getLocation());			
-			problem.setAttribute(IProblem.LINE_NUMBER, startLine);
-			problem.setAttribute(IProblem.COLUMN_NUMBER, startCol);
+					location, // location of the unresolved document being imported
+					definition.getLocation()); // location of document doing the importing	
 		}
 	}
 	
@@ -107,7 +96,6 @@ public class Definitions extends Validator {
 				file.deleteMarkers(IBPELMarker.ID, false, IResource.DEPTH_INFINITE);
 //				System.out.println("deleted markers from "+file);
 			} catch (CoreException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         

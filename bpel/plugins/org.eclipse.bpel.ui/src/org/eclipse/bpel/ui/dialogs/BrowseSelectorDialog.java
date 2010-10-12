@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.dialogs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +19,9 @@ import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.commands.AddImportCommand;
 import org.eclipse.bpel.ui.details.providers.ModelTreeLabelProvider;
+import org.eclipse.bpel.ui.details.tree.PartTreeNode;
+import org.eclipse.bpel.ui.details.tree.TreeNode;
+import org.eclipse.bpel.ui.details.tree.XSDElementDeclarationTreeNode;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.ModelHelper;
 import org.eclipse.core.resources.IFile;
@@ -34,6 +39,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -45,14 +51,22 @@ import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.dialogs.SelectionStatusDialog;
+import org.eclipse.wst.wsdl.Message;
+import org.eclipse.wst.wsdl.Part;
+import org.eclipse.xsd.XSDElementDeclaration;
 import org.eclipse.xsd.XSDNamedComponent;
 import org.eclipse.xsd.XSDSimpleTypeDefinition;
+import org.eclipse.xsd.XSDTypeDefinition;
 import org.eclipse.xsd.util.XSDConstants;
 
 /**
  * @author Michal Chmielewski (michal.chmielewski@oracle.com)
  * @date Jul 18, 2006
  *
+ * https://jira.jboss.org/browse/JBIDE-7107
+ * Enhanced to support element selection from the "lower" tree viewer
  */
 public class BrowseSelectorDialog extends ListAndViewDialog {
 
@@ -72,6 +86,7 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 	protected IStructuredContentProvider resourceContentProvider = null;
 	protected ITreeContentProvider treeContentProvider = null;  
 	
+	protected Group checkButtonGroup;
 	protected Tree fTree;
 	protected TreeViewer fTreeViewer;
 	
@@ -177,6 +192,28 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 		}
 		
 	}
+
+    /**
+     * @see ListAndViewDialog#computeResult()
+	 * https://jira.jboss.org/browse/JBIDE-7107
+	 * Added support for returning two results
+     */
+    @Override
+	protected void computeResult() {
+    	
+    	List result = new ArrayList();
+    	Object sel1[] = getSelectedElements();
+    	TreeItem sel2[] = fTree.getSelection();
+    	for (int i=0; i<sel1.length; ++i)
+    		result.add(sel1[i]);
+    	for (int i=0; i<sel2.length; ++i) {
+    		Object data = sel2[i].getData();
+    		if (data instanceof TreeNode)
+    			data = ((TreeNode)data).getModelObject();
+    		result.add(data);
+    	}
+		setResult(result);
+    }
 
 	/**
 	 * Ensure that the prefix mapping exists for the given namespace
@@ -416,21 +453,24 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 	}
 
 	protected void createBrowseFilterGroup(Composite parent) {
-		Group group = new Group(parent,SWT.SHADOW_ETCHED_IN);
-		group.setText( Messages.BrowseSelectorDialog_4 );
+		// https://jira.jboss.org/browse/JBIDE-7107
+		// need to support enabling/disabling of this button group
+		// see BrowseUtils#browseForMessageType() for example
+		checkButtonGroup = new Group(parent,SWT.SHADOW_ETCHED_IN);
+		checkButtonGroup.setText( Messages.BrowseSelectorDialog_4 );
 		
 		GridLayout layout = new GridLayout();
 		layout.makeColumnsEqualWidth = true;		
 		layout.numColumns = 3;		
-		group.setLayout(layout);
+		checkButtonGroup.setLayout(layout);
 		GridData data = new GridData();        
 	    data.grabExcessVerticalSpace = false;
 	    data.grabExcessHorizontalSpace = true;
 	    data.horizontalAlignment = GridData.FILL;
 	    data.verticalAlignment = GridData.FILL;
-	    group.setLayoutData(data);
+	    checkButtonGroup.setLayoutData(data);
 	
-	    createBrowseFilterGroupButtons ( group );
+	    createBrowseFilterGroupButtons ( checkButtonGroup );
 	}
 
 	
@@ -446,6 +486,16 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 	protected Object createLowerView(Composite parent) {
 		//	Tree viewer for variable structure ...
 		fTree = new Tree(parent, SWT.BORDER );
+		fTree.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				// https://jira.jboss.org/browse/JBIDE-7107
+				// update "OK" button enablement
+				refresh();
+			}
+			
+		});
 		 
 		fTreeViewer = new TreeViewer(fTree);
 		fTreeViewer.setContentProvider( treeContentProvider );
@@ -515,7 +565,9 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 			} else {
 				handleNonEmptyList();
 			}
-		}		
+		}
+		// https://jira.jboss.org/browse/JBIDE-7107
+		updateOkState();
 	}
 
 	/**

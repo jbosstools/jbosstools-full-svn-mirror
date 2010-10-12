@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.dialogs.SelectionDialog;
 import org.eclipse.wst.wsdl.Message;
 
 
@@ -72,7 +73,7 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 	protected final static int BID_XSD_PRIMITIVES = IDialogConstants.CLIENT_ID + 104;
 		
 	/* Whether messages ought to be shown */	
-	private boolean showMessages = true;
+	protected boolean showMessages = true;
 	
 		
 	protected XSDTypeOrElementContentProvider xsdTypeProvider = new XSDTypeOrElementContentProvider();
@@ -87,7 +88,12 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 	
 			
 	/* Which types to filter ? */
-	private int FILTER_TYPES = XSDTypeOrElementContentProvider.INLCUDE_ALL;
+	protected int FILTER_TYPES = XSDTypeOrElementContentProvider.INLCUDE_ALL;
+	
+	// https://jira.jboss.org/browse/JBIDE-7107
+	// set by caller if a selection from the lower tree (typically message parts or XSD elements)
+	// are required before "OK" button can be enabled.
+	protected boolean requireLowerTreeSelection = true;
 	
 	
 	/**
@@ -256,6 +262,26 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 		return list;
 	}
 
+	// https://jira.jboss.org/browse/JBIDE-7107
+	@Override
+	protected void updateOkState() {
+		super.updateOkState();
+		
+		boolean enabled = true;
+		computeResult();
+		Object obj = getFirstResult();
+		// We need to check whether namespace prefix has been already defined
+		if (obj instanceof Message) {
+			if (!checkNamespace((Message) obj)){
+				enabled = false;
+			}
+		}
+		if ( getResult().length!=2 && this.requireLowerTreeSelection )
+			enabled = false;
+		
+		getOkButton().setEnabled(enabled);
+	}
+
 	@Override
 	protected void okPressed() {
 		computeResult();
@@ -266,6 +292,8 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 				return;
 			}
 		}
+		if ( getResult().length!=2 && this.requireLowerTreeSelection )
+			return;
 		super.okPressed();
 	}
 

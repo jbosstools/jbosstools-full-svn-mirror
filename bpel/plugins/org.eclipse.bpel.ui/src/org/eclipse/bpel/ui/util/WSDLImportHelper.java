@@ -315,7 +315,11 @@ public class WSDLImportHelper {
 				// importingDefinition.getImports().put(importedSchema.getTargetNamespace(),
 				// imports);
 				importingDefinition.addImport(_import);
-			} else {
+			}
+			// https://jira.jboss.org/browse/JBIDE-7107
+			// ignore an inconsequential error here
+			else if ( !importingUri.equals(importedUri) )
+			{
 				// TODO handle errors here?
 				throw new IllegalStateException();
 			}

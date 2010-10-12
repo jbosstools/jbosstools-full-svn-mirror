@@ -47,7 +47,10 @@ public class Factory implements IFactory<Validator> {
 		
 		String nsURI = qname.getNamespaceURI();
 		if (IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE.equals ( nsURI ) ||
-			IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE_2.equals (nsURI ) ) 
+			IConstants.XMLNS_XPATH_EXPRESSION_LANGUAGE_2.equals (nsURI ) ||
+			// https://jira.jboss.org/browse/JBIDE-7107
+			// oops - also create validator for Definitions
+			IConstants.XMLNS_WSDL.equals (nsURI )) 
 		{
 			return createValidator( qname.getLocalPart() );
 		}		

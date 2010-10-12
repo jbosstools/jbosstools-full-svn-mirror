@@ -29,7 +29,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.wst.wsdl.WSDLElement;
+import org.eclipse.wst.wsdl.util.WSDLParser;
 import org.eclipse.xsd.XSDConcreteComponent;
+import org.eclipse.xsd.util.XSDParser;
 import org.w3c.dom.Element;
 
 
@@ -536,7 +538,42 @@ public class ModelQuery extends ModelQueryImpl {
 		try {
 			return ((Number)elm.getUserData(key)).intValue();
 		} catch (Throwable t) {
-			// 
+			// https://jira.jboss.org/browse/JBIDE-7107
+			// this was added as a result of https://jira.jboss.org/browse/JBIDE-7116 since we need to
+			// be able to report line information for various types of WSDL objects...
+			// if the requested item is line/column information, maybe it's in an imported WSDL or XSD.
+			// We'll have to get this info from the WSDLParser or XSDParser. Luckily we remembered to set
+			// the TRACK_LOCATION loader option for the WSDL Resource loader, right?
+			EObject eObj = (EObject) elm.getUserData("emf.model");
+			if (eObj instanceof XSDConcreteComponent) {
+				switch (what) {
+				case LOOKUP_NUMBER_LINE_NO :
+					def = XSDParser.getStartLine( ((XSDConcreteComponent)eObj).getElement() );
+					break;		
+				case LOOKUP_NUMBER_COLUMN_NO :
+					def = XSDParser.getStartColumn( ((XSDConcreteComponent)eObj).getElement() );
+					break;		
+				default:
+					return def;
+				}				
+			}
+			else if (eObj instanceof WSDLElement) {
+				switch (what) {
+				case LOOKUP_NUMBER_LINE_NO :
+					def = WSDLParser.getStartLine( ((WSDLElement)eObj).getElement() );
+					break;		
+				case LOOKUP_NUMBER_COLUMN_NO :
+					def = WSDLParser.getStartColumn( ((WSDLElement)eObj).getElement() );
+					break;		
+				default:
+					return def;
+				}				
+			}
+			else
+				return def;
+			
+			// found it! Set this info in the adaptable Element for next time
+			elm.setUserData(key, new Integer(def), null);
 		}			
 		return def;
 	}

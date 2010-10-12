@@ -1287,7 +1287,7 @@ IGotoMarker/*, CommandStackListener*/ {
 
 	@Override
 	public boolean isDirty() {
-		return this.fTextEditor.isDirty();
+		return this.fTextEditor.isDirty() || this.editDomain.getCommandStack().isDirty();
 	}
 
 	@Override
