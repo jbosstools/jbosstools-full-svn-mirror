@@ -63,6 +63,7 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String TITLE = "NewCloudConnection.title"; //$NON-NLS-1$
 	private static final String URL_LABEL = "Url.label"; //$NON-NLS-1$
 	private static final String NAME_LABEL = "Name.label"; //$NON-NLS-1$
+	private static final String CLOUDTYPE_LABEL = "Type.label"; //$NON-NLS-1$
 	private static final String USERNAME_LABEL = "UserName.label"; //$NON-NLS-1$
 	private static final String PASSWORD_LABEL = "Password.label"; //$NON-NLS-1$
 	private static final String TESTBUTTON_LABEL = "TestButton.label"; //$NON-NLS-1$
@@ -147,7 +148,10 @@ public class CloudConnectionPage extends WizardPage {
 
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
-		Binding urlBinding = bindCloudTypeLabel(dbc, urlText, typeLabel);
+		typeLabel.setText(WizardMessages.getString(CLOUDTYPE_LABEL));
+		
+		Label computedTypeLabel = new Label(container, SWT.NULL);
+		Binding urlBinding = bindCloudTypeLabel(dbc, urlText, computedTypeLabel);
 
 		// username
 		Label usernameLabel = new Label(container, SWT.NULL);
@@ -228,15 +232,15 @@ public class CloudConnectionPage extends WizardPage {
 		f.left = new FormAttachment(urlText, 0, SWT.LEFT);
 		f.top = new FormAttachment(urlText, 5 + centering);
 		f.right = new FormAttachment(100, 0);
-		typeLabel.setLayoutData(f);
+		computedTypeLabel.setLayoutData(f);
 
 		f = new FormData();
 		f.top = new FormAttachment(typeLabel, 10 + centering);
 		usernameLabel.setLayoutData(f);
 
 		f = new FormData();
-		f.left = new FormAttachment(typeLabel, 0, SWT.LEFT);
-		f.top = new FormAttachment(typeLabel, 10);
+		f.left = new FormAttachment(computedTypeLabel, 0, SWT.LEFT);
+		f.top = new FormAttachment(computedTypeLabel, 10);
 		f.right = new FormAttachment(100, -70);
 		usernameText.setLayoutData(f);
 
