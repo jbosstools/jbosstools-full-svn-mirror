@@ -29,6 +29,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -54,17 +55,18 @@ import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnection;
 import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
 import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
+import org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnection;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 
-
-public class DeltaCloudView extends ViewPart implements ICloudManagerListener, 
-ITabbedPropertySheetPageContributor {
+public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
+		ITabbedPropertySheetPageContributor {
 
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.DeltaCloudView";
-	
+
+	private static final String NEW_CONNECTION = "NewConnection.label"; //$NON-NLS-1$
 	private static final String REMOVE_CLOUD = "RemoveCloud.label"; //$NON-NLS-1$
 	private static final String EDIT_CLOUD = "EditCloud.label"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
@@ -85,10 +87,12 @@ ITabbedPropertySheetPageContributor {
 	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
 	private final static String IMAGE_FILTER = "ImageFilter.label"; //$NON-NLS-1$
 	private final static String INSTANCE_FILTER = "InstanceFilter.label"; //$NON-NLS-1$
-	
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
+
 	private TreeViewer viewer;
+
+	private Action createConnection;
 	private Action removeCloud;
 	private Action refreshAction;
 	private Action startAction;
@@ -101,10 +105,11 @@ ITabbedPropertySheetPageContributor {
 	private Action editCloud;
 	private Action imageFilterAction;
 	private Action instanceFilterAction;
-	
+
 	private Map<String, Action> instanceActions;
-	
+
 	private CloudViewElement selectedElement;
+
 
 	/**
 	 * The constructor.
@@ -113,8 +118,8 @@ ITabbedPropertySheetPageContributor {
 	}
 
 	/**
-	 * This is a callback that will allow us
-	 * to create the viewer and initialize it.
+	 * This is a callback that will allow us to create the viewer and initialize
+	 * it.
 	 */
 	public void createPartControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
@@ -139,7 +144,7 @@ ITabbedPropertySheetPageContributor {
 		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
 		super.dispose();
 	}
-	
+
 	private void hookSelection() {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
@@ -148,7 +153,7 @@ ITabbedPropertySheetPageContributor {
 			}
 		});
 	}
-	
+
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
@@ -176,16 +181,17 @@ ITabbedPropertySheetPageContributor {
 
 	private void handleSelection() {
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-		selectedElement = (CloudViewElement)selection.getFirstElement();
+		selectedElement = (CloudViewElement) selection.getFirstElement();
 		editCloud.setEnabled(selectedElement != null);
 		removeCloud.setEnabled(selectedElement != null);
 		refreshAction.setEnabled(selectedElement != null);
 		imageFilterAction.setEnabled(selectedElement != null);
 		instanceFilterAction.setEnabled(selectedElement != null);
 	}
-	
+
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.removeAll();
+		manager.add(createConnection);
 		manager.add(editCloud);
 		manager.add(removeCloud);
 		manager.add(refreshAction);
@@ -197,14 +203,15 @@ ITabbedPropertySheetPageContributor {
 		if (selectedElement instanceof CVImageElement) {
 			manager.add(createInstance);
 		} else if (selectedElement instanceof CVInstanceElement) {
-			CVInstanceElement element = (CVInstanceElement)selectedElement;
-			DeltaCloudInstance instance = (DeltaCloudInstance)element.getElement();
+			CVInstanceElement element = (CVInstanceElement) selectedElement;
+			DeltaCloudInstance instance = (DeltaCloudInstance) element.getElement();
 			List<String> actions = instance.getActions();
 			for (String action : actions) {
 				manager.add(instanceActions.get(action));
 			}
 			manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		}
+		manager.add(createConnection);
 		manager.add(editCloud);
 		manager.add(removeCloud);
 		manager.add(imageFilterAction);
@@ -212,230 +219,82 @@ ITabbedPropertySheetPageContributor {
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
-	
+
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(collapseall);
 	}
 
 	private void makeActions() {
-		removeCloud = new RemoveAction();
-		removeCloud.setText(CVMessages.getString(REMOVE_CLOUD));
-		removeCloud.setToolTipText(CVMessages.getString(REMOVE_CLOUD));
-		removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_ELCL_REMOVE));
-
-		createInstance = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Shell shell = viewer.getControl().getShell();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				if (obj instanceof CVImageElement) {
-					CVImageElement imageElement = (CVImageElement)obj;
-					DeltaCloudImage image = (DeltaCloudImage)imageElement.getElement();
-					CVCategoryElement images = (CVCategoryElement)imageElement.getParent();
-					CVCloudElement cloudElement = (CVCloudElement)images.getParent();
-					DeltaCloud cloud = (DeltaCloud)cloudElement.getElement();
-					IWizard wizard = new NewInstance(cloud, image);
-					WizardDialog dialog = new WizardDialog(shell, wizard);
-					dialog.create();
-					dialog.open();
-				}
-			}
-		};		
-		createInstance.setText(CVMessages.getString(CREATE_INSTANCE));
-		createInstance.setToolTipText(CVMessages.getString(CREATE_INSTANCE));
-		createInstance.setImageDescriptor(SWTImagesFactory.DESC_INSTANCE);
-		
-		editCloud = new Action() {
-			public void run() {
-				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-				CloudViewElement element = (CloudViewElement)selection.getFirstElement();
-				while (element != null && !(element instanceof CVCloudElement)) {
-					element = (CloudViewElement)element.getParent();
-				}
-				if (element != null) {
-					CVCloudElement cloudElement = (CVCloudElement)element;
-					DeltaCloud cloud = (DeltaCloud)cloudElement.getElement();
-					IWizard wizard = new EditCloudConnection(cloud);
-					Shell shell = viewer.getControl().getShell();
-					WizardDialog dialog = new WizardDialog(shell, wizard);
-					dialog.create();
-					dialog.open();
-				}
-			}
-		};		
-		editCloud.setText(CVMessages.getString(EDIT_CLOUD));
-		editCloud.setToolTipText(CVMessages.getString(EDIT_CLOUD));
-		
-		refreshAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				if (obj instanceof CloudViewElement) {
-					CloudViewElement element = (CloudViewElement)obj;
-					while (!(element instanceof CVCloudElement))
-						element = (CloudViewElement)element.getParent();
-					CVCloudElement cloud = (CVCloudElement)element;
-					cloud.loadChildren();
-				}
-			}
-		};
-		refreshAction.setText(CVMessages.getString(REFRESH));
-		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
-		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
-	
-		startAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				if (obj instanceof CVInstanceElement) {
-					CVInstanceElement cvinstance = (CVInstanceElement)obj;
-					DeltaCloudInstance instance = (DeltaCloudInstance)cvinstance.getElement();
-					CloudViewElement element = (CloudViewElement)obj;
-					while (!(element instanceof CVCloudElement))
-						element = (CloudViewElement)element.getParent();
-					CVCloudElement cvcloud = (CVCloudElement)element;
-					DeltaCloud cloud = (DeltaCloud)cvcloud.getElement();
-					PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance, DeltaCloudInstance.START,
-							CVMessages.getString(STARTING_INSTANCE_TITLE), 
-							CVMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[]{instance.getName()}),
-							DeltaCloudInstance.RUNNING);
-					t.setUser(true);
-					t.schedule();
-				}
-			}
-		};
-		startAction.setText(CVMessages.getString(START_LABEL));
-		startAction.setToolTipText(CVMessages.getString(START_LABEL));
-		startAction.setImageDescriptor(SWTImagesFactory.DESC_START);
-		startAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_STARTD);
-		
-		stopAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				if (obj instanceof CVInstanceElement) {
-					CVInstanceElement cvinstance = (CVInstanceElement)obj;
-					DeltaCloudInstance instance = (DeltaCloudInstance)cvinstance.getElement();
-					CloudViewElement element = (CloudViewElement)obj;
-					while (!(element instanceof CVCloudElement))
-						element = (CloudViewElement)element.getParent();
-					CVCloudElement cvcloud = (CVCloudElement)element;
-					DeltaCloud cloud = (DeltaCloud)cvcloud.getElement();
-					PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance, DeltaCloudInstance.STOP,
-							CVMessages.getString(STOPPING_INSTANCE_TITLE), 
-							CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[]{instance.getName()}),
-							DeltaCloudInstance.STOPPED);
-					t.setUser(true);
-					t.schedule();
-				}
-			}
-		};
-		stopAction.setText(CVMessages.getString(STOP_LABEL));
-		stopAction.setToolTipText(CVMessages.getString(STOP_LABEL));
-		stopAction.setImageDescriptor(SWTImagesFactory.DESC_STOP);
-		stopAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_STOPD);
-		
-		rebootAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				if (obj instanceof CVInstanceElement) {
-					CVInstanceElement cvinstance = (CVInstanceElement)obj;
-					DeltaCloudInstance instance = (DeltaCloudInstance)cvinstance.getElement();
-					CloudViewElement element = (CloudViewElement)obj;
-					while (!(element instanceof CVCloudElement))
-						element = (CloudViewElement)element.getParent();
-					CVCloudElement cvcloud = (CVCloudElement)element;
-					DeltaCloud cloud = (DeltaCloud)cvcloud.getElement();
-					PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance, DeltaCloudInstance.REBOOT,
-							CVMessages.getString(REBOOTING_INSTANCE_TITLE), 
-							CVMessages.getFormattedString(REBOOTING_INSTANCE_MSG, new String[]{instance.getName()}),
-							DeltaCloudInstance.RUNNING);
-					t.setUser(true);
-					t.schedule();
-				}
-			}
-		};
-		rebootAction.setText(CVMessages.getString(REBOOT_LABEL));
-		rebootAction.setToolTipText(CVMessages.getString(REBOOT_LABEL));
-		rebootAction.setImageDescriptor(SWTImagesFactory.DESC_REBOOT);
-		rebootAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_REBOOTD);
-		
-		destroyAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				if (obj instanceof CVInstanceElement) {
-					CVInstanceElement cvinstance = (CVInstanceElement)obj;
-					DeltaCloudInstance instance = (DeltaCloudInstance)cvinstance.getElement();
-					CloudViewElement element = (CloudViewElement)obj;
-					while (!(element instanceof CVCloudElement))
-						element = (CloudViewElement)element.getParent();
-					CVCloudElement cvcloud = (CVCloudElement)element;
-					DeltaCloud cloud = (DeltaCloud)cvcloud.getElement();
-					PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(cloud, instance,
-							CVMessages.getString(DESTROYING_INSTANCE_TITLE), 
-							CVMessages.getFormattedString(DESTROYING_INSTANCE_MSG, new String[]{instance.getName()}));
-					t.setUser(true);
-					t.schedule();
-				}
-			}
-		};
-		destroyAction.setText(CVMessages.getString(DESTROY_LABEL));
-		destroyAction.setToolTipText(CVMessages.getString(DESTROY_LABEL));
-		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
-		ImageDescriptor delete = ImageDescriptor.createFromImage(sharedImages.getImage(ISharedImages.IMG_ETOOL_DELETE));
-		ImageDescriptor delete_disabled = ImageDescriptor.createFromImage(sharedImages.getImage(ISharedImages.IMG_ETOOL_DELETE_DISABLED));
-		destroyAction.setImageDescriptor(delete);
-		destroyAction.setDisabledImageDescriptor(delete_disabled);
+		createConnection = createNewConnectionAction();
+		removeCloud = createRemoveAction();
+		createInstance = createInstanceAction();
+		editCloud = createEditCloudAction();
+		refreshAction = createRefreshAction();
+		startAction = createStartAction();
+		stopAction = createStopAction();
+		rebootAction = createRebootAction();
+		destroyAction = createDestroyAction();
 
 		instanceActions = new HashMap<String, Action>();
 		instanceActions.put(DeltaCloudInstance.START, startAction);
 		instanceActions.put(DeltaCloudInstance.STOP, stopAction);
 		instanceActions.put(DeltaCloudInstance.REBOOT, rebootAction);
 		instanceActions.put(DeltaCloudInstance.DESTROY, destroyAction);
-		
-		imageFilterAction = new Action() {
+
+		imageFilterAction = createImageFilterAction();
+		instanceFilterAction = createInstanceFilterAction();
+
+		collapseall = createCollapseAllAction();
+
+		doubleClickAction = new Action() {
 			public void run() {
-				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-				CloudViewElement element = (CloudViewElement)selection.getFirstElement();
-				while (element != null && !(element instanceof CVCloudElement)) {
-					element = (CloudViewElement)element.getParent();
-				}
-				if (element != null) {
-					CVCloudElement cve = (CVCloudElement)element;
-					final DeltaCloud cloud = (DeltaCloud)cve.getElement();
-					Display.getDefault().asyncExec(new Runnable() {
-
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							Shell shell = viewer.getControl().getShell();
-							IWizard wizard = new ImageFilter(cloud);
-							WizardDialog dialog = new WizardDialog(shell, wizard);
-							dialog.create();
-							dialog.open();
-						}
-
-					});
-				}
+				ISelection selection = viewer.getSelection();
+				@SuppressWarnings("unused")
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
 			}
 		};
-		imageFilterAction.setText(CVMessages.getString(IMAGE_FILTER));
-		imageFilterAction.setToolTipText(CVMessages.getString(IMAGE_FILTER));
-		
-		instanceFilterAction = new Action() {
+
+	}
+
+	private Action createNewConnectionAction() {
+		Action createConnection = new Action() {
+			public void run() {
+				NewCloudConnection wizard = new NewCloudConnection();
+				wizard.init(PlatformUI.getWorkbench(), new StructuredSelection());
+				WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
+				dialog.create();
+				dialog.open();
+			}
+		};
+		createConnection.setText(CVMessages.getString(NEW_CONNECTION));
+		createConnection.setToolTipText(CVMessages.getString(NEW_CONNECTION));
+		createConnection.setImageDescriptor(SWTImagesFactory.DESC_CLOUD);
+		return createConnection;
+	}
+	
+	private Action createCollapseAllAction() {
+		Action collapseAll = new Action() {
+			public void run() {
+				viewer.collapseAll();
+			}
+		};
+		collapseAll.setText(CVMessages.getString(COLLAPSE_ALL));
+		collapseAll.setToolTipText(CVMessages.getString(COLLAPSE_ALL));
+		collapseAll.setImageDescriptor(SWTImagesFactory.DESC_COLLAPSE_ALL);
+		return collapseAll;
+	}
+
+	private Action createInstanceFilterAction() {
+		Action instanceFilterAction = new Action() {
 			public void run() {
 				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-				CloudViewElement element = (CloudViewElement)selection.getFirstElement();
+				CloudViewElement element = (CloudViewElement) selection.getFirstElement();
 				while (element != null && !(element instanceof CVCloudElement)) {
-					element = (CloudViewElement)element.getParent();
+					element = (CloudViewElement) element.getParent();
 				}
 				if (element != null) {
-					CVCloudElement cve = (CVCloudElement)element;
-					final DeltaCloud cloud = (DeltaCloud)cve.getElement();
+					CVCloudElement cve = (CVCloudElement) element;
+					final DeltaCloud cloud = (DeltaCloud) cve.getElement();
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
@@ -454,28 +313,246 @@ ITabbedPropertySheetPageContributor {
 		};
 		instanceFilterAction.setText(CVMessages.getString(INSTANCE_FILTER));
 		instanceFilterAction.setToolTipText(CVMessages.getString(INSTANCE_FILTER));
-		
-		doubleClickAction = new Action() {
+		instanceFilterAction.setEnabled(selectedElement != null);
+
+		return instanceFilterAction;
+	}
+
+	private Action createImageFilterAction() {
+		Action imageFilterAction = new Action() {
+			public void run() {
+				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+				CloudViewElement element = (CloudViewElement) selection.getFirstElement();
+				while (element != null && !(element instanceof CVCloudElement)) {
+					element = (CloudViewElement) element.getParent();
+				}
+				if (element != null) {
+					CVCloudElement cve = (CVCloudElement) element;
+					final DeltaCloud cloud = (DeltaCloud) cve.getElement();
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							Shell shell = viewer.getControl().getShell();
+							IWizard wizard = new ImageFilter(cloud);
+							WizardDialog dialog = new WizardDialog(shell, wizard);
+							dialog.create();
+							dialog.open();
+						}
+
+					});
+				}
+			}
+		};
+		imageFilterAction.setText(CVMessages.getString(IMAGE_FILTER));
+		imageFilterAction.setToolTipText(CVMessages.getString(IMAGE_FILTER));
+		imageFilterAction.setEnabled(selectedElement != null);
+		return imageFilterAction;
+	}
+
+	private Action createDestroyAction() {
+		Action destroyAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				@SuppressWarnings("unused")
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				if (obj instanceof CVInstanceElement) {
+					CVInstanceElement cvinstance = (CVInstanceElement) obj;
+					DeltaCloudInstance instance = (DeltaCloudInstance) cvinstance.getElement();
+					CloudViewElement element = (CloudViewElement) obj;
+					while (!(element instanceof CVCloudElement))
+						element = (CloudViewElement) element.getParent();
+					CVCloudElement cvcloud = (CVCloudElement) element;
+					DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
+					PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(cloud, instance,
+							CVMessages.getString(DESTROYING_INSTANCE_TITLE),
+							CVMessages.getFormattedString(DESTROYING_INSTANCE_MSG, new String[] { instance.getName() }));
+					t.setUser(true);
+					t.schedule();
+				}
 			}
 		};
-		collapseall = new Action() {
-			public void run() {
-				viewer.collapseAll();
-			}
-		};
-		collapseall.setText(CVMessages.getString(COLLAPSE_ALL));
-		collapseall.setToolTipText(CVMessages.getString(COLLAPSE_ALL));
-		collapseall.setImageDescriptor(SWTImagesFactory.DESC_COLLAPSE_ALL);
+		destroyAction.setText(CVMessages.getString(DESTROY_LABEL));
+		destroyAction.setToolTipText(CVMessages.getString(DESTROY_LABEL));
+		ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
+		ImageDescriptor delete = ImageDescriptor.createFromImage(sharedImages.getImage(ISharedImages.IMG_ETOOL_DELETE));
+		ImageDescriptor delete_disabled = ImageDescriptor.createFromImage(sharedImages
+				.getImage(ISharedImages.IMG_ETOOL_DELETE_DISABLED));
+		destroyAction.setImageDescriptor(delete);
+		destroyAction.setDisabledImageDescriptor(delete_disabled);
+		return destroyAction;
+	}
 
-		editCloud.setEnabled(selectedElement != null);
-		removeCloud.setEnabled(selectedElement != null);
+	private Action createRebootAction() {
+		Action rebootAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				if (obj instanceof CVInstanceElement) {
+					CVInstanceElement cvinstance = (CVInstanceElement) obj;
+					DeltaCloudInstance instance = (DeltaCloudInstance) cvinstance.getElement();
+					CloudViewElement element = (CloudViewElement) obj;
+					while (!(element instanceof CVCloudElement))
+						element = (CloudViewElement) element.getParent();
+					CVCloudElement cvcloud = (CVCloudElement) element;
+					DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
+					PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance,
+							DeltaCloudInstance.REBOOT,
+							CVMessages.getString(REBOOTING_INSTANCE_TITLE),
+							CVMessages.getFormattedString(REBOOTING_INSTANCE_MSG, new String[] { instance.getName() }),
+							DeltaCloudInstance.RUNNING);
+					t.setUser(true);
+					t.schedule();
+				}
+			}
+		};
+		rebootAction.setText(CVMessages.getString(REBOOT_LABEL));
+		rebootAction.setToolTipText(CVMessages.getString(REBOOT_LABEL));
+		rebootAction.setImageDescriptor(SWTImagesFactory.DESC_REBOOT);
+		rebootAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_REBOOTD);
+		return rebootAction;
+	}
+
+	private Action createStopAction() {
+		Action stopAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				if (obj instanceof CVInstanceElement) {
+					CVInstanceElement cvinstance = (CVInstanceElement) obj;
+					DeltaCloudInstance instance = (DeltaCloudInstance) cvinstance.getElement();
+					CloudViewElement element = (CloudViewElement) obj;
+					while (!(element instanceof CVCloudElement))
+						element = (CloudViewElement) element.getParent();
+					CVCloudElement cvcloud = (CVCloudElement) element;
+					DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
+					PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance,
+							DeltaCloudInstance.STOP,
+							CVMessages.getString(STOPPING_INSTANCE_TITLE),
+							CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getName() }),
+							DeltaCloudInstance.STOPPED);
+					t.setUser(true);
+					t.schedule();
+				}
+			}
+		};
+		stopAction.setText(CVMessages.getString(STOP_LABEL));
+		stopAction.setToolTipText(CVMessages.getString(STOP_LABEL));
+		stopAction.setImageDescriptor(SWTImagesFactory.DESC_STOP);
+		stopAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_STOPD);
+		return stopAction;
+	}
+
+	private Action createStartAction() {
+		Action startAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				if (obj instanceof CVInstanceElement) {
+					CVInstanceElement cvinstance = (CVInstanceElement) obj;
+					DeltaCloudInstance instance = (DeltaCloudInstance) cvinstance.getElement();
+					CloudViewElement element = (CloudViewElement) obj;
+					while (!(element instanceof CVCloudElement))
+						element = (CloudViewElement) element.getParent();
+					CVCloudElement cvcloud = (CVCloudElement) element;
+					DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
+					PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance,
+							DeltaCloudInstance.START,
+							CVMessages.getString(STARTING_INSTANCE_TITLE),
+							CVMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] { instance.getName() }),
+							DeltaCloudInstance.RUNNING);
+					t.setUser(true);
+					t.schedule();
+				}
+			}
+		};
+		startAction.setText(CVMessages.getString(START_LABEL));
+		startAction.setToolTipText(CVMessages.getString(START_LABEL));
+		startAction.setImageDescriptor(SWTImagesFactory.DESC_START);
+		startAction.setDisabledImageDescriptor(SWTImagesFactory.DESC_STARTD);
+		return startAction;
+	}
+
+	private Action createRefreshAction() {
+		Action refreshAction = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				if (obj instanceof CloudViewElement) {
+					CloudViewElement element = (CloudViewElement) obj;
+					while (!(element instanceof CVCloudElement))
+						element = (CloudViewElement) element.getParent();
+					CVCloudElement cloud = (CVCloudElement) element;
+					cloud.loadChildren();
+				}
+			}
+		};
+		refreshAction.setText(CVMessages.getString(REFRESH));
+		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
+		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
 		refreshAction.setEnabled(selectedElement != null);
-		imageFilterAction.setEnabled(selectedElement != null);
-		instanceFilterAction.setEnabled(selectedElement != null);
+		return refreshAction;
+	}
+
+	private Action createEditCloudAction() {
+		Action editCloud = new Action() {
+			public void run() {
+				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+				CloudViewElement element = (CloudViewElement) selection.getFirstElement();
+				while (element != null && !(element instanceof CVCloudElement)) {
+					element = (CloudViewElement) element.getParent();
+				}
+				if (element != null) {
+					CVCloudElement cloudElement = (CVCloudElement) element;
+					DeltaCloud cloud = (DeltaCloud) cloudElement.getElement();
+					IWizard wizard = new EditCloudConnection(cloud);
+					Shell shell = viewer.getControl().getShell();
+					WizardDialog dialog = new WizardDialog(shell, wizard);
+					dialog.create();
+					dialog.open();
+				}
+			}
+		};
+		editCloud.setText(CVMessages.getString(EDIT_CLOUD));
+		editCloud.setToolTipText(CVMessages.getString(EDIT_CLOUD));
+		editCloud.setEnabled(selectedElement != null);
+		return editCloud;
+	}
+
+	private Action createRemoveAction() {
+		Action removeCloud = new RemoveAction();
+		removeCloud.setText(CVMessages.getString(REMOVE_CLOUD));
+		removeCloud.setToolTipText(CVMessages.getString(REMOVE_CLOUD));
+		removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+				getImageDescriptor(ISharedImages.IMG_ELCL_REMOVE));
+		removeCloud.setEnabled(selectedElement != null);
+		return removeCloud;
+	}
+
+	private Action createInstanceAction() {
+		Action createInstance = new Action() {
+			public void run() {
+				ISelection selection = viewer.getSelection();
+				Shell shell = viewer.getControl().getShell();
+				Object obj = ((IStructuredSelection) selection).getFirstElement();
+				if (obj instanceof CVImageElement) {
+					CVImageElement imageElement = (CVImageElement) obj;
+					DeltaCloudImage image = (DeltaCloudImage) imageElement.getElement();
+					CVCategoryElement images = (CVCategoryElement) imageElement.getParent();
+					CVCloudElement cloudElement = (CVCloudElement) images.getParent();
+					DeltaCloud cloud = (DeltaCloud) cloudElement.getElement();
+					IWizard wizard = new NewInstance(cloud, image);
+					WizardDialog dialog = new WizardDialog(shell, wizard);
+					dialog.create();
+					dialog.open();
+				}
+			}
+		};
+		createInstance.setText(CVMessages.getString(CREATE_INSTANCE));
+		createInstance.setToolTipText(CVMessages.getString(CREATE_INSTANCE));
+		createInstance.setImageDescriptor(SWTImagesFactory.DESC_INSTANCE);
+		return createInstance;
 	}
 
 	private void hookDoubleClickAction() {
@@ -500,26 +577,27 @@ ITabbedPropertySheetPageContributor {
 
 	@Override
 	public String getContributorId() {
-        return getSite().getId();
+		return getSite().getId();
 	}
-	
-    @SuppressWarnings("unchecked")
-	public Object getAdapter(Class adapter) {
-        if (adapter == IPropertySheetPage.class)
-        	// If Tabbed view is desired, then change the
-        	// following to new TabbedPropertySheetPage(this)
-            return new CVPropertySheetPage();
-        return super.getAdapter(adapter);
-    }
 
-    /**
-     * A JFace action that removes the clouds that are selected in the tree viewer.
-     */
-    private class RemoveAction extends Action {
+	@SuppressWarnings("unchecked")
+	public Object getAdapter(Class adapter) {
+		if (adapter == IPropertySheetPage.class)
+			// If Tabbed view is desired, then change the
+			// following to new TabbedPropertySheetPage(this)
+			return new CVPropertySheetPage();
+		return super.getAdapter(adapter);
+	}
+
+	/**
+	 * A JFace action that removes the clouds that are selected in the tree
+	 * viewer.
+	 */
+	private class RemoveAction extends Action {
 
 		public void run() {
 			IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-			for (Iterator<?> iterator = selection.toList().iterator(); iterator.hasNext(); ) {
+			for (Iterator<?> iterator = selection.toList().iterator(); iterator.hasNext();) {
 				CloudViewElement element = (CloudViewElement) iterator.next();
 				remove(element);
 			}
@@ -527,17 +605,17 @@ ITabbedPropertySheetPageContributor {
 
 		private void remove(CloudViewElement element) {
 			while (element != null && !(element instanceof CVCloudElement)) {
-				element = (CloudViewElement)element.getParent();
+				element = (CloudViewElement) element.getParent();
 			}
 			if (element != null) {
-				CVCloudElement cve = (CVCloudElement)element;
+				CVCloudElement cve = (CVCloudElement) element;
 				Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-				boolean confirmed = MessageDialog.openConfirm(shell, 
+				boolean confirmed = MessageDialog.openConfirm(shell,
 						CVMessages.getString(CONFIRM_CLOUD_DELETE_TITLE),
 						CVMessages.getFormattedString(CONFIRM_CLOUD_DELETE_MSG, cve.getName()));
 				if (confirmed) {
-					DeltaCloudManager.getDefault().removeCloud((DeltaCloud)element.getElement());
-					CloudViewContentProvider p = (CloudViewContentProvider)viewer.getContentProvider();
+					DeltaCloudManager.getDefault().removeCloud((DeltaCloud) element.getElement());
+					CloudViewContentProvider p = (CloudViewContentProvider) viewer.getContentProvider();
 					Object[] elements = p.getElements(getViewSite());
 					int index = -1;
 					for (int i = 0; i < elements.length; ++i) {
@@ -545,7 +623,7 @@ ITabbedPropertySheetPageContributor {
 							index = i;
 					}
 					if (index >= 0)
-						((TreeViewer)cve.getViewer()).remove(getViewSite(), index);
+						((TreeViewer) cve.getViewer()).remove(getViewSite(), index);
 				}
 			}
 		}
