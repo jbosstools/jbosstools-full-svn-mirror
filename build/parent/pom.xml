@@ -19,6 +19,8 @@
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
 		<target.platform>e36-wtp32</target.platform>
+		<!-- could also use http://download.jboss.org/jbosstools/updates/target-platform/latest/ -->
+		<target.platform.URL>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/</target.platform.URL>
 	</properties>
 
 	<build>
@@ -216,8 +218,7 @@
 			<repositories>
 				<repository>
 					<id>helios</id>
-					<!-- could also use http://download.jboss.org/jbosstools/updates/target-platform/latest/ -->
-					<url>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/</url>
+					<url>${target.platform.URL}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
