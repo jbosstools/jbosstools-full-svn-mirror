@@ -16,6 +16,7 @@ import org.mozilla.xpcom.Mozilla;
  */
 public class Flasher {
 	private inIFlasher iFlasher;
+	private static final boolean IS_OPEN_JDK = (System.getProperty("java.runtime.name")!=null&&System.getProperty("java.runtime.name").contains("OpenJDK")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 	// added by Maksim Areshkau as element for which we
 	// have drowed border. When we draw new border,
@@ -29,10 +30,11 @@ public class Flasher {
 		iFlasher = (inIFlasher) serviceManager.getServiceByContractID(
 				XPCOM.IN_FLASHER_CONTRACTID, inIFlasher.INIFLASHER_IID);
 		iFlasher.setThickness(2);
-		if (Platform.OS_MACOSX.equals(Platform.getOS())) {
+		//fix for JBIDE-7295, added by Maksim Areshkau
+		if (Platform.OS_MACOSX.equals(Platform.getOS())
+				||IS_OPEN_JDK) {
 			drawOutline = new DrawOutlineInterface() {
 				private nsIDOMElement lastBorderedElement = null;
-				@Override
 				public void drawElementOutline(nsIDOMElement domElement) {
 					if (this.lastBorderedElement != null
 							&& this.lastBorderedElement.getAttribute(XulRunnerEditor.STYLE_ATTR) != null) {
