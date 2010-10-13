@@ -912,18 +912,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * Checks a capability of drag of visual element.
 	 * 
 	 * @param sourceElement The current element of the source tree.
-	 * @param visualDocument The document of the visual tree.
-	 * @param data The arbitrary data, built by a method <code>create</code>
 	 * @param pageContext Contains the information on edited page.
-	 * @param visualElement The current element of the visual tree.
 	 * 
 	 * @return <code>true</code> The element can be dragged
 	 */
-	public boolean canInnerDrag(VpePageContext pageContext,
-			Element sourceElement, nsIDOMDocument visualDocument,
-			nsIDOMElement visualElement, Object data) {
+	public boolean canInnerDrag(VpePageContext pageContext, Element sourceElement) {
 		if (getDragger() != null) {
-
 			return getDragger().isDragEnabled();
 		} else {
 			return true;

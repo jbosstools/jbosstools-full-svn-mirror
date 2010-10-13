@@ -25,7 +25,7 @@ public class VpeDomBuilder {
 	protected VpeDomMapping domMapping;
 	
 	private INodeAdapter sorceAdapter;
-	private List sourceNodes = new ArrayList();
+	private List<Node> sourceNodes = new ArrayList();
 
 	public VpeDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter) {
 		this.domMapping = domMapping;
@@ -66,7 +66,7 @@ public class VpeDomBuilder {
 		return sorceAdapter;
 	}
 
-	public List getSourceNodes() {
+	public List<Node> getSourceNodes() {
 		return sourceNodes;
 	}
 }

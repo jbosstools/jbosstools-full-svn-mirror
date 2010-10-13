@@ -220,16 +220,10 @@ public interface VpeTemplate {
 	 *            Contains the information on edited page.
 	 * @param sourceElement
 	 *            The current element of the source tree.
-	 * @param visualDocument
-	 *            The document of the visual tree.
-	 * @param visualElement
-	 *            The current element of the visual tree.
-	 * @param data
-	 *            The arbitrary data, built by a method <code>create</code>
+	 *
 	 * @return <code>true</code> The element can be dragged
 	 */
-	boolean canInnerDrag(VpePageContext pageContext, Element sourceElement,
-			nsIDOMDocument visualDocument, nsIDOMElement visualElement, Object data);
+	boolean canInnerDrag(VpePageContext pageContext, Element sourceElement);
 
 	/**
 	 * Checks a capability to drop an element in the container

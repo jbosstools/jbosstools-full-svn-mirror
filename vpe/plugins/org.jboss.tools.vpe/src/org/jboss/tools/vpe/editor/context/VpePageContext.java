@@ -145,13 +145,11 @@ public class VpePageContext implements IVisualContext {
 	
 	public void refreshBundleValues() {
 		if (getVisualBuilder() == null) return;
-		List nodes = getVisualBuilder().getSourceNodes();
+		List<Node> nodes = getVisualBuilder().getSourceNodes();
 		//Iterator iterator = bundleDependencySet.iterator();
-		Iterator iterator = nodes.iterator();
-		while (iterator.hasNext()) {
-			Object object = iterator.next();
-			if (object instanceof Element) {
-				Element sourceElement = (Element) object;
+		for (Node node : nodes) {
+			if (node instanceof Element) {
+				Element sourceElement = (Element) node;
 				visualBuilder.refreshBundleValues(sourceElement);
 			}
 		}
