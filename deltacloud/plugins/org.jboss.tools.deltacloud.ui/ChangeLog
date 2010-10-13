@@ -1,3 +1,10 @@
+2010-10-13  Jeff Johnston  <jjohnstn@redhat.com>
+
+	[JBIDE-7194]
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java:  For RSE
+	action, add code to open the Remote Systems view.  Do this in the case
+	where the connection is already in place. 
+
 2010-10-13  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java: [JBIDE-7326] implemented dialog to disconnect multiple cloud connections. 

@@ -64,6 +64,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -508,6 +509,17 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 								protected IStatus run(IProgressMonitor monitor) {
 									try {
 										service.connect(monitor);
+										Display.getDefault().asyncExec(new Runnable() {
+											@Override
+											public void run() {
+												try {
+													PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.eclipse.rse.ui.view.systemView");
+												} catch (PartInitException e) {
+													// TODO Auto-generated catch block
+													Activator.log(e);
+												}
+											}
+										});
 										return Status.OK_STATUS;
 									} catch(Exception e) {
 										return Status.CANCEL_STATUS;
@@ -517,6 +529,20 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 							connect.setUser(true);
 							connect.schedule();
 						}
+					} else {
+						// Assume failure is due to name already in use
+						Display.getDefault().asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+								try {
+									PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.eclipse.rse.ui.view.systemView");
+								} catch (PartInitException e) {
+									Activator.log(e);
+								}
+							}
+							
+						});
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
