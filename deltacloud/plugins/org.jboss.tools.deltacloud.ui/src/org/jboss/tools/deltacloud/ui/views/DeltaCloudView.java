@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +20,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -71,8 +70,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	private static final String EDIT_CLOUD = "EditCloud.label"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	private static final String CREATE_INSTANCE = "CreateInstance.label"; //$NON-NLS-1$
-	private static final String CONFIRM_CLOUD_DELETE_TITLE = "ConfirmCloudDelete.title"; //$NON-NLS-1$
-	private static final String CONFIRM_CLOUD_DELETE_MSG = "ConfirmCloudDelete.msg"; //$NON-NLS-1$
 	private final static String START_LABEL = "Start.label"; //$NON-NLS-1$
 	private final static String STOP_LABEL = "Stop.label"; //$NON-NLS-1$
 	private final static String REBOOT_LABEL = "Reboot.label"; //$NON-NLS-1$
@@ -89,11 +86,10 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	private final static String INSTANCE_FILTER = "InstanceFilter.label"; //$NON-NLS-1$
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
 
-
 	private TreeViewer viewer;
 
 	private Action createConnection;
-	private Action removeCloud;
+	private Action disconnectCloud;
 	private Action refreshAction;
 	private Action startAction;
 	private Action stopAction;
@@ -109,7 +105,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	private Map<String, Action> instanceActions;
 
 	private CloudViewElement selectedElement;
-
 
 	/**
 	 * The constructor.
@@ -183,7 +178,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 		selectedElement = (CloudViewElement) selection.getFirstElement();
 		editCloud.setEnabled(selectedElement != null);
-		removeCloud.setEnabled(selectedElement != null);
+		disconnectCloud.setEnabled(selectedElement != null);
 		refreshAction.setEnabled(selectedElement != null);
 		imageFilterAction.setEnabled(selectedElement != null);
 		instanceFilterAction.setEnabled(selectedElement != null);
@@ -193,7 +188,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		manager.removeAll();
 		manager.add(createConnection);
 		manager.add(editCloud);
-		manager.add(removeCloud);
+		manager.add(disconnectCloud);
 		manager.add(refreshAction);
 		manager.add(imageFilterAction);
 		manager.add(instanceFilterAction);
@@ -213,7 +208,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		}
 		manager.add(createConnection);
 		manager.add(editCloud);
-		manager.add(removeCloud);
+		manager.add(disconnectCloud);
 		manager.add(imageFilterAction);
 		manager.add(instanceFilterAction);
 		// Other plug-ins can contribute there actions here
@@ -226,7 +221,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 
 	private void makeActions() {
 		createConnection = createNewConnectionAction();
-		removeCloud = createRemoveAction();
+		disconnectCloud = createDisconnectAction();
 		createInstance = createInstanceAction();
 		editCloud = createEditCloudAction();
 		refreshAction = createRefreshAction();
@@ -261,7 +256,8 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 			public void run() {
 				NewCloudConnection wizard = new NewCloudConnection();
 				wizard.init(PlatformUI.getWorkbench(), new StructuredSelection());
-				WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
+				WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+						wizard);
 				dialog.create();
 				dialog.open();
 			}
@@ -271,7 +267,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		createConnection.setImageDescriptor(SWTImagesFactory.DESC_CLOUD);
 		return createConnection;
 	}
-	
+
 	private Action createCollapseAllAction() {
 		Action collapseAll = new Action() {
 			public void run() {
@@ -520,8 +516,17 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		return editCloud;
 	}
 
-	private Action createRemoveAction() {
-		Action removeCloud = new RemoveAction();
+	private Action createDisconnectAction() {
+		Action removeCloud = new Action() {
+			public void run() {
+				DisconnectCloudsDialog dialog = new DisconnectCloudsDialog(
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
+						, ((IStructuredSelection) viewer.getSelection()).toList());
+				if (Dialog.OK == dialog.open()) {
+					viewer.remove(dialog.getResult());
+				}
+			}
+		};
 		removeCloud.setText(CVMessages.getString(REMOVE_CLOUD));
 		removeCloud.setToolTipText(CVMessages.getString(REMOVE_CLOUD));
 		removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
@@ -587,45 +592,5 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 			// following to new TabbedPropertySheetPage(this)
 			return new CVPropertySheetPage();
 		return super.getAdapter(adapter);
-	}
-
-	/**
-	 * A JFace action that removes the clouds that are selected in the tree
-	 * viewer.
-	 */
-	private class RemoveAction extends Action {
-
-		public void run() {
-			IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-			for (Iterator<?> iterator = selection.toList().iterator(); iterator.hasNext();) {
-				CloudViewElement element = (CloudViewElement) iterator.next();
-				remove(element);
-			}
-		}
-
-		private void remove(CloudViewElement element) {
-			while (element != null && !(element instanceof CVCloudElement)) {
-				element = (CloudViewElement) element.getParent();
-			}
-			if (element != null) {
-				CVCloudElement cve = (CVCloudElement) element;
-				Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
-				boolean confirmed = MessageDialog.openConfirm(shell,
-						CVMessages.getString(CONFIRM_CLOUD_DELETE_TITLE),
-						CVMessages.getFormattedString(CONFIRM_CLOUD_DELETE_MSG, cve.getName()));
-				if (confirmed) {
-					DeltaCloudManager.getDefault().removeCloud((DeltaCloud) element.getElement());
-					CloudViewContentProvider p = (CloudViewContentProvider) viewer.getContentProvider();
-					Object[] elements = p.getElements(getViewSite());
-					int index = -1;
-					for (int i = 0; i < elements.length; ++i) {
-						if (elements[i] == cve)
-							index = i;
-					}
-					if (index >= 0)
-						((TreeViewer) cve.getViewer()).remove(getViewSite(), index);
-				}
-			}
-		}
 	}
 }
