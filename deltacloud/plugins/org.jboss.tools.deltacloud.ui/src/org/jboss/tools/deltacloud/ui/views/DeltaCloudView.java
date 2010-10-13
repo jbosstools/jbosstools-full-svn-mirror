@@ -45,10 +45,10 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.jboss.tools.deltacloud.ui.internal.utils.UIUtils;
-import org.jboss.tools.deltacloud.ui.internal.wizards.ImageFilter;
-import org.jboss.tools.deltacloud.ui.internal.wizards.InstanceFilter;
-import org.jboss.tools.deltacloud.ui.internal.wizards.NewInstance;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
+import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
+import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 
 public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		ITabbedPropertySheetPageContributor {

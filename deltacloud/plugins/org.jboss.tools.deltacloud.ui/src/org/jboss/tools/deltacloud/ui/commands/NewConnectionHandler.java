@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.deltacloud.ui.internal.wizards.NewCloudConnection;
+import org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnection;
 
 /**
  * @author Andre Dietisheim

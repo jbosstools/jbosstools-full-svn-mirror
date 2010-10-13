@@ -21,10 +21,10 @@ import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.ui.internal.utils.UIUtils;
-import org.jboss.tools.deltacloud.ui.internal.wizards.EditCloudConnection;
 import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnection;
 
 /**
  * @author Andre Dietisheim

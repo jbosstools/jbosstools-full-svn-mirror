@@ -58,8 +58,8 @@ import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
-import org.jboss.tools.deltacloud.ui.internal.wizards.ImageFilter;
-import org.jboss.tools.deltacloud.ui.internal.wizards.NewInstance;
+import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
+import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 import org.osgi.service.prefs.Preferences;
 
 public class ImageView extends ViewPart implements ICloudManagerListener, IImageListListener {
