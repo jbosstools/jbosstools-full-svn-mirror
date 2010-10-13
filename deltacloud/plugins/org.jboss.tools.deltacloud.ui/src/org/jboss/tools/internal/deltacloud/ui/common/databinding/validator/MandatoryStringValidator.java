@@ -13,7 +13,6 @@ package org.jboss.tools.internal.deltacloud.ui.common.databinding.validator;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 
 /**
  * A {@link IValidator} that validates ok if the string it shall validate is not empty.
