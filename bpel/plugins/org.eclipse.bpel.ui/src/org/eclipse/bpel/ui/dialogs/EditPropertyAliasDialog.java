@@ -544,20 +544,20 @@ public class EditPropertyAliasDialog extends Dialog {
 		alias.setPropertyName(property);
 		if (typeElementOrMessage == BID_USE_TYPE) {
 			alias.setType(xsdTypeDefinition);
-			if (xsdTypeQuery!=null && (xsdTypeQuery.getValue()==null || xsdTypeQuery.getValue().isEmpty()) )
+			if (xsdTypeQuery!=null && (xsdTypeQuery.getValue()==null || xsdTypeQuery.getValue().trim().equals("")) )
 				xsdTypeQuery = null;
 			alias.setQuery(xsdTypeQuery);
 		}
 		else if (typeElementOrMessage == BID_USE_ELEMENT) {
 			alias.setXSDElement(xsdElementDeclaration);
-			if (xsdElementQuery!=null && (xsdElementQuery.getValue()==null || xsdElementQuery.getValue().isEmpty()) )
+			if (xsdElementQuery!=null && (xsdElementQuery.getValue()==null || xsdElementQuery.getValue().trim().equals("")) )
 				xsdElementQuery = null;
 			alias.setQuery(xsdElementQuery);
 		}
 		else {
 			alias.setMessageType(message);
 			alias.setPart(messagePart);
-			if (messageQuery!=null && (messageQuery.getValue()==null || messageQuery.getValue().isEmpty()) )
+			if (messageQuery!=null && (messageQuery.getValue()==null || messageQuery.getValue().trim().equals("")) )
 				messageQuery = null;
 			alias.setQuery(messageQuery);
 		}
