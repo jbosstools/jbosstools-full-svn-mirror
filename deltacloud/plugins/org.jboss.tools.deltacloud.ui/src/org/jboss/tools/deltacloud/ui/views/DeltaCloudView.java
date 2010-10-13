@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -523,7 +524,16 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
 						, ((IStructuredSelection) viewer.getSelection()).toList());
 				if (Dialog.OK == dialog.open()) {
-					viewer.remove(dialog.getResult());
+					removeCloudViewElements(dialog.getResult());
+				}
+			}
+
+			private void removeCloudViewElements(Object[] cloudViewerElements) {
+				viewer.remove(cloudViewerElements);
+				for (Object cloudViewElement : cloudViewerElements) {
+					Assert.isTrue(cloudViewElement instanceof CloudViewElement);
+					DeltaCloud deltaCloud = (DeltaCloud) ((CloudViewElement) cloudViewElement).getElement();
+					DeltaCloudManager.getDefault().removeCloud(deltaCloud);				
 				}
 			}
 		};
