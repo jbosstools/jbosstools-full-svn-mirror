@@ -60,9 +60,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	 */
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.DeltaCloudView";
 
-	private static final String NEW_CONNECTION = "NewConnection.label"; //$NON-NLS-1$
-	private static final String REMOVE_CLOUD = "RemoveCloud.label"; //$NON-NLS-1$
-	private static final String EDIT_CLOUD = "EditCloud.label"; //$NON-NLS-1$
 	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	private static final String CREATE_INSTANCE = "CreateInstance.label"; //$NON-NLS-1$
 	private final static String START_LABEL = "Start.label"; //$NON-NLS-1$
