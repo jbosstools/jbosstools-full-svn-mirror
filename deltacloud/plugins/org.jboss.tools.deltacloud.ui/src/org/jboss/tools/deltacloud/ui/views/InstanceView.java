@@ -75,7 +75,7 @@ import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
+import org.jboss.tools.deltacloud.ui.internal.wizards.InstanceFilter;
 import org.osgi.service.prefs.Preferences;
 
 public class InstanceView extends ViewPart implements ICloudManagerListener, IInstanceListListener {

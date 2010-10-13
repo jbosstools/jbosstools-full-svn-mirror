@@ -14,14 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -29,7 +25,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -37,11 +32,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -52,14 +45,15 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnection;
-import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
-import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
-import org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnection;
-import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
+import org.jboss.tools.deltacloud.ui.internal.utils.UIUtils;
+import org.jboss.tools.deltacloud.ui.internal.wizards.ImageFilter;
+import org.jboss.tools.deltacloud.ui.internal.wizards.InstanceFilter;
+import org.jboss.tools.deltacloud.ui.internal.wizards.NewInstance;
 
 public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		ITabbedPropertySheetPageContributor {
+
+	private static final String CONTEXT_MENU_ID = "popup:org.jboss.tools.deltacloud.menus.cloudviewer";
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -89,8 +83,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 
 	private TreeViewer viewer;
 
-	private Action createConnection;
-	private Action disconnectCloud;
 	private Action refreshAction;
 	private Action startAction;
 	private Action stopAction;
@@ -99,7 +91,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	private Action collapseall;
 	private Action doubleClickAction;
 	private Action createInstance;
-	private Action editCloud;
 	private Action imageFilterAction;
 	private Action instanceFilterAction;
 
@@ -151,16 +142,10 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	}
 
 	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				DeltaCloudView.this.fillContextMenu(manager);
-			}
-		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
+		IMenuManager contextMenu = UIUtils.createContextMenu(viewer.getControl());
+		// TODO: replace by declarative commands
+		fillContextMenu(contextMenu);
+		UIUtils.registerContributionManager(CONTEXT_MENU_ID, contextMenu, viewer.getControl());
 	}
 
 	private void contributeToActionBars() {
@@ -178,8 +163,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	private void handleSelection() {
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 		selectedElement = (CloudViewElement) selection.getFirstElement();
-		editCloud.setEnabled(selectedElement != null);
-		disconnectCloud.setEnabled(selectedElement != null);
 		refreshAction.setEnabled(selectedElement != null);
 		imageFilterAction.setEnabled(selectedElement != null);
 		instanceFilterAction.setEnabled(selectedElement != null);
@@ -187,9 +170,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.removeAll();
-		manager.add(createConnection);
-		manager.add(editCloud);
-		manager.add(disconnectCloud);
 		manager.add(refreshAction);
 		manager.add(imageFilterAction);
 		manager.add(instanceFilterAction);
@@ -205,15 +185,13 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 			for (String action : actions) {
 				manager.add(instanceActions.get(action));
 			}
-			manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+			// manager.add(new
+			// Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		}
-		manager.add(createConnection);
-		manager.add(editCloud);
-		manager.add(disconnectCloud);
 		manager.add(imageFilterAction);
 		manager.add(instanceFilterAction);
 		// Other plug-ins can contribute there actions here
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		// manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
@@ -221,10 +199,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	}
 
 	private void makeActions() {
-		createConnection = createNewConnectionAction();
-		disconnectCloud = createDisconnectAction();
 		createInstance = createInstanceAction();
-		editCloud = createEditCloudAction();
 		refreshAction = createRefreshAction();
 		startAction = createStartAction();
 		stopAction = createStopAction();
@@ -250,23 +225,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 			}
 		};
 
-	}
-
-	private Action createNewConnectionAction() {
-		Action createConnection = new Action() {
-			public void run() {
-				NewCloudConnection wizard = new NewCloudConnection();
-				wizard.init(PlatformUI.getWorkbench(), new StructuredSelection());
-				WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-						wizard);
-				dialog.create();
-				dialog.open();
-			}
-		};
-		createConnection.setText(CVMessages.getString(NEW_CONNECTION));
-		createConnection.setToolTipText(CVMessages.getString(NEW_CONNECTION));
-		createConnection.setImageDescriptor(SWTImagesFactory.DESC_CLOUD);
-		return createConnection;
 	}
 
 	private Action createCollapseAllAction() {
@@ -296,7 +254,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 
 						@Override
 						public void run() {
-							// TODO Auto-generated method stub
 							Shell shell = viewer.getControl().getShell();
 							IWizard wizard = new InstanceFilter(cloud);
 							WizardDialog dialog = new WizardDialog(shell, wizard);
@@ -330,7 +287,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 
 						@Override
 						public void run() {
-							// TODO Auto-generated method stub
 							Shell shell = viewer.getControl().getShell();
 							IWizard wizard = new ImageFilter(cloud);
 							WizardDialog dialog = new WizardDialog(shell, wizard);
@@ -492,58 +448,61 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		return refreshAction;
 	}
 
-	private Action createEditCloudAction() {
-		Action editCloud = new Action() {
-			public void run() {
-				IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-				CloudViewElement element = (CloudViewElement) selection.getFirstElement();
-				while (element != null && !(element instanceof CVCloudElement)) {
-					element = (CloudViewElement) element.getParent();
-				}
-				if (element != null) {
-					CVCloudElement cloudElement = (CVCloudElement) element;
-					DeltaCloud cloud = (DeltaCloud) cloudElement.getElement();
-					IWizard wizard = new EditCloudConnection(cloud);
-					Shell shell = viewer.getControl().getShell();
-					WizardDialog dialog = new WizardDialog(shell, wizard);
-					dialog.create();
-					dialog.open();
-				}
-			}
-		};
-		editCloud.setText(CVMessages.getString(EDIT_CLOUD));
-		editCloud.setToolTipText(CVMessages.getString(EDIT_CLOUD));
-		editCloud.setEnabled(selectedElement != null);
-		return editCloud;
-	}
+	// private Action createEditCloudAction() {
+	// Action editCloud = new Action() {
+	// public void run() {
+	// IStructuredSelection selection = (IStructuredSelection)
+	// viewer.getSelection();
+	// CloudViewElement element = (CloudViewElement)
+	// selection.getFirstElement();
+	// while (element != null && !(element instanceof CVCloudElement)) {
+	// element = (CloudViewElement) element.getParent();
+	// }
+	// if (element != null) {
+	// CVCloudElement cloudElement = (CVCloudElement) element;
+	// DeltaCloud cloud = (DeltaCloud) cloudElement.getElement();
+	// IWizard wizard = new EditCloudConnection(cloud);
+	// Shell shell = viewer.getControl().getShell();
+	// WizardDialog dialog = new WizardDialog(shell, wizard);
+	// dialog.create();
+	// dialog.open();
+	// }
+	// }
+	// };
+	// editCloud.setText(CVMessages.getString(EDIT_CLOUD));
+	// editCloud.setToolTipText(CVMessages.getString(EDIT_CLOUD));
+	// editCloud.setEnabled(selectedElement != null);
+	// return editCloud;
+	// }
 
-	private Action createDisconnectAction() {
-		Action removeCloud = new Action() {
-			public void run() {
-				DisconnectCloudsDialog dialog = new DisconnectCloudsDialog(
-						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
-						, ((IStructuredSelection) viewer.getSelection()).toList());
-				if (Dialog.OK == dialog.open()) {
-					removeCloudViewElements(dialog.getResult());
-				}
-			}
-
-			private void removeCloudViewElements(Object[] cloudViewerElements) {
-				viewer.remove(cloudViewerElements);
-				for (Object cloudViewElement : cloudViewerElements) {
-					Assert.isTrue(cloudViewElement instanceof CloudViewElement);
-					DeltaCloud deltaCloud = (DeltaCloud) ((CloudViewElement) cloudViewElement).getElement();
-					DeltaCloudManager.getDefault().removeCloud(deltaCloud);				
-				}
-			}
-		};
-		removeCloud.setText(CVMessages.getString(REMOVE_CLOUD));
-		removeCloud.setToolTipText(CVMessages.getString(REMOVE_CLOUD));
-		removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_ELCL_REMOVE));
-		removeCloud.setEnabled(selectedElement != null);
-		return removeCloud;
-	}
+	// private Action createDisconnectAction() {
+	// Action removeCloud = new Action() {
+	// public void run() {
+	// DisconnectCloudsDialog dialog = new DisconnectCloudsDialog(
+	// PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
+	// , ((IStructuredSelection) viewer.getSelection()).toList());
+	// if (Dialog.OK == dialog.open()) {
+	// removeCloudViewElements(dialog.getResult());
+	// }
+	// }
+	//
+	// private void removeCloudViewElements(Object[] cloudViewerElements) {
+	// // viewer.remove(cloudViewerElements);
+	// for (Object cloudViewElement : cloudViewerElements) {
+	// Assert.isTrue(cloudViewElement instanceof CloudViewElement);
+	// DeltaCloud deltaCloud = (DeltaCloud) ((CloudViewElement)
+	// cloudViewElement).getElement();
+	// DeltaCloudManager.getDefault().removeCloud(deltaCloud);
+	// }
+	// }
+	// };
+	// removeCloud.setText(CVMessages.getString(REMOVE_CLOUD));
+	// removeCloud.setToolTipText(CVMessages.getString(REMOVE_CLOUD));
+	// removeCloud.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
+	// getImageDescriptor(ISharedImages.IMG_ELCL_REMOVE));
+	// removeCloud.setEnabled(selectedElement != null);
+	// return removeCloud;
+	// }
 
 	private Action createInstanceAction() {
 		Action createInstance = new Action() {

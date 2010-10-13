@@ -79,7 +79,7 @@
       </category>
       <wizard
             category="org.jboss.tools.deltacloud.ui.wizard.category"
-            class="org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnection"
+            class="org.jboss.tools.deltacloud.ui.internal.wizards.NewCloudConnection"
             icon="icons/delta.gif"
             id="org.jboss.tools.deltacloud.ui.connection.wizard"
             name="%NewWizard.name">
@@ -101,6 +101,75 @@
             id="org.jboss.tools.deltacloud.ui.page1"
             name="%Preferences.name">
       </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.NewConnectionHandler"
+            commandId="org.jboss.tools.deltacloud.ui.newconnection">
+      </handler>
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.EditConnectionHandler"
+            commandId="org.jboss.tools.deltacloud.ui.editconnection">
+         <enabledWhen>
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.DisconnectCloudHandler"
+            commandId="org.eclipse.ui.edit.delete">
+         <enabledWhen>
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+         </enabledWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.jboss.tools.deltacloud.menus.cloudviewer">
+         <command
+               commandId="org.eclipse.ui.edit.delete"
+               label="Disconnect Cloud"
+               style="push">
+         </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.newconnection"
+               label="New Connection"
+               style="push">
+         </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.editconnection"
+               label="Edit Connection"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Creates a new cloud connection"
+            id="org.jboss.tools.deltacloud.ui.newconnection"
+            name="New Connection">
+      </command>
+      <command
+            id="org.jboss.tools.deltacloud.ui.editconnection"
+            name="Edit Connection">
+      </command>
    </extension>
 
 </plugin>
