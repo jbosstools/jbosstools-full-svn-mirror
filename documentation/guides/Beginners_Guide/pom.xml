@@ -14,27 +14,27 @@
             <id>release</id>
             <properties>
                 <master>master_output.xml</master>
-                <xsl-single>classpath:/xslt/com/jboss/tools/xhtml-single-release.xsl</xsl-single>
-                <xsl-chunked>classpath:/xslt/com/jboss/tools/xhtml-release.xsl</xsl-chunked>
-                <xsl-pdf>classpath:/xslt/com/jboss/tools/pdf.xsl</xsl-pdf>
+                <xsl-single>classpath:/xslt/org/jboss/tools/xhtml-single-release.xsl</xsl-single>
+                <xsl-chunked>classpath:/xslt/org/jboss/tools/xhtml-release.xsl</xsl-chunked>
+                <xsl-pdf>classpath:/xslt/org/jboss/tools/pdf.xsl</xsl-pdf>
             </properties>
         </profile>
         <profile>
             <id>releaseTest</id>
             <properties>
                 <master>master_output.xml</master>
-                <xsl-single>classpath:/xslt/com/jboss/tools/xhtml-single-release-nomarker.xsl</xsl-single>
-                <xsl-chunked>classpath:/xslt/com/jboss/tools/xhtml-release-nomarker.xsl</xsl-chunked>
-                <xsl-pdf>classpath:/xslt/com/jboss/tools/pdf.xsl</xsl-pdf>
+                <xsl-single>classpath:/xslt/org/jboss/tools/xhtml-single-release-nomarker.xsl</xsl-single>
+                <xsl-chunked>classpath:/xslt/org/jboss/tools/xhtml-release-nomarker.xsl</xsl-chunked>
+                <xsl-pdf>classpath:/xslt/org/jboss/tools/pdf.xsl</xsl-pdf>
             </properties>
         </profile>
         <profile>
             <id>releaseJBDS</id>
             <properties>
                 <master>master_output.xml</master>
-                <xsl-single>classpath:/xslt/com/jboss/tools/xhtml-single-release.xsl</xsl-single>
-                <xsl-chunked>classpath:/xslt/com/jboss/tools/xhtml-release.xsl</xsl-chunked>
-                <xsl-pdf>classpath:/xslt/com/jboss/tools/pdf.xsl</xsl-pdf>
+                <xsl-single>classpath:/xslt/org/jboss/tools/xhtml-single-release.xsl</xsl-single>
+                <xsl-chunked>classpath:/xslt/org/jboss/tools/xhtml-release.xsl</xsl-chunked>
+                <xsl-pdf>classpath:/xslt/org/jboss/tools/pdf.xsl</xsl-pdf>
                 <cssdir>${pom.basedir}/target/docbook/staging/css/com/css</cssdir>
             </properties>
         </profile>
@@ -42,9 +42,9 @@
             <id>diffmk</id>
             <properties>
                 <master>master_output.xml</master>
-                <xsl-single>classpath:/xslt/com/jboss/tools/xhtml-single-diff.xsl</xsl-single>
-                <xsl-chunked>classpath:/xslt/com/jboss/tools/xhtml-diff.xsl</xsl-chunked>
-                <xsl-pdf>classpath:/xslt/com/jboss/tools/pdf-diff.xsl</xsl-pdf>
+                <xsl-single>classpath:/xslt/org/jboss/tools/xhtml-single-diff.xsl</xsl-single>
+                <xsl-chunked>classpath:/xslt/org/jboss/tools/xhtml-diff.xsl</xsl-chunked>
+                <xsl-pdf>classpath:/xslt/org/jboss/tools/pdf-diff.xsl</xsl-pdf>
             </properties>
         </profile>
     </profiles>
@@ -100,7 +100,7 @@
                         </format>
                         <format>
                             <formatName>eclipse</formatName>
-                            <stylesheetResource>classpath:/xslt/com/jboss/tools/eclipse.xsl</stylesheetResource>
+                            <stylesheetResource>classpath:/xslt/org/jboss/tools/eclipse.xsl</stylesheetResource>
                             <finalName>index.html</finalName>
                         </format>
                     </formats>
@@ -161,11 +161,11 @@
         </snapshotRepository>
     </distributionManagement>
     <properties>
-        <xsl-single>classpath:/xslt/com/jboss/tools/xhtml-single.xsl</xsl-single>
-        <xsl-chunked>classpath:/xslt/com/jboss/tools/xhtml.xsl</xsl-chunked>
-        <xsl-pdf>classpath:/xslt/com/jboss/tools/pdf.xsl</xsl-pdf>
+        <xsl-single>classpath:/xslt/org/jboss/tools/xhtml-single.xsl</xsl-single>
+        <xsl-chunked>classpath:/xslt/org/jboss/tools/xhtml.xsl</xsl-chunked>
+        <xsl-pdf>classpath:/xslt/org/jboss/tools/pdf.xsl</xsl-pdf>
         <stylesdir>classpath:/xslt</stylesdir>
-        <cssdir>${pom.basedir}/target/docbook/staging/css/com/css</cssdir>
+        <cssdir>${pom.basedir}/target/docbook/staging/css/org/css</cssdir>
         <master>master.xml</master>
     </properties>
 </project>
