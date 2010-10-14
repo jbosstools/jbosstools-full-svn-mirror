@@ -258,6 +258,22 @@
       <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
+			<separator
+				name="instances"
+				visible="true" />
+			<separator
+				name="connections"
+				visible="true" />
+			<separator
+				name="images"
+				visible="true" />
+			<separator
+				name="filters"
+				visible="true" />
+	</menuContribution>
+    <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=instances">	
 		<!-- instance commands -->
          <command
                commandId="org.jboss.tools.deltacloud.ui.startinstance"
@@ -337,13 +353,11 @@
                   name="additions"
                   visible="true">
          </separator>
+    </menuContribution>
+    <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=connections">	
 		 <!-- connection commands -->
-         <command
-               commandId="org.eclipse.ui.edit.delete"
-               label="%command.disconnectcloud.label"
-               style="push"
-               tooltip="%command.disconnectcloud.tooltip">
-         </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.newconnection"
                label="%command.newconnection.label"
@@ -357,11 +371,21 @@
                tooltip="%command.editconnection.tooltip">
          </command>
          <command
+               commandId="org.eclipse.ui.edit.delete"
+               label="%command.disconnectcloud.label"
+               style="push"
+               tooltip="%command.disconnectcloud.tooltip">
+         </command>
+         <command
                commandId="org.eclipse.ui.file.refresh"
                label="%command.refresh.label"
                style="push"
                tooltip="%command.refresh.tooltip">
          </command>
+    </menuContribution>
+    <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=images">	
         <!-- image commands -->
          <command
                commandId="org.jboss.tools.deltacloud.ui.createinstance"
@@ -381,6 +405,10 @@
                </with>
             </visibleWhen>
          </command>
+    </menuContribution>
+    <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=filters">         
          <command
                commandId="org.jboss.tools.deltacloud.ui.filterimages"
                label="%command.filterimages.label"
@@ -501,12 +529,6 @@
          </separator>
          <!-- connection commands -->
          <command
-               commandId="org.eclipse.ui.edit.delete"
-               label="%command.disconnectcloud.label"
-               style="push"
-               tooltip="%command.disconnectcloud.tooltip">
-         </command>
-         <command
                commandId="org.jboss.tools.deltacloud.ui.newconnection"
                label="%command.newconnection.label"
                style="push"
@@ -517,6 +539,12 @@
                label="%command.editconnection.label"
                style="push"
                tooltip="%command.editconnection.tooltip">
+         </command>
+         <command
+               commandId="org.eclipse.ui.edit.delete"
+               label="%command.disconnectcloud.label"
+               style="push"
+               tooltip="%command.disconnectcloud.tooltip">
          </command>
         <!-- image commands -->
          <command
