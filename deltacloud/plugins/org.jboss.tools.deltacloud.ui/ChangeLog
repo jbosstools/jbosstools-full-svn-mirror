@@ -1,3 +1,8 @@
+2010-10-14  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (createPartControl): Fix filtering
+	label showing up in wrong area and when there is no filtering occurring.
+
 2010-10-13  Jeff Johnston  <jjohnstn@redhat.com>
 
 	[JBIDE-7194]

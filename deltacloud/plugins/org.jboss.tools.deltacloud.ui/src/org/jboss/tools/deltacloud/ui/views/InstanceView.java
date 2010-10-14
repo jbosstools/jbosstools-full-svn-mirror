@@ -250,6 +250,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			currCloud.removeInstanceListListener(parentView);
 			viewer.setInput(currCloud);
 			currCloud.addInstanceListListener(parentView);
+			IInstanceFilter filter = currCloud.getInstanceFilter();
+			filterLabel.setVisible(!filter.toString().equals(IInstanceFilter.ALL_STRING));
 		}
 
 		Point p1 = cloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -265,6 +267,11 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		f.top = new FormAttachment(0, 5);
 		f.left = new FormAttachment(cloudSelectorLabel, 5);
 		cloudSelector.setLayoutData(f);
+
+		f = new FormData();
+		f.top = new FormAttachment(0, 5 + centering);
+		f.right = new FormAttachment(100, -10);
+		filterLabel.setLayoutData(f);
 
 		f = new FormData();
 		f.top = new FormAttachment(cloudSelector, 8);
