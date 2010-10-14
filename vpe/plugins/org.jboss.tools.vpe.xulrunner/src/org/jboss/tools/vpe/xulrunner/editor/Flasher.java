@@ -58,7 +58,6 @@ public class Flasher {
 			};
 		} else {
 			drawOutline = new DrawOutlineInterface() {			
-				@Override
 				public void drawElementOutline(nsIDOMElement domElement) {
 					iFlasher.drawElementOutline(domElement);
 				}
