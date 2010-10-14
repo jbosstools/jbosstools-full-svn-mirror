@@ -137,6 +137,20 @@
                </with>
          </activeWhen>
       </handler>
+            <handler
+            class="org.jboss.tools.deltacloud.ui.commands.RefreshCloudHandler"
+            commandId="org.eclipse.ui.file.refresh">
+         <activeWhen>
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+         </activeWhen>
+      </handler>
 	  <!-- instance command handlers -->
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.StartInstanceHandler"
@@ -209,10 +223,38 @@
                </with>
          </activeWhen>
       </handler>
+	  <!-- Filter handlers -->
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.FilterImagesHandler"
+            commandId="org.jboss.tools.deltacloud.ui.filterimages">
+         <activeWhen>
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.FilterInstancesHandler"
+            commandId="org.jboss.tools.deltacloud.ui.filterinstances">
+         <activeWhen>
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+         </activeWhen>
+      </handler>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-	  <!-- DeltaCloudView context menu -->
+   <extension point="org.eclipse.ui.menus">
+	  <!-- DeltaCloudView context menu ================================== -->
       <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
@@ -234,6 +276,12 @@
                label="Edit Connection"
                style="push"
                tooltip="Edit Conncetion">
+         </command>
+         <command
+               commandId="org.eclipse.ui.file.refresh"
+               label="Refresh Cloud"
+               style="push"
+               tooltip="Refresh Cloud">
          </command>
         <!-- image commands -->
          <command
@@ -329,8 +377,42 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.filterimages"
+               label="Filter images..."
+               style="push"
+               tooltip="Filter Images...">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.filterinstances"
+               label="Filter Instances..."
+               style="push"
+               tooltip="Filter Instances...">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
-	  <!-- DeltaCloudView local menu -->
+	  <!-- DeltaCloudView local menu ========================================= -->
       <menuContribution
             allPopups="true"
             locationURI="menu:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
@@ -447,8 +529,43 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.filterimages"
+               label="Filter Images..."
+               style="push"
+               tooltip="Filter Images...">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.filterinstances"
+               label="Filter Instances..."
+               style="push"
+               tooltip="Filter Instances...">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
     </extension>
+	<!-- Commands -->
     <extension
          point="org.eclipse.ui.commands">
       <command
@@ -486,6 +603,17 @@
             description="Stops a cloud instance"
             id="org.jboss.tools.deltacloud.ui.destroyinstance"
             name="Destroy">
+      </command>
+	  <!-- filter commands -->
+      <command
+            description="Filters images"
+            id="org.jboss.tools.deltacloud.ui.filterimages"
+            name="Filter Images...">
+      </command>
+      <command
+            description="Filters instances"
+            id="org.jboss.tools.deltacloud.ui.filterinstances"
+            name="Filter Instances...">
       </command>
    </extension>
 
