@@ -10,12 +10,11 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
-import javax.net.ssl.SSLEngineResult.Status;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -45,7 +44,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 			}
 		}
 
-		return Status.OK;
+		return Status.OK_STATUS;
 	}
 
 	private void removeCloudViewElements(Object[] cloudViewerElements) {
