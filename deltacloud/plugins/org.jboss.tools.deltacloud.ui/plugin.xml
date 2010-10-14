@@ -260,36 +260,36 @@
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
 		 <!-- connection commands -->
          <command
-               commandId="org.eclipse.ui.edit.delete"
-               label="Disconnect Cloud"
-               style="push"
-               tooltip="Disconnect Cloud">
-         </command>
-         <command
                commandId="org.jboss.tools.deltacloud.ui.newconnection"
-               label="New Connection"
+               label="%command.label"
                style="push"
-               tooltip="New Connection">
+               tooltip="%command.tooltip">
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.editconnection"
-               label="Edit Connection"
+               label="%command.label.0"
                style="push"
-               tooltip="Edit Conncetion">
+               tooltip="%command.tooltip.0">
+         </command>
+         <command
+               commandId="org.eclipse.ui.edit.delete"
+               label="%command.label.1"
+               style="push"
+               tooltip="%command.tooltip.1">
          </command>
          <command
                commandId="org.eclipse.ui.file.refresh"
-               label="Refresh Cloud"
+               label="%command.label.2"
                style="push"
-               tooltip="Refresh Cloud">
+               tooltip="%command.tooltip.2">
          </command>
         <!-- image commands -->
          <command
                commandId="org.jboss.tools.deltacloud.ui.createinstance"
                icon="icons/instance.gif"
-               label="Launch Instance"
+               label="%command.label.3"
                style="push"
-               tooltip="Launch Instance">
+               tooltip="%command.tooltip.3">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -307,9 +307,9 @@
                commandId="org.jboss.tools.deltacloud.ui.startinstance"
                disabledIcon="icons/runningd.gif"
                icon="icons/running.gif"
-               label="Start"
+               label="%command.label.4"
                style="push"
-               tooltip="Start">
+               tooltip="%command.tooltip.4">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -326,9 +326,9 @@
                commandId="org.jboss.tools.deltacloud.ui.stopinstance"
                disabledIcon="icons/stoppedd.gif"
                icon="icons/stopped.gif"
-               label="Stop"
+               label="%command.label.5"
                style="push"
-               tooltip="Stop">
+               tooltip="%command.tooltip.5">
              <visibleWhen
                   checkEnabled="true">
                <with
@@ -345,9 +345,9 @@
                commandId="org.jboss.tools.deltacloud.ui.rebootinstance"
                disabledIcon="icons/rebootd.gif"
                icon="icons/reboot.gif"
-               label="Reboot"
+               label="%command.label.6"
                style="push"
-               tooltip="Reboot">
+               tooltip="%command.tooltip.6">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -362,9 +362,9 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.destroyinstance"
-               label="Destroy"
+               label="%command.label.7"
                style="push"
-               tooltip="Destroy">
+               tooltip="%command.tooltip.7">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -379,9 +379,9 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.filterimages"
-               label="Filter images..."
+               label="%command.label.8"
                style="push"
-               tooltip="Filter Images...">
+               tooltip="%command.tooltip.8">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -396,9 +396,9 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.filterinstances"
-               label="Filter Instances..."
+               label="%command.label.9"
                style="push"
-               tooltip="Filter Instances...">
+               tooltip="%command.tooltip.9">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -418,30 +418,30 @@
             locationURI="menu:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
 		 <!-- connection commands -->
          <command
-               commandId="org.eclipse.ui.edit.delete"
-               label="Disconnect Cloud"
-               style="push"
-               tooltip="Disconnect Cloud">
-         </command>
-         <command
                commandId="org.jboss.tools.deltacloud.ui.newconnection"
-               label="New Connection"
+               label="%command.label.10"
                style="push"
-               tooltip="New Connection">
+               tooltip="%command.tooltip.10">
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.editconnection"
-               label="Edit Connection"
+               label="%command.label.11"
                style="push"
-               tooltip="Edit Conncetion">
+               tooltip="%command.tooltip.11">
+         </command>
+         <command
+               commandId="org.eclipse.ui.edit.delete"
+               label="%command.label.12"
+               style="push"
+               tooltip="%command.tooltip.12">
          </command>
         <!-- image commands -->
          <command
                commandId="org.jboss.tools.deltacloud.ui.createinstance"
                icon="icons/instance.gif"
-               label="Launch Instance"
+               label="%command.label.13"
                style="push"
-               tooltip="Launch Instance">
+               tooltip="%command.tooltip.13">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -459,9 +459,9 @@
                commandId="org.jboss.tools.deltacloud.ui.startinstance"
                disabledIcon="icons/runningd.gif"
                icon="icons/running.gif"
-               label="Start"
+               label="%command.label.14"
                style="push"
-               tooltip="Start">
+               tooltip="%command.tooltip.14">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -478,9 +478,9 @@
                commandId="org.jboss.tools.deltacloud.ui.stopinstance"
                disabledIcon="icons/stoppedd.gif"
                icon="icons/stopped.gif"
-               label="Stop"
+               label="%command.label.15"
                style="push"
-               tooltip="Stop">
+               tooltip="%command.tooltip.15">
              <visibleWhen
                   checkEnabled="true">
                <with
@@ -497,9 +497,9 @@
                commandId="org.jboss.tools.deltacloud.ui.rebootinstance"
                disabledIcon="icons/rebootd.gif"
                icon="icons/reboot.gif"
-               label="Reboot"
+               label="%command.label.16"
                style="push"
-               tooltip="Reboot">
+               tooltip="%command.tooltip.16">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -514,9 +514,9 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.destroyinstance"
-               label="Destroy"
+               label="%command.label.17"
                style="push"
-               tooltip="Destroy">
+               tooltip="%command.tooltip.17">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -531,9 +531,9 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.filterimages"
-               label="Filter Images..."
+               label="%command.label.18"
                style="push"
-               tooltip="Filter Images...">
+               tooltip="%command.tooltip.18">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -548,9 +548,9 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.filterinstances"
-               label="Filter Instances..."
+               label="%command.label.19"
                style="push"
-               tooltip="Filter Instances...">
+               tooltip="%command.tooltip.19">
             <visibleWhen
                   checkEnabled="true">
                <with
@@ -569,51 +569,51 @@
     <extension
          point="org.eclipse.ui.commands">
       <command
-            description="Creates a new cloud connection"
+            description="%command.description"
             id="org.jboss.tools.deltacloud.ui.newconnection"
-            name="New Connection">
+            name="%command.name">
       </command>
       <command
             id="org.jboss.tools.deltacloud.ui.editconnection"
-            name="Edit Connection">
+            name="%command.name.0">
       </command>
 	  <!-- image commands -->
       <command
-            description="Launches an instance"
+            description="%command.description.0"
             id="org.jboss.tools.deltacloud.ui.createinstance"
-            name="Launch Instance">
+            name="%command.name.1">
       </command>
 	  <!-- instance commands -->
       <command
-            description="Starts a cloud instance"
+            description="%command.description.1"
             id="org.jboss.tools.deltacloud.ui.startinstance"
-            name="Start">
+            name="%command.name.2">
       </command>
       <command
-            description="Stops a cloud instance"
+            description="%command.description.2"
             id="org.jboss.tools.deltacloud.ui.stopinstance"
-            name="Stop">
+            name="%command.name.3">
       </command>
       <command
-            description="Reboots a cloud instance"
+            description="%command.description.3"
             id="org.jboss.tools.deltacloud.ui.rebootinstance"
-            name="Reboot">
+            name="%command.name.4">
       </command>
       <command
-            description="Stops a cloud instance"
+            description="%command.description.4"
             id="org.jboss.tools.deltacloud.ui.destroyinstance"
-            name="Destroy">
+            name="%command.name.5">
       </command>
 	  <!-- filter commands -->
       <command
-            description="Filters images"
+            description="%command.description.5"
             id="org.jboss.tools.deltacloud.ui.filterimages"
-            name="Filter Images...">
+            name="%command.name.6">
       </command>
       <command
-            description="Filters instances"
+            description="%command.description.6"
             id="org.jboss.tools.deltacloud.ui.filterinstances"
-            name="Filter Instances...">
+            name="%command.name.7">
       </command>
    </extension>
 
