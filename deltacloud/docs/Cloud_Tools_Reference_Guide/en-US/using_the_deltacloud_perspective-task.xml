@@ -18,7 +18,7 @@
 	   <title>Deltacloud perspective: The Cloud Viewer</title>
 	   <mediaobject>
 	      <imageobject>
-		 <imagedata fileref="images/Deltacloud-perspective-cloud-viewer.png"/>
+		 <imagedata fileref="images/Deltacloud-perspective-cloud_viewer.png"/>
 	      </imageobject>
 	   </mediaobject>
 	</figure>
@@ -26,11 +26,75 @@
 	   You can have multiple Deltacloud servers connected at any one time. If you have not yet setup a connection to a Deltacloud server see <xref linkend="sect-Cloud_Tools_Reference_Guide-Tasks-connecting_to_a_deltacloud_server"/>.
 	</para>
 	<formalpara>
+	   <title>The Images view</title>
+	   <para>
+	      Displayed in the <guilabel>Images</guilabel> view is a table of all images for a specified cloud.
+	   </para>
+	</formalpara>
+	<figure id="deltacloud_perspective-the_images_view">
+	   <title>Deltacloud perspective: The Images view</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/Deltacloud-images_view.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   By right-clicking on an image in the table and selecting <guimenuitem>Launch Instance</guimenuitem>, a dialog will appear. Define the <guilabel>Name</guilabel> of the instance, the <guilabel>Realm</guilabel> the instance should appear in, select a pre-defined <guilabel>Hardware Profile</guilabel> and choose a <guilabel>Key Name</guilabel> for key file authentication.
+	</para>
+	<para>
+	   User authentication keys are managed for Deltacloud tooling by the <guilabel>Manage Keys</guilabel> dialog. 
+	</para>
+	<para>
+	   Click <guibutton>Finish</guibutton> to create the new instance.
+        </para>
+	<figure id="deltacloud_perspective-launching_an_instance">
+	   <title>Deltacloud perspective: Launching an instance</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/Deltacloud-perspective-launch_instance.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<formalpara>
 	    <title>The Instances view</title>
 	    <para>
-	       
+	       Through the <guilabel>Instances</guilabel> view you can see all instances for a cloud server while having the functionality to start, stop and restart a selected instance.
 	    </para>
         </formalpara>
+	<figure id="deltacloud_perspective-the_instances_view">
+	   <title>Deltacloud perspective: The Instances view</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/Deltacloud-perspective-instances_view.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	    Using the <guilabel>Remote System Explorer</guilabel> you can connect to a running instance through the SSH protocol. Accessing a remote instance requires authentication; for an EC2 instance a PEM key file would be used. 
+        </para>
+	<para>
+	   Each unique user requires an individual key file and each file must be specified in the SSH2 private keys list prior to performing the ssh connection. To access the SSH2 private keys list navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>General</guimenuitem><guimenuitem>Network Connections</guimenuitem><guimenuitem>SSH2</guimenuitem></menuchoice>.
+        </para>
+	<figure id="preferences-SSH2">
+	   <title>Preferences: SSH2</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/Preferences-Genearl-Network_Connections-SSH2.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<figure id="deltacloud_perspective-the_instances_view">
+	   <title>Deltacloud perspective: The Instances view</title>
+	   <mediaobject>
+	      <imageobject>
+		 <imagedata fileref="images/Deltacloud-perspective-instances_view.png"/>
+	      </imageobject>
+	   </mediaobject>
+	</figure>
+	<para>
+	   Once connected files on the external instance can be manipulated as if they were on your local machine.
+        </para>
 </section>
 
 
