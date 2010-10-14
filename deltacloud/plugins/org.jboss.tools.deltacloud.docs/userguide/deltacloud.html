@@ -124,7 +124,11 @@ For each Instance (row) selected, right-clicking brings up a set of available ac
 <li>Stop - stop a running Instance</li>
 <li>Reboot - reboot an Instance</li>
 <li>Destroy - stop and destroy an Instance (this is not always enabled, such as in the case of EC2 where stopping terminates the Instance)</li>
-<li>Show in Remote System Explorer - this action creates an SSL connection to the Instance using the key specified earlier in the Launch Instance dialog.  Note: the key name corresponds to a file on the local system and this file must be placed on the list of private SSH2 keys prior to trying to connect to the Instance, otherwise the connection will fail.  To make the key file accessible, go to <noformat>Window->Preferences->General->Network Connections->SSH2</noformat> and select the "Add Private Key" button.</li>
+<li>Show in Remote System Explorer - this action creates an RSE connection to the Instance and opens the RSE Remote Systems viewer which allows access to the remote file system.  
+By default, an RSE connection will be made automatically when an Instance is launched via the Deltacloud Tools unless the preference found at <noformat>Windows->Preferences->Deltacloud</noformat> is disabled.  
+The Remote Systems view can also be opened manually via <noformat>Windows->Open View...</noformat> or by switching to the RSE Perspective.
+To access the remote file system, a local file corresponding to the key name used when the Instance is launched must be placed in the list of private SSH2 keys prior to trying to accessing the
+remote files.  To make the key file accessible, go to <noformat>Window->Preferences->General->Network Connections->SSH2</noformat> and select the "Add Private Key" button.</li>
 </ul>
 </p>
 <p>
@@ -134,6 +138,32 @@ Instance are likewise disabled as they are when right-clicking.</p>
 Actions requiring time may bring up a Progress Dialog which can be moved to the Background.  If the Progress Dialog is desired to be in the Foreground again, this can be achieved by accessing the preference found at: <noformat>Windows->Preferences</noformat> and selecting General.</p>
 
 <img border="0" src="images/bgpreferences.png"/>
+
+<a name="InstanceFilter"></a>
+<h2 id="Instance Filter">Instance Filter</h2>
+<p>
+If a large number of Instances exist, the list can be filtered to only include those of interest.  Filtering can be accomplished either by right-clicking in the Cloud Viewer and
+selecting "Filter Instances..." or by using the pull-down menu in the Instances View and selecting "Filter...".  This brings up the following dialog:</p>
+
+<img border="0" src="images/instancefilter.png"/>
+
+<p>
+The filter allows specification of matcher patterns for the fields:
+<ul>
+<li>Name</li>
+<li>ID</li>
+<li>Image ID</li>
+<li>Owner ID</li>
+<li>Key Name</li>
+<li>Realm</li>
+<li>Hardware Profile</li>
+</ul>
+</p>
+
+<p>
+All filtering fields allow specification of wildcards (e.g. ami* will match all strings starting with ami).  Filters are saved across sessions and are per cloud.  By default, all
+filtering fields are initially set to "*" meaning "all possible values".  If any filter field is not "*", a "filtered" label will appear on the right side of the Instances view to signify
+that not all available Instances are being shown in the view.</p>
 
 <a name="RSEPerspective"></a>
 <h2 id="RSE Perspective">RSE Perspective</h2>
@@ -168,6 +198,29 @@ Each row contains details about the Images including:
 </ul>
 </p>
 
+<a name="ImageFilter"></a>
+<h2 id="Image Filter">Image Filter</h2>
+<p>
+If a large number of Images exist, the list can be filtered to only include those of interest just as with Instances.  Filtering can be accomplished either by right-clicking in the Cloud Viewer and
+selecting "Filter Images..." or by using the pull-down menu in the Images View and selecting "Filter...".  This brings up the following dialog:</p>
+
+<img border="0" src="images/imagefilter.png"/>
+
+<p>
+The filter allows specification of matcher patterns for the fields:
+<ul>
+<li>Name</li>
+<li>ID</li>
+<li>Architecture</li>
+<li>Description</li>
+</ul>
+</p>
+
+<p>
+As with the Instance filter, all filtering fields allow specification of the "*" wildcard.  Image filters are saved across sessions and are per cloud.  By default, all
+filtering fields are initially set to "*" meaning "all possible values".  If any filter field is not "*", a "filtered" label will appear on the right side of the Images view to signify
+that not all available Images are being shown in the view.</p>
+
 <a name="ManageKeys"></a>
 <h2 id="Manage Keys">Manage Keys</h2>
 <p>
@@ -178,10 +231,10 @@ The Manage Keys dialog is accessed via the Launch Instance dialog.  This dialog 
 <p>
 The Directory field is where key files are stored.  To select a different directory, click on the Browse... button.</p>
 <p>
-To create a key, hit the "New..." button.  This brings up a simple dialog:
+To create a key, hit the "New..." button.  This brings up a simple dialog:</p>
 
 <img border="0" src="images/createkey.png"/>
-</p>
+
 <p>
 where the key name is entered.  The name must be unique for the Cloud (i.e. not just the directory).  When OK is pressed, the key file will be created in the specified directory chosen for the Manage Keys dialog.</p>
 <p>
