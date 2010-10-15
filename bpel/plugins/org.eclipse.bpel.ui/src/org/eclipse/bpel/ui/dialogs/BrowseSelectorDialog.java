@@ -209,8 +209,21 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
     	for (int i=0; i<sel2.length; ++i) {
     		Object data = sel2[i].getData();
     		if (data instanceof TreeNode)
-    			data = ((TreeNode)data).getModelObject();
-    		result.add(data);
+    		{
+    			// list of the selected node's model object ancestry in reverse order
+    			ArrayList<Object> elements = new ArrayList<Object>();
+    			TreeNode node = (TreeNode)data;
+    	    	ITreeContentProvider prov = (ITreeContentProvider)fTreeViewer.getContentProvider();
+    	    	do {
+    	    		elements.add(node.getModelObject());
+    	    		node = (TreeNode)prov.getParent(node);
+    	    	}
+    	    	while (node!=null && node.getModelObject()!=sel1[0]);
+    	    	
+    	    	for (int e=elements.size(); e>0; --e) {
+    	    		result.add(elements.get(e-1));
+    	    	}
+    		}
     	}
 		setResult(result);
     }

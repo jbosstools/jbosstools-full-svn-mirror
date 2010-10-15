@@ -454,53 +454,21 @@ public class EditPropertyAliasDialog extends Dialog {
 			if (result.length>=1) {
 				
 				type = result[0];
+				int index = 1;
 				if (type instanceof Message) {
 					message = (Message) type;
-					if (result.length>=2) {
-						if (result[1] instanceof Part) {
-							part = result[1];
-						}
-						else if (result[1] instanceof XSDComponent) {
-							// The selected XSD component must be a child of the message part.
-							// Look for part and build query path to the component.
-							// TODO: move this search algorithm to ModelQuery class
-							for ( Part p : (EList<Part>)message.getEParts() ) {
-								XSDTypeDefinition def = p.getElementDeclaration().getTypeDefinition(); 
-								XSDComponent comp = (XSDComponent)result[1];
-								String s = "";
-								while ( comp.eContainer() instanceof XSDComponent ) {
-									comp = (XSDComponent)comp.eContainer();
-									if (def == comp) {
-										part = p.getName();
-										query = s;
-										break;
-									}
-									else
-									{
-										if (comp instanceof XSDParticle && ((XSDParticle)comp).getTerm() instanceof XSDNamedComponent)
-										{
-											XSDNamedComponent nc = (XSDNamedComponent)((XSDParticle)comp).getTerm();
-											s = "/" + nc.getName() + s;
-										}
-									}
-								}									
-							}
-						}
+					if (result.length>=2 && result[1] instanceof Part) {
+						part = ((Part)result[1]).getName();
+						index = 2;
 					}
 				}
-				else if (type instanceof XSDComponent) {
-					if (result.length>=2 && result[1] instanceof XSDComponent) {
-						XSDComponent comp = (XSDComponent)result[1];
-						query = "";
-						while ( comp.eContainer() instanceof XSDComponent ) {
-							comp = (XSDComponent)comp.eContainer();
-							if (comp instanceof XSDParticle && ((XSDParticle)comp).getTerm() instanceof XSDNamedComponent)
-							{
-								XSDNamedComponent nc = (XSDNamedComponent)((XSDParticle)comp).getTerm();
-								query = "/" + nc.getName() + query;
-							}
-						}									
+				query = "";
+				while (index<result.length) {
+					if (result[index] instanceof XSDComponent) {
+						XSDNamedComponent nc = (XSDNamedComponent)result[index];
+						query = query + "/" + nc.getQName();
 					}
+					++index;
 				}
 			}
 			

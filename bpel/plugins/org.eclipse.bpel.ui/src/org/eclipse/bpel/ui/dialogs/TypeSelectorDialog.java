@@ -276,7 +276,7 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 				enabled = false;
 			}
 		}
-		if ( getResult().length!=2 && this.requireLowerTreeSelection )
+		if ( getResult().length<2 && this.requireLowerTreeSelection )
 			enabled = false;
 		
 		getOkButton().setEnabled(enabled);
@@ -292,7 +292,7 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 				return;
 			}
 		}
-		if ( getResult().length!=2 && this.requireLowerTreeSelection )
+		if ( getResult().length<2 && this.requireLowerTreeSelection )
 			return;
 		super.okPressed();
 	}
