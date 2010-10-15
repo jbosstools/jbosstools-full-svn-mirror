@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -95,6 +97,7 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnD;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
+import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.VpeMenuCreator;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -122,6 +125,7 @@ import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
@@ -134,8 +138,10 @@ import org.mozilla.interfaces.nsIDOMEvent;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
+import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsISelection;
+import org.mozilla.interfaces.nsISelectionDisplay;
 import org.mozilla.interfaces.nsISelectionListener;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -164,8 +170,6 @@ public class VpeController implements INodeAdapter,
 	private VpeSourceDomBuilder sourceBuilder;
 	private VpeVisualDomBuilder visualBuilder;
 	private VpeDnD vpeDnD;
-	/** @deprecated */
-	private VpeSelectionBuilder selectionBuilder;
 	// private VpeVisualKeyHandler visualKeyHandler;
 	private ActiveEditorSwitcher switcher = new ActiveEditorSwitcher();
 	private Attr lastRemovedAttr;
@@ -286,9 +290,7 @@ public class VpeController implements INodeAdapter,
 		// initialization visual selection controller
 		visualSelectionController = new VpeSelectionController(visualEditor
 				.getEditor().getSelectionController());
-
-		selectionBuilder = new VpeSelectionBuilder(domMapping, sourceBuilder,
-				visualBuilder, visualSelectionController);
+		visualSelectionController.setSelectionFlags(nsISelectionDisplay.DISPLAY_ALL);
 
 		selectionManager = new SelectionManager(pageContext, sourceEditor,
 				visualSelectionController);
@@ -1203,7 +1205,9 @@ public class VpeController implements INodeAdapter,
 				if (vpeDnD.isDragIconClicked(mouseEvent)) {
 					vpeDnD.dragStart(mouseEvent);
 				} else {
-					selectionManager.setSelection(mouseEvent);					
+					selectionManager.setSelection(
+						VisualDomUtil.getTargetNode(mouseEvent),
+						queryInterface(mouseEvent, nsIDOMNSUIEvent.class).getRangeOffset());					
 				}
 			}
 		} finally {
@@ -1247,9 +1251,13 @@ public class VpeController implements INodeAdapter,
 					mouseUpSelectionReasonFlag = false;
 				}
 
-				if (visualBuilder.doToggle(VisualDomUtil
-						.getTargetNode(mouseEvent))) {
-					// selectionBuilder.setClickContentAreaSelection();
+				Element toggledElement = visualBuilder.doToggle(visualNode);
+				if (toggledElement != null) {
+					VpeNodeMapping toggledMapping
+							= getDomMapping().getNearNodeMapping(toggledElement);
+					if (toggledMapping != null && toggledMapping.getVisualNode() != null) {
+						selectionManager.setSelection(toggledMapping.getVisualNode(), 0);
+					}
 				}
 			}
 		} finally {
@@ -2353,21 +2361,6 @@ public class VpeController implements INodeAdapter,
 		this.xulRunnerEditor = xulRunnerEditor;
 	}
 
-	/**
-	 * @return the selectionBuilder
-	 */
-	public VpeSelectionBuilder getSelectionBuilder() {
-		return selectionBuilder;
-	}
-
-	/**
-	 * @param selectionBuilder
-	 *            the selectionBuilder to set
-	 */
-	public void setSelectionBuilder(VpeSelectionBuilder selectionBuilder) {
-		this.selectionBuilder = selectionBuilder;
-	}
-
 	public boolean isVisualEditorVisible() {
 		return visualEditorVisible;
 	}
@@ -2438,8 +2431,7 @@ public class VpeController implements INodeAdapter,
 			visualSelectionController = new VpeSelectionController(visualEditor
 					.getEditor().getSelectionController());
 
-			selectionBuilder = new VpeSelectionBuilder(domMapping,
-					sourceBuilder, visualBuilder, visualSelectionController);
+			visualSelectionController.setSelectionFlags(nsISelectionDisplay.DISPLAY_ALL);
 
 			selectionManager = new SelectionManager(pageContext, sourceEditor,
 					visualSelectionController);

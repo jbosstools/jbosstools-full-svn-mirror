@@ -940,9 +940,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	public boolean doToggle(nsIDOMNode visualNode) {
+	public Element doToggle(nsIDOMNode visualNode) {
 		if (visualNode == null) {
-			return false;
+			return null;
 		}
 		nsIDOMElement visualElement = null;
 		try {
@@ -951,18 +951,18 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			visualElement = queryInterface(visualNode.getParentNode(), nsIDOMElement.class);
 		}
 		if (visualElement == null) {
-			return false;
+			return null;
 		}
 
 		nsIDOMAttr toggleIdAttr = visualElement
 				.getAttributeNode(VPE_USER_TOGGLE_ID);
 		if (toggleIdAttr == null) {
-			return false;
+			return null;
 		}
 		String toggleId = toggleIdAttr.getNodeValue();
 
 		if (toggleId == null) {
-			return false;
+			return null;
 		}
 
 		boolean toggleLookup = false;
@@ -975,7 +975,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		nsIDOMElement selectedElem = getLastSelectedElement();
 		// Fixes JBIDE-1823 author dmaliarevich
 		if (null == selectedElem) {
-			return false;
+			return null;
 		}
 		VpeElementMapping elementMapping = null;
 		VpeNodeMapping nodeMapping = domMapping.getNodeMapping(selectedElem);
@@ -997,7 +997,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 		Node sourceNode = domMapping.getSourceNode(selectedElem);
 		if (sourceNode == null) {
-			return false;
+			return null;
 		}
 
 		Element sourceElement = (Element) (sourceNode instanceof Element ? sourceNode
@@ -1039,10 +1039,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				((VpeToggableTemplate) template).toggle(this, sourceElement,
 						toggleId);
 				updateElement(sourceElement);
-				return true;
+				return sourceElement;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public void removeAttribute(Element sourceElement, String name) {

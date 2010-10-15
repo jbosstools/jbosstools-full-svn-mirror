@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
-import org.mozilla.interfaces.nsIDOMMouseEvent;
+import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsISelection;
 
 /**
@@ -33,7 +33,7 @@ public interface ISelectionManager {
 	 * 
 	 * @param mouseEvent
 	 */
-	public void setSelection(nsIDOMMouseEvent mouseEvent);
+	public void setSelection(nsIDOMNode visualNode, int rangeOffset);
 
 	/**
 	 * to bring in correspondence visual selection and source selection

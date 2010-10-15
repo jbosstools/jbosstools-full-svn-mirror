@@ -1758,15 +1758,7 @@ public class VpeVisualKeyHandler {
 	return nearestElement;
 	}
 
-
-	
-	private VpeSelectionBuilder getSelectionBuilder() {
-
-		return	pageContext.getEditPart().getController().getSelectionBuilder();
-	}
-	
 	private  nsIDOMElement getSelectedNode() {
-		
 		return	pageContext.getEditPart().getController().getXulRunnerEditor().getLastSelectedElement();
 	}
 	

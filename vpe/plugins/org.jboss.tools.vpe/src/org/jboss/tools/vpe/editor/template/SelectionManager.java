@@ -11,8 +11,6 @@
 
 package org.jboss.tools.vpe.editor.template;
 
-import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
@@ -25,10 +23,7 @@ import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.TextUtil;
-import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
-import org.mozilla.interfaces.nsIDOMMouseEvent;
-import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionController;
@@ -64,185 +59,108 @@ public class SelectionManager implements ISelectionManager {
 		this.selectionController = selectionController;
 	}
 
+	/* TODO: merge this method with setSelection(nsIDOMNode visualNode, int rangeOffset) */
 	public final void setSelection(nsISelection selection) {
-
-		nsIDOMNode selectedVisualNode = SelectionUtil
-				.getSelectedNode(selection);
-
-		if (selectedVisualNode == null)
+		nsIDOMNode visualNode = SelectionUtil.getSelectedNode(selection);
+		if (visualNode == null) {
 			return;
+		}
 
-		VpeNodeMapping nodeMapping = VpeNodesManagingUtil.getNodeMapping(
-				getDomMapping(), selectedVisualNode);
-
-		if (nodeMapping == null)
+		SelectionData selectionData = getSelectionData(visualNode);
+		if (selectionData == null) {
 			return;
-
-		// visual node which will be selected
-		nsIDOMNode targetVisualNode;
-		// source node which will be selected
-		Node targetSourceNode;
-
-		boolean isNodeEditable;
-
-		// if mapping is elementMapping
-		if (nodeMapping instanceof VpeElementMapping) {
-
-			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
-
-			VpeTemplate template = elementMapping.getTemplate();
-
-			NodeData nodeData = template.getNodeData(selectedVisualNode,
-					elementMapping.getElementData(), getDomMapping());
-
-			if (nodeData != null) {
-
-				isNodeEditable = nodeData.isEditable();
-				if (nodeData.getSourceNode() != null) {
-					targetSourceNode = nodeData.getSourceNode();
-
-				} else {
-
-					isNodeEditable = false;
-					targetSourceNode = elementMapping.getSourceNode();
-
-				}
-
-				targetVisualNode = nodeData.getVisualNode();
-			} else {
-
-				targetVisualNode = elementMapping.getVisualNode();
-				targetSourceNode = elementMapping.getSourceNode();
-				isNodeEditable = false;
-			}
-
-		} else {
-			// here we processed text node
-			targetVisualNode = nodeMapping.getVisualNode();
-			targetSourceNode = nodeMapping.getSourceNode();
-			isNodeEditable = true;
-
 		}
 		
-		if (targetVisualNode.getNodeType() != nsIDOMNode.TEXT_NODE
-				&& SelectionUtil.getLastSelectedNode(getPageContext()) == targetVisualNode)
+		if (selectionData.getVisualNode().getNodeType() != nsIDOMNode.TEXT_NODE
+				&& SelectionUtil.getLastSelectedNode(getPageContext())
+						== selectionData.getVisualNode()) {
 			return;
-			
-		int focusOffset;
-		int length;
-
-		if (isNodeEditable) {
-
-			Point sourceSelectionRange = SelectionUtil.getSourceSelectionRange(
-					selection, targetSourceNode);
-
-			focusOffset = sourceSelectionRange.x;
-			length = sourceSelectionRange.y;
-
-		} else {
-
-			focusOffset = 0;
-			length = NodesManagingUtil.getNodeLength(targetSourceNode);
-
 		}
-
+		/*************** Calculate selection range ****************************/
+		int selectionOffset;
+		int selectionLength;
+		if (selectionData.isNodeEditable()) {
+			Point sourceSelectionRange = SelectionUtil.getSourceSelectionRange(
+					selection, selectionData.getSourceNode());
+			selectionOffset = sourceSelectionRange.x;
+			selectionLength = sourceSelectionRange.y;
+		} else {
+			selectionOffset = 0;
+			selectionLength = NodesManagingUtil.getNodeLength(selectionData.getSourceNode());
+		}
+		/*************** Apply selection to views *****************************/
 		// set source selection
-		SelectionUtil.setSourceSelection(getPageContext(), targetSourceNode,
-				focusOffset, length);
-
+		SelectionUtil.setSourceSelection(getPageContext(), selectionData.getSourceNode(),
+				selectionOffset, selectionLength);
 		// paint visual selection
 		getPageContext().getVisualBuilder().setSelectionRectangle(
-				targetVisualNode);
-
+				selectionData.getVisualNode());
 	}
 
-	final public void setSelection(nsIDOMMouseEvent mouseEvent) {
+	final public void setSelection(nsIDOMNode visualNode, int rangeOffset) {
+		SelectionData selectionData = getSelectionData(visualNode);
+		if (selectionData == null) {
+			return;
+		}
+		/*************** Calculate selection range ****************************/
+		int selectionOffset;
+		int selectionLength;
+		if (selectionData.isNodeEditable()) {
+			selectionOffset = rangeOffset;
+			selectionLength = 0;
+		} else {
+			selectionOffset = 0;
+			selectionLength = NodesManagingUtil.getNodeLength(selectionData.getSourceNode());
+		}
+		/*************** Apply selection to views *****************************/
+		SelectionUtil.clearSelection(selectionController);
+		SelectionUtil.setSourceSelection(getPageContext(),
+				selectionData.getSourceNode(),
+				selectionOffset, selectionLength);
+		// paint selection rectangle
+		getPageContext().getVisualBuilder().setSelectionRectangle(
+				selectionData.getVisualNode());
+	}
 
-		// get visual node by event
-		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-
+	private SelectionData getSelectionData(nsIDOMNode visualNode) {
 		// get element mapping
 		VpeNodeMapping nodeMapping = VpeNodesManagingUtil.getNodeMapping(
 				getDomMapping(), visualNode);
 
-		if (nodeMapping == null)
-			return;
-
-		// visual node which will be selected
-		nsIDOMNode targetVisualNode;
-		// source node which will be selected
-		Node targetSourceNode;
-
+		if (nodeMapping == null) {
+			return null;
+		}
+		
+		nsIDOMNode targetVisualNode; // visual node which will be selected
+		Node targetSourceNode; // source node which will be selected
 		boolean isNodeEditable;
-
-		// if mapping is elementMapping
 		if (nodeMapping instanceof VpeElementMapping) {
-
 			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
-
-			VpeTemplate template = elementMapping.getTemplate();
-
-			NodeData nodeData = template.getNodeData(visualNode, elementMapping
-					.getElementData(), getDomMapping());
+			NodeData nodeData = elementMapping.getTemplate().getNodeData(
+					visualNode, elementMapping.getElementData(), getDomMapping());
 
 			if (nodeData != null) {
-
-				isNodeEditable = nodeData.isEditable();
-
-				if (nodeData.getSourceNode() != null) {
-
-					targetSourceNode = nodeData.getSourceNode();
-
-				} else {
-
-					isNodeEditable = false;
-					targetSourceNode = elementMapping.getSourceNode();
-
-				}
-
 				targetVisualNode = nodeData.getVisualNode();
-
+				if (nodeData.getSourceNode() != null) {
+					targetSourceNode = nodeData.getSourceNode();
+					isNodeEditable = nodeData.isEditable();				
+				} else {
+					targetSourceNode = elementMapping.getSourceNode();
+					isNodeEditable = false;
+				}
 			} else {
-
 				targetVisualNode = elementMapping.getVisualNode();
-				targetSourceNode = elementMapping.getSourceNode();
+				targetSourceNode = elementMapping.getSourceNode();				
 				isNodeEditable = false;
-
 			}
-
-		}
-
-		else {
-
+		} else {
 			targetVisualNode = nodeMapping.getVisualNode();
 			targetSourceNode = nodeMapping.getSourceNode();
 			isNodeEditable = true;
-
 		}
-
-		// get nsIDOMNSUIEvent event
-		nsIDOMNSUIEvent nsuiEvent = queryInterface(mouseEvent, nsIDOMNSUIEvent.class);
-
-		int selectionOffset;
-		int selectionLength;
-
-		if (isNodeEditable) {
-			selectionOffset = nsuiEvent.getRangeOffset();
-			selectionLength = 0;
-		} else {
-
-			selectionOffset = 0;
-			selectionLength = NodesManagingUtil.getNodeLength(targetSourceNode);
-
-		}
-		
-		SelectionUtil.clearSelection(selectionController);
-		SelectionUtil.setSourceSelection(getPageContext(), targetSourceNode,
-				selectionOffset, selectionLength);
-		// paint selection rectangle
-		getPageContext().getVisualBuilder().setSelectionRectangle(
-				targetVisualNode);
-
+		SelectionData selectionData = new SelectionData(
+				targetVisualNode, targetSourceNode, isNodeEditable);
+		return selectionData;
 	}
 
 	/**
@@ -390,4 +308,37 @@ public class SelectionManager implements ISelectionManager {
 		return sourceEditor;
 	}
 
+}
+
+class SelectionData {
+	private nsIDOMNode visualNode;
+	private Node sourceNode;
+	private boolean isNodeEditable;
+	
+	public SelectionData(nsIDOMNode visualNode, Node sourceNode,
+			boolean isNodeEditable) {
+		super();
+		this.visualNode = visualNode;
+		this.sourceNode = sourceNode;
+		this.isNodeEditable = isNodeEditable;
+	}
+	
+	public nsIDOMNode getVisualNode() {
+		return visualNode;
+	}
+	public void setVisualNode(nsIDOMNode visualNode) {
+		this.visualNode = visualNode;
+	}
+	public Node getSourceNode() {
+		return sourceNode;
+	}
+	public void setSourceNode(Node sourceNode) {
+		this.sourceNode = sourceNode;
+	}
+	public boolean isNodeEditable() {
+		return isNodeEditable;
+	}
+	public void setNodeEditable(boolean isNodeEditable) {
+		this.isNodeEditable = isNodeEditable;
+	}
 }
