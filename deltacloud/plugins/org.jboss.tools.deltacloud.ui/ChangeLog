@@ -1,3 +1,21 @@
+2010-10-14  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java: 
+	[JBIDE-JBIDE-7184] refactored to use command framework. Migrated actions to command handlers 
+	* src/org/jboss/tools/deltacloud/ui/commands/CreateInstanceHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/DestroyInstanceHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/DisconnectCloudHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/EditConnectionHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/FilterImagesHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/FilterInstancesHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/NewConnectionHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/RebootInstanceHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshCloudHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/StartInstanceHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/RebootInstanceHandlerHandler.java: 
+	[JBIDE-JBIDE-7184] refactored to use command framework. Migrated actions to command handlers 
+
 2010-10-14  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: Add Refresh.label message.
