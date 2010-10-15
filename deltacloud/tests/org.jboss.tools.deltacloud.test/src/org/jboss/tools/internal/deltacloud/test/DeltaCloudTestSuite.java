@@ -18,7 +18,9 @@ import org.junit.runners.Suite;
  * @author Andre Dietisheim
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({})
+@Suite.SuiteClasses({
+	DeltacloudIntegrationTest.class
+})
 public class DeltaCloudTestSuite {
 
 }
