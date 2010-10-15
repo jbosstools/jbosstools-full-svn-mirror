@@ -21,10 +21,9 @@ import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.expressions.IEditorConstants;
 import org.eclipse.bpel.ui.properties.ExpressionSection;
 import org.eclipse.bpel.ui.util.BrowseUtil;
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.bpel.ui.util.WSDLImportHelper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -50,7 +49,6 @@ import org.eclipse.wst.wsdl.Part;
 import org.eclipse.xsd.XSDComponent;
 import org.eclipse.xsd.XSDElementDeclaration;
 import org.eclipse.xsd.XSDNamedComponent;
-import org.eclipse.xsd.XSDParticle;
 import org.eclipse.xsd.XSDTypeDefinition;
 
 
@@ -462,11 +460,21 @@ public class EditPropertyAliasDialog extends Dialog {
 						index = 2;
 					}
 				}
+				
+				// build the query string
+				// NOTE: The namespace for the XSD type may be different from the message namespace
+				// e.g. the message is defined in a WSDL and the XSD type is defined in externally
+				// with a different namespace.
+				Definition definition = property.getEnclosingDefinition();
 				query = "";
 				while (index<result.length) {
 					if (result[index] instanceof XSDComponent) {
 						XSDNamedComponent nc = (XSDNamedComponent)result[index];
-						query = query + "/" + nc.getQName();
+						WSDLImportHelper.addImportAndNamespace(definition, nc.getSchema(),
+								bpelEditor.getEditModelClient().getPrimaryResourceInfo().getFile());
+						String prefix = definition.getPrefix(nc.getTargetNamespace());
+						// prefix is always non-null here, see WSDLImportHelper#addNamespace()
+						query = query + "/" + prefix + ":" + nc.getName();
 					}
 					++index;
 				}
