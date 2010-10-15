@@ -14,7 +14,8 @@ public class DeltacloudIntegrationTest {
 		ScriptEngine engine = factory.getEngineByName("jruby");
 		try {
 			engine.eval("puts('Hello')");
-			engine.eval("gem install rake");
+//			engine.eval("gem install rake");
+			engine.eval("jgem list");
 		} catch (ScriptException exception) {
 			exception.printStackTrace();
 		}
