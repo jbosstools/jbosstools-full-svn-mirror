@@ -1,19 +1,11 @@
 package org.eclipse.bpel.apache.ode.deploy.ui.wizards;
 
-import java.io.File;
-
 import org.eclipse.bpel.apache.ode.deploy.ui.util.DeployUtils;
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceDescription;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -52,7 +44,7 @@ public class ODEDeployWizardPage extends WizardPage {
 	public ODEDeployWizardPage(ISelection selection) {
 		super("ODEDeployDescriptorWizardPage");
 		setTitle("Apache ODE Deployment Descriptor");
-		setDescription("This wizard creates a new Apache ODE  descriptor file (bpel-deploy.xml). Note that the file name cannot be changed.");
+		setDescription("This wizard creates a new Apache ODE descriptor file (deploy.xml). Note that the file name cannot be changed.");
 		this.selection = selection;
 	}
 
@@ -88,7 +80,7 @@ public class ODEDeployWizardPage extends WizardPage {
 		label.setText("&File name:");
 
 		fileText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		fileText.setText("bpel-deploy.xml");
+		fileText.setText("deploy.xml");
 		fileText.setEditable(false);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		fileText.setLayoutData(gd);
