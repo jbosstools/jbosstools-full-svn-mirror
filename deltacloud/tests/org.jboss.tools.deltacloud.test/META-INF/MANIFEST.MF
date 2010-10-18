@@ -4,6 +4,7 @@ Bundle-Name: Test
 Bundle-SymbolicName: org.jboss.tools.deltacloud.test
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.junit;bundle-version="4.8.1"
+Require-Bundle: org.junit;bundle-version="4.8.1",
+ org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)"
 Bundle-ClassPath: jruby-complete-1.5.3.jar,
  .
