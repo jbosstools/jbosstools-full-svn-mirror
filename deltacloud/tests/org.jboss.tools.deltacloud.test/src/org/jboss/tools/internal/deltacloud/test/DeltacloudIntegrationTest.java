@@ -1,24 +1,36 @@
 package org.jboss.tools.internal.deltacloud.test;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Collections;
 
+import org.jruby.Ruby;
+import org.jruby.RubyInstanceConfig;
+import org.jruby.javasupport.JavaEmbedUtils;
 import org.junit.Test;
 
 public class DeltacloudIntegrationTest {
 
 	@Test
-	public void runDeltaCloud() {
-		ScriptEngineManager factory = new ScriptEngineManager();
-		ScriptEngine engine = factory.getEngineByName("jruby");
+	public void runDeltaCloud() throws IOException {
+
+		RubyInstanceConfig config = new RubyInstanceConfig();
+		Ruby ruby = JavaEmbedUtils.initialize(Collections.EMPTY_LIST, config);
 		try {
-			engine.eval("puts('Hello')");
-//			engine.eval("gem install rake");
-			engine.eval("jgem list");
-		} catch (ScriptException exception) {
-			exception.printStackTrace();
+			ruby.executeScript(readScript("/bootstrap-deltacloud.rb"), "/bootstrap-deltacloud.rb");
+		} finally {
+			JavaEmbedUtils.terminate(ruby);
 		}
 	}
 
+	private String readScript(String script) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(script)));
+		StringWriter writer = new StringWriter();
+		while (reader.ready())
+			new PrintWriter(writer).println(reader.readLine());
+		return writer.toString();
+	}
 }
