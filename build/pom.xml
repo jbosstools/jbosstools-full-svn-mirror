@@ -494,6 +494,7 @@
 			<id>ws-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../common</module>
 				<module>../ws</module>
 			</modules>
 		</profile>
