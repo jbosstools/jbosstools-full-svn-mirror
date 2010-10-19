@@ -11,9 +11,6 @@
 
 package org.jboss.tools.vpe.docbook.template;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
@@ -21,7 +18,6 @@ import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMText;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -33,7 +29,6 @@ import org.w3c.dom.NodeList;
  */
 public class DocbookProgramlistingTemplate extends VpeAbstractTemplate {
 
-	@Override
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
 
