@@ -322,9 +322,8 @@
 	</vpe:tag>
 
 	<vpe:tag name="programlisting" case-sensitive="yes" docbook="yes">
-		<vpe:template children="yes" modify="yes">
-			<pre />
-		</vpe:template>
+		<vpe:template children="yes" modify="yes"
+					class="org.jboss.tools.vpe.docbook.template.DocbookProgramlistingTemplate"/>
 	</vpe:tag>
 	<vpe:tag name="programlistingco" case-sensitive="yes" docbook="yes">
 		<vpe:template children="yes" modify="yes">
