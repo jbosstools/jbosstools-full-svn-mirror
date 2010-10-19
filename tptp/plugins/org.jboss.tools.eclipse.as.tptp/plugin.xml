@@ -27,15 +27,6 @@
 				</configuration>			
 		  	</mechanism>   	
 		</association>
-		<association launchConfigID="org.jboss.ide.eclipse.as.core.server.startupConfiguration">
- 			<mechanism mechanismID="org.eclipse.tptp.platform.instrumentation.ui.instrumentCollector">
-				<configuration
-                 associatedAgent="org.eclipse.tptp.platform.instrumentation.ui.instrumentAgent"
-                 configurationId="org.eclipse.tptp.platform.instrumentation.ui.instrumentCollectorConfiguration"
-                 filter="org.jboss.tools.eclipse.as.tptp.PICollectorFiltration"
-                 launchDelegate="org.eclipse.tptp.platform.instrumentation.ui.internal.launcher.deleg.application.InstrumentLauncherDelegate"/>
-	  		</mechanism>  
-		</association>
 		
 	</extension>
 </plugin>
