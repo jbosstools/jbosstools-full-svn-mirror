@@ -1354,6 +1354,13 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		               replace="\1"
 		               override="true"
 		/>
+		<propertyregex property="artifact.id"
+		               defaultvalue="${artifact.id}"
+		               input="${artifact.id}"
+		               regexp="([^_]+)_(\d+\.\d+\.\d+.SNAPSHOT)\.jar"
+		               replace="\1"
+		               override="true"
+		/>
 		<var name="artifactJar" unset="true" />
 	</target>
 
@@ -1368,6 +1375,7 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 					<property name="artifactJar" value="@{artifactJar}" />
 					<property name="regexp.path" value=".+/plugins/([^/]+.+\.jar)" />
 				</antcallback>
+				<echo level="verbose">Unzip @{artifactJar} into ${WORKINGDIR}/${COMPONENT}/plugins/${artifact.id}</echo>
 				<unzip src="@{artifactJar}" dest="${WORKINGDIR}/${COMPONENT}/plugins/${artifact.id}" overwrite="true" />
 				<var name="artifact.id" unset="true" />
 			</sequential>
