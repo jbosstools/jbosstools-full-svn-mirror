@@ -6,12 +6,12 @@
 <section id="sect-Cloud_Tools_Reference_Guide-Tasks-using_the_deltacloud_perspective">
 	<title>Using the Deltacloud perspective</title>
 	<para>
-	    The Deltacloud perspective consists of three different views: <guilabel>Cloud Viewer</guilabel>, <guilabel>Instances</guilabel> and <guilabel>Images</guilabel>.
+	The Deltacloud perspective consists of three different views: <guilabel>Cloud Viewer</guilabel>, <guilabel>Images</guilabel> and <guilabel>Instances</guilabel>.
         </para>
 	<formalpara>
 	    <title>The Cloud Viewer</title>
 	    <para>
-	       <guilabel>Cloud Viewer</guilabel> shows you the servers you are connected to, the instances running on each server and the images available on each server. Clicking on an object causes details to be shown in the <guilabel>Properties</guilabel> view.
+	       <guilabel>Cloud Viewer</guilabel> shows you the servers you are connected to, the instances running on each server and the images available on each server. Right-clicking on a cloud connection presents you with options to disconnect from a cloud using the <guimenuitem>Disconnect Cloud</guimenuitem> option or reload the the cloud view with the <guimenuitem>Refresh View</guimenuitem> option. Clicking on a connection name causes details to be shown in the <guilabel>Properties</guilabel> view.
 	    </para>
         </formalpara>
 	<figure id="deltacloud_perspective-the_cloud_viewer">
@@ -23,7 +23,7 @@
 	   </mediaobject>
 	</figure>
 	<para>
-	   You can have multiple Deltacloud servers connected at any one time. If you have not yet setup a connection to a Deltacloud server see <xref linkend="sect-Cloud_Tools_Reference_Guide-Tasks-connecting_to_a_deltacloud_server"/>.
+	   You can have multiple Deltacloud servers connected at any one time. If you have not yet setup a connection to a Deltacloud server see <xref linkend="sect-Cloud_Tools_Reference_Guide-Tasks-connecting_to_a_deltacloud_server"/>. You will also require a unique key file for each user who is to have access to the server. To add and manage your key files see <xref linkend="sect-Cloud_Tools_Reference_Guide-Tasks-add_and_manage_server_keys"/>
 	</para>
 	<formalpara>
 	   <title>The Images view</title>
@@ -35,7 +35,7 @@
 	   <title>Deltacloud perspective: The Images view</title>
 	   <mediaobject>
 	      <imageobject>
-		 <imagedata fileref="images/Deltacloud-images_view.png"/>
+		 <imagedata fileref="images/Deltacloud-perspective-images_view.png"/>
 	      </imageobject>
 	   </mediaobject>
 	</figure>
@@ -43,7 +43,7 @@
 	   By right-clicking on an image in the table and selecting <guimenuitem>Launch Instance</guimenuitem>, a dialog will appear. Define the <guilabel>Name</guilabel> of the instance, the <guilabel>Realm</guilabel> the instance should appear in, select a pre-defined <guilabel>Hardware Profile</guilabel> and choose a <guilabel>Key Name</guilabel> for key file authentication.
 	</para>
 	<para>
-	   User authentication keys are managed for Deltacloud tooling by the <guilabel>Manage Keys</guilabel> dialog. 
+	   User authentication keys are managed for Deltacloud tooling by the <guilabel>Manage Keys</guilabel> dialog. When clicking on the <guibutton>Manage</guibutton> you will be presented with this dialog. Select one from the list or add a new one. When adding a new key through this dialog, be sure that it has first been added to the SSH2 key list by undertaking <xref linkend="sect-Cloud_Tools_Reference_Guide-Tasks-add_and_manage_server_keys"/>.
 	</para>
 	<para>
 	   Click <guibutton>Finish</guibutton> to create the new instance.
@@ -71,29 +71,10 @@
 	   </mediaobject>
 	</figure>
 	<para>
-	    Using the <guilabel>Remote System Explorer</guilabel> you can connect to a running instance through the SSH protocol. Accessing a remote instance requires authentication; for an EC2 instance a PEM key file would be used. 
+	   Using the <guilabel>Remote System Explorer</guilabel> (<xref linkend="sect-Cloud_Tools_Reference_Guide-Task-using_the_remote_system_explorer"/>) you can connect to a running instance through the SSH protocol. Accessing a remote instance requires authentication; for an EC2 instance a PEM key file will be used. 
         </para>
 	<para>
-	   Each unique user requires an individual key file and each file must be specified in the SSH2 private keys list prior to performing the ssh connection. To access the SSH2 private keys list navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>General</guimenuitem><guimenuitem>Network Connections</guimenuitem><guimenuitem>SSH2</guimenuitem></menuchoice>.
-        </para>
-	<figure id="preferences-SSH2">
-	   <title>Preferences: SSH2</title>
-	   <mediaobject>
-	      <imageobject>
-		 <imagedata fileref="images/Preferences-Genearl-Network_Connections-SSH2.png"/>
-	      </imageobject>
-	   </mediaobject>
-	</figure>
-	<figure id="deltacloud_perspective-the_instances_view">
-	   <title>Deltacloud perspective: The Instances view</title>
-	   <mediaobject>
-	      <imageobject>
-		 <imagedata fileref="images/Deltacloud-perspective-instances_view.png"/>
-	      </imageobject>
-	   </mediaobject>
-	</figure>
-	<para>
-	   Once connected files on the external instance can be manipulated as if they were on your local machine.
+	   Once connected, files on the external instance can be manipulated as if they were on your local machine.
         </para>
 </section>
 

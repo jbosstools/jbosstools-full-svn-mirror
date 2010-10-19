@@ -6,6 +6,8 @@
 <chapter id="chap-Cloud_Tools_Reference_Guide-Tasks">
 	<title>Tasks</title>
 	<xi:include href="connecting_to_a_deltacloud_server-task.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="add_and_manage_server_keys-task.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="using_the_deltacloud_perspective-task.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="using_the_remote_system_explorer-task.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </chapter>
 
