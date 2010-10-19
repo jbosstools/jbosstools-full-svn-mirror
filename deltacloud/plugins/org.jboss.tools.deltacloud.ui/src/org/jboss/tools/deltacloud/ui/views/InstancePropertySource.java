@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 
 public class InstancePropertySource implements IPropertySource {
@@ -40,7 +41,13 @@ public class InstancePropertySource implements IPropertySource {
 	
 	private IPropertyDescriptor[] propertyDescriptors;
 	private DeltaCloudInstance instance;
+	private DeltaCloud cloud;
 	public InstancePropertySource(CVInstanceElement element, Object o) {
+		CloudViewElement parent = (CloudViewElement)element.getParent();
+		while (parent != null && !(parent instanceof CVCloudElement)) {
+			parent = (CloudViewElement)parent.getParent();
+		}
+		cloud = (DeltaCloud)parent.getElement();
 		instance = (DeltaCloudInstance)o;
 	}
 	
@@ -101,8 +108,27 @@ public class InstancePropertySource implements IPropertySource {
 			return instance.getRealmId();
 		if (id.equals(PROPERTY_IMAGEID))
 			return instance.getImageId();
-		if (id.equals(PROPERTY_KEYNAME))
-			return instance.getKey();
+		if (id.equals(PROPERTY_KEYNAME)) {
+			// At present (Deltacloud 0.0.7), the keyname is omitted
+			// in the data passed back from a listInstances request.
+			// If an instance is running and the keyname is missing,
+			// we can refresh the instance by its id and this will give us
+			// the full data.  We can then replace the instance so that
+			// it will be complete for future requests until a refresh gets the
+			// entire list again.
+			String key = instance.getKey();
+			if (!cloud.getType().equals(DeltaCloudInstance.MOCK_TYPE)) {
+				if (instance.getState().equals(DeltaCloudInstance.RUNNING) && (key == null || key.length() == 0)) {
+					instance = cloud.refreshInstance(instance.getId());
+					if (instance != null) {
+						key = instance.getKey();
+						if (key != null && key.length() > 0)
+							cloud.addReplaceInstance(instance);
+					}
+				}
+			}
+			return key;
+		}
 		if (id.equals(PROPERTY_STATE)) {
 			return instance.getState();
 		}

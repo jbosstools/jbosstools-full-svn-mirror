@@ -1,3 +1,11 @@
+2010-10-19  Jeff Johnston  <jjohnstn@redhat.com>
+	
+	[JBIDE-7366]
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (InstancePropertySource): Calculate
+	the cloud in the constructor.
+	(getPropertyValue): For non-mock clouds where the keyname is not filled in, attempt to
+	refresh the instance to get the keyname.
+
 2010-10-14  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java: 
