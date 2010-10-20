@@ -1,0 +1,5 @@
+2010-10-20  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/test/DeltaCloudClientTest.java: 
+	* src/org/jboss/tools/internal/deltacloud/test/fakes/ServerFake.java: 
+	[JBIDE-7371] tests for server type implemented
