@@ -1,5 +1,7 @@
 require 'rubygems'
+#require 'deltacloud-dependencies.jar'
 require 'deltacloud-dependencies.jar'
+#require 'steamcannon-deltacloud-core'
 
 # Force Rubygems to reload the gem paths
 Gem.clear_paths
