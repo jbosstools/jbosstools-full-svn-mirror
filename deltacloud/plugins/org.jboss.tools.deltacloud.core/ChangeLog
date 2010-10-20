@@ -1,6 +1,8 @@
 2010-10-20  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (getDeltaCloudType): moved from UI to deltacloud client
+	(DCNS): Added API enum (for api requests)
+	(getServerType): moved to instance method, reuse existing client code
 
 2010-10-12  Jeff Johnston  <jjohnstn@redhat.com>
 

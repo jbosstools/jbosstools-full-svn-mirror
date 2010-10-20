@@ -20,8 +20,7 @@ public class CloudTypeValidator implements IValidator {
 	@Override
 	public IStatus validate(Object value) {
 		if (value != null
-				&& !DeltaCloudClient.DeltaCloudType.UNKNOWN.equals(value)
-				&& !DeltaCloudClient.DeltaCloudType.INVALID_URL.equals(value)) {
+				&& !DeltaCloudClient.DeltaCloudType.UNKNOWN.equals(value)) {
 			return ValidationStatus.ok();
 		} else {
 			return ValidationStatus.error(WizardMessages.getString("IllegalCloudUrl.msg")); //$NON-NLS-1$

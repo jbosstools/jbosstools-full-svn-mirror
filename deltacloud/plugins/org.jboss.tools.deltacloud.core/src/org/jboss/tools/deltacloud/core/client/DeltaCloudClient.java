@@ -18,10 +18,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -54,23 +52,17 @@ import org.xml.sax.InputSource;
 
 public class DeltaCloudClient implements API {
 
-	private static final String REQUEST_URL_API = "/api?format=xml";
-
-	private static final String HTTPHEADER_KEY_ACCEPT = "Accept"; //$NON-NLS-1$
-	private static final String HTTPHEADER_VALUE_ACCEPTXML = "application/xml;q=1.0"; //$NON-NLS-1$
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver"; //$NON-NLS-1$
 	private static final String DOCUMENT_ELEMENT_API = "api"; //$NON-NLS-1$
-	private static final String URLCONNECTION_ENCODING = "UTF-8"; //$NON-NLS-1$
 
 	public static enum DeltaCloudType {
-		INVALID_URL, UNKNOWN, MOCK, EC2
+		UNKNOWN, MOCK, EC2
 	}
-
 
 	public static Logger logger = Logger.getLogger(DeltaCloudClient.class);
 
 	private static enum DCNS {
-		INSTANCES, REALMS, IMAGES, HARDWARE_PROFILES, KEYS, START, STOP, REBOOT, DESTROY;
+		API, INSTANCES, REALMS, IMAGES, HARDWARE_PROFILES, KEYS, START, STOP, REBOOT, DESTROY;
 
 		@Override
 		public String toString() {
@@ -86,7 +78,15 @@ public class DeltaCloudClient implements API {
 	private String username;
 	private String password;
 
-	public DeltaCloudClient(URL url, String username, String password) throws MalformedURLException {
+	public DeltaCloudClient(String url) throws MalformedURLException {
+		this(new URL(url), null, null);
+	}
+
+	public DeltaCloudClient(String url, String username, String password) throws MalformedURLException {
+		this(new URL(url), username, password);
+	}
+
+	public DeltaCloudClient(URL url, String username, String password) {
 
 		logger.debug("Creating new Delta Cloud Client for Server: " + url);
 
@@ -97,8 +97,11 @@ public class DeltaCloudClient implements API {
 
 	private String sendRequest(String path, RequestType requestType) throws DeltaCloudClientException {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
-		httpClient.getCredentialsProvider().setCredentials(new AuthScope(baseUrl.getHost(), baseUrl.getPort()),
-				new UsernamePasswordCredentials(username, password));
+		if (username != null && password != null) {
+			httpClient.getCredentialsProvider().setCredentials(
+					new AuthScope(baseUrl.getHost(), baseUrl.getPort()),
+					new UsernamePasswordCredentials(username, password));
+		}
 
 		String requestUrl = baseUrl.toString() + path;
 		logger.debug("Sending Request to: " + requestUrl);
@@ -157,56 +160,27 @@ public class DeltaCloudClient implements API {
 		return "";
 	}
 
-	public static DeltaCloudType getDeltaCloudType(String url) {
-		DeltaCloudType cloudType = DeltaCloudType.UNKNOWN;
+	public DeltaCloudType getServerType() {
+		DeltaCloudType serverType = DeltaCloudType.UNKNOWN;
 		try {
-			Object o = getURLContent(url + REQUEST_URL_API); //$NON-NLS-1$ 
-			if (o instanceof InputStream) {
-				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-				DocumentBuilder db = dbf.newDocumentBuilder();
-				Document document = db.parse(
-						new InputSource(new StringReader(getXML((InputStream) o))));
+			String query = "?format=xml";
+			String apiResponse = sendRequest(DCNS.API + query, RequestType.GET);
+			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Document document = db.parse(new InputSource(new StringReader(apiResponse)));
 
-				NodeList elements = document.getElementsByTagName(DOCUMENT_ELEMENT_API);
-				if (elements.getLength() > 0) {
-					Node n = elements.item(0);
-					Node driver = n.getAttributes().getNamedItem(DOCUMENT_ELEMENT_DRIVER);
-					if (driver != null) {
-						String driverValue = driver.getNodeValue();
-						cloudType = DeltaCloudType.valueOf(driverValue.toUpperCase());
-					}
+			NodeList elements = document.getElementsByTagName(DOCUMENT_ELEMENT_API);
+			if (elements.getLength() > 0) {
+				Node n = elements.item(0);
+				Node driver = n.getAttributes().getNamedItem(DOCUMENT_ELEMENT_DRIVER);
+				if (driver != null) {
+					String driverValue = driver.getNodeValue();
+					serverType = DeltaCloudType.valueOf(driverValue.toUpperCase());
 				}
 			}
-		} catch (MalformedURLException e) {
-			cloudType = DeltaCloudType.INVALID_URL;
 		} catch (Exception e) {
-			cloudType = DeltaCloudType.UNKNOWN;
+			serverType = DeltaCloudType.UNKNOWN;
 		}
-		return cloudType;
-	}
-
-	private static Object getURLContent(String url) throws IOException {
-		URL u = new URL(url);
-		URLConnection connection = u.openConnection();
-		connection.setRequestProperty(HTTPHEADER_KEY_ACCEPT, HTTPHEADER_VALUE_ACCEPTXML);
-		return connection.getContent();
-	}
-
-	private static String getXML(InputStream is) throws UnsupportedEncodingException, IOException {
-		try {
-			if (is == null) {
-				return "";
-			}
-			StringBuilder sb = new StringBuilder();
-			String line = "";
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is, URLCONNECTION_ENCODING));
-			while ((line = reader.readLine()) != null) {
-				sb.append(line).append("\n"); //$NON-NLS-1$
-			}
-			return sb.toString();
-		} finally {
-			is.close();
-		}
+		return serverType;
 	}
 
 	@Override

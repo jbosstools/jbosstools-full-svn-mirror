@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.net.MalformedURLException;
+
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 
@@ -31,7 +33,11 @@ public class UrlToCloudTypeConverter implements IConverter {
 	@Override
 	public Object convert(Object fromObject) {
 		String deltaCloudUrl = (String) fromObject;
-		return DeltaCloudClient.getDeltaCloudType(deltaCloudUrl);
+		try {
+			return new DeltaCloudClient(deltaCloudUrl, "", "").getServerType();
+		} catch (MalformedURLException e) {
+			return null;
+		}
 	}
 
 }
