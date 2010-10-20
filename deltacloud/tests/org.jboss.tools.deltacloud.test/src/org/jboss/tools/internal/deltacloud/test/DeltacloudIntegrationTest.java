@@ -10,11 +10,9 @@ import java.util.Collections;
 import org.jruby.Ruby;
 import org.jruby.RubyInstanceConfig;
 import org.jruby.javasupport.JavaEmbedUtils;
-import org.junit.Test;
 
 public class DeltacloudIntegrationTest {
 
-	@Test
 	public void runDeltaCloud() throws IOException {
 
 		RubyInstanceConfig config = new RubyInstanceConfig();
