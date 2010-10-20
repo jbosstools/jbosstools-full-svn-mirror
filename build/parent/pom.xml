@@ -227,7 +227,7 @@
 		<profile>
 			<id>helios-remote-target</id>
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<repositories>
 				<repository>
@@ -286,6 +286,13 @@
 			</activation>
 			<repositories>
 				<repository>
+         				<id>jbosstools-target-platform-repo</id>
+     	            			<url>http://download.jboss.org/jbosstools/updates/target-platform/latest/</url>
+                 			<layout>p2</layout>
+                   			<snapshots><enabled>true</enabled></snapshots>
+                     			<releases><enabled>true</enabled></releases>
+   				</repository>
+   				<repository>
 					<id>helios</id>
 					<url>http://download.eclipse.org/releases/helios/</url>
 					<layout>p2</layout>
