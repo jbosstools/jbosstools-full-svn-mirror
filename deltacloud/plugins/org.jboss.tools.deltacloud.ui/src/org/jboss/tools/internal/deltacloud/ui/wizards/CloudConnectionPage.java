@@ -149,7 +149,6 @@ public class CloudConnectionPage extends WizardPage {
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
 		typeLabel.setText(WizardMessages.getString(CLOUDTYPE_LABEL));
-		
 		Label computedTypeLabel = new Label(container, SWT.NULL);
 		Binding urlBinding = bindCloudTypeLabel(dbc, urlText, computedTypeLabel);
 
@@ -313,7 +312,7 @@ public class CloudConnectionPage extends WizardPage {
 		public void handleValueChange(ValueChangeEvent event) {
 			IStatus status = (IStatus) event.diff.getNewValue();
 			if (status.isOK()) {
-				typeLabel.setText(connectionModel.getType());
+				typeLabel.setText(connectionModel.getType().toString());
 			} else {
 				typeLabel.setText("");
 			}
@@ -336,8 +335,8 @@ public class CloudConnectionPage extends WizardPage {
 	 */
 	private Binding bindCloudTypeLabel(DataBindingContext dbc, Text urlText, final Label typeLabel) {
 		UpdateValueStrategy updateStrategy = new UpdateValueStrategy();
-		updateStrategy.setConverter(new CloudConnectionModel.CloudTypeConverter());
-		updateStrategy.setBeforeSetValidator(new CloudConnectionModel.CloudTypeValidator());
+		updateStrategy.setConverter(new UrlToCloudTypeConverter());
+		updateStrategy.setBeforeSetValidator(new CloudTypeValidator());
 
 		Binding binding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(100, urlText),

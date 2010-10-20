@@ -1,3 +1,12 @@
+2010-10-20  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/UrlToCloudTypeConverter.java:
+	[JBIDE-7371] moved cloud type checking to DeltaCloudClient, converter now delegates to deltacloud client
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudTypeValidator.java: 
+	[JBIDE-7371] switched validator to check enum type instead of string messages
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionModel.java:
+	[JBIDE-7371] moved cloud type checking to DeltaCloudClient, removed converter and validator 
+
 2010-10-19  Jeff Johnston  <jjohnstn@redhat.com>
 	
 	[JBIDE-7366]

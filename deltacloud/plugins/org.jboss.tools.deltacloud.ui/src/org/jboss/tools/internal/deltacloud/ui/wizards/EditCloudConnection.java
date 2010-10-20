@@ -79,7 +79,7 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
-		String type = mainPage.getModel().getType();
+		String type = mainPage.getModel().getType().toString();
 		try {
 			String oldName = cloud.getName();
 			cloud.editCloud(name, url, username, password, type);
