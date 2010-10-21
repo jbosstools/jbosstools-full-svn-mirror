@@ -101,14 +101,16 @@ public class DeltaCloudMockClientIntegrationTest {
 	public void canListMockInstances() throws DeltaCloudClientException {
 		List<Instance> instances = client.listInstances();
 		assertEquals(1, instances.size());
-		assertInstance("inst0", "Mock Instance With Profile Change", "mockuser", "img1", "us", instances.get(0));
+		assertInstance("inst0", "Mock Instance With Profile Change", "mockuser", "img1", "us", "m1-large", "12288 MB", instances.get(0));
 	}
 
-	private void assertInstance(String id, String name, String owner, String ImageId, String realmId, Instance instance) {
+	private void assertInstance(String id, String name, String owner, String ImageId, String realmId, String profile, String memory, Instance instance) {
 		assertEquals(id, instance.getId());
 		assertEquals(name, instance.getName());
 		assertEquals(owner, instance.getOwnerId());
 		assertEquals(realmId, instance.getRealmId());
+		assertEquals(profile, instance.getProfileId());
+		assertEquals(memory, instance.getMemory());
 	}
 
 }
