@@ -83,7 +83,7 @@ public class DeltaCloudClient implements API {
 
 		@Override
 		public String toString() {
-			return "/api/" + getResourceName();
+			return "/" + getResourceName();
 		}
 
 		public String getResourceName() {
@@ -118,7 +118,7 @@ public class DeltaCloudClient implements API {
 
 	private String sendRequest(String path, RequestType requestType) throws DeltaCloudClientException {
 		DefaultHttpClient httpClient = addCredentials(new DefaultHttpClient());
-		String requestUrl = baseUrl.toString() + path;
+		String requestUrl = baseUrl.toString() + "/api" + path;
 		logger.debug("Sending Request to: " + requestUrl);
 
 		try {
