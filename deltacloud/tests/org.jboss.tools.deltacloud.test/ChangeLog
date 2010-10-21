@@ -1,3 +1,8 @@
+2010-10-21  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/test/DeltaCloudMockClientIntegrationTest.java 
+	[JBIDE-7371] (reports404OnUnknownResource): added test for reporting 404 on bad requests 
+
 2010-10-20  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/test/DeltaCloudClientTest.java: 

@@ -20,6 +20,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -54,23 +55,43 @@ public class DeltaCloudClient implements API {
 
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver"; //$NON-NLS-1$
 	private static final String DOCUMENT_ELEMENT_API = "api"; //$NON-NLS-1$
+	private static final int HTTP_STATUSCODE_SERVERERROR = 500;
+	private static final int HTTP_STATUSCODE_CLIENTERROR = 400;
+
+	public static Logger logger = Logger.getLogger(DeltaCloudClient.class);
 
 	public static enum DeltaCloudType {
 		UNKNOWN, MOCK, EC2
 	}
 
-	public static Logger logger = Logger.getLogger(DeltaCloudClient.class);
-
 	private static enum DCNS {
-		API, INSTANCES, REALMS, IMAGES, HARDWARE_PROFILES, KEYS, START, STOP, REBOOT, DESTROY;
+		TYPE {
+			public String getResourceName() {
+				return "";
+			}
+		}
+		,
+		INSTANCES
+		, REALMS
+		, IMAGES
+		, HARDWARE_PROFILES
+		, KEYS
+		, START
+		, STOP
+		, REBOOT
+		, DESTROY;
 
 		@Override
 		public String toString() {
-			return "/" + name().toLowerCase();
+			return "/api/" + getResourceName();
+		}
+
+		public String getResourceName() {
+			return name().toLowerCase();
 		}
 	}
 
-	private static enum RequestType {
+	protected static enum RequestType {
 		POST, GET, DELETE
 	};
 
@@ -96,46 +117,91 @@ public class DeltaCloudClient implements API {
 	}
 
 	private String sendRequest(String path, RequestType requestType) throws DeltaCloudClientException {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		if (username != null && password != null) {
-			httpClient.getCredentialsProvider().setCredentials(
-					new AuthScope(baseUrl.getHost(), baseUrl.getPort()),
-					new UsernamePasswordCredentials(username, password));
-		}
-
+		DefaultHttpClient httpClient = addCredentials(new DefaultHttpClient());
 		String requestUrl = baseUrl.toString() + path;
 		logger.debug("Sending Request to: " + requestUrl);
 
 		try {
-			HttpUriRequest request = null;
-			if (requestType == RequestType.POST) {
-				request = new HttpPost(requestUrl);
-			} else if (requestType == RequestType.DELETE) {
-				request = new HttpDelete(requestUrl);
-			} else {
-				request = new HttpGet(requestUrl);
-			}
-
-			request.setHeader("Accept", "application/xml");
+			HttpUriRequest request = getRequest(requestType, requestUrl);
+			request.setHeader("Accept", "application/xml;q=1");
 			HttpResponse httpResponse = httpClient.execute(request);
-
-			HttpEntity entity = httpResponse.getEntity();
-
-			if (entity != null) {
-				InputStream is = entity.getContent();
-				String xml = readInputStreamToString(is);
-				httpClient.getConnectionManager().shutdown();
-
-				logger.debug("Response\n" + xml);
-				return xml;
+			if (isHttpError(httpResponse.getStatusLine().getStatusCode())) {
+				throw new DeltaCloudClientException(
+						MessageFormat.format("the server reported an error \"{0}\" on requesting \"{1}\"",
+						httpResponse.getStatusLine().getReasonPhrase(),requestUrl));
 			}
+			return getResponse(httpResponse.getEntity());
+		} catch (DeltaCloudClientException e) {
+			throw e;
 		} catch (IOException e) {
 			logger.error("Error processing request to: " + requestUrl, e);
 			throw new DeltaCloudClientException("Error processing request to: " + requestUrl, e);
 		} catch (Exception e) {
 			throw new DeltaCloudClientException(e.getMessage());
+		} finally {
+			httpClient.getConnectionManager().shutdown();
 		}
-		throw new DeltaCloudClientException("Could not execute request to:" + requestUrl);
+	}
+
+	private String getResponse(HttpEntity entity) throws IOException,
+			DeltaCloudClientException {
+		if (entity == null) {
+			return null;
+		}
+		String xml = readInputStreamToString(entity.getContent());
+		logger.debug("Response\n" + xml);
+		return xml;
+	}
+
+	private boolean isHttpError(int statusCode) throws DeltaCloudClientException {
+		return isHttpServerError(statusCode)
+				|| isHttpClientError(statusCode);
+	}
+
+	private boolean isHttpClientError(int statusCode) {
+		return (statusCode - HTTP_STATUSCODE_CLIENTERROR) > 0
+				&& (statusCode - HTTP_STATUSCODE_CLIENTERROR) < 100;
+	}
+
+	private boolean isHttpServerError(int statusCode) {
+		return (statusCode - HTTP_STATUSCODE_SERVERERROR) > 0
+				&& (statusCode - HTTP_STATUSCODE_SERVERERROR) < 100;
+	}
+
+	/**
+	 * Returns a request instance for the given request type and url.
+	 * 
+	 * @param requestType
+	 *            the request type to use
+	 * @param requestUrl
+	 *            the requested url
+	 * @return the request instance
+	 */
+	protected HttpUriRequest getRequest(RequestType requestType, String requestUrl) {
+		switch (requestType) {
+		case POST:
+			return new HttpPost(requestUrl);
+		case DELETE:
+			return new HttpDelete(requestUrl);
+		default:
+			return new HttpGet(requestUrl);
+		}
+	}
+
+	/**
+	 * Adds the credentials to the given http client.
+	 * 
+	 * @param httpClient
+	 *            the http client
+	 * @return the default http client
+	 */
+	private DefaultHttpClient addCredentials(DefaultHttpClient httpClient) {
+		if (username != null && password != null) {
+			httpClient.getCredentialsProvider().setCredentials(
+					new AuthScope(baseUrl.getHost(), baseUrl.getPort()),
+					new UsernamePasswordCredentials(username, password));
+		}
+		return httpClient;
 	}
 
 	private static String readInputStreamToString(InputStream is) throws DeltaCloudClientException {
@@ -164,7 +230,7 @@ public class DeltaCloudClient implements API {
 		DeltaCloudType serverType = DeltaCloudType.UNKNOWN;
 		try {
 			String query = "?format=xml";
-			String apiResponse = sendRequest(DCNS.API + query, RequestType.GET);
+			String apiResponse = sendRequest(DCNS.TYPE + query, RequestType.GET);
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(apiResponse)));
 

@@ -1,8 +1,14 @@
+2010-10-21  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java 
+	(getRequest): extracted to its own method, changed to switch (from if-else)
+	(sendRequest): added http status code check (latest deltacloud 0.0.8 now reports 404 on missing resource)
+
 2010-10-20  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (getDeltaCloudType): moved from UI to deltacloud client
 	(DCNS): Added API enum (for api requests)
-	(getServerType): moved to instance method, reuse existing client code
+	(getServerType): moved to instance method, reuse existing client code (instead of duplication)
 
 2010-10-12  Jeff Johnston  <jjohnstn@redhat.com>
 
