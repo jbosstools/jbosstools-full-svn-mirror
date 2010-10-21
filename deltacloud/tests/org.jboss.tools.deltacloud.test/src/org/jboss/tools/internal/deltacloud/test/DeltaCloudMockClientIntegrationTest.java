@@ -1,8 +1,8 @@
 package org.jboss.tools.internal.deltacloud.test;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -15,6 +15,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Image;
+import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerFake;
 import org.junit.Before;
 import org.junit.Test;
@@ -95,4 +96,19 @@ public class DeltaCloudMockClientIntegrationTest {
 		assertEquals(architecture, image.getArchitecture());
 		assertEquals(description, image.getDescription());
 	}
+
+	@Test
+	public void canListMockInstances() throws DeltaCloudClientException {
+		List<Instance> instances = client.listInstances();
+		assertEquals(1, instances.size());
+		assertInstance("inst0", "Mock Instance With Profile Change", "mockuser", "img1", "us", instances.get(0));
+	}
+
+	private void assertInstance(String id, String name, String owner, String ImageId, String realmId, Instance instance) {
+		assertEquals(id, instance.getId());
+		assertEquals(name, instance.getName());
+		assertEquals(owner, instance.getOwnerId());
+		assertEquals(realmId, instance.getRealmId());
+	}
+
 }
