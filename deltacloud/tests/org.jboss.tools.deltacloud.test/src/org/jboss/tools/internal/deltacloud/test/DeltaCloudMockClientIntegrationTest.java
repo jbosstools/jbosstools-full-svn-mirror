@@ -71,10 +71,10 @@ public class DeltaCloudMockClientIntegrationTest {
 				}
 			};
 			errorClient.listImages();
+			fail("no exception catched");
 		} catch (Exception e) {
 			assertEquals(DeltaCloudClientException.class, e.getClass());
 		}
-		fail("no exception catched");
 	}
 
 	@Test
