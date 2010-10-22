@@ -1,3 +1,9 @@
+2010-10-22  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java 
+	(shutdownInstance): [JBIDE-7401] changed to POST (api break in dc 0.0.8)
+	(startInstance): [JBIDE-7401] changed to POST (api break in dc 0.0.8)
+
 2010-10-22  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (listProfile): Fix to

@@ -362,17 +362,26 @@ public class DeltaCloudClient implements API {
 
 	@Override
 	public void rebootInstance(String instanceId) throws DeltaCloudClientException {
+		/**
+		 * shouldn't that be PUT? changing resource states == PUT!
+		 */
 		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.REBOOT, RequestType.GET);
 	}
 
 	@Override
 	public void shutdownInstance(String instanceId) throws DeltaCloudClientException {
-		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.STOP, RequestType.GET);
+		/**
+		 * shouldn't that be PUT? changing resource states == PUT!
+		 */
+		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.STOP, RequestType.POST);
 	}
 
 	@Override
 	public void startInstance(String instanceId) throws DeltaCloudClientException {
-		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.START, RequestType.GET);
+		/**
+		 * shouldn't that be PUT? changing resource states == PUT!
+		 */
+		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.START, RequestType.POST);
 	}
 
 	@Override
