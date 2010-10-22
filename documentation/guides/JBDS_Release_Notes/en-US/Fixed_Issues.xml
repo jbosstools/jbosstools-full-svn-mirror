@@ -25,31 +25,56 @@
 			<itemizedlist>
 				 <listitem>
 				    <para>
-				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7193">
-				       </ulink> New optional parameters <parameter>ruleMultithreadEvaluation</parameter> and <parameter>ruleMaxThreads</parameter> have been added to the <classname>BussinessRulesProcessor</classname> class. <parameter>ruleMultithreadEvaluation</parameter> enables or disables <classname>KnowledgeBase</classname> partitioning. <parameter>ruleMaxThreads</parameter> defines the numer of threads to use when <classname>KnowledgeBase</classname> partitioning is enabled. The default values for these parameters is null, disabling them by default.
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7193">JBIDE-7193</ulink>: New optional parameters <parameter>ruleMultithreadEvaluation</parameter> and <parameter>ruleMaxThreads</parameter> have been added to the <classname>BussinessRulesProcessor</classname> class. <parameter>ruleMultithreadEvaluation</parameter> enables or disables <classname>KnowledgeBase</classname> partitioning. <parameter>ruleMaxThreads</parameter> defines the numer of threads to use when <classname>KnowledgeBase</classname> partitioning is enabled. The default values for these parameters is null, disabling them by default.
 				    </para>
 				 </listitem>
 				 <listitem>
 					  <para>
-					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7235">
-					     </ulink> The ESB validator has been extended to cover the <classname>BussinessRulesProcessor</classname> class. This ensures that only one <methodname>ruleSet</methodname> is specified by the <classname>BussinessRulesProcessor</classname>, inhibiting conflicts.
+					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7235">JBIDE-7235</ulink>: The ESB validator has been extended to cover the <classname>BussinessRulesProcessor</classname> class. This ensures that only one <methodname>ruleSet</methodname> is specified by the <classname>BussinessRulesProcessor</classname>, inhibiting conflicts.
 					  </para>
 				 </listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-<!--	<formalpara>
-		<title>jBPM</title>
+        </formalpara>
+	<formalpara>
+		<title>Google Web Toolkit</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
-						</para>
+					   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7092">JBIDE-7092</ulink>: Support has been added for the Google Web Toolkit (GWT) Designer. To use this functionality do the following:					
+				       </para>
+				       <orderedlist>
+					  <listitem>
+					     <para>
+						Install the GWT Designer from <ulink url="http://dl.google.com/eclipse/inst/d2gwt/latest ">http://dl.google.com/eclipse/inst/d2gwt/latest</ulink>
+					     </para>
+					  </listitem>
+					  <listitem>
+					     <para>
+						Create a dynamic web project and active the GWT facet
+					     </para>
+					  </listitem>
+					  <listitem>
+					     <para>
+						Build the included GWT examples
+					     </para>
+					  </listitem>
+					  <listitem>
+					     <para>
+						Right-click on <filename>Gwt_jboss.java</filename> and choose <menuchoice><guimenuitem>Open with</guimenuitem><guimenuitem>WindowBuilder Editor</guimenuitem></menuchoice> from the menu
+					     </para>
+					  </listitem>
+					  <listitem>
+					     <para>
+						Switch the editor to the <guilabel>Designer</guilabel> tab
+					     </para>
+					  </listitem>
+				       </orderedlist>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 <!--	<formalpara>
 		<title>Hibernate</title>
 		<para>
@@ -63,17 +88,29 @@
 		</para>
 	     </formalpara> -->
 <!--	<formalpara>
-		<title>JavaServer Faces (JSF)</title>
+		<title>jBPM</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						
-					</para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	     </formalpara> -->
+	</formalpara> -->
+	<formalpara>
+		<title>JavaServer Faces (JSF)</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7147">JBIDE-7147</ulink>: The validators create a marker for each problem found when conducting validation. An issue would arise where system performance would be drammatically decreased when an excesive amount of problems were discovered and subsequently marked. To ensure a system does not receive a performance hit, the <guimenuitem>Validator</guimenuitem> preferences screen now includes the ability to set the maximum number of problems reported per file. If there are more issues in a file than the maximum number to be reported, once the reported issues are corrected the others will be reported in subsequent validation attempts.
+				   </para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	     </formalpara>
 <!--	<formalpara>
 		<title>Portlet</title>
 		<para>
@@ -134,6 +171,26 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
+	
+<!-- Only for JBT Release Notes -->
+<!--	<formalpara>
+		<title>Usage</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7144">JBIDE-7144</ulink>: A preference page is provided that details all settings currently being reported. 
+					</para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7142">JBIDE-7142</ulink>: Originally usage reporting only reported an operating system version if it was either Macintosh or Windows, missing Linux. Support for reporting Linux operating system versions was added through completion of this issue.
+				   </para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara> -->	
+	
 <!--	<formalpara>
 		<title>Visual Page Editor</title>
 		<para>
@@ -146,18 +203,18 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-<!--	<formalpara id="Fixed_Issues-Web_Tools_Platform">
+	<formalpara id="Fixed_Issues-Web_Tools_Platform">
 		<title>Web Tools Platform</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						
+					<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7106">JBIDE-7106</ulink>: Annotations have been added for JAX-RS (Java API for RESTful Web Services). This addition has been accomplished by modifying the <guilabel>Annotation Properties</guilabel> view.
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	     </formalpara> -->
+	     </formalpara>
 <!--	<formalpara>
 		<title>XHTML Editor</title>
 		<para>

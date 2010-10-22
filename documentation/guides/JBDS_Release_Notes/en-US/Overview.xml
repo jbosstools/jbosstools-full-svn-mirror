@@ -40,6 +40,16 @@
 					JBoss Drools
 				</para>
 			</listitem>
+			<listitem>
+				<para>
+					ModeShape
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Teiid
+				</para>
+			</listitem>
 		</itemizedlist>
 		<para>
 			JBoss Developer Studio includes both certified visual tooling and a runtime platform (that Red Hat supports for 3 years (Limited) and 5 years respectively), ensuring developers of a stable, upgradable, deployable and supportable platform.
