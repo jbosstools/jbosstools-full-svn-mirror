@@ -286,7 +286,7 @@ public class DeltaCloudClient implements API {
 	@Override
 	public HardwareProfile listProfile(String profileId) throws DeltaCloudClientException {
 		String request = DCNS.HARDWARE_PROFILES + "/" + profileId;
-		return JAXB.unmarshal(sendRequest(request, RequestType.GET), HardwareProfile.class);
+		return JAXB.unmarshal(new StringReader(sendRequest(request, RequestType.GET)), HardwareProfile.class);
 	}
 
 	@Override
@@ -301,7 +301,7 @@ public class DeltaCloudClient implements API {
 
 	@Override
 	public Image listImages(String imageId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(sendRequest(DCNS.IMAGES + "/" + imageId, RequestType.GET), Image.class);
+		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.IMAGES + "/" + imageId, RequestType.GET)), Image.class);
 	}
 
 	@Override
@@ -322,7 +322,7 @@ public class DeltaCloudClient implements API {
 
 	@Override
 	public Realm listRealms(String realmId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(sendRequest(DCNS.REALMS + "/" + realmId, RequestType.GET), Realm.class);
+		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.REALMS + "/" + realmId, RequestType.GET)), Realm.class);
 	}
 
 	public void createKey(String keyname, String keyStoreLocation) throws DeltaCloudClientException {

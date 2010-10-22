@@ -64,6 +64,8 @@ public class DeltaCloudManager {
 					Node typeNode = attrs.getNamedItem("type"); // $NON-NLS-1$
 					Node imageFilterNode = attrs.getNamedItem("imagefilter"); //$NON-NLS-1$
 					Node instanceFilterNode = attrs.getNamedItem("instancefilter"); //$NON-NLS-1$
+					Node lastKeyNameNode = attrs.getNamedItem("lastkeyname"); //$NON-NLS-1$
+					Node lastImageIdNode = attrs.getNamedItem("lastimage"); //$NON-NLS-1$
 					String name = nameNode.getNodeValue();
 					String url = urlNode.getNodeValue();
 					String username = usernameNode.getNodeValue();
@@ -79,6 +81,12 @@ public class DeltaCloudManager {
 						instanceFilterRules = instanceFilterNode.getNodeValue();
 					else
 						instanceFilterRules = IInstanceFilter.ALL_STRING;
+					String lastKeyName = "";
+					if (lastKeyNameNode != null)
+						lastKeyName = lastKeyNameNode.getNodeValue();
+					String lastImageId = "";
+					if (lastImageIdNode != null)
+						lastImageId = lastImageIdNode.getNodeValue();
 					ISecurePreferences root = SecurePreferencesFactory.getDefault();
 					ISecurePreferences node = root.node(key);
 					String password;
@@ -86,6 +94,8 @@ public class DeltaCloudManager {
 						password = node.get("password", null); //$NON-NLS-1$
 						DeltaCloud cloud = new DeltaCloud(name, url, username, password, type, 
 								false, imageFilterRules, instanceFilterRules);
+						cloud.setLastImageId(lastImageId);
+						cloud.setLastKeyname(lastKeyName);
 						cloud.loadChildren();
 						clouds.add(cloud);
 					} catch (Exception e1) {
@@ -116,10 +126,13 @@ public class DeltaCloudManager {
 				for (DeltaCloud d : clouds) {
 					p.println("<cloud name=\"" + d.getName() + "\" url=\"" //$NON-NLS-1$ //$NON-NLS-2$ 
 							+ d.getURL() +
-							"\" username=\"" + d.getUsername() + 
-							"\" type=\"" + d.getType() + 
-							"\" imagefilter=\"" + d.getImageFilter() + 
-							"\" instancefilter=\"" + d.getInstanceFilter() + "\"/>"); //$NON-NLS-1$ //$NON-NLS-2$
+							"\" username=\"" + d.getUsername() + //$NON-NLS-1$ //$NON-NLS-2$ 
+							"\" type=\"" + d.getType() + //$NON-NLS-1$ //$NON-NLS-2$
+							"\" imagefilter=\"" + d.getImageFilter() + //$NON-NLS-1$ //$NON-NLS-2$
+							"\" instancefilter=\"" + d.getInstanceFilter() + //$NON-NLS-1$ //$NON-NLS-2$
+							"\" lastkeyname=\"" + d.getLastKeyname() + //$NON-NLS-1$ //$NON-NLS-2$
+							"\" lastimage=\"" + d.getLastImageId() + //$NON-NLS-1$ //$NON-NLS-2$
+							"\"/>"); //$NON-NLS-1$
 				}
 				p.println("</clouds>"); //$NON-NLS-1$
 				p.close();

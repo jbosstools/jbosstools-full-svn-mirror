@@ -1,3 +1,19 @@
+2010-10-22  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (listProfile): Fix to
+ 	wrap the xml result in a StringReader before trying to unmarshal.
+	(listImages): Ditto.
+	(listRealms): Ditto.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getLastImageId): New method.
+	(setLastImageId): Ditto. 
+	(getLastKeyname): Ditto.
+	(setLastKeyname): Ditto.
+	(getImage): Ditto.
+	(save): Make public.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (loadClouds): Add code to get
+	the last keyname and last imageid used for the cloud. 
+	(saveClouds): Save the last keyname and last imageid used for instance launching.
+
 2010-10-21  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java 

@@ -39,6 +39,8 @@ public class DeltaCloud {
 	private String username;
 	private String url;
 	private String type;
+	private String lastKeyname = "";
+	private String lastImageId = "";
 	private DeltaCloudClient client;
 	private ArrayList<DeltaCloudInstance> instances;
 	private ArrayList<DeltaCloudImage> images;
@@ -131,6 +133,22 @@ public class DeltaCloud {
 		return type;
 	}
 	
+	public String getLastImageId() {
+		return lastImageId;
+	}
+	
+	public void setLastImageId(String lastImageId) {
+		this.lastImageId = lastImageId;
+	}
+	
+	public String getLastKeyname() {
+		return lastKeyname;
+	}
+	
+	public void setLastKeyname(String lastKeyname) {
+		this.lastKeyname = lastKeyname;
+	}
+	
 	public IInstanceFilter getInstanceFilter() {
 		return instanceFilter;
 	}
@@ -180,7 +198,7 @@ public class DeltaCloud {
 		t.start();
 	}
 	
-	private void save() {
+	public void save() {
 		// Currently we have to save all clouds instead of just this one
 		DeltaCloudManager.getDefault().saveClouds();
 	}
@@ -397,6 +415,18 @@ public class DeltaCloud {
 			imageArray = images.toArray(imageArray);
 			return imageArray;
 		}
+	}
+	
+	public DeltaCloudImage getImage(String imageId) {
+		DeltaCloudImage retVal = null;
+		try {
+			Image image = client.listImages(imageId);
+			retVal = new DeltaCloudImage(image);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// do nothing and return null
+		}
+		return retVal;
 	}
 	
 	public boolean testConnection() {
