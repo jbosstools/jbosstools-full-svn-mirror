@@ -1,5 +1,4 @@
 require 'rubygems'
-#require 'deltacloud-dependencies.jar'
 require 'deltacloud-dependencies.jar'
 #require 'steamcannon-deltacloud-core'
 
