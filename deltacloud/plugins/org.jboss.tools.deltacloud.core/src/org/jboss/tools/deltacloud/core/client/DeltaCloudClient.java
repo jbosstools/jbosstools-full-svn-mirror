@@ -123,7 +123,6 @@ public class DeltaCloudClient implements API {
 
 		try {
 			HttpUriRequest request = getRequest(requestType, requestUrl);
-			request.setHeader("Accept", "application/xml;q=1");
 			HttpResponse httpResponse = httpClient.execute(request);
 			if (isHttpError(httpResponse.getStatusLine().getStatusCode())) {
 				throw new DeltaCloudClientException(
@@ -178,14 +177,19 @@ public class DeltaCloudClient implements API {
 	 * @return the request instance
 	 */
 	protected HttpUriRequest getRequest(RequestType requestType, String requestUrl) {
+		HttpUriRequest request = null;
 		switch (requestType) {
 		case POST:
-			return new HttpPost(requestUrl);
+			request = new HttpPost(requestUrl);
+			break;
 		case DELETE:
-			return new HttpDelete(requestUrl);
+			request = new HttpDelete(requestUrl);
+			break;
 		default:
-			return new HttpGet(requestUrl);
+			request = new HttpGet(requestUrl);
 		}
+		request.setHeader("Accept", "application/xml;q=1");
+		return request;
 	}
 
 	/**
