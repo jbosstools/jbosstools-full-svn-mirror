@@ -23,6 +23,11 @@
 			<param name="build.archive" value="${soap50.build.archive}"/>
 			<param name="md5" value="${soap50.build.archive.md5}" />
 		</antcall>
+		<antcall target="build.soap">
+			<param name="build.uri" value="${soap51.build.uri}"/>
+			<param name="build.archive" value="${soap51.build.archive}"/>
+			<param name="md5" value="${soap51.build.archive.md5}" />
+		</antcall>
 	</target>
 	
 </project>
