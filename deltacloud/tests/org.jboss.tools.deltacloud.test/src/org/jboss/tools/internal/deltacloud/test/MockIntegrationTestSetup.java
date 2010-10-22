@@ -39,8 +39,13 @@ public class MockIntegrationTestSetup {
 		ensureDeltaCloudIsRunning();
 		this.client = new DeltaCloudClient(DELTACLOUD_URL, DELTACLOUD_USER, DELTACLOUD_PASSWORD);
 		Image image = getFirstImage(client);
+		this.testInstance = createTestInstance(image);
+	}
+
+	private Instance createTestInstance(Image image) throws DeltaCloudClientException {
 		assertNotNull(image);
-		this.testInstance = client.createInstance(image.getId());
+		Instance instance = client.createInstance(image.getId());
+		return instance;
 	}
 	
 	public void ensureDeltaCloudIsRunning() throws IOException {
