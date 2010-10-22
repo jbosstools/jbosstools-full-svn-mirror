@@ -19,18 +19,25 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-<!--	<formalpara>
+	<formalpara>
 		<title>ESB</title>
 		<para>
 			<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
-					</para>
-				</listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7193">
+				       </ulink> New optional parameters <parameter>ruleMultithreadEvaluation</parameter> and <parameter>ruleMaxThreads</parameter> have been added to the <classname>BussinessRulesProcessor</classname> class. <parameter>ruleMultithreadEvaluation</parameter> enables or disables <classname>KnowledgeBase</classname> partitioning. <parameter>ruleMaxThreads</parameter> defines the numer of threads to use when <classname>KnowledgeBase</classname> partitioning is enabled. The default values for these parameters is null, disabling them by default.
+				    </para>
+				 </listitem>
+				 <listitem>
+					  <para>
+					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7235">
+					     </ulink> The ESB validator has been extended to cover the <classname>BussinessRulesProcessor</classname> class. This ensures that only one <methodname>ruleSet</methodname> is specified by the <classname>BussinessRulesProcessor</classname>, inhibiting conflicts.
+					  </para>
+				 </listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 <!--	<formalpara>
 		<title>jBPM</title>
 		<para>
@@ -43,47 +50,42 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-	<formalpara>
+<!--	<formalpara>
 		<title>Hibernate</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6075">JBIDE-6075</ulink>: In the Hibernate reverse engineering editor it was impossible to add a parameter as the button to do so was missing. This update corrects the user interface to include the <guibutton>Add parameter</guibutton> button under the <guilabel>Id Generator details</guilabel> <guilabel>Class</guilabel> section.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5960">JBIDE-5960</ulink>: A new <guibutton>Details ...</guibutton> button has been added to the <guilabel>Hibernate Settings</guilabel> section within the project properties. This added button displays the configuration wizard for the selected console (this wizard is also still available through the <guilabel>Console Configuration</guilabel> view). With the addition of this new button, a consoles configuration wizard is now more easily accessable to the user.
+						
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	     </formalpara> -->
+<!--	<formalpara>
 		<title>JavaServer Faces (JSF)</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5941">JBIDE-5941</ulink>: A new JSF2 feature has been added that allows a user to type <code>#{cc.attrs.|</code> and have an attribute list returned.
+						
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
-	<formalpara>
+	     </formalpara> -->
+<!--	<formalpara>
 		<title>Portlet</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1214">JBDS-1214</ulink>: The JBoss Enterprise Portal Platform 5.0 was not compatible with the JBoss Developer Studio when a user would generate specific JBoss Portal XML files. To allow for the JBoss Enterprise Portal Platform to work with the JBoss Developer Studio the option to remove JBoss Portal XML file creation when the user chooses JBoss Enterprise Portal Platform 5.0. If a user attempts to deploy a JBoss Portal 2 project to the JBoss Enterprise Portal Platform 5.0, the user has to remove or rename the <filename>jboss-app.xml</filename> file in order to ensure compatibility.
+						
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
+	     </formalpara> -->
 <!--	<formalpara>
 		<title>RichFaces</title>
 		<para>
@@ -144,18 +146,18 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-	<formalpara id="Fixed_Issues-Web_Tools_Platform">
+<!--	<formalpara id="Fixed_Issues-Web_Tools_Platform">
 		<title>Web Tools Platform</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1155">JBDS-1155</ulink>: A regression existed in the Eclipse 3.5.2 Web Tools Platform (WTP) 3.1.2. The bug would break EAR deployments that used classpath variables by deploying dependent artifacts to <filename>&lt;root_ear&gt;/lib/lib/lib</filename> instead of <filename>&lt;root_ear&gt;/lib</filename>. The issue has been corrected with these updated packages so that the regression no longer exists and EAR deployments function correctly.
+						
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
+	     </formalpara> -->
 <!--	<formalpara>
 		<title>XHTML Editor</title>
 		<para>
@@ -180,66 +182,16 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-	<formalpara>
+<!--	<formalpara>
 		<title>General Issues</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1228">JBDS-1228</ulink>: The JBoss Developer Studio installation wizard would display incorrect step numbering, seeming to jump sporadically. This occurred because steps the installer takes that are invisible to the user were still included in the displayed step numbering on each screen. In this release the step numbering has been corrected to count only the steps the user participates in.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1220">JBDS-1220</ulink>: Within the JBoss Developer Studio, the browse button that allowed a user to select the location of the JBoss Application Server would not default to the location where the JBoss Enterprise Application Platform was installed. The consequence of this was that a user would have to search for the installed location of the JBoss Enterprise Application Platform. Though installation of the JBoss Enterprise Application Platform is optional, if it is installed it can be assumed that this will be the Application Server a user will wish to use. In order to improve the user experience, when the JBoss Enterprise Application Platform is installed, the server location browse button will default to that directory.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1215">JBDS-1215</ulink>: The installer was unable to locate the Seam runtimes within the JBoss Enterprise Application Platform 4.3. This occurred because the Seam runtime locations bundled within the JBoss Enterprise Application Platform 4.3 had recently changed from <filename>jboss-eap-4.3/seam</filename> and <filename>jboss-eap-4.3/seamfp</filename> to being <filename>jboss-eap-4.3/seam1</filename> and <filename>jboss-eap-4.3/seam2</filename>. This version of the JBoss Developer Studio includes an updated installer that contains the new Seam runtime locations. The installer is now able to find the Seam runtimes for the latest versions of the JBoss Enterprise Application Platform 4.3.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1187">JBDS-1187</ulink>: An empty URL tag (&lt;url&gt;) caused the <guimenuitem>Classic Update</guimenuitem> option under <menuchoice><guimenuitem>Preferences</guimenuitem><guimenuitem>General</guimenuitem><guimenuitem>Capabilities</guimenuitem></menuchoice> to error upon installation of a plug-in. To fix this issue the unused URL element has been removed. The <guimenuitem>Classic Update</guimenuitem> option is now usable and installs plug-ins correctly.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1181">JBDS-1181</ulink>: When creating a <guilabel>New Process Project</guilabel> the <guilabel>Configure JBoss jBPM Runtime</guilabel> screen included a link to <guilabel>Download the JBoss jBPM package if you have none available yet.</guilabel> that would direct users to a location that did not exist. For the previous release a redirect was created after this issue was found that directed a user to the sourceforge location of the files. This version of the JBoss Developer Studio sees the removal of the link.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1168">JBDS-1168</ulink>: The JBoss Developer Studio Installer was missleading in terms of system requirements. The consequence of this was that some users were unsure if the JBoss Developer Studio supported Java 6 even though it was required for the JBoss Enterprise Application Platform 5 and which JDK distributions were supported. The text in Step 4 of installation has been updated to inform the user that the JBoss Developer Studio works with both Java 5 and 6 (though Java 6 is required for JBoss Enterprise Application Platform 5), has been tested with the OpenJDK, SunJDK and IBM JDK distributions and the misspelt <emphasis>gij Java</emphasis> has been corrected to <emphasis>gcj Java</emphasis>.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="https://jira.jboss.org/jira/browse/JBDS-1222">JBDS-1222</ulink>: A bug existed in the JBoss Developer Studio that caused stylesheets to not render correctly in the JBoss Enterprise Application Platform 5 and a <exceptionname>org.ajax4jsf.resource.ResourceNotFoundException: Static resource not found for path &lt;resource name&gt;</exceptionname> exception when using the JBoss Enterprise Portal Platform 5 to load a JSF page through a Portlet. These errors were caused by the code to load the style sheet being: <code>&lt;a:loadStyle src="resource:///stylesheet/theme.xcss"/&gt;</code> instead of <code>&lt;a:loadStyle src="/stylesheet/theme.xcss"/&gt;</code>. This issue has now been corrected for this release.
-					</para>
-				</listitem>
-		<!-- Reopened	<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1147">JBDS-1147</ulink>: An incorrect link to the Guvnor Rules repository was included in the JBoss Developer Studio. This bug caused the repository to become unreachable. This has been fixed by correcting the link to be <ulink url="http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav">http://localhost:8080/drools-guvnor/org.drools.guvnor.Guvnor/webdav</ulink>. The JBoss Developer Studio is now able to connect to the Guvnor Rules repository.
-					</para>
-				</listitem> -->
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1091">JBDS-1091</ulink>: Two bugs were found. A problem was found in the <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in and the visibility of the <property>Instance</property> field was changed from public to private. These bugs respectively caused the JBoss Developer Studio <guilabel>Server View</guilabel> to not display all available servers on occasion after using the installer and jBPM runtimes to not be initialized correctly. The <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in has now been updated to force a refresh of the <guilabel>Server View</guilabel> post installation, which can be verified by a refresh message appearing in the log file and the <filename>org.jboss.tools.jbpm.common</filename> plug-in has been updated to set <code>public static final PreferencesManager INSTANCE = new PreferencesManager();</code>. By correcting the <filename>org.jboss.tools.runtime_1.1.0</filename> plug-in, all installed servers now appear in the <guilabel>Server View</guilabel> directly after installation of the JBoss Developer Studio through the installer. Fixing the <filename>org.jboss.tools.jbpm.common</filename> plug-in now allows for jBPM runtimes to be initialized correctly. Both issues are fixed with this update.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1088">JBDS-1088</ulink>: When installing the JBoss Developer Studio, if a previous installation was detected a dialog box would ask if you wished to overwrite the existing directory. If a user continued with installation they would then have a mixture of the old and new product versions. To better assist users a new warning is displayed in this situation, which indicates that you cannot upgrade by installing a new version over an old version. This new dialog box ensures that a user is informed of what will happen.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1047">JBDS-1047</ulink>: When installing the JBoss Developer Studio a user would not be warned if they were installing it as the root user on a Linux distribution. The consequence of this was that if a user uninstalled the software certain files would be left behind (such as menu items). In order to ensure a user is aware they are installing the JBoss Developer Studio as root, a warning is displayed informing them. The JBoss Developer Studio does not stop you from installing the software as the root user, rather it ensures this is what the user has intended to do.
+						
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
+	     </formalpara> -->
 </section>
