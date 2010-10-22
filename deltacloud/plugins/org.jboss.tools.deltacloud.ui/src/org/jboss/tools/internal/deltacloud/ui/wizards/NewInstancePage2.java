@@ -69,6 +69,7 @@ public class NewInstancePage2 extends WizardPage {
 	private static final String REALM_LABEL = "Realm.label"; //$NON-NLS-1$
 	private static final String KEY_LABEL = "Key.label"; //$NON-NLS-1$
 	private static final String MANAGE_BUTTON_LABEL = "ManageButton.label"; //$NON-NLS-1$
+	private static final String FIND_BUTTON_LABEL = "FindButton.label"; //$NON-NLS-1$
 	private static final String PROPERTIES_LABEL = "Properties.label"; //$NON-NLS-1$
 	private static final String MUST_ENTER_A_NAME = "ErrorMustProvideName.text"; //$NON-NLS-1$	
 	private static final String MUST_ENTER_A_KEYNAME = "ErrorMustProvideKeyName.text"; //$NON-NLS-1$	
@@ -85,6 +86,7 @@ public class NewInstancePage2 extends WizardPage {
 	private Text keyText;
 	private Combo hardware;
 	private Button keyManage;
+	private Button findImage;
 	private Control realm;
 	private ProfileComposite currPage;
 	private Map<String, ProfileComposite> profilePages;
@@ -114,6 +116,22 @@ public class NewInstancePage2 extends WizardPage {
 			String keyname = wizard.getKeyName();
 			if (keyname != null)
 				keyText.setText(keyname);
+		}
+	
+	};
+
+	private SelectionListener findListener = new SelectionAdapter() {
+
+		public void widgetSelected(SelectionEvent event) {
+			Shell shell = getShell();
+			FindImage wizard = new FindImage(cloud);
+			WizardDialog dialog = new CustomWizardDialog(shell, wizard,
+					IDialogConstants.OK_LABEL);
+			dialog.create();
+			dialog.open();
+			String imageId = wizard.getImageId();
+			if (imageId != null)
+				imageText.setText(imageId);
 		}
 	
 	};
@@ -247,6 +265,10 @@ public class NewInstancePage2 extends WizardPage {
 						WizardMessages.getString(MUST_ENTER_IMAGE_ID))),
 				null);
 	
+		findImage = new Button(container, SWT.NULL);
+		findImage.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
+		findImage.addSelectionListener(findListener);
+
 		arch = new Label(container, SWT.NULL);
 		bindArchLabel(dbc, imageText, arch, this);
 
@@ -299,10 +321,18 @@ public class NewInstancePage2 extends WizardPage {
 			profilePages.put(p.getId(), pc);
 			pc.setVisible(false);
 		}
+
+		keyManage = new Button(container, SWT.NULL);
+		keyManage.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
+		keyManage.addSelectionListener(manageListener);
+		if (cloud.getType().equals(DeltaCloudInstance.MOCK_TYPE))
+			keyManage.setEnabled(false);
 	
 		Point p1 = nameLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point p3 = findImage.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		int centering = (p2.y - p1.y + 1) / 2;
+		int centering2 = (p3.y - p2.y + 1) / 2;
 		
 		FormData f = new FormData();
 		f.left = new FormAttachment(0, 0);
@@ -321,14 +351,26 @@ public class NewInstancePage2 extends WizardPage {
 		nameText.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(nameText, 8 + centering);
+		f.top = new FormAttachment(nameText, 8 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		imageLabel.setLayoutData(f);
 
+		int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
+		Point minSize1 = findImage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+		Point minSize2 = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+		int buttonWidth = Math.max(widthHint, minSize1.x);
+		buttonWidth = Math.max(buttonWidth, minSize2.x);
+
 		f = new FormData();
+		f.width = buttonWidth;
 		f.top = new FormAttachment(nameText, 8);
+		f.right = new FormAttachment(realm, 0, SWT.RIGHT);
+		findImage.setLayoutData(f);
+
+		f = new FormData();
+		f.top = new FormAttachment(nameText, 8 + centering2);
 		f.left = new FormAttachment(hardwareLabel, 5);
-		f.right = new FormAttachment(100, 0);
+		f.right = new FormAttachment(findImage, -10);
 		imageText.setLayoutData(f);
 		
 		f = new FormData();
@@ -353,6 +395,7 @@ public class NewInstancePage2 extends WizardPage {
 		f.right = new FormAttachment(100, 0);
 		realm.setLayoutData(f);
 
+
 		Control control = realm;
 		
 		Label keyLabel = new Label(container, SWT.NULL);
@@ -361,13 +404,6 @@ public class NewInstancePage2 extends WizardPage {
 		keyText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		bindText(dbc, keyText, NewInstanceModel.PROPERTY_KEYNAME, MUST_ENTER_A_KEYNAME);
 
-		keyManage = new Button(container, SWT.NULL);
-		keyManage.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
-		keyManage.addSelectionListener(manageListener);
-		if (cloud.getType().equals(DeltaCloudInstance.MOCK_TYPE))
-			keyManage.setEnabled(false);
-		Point p3 = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		int centering2 = (p3.y - p2.y + 1) / 2;
 
 		f = new FormData();
 		f.top = new FormAttachment(realm, 8 + centering + centering2);
@@ -375,9 +411,7 @@ public class NewInstancePage2 extends WizardPage {
 		keyLabel.setLayoutData(f);
 
 		f = new FormData();
-		int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-		Point minSize = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-		f.width = Math.max(widthHint, minSize.x);
+		f.width = buttonWidth;
 		f.top = new FormAttachment(realm, 8);
 		f.right = new FormAttachment(realm, 0, SWT.RIGHT);
 		keyManage.setLayoutData(f);

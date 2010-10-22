@@ -1,9 +1,18 @@
 2010-10-22  Jeff Johnston  <jjohnstn@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImage.java: New file.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java (setFilter): Allow
+	use of a temporary filter that isn't saved in the cloud.
+	(filter): Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/common/databinding/validator/MandatoryStringValidator.java (validate): 
+	Make the message a warning rather than an error as a field will be unfilled in at first and
+	shouldn't be listed as in error.
 	* src/org/jboss/tools/deltacloud/ui/commands/CreateInstanceHandler2.java: New file.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstance2.java: New file.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceModel.java: New file.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage2.java: New file.
+	(createControl): Add support for finding an image.
 	* plugin.xml: Add menu item for launching an instance when the selected item(s) are not
 	images that will require entry of the image id.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: Add new

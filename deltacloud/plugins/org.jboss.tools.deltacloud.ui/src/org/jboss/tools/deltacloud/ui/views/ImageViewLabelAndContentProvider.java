@@ -27,6 +27,7 @@ import org.jboss.tools.deltacloud.core.IImageFilter;
 public class ImageViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider, ITableLabelProvider {
 
 	private DeltaCloud cloud;
+	private IImageFilter localFilter;
 	private DeltaCloudImage[] images;
 
 	public enum Column {
@@ -91,9 +92,16 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 		}
 	}
 
+	// Allow override of filter for Finding Images
+	public void setFilter(IImageFilter filter) {
+		this.localFilter = filter;
+	}
+	
 	private DeltaCloudImage[] filter(DeltaCloudImage[] input) {
 		ArrayList<DeltaCloudImage> array = new ArrayList<DeltaCloudImage>();
-		IImageFilter f = cloud.getImageFilter();
+		IImageFilter f = localFilter;
+		if (localFilter == null)
+			f = cloud.getImageFilter();
 		for (int i = 0; i < input.length; ++i) {
 			DeltaCloudImage image = input[i];
 			if (f.isVisible(image))
