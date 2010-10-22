@@ -159,12 +159,12 @@ public class DeltaCloudClient implements API {
 	}
 
 	private boolean isHttpClientError(int statusCode) {
-		return (statusCode - HTTP_STATUSCODE_CLIENTERROR) > 0
+		return (statusCode - HTTP_STATUSCODE_CLIENTERROR) >= 0
 				&& (statusCode - HTTP_STATUSCODE_CLIENTERROR) < 100;
 	}
 
 	private boolean isHttpServerError(int statusCode) {
-		return (statusCode - HTTP_STATUSCODE_SERVERERROR) > 0
+		return (statusCode - HTTP_STATUSCODE_SERVERERROR) >= 0
 				&& (statusCode - HTTP_STATUSCODE_SERVERERROR) < 100;
 	}
 
