@@ -208,6 +208,20 @@
                </with>
          </activeWhen>
       </handler>
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceHandler2"
+            commandId="org.jboss.tools.deltacloud.ui.createinstance2">
+         <activeWhen>
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+         </activeWhen>
+      </handler>
       <!-- image command handlers -->
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceHandler"
@@ -406,6 +420,36 @@
             </visibleWhen>
          </command>
     </menuContribution>
+     <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=images">	
+        <!-- image commands -->
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.createinstance2"
+               icon="icons/instance.gif"
+               label="%command.createinstance.label"
+               style="push"
+               tooltip="%command.createinstance.tooltip">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+					<iterate>
+        <and>
+           <instanceof
+                 value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+           </instanceof>
+           <not>
+              <instanceof
+                    value="org.jboss.tools.deltacloud.ui.views.CVImageElement">
+              </instanceof>
+           </not>
+        </and>
+	               	</iterate>
+               </with>
+            </visibleWhen>
+         </command>
+    </menuContribution>
     <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=filters">         
@@ -565,6 +609,24 @@
                </with>
             </visibleWhen>
          </command>
+          <command
+               commandId="org.jboss.tools.deltacloud.ui.createinstance2"
+               icon="icons/instance.gif"
+               label="%command.createinstance.label"
+               style="push"
+               tooltip="%command.createinstance.tooltip">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+            </visibleWhen>
+         </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.filterimages"
                label="%command.filterimages.label"
@@ -613,6 +675,11 @@
 			description="%command.editconnection.description"
             id="org.jboss.tools.deltacloud.ui.editconnection"
             name="%command.editconnection.name">
+      </command>
+      <command
+            description="%command.createinstance.description"
+            id="org.jboss.tools.deltacloud.ui.createinstance2"
+            name="%command.createinstance.name">
       </command>
 	  <!-- image commands -->
       <command
