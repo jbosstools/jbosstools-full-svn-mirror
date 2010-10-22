@@ -160,7 +160,7 @@ public class InstanceMockIntegrationTest {
 			client.shutdownInstance(testInstance.getId());
 		}
 		client.startInstance(testInstance.getId());
-		testInstance = client.listInstances(testInstance.getId());
+		testInstance = client.listInstances(testInstance.getId()); // reload!
 		assertEquals(State.RUNNING, testInstance.getState());
 	}
 }
