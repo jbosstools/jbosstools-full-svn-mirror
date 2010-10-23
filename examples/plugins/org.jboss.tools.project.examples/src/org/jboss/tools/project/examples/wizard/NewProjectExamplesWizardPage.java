@@ -71,6 +71,7 @@ import org.jboss.tools.project.examples.model.ProjectUtil;
  */
 public class NewProjectExamplesWizardPage extends WizardPage {
 
+	private static final int DEFAULT_WIDTH = 600;
 	private IStructuredSelection selection;
 	private Button showQuickFixButton;
 	private Combo siteCombo;
@@ -92,7 +93,7 @@ public class NewProjectExamplesWizardPage extends WizardPage {
 		Composite composite = new Composite(parent,SWT.NONE);
 		composite.setLayout(new GridLayout(1,false));
 		
-		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false);
 		
 		composite.setLayoutData(gd);
 		
@@ -157,7 +158,8 @@ public class NewProjectExamplesWizardPage extends WizardPage {
 		
 		Composite internal = new Composite(composite, SWT.NULL);
 		internal.setLayout(new GridLayout(2,false));
-		gd = new GridData(GridData.FILL_BOTH);
+		gd = new GridData(GridData.FILL, GridData.FILL, true, false);
+		gd.widthHint = DEFAULT_WIDTH;
 		internal.setLayoutData(gd);
 		
 		Label projectNameLabel = new Label(internal,SWT.NULL);
@@ -305,7 +307,7 @@ public class NewProjectExamplesWizardPage extends WizardPage {
 
 	private void configureSizeAndLocation() {
 		Shell shell = getContainer().getShell();
-		Point size = new Point(600,shell.getSize().y);
+		Point size = new Point(DEFAULT_WIDTH,shell.getSize().y);
 		shell.setSize(size);
 		Point location = getInitialLocation(size, shell);
 		shell.setBounds(getConstrainedShellBounds(new Rectangle(location.x,
