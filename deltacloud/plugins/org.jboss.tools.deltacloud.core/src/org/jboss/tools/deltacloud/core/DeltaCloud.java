@@ -66,7 +66,7 @@ public class DeltaCloud {
 	public DeltaCloud(String name, String url, String username, String passwd, 
 			String type, boolean persistent, 
 			String imageFilterRules, String instanceFilterRules) throws MalformedURLException {
-		this.client = new DeltaCloudClient(new URL(url + "/api"), username, passwd); //$NON-NLS-1$
+		this.client = new DeltaCloudClient(new URL(url), username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;
