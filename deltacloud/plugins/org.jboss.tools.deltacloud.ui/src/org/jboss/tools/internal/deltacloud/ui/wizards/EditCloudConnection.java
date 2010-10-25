@@ -27,18 +27,26 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 	private static final String MAINPAGE_NAME = "EditCloudConnection.name"; //$NON-NLS-1$
 	private CloudConnectionPage mainPage;
 	private DeltaCloud cloud;
-	
+
 	public EditCloudConnection(DeltaCloud cloud) {
 		super();
 		this.cloud = cloud;
 	}
-	
+
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 	}
 
 	@Override
 	public void addPages() {
+		String password = getPassword();
+		mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME),
+				cloud.getName(), cloud.getURL(), cloud.getUsername(), password,
+				cloud.getType(), this);
+		addPage(mainPage);
+	}
+
+	private String getPassword() {
 		String password = "";
 		String key = DeltaCloud.getPreferencesKey(cloud.getURL(), cloud.getUsername());
 		ISecurePreferences root = SecurePreferencesFactory.getDefault();
@@ -48,10 +56,7 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 		} catch (Exception e) {
 			Activator.log(e);
 		}
-		mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME), 
-				cloud.getName(), cloud.getURL(), cloud.getUsername(), password,
-				cloud.getType(), this);
-		addPage(mainPage);
+		return password;
 	}
 
 	@Override
@@ -72,7 +77,7 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 			return false;
 		}
 	}
-	
+
 	@Override
 	public boolean performFinish() {
 		String name = mainPage.getModel().getName();
