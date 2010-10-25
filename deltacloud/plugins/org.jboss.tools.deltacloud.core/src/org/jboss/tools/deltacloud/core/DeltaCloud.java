@@ -60,7 +60,7 @@ public class DeltaCloud {
 
 	public DeltaCloud(String name, String url, String username, String passwd, 
 			String type, boolean persistent) throws MalformedURLException {
-		this(name, url, username, passwd, null, persistent, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
+		this(name, url, username, passwd, type, persistent, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
 	}
 
 	public DeltaCloud(String name, String url, String username, String passwd, 

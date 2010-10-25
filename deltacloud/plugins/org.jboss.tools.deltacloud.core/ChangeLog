@@ -1,3 +1,8 @@
+2010-10-25  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): Fix constructor
+	typo caused by copying so that type is passed when it is offered.
+
 2010-10-22  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): Don't add
