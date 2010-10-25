@@ -84,14 +84,7 @@ public class DeltaCloud {
 			instanceFilter.setRules(IInstanceFilter.ALL_STRING);
 		}
 		if (persistent) {
-			ISecurePreferences root = SecurePreferencesFactory.getDefault();
-			String key = DeltaCloud.getPreferencesKey(url, username);
-			ISecurePreferences node = root.node(key);
-			try {
-				node.put("password", passwd, true /*encrypt*/);
-			} catch (StorageException e) {
-				e.printStackTrace();
-			}
+			storePassword(url, username, passwd);
 		}
 	}
 	
@@ -101,6 +94,10 @@ public class DeltaCloud {
 		this.name = name;
 		this.username = username;
 		this.type = type;
+		storePassword(url, username, passwd);
+	}
+
+	private void storePassword(String url, String username, String passwd) {
 		ISecurePreferences root = SecurePreferencesFactory.getDefault();
 		String key = DeltaCloud.getPreferencesKey(url, username);
 		ISecurePreferences node = root.node(key);
