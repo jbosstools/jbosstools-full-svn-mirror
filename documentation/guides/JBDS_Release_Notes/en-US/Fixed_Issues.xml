@@ -7,18 +7,28 @@
 	<para>
 		Following is a list of new and noteworthy features and bug fixes in this release:
 	</para>
-<!--	<formalpara>
+	<formalpara>
 		<title>Contexts and Dependency Injection (CDI)</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7025">JBIDE-7025</ulink>: OpenOn support has been added for the <filename>beans.xml</filename> editor. OpenOn support allows you to easily navigate around your project without the use of the <guilabel>Package Explorer</guilabel> or <guilabel>Project Explorer</guilabel>. This is achieved by using the class and method names in your code as links to those code segments.
 					</para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6998">JBIDE-6998</ulink>: The <productname>Weld</productname> project extensions (beans_1_1.xsd) are now supported by the <filename>beans.xml</filename> editor.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6983">JBIDE-6983</ulink>: The <filename>beans.xml</filename> editor now correctly supports elements in other namespaces. This has been achieved by supporting any child element of the &lt;beans&gt; root element and providing dynamic extentions to <filename>beans.xml</filename> in order to support different namespaces.
+				   </para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 	<formalpara>
 		<title>ESB</title>
 		<para>
@@ -32,6 +42,19 @@
 					  <para>
 					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7235">JBIDE-7235</ulink>: The ESB validator has been extended to cover the <classname>BussinessRulesProcessor</classname> class. This ensures that only one <methodname>ruleSet</methodname> is specified by the <classname>BussinessRulesProcessor</classname>, inhibiting conflicts.
 					  </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7055">JBIDE-7055</ulink>: Eclipse Helios provides a new view called the <guilabel>Annotation Properties</guilabel> view that is focused on JAXB and JAX-WS annotations. The new view is now extended with support for ESB annotations for action definitions. 
+				    </para>
+				    <para>
+					  To open the new <guilabel>Annotation Properties</guilabel> view, navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>JAX-WS</guimenuitem><guimenuitem>Annotation Properties</guimenuitem></menuchoice> and clicking <guibutton>OK</guibutton>. The view can be filtered to display only ESB annotations by selecting the <guimenuitem>Filters</guimenuitem> option from the <guilabel>Annotation Properties</guilabel> view menu and then selecting all annotation categories except for <guilabel>JBoss ESB</guilabel> and clicking <guibutton>OK</guibutton>.
+				    </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6908">JBIDE-6908</ulink>: Support for ESB 4.9 has been added to the ESB project editor.
+				    </para>
 				 </listitem>
 			</itemizedlist>
 		</para>
@@ -75,18 +98,26 @@
 			</itemizedlist>
 		</para>
 	</formalpara>
-<!--	<formalpara>
+	<formalpara>
 		<title>Hibernate</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						
+					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6988">JBIDE-6988</ulink>: Console configuration would not take into account the schema and catalog being specified for a JPA project. This meant that if two schemas existed for one databse when a user opened the created console confitguration, it would error indicating there was two database schemas. The expected result is that the schema that has been set for the project would be used.
 					</para>
+					<para>
+					  Expected behavior has been implemented by setting a <property>default_schema</property> property in the properties for the project as if this was being set in the <filename>hibernate.properties</filename> file. However properties in the <filename>hibernate.properties</filename> file will overwrite project properties.
+				        </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6974">JBIDE-6974</ulink>: Support for comments in the HQL editor has been added for this release. Comments are annotated with <emphasis>--</emphasis> at the beginning of each comment line.
+				   </para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	     </formalpara> -->
+	     </formalpara>
 <!--	<formalpara>
 		<title>jBPM</title>
 		<para>
@@ -108,9 +139,31 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7147">JBIDE-7147</ulink>: The validators create a marker for each problem found when conducting validation. An issue would arise where system performance would be drammatically decreased when an excesive amount of problems were discovered and subsequently marked. To ensure a system does not receive a performance hit, the <guimenuitem>Validator</guimenuitem> preferences screen now includes the ability to set the maximum number of problems reported per file. If there are more issues in a file than the maximum number to be reported, once the reported issues are corrected the others will be reported in subsequent validation attempts.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7086">JBIDE-7086</ulink>: MyFaces uses the library <filename>myfaces-metadata.xml</filename> to enable tag auto-completion, a plug-in that was not supported. MyFaces plug-in library support has been added, allowing for MyFaces tag auto-completion. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7021">JBIDE-7021</ulink>: Low performance issues existed for validation of web pages. Performance issues were caused by the XHTML syntax validator performing to slow if a DOCTYPE was not declared at the top of XHTML files, the <methodname>PageContextFactory.createPageContext</methodname> method created a SSE model for non-facelet pages, if a page contained Expression Language (EL) errors or warnings, a memory leak appeared in the <methodname>PageContextFactory.getSheetForTagAttribute</methodname> method by registerting <classname>ExtendedLinkElementAdapter</classname> and never releasing the memory allocated to it. These issues have been addressed in this release and the <classname>PageContextFactory</classname> class has been removed from the resource listeners since resources can be modified without changing their context in other places apart from the included validators. 
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	     </formalpara>
+	     <formalpara>
+		<title>JBoss Application Server</title>
+		<para>
+		   <itemizedlist>
+		      <listitem>
+			 <para>
+			      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6973">JBIDE-6973</ulink>: A HTTP poller has been added for JBoss servers to detect if the server is running. This added feature will be useful for remote and local servers, being less resource-intensive than polling with JMX.
+		      </para>
+		   </listitem>
+		</itemizedlist>
+	     </para>
+	</formalpara>
 <!--	<formalpara>
 		<title>Portlet</title>
 		<para>
@@ -178,31 +231,51 @@
 		<para>
 			<itemizedlist>
 				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7144">JBIDE-7144</ulink>: A preference page is provided that details all settings currently being reported. 
-					</para>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7144">JBIDE-7144</ulink>: A preference page is provided that details all settings currently being reported. 
+				    </para>
+				</listitem>
+				<listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7142">JBIDE-7142</ulink>: Originally usage reporting only reported an operating system version if it was either Macintosh or Windows, missing Linux. Support for reporting Linux operating system versions was added through completion of this issue.
+				    </para>
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7142">JBIDE-7142</ulink>: Originally usage reporting only reported an operating system version if it was either Macintosh or Windows, missing Linux. Support for reporting Linux operating system versions was added through completion of this issue.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7082">JBIDE-7082</ulink>: Originally usage reporting would only report on components that started with <filename>org.jboss.tools</filename>, excluding components such as the application server and Hibernate. Reporting of these components has been achieved by the modification of the <filename>JBossToolsComponents.java</filename> file.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7041">JBIDE-7041</ulink>: Originally usage reporting would not report on the version of the application being used. This information is useful to us as it gives an indication of how fast users move to a newly released version. Functionality for this is now included in the usage plug-in.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7034">JBIDE-7034</ulink>, <ulink url="http://jira.jboss.com/jira/browse/JBIDE-">JBIDE-</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-">JBIDE-</ulink>: New reporting fields were added to the usage plug-in for the gathering of user data. See the individual JIRAs for specific field details.
 				   </para>
 				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara> -->	
 	
-<!--	<formalpara>
+	<formalpara>
 		<title>Visual Page Editor</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7059">JBIDE-7059</ulink>: XulRunner (XR) has become an optional install of the Visual Page Editor. This decision has meant that the buttons of the Visual Page Editor plug-in have been moved to be apart of the Eclipse icon bar.
 					</para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6981">JBIDE-6981</ulink>: Functionality has been added that provides a drop-down menu in the tag breadcrumbs that enables easy selection of any child element to the selected tag. If there are no children to be expanded, the last tag will remain highlighted.
+				   </para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 	<formalpara id="Fixed_Issues-Web_Tools_Platform">
 		<title>Web Tools Platform</title>
 		<para>
