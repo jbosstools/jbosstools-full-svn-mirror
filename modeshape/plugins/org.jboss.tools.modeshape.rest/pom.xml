@@ -21,10 +21,13 @@
 						<phase>validate</phase>
 						<configuration>
 							<tasks>
+								<!-- JBDS-1343 uncomment this to pull a fresh copy of the jar from this or another location as needed -->
+								<!--
 								<delete file="modeshape-client.jar" quiet="true" />
 								<get
 									src="http://jawa05.englab.brq.redhat.com/candidate/SOA-5.1-ER3/JBDS/modeshape-client.jar"
 									dest="modeshape-client.jar" usetimestamp="true" />
+								-->
 							</tasks>
 						</configuration>
 						<goals>
