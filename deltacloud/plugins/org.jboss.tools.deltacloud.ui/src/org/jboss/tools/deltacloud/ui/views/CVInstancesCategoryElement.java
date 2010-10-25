@@ -39,17 +39,50 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 		super.finalize();
 	}
 	
+	private void addInstances(DeltaCloudInstance[] instances) {
+		if (instances.length > CVNumericFoldingElement.FOLDING_SIZE) {
+			int min = 0;
+			int max = CVNumericFoldingElement.FOLDING_SIZE;
+			int length = instances.length;
+			while (length > CVNumericFoldingElement.FOLDING_SIZE) {
+				CVNumericFoldingElement f = new CVNumericFoldingElement(null, 
+						"[" + min + ".." + (max - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				addChild(f);
+				for (int i = min; i < max; ++i) { 
+					DeltaCloudInstance d = instances[i];
+					CVInstanceElement element = new CVInstanceElement(d, d.getName());
+					f.addChild(element);
+				}
+				min += CVNumericFoldingElement.FOLDING_SIZE;
+				max += CVNumericFoldingElement.FOLDING_SIZE;
+				length -= CVNumericFoldingElement.FOLDING_SIZE;
+			}
+			if (length > 0) {
+				CVNumericFoldingElement f = new CVNumericFoldingElement(null, 
+						"[" + min + ".." + (max  - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				addChild(f);
+				for (int i = min; i < min + length; ++i) {
+					DeltaCloudInstance d = instances[i];
+					CVInstanceElement element = new CVInstanceElement(d, d.getName());
+					f.addChild(element);
+				}
+			}
+		} else {
+			for (int i = 0; i < instances.length; ++i) {
+				DeltaCloudInstance d = instances[i];
+				CVInstanceElement element = new CVInstanceElement(d, d.getName());
+				addChild(element);
+			}
+		}
+	}
+	
 	@Override
 	public Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
 			cloud.removeInstanceListListener(this);
 			DeltaCloudInstance[] instances = filter(cloud.getCurrInstances());
-			for (int i = 0; i < instances.length; ++i) {
-				DeltaCloudInstance d = instances[i];
-				CVInstanceElement element = new CVInstanceElement(d, d.getName());
-				addChild(element);
-			}
+			addInstances(instances);
 			initialized = true;
 			cloud.addInstanceListListener(this);
 		}
@@ -60,11 +93,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] newInstances) {
 		clearChildren();
 		DeltaCloudInstance[] instances = filter(newInstances);
-		for (int i = 0; i < instances.length; ++i) {
-			DeltaCloudInstance d = instances[i];
-			CVInstanceElement element = new CVInstanceElement(d, d.getName());
-			addChild(element);
-		}
+		addInstances(instances);
 		initialized = true;
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override

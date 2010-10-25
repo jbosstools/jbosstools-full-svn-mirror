@@ -1,5 +1,20 @@
 2010-10-25  Jeff Johnston  <jjohnstn@redhat.com>
 
+	[JBIDE-7408]
+	* src/org/jboss/tools/deltacloud/ui/views/CVNumericFoldingElement.java: New file.
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewLabelProvider.java (getImage): Add
+	check for CVNumericFoldingElement.
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (addImages): New
+	method which adds intermediate CVNumericFoldingElement folders if necessary.
+	(getChildren): Use addImages method to add children.
+	(listChanged): Ditto.
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (addInstances): New
+	method which adds intermediate CVNumericFoldingElement folders if necessary. 
+	(getChildren): Use addInstances method to add children.
+	(listChanged): Ditto.
+	
+2010-10-25  Jeff Johnston  <jjohnstn@redhat.com>
+
 	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (getPropertyValue): Use
 	DeltaCloud as source of cloud type constants.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (validate): Ditto. 

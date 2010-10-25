@@ -39,17 +39,50 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 		super.finalize();
 	}
 	
+	private void addImages(DeltaCloudImage[] images) {
+		if (images.length > CVNumericFoldingElement.FOLDING_SIZE) {
+			int min = 0;
+			int max = CVNumericFoldingElement.FOLDING_SIZE;
+			int length = images.length;
+			while (length > CVNumericFoldingElement.FOLDING_SIZE) {
+				CVNumericFoldingElement f = new CVNumericFoldingElement(null, 
+						"[" + min + ".." + (max  - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				addChild(f);
+				for (int i = min; i < max; ++i) { 
+					DeltaCloudImage d = images[i];
+					CVImageElement element = new CVImageElement(d, d.getName());
+					f.addChild(element);
+				}
+				min += CVNumericFoldingElement.FOLDING_SIZE;
+				max += CVNumericFoldingElement.FOLDING_SIZE;
+				length -= CVNumericFoldingElement.FOLDING_SIZE;
+			}
+			if (length > 0) {
+				CVNumericFoldingElement f = new CVNumericFoldingElement(null, 
+						"[" + min + ".." + (max - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				addChild(f);
+				for (int i = min; i < min + length; ++i) {
+					DeltaCloudImage d = images[i];
+					CVImageElement element = new CVImageElement(d, d.getName());
+					f.addChild(element);
+				}
+			}
+		} else {
+			for (int i = 0; i < images.length; ++i) {
+				DeltaCloudImage d = images[i];
+				CVImageElement element = new CVImageElement(d, d.getName());
+				addChild(element);
+			}
+		}
+	}
+	
 	@Override
 	public Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
 			cloud.removeImageListListener(this);
 			DeltaCloudImage[] images = filter(cloud.getCurrImages());
-			for (int i = 0; i < images.length; ++i) {
-				DeltaCloudImage d = images[i];
-				CVImageElement element = new CVImageElement(d, d.getName());
-				addChild(element);
-			}
+			addImages(images);
 			initialized = true;
 			cloud.addImageListListener(this);
 		}
@@ -60,11 +93,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 	public void listChanged(DeltaCloud cloud, DeltaCloudImage[] newImages) {
 		clearChildren();
 		DeltaCloudImage[] images = filter(newImages);
-		for (int i = 0; i < images.length; ++i) {
-			DeltaCloudImage d = images[i];
-			CVImageElement element = new CVImageElement(d, d.getName());
-			addChild(element);
-		}
+		addImages(images);
 		initialized = true;
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
