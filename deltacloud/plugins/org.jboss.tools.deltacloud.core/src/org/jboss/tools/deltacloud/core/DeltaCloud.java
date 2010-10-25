@@ -35,6 +35,9 @@ import org.jboss.tools.deltacloud.core.client.Realm;
 
 public class DeltaCloud {
 	
+	public final static String MOCK_TYPE = "MOCK"; //$NON-NLS-1$
+	public final static String EC2_TYPE = "EC2"; //$NON-NLS-1$
+	
 	private String name;
 	private String username;
 	private String url;

@@ -28,9 +28,6 @@ public class DeltaCloudInstance {
 	public final static String REBOOT = Instance.Action.REBOOT.toString();
 	public final static String DESTROY = Instance.Action.DESTROY.toString();
 	
-	public final static String EC2_TYPE = "EC2"; //$NON-NLS-1$
-	public final static String MOCK_TYPE = "MOCK"; //$NON-NLS-1$
-	
 	private Instance instance;
 	private String givenName;
 	
