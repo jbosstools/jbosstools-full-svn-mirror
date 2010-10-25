@@ -49,7 +49,6 @@ import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
@@ -325,7 +324,7 @@ public class NewInstancePage2 extends WizardPage {
 		keyManage = new Button(container, SWT.NULL);
 		keyManage.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
 		keyManage.addSelectionListener(manageListener);
-		if (cloud.getType().equals(DeltaCloudInstance.MOCK_TYPE))
+		if (cloud.getType().equals(DeltaCloud.MOCK_TYPE))
 			keyManage.setEnabled(false);
 	
 		Point p1 = nameLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);

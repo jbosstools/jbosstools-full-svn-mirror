@@ -1,3 +1,11 @@
+2010-10-25  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (getPropertyValue): Use
+	DeltaCloud as source of cloud type constants.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (validate): Ditto. 
+	(createControl): Ditto.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage2.java (createControl): Ditto. 
+
 2010-10-22  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImage.java: New file.

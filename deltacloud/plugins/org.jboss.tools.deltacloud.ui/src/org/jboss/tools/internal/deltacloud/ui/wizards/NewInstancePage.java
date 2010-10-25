@@ -37,7 +37,6 @@ import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
@@ -168,7 +167,7 @@ public class NewInstancePage extends WizardPage {
 			complete = false;
 		}
 
-		if (cloud.getType().equals(DeltaCloudInstance.EC2_TYPE)) {
+		if (cloud.getType().equals(DeltaCloud.EC2_TYPE)) {
 			String keyname = keyText.getText();
 			if (keyname.length() == 0)
 				complete = false;
@@ -339,7 +338,7 @@ public class NewInstancePage extends WizardPage {
 
 		Control control = realm;
 		
-		if (cloud.getType().equals(DeltaCloudInstance.EC2_TYPE)) {
+		if (cloud.getType().equals(DeltaCloud.EC2_TYPE)) {
 			Label keyLabel = new Label(container, SWT.NULL);
 			keyLabel.setText(WizardMessages.getString(KEY_LABEL));
 

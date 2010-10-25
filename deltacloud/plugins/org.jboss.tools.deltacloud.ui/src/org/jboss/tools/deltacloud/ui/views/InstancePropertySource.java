@@ -117,7 +117,7 @@ public class InstancePropertySource implements IPropertySource {
 			// it will be complete for future requests until a refresh gets the
 			// entire list again.
 			String key = instance.getKey();
-			if (!cloud.getType().equals(DeltaCloudInstance.MOCK_TYPE)) {
+			if (!cloud.getType().equals(DeltaCloud.MOCK_TYPE)) {
 				if (instance.getState().equals(DeltaCloudInstance.RUNNING) && (key == null || key.length() == 0)) {
 					instance = cloud.refreshInstance(instance.getId());
 					if (instance != null) {
