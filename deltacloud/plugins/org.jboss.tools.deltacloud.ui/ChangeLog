@@ -4,10 +4,12 @@
 	[JBIDE-7360] CloudTypeValidator now returns a warning instead of an error (wizard may be finished with an invalid url).
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnection.java (addPages): 
 	[JBIDE-7402] added MalformedURLException handling.
-	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (bindCloudType): 
-	[JBIDE-7402] bound type label to converter state.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java 
+	(bindCloudType): [JBIDE-7402] bound type label to converter state.
 	(CloudNameValidator): [JBIDE-7402] corrected CloudNameValidator to ignore the name of the connection that's being edited
 	(bindName): [JBIDE-7402] corrected CloudNameValidator to ignore the name of the connection that's being edited
+	(createControl): [JBIDE-7411] removed static initialization to 'disabled' by dynamic initialization on behalf of url->type binding validity
+	(enableButtonOnUrlValidityChanges): [JBIDE-7411] removed static initialization to 'disabled' by dynamic initialization on behalf of url->type binding validity
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionModel.java 
 	(getDeltaCloudType): [JBIDE-7402] added setup of type at instantiation time
     (CloudConnectionModel): [JBIDE-7402] radded setup of type at instantiation time
