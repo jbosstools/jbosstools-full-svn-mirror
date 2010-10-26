@@ -23,7 +23,7 @@ public class CloudTypeValidator implements IValidator {
 				&& !DeltaCloudClient.DeltaCloudType.UNKNOWN.equals(value)) {
 			return ValidationStatus.ok();
 		} else {
-			return ValidationStatus.error(WizardMessages.getString("IllegalCloudUrl.msg")); //$NON-NLS-1$
+			return ValidationStatus.warning(WizardMessages.getString("IllegalCloudUrl.msg")); //$NON-NLS-1$
 		}
 	}
 }
