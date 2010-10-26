@@ -47,11 +47,12 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 			mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME),
 					cloud.getName(), cloud.getURL(), cloud.getUsername(), password,
 					cloud.getType(), this);
+			addPage(mainPage);
 		} catch (MalformedURLException e) {
 			Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e);
-			ErrorDialog.openError(getShell(), "Error", "Could not open connection wizard", status);
+			ErrorDialog.openError(getShell(), WizardMessages.getString("EditCloudConnectionError.title"),
+					WizardMessages.getString("EditCloudConnectionError.message"), status);
 		}
-		addPage(mainPage);
 	}
 
 	private String getPassword() {
