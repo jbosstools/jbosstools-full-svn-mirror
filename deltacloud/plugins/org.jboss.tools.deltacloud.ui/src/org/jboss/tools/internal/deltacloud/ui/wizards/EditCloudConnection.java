@@ -12,8 +12,11 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.MalformedURLException;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -40,9 +43,14 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 	@Override
 	public void addPages() {
 		String password = getPassword();
-		mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME),
-				cloud.getName(), cloud.getURL(), cloud.getUsername(), password,
-				cloud.getType(), this);
+		try {
+			mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME),
+					cloud.getName(), cloud.getURL(), cloud.getUsername(), password,
+					cloud.getType(), this);
+		} catch (MalformedURLException e) {
+			Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e);
+			ErrorDialog.openError(getShell(), "Error", "Could not open connection wizard", status);
+		}
 		addPage(mainPage);
 	}
 

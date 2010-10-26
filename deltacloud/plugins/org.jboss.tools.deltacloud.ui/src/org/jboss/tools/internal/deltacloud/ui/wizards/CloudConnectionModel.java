@@ -10,7 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.net.MalformedURLException;
+
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClient.DeltaCloudType;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.ObservablePojo;
 
 /**
@@ -34,12 +37,43 @@ public class CloudConnectionModel extends ObservablePojo {
 
 	private String password;
 	private DeltaCloudClient.DeltaCloudType cloudType;
+	private String initialName;
 
-	public CloudConnectionModel(String name, String url, String username, String password) {
+	public CloudConnectionModel() {
+		this("", "", "", "", (DeltaCloudType) null);
+	}
+
+	public CloudConnectionModel(String name, String url, String username, String password, String cloudType) throws MalformedURLException {
+		this(name, url, username, password, getDeltaCloudType(cloudType, url));
+	}
+
+	public CloudConnectionModel(String name, String url, String username, String password) throws MalformedURLException {
+		this(name, url, username, password, getDeltaCloudTypeFromUrl(url));
+	}
+
+	public CloudConnectionModel(String name, String url, String username, String password, DeltaCloudType deltaCloudType) {
 		this.name = name;
+		this.initialName = name;
 		this.url = url;
 		this.username = username;
 		this.password = password;
+		this.cloudType = deltaCloudType;
+	}
+	
+	private static DeltaCloudType getDeltaCloudTypeFromUrl(String url) throws MalformedURLException {
+		return new DeltaCloudClient(url, "", "").getServerType();
+	}
+
+	private static DeltaCloudType getDeltaCloudType(String cloudType, String url) throws MalformedURLException {
+		if (cloudType == null) {
+			return null;
+		}
+
+		try {
+			return DeltaCloudType.valueOf(cloudType);
+		} catch (IllegalArgumentException e) {
+			return getDeltaCloudTypeFromUrl(url);
+		}
 	}
 
 	public String getUsername() {
@@ -58,6 +92,10 @@ public class CloudConnectionModel extends ObservablePojo {
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_PASSWORD, this.password, this.password = password);
 	}
 
+	public String getInitialName() {
+		return initialName;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -67,18 +105,22 @@ public class CloudConnectionModel extends ObservablePojo {
 	}
 
 	public String getUrl() {
+		System.err.println("getting url: " + url);
 		return url;
 	}
 
 	public void setUrl(String url) {
+		System.err.println("url set to: " + url);
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_URL, this.url, this.url = url);
 	}
 
 	public DeltaCloudClient.DeltaCloudType getType() {
+		System.err.println("getting cloud type: " + cloudType);
 		return cloudType;
 	}
 
 	public void setType(DeltaCloudClient.DeltaCloudType cloudType) {
+		System.err.println("cloud type set to " + cloudType);
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_TYPE, this.cloudType, this.cloudType = cloudType);
 	}
 }
