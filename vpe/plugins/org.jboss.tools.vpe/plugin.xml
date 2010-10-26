@@ -87,14 +87,14 @@
                  id="org.eclipse.ui.commands.toggleState">
            </state>
         </command>
-		<!--command categoryId="org.jboss.tools.vpe.category"
+		<command categoryId="org.jboss.tools.vpe.category"
 			id="org.jboss.tools.vpe.commands.showTextFormattingCommand"
 		    name="%vpe.toolbar.show_text_formatting">		    
            <state
                  class="org.eclipse.ui.handlers.RegistryToggleState:false"
                  id="org.eclipse.ui.commands.toggleState">
            </state>
-        </command-->
+        </command>
 		<command categoryId="org.jboss.tools.vpe.category"
 			id="org.jboss.tools.vpe.commands.showBundleAsELCommand"
 		    name="%vpe.toolbar.show_bundle_as_el">
@@ -147,11 +147,11 @@
         	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
         	contextId="org.eclipse.ui.contexts.window"
         	sequence="M1+M2+6"/>
-		<!--key
+		<key
         	commandId="org.jboss.tools.vpe.commands.showTextFormattingCommand"
         	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
         	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+7"/-->
+        	sequence="M1+M2+7"/>
 		<key
         	commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"
         	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
@@ -218,12 +218,12 @@
 	                style="toggle"
                     id="org.jboss.tools.vpe.menus.showNonVisualTagsCommand"
                     mnemonic="S"/>
-              <!--command
+              <command
                     commandId="org.jboss.tools.vpe.commands.showTextFormattingCommand"
 	                icon="icons/text-formatting.gif"
 	                style="toggle"
                     id="org.jboss.tools.vpe.menus.showTextFormattingCommand"
-                    mnemonic="S"/-->
+                    mnemonic="S"/>
               <command
                     commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"
 	                icon="icons/bundle-as-el.gif"
@@ -292,7 +292,7 @@
 	            	<reference definitionId="org.jboss.tools.ui.structuredEditor"/>
 	            </visibleWhen>
             </command>
-            <!--command
+            <command
 	            	commandId="org.jboss.tools.vpe.commands.showTextFormattingCommand"
 	                icon="icons/text-formatting.gif"
 	                style="toggle"
@@ -301,7 +301,7 @@
 				<visibleWhen checkEnabled="false">
 	            	<reference definitionId="org.jboss.tools.ui.structuredEditor"/>
 	            </visibleWhen>
-            </command-->
+            </command>
             <command
 	            	commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"
 	                icon="icons/bundle-as-el.gif"
@@ -380,9 +380,9 @@
        <handler
              class="org.jboss.tools.vpe.handlers.ShowNonVisualTagsHandler"
              commandId="org.jboss.tools.vpe.commands.showNonVisualTagsCommand"/>
-       <!--handler
+       <handler
              class="org.jboss.tools.vpe.handlers.ShowTextFormattingHandler"
-             commandId="org.jboss.tools.vpe.commands.showTextFormattingCommand"/-->
+             commandId="org.jboss.tools.vpe.commands.showTextFormattingCommand"/>
        <handler
              class="org.jboss.tools.vpe.handlers.ShowBundleAsELHandler"
              commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"/>

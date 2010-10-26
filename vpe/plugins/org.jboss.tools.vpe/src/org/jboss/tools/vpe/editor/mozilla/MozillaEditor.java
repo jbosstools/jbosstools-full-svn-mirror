@@ -1111,4 +1111,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public MozillaTooltipListener getTooltipListener() {
 		return tooltipListener;
 	}
+
+	public IVpeToolBarManager getVpeToolBarManager() {
+		return vpeToolBarManager;
+	}
 }
