@@ -1,5 +1,7 @@
 2010-10-26  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudTypeValidator.java (validate): 
+	[JBIDE-7360] CloudTypeValidator now returns a warning instead of an error (wizard may be finished with an invalid url).
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnection.java (addPages): 
 	[JBIDE-7402] added MalformedURLException handling.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (bindCloudType): 
