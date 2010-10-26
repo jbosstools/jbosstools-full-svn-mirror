@@ -30,6 +30,18 @@
 		</para>
 	</formalpara>
 	<formalpara>
+	   <title>Deltacloud</title>
+	   <para>
+	      <itemizedlist>
+		 <listitem>
+		    <para>
+		    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6837">JBIDE-6837</ulink>: Deltacloud tooling has been added for this release.
+		 </para>
+	      </listitem>
+	   </itemizedlist>
+	</para>
+	</formalpara>
+	<formalpara>
 		<title>ESB</title>
 		<para>
 			<itemizedlist>
@@ -149,6 +161,16 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7021">JBIDE-7021</ulink>: Low performance issues existed for validation of web pages. Performance issues were caused by the XHTML syntax validator performing to slow if a DOCTYPE was not declared at the top of XHTML files, the <methodname>PageContextFactory.createPageContext</methodname> method created a SSE model for non-facelet pages, if a page contained Expression Language (EL) errors or warnings, a memory leak appeared in the <methodname>PageContextFactory.getSheetForTagAttribute</methodname> method by registerting <classname>ExtendedLinkElementAdapter</classname> and never releasing the memory allocated to it. These issues have been addressed in this release and the <classname>PageContextFactory</classname> class has been removed from the resource listeners since resources can be modified without changing their context in other places apart from the included validators. 
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6816">JBIDE-6816</ulink>: A template page for RichFaces has been added to the list of available XHTML templates.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6815">JBIDE-6815</ulink>: A template page has been added that does not incorporate Facelets.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	     </formalpara>
@@ -188,18 +210,43 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-<!--	<formalpara>
+	<formalpara>
 		<title>Seam</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-">JBDS-</ulink>
+					   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6877">JBIDE-6877</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6875">JBIDE-6875</ulink>: When a user writes code for the Seam component that won't compile, new quick fixes are now presented through annotations. Quick fixes include the ability to quickly add a <property>Name</property> annotation to the class and delete a <property>Create</property>, <property>Unwrap</property> or <property>Observer</property> annotation from the method.
 					</para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6876">JBIDE-6876</ulink>: The quick fix annotation suggestions for the <methodname>Destroy</methodname> method have been updated to remove <guimenuitem>Set Seam properties</guimenuitem> option. This option should not have been presented in this situation. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6874">JBIDE-6874</ulink>: Quick fix now offers to delete any <property>Remove</property> annotation. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6873">JBIDE-6873</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6871">JBIDE-6871</ulink>: For <property>Scope</property> annotation, quick fix now offers to change a component's scope. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6870">JBIDE-6870</ulink>: Quick fix now offers to create a new method with <property>Remove</property> or <property>Destroy</property> annotation. These annotations are also offered as additions to existing methods.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6869">JBIDE-6869</ulink>: Quick fix now offers to rename a component if it is a duplicate and to delete <property>Name</property> annotation.
+				   </para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 <!--	<formalpara>
 		<title>Smooks</title>
 		<para>
@@ -273,6 +320,11 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6981">JBIDE-6981</ulink>: Functionality has been added that provides a drop-down menu in the tag breadcrumbs that enables easy selection of any child element to the selected tag. If there are no children to be expanded, the last tag will remain highlighted.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6805">JBIDE-6805</ulink>: New templates have been added, supporting most docbook tags.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -282,8 +334,18 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-					<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7106">JBIDE-7106</ulink>: Annotations have been added for JAX-RS (Java API for RESTful Web Services). This addition has been accomplished by modifying the <guilabel>Annotation Properties</guilabel> view.
+					    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7106">JBIDE-7106</ulink>: Annotations have been added for JAX-RS (Java API for RESTful Web Services). This addition has been accomplished by modifying the <guilabel>Annotation Properties</guilabel> view.
 					</para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6904">JBIDE-6904</ulink>: A new wizard is available for creating JAX-WS and JAX-RS services from annotated class files. If the classes do not exist upon creation of the services, they will be created during service creation, the same as if the user had used the <guilabel>Create a Sample Web Service</guilabel> or <guilabel>Create a Sample RESTful Web Service</guilabel> wizards.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6851">JBIDE-6851</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6850">JBIDE-6850</ulink>: A new feature has been added providing the ability to read Web Service Definition Language (WSDL) over HTTPS. This ensures that secured <methodname>GET</methodname> and <methodname>POST</methodname> methods are usable and will not produce a <exceptionname>com.sun.xml.internal.ws.wsdl.parser.InaccessibleWSDLException: 2 counts of InaccessibleWSDLException</exceptionname> exception.
+				   </para>
 				</listitem>
 			</itemizedlist>
 		</para>
@@ -312,16 +374,17 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-<!--	<formalpara>
+	<formalpara>
 		<title>General Issues</title>
 		<para>
 			<itemizedlist>
-				<listitem>
-					<para>
-						
-					</para>
-				</listitem>
+			   <!-- This issue only in release notes for JBT -->
+		<!--	   <listitem>
+			      <para>
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6836">JBIDE-6836</ulink>: Google Web Toolkit features are available for JBoss Tools through the update site as experimental. 
+			      </para>
+			   </listitem> -->
 			</itemizedlist>
 		</para>
-	     </formalpara> -->
+	     </formalpara>
 </section>
