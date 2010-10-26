@@ -1,3 +1,15 @@
+2010-10-26  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnection.java (addPages): 
+	[JBIDE-7402] added MalformedURLException handling.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (bindCloudType): 
+	[JBIDE-7402] bound type label to converter state.
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionModel.java 
+	(getDeltaCloudType): [JBIDE-7402] added setup of type at instantiation time
+    (CloudConnectionModel): [JBIDE-7402] radded setup of type at instantiation time
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/Url2DeltaCloudTypeConverter.java: 
+	[JBIDE-7402] renamed to reflect involved types better.
+
 2010-10-25  Jeff Johnston  <jjohnstn@redhat.com>
 
 	[JBIDE-7408]
