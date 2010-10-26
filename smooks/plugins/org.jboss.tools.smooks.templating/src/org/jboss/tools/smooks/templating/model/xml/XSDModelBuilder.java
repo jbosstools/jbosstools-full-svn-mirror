@@ -91,6 +91,9 @@ public class XSDModelBuilder extends ModelBuilder {
         Document model = createModelInstance();
         expand(rootElement, 1, 1, model, model);
 
+        // The model has detailed metadata attached, so mark it as a strict model...
+        ModelBuilder.setStrictModel(model, true);
+
         return model;
     }
 

@@ -25,6 +25,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.milyn.xml.DomUtils;
 
 import javax.xml.XMLConstants;
@@ -269,4 +270,58 @@ public abstract class ModelBuilder {
 
         return !enforce.equals("false"); //$NON-NLS-1$
     }
+
+	/**
+	 * Does the model element contain child elements.
+	 * @param element The element to test.
+	 * @return true if the element contains child elements, otherwise false.
+	 */
+	public static boolean hasChildElements(Element element) {
+		NodeList childNodes = element.getChildNodes();
+		int numChildren = childNodes.getLength();
+		
+		for(int i = 0; i < numChildren; i++) {
+			if(childNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Set the model as being strict, or not.
+	 * <p/>
+	 * A strict model should have cardinality info attached e.g. minOccurs/maxOccurs, required etc.
+	 * @param model The model Document node.
+	 * @param strict True if the model is strict, otherwise false.
+	 */
+	public static void setStrictModel(Document model, boolean strict) {
+		Element documentElement = model.getDocumentElement();
+		
+		if(documentElement == null) {
+			throw new IllegalStateException("Call to 'markStrictModel' before the model's root element has been added."); //$NON-NLS-1$   
+		}
+		
+		documentElement.setAttributeNS(NAMESPACE, "smk:strict", Boolean.toString(strict)); //$NON-NLS-1$    	
+	}
+	
+	/**
+	 * Is the model strict, or not.
+	 * <p/>
+	 * A strict model should have cardinality info attached e.g. minOccurs/maxOccurs, required etc.
+	 * @param model The model Document node.
+	 * @return True if the model is strict, otherwise false.
+	 */
+	public static boolean isStrictModel(Document model) {
+		Element documentElement = model.getDocumentElement();
+		
+		if(documentElement == null) {
+			throw new IllegalStateException("Call to 'isStrictModel' before the model's root element has been added."); //$NON-NLS-1$   
+		}
+		
+		String strict = documentElement.getAttributeNS(NAMESPACE, "strict"); //$NON-NLS-1$
+		
+		return Boolean.parseBoolean(strict);
+	}
 }

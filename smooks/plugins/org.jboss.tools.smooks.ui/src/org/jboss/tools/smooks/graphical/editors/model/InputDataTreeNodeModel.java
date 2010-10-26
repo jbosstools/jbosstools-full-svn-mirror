@@ -18,6 +18,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
+import org.jboss.tools.smooks.configuration.editors.xml.AbstractXMLObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
@@ -84,25 +85,34 @@ public class InputDataTreeNodeModel extends TreeNodeModel {
 	@Override
 	public boolean canLinkWithTarget(Object model) {
 		TreeNodeModel targetNode = (TreeNodeModel) model;
-		System.out.println(targetNode);
 		if (targetNode == this
 				|| targetNode.getModelRootNode() == getModelRootNode()) {
 			return false;
 		}
 
-		Object data = AdapterFactoryEditingDomain.unwrap(targetNode.getData());
-		AbstractSmooksGraphicalModel pm = targetNode;
-		while (pm != null && !(pm instanceof FreemarkerTemplateGraphicalModel)) {
-			pm = pm.getParent();
+		Object targetData = AdapterFactoryEditingDomain.unwrap(targetNode.getData());
+		AbstractSmooksGraphicalModel targetModel = targetNode;
+		while (targetModel != null && !(targetModel instanceof FreemarkerTemplateGraphicalModel)) {
+			targetModel = targetModel.getParent();
 		}
-		if (data instanceof IFreemarkerTemplateModel && pm instanceof FreemarkerTemplateGraphicalModel) {
-			TemplateBuilder builder = ((FreemarkerTemplateGraphicalModel) pm).getTemplateBuilder();
-			if (((IFreemarkerTemplateModel) data).isHidden(builder)) {
+		if (targetData instanceof IFreemarkerTemplateModel && targetModel instanceof FreemarkerTemplateGraphicalModel) {
+			TemplateBuilder builder = ((FreemarkerTemplateGraphicalModel) targetModel).getTemplateBuilder();
+			if (((IFreemarkerTemplateModel) targetData).isHidden(builder)) {
 				return false;
 			}
 
-			if (data instanceof FreemarkerTemplateXMLModel) {
-				if (!((FreemarkerTemplateXMLModel) data).getXMLNodeChildren().isEmpty()) {
+			if (targetData instanceof FreemarkerTemplateXMLModel) {
+				FreemarkerTemplateXMLModel targetDataModel = (FreemarkerTemplateXMLModel) targetData;
+				if (!targetDataModel.getXMLNodeChildren().isEmpty()) {
+					// The target node has child nodes.  The only thing it can connect to on the source is
+					// a collection node.
+					Object sourceData = AdapterFactoryEditingDomain.unwrap(this.getData());
+					if(sourceData instanceof AbstractXMLObject) {
+						Element sourceElement = ((AbstractXMLObject)sourceData).getReferenceElement();
+						if(ModelBuilder.isCollection(sourceElement) || (!ModelBuilder.isStrictModel(sourceElement.getOwnerDocument()) && ModelBuilder.hasChildElements(sourceElement))) { 
+							return true;
+						}
+					}
 					return false;
 				}
 			}
@@ -134,17 +144,17 @@ public class InputDataTreeNodeModel extends TreeNodeModel {
 				pgm = pgm.getParent();
 			}
 		}
-		if (data instanceof TagPropertyObject) {
+		if (targetData instanceof TagPropertyObject) {
 			// Only OK to link to an attribute from a valid Value node...
 			return isValidValueNode();
-		} else if (data instanceof TagObject) {
+		} else if (targetData instanceof TagObject) {
 			if (targetNode.isValidValueNode()) {
 				return isValidValueNode();
 			} else if (targetNode.isValidCollectionNode()) {
 				return isValidCollectionNode();
 			}
-		} else if (data instanceof EObject) {
-			if (SmooksUIUtils.getSelectorFeature((EObject) data) != null) {
+		} else if (targetData instanceof EObject) {
+			if (SmooksUIUtils.getSelectorFeature((EObject) targetData) != null) {
 				return true;
 			}
 		}

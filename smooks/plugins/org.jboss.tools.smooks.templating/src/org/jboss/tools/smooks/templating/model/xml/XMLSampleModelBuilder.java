@@ -84,6 +84,10 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 		
 		Element documentElement = model.getDocumentElement();
 		
+        // The model has no metadata attached since it is based on only a sample, 
+		// so mark it as not being a strict model...
+        ModelBuilder.setStrictModel(model, false);
+		
 		trimNonModelNodes(documentElement);
 		configureModelElementTypes(documentElement);
 		configureModelElementCardinality(documentElement);

@@ -52,6 +52,9 @@ public class CSVModelBuilder extends ModelBuilder {
 			record.appendChild(fieldElement);
         }
 
+        // The model has some cardinality metadata attached, so mark it as a strict model...
+        ModelBuilder.setStrictModel(model, true);
+        
         return model;
     }
 }
