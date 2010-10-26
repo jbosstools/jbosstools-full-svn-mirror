@@ -62,7 +62,7 @@ import org.jboss.tools.internal.deltacloud.ui.common.swt.JFaceUtils;
 public class CloudConnectionPage extends WizardPage {
 
 	private static final int CLOUDTYPE_CHECK_DELAY = 500;
-	
+
 	private static final String DESCRIPTION = "NewCloudConnection.desc"; //$NON-NLS-1$
 	private static final String TITLE = "NewCloudConnection.title"; //$NON-NLS-1$
 	private static final String URL_LABEL = "Url.label"; //$NON-NLS-1$
@@ -137,7 +137,7 @@ public class CloudConnectionPage extends WizardPage {
 	}
 
 	/**
-	 * A class that listens to a user click on a button that allows it to test
+	 * A Listener that listens to user clicks on a button that allows it to test
 	 * credentials.
 	 * 
 	 * @see CloudConnection#performTest()
@@ -183,6 +183,35 @@ public class CloudConnectionPage extends WizardPage {
 		public void handleValueChange(ValueChangeEvent event) {
 			setDecorations(false);
 			clearMessage();
+		}
+	}
+
+	/**
+	 * A validator that marks cloud names as invalid if the name the user
+	 * entered is already used by another connection. It does not invalidate the
+	 * name the connection had before editing.
+	 * 
+	 * @see IValidator
+	 * @see CloudConnectionModel#getInitialName()
+	 * @see DeltaCloudManager#findCloud(String)
+	 * 
+	 */
+	private class CloudNameValidator implements IValidator {
+
+		@Override
+		public IStatus validate(Object value) {
+			String connectionName = (String) value;
+			/*
+			 * keeping the same name when editing must be valid
+			 */
+			if (!connectionName.equals(connectionModel.getInitialName())
+					/* all new names must be unique */
+					&& DeltaCloudManager.getDefault().findCloud(connectionName) != null) {
+				return ValidationStatus
+						.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
+			} else {
+				return ValidationStatus.ok();
+			}
 		}
 	}
 
@@ -415,8 +444,8 @@ public class CloudConnectionPage extends WizardPage {
 
 		// bind converter to delta cloud label
 		IObservableValue cloudTypeObservable = urlToCloudTypeConverter.getCloudTypeObservable();
-		DeltaCloudTypeLabelAdapter cloudTypeAdapter = new DeltaCloudTypeLabelAdapter(
-				(DeltaCloudType) cloudTypeObservable.getValue(), typeLabel);
+		DeltaCloudTypeLabelAdapter cloudTypeAdapter =
+				new DeltaCloudTypeLabelAdapter((DeltaCloudType) cloudTypeObservable.getValue(), typeLabel);
 		cloudTypeObservable.addValueChangeListener(cloudTypeAdapter);
 
 		ControlDecorationSupport.create(binding, SWT.LEFT | SWT.TOP);
@@ -441,24 +470,7 @@ public class CloudConnectionPage extends WizardPage {
 				new UpdateValueStrategy().setBeforeSetValidator(
 						new CompositeValidator(
 								new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_NAME)),
-								new IValidator() {
-
-									@Override
-									public IStatus validate(Object value) {
-										/*
-										 * keeping the same name when editing
-										 * must be valid
-										 */
-										if (!nameText.getText().equals(connectionModel.getInitialName())
-												/* all new names must be unique */
-												&& DeltaCloudManager.getDefault().findCloud(nameText.getText()) != null) {
-											return ValidationStatus
-													.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
-										} else {
-											return ValidationStatus.ok();
-										}
-									}
-								})),
+								new CloudNameValidator())),
 				null);
 		ControlDecorationSupport.create(nameTextBinding, SWT.LEFT | SWT.TOP);
 	}
