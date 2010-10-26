@@ -273,7 +273,7 @@ public class CloudConnectionPage extends WizardPage {
 		Label typeLabel = new Label(container, SWT.NULL);
 		typeLabel.setText(WizardMessages.getString(CLOUDTYPE_LABEL));
 		Label computedTypeLabel = new Label(container, SWT.NULL);
-		Binding urlBinding = bindCloudType(dbc, urlText, computedTypeLabel);
+		Binding urlTypeBinding = bindCloudType(dbc, urlText, computedTypeLabel);
 
 		// username
 		Label usernameLabel = new Label(container, SWT.NULL);
@@ -299,8 +299,9 @@ public class CloudConnectionPage extends WizardPage {
 		// test button
 		final Button testButton = new Button(container, SWT.NULL);
 		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));
-		testButton.setEnabled(false);
-		urlBinding.getValidationStatus().addValueChangeListener(enableButtonOnUrlValidityChanges(testButton));
+		boolean isUrlValid = ((IStatus) urlTypeBinding.getValidationStatus().getValue()).getSeverity() == IStatus.OK;
+		urlTypeBinding.getValidationStatus().addValueChangeListener(
+				enableButtonOnUrlValidityChanges(testButton, isUrlValid));
 
 		CredentialsTestAdapter credentialsTestAdapter = new CredentialsTestAdapter(usernameDecoration,
 				passwordDecoration);
@@ -403,9 +404,12 @@ public class CloudConnectionPage extends WizardPage {
 	 * 
 	 * @param testButton
 	 *            the test button
+	 * @param isUrlValid
 	 * @return the i value change listener
 	 */
-	private IValueChangeListener enableButtonOnUrlValidityChanges(final Button testButton) {
+	private IValueChangeListener enableButtonOnUrlValidityChanges(final Button testButton, boolean isUrlValid) {
+
+		testButton.setEnabled(isUrlValid);
 		return new IValueChangeListener() {
 
 			@Override
@@ -417,9 +421,11 @@ public class CloudConnectionPage extends WizardPage {
 	}
 
 	/**
-	 * Binds the given cloud type label to the given url text widget. Attaches a
-	 * listener to the url text widget Adds a validity decorator to the url text
-	 * widget.
+	 * Binds the given url text widget to the model type property and uses a
+	 * converter to transfer urls to cloud types. Furthermore it binds the given
+	 * cloud type label to the result of this conversion. The binding returned
+	 * is the binding that connects the url text widget to the cloud type
+	 * property in the model.
 	 * 
 	 * @param dbc
 	 *            the databinding context to use
@@ -436,21 +442,29 @@ public class CloudConnectionPage extends WizardPage {
 		updateStrategy.setConverter(urlToCloudTypeConverter);
 		updateStrategy.setBeforeSetValidator(new CloudTypeValidator());
 
-		Binding binding = dbc.bindValue(
+		// bind url to cloud type in model
+		Binding urlTypeBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(urlText),
 				BeanProperties.value(CloudConnectionModel.PROPERTY_TYPE).observe(connectionModel),
 				updateStrategy,
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
 
-		// bind converter to delta cloud label
+		/*
+		 * bind converter to delta cloud label.
+		 * 
+		 * Cloud type cannot be fetched from the model since invalid url's don't
+		 * get propagated to the model and no type update happens in this case.
+		 * We could not show invalid urls in the label if we would get the type
+		 * in the model.
+		 */
 		IObservableValue cloudTypeObservable = urlToCloudTypeConverter.getCloudTypeObservable();
 		DeltaCloudTypeLabelAdapter cloudTypeAdapter =
 				new DeltaCloudTypeLabelAdapter((DeltaCloudType) cloudTypeObservable.getValue(), typeLabel);
 		cloudTypeObservable.addValueChangeListener(cloudTypeAdapter);
 
-		ControlDecorationSupport.create(binding, SWT.LEFT | SWT.TOP);
+		ControlDecorationSupport.create(urlTypeBinding, SWT.LEFT | SWT.TOP);
 
-		return binding;
+		return urlTypeBinding;
 	}
 
 	/**
