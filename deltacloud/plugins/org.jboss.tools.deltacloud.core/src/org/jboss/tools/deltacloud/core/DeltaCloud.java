@@ -437,7 +437,7 @@ public class DeltaCloud {
 		} catch (DeltaCloudAuthException e) {
 			return false;
 		} catch (DeltaCloudClientException e) {
-			return true;
+			return false;
 		}
 	}
 

@@ -135,6 +135,56 @@ public class CloudConnectionPage extends WizardPage {
 		}
 	}
 
+	/**
+	 * A class that listens to a user click on a button that allows it to test
+	 * credentials.
+	 * 
+	 * @see CloudConnection#performTest()
+	 */
+	private class CredentialsTestAdapter extends SelectionAdapter implements IValueChangeListener {
+
+		private ControlDecoration[] controlDecorations;
+
+		public CredentialsTestAdapter(ControlDecoration... controlDecorations) {
+			this.controlDecorations = controlDecorations;
+			setDecorations(false);
+		}
+
+		public void widgetSelected(SelectionEvent event) {
+			boolean success = cloudConnection.performTest();
+			setMessage(success);
+			setDecorations(!success);
+		}
+
+		private void setMessage(boolean success) {
+			if (success) {
+				CloudConnectionPage.this.setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
+			} else {
+				CloudConnectionPage.this.setErrorMessage(WizardMessages.getString(TEST_FAILURE));
+			}
+		}
+
+		private void clearMessage() {
+			CloudConnectionPage.this.setMessage(""); //$NON-NLS-1$
+		}
+
+		private void setDecorations(boolean visible) {
+			for (ControlDecoration controlDecoration : controlDecorations) {
+				if (visible) {
+					controlDecoration.show();
+				} else {
+					controlDecoration.hide();
+				}
+			}
+		}
+
+		@Override
+		public void handleValueChange(ValueChangeEvent event) {
+			setDecorations(false);
+			clearMessage();
+		}
+	}
+
 	public CloudConnectionPage(String pageName, CloudConnection cloudConnection) {
 		super(pageName);
 		setDescription(WizardMessages.getString(DESCRIPTION));
@@ -414,49 +464,5 @@ public class CloudConnectionPage extends WizardPage {
 
 	public CloudConnectionModel getModel() {
 		return connectionModel;
-	}
-
-	private class CredentialsTestAdapter extends SelectionAdapter implements IValueChangeListener {
-
-		private ControlDecoration[] controlDecorations;
-
-		public CredentialsTestAdapter(ControlDecoration... controlDecorations) {
-			this.controlDecorations = controlDecorations;
-			setDecorations(false);
-		}
-
-		public void widgetSelected(SelectionEvent event) {
-			boolean success = cloudConnection.performTest();
-			setMessage(success);
-			setDecorations(!success);
-		}
-
-		private void setMessage(boolean success) {
-			if (success) {
-				CloudConnectionPage.this.setMessage(WizardMessages.getString(TEST_SUCCESSFUL));
-			} else {
-				CloudConnectionPage.this.setErrorMessage(WizardMessages.getString(TEST_FAILURE));
-			}
-		}
-
-		private void clearMessage() {
-			CloudConnectionPage.this.setMessage(""); //$NON-NLS-1$
-		}
-
-		private void setDecorations(boolean visible) {
-			for (ControlDecoration controlDecoration : controlDecorations) {
-				if (visible) {
-					controlDecoration.show();
-				} else {
-					controlDecoration.hide();
-				}
-			}
-		}
-
-		@Override
-		public void handleValueChange(ValueChangeEvent event) {
-			setDecorations(false);
-			clearMessage();
-		}
 	}
 }
