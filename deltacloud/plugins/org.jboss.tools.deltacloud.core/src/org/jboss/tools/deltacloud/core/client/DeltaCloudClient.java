@@ -53,6 +53,8 @@ import org.xml.sax.InputSource;
 
 public class DeltaCloudClient implements API {
 
+	private static final int HTTP_STATUSCODE_NOTFOUND = 404;
+	private static final int HTTP_STATUSCODE_FORBIDDEN = 403;
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver"; //$NON-NLS-1$
 	private static final String DOCUMENT_ELEMENT_API = "api"; //$NON-NLS-1$
 	private static final int HTTP_STATUSCODE_SERVERERROR = 500;
@@ -142,17 +144,24 @@ public class DeltaCloudClient implements API {
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
 		if (isHttpForbiddenError(statusCode)) {
 			throw new DeltaCloudAuthException(
-					MessageFormat.format("the server reported an authorization error \"{0}\" on requesting \"{1}\"",
+					MessageFormat.format("The server reported an authorization error \"{0}\" on requesting \"{1}\"",
 							httpResponse.getStatusLine().getReasonPhrase(), requestUrl));
+		} else if (isHttpNotFoundError(statusCode)) {
+			throw new DeltaCloudNotFoundException(
+						MessageFormat.format("The server could not find the resource \"{0}\"", requestUrl));
 		} else if (isHttpClientError(statusCode) || isHttpServerError(statusCode)) {
 			throw new DeltaCloudClientException(
-					MessageFormat.format("the server reported an error \"{0}\" on requesting \"{1}\"",
+					MessageFormat.format("The server reported an error \"{0}\" on requesting \"{1}\"",
 							httpResponse.getStatusLine().getReasonPhrase(), requestUrl));
 		}
 	}
 
+	private boolean isHttpNotFoundError(int statusCode) {
+		return statusCode == HTTP_STATUSCODE_NOTFOUND;
+	}
+
 	private boolean isHttpForbiddenError(int statusCode) {
-		return statusCode == 403;
+		return statusCode == HTTP_STATUSCODE_FORBIDDEN;
 	}
 
 	private boolean isHttpClientError(int statusCode) {

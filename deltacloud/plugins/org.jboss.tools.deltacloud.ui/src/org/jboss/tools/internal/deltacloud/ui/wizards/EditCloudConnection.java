@@ -51,7 +51,7 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 					cloud.getType(), this);
 			addPage(mainPage);
 		} catch (MalformedURLException e) {
-			Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e);
+			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 			ErrorDialog.openError(getShell(), WizardMessages.getString("EditCloudConnectionError.title"),
 					WizardMessages.getString("EditCloudConnectionError.message"), status);
 		}

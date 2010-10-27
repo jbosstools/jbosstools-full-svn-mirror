@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.test.core;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -45,21 +47,23 @@ public class DeltaCloudMockIntegrationTest {
 	}
 
 	@Test
-	public void testConnectionDoesNotThrowOnForbidden() throws MalformedURLException, DeltaCloudClientException {
+	public void testConnectionReportsFalseOnAuthFailure() throws MalformedURLException, DeltaCloudClientException {
 		ServerFake serverFake = setupServerFake("HTTP/1.1 403 Forbidden\n\n\n");
 		try {
-			DeltaCloud deltaCloud = new DeltaCloud("aName", "http://localhost:" + ServerFake.DEFAULT_PORT, "badUser", "badPassword");
-			deltaCloud.testConnection();
+			DeltaCloud deltaCloud = new DeltaCloud("aName", "http://localhost:" + ServerFake.DEFAULT_PORT, "badUser",
+					"badPassword");
+			assertFalse(deltaCloud.testConnection());
 		} finally {
 			serverFake.stop();
 		}
 	}
 
-	@Test(expected=DeltaCloudClientException.class)
-	public void testConnectionDoesThrowOnGeneralError() throws MalformedURLException, DeltaCloudClientException {
+	@Test(expected = DeltaCloudClientException.class)
+	public void testConnectionThrowsOnGeneralFailure() throws MalformedURLException, DeltaCloudClientException {
 		ServerFake serverFake = setupServerFake("HTTP/1.1 501 Some Error\ndummy dummy dummy\n\n");
 		try {
-			DeltaCloud deltaCloud = new DeltaCloud("aName", "http://localhost:" + ServerFake.DEFAULT_PORT, "badUser", "badPassword");
+			DeltaCloud deltaCloud = new DeltaCloud("aName", "http://localhost:" + ServerFake.DEFAULT_PORT, "badUser",
+					"badPassword");
 			deltaCloud.testConnection();
 		} finally {
 			serverFake.stop();
