@@ -26,6 +26,51 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6983">JBIDE-6983</ulink>: The <filename>beans.xml</filename> editor now correctly supports elements in other namespaces. This has been achieved by supporting any child element of the &lt;beans&gt; root element and providing dynamic extentions to <filename>beans.xml</filename> in order to support different namespaces.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6742">JBIDE-6742</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6743">JBIDE-6743</ulink>: Error messages have been rewritten to clarify the error that occured. For example, the error message <errorname>Session bean with a parameterized bean class declares any scope other than @Dependent</errorname> has been rewritten to say <errorname>Session bean with a parameterized bean class must have @Dependent scope</errorname>. For a list of all error messages affected view the associated JIRAs. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6728">JBIDE-6728</ulink>: Each field injection point that includes an <parameter>Event</parameter> type is now provided with a default bean. For example the injection field <code>@Inject @Any @Tame @Role("Master") Event<TamingCommand> tamingEvent</code> will now have a bean for injection.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6704">JBIDE-6704</ulink>: It is now possible to enable and disable the CDI validator at the project level. To enable project validator settings navigate to <menuchoice><guimenuitem>Project</guimenuitem><guimenuitem>Properties</guimenuitem><guimenuitem>CDI Settings</guimenuitem><guimenuitem>Validator</guimenuitem><guimenuitem>Enable project specific settings</guimenuitem></menuchoice>.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6642">JBIDE-6642</ulink>: Validation has been added to ensure that <property>@Stereotype</property> annotation has the following annotation components: <property>@Target({TYPE, METHOD, FIELD})</property>, <property>@Target(TYPE)</property>, <property>@Target(METHOD)</property>, <property>@Target(FIELD)</property> or <property>@Target({METHOD, FIELD})</property>, and <property>@Retention(RUNTIME)</property>.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6641">JBIDE-6641</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6640">JBIDE-6640</ulink>: The OpenOn menu for injection points has been upgraded to present more information concerning eligible beans and indicates the class or classes that will be injected.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6639">JBIDE-6639</ulink>: Validation has been added to ensure that <property>@Scope</property> and <property>@NormalScope</property> annotation have the following annotation components: <property>@Target({TYPE, METHOD, FIELD})</property> and <property>@Retention(RUNTIME)</property>.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6637">JBIDE-6637</ulink>: Validation has been added to ensure that <property>@Qualifier</property> and <property>@NormalScope</property> annotation have the following annotation components: <property>@Target({METHOD, FIELD, PARAMETER, TYPE})</property> and <property>@Retention(RUNTIME)</property>.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6636">JBIDE-6636</ulink>: Errors in the <property>@Typed</property> annotation applied to the <classname>Bean</classname> class, <methodname>Producer</methodname> method and the <property>Producer</property> field were not reported on. If <property>@Typed</property> annotation errors are present in these circumstances, the errors are now reported to the user.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6635">JBIDE-6635</ulink>: A bug existed that would ignore the decorator of a class and take a user straight to the bean when choosing the <guimenuitem>Open Injected Class</guimenuitem> option. This issue has been corrected by expanding on the list of options to choose from. New options include <guimenuitem>Open Decorator NAME</guimenuitem> and <guimenuitem>Open Interceptor NAME</guimenuitem>
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -66,6 +111,11 @@
 				 <listitem>
 				    <para>
 				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6908">JBIDE-6908</ulink>: Support for ESB 4.9 has been added to the ESB project editor.
+				    </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6758">JBIDE-6758</ulink>: An existing <parameter>service</parameter> element without a child <parameter>security</parameter> element would not be be able to have the <parameter>security</parameter> element added through the user interface. To this issue, each <parameter>service</parameter> element now has a <parameter>security</parameter> element and a subsequent <guimenuitem>Security</guimenuitem> form automatically attached in the ESB editor. The <parameter>security</parameter> element can safely be deleted from the <parameter>service</parameter> element code without the <guimenuitem>Security</guimenuitem> form being removed in the ESB editor. This ensures that if a user wishes to re-add a <parameter>security</parameter> element at a later stage, the functionality will exist to do so within the user interface. 
 				    </para>
 				 </listitem>
 			</itemizedlist>
@@ -127,6 +177,21 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6974">JBIDE-6974</ulink>: Support for comments in the HQL editor has been added for this release. Comments are annotated with <emphasis>--</emphasis> at the beginning of each comment line.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6727">JBIDE-6727</ulink>: When a JPA project is created with Hibernate a console configuration is automatically created for it. However if a Hibernate JPA project did not have a console configuration associated with it an exception would occur due to the tooling assuming a console configuration existed. To avoid this situation, Hibernate JPA projects are now tested for an associated console configuration. If a console configuration is not found an error will appear in the <guilabel>Problems</guilabel> view.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6703">JBIDE-6703</ulink>: The <classname>QueryExporter</classname> has been added to the exporters for use in Hibernate code generation configurations. This is accomplished by allowing all Ant export tasks to be executed from the user interface.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6686">JBIDE-6686</ulink>: An error existed where the Hibernate platform to be used was not filtered based on the version of JPA being used. This meant that selecting the JPA version to use would present all Hibernate platforms to the user, with indistinct names. This issue has been corrected by only displaying the Hibernate platform that corresponds to the specified JPA version, and renaming these platforms for easier identification.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	     </formalpara>
@@ -181,6 +246,16 @@
 		      <listitem>
 			 <para>
 			      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6973">JBIDE-6973</ulink>: A HTTP poller has been added for JBoss servers to detect if the server is running. This added feature will be useful for remote and local servers, being less resource-intensive than polling with JMX.
+		      </para>
+		   </listitem>
+		   <listitem>
+		      <para>
+			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6796">JBIDE-6796</ulink>: Launch configuration of the server can now be altered to perform different tasks based on the server mode; sample modes include local and Remote System Explorer (RSE). This added functionality has been achieved by separating launch behaviour into seperate classes.
+		      </para>
+		   </listitem>
+		   <listitem>
+		      <para>
+			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6707">JBIDE-6707</ulink>: The ability to <option>Explore</option> a specific resource on a server has now been expanded to encapsulate the entire server, allowing the deploy directory to be explored.
 		      </para>
 		   </listitem>
 		</itemizedlist>
@@ -325,6 +400,11 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6805">JBIDE-6805</ulink>: New templates have been added, supporting most docbook tags.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6721">JBIDE-6721</ulink> and  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6711">JBIDE-6711</ulink>: Spring support has been added to the Visual Page Editor through the addition of a new plug-in. The plug-in is available as <filename>org.jboss.tools.vpe.spring</filename>.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -345,6 +425,21 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6851">JBIDE-6851</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6850">JBIDE-6850</ulink>: A new feature has been added providing the ability to read Web Service Definition Language (WSDL) over HTTPS. This ensures that secured <methodname>GET</methodname> and <methodname>POST</methodname> methods are usable and will not produce a <exceptionname>com.sun.xml.internal.ws.wsdl.parser.InaccessibleWSDLException: 2 counts of InaccessibleWSDLException</exceptionname> exception.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6797">JBIDE-6797</ulink>: A new <guimenuitem>Options</guimenuitem> menu item has been added to the Web Services interface for JAX-RS. The <guimenuitem>Options</guimenuitem> menu item allows a user to test RESTful web services for allowed HTTP methods such as <methodname>POST</methodname> and <methodname>GET</methodname>. Results from the <guimenuitem>Options</guimenuitem> operation are viewable in the <property>Response Headers</property> list.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6753">JBIDE-6753</ulink>: In JBoss Application Server 6 no entries are required in the <filename>web.xml</filename> file, however entries remain mandatory for earlier releases. To reflect this upgrade, the <guilabel>Generate a Sample RESTful Web Service</guilabel> wizard now contains a checkbox to <guilabel>Update web.xml</guilabel>. By default the update option is enabled. If a user is aware that JBoss Application Server 6 is being utilized and they do not wish to update the <filename>web.xml</filename> file, this checkbox can be unchecked. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6660">JBIDE-6660</ulink>: A bug existed in the Web Services tooling such that when a user attempted to connect with a password protected URL (for example, a deltacloud) a dialog would appear requesting a username and password combination, however when the information was submitted it would not persist; this ensured the user would be asked for login details continually. This issue has been fixed by the creation of a new dialog that remembers the authentication information last used, however login information is not currently persisted between sessions (for example, closing and then reopening a workbench).
 				   </para>
 				</listitem>
 			</itemizedlist>
@@ -381,7 +476,7 @@
 			   <!-- This issue only in release notes for JBT -->
 		<!--	   <listitem>
 			      <para>
-				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6836">JBIDE-6836</ulink>: Google Web Toolkit features are available for JBoss Tools through the update site as experimental. 
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6836">JBIDE-6836</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6695">JBIDE-6695</ulink>: Google Web Toolkit features are available for JBoss Tools through the update site as experimental. 
 			      </para>
 			   </listitem> -->
 			</itemizedlist>
