@@ -307,7 +307,7 @@
 	                icon="icons/bundle-as-el.gif"
 	                style="toggle"
 	                id="org.jboss.tools.vpe.toolbars.showBundleAsELCommand"
-	                tooltip="%vpe.toolbar.show_text_formatting">
+	                tooltip="%vpe.toolbar.show_bundle_as_el">
 				<visibleWhen checkEnabled="false">
 	            	<reference definitionId="org.jboss.tools.ui.structuredEditor"/>
 	            </visibleWhen>
