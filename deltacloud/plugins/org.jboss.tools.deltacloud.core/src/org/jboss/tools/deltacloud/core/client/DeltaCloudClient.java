@@ -28,6 +28,7 @@ import java.util.List;
 import javax.xml.bind.JAXB;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -50,9 +51,11 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class DeltaCloudClient implements API {
 
+	private static final String PEM_FILE_SUFFIX = "pem";
 	private static final int HTTP_STATUSCODE_NOTFOUND = 404;
 	private static final int HTTP_STATUSCODE_FORBIDDEN = 403;
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver"; //$NON-NLS-1$
@@ -342,35 +345,66 @@ public class DeltaCloudClient implements API {
 		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.REALMS + "/" + realmId, RequestType.GET)), Realm.class);
 	}
 
+	/**
+	 * Retrieves a key for a given name on the deltacloud server and stores it
+	 * in the file at the given path. The file gets created if the file path does not exist yet.
+	 * 
+	 * @param keyname
+	 *            the name of the key to retrieve from the server
+	 * @param keyStoreLocation
+	 *            the path to the file to store the key in
+	 * @throws DeltaCloudClientException
+	 *             the delta cloud client exception
+	 */
 	public void createKey(String keyname, String keyStoreLocation) throws DeltaCloudClientException {
 		String xml = sendRequest(DCNS.KEYS + "?name=" + keyname, RequestType.POST);
 		try {
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document document = db.parse(new InputSource(new StringReader(xml)));
-			List<String> keyText = getElementText(document, "pem"); //$NON-NLS-1$
-			File keyFile = Path.fromOSString(keyStoreLocation).append(keyname + ".pem").toFile(); //$NON-NLS-1$
-			if (!keyFile.exists())
-				keyFile.createNewFile();
-			keyFile.setReadable(false, false);
-			keyFile.setWritable(true, true);
-			keyFile.setReadable(true, true);
-			StringBuffer sb = new StringBuffer();
-			String line;
-			BufferedReader reader = new BufferedReader(new StringReader(keyText.get(0)));
-			while ((line = reader.readLine()) != null) {
-				// We must trim off the white-space from the xml
-				// Complete white-space lines are to be ignored.
-				String trimmedLine = line.trim();
-				if (trimmedLine.length() > 0)
-					sb.append(trimmedLine).append("\n");
-			}
-			FileWriter w = new FileWriter(keyFile);
-			w.write(sb.toString());
-			w.close();
+			String key = trimKey(getKey(xml));
+			File keyFile = createKeyFile(keyname, keyStoreLocation);
+			storeKey(key, keyFile);
 		} catch (Exception e) {
 			throw new DeltaCloudClientException(e);
 		}
+	}
+
+	private void storeKey(String key, File keyFile) throws IOException {
+		FileWriter w = new FileWriter(keyFile);
+		w.write(key);
+		w.close();
+	}
+
+	private String trimKey(List<String> keyText) throws IOException {
+		StringBuffer sb = new StringBuffer();
+		String line;
+		BufferedReader reader = new BufferedReader(new StringReader(keyText.get(0)));
+		while ((line = reader.readLine()) != null) {
+			// We must trim off the white-space from the xml
+			// Complete white-space lines are to be ignored.
+			String trimmedLine = line.trim();
+			if (trimmedLine.length() > 0) {
+				sb.append(trimmedLine).append("\n");
+			}
+		}
+		return sb.toString();
+	}
+
+	private List<String> getKey(String xml) throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = dbf.newDocumentBuilder();
+		Document document = db.parse(new InputSource(new StringReader(xml)));
+		List<String> keyText = getElementText(document, PEM_FILE_SUFFIX); //$NON-NLS-1$
+		return keyText;
+	}
+
+	private File createKeyFile(String keyname, String keyStoreLocation) throws IOException {
+		File keyFile = Path.fromOSString(keyStoreLocation).append(keyname + "." + PEM_FILE_SUFFIX).toFile(); //$NON-NLS-1$
+		if (!keyFile.exists()) {
+			keyFile.createNewFile();
+		}
+		keyFile.setReadable(false, false);
+		keyFile.setWritable(true, true);
+		keyFile.setReadable(true, true);
+		return keyFile;
 	}
 
 	public void deleteKey(String keyname) throws DeltaCloudClientException {
