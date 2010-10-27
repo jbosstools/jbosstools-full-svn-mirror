@@ -62,7 +62,6 @@ public class ShowNonVisualTagsHandler extends AbstractHandler implements
 		return null;
 	}
 
-	@Override
 	public void updateElement(UIElement element, Map parameters) {
 
 		IEditorPart activeEditor = PlatformUI.getWorkbench()

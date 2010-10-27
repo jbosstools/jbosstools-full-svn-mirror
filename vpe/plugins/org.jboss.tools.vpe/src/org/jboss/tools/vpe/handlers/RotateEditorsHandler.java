@@ -119,7 +119,6 @@ public class RotateEditorsHandler extends AbstractHandler implements
 		return null;
 	}
 
-	@Override
 	public void updateElement(UIElement element, Map parameters) {
 
 		IPreferenceStore preferences = JspEditorPlugin.getDefault()

@@ -73,7 +73,6 @@ public class ShowTextFormattingHandler extends AbstractHandler implements
 		return null;
 	}
 
-	@Override
 	public void updateElement(UIElement element, Map parameters) {
 
 		boolean toggleState = JspEditorPlugin.getDefault().getPreferenceStore()
