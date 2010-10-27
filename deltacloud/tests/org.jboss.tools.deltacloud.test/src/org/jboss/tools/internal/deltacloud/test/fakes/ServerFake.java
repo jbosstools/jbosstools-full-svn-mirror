@@ -19,9 +19,15 @@ import java.util.concurrent.Executors;
 
 public class ServerFake {
 
+	public static final int DEFAULT_PORT = 3002;
 	private ExecutorService executor;
 	private int port;
 	private String response;
+	private ServerFakeSocket serverSocket;
+
+	public ServerFake(String response) {
+		this(DEFAULT_PORT, response);
+	}
 
 	public ServerFake(int port, String response) {
 		this.port = port;
@@ -30,11 +36,13 @@ public class ServerFake {
 
 	public void start() {
 		executor = Executors.newFixedThreadPool(1);
-		executor.submit(new ServerFakeSocket(port, response));
+		this.serverSocket = new ServerFakeSocket(port, response);
+		executor.submit(serverSocket);
 	}
 
 	public void stop() {
 		executor.shutdownNow();
+		serverSocket.shutdown();
 	}
 
 	private class ServerFakeSocket implements Runnable {
@@ -52,6 +60,14 @@ public class ServerFake {
 			}
 		}
 
+		public void shutdown() {
+			try {
+				this.serverSocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 		@Override
 		public void run() {
 			Socket socket;
@@ -60,6 +76,7 @@ public class ServerFake {
 				OutputStream outputStream = socket.getOutputStream();
 				outputStream.write(response.getBytes());
 				outputStream.flush();
+				outputStream.close();
 				socket.close();
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test;
+package org.jboss.tools.internal.deltacloud.test.context;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +25,13 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
 
-public class MockIntegrationTestSetup {
+/**
+ * A class that holds the integration test context
+ * 
+ * @author Andre Dietisheim
+ * 
+ */
+public class MockIntegrationTestContext {
 
 	public static final String DELTACLOUD_URL = "http://localhost:3001";
 	public static final String SERVERFAKE_URL = "http://localhost:3002";

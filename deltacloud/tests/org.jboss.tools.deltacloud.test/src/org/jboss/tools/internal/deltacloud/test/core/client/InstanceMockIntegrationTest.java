@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test;
+package org.jboss.tools.internal.deltacloud.test.core.client;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,6 +24,7 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.Instance.State;
+import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,18 +32,21 @@ import org.junit.Test;
 /**
  * Integration tests for instance related methods in {@link DeltaCloudClient}.
  * 
+ * @author Andre Dietisheim
+ * 
  * @see DeltaCloudClient#listInstances()
  * @see DeltaCloudClient#createInstance(String)
  * @see DeltaCloudClient#destroyInstance(String)
  * @see DeltaCloudClient#startInstance(String)
+ * @see DeltaCloudClient#shutdownInstance(String)
  */
 public class InstanceMockIntegrationTest {
 
-	private MockIntegrationTestSetup testSetup;
+	private MockIntegrationTestContext testSetup;
 
 	@Before
 	public void setUp() throws IOException, DeltaCloudClientException {
-		this.testSetup = new MockIntegrationTestSetup();
+		this.testSetup = new MockIntegrationTestContext();
 		testSetup.setUp();
 	}
 
@@ -105,7 +109,7 @@ public class InstanceMockIntegrationTest {
 
 	@Test(expected = DeltaCloudClientException.class)
 	public void cannotDestroyIfNotAuthenticated() throws MalformedURLException, DeltaCloudClientException {
-		DeltaCloudClient unauthenticatedClient = new DeltaCloudClient(MockIntegrationTestSetup.DELTACLOUD_URL,
+		DeltaCloudClient unauthenticatedClient = new DeltaCloudClient(MockIntegrationTestContext.DELTACLOUD_URL,
 				"badUser", "badPassword");
 		Image image = testSetup.getFirstImage(unauthenticatedClient);
 		unauthenticatedClient.createInstance(image.getId());

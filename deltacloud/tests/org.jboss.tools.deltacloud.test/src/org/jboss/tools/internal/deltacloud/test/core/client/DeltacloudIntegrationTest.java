@@ -1,4 +1,4 @@
-package org.jboss.tools.internal.deltacloud.test;
+package org.jboss.tools.internal.deltacloud.test.core.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;

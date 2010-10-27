@@ -124,11 +124,7 @@ public class DeltaCloudClient implements API {
 		try {
 			HttpUriRequest request = getRequest(requestType, requestUrl);
 			HttpResponse httpResponse = httpClient.execute(request);
-			if (isHttpError(httpResponse.getStatusLine().getStatusCode())) {
-				throw new DeltaCloudClientException(
-						MessageFormat.format("the server reported an error \"{0}\" on requesting \"{1}\"",
-						httpResponse.getStatusLine().getReasonPhrase(),requestUrl));
-			}
+			throwOnHttpErrors(requestUrl, httpResponse);
 			return getResponse(httpResponse.getEntity());
 		} catch (DeltaCloudClientException e) {
 			throw e;
@@ -142,19 +138,21 @@ public class DeltaCloudClient implements API {
 		}
 	}
 
-	private String getResponse(HttpEntity entity) throws IOException,
-			DeltaCloudClientException {
-		if (entity == null) {
-			return null;
+	private void throwOnHttpErrors(String requestUrl, HttpResponse httpResponse) throws DeltaCloudClientException {
+		int statusCode = httpResponse.getStatusLine().getStatusCode();
+		if (isHttpForbiddenError(statusCode)) {
+			throw new DeltaCloudAuthException(
+					MessageFormat.format("the server reported an authorization error \"{0}\" on requesting \"{1}\"",
+							httpResponse.getStatusLine().getReasonPhrase(), requestUrl));
+		} else if (isHttpClientError(statusCode) || isHttpServerError(statusCode)) {
+			throw new DeltaCloudClientException(
+					MessageFormat.format("the server reported an error \"{0}\" on requesting \"{1}\"",
+							httpResponse.getStatusLine().getReasonPhrase(), requestUrl));
 		}
-		String xml = readInputStreamToString(entity.getContent());
-		logger.debug("Response\n" + xml);
-		return xml;
 	}
 
-	private boolean isHttpError(int statusCode) throws DeltaCloudClientException {
-		return isHttpServerError(statusCode)
-				|| isHttpClientError(statusCode);
+	private boolean isHttpForbiddenError(int statusCode) {
+		return statusCode == 403;
 	}
 
 	private boolean isHttpClientError(int statusCode) {
@@ -165,6 +163,16 @@ public class DeltaCloudClient implements API {
 	private boolean isHttpServerError(int statusCode) {
 		return (statusCode - HTTP_STATUSCODE_SERVERERROR) >= 0
 				&& (statusCode - HTTP_STATUSCODE_SERVERERROR) < 100;
+	}
+
+	private String getResponse(HttpEntity entity) throws IOException,
+			DeltaCloudClientException {
+		if (entity == null) {
+			return null;
+		}
+		String xml = readInputStreamToString(entity.getContent());
+		logger.debug("Response\n" + xml);
+		return xml;
 	}
 
 	/**
@@ -389,22 +397,24 @@ public class DeltaCloudClient implements API {
 		sendRequest(DCNS.INSTANCES + "/" + instanceId, RequestType.DELETE);
 	}
 
-//	private void checkForErrors(Document d) throws DeltaCloudClientException {
-//		NodeList n = d.getElementsByTagName("error");
-//		for (int i = 0; i < n.getLength(); ++i) {
-//			Node node = n.item(i);
-//			Node statusNode = node.getAttributes().getNamedItem("status");
-//			if (statusNode != null) {
-//				String status = node.getAttributes().getNamedItem("status").getNodeValue();
-//				if (status.equals("403"))
-//					throw new DeltaCloudAuthException("Authorization error");
-//				else if (status.equals("404"))
-//					throw new DeltaCloudClientException("Not found");
-//				else
-//					throw new DeltaCloudClientException("Connection error");
-//			}
-//		}
-//	}
+	// private void checkForErrors(Document d) throws DeltaCloudClientException
+	// {
+	// NodeList n = d.getElementsByTagName("error");
+	// for (int i = 0; i < n.getLength(); ++i) {
+	// Node node = n.item(i);
+	// Node statusNode = node.getAttributes().getNamedItem("status");
+	// if (statusNode != null) {
+	// String status =
+	// node.getAttributes().getNamedItem("status").getNodeValue();
+	// if (status.equals("403"))
+	// throw new DeltaCloudAuthException("Authorization error");
+	// else if (status.equals("404"))
+	// throw new DeltaCloudClientException("Not found");
+	// else
+	// throw new DeltaCloudClientException("Connection error");
+	// }
+	// }
+	// }
 
 	private Instance buildInstance(String xml) throws DeltaCloudClientException {
 		try {
@@ -414,7 +424,7 @@ public class DeltaCloudClient implements API {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(xml)));
 
-//			checkForErrors(document);
+			// checkForErrors(document);
 
 			instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 			instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
@@ -431,8 +441,8 @@ public class DeltaCloudClient implements API {
 			instance.setActions(actions);
 
 			return instance;
-//		} catch (DeltaCloudClientException e) {
-//			throw e;
+			// } catch (DeltaCloudClientException e) {
+			// throw e;
 		} catch (Exception e) {
 			DeltaCloudClientException newException = new DeltaCloudClientException(e.getLocalizedMessage());
 			throw newException;
@@ -447,7 +457,7 @@ public class DeltaCloudClient implements API {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(xml)));
 
-//			checkForErrors(document);
+			// checkForErrors(document);
 
 			List<Node> nodes = getPropertyNodes(document, "hardware_profile"); //$NON-NLS-1$
 
@@ -588,7 +598,7 @@ public class DeltaCloudClient implements API {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(is);
 
-//			checkForErrors(document);
+			// checkForErrors(document);
 
 			document.getElementsByTagName(path).toString();
 

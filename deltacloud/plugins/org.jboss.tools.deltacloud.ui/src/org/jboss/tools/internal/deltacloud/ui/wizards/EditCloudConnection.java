@@ -21,8 +21,10 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.ui.Activator;
 
 public class EditCloudConnection extends Wizard implements INewWizard, CloudConnection {
@@ -84,6 +86,15 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 		} catch (MalformedURLException e) {
 			Activator.log(e);
 			return false;
+		} catch (DeltaCloudClientException e) {
+			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			Activator.log(status);
+			ErrorDialog.openError(
+					getShell(),
+					WizardMessages.getString("CloudConnectionAuthError.title"),
+					WizardMessages.getFormattedString("CloudConnectionAuthError.message", url),
+					status);
+			return true;
 		}
 	}
 

@@ -429,14 +429,12 @@ public class DeltaCloud {
 		return retVal;
 	}
 	
-	public boolean testConnection() {
+	public boolean testConnection() throws DeltaCloudClientException {
 		String instanceId = "madeupValue"; //$NON-NLS-1$
 		try {
 			client.listInstances(instanceId);
 			return true;
 		} catch (DeltaCloudAuthException e) {
-			return false;
-		} catch (DeltaCloudClientException e) {
 			return false;
 		}
 	}

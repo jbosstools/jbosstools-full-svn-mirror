@@ -8,31 +8,38 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test;
+package org.jboss.tools.internal.deltacloud.test.core.client;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Image;
+import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * An integration test that test various image related operations in DeltaCloudClient
+ * 
+ * @author Andre Dietisheim
+ * 
+ * @see DeltaCloudClient#listImages()
+ * @see DeltaCloudClient#listImages(String)
+ * 
+ */
 public class ImageMockIntegrationTest {
 
-	private MockIntegrationTestSetup testSetup;
+	private MockIntegrationTestContext testSetup;
 
 	@Before
 	public void setUp() throws IOException, DeltaCloudClientException {
-		this.testSetup = new MockIntegrationTestSetup();
+		this.testSetup = new MockIntegrationTestContext();
 		testSetup.setUp();
 	}
 
@@ -43,24 +50,8 @@ public class ImageMockIntegrationTest {
 
 	@Test(expected = DeltaCloudClientException.class)
 	public void cannotListIfNotAuthenticated() throws MalformedURLException, DeltaCloudClientException {
-		DeltaCloudClient client = new DeltaCloudClient(MockIntegrationTestSetup.DELTACLOUD_URL, "badUser", "badPassword");
+		DeltaCloudClient client = new DeltaCloudClient(MockIntegrationTestContext.DELTACLOUD_URL, "badUser", "badPassword");
 		client.listImages();
-	}
-
-	@Test
-	public void throwsDeltaCloudClientExceptionOnUnknownResource() {
-		try {
-			DeltaCloudClient errorClient = new DeltaCloudClient(MockIntegrationTestSetup.DELTACLOUD_URL) {
-				@Override
-				protected HttpUriRequest getRequest(RequestType requestType, String requestUrl) {
-					return new HttpGet(MockIntegrationTestSetup.DELTACLOUD_URL + "/DUMMY");
-				}
-			};
-			errorClient.listImages();
-			fail("no exception catched");
-		} catch (Exception e) {
-			assertEquals(DeltaCloudClientException.class, e.getClass());
-		}
 	}
 
 	@Test

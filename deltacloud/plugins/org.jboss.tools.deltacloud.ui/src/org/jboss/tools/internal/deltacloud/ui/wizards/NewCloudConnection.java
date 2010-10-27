@@ -12,23 +12,27 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.MalformedURLException;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.ui.Activator;
 
 public class NewCloudConnection extends Wizard implements INewWizard, CloudConnection {
 
 	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
 	private CloudConnectionPage mainPage;
-	
+
 	public NewCloudConnection() {
 		super();
 	}
-	
+
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 	}
@@ -55,9 +59,18 @@ public class NewCloudConnection extends Wizard implements INewWizard, CloudConne
 		} catch (MalformedURLException e) {
 			Activator.log(e);
 			return false;
+		} catch (DeltaCloudClientException e) {
+			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			Activator.log(status);
+			ErrorDialog.openError(
+					getShell(),
+					WizardMessages.getString("CloudConnectionAuthError.title"),
+					WizardMessages.getFormattedString("CloudConnectionAuthError.message", url),
+					status);
+			return true;
 		}
 	}
-	
+
 	@Override
 	public boolean performFinish() {
 		String name = mainPage.getModel().getName();

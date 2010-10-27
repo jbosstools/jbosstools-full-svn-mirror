@@ -8,28 +8,31 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test;
+package org.jboss.tools.internal.deltacloud.test.core.client;
 
 import java.io.IOException;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
 
 /**
  * Integration tests for key related operations in delta cloud client.
  * 
+ * @author Andre Dietisheim
+ * 
  * @see DeltaCloudClient#createKey(String, String)
  * @see DeltaCloudClient#deleteKey(String)
  */
 public class KeyMockIntegrationTest {
 
-	private MockIntegrationTestSetup testSetup;
+	private MockIntegrationTestContext testSetup;
 
 	@Before
 	public void setUp() throws IOException, DeltaCloudClientException {
-		this.testSetup = new MockIntegrationTestSetup();
+		this.testSetup = new MockIntegrationTestContext();
 		testSetup.setUp();
 	}
 
