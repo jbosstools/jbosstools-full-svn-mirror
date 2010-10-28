@@ -25,6 +25,7 @@ SRCSNAME="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip"
 # define suffix to use for additional update sites
 SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 
+# for JBDS, use DESTINATION=/qa/services/http/binaries/RHDS
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools"; fi
 
 # cleanup from last time
