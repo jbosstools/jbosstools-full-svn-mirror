@@ -25,9 +25,11 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -173,6 +175,7 @@ import org.jboss.tools.smooks.model.smooks.ResourceConfigType;
 import org.jboss.tools.smooks.model.smooks.SmooksFactory;
 import org.jboss.tools.smooks.model.smooks.SmooksPackage;
 import org.jboss.tools.smooks.model.smooks.SmooksResourceListType;
+import org.jboss.tools.smooks.model.smooks.impl.ParamTypeImpl;
 
 /**
  * 
@@ -207,7 +210,18 @@ public class SmooksUIUtils {
 			'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P',
 			'q', 'Q', 'r', 'R', 's', 'S', 't', 'T', 'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y' };
 
+	public static final Set<String> validInputSourceTypes = new LinkedHashSet<String>(); 
+	
 	public static final String[] SELECTOR_SPERATORS = new String[] { " ", "/" }; //$NON-NLS-1$ //$NON-NLS-2$
+	
+	static {
+		validInputSourceTypes.add(SmooksModelUtils.INPUT_TYPE_CSV);
+		validInputSourceTypes.add(SmooksModelUtils.INPUT_TYPE_JAVA);
+		validInputSourceTypes.add(SmooksModelUtils.INPUT_TYPE_XML);
+		validInputSourceTypes.add(SmooksModelUtils.INPUT_TYPE_EDI_1_2);
+		validInputSourceTypes.add(SmooksModelUtils.INPUT_TYPE_XSD);
+		validInputSourceTypes.add(SmooksModelUtils.INPUT_TYPE_JSON_1_2);
+	}
 
 	private static void fillBeanIdStringList(EObject model, final Collection<String> beanIdList) {
 		EStructuralFeature beanIDFeature = getBeanIDFeature(model);
@@ -3247,5 +3261,9 @@ public class SmooksUIUtils {
 			return SmooksPackage.Literals.DOCUMENT_ROOT__RESOURCE_CONFIG;
 		}
 		return null;
+	}
+
+	public static boolean isValidInputSourceType(String inputType) {
+		return validInputSourceTypes.contains(inputType);
 	}
 }

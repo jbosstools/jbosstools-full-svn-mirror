@@ -784,28 +784,15 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		String inputType = null;
 		if (param != null) {
 			inputType = param.getStringValue();
-			String realInputType = SmooksUIUtils.judgeInputType(smooksModel);
-			if (realInputType == null) {
-				if (inputType != null) {
-					if (inputType.equals(SmooksModelUtils.INPUT_TYPE_XML)
-							|| inputType.equals(SmooksModelUtils.INPUT_TYPE_JAVA)
-							|| inputType.equals(SmooksModelUtils.INPUT_TYPE_XSD)) {
-
-					}
-				}
+			if (inputType == null || !SmooksUIUtils.isValidInputSourceType(inputType)) {
+				this.setInputType(SmooksModelUtils.INPUT_TYPE_XML);
 			} else {
-				if (!realInputType.equals(inputType)) {
-					param.setStringValue(realInputType);
-					inputType = realInputType;
-				}
+				this.setInputType(inputType);
 			}
 		} else {
-			inputType = SmooksUIUtils.judgeInputType(smooksModel);
-			if (inputType != null) {
-				SmooksUIUtils.addInputTypeParam(inputType, resourceList);
-			}
+			this.setInputType(SmooksModelUtils.INPUT_TYPE_XML);
+			SmooksUIUtils.addInputTypeParam(SmooksModelUtils.INPUT_TYPE_XML, resourceList);
 		}
-		this.setInputType(inputType);
 	}
 
 	public EObject getSmooksResourceList() {
