@@ -928,4 +928,31 @@ Java POJOs.</description>
 		</fixes>
 	</project>
 	
+	<project>
+		<category>Richfaces 4.0/JSF 2.0</category>
+		<name>richfaces-simpleapp</name>
+		<included-projects>richfaces-simpleapp</included-projects>
+		<shortDescription>RichFaces 4.0 Simple Application</shortDescription>
+		<description>This example creates a simple RichFaces 4.0 Application. It requires JBoss AS 6.0 and m2eclipse.
+It includes the richfaces-simpleapp project.
+</description>
+		<size>9046</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/richfaces-examples/richfaces-simpleapp.zip
+		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
+				<property name="eclipse-projects">richfaces-simpleapp</property>
+				<property name="description">This project example requires the JBoss AS 6.0</property>
+			</fix>
+			
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">0.10.0, 0.11.0,0.12.0</property>
+				<property name="description">The m2eclipse-wtp plugin is required. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e/ and http://m2eclipse.sonatype.org/sites/m2e-extras/</property>
+			</fix>
+		</fixes>
+	</project>
+	
 </projects>
