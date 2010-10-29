@@ -49,18 +49,27 @@ public class StopInstanceHandler extends AbstractHandler implements IHandler {
 	private void stopInstance(CVInstanceElement cvInstance) {
 		if (cvInstance != null) {
 			DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
-			CloudViewElement element = cvInstance;
-			while (!(element instanceof CVCloudElement))
-				element = (CloudViewElement) element.getParent();
-			CVCloudElement cvcloud = (CVCloudElement) element;
-			DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
-			PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance,
-					DeltaCloudInstance.STOP,
-					CVMessages.getString(STOPPING_INSTANCE_TITLE),
-					CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getName() }),
-					DeltaCloudInstance.STOPPED);
-			t.setUser(true);
-			t.schedule();
+			DeltaCloud cloud = getCloud(cvInstance);
+			executeInstanceAction(instance, cloud);
 		}
+	}
+
+	private DeltaCloud getCloud(CloudViewElement element) {
+		while (!(element instanceof CVCloudElement)) {
+			element = (CloudViewElement) element.getParent();
+		}
+		CVCloudElement cvcloud = (CVCloudElement) element;
+		DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
+		return cloud;
+	}
+
+	private void executeInstanceAction(DeltaCloudInstance instance, DeltaCloud cloud) {
+		PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance,
+				DeltaCloudInstance.STOP,
+				CVMessages.getString(STOPPING_INSTANCE_TITLE),
+				CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getName() }),
+				DeltaCloudInstance.STOPPED);
+		t.setUser(true);
+		t.schedule();
 	}
 }
