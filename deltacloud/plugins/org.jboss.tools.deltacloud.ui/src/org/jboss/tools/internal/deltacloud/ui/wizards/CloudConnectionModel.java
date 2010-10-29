@@ -105,7 +105,6 @@ public class CloudConnectionModel extends ObservablePojo {
 	}
 
 	public String getUrl() {
-		System.err.println("getting url: " + url);
 		return url;
 	}
 
@@ -115,7 +114,6 @@ public class CloudConnectionModel extends ObservablePojo {
 	}
 
 	public DeltaCloudClient.DeltaCloudType getType() {
-		System.err.println("getting cloud type: " + cloudType);
 		return cloudType;
 	}
 
