@@ -1,5 +1,8 @@
 2010-10-29  André Dietisheim  <adietish@redhat.com>
 
+	* plugin.xml: 	[JBIDE-7367] implemented correct visibility for start and stop instance.
+	* src/org/jboss/tools/deltacloud/ui/commands/InstanceStoppedPropertyTester.java: 
+	[JBIDE-7367] implemented correct visibility for start and stop instance.
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.java (getFormattedString): 
 	[JBIDE-7459] changed to allow variable number of arguments
 	* src/org/jboss/tools/internal/deltacloud/ui/utils/UIUtils.java (getActiveShell): 
