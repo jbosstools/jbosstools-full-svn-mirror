@@ -176,6 +176,30 @@
 					</with>
 					</or>
 			</definition>
+						<definition id="org.jboss.tools.ui.vpe.editor.invisibleByDefault">
+			<and>
+					<or>
+					<with variable="activeEditorId">
+							<equals value="org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"/>
+					</with>
+					<with variable="activeEditorId">
+							<equals value="org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor"/>
+					</with>
+					<with variable="activeEditorId">
+							<equals value="org.jboss.tools.jst.jsp.jspeditor.DocBookEditor"/>
+					</with>
+					</or>
+					<with
+                        variable="activeContexts">
+                     <iterate
+                           operator="or">
+                        <equals
+                              value="org.jboss.tools.jst.jsp.toolbars.sampleToolbar">
+                        </equals>
+                     </iterate>
+                  </with>
+			</and>
+			</definition>
 	</extension>
    <extension
         point="org.eclipse.ui.menus">
@@ -278,7 +302,7 @@
 	                id="org.jboss.tools.vpe.toolbars.preferencesCommand"
 	                tooltip="%vpe.toolbar.preferences">
 				<visibleWhen checkEnabled="false">
-	            	<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
+	            	<reference definitionId="org.jboss.tools.ui.vpe.editor.invisibleByDefault"/>
 	            </visibleWhen>
             </command>
             <command
@@ -296,7 +320,7 @@
 	                id="org.jboss.tools.vpe.toolbars.pageDesignOptionsCommand"
 	                tooltip="%vpe.toolbar.page_design_options">
 				<visibleWhen checkEnabled="false">
-	            	<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
+	            	<reference definitionId="org.jboss.tools.ui.vpe.editor.invisibleByDefault"/>
 	            </visibleWhen>
             </command>
             <command
@@ -314,7 +338,7 @@
 	                id="org.jboss.tools.vpe.toolbars.showBorderCommand"
 	                tooltip="%vpe.toolbar.show_border">
 				<visibleWhen checkEnabled="false">
-	            	<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
+	            	<reference definitionId="org.jboss.tools.ui.vpe.editor.invisibleByDefault"/>
 	            </visibleWhen>
             </command>
             <command
@@ -324,7 +348,7 @@
 	                id="org.jboss.tools.vpe.toolbars.showNonVisualTagsCommand"
 	                tooltip="%vpe.toolbar.show_non_visual_tags">
 				<visibleWhen checkEnabled="false">
-	            	<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
+	            	<reference definitionId="org.jboss.tools.ui.vpe.editor.invisibleByDefault"/>
 	            </visibleWhen>
             </command>
             <command
@@ -333,9 +357,10 @@
 	                style="toggle"
 	                id="org.jboss.tools.vpe.toolbars.showTextFormattingCommand"
 	                tooltip="%vpe.toolbar.show_text_formatting">
-				<visibleWhen checkEnabled="false">
-	            	<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
-	            </visibleWhen>
+            <visibleWhen
+                     checkEnabled="false">
+                     <reference definitionId="org.jboss.tools.ui.vpe.editor"/>
+               </visibleWhen>
             </command>
             <command
 	            	commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"
@@ -344,11 +369,19 @@
 	                id="org.jboss.tools.vpe.toolbars.showBundleAsELCommand"
 	                tooltip="%vpe.toolbar.show_bundle_as_el">
 				<visibleWhen checkEnabled="false">
-	            	<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
+	            	<reference definitionId="org.jboss.tools.ui.vpe.editor.invisibleByDefault"/>
 	            </visibleWhen>
             </command>
         </menuContribution>
-  </extension>  
+  </extension>
+     <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet label="%vpe.toolbar.name"
+      		description="Contains Vpe Configuration ToolBar Items"
+            id="org.jboss.tools.jst.jsp.toolbars.sampleToolbar"
+            visible="false">
+      </actionSet>
+   </extension>  
   <extension
         point="org.eclipse.ui.exportWizards">
      <wizard
