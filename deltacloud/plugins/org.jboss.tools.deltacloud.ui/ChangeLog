@@ -1,3 +1,12 @@
+2010-10-29  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnection.java (needsProgressMonitor): 
+	[JBIDE-7458] added a progress bar to the wizard, run credentials tests in a separate thread. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (needsProgressMonitor): 
+	[JBIDE-7458] added a progress bar to the wizard, run credentials tests in a separate thread. 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java 
+	(CredentialsTestAdapter.onTestCredentials): [JBIDE-7458] added a progress bar to the wizard, run credentials tests in a separate thread. 
+
 2010-10-26  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudTypeValidator.java (validate): 
