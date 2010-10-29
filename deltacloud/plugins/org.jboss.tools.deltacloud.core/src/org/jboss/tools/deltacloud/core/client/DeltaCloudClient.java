@@ -288,7 +288,7 @@ public class DeltaCloudClient implements API {
 	@Override
 	public HardwareProfile listProfile(String profileId) throws DeltaCloudClientException {
 		String request = DCNS.HARDWARE_PROFILES + "/" + profileId;
-		return JAXB.unmarshal(new StringReader(sendRequest(request, RequestType.GET)), HardwareProfile.class);
+		return buildDeltaCloudObject(HardwareProfile.class, sendRequest(request, RequestType.GET));
 	}
 
 	@Override

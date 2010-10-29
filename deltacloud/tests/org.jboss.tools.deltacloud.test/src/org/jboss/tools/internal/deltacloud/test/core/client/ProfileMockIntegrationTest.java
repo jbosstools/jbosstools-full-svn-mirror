@@ -58,12 +58,13 @@ public class ProfileMockIntegrationTest {
 		// get a profile seen in the web UI
 		HardwareProfile profile = testSetup.getClient().listProfile("m1-small");
 		assertNotNull(profile);
-		assertHardWareProfile("i386", "1740.8", "160", profile);
+		assertHardWareProfile("i386", "1740.8 MB", "160 GB", "1", profile);
 	}
 
-	public void assertHardWareProfile(String architecture, String memory, String storage, HardwareProfile profile) {
+	public void assertHardWareProfile(String architecture, String memory, String storage, String cpu, HardwareProfile profile) {
 		assertEquals(architecture, profile.getArchitecture());
 		assertEquals(memory, profile.getMemory());
 		assertEquals(storage, profile.getStorage());
+		assertEquals(cpu, profile.getCPU());
 	}
 }
