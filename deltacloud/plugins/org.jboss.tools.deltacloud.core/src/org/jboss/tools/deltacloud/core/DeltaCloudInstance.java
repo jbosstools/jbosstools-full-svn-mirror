@@ -17,11 +17,11 @@ import org.jboss.tools.deltacloud.core.client.Instance;
 
 public class DeltaCloudInstance {
 
-	public final static String PENDING = Instance.State.PENDING.toString();
-	public final static String RUNNING = Instance.State.RUNNING.toString();
-	public final static String STOPPED = Instance.State.STOPPED.toString();
-	public final static String TERMINATED = Instance.State.TERMINATED.toString();
-	public final static String BOGUS = Instance.State.BOGUS.toString();
+	public final static String PENDING = Instance.InstanceState.PENDING.toString();
+	public final static String RUNNING = Instance.InstanceState.RUNNING.toString();
+	public final static String STOPPED = Instance.InstanceState.STOPPED.toString();
+	public final static String TERMINATED = Instance.InstanceState.TERMINATED.toString();
+	public final static String BOGUS = Instance.InstanceState.BOGUS.toString();
 	
 	public final static String START = Instance.Action.START.toString();
 	public final static String STOP = Instance.Action.STOP.toString();

@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.HardwareProfile;
+import org.jboss.tools.deltacloud.core.client.Realm;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
@@ -30,10 +30,10 @@ import org.junit.Test;
  * 
  * @author Andre Dietisheim
  * 
- * @see DeltaCloudClient#listProfiles()
- * @see DeltaCloudClient#listProfie(String)
+ * @see DeltaCloudClient#listRealms()
+ * @see DeltaCloudClient#listRealm(String)
  */
-public class ProfileMockIntegrationTest {
+public class RealmMockIntegrationTest {
 
 	private MockIntegrationTestContext testSetup;
 
@@ -49,24 +49,23 @@ public class ProfileMockIntegrationTest {
 	}
 
 	@Test
-	public void canListProfiles() throws DeltaCloudClientException {
-		List<HardwareProfile> hardwareProfiles = testSetup.getClient().listProfiles();
-		assertNotNull(hardwareProfiles);
-		assertTrue(hardwareProfiles.size() > 0);
+	public void canListRealms() throws DeltaCloudClientException {
+		List<Realm> realms = testSetup.getClient().listRealms();
+		assertNotNull(realms);
+		assertTrue(realms.size() > 0);
 	}
 
 	@Test
 	public void canGetProfile() throws DeltaCloudClientException {
 		// get a profile seen in the web UI
-		HardwareProfile profile = testSetup.getClient().listProfile("m1-small");
-		assertNotNull(profile);
-		assertHardWareProfile("i386", "1740.8 MB", "160 GB", "1", profile);
+		Realm realm = testSetup.getClient().listRealms("eu");
+		assertNotNull(realm);
+		assertRealm("Europe", Realm.RealmState.AVAILABLE, 0, realm);
 	}
 
-	public void assertHardWareProfile(String architecture, String memory, String storage, String cpu, HardwareProfile profile) {
-		assertEquals(architecture, profile.getArchitecture());
-		assertEquals(memory, profile.getMemory());
-		assertEquals(storage, profile.getStorage());
-		assertEquals(cpu, profile.getCPU());
+	public void assertRealm(String name, Realm.RealmState state, int limit, Realm realm) {
+		assertEquals(name, realm.getName());
+		assertEquals(state, realm.getState());
+		assertEquals(limit, realm.getLimit());
 	}
 }

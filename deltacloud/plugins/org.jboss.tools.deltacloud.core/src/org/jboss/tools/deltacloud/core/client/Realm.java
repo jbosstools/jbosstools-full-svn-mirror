@@ -16,11 +16,15 @@ public class Realm extends DeltaCloudObject
 {
 	private static final long serialVersionUID = 1L;
 
+	public static enum RealmState {
+		AVAILABLE, UNAVAILABLE, UNKNOWN
+	}
+	
 	@XmlElement
 	private String name;
 	
 	@XmlElement
-	private String state;
+	private RealmState state;
 	
 	@XmlElement
 	private int limit;
@@ -38,7 +42,11 @@ public class Realm extends DeltaCloudObject
 	@SuppressWarnings("unused")
 	private void setState(String state)
 	{
-		this.state = state;
+		try {
+			this.state = RealmState.valueOf(state);
+		} catch (Exception e) {
+			this.state = RealmState.UNKNOWN;
+		}
 	}
 
 	@SuppressWarnings("unused")
@@ -57,11 +65,11 @@ public class Realm extends DeltaCloudObject
 		return name;
 	}
 
-	public String getState()
+	public RealmState getState()
 	{
 		return state;
 	}
-
+	
 	public int getLimit()
 	{
 		return limit;
