@@ -1,5 +1,9 @@
 2010-10-29  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.java (getFormattedString): 
+	[JBIDE-7459] changed to allow variable number of arguments
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/UIUtils.java (getActiveShell): 
+	[JBIDE-7459] added error dialog 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnection.java (needsProgressMonitor): 
 	[JBIDE-7458] added a progress bar to the wizard, run credentials tests in a separate thread. 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnection.java (needsProgressMonitor): 
