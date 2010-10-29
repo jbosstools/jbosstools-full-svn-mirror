@@ -430,8 +430,6 @@ public class DeltaCloudClient implements API {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(xml)));
 
-			// checkForErrors(document);
-
 			instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 			instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 			getProfileProperties(instance, getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
