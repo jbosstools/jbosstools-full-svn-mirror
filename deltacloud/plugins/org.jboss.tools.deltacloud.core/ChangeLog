@@ -1,3 +1,11 @@
+2010-10-29  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/HttpStatusCode.java: extracted and put in a 2 enums: 
+	HttpStatusCode, HttpStatusRange (server-, client-error)
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java 
+	(listDeltaCloudObjects): rethrows DeltaCloudClientException (was catching and wrapping)
+	(getDocument): refactored and split #listDeltaCloudObjects implementation into parts
+
 2010-10-26  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (testConnection): 
