@@ -114,4 +114,10 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean needsProgressMonitor() {
+		return true;
+	}
+
 }

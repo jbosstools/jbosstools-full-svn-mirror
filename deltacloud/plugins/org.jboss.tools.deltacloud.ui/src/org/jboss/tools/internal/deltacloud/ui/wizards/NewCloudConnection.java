@@ -87,4 +87,8 @@ public class NewCloudConnection extends Wizard implements INewWizard, CloudConne
 		return true;
 	}
 
+	@Override
+	public boolean needsProgressMonitor() {
+		return true;
+	}
 }

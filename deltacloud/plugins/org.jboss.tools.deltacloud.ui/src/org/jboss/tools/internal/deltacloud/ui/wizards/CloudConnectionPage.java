@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -23,6 +26,7 @@ import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
@@ -30,6 +34,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -40,11 +45,13 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.log.LogHelper;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
@@ -63,8 +70,12 @@ public class CloudConnectionPage extends WizardPage {
 
 	private static final int CLOUDTYPE_CHECK_DELAY = 500;
 
-	private static final String DESCRIPTION = "NewCloudConnection.desc"; //$NON-NLS-1$
-	private static final String TITLE = "NewCloudConnection.title"; //$NON-NLS-1$
+	private static final String DESCRIPTION = "CloudConnection.desc"; //$NON-NLS-1$
+	private static final String TITLE = "CloudConnection.title"; //$NON-NLS-1$
+	private static final String TEST_SUCCESSFUL = "CloudConnectionTestSuccess.msg"; //$NON-NLS-1$
+	private static final String TEST_FAILURE = "CloudConnectionTestFailure.msg"; //$NON-NLS-1$
+	private static final String TESTING_CREDENTIALS = "CloudConnectionTestingCredentials.msg"; //$NON-NLS-1$;
+	private static final String INVALID_CREDENTIALS = "CloudConnectionInvalidCredentials.msg"; //$NON-NLS-1$;
 	private static final String URL_LABEL = "Url.label"; //$NON-NLS-1$
 	private static final String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private static final String CLOUDTYPE_LABEL = "Type.label"; //$NON-NLS-1$
@@ -75,11 +86,9 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String EC2_PASSWORD_INFO = "EC2PasswordLink.text"; //$NON-NLS-1$
 	private static final String NAME_ALREADY_IN_USE = "ErrorNameInUse.text"; //$NON-NLS-1$
 	private static final String COULD_NOT_OPEN_BROWSER = "ErrorCouldNotOpenBrowser.text"; //$NON-NLS-1$
-	private static final String TEST_SUCCESSFUL = "NewCloudConnectionTest.success"; //$NON-NLS-1$
-	private static final String TEST_FAILURE = "NewCloudConnectionTest.failure"; //$NON-NLS-1$
 	private static final String MUST_ENTER_A_NAME = "ErrorMustNameConnection.text"; //$NON-NLS-1$
 	private static final String MUST_ENTER_A_URL = "ErrorMustProvideUrl.text"; //$NON-NLS-1$;
-
+	
 	private CloudConnectionModel connectionModel;
 	private CloudConnection cloudConnection;
 
@@ -137,24 +146,60 @@ public class CloudConnectionPage extends WizardPage {
 	}
 
 	/**
-	 * A Listener that listens to user clicks on a button that allows it to test
-	 * credentials.
+	 * A component that displays the result of the credentials test. Listens to
+	 * clicks on the test-button (that allows you to test the credentials) and
+	 * to changes in the username and password text fields.
 	 * 
 	 * @see CloudConnection#performTest()
+	 * @see IValueChangeListener#handleValueChange(ValueChangeEvent)
+	 * @see ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart,
+	 *      org.eclipse.jface.viewers.ISelection)
 	 */
 	private class CredentialsTestAdapter extends SelectionAdapter implements IValueChangeListener {
 
-		private ControlDecoration[] controlDecorations;
+		private List<ControlDecoration> controlDecorations;
 
-		public CredentialsTestAdapter(ControlDecoration... controlDecorations) {
-			this.controlDecorations = controlDecorations;
-			setDecorations(false);
+		public CredentialsTestAdapter(Control... controls) {
+			this.controlDecorations = createDecorations(controls);
+			showDecorations(false);
+		}
+
+		private List<ControlDecoration> createDecorations(Control... controls) {
+			List<ControlDecoration> decorations = new ArrayList<ControlDecoration>();
+			for (Control control : controls) {
+				decorations.add(JFaceUtils.createDecoration(control, WizardMessages.getString(INVALID_CREDENTIALS)));
+			}
+			return decorations;
 		}
 
 		public void widgetSelected(SelectionEvent event) {
-			boolean success = cloudConnection.performTest();
-			setMessage(success);
-			setDecorations(!success);
+			try {
+				getWizard().getContainer().run(true, true, onTestCredentials());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		private IRunnableWithProgress onTestCredentials() {
+			return new IRunnableWithProgress() {
+				@Override
+				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+					monitor.beginTask(WizardMessages.getString(TESTING_CREDENTIALS), 2);
+					monitor.worked(1);
+					final boolean success = cloudConnection.performTest();
+					monitor.worked(2);
+					getShell().getDisplay().syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							setMessage(success);
+							showDecorations(!success);						
+						}
+						
+					});
+					monitor.done();
+				}
+			};
 		}
 
 		private void setMessage(boolean success) {
@@ -169,7 +214,7 @@ public class CloudConnectionPage extends WizardPage {
 			CloudConnectionPage.this.setMessage(""); //$NON-NLS-1$
 		}
 
-		private void setDecorations(boolean visible) {
+		private void showDecorations(boolean visible) {
 			for (ControlDecoration controlDecoration : controlDecorations) {
 				if (visible) {
 					controlDecoration.show();
@@ -181,7 +226,7 @@ public class CloudConnectionPage extends WizardPage {
 
 		@Override
 		public void handleValueChange(ValueChangeEvent event) {
-			setDecorations(false);
+			showDecorations(false);
 			clearMessage();
 		}
 	}
@@ -279,7 +324,6 @@ public class CloudConnectionPage extends WizardPage {
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 		Text usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		ControlDecoration usernameDecoration = JFaceUtils.createDecoration(usernameText, TEST_FAILURE);
 		IObservableValue usernameObservable = WidgetProperties.text(SWT.Modify).observe(usernameText);
 		dbc.bindValue(
 				usernameObservable,
@@ -290,7 +334,6 @@ public class CloudConnectionPage extends WizardPage {
 		Label passwordLabel = new Label(container, SWT.NULL);
 		passwordLabel.setText(WizardMessages.getString(PASSWORD_LABEL));
 		Text passwordText = new Text(container, SWT.BORDER | SWT.PASSWORD | SWT.SINGLE);
-		ControlDecoration passwordDecoration = JFaceUtils.createDecoration(passwordText, TEST_FAILURE);
 		ISWTObservableValue passwordTextObservable = WidgetProperties.text(SWT.Modify).observe(passwordText);
 		dbc.bindValue(
 				passwordTextObservable,
@@ -303,8 +346,9 @@ public class CloudConnectionPage extends WizardPage {
 		urlTypeBinding.getValidationStatus().addValueChangeListener(
 				enableButtonOnUrlValidityChanges(testButton, isUrlValid));
 
-		CredentialsTestAdapter credentialsTestAdapter = new CredentialsTestAdapter(usernameDecoration,
-				passwordDecoration);
+		CredentialsTestAdapter credentialsTestAdapter = new CredentialsTestAdapter(
+				usernameText,
+				passwordText);
 		testButton.addSelectionListener(credentialsTestAdapter);
 		usernameObservable.addValueChangeListener(credentialsTestAdapter);
 		passwordTextObservable.addValueChangeListener(credentialsTestAdapter);
