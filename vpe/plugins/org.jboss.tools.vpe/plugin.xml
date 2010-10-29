@@ -165,6 +165,16 @@
    <extension
         point="org.eclipse.ui.menus">
         <menuContribution
+              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor.source.EditorContext?after=paste">
+             	<separator
+                    name="org.jboss.tools.insertGroup" visible="true" >
+             	</separator>
+              <dynamic
+                    class="org.jboss.tools.vpe.editor.menu.InsertContributionItem"
+                    id="org.jboss.tools.vpe.editor.menu.InsertContributionItem">
+              </dynamic>
+        </menuContribution>        
+        <menuContribution
               locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor.source.EditorContext?after=paste">
              	<separator
                     name="org.jboss.tools.insertGroup" visible="true" >
@@ -175,6 +185,13 @@
               </dynamic>
         </menuContribution>
         <menuContribution
+              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor.source.EditorContext?after=org.jboss.tools.vpe.editor.menu.InsertContributionItem">
+        	<dynamic
+               class="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem"
+               id="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
+        	</dynamic>
+        </menuContribution>
+        <menuContribution
               locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor.source.EditorContext?after=org.jboss.tools.vpe.editor.menu.InsertContributionItem">
         	<dynamic
                class="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem"
@@ -182,10 +199,13 @@
         	</dynamic>
         </menuContribution>
         <menuContribution
-              locationURI="menu:sourceMenuId?after=org.jboss.tools.jst.jsp.menus.i18">
+              locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+           <separator
+           		name="org.jboss.tools.separator.vpePrefs" visible="true" >
+           </separator>
            <menu
-                 id="org.jboss.tools.vpe.menus.VpeMenu"
-                 label="%vpe.menu.name"
+                 id="org.jboss.tools.vpe.menus.VpePreferences"
+                 label="%vpe.menu.preferences"
                  mnemonic="M">
               <command
                     commandId="org.jboss.tools.vpe.commands.preferencesCommand"
@@ -313,29 +333,8 @@
 	            </visibleWhen>
             </command>
         </menuContribution>
-  </extension>
+  </extension>  
   <extension
-        point="org.eclipse.ui.menus">
-        <menuContribution
-              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor.source.EditorContext?after=paste">
-             	<separator
-                    name="org.jboss.tools.insertGroup" visible="true" >
-             	</separator>
-              <dynamic
-                    class="org.jboss.tools.vpe.editor.menu.InsertContributionItem"
-                    id="org.jboss.tools.vpe.editor.menu.InsertContributionItem">
-              </dynamic>
-        </menuContribution>
-        <menuContribution
-              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor.source.EditorContext?after=org.jboss.tools.vpe.editor.menu.InsertContributionItem">
-        	<dynamic
-               class="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem"
-               id="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
-        	</dynamic>
-        </menuContribution>
-  </extension>
-  
-    <extension
         point="org.eclipse.ui.exportWizards">
      <wizard
            id="org.jboss.tools.vpe.editor.wizards.ExportUserTagsTemplatesMenuWizard"
@@ -346,9 +345,8 @@
               %exportUserTagsTemplatesWizardDescription
         </description>
      </wizard>
-  </extension>
-  
-    <extension
+  </extension>  
+  <extension
         point="org.eclipse.ui.importWizards">
      <wizard
            id="org.jboss.tools.vpe.editor.wizards.ImportUserTagsTemplatesMenuWizard"
@@ -387,6 +385,4 @@
              class="org.jboss.tools.vpe.handlers.ShowBundleAsELHandler"
              commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"/>
     </extension>
-  
-  
 </plugin>

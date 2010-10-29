@@ -19,7 +19,9 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsContributionItem;
@@ -28,10 +30,10 @@ import org.jboss.tools.vpe.VpeDebug;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
+import org.jboss.tools.vpe.editor.menu.action.ComplexAction;
 import org.jboss.tools.vpe.editor.menu.action.EditAttributesAction;
 import org.jboss.tools.vpe.editor.menu.action.SelectThisTagAction;
 import org.jboss.tools.vpe.editor.menu.action.StripTagAction;
-import org.jboss.tools.vpe.editor.menu.action.ComplexAction;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.template.IZoomEventManager;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
@@ -46,6 +48,9 @@ import org.w3c.dom.Node;
  * @author yradtsevich (based on the implementation of MenuCreationHelper)
  */
 public class VpeMenuCreator {
+
+	private static final String VPE_PREFERENCES_MENU_URI = "popup:org.eclipse.ui.popup.any?after=additions"; //$NON-NLS-1$
+
 	private final MenuManager menuManager;
 	private final VpeMenuUtil vpeMenuUtil;
 	private final Node node;
@@ -90,13 +95,13 @@ public class VpeMenuCreator {
 		menuManager.add(new InsertContributionItem(node));
 		addIfEnabled(new StripTagAction(node));
 		/*
-		 * https://jira.jboss.org/browse/JBIDE-7222
-		 * Adding ExternalizeStrings dialog to the VPE context menu
+		 * https://jira.jboss.org/browse/JBIDE-7222 Adding ExternalizeStrings
+		 * dialog to the VPE context menu
 		 */
-		if (ExternalizeStringsUtils.isSelectionCorrect(
-				vpeMenuUtil.getSelection())) {
+		if (ExternalizeStringsUtils.isSelectionCorrect(vpeMenuUtil
+				.getSelection())) {
 			menuManager.add(new ExternalizeStringsContributionItem());
-		}		
+		}
 		addSeparator();
 		if (topLevelMenu) {
 			addZoomActions();
@@ -108,8 +113,22 @@ public class VpeMenuCreator {
 			addIfEnabled(new DumpMappingAction());
 			addIfEnabled(new TestAction());
 		}
+
+		addSeparator();
+		addVpePreferences();
+
 		addSeparator();
 		addCutCopyPasteActions(topLevelMenu);
+	}
+
+	/**
+	 * Adds vpe preferences.
+	 */
+	private void addVpePreferences() {
+		IMenuService menuService = (IMenuService) PlatformUI.getWorkbench()
+				.getService(IMenuService.class);
+		menuService.populateContributionManager(menuManager,
+				VPE_PREFERENCES_MENU_URI);
 	}
 
 	/**
@@ -227,8 +246,7 @@ public class VpeMenuCreator {
 			final MozillaEditor visualEditor = vpeMenuUtil.getMozillaEditor();
 			DOMTreeDumper dumper = new DOMTreeDumper(
 					VpeDebug.VISUAL_DUMP_PRINT_HASH);
-			dumper
-					.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
+			dumper.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
 			dumper.dumpToStream(System.out, visualEditor.getDomDocument());
 		}
 
@@ -257,8 +275,7 @@ public class VpeMenuCreator {
 			if (nodeMapping != null) {
 				DOMTreeDumper dumper = new DOMTreeDumper(
 						VpeDebug.VISUAL_DUMP_PRINT_HASH);
-				dumper
-						.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
+				dumper.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
 				dumper.dumpNode(nodeMapping.getVisualNode());
 			}
 		}
@@ -293,7 +310,8 @@ public class VpeMenuCreator {
 		IZoomEventManager zoomEventManager = ((VpeEditorPart) vpeMenuUtil
 				.getEditor().getVisualEditor()).getController()
 				.getZoomEventManager();
-		ZoomActionMenuManager manager = new ZoomActionMenuManager(zoomEventManager);
+		ZoomActionMenuManager manager = new ZoomActionMenuManager(
+				zoomEventManager);
 		menuManager.add(manager);
 	}
 }
