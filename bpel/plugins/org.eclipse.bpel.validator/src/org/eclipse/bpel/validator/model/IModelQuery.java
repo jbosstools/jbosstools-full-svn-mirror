@@ -23,7 +23,13 @@ import javax.xml.namespace.QName;
 
 public interface IModelQuery extends IModelQueryLookups {
 	
-		
+	/**
+	 * Return error message from XSDComparer if assignments are incompatible
+	 *
+	 * https://jira.jboss.org/browse/JBIDE-7351
+	 */
+	public String getDiagnostic(int index);
+
 	/**
 	 * Answer the priority with which this implementation of ModelQuery ought to
 	 * be called with.

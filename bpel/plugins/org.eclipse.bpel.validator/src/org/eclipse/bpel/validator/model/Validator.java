@@ -605,8 +605,9 @@ public class Validator implements IConstants {
 	 * @param node
 	 * @return true if defined, false otherwise
 	 */
-	
-	protected boolean isDefined ( INode node ) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of XSDComparer in EmfModelQuery
+	protected static boolean isDefined ( INode node ) {
 		return node != null && node.isResolved();
 	}
 	
@@ -617,8 +618,9 @@ public class Validator implements IConstants {
 	 * @param node
 	 * @return true of undefined, false if defined.
 	 */
-	
-	protected boolean isUndefined ( INode node ) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of XSDComparer in EmfModelQuery
+	protected static boolean isUndefined ( INode node ) {
 		return node == null || node.isResolved() == false;
 	}
 	

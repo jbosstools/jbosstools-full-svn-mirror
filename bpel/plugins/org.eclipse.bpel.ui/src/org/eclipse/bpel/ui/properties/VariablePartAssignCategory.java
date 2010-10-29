@@ -10,13 +10,10 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.properties;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.bpel.common.ui.details.IDetailsAreaConstants;
 import org.eclipse.bpel.common.ui.flatui.FlatFormAttachment;
@@ -31,6 +28,7 @@ import org.eclipse.bpel.model.Variable;
 import org.eclipse.bpel.model.messageproperties.Property;
 import org.eclipse.bpel.model.util.BPELConstants;
 import org.eclipse.bpel.model.util.BPELUtils;
+import org.eclipse.bpel.model.util.XSD2XMLGenerator;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.adapters.IVirtualCopyRuleSide;
 import org.eclipse.bpel.ui.commands.InsertCopyCommand;
@@ -57,20 +55,10 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wst.wsdl.Message;
 import org.eclipse.wst.wsdl.Part;
-import org.eclipse.wst.xml.core.internal.contentmodel.CMDocument;
-import org.eclipse.wst.xml.core.internal.contentmodel.CMElementDeclaration;
-import org.eclipse.wst.xml.core.internal.contentmodel.CMNamedNodeMap;
-import org.eclipse.wst.xml.core.internal.contentmodel.ContentModelManager;
-import org.eclipse.wst.xml.core.internal.contentmodel.util.DOMContentBuilderImpl;
-import org.eclipse.wst.xml.core.internal.contentmodel.util.DOMNamespaceInfoManager;
-import org.eclipse.wst.xml.core.internal.contentmodel.util.DOMWriter;
-import org.eclipse.wst.xml.core.internal.contentmodel.util.NamespaceInfo;
-import org.eclipse.wst.xml.ui.internal.wizards.NewXMLGenerator;
 import org.eclipse.xsd.XSDAttributeDeclaration;
 import org.eclipse.xsd.XSDElementDeclaration;
 import org.eclipse.xsd.XSDNamedComponent;
 import org.eclipse.xsd.XSDTypeDefinition;
-import org.w3c.dom.Document;
 
 /**
  * An AssignCategory presenting a tree from which the user can select any of: -
@@ -578,16 +566,17 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			return;
 		}
 
-		MyNewXMLGenerator generator = new MyNewXMLGenerator();
-		generator.setRootElementName(rootElement);
+		// https://jira.jboss.org/browse/JBIDE-7351
+		// use the new and improved XSD -> XML generator
+		// this was an internal class that was moved to org.eclipse.bpel.model.util
+		XSD2XMLGenerator generator = new XSD2XMLGenerator(uriWSDL, rootElement);
 
-		CMDocument cmdoc = ContentModelManager.getInstance().createCMDocument(
-				uriWSDL, "xsd");
-		generator.setCMDocument(cmdoc);
-		generator.createNamespaceInfoList();
+		// be sure to tell the generator which elements in a "choice" we are interested in
+		if (side.getQuery()!=null && side.getQuery().getValue().trim().length()>0)
+			generator.setQueryPath(side.getQuery().getValue());
 
 		try {
-			String literal = generator.createXML("tmp");
+			String literal = generator.createXML();
 			Copy copy = BPELFactory.eINSTANCE.createCopy();
 			Assign a = (Assign) ((To) side.getCopyRuleSide()).getContainer()
 					.getContainer();
@@ -709,73 +698,5 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			}
 		}
 
-	}
-
-	class MyNewXMLGenerator extends NewXMLGenerator {
-
-		public String createXML(String xmlFileName) throws Exception {
-			CMDocument cmDocument = getCMDocument();
-
-			// create the xml model
-			CMNamedNodeMap nameNodeMap = cmDocument.getElements();
-			CMElementDeclaration cmElementDeclaration = (CMElementDeclaration) nameNodeMap
-					.getNamedItem(getRootElementName());
-
-			Document xmlDocument = DocumentBuilderFactory.newInstance()
-					.newDocumentBuilder().newDocument();
-			MyDOMContentBuilderImpl contentBuilder = new MyDOMContentBuilderImpl(
-					xmlDocument);
-
-			contentBuilder.setBuildPolicy(contentBuilder.BUILD_OPTIONAL_ELEMENTS);
-			contentBuilder.createDefaultRootContent(cmDocument,
-					cmElementDeclaration, namespaceInfoList);
-
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-					outputStream);
-
-			DOMWriter domWriter = new DOMWriter(outputStreamWriter);
-
-			// TODO... instead of relying on file extensions, we need to keep
-			// track of the grammar type
-			// better yet we should reate an SSE document so that we can format
-			// it
-			// nicely before saving
-			// then we won't need the DOMWriter at all
-			//
-			domWriter.print(xmlDocument);
-			outputStream.flush();
-			outputStream.close();
-
-			return outputStream.toString();
-		}
-
-	}
-
-	class MyDOMContentBuilderImpl extends DOMContentBuilderImpl {
-
-		public MyDOMContentBuilderImpl(Document document) {
-			super(document);
-		}
-
-		@Override
-		public void createDefaultRootContent(CMDocument cmDocument,
-				CMElementDeclaration rootCMElementDeclaration) throws Exception {
-			if (namespaceInfoList != null) {
-				DOMNamespaceInfoManager manager = new DOMNamespaceInfoManager();
-				String name = rootCMElementDeclaration.getNodeName();
-				if (namespaceInfoList.size() > 0) {
-					NamespaceInfo info = (NamespaceInfo) namespaceInfoList
-							.get(0);
-					if (info.prefix != null && info.prefix.length() > 0) {
-						name = info.prefix + ":" + name; //$NON-NLS-1$
-					}
-				}
-				rootElement = createElement(rootCMElementDeclaration, name,
-						document);
-				manager.addNamespaceInfo(rootElement, namespaceInfoList, true);
-			}
-			createDefaultContent(document, rootCMElementDeclaration);
-		}
 	}
 }

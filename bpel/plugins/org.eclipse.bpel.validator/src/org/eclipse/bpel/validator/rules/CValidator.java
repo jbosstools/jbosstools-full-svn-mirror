@@ -341,16 +341,17 @@ public class CValidator extends Validator {
 
 			
 		} else if (bCompatible == false) {
-			
+			// https://jira.jboss.org/browse/JBIDE-7351
+			// added diagnostic message for easier location of the incompatibility
 			problem = createError();
 			problem.fill("BPELC_COPY__INCOMPATIBLE",
 					toString(mNode.nodeName()),
 					"text.term.from",					
 					fromTypeNode,
 					"text.term.to",
-					toTypeNode
+					toTypeNode,
+					mModelQuery.getDiagnostic(0)
 			);
-			
 		}		
 		
 	}

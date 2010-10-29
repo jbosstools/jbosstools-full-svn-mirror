@@ -19,6 +19,7 @@ import java.util.Stack;
 
 import javax.xml.namespace.QName;
 
+import org.eclipse.bpel.validator.EmfModelQuery;
 import org.eclipse.bpel.validator.model.Filters;
 import org.eclipse.bpel.validator.model.IConstants;
 import org.eclipse.bpel.validator.model.IFilter;
@@ -62,16 +63,33 @@ public class ModelQueryImpl  implements IModelQuery {
 	
 	static final protected Selector mSelector = new Selector();
 		
+	/**
+	 * https://jira.jboss.org/browse/JBIDE-7351
+	 * Need an EmfModelQuery to contain the XSDComparer object so that
+	 * we can grab diagnostics from it after a failed XSD compare (used
+	 * for error reporting!)
+	 */
+	protected EmfModelQuery emfModelQuery;
 	
+
 	/**
 	 * Protected constructor, just to initialize the basics the basics.
 	 *
 	 */
 	
 	public ModelQueryImpl () {
-		
+		emfModelQuery = new EmfModelQuery();
 	}
-			
+
+	/**
+	 * Return error message from XSDComparer if assignments are incompatible
+	 *
+	 * https://jira.jboss.org/browse/JBIDE-7351
+	 */
+	public String getDiagnostic(int index)
+	{
+		return emfModelQuery.getXSDComparer().getDiagnostic(index);
+	}
 	/**
 	 * Return an answer that decides whether the model has support for 
 	 * the given aspects that the validator wants.

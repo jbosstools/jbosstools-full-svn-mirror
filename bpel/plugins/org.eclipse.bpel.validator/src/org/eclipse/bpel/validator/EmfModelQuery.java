@@ -24,8 +24,10 @@ import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
 import org.eclipse.bpel.model.partnerlinktype.Role;
 import org.eclipse.bpel.model.util.ImportResolver;
 import org.eclipse.bpel.model.util.ImportResolverRegistry;
+import org.eclipse.bpel.model.util.XSDComparer;
 import org.eclipse.bpel.model.util.WSDLUtil;
 import org.eclipse.bpel.model.util.XSDUtil;
+import org.eclipse.bpel.validator.factory.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -43,7 +45,6 @@ import org.eclipse.xsd.XSDElementDeclaration;
 import org.eclipse.xsd.XSDSchema;
 import org.eclipse.xsd.XSDSimpleTypeDefinition;
 import org.eclipse.xsd.XSDTypeDefinition;
-import org.eclipse.xsd.impl.XSDNamedComponentImpl;
 
 /**
  * 
@@ -60,6 +61,21 @@ import org.eclipse.xsd.impl.XSDNamedComponentImpl;
 public class EmfModelQuery {
 		
 	static final String CONTEXT_MSG = "The EMF context object object cannot be null";
+
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// we need an instance of this so we can get diagnostics for error reporting
+	XSDComparer xsdComparer;
+	
+	
+	public EmfModelQuery() {
+		xsdComparer = new XSDComparer();
+		// if debug mode is set in the builder, force XSD comparison
+		xsdComparer.setDebug(AdapterFactory.DEBUG);
+	}
+	
+	public XSDComparer getXSDComparer() {
+		return xsdComparer;
+	}
 	
 	/**
 	 * @param eObj
@@ -498,16 +514,20 @@ public class EmfModelQuery {
 	 * @param dst
 	 * @return true if compatible, false if not.
 	 */
-	
-	public static boolean compatiblePartnerActivityMessages (EObject src, EObject dst) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of xsdComparer object
+	public boolean compatiblePartnerActivityMessages (EObject src, EObject dst) {
 		
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
 		// https://jira.jboss.org/browse/JBIDE-7116
 		// quick exit
-		if (src==dst)
-			return true;
+		// https://jira.jboss.org/browse/JBIDE-7351
+		// ...unless we're in debug mode!
+		if (AdapterFactory.DEBUG==false)
+			if (src==dst)
+				return true;
 		
 		Message srcMsg = null;
 		Message dstMsg = null;
@@ -594,15 +614,17 @@ public class EmfModelQuery {
 	 * @param dst the destination type
 	 * @return if the types are compatible, false otherwise
 	 */
-	
-	public static boolean compatibleType(EObject src, EObject dst) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of xsdComparer object
+	public boolean compatibleType(EObject src, EObject dst) {
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
 		// https://jira.jboss.org/browse/JBIDE-7116
 		// quick exit
-		if (src==dst)
-			return true;
+		if (AdapterFactory.DEBUG==false)
+			if (src==dst)
+				return true;
 		
 		Message srcMsg = null;
 		Message dstMsg = null;
@@ -649,9 +671,15 @@ public class EmfModelQuery {
 		
 		if (srcType != null && dstType != null) {
 			//https://jira.jboss.org/browse/JBIDE-7116
-			if (compatibleType(srcType, dstType)) {
+			// https://jira.jboss.org/browse/JBIDE-7351
+			// use XSDComparer
+			if (xsdComparer.compare(srcType,dstType)) {
 				return true;
 			}
+
+			// construct a new comparer to prevent the original
+			// diagnostics from being cleared
+			XSDComparer comp = new XSDComparer();
 			
 			// check if src is derived from dst.
 			//   1) src is NCName, dst is string --> compatible.
@@ -660,11 +688,11 @@ public class EmfModelQuery {
 			do {
 				// System.out.println("Checking: " + dstType + " against baseType: " + baseType);
 				// https://jira.jboss.org/browse/JBIDE-7116
-				if (compatibleType(dstType, baseType)) {
+				if (comp.compare(baseType,dstType)) {
 					return true;
 				}
 				baseType = baseType.getBaseType();
-			} while ( !compatibleType(baseType,baseType.getBaseType()) );
+			} while (baseType!=baseType.getBaseType());
 			
 			return false;
 		}
@@ -684,12 +712,15 @@ public class EmfModelQuery {
 	
 	// https://jira.jboss.org/browse/JBIDE-7116
 	// new: compare contents of messages
-	public static boolean compatibleType(Message src, Message dst) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of xsdComparer object
+	public boolean compatibleType(Message src, Message dst) {
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
-		if (src==dst)
-			return true;
+		if (AdapterFactory.DEBUG==false)
+			if (src==dst)
+				return true;
 		
 		if (!src.getQName().equals(dst.getQName()))
 			return false;
@@ -717,39 +748,45 @@ public class EmfModelQuery {
 	
 	// https://jira.jboss.org/browse/JBIDE-7116
 	// new: compare XSDElementDeclaractions
-	public static boolean compatibleType(XSDElementDeclaration src, XSDElementDeclaration dst) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of xsdComparer object
+	public boolean compatibleType(XSDElementDeclaration src, XSDElementDeclaration dst) {
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
-		if (src==dst)
-			return true;
+		if (AdapterFactory.DEBUG==false)
+			if (src==dst)
+				return true;
 		
-		// TODO: currently just doing a rudimentary name-only compare
-		// need to add XSD compare/diff when the eclipse MDT project builds one
-		return XSDNamedComponentImpl.Comparator.getInstance().compare(src,dst) == 0;
+		return compatibleType(src.getTypeDefinition(),dst.getTypeDefinition());
 	}
 	
 	// https://jira.jboss.org/browse/JBIDE-7116
 	// new: compare XSDTypeDefinitions
-	public static boolean compatibleType(XSDTypeDefinition src, XSDTypeDefinition dst) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of xsdComparer object
+	public boolean compatibleType(XSDTypeDefinition src, XSDTypeDefinition dst) {
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
-		if (src==dst)
-			return true;
+		if (AdapterFactory.DEBUG==false)
+			if (src==dst)
+				return true;
 
-		// rudimentary name-only compare
-		return XSDNamedComponentImpl.Comparator.getInstance().compare(src,dst) == 0;
+		return xsdComparer.compare(src,dst);
 	}
 	
 	// https://jira.jboss.org/browse/JBIDE-7116
 	// new: compare PortTypes
-	public static boolean compatibleType(PortType src, PortType dst) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of xsdComparer object
+	public boolean compatibleType(PortType src, PortType dst) {
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
-		if (src==dst)
-			return true;
+		if (AdapterFactory.DEBUG==false)
+			if (src==dst)
+				return true;
 		
 		// do portTypes have to be defined in the same WSDL?
 //		URI uri1 = src.eResource().getURI();
@@ -777,12 +814,15 @@ public class EmfModelQuery {
 	
 	// https://jira.jboss.org/browse/JBIDE-7116
 	// new: compare Operations
-	public static boolean compatibleType(Operation src, Operation dst) {
+	// https://jira.jboss.org/browse/JBIDE-7351
+	// no longer static because of xsdComparer object
+	public boolean compatibleType(Operation src, Operation dst) {
 		assertTrue(src != null, CONTEXT_MSG);
 		assertTrue(dst != null, CONTEXT_MSG);
 		
-		if (src==dst)
-			return true;
+		if (AdapterFactory.DEBUG==false)
+			if (src==dst)
+				return true;
 		
 		if (src.getName()==null || !src.getName().equals(dst.getName()))
 			return false;
