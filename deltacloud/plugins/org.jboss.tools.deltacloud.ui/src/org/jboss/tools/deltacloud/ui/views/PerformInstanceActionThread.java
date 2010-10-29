@@ -14,11 +14,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 public class PerformInstanceActionThread extends Job {
+
+	private static final String INSTANCEACTION_ERROR_TITLE = "InstanceActionError.title"; //$NON-NLS-1$
+	private static final String INSTANCEACTION_ERROR_MESSAGE = "InstanceActionError.msg"; //$NON-NLS-1$
+
 	private DeltaCloud cloud;
 	private DeltaCloudInstance instance;
 	private String action;
@@ -63,7 +71,13 @@ public class PerformInstanceActionThread extends Job {
 				}
 			}
 		} catch (DeltaCloudException e) {
-			// do nothing..action had problem executing..perhaps illegal
+			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			Activator.log(status);
+			ErrorDialog.openError(
+					UIUtils.getActiveShell(),
+					CVMessages.getString(INSTANCEACTION_ERROR_TITLE),
+					CVMessages.getFormattedString(INSTANCEACTION_ERROR_MESSAGE, action, instance.getName()),
+					status);
 		} finally {
 			cloud.removeActionJob(id, this);
 			pm.done();
