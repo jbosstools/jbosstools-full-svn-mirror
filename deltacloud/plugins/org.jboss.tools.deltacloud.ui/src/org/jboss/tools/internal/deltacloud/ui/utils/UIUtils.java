@@ -25,6 +25,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -140,6 +141,13 @@ public class UIUtils
 		IWorkbenchWindow workbenchWindow = getWorkbench().getActiveWorkbenchWindow();
 		Assert.isNotNull( workbenchWindow );
 		return workbenchWindow;
+	}
+
+	public static Shell getActiveShell()
+	{
+		Shell shell = getActiveWorkbenchWindow().getShell();
+		Assert.isTrue( shell != null && !shell.isDisposed() );
+		return shell;
 	}
 
 	/**

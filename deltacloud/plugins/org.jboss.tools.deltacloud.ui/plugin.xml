@@ -159,9 +159,14 @@
                <with
                      variable="selection">
 					<iterate operator="and">
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-	               		</instanceof>
+						<and>
+		               		<instanceof
+		                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
+		               		</instanceof>
+							<test 
+								property="org.jboss.tools.deltacloud.ui.instance.isStopped"
+             					value="true"/>
+		               	</and>
 	               	</iterate>
                </with>
          </activeWhen>
@@ -173,9 +178,14 @@
                <with
                      variable="selection">
 					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-	               		</instanceof>
+						<and>
+		               		<instanceof
+		                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
+		               		</instanceof>
+							<test 
+								property="org.jboss.tools.deltacloud.ui.instance.isStopped"
+             					value="false"/>
+		               	</and>
 	               	</iterate>
                </with>
          </activeWhen>
@@ -720,5 +730,15 @@
             name="%command.filterinstances.name">
       </command>
    </extension>
+    <extension
+          point="org.eclipse.core.expressions.propertyTesters">
+       <propertyTester
+             class="org.jboss.tools.deltacloud.ui.commands.InstanceStoppedPropertyTester"
+             id="org.jboss.tools.deltacloud.ui.commands.InstancePropertyTester"
+             namespace="org.jboss.tools.deltacloud.ui.instance"
+             properties="isStopped"
+             type="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
+       </propertyTester>
+    </extension>
 
 </plugin>

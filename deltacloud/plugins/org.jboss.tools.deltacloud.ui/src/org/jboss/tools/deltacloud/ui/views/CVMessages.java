@@ -32,7 +32,7 @@ public class CVMessages {
 		return MessageFormat.format(getString(key), new Object[] { arg });
 	}
 
-	public static String getFormattedString(String key, String[] args) {
-		return MessageFormat.format(getString(key), (Object[])args);
+	public static String getFormattedString(String key, String... args) {
+		return MessageFormat.format(getString(key), (Object[]) args);
 	}
 }
