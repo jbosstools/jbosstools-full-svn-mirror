@@ -21,6 +21,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundException;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerFake;
 import org.junit.After;
@@ -91,7 +92,7 @@ public class ServerTypeMockIntegrationTest {
 			errorClient.listImages();
 			fail("no exception catched");
 		} catch (Exception e) {
-			assertEquals(DeltaCloudClientException.class, e.getClass());
+			assertEquals(DeltaCloudNotFoundException.class, e.getClass());
 		}
 	}
 }
