@@ -10,20 +10,31 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.properties;
 
+import java.util.Map;
+
+import javax.xml.namespace.QName;
+
 import org.eclipse.bpel.common.ui.flatui.FlatFormAttachment;
 import org.eclipse.bpel.common.ui.flatui.FlatFormData;
 import org.eclipse.bpel.model.From;
+import org.eclipse.bpel.model.impl.VariableImpl;
 import org.eclipse.bpel.model.resource.BPELResource;
 import org.eclipse.bpel.model.util.BPELUtils;
+import org.eclipse.bpel.model.util.XSD2XMLGenerator;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.adapters.IVirtualCopyRuleSide;
 import org.eclipse.bpel.ui.util.BPELUtil;
+import org.eclipse.bpel.validator.EmfModelQuery;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wst.wsdl.Message;
+import org.eclipse.wst.wsdl.Part;
+import org.eclipse.xsd.XSDElementDeclaration;
+import org.eclipse.xsd.XSDTypeDefinition;
 
 
 /**
@@ -95,6 +106,60 @@ public class LiteralAssignCategory extends AssignCategoryBase {
 			}
 			if (fromString == null) {
 				fromString = EMPTY_STRING;
+				// https://jira.jboss.org/browse/JBIDE-7351
+				// if "From" is empty, construct a suitable literal for the variable
+				try {
+					VariableImpl var = (VariableImpl)fOwnerSection.getModel();
+					String rootElement = null;
+					String uriWSDL = null;
+
+					// Variable is defined using "messageType"
+					Message msg = (Message)var.getMessageType();
+					if (msg != null) {
+						if (msg.eIsProxy()) {
+							EObject obj = EmfModelQuery.lookupMessage(getBPELEditor().getProcess(), msg.getQName());
+							if (obj instanceof Message)
+								msg = (Message)obj;
+						}
+						Part part = null;
+						Map parts = msg.getParts();
+						if (parts!=null && !parts.isEmpty()) {
+							Map.Entry entry = (Map.Entry)parts.entrySet().iterator().next();
+							part = (Part)entry.getValue();
+						}
+						if (aModel.getPart() != null)
+							part = aModel.getPart();
+						if (part!=null) {
+							XSDElementDeclaration declaration = part.getElementDeclaration();
+							if (declaration != null) {
+								uriWSDL = declaration.getSchema().getSchemaLocation();
+								rootElement = declaration.getName();
+							}
+						}
+					}
+
+					// Variable is defined using "type"
+					XSDTypeDefinition type = var.getType();
+					if (type != null) {
+						QName qname = new QName(type.getTargetNamespace(), type.getName());
+						rootElement = qname.getLocalPart();
+						uriWSDL = type.eResource().getURI().toString();
+					}
+
+					// Variable is defined using "element"
+					XSDElementDeclaration element = var.getXSDElement();
+					if (element != null) {
+						QName qname = new QName(element.getTargetNamespace(), element
+								.getName());
+						rootElement = qname.getLocalPart();
+						uriWSDL = element.eResource().getURI().toString();
+					}
+
+					XSD2XMLGenerator generator = new XSD2XMLGenerator(uriWSDL, rootElement);
+					fromString = generator.createXML();
+				}
+				catch (Exception e) {
+				}
 			}
 			
 			fLiteralText.setText(fromString);			
