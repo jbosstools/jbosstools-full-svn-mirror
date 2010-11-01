@@ -67,7 +67,7 @@ public class PageDesignOptionsHandler extends AbstractHandler {
 	}
 
 	@Override
-	public boolean isEnabled() {
+	public void setEnabled(Object evaluationContext) {
 		IEditorPart activeEditor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		IEditorInput input = activeEditor.getEditorInput();
@@ -81,6 +81,10 @@ public class PageDesignOptionsHandler extends AbstractHandler {
 				file = FileUtil.getFile(input, path.lastSegment());
 			}
 		}
-		return ((file != null) && (file.exists()));
+		
+		boolean enabled = file != null && file.exists();
+		if (isEnabled() != enabled) {
+			setBaseEnabled(enabled);
+		}
 	}
 }
