@@ -16,7 +16,9 @@ import org.eclipse.draw2d.MouseMotionListener;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
 import org.jboss.tools.smooks.configuration.editors.GraphicsConstants;
@@ -27,7 +29,8 @@ import org.jboss.tools.smooks.gef.tree.model.TreeContainerModel;
  * @author DartPeng
  * 
  */
-public class TreeContainerFigure extends Figure implements ISelectableFigure, IShowHighlighFigure {
+public class TreeContainerFigure extends Figure implements ISelectableFigure,
+		IShowHighlighFigure {
 
 	private IFigure headerFigure;
 
@@ -41,9 +44,10 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 
 	private Color sourceHeaderColor = ColorConstants.orange;
 
-	protected Color targetHeaderSelectedColor = FigureUtilities.lighter(targetHeaderColor);
+	protected Color targetHeaderSelectedColor = GraphicsConstants.BORDER_CORLOR;// FigureUtilities.lighter(targetHeaderColor);
 
-	protected Color sourceHeaderSelectedColor = FigureUtilities.lighter(sourceHeaderColor);
+	protected Color sourceHeaderSelectedColor = FigureUtilities
+			.lighter(sourceHeaderColor);
 
 	private boolean focus;
 
@@ -58,6 +62,8 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 	private boolean showDragLink = false;
 
 	private boolean isSource = true;
+
+	private Font oldLabelFont;
 
 	public TreeContainerFigure(TreeContainerModel model) {
 		super();
@@ -194,8 +200,9 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 							return;
 						}
 					}
-					Image img = SmooksConfigurationActivator.getDefault().getImageRegistry().get(
-							GraphicsConstants.IMAGE_DRAG_LINK);
+					Image img = SmooksConfigurationActivator.getDefault()
+							.getImageRegistry()
+							.get(GraphicsConstants.IMAGE_DRAG_LINK);
 					if (img != null) {
 						graphics.drawImage(img, getLocation());
 					}
@@ -285,9 +292,11 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 		try {
 			graphics.pushState();
 			Color currentColor = sourceHeaderColor;
+//			label.getFont().getFontData()[0].setStyle(SWT.NORMAL);
 			if (!isSource)
 				currentColor = targetHeaderColor;
-			if (isSelected() || isFocus()) {
+			if (isSelected() || isFocus() || showHightlight) {
+//				label.getFont().getFontData()[0].setStyle(SWT.BOLD);
 				currentColor = sourceHeaderSelectedColor;
 				if (!isSource)
 					currentColor = targetHeaderSelectedColor;
@@ -299,8 +308,8 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 			graphics.setBackgroundColor(ColorConstants.white);
 			graphics.fillGradient(headerFigure.getBounds().expand(30, 0), true);
 			graphics.setForegroundColor(currentColor);
-			graphics.drawLine(getBounds().getBottomLeft().translate(0, -1), getBounds().getBottomRight().translate(0,
-					-1));
+			graphics.drawLine(getBounds().getBottomLeft().translate(0, -1),
+					getBounds().getBottomRight().translate(0, -1));
 			graphics.popState();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -345,16 +354,25 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 
 	@Override
 	protected void paintBorder(Graphics graphics) {
+//		if(true){
+//			super.paintBorder(graphics);
+//			return;
+//		}
 		try {
+			graphics.setLineStyle(SWT.LINE_SOLID);
 			graphics.setForegroundColor(ColorConstants.buttonDarkest);
 			if (isSelected() || isFocus()) {
-				graphics.setForegroundColor(GraphicsConstants.BORDER_CORLOR);
+				graphics.setForegroundColor(ColorConstants.blue);
+				graphics.setLineStyle(SWT.LINE_DOT);
 			}
 
 			if (showHightlight && highlightColor != null) {
-				graphics.setForegroundColor(FigureUtilities.darker(highlightColor));
+				graphics.setForegroundColor(FigureUtilities
+						.darker(highlightColor));
+				graphics.setLineStyle(SWT.LINE_DOT);
 			}
-			Rectangle drawnRectangle = new Rectangle(getBounds().x, getBounds().y, getBounds().width - 1,
+			Rectangle drawnRectangle = new Rectangle(getBounds().x,
+					getBounds().y, getBounds().width - 1,
 					getBounds().height - 1);
 			graphics.drawRoundRectangle(drawnRectangle, 5, 5);
 		} catch (Exception e) {
@@ -444,7 +462,7 @@ public class TreeContainerFigure extends Figure implements ISelectableFigure, IS
 	 */
 	public void setContentFigure(IFigure contentFigure) {
 		this.contentFigure = contentFigure;
-//		this.repaint(0,0,0,0);
+		// this.repaint(0,0,0,0);
 		repaint();
 	}
 

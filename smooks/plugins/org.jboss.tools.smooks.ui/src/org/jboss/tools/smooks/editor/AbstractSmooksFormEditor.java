@@ -429,6 +429,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 		try {
 			int index = this.addPage(textEditor, getEditorInput());
 			setPageText(index, Messages.AbstractSmooksFormEditor_Source_Page_Title);
+			((SmooksXMLEditor)textEditor).setParentEditorPart(this);
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}

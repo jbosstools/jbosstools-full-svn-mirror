@@ -127,10 +127,10 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 	 */
 	public void eraseTargetFeedback(Request request) {
 		super.eraseTargetFeedback(request);
-		if (revertColor != null) {
-			unsetContainerBackgroud(revertColor);
-			revertColor = null;
-		}
+//		if (revertColor != null) {
+//			unsetContainerBackgroud(revertColor);
+//			revertColor = null;
+//		}
 	}
 
 	private void unsetContainerBackgroud(Color c) {
@@ -183,10 +183,10 @@ public class TreeNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
 	 */
 	public void showTargetFeedback(Request request) {
 		super.showTargetFeedback(request);
-		if (REQ_CONNECTION_START.equals(request.getType()) || REQ_CONNECTION_END.equals(request.getType())
-				|| REQ_RECONNECT_SOURCE.equals(request.getType()) || REQ_RECONNECT_TARGET.equals(request.getType())) {
-			showHighlight();
-		}
+//		if (REQ_CONNECTION_START.equals(request.getType()) || REQ_CONNECTION_END.equals(request.getType())
+//				|| REQ_RECONNECT_SOURCE.equals(request.getType()) || REQ_RECONNECT_TARGET.equals(request.getType())) {
+//			showHighlight();
+//		}
 	}
 
 }

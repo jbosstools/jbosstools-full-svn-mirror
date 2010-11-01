@@ -20,6 +20,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.SmooksConfigurationActivator;
@@ -111,9 +112,11 @@ public class InputDataContainerEditPart extends TreeContainerEditPart {
 			protected void paintBorder(Graphics graphics) {
 				// super.paintBorder(graphics);
 				if (isSelected() || isFocus()) {
-					graphics.setForegroundColor(ColorConstants.orange);
+					graphics.setForegroundColor(ColorConstants.blue);
+					graphics.setLineStyle(SWT.LINE_DOT);
 				} else {
 					graphics.setForegroundColor(FigureUtilities.darker(ColorConstants.orange));
+					graphics.setLineStyle(SWT.LINE_SOLID);
 				}
 
 				Point p2 = new Point();

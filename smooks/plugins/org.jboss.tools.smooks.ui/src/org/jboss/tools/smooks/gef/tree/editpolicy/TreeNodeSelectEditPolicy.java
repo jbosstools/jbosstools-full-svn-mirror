@@ -50,6 +50,10 @@ public class TreeNodeSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.NonResizableEditPolicy#hideFocus()
 	 */
 	protected void hideFocus() {
+		if(true){
+			super.hideFocus();
+			return;
+		}
 		if (getTreeNodeFigure() != null) {
 			getTreeNodeFigure().setFocus(false);
 		}
@@ -59,6 +63,10 @@ public class TreeNodeSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.SelectionHandlesEditPolicy#hideSelection()
 	 */
 	protected void hideSelection() {
+		if(true){
+			super.hideSelection();
+			return;
+		}
 		if (getTreeNodeFigure() != null) {
 			getTreeNodeFigure().setSelected(false);
 			getTreeNodeFigure().setFocus(false);
@@ -70,6 +78,10 @@ public class TreeNodeSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.NonResizableEditPolicy#showFocus()
 	 */
 	protected void showFocus() {
+		if(true){
+			super.showFocus();
+			return;
+		}
 		if (getTreeNodeFigure() != null) {
 			getTreeNodeFigure().setFocus(true);
 		}
@@ -79,6 +91,10 @@ public class TreeNodeSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.SelectionHandlesEditPolicy#showSelection()
 	 */
 	protected void showPrimarySelection() {
+		if(true){
+			super.showPrimarySelection();
+			return;
+		}
 		if (getTreeNodeFigure() != null) {
 			getTreeNodeFigure().setSelected(true);
 			getTreeNodeFigure().setFocus(true);
@@ -89,6 +105,10 @@ public class TreeNodeSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.SelectionHandlesEditPolicy#showSelection()
 	 */
 	protected void showSelection() {
+		if(true){
+			super.showSelection();
+			return;
+		}
 		if (getTreeNodeFigure() != null) {
 			getTreeNodeFigure().setSelected(true);
 			getTreeNodeFigure().setFocus(false);

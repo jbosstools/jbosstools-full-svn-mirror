@@ -50,6 +50,10 @@ public class FigureSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.NonResizableEditPolicy#hideFocus()
 	 */
 	protected void hideFocus() {
+		if(true){
+			super.hideFocus();
+			return;
+		}
 		if (getSelectableFigure() != null) {
 			getSelectableFigure().setFocus(false);
 		}
@@ -59,6 +63,10 @@ public class FigureSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.SelectionHandlesEditPolicy#hideSelection()
 	 */
 	protected void hideSelection() {
+		if(true){
+			super.hideSelection();
+			return;
+		}
 		if (getSelectableFigure() != null) {
 			getSelectableFigure().setSelected(false);
 			getSelectableFigure().setFocus(false);
@@ -69,6 +77,10 @@ public class FigureSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.NonResizableEditPolicy#showFocus()
 	 */
 	protected void showFocus() {
+		if(true){
+			super.showFocus();
+			return;
+		}
 		if (getSelectableFigure() != null) {
 			getSelectableFigure().setFocus(true);
 		}
@@ -78,6 +90,10 @@ public class FigureSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.SelectionHandlesEditPolicy#showSelection()
 	 */
 	protected void showPrimarySelection() {
+		if(true){
+			super.showPrimarySelection();
+			return;
+		}
 		if (getSelectableFigure() != null) {
 			getSelectableFigure().setSelected(true);
 			getSelectableFigure().setFocus(true);
@@ -88,6 +104,10 @@ public class FigureSelectEditPolicy extends NonResizableEditPolicy {
 	 * @see org.eclipse.gef.editpolicies.SelectionHandlesEditPolicy#showSelection()
 	 */
 	protected void showSelection() {
+		if(true){
+			super.showSelection();
+			return;
+		}
 		if (getSelectableFigure() != null) {
 			getSelectableFigure().setSelected(true);
 			getSelectableFigure().setFocus(false);

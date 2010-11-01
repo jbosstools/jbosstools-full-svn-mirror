@@ -76,7 +76,7 @@ public class FigureHighlightEditPolicy extends GraphicalEditPolicy {
 	 * @see org.eclipse.gef.EditPolicy#showTargetFeedback(org.eclipse.gef.Request)
 	 */
 	public void showTargetFeedback(Request request) {
-		if (request.getType().equals(RequestConstants.REQ_CREATE) || request.getType().equals(RequestConstants.REQ_ADD))
+		if (request.getType().equals(RequestConstants.REQ_CONNECTION_END) || request.getType().equals(RequestConstants.REQ_ADD))
 			showHighlight();
 	}
 

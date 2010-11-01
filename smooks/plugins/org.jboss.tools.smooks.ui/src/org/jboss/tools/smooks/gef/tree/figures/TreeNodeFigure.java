@@ -349,9 +349,12 @@ public class TreeNodeFigure extends Figure implements ISelectableFigure, IShowHi
 		if (oldLabelColor == null){
 			oldLabelColor = label.getForegroundColor();
 		}
+		label.setOpaque(false);
 		label.setForegroundColor(oldLabelColor);
 		if (isFocus() || isSelected() || showHighlight) {
-			label.setForegroundColor(GraphicsConstants.FONT_COLOR);
+			label.setOpaque(true);
+			label.setBackgroundColor(GraphicsConstants.FONT_COLOR);
+			label.setForegroundColor(ColorConstants.white);
 		}
 
 		super.paint(graphics);
