@@ -833,7 +833,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 this.workspaces = new ArrayList<Workspace>(getServerManager().getWorkspaces(this.repository));
             } catch (Exception e) {
                 this.workspaces = Collections.emptyList();
-                String msg = RestClientI18n.serverManagerGetWorkspacesExceptionMsg.text();
+                String msg = RestClientI18n.serverManagerGetWorkspacesExceptionMsg.text(this.repository);
                 Activator.getDefault().log(new Status(Severity.ERROR, msg, e));
 
                 if (getControl().isVisible()) {
