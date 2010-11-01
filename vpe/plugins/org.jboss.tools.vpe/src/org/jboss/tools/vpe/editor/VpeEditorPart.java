@@ -318,7 +318,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			 * Restore the state after switching from Preview, for example.
 			 */
 //			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
-			setVerticalToolbarVisible(true);
+			//added by Maksim Areshkau, here we remove Visual Page Editor Toolbar
+//			setVerticalToolbarVisible(true);
+			setVerticalToolbarVisible(false);
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
 			 * author Denis Maliarevich.

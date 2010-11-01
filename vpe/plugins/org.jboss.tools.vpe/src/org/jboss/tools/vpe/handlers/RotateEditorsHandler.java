@@ -151,6 +151,9 @@ public class RotateEditorsHandler extends AbstractHandler implements
 			JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
 			VpeController vpeController = (VpeController) jspEditor
 					.getVisualEditor().getController();
+			//if called in initialization time, vpe controller is null
+			//added by Maksim Areshkau
+			if(vpeController!=null)
 			vpeController.getPageContext().getEditPart()
 					.fillContainer(true, orientation);
 		}
