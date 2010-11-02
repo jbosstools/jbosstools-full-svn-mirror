@@ -118,6 +118,21 @@
 				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6758">JBIDE-6758</ulink>: An existing <parameter>service</parameter> element without a child <parameter>security</parameter> element would not be be able to have the <parameter>security</parameter> element added through the user interface. To this issue, each <parameter>service</parameter> element now has a <parameter>security</parameter> element and a subsequent <guimenuitem>Security</guimenuitem> form automatically attached in the ESB editor. The <parameter>security</parameter> element can safely be deleted from the <parameter>service</parameter> element code without the <guimenuitem>Security</guimenuitem> form being removed in the ESB editor. This ensures that if a user wishes to re-add a <parameter>security</parameter> element at a later stage, the functionality will exist to do so within the user interface. 
 				    </para>
 				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6616">JBIDE-6616</ulink>: Support for ESB actions through annotations has been added to the ESB editor. When creating the configuration for a new ESB action, you can now create a new Annotated POJO class as well as a class that extends the <classname>AbstractActionPipelinedProcessor</classname> class.
+				    </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6615">JBIDE-6615</ulink>: ESB 4.9 includes a new router for utilizing the Camel runtime; support for this new router has been added to the ESB tooling.
+				    </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6615">JBIDE-6615</ulink>: ESB 4.9 includes new functionality for complex event processing, utilizing the <classname>BusinessRulesProcessor</classname> action. Support for this action has been added to the ESB tooling.
+				    </para>
+				 </listitem>
 			</itemizedlist>
 		</para>
         </formalpara>
@@ -192,6 +207,11 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6686">JBIDE-6686</ulink>: An error existed where the Hibernate platform to be used was not filtered based on the version of JPA being used. This meant that selecting the JPA version to use would present all Hibernate platforms to the user, with indistinct names. This issue has been corrected by only displaying the Hibernate platform that corresponds to the specified JPA version, and renaming these platforms for easier identification.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6621">JBIDE-6621</ulink>: In previous versions, when a user selected Ingres from the list of databases or databse dialects the <guilabel>Driver Name</guilabel> and <guilabel>Connection URL</guilabel> fields would not be auto-populated as they are for other databases in the list. This has lead to concerns of the compatibility of Ingres with JBoss Enterprise Application Platform. To correct this issue the new Ingres dialects <filename>Ingres9Dialect</filename> and <filename>Ingres10Dialect</filename> have been added, ensuring the aforementioned fields are auto-populated for both versions 9 and 10 of Hibernate core.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	     </formalpara>
@@ -258,6 +278,11 @@
 			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6707">JBIDE-6707</ulink>: The ability to <option>Explore</option> a specific resource on a server has now been expanded to encapsulate the entire server, allowing the deploy directory to be explored.
 		      </para>
 		   </listitem>
+		   <listitem>
+		      <para>
+			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6612">JBIDE-6612</ulink>: The new version of Eclipse would not recognise JBoss Application Server 6 as a valid JEE6 environment. To rectify this bug, Java EE6 has been configured to support JBoss Application Server 6 by modifying <filename>/as/plugins/org.jboss.ide.eclipse.as.core/plugin.xml </filename>. 
+		      </para>
+		   </listitem>
 		</itemizedlist>
 	     </para>
 	</formalpara>
@@ -317,6 +342,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6869">JBIDE-6869</ulink>: Quick fix now offers to rename a component if it is a duplicate and to delete <property>Name</property> annotation.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6610">JBIDE-6610</ulink>: Components defined in a custom <filename>component.xml</filename> file were not recognized. This bug has been corrected through the modification of <filename>XMLScanner.java</filename>, <filename>SeamComponentsEntityRecognizer.java</filename> and <filename>SeamResourceVisitor.java</filename>.
 				   </para>
 				</listitem>
 			</itemizedlist>
@@ -403,6 +433,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6721">JBIDE-6721</ulink> and  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6711">JBIDE-6711</ulink>: Spring support has been added to the Visual Page Editor through the addition of a new plug-in. The plug-in is available as <filename>org.jboss.tools.vpe.spring</filename>.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6631">JBIDE-6631</ulink>: Previously the only way to export a template was by navigating to <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Export</guimenuitem><guimenuitem>Unknown</guimenuitem></menuchoice>. This process was not intuitive and so <guibutton>Import</guibutton> and <guibutton>Export</guibutton> buttons have been added to the <guilabel>Visual Templates Preferences</guilabel> page. Due to Java prohibiting the extension of more than one class, extra classes have been written for this added functionality.
 				   </para>
 				</listitem>
 			</itemizedlist>
