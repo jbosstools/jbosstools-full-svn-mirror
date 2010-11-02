@@ -19,11 +19,16 @@ import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
+import org.jboss.tools.deltacloud.core.client.Instance.State;
 
 /**
  * A class that holds the integration test context
@@ -41,6 +46,8 @@ public class MockIntegrationTestContext {
 	private DeltaCloudClient client;
 	private Instance testInstance;
 
+	private ExecutorService executor = Executors.newSingleThreadExecutor();
+
 	public void setUp() throws IOException, DeltaCloudClientException {
 		ensureDeltaCloudIsRunning();
 		this.client = new DeltaCloudClient(DELTACLOUD_URL, DELTACLOUD_USER, DELTACLOUD_PASSWORD);
@@ -53,7 +60,7 @@ public class MockIntegrationTestContext {
 		Instance instance = client.createInstance(image.getId());
 		return instance;
 	}
-	
+
 	public void ensureDeltaCloudIsRunning() throws IOException {
 		try {
 			URLConnection connection = new URL(DELTACLOUD_URL).openConnection();
@@ -62,7 +69,7 @@ public class MockIntegrationTestContext {
 			fail("Local DeltaCloud instance is not running. Please start a DeltaCloud instance before running these tests.");
 		}
 	}
-	
+
 	public DeltaCloudClient getClient() {
 		return client;
 	}
@@ -77,7 +84,6 @@ public class MockIntegrationTestContext {
 		Image image = images.get(0);
 		return image;
 	}
-	
 
 	public Instance getInstanceById(String id, DeltaCloudClient client) throws DeltaCloudClientException {
 		for (Instance availableInstance : client.listInstances()) {
@@ -87,11 +93,12 @@ public class MockIntegrationTestContext {
 		}
 		return null;
 	}
-	
+
 	public void tearDown() {
 		quietlyDestroyInstance(testInstance);
+		executor.shutdownNow();
 	}
-	
+
 	public void quietlyDestroyInstance(Instance instance) {
 		if (instance != null) {
 			try {
@@ -100,5 +107,42 @@ public class MockIntegrationTestContext {
 				// ignore
 			}
 		}
+	}
+
+	/**
+	 * Waits for an instance to get the given state for a given timeout.
+	 * 
+	 * @param instanceId
+	 *            the id of the instance to watch
+	 * @param state
+	 *            the state to wait for
+	 * @param timeout
+	 *            the timeout to wait for
+	 * @return <code>true</code>, if the state was reached while waiting for
+	 *         timeout, <code>false</code> otherwise
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
+	 */
+	public boolean waitForInstanceState(final String instanceId, final State state, final long timeout) throws InterruptedException, ExecutionException {
+		final long startTime = System.currentTimeMillis();
+		Callable<Boolean> waitingCallable = new Callable<Boolean>() {
+
+			@Override
+			public Boolean call() throws Exception {
+				try {
+					while (System.currentTimeMillis() < startTime + timeout) {
+						if (client.listInstances(instanceId).getState() == state) {
+							return true;
+						}
+						Thread.sleep(200);
+					}
+					return false;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+		};
+		return executor.submit(waitingCallable).get();
 	}
 }
