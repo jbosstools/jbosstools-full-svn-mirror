@@ -159,17 +159,22 @@
                <with
                      variable="selection">
 					<iterate operator="and">
-						<and>
-		               		<instanceof
-		                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-		               		</instanceof>
-							<test 
-								property="org.jboss.tools.deltacloud.ui.instance.isStopped"
-             					value="true"/>
-		               	</and>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
+	               		</instanceof>
 	               	</iterate>
                </with>
          </activeWhen>
+         <enabledWhen>
+               <with
+                     variable="selection">
+					<iterate operator="and">
+						<test 
+							property="org.jboss.tools.deltacloud.ui.instance.isStopped"
+         					value="true"/>
+	               	</iterate>
+               </with>
+         </enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.StopInstanceHandler"
@@ -177,18 +182,23 @@
          <activeWhen>
                <with
                      variable="selection">
-					<iterate>
-						<and>
-		               		<instanceof
-		                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-		               		</instanceof>
-							<test 
-								property="org.jboss.tools.deltacloud.ui.instance.isStopped"
-             					value="false"/>
-		               	</and>
+					<iterate operator="and">
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
+	               		</instanceof>
 	               	</iterate>
                </with>
          </activeWhen>
+         <enabledWhen>
+               <with
+                     variable="selection">
+					<iterate operator="and">
+						<test 
+							property="org.jboss.tools.deltacloud.ui.instance.isStopped"
+         					value="false"/>
+	               	</iterate>
+               </with>
+         </enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.RebootInstanceHandler"
@@ -196,13 +206,23 @@
          <activeWhen>
                <with
                      variable="selection">
-					<iterate>
+					<iterate operator="and">
 	               		<instanceof
 	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
 	               		</instanceof>
 	               	</iterate>
                </with>
          </activeWhen>
+         <enabledWhen>
+               <with
+                     variable="selection">
+					<iterate operator="and">
+						<test 
+							property="org.jboss.tools.deltacloud.ui.instance.isStopped"
+         					value="false"/>
+	               	</iterate>
+               </with>
+         </enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.DestroyInstanceHandler"
@@ -210,13 +230,23 @@
          <activeWhen>
                <with
                      variable="selection">
-					<iterate>
+					<iterate operator="and">
 	               		<instanceof
 	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
 	               		</instanceof>
 	               	</iterate>
                </with>
          </activeWhen>
+         <enabledWhen>
+               <with
+                     variable="selection">
+					<iterate operator="and">
+						<test 
+							property="org.jboss.tools.deltacloud.ui.instance.isStopped"
+         					value="true"/>
+	               	</iterate>
+               </with>
+         </enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceHandler2"
@@ -445,16 +475,16 @@
                <with
                      variable="selection">
 					<iterate>
-        <and>
-           <instanceof
-                 value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
-           </instanceof>
-           <not>
-              <instanceof
-                    value="org.jboss.tools.deltacloud.ui.views.CVImageElement">
-              </instanceof>
-           </not>
-        </and>
+				        <and>
+				           <instanceof
+				                 value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+				           </instanceof>
+				           <not>
+				              <instanceof
+				                    value="org.jboss.tools.deltacloud.ui.views.CVImageElement">
+				              </instanceof>
+				           </not>
+				        </and>
 	               	</iterate>
                </with>
             </visibleWhen>
