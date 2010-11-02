@@ -96,7 +96,7 @@ public class UIUtils
 		{
 			Assert.isTrue( selection instanceof IStructuredSelection );
 			Object firstElement = ( ( IStructuredSelection ) selection ).getFirstElement();
-			if ( expectedClass.isAssignableFrom( firstElement.getClass() ) )
+			if ( firstElement != null && expectedClass.isAssignableFrom( firstElement.getClass() ) )
 			{
 				return ( T ) firstElement;
 			}

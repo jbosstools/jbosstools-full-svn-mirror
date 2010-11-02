@@ -44,7 +44,6 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 				cloudViewElement = (CloudViewElement) cloudViewElement.getParent();
 			CVCloudElement cloud = (CVCloudElement) cloudViewElement;
 			cloud.loadChildren();
-
 		}
 	}
 }
