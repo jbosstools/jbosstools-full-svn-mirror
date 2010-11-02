@@ -1,5 +1,6 @@
 2010-11-02  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: [JBIDE-7482] fixed missing label
 	* plugin.xml: [JBIDE-7479] removed all but 'create new cloud connection' commands from view local menu,
 	removed destroy image command from running instances & removed reboot command from stopped instances
 	* src/org/jboss/tools/internal/deltacloud/ui/utils/UIUtils.java (getFirstElement): 
