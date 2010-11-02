@@ -11,10 +11,12 @@
  */
 package org.jboss.tools.modeshape.rest.wizards;
 
+import static org.jboss.tools.modeshape.rest.IUiConstants.BLANK_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.SERVER_DIALOG_HELP_CONTEXT;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -301,6 +303,24 @@ public final class ServerPage extends WizardPage {
                 handleUrlModified(((Text)e.widget).getText());
             }
         });
+
+        // add a blank image to push text over a bit
+        Label lblImage = new Label(pnl, SWT.NONE);
+        lblImage.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+        lblImage.setImage(Activator.getDefault().getImage(BLANK_IMAGE));
+
+        // add the text on the URL format
+        StyledText st = new StyledText(pnl, SWT.READ_ONLY | SWT.MULTI | SWT.NO_FOCUS | SWT.WRAP);
+        st.setText(RestClientI18n.serverPageUrlTemplateLabel.text());
+        st.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+        st.setFont(JFaceResources.getTextFont());
+        st.setCaret(null);
+        GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, true);
+        gd.grabExcessVerticalSpace = false;
+        gd.horizontalIndent = 4;
+        gd.verticalIndent = 8;
+        gd.widthHint = 150;
+        st.setLayoutData(gd);
     }
 
     /**

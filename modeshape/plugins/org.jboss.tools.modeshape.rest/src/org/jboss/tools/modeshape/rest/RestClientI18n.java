@@ -167,6 +167,7 @@ public final class RestClientI18n {
     public static I18n serverPageTestConnectionDialogSuccessMsg;
     public static I18n serverPageTitle;
     public static I18n serverPageUrlLabel;
+    public static I18n serverPageUrlTemplateLabel;
     public static I18n serverPageUrlToolTip;
     public static I18n serverPageUserLabel;
     public static I18n serverPageUserToolTip;
