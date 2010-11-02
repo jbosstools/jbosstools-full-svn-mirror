@@ -46,6 +46,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
+import org.jboss.tools.deltacloud.core.client.Instance.Action;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -437,12 +438,7 @@ public class DeltaCloudClient implements API {
 			instance.setState(getElementText(document, "state").get(0)); //$NON-NLS-1$
 			getAuthentication(document, instance);
 
-			ArrayList<Instance.Action> actions = new ArrayList<Instance.Action>();
-			for (String s : getAttributeValues(document, "link", "rel")) //$NON-NLS-1$ //$NON-NLS-2$
-			{
-				actions.add(Instance.Action.valueOf(s.toUpperCase()));
-			}
-			instance.setActions(actions);
+			instance.setActions(createActions(instance, document));
 
 			return instance;
 			// } catch (DeltaCloudClientException e) {
@@ -451,6 +447,15 @@ public class DeltaCloudClient implements API {
 			DeltaCloudClientException newException = new DeltaCloudClientException(e.getLocalizedMessage());
 			throw newException;
 		}
+	}
+
+	private List<Action> createActions(Instance instance, Document document) {
+		ArrayList<Instance.Action> actions = new ArrayList<Instance.Action>();
+		for (String s : getAttributeValues(document, "link", "rel")) //$NON-NLS-1$ //$NON-NLS-2$
+		{
+			actions.add(Instance.Action.valueOf(s.toUpperCase()));
+		}
+		return actions;
 	}
 
 	private HardwareProfile buildHardwareProfile(String xml) throws DeltaCloudClientException {
