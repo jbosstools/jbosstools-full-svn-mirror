@@ -1,3 +1,10 @@
+2010-11-02  André Dietisheim  <adietish@redhat.com>
+
+	* plugin.xml: [JBIDE-7479] removed all but 'create new cloud connection' commands from view local menu,
+	removed destroy image command from running instances & removed reboot command from stopped instances
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/UIUtils.java (getFirstElement): 
+	[JBIDE-7481] added check for null
+
 2010-10-29  André Dietisheim  <adietish@redhat.com>
 
 	* plugin.xml: 	[JBIDE-7367] implemented correct visibility for start and stop instance.
