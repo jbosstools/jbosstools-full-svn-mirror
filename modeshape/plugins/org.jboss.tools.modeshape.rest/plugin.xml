@@ -110,16 +110,19 @@
             <command
                   commandId="org.jboss.tools.modeshape.rest.actions.PublishCommand"
                   label="%publishCommand.name"
+                  icon="icons/views/publish.png"
                   style="push">
             </command>
             <command
                   commandId="org.jboss.tools.modeshape.rest.actions.UnpublishCommand"
                   label="%unpublishCommand.name"
+                  icon="icons/views/unpublish.png"
                   style="push">
             </command>
             <command
                   commandId="org.jboss.tools.modeshape.rest.actions.ShowPublishedLocationsCommand"
                   label="%showPublishedLocationsCommand.name"
+                  icon="icons/views/blank.gif"
                   style="push">
             </command>
             <visibleWhen
