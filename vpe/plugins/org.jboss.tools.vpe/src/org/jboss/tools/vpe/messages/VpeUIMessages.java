@@ -120,6 +120,8 @@ public final class VpeUIMessages extends NLS {
 	public static String INCLUDED_CSS_FILES_ABOUT;
 	public static String INCLUDED_TAG_LIBS_ABOUT;
 	public static String SUBSTITUTED_EL_EXPRESSIONS_ABOUT;
+	public static String VISUAL_EDITOR_TOOLBAR_BEHAVIOR;
+	public static String SHOW_VPE_TOOLBAR;
 	
 	public static String GENERAL_TAB_TITLE;
 	public static String VPE_PREFERENCES_PAGE_DESCRIPTION;

@@ -55,6 +55,7 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 	private Group visualAppearanceGroup;
 	private Group confirmationGroup;
 	private Group tabsGroup;
+	private Group visualEditorToolbarGroup;
 
 	public VpePreferencesPage() {
 		super();
@@ -84,38 +85,45 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		pageContainer.setLayout(layout);
 		pageContainer.setLayoutData(gd);
+		
+		visualEditorToolbarGroup = createLayoutGroup(pageContainer, SWT.SHADOW_ETCHED_IN, VpeUIMessages.VISUAL_EDITOR_TOOLBAR_BEHAVIOR);
 
-		visualAppearanceGroup = new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
-		visualAppearanceGroup
-				.setText(VpeUIMessages.VISUAL_APPEARANCE_GROUP_TITLE);
-		layout = new GridLayout();
-		layout.marginHeight = 10;
-		layout.marginWidth = 10;
-		layout.horizontalSpacing = 10;
-		layout.verticalSpacing = 10;
-		visualAppearanceGroup.setLayout(layout);
-		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
-		visualAppearanceGroup.setLayoutData(gd);
+		visualAppearanceGroup = createLayoutGroup(pageContainer, SWT.SHADOW_ETCHED_IN, VpeUIMessages.VISUAL_APPEARANCE_GROUP_TITLE);
+//			new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
+//		visualAppearanceGroup
+//				.setText(VpeUIMessages.VISUAL_APPEARANCE_GROUP_TITLE);
+//		layout = new GridLayout();
+//		layout.marginHeight = 10;
+//		layout.marginWidth = 10;
+//		layout.horizontalSpacing = 10;
+//		layout.verticalSpacing = 10;
+//		visualAppearanceGroup.setLayout(layout);
+//		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
+//		visualAppearanceGroup.setLayoutData(gd);
 
-		confirmationGroup = new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
-		confirmationGroup.setText(VpeUIMessages.CONFIRMATION_GROUP_TITLE);
-		layout = new GridLayout();
-		layout.marginHeight = 10;
-		layout.marginWidth = 10;
-		layout.horizontalSpacing = 10;
-		layout.verticalSpacing = 10;
-		confirmationGroup.setLayout(layout);
-		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
-		confirmationGroup.setLayoutData(gd);
+		confirmationGroup = createLayoutGroup(pageContainer, SWT.SHADOW_ETCHED_IN, VpeUIMessages.CONFIRMATION_GROUP_TITLE);
 
-		tabsGroup = new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
-		tabsGroup.setText(VpeUIMessages.TABS_GROUP_TITLE);
-		layout = new GridLayout();
-		layout.marginHeight = 10;
-		layout.marginWidth = 10;
-		tabsGroup.setLayout(layout);
-		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
-		tabsGroup.setLayoutData(gd);
+//			new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
+//		confirmationGroup.setText(VpeUIMessages.CONFIRMATION_GROUP_TITLE);
+//		layout = new GridLayout();
+//		layout.marginHeight = 10;
+//		layout.marginWidth = 10;
+//		layout.horizontalSpacing = 10;
+//		layout.verticalSpacing = 10;
+//		confirmationGroup.setLayout(layout);
+//		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
+//		confirmationGroup.setLayoutData(gd);
+
+		tabsGroup = createLayoutGroup(pageContainer, SWT.SHADOW_ETCHED_IN, VpeUIMessages.TABS_GROUP_TITLE);
+
+//			new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
+//		tabsGroup.setText(VpeUIMessages.TABS_GROUP_TITLE);
+//		layout = new GridLayout();
+//		layout.marginHeight = 10;
+//		layout.marginWidth = 10;
+//		tabsGroup.setLayout(layout);
+//		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
+//		tabsGroup.setLayoutData(gd);
 
 		createFieldEditors();
 		initialize();
@@ -131,6 +139,9 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 
 	@Override
 	protected void createFieldEditors() {
+		addField(new BooleanFieldEditor(SHOW_VISUAL_TOOLBAR,
+				VpeUIMessages.SHOW_VPE_TOOLBAR,
+				visualEditorToolbarGroup));
 		addField(new BooleanFieldEditor(SHOW_BORDER_FOR_UNKNOWN_TAGS,
 				VpeUIMessages.SHOW_BORDER_FOR_UNKNOWN_TAGS,
 				visualAppearanceGroup));
@@ -193,5 +204,26 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 	public IPreferenceStore getPreferenceStore() {
 		return JspEditorPlugin.getDefault().getPreferenceStore();
 	}
-
+/**
+ * Creates a layout group for vpe preferencess
+ * @param parent
+ * @param style
+ * @param groupTitle
+ * @return layut grop for VPE Preferences
+ * @author mareshkau
+ */
+	private static Group createLayoutGroup(final Composite parent,final int style, final String groupTitle){
+		Group prefGroup = new Group(parent, style);
+		prefGroup
+				.setText(groupTitle);
+		GridLayout layout = new GridLayout();
+		layout.marginHeight = 10;
+		layout.marginWidth = 10;
+		layout.horizontalSpacing = 10;
+		layout.verticalSpacing = 10;
+		prefGroup.setLayout(layout);
+		GridData gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
+		prefGroup.setLayoutData(gd);
+		return prefGroup;
+	}
 }
