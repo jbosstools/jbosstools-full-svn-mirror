@@ -109,7 +109,6 @@ public class CloudConnectionModel extends ObservablePojo {
 	}
 
 	public void setUrl(String url) {
-		System.err.println("url set to: " + url);
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_URL, this.url, this.url = url);
 	}
 
@@ -118,7 +117,6 @@ public class CloudConnectionModel extends ObservablePojo {
 	}
 
 	public void setType(DeltaCloudClient.DeltaCloudType cloudType) {
-		System.err.println("cloud type set to " + cloudType);
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_TYPE, this.cloudType, this.cloudType = cloudType);
 	}
 }
