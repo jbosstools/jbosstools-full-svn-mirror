@@ -71,6 +71,57 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6635">JBIDE-6635</ulink>: A bug existed that would ignore the decorator of a class and take a user straight to the bean when choosing the <guimenuitem>Open Injected Class</guimenuitem> option. This issue has been corrected by expanding on the list of options to choose from. New options include <guimenuitem>Open Decorator NAME</guimenuitem> and <guimenuitem>Open Interceptor NAME</guimenuitem>
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6574">JBIDE-6574</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6505">JBIDE-6505</ulink>: The Java Specification Request 299 (JSR-299) specifies context and dependency injection for the Java EE platform. To cater for this more than 70 validation rules have been added that reference the specific section of the JSR-299 specification each validation error relates to. This functionality ensures that written annotations will compile correctly.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6523">JBIDE-6523</ulink>: Validation has been added for all classes and annotation names.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6446">JBIDE-6446</ulink>: It is possible to declare two different methods in the one class that have the same annotation. Circumstances such as this would cause confusion when a user clicked on an injection point and went to select one of the methods from the generated list, since both would display the same class name only. This bug has been fixed by including the method or field name along with the class name in the generated list. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6445">JBIDE-6445</ulink>: A bug existed that would cause Eclipse to hang for an unstipulated amount of time when OpenOn for injection points was utilized. This error has now been fixed by modifying the <classname>ProducerDisposerHyperlinkDetector</classname>, <classname>CDIUtil</classname> and <classname>InjectedPointHyperlinkDetector</classname> classes.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6418">JBIDE-6418</ulink>: When matching injections to CDI injection points, there was occasion when no injections existed or those that did exist were ambiguous, however no feedback was provided to the user indicating this. This has been rectified in this release by adding validation tests for CDI injection points where no matching injections exist or those that match are ambigious. In these circumstances validation tests will mark these injection points with an error or warning based on user preferences. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6416">JBIDE-6416</ulink>: A new wizard has been added for easy creation of a Scope Java file. The <guilabel>Scope Annotation Type</guilabel> wizard can be found under the <guilabel>CDI</guilabel> folder in the wizard selection dialog.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6415">JBIDE-6415</ulink>: A new wizard has been added for easy creation of an Interceptor Binding Java file. The <guilabel>Interceptor Binding Annotation Type</guilabel> wizard can be found under the <guilabel>CDI</guilabel> folder in the wizard selection dialog.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6414">JBIDE-6414</ulink>: A new wizard has been added for easy creation of a Stereotype Java file. The <guilabel>Stereotype Annotation Type</guilabel> wizard can be found under the <guilabel>CDI</guilabel> folder in the wizard selection dialog.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6413">JBIDE-6413</ulink>: A new wizard has been added for easy creation of a Qualifier Java file. The <guilabel>Qualifier Annotation Type</guilabel> wizard can be found under the <guilabel>CDI</guilabel> folder in the wizard selection dialog.
+				   </para>
+				</listitem>
+<!-- Only for JBT Release Notes -->
+			<!--	<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6412">JBIDE-6412</ulink>: A new feature has been added, the CDI Maven configurator. The configurator allows you to configure the Maven CDI settings for your project.
+				   </para>
+				</listitem> -->
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -85,6 +136,18 @@
 	      </listitem>
 	   </itemizedlist>
 	</para>
+	</formalpara>
+	<formalpara>
+	   <title>Drools</title>
+	   <para>
+	      <itemizedlist>
+		 <listitem>
+		    <para>
+		       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6459">JBIDE-6459</ulink>: Functionality has been added that allows a user to right-click on a Fact or POJO and add it to their BRMS or Govnor instance without going through the process of exporting a JAR file and then importing it.
+		    </para>
+		 </listitem>
+	      </itemizedlist>
+	   </para>
 	</formalpara>
 	<formalpara>
 		<title>ESB</title>
@@ -130,7 +193,10 @@
 				 </listitem>
 				 <listitem>
 				    <para>
-				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6615">JBIDE-6615</ulink>: ESB 4.9 includes new functionality for complex event processing, utilizing the <classname>BusinessRulesProcessor</classname> action. Support for this action has been added to the ESB tooling.
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6609">JBIDE-6609</ulink>: The ESB Editor did not support the <methodname>BPELInvoke</methodname> action, causing error with Riftsaw and ESB integration.To correct this bug the option <menuchoice>
+                                          <guimenuitem>New</guimenuitem>
+                                          <guimenuitem>BPELInvoke Action</guimenuitem>
+				       </menuchoice> is available from the ESB editor's menu when the <classname>org.jboss.soa.esb.actions.bpel.BPELInvoke</classname> class is apart of the project classpath. This ensures that the <methodname>BPELInvoke</methodname> action is only enabled when the Riftsaw runtime is installed. 
 				    </para>
 				 </listitem>
 			</itemizedlist>
@@ -212,6 +278,21 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6621">JBIDE-6621</ulink>: In previous versions, when a user selected Ingres from the list of databases or databse dialects the <guilabel>Driver Name</guilabel> and <guilabel>Connection URL</guilabel> fields would not be auto-populated as they are for other databases in the list. This has lead to concerns of the compatibility of Ingres with JBoss Enterprise Application Platform. To correct this issue the new Ingres dialects <filename>Ingres9Dialect</filename> and <filename>Ingres10Dialect</filename> have been added, ensuring the aforementioned fields are auto-populated for both versions 9 and 10 of Hibernate core.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6518">JBIDE-6518</ulink>: A new feature has been added that makes it possible to export a Hibernate code generation configuration to an Ant build file. To use this feature navigate to <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Export</guimenuitem><guimenuitem>Hibernate</guimenuitem><guimenuitem>Ant Code Generation</guimenuitem></menuchoice>.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6473">JBIDE-6473</ulink>: A new Hibernate platform has been added called <emphasis>Hibernate JPA 2.0</emphasis>. This platform extends the base JPA 2.0 platform.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6423">JBIDE-6423</ulink>: A new feature that allows for code generation to be run in external processes has been added. This new feature is accessed through the <guilabel>Hibernate Code Generation Configurations</guilabel> wizard in the form of a checkbox called <guilabel>Use generation in external process</guilabel>.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	     </formalpara>
@@ -286,6 +367,24 @@
 		</itemizedlist>
 	     </para>
 	</formalpara>
+<!-- Include in JBT Release Notes only!!! -->
+   <!--	<formalpara>
+	<title>Maven</title>
+	<para>
+	   <itemizedlist>
+	      <listitem>
+		 <para>
+		    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6576">JBIDE-6576</ulink>: Maven configurators have been moved to be individual features.
+		 </para>
+	      </listitem>
+	      <listitem>
+		 <para>
+		    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6487">JBIDE-6487</ulink>: The Maven Hibernate Configurator has been added. This insures that if a maven project contains a dependency with <property>groupId=org.hibernate</property> and an <property>artifactId</property> starting with <property>hibernate</property>, the Maven Hibernate Configurator will enable Hibernate 3 support.
+		 </para>
+	      </listitem>
+	   </itemizedlist>
+	</para>
+     </formalpara> -->
 <!--	<formalpara>
 		<title>Portlet</title>
 		<para>
@@ -440,6 +539,11 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6631">JBIDE-6631</ulink>: Previously the only way to export a template was by navigating to <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Export</guimenuitem><guimenuitem>Unknown</guimenuitem></menuchoice>. This process was not intuitive and so <guibutton>Import</guibutton> and <guibutton>Export</guibutton> buttons have been added to the <guilabel>Visual Templates Preferences</guilabel> page. Due to Java prohibiting the extension of more than one class, extra classes have been written for this added functionality.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6600">JBIDE-6600</ulink>: The Visual Page Editor would use all available template libraries reguardless of the opened content. This caused conflicts between templates; an example of this is the <property>head</property> tag appearing in both the docbook and HTML templates. The solution has been to create a seperate editor for docbook.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -475,6 +579,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6660">JBIDE-6660</ulink>: A bug existed in the Web Services tooling such that when a user attempted to connect with a password protected URL (for example, a deltacloud) a dialog would appear requesting a username and password combination, however when the information was submitted it would not persist; this ensured the user would be asked for login details continually. This issue has been fixed by the creation of a new dialog that remembers the authentication information last used, however login information is not currently persisted between sessions (for example, closing and then reopening a workbench).
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6589">JBIDE-6589</ulink>: In previous releases a JAX-WS invocation could not be cancelled. Support for cancelling a long-running invocation has been implemented and improved for this release.
 				   </para>
 				</listitem>
 			</itemizedlist>
@@ -514,6 +623,11 @@
 				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6836">JBIDE-6836</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6695">JBIDE-6695</ulink>: Google Web Toolkit features are available for JBoss Tools through the update site as experimental. 
 			      </para>
 			   </listitem> -->
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6507">JBIDE-6507</ulink>: Support has been added for enabling and disabling project validators based on the JBoss KB (Knowledge Base) project validator. Validators that can be enabled or disabled include those for JSF, Seam and CDI.
+				 </para>
+			      </listitem>
 			</itemizedlist>
 		</para>
 	     </formalpara>
