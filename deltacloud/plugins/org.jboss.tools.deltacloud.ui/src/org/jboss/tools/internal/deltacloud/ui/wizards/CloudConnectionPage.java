@@ -68,7 +68,7 @@ import org.jboss.tools.internal.deltacloud.ui.common.swt.JFaceUtils;
  */
 public class CloudConnectionPage extends WizardPage {
 
-	private static final int CLOUDTYPE_CHECK_DELAY = 500;
+	private static final int CLOUDTYPE_CHECK_DELAY = 1000;
 
 	private static final String DESCRIPTION = "CloudConnection.desc"; //$NON-NLS-1$
 	private static final String TITLE = "CloudConnection.title"; //$NON-NLS-1$

@@ -13,7 +13,7 @@ package org.jboss.tools.deltacloud.ui.commands;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.runtime.Assert;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.client.Instance.InstanceState;
+import org.jboss.tools.deltacloud.core.client.Instance.State;
 import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
 
 /**
@@ -30,7 +30,7 @@ public class InstanceStoppedPropertyTester extends PropertyTester {
 		DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
 		Assert.isTrue(expectedValue instanceof Boolean);
 		Boolean isExpectedValue = (Boolean) expectedValue;
-		boolean isStopped = InstanceState.STOPPED.toString().equals(instance.getState());
+		boolean isStopped = State.STOPPED.toString().equals(instance.getState());
 		return isExpectedValue.equals(isStopped);
 	}
 }

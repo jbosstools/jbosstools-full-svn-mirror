@@ -46,7 +46,6 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
-import org.jboss.tools.deltacloud.core.client.Instance.Action;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -56,9 +55,10 @@ import org.xml.sax.SAXException;
 
 public class DeltaCloudClient implements API {
 
+	private static final String BASEURL_API = "/api";
 	private static final String PEM_FILE_SUFFIX = "pem";
-	private static final String DOCUMENT_ELEMENT_DRIVER = "driver"; //$NON-NLS-1$
-	private static final String DOCUMENT_ELEMENT_API = "api"; //$NON-NLS-1$
+	private static final String DOCUMENT_ELEMENT_DRIVER = "driver";
+	private static final String DOCUMENT_ELEMENT_API = "api";
 
 	public static Logger logger = Logger.getLogger(DeltaCloudClient.class);
 
@@ -93,38 +93,30 @@ public class DeltaCloudClient implements API {
 		}
 	}
 
-	protected static enum RequestType {
-		POST, GET, DELETE
-	};
-
 	private URL baseUrl;
 	private String username;
 	private String password;
 
 	public DeltaCloudClient(String url) throws MalformedURLException {
-		this(new URL(url), null, null);
+		this(url, null, null);
 	}
 
 	public DeltaCloudClient(String url, String username, String password) throws MalformedURLException {
-		this(new URL(url), username, password);
-	}
-
-	public DeltaCloudClient(URL url, String username, String password) {
 
 		logger.debug("Creating new Delta Cloud Client for Server: " + url);
 
-		this.baseUrl = url;
+		this.baseUrl = new URL(url + BASEURL_API);
 		this.username = username;
 		this.password = password;
 	}
 
-	private String sendRequest(String path, RequestType requestType) throws DeltaCloudClientException {
+	private String sendRequest(String path, HttpMethod httpMethod) throws DeltaCloudClientException {
 		DefaultHttpClient httpClient = addCredentials(new DefaultHttpClient());
-		String requestUrl = baseUrl.toString() + "/api" + path;
+		String requestUrl = baseUrl.toString() + path;
 		logger.debug("Sending Request to: " + requestUrl);
 
 		try {
-			HttpUriRequest request = getRequest(requestType, requestUrl);
+			HttpUriRequest request = getRequest(httpMethod, requestUrl);
 			HttpResponse httpResponse = httpClient.execute(request);
 			throwOnHttpErrors(requestUrl, httpResponse);
 			return getResponse(httpResponse.getEntity());
@@ -144,15 +136,14 @@ public class DeltaCloudClient implements API {
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
 		if (HttpStatusCode.OK.isStatus(statusCode)) {
 			return;
-		}
-		else if (HttpStatusCode.FORBIDDEN.isStatus(statusCode)) {
+		} else if (HttpStatusCode.FORBIDDEN.isStatus(statusCode)) {
 			throw new DeltaCloudAuthException(
 					MessageFormat.format("The server reported an authorization error \"{0}\" on requesting \"{1}\"",
 							httpResponse.getStatusLine().getReasonPhrase(), requestUrl));
 		} else if (HttpStatusCode.NOT_FOUND.isStatus(statusCode)) {
 			throw new DeltaCloudNotFoundException(
 						MessageFormat.format("The server could not find the resource \"{0}\"", requestUrl));
-		} else if (HttpStatusRange.CLIENT_ERROR.isInRange(statusCode) 
+		} else if (HttpStatusRange.CLIENT_ERROR.isInRange(statusCode)
 				|| HttpStatusRange.SERVER_ERROR.isInRange(statusCode)) {
 			throw new DeltaCloudClientException(
 					MessageFormat.format("The server reported an error \"{0}\" on requesting \"{1}\"",
@@ -173,21 +164,22 @@ public class DeltaCloudClient implements API {
 	/**
 	 * Returns a request instance for the given request type and url.
 	 * 
-	 * @param requestType
+	 * @param httpMethod
 	 *            the request type to use
 	 * @param requestUrl
 	 *            the requested url
 	 * @return the request instance
 	 */
-	protected HttpUriRequest getRequest(RequestType requestType, String requestUrl) {
+	protected HttpUriRequest getRequest(HttpMethod httpMethod, String requestUrl) {
 		HttpUriRequest request = null;
-		switch (requestType) {
+		switch (httpMethod) {
 		case POST:
 			request = new HttpPost(requestUrl);
 			break;
 		case DELETE:
 			request = new HttpDelete(requestUrl);
 			break;
+		case GET:
 		default:
 			request = new HttpGet(requestUrl);
 		}
@@ -237,7 +229,7 @@ public class DeltaCloudClient implements API {
 		DeltaCloudType serverType = DeltaCloudType.UNKNOWN;
 		try {
 			String query = "?format=xml";
-			String apiResponse = sendRequest(DCNS.TYPE + query, RequestType.GET);
+			String apiResponse = sendRequest(DCNS.TYPE + query, HttpMethod.GET);
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(apiResponse)));
 
@@ -259,7 +251,7 @@ public class DeltaCloudClient implements API {
 	@Override
 	public Instance createInstance(String imageId) throws DeltaCloudClientException {
 		String query = "?image_id=" + imageId;
-		return buildInstance(sendRequest(DCNS.INSTANCES + query, RequestType.POST));
+		return buildInstance(sendRequest(DCNS.INSTANCES + query, HttpMethod.POST));
 	}
 
 	@Override
@@ -283,13 +275,13 @@ public class DeltaCloudClient implements API {
 		if (keyname != null)
 			query += "&keyname=" + keyname;
 		query += "&commit=create";
-		return buildInstance(sendRequest(DCNS.INSTANCES + query, RequestType.POST));
+		return buildInstance(sendRequest(DCNS.INSTANCES + query, HttpMethod.POST));
 	}
 
 	@Override
 	public HardwareProfile listProfile(String profileId) throws DeltaCloudClientException {
 		String request = DCNS.HARDWARE_PROFILES + "/" + profileId;
-		return buildDeltaCloudObject(HardwareProfile.class, sendRequest(request, RequestType.GET));
+		return buildDeltaCloudObject(HardwareProfile.class, sendRequest(request, HttpMethod.GET));
 	}
 
 	@Override
@@ -304,18 +296,17 @@ public class DeltaCloudClient implements API {
 
 	@Override
 	public Image listImages(String imageId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.IMAGES + "/" + imageId, RequestType.GET)), Image.class);
+		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.IMAGES + "/" + imageId, HttpMethod.GET)), Image.class);
 	}
 
 	@Override
 	public List<Instance> listInstances() throws DeltaCloudClientException {
-
 		return listDeltaCloudObjects(Instance.class, DCNS.INSTANCES.toString(), "instance");
 	}
 
 	@Override
 	public Instance listInstances(String instanceId) throws DeltaCloudClientException {
-		return buildInstance(sendRequest(DCNS.INSTANCES + "/" + instanceId, RequestType.GET));
+		return buildInstance(sendRequest(DCNS.INSTANCES + "/" + instanceId, HttpMethod.GET));
 	}
 
 	@Override
@@ -325,12 +316,13 @@ public class DeltaCloudClient implements API {
 
 	@Override
 	public Realm listRealms(String realmId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.REALMS + "/" + realmId, RequestType.GET)), Realm.class);
+		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.REALMS + "/" + realmId, HttpMethod.GET)), Realm.class);
 	}
 
 	/**
 	 * Retrieves a key for a given name on the deltacloud server and stores it
-	 * in the file at the given path. The file gets created if the file path does not exist yet.
+	 * in the file at the given path. The file gets created if the file path
+	 * does not exist yet.
 	 * 
 	 * @param keyname
 	 *            the name of the key to retrieve from the server
@@ -340,7 +332,7 @@ public class DeltaCloudClient implements API {
 	 *             the delta cloud client exception
 	 */
 	public void createKey(String keyname, String keyStoreLocation) throws DeltaCloudClientException {
-		String xml = sendRequest(DCNS.KEYS + "?name=" + keyname, RequestType.POST);
+		String xml = sendRequest(DCNS.KEYS + "?name=" + keyname, HttpMethod.POST);
 		try {
 			String key = trimKey(getKey(xml));
 			File keyFile = createKeyFile(keyname, keyStoreLocation);
@@ -391,7 +383,7 @@ public class DeltaCloudClient implements API {
 	}
 
 	public void deleteKey(String keyname) throws DeltaCloudClientException {
-		sendRequest(DCNS.KEYS + "/" + keyname, RequestType.DELETE);
+		sendRequest(DCNS.KEYS + "/" + keyname, HttpMethod.DELETE);
 	}
 
 	@Override
@@ -399,7 +391,7 @@ public class DeltaCloudClient implements API {
 		/**
 		 * shouldn't that be PUT? changing resource states == PUT!
 		 */
-		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.REBOOT, RequestType.GET);
+		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.REBOOT, HttpMethod.GET);
 	}
 
 	@Override
@@ -407,7 +399,7 @@ public class DeltaCloudClient implements API {
 		/**
 		 * shouldn't that be PUT? changing resource states == PUT!
 		 */
-		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.STOP, RequestType.POST);
+		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.STOP, HttpMethod.POST);
 	}
 
 	@Override
@@ -415,12 +407,12 @@ public class DeltaCloudClient implements API {
 		/**
 		 * shouldn't that be PUT? changing resource states == PUT!
 		 */
-		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.START, RequestType.POST);
+		sendRequest(DCNS.INSTANCES + "/" + instanceId + DCNS.START, HttpMethod.POST);
 	}
 
 	@Override
 	public void destroyInstance(String instanceId) throws DeltaCloudClientException {
-		sendRequest(DCNS.INSTANCES + "/" + instanceId, RequestType.DELETE);
+		sendRequest(DCNS.INSTANCES + "/" + instanceId, HttpMethod.DELETE);
 	}
 
 	private Instance buildInstance(String xml) throws DeltaCloudClientException {
@@ -437,25 +429,53 @@ public class DeltaCloudClient implements API {
 			instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 			instance.setState(getElementText(document, "state").get(0)); //$NON-NLS-1$
 			getAuthentication(document, instance);
-
-			instance.setActions(createActions(instance, document));
+			instance.setActions(createInstanceActions(instance, document));
 
 			return instance;
-			// } catch (DeltaCloudClientException e) {
-			// throw e;
+		} catch (DeltaCloudClientException e) {
+			throw e;
 		} catch (Exception e) {
 			DeltaCloudClientException newException = new DeltaCloudClientException(e.getLocalizedMessage());
 			throw newException;
 		}
 	}
 
-	private List<Action> createActions(Instance instance, Document document) {
-		ArrayList<Instance.Action> actions = new ArrayList<Instance.Action>();
-		for (String s : getAttributeValues(document, "link", "rel")) //$NON-NLS-1$ //$NON-NLS-2$
-		{
-			actions.add(Instance.Action.valueOf(s.toUpperCase()));
-		}
+	private List<InstanceAction> createInstanceActions(Instance instance, Document document)
+			throws DeltaCloudClientException {
+		final List<InstanceAction> actions = new ArrayList<InstanceAction>();
+		forEachNode(document, "link", new INodeVisitor() {
+
+			@Override
+			public void visit(Node node) throws Exception {
+				NamedNodeMap attributes = node.getAttributes();
+				String name = getAttributeTextContent("rel", attributes, node);
+				String url = getAttributeTextContent("href", attributes, node);
+				String method = getAttributeTextContent("method", attributes, node);
+				actions.add(new InstanceAction(name, stripBaseUrl(url), method));
+			}
+		});
 		return actions;
+	}
+
+	private String stripBaseUrl(String url) throws DeltaCloudClientException {
+		String baseUrlString = baseUrl.toString();
+		if (url.indexOf(baseUrlString) != 0) {
+			throw new DeltaCloudClientException(MessageFormat.format(
+					"Resource at {0} is not child resource of root resource at {1}", url, baseUrl));
+		}
+
+		return url.substring(baseUrlString.length());
+	}
+
+	private String getAttributeTextContent(String attributeName, NamedNodeMap namedNodeMap, Node node)
+			throws DeltaCloudClientException {
+		Node attributeNode = namedNodeMap.getNamedItem(attributeName);
+		if (attributeNode == null) {
+			throw new DeltaCloudClientException(MessageFormat.format("Could not find attribute {0} in node {1}",
+					attributeName, node.getNodeName()));
+		}
+
+		return attributeNode.getTextContent();
 	}
 
 	private HardwareProfile buildHardwareProfile(String xml) throws DeltaCloudClientException {
@@ -465,8 +485,6 @@ public class DeltaCloudClient implements API {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(xml)));
-
-			// checkForErrors(document);
 
 			List<Node> nodes = getPropertyNodes(document, "hardware_profile"); //$NON-NLS-1$
 
@@ -510,6 +528,17 @@ public class DeltaCloudClient implements API {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private void forEachNode(Document document, String tagName, INodeVisitor visitor) throws DeltaCloudClientException {
+		NodeList elements = document.getElementsByTagName(tagName);
+		for (int i = 0; i < elements.getLength(); i++) {
+			try {
+				visitor.visit(elements.item(i));
+			} catch (Exception e) {
+				throw new DeltaCloudClientException(e.getMessage());
+			}
+		}
 	}
 
 	private List<String> getAttributeValues(Document document, String elementName, String attributeName) {
@@ -609,7 +638,7 @@ public class DeltaCloudClient implements API {
 				dco.add(buildDeltaCloudObject(clazz, nodeToString(nodeList.item(i))));
 			}
 			return dco;
-		} catch(DeltaCloudClientException e) {
+		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new DeltaCloudClientException("Could not list object of type " + clazz, e);
@@ -618,7 +647,7 @@ public class DeltaCloudClient implements API {
 
 	private Document getDocument(String path) throws DeltaCloudClientException, ParserConfigurationException,
 			SAXException, IOException {
-		InputSource is = new InputSource(new StringReader(sendRequest(path, RequestType.GET)));
+		InputSource is = new InputSource(new StringReader(sendRequest(path, HttpMethod.GET)));
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document document = db.parse(is);
@@ -636,11 +665,33 @@ public class DeltaCloudClient implements API {
 		}
 	}
 
-	public boolean performInstanceAction(String instanceId, String action) throws DeltaCloudClientException {
+	/**
+	 * Performs an action, indicated by a given action id, on a instance with a
+	 * given instance id.
+	 * <p>
+	 * Retrieves the instance with the given id, checks for the actions that are
+	 * available to it and performs the given action only if it is available. It
+	 * is important to note that this method performs several REST calls to the
+	 * server.
+	 * 
+	 * @param instanceId
+	 *            the id of the instance to perfom the action on
+	 * @param action
+	 *            the action id to perform
+	 * @return true, if the action was performed successfully
+	 * @throws DeltaCloudClientException
+	 *             indicates that an error occured while performing the action
+	 * 
+	 * @see #startInstance(String)
+	 * @see #shutdownInstance(String)
+	 * @see #destroyInstance(String)
+	 * @see #rebootInstance(String)
+	 */
+	public boolean performInstanceAction(String instanceId, String actionName) throws DeltaCloudClientException {
 		Instance instance = listInstances(instanceId);
-		if (instance.getActionNames().contains(action)) {
-			String request = DCNS.INSTANCES + "/" + instanceId + "/" + action.toLowerCase();
-			sendRequest(request, RequestType.POST);
+		InstanceAction action = instance.getAction(actionName);
+		if (action != null) {
+			sendRequest(action.getUrl(), action.getMethod());
 			return true;
 		}
 		return false;
@@ -656,4 +707,9 @@ public class DeltaCloudClient implements API {
 			throw new DeltaCloudClientException("Error transforming node to string", e);
 		}
 	}
+
+	private interface INodeVisitor {
+		public void visit(Node node) throws Exception;
+	}
+
 }

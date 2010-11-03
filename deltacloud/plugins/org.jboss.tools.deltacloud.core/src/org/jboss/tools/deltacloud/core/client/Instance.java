@@ -19,9 +19,7 @@ public class Instance extends DeltaCloudObject
 {	
 	private static final long serialVersionUID = 1L;
 	
-	public static enum InstanceState { RUNNING, STOPPED, PENDING, TERMINATED, BOGUS };
-	
-	public static enum Action { START, STOP, REBOOT, DESTROY };
+	public static enum State { RUNNING, STOPPED, PENDING, TERMINATED, BOGUS };
 	
 	@XmlElement(name="owner_id")
 	private String ownerId;
@@ -44,9 +42,9 @@ public class Instance extends DeltaCloudObject
 	private String keyname;
 	
 	@XmlElement
-	private InstanceState state;
+	private State state;
 	
-	private List<Action> actions;
+	private List<InstanceAction> actions;
 	
 	@XmlElement(name="public_addresses")
 	private AddressList publicAddresses;
@@ -97,17 +95,17 @@ public class Instance extends DeltaCloudObject
 		this.realmId = realmId;
 	}
 	
-	protected void setActions(List<Action> actions)
+	protected void setActions(List<InstanceAction> actions)
 	{
 		this.actions = actions;
 	}
-	
+
 	protected void setState(String state)
 	{
 		try {
-			this.state = InstanceState.valueOf(state);
+			this.state = State.valueOf(state);
 		} catch (Exception e) {
-			this.state = InstanceState.BOGUS;
+			this.state = State.BOGUS;
 		}
 	}
 	
@@ -168,12 +166,12 @@ public class Instance extends DeltaCloudObject
 		return realmId;
 	}
 
-	public InstanceState getState()
+	public State getState()
 	{
 		return state;
 	}
 	
-	public List<Action> getActions()
+	public List<InstanceAction> getActions()
 	{
 		return actions;
 	}
@@ -181,11 +179,24 @@ public class Instance extends DeltaCloudObject
 	public List<String> getActionNames()
 	{
 		ArrayList<String>names = new ArrayList<String>();
-		for (Action action : actions)
+		for (InstanceAction action : actions)
 		{
-			names.add(action.name());
+			names.add(action.getName());
 		}
 		return names;
+	}
+	
+	public InstanceAction getAction(String name) {
+		if (name == null) {
+			return null;
+		}
+		
+		for(InstanceAction action : actions) {
+			if (name.equals(action.getName())) {
+				return action;
+			}
+		}
+		return null;
 	}
 	
 	public List<String> getPublicAddresses()

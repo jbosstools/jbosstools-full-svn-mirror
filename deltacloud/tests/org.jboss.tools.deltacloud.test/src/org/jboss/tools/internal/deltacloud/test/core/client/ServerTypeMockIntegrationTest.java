@@ -22,6 +22,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundException;
+import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerFake;
 import org.junit.After;
@@ -85,7 +86,7 @@ public class ServerTypeMockIntegrationTest {
 		try {
 			DeltaCloudClient errorClient = new DeltaCloudClient(MockIntegrationTestContext.DELTACLOUD_URL) {
 				@Override
-				protected HttpUriRequest getRequest(RequestType requestType, String requestUrl) {
+				protected HttpUriRequest getRequest(HttpMethod httpMethod, String requestUrl) {
 					return new HttpGet(MockIntegrationTestContext.DELTACLOUD_URL + "/DUMMY");
 				}
 			};

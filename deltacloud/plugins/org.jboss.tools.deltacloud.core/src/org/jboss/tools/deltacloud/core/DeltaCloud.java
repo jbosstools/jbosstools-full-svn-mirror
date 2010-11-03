@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.core;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -70,7 +69,7 @@ public class DeltaCloud {
 	public DeltaCloud(String name, String url, String username, String passwd,
 			String type, boolean persistent,
 			String imageFilterRules, String instanceFilterRules) throws MalformedURLException {
-		this.client = new DeltaCloudClient(new URL(url), username, passwd); //$NON-NLS-1$
+		this.client = new DeltaCloudClient(url, username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;
@@ -94,7 +93,7 @@ public class DeltaCloud {
 
 	public void editCloud(String name, String url, String username, String passwd, String type)
 			throws MalformedURLException {
-		this.client = new DeltaCloudClient(new URL(url + "/api"), username, passwd); //$NON-NLS-1$
+		this.client = new DeltaCloudClient(url, username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;

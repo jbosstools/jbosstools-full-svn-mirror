@@ -13,20 +13,21 @@ package org.jboss.tools.deltacloud.core;
 import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.Instance;
+import org.jboss.tools.deltacloud.core.client.InstanceAction;
 
 
 public class DeltaCloudInstance {
 
-	public final static String PENDING = Instance.InstanceState.PENDING.toString();
-	public final static String RUNNING = Instance.InstanceState.RUNNING.toString();
-	public final static String STOPPED = Instance.InstanceState.STOPPED.toString();
-	public final static String TERMINATED = Instance.InstanceState.TERMINATED.toString();
-	public final static String BOGUS = Instance.InstanceState.BOGUS.toString();
+	public final static String PENDING = Instance.State.PENDING.toString();
+	public final static String RUNNING = Instance.State.RUNNING.toString();
+	public final static String STOPPED = Instance.State.STOPPED.toString();
+	public final static String TERMINATED = Instance.State.TERMINATED.toString();
+	public final static String BOGUS = Instance.State.BOGUS.toString();
 	
-	public final static String START = Instance.Action.START.toString();
-	public final static String STOP = Instance.Action.STOP.toString();
-	public final static String REBOOT = Instance.Action.REBOOT.toString();
-	public final static String DESTROY = Instance.Action.DESTROY.toString();
+	public final static String START = InstanceAction.START;
+	public final static String STOP = InstanceAction.STOP;
+	public final static String REBOOT = InstanceAction.REBOOT;
+	public final static String DESTROY = InstanceAction.DESTROY;
 	
 	private Instance instance;
 	private String givenName;
