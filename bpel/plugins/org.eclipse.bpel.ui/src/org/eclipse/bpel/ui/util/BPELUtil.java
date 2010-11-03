@@ -83,6 +83,7 @@ import org.eclipse.bpel.ui.extensions.ActionDescriptor;
 import org.eclipse.bpel.ui.extensions.BPELUIRegistry;
 import org.eclipse.bpel.ui.uiextensionmodel.ActivityExtension;
 import org.eclipse.bpel.ui.uiextensionmodel.UiextensionmodelPackage;
+import org.eclipse.bpel.validator.EmfModelQuery;
 import org.eclipse.bpel.wsil.model.inspection.InspectionPackage;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -1720,6 +1721,11 @@ public class BPELUtil {
 	
 	public static void openEditor(EObject modelObject, BPELEditor editor) {
 		try {
+			// https://jira.jboss.org/browse/JBIDE-7351
+			// try to resolve proxies here, otherwise we don't know editor input
+			if (modelObject.eIsProxy()) {
+				modelObject = EmfModelQuery.resolveProxy(editor.getProcess(), modelObject);
+			}
 			Assert.isNotNull(modelObject);
 			Assert.isNotNull(modelObject.eResource());
 			IFile file = BPELUtil.getFileFromURI(modelObject.eResource().getURI());

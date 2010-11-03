@@ -3134,8 +3134,14 @@ public class ReconciliationBPELReader extends BPELReader implements
 
 				case Node.TEXT_NODE:
 				case Node.CDATA_SECTION_NODE:
-					elementData.append(getText(n));
-					break;
+					// https://jira.jboss.org/browse/JBIDE-7351
+					// don't display "null" for literal editor widgets
+					{
+						String data = getText(n);
+						if (data != null)
+							elementData.append(data);
+						break;
+					}
 				}
 			}
 

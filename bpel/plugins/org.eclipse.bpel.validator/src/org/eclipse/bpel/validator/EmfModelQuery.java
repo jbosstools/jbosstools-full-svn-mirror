@@ -12,7 +12,6 @@ package org.eclipse.bpel.validator;
 
 import java.util.List;
 
-import javax.wsdl.OperationType;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 
@@ -22,10 +21,19 @@ import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.Variable;
 import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
 import org.eclipse.bpel.model.partnerlinktype.Role;
+import org.eclipse.bpel.model.proxy.MessageProxy;
+import org.eclipse.bpel.model.proxy.OperationProxy;
+import org.eclipse.bpel.model.proxy.PartProxy;
+import org.eclipse.bpel.model.proxy.PartnerLinkTypeProxy;
+import org.eclipse.bpel.model.proxy.PortTypeProxy;
+import org.eclipse.bpel.model.proxy.PropertyProxy;
+import org.eclipse.bpel.model.proxy.RoleProxy;
+import org.eclipse.bpel.model.proxy.XSDElementDeclarationProxy;
+import org.eclipse.bpel.model.proxy.XSDTypeDefinitionProxy;
 import org.eclipse.bpel.model.util.ImportResolver;
 import org.eclipse.bpel.model.util.ImportResolverRegistry;
-import org.eclipse.bpel.model.util.XSDComparer;
 import org.eclipse.bpel.model.util.WSDLUtil;
+import org.eclipse.bpel.model.util.XSDComparer;
 import org.eclipse.bpel.model.util.XSDUtil;
 import org.eclipse.bpel.validator.factory.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
@@ -495,6 +503,40 @@ public class EmfModelQuery {
         return null;
 	}
 
+	public static EObject resolveProxy( Process process, EObject obj) {
+		if (obj instanceof MessageProxy) {
+			return scanImports ( process, ((MessageProxy)obj).getQName(), WSDLUtil.WSDL_MESSAGE );
+		}
+		else if (obj instanceof PortTypeProxy) {
+			return scanImports ( process, ((PortTypeProxy)obj).getQName(), WSDLUtil.WSDL_PORT_TYPE );
+		}
+		else if (obj instanceof PartnerLinkTypeProxy) {
+			return scanImports ( process, ((PartnerLinkTypeProxy)obj).getQName(), WSDLUtil.BPEL_PARTNER_LINK_TYPE );
+		}
+		else if (obj instanceof RoleProxy) {
+			return scanImports ( process, ((RoleProxy)obj).getQName(), WSDLUtil.BPEL_ROLE );
+		}
+		else if (obj instanceof PropertyProxy) {
+			return scanImports ( process, ((PropertyProxy)obj).getQName(), WSDLUtil.BPEL_PROPERTY );
+		}
+		else if (obj instanceof OperationProxy) {
+			QName qname = new QName(((OperationProxy)obj).getName());
+			return scanImports ( process, qname, WSDLUtil.WSDL_OPERATION );
+		}
+		else if (obj instanceof PartProxy) {
+			QName qname = new QName(((PartProxy)obj).getName());
+			return scanImports ( process, qname, WSDLUtil.WSDL_PART );
+		}
+		else if (obj instanceof XSDTypeDefinitionProxy) {
+			QName qname = new QName(((XSDTypeDefinitionProxy)obj).getName());
+			return scanImports ( process, qname, WSDLUtil.XSD_TYPE_DEFINITION );
+		}
+		else if (obj instanceof XSDElementDeclarationProxy) {
+			QName qname = new QName(((XSDElementDeclarationProxy)obj).getName());
+			return scanImports ( process, qname, WSDLUtil.XSD_ELEMENT_DECLARATION );
+		}
+		return obj;
+	}
 
 	static void assertTrue ( boolean mustBeTrue , String msg ) {
 		if (!mustBeTrue) {

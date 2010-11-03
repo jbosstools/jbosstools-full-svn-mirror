@@ -39,20 +39,17 @@ import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.XSDUtils;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.wst.wsdl.Message;
 import org.eclipse.wst.wsdl.Part;
 import org.eclipse.xsd.XSDAttributeDeclaration;
@@ -480,6 +477,10 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			side.setQuery(null);
 		}
 
+		/*
+		// https://jira.jboss.org/browse/JBIDE-7351
+		// remove all of this: don't ask to initialize variables whenever focus
+		// changes - this makes for a bad user experience!
 		// From?
 		if (side.isSource())
 			return;
@@ -502,6 +503,7 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 										(new Object[] { var.getName() })))) {
 			initTargetVariable(var, side);
 		}
+		*/
 	}
 
 	private boolean isInitializerExist(Variable var, IVirtualCopyRuleSide side) {

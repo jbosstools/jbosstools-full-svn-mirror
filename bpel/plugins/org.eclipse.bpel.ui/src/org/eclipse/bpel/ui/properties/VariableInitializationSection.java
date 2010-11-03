@@ -11,16 +11,25 @@
 
 package org.eclipse.bpel.ui.properties;
 
+import java.util.Map;
+
+import javax.xml.namespace.QName;
+
 import org.eclipse.bpel.common.ui.details.IDetailsAreaConstants;
 import org.eclipse.bpel.common.ui.flatui.FlatFormAttachment;
 import org.eclipse.bpel.common.ui.flatui.FlatFormData;
 import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.bpel.model.BPELPackage;
+import org.eclipse.bpel.model.From;
+import org.eclipse.bpel.model.To;
 import org.eclipse.bpel.model.Variable;
+import org.eclipse.bpel.model.util.XSD2XMLGenerator;
+import org.eclipse.bpel.ui.BPELEditor;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.commands.SetCommand;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.MultiObjectAdapter;
+import org.eclipse.bpel.validator.EmfModelQuery;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +39,10 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.wst.wsdl.Message;
+import org.eclipse.wst.wsdl.Part;
+import org.eclipse.xsd.XSDElementDeclaration;
+import org.eclipse.xsd.XSDTypeDefinition;
 
 
 /**
@@ -274,6 +287,19 @@ public class VariableInitializationSection extends BPELPropertySection {
 			section.updateCombo();
 		}				
 		
+		// https://jira.jboss.org/browse/JBIDE-7351
+		// generate an appropriate XML initializer literal if currently empty
+		if (section.fCurrent instanceof LiteralAssignCategory) {
+			From from = fVariable.getFrom();
+			if (from!=null) {
+				String literal = from.getLiteral();
+				if (literal==null || literal.isEmpty()) {
+					literal = createDefaultInitializer(getBPELEditor(), fVariable, null);
+					from.setLiteral(literal);
+				}
+			}
+		}
+		
 		// Set the input of the category after we insert the to or from into the model.
 		section.fCurrent.setInput( fVariable.getFrom() );			
 		section.showCurrent();
@@ -310,5 +336,88 @@ public class VariableInitializationSection extends BPELPropertySection {
 	@Override
 	public void gotoMarker(IMarker marker) {						
 		refresh();
+	}
+	
+	/**
+	 * Construct an appropriate XML literal initializer for the given "from" and "to" parts
+	 *  
+	 * @param bpelEditor
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	public static String createDefaultInitializer(BPELEditor bpelEditor, From from, To to) {
+		String literal = EMPTY_STRING;
+		if ( from!=null && to!=null) {
+			literal = from.getLiteral();
+			if (literal==null || literal.isEmpty()) {
+				literal = createDefaultInitializer(bpelEditor, to.getVariable(), to.getPart());
+				from.setLiteral(literal);
+			}
+		}
+		return literal;
+	}
+
+	/**
+	 * Construct an appropriate XML literal initializer for the given variable and message part.
+	 *  
+	 * @param bpelEditor
+	 * @param var - the variable to be initialized
+	 * @param part - if the variable is defined as a message, this is the message part
+	 *               otherwise null
+	 * @return - XML string representing an intializer for the given variable
+	 * @see https://jira.jboss.org/browse/JBIDE-7351
+	 */
+	public static String createDefaultInitializer(BPELEditor bpelEditor, Variable var, Part part) {
+		String fromString = EMPTY_STRING;
+		try {
+			String rootElement = null;
+			String uriWSDL = null;
+
+			// Variable is defined using "messageType"
+			Message msg = (Message)var.getMessageType();
+			if (msg != null) {
+				if (msg.eIsProxy()) {
+					msg = (Message)EmfModelQuery.resolveProxy(bpelEditor.getProcess(), msg);
+				}
+				if (part==null) {
+					Map parts = msg.getParts();
+					if (parts!=null && !parts.isEmpty()) {
+						Map.Entry entry = (Map.Entry)parts.entrySet().iterator().next();
+						part = (Part)entry.getValue();
+					}
+				}
+				if (part!=null) {
+					XSDElementDeclaration declaration = part.getElementDeclaration();
+					if (declaration != null) {
+						uriWSDL = declaration.getSchema().getSchemaLocation();
+						rootElement = declaration.getName();
+					}
+				}
+			}
+
+			// Variable is defined using "type"
+			XSDTypeDefinition type = var.getType();
+			if (type != null) {
+				QName qname = new QName(type.getTargetNamespace(), type.getName());
+				rootElement = qname.getLocalPart();
+				uriWSDL = type.eResource().getURI().toString();
+			}
+
+			// Variable is defined using "element"
+			XSDElementDeclaration element = var.getXSDElement();
+			if (element != null) {
+				QName qname = new QName(element.getTargetNamespace(), element
+						.getName());
+				rootElement = qname.getLocalPart();
+				uriWSDL = element.eResource().getURI().toString();
+			}
+
+			XSD2XMLGenerator generator = new XSD2XMLGenerator(uriWSDL, rootElement);
+			fromString = generator.createXML();
+		}
+		catch (Exception e) {
+		}
+		return fromString;
 	}
 }

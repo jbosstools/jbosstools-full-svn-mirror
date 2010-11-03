@@ -592,6 +592,11 @@ public class AssignImplSection extends BPELPropertySection {
 				fCurrentCopy.setFrom(BPELFactory.eINSTANCE.createFrom());
 			}
 			section.fCurrent.setInput(fCurrentCopy.getFrom());
+			
+			// https://jira.jboss.org/browse/JBIDE-7351
+			// construct an initializer if From is empty
+			if (section.fCurrent instanceof LiteralAssignCategory)
+				VariableInitializationSection.createDefaultInitializer(getBPELEditor(), fCurrentCopy.getFrom(), fCurrentCopy.getTo());
 		}
 
 		section.showCurrent();
