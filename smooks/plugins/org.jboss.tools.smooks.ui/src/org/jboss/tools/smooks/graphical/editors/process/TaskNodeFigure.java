@@ -72,6 +72,8 @@ public class TaskNodeFigure extends Figure {
 
 	private Rectangle imageSourceRectangle = null;
 
+	private boolean showRectangle = false;
+
 	public TaskNodeFigure(TaskType task, SmooksProcessGraphicalEditor graph,
 			Image image, String text) {
 		super();
@@ -128,6 +130,15 @@ public class TaskNodeFigure extends Figure {
 		});
 	}
 
+	@Override
+	protected void paintBorder(Graphics graphics) {
+//		super.paintBorder(graphics);
+		if (showRectangle) {
+			graphics.setLineWidth(2);
+			graphics.drawRectangle(getBounds().x+1,getBounds().y+1,getBounds().width - 2 , getBounds().height - 2);
+		}
+	}
+
 	protected void initFigure() {
 		initMainFigure();
 		initAddTaskFigure();
@@ -166,9 +177,9 @@ public class TaskNodeFigure extends Figure {
 					// imageSourceRectangle = new Rectangle(rect.x + feet,
 					// rect.y + feet, rect.width - feet * 2,
 					// rect.height - feet * 2);
-				}else{
-					Graph g = processGraphicalViewerEditor.getProcessGraphViewer()
-							.getGraphControl();
+				} else {
+					Graph g = processGraphicalViewerEditor
+							.getProcessGraphViewer().getGraphControl();
 					processGraphicalViewerEditor.setNeedupdatewhenshow(false);
 					List<?> nodes = g.getNodes();
 					for (Iterator<?> iterator = nodes.iterator(); iterator
@@ -184,15 +195,17 @@ public class TaskNodeFigure extends Figure {
 							}
 						}
 					}
-					List<IAction> actionsList = processGraphicalViewerEditor.getProcessPanelActionList();
+					List<IAction> actionsList = processGraphicalViewerEditor
+							.getProcessPanelActionList();
 					boolean hideAddIcon = true;
 					for (IAction iAction : actionsList) {
-						if(iAction.isEnabled() && !(iAction instanceof DeleteTaskNodeAction)){
+						if (iAction.isEnabled()
+								&& !(iAction instanceof DeleteTaskNodeAction)) {
 							hideAddIcon = false;
 							break;
 						}
 					}
-					if(hideAddIcon){
+					if (hideAddIcon) {
 						graphics.fillRectangle(rect);
 						return;
 					}
@@ -329,13 +342,15 @@ public class TaskNodeFigure extends Figure {
 	public void highlightLabel(Color highlightColor) {
 		oldLabelColor = label.getForegroundColor();
 		label.setForegroundColor(highlightColor);
-		label.repaint();
+		showRectangle = true;
+		this.repaint();
 	}
 
 	public void unhighlightLabel() {
 		if (oldLabelColor != null) {
 			label.setForegroundColor(oldLabelColor);
-			label.repaint();
+			showRectangle = false;
+			this.repaint();
 		}
 	}
 
