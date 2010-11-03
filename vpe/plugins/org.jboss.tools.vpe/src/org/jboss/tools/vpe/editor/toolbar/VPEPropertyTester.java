@@ -20,7 +20,6 @@ import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
  */
 public class VPEPropertyTester extends PropertyTester{
 
-	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
 		return !JspEditorPlugin.getDefault().getPreferenceStore()
