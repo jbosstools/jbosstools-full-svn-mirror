@@ -65,8 +65,8 @@ public class SmooksXMLEditor extends StructuredTextEditor {
 			boolean yes = MessageDialog
 					.openQuestion(
 							getSite().getShell(),
-							"Incorrect Extension Name",
-							"The extension name of this smooks configuration file isn't correct , it will occur some exception , do you want to close this editor and re-open the file?");
+							"Warning",
+							"The extension of the open Smooks configuration file is no longer correct and will cause exceptions in the editor if you continue. Do you want to close this editor and reopen the file?");
 			if (yes) {
 				if (parentEditorPart != null) {
 					 ((AbstractSmooksFormEditor)
