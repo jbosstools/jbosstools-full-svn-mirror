@@ -23,6 +23,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementUpdater;
@@ -145,17 +148,24 @@ public class RotateEditorsHandler extends AbstractHandler implements
 		 * Call <code>filContainer()</code> from VpeEditorPart to redraw
 		 * CustomSashForm with new layout.
 		 */
-		IEditorPart activeEditor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		if (activeEditor instanceof JSPMultiPageEditor) {
-			JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
+		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage().getEditorReferences();
+		for (IEditorReference openedEditor : openedEditors) {
+			IEditorPart editor = openedEditor.getEditor(true);
+			rotateEditor(editor, orientation);
+		}
+	}
+
+	private void rotateEditor(IEditorPart editor, String orientation) {
+		if (editor instanceof JSPMultiPageEditor) {
+			JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) editor;
 			VpeController vpeController = (VpeController) jspEditor
 					.getVisualEditor().getController();
-			//if called in initialization time, vpe controller is null
-			//added by Maksim Areshkau
-			if(vpeController!=null)
-			vpeController.getPageContext().getEditPart()
-					.fillContainer(true, orientation);
+			// if called in initialization time, vpe controller is null
+			// added by Maksim Areshkau
+			if (vpeController != null)
+				vpeController.getPageContext().getEditPart()
+						.fillContainer(true, orientation);
 		}
 	}
 }
