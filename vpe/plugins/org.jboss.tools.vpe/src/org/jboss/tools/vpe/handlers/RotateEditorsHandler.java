@@ -149,7 +149,8 @@ public class RotateEditorsHandler extends AbstractHandler implements
 		 * CustomSashForm with new layout.
 		 */
 		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getEditorReferences();
+				.getActiveWorkbenchWindow().getActivePage()
+				.getEditorReferences();
 		for (IEditorReference openedEditor : openedEditors) {
 			IEditorPart editor = openedEditor.getEditor(true);
 			rotateEditor(editor, orientation);
@@ -157,15 +158,19 @@ public class RotateEditorsHandler extends AbstractHandler implements
 	}
 
 	private void rotateEditor(IEditorPart editor, String orientation) {
-		if (editor instanceof JSPMultiPageEditor) {
-			JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) editor;
-			VpeController vpeController = (VpeController) jspEditor
-					.getVisualEditor().getController();
-			// if called in initialization time, vpe controller is null
-			// added by Maksim Areshkau
-			if (vpeController != null)
-				vpeController.getPageContext().getEditPart()
-						.fillContainer(true, orientation);
+
+		if (!(editor instanceof JSPMultiPageEditor)) {
+			return;
 		}
+
+		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) editor;
+		VpeController vpeController = (VpeController) jspEditor
+				.getVisualEditor().getController();
+		// if called in initialization time, vpe controller is null
+		// added by Maksim Areshkau
+		if (vpeController != null)
+			vpeController.getPageContext().getEditPart()
+					.fillContainer(true, orientation);
+
 	}
 }
