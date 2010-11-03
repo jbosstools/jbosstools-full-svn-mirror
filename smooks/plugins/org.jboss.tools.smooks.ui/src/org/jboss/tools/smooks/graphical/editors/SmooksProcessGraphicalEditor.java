@@ -584,7 +584,7 @@ public class SmooksProcessGraphicalEditor extends FormPage implements ISelection
 
 		createTaskDetailsSection(toolkit, sashForm);
 
-		sashForm.setWeights(new int[] { 3, 7 });
+		sashForm.setWeights(new int[] { 2, 8 });
 
 		validateEnd(null);
 	}
