@@ -374,9 +374,9 @@ public class EditMessagePropertyDialog extends Dialog {
 		data.horizontalSpan = 3;
 		separator.setLayoutData(data);
 		
-		data = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING | GridData.FILL_HORIZONTAL);
-		typeOrElementNameLabel.setLayoutData(data);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		typeOrElementNameLabel.setLayoutData(data);
+		data = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING | GridData.FILL_HORIZONTAL);
 		typeOrElementNameText.setLayoutData(data);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_END);
 		browseTypeButton.setLayoutData(data);
@@ -557,6 +557,7 @@ public class EditMessagePropertyDialog extends Dialog {
 			elementRadio.setSelection(false);
 			propertyType = xsdTypeDefinition;
 		}
+		typeOrElementNameLabel.pack();
 		updateTypeFileText();
 	}
 
@@ -656,8 +657,6 @@ public class EditMessagePropertyDialog extends Dialog {
 	protected void createAlias() {
 		EditPropertyAliasDialog dialog = new EditPropertyAliasDialog(getShell(), property, null, bpelEditor, wf);
 		if (dialog.open() == Window.OK) {
-			if (property.eResource()==null)
-				createProperty();
 
 			final PropertyAlias alias = dialog.getPropertyAlias();
 			if (alias != null) {

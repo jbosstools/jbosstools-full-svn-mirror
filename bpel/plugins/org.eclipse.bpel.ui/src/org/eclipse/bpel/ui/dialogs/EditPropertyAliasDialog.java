@@ -22,8 +22,11 @@ import org.eclipse.bpel.ui.expressions.IEditorConstants;
 import org.eclipse.bpel.ui.properties.ExpressionSection;
 import org.eclipse.bpel.ui.util.BrowseUtil;
 import org.eclipse.bpel.ui.util.WSDLImportHelper;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -466,6 +469,12 @@ public class EditPropertyAliasDialog extends Dialog {
 				// e.g. the message is defined in a WSDL and the XSD type is defined in externally
 				// with a different namespace.
 				Definition definition = property.getEnclosingDefinition();
+				if (definition==null) {
+					IFile targetFile = bpelEditor.getEditModelClient().getArtifactsResourceInfo().getFile();
+					URI uri = URI.createPlatformResourceURI(targetFile.getFullPath().toString());
+					Resource resource = bpelEditor.getResourceSet().getResource(uri, true);
+					definition = (Definition) resource.getContents().get(0);
+				}
 				query = "";
 				while (index<result.length) {
 					if (result[index] instanceof XSDComponent) {
@@ -473,8 +482,10 @@ public class EditPropertyAliasDialog extends Dialog {
 						WSDLImportHelper.addImportAndNamespace(definition, nc.getSchema(),
 								bpelEditor.getEditModelClient().getPrimaryResourceInfo().getFile());
 						String prefix = definition.getPrefix(nc.getTargetNamespace());
-						// prefix is always non-null here, see WSDLImportHelper#addNamespace()
-						query = query + "/" + prefix + ":" + nc.getName();
+						if (prefix!=null)
+							query = query + "/" + prefix + ":" + nc.getName();
+						else
+							query = query + "/" + nc.getName();
 					}
 					++index;
 				}

@@ -303,16 +303,21 @@ public class CorrSetImplSection extends BPELPropertySection  {
 		editButton.setEnabled(hasSelection);
 	}
 	
-	protected void updatePropertyWidgets(Property property) {
+	protected void updatePropertyWidgets(final Property property) {
 		Object input = getInput();
 		if (input == null)  throw new IllegalStateException();
 		
 		propertyViewer.setInput(getInput());
-		if (property != null) {
-			propertyViewer.refresh(property, true);
-		} else {
-			propertyViewer.refresh();
-		}
+		// https://jira.jboss.org/browse/JBIDE-7351
+		propertyViewer.getControl().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				if (property != null) {
+					propertyViewer.refresh(property, true);
+				} else {
+					propertyViewer.refresh();
+				}
+			}
+		});
 	}
 	
 	@Override
