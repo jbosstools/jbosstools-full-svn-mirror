@@ -10,23 +10,16 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
@@ -47,41 +40,7 @@ public class StopInstanceHandler extends AbstractHandler implements IHandler {
 	private final static String STOP_INSTANCES_DIALOG_TITLE = "StopInstancesDialog.title"; //$NON-NLS-1$
 	private final static String STOP_INSTANCES_DIALOG_MSG = "StopInstancesDialog.msg"; //$NON-NLS-1$
 	
-	public static class StopInstanceDialog extends ListSelectionDialog {
 
-		private static class DeltaCloudInstanceProvider implements IStructuredContentProvider {
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public Object[] getElements(Object cvInstanceElements) {
-				Assert.isTrue(cvInstanceElements instanceof Collection);
-				Collection<CVInstanceElement> instances = (Collection<CVInstanceElement>) cvInstanceElements;
-				return instances.toArray(new CVInstanceElement[instances.size()]);
-			}
-
-			@Override
-			public void dispose() {
-			}
-
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			}
-		}
-
-		private static class CloudElementNameProvider extends LabelProvider {
-			public String getText(Object element) {
-				return ((CVInstanceElement) element).getName();
-			}
-		};
-
-		public StopInstanceDialog(Shell parentShell, Collection<?> cloudViewElements) {
-			super(parentShell
-					, cloudViewElements
-					, new DeltaCloudInstanceProvider()
-					, new CloudElementNameProvider(), CVMessages.getString(STOP_INSTANCES_DIALOG_TITLE));
-			setTitle(CVMessages.getString(STOP_INSTANCES_DIALOG_MSG));
-		}
-	}
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -107,9 +66,11 @@ public class StopInstanceHandler extends AbstractHandler implements IHandler {
 
 	@SuppressWarnings("unchecked")
 	private void stopWithDialog(IStructuredSelection selection) {
-		StopInstanceDialog dialog = new StopInstanceDialog(
+		CVInstanceElementsSelectionDialog dialog = new CVInstanceElementsSelectionDialog(
 					UIUtils.getActiveShell()
-					, (List<CVInstanceElement>) selection.toList());
+					, (List<CVInstanceElement>) selection.toList()
+					, CVMessages.getString(STOP_INSTANCES_DIALOG_TITLE)
+					, CVMessages.getString(STOP_INSTANCES_DIALOG_MSG));
 		if (Dialog.OK == dialog.open()) {
 			stopInstances(dialog.getResult());
 		}
