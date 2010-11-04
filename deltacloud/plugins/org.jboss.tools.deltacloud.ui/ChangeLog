@@ -1,5 +1,9 @@
 2010-11-04  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: 
+	[JBIDE-7496] added texts for dialog to stop several instances at once
+	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java (StopInstanceDialog): 
+	[JBIDE-7496] added dialog to stop several instances at once
 	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (.modifyText): 
 	[JBIDE-7498] do nothing if event's is triggered for cloud's that has been deleted
 	* src/org/jboss/tools/deltacloud/ui/views/PerformInstanceActionThread.java: 
