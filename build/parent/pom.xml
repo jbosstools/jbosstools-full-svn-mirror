@@ -446,7 +446,7 @@
 			</activation>
 			<properties>
 				<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
-				<systemProperties combine.children="append"> -d32 </systemProperties>
+				<systemProperties combine.children="append"> -d32 -Dosgi.arch=x86 -XstartOnFirstThread </systemProperties>
 			</properties>
 		</profile>
 
