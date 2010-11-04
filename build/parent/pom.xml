@@ -125,8 +125,8 @@
 					<forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
-					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties}
-						-Dusage_reporting_enabled=false</argLine>
+					<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties} -Dusage_reporting_enabled=false</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests (?) -->
@@ -445,8 +445,8 @@
 				</property>
 			</activation>
 			<properties>
-				<systemProperties combine.children="append">-d32
-				</systemProperties>
+				<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+				<systemProperties combine.children="append"> -d32 </systemProperties>
 			</properties>
 		</profile>
 
