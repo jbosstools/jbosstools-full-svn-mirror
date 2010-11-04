@@ -1,7 +1,12 @@
 2010-11-04  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/commands/AbstractInstanceHandler.java: 
+	[JBIDE-7499] extracted base handler for instances
+	* src/org/jboss/tools/deltacloud/ui/commands/StartInstanceHandler.java: 
+	[JBIDE-7499] added dialog to start several instances at once
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: 
 	[JBIDE-7496] added texts for dialog to stop several instances at once
+	[JBIDE-7499] added texts for dialog to start several instances at once
 	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java (StopInstanceDialog): 
 	[JBIDE-7496] added dialog to stop several instances at once
 	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (.modifyText): 

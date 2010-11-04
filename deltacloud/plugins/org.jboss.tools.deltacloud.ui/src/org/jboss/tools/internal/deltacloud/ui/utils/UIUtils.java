@@ -40,11 +40,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * @author Andre Dietisheim
  */
-public class UIUtils
-{
-	
-	private UIUtils()
-	{
+public class UIUtils {
+
+	private UIUtils() {
 	}
 
 	/**
@@ -54,8 +52,7 @@ public class UIUtils
 	 * 
 	 * @see IWorkbenchWindow#getSelectionService()
 	 */
-	public static ISelection getWorkbenchWindowSelection()
-	{
+	public static ISelection getWorkbenchWindowSelection() {
 		return getActiveWorkbenchWindow().getSelectionService().getSelection();
 	}
 
@@ -64,15 +61,11 @@ public class UIUtils
 	 * 
 	 * @return the structured selection
 	 */
-	public static IStructuredSelection getStructuredSelection()
-	{
+	public static IStructuredSelection getStructuredSelection() {
 		ISelection selection = getWorkbenchWindowSelection();
-		if ( selection instanceof IStructuredSelection )
-		{
-			return ( IStructuredSelection ) selection;
-		}
-		else
-		{
+		if (selection instanceof IStructuredSelection) {
+			return (IStructuredSelection) selection;
+		} else {
 			return null;
 		}
 	}
@@ -80,31 +73,46 @@ public class UIUtils
 	/**
 	 * Gets the first element.
 	 * 
-	 * @param selection the selection
-	 * @param expectedClass the expected class
+	 * @param selection
+	 *            the selection
+	 * @param expectedClass
+	 *            the expected class
 	 * 
 	 * @return the first element
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T getFirstElement( final ISelection selection, final Class<T> expectedClass )
-	{
-		if ( selection == null )
-		{
+	public static <T> T getFirstElement(final ISelection selection, final Class<T> expectedClass) {
+		if (selection == null) {
 			return null;
-		}
-		else
-		{
-			Assert.isTrue( selection instanceof IStructuredSelection );
-			Object firstElement = ( ( IStructuredSelection ) selection ).getFirstElement();
-			if ( firstElement != null && expectedClass.isAssignableFrom( firstElement.getClass() ) )
-			{
-				return ( T ) firstElement;
-			}
-			else
-			{
+		} else {
+			Assert.isTrue(selection instanceof IStructuredSelection);
+			Object firstElement = ((IStructuredSelection) selection).getFirstElement();
+			if (firstElement != null && expectedClass.isAssignableFrom(firstElement.getClass())) {
+				return (T) firstElement;
+			} else {
 				return null;
 			}
 		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the given selection holds exactly 1 element
+	 * of the given type.
+	 * 
+	 * @param selection
+	 *            the selection to check
+	 * @param expectedClass
+	 *            the expected class
+	 * @return <code>true</code>, if the given selection holds a single element
+	 *         of the given type.
+	 */
+	public static <T> boolean isSingleSelection(final ISelection selection, final Class<T> expectedClass) {
+		if (!(selection instanceof IStructuredSelection)) {
+			return false;
+		}
+
+		return ((IStructuredSelection) selection).toList().size() == 1
+				&& getFirstElement(selection, expectedClass) != null;
 	}
 
 	/**
@@ -112,10 +120,9 @@ public class UIUtils
 	 * 
 	 * @return the active page
 	 */
-	public static IWorkbenchPage getActivePage()
-	{
+	public static IWorkbenchPage getActivePage() {
 		IWorkbenchPage workbenchPage = getActiveWorkbenchWindow().getActivePage();
-		Assert.isNotNull( workbenchPage );
+		Assert.isNotNull(workbenchPage);
 		return workbenchPage;
 	}
 
@@ -124,10 +131,9 @@ public class UIUtils
 	 * 
 	 * @return the active editor
 	 */
-	public static IEditorPart getActiveEditor()
-	{
+	public static IEditorPart getActiveEditor() {
 		IEditorPart editor = getActivePage().getActiveEditor();
-		Assert.isNotNull( editor );
+		Assert.isNotNull(editor);
 		return editor;
 	}
 
@@ -136,17 +142,15 @@ public class UIUtils
 	 * 
 	 * @return the active workbench window
 	 */
-	public static IWorkbenchWindow getActiveWorkbenchWindow()
-	{
+	public static IWorkbenchWindow getActiveWorkbenchWindow() {
 		IWorkbenchWindow workbenchWindow = getWorkbench().getActiveWorkbenchWindow();
-		Assert.isNotNull( workbenchWindow );
+		Assert.isNotNull(workbenchWindow);
 		return workbenchWindow;
 	}
 
-	public static Shell getActiveShell()
-	{
+	public static Shell getActiveShell() {
 		Shell shell = getActiveWorkbenchWindow().getShell();
-		Assert.isTrue( shell != null && !shell.isDisposed() );
+		Assert.isTrue(shell != null && !shell.isDisposed());
 		return shell;
 	}
 
@@ -155,93 +159,96 @@ public class UIUtils
 	 * 
 	 * @return the workbench
 	 */
-	public static IWorkbench getWorkbench()
-	{
+	public static IWorkbench getWorkbench() {
 		IWorkbench workbench = PlatformUI.getWorkbench();
-		Assert.isNotNull( workbench );
+		Assert.isNotNull(workbench);
 		return workbench;
 	}
 
 	/**
 	 * Replaces an image with the given key by the given image descriptor.
 	 * 
-	 * @param imageKey the image key
-	 * @param imageDescriptor the image descriptor
+	 * @param imageKey
+	 *            the image key
+	 * @param imageDescriptor
+	 *            the image descriptor
 	 */
-	public static void replaceInJfaceImageRegistry( final String imageKey, final ImageDescriptor imageDescriptor )
-	{
-		Assert.isNotNull( imageKey );
-		Assert.isNotNull( imageDescriptor );
+	public static void replaceInJfaceImageRegistry(final String imageKey, final ImageDescriptor imageDescriptor) {
+		Assert.isNotNull(imageKey);
+		Assert.isNotNull(imageDescriptor);
 
-		JFaceResources.getImageRegistry().remove( imageKey );
-		JFaceResources.getImageRegistry().put( imageKey, imageDescriptor );
+		JFaceResources.getImageRegistry().remove(imageKey);
+		JFaceResources.getImageRegistry().put(imageKey, imageDescriptor);
 	}
 
 	/**
-	 * Register the given ContributionManager with the given id. The contribution manager gets unregistered on control disposal.
+	 * Register the given ContributionManager with the given id. The
+	 * contribution manager gets unregistered on control disposal.
 	 * 
-	 * @param id the id
-	 * @param contributionManager the contribution manager
-	 * @param control the control
+	 * @param id
+	 *            the id
+	 * @param contributionManager
+	 *            the contribution manager
+	 * @param control
+	 *            the control
 	 * 
 	 * @see ContributionManager
 	 * @see IMenuService
 	 * @see DisposeListener
 	 */
-	public static void registerContributionManager( final String id, final IContributionManager contributionManager,
-			final Control control )
-	{
-		Assert.isNotNull( id );
-		Assert.isNotNull( contributionManager );
-		Assert.isTrue( control != null && !control.isDisposed()  );
+	public static void registerContributionManager(final String id, final IContributionManager contributionManager,
+			final Control control) {
+		Assert.isNotNull(id);
+		Assert.isNotNull(contributionManager);
+		Assert.isTrue(control != null && !control.isDisposed());
 
-		final IMenuService menuService = ( IMenuService ) PlatformUI.getWorkbench().getService( IMenuService.class );
-		menuService.populateContributionManager( ( ContributionManager ) contributionManager, id );
-		contributionManager.update( true );
-		control.addDisposeListener( new DisposeListener()
+		final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
+		menuService.populateContributionManager((ContributionManager) contributionManager, id);
+		contributionManager.update(true);
+		control.addDisposeListener(new DisposeListener()
 		{
-			public void widgetDisposed( DisposeEvent e )
+			public void widgetDisposed(DisposeEvent e)
 			{
-				menuService.releaseContributions( ( ContributionManager ) contributionManager );
+				menuService.releaseContributions((ContributionManager) contributionManager);
 			}
-		} );
+		});
 	}
 
 	/**
 	 * Creates context menu to a given control.
 	 * 
-	 * @param control the control
+	 * @param control
+	 *            the control
 	 * 
 	 * @return the i menu manager
 	 */
-	public static IMenuManager createContextMenu( final Control control )
-	{
-		Assert.isTrue( control != null && !control.isDisposed() );
+	public static IMenuManager createContextMenu(final Control control) {
+		Assert.isTrue(control != null && !control.isDisposed());
 
 		MenuManager menuManager = new MenuManager();
-		menuManager.add( new GroupMarker( IWorkbenchActionConstants.MB_ADDITIONS ) );
+		menuManager.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 
-		Menu menu = menuManager.createContextMenu( control );
-		control.setMenu( menu );
+		Menu menu = menuManager.createContextMenu(control);
+		control.setMenu(menu);
 		return menuManager;
 	}
 
 	/**
 	 * Gets the dialog settings for the given identifer and plugin.
 	 * 
-	 * @param identifier the identifier
-	 * @param plugin the plugin
+	 * @param identifier
+	 *            the identifier
+	 * @param plugin
+	 *            the plugin
 	 * 
 	 * @return the dialog settings
 	 */
-	public static IDialogSettings getDialogSettings( final String identifier, final AbstractUIPlugin plugin )
-	{
-		Assert.isNotNull( plugin );
+	public static IDialogSettings getDialogSettings(final String identifier, final AbstractUIPlugin plugin) {
+		Assert.isNotNull(plugin);
 		IDialogSettings dialogSettings = plugin.getDialogSettings();
-		IDialogSettings section = dialogSettings.getSection( identifier );
-		if ( section == null )
-		{
-			section = dialogSettings.addNewSection( identifier );
+		IDialogSettings section = dialogSettings.getSection(identifier);
+		if (section == null) {
+			section = dialogSettings.addNewSection(identifier);
 		}
 		return section;
 	}
@@ -249,18 +256,18 @@ public class UIUtils
 	/**
 	 * Returns the page for a given editor.
 	 * 
-	 * @param editor the editor
-	 * @return 
+	 * @param editor
+	 *            the editor
+	 * @return
 	 * 
 	 * @return the page
 	 * 
 	 * @see IWorkbenchPage
 	 */
-	public static IWorkbenchPage getPage( EditorPart editor )
-	{
-		Assert.isNotNull( editor );
+	public static IWorkbenchPage getPage(EditorPart editor) {
+		Assert.isNotNull(editor);
 		IWorkbenchPartSite site = editor.getSite();
-		Assert.isNotNull( site );
+		Assert.isNotNull(site);
 		return site.getPage();
 	}
 
