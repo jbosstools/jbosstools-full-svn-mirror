@@ -10,32 +10,29 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 
 public class DisconnectCloudsDialog extends ListSelectionDialog {
 
 	private static final String CONFIRM_CLOUD_DELETE_TITLE = "ConfirmCloudDelete.title"; //$NON-NLS-1$
 	private static final String CONFIRM_CLOUD_DELETE_MSG = "ConfirmCloudDelete.msg"; //$NON-NLS-1$
 
-	private static class CloudViewElementsParentContentProvider implements IStructuredContentProvider {
+	private static class DeltaCloudItemProvider implements IStructuredContentProvider {
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public Object[] getElements(Object cloudViewElements) {
-			List<CloudViewElement> cloudViewElementParents = new ArrayList<CloudViewElement>();
-			for (Object cloudViewElement : (List<CloudViewElement>) cloudViewElements) {
-				if (cloudViewElement instanceof CloudViewElement && ((CloudViewElement) cloudViewElement).getParent() != null) {
-					cloudViewElementParents.add((CloudViewElement) cloudViewElement);
-				}
-			}
-			return cloudViewElementParents.toArray(new CloudViewElement[cloudViewElementParents.size()]);
+			Assert.isTrue(cloudViewElements instanceof Collection);
+			Collection<DeltaCloud> deltaClouds = (Collection<DeltaCloud>) cloudViewElements;
+			return deltaClouds.toArray(new DeltaCloud[deltaClouds.size()]);
 		}
 
 		@Override
@@ -49,14 +46,14 @@ public class DisconnectCloudsDialog extends ListSelectionDialog {
 
 	private static class CloudElementNameProvider extends LabelProvider {
 		public String getText(Object element) {
-			return ((CloudViewElement) element).getName();
+			return ((DeltaCloud) element).getName();
 		}
 	};
 
-	public DisconnectCloudsDialog(Shell parentShell, List<?> cloudViewElements) {
+	public DisconnectCloudsDialog(Shell parentShell, Collection<?> cloudViewElements) {
 		super(parentShell
 				, cloudViewElements
-				, new CloudViewElementsParentContentProvider()
+				, new DeltaCloudItemProvider()
 				, new CloudElementNameProvider(), CVMessages.getString(CONFIRM_CLOUD_DELETE_MSG));
 		setTitle(CVMessages.getString(CONFIRM_CLOUD_DELETE_TITLE));
 	}

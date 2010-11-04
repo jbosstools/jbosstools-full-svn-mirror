@@ -10,6 +10,11 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -38,7 +43,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		if (selection instanceof IStructuredSelection) {
 			DisconnectCloudsDialog dialog = new DisconnectCloudsDialog(
 					shell
-					, ((IStructuredSelection) selection).toList());
+					, getSelectedClouds(selection));
 			if (Dialog.OK == dialog.open()) {
 				removeCloudViewElements(dialog.getResult());
 			}
@@ -47,12 +52,46 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		return Status.OK_STATUS;
 	}
 
-	private void removeCloudViewElements(Object[] cloudViewerElements) {
-		for (Object cloudViewElement : cloudViewerElements) {
-			if (cloudViewElement instanceof CloudViewElement) {
-				DeltaCloud deltaCloud = (DeltaCloud) ((CloudViewElement) cloudViewElement).getElement();
-				DeltaCloudManager.getDefault().removeCloud(deltaCloud);
+	private Collection<DeltaCloud> getSelectedClouds(ISelection selection) {
+		Set<DeltaCloud> selectedClouds = new HashSet<DeltaCloud>();
+		List<?> selectedElements = ((IStructuredSelection) selection).toList();
+		for (Object element : selectedElements) {
+			DeltaCloud deltaCloud = getDeltaCloud(element);
+			if (deltaCloud != null) {
+				selectedClouds.add(deltaCloud);
 			}
+		}
+		return selectedClouds;
+	}
+
+	private DeltaCloud getDeltaCloud(Object item) {
+		if (!(item instanceof CloudViewElement)) {
+			return null;
+		}
+
+		DeltaCloud cloud = getDeltaCloud((CloudViewElement) item);
+
+		if (cloud == null) {
+			return null;
+		}
+		return cloud;
+	}
+
+	private DeltaCloud getDeltaCloud(CloudViewElement element) {
+		if (element == null) {
+			return null;
+		}
+		Object cloud = element.getElement();
+		if (cloud instanceof DeltaCloud) {
+			return (DeltaCloud) cloud;
+		}
+
+		return getDeltaCloud((CloudViewElement) element.getParent());
+	}
+
+	private void removeCloudViewElements(Object[] deltaClouds) {
+		for (Object deltaCloud : deltaClouds) {
+			DeltaCloudManager.getDefault().removeCloud((DeltaCloud) deltaCloud);
 		}
 	}
 }
