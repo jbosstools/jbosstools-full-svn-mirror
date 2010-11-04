@@ -337,6 +337,21 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6815">JBIDE-6815</ulink>: A template page has been added that does not incorporate Facelets.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6285">JBIDE-6285</ulink>: Previously when a user would insert a start and ending tag (for example, &lt;tag&gt;&lt;tag&gt;), code assistance would turn on when the cursor was placed between the tags. This behavior was not an assistance to the user under normal circumstances as when a user pressed the <keycode>Enter</keycode> key, to seperate the tags, the first code assist proposal would be inserted instead. For this release Code assistance has been improved by realizing that in the mentioned circumstance no assistance is required.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6276">JBIDE-6276</ulink>: The ability to preview refactoring changes made to JSF 2 components has been added.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6266">JBIDE-6266</ulink>: Content Assist now includes support for Web Standards Tools (WST) categories. A futher two categories have been added: JBoss JSF/Seam EL and JBoss JSF/Seam Tag Proposals.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	     </formalpara>
@@ -380,6 +395,11 @@
 	      <listitem>
 		 <para>
 		    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6487">JBIDE-6487</ulink>: The Maven Hibernate Configurator has been added. This insures that if a maven project contains a dependency with <property>groupId=org.hibernate</property> and an <property>artifactId</property> starting with <property>hibernate</property>, the Maven Hibernate Configurator will enable Hibernate 3 support.
+		 </para>
+	      </listitem>
+	      <listitem>
+		 <para>
+		    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6293">JBIDE-6293</ulink>: The final version of Maven Portletbridge 2.0.0 libraries have been added to the tool set.
 		 </para>
 	      </listitem>
 	   </itemizedlist>
@@ -448,6 +468,11 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6610">JBIDE-6610</ulink>: Components defined in a custom <filename>component.xml</filename> file were not recognized. This bug has been corrected through the modification of <filename>XMLScanner.java</filename>, <filename>SeamComponentsEntityRecognizer.java</filename> and <filename>SeamResourceVisitor.java</filename>.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6360">JBIDE-6360</ulink>: Previously <property>view-id</property> entries in the navigation of XML files was not tested for validlity. Error checking for this parameter has been added to the Seam tools set with this release.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -503,7 +528,12 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7034">JBIDE-7034</ulink>, <ulink url="http://jira.jboss.com/jira/browse/JBIDE-">JBIDE-</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-">JBIDE-</ulink>: New reporting fields were added to the usage plug-in for the gathering of user data. See the individual JIRAs for specific field details.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7034">JBIDE-7034</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-">JBIDE-</ulink>: New reporting fields were added to the usage plug-in for the gathering of user data. See the individual JIRAs for specific field details.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6376">JBIDE-6376</ulink>: Usage reporting component based on Google Analytics has been added.
 				   </para>
 				</listitem>
 			</itemizedlist>
@@ -542,6 +572,21 @@
 				<listitem>
 				   <para>
 				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6600">JBIDE-6600</ulink>: The Visual Page Editor would use all available template libraries reguardless of the opened content. This caused conflicts between templates; an example of this is the <property>head</property> tag appearing in both the docbook and HTML templates. The solution has been to create a seperate editor for docbook.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6385">JBIDE-6385</ulink>: The icon for the <guiicon>Externalize Strings</guiicon> action in the Visual Page Editor toolbar has been updated.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6333">JBIDE-6333</ulink>: When resizing an image, a caption now appears at the users cursor to indicate the current size an image will be resized to.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6288">JBIDE-6288</ulink>: When hovering over a button created in the Visual Page Editor, the button would not be highlighted on Linux operating systems. This issue has been corrected by modifying the following files: <filename>VpeController.java</filename>, <filename>VpeDnD.java</filename>, <filename>MozillaEventAdapter.java</filename>, <filename>VisualDomUtil.java</filename> and <filename>MozillaDndListener.java</filename>.
 				   </para>
 				</listitem>
 			</itemizedlist>
