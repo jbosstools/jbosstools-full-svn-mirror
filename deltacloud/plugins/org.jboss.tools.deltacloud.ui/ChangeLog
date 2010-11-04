@@ -1,5 +1,7 @@
 2010-11-04  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (getKeyName): 
+	avoid NullPointerExeption when fetching name of key and keyText is not instantiated (is null)
 	* src/org/jboss/tools/deltacloud/ui/views/DisconnectCloudsDialog.java: 
 	* src/org/jboss/tools/deltacloud/ui/commands/DisconnectCloudHandler.java: 
 	[JBIDE-7495] changed dialog and handler to climb up the hierarchy to the connection and offer to disconnect the cloud connection

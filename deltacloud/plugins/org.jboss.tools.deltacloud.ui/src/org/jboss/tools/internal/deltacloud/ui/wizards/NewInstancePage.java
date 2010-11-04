@@ -153,7 +153,11 @@ public class NewInstancePage extends WizardPage {
 	}
 	
 	public String getKeyName() {
-		return keyText.getText();
+		if (keyText == null) {
+			return null;
+		} else {
+			return keyText.getText();
+		}
 	}
 	
 	private void validate() {
