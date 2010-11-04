@@ -14,13 +14,35 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 
 public class CloudViewElementUtils {
 
+	/**
+	 * Returns a DeltaCloud instance for a given cloud view element
+	 *
+	 * @param element the cloud view element to get the DeltaCloud for
+	 * @return the cloud for the given CloudViewElement
+	 * 
+	 * @see DeltaCloud
+	 * @see CloudViewElement
+	 */
 	public static DeltaCloud getCloud(CloudViewElement element) {
+		CVCloudElement cvcloud = getCVCloudElement(element);
+		DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
+		return cloud;
+	}
+
+	/**
+	 * Returns a CVCloudElement for a given cloud view element
+	 *
+	 * @param element the cloud view element to get the CVCloudElement for
+	 * @return the CVCloudElement for the given CloudViewElement
+	 * 
+	 * @see CloudViewElement
+	 * @see CVCloudElement
+	 */
+	public static CVCloudElement getCVCloudElement(CloudViewElement element) {
 		while (!(element instanceof CVCloudElement)) {
 			element = (CloudViewElement) element.getParent();
 		}
-		CVCloudElement cvcloud = (CVCloudElement) element;
-		DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
-		return cloud;
+		return (CVCloudElement) element;
 	}
 	
 }

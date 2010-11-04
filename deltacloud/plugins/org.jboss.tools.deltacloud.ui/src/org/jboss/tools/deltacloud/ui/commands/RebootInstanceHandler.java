@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -28,7 +27,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 /**
  * @author Andre Dietisheim
  */
-public class RebootInstanceHandler extends AbstractInstanceHandler implements IHandler {
+public class RebootInstanceHandler extends AbstractInstanceHandler {
 
 	private final static String REBOOTING_INSTANCE_TITLE = "RebootingInstance.title"; //$NON-NLS-1$
 	private final static String REBOOTING_INSTANCE_MSG = "RebootingInstance.msg"; //$NON-NLS-1$

@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -28,7 +27,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 /**
  * @author Andre Dietisheim
  */
-public class StartInstanceHandler extends AbstractInstanceHandler implements IHandler {
+public class StartInstanceHandler extends AbstractInstanceHandler {
 
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$

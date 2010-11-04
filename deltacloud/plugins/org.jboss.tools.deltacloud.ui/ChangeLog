@@ -1,5 +1,9 @@
 2010-11-04  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElementUtils.java: 
+	[JBIDE-7502] extracted common patterns of instance lookup to a util class 
+	* src/org/jboss/tools/deltacloud/ui/commands/DestroyInstanceHandler.java: 
+	[JBIDE-7502] added dialog to destroy several instances at once 
 	* src/org/jboss/tools/deltacloud/ui/commands/RebootInstanceHandler.java:
 	[JBIDE-7501] added dialog to reboot several instances at once 
 	* src/org/jboss/tools/deltacloud/ui/commands/AbstractInstanceHandler.java: 
@@ -10,6 +14,7 @@
 	[JBIDE-7496] added texts for dialog to stop several instances at once
 	[JBIDE-7499] added texts for dialog to start several instances at once
 	[JBIDE-7501] added texts for dialog to reboot several instances at once
+	[JBIDE-7502] added texts for dialog to destroy several instances at once
 	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java (StopInstanceDialog): 
 	[JBIDE-7496] added dialog to stop several instances at once
 	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (.modifyText): 

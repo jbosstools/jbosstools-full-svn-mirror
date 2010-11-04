@@ -10,11 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
-import org.eclipse.core.commands.AbstractHandler;
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -24,37 +25,63 @@ import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
 import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.CloudViewElementUtils;
 import org.jboss.tools.deltacloud.ui.views.PerformDestroyInstanceActionThread;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
  * @author Andre Dietisheim
  */
-public class DestroyInstanceHandler extends AbstractHandler implements IHandler {
+public class DestroyInstanceHandler extends AbstractInstanceHandler {
 
 	private final static String DESTROYING_INSTANCE_TITLE = "DestroyingInstance.title"; //$NON-NLS-1$
 	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
+
+	private final static String DESTROY_INSTANCE_TITLE = "DestroyInstancesDialog.title"; //$NON-NLS-1$
+	private final static String DESTROY_INSTANCE_MSG = "DestroyInstancesDialog.msg"; //$NON-NLS-1$
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			CVInstanceElement cvInstance = UIUtils.getFirstElement(selection, CVInstanceElement.class);
-			rebootInstance(cvInstance);
+			if (isSingleInstanceSelected(selection)) {
+				CVInstanceElement cvInstance = UIUtils.getFirstElement(selection, CVInstanceElement.class);
+				destroyInstance(cvInstance);
+			} else {
+				destroyWithDialog((IStructuredSelection) selection);
+			}
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void rebootInstance(CVInstanceElement cvInstance) {
+	@SuppressWarnings("unchecked")
+	private void destroyWithDialog(IStructuredSelection selection) {
+		CVInstanceElementsSelectionDialog dialog = new CVInstanceElementsSelectionDialog(
+					UIUtils.getActiveShell()
+					, (List<CVInstanceElement>) selection.toList()
+					, CVMessages.getString(DESTROY_INSTANCE_TITLE)
+					, CVMessages.getString(DESTROY_INSTANCE_MSG));
+		if (Dialog.OK == dialog.open()) {
+			destroyInstances(dialog.getResult());
+		}
+	}
+
+	private void destroyInstances(Object[] cvInstances) {
+		for (int i = 0; i < cvInstances.length; i++) {
+			destroyInstance((CVInstanceElement) cvInstances[i]);
+		}
+	}
+	
+	private void destroyInstance(CVInstanceElement cvInstance) {
 		if (cvInstance != null) {
 			DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
 			CloudViewElement element = cvInstance;
-			while (!(element instanceof CVCloudElement))
-				element = (CloudViewElement) element.getParent();
-			CVCloudElement cvcloud = (CVCloudElement) element;
+			CVCloudElement cvcloud = CloudViewElementUtils.getCVCloudElement(element);
 			DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
-			PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(cloud, instance,
+			PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(
+					cloud, 
+					instance,
 					CVMessages.getString(DESTROYING_INSTANCE_TITLE),
 					CVMessages.getFormattedString(DESTROYING_INSTANCE_MSG, new String[] { instance.getName() }));
 			t.setUser(true);
