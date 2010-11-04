@@ -20,7 +20,8 @@
 		<systemProperties></systemProperties>
 		<target.platform>e36-wtp32</target.platform>
 		<!-- could also use http://download.jboss.org/jbosstools/updates/target-platform/latest/ -->
-		<target.platform.URL>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/</target.platform.URL>
+		<target.platform.URL>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/
+		</target.platform.URL>
 	</properties>
 
 	<build>
@@ -124,7 +125,8 @@
 					<forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
-					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties} -Dusage_reporting_enabled=false</argLine>
+					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties}
+						-Dusage_reporting_enabled=false</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests (?) -->
@@ -202,7 +204,8 @@
 			</build>
 		</profile>
 
-		<!-- Time saver: to build everything from scratch from a single local repo on Hudson cluster -->
+		<!-- Time saver: to build everything from scratch from a single local repo 
+			on Hudson cluster -->
 		<profile>
 			<id>helios-local-target</id>
 			<activation>
@@ -223,7 +226,8 @@
 			</repositories>
 		</profile>
 
-		<!-- Time saver: to build everything from scratch from a single repo containing all deps in .target -->
+		<!-- Time saver: to build everything from scratch from a single repo containing 
+			all deps in .target -->
 		<profile>
 			<id>helios-remote-target</id>
 			<activation>
@@ -232,7 +236,8 @@
 			<repositories>
 				<repository>
 					<id>jbosstools-target-platform-repo</id>
-					<url>http://download.jboss.org/jbosstools/updates/target-platform/latest/</url>
+					<url>http://download.jboss.org/jbosstools/updates/target-platform/latest/
+					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -263,13 +268,18 @@
 			</activation>
 			<repositories>
 				<repository>
-         				<id>jbosstools-target-platform-repo</id>
-     	            			<url>http://download.jboss.org/jbosstools/updates/target-platform/latest/</url>
-                 			<layout>p2</layout>
-                   			<snapshots><enabled>true</enabled></snapshots>
-                     			<releases><enabled>true</enabled></releases>
-   				</repository>
-   				<repository>
+					<id>jbosstools-target-platform-repo</id>
+					<url>http://download.jboss.org/jbosstools/updates/target-platform/latest/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
 					<id>helios</id>
 					<url>http://download.eclipse.org/releases/helios/</url>
 					<layout>p2</layout>
@@ -424,6 +434,20 @@
 					</releases>
 				</repository>
 			</repositories>
+		</profile>
+
+		<profile>
+			<id>osx</id>
+			<activation>
+				<property>
+					<name>java.vendor.url</name>
+					<value>http://www.apple.com/</value>
+				</property>
+			</activation>
+			<properties>
+				<systemProperties combine.children="append">-d32
+				</systemProperties>
+			</properties>
 		</profile>
 
 		<profile>
@@ -645,7 +669,8 @@
 			<repositories>
 				<repository>
 					<id>jbosstools-nightly-trunk</id>
-					<url>http://download.jboss.org/jbosstools/updates/nightly/trunk/</url>
+					<url>http://download.jboss.org/jbosstools/updates/nightly/trunk/
+					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
