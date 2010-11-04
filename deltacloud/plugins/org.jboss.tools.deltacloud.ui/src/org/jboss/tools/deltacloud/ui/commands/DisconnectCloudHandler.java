@@ -19,42 +19,110 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
-import org.jboss.tools.deltacloud.ui.views.DisconnectCloudsDialog;
 
 /**
  * @author Andre Dietisheim
  */
 public class DisconnectCloudHandler extends AbstractHandler implements IHandler {
 
+	public static class DisconnectCloudsDialog extends ListSelectionDialog {
+
+		private static final String CONFIRM_CLOUD_DELETE_TITLE = "ConfirmCloudDelete.title"; //$NON-NLS-1$
+		private static final String CONFIRM_CLOUD_DELETE_MSG = "ConfirmCloudDelete.msg"; //$NON-NLS-1$
+
+		private static class DeltaCloudItemProvider implements IStructuredContentProvider {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public Object[] getElements(Object cloudViewElements) {
+				Assert.isTrue(cloudViewElements instanceof Collection);
+				Collection<DeltaCloud> deltaClouds = (Collection<DeltaCloud>) cloudViewElements;
+				return deltaClouds.toArray(new DeltaCloud[deltaClouds.size()]);
+			}
+
+			@Override
+			public void dispose() {
+			}
+
+			@Override
+			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			}
+		}
+
+		private static class CloudElementNameProvider extends LabelProvider {
+			public String getText(Object element) {
+				return ((DeltaCloud) element).getName();
+			}
+		};
+
+		public DisconnectCloudsDialog(Shell parentShell, Collection<?> cloudViewElements) {
+			super(parentShell
+					, cloudViewElements
+					, new DeltaCloudItemProvider()
+					, new CloudElementNameProvider(), CVMessages.getString(CONFIRM_CLOUD_DELETE_MSG));
+			setTitle(CVMessages.getString(CONFIRM_CLOUD_DELETE_TITLE));
+		}
+	}
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DisconnectCloudsDialog dialog = new DisconnectCloudsDialog(
-					shell
-					, getSelectedClouds(selection));
-			if (Dialog.OK == dialog.open()) {
-				removeCloudViewElements(dialog.getResult());
+			List<?> selectedElements = ((IStructuredSelection) selection).toList();
+			DeltaCloud deltaCloud = getFirstSelectedCloud(selectedElements);
+			if (selectedElements.size() == 1 && deltaCloud != null) {
+				removeDeltaCloud(deltaCloud);
+			} else {
+				removeWithDialog(shell, selectedElements);
 			}
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private Collection<DeltaCloud> getSelectedClouds(ISelection selection) {
+	private void removeWithDialog(Shell shell, List<?> selectedElements) {
+		DisconnectCloudsDialog dialog = new DisconnectCloudsDialog(
+				shell
+				, getSelectedClouds(selectedElements));
+		if (Dialog.OK == dialog.open()) {
+			removeDeltaClouds(dialog.getResult());
+		}
+	}
+	
+	private DeltaCloud getFirstSelectedCloud(List<?> selectedElements) {
+		DeltaCloud deltaCloud = null;
+		if (selectedElements.size() > 0) {
+			Object object = selectedElements.get(0);
+			if (object instanceof CVCloudElement) {
+				Object element = ((CVCloudElement) object).getElement();
+				if (element instanceof DeltaCloud) {
+					deltaCloud = (DeltaCloud) element;
+				}
+			}
+		}
+		return deltaCloud;
+	}
+
+	private Collection<DeltaCloud> getSelectedClouds(List<?> selectedElements) {
 		Set<DeltaCloud> selectedClouds = new HashSet<DeltaCloud>();
-		List<?> selectedElements = ((IStructuredSelection) selection).toList();
 		for (Object element : selectedElements) {
 			DeltaCloud deltaCloud = getDeltaCloud(element);
 			if (deltaCloud != null) {
@@ -89,9 +157,13 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		return getDeltaCloud((CloudViewElement) element.getParent());
 	}
 
-	private void removeCloudViewElements(Object[] deltaClouds) {
+	private void removeDeltaClouds(Object[] deltaClouds) {
 		for (Object deltaCloud : deltaClouds) {
-			DeltaCloudManager.getDefault().removeCloud((DeltaCloud) deltaCloud);
+			removeDeltaCloud((DeltaCloud) deltaCloud);
 		}
+	}
+	
+	private void removeDeltaCloud(DeltaCloud deltaCloud) {
+		DeltaCloudManager.getDefault().removeCloud((DeltaCloud) deltaCloud);
 	}
 }

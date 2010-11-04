@@ -76,16 +76,16 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	private Label filterLabel;
 	@SuppressWarnings("unused")
 	private DeltaCloudImage selectedElement;
-	
+
 	private DeltaCloud[] clouds;
 	private DeltaCloud currCloud;
-	
+
 	private ImageViewLabelAndContentProvider contentProvider;
-	
+
 	private Action refreshAction;
 	private Action filterAction;
 	private Action launchAction;
-	
+
 	private ImageView parentView;
 
 	public ImageView() {
@@ -96,57 +96,60 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			int index = cloudSelector.getSelectionIndex();
-			if (currCloud != null)
+			if (currCloud != null) {
 				currCloud.removeImageListListener(parentView);
-			currCloud = clouds[index];
-			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-			try {
-				prefs.put(IDeltaCloudPreferenceConstants.LAST_CLOUD_IMAGE_VIEW, currCloud.getName());
-			} catch(Exception exc) {
-				// do nothing
 			}
-
-			viewer.setInput(new DeltaCloudImage[0]);
-			viewer.refresh();
-			Display.getCurrent().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-					viewer.setInput(currCloud);
-					currCloud.addImageListListener(parentView);
-					viewer.refresh();
-					
+			int index = cloudSelector.getSelectionIndex();
+			if (index >= 0) {
+				currCloud = clouds[index];
+				Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+				try {
+					prefs.put(IDeltaCloudPreferenceConstants.LAST_CLOUD_IMAGE_VIEW, currCloud.getName());
+				} catch (Exception exc) {
+					// do nothing
 				}
-				
-			});
+
+				viewer.setInput(new DeltaCloudImage[0]);
+				viewer.refresh();
+				Display.getCurrent().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						viewer.setInput(currCloud);
+						currCloud.addImageListListener(parentView);
+						viewer.refresh();
+
+					}
+
+				});
+			}
 		}
-		
 	};
-	
+
 	private class ColumnListener extends SelectionAdapter {
-		
+
 		private int column;
 		private TableViewer viewer;
-		
+
 		public ColumnListener(int column, TableViewer viewer) {
 			this.column = column;
 			this.viewer = viewer;
 		}
+
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			ImageComparator comparator = (ImageComparator)viewer.getComparator();
+			ImageComparator comparator = (ImageComparator) viewer.getComparator();
 			Table t = viewer.getTable();
 			if (comparator.getColumn() == column) {
 				comparator.reverseDirection();
 			}
 			comparator.setColumn(column);
-			TableColumn tc = (TableColumn)e.getSource();
+			TableColumn tc = (TableColumn) e.getSource();
 			t.setSortColumn(tc);
 			t.setSortDirection(SWT.NONE);
 			viewer.refresh();
 		}
-	
+
 	};
 
 	@Override
@@ -157,7 +160,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
 		super.dispose();
 	}
-	
+
 	@Override
 	public void createPartControl(Composite parent) {
 		container = new Composite(parent, SWT.NULL);
@@ -165,10 +168,10 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
 		container.setLayout(layout);
-		
+
 		Label cloudSelectorLabel = new Label(container, SWT.NULL);
 		cloudSelectorLabel.setText(CVMessages.getString(CLOUD_SELECTOR_LABEL));
-		
+
 		cloudSelector = new Combo(container, SWT.BORDER | SWT.READ_ONLY);
 		initializeCloudSelector();
 		cloudSelector.addModifyListener(cloudModifyListener);
@@ -180,15 +183,15 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 				e.doit = false;
 			}
 		});
-		
+
 		filterLabel = new Label(container, SWT.NULL);
 		filterLabel.setText(CVMessages.getString(FILTERED_LABEL));
 		filterLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
-		
+
 		Composite tableArea = new Composite(container, SWT.NULL);
 		TableColumnLayout tableLayout = new TableColumnLayout();
 		tableArea.setLayout(tableLayout);
-		
+
 		viewer = new TableViewer(tableArea, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
@@ -198,10 +201,10 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		viewer.setLabelProvider(contentProvider);
 		ImageComparator comparator = new ImageComparator(0);
 		viewer.setComparator(comparator);
-		
+
 		for (int i = 0; i < ImageViewLabelAndContentProvider.Column.getSize(); ++i) {
-			ImageViewLabelAndContentProvider.Column c = 
-				ImageViewLabelAndContentProvider.Column.getColumn(i);
+			ImageViewLabelAndContentProvider.Column c =
+					ImageViewLabelAndContentProvider.Column.getColumn(i);
 			TableColumn tc = new TableColumn(table, SWT.NONE);
 			if (i == 0)
 				table.setSortColumn(tc);
@@ -210,7 +213,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			tc.addSelectionListener(new ColumnListener(i, viewer));
 		}
 		table.setSortDirection(SWT.NONE);
-		
+
 		if (currCloud != null) {
 			currCloud.removeImageListListener(parentView);
 			viewer.setInput(currCloud);
@@ -227,12 +230,12 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		f.top = new FormAttachment(0, 5 + centering);
 		f.left = new FormAttachment(0, 30);
 		cloudSelectorLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(0, 5);
 		f.left = new FormAttachment(cloudSelectorLabel, 5);
 		cloudSelector.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(0, 5 + centering);
 		f.right = new FormAttachment(100, -10);
@@ -244,17 +247,17 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		f.right = new FormAttachment(100, 0);
 		f.bottom = new FormAttachment(100, 0);
 		tableArea.setLayoutData(f);
-		
+
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		makeActions();
 		hookContextMenu();
 		hookSelection();
 		contributeToActionBars();
-		
+
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
-	
+
 	private void hookSelection() {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
@@ -263,7 +266,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			}
 		});
 	}
-	
+
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
@@ -285,9 +288,9 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 
 	private void handleSelection() {
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-		selectedElement = (DeltaCloudImage)selection.getFirstElement();
+		selectedElement = (DeltaCloudImage) selection.getFirstElement();
 	}
-	
+
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(refreshAction);
 		manager.add(filterAction);
@@ -298,9 +301,9 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
-	
+
 	private void fillLocalToolBar(IToolBarManager manager) {
-		//TODO
+		// TODO
 	}
 
 	private void makeActions() {
@@ -323,7 +326,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
 		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
-		
+
 		filterAction = new Action() {
 			public void run() {
 				Display.getDefault().asyncExec(new Runnable() {
@@ -341,7 +344,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 						else
 							filterLabel.setVisible(false);
 					}
-					
+
 				});
 			}
 		};
@@ -351,7 +354,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		launchAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				final DeltaCloudImage image = (DeltaCloudImage)((IStructuredSelection)selection).getFirstElement();
+				final DeltaCloudImage image = (DeltaCloudImage) ((IStructuredSelection) selection).getFirstElement();
 				Display.getDefault().asyncExec(new Runnable() {
 
 					@Override
@@ -363,20 +366,20 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 						dialog.create();
 						dialog.open();
 					}
-					
+
 				});
 			}
 		};
 		launchAction.setText(CVMessages.getString(LAUNCH_INSTANCE));
 		launchAction.setToolTipText(CVMessages.getString(LAUNCH_INSTANCE));
 	}
-	
+
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	private void initializeCloudSelector() {
 		int defaultIndex = 0;
 		clouds = DeltaCloudManager.getDefault().getClouds();
@@ -396,7 +399,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			currCloud = clouds[defaultIndex];
 		}
 	}
-	
+
 	public void changeEvent(int type) {
 		String currName = null;
 		int currIndex = 0;

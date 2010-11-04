@@ -1,5 +1,7 @@
 2010-11-04  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (.modifyText): 
+	[JBIDE-7498] do nothing if event's is triggered for cloud's that has been deleted
 	* src/org/jboss/tools/deltacloud/ui/views/PerformInstanceActionThread.java: 
 	[JBIDE-7484] removed instance related methods from client, unified funtionality in #performAction and offered additional methods on 
 	Instance (#start, #stop, #destroy, #reboot). Furthermore update instance upon action responses from server.
@@ -8,6 +10,7 @@
 	* src/org/jboss/tools/deltacloud/ui/views/DisconnectCloudsDialog.java: 
 	* src/org/jboss/tools/deltacloud/ui/commands/DisconnectCloudHandler.java: 
 	[JBIDE-7495] changed dialog and handler to climb up the hierarchy to the connection and offer to disconnect the cloud connection
+	[JBIDE-7495] delete cloud directly (no dialog) if single cloud is selected
 
 2010-11-02  André Dietisheim  <adietish@redhat.com>
 
