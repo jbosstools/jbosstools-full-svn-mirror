@@ -116,26 +116,24 @@
 	<feature url="features/org.jboss.tools.maven.portlet.feature_0.0.0.jar" id="org.jboss.tools.maven.portlet.feature" version="0.0.0">
 		<category name="MavenTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="SOATools" />
+	</feature>
+	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
+		<category name="SOATools" />
+	</feature>
+	<feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
+		<category name="GeneralTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.deltacloud.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.feature" version="0.0.0">
+		<category name="CloudTools" />
+	</feature>
 
 	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
-
-	<!-- TODO: enable SDK features once we can build source plugins w/ Tycho -->
-	<!-- <feature url="features/org.jboss.tools.jmx.sdk.feature_0.0.0.jar" id="org.jboss.tools.jmx.sdk.feature" 
-		version="0.0.0"> <category name="SDKTools"/> </feature> <feature url="features/org.jboss.ide.eclipse.freemarker.sdk.feature_0.0.0.jar" 
-		id="org.jboss.ide.eclipse.freemarker.sdk.feature" version="0.0.0"> <category 
-		name="SDKTools"/> </feature> -->
-	<!-- TODO: enable SDK features once we can build source plugins w/ Tycho -->
-	<!-- Only in JBT -->
-	<!-- 
-	<feature url="features/org.jboss.tools.bpel.sdk.feature_0.0.0.jar" 
-		id="org.jboss.tools.bpel.sdk.feature" version="0.0.0"> <category name="AllTools"/> 
-		<category name="SOATools"/> </feature> <feature url="features/org.jboss.tools.maven.sdk.feature_0.0.0.jar" 
-		id="org.jboss.tools.maven.sdk.feature" version="0.0.0"> <category name="SDKTools"/> 
-		</feature> 
-	-->
 
 	<!-- jBPM Tools & Flow features -->
 	<feature url="features/org.jboss.tools.jbpm.convert.feature_0.0.0.jar" id="org.jboss.tools.jbpm.convert.feature" version="0.0.0">
@@ -150,14 +148,6 @@
 		<category name="AllTools" />
 		<category name="SOATools" />
 	</feature>
-	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-
-	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
-		<category name="SOATools" />
-	</feature>
 
 	<feature url="features/org.jboss.tools.modeshape.rest.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.feature" version="0.0.0">
 		<category name="AllTools" />
@@ -166,15 +156,6 @@
 
 	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
 		<category name="AllTools" />
-	</feature>
-
-	<!-- JBIDE- 6836 DO NOT PUT IN AllTools CATEGORY -->
-	<feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
-		<category name="GeneralTools" />
-	</feature>
-
-	<feature url="features/org.jboss.tools.deltacloud.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.feature" version="0.0.0">
-		<category name="CloudTools" />
 	</feature>
 
 	<feature url="features/org.jboss.tools.usage.feature_0.0.0.jar" id="org.jboss.tools.usage.feature" version="0.0.0">
@@ -226,29 +207,36 @@
 			transformation.</description>
 	</category-def>
 
-	<!-- Only in JBT -->
-	<category-def name="MavenTools" label="Maven Support">
-		<description>Plugins related to Maven and m2eclipse support. Use these
-			to enable use of Maven.</description>
-	</category-def>
-
-	<!-- Only in JBT -->
-	<category-def name="ReportTools" label="Business Intelligence, Reporting and Charting">
-		<description>Business Intelligence, Reporting and Charting. Use these
-			if you plan to integrate Hibernate or Seam with Eclipse BIRT.
-		</description>
-	</category-def>
-
 	<category-def name="TestPerfTools" label="Test and Performance">
 		<description>Tools used to improve testing and performance.
 		</description>
 	</category-def>
 
+	<!-- Only in JBT -->
+	<category-def name="MavenTools" label="Maven Support">
+		<description>Plugins related to Maven and m2eclipse support. Use these
+			to enable use of Maven.</description>
+	</category-def>
+	<category-def name="ReportTools" label="Business Intelligence, Reporting and Charting">
+		<description>Business Intelligence, Reporting and Charting. Use these
+			if you plan to integrate Hibernate or Seam with Eclipse BIRT.
+		</description>
+	</category-def>
 	<category-def name="CloudTools" label="Cloud">
 		<description>Tools for Cloud Development.
       		</description>
 	</category-def>
 
+	<!-- aggregated from other sources; only in JBT -->
+	<feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
+		<category name="SOATools" />
+	</feature>
+	<feature url="features/org.jboss.savara.tools.feature_0.0.0.jar" id="org.jboss.savara.tools.feature" version="0.0.0">
+		<category name="SOATools" />
+	</feature>
+	<feature url="features/org.scribble.protocol.feature_0.0.0.jar" id="org.scribble.protocol.feature" version="0.0.0">
+	</feature>
+	
 	<!-- aggregated from other sources -->
 	<feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
 		<category name="AllTools" />
@@ -263,9 +251,6 @@
 		<category name="AllTools" />
 		<category name="SOATools" />
 	</feature>
-	<feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
-		<category name="SOATools" />
-	</feature>
 
 	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
 		<category name="DataTools" />
@@ -276,10 +261,4 @@
 	<feature url="features/org.teiid.designer.runtime.feature_0.0.0.jar" id="org.teiid.designer.runtime.feature" version="0.0.0">
 		<category name="DataTools" />
 	</feature>
-	<feature url="features/org.jboss.savara.tools.feature_0.0.0.jar" id="org.jboss.savara.tools.feature" version="0.0.0">
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.scribble.protocol.feature_0.0.0.jar" id="org.scribble.protocol.feature" version="0.0.0">
-	</feature>
-
 </site>
