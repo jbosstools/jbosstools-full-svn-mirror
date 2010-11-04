@@ -26,6 +26,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+import javax.xml.namespace.QName;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xsd.*;
 import org.eclipse.xsd.util.XSDConstants;
@@ -125,6 +127,10 @@ public class XSDComparer {
 					if (type1 instanceof XSDSimpleTypeDefinition && type2 instanceof XSDSimpleTypeDefinition) {
 						dump("Comparing ", elem1, type1, level);
 						dump("       to ", elem2, type2, level);
+						if (!compareQNames(elem1, elem2)) {
+							addError("different QNames: " + elem1.getQName() + " vs " + elem2.getQName(), term1,term2);
+							return false;
+						}
 						String s1 = getTypeNameHierarchy(elem1);
 						String s2 = getTypeNameHierarchy(elem2);
 						if (!s1.equals(s2)) {
@@ -132,23 +138,27 @@ public class XSDComparer {
 							return false;
 						}
 					} else if (type1 instanceof XSDComplexTypeDefinition && type2 instanceof XSDComplexTypeDefinition) {
-						 int min1 = getMinOccurs(term1);
-						 int min2 = getMinOccurs(term2);
-						 int max1 = getMaxOccurs(term1);
-						 int max2 = getMaxOccurs(term2);
+						dump("Comparing ", elem1, type1, level);
+						dump("       to ", elem2, type2, level);
+						if (!compareQNames(elem1, elem2)) {
+							addError("different QNames: " + elem1.getQName() + " vs " + elem2.getQName(), term1,term2);
+							return false;
+						}
+						int min1 = getMinOccurs(term1);
+						int min2 = getMinOccurs(term2);
+						int max1 = getMaxOccurs(term1);
+						int max2 = getMaxOccurs(term2);
 						if (strict) {
 							if (min1 != min2 || max1 != max2) {
 								addError("different cardinality: " + min1 + " to " + max1 + " vs " + min2 + " to " + max2, term1,term2);
 								return false;
 							}
 						} else {
-							if (min1 > max2 || min2 > max1) {
+							if ((max2>0 && min1 > max2) || (max1>0 && min2 > max1)) {
 								addError("incompatible cardinality: " + min1 + " to " + max1 + " vs " + min2 + " to " + max2, term1,term2);
 								return false;
 							}
 						}
-						dump("Comparing ", elem1, type1, level);
-						dump("       to ", elem2, type2, level);
 						boolean result = compare(getChildTerms(elem1), getChildTerms(elem2), level + 1);
 						if (!result) {
 							addError("different complex element structures",elem1,elem2);
@@ -194,18 +204,24 @@ public class XSDComparer {
 					List<XSDAttributeDeclaration> attrs1 = getAttributeDeclarations(elem1);
 					List<XSDAttributeDeclaration> attrs2 = getAttributeDeclarations(elem2);
 					if (attrs1.size() != attrs2.size()) {
-						addError("differing number of attributes",elem1,elem2);
+						addError("different number of attributes",elem1,elem2);
 						return false;
 					}
 					for (int i = 0; i < attrs1.size(); ++i) {
 						XSDAttributeDeclaration attr1 = attrs1.get(i);
 						XSDAttributeDeclaration attr2 = attrs2.get(i);
 						if (!attr1.getQName().equals(attr2.getQName())) {
-							addError("differing attribute names: "+attr1.getQName()+" vs "+attr2.getQName(),elem1,elem2);
+							addError("different attribute names: "+attr1.getQName()+" vs "+attr2.getQName(),elem1,elem2);
 							return false;
 						}
-						if (!attr1.getLexicalValue().equals(attr2.getLexicalValue())) {
-							addError("differing attribute values: "+attr1.getLexicalValue()+" vs "+attr2.getLexicalValue(),elem1,elem2);
+						String value1 = attr1.getLexicalValue(); 
+						String value2 = attr2.getLexicalValue();
+						if (value1==null)
+							value1 = "";
+						if (value2==null)
+							value2 = "";
+						if (!value1.equals(value2)) {
+							addError("different attribute values: "+attr1.getLexicalValue()+" vs "+attr2.getLexicalValue(),elem1,elem2);
 							return false;
 						}
 					}
@@ -308,9 +324,12 @@ public class XSDComparer {
 
 		} catch (Exception e) {
 			addError("caught exception: "+e.toString(),term1,term2);
+			e.printStackTrace();
 			return false;
 		}
-		dump("*** Schemas are compatible");
+		
+		if (level==0)
+			dump("*** Schemas are compatible");
 
 		return true;
 	}
@@ -338,6 +357,30 @@ public class XSDComparer {
 				s = s + ":" + names.pop();
 		}
 		return s;
+	}
+	
+	private boolean compareQNames(XSDNamedComponent elem1, XSDNamedComponent elem2) {
+
+		String name1 = elem1.getName();
+		String name2 = elem2.getName();
+		if (name1==null || name2==null) {
+			if (name1==name2)
+				return true;
+			return false;
+		}
+		if (name1.equals(name2)) {
+			if (elem1.getTargetNamespace() == null || elem1.getTargetNamespace().isEmpty()
+					&& elem2.getTargetNamespace() == null || elem2.getTargetNamespace().isEmpty())
+				return true;
+
+			if (elem1.getTargetNamespace().equals(elem2.getTargetNamespace()))
+				return true;
+			
+			if ( elem1.getSchema().getTargetNamespace().equals(elem2.getSchema().getTargetNamespace()) )
+				return true;
+		}
+		
+		return false;
 	}
 
 	/**
@@ -669,6 +712,9 @@ public class XSDComparer {
 		diag.getComponents().add(comp1);
 		diag.getComponents().add(comp2);
 		getDiagnostics().add(diag);
+		
+		if (debug)
+			dump(getDiagnostic(getDiagnostics().size()-1));
 		
 		return diag;
 	}
