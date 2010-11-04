@@ -87,6 +87,9 @@ public class ShowNonVisualTagsHandler extends AbstractHandler implements
 		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) editor;
 		VpeController vpeController = (VpeController) jspEditor
 				.getVisualEditor().getController();
+		if (vpeController == null) {
+			return;
+		}
 
 		/*
 		 * Change flag
