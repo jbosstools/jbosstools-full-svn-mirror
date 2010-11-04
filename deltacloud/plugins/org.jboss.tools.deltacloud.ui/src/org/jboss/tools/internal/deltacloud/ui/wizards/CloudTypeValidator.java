@@ -13,14 +13,14 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 
 public class CloudTypeValidator implements IValidator {
 
 	@Override
 	public IStatus validate(Object value) {
 		if (value != null
-				&& !DeltaCloudClient.DeltaCloudType.UNKNOWN.equals(value)) {
+				&& !DeltaCloudClientImpl.DeltaCloudServerType.UNKNOWN.equals(value)) {
 			return ValidationStatus.ok();
 		} else {
 			return ValidationStatus.warning(WizardMessages.getString("IllegalCloudUrl.msg")); //$NON-NLS-1$

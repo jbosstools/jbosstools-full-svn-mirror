@@ -55,7 +55,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.log.LogHelper;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient.DeltaCloudType;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.CompositeValidator;
@@ -114,30 +114,30 @@ public class CloudConnectionPage extends WizardPage {
 	 *            the label that shall display the delta cloud type
 	 * 
 	 * @see IValueChangeListener
-	 * @see DeltaCloudType
+	 * @see DeltaCloudServerType
 	 */
 	private class DeltaCloudTypeLabelAdapter implements IValueChangeListener {
 
 		private Label typeLabel;
 
-		public DeltaCloudTypeLabelAdapter(DeltaCloudType cloudType, Label typeLabel) {
+		public DeltaCloudTypeLabelAdapter(DeltaCloudServerType cloudType, Label typeLabel) {
 			this.typeLabel = typeLabel;
 			init(cloudType);
 		}
 
-		private void init(DeltaCloudType cloudType) {
+		private void init(DeltaCloudServerType cloudType) {
 			setLabelText(cloudType);
 		}
 
 		@Override
 		public void handleValueChange(ValueChangeEvent event) {
 			Object newValue = event.diff.getNewValue();
-			Assert.isTrue(newValue instanceof DeltaCloudType);
-			setLabelText((DeltaCloudType) newValue);
+			Assert.isTrue(newValue instanceof DeltaCloudServerType);
+			setLabelText((DeltaCloudServerType) newValue);
 		}
 
-		private void setLabelText(DeltaCloudType cloudType) {
-			if (cloudType != null && cloudType != DeltaCloudType.UNKNOWN) {
+		private void setLabelText(DeltaCloudServerType cloudType) {
+			if (cloudType != null && cloudType != DeltaCloudServerType.UNKNOWN) {
 				typeLabel.setText(cloudType.toString());
 			} else {
 				typeLabel.setText("?"); // $NON-NLS-1$
@@ -503,7 +503,7 @@ public class CloudConnectionPage extends WizardPage {
 		 */
 		IObservableValue cloudTypeObservable = urlToCloudTypeConverter.getCloudTypeObservable();
 		DeltaCloudTypeLabelAdapter cloudTypeAdapter =
-				new DeltaCloudTypeLabelAdapter((DeltaCloudType) cloudTypeObservable.getValue(), typeLabel);
+				new DeltaCloudTypeLabelAdapter((DeltaCloudServerType) cloudTypeObservable.getValue(), typeLabel);
 		cloudTypeObservable.addValueChangeListener(cloudTypeAdapter);
 
 		ControlDecorationSupport.create(urlTypeBinding, SWT.LEFT | SWT.TOP);

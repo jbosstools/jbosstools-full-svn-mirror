@@ -1,5 +1,8 @@
 2010-11-04  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/PerformInstanceActionThread.java: 
+	[JBIDE-7484] removed instance related methods from client, unified funtionality in #performAction and offered additional methods on 
+	Instance (#start, #stop, #destroy, #reboot). Furthermore update instance upon action responses from server.
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (getKeyName): 
 	avoid NullPointerExeption when fetching name of key and keyText is not instantiated (is null)
 	* src/org/jboss/tools/deltacloud/ui/views/DisconnectCloudsDialog.java: 

@@ -24,8 +24,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.Instance.State;
@@ -50,7 +51,7 @@ public class MockIntegrationTestContext {
 
 	public void setUp() throws IOException, DeltaCloudClientException {
 		ensureDeltaCloudIsRunning();
-		this.client = new DeltaCloudClient(DELTACLOUD_URL, DELTACLOUD_USER, DELTACLOUD_PASSWORD);
+		this.client = new DeltaCloudClientImpl(DELTACLOUD_URL, DELTACLOUD_USER, DELTACLOUD_PASSWORD);
 		Image image = getFirstImage(client);
 		this.testInstance = createTestInstance(image);
 	}
@@ -102,7 +103,10 @@ public class MockIntegrationTestContext {
 	public void quietlyDestroyInstance(Instance instance) {
 		if (instance != null) {
 			try {
-				client.destroyInstance(instance.getId());
+				if (instance.getState() == Instance.State.RUNNING) {
+					instance.stop(client);
+				}
+				instance.destroy(client);
 			} catch (Exception e) {
 				// ignore
 			}
@@ -120,10 +124,11 @@ public class MockIntegrationTestContext {
 	 *            the timeout to wait for
 	 * @return <code>true</code>, if the state was reached while waiting for
 	 *         timeout, <code>false</code> otherwise
-	 * @throws ExecutionException 
-	 * @throws InterruptedException 
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
-	public boolean waitForInstanceState(final String instanceId, final State state, final long timeout) throws InterruptedException, ExecutionException {
+	public boolean waitForInstanceState(final String instanceId, final State state, final long timeout)
+			throws InterruptedException, ExecutionException {
 		final long startTime = System.currentTimeMillis();
 		Callable<Boolean> waitingCallable = new Callable<Boolean>() {
 

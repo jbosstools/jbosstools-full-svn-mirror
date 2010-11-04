@@ -17,31 +17,40 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
+import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.Instance.State;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
+import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Integration tests for instance related methods in {@link DeltaCloudClient}.
+ * Integration tests for instance related methods in
+ * {@link DeltaCloudClientImpl}.
  * 
  * @author Andre Dietisheim
  * 
- * @see DeltaCloudClient#listInstances()
- * @see DeltaCloudClient#createInstance(String)
- * @see DeltaCloudClient#destroyInstance(String)
- * @see DeltaCloudClient#startInstance(String)
- * @see DeltaCloudClient#shutdownInstance(String)
+ * @see DeltaCloudClientImpl#listInstances()
+ * @see DeltaCloudClientImpl#createInstance(String)
+ * @see DeltaCloudClientImpl#destroyInstance(String)
+ * @see DeltaCloudClientImpl#startInstance(String)
+ * @see DeltaCloudClientImpl#shutdownInstance(String)
  */
 public class InstanceMockIntegrationTest {
 
@@ -92,7 +101,7 @@ public class InstanceMockIntegrationTest {
 				, instance);
 	}
 
-	@Test(expected = DeltaCloudClientException.class)
+	@Test(expected = DeltaCloudNotFoundClientException.class)
 	public void listDestroyedInstanceThrowsException() throws DeltaCloudClientException {
 		Instance testInstance = testSetup.getTestInstance();
 		testSetup.quietlyDestroyInstance(testInstance);
@@ -113,7 +122,8 @@ public class InstanceMockIntegrationTest {
 
 	@Test(expected = DeltaCloudClientException.class)
 	public void cannotDestroyIfNotAuthenticated() throws MalformedURLException, DeltaCloudClientException {
-		DeltaCloudClient unauthenticatedClient = new DeltaCloudClient(MockIntegrationTestContext.DELTACLOUD_URL,
+		DeltaCloudClientImpl unauthenticatedClient = new DeltaCloudClientImpl(
+				MockIntegrationTestContext.DELTACLOUD_URL,
 				"badUser", "badPassword");
 		Image image = testSetup.getFirstImage(unauthenticatedClient);
 		unauthenticatedClient.createInstance(image.getId());
@@ -141,21 +151,67 @@ public class InstanceMockIntegrationTest {
 	@Test
 	public void canDestroy() throws DeltaCloudClientException {
 		Image image = testSetup.getFirstImage(testSetup.getClient());
-		Instance instance = testSetup.getClient().createInstance(image.getId());
-		testSetup.getClient().destroyInstance(instance.getId());
+		DeltaCloudClient client = testSetup.getClient();
+		Instance instance = client.createInstance(image.getId());
+		instance.stop(client);
+		instance.destroy(client);
 		assertNull(testSetup.getInstanceById(instance.getId(), testSetup.getClient()));
 	}
 
 	@Test(expected = DeltaCloudClientException.class)
-	public void destroyThrowExceptionOnUnknowInstanceId() throws DeltaCloudClientException {
-		testSetup.getClient().destroyInstance("dummy");
+	public void destroyThrowExceptionOnUnknowInstanceId() throws DeltaCloudClientException, IllegalArgumentException,
+			InstantiationException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException {
+		DeltaCloudClient client = testSetup.getClient();
+		((InternalDeltaCloudClient) testSetup.getClient()).performInstanceAction(
+				createInstanceAction(
+						InstanceAction.DESTROY,
+						MockIntegrationTestContext.DELTACLOUD_URL,
+						HttpMethod.POST,
+						createInstance()));
+	}
+
+	private Instance createInstance() throws IllegalArgumentException, InstantiationException, IllegalAccessException,
+			InvocationTargetException, SecurityException, NoSuchMethodException {
+		Constructor<Instance> constructor = (Constructor<Instance>) Instance.class
+				.getDeclaredConstructor(null);
+		constructor.setAccessible(true);
+		return constructor.newInstance();
+	}
+
+	private InstanceAction createInstanceAction(String name, String url, HttpMethod method, Instance instance)
+			throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException {
+		Constructor<InstanceAction> constructor = (Constructor<InstanceAction>) InstanceAction.class
+				.getDeclaredConstructor(String.class, String.class, HttpMethod.class, Instance.class);
+		constructor.setAccessible(true);
+		InstanceAction instanceAction = constructor.newInstance(
+				name,
+				url,
+				method,
+				instance
+				);
+		return instanceAction;
+	}
+
+	private class InstanceActionProxy implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+			if (method.getName().equals("getUrl")) {
+				return MockIntegrationTestContext.DELTACLOUD_URL;
+			} else if (method.getName().equals("getMethod")) {
+				return HttpMethod.POST;
+			} else {
+				return null;
+			}
+		}
+
 	}
 
 	@Test
 	public void canShutdownInstance() throws DeltaCloudClientException {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
-		client.shutdownInstance(testInstance.getId());
+		testInstance.stop(client);
 		testInstance = client.listInstances(testInstance.getId()); // reload!
 		assertEquals(State.STOPPED, testInstance.getState());
 	}
@@ -165,9 +221,9 @@ public class InstanceMockIntegrationTest {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
 		if (testInstance.getState() == State.RUNNING) {
-			client.shutdownInstance(testInstance.getId());
+			testInstance.stop(client);
 		}
-		client.startInstance(testInstance.getId());
+		testInstance.start(client);
 		testInstance = client.listInstances(testInstance.getId()); // reload!
 		assertEquals(State.RUNNING, testInstance.getState());
 	}
@@ -177,9 +233,9 @@ public class InstanceMockIntegrationTest {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
 		if (testInstance.getState() == State.RUNNING) {
-			client.performInstanceAction(testInstance.getId(), InstanceAction.STOP);
+			testInstance.stop(client);
 		}
-		assertTrue(client.performInstanceAction(testInstance.getId(), InstanceAction.START));
+		assertTrue(testInstance.start(client));
 		testInstance = client.listInstances(testInstance.getId()); // reload!
 		assertEquals(State.RUNNING, testInstance.getState());
 	}
@@ -188,8 +244,8 @@ public class InstanceMockIntegrationTest {
 	public void cannotStartRunningInstance() throws DeltaCloudClientException {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
-		client.startInstance(testInstance.getId());
-		assertFalse(client.performInstanceAction(testInstance.getId(), InstanceAction.START));
+		testInstance.start(client);
+		assertFalse(testInstance.start(client));
 	}
 
 	@Test
@@ -197,10 +253,10 @@ public class InstanceMockIntegrationTest {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
 		try {
-			client.shutdownInstance(testInstance.getId());
-			assertFalse(client.performInstanceAction(testInstance.getId(), InstanceAction.STOP));
+			testInstance.stop(client);
+			assertFalse(testInstance.stop(client));
 		} finally {
-			client.startInstance(testInstance.getId());
+			testInstance.start(client);
 		}
 	}
 
@@ -210,7 +266,7 @@ public class InstanceMockIntegrationTest {
 		DeltaCloudClient client = testSetup.getClient();
 		testInstance = client.listInstances(testInstance.getId()); // reload
 		assertTrue(testInstance.getState() == State.RUNNING);
-		assertFalse(client.performInstanceAction(testInstance.getId(), InstanceAction.DESTROY));
+		assertFalse(testInstance.destroy(client));
 	}
 
 	@Test
@@ -219,12 +275,12 @@ public class InstanceMockIntegrationTest {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
 		try {
-			client.shutdownInstance(testInstance.getId());
+			testInstance.stop(client);
 			testInstance = client.listInstances(testInstance.getId()); // reload
 			assertTrue(testInstance.getState() == State.STOPPED);
-			assertFalse(client.performInstanceAction(testInstance.getId(), InstanceAction.REBOOT));
+			assertFalse(testInstance.reboot(client));
 		} finally {
-			client.startInstance(testInstance.getId());
+			testInstance.start(client);
 			client.listInstances(testInstance.getId()); // reload
 		}
 	}

@@ -12,7 +12,7 @@ package org.jboss.tools.internal.deltacloud.test.core.client;
 
 import java.io.IOException;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.junit.After;
@@ -23,8 +23,8 @@ import org.junit.Before;
  * 
  * @author Andre Dietisheim
  * 
- * @see DeltaCloudClient#createKey(String, String)
- * @see DeltaCloudClient#deleteKey(String)
+ * @see DeltaCloudClientImpl#createKey(String, String)
+ * @see DeltaCloudClientImpl#deleteKey(String)
  */
 public class KeyMockIntegrationTest {
 

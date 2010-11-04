@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Realm;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
@@ -30,8 +30,8 @@ import org.junit.Test;
  * 
  * @author Andre Dietisheim
  * 
- * @see DeltaCloudClient#listRealms()
- * @see DeltaCloudClient#listRealm(String)
+ * @see DeltaCloudClientImpl#listRealms()
+ * @see DeltaCloudClientImpl#listRealm(String)
  */
 public class RealmMockIntegrationTest {
 

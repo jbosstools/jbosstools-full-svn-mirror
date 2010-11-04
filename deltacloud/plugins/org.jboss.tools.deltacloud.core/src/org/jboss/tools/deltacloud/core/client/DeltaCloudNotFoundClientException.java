@@ -10,21 +10,21 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-public class DeltaCloudNotFoundException extends DeltaCloudClientException {
+public class DeltaCloudNotFoundClientException extends DeltaCloudClientException {
 
 	private static final long serialVersionUID = 1L;
 	
-	public DeltaCloudNotFoundException(String message, Throwable clause)
+	public DeltaCloudNotFoundClientException(String message, Throwable clause)
 	{
 		super(message, clause);
 	}
 	
-	public DeltaCloudNotFoundException(Throwable clause)
+	public DeltaCloudNotFoundClientException(Throwable clause)
 	{
 		super(clause);
 	}
 	
-	public DeltaCloudNotFoundException(String message)
+	public DeltaCloudNotFoundClientException(String message)
 	{
 		super(message);
 	}

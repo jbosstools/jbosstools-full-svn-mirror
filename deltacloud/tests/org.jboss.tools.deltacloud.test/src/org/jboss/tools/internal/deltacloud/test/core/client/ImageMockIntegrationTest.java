@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
@@ -29,8 +29,8 @@ import org.junit.Test;
  * 
  * @author Andre Dietisheim
  * 
- * @see DeltaCloudClient#listImages()
- * @see DeltaCloudClient#listImages(String)
+ * @see DeltaCloudClientImpl#listImages()
+ * @see DeltaCloudClientImpl#listImages(String)
  * 
  */
 public class ImageMockIntegrationTest {
@@ -50,7 +50,7 @@ public class ImageMockIntegrationTest {
 
 	@Test(expected = DeltaCloudClientException.class)
 	public void cannotListIfNotAuthenticated() throws MalformedURLException, DeltaCloudClientException {
-		DeltaCloudClient client = new DeltaCloudClient(MockIntegrationTestContext.DELTACLOUD_URL, "badUser", "badPassword");
+		DeltaCloudClientImpl client = new DeltaCloudClientImpl(MockIntegrationTestContext.DELTACLOUD_URL, "badUser", "badPassword");
 		client.listImages();
 	}
 

@@ -12,8 +12,8 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.MalformedURLException;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient.DeltaCloudType;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.ObservablePojo;
 
 /**
@@ -36,11 +36,11 @@ public class CloudConnectionModel extends ObservablePojo {
 	private String username;
 
 	private String password;
-	private DeltaCloudClient.DeltaCloudType cloudType;
+	private DeltaCloudClientImpl.DeltaCloudServerType cloudType;
 	private String initialName;
 
 	public CloudConnectionModel() {
-		this("", "", "", "", (DeltaCloudType) null);
+		this("", "", "", "", (DeltaCloudServerType) null);
 	}
 
 	public CloudConnectionModel(String name, String url, String username, String password, String cloudType) throws MalformedURLException {
@@ -51,7 +51,7 @@ public class CloudConnectionModel extends ObservablePojo {
 		this(name, url, username, password, getDeltaCloudTypeFromUrl(url));
 	}
 
-	public CloudConnectionModel(String name, String url, String username, String password, DeltaCloudType deltaCloudType) {
+	public CloudConnectionModel(String name, String url, String username, String password, DeltaCloudServerType deltaCloudType) {
 		this.name = name;
 		this.initialName = name;
 		this.url = url;
@@ -60,17 +60,17 @@ public class CloudConnectionModel extends ObservablePojo {
 		this.cloudType = deltaCloudType;
 	}
 	
-	private static DeltaCloudType getDeltaCloudTypeFromUrl(String url) throws MalformedURLException {
-		return new DeltaCloudClient(url, "", "").getServerType();
+	private static DeltaCloudServerType getDeltaCloudTypeFromUrl(String url) throws MalformedURLException {
+		return new DeltaCloudClientImpl(url, "", "").getServerType();
 	}
 
-	private static DeltaCloudType getDeltaCloudType(String cloudType, String url) throws MalformedURLException {
+	private static DeltaCloudServerType getDeltaCloudType(String cloudType, String url) throws MalformedURLException {
 		if (cloudType == null) {
 			return null;
 		}
 
 		try {
-			return DeltaCloudType.valueOf(cloudType);
+			return DeltaCloudServerType.valueOf(cloudType);
 		} catch (IllegalArgumentException e) {
 			return getDeltaCloudTypeFromUrl(url);
 		}
@@ -112,11 +112,11 @@ public class CloudConnectionModel extends ObservablePojo {
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_URL, this.url, this.url = url);
 	}
 
-	public DeltaCloudClient.DeltaCloudType getType() {
+	public DeltaCloudClientImpl.DeltaCloudServerType getType() {
 		return cloudType;
 	}
 
-	public void setType(DeltaCloudClient.DeltaCloudType cloudType) {
+	public void setType(DeltaCloudClientImpl.DeltaCloudServerType cloudType) {
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_TYPE, this.cloudType, this.cloudType = cloudType);
 	}
 }

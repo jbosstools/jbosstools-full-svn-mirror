@@ -15,8 +15,8 @@ import java.net.MalformedURLException;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient.DeltaCloudType;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 
 /**
  * A class that converts an url (string) to a DeltaCloudType (enum). The state
@@ -40,20 +40,20 @@ public class Url2DeltaCloudTypeConverter implements IConverter {
 
 	@Override
 	public Object getToType() {
-		return DeltaCloudClient.DeltaCloudType.class;
+		return DeltaCloudClientImpl.DeltaCloudServerType.class;
 	}
 
 	@Override
 	public Object convert(Object fromObject) {
 		String deltaCloudUrl = (String) fromObject;
-		DeltaCloudType cloudType = getCloudType(deltaCloudUrl);
+		DeltaCloudServerType cloudType = getCloudType(deltaCloudUrl);
 		cloudTypeObservable.setValue(cloudType);
 		return cloudType;
 	}
 
-	private DeltaCloudType getCloudType(String deltaCloudUrl) {
+	private DeltaCloudServerType getCloudType(String deltaCloudUrl) {
 		try {
-			return new DeltaCloudClient(deltaCloudUrl, "", "").getServerType();
+			return new DeltaCloudClientImpl(deltaCloudUrl, "", "").getServerType();
 		} catch (MalformedURLException e) {
 			return null;
 		}

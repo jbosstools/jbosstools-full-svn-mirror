@@ -1,3 +1,12 @@
+2010-11-04  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java: 
+	* src/org/jboss/tools/deltacloud/core/client/InstanceAction.java: 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java: 
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java (start), (stop), (destroy), (reboot): 
+	[JBIDE-7484] removed instance related methods from client, unified funtionality in #performAction and offered additional methods on 
+	Instance (#start, #stop, #destroy, #reboot). Furthermore update instance upon action responses from server.
+
 2010-10-29  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/HttpStatusCode.java: extracted and put in a 2 enums: 

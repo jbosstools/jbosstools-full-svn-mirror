@@ -28,15 +28,17 @@ public class InstanceAction {
 	private String name;
 	private String url;
 	private HttpMethod method;
+	private Instance instance;
 
-	public InstanceAction(String name, String url, String method) {
-		this(name, url, HttpMethod.valueOf(method.toUpperCase()));
+	protected InstanceAction(String name, String url, String method, Instance instance) {
+		this(name, url, HttpMethod.valueOf(method.toUpperCase()), instance);
 	}
 
-	public InstanceAction(String name, String url, HttpMethod method) {
+	protected InstanceAction(String name, String url, HttpMethod method, Instance instance) {
 		this.name = name;
 		this.url = url;
 		this.method = method;
+		this.instance = instance;
 	}
 
 	public String getName() {
@@ -54,5 +56,9 @@ public class InstanceAction {
 	@Override
 	public String toString() {
 		return "InstanceAction [name=" + name + ", url=" + url + ", method=" + method + "]";
+	}
+
+	public Instance getInstance() {
+		return instance;
 	}
 }

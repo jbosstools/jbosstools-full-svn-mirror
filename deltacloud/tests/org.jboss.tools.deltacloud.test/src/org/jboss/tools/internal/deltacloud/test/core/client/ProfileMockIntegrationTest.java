@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
@@ -30,8 +30,8 @@ import org.junit.Test;
  * 
  * @author Andre Dietisheim
  * 
- * @see DeltaCloudClient#listProfiles()
- * @see DeltaCloudClient#listProfie(String)
+ * @see DeltaCloudClientImpl#listProfiles()
+ * @see DeltaCloudClientImpl#listProfie(String)
  */
 public class ProfileMockIntegrationTest {
 

@@ -25,9 +25,9 @@ import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
@@ -44,7 +44,7 @@ public class DeltaCloud {
 	private String type;
 	private String lastKeyname = "";
 	private String lastImageId = "";
-	private DeltaCloudClient client;
+	private DeltaCloudClientImpl client;
 	private ArrayList<DeltaCloudInstance> instances;
 	private ArrayList<DeltaCloudImage> images;
 	private IImageFilter imageFilter;
@@ -69,7 +69,7 @@ public class DeltaCloud {
 	public DeltaCloud(String name, String url, String username, String passwd,
 			String type, boolean persistent,
 			String imageFilterRules, String instanceFilterRules) throws MalformedURLException {
-		this.client = new DeltaCloudClient(url, username, passwd); //$NON-NLS-1$
+		this.client = new DeltaCloudClientImpl(url, username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;
@@ -93,7 +93,7 @@ public class DeltaCloud {
 
 	public void editCloud(String name, String url, String username, String passwd, String type)
 			throws MalformedURLException {
-		this.client = new DeltaCloudClient(url, username, passwd); //$NON-NLS-1$
+		this.client = new DeltaCloudClientImpl(url, username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
 		this.username = username;
@@ -288,15 +288,10 @@ public class DeltaCloud {
 
 	public DeltaCloudInstance[] destroyInstance(String instanceId) {
 		try {
-			client.destroyInstance(instanceId);
-			for (int i = 0; i < instances.size(); ++i) {
-				DeltaCloudInstance instance = instances.get(i);
-				if (instance.getId().equals(instanceId)) {
-					instances.remove(i);
-					break;
-				}
-			}
-		} catch (DeltaCloudClientException e) {
+			DeltaCloudInstance instance = getInstance(instanceId);
+			performInstanceAction(instance, DeltaCloudInstance.DESTROY);
+			instances.remove(instance);
+		} catch (DeltaCloudException e) {
 			return null;
 		}
 		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
@@ -367,12 +362,29 @@ public class DeltaCloud {
 		return retVal;
 	}
 
-	public boolean performInstanceAction(String instanceId, String action) throws DeltaCloudException {
+	public boolean performInstanceAction(String instanceId, String actionId) throws DeltaCloudException {
+		return performInstanceAction(getInstance(instanceId), actionId);
+	}
+
+	protected boolean performInstanceAction(DeltaCloudInstance instance, String actionId) throws DeltaCloudException {
 		try {
-			return client.performInstanceAction(instanceId, action);
+			if (instance == null) {
+				return false;
+			}
+			return instance.performInstanceAction(actionId, client);
+
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(e);
 		}
+	}
+
+	private DeltaCloudInstance getInstance(String instanceId) {
+		for (DeltaCloudInstance instance : instances) {
+			if (instance.getId().equals(instanceId)) {
+				return instance;
+			}
+		}
+		return null;
 	}
 
 	public DeltaCloudHardwareProfile[] getProfiles() {
@@ -437,11 +449,11 @@ public class DeltaCloud {
 		try {
 			client.listInstances(instanceId);
 			return true;
-		} catch( DeltaCloudNotFoundException e) {
+		} catch (DeltaCloudNotFoundClientException e) {
 			return true;
 		} catch (DeltaCloudAuthException e) {
 			return false;
-		} 
+		}
 	}
 
 	public DeltaCloudRealm[] getRealms() {
