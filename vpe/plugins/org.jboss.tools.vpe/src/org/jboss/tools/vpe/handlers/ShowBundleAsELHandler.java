@@ -18,6 +18,7 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementUpdater;
@@ -65,21 +66,30 @@ public class ShowBundleAsELHandler extends AbstractHandler implements
 
 	public void updateElement(UIElement element, Map parameters) {
 
-		IEditorPart activeEditor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		if (!(activeEditor instanceof JSPMultiPageEditor)) {
-			return;
-		}
-
-		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
-		VpeController vpeController = (VpeController) jspEditor
-				.getVisualEditor().getController();
-
 		boolean toggleState = JspEditorPlugin
 				.getDefault()
 				.getPreferenceStore()
 				.getBoolean(
 						IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+
+		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage()
+				.getEditorReferences();
+		for (IEditorReference openedEditor : openedEditors) {
+			IEditorPart editor = openedEditor.getEditor(true);
+			toggleShowBundleAsEl(editor, toggleState);
+		}
+	}
+
+	private void toggleShowBundleAsEl(IEditorPart editor, boolean toggleState) {
+
+		if (!(editor instanceof JSPMultiPageEditor)) {
+			return;
+		}
+
+		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) editor;
+		VpeController vpeController = (VpeController) jspEditor
+				.getVisualEditor().getController();
 
 		/*
 		 * Update bundle messages.
