@@ -177,7 +177,7 @@
 		<profile>
 			<id>helios</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
 			</properties>
@@ -244,35 +244,12 @@
 			</repositories>
 		</profile>
 
+		<!-- TODO: do we need this? -->
 		<profile>
 			<id>jbds-no-target</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-			<!--repositories>
-				<repository>
-					<id>jbosstools</id>
-					<url>jar:file:///home/eskimo/Projects/jbds-build/jbosstools-src/adt.builder/downloads/toTransform/jbdevstudio-Update-4.0.0.v201009250226N-Beta1.zip!/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>eclipse-rcp</id>
-					<url>jar:file:///home/eskimo/Projects/jbds-build/jbosstools-src/adt.builder/downloads/rcp.zip!/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories-->
 		</profile>
 
 		<!-- Time saver: to build everything from scratch (without target platform); 
@@ -450,27 +427,6 @@
 		</profile>
 
 		<profile>
-			<id>helios-maintenance-no-target</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>eclipse36x</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.6.x/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
-
-		<profile>
 			<id>hudson</id>
 			<activation>
 				<property>
@@ -491,57 +447,6 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>
-		<profile>
-			<id>svn-repos</id>
-			<repositories>
-				<repository>
-					<id>svnkit13</id>
-					<url>http://eclipse.svnkit.com/1.3.x/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>subclipse16</id>
-					<url>http://subclipse.tigris.org/update_1.6.x/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>subversive07</id>
-					<url>http://download.eclipse.org/technology/subversive/0.7/update-site/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>subversive20</id>
-					<url>http://community.polarion.com/projects/subversive/download/eclipse/2.0/update-site/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
 		</profile>
 		<profile>
 			<id>coverage</id>
@@ -751,6 +656,8 @@
 				</repository>
 			</repositories>
 		</profile>
+
+		<!-- TODO: remove this -->
 		<profile>
 			<id>dgolovin</id>
 			<activation>
@@ -829,50 +736,4 @@
 			</repositories>
 		</profile>
 	</profiles>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>sonatype-maven-central</id>
-			<url>http://repository.sonatype.org/content/repositories/central/
-			</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-		<pluginRepository>
-			<id>maven-snapshots-sonatype</id>
-			<url>https://repository.apache.org/content/repositories/maven-snapshots-sonatype/
-			</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-		<pluginRepository>
-			<id>tycho</id>
-			<url>https://repository.sonatype.org/content/repositories/snapshots/
-			</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-		<pluginRepository>
-			<id>apache-snapshots</id>
-			<url>http://repository.apache.org/snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
 </project>
