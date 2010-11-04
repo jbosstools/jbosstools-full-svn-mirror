@@ -17,12 +17,8 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementUpdater;
@@ -31,13 +27,9 @@ import org.eclipse.ui.menus.UIElement;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
-import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
-import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
-import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
-import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
 
 /**
  * Handler for ShowTextFormatting
@@ -78,13 +70,23 @@ public class ShowTextFormattingHandler extends AbstractHandler implements
 		boolean toggleState = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
 
-		IEditorPart activeEditor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		if (!(activeEditor instanceof JSPMultiPageEditor)) {
+		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage()
+				.getEditorReferences();
+		for (IEditorReference openedEditor : openedEditors) {
+			IEditorPart editor = openedEditor.getEditor(true);
+			toggleShowTextFormatting(editor, toggleState);
+		}
+	}
+
+	private void toggleShowTextFormatting(IEditorPart editor,
+			boolean toggleState) {
+
+		if (!(editor instanceof JSPMultiPageEditor)) {
 			return;
 		}
 
-		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
+		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) editor;
 		MozillaEditor mozillaEditor = ((VpeEditorPart) jspEditor
 				.getVisualEditor()).getVisualEditor();
 		IVpeToolBarManager vpeToolBarManager = mozillaEditor
