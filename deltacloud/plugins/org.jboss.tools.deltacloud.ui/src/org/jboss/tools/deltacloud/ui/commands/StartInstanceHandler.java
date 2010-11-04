@@ -20,13 +20,9 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
 import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
-import org.jboss.tools.deltacloud.ui.views.PerformInstanceActionThread;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
@@ -75,19 +71,12 @@ public class StartInstanceHandler extends AbstractInstanceHandler implements IHa
 	private void startInstance(CVInstanceElement cvInstance) {
 		if (cvInstance != null) {
 			DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
-			CloudViewElement element = cvInstance;
-			while (!(element instanceof CVCloudElement)) {
-				element = (CloudViewElement) element.getParent();
-			}
-			CVCloudElement cvcloud = (CVCloudElement) element;
-			DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
-			PerformInstanceActionThread t = new PerformInstanceActionThread(cloud, instance,
-					DeltaCloudInstance.START,
-					CVMessages.getString(STARTING_INSTANCE_TITLE),
-					CVMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] { instance.getName() }),
-					DeltaCloudInstance.RUNNING);
-			t.setUser(true);
-			t.schedule();
+			executeInstanceAction(
+					cvInstance
+					, DeltaCloudInstance.START
+					, DeltaCloudInstance.RUNNING
+					, CVMessages.getString(STARTING_INSTANCE_TITLE)
+					, CVMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] { instance.getName() }));
 		}
 	}
 }
