@@ -1,3 +1,9 @@
+2010-11-04  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/DisconnectCloudsDialog.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/DisconnectCloudHandler.java: 
+	[JBIDE-7495] changed dialog and handler to climb up the hierarchy to the connection and offer to disconnect the cloud connection
+
 2010-11-02  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: [JBIDE-7482] fixed missing label
