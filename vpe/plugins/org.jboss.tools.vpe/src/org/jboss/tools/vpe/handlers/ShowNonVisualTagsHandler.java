@@ -18,6 +18,7 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.commands.IElementUpdater;
@@ -64,18 +65,29 @@ public class ShowNonVisualTagsHandler extends AbstractHandler implements
 
 	public void updateElement(UIElement element, Map parameters) {
 
-		IEditorPart activeEditor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		if (!(activeEditor instanceof JSPMultiPageEditor)) {
+		boolean toggleState = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+
+		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage()
+				.getEditorReferences();
+		for (IEditorReference openedEditor : openedEditors) {
+			IEditorPart editor = openedEditor.getEditor(true);
+			toggleShowNonVisualElements(editor, toggleState);
+		}
+	}
+
+	private void toggleShowNonVisualElements(IEditorPart editor,
+			boolean toggleState) {
+
+		if (!(editor instanceof JSPMultiPageEditor)) {
 			return;
 		}
 
-		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
+		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) editor;
 		VpeController vpeController = (VpeController) jspEditor
 				.getVisualEditor().getController();
 
-		boolean toggleState = JspEditorPlugin.getDefault().getPreferenceStore()
-				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
 		/*
 		 * Change flag
 		 */
