@@ -33,17 +33,17 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class DeltaCloudManager {
-	
+
 	public final static String CLOUDFILE_NAME = "clouds.xml"; //$NON-NLS-1$
-	
+
 	private static DeltaCloudManager cloudManager;
 	private ArrayList<DeltaCloud> clouds = new ArrayList<DeltaCloud>();
 	private ListenerList cloudManagerListeners;
-	
+
 	private DeltaCloudManager() {
 		loadClouds();
 	}
-	
+
 	private void loadClouds() {
 		IPath stateLocation = Activator.getDefault().getStateLocation();
 		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
@@ -57,53 +57,9 @@ public class DeltaCloudManager {
 				NodeList cloudNodes = e.getElementsByTagName("cloud"); // $NON-NLS-1$
 				for (int x = 0; x < cloudNodes.getLength(); ++x) {
 					Node n = cloudNodes.item(x);
-					NamedNodeMap attrs = n.getAttributes();
-					Node nameNode = attrs.getNamedItem("name"); // $NON-NLS-1$
-					Node urlNode = attrs.getNamedItem("url"); // $NON-NLS-1$
-					Node usernameNode = attrs.getNamedItem("username"); // $NON-NLS-1$
-					Node typeNode = attrs.getNamedItem("type"); // $NON-NLS-1$
-					Node imageFilterNode = attrs.getNamedItem("imagefilter"); //$NON-NLS-1$
-					Node instanceFilterNode = attrs.getNamedItem("instancefilter"); //$NON-NLS-1$
-					Node lastKeyNameNode = attrs.getNamedItem("lastkeyname"); //$NON-NLS-1$
-					Node lastImageIdNode = attrs.getNamedItem("lastimage"); //$NON-NLS-1$
-					String name = nameNode.getNodeValue();
-					String url = urlNode.getNodeValue();
-					String username = usernameNode.getNodeValue();
-					String type = typeNode.getNodeValue();
-					String key = DeltaCloud.getPreferencesKey(url, username);
-					String imageFilterRules = null;
-					if (imageFilterNode != null)
-						imageFilterRules = imageFilterNode.getNodeValue();
-					else
-						imageFilterRules = IImageFilter.ALL_STRING;
-					String instanceFilterRules = null;
-					if (instanceFilterNode != null)
-						instanceFilterRules = instanceFilterNode.getNodeValue();
-					else
-						instanceFilterRules = IInstanceFilter.ALL_STRING;
-					String lastKeyName = "";
-					if (lastKeyNameNode != null)
-						lastKeyName = lastKeyNameNode.getNodeValue();
-					String lastImageId = "";
-					if (lastImageIdNode != null)
-						lastImageId = lastImageIdNode.getNodeValue();
-					ISecurePreferences root = SecurePreferencesFactory.getDefault();
-					ISecurePreferences node = root.node(key);
-					String password;
-					try {
-						password = node.get("password", null); //$NON-NLS-1$
-						DeltaCloud cloud = new DeltaCloud(name, url, username, password, type, 
-								false, imageFilterRules, instanceFilterRules);
-						cloud.setLastImageId(lastImageId);
-						cloud.setLastKeyname(lastKeyName);
-						cloud.loadChildren();
-						clouds.add(cloud);
-					} catch (Exception e1) {
-						Activator.log(e1);
-						continue; // skip cloud
-					}
+					loadCloud(n);
 				}
-			} 
+			}
 		} catch (ParserConfigurationException e) {
 			Activator.log(e);
 		} catch (SAXException e) {
@@ -113,20 +69,71 @@ public class DeltaCloudManager {
 		}
 	}
 
+	private void loadCloud(Node n) {
+		NamedNodeMap attrs = n.getAttributes();
+		String name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
+		String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
+		String username = attrs.getNamedItem("username").getNodeValue(); // $NON-NLS-1$
+		String type = attrs.getNamedItem("type").getNodeValue(); // $NON-NLS-1$
+		String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
+		String key = DeltaCloud.getPreferencesKey(url, username); // $NON-NLS-1$
+		String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
+		String lastKeyName = getLastKeyName(attrs.getNamedItem("lastkeyname"));
+		String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage"));
+		ISecurePreferences root = SecurePreferencesFactory.getDefault();
+		ISecurePreferences node = root.node(key);
+		try {
+			String password = node.get("password", null); //$NON-NLS-1$
+			DeltaCloud cloud = new DeltaCloud(name, url, username, password, type,
+					false, imageFilterRules, instanceFilterRules);
+			cloud.setLastImageId(lastImageId);
+			cloud.setLastKeyname(lastKeyName);
+			cloud.loadChildren();
+			clouds.add(cloud);
+		} catch (Exception e1) {
+			Activator.log(e1);
+			return;
+		}
+	}
+
+	private String getLastKeyName(Node lastKeyNameNode) {
+		String lastKeyName = "";
+		if (lastKeyNameNode != null) {
+			lastKeyName = lastKeyNameNode.getNodeValue();
+		}
+		return lastKeyName;
+	}
+
+	private String getInstanceFilterRules(Node instanceFilterNode) {
+		String instanceFilterRules = IInstanceFilter.ALL_STRING;
+		if (instanceFilterNode != null) {
+			instanceFilterRules = instanceFilterNode.getNodeValue();
+		}
+		return instanceFilterRules;
+	}
+
+	private String getImageFilterRules(Node imageFilterNode) {
+		String imageFilterRules = IImageFilter.ALL_STRING;
+		if (imageFilterNode != null) {
+			imageFilterRules = imageFilterNode.getNodeValue();
+		}
+		return imageFilterRules;
+	}
+
 	public void saveClouds() {
 		try {
 			IPath stateLocation = Activator.getDefault().getStateLocation();
 			File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
-			if (!cloudFile.exists())
+			if (!cloudFile.exists()) {
 				cloudFile.createNewFile();
+			}
 			if (cloudFile.exists()) {
 				PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter(cloudFile)));
 				p.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
 				p.println("<clouds>"); // $NON-NLS-1$
 				for (DeltaCloud d : clouds) {
 					p.println("<cloud name=\"" + d.getName() + "\" url=\"" //$NON-NLS-1$ //$NON-NLS-2$ 
-							+ d.getURL() +
-							"\" username=\"" + d.getUsername() + //$NON-NLS-1$ //$NON-NLS-2$ 
+							+ d.getURL() + "\" username=\"" + d.getUsername() + //$NON-NLS-1$ //$NON-NLS-2$ 
 							"\" type=\"" + d.getType() + //$NON-NLS-1$ //$NON-NLS-2$
 							"\" imagefilter=\"" + d.getImageFilter() + //$NON-NLS-1$ //$NON-NLS-2$
 							"\" instancefilter=\"" + d.getInstanceFilter() + //$NON-NLS-1$ //$NON-NLS-2$
@@ -141,13 +148,13 @@ public class DeltaCloudManager {
 			Activator.log(e);
 		}
 	}
-	
+
 	public static DeltaCloudManager getDefault() {
 		if (cloudManager == null)
 			cloudManager = new DeltaCloudManager();
 		return cloudManager;
 	}
-	
+
 	public DeltaCloud[] getClouds() {
 		return clouds.toArray(new DeltaCloud[clouds.size()]);
 	}
@@ -159,13 +166,13 @@ public class DeltaCloudManager {
 		}
 		return null;
 	}
-	
+
 	public void addCloud(DeltaCloud d) {
 		clouds.add(d);
 		saveClouds();
 		notifyListeners(ICloudManagerListener.ADD_EVENT);
 	}
-	
+
 	public void removeCloud(DeltaCloud d) {
 		clouds.remove(d);
 		String url = d.getURL();
@@ -191,12 +198,12 @@ public class DeltaCloudManager {
 		saveClouds();
 		notifyListeners(ICloudManagerListener.REMOVE_EVENT);
 	}
-	
+
 	public void notifyCloudRename() {
 		saveClouds();
 		notifyListeners(ICloudManagerListener.RENAME_EVENT);
 	}
-	
+
 	public void addCloudManagerListener(ICloudManagerListener listener) {
 		if (cloudManagerListeners == null)
 			cloudManagerListeners = new ListenerList(ListenerList.IDENTITY);
@@ -212,9 +219,9 @@ public class DeltaCloudManager {
 		if (cloudManagerListeners != null) {
 			Object[] listeners = cloudManagerListeners.getListeners();
 			for (int i = 0; i < listeners.length; ++i) {
-				((ICloudManagerListener)listeners[i]).changeEvent(type);
+				((ICloudManagerListener) listeners[i]).changeEvent(type);
 			}
 		}
 	}
-	
+
 }
