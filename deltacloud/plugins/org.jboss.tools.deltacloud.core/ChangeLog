@@ -1,3 +1,8 @@
+2010-11-05  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (performInstanceAction): 
+	[JBIDE-7503] added instance notification 
+
 2010-11-04  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java: 

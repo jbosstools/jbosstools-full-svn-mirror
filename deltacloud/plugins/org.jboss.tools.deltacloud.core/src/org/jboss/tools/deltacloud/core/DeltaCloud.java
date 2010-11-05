@@ -25,8 +25,8 @@ import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Image;
@@ -164,7 +164,7 @@ public class DeltaCloud {
 		}
 		if (!rules.equals(ruleString)) {
 			save();
-			notifyInstanceListListeners(getCurrInstances());
+			notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 		}
 	}
 
@@ -214,8 +214,9 @@ public class DeltaCloud {
 
 	public void notifyInstanceListListeners(DeltaCloudInstance[] array) {
 		Object[] listeners = instanceListeners.getListeners();
-		for (int i = 0; i < listeners.length; ++i)
+		for (int i = 0; i < listeners.length; ++i) {
 			((IInstanceListListener) listeners[i]).listChanged(this, array);
+		}
 	}
 
 	public void addImageListListener(IImageListListener listener) {
@@ -269,17 +270,17 @@ public class DeltaCloud {
 			} catch (DeltaCloudClientException e) {
 				Activator.log(e);
 			}
-			DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
-			instanceArray = instances.toArray(instanceArray);
-			notifyInstanceListListeners(instanceArray);
-			return instanceArray;
+			DeltaCloudInstance[] instancesArray = instances.toArray(new DeltaCloudInstance[instances.size()]);
+			notifyInstanceListListeners(instancesArray);
+			return instancesArray;
 		}
 	}
 
 	public DeltaCloudInstance[] getCurrInstances() {
 		synchronized (instanceLock) {
-			if (instances == null)
+			if (instances == null) {
 				return getInstances();
+			}
 			DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
 			instanceArray = instances.toArray(instanceArray);
 			return instanceArray;
@@ -294,10 +295,9 @@ public class DeltaCloud {
 		} catch (DeltaCloudException e) {
 			return null;
 		}
-		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
-		instanceArray = instances.toArray(instanceArray);
-		notifyInstanceListListeners(instanceArray);
-		return instanceArray;
+		DeltaCloudInstance[] instancesArray = instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()]));
+		notifyInstanceListListeners(instancesArray);
+		return instancesArray;
 	}
 
 	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
@@ -330,9 +330,9 @@ public class DeltaCloud {
 			if (!found) {
 				instances.add(instance);
 			}
-			DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
-			instanceArray = instances.toArray(instanceArray);
-			notifyInstanceListListeners(instanceArray);
+
+			notifyInstanceListListeners(
+					instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 		}
 	}
 
@@ -349,9 +349,7 @@ public class DeltaCloud {
 					if (!(retVal.getState().equals(DeltaCloudInstance.BOGUS))
 							&& !(inst.getState().equals(retVal.getState()))) {
 						instances.set(i, retVal);
-						DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
-						instanceArray = instances.toArray(instanceArray);
-						notifyInstanceListListeners(instanceArray);
+						notifyInstanceListListeners(getCurrInstances());
 						return retVal;
 					}
 				}
@@ -371,8 +369,12 @@ public class DeltaCloud {
 			if (instance == null) {
 				return false;
 			}
-			return instance.performInstanceAction(actionId, client);
 
+			boolean result = instance.performInstanceAction(actionId, client);
+			if (result) {
+				notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
+			}
+			return result;
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(e);
 		}
