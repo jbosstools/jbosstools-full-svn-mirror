@@ -20,28 +20,31 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
+import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
-public class InstanceViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider, ITableLabelProvider {
+public class InstanceViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider,
+		ITableLabelProvider {
 
 	private DeltaCloud cloud;
 	private DeltaCloudInstance[] instances;
 
 	public enum Column {
-		NAME(0, 20), 
-		ID(1, 20), 
-		STATUS(2, 20), 
+		NAME(0, 20),
+		ID(1, 20),
+		STATUS(2, 20),
 		HOSTNAME(3, 40);
-		
+
 		private int column;
 		private int weight;
-		private static final Map<Integer,Column> lookup 
-		= new HashMap<Integer,Column>();
+		private static final Map<Integer, Column> lookup = new HashMap<Integer, Column>();
 
 		static {
-			for(Column c : EnumSet.allOf(Column.class))
+			for (Column c : EnumSet.allOf(Column.class))
 				lookup.put(c.getColumnNumber(), c);
 		}
 
@@ -53,7 +56,7 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 		public int getColumnNumber() {
 			return column;
 		}
-		
+
 		public int getWeight() {
 			return weight;
 		}
@@ -61,13 +64,13 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 		public static Column getColumn(int number) {
 			return lookup.get(number);
 		}
-		
+
 		public static int getSize() {
 			return lookup.size();
 		}
-		
+
 	};
-	
+
 	@Override
 	public Object[] getElements(Object inputElement) {
 		return instances;
@@ -83,9 +86,9 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (newInput != null) {
 			if (newInput instanceof DeltaCloudInstance[]) {
-				instances = filter((DeltaCloudInstance[])newInput);
+				instances = filter((DeltaCloudInstance[]) newInput);
 			} else {
-				cloud = (DeltaCloud)newInput;
+				cloud = (DeltaCloud) newInput;
 				instances = filter(cloud.getCurrInstances());
 			}
 		}
@@ -101,16 +104,36 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 		}
 		return array.toArray(new DeltaCloudInstance[array.size()]);
 	}
-	
+
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
-		return null;
+		Column c = Column.getColumn(columnIndex);
+		DeltaCloudInstance i = (DeltaCloudInstance) element;
+		switch (c) {
+		case STATUS:
+			return getStatusIcon(i.getState());
+		default:
+			return null;
+		}
+	}
+
+	private Image getStatusIcon(String status) {
+		if (DeltaCloudInstance.STOPPED.equals(status)) {
+			return SWTImagesFactory.get(SWTImagesFactory.IMG_STOP);
+		} else if (DeltaCloudInstance.RUNNING.equals(status)) {
+			return SWTImagesFactory.get(SWTImagesFactory.IMG_START);
+		} else if (DeltaCloudInstance.BOGUS.equals(status)) {
+			return PlatformUI.getWorkbench().getSharedImages().
+					getImage(ISharedImages.IMG_DEC_FIELD_WARNING);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		Column c = Column.getColumn(columnIndex);
-		DeltaCloudInstance i = (DeltaCloudInstance)element;
+		DeltaCloudInstance i = (DeltaCloudInstance) element;
 		if (i != null) {
 			switch (c) {
 			case NAME:
@@ -118,7 +141,8 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 			case ID:
 				return i.getId();
 			case STATUS:
-				return i.getState();
+//				return i.getState();
+				return "";
 			case HOSTNAME:
 				return i.getHostName();
 			}
