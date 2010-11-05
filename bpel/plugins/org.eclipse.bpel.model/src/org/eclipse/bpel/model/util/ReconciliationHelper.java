@@ -1007,7 +1007,14 @@ public class ReconciliationHelper {
 	    } else if (child instanceof OnEvent) {
 	    	
 	    } else if (child instanceof OnAlarm) {
-		    
+	    	Activity activity = ((OnAlarm) child).getActivity();
+		    if(((OnAlarm) child).getActivity() != null) {
+	    	    Element childElement = ((WSDLElement)activity).getElement();
+			    if (childElement == null) {
+	    		    childElement = ElementFactory.getInstance().createElement(((ExtensibleElement)activity), child);
+	    		    ((ExtensibleElement)activity).setElement(childElement);
+	    	    }
+		    }
 	    } else if (child instanceof FaultHandler) {
 	    	FaultHandler c = (FaultHandler)child;
 	    	EList<Catch> _catch = c.getCatch();
