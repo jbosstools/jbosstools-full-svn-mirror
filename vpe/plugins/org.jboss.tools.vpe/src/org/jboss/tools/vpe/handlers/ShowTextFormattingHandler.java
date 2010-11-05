@@ -82,6 +82,9 @@ public class ShowTextFormattingHandler extends VisualPartAbstractHandler {
 		JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) editor;
 		MozillaEditor mozillaEditor = ((VpeEditorPart) jspEditor
 				.getVisualEditor()).getVisualEditor();
+		if(mozillaEditor==null){
+			return;
+		}
 		IVpeToolBarManager vpeToolBarManager = mozillaEditor
 				.getVpeToolBarManager();
 
