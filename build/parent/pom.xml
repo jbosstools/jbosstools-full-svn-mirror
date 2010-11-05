@@ -29,7 +29,10 @@
 		<target.platform.classifier.local>local
 		</target.platform.classifier.local>
 
-		<!-- Set this to a path on your own machine, or use remote URL like http://download.jboss.org/jbosstools/updates/target-platform/latest/ -->
+		<!-- Set this to a path on your own machine, or use remote URL like http://download.jboss.org/jbosstools/updates/target-platform/latest/
+				Can also generate a local.target file which will always point to your local repo w/o having to edit here. 
+				See local.target profile below for more information. 
+		-->
 		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/
 		</target.platform.site>
 	</properties>
@@ -190,7 +193,9 @@
 	</issueManagement>
 	<profiles>
 
-		<!-- TODO: remove this when no one depends on it -->
+		<!-- TODO: remove this when no one depends on it; replace with unified.target, not multiuple.target,
+				since no one should need to resolve against all these sites (and one site is by far faster) ! 
+		-->
 		<profile>
 			<id>helios</id>
 			<activation>
@@ -218,8 +223,12 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<!-- Target platform file pointing at a single update site from which to resolve. 
+				See unified.site if you want to resolve against a site w/o using the unified.target file 
+		-->
 		<profile>
-			<id>unified</id>
+			<id>unified.target</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
@@ -245,8 +254,21 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<!-- To use this profile, must have first created a local.target file, 
+			which points to a local repo. You can do this by hand or generate it from 
+			multiple.target using: cd ~/trunk/build/target-platform; ant See also the 
+			README in target-platform/ folder for additional usage examples. You can 
+			also run `ant help`.
+			
+			If you want to build the target-platform/pom.xml AND generate a local repo 
+			+ local.target file ALL AT THE SAME TIME, you can do:
+			
+			mvn clean install -Plocal -f /path/to/target-platform/pom.xml			
+			
+		-->
 		<profile>
-			<id>local</id>
+			<id>local.target</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
@@ -292,13 +314,61 @@
 				</repository>
 			</repositories>
 		</profile>
+		
+		<!-- if you have a local repo mirror of the unified.site, you can use this profile with the 
+				-Dtarget.platform.site=file://path/to/repo 
+				to resolve dependencies without needing to use a local.target file
+		-->
+		<profile>
+			<id>local.site</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-target-platform-repo</id>
+					<url>${target.platform.site}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
 
-		<!-- Time saver: to build everything from scratch from a single repo containing 
-			all deps in .target -->
+		<!-- TODO: remove this when no one depends on it; replace with unified.site -->
 		<profile>
 			<id>helios-remote-target</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-target-platform-repo</id>
+					<url>http://download.jboss.org/jbosstools/updates/target-platform/latest/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- Time saver: to build everything from scratch from a single repo containing 
+			all deps in unified.target, but without using the target file to filter site contents 
+			(may end up using a different version of a dependency if site contains multiple versions)
+		-->
+		<profile>
+			<id>unified.site</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<repositories>
 				<repository>
@@ -328,6 +398,7 @@
 			To enable it use -P helios-no-target in command line. Do not remove repos 
 			that contains the same artefacts, it is done for purpose to make build more 
 			stable in case one of the repos is offline. -->
+		<!-- TODO: rename when no one depends on it; rename to multiple.site -->
 		<profile>
 			<id>helios-no-target</id>
 			<activation>
@@ -734,8 +805,8 @@
 		<profile>
 			<id>jbosstools-nightly-trunk</id>
 			<activation>
-                                <activeByDefault>true</activeByDefault>
-                        </activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<repositories>
 				<repository>
 					<id>jbosstools-nightly-trunk</id>
