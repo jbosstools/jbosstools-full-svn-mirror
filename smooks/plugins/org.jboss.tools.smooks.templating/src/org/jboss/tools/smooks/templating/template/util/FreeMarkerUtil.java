@@ -121,8 +121,12 @@ public class FreeMarkerUtil {
 	public static String toPath(String srcPath, boolean nodeModelSource) {
 		if(nodeModelSource) {
 			StringBuilder builder = new StringBuilder();
-			String[] tokens = srcPath.split("\\.");
 			
+			if(srcPath.startsWith("/") && srcPath.length() > 0) {
+				srcPath = srcPath.substring(1);
+			}
+			
+			String[] tokens = srcPath.split("/");
 			builder.append(".vars[\"").append(tokens[0]).append("\"]");
 			if(tokens.length > 1) {
 				builder.append("[\"");
@@ -145,7 +149,7 @@ public class FreeMarkerUtil {
 	public static String normalizePath(String srcPath) {
 		Matcher matcher = varsPattern.matcher(srcPath);
 		if(matcher.matches()) {
-			return matcher.group(1) + "." + matcher.group(2).replace('/', '.');
+			return matcher.group(1) + "/" + matcher.group(2);
 		} else {
 			return srcPath;
 		}

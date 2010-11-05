@@ -442,7 +442,7 @@ public abstract class TemplateBuilder {
 	 * @return The fully resolved path.
 	 */
 	public String resolveMappingSrcPath(Mapping mapping) {
-		String[] srcPathTokens = mapping.getSrcPath().split("\\.");
+		String[] srcPathTokens = mapping.getSrcPath().split("/");
 		
 		if(srcPathTokens.length > 1) {
 			CollectionMapping parentCollection = findParentCollection(srcPathTokens[0], mapping);
@@ -451,7 +451,7 @@ public abstract class TemplateBuilder {
 				
 				pathBuilder.append(resolveMappingSrcPath(parentCollection));
 				for(int i = 1; i < srcPathTokens.length; i++) {
-					pathBuilder.append('.');
+					pathBuilder.append('/');
 					pathBuilder.append(srcPathTokens[i]);
 				}
 				

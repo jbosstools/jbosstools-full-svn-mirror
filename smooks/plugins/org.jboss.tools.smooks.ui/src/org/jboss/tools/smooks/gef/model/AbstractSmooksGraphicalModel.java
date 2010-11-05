@@ -26,6 +26,7 @@ import org.jboss.tools.smooks.gef.tree.model.IConnectableNode;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
+import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
 import org.w3c.dom.Node;
 
 /**
@@ -413,7 +414,7 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 	}
 
 	public TreeNodeModel getModelNode(String srcPath) {
-		String[] pathTokens = srcPath.split("\\.");
+		String[] pathTokens = srcPath.split("/");
 		
 		if(pathTokens.length > 0) {
 			return getModeNode(pathTokens, 0);
@@ -485,8 +486,7 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 						TagObject tagObj = (TagObject) childData;
 						if(tagObj.getName().equals(nodeName)) {
 							isMatch = true;
-						}
-						
+						}						
 					}
 				}
 				

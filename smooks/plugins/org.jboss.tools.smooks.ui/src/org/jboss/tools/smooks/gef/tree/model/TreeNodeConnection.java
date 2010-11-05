@@ -188,11 +188,11 @@ public class TreeNodeConnection implements IValidatableModel{
 			}
 
 			if(currentNode == sourceCollectionDomNode) {
-				builder.insert(0, collectionMapping.getCollectionItemName() + ".");
+				builder.insert(0, collectionMapping.getCollectionItemName() + "/");
 			}
 		} else {
 			// No parent connection... just use the connection source path...
-			builder.append(SmooksUIUtils.generateFullPath((IXMLStructuredObject) sourceNodeModel.getData(), "."));				
+			builder.append(SmooksUIUtils.generateFullPath((IXMLStructuredObject) sourceNodeModel.getData(), "/"));				
 		}
 		
 		if(builder.length() > 1 && builder.charAt(0) == '.') {
