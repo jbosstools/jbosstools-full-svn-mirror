@@ -733,6 +733,9 @@
 
 		<profile>
 			<id>jbosstools-nightly-trunk</id>
+			<activation>
+                                <activeByDefault>true</activeByDefault>
+                        </activation>
 			<repositories>
 				<repository>
 					<id>jbosstools-nightly-trunk</id>
