@@ -128,6 +128,13 @@ import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
+import org.jboss.tools.vpe.handlers.PageDesignOptionsHandler;
+import org.jboss.tools.vpe.handlers.PreferencesHandler;
+import org.jboss.tools.vpe.handlers.RefreshHandler;
+import org.jboss.tools.vpe.handlers.RotateEditorsHandler;
+import org.jboss.tools.vpe.handlers.ShowBorderHandler;
+import org.jboss.tools.vpe.handlers.ShowBundleAsELHandler;
+import org.jboss.tools.vpe.handlers.ShowNonVisualTagsHandler;
 import org.jboss.tools.vpe.handlers.ShowTextFormattingHandler;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
@@ -2370,7 +2377,6 @@ public class VpeController implements INodeAdapter,
 	}
 
 	public void setVisualEditorVisible(boolean visualEditorVisible) {
-		VpeDebugUtil.debugInfo(visualEditorVisible+"");
 		this.visualEditorVisible = visualEditorVisible;
 	}
 
@@ -2467,7 +2473,13 @@ public class VpeController implements INodeAdapter,
 		ICommandService commandService = (ICommandService) PlatformUI
 		.getWorkbench().getService(ICommandService.class);
 		commandService.refreshElements(ShowTextFormattingHandler.COMMAND_ID, null);
-
+		commandService.refreshElements(RotateEditorsHandler.COMMAND_ID, null);
+		commandService.refreshElements(ShowNonVisualTagsHandler.COMMAND_ID, null);
+		commandService.refreshElements(ShowBundleAsELHandler.COMMAND_ID, null);
+		commandService.refreshElements(ShowBorderHandler.COMMAND_ID, null);
+		commandService.refreshElements(RefreshHandler.COMMAND_ID, null);
+		commandService.refreshElements(PreferencesHandler.COMMAND_ID, null);
+		commandService.refreshElements(PageDesignOptionsHandler.COMMAND_ID, null);
 	}	
 
 	/**

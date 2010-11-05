@@ -13,7 +13,6 @@ package org.jboss.tools.vpe.handlers;
 
 import java.util.Map;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -21,7 +20,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.menus.UIElement;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
@@ -32,14 +30,8 @@ import org.jboss.tools.vpe.editor.VpeController;
 /**
  * Handler for ShowBorder
  */
-public class ShowBorderHandler extends AbstractHandler implements
-		IElementUpdater {
-
-	/**
-	 * The constructor.
-	 */
-	public ShowBorderHandler() {
-	}
+public class ShowBorderHandler extends VisualPartAbstractHandler {
+	public static final String COMMAND_ID = "org.jboss.tools.vpe.commands.showBorderCommand"; //$NON-NLS-1$
 
 	/**
 	 * the command has been executed, so extract extract the needed information
@@ -64,7 +56,7 @@ public class ShowBorderHandler extends AbstractHandler implements
 	}
 
 	public void updateElement(UIElement element, Map parameters) {
-
+		super.updateElement(element, parameters);
 		boolean toggleState = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
 

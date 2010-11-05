@@ -13,24 +13,18 @@ package org.jboss.tools.vpe.handlers;
 
 import java.util.Map;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.HandlerEvent;
-import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.menus.UIElement;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
-import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
@@ -38,34 +32,8 @@ import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
 /**
  * Handler for ShowTextFormatting
  */
-public class ShowTextFormattingHandler extends AbstractHandler implements
-		IElementUpdater {
+public class ShowTextFormattingHandler extends VisualPartAbstractHandler {
 	public static final String COMMAND_ID = "org.jboss.tools.vpe.commands.showTextFormattingCommand"; //$NON-NLS-1$
-
-	/**
-	 * The constructor.
-	 */
-	public ShowTextFormattingHandler() {
-	}
-	
-	@Override
-	public void setEnabled(Object evaluationContext) {
-		boolean enabled = false;
-		
-		if (evaluationContext instanceof IEvaluationContext) {
-			IEvaluationContext context = (IEvaluationContext) evaluationContext;
-			Object activeEditor = context.getVariable(ISources.ACTIVE_EDITOR_NAME);
-			if(activeEditor instanceof JSPMultiPageEditor){
-				JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
-				if(jspEditor.getVisualEditor().getController()!=null)
-				enabled=((VpeController)(jspEditor.getVisualEditor().getController())).isVisualEditorVisible();
-			}
-		}
-		
-		if (enabled != isEnabled()) {
-			setBaseEnabled(enabled);
-		}
-	}
 
 	/**
 	 * the command has been executed, so extract extract the needed information
@@ -90,7 +58,7 @@ public class ShowTextFormattingHandler extends AbstractHandler implements
 	}
 
 	public void updateElement(UIElement element, Map parameters) {
-
+		super.updateElement(element, parameters);
 		boolean toggleState = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
 
@@ -101,7 +69,7 @@ public class ShowTextFormattingHandler extends AbstractHandler implements
 			IEditorPart editor = openedEditor.getEditor(true);
 			toggleShowTextFormatting(editor, toggleState);
 		}
-		fireHandlerChanged(new HandlerEvent(this, true, false));
+		
 	}
 
 	private void toggleShowTextFormatting(IEditorPart editor,

@@ -11,7 +11,6 @@
 
 package org.jboss.tools.vpe.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
@@ -22,7 +21,9 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
@@ -30,12 +31,9 @@ import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
 /**
  * Handler for PageDesignOptions
  */
-public class PageDesignOptionsHandler extends AbstractHandler {
-	/**
-	 * The constructor.
-	 */
-	public PageDesignOptionsHandler() {
-	}
+public class PageDesignOptionsHandler extends VisualPartAbstractHandler {
+	
+	public static final String COMMAND_ID="org.jboss.tools.vpe.commands.pageDesignOptionsCommand"; //$NON-NLS-1$
 
 	/**
 	 * the command has been executed, so extract extract the needed information
@@ -84,8 +82,16 @@ public class PageDesignOptionsHandler extends AbstractHandler {
 				file = FileUtil.getFile(input, path.lastSegment());
 			}
 		}
+		boolean isVisualPartVisible=false;
+			if(activeEditor instanceof JSPMultiPageEditor){
+				JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
+				if(jspEditor.getVisualEditor().getController()!=null)
+				isVisualPartVisible=((VpeController)(jspEditor.getVisualEditor().getController())).isVisualEditorVisible();
+			}
 		
-		boolean enabled = file != null && file.exists();
+		
+		boolean isFileExists = file != null && file.exists();
+		boolean enabled=isFileExists&&isVisualPartVisible;
 		if (isEnabled() != enabled) {
 			setBaseEnabled(enabled);
 		}

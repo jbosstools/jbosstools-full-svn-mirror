@@ -11,7 +11,6 @@
 
 package org.jboss.tools.vpe.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IEditorPart;
@@ -21,13 +20,9 @@ import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 /**
  * Handler for Refresh
  */
-public class RefreshHandler extends AbstractHandler {
-	/**
-	 * The constructor.
-	 */
-	public RefreshHandler() {
-	}
-
+public class RefreshHandler extends VisualPartAbstractHandler {
+	
+	public static final String COMMAND_ID = "org.jboss.tools.vpe.commands.refreshCommand"; //$NON-NLS-1$
 	/**
 	 * the command has been executed, so extract extract the needed information
 	 * from the application context.

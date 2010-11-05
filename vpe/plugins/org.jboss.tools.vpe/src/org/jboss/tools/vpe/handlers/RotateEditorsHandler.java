@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -24,11 +23,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
@@ -39,9 +35,10 @@ import org.jboss.tools.vpe.messages.VpeUIMessages;
 /**
  * Handler for RotateEditors
  */
-public class RotateEditorsHandler extends AbstractHandler implements
-		IElementUpdater {
-
+public class RotateEditorsHandler extends VisualPartAbstractHandler{
+	
+	public static final String COMMAND_ID="org.jboss.tools.vpe.commands.rotateEditorsCommand"; //$NON-NLS-1$
+	
 	private static List<String> layoutValues;
 	private static Map<String, String> layoutIcons;
 	private static Map<String, String> layoutNames;
@@ -123,7 +120,7 @@ public class RotateEditorsHandler extends AbstractHandler implements
 	}
 
 	public void updateElement(UIElement element, Map parameters) {
-
+		super.updateElement(element, parameters);
 		IPreferenceStore preferences = JspEditorPlugin.getDefault()
 				.getPreferenceStore();
 		String orientation = preferences
