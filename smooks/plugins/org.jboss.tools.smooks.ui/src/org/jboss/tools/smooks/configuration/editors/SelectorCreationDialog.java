@@ -13,6 +13,7 @@ package org.jboss.tools.smooks.configuration.editors;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -549,7 +550,8 @@ public class SelectorCreationDialog extends Dialog {
 	        }
 	    }
 
-	    private <T> T buildObject(Class<T> objectType) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+	    @SuppressWarnings("unchecked")
+		private <T> T buildObject(Class<T> objectType) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
 
 	        if(String.class.isAssignableFrom(objectType)) {
 	            return objectType.cast("x");
@@ -560,6 +562,8 @@ public class SelectorCreationDialog extends Dialog {
 	        } else if(objectType == Object.class) {
 	            // don't construct raw Object types... leave them and just return null...
 	            return null;
+	        } else if(objectType.isEnum()) {
+	        	return (T) EnumSet.allOf((Class<Enum>)objectType).iterator().next();
 	        }
 
 	        T messageInstance = objectType.newInstance();
