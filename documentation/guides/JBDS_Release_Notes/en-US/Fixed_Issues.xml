@@ -8,6 +8,18 @@
 		Following is a list of new and noteworthy features and bug fixes in this release:
 	</para>
 	<formalpara>
+	   <title>BIRT</title>
+	   <para>
+	      <itemizedlist>
+		 <listitem>
+		    <para>
+		       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6041">JBIDE-6041</ulink>: When creating a BIRT report that included the <property>EnumType</property> property, an error would be generated. This bug has been corrected by modifying the <filename>DataTypes.java</filename> file.
+		    </para>
+		 </listitem>
+	      </itemizedlist>
+	   </para>
+	</formalpara>
+	<formalpara>
 		<title>Contexts and Dependency Injection (CDI)</title>
 		<para>
 			<itemizedlist>
@@ -122,6 +134,11 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6412">JBIDE-6412</ulink>: A new feature has been added, the CDI Maven configurator. The configurator allows you to configure the Maven CDI settings for your project.
 				   </para>
 				</listitem> -->
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6251">JBIDE-6251</ulink>: OpenOn support has been added for <methodname>Disposer</methodname> and <methodname>Producer</methodname> methods.
+				    </para>
+				 </listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -178,7 +195,10 @@
 				 </listitem>
 				 <listitem>
 				    <para>
-				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6758">JBIDE-6758</ulink>: An existing <parameter>service</parameter> element without a child <parameter>security</parameter> element would not be be able to have the <parameter>security</parameter> element added through the user interface. To this issue, each <parameter>service</parameter> element now has a <parameter>security</parameter> element and a subsequent <guimenuitem>Security</guimenuitem> form automatically attached in the ESB editor. The <parameter>security</parameter> element can safely be deleted from the <parameter>service</parameter> element code without the <guimenuitem>Security</guimenuitem> form being removed in the ESB editor. This ensures that if a user wishes to re-add a <parameter>security</parameter> element at a later stage, the functionality will exist to do so within the user interface. 
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6758">JBIDE-6758</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6160">JBIDE-6160</ulink>: An existing <parameter>service</parameter> element without a child <parameter>security</parameter> element would not be be able to have the <parameter>security</parameter> element added through the user interface. To fix this issue, each <parameter>service</parameter> element now has a <parameter>security</parameter> element and a subsequent <guimenuitem>Security</guimenuitem> form automatically attached in the ESB editor. The <parameter>security</parameter> element can safely be deleted from the <parameter>service</parameter> element code without the <guimenuitem>Security</guimenuitem> form being removed in the ESB editor. This ensures that if a user wishes to re-add a <parameter>security</parameter> element at a later stage, the functionality will exist to do so within the user interface. 
+				    </para>
+				    <para>
+				       In fixing this issue the new value of <property>org.jboss.soa.esb.services.security.auth.login.JBossSTSIssueCallbackHandler</property> was also added to the Callback Handler drop-down box. This new value enables the ability to retrieve user and password information from an authentication request.
 				    </para>
 				 </listitem>
 				 <listitem>
@@ -293,21 +313,32 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6423">JBIDE-6423</ulink>: A new feature that allows for code generation to be run in external processes has been added. This new feature is accessed through the <guilabel>Hibernate Code Generation Configurations</guilabel> wizard in the form of a checkbox called <guilabel>Use generation in external process</guilabel>.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6120">JBIDE-6120</ulink>: Superclass properties were not shown in code completion, within the <guilabel>HQLEditor</guilabel>. A new feature has been added for this release that enables superclass properties to appear when using code completion within the <guilabel>HQLEditor</guilabel>.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6115">JBIDE-6115</ulink>: The <guibutton>Schema Export (.ddl)</guibutton> exporter would apply any changes made by a user to the database during the export process. This was unexpected behavior and had the ability to cause unwanted data loss. This issue has been corrected by ensuring that the script is not exported to the database by default, thus no changes are applied to the databse by default now when using the <guibutton>Schema Export (.ddl)</guibutton> functionality.
+				   </para>
+				</listitem>
+<!-- JBIDE-5960 was included in the JBDS 3.0.1 and JBT 3.1.1 releases. Mentioned in 3.0.1 Release Notes -->
 			</itemizedlist>
 		</para>
 	     </formalpara>
-<!--	<formalpara>
+	<formalpara>
 		<title>jBPM</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6104">JBIDE-6104</ulink>: An error existed that meant local and deployment server settings were not saved and upon reopening the jBPM Process Definition Language (JPDL) all the settings would need to be reconfigured. With this release changes made to local and deployment server settings are made persistent across JPDL sessions. 
 						</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 	<formalpara>
 		<title>JavaServer Faces (JSF)</title>
 		<para>
@@ -350,6 +381,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6266">JBIDE-6266</ulink>: Content Assist now includes support for Web Standards Tools (WST) categories. A futher two categories have been added: JBoss JSF/Seam EL and JBoss JSF/Seam Tag Proposals.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6259">JBIDE-6259</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6025">JBIDE-6025</ulink>: A new option has been added to the <guilabel>Preferences</guilabel> page allowing a user to <option>enable</option> or <option>disbale</option> code assist of <methodname>get</methodname> and <methodname>set</methodname> methods in the expression language.
 				   </para>
 				</listitem>
 			</itemizedlist>
@@ -589,6 +625,21 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6288">JBIDE-6288</ulink>: When hovering over a button created in the Visual Page Editor, the button would not be highlighted on Linux operating systems. This issue has been corrected by modifying the following files: <filename>VpeController.java</filename>, <filename>VpeDnD.java</filename>, <filename>MozillaEventAdapter.java</filename>, <filename>VisualDomUtil.java</filename> and <filename>MozillaDndListener.java</filename>.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6114">JBIDE-6114</ulink>: A new template has been added to the Visual Page Editor, enabling improved rendering of the jBPM task forms.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6092">JBIDE-6092</ulink>: New features have been added to the Visual Page Editor that allow for items in a table to be moved by select CSS classes and for all items in a CSS tree node to be moved through the CSS class viewer.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5970">JBIDE-5970</ulink>: A new feature has been added that indicates the drop actions available to a user while they are dragging an element. Available actions are displayed to the user in a text caption.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -646,18 +697,18 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-<!--	<formalpara>
+	<formalpara>
 		<title>XML Structured Editor</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5975">JBIDE-5975</ulink>: The <filename>web.xml</filename> editor did not support the JavaEE 6 Servlet 3.0 specification. The <filename>web.xml</filename> editor has now been updated to suppor the new Servlet specification version.
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 	<formalpara>
 		<title>General Issues</title>
 		<para>
@@ -671,6 +722,36 @@
 			      <listitem>
 				 <para>
 				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6507">JBIDE-6507</ulink>: Support has been added for enabling and disabling project validators based on the JBoss KB (Knowledge Base) project validator. Validators that can be enabled or disabled include those for JSF, Seam and CDI.
+				 </para>
+			      </listitem>
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6238">JBIDE-6238</ulink>: When a user accesses example projects some of the sites used by the examples may not be reachable due to no network access, proxy or firewall settings. Previously the user would not be informed of this issue. In this release the user is now informed when a site attempting to be accessed by an example project is unreachable.
+				 </para>
+			      </listitem>
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6183">JBIDE-6183</ulink>: Library files for RichFaces have been updated to the latest version, supporting RichFaces 3.3.3.
+				 </para>
+			      </listitem>
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6131">JBIDE-6131</ulink>: Previously the specification of XHTML templates was handled by navigating to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>JSF</guimenuitem><guimenuitem>JSF Pages</guimenuitem></menuchoice>. This process was not intuitive for users as the standard Eclipse method of specifying templates is by navigating to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem><replaceable>COMPONENT_NAME</replaceable></guimenuitem><guimenuitem>Editor</guimenuitem><guimenuitem>Templates</guimenuitem></menuchoice>. Specification of XHTML templates is now handled using the standard Eclipse user interface approach, improving usability.
+				 </para>
+			      </listitem>
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6119">JBIDE-6119</ulink>: When installing the tool set, the included installer has the ability to find, detect and configure JBoss server runtimes for use; this functionality however was never extended past the initial installation. A new feature has been added that now allows a user to find, detect and configure installed JBoss server runtimes after installation. This new functionality can be found by navigating to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>JBoss Runtimes</guimenuitem></menuchoice>.
+				 </para>
+			      </listitem>
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6083">JBIDE-6083</ulink>: Functionality has been added to all editors that allow for them to be placed vertically side by side, rather than just horizontally. This new feature is available through the <menuchoice>Window</menuchoice> menu of Eclipse.
+				 </para>
+			      </listitem>
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5950">JBIDE-5950</ulink>: Additional runtime checks have been added to the ESB and BPEL project examples. This ensures that the ability to specify required components is available, as it is for other project examples.
 				 </para>
 			      </listitem>
 			</itemizedlist>
