@@ -63,7 +63,7 @@ public abstract class CloudViewElement implements IAdaptable {
 		return element;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Object getAdapter(Class adapter) {
 		if (adapter == IPropertySource.class) {

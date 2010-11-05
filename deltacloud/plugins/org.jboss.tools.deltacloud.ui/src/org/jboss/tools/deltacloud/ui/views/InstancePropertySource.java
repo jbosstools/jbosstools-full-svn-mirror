@@ -53,7 +53,6 @@ public class InstancePropertySource implements IPropertySource {
 	
 	@Override
 	public Object getEditableValue() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -153,8 +152,6 @@ public class InstancePropertySource implements IPropertySource {
 
 	@Override
 	public void setPropertyValue(Object id, Object value) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

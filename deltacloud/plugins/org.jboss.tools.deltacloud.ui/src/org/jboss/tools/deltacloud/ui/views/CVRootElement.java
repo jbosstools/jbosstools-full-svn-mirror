@@ -30,7 +30,7 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 	
 	@Override
 	public IPropertySource getPropertySource() {
-		// TODO Auto-generated method stub
+		// no property source for the root element
 		return null;
 	}
 

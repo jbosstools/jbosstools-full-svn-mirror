@@ -22,5 +22,4 @@ public class CVImageElement extends CloudViewElement {
 	public IPropertySource getPropertySource() {
 		return new ImagePropertySource(getElement());
 	}
-
 }

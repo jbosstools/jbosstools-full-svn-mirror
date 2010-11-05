@@ -35,7 +35,6 @@ public class ImagePropertySource implements IPropertySource {
 	
 	@Override
 	public Object getEditableValue() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -82,13 +81,10 @@ public class ImagePropertySource implements IPropertySource {
 
 	@Override
 	public void resetPropertyValue(Object id) {
-		// do nothing
 	}
 
 	@Override
 	public void setPropertyValue(Object id, Object value) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

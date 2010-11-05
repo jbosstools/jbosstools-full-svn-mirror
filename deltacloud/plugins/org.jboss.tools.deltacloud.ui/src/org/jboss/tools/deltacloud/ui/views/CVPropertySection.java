@@ -32,14 +32,13 @@ public class CVPropertySection extends AbstractPropertySection {
 	 * @see org.eclipse.ui.views.properties.tabbed.ISection#createControls(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage)
 	 */
-	public void createControls(Composite parent,
-			final TabbedPropertySheetPage atabbedPropertySheetPage) {
+	public void createControls(Composite parent, final TabbedPropertySheetPage atabbedPropertySheetPage) {
 		super.createControls(parent, atabbedPropertySheetPage);
-		Composite composite = getWidgetFactory()
-			.createFlatFormComposite(parent);
-		page = new CVPropertySheetPage();
 
+		Composite composite = getWidgetFactory().createFlatFormComposite(parent);
+		page = new CVPropertySheetPage();
 		page.createControl(composite);
+
 		FormData data = new FormData();
 		data.left = new FormAttachment(0, 0);
 		data.right = new FormAttachment(100, 0);

@@ -138,8 +138,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		return getSite().getId();
 	}
 
-	@SuppressWarnings("unchecked")
-	public Object getAdapter(Class adapter) {
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
 		if (adapter == IPropertySheetPage.class)
 			// If Tabbed view is desired, then change the
 			// following to new TabbedPropertySheetPage(this)
