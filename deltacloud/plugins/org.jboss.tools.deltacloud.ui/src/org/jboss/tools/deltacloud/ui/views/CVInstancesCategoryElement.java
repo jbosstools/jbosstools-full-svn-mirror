@@ -18,6 +18,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
@@ -34,7 +36,21 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 		this.viewer = viewer;
 		DeltaCloud cloud = (DeltaCloud) getElement();
 		cloud.addInstanceListListener(this);
+		viewer.getControl().addDisposeListener(onDispose());
 		this.category = this;
+	}
+
+	private DisposeListener onDispose() {
+		return new DisposeListener() {
+			
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				DeltaCloud cloud = (DeltaCloud) getElement();
+				if (cloud != null) {
+					cloud.removeInstanceListListener(CVInstancesCategoryElement.this);
+				}
+			}
+		};
 	}
 
 	protected void finalize() throws Throwable {

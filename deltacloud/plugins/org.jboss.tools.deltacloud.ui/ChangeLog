@@ -5,6 +5,8 @@
 	[JBIDE-7507] returns now icons to represent states (instead of texts)
 	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (.run): 
 	[JBIDE-7503] added restore selection after refresh (viewer lost the selection before this change)
+	(onDispose): 
+	[JBIDE-7506] remove cloud instance listener if viewer is disposed
 
 2010-11-04  André Dietisheim  <adietish@redhat.com>
 
