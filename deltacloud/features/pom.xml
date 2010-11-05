@@ -5,7 +5,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<artifactId>features</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>seam.features</name>
+	<name>deltacloud.features</name>
 	<modules>
 		<module>org.jboss.tools.deltacloud.feature</module>
 	<!--	<module>org.jboss.tools.deltacloud.test.feature</module> -->
