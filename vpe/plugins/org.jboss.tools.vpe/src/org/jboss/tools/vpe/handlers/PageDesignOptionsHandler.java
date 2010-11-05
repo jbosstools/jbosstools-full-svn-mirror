@@ -70,6 +70,9 @@ public class PageDesignOptionsHandler extends AbstractHandler {
 	public void setEnabled(Object evaluationContext) {
 		IEditorPart activeEditor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		if (activeEditor == null) {
+			return;
+		}
 		IEditorInput input = activeEditor.getEditorInput();
 		IFile file = null;
 		if (input instanceof IFileEditorInput) {
