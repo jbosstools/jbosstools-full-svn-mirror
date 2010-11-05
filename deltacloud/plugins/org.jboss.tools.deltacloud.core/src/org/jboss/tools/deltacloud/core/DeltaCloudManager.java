@@ -78,8 +78,8 @@ public class DeltaCloudManager {
 		String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
 		String key = DeltaCloud.getPreferencesKey(url, username); // $NON-NLS-1$
 		String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
-		String lastKeyName = getLastKeyName(attrs.getNamedItem("lastkeyname"));
-		String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage"));
+		String lastKeyName = getLastKeyName(attrs.getNamedItem("lastkeyname")); // $NON-NLS-1$
+		String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage")); // $NON-NLS-1$
 		ISecurePreferences root = SecurePreferencesFactory.getDefault();
 		ISecurePreferences node = root.node(key);
 		try {
@@ -122,24 +122,13 @@ public class DeltaCloudManager {
 
 	public void saveClouds() {
 		try {
-			IPath stateLocation = Activator.getDefault().getStateLocation();
-			File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
-			if (!cloudFile.exists()) {
-				cloudFile.createNewFile();
-			}
+			File cloudFile = getOrCreateCloudFile();
 			if (cloudFile.exists()) {
 				PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter(cloudFile)));
 				p.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
 				p.println("<clouds>"); // $NON-NLS-1$
 				for (DeltaCloud d : clouds) {
-					p.println("<cloud name=\"" + d.getName() + "\" url=\"" //$NON-NLS-1$ //$NON-NLS-2$ 
-							+ d.getURL() + "\" username=\"" + d.getUsername() + //$NON-NLS-1$ //$NON-NLS-2$ 
-							"\" type=\"" + d.getType() + //$NON-NLS-1$ //$NON-NLS-2$
-							"\" imagefilter=\"" + d.getImageFilter() + //$NON-NLS-1$ //$NON-NLS-2$
-							"\" instancefilter=\"" + d.getInstanceFilter() + //$NON-NLS-1$ //$NON-NLS-2$
-							"\" lastkeyname=\"" + d.getLastKeyname() + //$NON-NLS-1$ //$NON-NLS-2$
-							"\" lastimage=\"" + d.getLastImageId() + //$NON-NLS-1$ //$NON-NLS-2$
-							"\"/>"); //$NON-NLS-1$
+					p.println(createCloudXML(d)); //$NON-NLS-1$
 				}
 				p.println("</clouds>"); //$NON-NLS-1$
 				p.close();
@@ -147,6 +136,27 @@ public class DeltaCloudManager {
 		} catch (Exception e) {
 			Activator.log(e);
 		}
+	}
+
+	private String createCloudXML(DeltaCloud d) {
+		return "<cloud name=\"" + d.getName() + "\" url=\"" //$NON-NLS-1$ //$NON-NLS-2$ 
+				+ d.getURL() + "\" username=\"" + d.getUsername() + //$NON-NLS-1$ //$NON-NLS-2$ 
+				"\" type=\"" + d.getType() + //$NON-NLS-1$ //$NON-NLS-2$
+				"\" imagefilter=\"" + d.getImageFilter() + //$NON-NLS-1$ //$NON-NLS-2$
+				"\" instancefilter=\"" + d.getInstanceFilter() + //$NON-NLS-1$ //$NON-NLS-2$
+				"\" lastkeyname=\"" + d.getLastKeyname() + //$NON-NLS-1$ //$NON-NLS-2$
+				"\" lastimage=\"" + d.getLastImageId() + //$NON-NLS-1$ //$NON-NLS-2$
+				"\"/>";
+	}
+
+	private File getOrCreateCloudFile() throws IOException {
+		IPath stateLocation = Activator.getDefault().getStateLocation();
+		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
+		if (!cloudFile.exists()) {
+			// try to create a new cloud storage file
+			cloudFile.createNewFile();
+		}
+		return cloudFile;
 	}
 
 	public static DeltaCloudManager getDefault() {
@@ -179,17 +189,10 @@ public class DeltaCloudManager {
 		String userName = d.getUsername();
 		// check if we have a duplicate cloud connection using the same
 		// url/username combo.
-		boolean found = false;
-		for (DeltaCloud cloud : clouds) {
-			if (cloud.getURL().equals(url) && cloud.getUsername().equals(userName)) {
-				found = true;
-				break;
-			}
-		}
 		// if we have removed a cloud and no other cloud shares the
 		// url/username combo, then we should clear the node out which
 		// includes the password.
-		if (!found) {
+		if (!isHasAnyCloud(url, userName)) {
 			ISecurePreferences root = SecurePreferencesFactory.getDefault();
 			String key = DeltaCloud.getPreferencesKey(url, userName);
 			ISecurePreferences node = root.node(key);
@@ -197,6 +200,22 @@ public class DeltaCloudManager {
 		}
 		saveClouds();
 		notifyListeners(ICloudManagerListener.REMOVE_EVENT);
+	}
+
+	/**
+	 * Checks if any cloud uses the given url and username
+	 *
+	 * @param url the url
+	 * @param userName the user name
+	 * @return true, if is checks for any cloud
+	 */
+	private boolean isHasAnyCloud(String url, String userName) {
+		for (DeltaCloud cloud : clouds) {
+			if (cloud.getURL().equals(url) && cloud.getUsername().equals(userName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void notifyCloudRename() {
