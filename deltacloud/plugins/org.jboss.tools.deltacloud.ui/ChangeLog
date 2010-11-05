@@ -1,5 +1,8 @@
 2010-11-05  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (getStatusIcon): 
+	(getColumnImage): 
+	[JBIDE-7507] returns now icons to represent states (instead of texts)
 	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (.run): 
 	[JBIDE-7503] added restore selection after refresh (viewer lost the selection before this change)
 
