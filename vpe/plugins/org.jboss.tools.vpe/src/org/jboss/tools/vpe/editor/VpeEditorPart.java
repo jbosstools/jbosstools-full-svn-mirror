@@ -27,6 +27,8 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Point;
@@ -400,6 +402,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			}
 			break;
 		}
+		if(visualEditor!=null&&visualEditor.getController()!=null){
+			visualEditor.getController().refreshCommands();
+		}
 		container.layout();
 		if (visualMode == SOURCE_MODE && type != SOURCE_MODE) {
 			visualMode = type;
@@ -455,6 +460,21 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 *  see https://bugs.eclipse.org/bugs/show_bug.cgi?id=302950
 		 */
 		cmpEdTl =  parent;
+		cmpEdTl.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				System.out.println();
+				
+			}
+		});
+		
 		GridLayout layoutEdTl = new GridLayout(2, false);
 		layoutEdTl.verticalSpacing = 0;
 		layoutEdTl.marginHeight = 0;
@@ -1032,6 +1052,8 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 
 		private void handleActivation() {
+			if(visualEditor!=null&&visualEditor.getController()!=null)
+			visualEditor.getController().refreshCommands();
 			if (fIsHandlingActivation)
 				return;
 

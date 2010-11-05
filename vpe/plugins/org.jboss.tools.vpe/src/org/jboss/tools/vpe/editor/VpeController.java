@@ -55,6 +55,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.internal.keys.WorkbenchKeyboard;
 import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.progress.UIJob;
@@ -125,7 +126,9 @@ import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
+import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
 import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
+import org.jboss.tools.vpe.handlers.ShowTextFormattingHandler;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
@@ -356,6 +359,7 @@ public class VpeController implements INodeAdapter,
 		// yradtsevich: we have to refresh VPE selection on init (fix of
 		// JBIDE-4037)
 		sourceSelectionChanged(true);
+		refreshCommands();
 	}
 
 	public void dispose() {
@@ -2366,6 +2370,7 @@ public class VpeController implements INodeAdapter,
 	}
 
 	public void setVisualEditorVisible(boolean visualEditorVisible) {
+		VpeDebugUtil.debugInfo(visualEditorVisible+"");
 		this.visualEditorVisible = visualEditorVisible;
 	}
 
@@ -2455,6 +2460,15 @@ public class VpeController implements INodeAdapter,
 		}
 
 	}
+	/**
+	 * 
+	 */
+	public void refreshCommands(){
+		ICommandService commandService = (ICommandService) PlatformUI
+		.getWorkbench().getService(ICommandService.class);
+		commandService.refreshElements(ShowTextFormattingHandler.COMMAND_ID, null);
+
+	}	
 
 	/**
 	 * @return the visualSelectionController
@@ -2516,4 +2530,5 @@ public class VpeController implements INodeAdapter,
 	public VpeDropWindow getDropWindow() {
 		return dropWindow;
 	}
+	
 }
