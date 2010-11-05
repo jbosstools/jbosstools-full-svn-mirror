@@ -16,6 +16,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 public class Instance extends DeltaCloudObject {
+
 	private static final long serialVersionUID = 1L;
 
 	public static enum State {
@@ -249,5 +250,4 @@ public class Instance extends DeltaCloudObject {
 
 		return s;
 	}
-
 }
