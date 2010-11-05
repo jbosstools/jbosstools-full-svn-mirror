@@ -22,5 +22,4 @@ public class CVInstanceElement extends CloudViewElement {
 	public IPropertySource getPropertySource() {
 		return new InstancePropertySource(this, getElement());
 	}
-
 }

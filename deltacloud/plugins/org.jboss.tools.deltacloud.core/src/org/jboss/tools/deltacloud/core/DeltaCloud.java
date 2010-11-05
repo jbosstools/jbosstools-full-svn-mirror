@@ -164,6 +164,7 @@ public class DeltaCloud {
 		}
 		if (!rules.equals(ruleString)) {
 			save();
+			// TODO: remove notification with all instances, replace by notifying the changed instance
 			notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 		}
 	}
@@ -270,6 +271,7 @@ public class DeltaCloud {
 			} catch (DeltaCloudClientException e) {
 				Activator.log(e);
 			}
+			// TODO: remove notification with all instances, replace by notifying the changed instance
 			DeltaCloudInstance[] instancesArray = instances.toArray(new DeltaCloudInstance[instances.size()]);
 			notifyInstanceListListeners(instancesArray);
 			return instancesArray;
@@ -295,6 +297,7 @@ public class DeltaCloud {
 		} catch (DeltaCloudException e) {
 			return null;
 		}
+		// TODO: remove notification with all instances, replace by notifying the changed instance
 		DeltaCloudInstance[] instancesArray = instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()]));
 		notifyInstanceListListeners(instancesArray);
 		return instancesArray;
@@ -330,7 +333,7 @@ public class DeltaCloud {
 			if (!found) {
 				instances.add(instance);
 			}
-
+			// TODO: remove notification with all instances, replace by notifying the changed instance
 			notifyInstanceListListeners(
 					instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 		}
@@ -372,6 +375,7 @@ public class DeltaCloud {
 
 			boolean result = instance.performInstanceAction(actionId, client);
 			if (result) {
+				// TODO: remove notification with all instances, replace by notifying the changed instance
 				notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 			}
 			return result;

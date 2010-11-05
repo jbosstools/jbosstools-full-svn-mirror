@@ -11,7 +11,11 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
@@ -24,31 +28,31 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 
 	private Viewer viewer;
 	private CVInstancesCategoryElement category;
-	
+
 	public CVInstancesCategoryElement(Object element, String name, Viewer viewer) {
 		super(element, name, CVCategoryElement.INSTANCES);
 		this.viewer = viewer;
-		DeltaCloud cloud = (DeltaCloud)getElement();
+		DeltaCloud cloud = (DeltaCloud) getElement();
 		cloud.addInstanceListListener(this);
 		this.category = this;
 	}
 
 	protected void finalize() throws Throwable {
-		DeltaCloud cloud = (DeltaCloud)getElement();
+		DeltaCloud cloud = (DeltaCloud) getElement();
 		cloud.removeInstanceListListener(this);
 		super.finalize();
 	}
-	
+
 	private void addInstances(DeltaCloudInstance[] instances) {
 		if (instances.length > CVNumericFoldingElement.FOLDING_SIZE) {
 			int min = 0;
 			int max = CVNumericFoldingElement.FOLDING_SIZE;
 			int length = instances.length;
 			while (length > CVNumericFoldingElement.FOLDING_SIZE) {
-				CVNumericFoldingElement f = new CVNumericFoldingElement(null, 
+				CVNumericFoldingElement f = new CVNumericFoldingElement(null,
 						"[" + min + ".." + (max - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				addChild(f);
-				for (int i = min; i < max; ++i) { 
+				for (int i = min; i < max; ++i) {
 					DeltaCloudInstance d = instances[i];
 					CVInstanceElement element = new CVInstanceElement(d, d.getName());
 					f.addChild(element);
@@ -58,8 +62,8 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 				length -= CVNumericFoldingElement.FOLDING_SIZE;
 			}
 			if (length > 0) {
-				CVNumericFoldingElement f = new CVNumericFoldingElement(null, 
-						"[" + min + ".." + (max  - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				CVNumericFoldingElement f = new CVNumericFoldingElement(null,
+						"[" + min + ".." + (max - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				addChild(f);
 				for (int i = min; i < min + length; ++i) {
 					DeltaCloudInstance d = instances[i];
@@ -75,11 +79,11 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 			}
 		}
 	}
-	
+
 	@Override
 	public Object[] getChildren() {
 		if (!initialized) {
-			DeltaCloud cloud = (DeltaCloud)getElement();
+			DeltaCloud cloud = (DeltaCloud) getElement();
 			cloud.removeInstanceListListener(this);
 			DeltaCloudInstance[] instances = filter(cloud.getCurrInstances());
 			addInstances(instances);
@@ -92,20 +96,70 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 	@Override
 	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] newInstances) {
 		clearChildren();
-		DeltaCloudInstance[] instances = filter(newInstances);
+		final DeltaCloudInstance[] instances = filter(newInstances);
 		addInstances(instances);
 		initialized = true;
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				((TreeViewer)viewer).refresh(category, false);
+				IStructuredSelection oldSelection = (IStructuredSelection) viewer.getSelection();
+				((TreeViewer) viewer).refresh(category, false);
+				restoreSelection(oldSelection);
 			}
+
+			/**
+			 * This is a workaround:
+			 * 
+			 * When a change in the list of instances happens, DeltaCloud
+			 * notifies this class with the list of all instances (@see
+			 * DeltaCloud#performInstanceAction). This class then removes all
+			 * children and readds new children with the same DeltaCloudInstance
+			 * instances.
+			 * 
+			 * <p>
+			 * I also tried an alternative approach where I implemented an
+			 * equals method in CVInstanceElement that returns <code>true</code>
+			 * if both elements have the same DeltaCloudInsta instance. The
+			 * consequence is that the viewer keeps the selection, but is not
+			 * aware of a change in the underlying items. The consequence is
+			 * that the context-menu does not change its state (the instance
+			 * action, that was executed, should disappear) and the properties
+			 * view does not update either.
+			 * 
+			 * @param selection
+			 * 
+			 * @see DeltaCloud#performInstanceAction
+			 * @see #listChanged
+			 */
+			private void restoreSelection(IStructuredSelection selection) {
+				ISelection newSelection = new StructuredSelection(getChildrenWithSameDeltaCloudInstance(selection
+						.toList()));
+				viewer.setSelection(newSelection);
+			}
+
+			private List<CVInstanceElement> getChildrenWithSameDeltaCloudInstance(List<?> cvInstanceElements) {
+				List<CVInstanceElement> cvInstances = new ArrayList<CVInstanceElement>();
+				Object[] children = getChildren();
+				for (Object member : cvInstanceElements) {
+					CVInstanceElement cvInstance = (CVInstanceElement) member;
+					DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
+					for (Object child : children) {
+						CVInstanceElement childCvInstanceElement = (CVInstanceElement) child;
+						DeltaCloudInstance childInstance = (DeltaCloudInstance) childCvInstanceElement.getElement();
+						if (instance != null && instance.equals(childInstance)) {
+							cvInstances.add(childCvInstanceElement);
+						}
+					}
+				}
+				return cvInstances;
+			}
+
 		});
 	}
 
 	private DeltaCloudInstance[] filter(DeltaCloudInstance[] input) {
 		ArrayList<DeltaCloudInstance> array = new ArrayList<DeltaCloudInstance>();
-		DeltaCloud cloud = (DeltaCloud)getElement();
+		DeltaCloud cloud = (DeltaCloud) getElement();
 		IInstanceFilter f = cloud.getInstanceFilter();
 		for (int i = 0; i < input.length; ++i) {
 			DeltaCloudInstance instance = input[i];
