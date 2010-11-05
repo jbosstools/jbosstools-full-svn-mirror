@@ -36,7 +36,7 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 	public enum Column {
 		NAME(0, 20),
 		ID(1, 20),
-		STATUS(2, 20),
+		STATUS(2, 6),
 		HOSTNAME(3, 40);
 
 		private int column;
