@@ -18,12 +18,17 @@
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
-		
-		<!-- target files available for building: multiple sites, 1 unified site, 1 local mirrored site -->
-		<target.platform.classifier.multiple>mutiple</target.platform.classifier.multiple>
-		<target.platform.classifier.unified>unified</target.platform.classifier.unified>
-		<target.platform.classifier.local>local</target.platform.classifier.local>
-		
+		<maven.antrun.plugin.version>1.4</maven.antrun.plugin.version>
+
+		<!-- target files available for building: multiple sites, 1 unified site, 
+			1 local mirrored site -->
+		<target.platform.classifier.multiple>mutiple
+		</target.platform.classifier.multiple>
+		<target.platform.classifier.unified>unified
+		</target.platform.classifier.unified>
+		<target.platform.classifier.local>local
+		</target.platform.classifier.local>
+
 		<!-- Set this to a path on your own machine, or use remote URL like http://download.jboss.org/jbosstools/updates/target-platform/latest/ -->
 		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/
 		</target.platform.site>
@@ -33,7 +38,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
+				<version>${maven.antrun.plugin.version}</version>
 			</plugin>
 
 			<plugin>
@@ -135,6 +140,9 @@
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests (?) -->
+
+					<!-- TODO: add new profile to permit running against JBDS product/application 
+						for JBDS tests, against Eclipse SDK for JBT -->
 					<product>org.eclipse.sdk.ide</product>
 					<application>org.eclipse.ui.ide.workbench</application>
 					<dependencies>
@@ -539,7 +547,8 @@
 				</property>
 			</activation>
 			<properties>
-				<emma.session.out.file>${project.build.directory}/emma/coverage.es</emma.session.out.file>
+				<emma.session.out.file>${project.build.directory}/emma/coverage.es
+				</emma.session.out.file>
 				<emma.filter />
 				<emma.instrument.bundles />
 			</properties>
@@ -594,7 +603,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.6</version>
+						<version>${maven.antrun.plugin.version}</version>
 						<dependencies>
 							<dependency>
 								<groupId>emma</groupId>
@@ -690,7 +699,7 @@
 							</dependency>
 						</dependencies>
 						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.6</version>
+						<version>${maven.antrun.plugin.version}</version>
 						<executions>
 							<execution>
 								<id>download-plugin-requirements</id>
