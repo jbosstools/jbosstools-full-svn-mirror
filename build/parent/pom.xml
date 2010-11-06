@@ -18,7 +18,7 @@
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
-		<maven.antrun.plugin.version>1.6</maven.antrun.plugin.version>
+		<maven.antrun.plugin.version>1.3</maven.antrun.plugin.version>
 
 		<!-- target files available for building: multiple sites, 1 unified site, 
 			1 local mirrored site -->
