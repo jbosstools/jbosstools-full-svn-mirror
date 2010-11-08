@@ -139,6 +139,11 @@
 				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6251">JBIDE-6251</ulink>: OpenOn support has been added for <methodname>Disposer</methodname> and <methodname>Producer</methodname> methods.
 				    </para>
 				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5927">JBIDE-5927</ulink>: A new feature has been added allowing for CDI <property>@Named</property> annotated beans to be renamed through refactoring. This change appears when using the <guilabel>Find References</guilabel> functionality for EL expressions. The <guimenuitem>Rename</guimenuitem> action is available from the context menu for a <property>@Named</property> annotation in the Java Source editor.
+				    </para>
+				 </listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -219,6 +224,10 @@
 				       </menuchoice> is available from the ESB editor's menu when the <classname>org.jboss.soa.esb.actions.bpel.BPELInvoke</classname> class is apart of the project classpath. This ensures that the <methodname>BPELInvoke</methodname> action is only enabled when the Riftsaw runtime is installed. 
 				    </para>
 				 </listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5551">JBIDE-5551</ulink>: Language property support has been corrected in the ESB editor. When specifying a <property>ScriptingAction</property> a user can now set a <property>language</property> property instead of allowing the <property>ScriptingAction</property> to determine the language based on the extension of the file.
+				 </para>
+			      </listitem>
 			</itemizedlist>
 		</para>
         </formalpara>
@@ -323,6 +332,21 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6115">JBIDE-6115</ulink>: The <guibutton>Schema Export (.ddl)</guibutton> exporter would apply any changes made by a user to the database during the export process. This was unexpected behavior and had the ability to cause unwanted data loss. This issue has been corrected by ensuring that the script is not exported to the database by default, thus no changes are applied to the databse by default now when using the <guibutton>Schema Export (.ddl)</guibutton> functionality.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5847">JBIDE-5847</ulink>: New functionality has been added that allows for Dali 2.3 support in Hibernate Tools. Dali 2.3 is the latest release of the Eclipse Web Tools Platform, part of the larger Eclipse Helios release that this JBoss release is built upon.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5805">JBIDE-5805</ulink>: Usability has been improved with this release by including matching bracket highlighting within the Hibernate Query Language (HQL) editor. When a user has the cursor beside a bracket in their code, the paired bracket will be highlighted. This functionality is useful for debuging applicaitons.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5411">JBIDE-5411</ulink>: Packages without Java classes are now correctly filtered from being shown in the <guilabel>New Hibernate hbm.xml</guilabel> wizard. This wizard is used to create a new Hibernate XML mapping file.
+				   </para>
+				</listitem>
 <!-- JBIDE-5960 was included in the JBDS 3.0.1 and JBT 3.1.1 releases. Mentioned in 3.0.1 Release Notes -->
 			</itemizedlist>
 		</para>
@@ -332,9 +356,14 @@
 		<para>
 			<itemizedlist>
 				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6104">JBIDE-6104</ulink>: An error existed that meant local and deployment server settings were not saved and upon reopening the jBPM Process Definition Language (JPDL) all the settings would need to be reconfigured. With this release changes made to local and deployment server settings are made persistent across JPDL sessions. 
-						</para>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6104">JBIDE-6104</ulink>: An error existed that meant local and deployment server settings were not saved and upon reopening the jBPM Process Definition Language (JPDL) all the settings would need to be reconfigured. With this release changes made to local and deployment server settings are made persistent across JPDL sessions. 
+				    </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5911">JBIDE-5911</ulink>: Previously it was only possible to have one jBPM process definition in a package (folder). Support has been added in this version that allows for multiple process definitions to exist in the one package.
+				   </para>
 				</listitem>
 			</itemizedlist>
 		</para>
@@ -388,6 +417,71 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6259">JBIDE-6259</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6025">JBIDE-6025</ulink>: A new option has been added to the <guilabel>Preferences</guilabel> page allowing a user to <option>enable</option> or <option>disbale</option> code assist of <methodname>get</methodname> and <methodname>set</methodname> methods in the expression language.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5946">JBIDE-5946</ulink>: A new XHTML template called <guilabel>JSF Composite Component</guilabel> has been added to the new XHTML page wizard that assists in the creation of JSF2 composite components.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5943">JBIDE-5943</ulink>: The possibility to rename a JSF component attribute name now exists. To rename a component name right-click on the name in your XHTML editor and navigate to <menuchoice><guimenuitem>Refactor</guimenuitem><guimenuitem>Rename</guimenuitem></menuchoice> and input a new name in the <guilabel>Rename Composite Attribute</guilabel> dialog.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5942">JBIDE-5942</ulink>: The ability to refactor a JSF component has been added. This allows for a user to change the name of a component file and for this change to persist in the project the component is a part of.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5941">JBIDE-5941</ulink>: Content assist support has been added for composite attributes. To support this functionality the <classname>JSF2CCAttrsELCompletionEngine</classname> class has been added.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5937">JBIDE-5937</ulink>: If a custom element attribute does not exist then a user can perform a quick fix to create it.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5930">JBIDE-5930</ulink>: When creating a custom JSF2 page and a coded element name does not exist, the user will be presented with a quick fix option. To select the quick fix option navigate to the <guilabel>Problems</guilabel> window where the <guiicon>Warnings</guiicon> information appears and rick-click on the warning specifying that the element name does not exist. From the displayed menu, navigate to <menuchoice><guimenuitem>Quick Fix</guimenuitem></menuchoice>. The <guilabel>Quick Fix</guilabel> dialog will then display with a list of fixes for the problem. Select one from the list and click <guibutton>Finish</guibutton> to apply the quick fix.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5922">JBIDE-5922</ulink>: When referencing a resource that does not exist (for example, having the following code at the top of a HTML page <code>xmlns:newResource="http://java.sun.com/jsf/composite/newResource"</code>), the user can now select the <guimenuitem>Quick Fix</guimenuitem> option from the context menu that will create a folder for this resource under the <guimenuitem>resources</guimenuitem> folder for your project.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5888">JBIDE-5888</ulink>: The <guilabel>Add JSF Capabilities</guilabel> wizard has been updated to support the new Servlet 3.0 standard. A user can select to use Servlet 3.0 from the <guilabel>Servlet Version</guilabel> drop-down list on the <guilabel>Project Folders</guilabel> page of the wizard.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5677">JBIDE-5677</ulink>: JSF 2 is now supported for web projects. When a user is configuring Project Facets and selects to add JSF support, JSF 2 is now an avaiable option.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5219">JBIDE-5219</ulink>: The JSF 2 kick start project template has been added and is now available within the <guilabel>New JSF Project Wizard</guilabel>.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4990">JBIDE-4990</ulink>: When performing an Expression Language (EL) variable refactoring (renaming), all occurances of the specific variable are renamed accordingly. The refactoring action is available from the context menu of an Expression Language (EL) variable in the JSP and XHTML editors.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4947">JBIDE-4947</ulink>: A new feature has been added that produces a tool tip for any Expression Language (EL) element that a user hovers the mouse cursor over. The tool tip displays informaiton about the EL element.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4876">JBIDE-4876</ulink>: The quick fix operation has been enhanced,  now offering to add the corresponding tag library definition to the JSP or XHTML header for any tags without a corresponding XML Namespace (XMLNS) in the document header.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	     </formalpara>
@@ -413,6 +507,11 @@
 		   <listitem>
 		      <para>
 			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6612">JBIDE-6612</ulink>: The new version of Eclipse would not recognise JBoss Application Server 6 as a valid JEE6 environment. To rectify this bug, Java EE6 has been configured to support JBoss Application Server 6 by modifying <filename>/as/plugins/org.jboss.ide.eclipse.as.core/plugin.xml </filename>. 
+		      </para>
+		   </listitem>
+		   <listitem>
+		      <para>
+			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5109">JBIDE-5109</ulink>: JBoss Application Server tooling as been improved to now allow regular JBoss servers to use remote deployment instead of just SSH Server deployment. Previously remote deployment was only available to JBoss EC2 servers, and not regular remote hosts.
 		      </para>
 		   </listitem>
 		</itemizedlist>
@@ -507,6 +606,21 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6360">JBIDE-6360</ulink>: Previously <property>view-id</property> entries in the navigation of XML files was not tested for validlity. Error checking for this parameter has been added to the Seam tools set with this release.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5231">JBIDE-5231</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5198">JBIDE-5198</ulink>: Content assist has been improved to suggest attributes of Seam PDF and Seam mail components to the user, when appropriate.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5134">JBIDE-5134</ulink>: When implementing a <guimenuitem>Quick Fix</guimenuitem> from the context menu of a <errorname>Seam Runtime <replaceable>NAME</replaceable> does not exist</errorname> error the <guilabel>Name</guilabel> and <guilabel>Version</guilabel> fields are now automatically filled in. The name field is editable in case a runtime already exists with the generated name, however the version is locked to the version used in the Seam project settings.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5007">JBIDE-5007</ulink>: When using the <guilabel>Generate Seam Entities</guilabel> wizard, the option to <guilabel>Use existing reveng</guilabel> file has been added. Once this checkbox has been checked, a user can use the <guibutton>Browse</guibutton> button beside the <guilabel>reveng.xml</guilabel> field to navigate to the existing file. By importing a <filename><replaceable>NAME</replaceable>.reveng.xml</filename> file a user can regenerate the entities for use in the new Seam project.
 				   </para>
 				</listitem>
 			</itemizedlist>
@@ -640,6 +754,48 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5970">JBIDE-5970</ulink>: A new feature has been added that indicates the drop actions available to a user while they are dragging an element. Available actions are displayed to the user in a text caption.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5101">JBIDE-5101</ulink>: A bug existed within the resizer tool, which meant that it was not shown correctly for buttons, input fields and controls. This readability and usability issue has been resolved by adjusting the padding for the body of a Visual Page Editor page, allowing space for resizer elements.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5042">JBIDE-5042</ulink>: Drag and drop actions have been improved to be more reliable and easier to use. The list of improvements is as follows:
+				   </para>
+				   <itemizedlist>
+				       <listitem>
+					  <para>
+					     The drop indicator is now shown in all drop locations available
+					  </para>
+				       </listitem>
+				       <listitem>
+					  <para>
+					     The four arrow resize icon is shown for any selected element that is draggable
+					  </para>
+				       </listitem>
+				       <listitem>
+					  <para>
+					     The drop container is now highlighted blue, making it easier to see what the result of a drop action will be
+					  </para>
+				       </listitem>
+				       <listitem>
+					  <para>
+					     When an element is being dragged, an image of the element appears under the mouse cursor
+					  </para>
+				       </listitem>
+				       <listitem>
+					  <para>
+					     Drop targets of any move event are marked by sold black lines that may appear before or after any other object
+					  </para>
+				       </listitem>
+				       <listitem>
+					  <para>
+					     The current drop target is highlighted red
+					  </para>
+				       </listitem>
+				    </itemizedlist>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -680,6 +836,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6589">JBIDE-6589</ulink>: In previous releases a JAX-WS invocation could not be cancelled. Support for cancelling a long-running invocation has been implemented and improved for this release.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5723">JBIDE-5723</ulink>: A new wizard has been added called <guilabel>Create a Sample Web Service</guilabel>. This wizard allows a user to get a web service up and running quickly. The wizard adds the RestEasy code to the <filename>web.xml</filename> file, creates the application class and JAX-RS annotated resource class, and adds the required RestEast JAR files from the runtime. Once created, the new web service project can be tested using the <guilabel>Web Service Tester</guilabel>.
 				   </para>
 				</listitem>
 			</itemizedlist>
