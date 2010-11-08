@@ -18,6 +18,8 @@
       <attribute
             name="org.eclipse.bpel.common.ui.visible">
       </attribute>
+      <!-- https://jira.jboss.org/browse/JBIDE-7497 -->
+      <persistent value="true"/>
    </extension>
    <extension
          id="graphicalMarker"
@@ -29,6 +31,8 @@
       <attribute
             name="org.eclipse.bpel.common.ui.anchorPoint">
       </attribute>
+      <!-- https://jira.jboss.org/browse/JBIDE-7497 -->
+      <persistent value="true"/>
    </extension>
    <extension
          id="textMarker"
@@ -43,6 +47,7 @@
       <attribute
             name="org.eclipse.bpel.common.ui.lineNumInObject">
       </attribute>
+      <persistent value="true"/>
    </extension>
    <extension
          point="org.eclipse.core.runtime.contentTypes">

@@ -26,7 +26,9 @@ import org.eclipse.wst.wsdl.Part;
  * @date Jun 11, 2007
  *
  */
-public class FromAdapter extends AbstractStatefulAdapter implements IVirtualCopyRuleSide {
+// https://jira.jboss.org/browse/JBIDE-7497
+// change base class to MarkerDelegateAdapter
+public class FromAdapter extends MarkerDelegateAdapter implements IVirtualCopyRuleSide {
 
 	/**
 	 * @see org.eclipse.bpel.ui.adapters.IVirtualCopyRuleSide#getEndpointReference()

@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.adapters;
 
-import org.eclipse.bpel.model.adapters.AbstractAdapter;
 import org.eclipse.bpel.ui.uiextensionmodel.UiextensionmodelFactory;
 import org.eclipse.emf.ecore.EObject;
 
-
-public class CopyAdapter extends AbstractAdapter implements IExtensionFactory {
+// https://jira.jboss.org/browse/JBIDE-7497
+// use MarkerDelegateAdapter to forward marker notifications to the enclosing <assign>
+public class CopyAdapter extends MarkerDelegateAdapter implements IExtensionFactory {
 
 	/* IExtensionFactory */
 	

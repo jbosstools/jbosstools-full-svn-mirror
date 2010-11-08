@@ -86,6 +86,8 @@
       <attribute name="order"/>
       <attribute name="active"/>
       <attribute name="installed"/>
+      <!-- https://jira.jboss.org/browse/JBIDE-7497 -->
+      <persistent value="true"/>
    </extension>
 
 <!-- Markers used in expression editors. -->

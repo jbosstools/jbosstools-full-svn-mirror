@@ -64,7 +64,8 @@
          id="org.eclispe.bpel.validator.marker"
          name="BPEL Validation Marker"
          point="org.eclipse.core.resources.markers">
-      <persistent value="false"/>
+      <!-- https://jira.jboss.org/browse/JBIDE-7497 -->
+      <persistent value="true"/>
       <super type="org.eclipse.core.resources.problemmarker"/>
       <attribute name="address.xpath"/>
       <attribute name="address.model"/>

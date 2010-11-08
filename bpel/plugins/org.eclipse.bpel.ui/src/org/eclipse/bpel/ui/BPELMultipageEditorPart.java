@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.bpel.common.extension.model.ExtensionMap;
 import org.eclipse.bpel.common.ui.editmodel.IEditModelListener;
@@ -35,6 +36,7 @@ import org.eclipse.bpel.model.Variable;
 import org.eclipse.bpel.model.resource.BPELResourceSetImpl;
 import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.adapters.AdapterNotification;
+import org.eclipse.bpel.ui.adapters.IMarkerHolder;
 import org.eclipse.bpel.ui.editparts.ProcessTrayEditPart;
 import org.eclipse.bpel.ui.editparts.util.OutlineTreePartFactory;
 import org.eclipse.bpel.ui.properties.BPELPropertySection;
@@ -42,6 +44,7 @@ import org.eclipse.bpel.ui.uiextensionmodel.StartNode;
 import org.eclipse.bpel.ui.util.BPELEditModelClient;
 import org.eclipse.bpel.ui.util.BPELEditorUtil;
 import org.eclipse.bpel.ui.util.BPELReader;
+import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.ModelHelper;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -66,8 +69,10 @@ import org.eclipse.draw2d.parts.Thumbnail;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPart;
@@ -1115,6 +1120,9 @@ IGotoMarker/*, CommandStackListener*/ {
 
 		this.modelListenerAdapter = new ModelListenerAdapter();
 		this.modelListenerAdapter.setExtensionMap(this.extensionMap);
+		
+		// https://jira.jboss.org/browse/JBIDE-7497
+		updateMarkersHard();
 	}
 
 	public void modelDeleted(ResourceInfo resourceInfo) {
@@ -1169,6 +1177,70 @@ IGotoMarker/*, CommandStackListener*/ {
 		    }
 		});
 
+	}
+
+	/**
+	 * Erase and reload markers for the given model object.
+	 * This will create the necessary adapters so that marker
+	 * notifications are delegated to the correct activity displayed
+	 * in the graphical viewer.
+	 * 
+	 * @param modelObject
+	 * @see https://jira.jboss.org/browse/JBIDE-7497
+	 */
+	public void updateMarkers(EObject modelObject) {
+		List<Long> removed = new ArrayList<Long>();
+		for (Entry<Long, EObject> e : fMarkers2EObject.entrySet()){
+			if (e.getValue() == modelObject)
+				removed.add(e.getKey());
+		}
+		for (Long key : removed) {
+			fMarkers2EObject.remove(key);
+		}
+		
+		modelObject.eNotify(fMarkersStale);
+		
+		for (TreeIterator<EObject> iter=EcoreUtil.getAllContents((EObject)modelObject, true); iter.hasNext(); ){
+			EObject obj = iter.next();
+			BPELUtil.adapt(obj, IMarkerHolder.class);
+		}
+		
+		IMarker[] markers = null;
+		IFile file = getFileInput();
+		Resource resource = getProcess().eResource();
+
+		try {
+			markers = file.findMarkers(null, true, IResource.DEPTH_ZERO);
+		} catch (CoreException ex) {
+			BPELUIPlugin.log(ex);
+			return;
+		}
+
+		for (IMarker m : markers) {
+
+			String href = null;
+			EObject target = null;
+			try {
+				href = (String) m.getAttribute( "address.model" ); //$NON-NLS-1$
+				if (href == null) {
+					continue;
+				}
+				target = resource.getEObject(href);
+			} catch (CoreException ex) {
+				continue;
+			}
+
+			if (target == modelObject) {
+				this.fMarkers2EObject.put(m.getId(), target);
+				EObject obj = target;
+				while (obj!=null) {
+					BPELUtil.adapt(obj, IMarkerHolder.class);
+					obj = obj.eContainer();
+				}
+				target.eNotify( new NotificationImpl (AdapterNotification.NOTIFICATION_MARKER_ADDED , null, m ));
+			}
+		}
+		
 	}
 
 	protected void updateMarkersHard () {

@@ -52,6 +52,22 @@ public abstract class ActivityAdapter extends AbstractStatefulAdapter implements
 	IEditPartActionContributor, IExtensionFactory, AdapterNotification
 {
 
+	public static class UniqueMarkers extends ArrayList<IMarker> {
+
+		// https://jira.jboss.org/browse/JBIDE-7497
+		// prevent duplicate marker IDs from being added to the list - this
+		// causes those mysterious "Marker not found" errors during validation
+		@Override
+		public boolean add(IMarker e) {
+			for (int i=0; i<size(); ++i) {
+				IMarker m = get(i);
+				if (m.getId() == e.getId())
+					return false;
+			}
+			return super.add(e);
+		}
+		
+	}
 	
 	/**
 	 * @see org.eclipse.bpel.model.adapters.AbstractAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
@@ -72,7 +88,7 @@ public abstract class ActivityAdapter extends AbstractStatefulAdapter implements
 		}				
 	}
 	
-	ArrayList<IMarker> fMarkers = new ArrayList<IMarker>();
+	UniqueMarkers fMarkers = new UniqueMarkers();
 
 	static IMarker [] EMPTY_MARKERS = {};
 	
