@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -21,9 +20,9 @@ import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 public class CVRootElement extends CloudViewElement implements ICloudManagerListener {
 
 	private boolean initialized;
-	private Viewer viewer;
+	private TreeViewer viewer;
 
-	public CVRootElement(Viewer viewer) {
+	public CVRootElement(TreeViewer viewer) {
 		super(DeltaCloudManager.getDefault(), "root"); //$NON-NLS-1$
 		this.viewer = viewer;
 	}

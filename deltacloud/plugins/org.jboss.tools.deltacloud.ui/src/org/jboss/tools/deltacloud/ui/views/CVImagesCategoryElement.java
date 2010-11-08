@@ -13,8 +13,6 @@ package org.jboss.tools.deltacloud.ui.views;
 import java.util.ArrayList;
 
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
@@ -22,21 +20,10 @@ import org.jboss.tools.deltacloud.core.IImageListListener;
 
 public class CVImagesCategoryElement extends CVCategoryElement implements IImageListListener {
 
-	private Viewer viewer;
-	private CVImagesCategoryElement category;
-	
-	public CVImagesCategoryElement(Object element, String name, Viewer viewer) {
-		super(element, name, CVCategoryElement.INSTANCES);
-		this.viewer = viewer;
+	public CVImagesCategoryElement(Object element, String name, TreeViewer viewer) {
+		super(element, name, viewer);
 		DeltaCloud cloud = (DeltaCloud)getElement();
 		cloud.addImageListListener(this);
-		this.category = this;
-	}
-
-	protected void finalize() throws Throwable {
-		DeltaCloud cloud = (DeltaCloud)getElement();
-		cloud.removeImageListListener(this);
-		super.finalize();
 	}
 	
 	private void addImages(DeltaCloudImage[] images) {
@@ -95,12 +82,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 		DeltaCloudImage[] images = filter(newImages);
 		addImages(images);
 		initialized = true;
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				((TreeViewer)viewer).refresh(category, false);
-			}
-		});
+		refresh();
 	}
 	
 	public DeltaCloudImage[] filter(DeltaCloudImage[] input) {
@@ -116,4 +98,8 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 
 	}
 	
+	protected void dispose() {
+		DeltaCloud cloud = (DeltaCloud)getElement();
+		cloud.removeImageListListener(this);
+	}
 }

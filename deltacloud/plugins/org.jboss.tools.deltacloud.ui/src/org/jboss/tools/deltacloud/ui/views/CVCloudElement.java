@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -19,10 +20,10 @@ public class CVCloudElement extends CloudViewElement {
 	private static final String INSTANCE_CATEGORY_NAME = "InstanceCategoryName"; //$NON-NLS-1$
 	private static final String IMAGE_CATEGORY_NAME = "ImageCategoryName"; //$NON-NLS-1$
 
-	private Viewer viewer;
+	private TreeViewer viewer;
 	private boolean initialized;
 	
-	public CVCloudElement(Object element, String name, Viewer viewer) {
+	public CVCloudElement(Object element, String name, TreeViewer viewer) {
 		super(element, name);
 		this.viewer = viewer;
 	}

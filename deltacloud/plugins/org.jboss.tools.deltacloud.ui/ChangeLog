@@ -1,3 +1,11 @@
+2010-11-08  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/CVCategoryElement.java (getChildrenWithSameElement): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (dispose): 
+	(CVInstancesCategoryElement): 
+	(listChanged): 
+	[JBIDE-7513] extracted several common parts (code duplication) to common superclass, implemented generic selection restoring
+
 2010-11-05  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (getStatusIcon): 
