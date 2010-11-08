@@ -102,15 +102,10 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			int index = cloudSelector.getSelectionIndex();
 			if (index >= 0) {
 				currCloud = clouds[index];
-				Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-				try {
-					prefs.put(IDeltaCloudPreferenceConstants.LAST_CLOUD_IMAGE_VIEW, currCloud.getName());
-				} catch (Exception exc) {
-					// do nothing
-				}
+				storeSelectedCloud();
 
-				viewer.setInput(new DeltaCloudImage[0]);
-				viewer.refresh();
+//				viewer.setInput(new DeltaCloudImage[0]);
+//				viewer.refresh();
 				Display.getCurrent().asyncExec(new Runnable() {
 
 					@Override
@@ -122,6 +117,15 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 					}
 
 				});
+			}
+		}
+
+		private void storeSelectedCloud() {
+			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+			try {
+				prefs.put(IDeltaCloudPreferenceConstants.LAST_CLOUD_IMAGE_VIEW, currCloud.getName());
+			} catch (Exception exc) {
+				// do nothing
 			}
 		}
 	};
