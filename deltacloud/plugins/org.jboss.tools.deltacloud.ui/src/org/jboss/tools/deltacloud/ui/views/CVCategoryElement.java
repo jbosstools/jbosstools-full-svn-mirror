@@ -37,7 +37,9 @@ public abstract class CVCategoryElement extends CloudViewElement {
 	
 	@Override
 	public IPropertySource getPropertySource() {
+		// no property source for cathegories
 		return null;
 	}
 
+	
 }
