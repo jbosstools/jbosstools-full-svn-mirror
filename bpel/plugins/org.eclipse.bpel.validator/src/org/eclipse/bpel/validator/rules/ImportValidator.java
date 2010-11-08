@@ -205,7 +205,7 @@ public class ImportValidator extends CValidator {
 		IProblem problem ;
 		if (isUndefined(fImportedNode) && isNonEmpty(fLocation)) {
 			
-			problem = createWarning();
+			problem = createError();
 			problem.fill("BPELC_IMPORT__UNRESOVED",
 					toString(mNode.nodeName()),
 					fImportType,
