@@ -45,7 +45,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6728">JBIDE-6728</ulink>: Each field injection point that includes an <parameter>Event</parameter> type is now provided with a default bean. For example the injection field <code>@Inject @Any @Tame @Role("Master") Event<TamingCommand> tamingEvent</code> will now have a bean for injection.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6728">JBIDE-6728</ulink>: Each field injection point that includes an <parameter>Event</parameter> type is now provided with a default bean. For example the injection field <code>@Inject @Any @Tame @Role("Master") Event&lt;TamingCommand&gt; tamingEvent</code> will now have a bean for injection.
 				   </para>
 				</listitem>
 				<listitem>
@@ -224,8 +224,9 @@
 				       </menuchoice> is available from the ESB editor's menu when the <classname>org.jboss.soa.esb.actions.bpel.BPELInvoke</classname> class is apart of the project classpath. This ensures that the <methodname>BPELInvoke</methodname> action is only enabled when the Riftsaw runtime is installed. 
 				    </para>
 				 </listitem>
-				 <para>
-				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5551">JBIDE-5551</ulink>: Language property support has been corrected in the ESB editor. When specifying a <property>ScriptingAction</property> a user can now set a <property>language</property> property instead of allowing the <property>ScriptingAction</property> to determine the language based on the extension of the file.
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5551">JBIDE-5551</ulink>: Language property support has been corrected in the ESB editor. When specifying a <property>ScriptingAction</property> a user can now set a <property>language</property> property instead of allowing the <property>ScriptingAction</property> to determine the language based on the extension of the file.
 				 </para>
 			      </listitem>
 			</itemizedlist>
@@ -907,7 +908,7 @@
 			      </listitem>
 			      <listitem>
 				 <para>
-				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6083">JBIDE-6083</ulink>: Functionality has been added to all editors that allow for them to be placed vertically side by side, rather than just horizontally. This new feature is available through the <menuchoice>Window</menuchoice> menu of Eclipse.
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6083">JBIDE-6083</ulink>: Functionality has been added to all editors that allow for them to be placed vertically side by side, rather than just horizontally. This new feature is available through the <menuchoice><guimenuitem>Window</guimenuitem></menuchoice> menu of Eclipse.
 				 </para>
 			      </listitem>
 			      <listitem>
