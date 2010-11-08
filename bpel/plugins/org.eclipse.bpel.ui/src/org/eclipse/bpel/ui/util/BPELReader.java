@@ -100,10 +100,12 @@ public class BPELReader {
 				extensionMap = ExtensionmodelFactory.eINSTANCE.findExtensionMap(
 					IBPELUIConstants.MODEL_EXTENSIONS_NAMESPACE, extensionsResource.getContents());
 			}
+			// https://jira.jboss.org/browse/JBIDE-7520
+			if (extensionMap != null)
+				extensionMap.initializeAdapter();
 		} catch (Exception e) {
 			BPELUIPlugin.log(e);
 		}
-		if (extensionMap != null) extensionMap.initializeAdapter();
 
 		if (process == null) {
 			process = BPELFactory.eINSTANCE.createProcess();

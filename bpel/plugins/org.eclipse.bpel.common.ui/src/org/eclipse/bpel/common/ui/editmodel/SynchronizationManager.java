@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWindowListener;
@@ -189,9 +190,13 @@ void handleActivated(ResourceInfo resourceInfo) throws CoreException, IOExceptio
 	if (resourceInfo.getFileExists() && !exists) { //File was deleted
 		String[] buttons = { Messages.SynchronizationManager_saveButtonLabel, IDialogConstants.CLOSE_LABEL }; 
 		
+		// https://jira.jboss.org/browse/JBIDE-7520
+		// avoid using activeWindow to get a shell - there are cases where these
+		// error dialogs are opened before the active window has been created
+		// (e.g. resource load failures during editor startup)
 		while (true) {   
 			MessageDialog dialog = new MessageDialog(
-				activeWindow.getShell(),
+				editor.getEditorSite().getShell(),
 				Messages.SynchronizationManager_deleted_title, 
 				null, // accept the default windowing system icon
 				Messages.SynchronizationManager_deleted_message, 
@@ -200,7 +205,7 @@ void handleActivated(ResourceInfo resourceInfo) throws CoreException, IOExceptio
 				0);
 				
 			if (dialog.open() == Window.OK) {
-				SaveAsDialog saveAsDialog = new SaveAsDialog(activeWindow.getShell());
+				SaveAsDialog saveAsDialog = new SaveAsDialog(editor.getEditorSite().getShell());
 				saveAsDialog.setOriginalFile(resourceInfo.getFile());
 				saveAsDialog.open();
 				
@@ -220,10 +225,12 @@ void handleActivated(ResourceInfo resourceInfo) throws CoreException, IOExceptio
 			}
 		}
 	} else if (lastModified != resourceInfo.getSynchronizeStamp()) {
+		String msg = NLS.bind(Messages.SynchronizationManager_refresh_message, (new String[]{ resourceInfo.getFile().toString()})); 
+
 		boolean refresh = MessageDialog.openQuestion(
-				activeWindow.getShell(), 
+				editor.getEditorSite().getShell(), 
 				Messages.SynchronizationManager_refresh_title,  
-				Messages.SynchronizationManager_refresh_message); 
+				msg);
 				
 		if (refresh) {
 			handler.refresh(resourceInfo);

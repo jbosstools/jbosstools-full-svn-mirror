@@ -98,11 +98,13 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -412,19 +414,30 @@ IGotoMarker/*, CommandStackListener*/ {
 		if( getFileInput() == null ) {
 			MessageDialog.openError(
 					getSite().getShell(),
-					"Error while opening the file",
-			"The file could be opened, no input could be retrieved." );
+					Messages.Editor_load_error_title, // https://jira.jboss.org/browse/JBIDE-7520
+					Messages.Editor_load_error
+			);
 			return;
 		}
 		// End of patch
-		loadModel();
 		try
 		{
+			loadModel();
+			
 			addPage(0, this.fDesignViewer, getEditorInput());
 			//FIXME I18N
 			setPageText(0, "Design");
+//			if (extensionsResource!=null && extensionsResource.isModified())
+//				modelDirtyStateChanged(null);
+
 		} catch (PartInitException e) {
-			ErrorDialog.openError(getSite().getShell(), "Error creating Design page", null, e.getStatus()); //$NON-NLS-1$
+			ErrorDialog.openError(
+					getSite().getShell(),
+					Messages.Editor_design_page_error, // https://jira.jboss.org/browse/JBIDE-7520
+					null,
+					e.getStatus()); //$NON-NLS-1$
+		} catch (CoreException e) {
+			// TODO: what to do here?
 		}
 	}
 
@@ -1071,7 +1084,7 @@ IGotoMarker/*, CommandStackListener*/ {
 		return false;
 	}
 
-	protected void loadModel() {
+	protected void loadModel() throws CoreException {
 		Document structuredDocument = null;
 
 		try {
@@ -1099,14 +1112,91 @@ IGotoMarker/*, CommandStackListener*/ {
 
 		// Bug # 209341 - starting patch
 		// By Vincent Zurczak
-		IFile fileToOpen = getFileInput();
-		BPELEditModelClient editModelClient = new BPELEditModelClient(this, fileToOpen, this, loadOptions);
+		IFile file = null;
+		BPELEditModelClient editModelClient = new BPELEditModelClient(this);
+
+		// https://jira.jboss.org/browse/JBIDE-7520
+		// first load the primary resource (the *.bpel file)
+		boolean keepGoing = false;
+		Shell shell = getEditorSite().getShell();
+		try {
+			file = getFileInput();
+			editModelClient.loadPrimaryResource(file,loadOptions);
+		}
+		catch (RuntimeException ex) {
+			String msg = NLS.bind(Messages.EditModelClient_bpel_load_error,
+					new String[]{file.toString()}
+			); 
+
+			keepGoing = MessageDialog.openQuestion(
+					shell, 
+					Messages.EditModelClient_load_error_title,  
+					msg);
+			
+			if (!keepGoing)
+				throw ex;
+		}
+
+		// next load the extensions resource (the *.bpelex file)
+		try {
+			editModelClient.loadExtensionsResource();
+		}
+		catch (RuntimeException ex) {
+			file = editModelClient.getExtensionsFile();
+			String msg = NLS.bind(Messages.EditModelClient_bpelex_load_error,
+					new String[]{file.toString()}
+			); 
+
+			keepGoing = MessageDialog.openQuestion(
+					shell, 
+					Messages.EditModelClient_load_error_title,  
+					msg);
+			
+			if (!keepGoing)
+				throw ex;
+			
+			try {
+				file.delete(true, null);
+				editModelClient.loadExtensionsResource();
+			} catch (CoreException ce) {
+				MessageDialog.openError(shell, Messages.EditModelClient_delete_error_title, Messages.EditModelClient_delete_error_message);
+				throw ce;
+			}
+		}
+
+		// finally load the artifacts resource (the *.wsdl file)
+		try {
+			editModelClient.loadArtifactsResource();
+		}
+		catch (RuntimeException ex) {
+			file = editModelClient.getArtifactsFile();
+			String msg = NLS.bind(Messages.EditModelClient_wsdl_load_error,
+					new String[]{file.toString()}
+			); 
+
+			keepGoing = MessageDialog.openQuestion(
+					shell, 
+					Messages.EditModelClient_load_error_title,  
+					msg);
+			
+			if (!keepGoing)
+				throw ex;
+			
+			try {
+				file.delete(true, null);
+				editModelClient.loadArtifactsResource();
+			} catch (CoreException ce) {
+				MessageDialog.openError(shell, Messages.EditModelClient_delete_error_title, Messages.EditModelClient_delete_error_message);
+				throw ce;
+			}
+		}
+		
 		this.fDesignViewer.setEditModelClient(editModelClient);
 		getEditDomain().setCommandStack(editModelClient.getCommandStack());
 
 		Resource bpelResource = editModelClient.getPrimaryResourceInfo().getResource();
 		BPELReader reader = new BPELReader();
-		reader.read(bpelResource, fileToOpen, this.fDesignViewer.getResourceSet());
+		reader.read(bpelResource, getFileInput(), this.fDesignViewer.getResourceSet());
 		// End of patch
 
 		this.process = reader.getProcess();
@@ -1281,6 +1371,11 @@ IGotoMarker/*, CommandStackListener*/ {
 			}
 
 			this.fMarkers2EObject.put(m.getId(), target);
+			EObject obj = target;
+			while (obj!=null) {
+				BPELUtil.adapt(obj, IMarkerHolder.class);
+				obj = obj.eContainer();
+			}
 			target.eNotify( new NotificationImpl (AdapterNotification.NOTIFICATION_MARKER_ADDED , null, m ));
 		}
 

@@ -678,6 +678,17 @@ public final class Messages extends NLS {
 	public static String DeletePartnerLinkTypeWarningMessage;
 	public static String DeletePartnerLinkTypeWarningDialogTitle;
 
+	// https://jira.jboss.org/browse/JBIDE-7520
+	public static String EditModelClient_load_error_title;
+	public static String EditModelClient_bpel_load_error;
+	public static String EditModelClient_bpelex_load_error;
+	public static String EditModelClient_wsdl_load_error;
+	public static String EditModelClient_delete_error_title;
+	public static String EditModelClient_delete_error_message;
+	public static String Editor_load_error_title;
+	public static String Editor_load_error;
+	public static String Editor_design_page_error;
+	
 	static {
 		
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

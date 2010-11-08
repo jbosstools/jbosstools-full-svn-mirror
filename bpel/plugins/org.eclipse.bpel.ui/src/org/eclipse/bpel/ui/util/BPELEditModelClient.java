@@ -41,14 +41,35 @@ public class BPELEditModelClient extends EditModelClient {
 	private ResourceInfo artifactsResourceInfo;
 	BPELEditModel bpelEditModel;
 	
-	public BPELEditModelClient(IEditorPart editor, IFile file,
-		IEditModelListener modelListener, Map loadOptions)
+	// https://jira.jboss.org/browse/JBIDE-7520
+	// split the loading of primary resource, extensions and artifacts
+	// so that we can report & handle load failures of each individually
+	// see BPELMultipageEditorPart#loadModel() for example
+	public BPELEditModelClient(IEditorPart editor)
 	{
-		super(editor, file, modelListener, loadOptions);
+		super(editor, (IEditModelListener)editor);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.bpel.common.ui.editmodel.EditModelClient#loadPrimaryResource(org.eclipse.core.resources.IFile, java.util.Map)
+	 */
+	@Override
+	public void loadPrimaryResource(IFile file, Map loadOptions) throws RuntimeException {
+
+		super.loadPrimaryResource(file,loadOptions);
 		bpelEditModel = (BPELEditModel)getEditModel();
-
 		getPrimaryResourceInfo().getResource();
+	}
+	
+	/**
+	 * Load the extension resource (<process-name>.bpelex file)
+	 * @throws RuntimeException
+	 */
+	public void loadExtensionsResource() throws RuntimeException {
 
+		if (bpelEditModel==null || getPrimaryResourceInfo()==null)
+			throw new RuntimeException("Primary resource must be loaded before Extensions");
+		
 		IFile extensionsFile = bpelEditModel.getExtensionsFile();
 		if (extensionsFile.exists()) {
 			extensionsResourceInfo = bpelEditModel.getResourceInfo(extensionsFile);
@@ -61,7 +82,17 @@ public class BPELEditModelClient extends EditModelClient {
 				IBPELUIConstants.MODEL_EXTENSIONS_NAMESPACE);
 			bpelexResource.getContents().add(extensionMap);
 		}
+	}
+	
+	/**
+	 * Load the artifacts resource (<process-name>Artifacts.wsdl file)
+	 * @throws RuntimeException
+	 */
+	public void loadArtifactsResource() throws RuntimeException {
 
+		if (bpelEditModel==null || getPrimaryResourceInfo()==null)
+			throw new RuntimeException("Primary resource must be loaded before Artifacts");
+		
 		IFile artifactsFile = bpelEditModel.getArtifactsFile();
 		if (artifactsFile.exists()) {
 			artifactsResourceInfo = bpelEditModel.getResourceInfo(artifactsFile);
@@ -112,4 +143,7 @@ public class BPELEditModelClient extends EditModelClient {
 	
 	public ResourceInfo getArtifactsResourceInfo() { return artifactsResourceInfo; }
 	public ResourceInfo getExtensionsResourceInfo() { return extensionsResourceInfo; }
+	
+	public IFile getExtensionsFile() { return bpelEditModel.getExtensionsFile(); } 
+	public IFile getArtifactsFile() { return bpelEditModel.getArtifactsFile(); } 
 }

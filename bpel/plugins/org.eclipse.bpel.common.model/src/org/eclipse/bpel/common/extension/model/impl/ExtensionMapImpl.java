@@ -757,24 +757,38 @@ public class ExtensionMapImpl extends EObjectImpl implements ExtensionMap  {
 			// There is no adapter associated with this bject so we must search the
 			// Extension list.  Once the Extension is found, associate an adapter with this
 			// object to improve performance in future queries.
-			if( extension == null){
-									
-				for( Extension ext : getExtensions()) {					
-					if (ext.getExtendedObject() != null && ext.getExtendedObject().equals(extendedObject)){
-						extension = ext;
-						
-						ExtensionmodelAdapterFactory adapterFactory = new ExtensionmodelAdapterFactory();
-				
-						ExtendedObjectAdapter extAdptr = (ExtendedObjectAdapter) adapterFactory.createExtendedObjectAdapter();
-				
-						extAdptr.setExtension(extension);
-						extAdptr.setNamespace(getNamespace());
-						
-						ExtensionmodelFactory.eINSTANCE.adaptEObject(extendedObject,extAdptr);
-						
-						adapterFactory.adapt(extension,ExtensionAdapterImpl.class);
-						
-						break;
+			if (extension == null) {
+
+				EList<Extension> extensions = getExtensions();
+				int len = extensions.size();
+				for (int i = 0; i < len; ++i) {
+					Extension ext = extensions.get(i);
+					EObject extObject = ext.getExtendedObject();
+					if (extObject != null) {
+						if (ext.getExtendedObject().equals(extendedObject)) {
+							extension = ext;
+	
+							ExtensionmodelAdapterFactory adapterFactory = new ExtensionmodelAdapterFactory();
+	
+							ExtendedObjectAdapter extAdptr = (ExtendedObjectAdapter) adapterFactory
+									.createExtendedObjectAdapter();
+	
+							extAdptr.setExtension(extension);
+							extAdptr.setNamespace(getNamespace());
+	
+							ExtensionmodelFactory.eINSTANCE.adaptEObject(extendedObject, extAdptr);
+	
+							adapterFactory.adapt(extension, ExtensionAdapterImpl.class);
+	
+							break;
+						} else if (extObject.eIsProxy()) {
+							// https://jira.jboss.org/browse/JBIDE-7520
+							// this thing has not been resolved - the extension
+							// model is out of sync with the BPEL model so remove
+							// this extension from the model
+							extensions.remove(i--);
+							--len;
+						}
 					}
 					 
 				}
