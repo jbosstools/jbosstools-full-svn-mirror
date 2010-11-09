@@ -14,6 +14,7 @@ import java.util.regex.PatternSyntaxException;
 
 public class ImageFilter implements IImageFilter {
 
+	private static final String ALL_MATCHER = "*";
 	private IFieldMatcher nameRule;
 	private IFieldMatcher idRule;
 	private IFieldMatcher archRule;
@@ -38,7 +39,7 @@ public class ImageFilter implements IImageFilter {
 	}
 
 	private IFieldMatcher createRule(String token) {
-		if (token.equals("*")) { //$NON-NLS-1$
+		if (token.equals(ALL_MATCHER)) { //$NON-NLS-1$
 			return new AllFieldMatcher();
 		} else {
 			return new FieldMatcher(token);
