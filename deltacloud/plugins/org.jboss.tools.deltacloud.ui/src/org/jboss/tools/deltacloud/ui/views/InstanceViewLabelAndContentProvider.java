@@ -77,12 +77,6 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 	}
 
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (newInput != null) {
 			if (newInput instanceof DeltaCloudInstance[]) {
@@ -141,13 +135,16 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 			case ID:
 				return i.getId();
 			case STATUS:
-//				return i.getState();
 				return "";
 			case HOSTNAME:
 				return i.getHostName();
 			}
 		}
 		return "";
+	}
+
+	@Override
+	public void dispose() {
 	}
 
 }
