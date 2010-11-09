@@ -23,41 +23,8 @@ import org.eclipse.emf.common.notify.Notification;
  *
  */
 
-public class ExpressionAdapter extends AbstractStatefulAdapter implements IMarkerHolder, AdapterNotification {
+// https://jira.jboss.org/browse/JBIDE-7526
+// push all of the Marker stuff up to MarkerHolderAdapter to avoid duplication
+public class ExpressionAdapter extends MarkerHolderAdapter implements IMarkerHolder, AdapterNotification {
 
-	/**
-	 * @see org.eclipse.bpel.model.adapters.AbstractAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
-	 */
-	@Override
-	public void notifyChanged(Notification notification) {		
-		super.notifyChanged(notification);
-		switch (notification.getEventType()) {
-			case NOTIFICATION_MARKERS_STALE : 
-				fMarkers.clear();
-				break;
-			case NOTIFICATION_MARKER_ADDED :
-				fMarkers.add ( (IMarker) notification.getNewValue() );
-				break;
-			case NOTIFICATION_MARKER_DELETED :
-				fMarkers.remove ( notification.getOldValue() );
-				break;								
-		}				
-	}
-	
-	ArrayList<IMarker> fMarkers = new ArrayList<IMarker>();
-
-	static IMarker [] EMPTY_MARKERS = {};
-	
-	/** (non-Javadoc)
-	 * @see org.eclipse.bpel.ui.adapters.IMarkerHolder#getMarkers(java.lang.Object)
-	 */
-
-	public IMarker[] getMarkers (Object object) {
-		
-		if (fMarkers.size() == 0) {
-			return EMPTY_MARKERS;
-		}
-		return fMarkers.toArray( EMPTY_MARKERS );						
-	}
-	
 }

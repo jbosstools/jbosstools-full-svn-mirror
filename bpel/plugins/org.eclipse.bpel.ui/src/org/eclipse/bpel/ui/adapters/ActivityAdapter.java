@@ -29,6 +29,7 @@ import org.eclipse.bpel.ui.factories.UIObjectFactoryProvider;
 import org.eclipse.bpel.ui.uiextensionmodel.UiextensionmodelFactory;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.FlowLinkUtil;
+import org.eclipse.core.internal.resources.Marker;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -47,63 +48,12 @@ import org.eclipse.swt.graphics.Image;
  *
  */
 
-public abstract class ActivityAdapter extends AbstractStatefulAdapter implements INamedElement,
+// https://jira.jboss.org/browse/JBIDE-7526
+// push all of the Marker stuff up to MarkerHolderAdapter to avoid duplication
+public abstract class ActivityAdapter extends MarkerHolderAdapter implements INamedElement,
 	ILabeledElement, EditPartFactory, IOutlineEditPartFactory, IMarkerHolder,
 	IEditPartActionContributor, IExtensionFactory, AdapterNotification
 {
-
-	public static class UniqueMarkers extends ArrayList<IMarker> {
-
-		// https://jira.jboss.org/browse/JBIDE-7497
-		// prevent duplicate marker IDs from being added to the list - this
-		// causes those mysterious "Marker not found" errors during validation
-		@Override
-		public boolean add(IMarker e) {
-			for (int i=0; i<size(); ++i) {
-				IMarker m = get(i);
-				if (m.getId() == e.getId())
-					return false;
-			}
-			return super.add(e);
-		}
-		
-	}
-	
-	/**
-	 * @see org.eclipse.bpel.model.adapters.AbstractAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
-	 */
-	@Override
-	public void notifyChanged(Notification notification) {		
-		super.notifyChanged(notification);
-		switch (notification.getEventType()) {
-			case NOTIFICATION_MARKERS_STALE : 
-				fMarkers.clear();
-				break;
-			case NOTIFICATION_MARKER_ADDED :
-				fMarkers.add ( (IMarker) notification.getNewValue() );
-				break;
-			case NOTIFICATION_MARKER_DELETED :
-				fMarkers.remove ( notification.getOldValue() );
-				break;								
-		}				
-	}
-	
-	UniqueMarkers fMarkers = new UniqueMarkers();
-
-	static IMarker [] EMPTY_MARKERS = {};
-	
-	/** (non-Javadoc)
-	 * @see org.eclipse.bpel.ui.adapters.IMarkerHolder#getMarkers(java.lang.Object)
-	 */
-
-	public IMarker[] getMarkers (Object object) {
-		
-		if (fMarkers.size() == 0) {
-			return EMPTY_MARKERS;
-		}
-		return fMarkers.toArray( EMPTY_MARKERS );						
-	}
-	
 	
 	/**
 	 * Helper method for getting an AbstractUIObjectFactory from a model object.

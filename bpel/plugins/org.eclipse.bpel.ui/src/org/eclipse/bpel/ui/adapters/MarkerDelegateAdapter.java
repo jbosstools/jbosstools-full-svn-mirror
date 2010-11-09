@@ -46,20 +46,18 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class MarkerDelegateAdapter extends AbstractStatefulAdapter implements IMarkerHolder, AdapterNotification {
 	
-	ArrayList<IMarker> fMarkers = new ArrayList<IMarker>();
-
 	static IMarker [] EMPTY_MARKERS = {};
 	
 	/** (non-Javadoc)
 	 * @see org.eclipse.bpel.ui.adapters.IMarkerHolder#getMarkers(java.lang.Object)
+	 *
+	 * https://jira.jboss.org/browse/JBIDE-7526
+	 * We don't own any markers since we delegate to MarkerHolderAdapter
+	 * TODO: do we need to get markers from parent adapter?
 	 */
-
 	public IMarker[] getMarkers (Object object) {
 		
-		if (fMarkers.size() == 0) {
-			return EMPTY_MARKERS;
-		}
-		return fMarkers.toArray( EMPTY_MARKERS );						
+		return EMPTY_MARKERS;
 	}
 	
 	protected boolean isMarkerEvent(Notification notification) {

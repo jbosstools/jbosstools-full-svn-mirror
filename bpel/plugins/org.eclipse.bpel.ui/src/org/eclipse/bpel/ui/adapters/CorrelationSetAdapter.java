@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.CorrelationSet;
-import org.eclipse.bpel.model.adapters.AbstractStatefulAdapter;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.Messages;
@@ -33,49 +32,12 @@ import org.eclipse.swt.graphics.Image;
  * @date Jun 5, 2007
  *
  */
-public class CorrelationSetAdapter extends AbstractStatefulAdapter implements INamedElement,
+// https://jira.jboss.org/browse/JBIDE-7526
+// push all of the Marker stuff up to MarkerHolderAdapter to avoid duplication
+public class CorrelationSetAdapter extends MarkerHolderAdapter implements INamedElement,
 	ILabeledElement, EditPartFactory, IOutlineEditPartFactory, IMarkerHolder,
 	ITrayEditPartFactory,AdapterNotification
 {
-	
-
-	/**
-	 * @see org.eclipse.bpel.model.adapters.AbstractAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
-	 */
-	@Override
-	public void notifyChanged(Notification notification) {		
-		super.notifyChanged(notification);
-		switch (notification.getEventType()) {
-			case NOTIFICATION_MARKERS_STALE : 
-				fMarkers.clear();
-				break;
-			case NOTIFICATION_MARKER_ADDED :
-				fMarkers.add ( (IMarker) notification.getNewValue() );
-				break;
-			case NOTIFICATION_MARKER_DELETED :
-				fMarkers.remove ( notification.getOldValue() );
-				break;								
-		}				
-	}
-	
-	ArrayList<IMarker> fMarkers = new ArrayList<IMarker>();
-
-	static IMarker [] EMPTY_MARKERS = {};
-	
-	/** (non-Javadoc)
-	 * @see org.eclipse.bpel.ui.adapters.IMarkerHolder#getMarkers(java.lang.Object)
-	 */
-
-	public IMarker[] getMarkers (Object object) {
-		
-		if (fMarkers.size() == 0) {
-			return EMPTY_MARKERS;
-		}
-		return fMarkers.toArray( EMPTY_MARKERS );						
-	}
-	
-	
-	
 	
 	/**
 	 * @see org.eclipse.bpel.ui.adapters.INamedElement#getName(java.lang.Object)

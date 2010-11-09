@@ -10,20 +10,17 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.adapters;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.eclipse.bpel.model.adapters.AbstractStatefulAdapter;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.emf.common.notify.Notification;
 
 /**
  * Adapter for an object which may (or may not) support IContainer.
  * This class forwards the IContainer methods to a delegate which subclasses
  * should construct in createContainerDelegate().
  */
+// https://jira.jboss.org/browse/JBIDE-7526
+// push all of the Marker stuff up to MarkerHolderAdapter to avoid duplication
 public abstract class ContainerAdapter 
-            extends AbstractStatefulAdapter 
+            extends MarkerHolderAdapter 
             implements IContainer,  IMarkerHolder, AdapterNotification  {
 
 	IContainer containerDelegate = null;
@@ -34,45 +31,7 @@ public abstract class ContainerAdapter
 		}
 		return containerDelegate;
 	}
-	
-	
-	
-	/**
-	 * @see org.eclipse.bpel.model.adapters.AbstractAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
-	 */
-	@Override
-	public void notifyChanged(Notification notification) {		
-		super.notifyChanged(notification);
-		switch (notification.getEventType()) {
-			case NOTIFICATION_MARKERS_STALE : 
-				fMarkers.clear();
-				break;
-			case NOTIFICATION_MARKER_ADDED :
-				fMarkers.add ( (IMarker) notification.getNewValue() );
-				break;
-			case NOTIFICATION_MARKER_DELETED :
-				fMarkers.remove ( notification.getOldValue() );
-				break;								
-		}				
-	}
-	
-	ArrayList<IMarker> fMarkers = new ArrayList<IMarker>();
 
-	static IMarker [] EMPTY_MARKERS = {};
-	
-	/** (non-Javadoc)
-	 * @see org.eclipse.bpel.ui.adapters.IMarkerHolder#getMarkers(java.lang.Object)
-	 */
-
-	public IMarker[] getMarkers (Object object) {
-		
-		if (fMarkers.size() == 0) {
-			return EMPTY_MARKERS;
-		}
-		return fMarkers.toArray( EMPTY_MARKERS );						
-	}
-	
-	
 	/**
 	 * Subclasses must override this to create the actual IContainer
 	 * implementation.  This method should not return null.
