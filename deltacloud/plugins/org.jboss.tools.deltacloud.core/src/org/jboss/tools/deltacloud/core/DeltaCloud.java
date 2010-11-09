@@ -74,18 +74,8 @@ public class DeltaCloud {
 		this.name = name;
 		this.username = username;
 		this.type = type;
-		imageFilter = new ImageFilter();
-		try {
-			imageFilter.setRules(imageFilterRules);
-		} catch (PatternSyntaxException e) {
-			imageFilter.setRules(IImageFilter.ALL_STRING);
-		}
-		instanceFilter = new InstanceFilter();
-		try {
-			instanceFilter.setRules(instanceFilterRules);
-		} catch (PatternSyntaxException e) {
-			instanceFilter.setRules(IInstanceFilter.ALL_STRING);
-		}
+		imageFilter = createImageFilter(imageFilterRules);
+		instanceFilter = createInstanceFilter(instanceFilterRules);
 		if (persistent) {
 			storePassword(url, username, passwd);
 		}
@@ -100,7 +90,8 @@ public class DeltaCloud {
 		this.type = type;
 		storePassword(url, username, passwd);
 		save();
-		// TODO: remove notification with all instances, replace by notifying the changed instance
+		// TODO: remove notification with all instances, replace by notifying
+		// the changed instance
 		notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 	}
 
@@ -158,37 +149,58 @@ public class DeltaCloud {
 		return instanceFilter;
 	}
 
-	public void createInstanceFilter(String ruleString) {
+	public void updateInstanceFilter(String ruleString) {
 		String rules = getInstanceFilter().toString();
+		instanceFilter = createInstanceFilter(ruleString);
+		if (!rules.equals(ruleString)) {
+			save();
+			// TODO: remove notification with all instances, replace by
+			// notifying the changed instance
+			notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
+		}
+	}
+
+	private IInstanceFilter createInstanceFilter(String ruleString) {
+		IInstanceFilter instanceFilter = null;
 		if (IInstanceFilter.ALL_STRING.equals(ruleString))
 			instanceFilter = new AllInstanceFilter();
 		else {
-			instanceFilter = new InstanceFilter();
-			instanceFilter.setRules(ruleString);
+			try {
+				instanceFilter = new InstanceFilter();
+				instanceFilter.setRules(ruleString);
+			} catch (PatternSyntaxException e) {
+				instanceFilter.setRules(IInstanceFilter.ALL_STRING);
+			}
 		}
-		if (!rules.equals(ruleString)) {
-			save();
-			// TODO: remove notification with all instances, replace by notifying the changed instance
-			notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
-		}
+		return instanceFilter;
 	}
 
 	public IImageFilter getImageFilter() {
 		return imageFilter;
 	}
 
-	public void createImageFilter(String ruleString) {
+	public void updateImageFilter(String ruleString) {
 		String rules = getImageFilter().toString();
-		if (IImageFilter.ALL_STRING.equals(ruleString))
-			imageFilter = new AllImageFilter();
-		else {
-			imageFilter = new ImageFilter();
-			imageFilter.setRules(ruleString);
-		}
+		this.imageFilter = createImageFilter(ruleString);
 		if (!rules.equals(ruleString)) {
 			save();
 			notifyImageListListeners(getCurrImages());
 		}
+	}
+
+	private IImageFilter createImageFilter(String ruleString) {
+		IImageFilter imageFilter = null;
+		if (IImageFilter.ALL_STRING.equals(ruleString))
+			imageFilter = new AllImageFilter();
+		else {
+			try {
+				imageFilter = new ImageFilter();
+				imageFilter.setRules(ruleString);
+			} catch (PatternSyntaxException e) {
+				imageFilter.setRules(IImageFilter.ALL_STRING);
+			}
+		}
+		return imageFilter;
 	}
 
 	public void loadChildren() {
@@ -275,7 +287,8 @@ public class DeltaCloud {
 			} catch (DeltaCloudClientException e) {
 				Activator.log(e);
 			}
-			// TODO: remove notification with all instances, replace by notifying the changed instance
+			// TODO: remove notification with all instances, replace by
+			// notifying the changed instance
 			DeltaCloudInstance[] instancesArray = instances.toArray(new DeltaCloudInstance[instances.size()]);
 			notifyInstanceListListeners(instancesArray);
 			return instancesArray;
@@ -301,8 +314,10 @@ public class DeltaCloud {
 		} catch (DeltaCloudException e) {
 			return null;
 		}
-		// TODO: remove notification with all instances, replace by notifying the changed instance
-		DeltaCloudInstance[] instancesArray = instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()]));
+		// TODO: remove notification with all instances, replace by notifying
+		// the changed instance
+		DeltaCloudInstance[] instancesArray = instances.toArray(instances.toArray(new DeltaCloudInstance[instances
+				.size()]));
 		notifyInstanceListListeners(instancesArray);
 		return instancesArray;
 	}
@@ -337,9 +352,9 @@ public class DeltaCloud {
 			if (!found) {
 				instances.add(instance);
 			}
-			// TODO: remove notification with all instances, replace by notifying the changed instance
-			notifyInstanceListListeners(
-					instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
+			// TODO: remove notification with all instances, replace by
+			// notifying the changed instance
+			notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 		}
 	}
 
@@ -379,8 +394,10 @@ public class DeltaCloud {
 
 			boolean result = instance.performInstanceAction(actionId, client);
 			if (result) {
-				// TODO: remove notification with all instances, replace by notifying the changed instance
-				notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
+				// TODO: remove notification with all instances, replace by
+				// notifying the changed instance
+				notifyInstanceListListeners(instances
+						.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 			}
 			return result;
 		} catch (DeltaCloudClientException e) {
