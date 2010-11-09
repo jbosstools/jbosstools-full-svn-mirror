@@ -90,8 +90,7 @@ public class DeltaCloud {
 		this.type = type;
 		storePassword(url, username, passwd);
 		save();
-		loadInstances();
-		loadImages();
+		loadChildren();
 	}
 
 	private void storePassword(String url, String username, String passwd) {
