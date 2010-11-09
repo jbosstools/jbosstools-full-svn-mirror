@@ -1005,16 +1005,14 @@ public class ReconciliationHelper {
 	    	reconcile(th, th.getElement());
 			System.err.println("TerminationHandler patch ok");
 	    } else if (child instanceof OnEvent) {
-	    	
+
 	    } else if (child instanceof OnAlarm) {
-	    	Activity activity = ((OnAlarm) child).getActivity();
-		    if(((OnAlarm) child).getActivity() != null) {
-	    	    Element childElement = ((WSDLElement)activity).getElement();
-			    if (childElement == null) {
-	    		    childElement = ElementFactory.getInstance().createElement(((ExtensibleElement)activity), child);
-	    		    ((ExtensibleElement)activity).setElement(childElement);
-	    	    }
-		    }
+	    	// fix https://jira.jboss.org/browse/JBIDE-7480
+	    	OnAlarm o = (OnAlarm)child;
+	    	Activity a = o.getActivity();
+			Element s = ReconciliationHelper.getBPELChildElementByLocalName(o.getElement(), BPELConstants.ND_SCOPE);
+			a.setElement(s);
+			reconcile(a, s);
 	    } else if (child instanceof FaultHandler) {
 	    	FaultHandler c = (FaultHandler)child;
 	    	EList<Catch> _catch = c.getCatch();
@@ -1025,7 +1023,22 @@ public class ReconciliationHelper {
 				reconcile(ch, catchElement);
 	    	}
 			System.err.println("FaultHandler patch ok");
-	    } 
+	    }  else if (child instanceof EventHandler) {
+	    	// fix https://jira.jboss.org/browse/JBIDE-7504
+	        EventHandler e = (EventHandler)child;
+	        EList<OnEvent> _onEvent = e.getEvents();
+	        OnEvent on = _onEvent.get(0);
+			Element onElement = ReconciliationHelper.getBPELChildElementByLocalName(e.getElement(), BPELConstants.ND_ON_EVENT);
+			on.setElement(onElement);
+			reconcile(on, onElement);
+	    }  else if (child instanceof CompensationHandler) {
+	    	// fix https://jira.jboss.org/browse/JBIDE-7504
+	    	CompensationHandler c = (CompensationHandler)child;
+	    	Activity a = c.getActivity();
+			Element s = ReconciliationHelper.getBPELChildElementByLocalName(c.getElement(), BPELConstants.ND_SEQUENCE);
+			a.setElement(s);
+			reconcile(a, s);
+	    }
 	    	
 	}
 
