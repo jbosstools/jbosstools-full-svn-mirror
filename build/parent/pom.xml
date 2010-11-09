@@ -29,10 +29,9 @@
 		<target.platform.classifier.local>local
 		</target.platform.classifier.local>
 
-		<!-- Set this to a path on your own machine, or use remote URL like http://download.jboss.org/jbosstools/updates/target-platform/latest/
-				Can also generate a local.target file which will always point to your local repo w/o having to edit here. 
-				See local.target profile below for more information. 
-		-->
+		<!-- Set this to a path on your own machine, or use remote URL like http://download.jboss.org/jbosstools/updates/target-platform/latest/ 
+			Can also generate a local.target file which will always point to your local 
+			repo w/o having to edit here. See local.target profile below for more information. -->
 		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/
 		</target.platform.site>
 	</properties>
@@ -193,9 +192,9 @@
 	</issueManagement>
 	<profiles>
 
-		<!-- TODO: remove this when no one depends on it; replace with unified.target, not multiuple.target,
-				since no one should need to resolve against all these sites (and one site is by far faster) ! 
-		-->
+		<!-- TODO: remove this when no one depends on it; replace with unified.target, 
+			not multiuple.target, since no one should need to resolve against all these 
+			sites (and one site is by far faster) ! -->
 		<profile>
 			<id>helios</id>
 			<activation>
@@ -224,9 +223,9 @@
 			</build>
 		</profile>
 
-		<!-- Target platform file pointing at a single update site from which to resolve. 
-				See unified.site if you want to resolve against a site w/o using the unified.target file 
-		-->
+		<!-- Target platform file pointing at a single update site from which to 
+			resolve. See unified.site if you want to resolve against a site w/o using 
+			the unified.target file -->
 		<profile>
 			<id>unified.target</id>
 			<activation>
@@ -259,14 +258,9 @@
 			which points to a local repo. You can do this by hand or generate it from 
 			multiple.target using: cd ~/trunk/build/target-platform; ant See also the 
 			README in target-platform/ folder for additional usage examples. You can 
-			also run `ant help`.
-			
-			If you want to build the target-platform/pom.xml AND generate a local repo 
-			+ local.target file ALL AT THE SAME TIME, you can do:
-			
-			mvn clean install -Plocal -f /path/to/target-platform/pom.xml			
-			
-		-->
+			also run `ant help`. If you want to build the target-platform/pom.xml AND 
+			generate a local repo + local.target file ALL AT THE SAME TIME, you can do: 
+			mvn clean install -Plocal -f /path/to/target-platform/pom.xml -->
 		<profile>
 			<id>local.target</id>
 			<activation>
@@ -314,11 +308,10 @@
 				</repository>
 			</repositories>
 		</profile>
-		
-		<!-- if you have a local repo mirror of the unified.site, you can use this profile with the 
-				-Dtarget.platform.site=file://path/to/repo 
-				to resolve dependencies without needing to use a local.target file
-		-->
+
+		<!-- if you have a local repo mirror of the unified.site, you can use this 
+			profile with the -Dtarget.platform.site=file://path/to/repo to resolve dependencies 
+			without needing to use a local.target file -->
 		<profile>
 			<id>local.site</id>
 			<activation>
@@ -362,9 +355,9 @@
 		</profile>
 
 		<!-- Time saver: to build everything from scratch from a single repo containing 
-			all deps in unified.target, but without using the target file to filter site contents 
-			(may end up using a different version of a dependency if site contains multiple versions)
-		-->
+			all deps in unified.target, but without using the target file to filter site 
+			contents (may end up using a different version of a dependency if site contains 
+			multiple versions) -->
 		<profile>
 			<id>unified.site</id>
 			<activation>
@@ -493,10 +486,19 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!--repository> <id>swtbot-helios</id> <url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
 				<repository>
+					<id>swtbot-helios</id>
+					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/ 
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<!-- repository>
 					<id>jboss-swtbot-helios</id>
 					<url>http://download.jboss.org/jbosstools/updates/requirements/swtbot-helios/
 					</url>
@@ -507,7 +509,7 @@
 					<releases>
 						<enabled>true</enabled>
 					</releases>
-				</repository>
+				</repository -->
 				<repository>
 					<id>m2eclipse</id>
 					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
