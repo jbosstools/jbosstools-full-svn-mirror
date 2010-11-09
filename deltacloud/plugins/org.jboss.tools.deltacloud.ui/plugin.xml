@@ -113,12 +113,12 @@
             commandId="org.jboss.tools.deltacloud.ui.editconnection">
          <activeWhen>
                <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
-	               		</instanceof>
-	               	</iterate>
+	                 variable="selection">
+				        <iterate>
+				           <instanceof
+				                 value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+				           </instanceof>
+				        </iterate>
                </with>
          </activeWhen>
       </handler>
@@ -157,11 +157,10 @@
          <activeWhen>
                <with
                      variable="selection">
-					<iterate operator="and">
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-	               		</instanceof>
-	               	</iterate>
+						<iterate operator="and">
+		               		<adapt
+		                	     type="org.jboss.tools.deltacloud.core.DeltaCloudInstance" />
+		               	</iterate>
                </with>
          </activeWhen>
          <enabledWhen>
@@ -297,7 +296,7 @@
          <activeWhen>
                <with
                      variable="selection">
-					<iterate>
+			i		<iterate>
 	               		<instanceof
 	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
 	               		</instanceof>
@@ -305,6 +304,32 @@
                </with>
          </activeWhen>
       </handler>
+   </extension>
+   <extension point="org.eclipse.ui.menus">
+      <!-- InstanceView context menu ================================== -->
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView">
+			<separator
+				name="instances"
+				visible="true" />
+			<separator
+				name="filters"
+				visible="true" />
+	  </menuContribution>
+      <!-- instance commands -->
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=instances">	
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.startinstance"
+               disabledIcon="icons/runningd.gif"
+               icon="icons/running.gif"
+               label="%command.label"
+               style="push"
+               tooltip="%command.tooltip">
+         </command>
+ 	  </menuContribution>
    </extension>
    <extension point="org.eclipse.ui.menus">
 	  <!-- DeltaCloudView context menu ================================== -->
@@ -324,10 +349,10 @@
 				name="filters"
 				visible="true" />
 	</menuContribution>
+	<!-- instance commands -->
     <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=instances">	
-		<!-- instance commands -->
          <command
                commandId="org.jboss.tools.deltacloud.ui.startinstance"
                disabledIcon="icons/runningd.gif"
@@ -335,17 +360,6 @@
                label="%command.label"
                style="push"
                tooltip="%command.tooltip">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-	               		</instanceof>
-	               	</iterate>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.stopinstance"
@@ -354,17 +368,6 @@
                label="%command.stopinstance.label"
                style="push"
                tooltip="%command.stopinstance.tooltip">
-             <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-	               		</instanceof>
-	               	</iterate>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.rebootinstance"
@@ -373,34 +376,12 @@
                label="%command.rebootinstance.label"
                style="push"
                tooltip="%command.rebootinstance.tooltip">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-	               		</instanceof>
-	               	</iterate>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.destroyinstance"
                label="%command.destroyinstance.label"
                style="push"
                tooltip="%command.destroyinstance.tooltip">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-	               		</instanceof>
-	               	</iterate>
-               </with>
-            </visibleWhen>
          </command>
 		 <separator
                   name="additions"
@@ -540,10 +521,10 @@
          </command>
 		 <separator
                   name="additions"
-                  visible="true">
-         </separator>
+                  visible="true" />
       </menuContribution>
     </extension>
+    
 	<!-- Commands ========================================= -->
     <extension
          point="org.eclipse.ui.commands">
