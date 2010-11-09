@@ -206,11 +206,12 @@
 		<title>ESB</title>
 		<para>
 			<itemizedlist>
-				 <listitem>
+<!-- Has been reopened - check closer to release date if it is resolved-->
+			<!--	 <listitem>
 				    <para>
 				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7193">JBIDE-7193</ulink>: New optional parameters <parameter>ruleMultithreadEvaluation</parameter> and <parameter>ruleMaxThreads</parameter> have been added to the <classname>BussinessRulesProcessor</classname> class. <parameter>ruleMultithreadEvaluation</parameter> enables or disables <classname>KnowledgeBase</classname> partitioning. <parameter>ruleMaxThreads</parameter> defines the numer of threads to use when <classname>KnowledgeBase</classname> partitioning is enabled. The default values for these parameters is null, disabling them by default.
 				    </para>
-				 </listitem>
+				 </listitem> -->
 				 <listitem>
 					  <para>
 					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7235">JBIDE-7235</ulink>: The ESB validator has been extended to cover the <classname>BussinessRulesProcessor</classname> class. This ensures that only one <methodname>ruleSet</methodname> is specified by the <classname>BussinessRulesProcessor</classname>, inhibiting conflicts.
@@ -245,6 +246,11 @@
 				 <listitem>
 				    <para>
 				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6615">JBIDE-6615</ulink>: ESB 4.9 includes a new router for utilizing the Camel runtime; support for this new router has been added to the ESB tooling.
+				    </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6614">JBIDE-6614</ulink>: Support for the new Complex Event Processing (CEP) functionality in ESB 4.9 has been added. The new feature means that CEP can now use the <classname>BusinessRulesProcessor</classname> action, and this has been added to the ESB tooling.
 				    </para>
 				 </listitem>
 				 <listitem>
@@ -409,6 +415,11 @@
 		<title>JavaServer Faces (JSF)</title>
 		<para>
 			<itemizedlist>
+			   <listitem>
+			      <para>
+			      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7439">JBIDE-7439</ulink>: Code completion has been added for the <property>name</property> attribute based on the assoicated <property>type</property>. For example: Code completion is now available for <code>&lt;cc:attribute name="myattr" type="java.lang.String" /&gt;</code>.
+			      </para>
+			   </listitem>
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7147">JBIDE-7147</ulink>: The validators create a marker for each problem found when conducting validation. An issue would arise where system performance would be drammatically decreased when an excesive amount of problems were discovered and subsequently marked. To ensure a system does not receive a performance hit, the <guimenuitem>Validator</guimenuitem> preferences screen now includes the ability to set the maximum number of problems reported per file. If there are more issues in a file than the maximum number to be reported, once the reported issues are corrected the others will be reported in subsequent validation attempts.
@@ -432,6 +443,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6815">JBIDE-6815</ulink>: A template page has been added that does not incorporate Facelets.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6732">JBIDE-6732</ulink>: New functionality has been added that allows a user to refactor a JSF 2 composite components directory. This means that a user can rename the directory and every reference to the folder within namespace definitions of web pages will be updated accordingly, through the refactoring process.
 				   </para>
 				</listitem>
 				<listitem>
@@ -623,6 +639,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6873">JBIDE-6873</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6871">JBIDE-6871</ulink>: For <property>Scope</property> annotation, quick fix now offers to change a component's scope. 
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6872">JBIDE-6872</ulink>: Quick fix has added functionality that offers to create <methodname>setter</methodname> and <methodname>getter</methodname> methods for component class property if the methods do not exist. 
 				   </para>
 				</listitem>
 				<listitem>
@@ -936,8 +957,13 @@
 		<title>General Issues</title>
 		<para>
 			<itemizedlist>
-			   <!-- This issue only in release notes for JBT -->
-		<!--	   <listitem>
+<!-- These two issues only in release notes for JBT -->
+			   <!--	   <listitem>
+			      <para>
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7435">JBIDE-7435</ulink>: RichFaces 4.0 and JSF 2.0 project examples with Maven are now available at <ulink url="http://download.jboss.org/jbosstools/examples/ ">http://download.jboss.org/jbosstools/examples/</ulink>.
+			      </para>
+			   </listitem>
+			   <listitem>
 			      <para>
 				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6836">JBIDE-6836</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6695">JBIDE-6695</ulink>: Google Web Toolkit features are available for JBoss Tools through the update site as experimental. 
 			      </para>
