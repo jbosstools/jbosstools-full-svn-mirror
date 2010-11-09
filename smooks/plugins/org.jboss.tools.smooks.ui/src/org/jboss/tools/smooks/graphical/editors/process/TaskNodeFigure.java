@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.draw2d.ActionEvent;
 import org.eclipse.draw2d.ActionListener;
 import org.eclipse.draw2d.Clickable;
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.GridData;
@@ -31,7 +30,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Menu;
@@ -136,9 +134,9 @@ public class TaskNodeFigure extends Figure {
 	protected void paintBorder(Graphics graphics) {
 //		super.paintBorder(graphics);
 		if (showRectangle) {
-//			graphics.setLineWidth(2);
-			graphics.setForegroundColor(ColorConstants.blue);
-			graphics.setLineStyle(SWT.LINE_DOT);
+			graphics.setLineWidth(2);
+//			graphics.setForegroundColor(ColorConstants.blue);
+//			graphics.setLineStyle(SWT.LINE_DOT);
 			graphics.drawRectangle(getBounds().x+1,getBounds().y+1,getBounds().width - 2 , getBounds().height - 2);
 		}
 	}
@@ -301,7 +299,7 @@ public class TaskNodeFigure extends Figure {
 		mainFigure.add(imageFigure);
 
 		label = new Label();
-		label.setForegroundColor(GraphicsConstants.BORDER_CORLOR);
+//		label.setForegroundColor(GraphicsConstants.BORDER_CORLOR);
 		label.setText(labelText);
 
 		oldLabelColor = label.getForegroundColor();
@@ -345,7 +343,7 @@ public class TaskNodeFigure extends Figure {
 
 	public void highlightLabel(Color highlightColor) {
 		oldLabelColor = label.getForegroundColor();
-		label.setForegroundColor(highlightColor);
+//		label.setForegroundColor(highlightColor);
 		showRectangle = true;
 		this.repaint();
 	}

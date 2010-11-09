@@ -13,11 +13,14 @@ package org.jboss.tools.smooks.graphical.editors.process;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.zest.core.viewers.IConnectionStyleProvider;
 import org.eclipse.zest.core.viewers.IFigureProvider;
 import org.eclipse.zest.core.viewers.ISelfStyleProvider;
 import org.eclipse.zest.core.widgets.CGraphNode;
@@ -34,7 +37,7 @@ import org.jboss.tools.smooks.graphical.editors.TaskTypeManager.TaskTypeDescript
  * @author Dart
  * 
  */
-public class ProcessGraphicalViewerLabelProvider extends LabelProvider implements IFigureProvider, ISelfStyleProvider {
+public class ProcessGraphicalViewerLabelProvider extends LabelProvider implements IFigureProvider, ISelfStyleProvider ,IConnectionStyleProvider {
 
 	private SmooksProcessGraphicalEditor processEditor;
 	
@@ -94,7 +97,7 @@ public class ProcessGraphicalViewerLabelProvider extends LabelProvider implement
 	}
 
 	public void selfStyleConnection(Object element, GraphConnection connection) {
-		connection.setLineColor(GraphicsConstants.BORDER_CORLOR);
+//		connection.setLineColor(GraphicsConstants.BORDER_CORLOR);
 	}
 	
 	private String getProblemMessage(List<String> message){
@@ -135,6 +138,28 @@ public class ProcessGraphicalViewerLabelProvider extends LabelProvider implement
 			Dimension size = figure.getLayoutManager().getPreferredSize(figure, -1, -1);
 			figure.setSize(size);
 		}
+	}
+
+	public int getConnectionStyle(Object rel) {
+		return 0;
+	}
+
+	public Color getColor(Object rel) {
+		return ColorConstants.black;
+	}
+
+	public Color getHighlightColor(Object rel) {
+		return ColorConstants.black;
+	}
+
+	public int getLineWidth(Object rel) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public IFigure getTooltip(Object entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
