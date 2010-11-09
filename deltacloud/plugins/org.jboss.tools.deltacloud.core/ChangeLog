@@ -22,6 +22,8 @@
 	(createInstanceFilter): 
 	(updateInstanceFilter): 
 	[JBIDE-7518] cleanup code duplication (imageFilter and instanceFilter creation)
+	(editCloud): 
+	[JBIDE-7518] load images and instances after editing the cloud -> notifies listeners of changes
 
 2010-11-05  André Dietisheim  <adietish@redhat.com>
 

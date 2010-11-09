@@ -90,11 +90,6 @@ public class DeltaCloud {
 		this.type = type;
 		storePassword(url, username, passwd);
 		save();
-		// // TODO: remove notification with all instances, replace by notifying
-		// // the changed instance
-		// /* notification is needed to refresh instances and images */
-		// notifyInstanceListListeners(instances.toArray(instances.toArray(new
-		// DeltaCloudInstance[instances.size()])));
 		loadInstances();
 		loadImages();
 	}
