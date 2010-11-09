@@ -90,9 +90,13 @@ public class DeltaCloud {
 		this.type = type;
 		storePassword(url, username, passwd);
 		save();
-		// TODO: remove notification with all instances, replace by notifying
-		// the changed instance
-		notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
+		// // TODO: remove notification with all instances, replace by notifying
+		// // the changed instance
+		// /* notification is needed to refresh instances and images */
+		// notifyInstanceListListeners(instances.toArray(instances.toArray(new
+		// DeltaCloudInstance[instances.size()])));
+		loadInstances();
+		loadImages();
 	}
 
 	private void storePassword(String url, String username, String passwd) {
@@ -162,9 +166,9 @@ public class DeltaCloud {
 
 	private IInstanceFilter createInstanceFilter(String ruleString) {
 		IInstanceFilter instanceFilter = null;
-		if (IInstanceFilter.ALL_STRING.equals(ruleString))
+		if (IInstanceFilter.ALL_STRING.equals(ruleString)) {
 			instanceFilter = new AllInstanceFilter();
-		else {
+		} else {
 			try {
 				instanceFilter = new InstanceFilter();
 				instanceFilter.setRules(ruleString);
@@ -190,9 +194,9 @@ public class DeltaCloud {
 
 	private IImageFilter createImageFilter(String ruleString) {
 		IImageFilter imageFilter = null;
-		if (IImageFilter.ALL_STRING.equals(ruleString))
+		if (IImageFilter.ALL_STRING.equals(ruleString)) {
 			imageFilter = new AllImageFilter();
-		else {
+		} else {
 			try {
 				imageFilter = new ImageFilter();
 				imageFilter.setRules(ruleString);
@@ -208,8 +212,8 @@ public class DeltaCloud {
 
 			@Override
 			public void run() {
-				getImages();
-				getInstances();
+				loadImages();
+				loadInstances();
 			}
 
 		});
@@ -275,7 +279,15 @@ public class DeltaCloud {
 		}
 	}
 
-	public DeltaCloudInstance[] getInstances() {
+	/**
+	 * Loads the instances from the server and stores them in this instance.
+	 * Furthermore listeners get informed.
+	 * 
+	 * @return the instances
+	 * 
+	 * @see #notifyInstanceListListeners(DeltaCloudInstance[])
+	 */
+	public DeltaCloudInstance[] loadInstances() {
 		synchronized (instanceLock) {
 			instances = new ArrayList<DeltaCloudInstance>();
 			try {
@@ -298,7 +310,7 @@ public class DeltaCloud {
 	public DeltaCloudInstance[] getCurrInstances() {
 		synchronized (instanceLock) {
 			if (instances == null) {
-				return getInstances();
+				return loadInstances();
 			}
 			DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
 			instanceArray = instances.toArray(instanceArray);
@@ -371,6 +383,7 @@ public class DeltaCloud {
 					if (!(retVal.getState().equals(DeltaCloudInstance.BOGUS))
 							&& !(inst.getState().equals(retVal.getState()))) {
 						instances.set(i, retVal);
+						// TODO: is this correct? getCurrInstances notifies, too
 						notifyInstanceListListeners(getCurrInstances());
 						return retVal;
 					}
@@ -430,7 +443,15 @@ public class DeltaCloud {
 		return profileArray;
 	}
 
-	public DeltaCloudImage[] getImages() {
+	/**
+	 * Loads the available images from the server and stores them locally.
+	 * Furthermore listeners get informed.
+	 * 
+	 * @return the delta cloud image[]
+	 * 
+	 * @see #notifyImageListListeners(DeltaCloudImage[])
+	 */
+	public DeltaCloudImage[] loadImages() {
 		synchronized (imageLock) {
 			images = new ArrayList<DeltaCloudImage>();
 			try {
@@ -452,7 +473,7 @@ public class DeltaCloud {
 	public DeltaCloudImage[] getCurrImages() {
 		synchronized (imageLock) {
 			if (images == null)
-				return getImages();
+				return loadImages();
 			DeltaCloudImage[] imageArray = new DeltaCloudImage[images.size()];
 			imageArray = images.toArray(imageArray);
 			return imageArray;
