@@ -38,7 +38,7 @@ public class ImageFilter implements IImageFilter {
 	}
 
 	private IFieldMatcher createRule(String token) {
-		if (token.equals(ALL_MATCHER)) { //$NON-NLS-1$
+		if (token.equals(ALL_MATCHER_EXPRESSION)) { //$NON-NLS-1$
 			return new AllFieldMatcher();
 		} else {
 			return new FieldMatcher(token);

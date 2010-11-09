@@ -26,40 +26,20 @@ public class InstanceFilter implements IInstanceFilter {
 	@Override
 	public void setRules(String ruleString) throws PatternSyntaxException {
 		String[] tokens = ruleString.split(";");
-		if (tokens[0].equals("*")) { //$NON-NLS-1$
-			nameRule = new AllFieldMatcher();
+		this.nameRule = createRule(tokens[0]);
+		this.idRule = createRule(tokens[1]);
+		this.imageIdRule = createRule(tokens[2]);
+		this.ownerIdRule = createRule(tokens[3]);
+		this.keyNameRule = createRule(tokens[4]);
+		this.realmRule = createRule(tokens[5]);
+		this.profileRule = createRule(tokens[6]);
+	}
+
+	private IFieldMatcher createRule(String expression) {
+		if (expression.equals(ALL_MATCHER_EXPRESSION)) { //$NON-NLS-1$
+			return new AllFieldMatcher();
 		} else {
-			nameRule = new FieldMatcher(tokens[0]);
-		}
-		if (tokens[1].equals("*")) { //$NON-NLS-1$
-			idRule = new AllFieldMatcher();
-		} else {
-			idRule = new FieldMatcher(tokens[1]);
-		}
-		if (tokens[2].equals("*")) { //$NON-NLS-1$
-			imageIdRule = new AllFieldMatcher();
-		} else {
-			imageIdRule = new FieldMatcher(tokens[2]);
-		}
-		if (tokens[3].equals("*")) { //$NON-NLS-1$
-			ownerIdRule = new AllFieldMatcher();
-		} else {
-			ownerIdRule = new FieldMatcher(tokens[3]);
-		}
-		if (tokens[4].equals("*")) { //$NON-NLS-1$
-			keyNameRule = new AllFieldMatcher();
-		} else {
-			keyNameRule = new FieldMatcher(tokens[4]);
-		}
-		if (tokens[5].equals("*")) { //$NON-NLS-1$
-			realmRule = new AllFieldMatcher();
-		} else {
-			realmRule = new FieldMatcher(tokens[5]);
-		}
-		if (tokens[6].equals("*")) { //$NON-NLS-1$
-			profileRule = new AllFieldMatcher();
-		} else {
-			profileRule = new FieldMatcher(tokens[6]);
+			return new FieldMatcher(expression);
 		}
 	}
 	

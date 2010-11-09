@@ -1,6 +1,19 @@
 2010-11-09  André Dietisheim  <adietish@redhat.com>
 
-	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (editCloud): [JBIDE-7521] storing cloud after it has been edited
+	* src/org/jboss/tools/deltacloud/core/ImageFilter.java (setRules): 
+	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java 
+	(setRules): 
+	(createRule): 
+	[JBIDE-7518] removed duplicate code for matcher creation
+	(createRule): 
+	(setRules): 
+	[JBIDE-7518] removed duplicate code for matcher creation
+	* src/org/jboss/tools/deltacloud/core/ICloudElementFilter.java: 
+	* src/org/jboss/tools/deltacloud/core/IImageFilter.java: 
+	* src/org/jboss/tools/deltacloud/core/IInstanceFilter.java
+	
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (editCloud): 
+	[JBIDE-7521] storing cloud after it has been edited
 	(editCloud): 
 	[JBIDE-7518] added notification after cloud was edited
 	(DeltaCloud): 
