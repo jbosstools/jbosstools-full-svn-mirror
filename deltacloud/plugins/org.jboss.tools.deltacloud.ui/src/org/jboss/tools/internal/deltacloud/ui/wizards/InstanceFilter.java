@@ -34,7 +34,7 @@ public class InstanceFilter extends Wizard {
 		String realmRule = mainPage.getRealmRule();
 		String profileRule = mainPage.getProfileRule();
 		
-		cloud.createInstanceFilter(nameRule + ";" + //$NON-NLS-1$
+		cloud.updateInstanceFilter(nameRule + ";" + //$NON-NLS-1$
 				idRule + ";" + //$NON-NLS-1$
 				imageIdRule + ";" + //$NON-NLS-1$
 				ownerIdRule + ";" + //$NON-NLS-1$

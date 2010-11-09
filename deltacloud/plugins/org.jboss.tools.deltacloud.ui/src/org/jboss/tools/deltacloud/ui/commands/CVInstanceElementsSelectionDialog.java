@@ -13,11 +13,13 @@ package org.jboss.tools.deltacloud.ui.commands;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
 
 /**
@@ -29,12 +31,11 @@ public class CVInstanceElementsSelectionDialog extends ListSelectionDialog {
 
 	private static class DeltaCloudInstanceProvider implements IStructuredContentProvider {
 
-		@SuppressWarnings("unchecked")
 		@Override
-		public Object[] getElements(Object cvInstanceElements) {
-			Assert.isTrue(cvInstanceElements instanceof Collection);
-			Collection<CVInstanceElement> instances = (Collection<CVInstanceElement>) cvInstanceElements;
-			return instances.toArray(new CVInstanceElement[instances.size()]);
+		public Object[] getElements(Object deltaCloudInstances) {
+			Assert.isTrue(deltaCloudInstances instanceof Collection);
+			Collection<?> instances = (Collection<?>) deltaCloudInstances;
+			return instances.toArray(new Object[instances.size()]);
 		}
 
 		@Override
@@ -48,6 +49,11 @@ public class CVInstanceElementsSelectionDialog extends ListSelectionDialog {
 
 	private static class CloudElementNameProvider extends LabelProvider {
 		public String getText(Object element) {
+			Assert.isTrue(element instanceof IAdaptable);
+			DeltaCloudInstance deltaCloudInstance = (DeltaCloudInstance) ((IAdaptable) element).getAdapter(DeltaCloudInstance.class);
+			if (deltaCloudInstance != null) {
+				return deltaCloudInstance.getName();
+			}
 			return ((CVInstanceElement) element).getName();
 		}
 	};

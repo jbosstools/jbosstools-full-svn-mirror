@@ -318,7 +318,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 					@Override
 					public void run() {
 						if (currCloud != null) {
-							currCloud.getImages();
+							currCloud.loadImages();
 						}
 					}
 

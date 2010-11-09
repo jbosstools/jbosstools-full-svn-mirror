@@ -20,11 +20,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -55,15 +52,14 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -76,6 +72,7 @@ import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
 import org.osgi.service.prefs.Preferences;
 
@@ -86,8 +83,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	 */
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.InstanceView";
 
-//	private static final String CONTEXT_MENU_ID = "popup:" + ID;
-//	private static final String VIEW_MENU_ID = "menu:" + ID;
+	private static final String CONTEXT_MENU_ID = "popup:" + ID;
+	private static final String VIEW_MENU_ID = "menu:" + ID;
 	
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
 	private final static String START_LABEL = "Start.label"; //$NON-NLS-1$
@@ -122,7 +119,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 
 	private IAction refreshAction;
 	private IAction filterAction;
-	private IAction startAction;
+//	private IAction startAction;
 	private IAction stopAction;
 	private IAction destroyAction;
 	private IAction rebootAction;
@@ -146,8 +143,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			}
 			currCloud = clouds[index];
 			storeSelectedCloud();
-//			viewer.setInput(new DeltaCloudInstance[0]);
-//			viewer.refresh();
 			Display.getCurrent().asyncExec(new Runnable() {
 
 				@Override
@@ -168,7 +163,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				// do nothing
 			}
 		}
-
 	};
 
 	private class ColumnListener extends SelectionAdapter {
@@ -221,7 +215,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		filterLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
 
 		Composite tableArea = new Composite(container, SWT.NULL);
-		createTableViewer(tableArea);
+		viewer = createTableViewer(tableArea);
 
 		if (currCloud != null) {
 			currCloud.removeInstanceListListener(parentView);
@@ -260,18 +254,19 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		makeActions();
-		hookContextMenu();
+		hookContextMenu(viewer.getTable());
 		hookSelection();
 		contributeToActionBars();
+		getSite().setSelectionProvider(viewer);
 
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
 
-	private void createTableViewer(Composite tableArea) {
+	private TableViewer createTableViewer(Composite tableArea) {
 		TableColumnLayout tableLayout = new TableColumnLayout();
 		tableArea.setLayout(tableLayout);
 
-		viewer = new TableViewer(tableArea, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
+		TableViewer viewer = new TableViewer(tableArea, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -280,18 +275,24 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		viewer.setLabelProvider(contentProvider);
 		InstanceComparator comparator = new InstanceComparator(0);
 		viewer.setComparator(comparator);
+		createColumns(tableLayout, table);
+		table.setSortDirection(SWT.NONE);
+		return viewer;
+		
+	}
 
+	private void createColumns(TableColumnLayout tableLayout, Table table) {
 		for (int i = 0; i < InstanceViewLabelAndContentProvider.Column.getSize(); ++i) {
 			InstanceViewLabelAndContentProvider.Column c =
 					InstanceViewLabelAndContentProvider.Column.getColumn(i);
 			TableColumn tc = new TableColumn(table, SWT.NONE);
-			if (i == 0)
+			if (i == 0) {
 				table.setSortColumn(tc);
+			}
 			tc.setText(CVMessages.getString(c.name()));
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
 			tc.addSelectionListener(new ColumnListener(i, viewer));
 		}
-		table.setSortDirection(SWT.NONE);
 	}
 
 	private Label createCloudSelector() {
@@ -317,21 +318,25 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				handleSelection();
+				System.err.println(event.getSelection());
 			}
 		});
 	}
 
-	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				InstanceView.this.fillContextMenu(manager);
-			}
-		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
+	private void hookContextMenu(Control control) {
+		IMenuManager contextMenu = UIUtils.createContextMenu(control);
+		UIUtils.registerContributionManager(CONTEXT_MENU_ID, contextMenu, control);
+
+//		MenuManager menuMgr = new MenuManager("#PopupMenu");
+//		menuMgr.setRemoveAllWhenShown(true);
+//		menuMgr.addMenuListener(new IMenuListener() {
+//			public void menuAboutToShow(IMenuManager manager) {
+//				InstanceView.this.fillContextMenu(manager);
+//			}
+//		});
+//		Menu menu = menuMgr.createContextMenu(viewer.getControl());
+//		viewer.getControl().setMenu(menu);
+//		getSite().registerContextMenu(menuMgr, viewer);
 	}
 
 	private void contributeToActionBars() {
@@ -343,15 +348,12 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private void handleSelection() {
 		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
 		selectedElement = (DeltaCloudInstance) selection.getFirstElement();
-		instanceActions.get(DeltaCloudInstance.START).setEnabled(false);
+//		instanceActions.get(DeltaCloudInstance.START).setEnabled(false);
 		instanceActions.get(DeltaCloudInstance.STOP).setEnabled(false);
 		instanceActions.get(DeltaCloudInstance.REBOOT).setEnabled(false);
 		instanceActions.get(DeltaCloudInstance.DESTROY).setEnabled(false);
 		if (selectedElement != null) {
-			List<String> actions = selectedElement.getActions();
-			for (String action : actions) {
-				instanceActions.get(action).setEnabled(true);
-			}
+			enableActions(selectedElement.getActions());
 		}
 	}
 
@@ -361,32 +363,39 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
-		List<String> actions = selectedElement.getActions();
-		manager.add(instanceActions.get(DeltaCloudInstance.START));
-		instanceActions.get(DeltaCloudInstance.START).setEnabled(false);
-		manager.add(instanceActions.get(DeltaCloudInstance.STOP));
-		instanceActions.get(DeltaCloudInstance.STOP).setEnabled(false);
-		manager.add(instanceActions.get(DeltaCloudInstance.REBOOT));
-		instanceActions.get(DeltaCloudInstance.REBOOT).setEnabled(false);
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		manager.add(instanceActions.get(DeltaCloudInstance.DESTROY));
-		instanceActions.get(DeltaCloudInstance.DESTROY).setEnabled(false);
-		for (String action : actions) {
-			instanceActions.get(action).setEnabled(true);
+//		List<String> actions = selectedElement.getActions();
+//		manager.add(instanceActions.get(DeltaCloudInstance.START));
+//		instanceActions.get(DeltaCloudInstance.START).setEnabled(false);
+//		manager.add(instanceActions.get(DeltaCloudInstance.STOP));
+//		instanceActions.get(DeltaCloudInstance.STOP).setEnabled(false);
+//		manager.add(instanceActions.get(DeltaCloudInstance.REBOOT));
+//		instanceActions.get(DeltaCloudInstance.REBOOT).setEnabled(false);
+//		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+//		manager.add(instanceActions.get(DeltaCloudInstance.DESTROY));
+//		instanceActions.get(DeltaCloudInstance.DESTROY).setEnabled(false);
+//		enableActions(actions);
+//		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+//		manager.add(rseAction);
+//		if (selectedElement.getState().equals(DeltaCloudInstance.RUNNING) ||
+//				selectedElement.getState().equals(DeltaCloudInstance.STOPPED))
+//			rseAction.setEnabled(true);
+//		else
+//			rseAction.setEnabled(false);
+//		// Other plug-ins can contribute there actions here
+//		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+	}
+
+	private void enableActions(List<String> actions) {
+		for (String actionId : actions) {
+			IAction action = instanceActions.get(actionId);
+			if (action != null) {
+				action.setEnabled(true);
+			}
 		}
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		manager.add(rseAction);
-		if (selectedElement.getState().equals(DeltaCloudInstance.RUNNING) ||
-				selectedElement.getState().equals(DeltaCloudInstance.STOPPED))
-			rseAction.setEnabled(true);
-		else
-			rseAction.setEnabled(false);
-		// Other plug-ins can contribute there actions here
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(instanceActions.get(DeltaCloudInstance.START));
+//		manager.add(instanceActions.get(DeltaCloudInstance.START));
 		manager.add(instanceActions.get(DeltaCloudInstance.STOP));
 		manager.add(instanceActions.get(DeltaCloudInstance.REBOOT));
 		manager.add(instanceActions.get(DeltaCloudInstance.DESTROY));
@@ -395,14 +404,19 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private void makeActions() {
 		this.refreshAction = createRefreshAction();
 		this.filterAction = createFilterAction();
-		this.startAction = createStartAction();
+
+		IActionBars actionBars = getViewSite().getActionBars();
+		IMenuManager menuManager = actionBars.getMenuManager();
+		UIUtils.registerContributionManager(VIEW_MENU_ID, menuManager, viewer.getControl());
+		
+//		this.startAction = createStartAction();
 		this.stopAction = createStopAction();
 		this.rebootAction = createRebootAction();
 		this.destroyAction = createDestroyAction();
 		this.rseAction = createRseAction();
 
 		instanceActions = new HashMap<String, IAction>();
-		instanceActions.put(DeltaCloudInstance.START, startAction);
+//		instanceActions.put(DeltaCloudInstance.START, startAction);
 		instanceActions.put(DeltaCloudInstance.STOP, stopAction);
 		instanceActions.put(DeltaCloudInstance.REBOOT, rebootAction);
 		instanceActions.put(DeltaCloudInstance.DESTROY, destroyAction);
@@ -610,7 +624,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 					@Override
 					public void run() {
 						if (currCloud != null) {
-							currCloud.getInstances();
+							currCloud.loadInstances();
 						}
 					}
 
@@ -625,10 +639,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		return refreshAction;
 	}
 
-	@Override
-	public void setFocus() {
-		viewer.getControl().setFocus();
-	}
 
 	private void initializeCloudSelector() {
 		int defaultIndex = 0;
@@ -699,4 +709,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		}
 	}
 
+	@Override
+	public void setFocus() {
+		viewer.getControl().setFocus();
+	}
 }

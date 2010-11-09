@@ -31,7 +31,7 @@ public class ImageFilter extends Wizard {
 		String archRule = mainPage.getArchRule();
 		String descRule = mainPage.getDescRule();
 		
-		cloud.createImageFilter(nameRule + ";" + //$NON-NLS-1$
+		cloud.updateImageFilter(nameRule + ";" + //$NON-NLS-1$
 				idRule + ";" + //$NON-NLS-1$
 				archRule + ";" + //$NON-NLS-1$
 				descRule); //$NON-NLS-1$
