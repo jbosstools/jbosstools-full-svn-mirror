@@ -17,7 +17,6 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
 
-
 public class DeltaCloudInstance {
 
 	public final static String PENDING = Instance.State.PENDING.toString();
@@ -25,75 +24,76 @@ public class DeltaCloudInstance {
 	public final static String STOPPED = Instance.State.STOPPED.toString();
 	public final static String TERMINATED = Instance.State.TERMINATED.toString();
 	public final static String BOGUS = Instance.State.BOGUS.toString();
-	
+
 	public final static String START = InstanceAction.START;
 	public final static String STOP = InstanceAction.STOP;
 	public final static String REBOOT = InstanceAction.REBOOT;
 	public final static String DESTROY = InstanceAction.DESTROY;
-	
+
 	private Instance instance;
 	private String givenName;
-	
+
 	public DeltaCloudInstance(Instance instance) {
 		this.instance = instance;
 	}
-	
+
 	public String getName() {
 		return instance.getName();
 	}
-	
+
 	public String getGivenName() {
 		return givenName;
 	}
-	
+
 	public void setGivenName(String name) {
 		givenName = name;
 	}
-	
+
 	public String getId() {
 		return instance.getId();
 	}
-	
+
 	public String getOwnerId() {
 		return instance.getOwnerId();
 	}
-	
+
 	public String getState() {
 		return instance.getState().toString();
 	}
-	
+
 	public String getKey() {
 		return instance.getKey();
 	}
-	
+
 	public List<String> getActions() {
 		return instance.getActionNames();
 	}
-	
+
 	public String getProfileId() {
 		return instance.getProfileId();
 	}
-	
+
 	public String getRealmId() {
 		return instance.getRealmId();
 	}
-	
+
 	public String getImageId() {
 		return instance.getImageId();
 	}
-	
+
 	public List<String> getHostNames() {
 		return instance.getPublicAddresses();
 	}
-	
+
 	public String getHostName() {
 		List<String> hostNames = getHostNames();
 		if (hostNames != null && hostNames.size() > 0)
 			return hostNames.get(0);
 		return null;
 	}
-	
-	protected boolean performInstanceAction(String actionId, DeltaCloudClientImpl client) throws DeltaCloudClientException {
+
+	protected boolean performInstanceAction(String actionId, DeltaCloudClientImpl client)
+			throws DeltaCloudClientException {
 		InstanceAction action = instance.getAction(actionId);
 		if (action == null) {
 			return false;
@@ -110,6 +110,13 @@ public class DeltaCloudInstance {
 		return result;
 	}
 
+	/**
+	 * The current strategy regarding instances is to create new instances (and
+	 * not update instances). We therefore need equals to be able to match
+	 * domain objects. We might have to change that since in my experience it is
+	 * not a good choice to create new instances, better is to update the ones
+	 * that are available in the client.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

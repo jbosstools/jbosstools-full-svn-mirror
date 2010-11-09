@@ -45,6 +45,13 @@ public class DeltaCloudImage {
 		return result;
 	}
 
+	/**
+	 * The current strategy regarding instances is to create new instances (and
+	 * not update instances). We therefore need equals to be able to match
+	 * domain objects. We might have to change that since in my experience it is
+	 * not a good choice to create new instances, better is to update the ones
+	 * that are available in the client.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
