@@ -3,6 +3,12 @@
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (editCloud): [JBIDE-7521] storing cloud after it has been edited
 	(editCloud): 
 	[JBIDE-7518] added notification after cloud was edited
+	(DeltaCloud): 
+	(createImageFilter): 
+	(updateImageFilter): 
+	(createInstanceFilter): 
+	(updateInstanceFilter): 
+	[JBIDE-7518] cleanup code duplication (imageFilter and instanceFilter creation)
 
 2010-11-05  André Dietisheim  <adietish@redhat.com>
 
