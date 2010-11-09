@@ -87,4 +87,49 @@ public class Image extends DeltaCloudObject
 		s += "Arch:\t\t" + getArchitecture() + "\n";
 		return s;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((architecture == null) ? 0 : architecture.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((ownerId == null) ? 0 : ownerId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Image other = (Image) obj;
+		if (architecture == null) {
+			if (other.architecture != null)
+				return false;
+		} else if (!architecture.equals(other.architecture))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (ownerId == null) {
+			if (other.ownerId != null)
+				return false;
+		} else if (!ownerId.equals(other.ownerId))
+			return false;
+		return true;
+	}
+	
+	
 }

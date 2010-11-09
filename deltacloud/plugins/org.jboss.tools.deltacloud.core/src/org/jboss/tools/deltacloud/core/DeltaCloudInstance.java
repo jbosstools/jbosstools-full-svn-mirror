@@ -100,4 +100,35 @@ public class DeltaCloudInstance {
 		}
 		return client.performInstanceAction(action);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((givenName == null) ? 0 : givenName.hashCode());
+		result = prime * result + ((instance == null) ? 0 : instance.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DeltaCloudInstance other = (DeltaCloudInstance) obj;
+		if (givenName == null) {
+			if (other.givenName != null)
+				return false;
+		} else if (!givenName.equals(other.givenName))
+			return false;
+		if (instance == null) {
+			if (other.instance != null)
+				return false;
+		} else if (!instance.equals(other.instance))
+			return false;
+		return true;
+	}
 }

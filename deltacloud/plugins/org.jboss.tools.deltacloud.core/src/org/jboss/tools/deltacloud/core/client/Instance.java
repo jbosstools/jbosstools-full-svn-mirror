@@ -250,4 +250,77 @@ public class Instance extends DeltaCloudObject {
 
 		return s;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cpu == null) ? 0 : cpu.hashCode());
+		result = prime * result + ((imageId == null) ? 0 : imageId.hashCode());
+		result = prime * result + ((keyname == null) ? 0 : keyname.hashCode());
+		result = prime * result + ((memory == null) ? 0 : memory.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((ownerId == null) ? 0 : ownerId.hashCode());
+		result = prime * result + ((profileId == null) ? 0 : profileId.hashCode());
+		result = prime * result + ((realmId == null) ? 0 : realmId.hashCode());
+		result = prime * result + ((storage == null) ? 0 : storage.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Instance other = (Instance) obj;
+		if (cpu == null) {
+			if (other.cpu != null)
+				return false;
+		} else if (!cpu.equals(other.cpu))
+			return false;
+		if (imageId == null) {
+			if (other.imageId != null)
+				return false;
+		} else if (!imageId.equals(other.imageId))
+			return false;
+		if (keyname == null) {
+			if (other.keyname != null)
+				return false;
+		} else if (!keyname.equals(other.keyname))
+			return false;
+		if (memory == null) {
+			if (other.memory != null)
+				return false;
+		} else if (!memory.equals(other.memory))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (ownerId == null) {
+			if (other.ownerId != null)
+				return false;
+		} else if (!ownerId.equals(other.ownerId))
+			return false;
+		if (profileId == null) {
+			if (other.profileId != null)
+				return false;
+		} else if (!profileId.equals(other.profileId))
+			return false;
+		if (realmId == null) {
+			if (other.realmId != null)
+				return false;
+		} else if (!realmId.equals(other.realmId))
+			return false;
+		if (storage == null) {
+			if (other.storage != null)
+				return false;
+		} else if (!storage.equals(other.storage))
+			return false;
+		return true;
+	}
 }

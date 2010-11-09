@@ -1,5 +1,15 @@
 2010-11-09  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java 
+	(hashCode): 
+	(equals): 
+	[JBIDE-7513] added equals and hascode methods to be able to match new instances to old ones
+	(so that I can keep the selection in the cloud viewer)
+	* src/org/jboss/tools/deltacloud/core/client/Image.java 
+	(hashCode): 
+	(equals): 
+	[JBIDE-7513] added equals and hascode methods to be able to match new instances to old ones
+	(so that I can keep the selection in the cloud viewer)
 	* src/org/jboss/tools/deltacloud/core/ImageFilter.java (setRules): 
 	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java 
 	(setRules): 
