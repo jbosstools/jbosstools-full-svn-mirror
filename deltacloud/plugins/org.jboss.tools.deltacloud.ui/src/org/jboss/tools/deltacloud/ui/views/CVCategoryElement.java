@@ -119,12 +119,12 @@ public abstract class CVCategoryElement extends CloudViewElement {
 			return Collections.EMPTY_LIST;
 		}
 		List<Object> children = new ArrayList<Object>();
-		for (Object member : itemsToMatch) {
-			Object element = ((CloudViewElement) member).getElement();
-			if (element != null) {
+		for (Object itemToMatch : itemsToMatch) {
+			Object elementToMatch = ((CloudViewElement) itemToMatch).getElement();
+			if (elementToMatch != null) {
 				for (Object child : getChildren()) {
 					Object childElement = ((CloudViewElement) child).getElement();
-					if (element.equals(childElement)) {
+					if (elementToMatch.equals(childElement)) {
 						children.add(child);
 					}
 				}
