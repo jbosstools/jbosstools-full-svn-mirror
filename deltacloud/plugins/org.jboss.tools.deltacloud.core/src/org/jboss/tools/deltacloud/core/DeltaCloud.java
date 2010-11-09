@@ -100,6 +100,8 @@ public class DeltaCloud {
 		this.type = type;
 		storePassword(url, username, passwd);
 		save();
+		// TODO: remove notification with all instances, replace by notifying the changed instance
+		notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
 	}
 
 	private void storePassword(String url, String username, String passwd) {
@@ -109,6 +111,7 @@ public class DeltaCloud {
 		try {
 			node.put("password", passwd, true /* encrypt */);
 		} catch (StorageException e) {
+			// TODO: implement proper rethrowing/loggin
 			e.printStackTrace();
 		}
 	}
