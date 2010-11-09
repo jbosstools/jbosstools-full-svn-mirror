@@ -14,7 +14,6 @@ import java.util.regex.PatternSyntaxException;
 
 public class ImageFilter implements IImageFilter {
 
-	private static final String ALL_MATCHER = "*";
 	private IFieldMatcher nameRule;
 	private IFieldMatcher idRule;
 	private IFieldMatcher archRule;

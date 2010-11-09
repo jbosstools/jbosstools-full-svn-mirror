@@ -10,12 +10,18 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-public interface IImageFilter extends ICloudElementFilter {
+public interface ICloudElementFilter {
+
+	public static final String RULE_DELIMITER = ";"; // $NON-NLS-1$
+
+	public static final String ALL_MATCHER = "*"; //$NON-NLS-1$
+
+	public static final String ALL_STRING = 
+		ALL_MATCHER + RULE_DELIMITER // name
+		+ ALL_MATCHER + RULE_DELIMITER // id
+		+ ALL_MATCHER + RULE_DELIMITER // arch
+		+ ALL_MATCHER; // desc
+
+
 	
-	public boolean isVisible(DeltaCloudImage image);
-	public void setRules(String ruleString);
-	public IFieldMatcher getNameRule();
-	public IFieldMatcher getIdRule();
-	public IFieldMatcher getArchRule();
-	public IFieldMatcher getDescRule();
 }
