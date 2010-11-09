@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+ * Copyright (c) 2007-2010 Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
  * Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  *
- * Contributors:
- *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
+ * Contributor:
+ *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.util;
 
@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.swt.graphics.Point;
@@ -215,26 +216,50 @@ public class VisualDomUtil {
 	        }
 	    }
 	}
+	
+	/**
+	 * Copies all attributes from source node to visual node.
+	 * 
+	 * @param sourceElement the source element
+	 * @param sourceAttrName the name of source attribute 
+	 * @param visualElement the visual element
+	 * @param visualAttrName the resulting name of visual attribute 
+	 */
+	public static void copyAttribute(Element sourceElement, String sourceAttrName,
+			nsIDOMElement visualElement, String visualAttrName) {
+		if (sourceElement.hasAttribute(sourceAttrName)) {
+			String attrValue = sourceElement.getAttribute(sourceAttrName);
+			visualElement.setAttribute(visualAttrName, attrValue);
+		}
+	}
 
 	/**
 	 * Copies all attributes from source node to visual node.
 	 * 
 	 * @param sourceElement the source element
-	 * @param attributes list names of attributes which will copy
 	 * @param visualElement the visual element
+	 * @param attributes list names of attributes which will copy
 	 */
-	public static void copyAttributes(Element sourceElement, List<String> attributes, nsIDOMElement visualElement) {
-	
-	    if (attributes == null)
-	        return;
-	
+	public static void copyAttributes(Element sourceElement, nsIDOMElement visualElement, List<String> attributes) {
 	    for (String attributeName : attributes) {
-	        if (sourceElement.hasAttribute(attributeName)) {
-	        	String attributeValue = sourceElement.getAttribute(attributeName);
-	            visualElement.setAttribute(attributeName, attributeValue);
-	        }
+	        copyAttribute(sourceElement, attributeName, visualElement, attributeName);
 	    }
-	
+	}
+
+	/**
+	 * Copies all attributes from source node to visual node.
+	 * 
+	 * @param sourceElement the source element
+	 * @param visualElement the visual element
+	 * @param sourceToVisualMap mapping for attributes' names.
+	 */
+	public static void copyAttributes(Element sourceElement,
+			nsIDOMElement visualElement, Map<String, String> sourceToVisualMap) {
+		for (Entry<String, String> sourceToVisual : sourceToVisualMap.entrySet()) {
+			String sourceAttrName = sourceToVisual.getKey();
+			String visualAttrName = sourceToVisual.getValue();
+			copyAttribute(sourceElement, sourceAttrName, visualElement, visualAttrName);
+		}
 	}
 	
 	/**
@@ -555,5 +580,4 @@ public class VisualDomUtil {
 		}
 		return false;
 	}
-	
 }

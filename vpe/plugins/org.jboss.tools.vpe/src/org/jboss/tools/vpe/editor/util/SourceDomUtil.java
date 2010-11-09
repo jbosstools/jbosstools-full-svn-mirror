@@ -95,20 +95,32 @@ public class SourceDomUtil {
 		return result;
 	}
 	
-	public static Element getFacetByName(Element sourceElement, String facetName) {
+	public static Element getFacetByName(VpePageContext pageContext,
+			Element sourceElement, String facetName) {
+		if (facetName == null) {
+			return null;
+		}
+
 		Element facetElement = null; 
 		NodeList children = sourceElement.getChildNodes();
-	        for (int i = 0; i < children.getLength(); i++) {
-	            Node node = children.item(i);
-			if ((facetName != null)
-					&& (node instanceof Element)
-					&& (node.getNodeName() != null)
-					&& (node.getNodeName().indexOf(":facet") > 0) //$NON-NLS-1$
-					&& (facetName.equalsIgnoreCase((((Element) node)).getAttribute("name")))) { //$NON-NLS-1$
+        for (int i = 0; i < children.getLength(); i++) {
+            Node node = children.item(i);
+			if (isFacetElement(pageContext, node)
+					&& facetName.equalsIgnoreCase( ((Element) node).getAttribute("name") )) { //$NON-NLS-1$
 				facetElement = (Element) node;
-	            }
-	        }
-	        return facetElement;
+			}
+        }
+        return facetElement;
+	}
+	
+	public static boolean isFacetElement(VpePageContext pageContext, Node node) {
+		if (node instanceof Element) {
+			String templateName = VpeTemplateManager.getInstance()
+					.getTemplateName(pageContext, node);
+			return "f:facet".equals(templateName);
+		} else {
+			return false;
+		}
 	}
 
 	/**
