@@ -29,26 +29,19 @@ public class ImageFilter implements IImageFilter {
 
 	@Override
 	public void setRules(String ruleString) throws PatternSyntaxException {
+		// TODO: replace filter passing (;-delimited string) by list
 		String[] tokens = ruleString.split(";");
-		if (tokens[0].equals("*")) { //$NON-NLS-1$
-			nameRule = new AllFieldMatcher();
+		this.nameRule = createRule(tokens[0]);
+		this.idRule = createRule(tokens[1]);
+		this.archRule = createRule(tokens[2]);
+		this.descRule = createRule(tokens[3]);
+	}
+
+	private IFieldMatcher createRule(String token) {
+		if (token.equals("*")) { //$NON-NLS-1$
+			return new AllFieldMatcher();
 		} else {
-			nameRule = new FieldMatcher(tokens[0]);
-		}
-		if (tokens[1].equals("*")) { //$NON-NLS-1$
-			idRule = new AllFieldMatcher();
-		} else {
-			idRule = new FieldMatcher(tokens[1]);
-		}
-		if (tokens[2].equals("*")) { //$NON-NLS-1$
-			archRule = new AllFieldMatcher();
-		} else {
-			archRule = new FieldMatcher(tokens[2]);
-		}
-		if (tokens[3].equals("*")) { //$NON-NLS-1$
-			descRule = new AllFieldMatcher();
-		} else {
-			descRule = new FieldMatcher(tokens[3]);
+			return new FieldMatcher(token);
 		}
 	}
 	
