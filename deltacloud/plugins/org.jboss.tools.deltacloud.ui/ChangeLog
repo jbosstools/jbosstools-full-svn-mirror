@@ -1,3 +1,7 @@
+2010-11-09  André Dietisheim  <adietish@redhat.com>
+
+	* plugin.xml: [JBIDE-7540] removed visibleWhen clauses to have instance commands visible but disabled
+
 2010-11-08  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVCategoryElement.java (getChildrenWithSameElement): 
