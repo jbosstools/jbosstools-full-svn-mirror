@@ -184,7 +184,7 @@ public class TaskNodeFigure extends Figure {
 				} else {
 					Graph g = processGraphicalViewerEditor
 							.getProcessGraphViewer().getGraphControl();
-					processGraphicalViewerEditor.setNeedupdatewhenshow(false);
+//					processGraphicalViewerEditor.setNeedupdatewhenshow(false);
 					List<?> nodes = g.getNodes();
 					for (Iterator<?> iterator = nodes.iterator(); iterator
 							.hasNext();) {
