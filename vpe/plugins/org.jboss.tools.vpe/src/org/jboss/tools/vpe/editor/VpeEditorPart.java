@@ -460,21 +460,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		 *  see https://bugs.eclipse.org/bugs/show_bug.cgi?id=302950
 		 */
 		cmpEdTl =  parent;
-		cmpEdTl.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				System.out.println();
-				
-			}
-		});
-		
 		GridLayout layoutEdTl = new GridLayout(2, false);
 		layoutEdTl.verticalSpacing = 0;
 		layoutEdTl.marginHeight = 0;
