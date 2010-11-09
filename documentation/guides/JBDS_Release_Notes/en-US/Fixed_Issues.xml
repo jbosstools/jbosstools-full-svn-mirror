@@ -144,6 +144,32 @@
 				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5927">JBIDE-5927</ulink>: A new feature has been added allowing for CDI <property>@Named</property> annotated beans to be renamed through refactoring. This change appears when using the <guilabel>Find References</guilabel> functionality for EL expressions. The <guimenuitem>Rename</guimenuitem> action is available from the context menu for a <property>@Named</property> annotation in the Java Source editor.
 				    </para>
 				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-3136">JBIDE-3136</ulink>: A new decorator wizard has been added. To create a new decorator type with the decorator wizard, navigate to <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>CDI</guimenuitem><guimenuitem>Decorator Type</guimenuitem></menuchoice> and press <guibutton>Next</guibutton>. The decorator wizard creates a decorator for an existing web bean, and implements <property>@Decorates</property> annotation.
+				    </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-3124">JBIDE-3124</ulink>: A new feature has been added that allows a user to locate <methodname>Observer</methodname> methods for an <methodname>Event</methodname> and also locate <methodname>Event</methodname> methods for an <methodname>Observer</methodname>. To locate the <methodname>Observer</methodname> methods for an <methodname>Event</methodname>, click on the <guimenuitem>Open CDI Observer Methods</guimenuitem> from the content assist menu for an <methodname>Event</methodname>. Likewise, select <guimenuitem>Open CDI Events</guimenuitem> from the content assist menu for an <methodname>Observer</methodname> method to find the relevant <methodname>Event</methodname> methods.
+				    </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-3122">JBIDE-3122</ulink>: A new <classname>Interceptor</classname> class wizard has been added. To create a new interceptor type with the interceptor wizard, navigate to <menuchoice>
+                                          <guimenuitem>File</guimenuitem>
+                                          <guimenuitem>New</guimenuitem>
+                                          <guimenuitem>Other</guimenuitem>
+                                          <guimenuitem>CDI</guimenuitem>
+                                          <guimenuitem>Interceptor Type</guimenuitem>
+				       </menuchoice> and press <guibutton>Next</guibutton>. The interceptor wizard declares an interceptor for an existing web bean, and implements <property>@Interceptor</property> annotation.
+				    </para>
+				 </listitem>
+				 <listitem>
+				    <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-2704">JBIDE-2704</ulink>: The CDI tool set has been enhanced with code completion added for relevant types and annotations in <filename>beans.xml</filename>.
+				    </para>
+				 </listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -166,6 +192,11 @@
 		 <listitem>
 		    <para>
 		       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6459">JBIDE-6459</ulink>: Functionality has been added that allows a user to right-click on a Fact or POJO and add it to their BRMS or Govnor instance without going through the process of exporting a JAR file and then importing it.
+		    </para>
+		 </listitem>
+		 <listitem>
+		    <para>
+		       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4646">JBIDE-4646</ulink>: A new wizard is now available that allows for a user to update an existing Drools Guvnor repository connection. Through this wizard a user can update the repository location and security information. To open the wizard, select <guimenuitem>Edit Connection</guimenuitem> from the context menu of your connection in the <guilabel>Guvnor Repositories</guilabel> view.
 		    </para>
 		 </listitem>
 	      </itemizedlist>
@@ -346,6 +377,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5411">JBIDE-5411</ulink>: Packages without Java classes are now correctly filtered from being shown in the <guilabel>New Hibernate hbm.xml</guilabel> wizard. This wizard is used to create a new Hibernate XML mapping file.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4663">JBIDE-4663</ulink>: <property>@DiscriminatorFormula</property> annotation has been fixed so that the assigned value appears in the <guilabel>Formula</guilabel> field of the <guilabel>JPA Details</guilabel> tab.
 				   </para>
 				</listitem>
 <!-- JBIDE-5960 was included in the JBDS 3.0.1 and JBT 3.1.1 releases. Mentioned in 3.0.1 Release Notes -->
@@ -624,6 +660,16 @@
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5007">JBIDE-5007</ulink>: When using the <guilabel>Generate Seam Entities</guilabel> wizard, the option to <guilabel>Use existing reveng</guilabel> file has been added. Once this checkbox has been checked, a user can use the <guibutton>Browse</guibutton> button beside the <guilabel>reveng.xml</guilabel> field to navigate to the existing file. By importing a <filename><replaceable>NAME</replaceable>.reveng.xml</filename> file a user can regenerate the entities for use in the new Seam project.
 				   </para>
 				</listitem>
+				<listitem>
+				   <para>
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4064">JBIDE-4064</ulink>: Numerious <guimenuitem>Quick Fix</guimenuitem> operations within the Seam tooling have been improved. These improvements are detailed within this Seam section of the release notes.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-2809">JBIDE-2809</ulink>: A new feature has been added to the <guilabel>New Seam Project</guilabel> wizard. The wizard now allows a user to specify unique names for each project deployment type of WAR, EJB and EAR. This means that the one project can now be named differently depending on the deployment type. 
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -797,6 +843,21 @@
 				       </listitem>
 				    </itemizedlist>
 				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-3875">JBIDE-3875</ulink>: Content assist has been added for the <property>facet name</property> tag.The content assist for this tag is based on the metadata of the parent JSF tag.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-3288">JBIDE-3288</ulink>: The CSS class wizard user interface has been improved. Improvements include a new <guilabel>Preview</guilabel> view that allows a user to observe the selected CSS class and real-time alterations and a file tree panel for easy class selection.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-2795">JBIDE-2795</ulink>: A new feature has been added that allows templates created using the Visual Page Editor to be exported to a file. This functionality is useful for sharing custom templates between users.
+				   </para>
+				</listitem>
 			</itemizedlist>
 		</para>
 	</formalpara>
@@ -914,6 +975,11 @@
 			      <listitem>
 				 <para>
 				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5950">JBIDE-5950</ulink>: Additional runtime checks have been added to the ESB and BPEL project examples. This ensures that the ability to specify required components is available, as it is for other project examples.
+				 </para>
+			      </listitem>
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4858">JBIDE-4858</ulink>: A new feature has been added that allows for message bundles to be refactored from within the JSF and Seam editors. To refactor messages from within the JSF editor, highlight the message and select <guimenuitem>EL Refactor</guimenuitem> from the context menu. Refactoring messages from within the Seam editor is accomplished by selecting the message through the <guilabel>Package Explorer</guilabel> and navigating to <guimenuitem>Refactor</guimenuitem> from the context menu.
 				 </para>
 			      </listitem>
 			</itemizedlist>
