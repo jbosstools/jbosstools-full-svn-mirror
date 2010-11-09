@@ -99,6 +99,7 @@ public class DeltaCloud {
 		this.username = username;
 		this.type = type;
 		storePassword(url, username, passwd);
+		save();
 	}
 
 	private void storePassword(String url, String username, String passwd) {
