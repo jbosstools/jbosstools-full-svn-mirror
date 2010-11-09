@@ -13,14 +13,11 @@ package org.jboss.tools.deltacloud.ui.views;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -49,23 +46,26 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	private TreeViewer viewer;
 
 	private Action collapseall;
-	private Action doubleClickAction;
 
 	public void createPartControl(Composite parent) {
-		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-		viewer.setContentProvider(new CloudViewContentProvider());
-		viewer.setLabelProvider(new CloudViewLabelProvider());
-		viewer.setInput(new CVRootElement(viewer));
-		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
-		getSite().setSelectionProvider(viewer); // for tabbed properties
+		viewer = createTreeViewer(parent);
 
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), HELP_CONTEXTID);
 		makeActions();
-		hookContextMenu();
-		hookDoubleClickAction();
+		hookContextMenu(viewer.getTree());
 		contributeToActionBars();
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
+	}
+
+	private TreeViewer createTreeViewer(Composite parent) {
+		TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		viewer.setContentProvider(new CloudViewContentProvider());
+		viewer.setLabelProvider(new CloudViewLabelProvider());
+		viewer.setInput(new CVRootElement(viewer));
+		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
+		getSite().setSelectionProvider(viewer);
+		return viewer;
 	}
 
 	@Override
@@ -74,9 +74,9 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		super.dispose();
 	}
 
-	private void hookContextMenu() {
-		IMenuManager contextMenu = UIUtils.createContextMenu(viewer.getControl());
-		UIUtils.registerContributionManager(CONTEXT_MENU_ID, contextMenu, viewer.getControl());
+	private void hookContextMenu(Control control) {
+		IMenuManager contextMenu = UIUtils.createContextMenu(control);
+		UIUtils.registerContributionManager(CONTEXT_MENU_ID, contextMenu, control);
 	}
 
 	private void contributeToActionBars() {
@@ -93,15 +93,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 
 	private void makeActions() {
 		collapseall = createCollapseAllAction();
-
-		doubleClickAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				@SuppressWarnings("unused")
-				Object obj = ((IStructuredSelection) selection).getFirstElement();
-			}
-		};
-
 	}
 
 	private Action createCollapseAllAction() {
@@ -116,14 +107,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		return collapseAll;
 	}
 
-	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
-	}
-
+	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
