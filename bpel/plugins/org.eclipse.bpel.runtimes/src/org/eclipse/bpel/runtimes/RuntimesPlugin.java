@@ -8,12 +8,11 @@
  * Contributors:
  * 	Bruno Wassermann - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.bpel.runtimes;
+package org.eclipse.bpel.runtimes;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.eclipse.bpel.runtimes.IRuntimesUIConstants;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -28,7 +27,7 @@ import org.osgi.framework.BundleContext;
  */
 public class RuntimesPlugin extends AbstractUIPlugin {
 
-	public static final String PLUGIN_ID = "org.jboss.tools.bpel.runtimes"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.bpel.runtimes"; //$NON-NLS-1$
 	
 	//The shared instance.
 	private static RuntimesPlugin plugin;

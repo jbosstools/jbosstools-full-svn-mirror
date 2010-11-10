@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 
+import org.eclipse.bpel.runtimes.IBPELModuleFacetConstants;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -47,7 +48,6 @@ import org.jboss.ide.eclipse.as.core.util.FileUtil;
 import org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants;
 import org.jboss.ide.eclipse.as.core.util.IWTPConstants;
 import org.jboss.ide.eclipse.as.core.util.ServerConverter;
-import org.jboss.tools.bpel.runtimes.IBPELModuleFacetConstants;
 import org.jboss.tools.jmx.core.IMemento;
 import org.jboss.tools.jmx.core.util.XMLMemento;
 
@@ -70,9 +70,13 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 	public boolean accepts(String method, IServer server, IModule[] module) {
 		if( LocalPublishMethod.LOCAL_PUBLISH_METHOD.equals(method) 
 				&& module != null && module.length > 0 
-				&& module[module.length-1] != null  
-				&& module[module.length-1].getModuleType().getId().equals(IBPELModuleFacetConstants.BPEL_MODULE_TYPE))
-			return true;
+				&& module[module.length-1] != null ) {
+			String typeId =module[module.length-1].getModuleType().getId(); 
+			if( typeId.equals(IBPELModuleFacetConstants.BPEL20_MODULE_TYPE))
+				return true;
+			if( typeId.equals(JBTBPELModuleFactoryDelegate.LEGACY_MODULE_TYPE))
+				return true;
+		}
 		return false;
 	}
 

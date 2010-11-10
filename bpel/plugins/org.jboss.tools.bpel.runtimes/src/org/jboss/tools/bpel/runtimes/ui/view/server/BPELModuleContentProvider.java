@@ -1,12 +1,13 @@
 package org.jboss.tools.bpel.runtimes.ui.view.server;
 
+import org.eclipse.bpel.runtimes.IBPELModuleFacetConstants;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.ui.internal.view.servers.ModuleServer;
-import org.jboss.tools.bpel.runtimes.IBPELModuleFacetConstants;
+import org.jboss.tools.bpel.runtimes.module.JBTBPELModuleFactoryDelegate;
 import org.jboss.tools.bpel.runtimes.module.JBTBPELPublisher;
 
 public class BPELModuleContentProvider implements ITreeContentProvider {
@@ -20,7 +21,7 @@ public class BPELModuleContentProvider implements ITreeContentProvider {
 			String typeId = mod.getModuleType().getId();
 			// https://jira.jboss.org/browse/JBIDE-7486
 			// if project was closed or deleted, mod.getProject() is null - ignore
-			if( mod != null && mod.getProject() != null && typeId.equals(IBPELModuleFacetConstants.BPEL_MODULE_TYPE)) {
+			if( mod != null && mod.getProject() != null && (typeId.equals(IBPELModuleFacetConstants.BPEL20_MODULE_TYPE) || typeId.equals(JBTBPELModuleFactoryDelegate.LEGACY_MODULE_TYPE))) {
 				// we have a bpel module deployed to a server. List the children
 				String[] versions = JBTBPELPublisher.getDeployedPathsFromDescriptor(s, mod.getProject());
 				return wrap((ModuleServer)parentElement, versions);

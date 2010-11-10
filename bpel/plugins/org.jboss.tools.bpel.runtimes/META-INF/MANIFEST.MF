@@ -27,14 +27,15 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.wst.web,
  org.jboss.ide.eclipse.as.core;resolution:=optional,
  org.jboss.ide.eclipse.archives.webtools;resolution:=optional,
- org.jboss.tools.jmx.core;resolution:=optional,
  org.eclipse.wst.server.ui;resolution:=optional,
- org.eclipse.ui.navigator
+ org.eclipse.ui.navigator,
+ org.jboss.ide.eclipse.as.ui;bundle-version="2.2.0",
+ org.jboss.ide.eclipse.as.wtp.ui;bundle-version="2.2.0",
+ org.eclipse.bpel.runtimes;bundle-version="0.5.0",
+ org.jboss.tools.jmx.core;bundle-version="1.2.0"
 Eclipse-LazyStart: true
 Export-Package: org.jboss.tools.bpel.runtimes,
- org.jboss.tools.bpel.runtimes.facets,
- org.jboss.tools.bpel.runtimes.module,
- org.jboss.tools.bpel.runtimes.ui.wizards
+ org.jboss.tools.bpel.runtimes.module
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
