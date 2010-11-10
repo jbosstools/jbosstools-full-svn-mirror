@@ -23,9 +23,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -94,15 +97,30 @@ public class XMLSampleModelBuilder extends ModelBuilder {
 		registerNamepsaces(documentElement);
     }
 
-	private void trimNonModelNodes(Element element) {
+	public static void trimNonModelNodes(Element element) {
 		NodeList children = element.getChildNodes();
 		List<Node> removeableChildren = new ArrayList<Node>();
+		Set<QName> childElementSet = new HashSet<QName>();
 
 		for(int i = 0; i < children.getLength(); i++) {
-			Node child = children.item(i);			
+			Node child = children.item(i);
 		
 			if(child.getNodeType() == Node.ELEMENT_NODE) {
-				trimNonModelNodes((Element) child);
+				Element childElement = (Element) child;
+				QName childElementQName;
+
+				if(childElement.getPrefix() != null) {
+					childElementQName = new QName(childElement.getNamespaceURI(), childElement.getLocalName(), childElement.getPrefix());
+				} else {
+					childElementQName = new QName(childElement.getNamespaceURI(), childElement.getTagName());
+				}
+				
+				if(!childElementSet.contains(childElementQName)) {
+					childElementSet.add(childElementQName);
+					trimNonModelNodes((Element) child);				
+				} else {
+					removeableChildren.add(child);
+				}
 			} else {
 				removeableChildren.add(child);
 			}

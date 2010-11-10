@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
+import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
 /**
@@ -74,13 +76,13 @@ public abstract class Mapping {
 	}
 
 	public boolean isParentNodeMapping(Mapping mapping) {
-		Node parentNode = mapping.getMappingNode().getParentNode();
+		Node parentNode = ModelBuilder.getParentNode(mapping.getMappingNode());
 		
 		while(parentNode != null) {
 			if(parentNode == getMappingNode()) {
 				return true;
 			}
-			parentNode = parentNode.getParentNode();
+			parentNode = ModelBuilder.getParentNode(parentNode);
 		}
 		
 		return false;

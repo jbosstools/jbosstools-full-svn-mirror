@@ -109,8 +109,10 @@ public class InputDataTreeNodeModel extends TreeNodeModel {
 					Object sourceData = AdapterFactoryEditingDomain.unwrap(this.getData());
 					if(sourceData instanceof AbstractXMLObject) {
 						Element sourceElement = ((AbstractXMLObject)sourceData).getReferenceElement();
-						if(ModelBuilder.isCollection(sourceElement) || (!ModelBuilder.isStrictModel(sourceElement.getOwnerDocument()) && ModelBuilder.hasChildElements(sourceElement))) { 
-							return true;
+						if(sourceElement != null) {
+							if(ModelBuilder.isCollection(sourceElement) || (!ModelBuilder.isStrictModel(sourceElement.getOwnerDocument()) && ModelBuilder.hasChildContent(sourceElement))) { 
+								return true;
+							}
 						}
 					}
 					return false;

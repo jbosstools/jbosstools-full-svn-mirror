@@ -143,12 +143,12 @@ public class XMLFreeMarkerTemplateBuilder extends FreeMarkerTemplateBuilder {
 				
 				TemplateBuilder.writeIndent(indent, templateWriter);			
 				writeElementStart(element, templateWriter);
-				if(writeElementChildren(element, indent + 1, templateWriter) > 0) {
+				
+				ChildWriteHistory writeChildHistory = writeElementChildren(element, indent + 1, templateWriter);
+				if(writeChildHistory.numElementsWritten > 0) {
 					TemplateBuilder.writeIndent(indent, templateWriter);
-					writeElementEnd(element, true, templateWriter);
-				} else {
-					writeElementEnd(element, false, templateWriter);
 				}
+				writeElementEnd(element, writeChildHistory.startClosed, templateWriter);
 
 				if(collectionMapping != null) {
 					templateWriter.write("\n"); //$NON-NLS-1$
@@ -206,15 +206,16 @@ public class XMLFreeMarkerTemplateBuilder extends FreeMarkerTemplateBuilder {
 		templateWriter.write(quoteChar); //$NON-NLS-1$
 	}
 
-	private int writeElementChildren(Element element, int indent, Writer templateWriter) throws IOException {
+	private ChildWriteHistory writeElementChildren(Element element, int indent, Writer templateWriter) throws IOException {
 		NodeList children = element.getChildNodes();
-		int numElementsWritten = 0;
+		ChildWriteHistory writeHistory = new ChildWriteHistory();
 		
 		if(children.getLength() == 0) {
 			Mapping mapping = getMapping(element);
 			
-			if(ModelBuilder.getElementType(element) == ElementType.simple) {
+			if(ModelBuilder.getElementType(element) == ElementType.simple && mapping instanceof ValueMapping) {
 				templateWriter.write(">"); //$NON-NLS-1$
+				writeHistory.startClosed = true;
 				if(mapping != null) {
 					templateWriter.write(FreeMarkerUtil.toFreeMarkerVariable((ValueMapping)mapping, isNodeModelSource()));
 				} else {
@@ -224,12 +225,17 @@ public class XMLFreeMarkerTemplateBuilder extends FreeMarkerTemplateBuilder {
 		} else {
 			if(!ModelBuilder.isInReservedNamespace(element)) {
 				templateWriter.write(">"); //$NON-NLS-1$
+				writeHistory.startClosed = true;
 			}
 			for(int i = 0; i < children.getLength(); i++) {
 				Node child = children.item(i);
 				if(child.getNodeType() == Node.ELEMENT_NODE) {
+					if(!writeHistory.startClosed) {
+						templateWriter.write(">"); //$NON-NLS-1$
+						writeHistory.startClosed = true;
+					}
 					writeElement((Element)child, indent, true, templateWriter);
-					numElementsWritten++;
+					writeHistory.numElementsWritten++;
 				}
 			}
 			if(!ModelBuilder.isInReservedNamespace(element)) {
@@ -237,11 +243,16 @@ public class XMLFreeMarkerTemplateBuilder extends FreeMarkerTemplateBuilder {
 			}
 		}
 		
-		return numElementsWritten;
+		return writeHistory;
+	}
+	
+	private class ChildWriteHistory {
+		private int numElementsWritten = 0;
+		private boolean startClosed = false;
 	}
 
-	private void writeElementEnd(Element element, boolean hasChildren, Writer templateWriter) throws IOException {
-		if(hasChildren || ModelBuilder.getElementType(element) == ElementType.simple) {
+	private void writeElementEnd(Element element, boolean startClosed, Writer templateWriter) throws IOException {
+		if(startClosed) {
 			templateWriter.write("</"); //$NON-NLS-1$
 			templateWriter.write(element.getNodeName());
 			templateWriter.write(">"); //$NON-NLS-1$

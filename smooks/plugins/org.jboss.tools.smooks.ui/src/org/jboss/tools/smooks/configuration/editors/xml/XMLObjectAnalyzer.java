@@ -19,6 +19,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.jboss.tools.smooks.templating.model.xml.XMLSampleModelBuilder;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -59,6 +60,9 @@ public class XMLObjectAnalyzer {
 			IOException {
 		DocumentBuilder builder = createDocumentBuildingFactory();
 		Document doc = builder.parse(stream);
+		
+		XMLSampleModelBuilder.trimNonModelNodes(doc.getDocumentElement());
+		
 		return analyze(doc, ignoreNodeNames, tagObjectClass);
 	}
 

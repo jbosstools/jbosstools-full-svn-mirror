@@ -177,10 +177,12 @@ public class TreeNodeConnection implements IValidatableModel{
 				}
 				
 				if(builder.length() > 0) {
-					builder.insert(0, '.');
+					builder.insert(0, '/');
 				}
 				if(currentNode.getNodeType() == Node.ATTRIBUTE_NODE) {
 					builder.insert(0, "@" + ((Attr)currentNode).getNodeName());				
+					currentNode = ((Attr)currentNode).getOwnerElement();
+					continue;
 				} else if(currentNode.getNodeType() == Node.ELEMENT_NODE) {
 					builder.insert(0, DomUtils.getName((Element)currentNode));				
 				}

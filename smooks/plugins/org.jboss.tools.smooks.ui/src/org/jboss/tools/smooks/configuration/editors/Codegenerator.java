@@ -65,8 +65,8 @@ public class Codegenerator {
 					continue;
 				}
 				File file = new File(basePath + eClass.getName() + "UICreator.java"); //$NON-NLS-1$
-				System.out.println("map.put(" + eClass.getName() + "Impl.class, new " //$NON-NLS-1$ //$NON-NLS-2$
-					+ eClass.getName() + "UICreator());"); //$NON-NLS-1$
+//				System.out.println("map.put(" + eClass.getName() + "Impl.class, new " //$NON-NLS-1$ //$NON-NLS-2$
+//					+ eClass.getName() + "UICreator());"); //$NON-NLS-1$
 				if (!file.exists()) {
 					file.createNewFile();
 					FileWriter writer = new FileWriter(file);

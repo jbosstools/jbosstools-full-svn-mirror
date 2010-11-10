@@ -198,6 +198,10 @@ public abstract class ModelBuilder {
     }
 
     public static boolean isCollection(Element element) {
+    	if(element == null) {
+    		return false;
+    	}
+    	
     	int maxOccurs = getMaxOccurs(element);
 
         return (maxOccurs > 1 || maxOccurs == -1);
@@ -287,6 +291,18 @@ public abstract class ModelBuilder {
 		}
 		
 		return false;
+	}
+
+	/**
+	 * Does the model element have child content of any kind.
+	 * <p/>
+	 * Does it have child elements or attributes.
+	 * 
+	 * @param element The element to test.
+	 * @return true if the element contains child content of any kind, otherwise false.
+	 */
+	public static boolean hasChildContent(Element element) {
+		return (element.hasAttributes() || hasChildElements(element));
 	}
 	
 	/**

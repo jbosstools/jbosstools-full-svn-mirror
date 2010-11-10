@@ -208,7 +208,7 @@ public class XSDObjectAnalyzer {
 		resource.load(Collections.EMPTY_MAP);
 		XSDSchema schema = (XSDSchema) resource.getContents().get(0);
 		TagObject rootTag = new XSDObjectAnalyzer().loadElement(schema, "smooks-resource-list"); //$NON-NLS-1$
-		System.out.println(rootTag);
+//		System.out.println(rootTag);
 		// List<XSDElementDeclaration> elements =
 		// schema.getElementDeclarations();
 		// for (Iterator<?> iterator = elements.iterator(); iterator.hasNext();)

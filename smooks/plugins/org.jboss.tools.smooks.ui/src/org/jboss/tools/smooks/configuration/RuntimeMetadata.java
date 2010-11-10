@@ -95,12 +95,16 @@ public class RuntimeMetadata {
 			return Messages.RuntimeMetadata_Error_SmooksFile_Not_Valid;
 		} else if (inputFile == null) {
 			return Messages.RuntimeMetadata_Error_Input_Task_No_Input_File;
-		} else if (!inputFile.exists()) {
-			return Messages.RuntimeMetadata_Error_Input_Task_Input_File_Not_Found;
-		} else if (!inputFile.isFile()) {
-			return Messages.RuntimeMetadata_Error_Input_Task_Input_File_Cannot_Be_Read;
+		} 
+		
+		if(!SmooksModelUtils.INPUT_TYPE_JAVA.equals(inputType)) {
+			if (!inputFile.exists()) {
+				return Messages.RuntimeMetadata_Error_Input_Task_Input_File_Not_Found;
+			} else if (!inputFile.isFile()) {
+				return Messages.RuntimeMetadata_Error_Input_Task_Input_File_Cannot_Be_Read;
+			}
 		}
-
+		
 		return ""; //$NON-NLS-1$
 	}
 
@@ -194,7 +198,7 @@ public class RuntimeMetadata {
 					}
 
 					inputFile = new File(resolvedFilePath);
-					if (inputFile.exists() && inputFile.isFile()) {
+					if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(inputType) || (inputFile.exists() && inputFile.isFile())) {
 						isValidSmooksConfig = true;
 					}
 				}

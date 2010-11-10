@@ -72,8 +72,8 @@ public class Test {
 				generateChildrenTag(tag, ss, separators, 0);
 			}
 		}
-		
-		System.out.println(rootTag);
+//		
+//		System.out.println(rootTag);
 	}
 	
 	private String getSeparator(String s){
