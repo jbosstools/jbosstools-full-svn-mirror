@@ -1,5 +1,5 @@
 <projects baseurl="http://downloads.sourceforge.net/jboss/">
-<project name="All Plugins (repo)" version="${ZIPSUFFIX}">
+<project name="All Plugins" version="${ZIPSUFFIX}">
  <description>A p2 repo (update site) bundle of all JBoss Tools plugins - </description>
  <a href="http://www.jboss.org/tools/download/update.html#fromzip">install instructions</a>
  <download os="All platforms" url="${update-filename}" size="${update-filesize} MB"/>
@@ -123,6 +123,11 @@
 <project name="Runtime Initialization" version="${ZIPSUFFIX}">
  <description>This feature provides runtime initialization</description>
  <download os="All platforms" url="${runtime-filename}" size="${runtime-filesize} MB"/>
+</project>
+
+<project name="Savara Tools" version="${ZIPSUFFIX}">
+ <description>Provides Savara Tools</description>
+ <download os="All platforms" url="${savara-filename}" size="${savara-filesize} MB"/>
 </project>
 
 <project name="Seam Tools" version="${ZIPSUFFIX}" >

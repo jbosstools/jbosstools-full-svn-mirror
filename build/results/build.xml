@@ -110,20 +110,8 @@ output.dir = ${output.dir}</echo>
 			</path>
 			<sequential>
 				<var name="filename" unset="true" />
-				<propertyregex property="filename"
-				               input="@{UPDATEZIP}"
-				               defaultvalue="@{UPDATEZIP}"
-				               regexp=".+/([^/]+\.zip)"
-				               replace="\1"
-				               casesensitive="false"
-				               override="true" />
-				<propertyregex property="COMPONENT"
-				               input="${filename}"
-				               defaultvalue="${filename}"
-				               regexp="(.+)-(Update|Sources)-${ZIPSUFFIX}\.zip"
-				               replace="\1"
-				               casesensitive="false"
-				               override="true" />
+				<propertyregex property="filename" input="@{UPDATEZIP}" defaultvalue="@{UPDATEZIP}" regexp=".+/([^/]+\.zip)" replace="\1" casesensitive="false" override="true" />
+				<propertyregex property="COMPONENT" input="${filename}" defaultvalue="${filename}" regexp="(.+)-(Update|Sources)-${ZIPSUFFIX}\.zip" replace="\1" casesensitive="false" override="true" />
 				<if>
 					<and>
 						<isset property="JOB_NAME" />
@@ -183,6 +171,7 @@ COMPONENT = ${COMPONENT}</echo>
 					</filterchain>
 				</copy>
 				<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.txt" style="download.xsl" />
+				<xslt in="${output.dir}/download.xml" out="${output.dir}/buildResults.html" style="buildResults.xsl" />
 				<delete file="${output.dir}/download.xml" />
 			</then>
 			<elseif>
@@ -193,12 +182,7 @@ COMPONENT = ${COMPONENT}</echo>
 					<contains string="${template.file}" substring="ftp:" />
 				</or>
 				<then>
-					<propertyregex property="template.file.cleaned"
-					               input="${template.file}"
-					               defaultvalue="${template.file}"
-					               regexp=".+/([^/]+)"
-					               replace="\1"
-					               override="true" />
+					<propertyregex property="template.file.cleaned" input="${template.file}" defaultvalue="${template.file}" regexp=".+/([^/]+)" replace="\1" override="true" />
 					<get src="${template.file}" dest="${output.dir}/${template.file.cleaned}.in" ignoreerrors="true" />
 					<if>
 						<available file="${output.dir}/${template.file.cleaned}.in" type="file" />
@@ -223,15 +207,18 @@ COMPONENT = ${COMPONENT}</echo>
 									<expandproperties />
 								</filterchain>
 							</copy>
-							<xslt in="${output.dir}/download.xml"
-							      out="${output.dir}/download-snippet.txt"
-							      style="download.xsl" />
+							<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.txt" style="download.xsl" />
 							<delete file="${output.dir}/download.xml" />
 						</else>
 					</if>
 				</then>
 			</elseif>
 		</if>
+	</target>
+
+	<target name="test.xslt">
+		<xslt in="download-template.xml" out="download-snippet.out.html" style="download.xsl" />
+		<xslt in="download-template.xml" out="buildResults.out.html" style="buildResults.xsl" />
 	</target>
 
 </project>
