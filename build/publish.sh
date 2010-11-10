@@ -147,7 +147,7 @@ done
 echo ""  >> ${STAGINGDIR}/logs/${METAFILE}
 
 # generate HTML snippet, download-snippet.txt, for inclusion on jboss.org
-if [[ ${RELEASE} == "Yes" ]]; then
+#if [[ ${RELEASE} == "Yes" ]]; then
 	mkdir -p ${STAGINGDIR}/logs
 	ANT_PARAMS="-v -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
 	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then # reuse snippet from upstream build
@@ -159,7 +159,7 @@ if [[ ${RELEASE} == "Yes" ]]; then
 		fi
 	done
 	ant -f ${ANT_SCRIPT} ${ANT_PARAMS}
-fi
+#fi
 
 # ${bl} is full build log; see above
 mkdir -p ${STAGINGDIR}/logs
