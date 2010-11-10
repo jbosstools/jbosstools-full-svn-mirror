@@ -81,12 +81,6 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 	}
 
 	/**
-	 * The constructor.
-	 */
-	public RotateEditorsHandler() {
-	}
-
-	/**
 	 * the command has been executed, so extract extract the needed information
 	 * from the application context.
 	 */
@@ -111,7 +105,13 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 		preferences.setValue(
 				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING,
 				newOrientation);
-
+		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
+		.getActiveWorkbenchWindow().getActivePage()
+		.getEditorReferences();
+		for (IEditorReference openedEditor : openedEditors) {
+			IEditorPart editor = openedEditor.getEditor(true);
+			rotateEditor(editor, newOrientation);
+		}
 		Command command = event.getCommand();
 		ICommandService commandService = (ICommandService) PlatformUI
 				.getWorkbench().getService(ICommandService.class);
@@ -120,7 +120,6 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 	}
 
 	public void updateElement(UIElement element, Map parameters) {
-		super.updateElement(element, parameters);
 		IPreferenceStore preferences = JspEditorPlugin.getDefault()
 				.getPreferenceStore();
 		String orientation = preferences
@@ -141,17 +140,6 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 		element.setTooltip(orientationName);
 		element.setText(orientationName);
 
-		/*
-		 * Call <code>filContainer()</code> from VpeEditorPart to redraw
-		 * CustomSashForm with new layout.
-		 */
-		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage()
-				.getEditorReferences();
-		for (IEditorReference openedEditor : openedEditors) {
-			IEditorPart editor = openedEditor.getEditor(true);
-			rotateEditor(editor, orientation);
-		}
 	}
 
 	private void rotateEditor(IEditorPart editor, String orientation) {

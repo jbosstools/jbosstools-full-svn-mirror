@@ -41,27 +41,13 @@ public class ShowTextFormattingHandler extends VisualPartAbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		boolean oldToggleState = HandlerUtil.toggleCommandState(event
+		boolean toggleState = !HandlerUtil.toggleCommandState(event
 				.getCommand());
 		JspEditorPlugin
 				.getDefault()
 				.getPreferenceStore()
 				.setValue(IVpePreferencesPage.SHOW_TEXT_FORMATTING,
-						!oldToggleState);
-
-		Command command = event.getCommand();
-		ICommandService commandService = (ICommandService) PlatformUI
-				.getWorkbench().getService(ICommandService.class);
-		commandService.refreshElements(command.getId(), null);
-
-		return null;
-	}
-
-	public void updateElement(UIElement element, Map parameters) {
-		super.updateElement(element, parameters);
-		boolean toggleState = JspEditorPlugin.getDefault().getPreferenceStore()
-				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
-
+						toggleState);
 		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage()
 				.getEditorReferences();
@@ -69,7 +55,7 @@ public class ShowTextFormattingHandler extends VisualPartAbstractHandler {
 			IEditorPart editor = openedEditor.getEditor(true);
 			toggleShowTextFormatting(editor, toggleState);
 		}
-		
+		return null;
 	}
 
 	private void toggleShowTextFormatting(IEditorPart editor,
