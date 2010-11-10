@@ -695,12 +695,12 @@ public final class ServerManager implements IRestClient {
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @throws UnsupportedOperationException if this method is called
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#getNodeTypes(org.modeshape.web.jcr.rest.client.domain.Workspace)
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#getNodeTypes(org.modeshape.web.jcr.rest.client.domain.Repository)
      */
     @Override
-    public Map<String, NodeType> getNodeTypes( Workspace workspace ) throws Exception {
+    public Map<String, NodeType> getNodeTypes( Repository repository ) throws Exception {
         throw new UnsupportedOperationException();
     }
 

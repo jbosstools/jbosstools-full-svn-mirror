@@ -31,10 +31,11 @@ public final class MockRestClient implements IRestClient {
 
     /**
      * {@inheritDoc}
-     *
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#getNodeTypes(org.modeshape.web.jcr.rest.client.domain.Workspace)
+     * 
+     * @throws UnsupportedOperationException if this method is called
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#getNodeTypes(org.modeshape.web.jcr.rest.client.domain.Repository)
      */
-    public Map<String, NodeType> getNodeTypes( Workspace arg0 ) throws Exception {
+    public Map<String, NodeType> getNodeTypes( Repository repository ) throws Exception {
         return null;
     }
 
