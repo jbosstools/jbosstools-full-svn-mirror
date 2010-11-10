@@ -168,11 +168,9 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private class ColumnListener extends SelectionAdapter {
 
 		private int column;
-		private TableViewer viewer;
 
-		public ColumnListener(int column, TableViewer viewer) {
+		public ColumnListener(int column) {
 			this.column = column;
-			this.viewer = viewer;
 		}
 
 		@Override
@@ -291,7 +289,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			}
 			tc.setText(CVMessages.getString(c.name()));
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
-			tc.addSelectionListener(new ColumnListener(i, viewer));
+			tc.addSelectionListener(new ColumnListener(i));
 		}
 	}
 
