@@ -40,6 +40,7 @@ import org.eclipse.bpel.model.PartnerLink;
 import org.eclipse.bpel.model.PartnerLinks;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.Scope;
+import org.eclipse.bpel.ui.BPELMultipageEditorPart;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.util.BPELUtil;
@@ -100,6 +101,7 @@ import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.SectionPart;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -844,6 +846,24 @@ public class ProcessPage extends FormPage implements IResourceChangeListener {
 							mainform.setMessage("Associated BPEL and/or WSDL has been changed, click to update!", IMessageProvider.WARNING);
 						}
 					});
+				}
+				// https://jira.jboss.org/browse/JBIDE-7477
+				// close editor when file is deleted
+				else {
+					IFile editorFile = ((IFileEditorInput)getEditorInput()).getFile();
+					IResource target = delta.getResource();
+					if (delta.getKind() == IResourceDelta.REMOVED &&
+							target instanceof IFile &&
+							editorFile.equals(target))
+					{
+						// Close the editor if its input file has been moved or deleted.
+						Display display = getSite().getShell().getDisplay();
+						display.asyncExec(new Runnable() {
+							public void run() {
+								getSite().getPage().closeEditor(ProcessPage.this.editor, false);
+							}
+						});
+					}
 				}
 
 				return true; // visit the children
