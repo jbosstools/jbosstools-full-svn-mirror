@@ -29,12 +29,12 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
-import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.Instance.State;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
 import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
@@ -160,9 +160,10 @@ public class InstanceMockIntegrationTest {
 
 	@Test(expected = DeltaCloudClientException.class)
 	public void destroyThrowExceptionOnUnknowInstanceId() throws DeltaCloudClientException, IllegalArgumentException,
-			InstantiationException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException {
-		DeltaCloudClient client = testSetup.getClient();
-		((InternalDeltaCloudClient) testSetup.getClient()).performInstanceAction(
+			InstantiationException, IllegalAccessException, InvocationTargetException, SecurityException,
+			NoSuchMethodException {
+		InternalDeltaCloudClient client = (InternalDeltaCloudClient) testSetup.getClient();
+		client.performInstanceAction(
 				createInstanceAction(
 						InstanceAction.DESTROY,
 						MockIntegrationTestContext.DELTACLOUD_URL,
@@ -172,14 +173,14 @@ public class InstanceMockIntegrationTest {
 
 	private Instance createInstance() throws IllegalArgumentException, InstantiationException, IllegalAccessException,
 			InvocationTargetException, SecurityException, NoSuchMethodException {
-		Constructor<Instance> constructor = (Constructor<Instance>) Instance.class
-				.getDeclaredConstructor(null);
+		Constructor<Instance> constructor = (Constructor<Instance>) Instance.class.getDeclaredConstructor(null);
 		constructor.setAccessible(true);
 		return constructor.newInstance();
 	}
 
 	private InstanceAction createInstanceAction(String name, String url, HttpMethod method, Instance instance)
-			throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException {
+			throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException,
+			SecurityException, NoSuchMethodException {
 		Constructor<InstanceAction> constructor = (Constructor<InstanceAction>) InstanceAction.class
 				.getDeclaredConstructor(String.class, String.class, HttpMethod.class, Instance.class);
 		constructor.setAccessible(true);
@@ -192,6 +193,7 @@ public class InstanceMockIntegrationTest {
 		return instanceAction;
 	}
 
+	@SuppressWarnings("unused")
 	private class InstanceActionProxy implements InvocationHandler {
 
 		@Override

@@ -50,7 +50,10 @@ public class DeltaCloudMockIntegrationTest {
 	public void testConnectionReportsFalseOnAuthFailure() throws MalformedURLException, DeltaCloudClientException {
 		ServerFake serverFake = setupServerFake("HTTP/1.1 403 Forbidden\n\n\n");
 		try {
-			DeltaCloud deltaCloud = new DeltaCloud("aName", "http://localhost:" + ServerFake.DEFAULT_PORT, "badUser",
+			DeltaCloud deltaCloud = new DeltaCloud(
+					"aName",
+					"http://localhost:" + ServerFake.DEFAULT_PORT, 
+					"badUser", 
 					"badPassword");
 			assertFalse(deltaCloud.testConnection());
 		} finally {

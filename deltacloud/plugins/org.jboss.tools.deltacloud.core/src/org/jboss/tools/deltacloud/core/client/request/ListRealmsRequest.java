@@ -8,8 +8,17 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core.client;
+package org.jboss.tools.deltacloud.core.client.request;
 
-public enum HttpMethod {
-	GET, POST, PUT, DELETE, HEAD;
+import java.net.URL;
+
+
+/**
+ * Lists realms on the deltacloud server. 
+ */
+public class ListRealmsRequest extends AbstractListObjectsRequest {
+	
+	public ListRealmsRequest(URL baseUrl) {
+		super(baseUrl, "realms");
+	}
 }

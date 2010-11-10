@@ -46,6 +46,22 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
+import org.jboss.tools.deltacloud.core.client.request.AbstractListObjectsRequest;
+import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
+import org.jboss.tools.deltacloud.core.client.request.DeleteKeyRequest;
+import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest;
+import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
+import org.jboss.tools.deltacloud.core.client.request.ListHardwareProfileRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListImageRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListHardwareProfilesRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListImagesRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListInstanceRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListInstancesRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListKeyRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListRealmRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
+import org.jboss.tools.deltacloud.core.client.request.PerformInstanceActionRequest;
+import org.jboss.tools.deltacloud.core.client.request.TypeRequest;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -55,7 +71,6 @@ import org.xml.sax.SAXException;
 
 public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
-	private static final String BASEURL_API = "/api";
 	private static final String PEM_FILE_SUFFIX = "pem";
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver";
 	private static final String DOCUMENT_ELEMENT_API = "api";
@@ -64,33 +79,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	public static enum DeltaCloudServerType {
 		UNKNOWN, MOCK, EC2
-	}
-
-	private static enum DCNS {
-		TYPE {
-			public String getResourceName() {
-				return "";
-			}
-		}
-		,
-		INSTANCES
-		, REALMS
-		, IMAGES
-		, HARDWARE_PROFILES
-		, KEYS
-		, START
-		, STOP
-		, REBOOT
-		, DESTROY;
-
-		@Override
-		public String toString() {
-			return "/" + getResourceName();
-		}
-
-		public String getResourceName() {
-			return name().toLowerCase();
-		}
 	}
 
 	private URL baseUrl;
@@ -105,26 +93,25 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 		logger.debug("Creating new Delta Cloud Client for Server: " + url);
 
-		this.baseUrl = new URL(url + BASEURL_API);
+		this.baseUrl = new URL(url);
 		this.username = username;
 		this.password = password;
 	}
 
-	private String sendRequest(String path, HttpMethod httpMethod) throws DeltaCloudClientException {
+	protected String sendRequest(DeltaCloudRequest deltaCloudRequest) throws DeltaCloudClientException {
 		DefaultHttpClient httpClient = addCredentials(new DefaultHttpClient());
-		String requestUrl = baseUrl.toString() + path;
-		logger.debug("Sending Request to: " + requestUrl);
+		logger.debug("Sending Request to: " + deltaCloudRequest.getUrl());
 
 		try {
-			HttpUriRequest request = getRequest(httpMethod, requestUrl);
+			HttpUriRequest request = createRequest(deltaCloudRequest);
 			HttpResponse httpResponse = httpClient.execute(request);
-			throwOnHttpErrors(requestUrl, httpResponse);
+			throwOnHttpErrors(deltaCloudRequest.getUrl(), httpResponse);
 			return getResponse(httpResponse.getEntity());
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (IOException e) {
-			logger.error("Error processing request to: " + requestUrl, e);
-			throw new DeltaCloudClientException("Error processing request to: " + requestUrl, e);
+			logger.error("Error processing request to: " + deltaCloudRequest.getUrl(), e);
+			throw new DeltaCloudClientException("Error processing request to: " + deltaCloudRequest.getUrl(), e);
 		} catch (Exception e) {
 			throw new DeltaCloudClientException(e.getMessage());
 		} finally {
@@ -170,18 +157,20 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	 *            the requested url
 	 * @return the request instance
 	 */
-	protected HttpUriRequest getRequest(HttpMethod httpMethod, String requestUrl) {
+	protected HttpUriRequest createRequest(DeltaCloudRequest deltaCloudRequest) {
 		HttpUriRequest request = null;
+		String url = deltaCloudRequest.getUrl();
+		HttpMethod httpMethod = deltaCloudRequest.getHttpMethod();
 		switch (httpMethod) {
 		case POST:
-			request = new HttpPost(requestUrl);
+			request = new HttpPost(url);
 			break;
 		case DELETE:
-			request = new HttpDelete(requestUrl);
+			request = new HttpDelete(url);
 			break;
 		case GET:
 		default:
-			request = new HttpGet(requestUrl);
+			request = new HttpGet(url);
 		}
 		request.setHeader("Accept", "application/xml;q=1");
 		return request;
@@ -228,8 +217,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	public DeltaCloudServerType getServerType() {
 		DeltaCloudServerType serverType = DeltaCloudServerType.UNKNOWN;
 		try {
-			String query = "?format=xml";
-			String apiResponse = sendRequest(DCNS.TYPE + query, HttpMethod.GET);
+			String apiResponse = sendRequest(new TypeRequest(baseUrl));
 			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document document = db.parse(new InputSource(new StringReader(apiResponse)));
 
@@ -250,8 +238,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public Instance createInstance(String imageId) throws DeltaCloudClientException {
-		String query = "?image_id=" + imageId;
-		return buildInstance(sendRequest(DCNS.INSTANCES + query, HttpMethod.POST));
+		return buildInstance(sendRequest(new CreateInstanceRequest(baseUrl, imageId)));
 	}
 
 	@Override
@@ -265,58 +252,49 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return createInstance(imageId, profileId, realmId, name, null, memory, storage);
 	}
 
-	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyname,
-			String memory, String storage) throws DeltaCloudClientException {
-		String query = "?image_id=" + imageId + "&hwp_id=" + profileId + "&realm_id=" + realmId + "&name=" + name;
-		if (memory != null)
-			query += "&hwp_memory=" + memory;
-		if (storage != null)
-			query += "&hwp_storage=" + storage;
-		if (keyname != null)
-			query += "&keyname=" + keyname;
-		query += "&commit=create";
-		return buildInstance(sendRequest(DCNS.INSTANCES + query, HttpMethod.POST));
+	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyname, String memory, String storage) throws DeltaCloudClientException { 
+		return buildInstance(sendRequest(new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyname, memory, storage)));
 	}
 
 	@Override
 	public HardwareProfile listProfile(String profileId) throws DeltaCloudClientException {
-		String request = DCNS.HARDWARE_PROFILES + "/" + profileId;
-		return buildDeltaCloudObject(HardwareProfile.class, sendRequest(request, HttpMethod.GET));
+		return buildDeltaCloudObject(HardwareProfile.class, sendRequest(new ListHardwareProfileRequest(baseUrl, profileId)));
 	}
 
 	@Override
 	public List<HardwareProfile> listProfiles() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(HardwareProfile.class, DCNS.HARDWARE_PROFILES.toString(), "hardware_profile");
+		return listDeltaCloudObjects(HardwareProfile.class, 
+				new ListHardwareProfilesRequest(baseUrl),"hardware_profile");
 	}
 
 	@Override
 	public List<Image> listImages() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(Image.class, DCNS.IMAGES.toString(), "image");
+		return listDeltaCloudObjects(Image.class, new ListImagesRequest(baseUrl), "image");
 	}
 
 	@Override
 	public Image listImages(String imageId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.IMAGES + "/" + imageId, HttpMethod.GET)), Image.class);
+		return JAXB.unmarshal(new StringReader(sendRequest(new ListImageRequest(baseUrl, imageId))), Image.class);
 	}
 
 	@Override
 	public List<Instance> listInstances() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(Instance.class, DCNS.INSTANCES.toString(), "instance");
+		return listDeltaCloudObjects(Instance.class, new ListInstancesRequest(baseUrl), "instance");
 	}
 
 	@Override
 	public Instance listInstances(String instanceId) throws DeltaCloudClientException {
-		return buildInstance(sendRequest(DCNS.INSTANCES + "/" + instanceId, HttpMethod.GET));
+		return buildInstance(sendRequest(new ListInstanceRequest(baseUrl, instanceId)));
 	}
 
 	@Override
 	public List<Realm> listRealms() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(Realm.class, DCNS.REALMS.toString(), "realm");
+		return listDeltaCloudObjects(Realm.class, new ListRealmsRequest(baseUrl), "realm");
 	}
 
 	@Override
 	public Realm listRealms(String realmId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(new StringReader(sendRequest(DCNS.REALMS + "/" + realmId, HttpMethod.GET)), Realm.class);
+		return JAXB.unmarshal(new StringReader(sendRequest(new ListRealmRequest(baseUrl, realmId))), Realm.class);
 	}
 
 	/**
@@ -332,7 +310,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	 *             the delta cloud client exception
 	 */
 	public void createKey(String keyname, String keyStoreLocation) throws DeltaCloudClientException {
-		String xml = sendRequest(DCNS.KEYS + "?name=" + keyname, HttpMethod.POST);
+		String xml = sendRequest(new ListKeyRequest(baseUrl, keyname));
 		try {
 			String key = trimKey(getKey(xml));
 			File keyFile = createKeyFile(keyname, keyStoreLocation);
@@ -383,7 +361,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	public void deleteKey(String keyname) throws DeltaCloudClientException {
-		sendRequest(DCNS.KEYS + "/" + keyname, HttpMethod.DELETE);
+		sendRequest(new DeleteKeyRequest(baseUrl, keyname));
 	}
 
 	private Instance updateInstance(String xml, Instance instance) throws DeltaCloudClientException {
@@ -409,7 +387,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			throw newException;
 		}
 	}
-	
+
 	private Instance buildInstance(String xml) throws DeltaCloudClientException {
 		Instance instance = JAXB.unmarshal(new StringReader(xml), Instance.class);
 		updateInstance(xml, instance);
@@ -427,20 +405,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 				String name = getAttributeTextContent("rel", attributes, node);
 				String url = getAttributeTextContent("href", attributes, node);
 				String method = getAttributeTextContent("method", attributes, node);
-				actions.add(new InstanceAction(name, stripBaseUrl(url), method, instance));
+				actions.add(new InstanceAction(name, url, method, instance));
 			}
 		});
 		return actions;
-	}
-
-	private String stripBaseUrl(String url) throws DeltaCloudClientException {
-		String baseUrlString = baseUrl.toString();
-		if (url.indexOf(baseUrlString) != 0) {
-			throw new DeltaCloudClientException(MessageFormat.format(
-					"Resource at {0} is not child resource of root resource at {1}", url, baseUrl));
-		}
-
-		return url.substring(baseUrlString.length());
 	}
 
 	private String getAttributeTextContent(String attributeName, NamedNodeMap namedNodeMap, Node node)
@@ -604,10 +572,11 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return href.substring(href.lastIndexOf("/") + 1, href.length());
 	}
 
-	private <T extends DeltaCloudObject> List<T> listDeltaCloudObjects(Class<T> clazz, String path, String elementName)
+	private <T extends DeltaCloudObject> List<T> listDeltaCloudObjects(Class<T> clazz,
+			AbstractListObjectsRequest request, String elementName)
 			throws DeltaCloudClientException {
 		try {
-			Document document = getDocument(path);
+			Document document = getDocument(sendRequest(request));
 			ArrayList<T> dco = new ArrayList<T>();
 			NodeList nodeList = document.getElementsByTagName(elementName);
 			for (int i = 0; i < nodeList.getLength(); i++) {
@@ -621,9 +590,9 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	private Document getDocument(String path) throws DeltaCloudClientException, ParserConfigurationException,
+	private Document getDocument(String response) throws ParserConfigurationException,
 			SAXException, IOException {
-		InputSource is = new InputSource(new StringReader(sendRequest(path, HttpMethod.GET)));
+		InputSource is = new InputSource(new StringReader(response));
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document document = db.parse(is);
@@ -643,9 +612,15 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	public boolean performInstanceAction(InstanceAction action) throws DeltaCloudClientException {
 		if (action != null) {
-			String response = sendRequest(action.getUrl(), action.getMethod());
-			if (!InstanceAction.DESTROY.equals(action.getName())) {
-				updateInstance(response, action.getInstance());
+			try {
+				String response = sendRequest(new PerformInstanceActionRequest(
+						new URL(action.getUrl()),
+						action.getMethod()));
+				if (!InstanceAction.DESTROY.equals(action.getName())) {
+					updateInstance(response, action.getInstance());
+				}
+			} catch (MalformedURLException e) {
+				throw new DeltaCloudClientException(MessageFormat.format("Could not perform action {0} on instance {1}", action.getName(), action.getInstance().getName()), e);
 			}
 			return true;
 		}
@@ -666,5 +641,4 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private interface INodeVisitor {
 		public void visit(Node node) throws Exception;
 	}
-
 }

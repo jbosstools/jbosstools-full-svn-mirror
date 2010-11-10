@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
+import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
+
 /**
  * An action that is executable on an instance
  * 

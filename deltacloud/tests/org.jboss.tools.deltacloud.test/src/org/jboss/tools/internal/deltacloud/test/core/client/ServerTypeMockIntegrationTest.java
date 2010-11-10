@@ -16,13 +16,14 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
-import org.jboss.tools.deltacloud.core.client.HttpMethod;
+import org.jboss.tools.deltacloud.core.client.Image;
+import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerFake;
 import org.junit.After;
@@ -53,10 +54,10 @@ public class ServerTypeMockIntegrationTest {
 
 	@Test
 	public void recognizesDeltaCloud() throws IOException {
-		assertEquals(DeltaCloudClientImpl.DeltaCloudServerType.MOCK,testSetup.getClient().getServerType());
+		assertEquals(DeltaCloudClientImpl.DeltaCloudServerType.MOCK, testSetup.getClient().getServerType());
 	}
 
-	/**
+/**
 	 * 
 	 * #getServerType reports {@link DeltaCloudClient.DeltaCloudType#UNKNOWN) if it queries a fake server that responds with a unknown answer.
 	 * 
@@ -65,10 +66,12 @@ public class ServerTypeMockIntegrationTest {
 	 */
 	@Test
 	public void reportsUnknownUrl() throws IOException {
-		ServerFake serverFake = new ServerFake(new URL(MockIntegrationTestContext.SERVERFAKE_URL).getPort(), "<dummy></dummy>");
+		ServerFake serverFake = new ServerFake(new URL(MockIntegrationTestContext.SERVERFAKE_URL).getPort(),
+				"<dummy></dummy>");
 		serverFake.start();
 		try {
-			assertEquals(DeltaCloudClientImpl.DeltaCloudServerType.UNKNOWN, new DeltaCloudClientImpl(MockIntegrationTestContext.SERVERFAKE_URL, MockIntegrationTestContext.DELTACLOUD_USER,
+			assertEquals(DeltaCloudClientImpl.DeltaCloudServerType.UNKNOWN, new DeltaCloudClientImpl(
+					MockIntegrationTestContext.SERVERFAKE_URL, MockIntegrationTestContext.DELTACLOUD_USER,
 					MockIntegrationTestContext.DELTACLOUD_PASSWORD).getServerType());
 		} finally {
 			serverFake.stop();
@@ -77,7 +80,8 @@ public class ServerTypeMockIntegrationTest {
 
 	@Test(expected = DeltaCloudClientException.class)
 	public void listImages_cannotListIfNotAuthenticated() throws MalformedURLException, DeltaCloudClientException {
-		DeltaCloudClientImpl client = new DeltaCloudClientImpl(MockIntegrationTestContext.DELTACLOUD_URL, "badUser", "badPassword");
+		DeltaCloudClientImpl client = new DeltaCloudClientImpl(MockIntegrationTestContext.DELTACLOUD_URL, "badUser",
+				"badPassword");
 		client.listImages();
 	}
 
@@ -86,8 +90,20 @@ public class ServerTypeMockIntegrationTest {
 		try {
 			DeltaCloudClientImpl errorClient = new DeltaCloudClientImpl(MockIntegrationTestContext.DELTACLOUD_URL) {
 				@Override
-				protected HttpUriRequest getRequest(HttpMethod httpMethod, String requestUrl) {
-					return new HttpGet(MockIntegrationTestContext.DELTACLOUD_URL + "/DUMMY");
+				public List<Image> listImages() throws DeltaCloudClientException {
+					sendRequest(new DeltaCloudRequest() {
+
+						@Override
+						public String getUrl() {
+							return MockIntegrationTestContext.DELTACLOUD_URL + "/DUMMY";
+						}
+
+						@Override
+						public HttpMethod getHttpMethod() {
+							return HttpMethod.GET;
+						} }
+					);
+					return Collections.emptyList();
 				}
 			};
 			errorClient.listImages();
