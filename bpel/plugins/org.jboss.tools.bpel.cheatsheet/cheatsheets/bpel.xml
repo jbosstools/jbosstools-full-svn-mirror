@@ -51,15 +51,15 @@ Open the WSDL using the WSDL editor, add &quot;Service&quot; and &quot;Binding&q
   </description>
   </item>
   
-  <item title="Create a bpel-deploy.xml file" skip="true">
+  <item title="Create a deploy.xml file" skip="true">
       <description>
-         If you want to deploy a BPEL project to JBoss BPEL Runtime, you need to create a bpel-deploy.xml file.
+         If you want to deploy a BPEL project to JBoss BPEL Runtime, you need to create a deploy.xml file.
       </description>
-      <subitem label="Create a bpel-deploy.xml by selecting &quot;File &gt; New &gt; Other... &gt; BPEL 2.0 &gt; Apache ODE Deployment Descriptor&quot; from the menu bar.">
+      <subitem label="Create a deploy.xml by selecting &quot;File &gt; New &gt; Other... &gt; BPEL 2.0 &gt; Apache ODE Deployment Descriptor&quot; from the menu bar.">
 	  </subitem>
-      <subitem label="On the first page of the &quot;Apache ODE Deployment Descriptor&quot; Wizard choose the &quot;bpelContent&quot; folder of a bpel project in the &quot;BPEL Project&quot;  field and enter &quot;bpel-deploy.xml&quot; in the &quot;File name&quot; field. Click &quot;Finish&quot; button.">
+      <subitem label="On the first page of the &quot;Apache ODE Deployment Descriptor&quot; Wizard choose the &quot;bpelContent&quot; folder of a bpel project in the &quot;BPEL Project&quot;  field and enter &quot;deploy.xml&quot; in the &quot;File name&quot; field. Click &quot;Finish&quot; button.">
 	  </subitem>
-      <subitem label="Double-click the bpel-deploy.xml file to open it in ODE Descriptor Deployment Editor. In the &quot;Inbound Interfaces&quot; section, click the &quot;Associated Port&quot; column and  in the dropdown box select a BPEL port that is defined in the WSDL file.The Related Service and Binding Used columns should be automatically filled in. Save the bpel-deploy.xml file.">
+      <subitem label="Double-click the deploy.xml file to open it in ODE Descriptor Deployment Editor. In the &quot;Inbound Interfaces&quot; section, click the &quot;Associated Port&quot; column and  in the dropdown box select a BPEL port that is defined in the WSDL file.The Related Service and Binding Used columns should be automatically filled in. Save the deploy.xml file.">
 	  </subitem>
   </item>  
   
