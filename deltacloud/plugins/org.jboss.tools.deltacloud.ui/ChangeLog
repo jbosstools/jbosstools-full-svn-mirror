@@ -1,5 +1,7 @@
 2010-11-11  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (ColumnListener.widgetSelected): 
+	[JBIDE-7559] removed unneeded instance variable 
 	* plugin.xml: [JBIDE-7540] instance handlers: removed enabledWhen, replaced by additional activatedWhen
 
 2010-11-10  André Dietisheim  <adietish@redhat.com>

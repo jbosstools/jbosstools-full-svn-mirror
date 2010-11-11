@@ -133,11 +133,9 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	private class ColumnListener extends SelectionAdapter {
 
 		private int column;
-		private TableViewer viewer;
 
 		public ColumnListener(int column, TableViewer viewer) {
 			this.column = column;
-			this.viewer = viewer;
 		}
 
 		@Override
