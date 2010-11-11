@@ -451,7 +451,7 @@ public class DeltaCloud {
 			try {
 				List<Image> list = client.listImages();
 				for (Iterator<Image> i = list.iterator(); i.hasNext();) {
-					DeltaCloudImage image = new DeltaCloudImage(i.next());
+					DeltaCloudImage image = new DeltaCloudImage(i.next(), this);
 					images.add(image);
 				}
 			} catch (DeltaCloudClientException e) {
@@ -478,7 +478,7 @@ public class DeltaCloud {
 		DeltaCloudImage retVal = null;
 		try {
 			Image image = client.listImages(imageId);
-			retVal = new DeltaCloudImage(image);
+			retVal = new DeltaCloudImage(image, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// do nothing and return null

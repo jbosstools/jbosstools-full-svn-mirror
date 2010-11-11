@@ -16,11 +16,17 @@ import org.jboss.tools.deltacloud.core.client.Image;
 public class DeltaCloudImage {
 
 	private Image image;
+	private DeltaCloud deltaCloud;
 	
-	public DeltaCloudImage(Image image) {
+	public DeltaCloudImage(Image image, DeltaCloud deltaCloud) {
 		this.image = image;
+		this.deltaCloud = deltaCloud;
 	}
 	
+	public DeltaCloud getDeltaCloud() {
+		return deltaCloud;
+	}
+
 	public String getName() {
 		return image.getName();
 	}
