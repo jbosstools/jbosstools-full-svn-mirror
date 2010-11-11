@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>org.jboss.tools.parent.pom</artifactId>
@@ -852,16 +853,14 @@
 			<id>jboss-releases-repository</id>
 			<name>JBoss Releases Repository</name>
 			<uniqueVersion>false</uniqueVersion>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases/
-			</url>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
 			<layout>default</layout>
 		</repository>
 		<snapshotRepository>
 			<id>jboss-snapshots-repository</id>
 			<name>JBoss Snapshot Repository</name>
 			<uniqueVersion>true</uniqueVersion>
-			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/
-			</url>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
 			<layout>default</layout>
 		</snapshotRepository>
 	</distributionManagement>
