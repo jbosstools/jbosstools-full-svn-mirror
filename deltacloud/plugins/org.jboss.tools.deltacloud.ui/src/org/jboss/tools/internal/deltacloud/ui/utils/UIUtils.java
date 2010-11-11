@@ -84,7 +84,7 @@ public class UIUtils {
 	 * 
 	 * @return the first element
 	 */
-	public static <T> T getFirstElement(final ISelection selection, final Class<T> expectedClass) {
+	public static <T> T getFirstAdaptedElement(final ISelection selection, final Class<T> expectedClass) {
 		if (selection == null) {
 			return null;
 		} else {
@@ -114,7 +114,7 @@ public class UIUtils {
 		}
 
 		return ((IStructuredSelection) selection).toList().size() == 1
-				&& getFirstElement(selection, expectedClass) != null;
+				&& getFirstAdaptedElement(selection, expectedClass) != null;
 	}
 
 	/**

@@ -39,7 +39,7 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (isSingleInstanceSelected(selection)) {
-				DeltaCloudInstance cvinstance = UIUtils.getFirstElement(selection, DeltaCloudInstance.class);
+				DeltaCloudInstance cvinstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 				startInstance(cvinstance);
 			} else {
 				startWithDialog((IStructuredSelection) selection);

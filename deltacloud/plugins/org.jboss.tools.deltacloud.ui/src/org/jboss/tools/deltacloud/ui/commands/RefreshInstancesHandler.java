@@ -31,7 +31,7 @@ public class RefreshInstancesHandler extends AbstractHandler implements IHandler
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudInstance deltaCloudInstance = UIUtils.getFirstElement(selection, DeltaCloudInstance.class);
+			DeltaCloudInstance deltaCloudInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 			refresh(deltaCloudInstance);
 		}
 

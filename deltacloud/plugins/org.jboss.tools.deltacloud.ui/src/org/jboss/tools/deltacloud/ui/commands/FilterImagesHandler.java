@@ -37,7 +37,7 @@ public class FilterImagesHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			CloudViewElement cloudViewElement = UIUtils.getFirstElement(selection, CloudViewElement.class);
+			CloudViewElement cloudViewElement = UIUtils.getFirstAdaptedElement(selection, CloudViewElement.class);
 			createImagesFilter(cloudViewElement, HandlerUtil.getActiveShell(event));
 		}
 

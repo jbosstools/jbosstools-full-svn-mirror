@@ -22,9 +22,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
-import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
 
@@ -37,32 +35,25 @@ public class FilterInstancesHandler extends AbstractHandler implements IHandler 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			CloudViewElement cloudViewElement = UIUtils.getFirstElement(selection, CloudViewElement.class);
-			createInstancesFilter(cloudViewElement, HandlerUtil.getActiveShell(event));
+			DeltaCloudInstance deltaCloudInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+			createInstancesFilter(deltaCloudInstance, HandlerUtil.getActiveShell(event));
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void createInstancesFilter(CloudViewElement element, final Shell shell) {
-		if (element != null) {
-			while (element != null && !(element instanceof CVCloudElement)) {
-				element = (CloudViewElement) element.getParent();
-			}
-			if (element != null) {
-				CVCloudElement cve = (CVCloudElement) element;
-				final DeltaCloud cloud = (DeltaCloud) cve.getElement();
-				Display.getDefault().asyncExec(new Runnable() {
+	private void createInstancesFilter(final DeltaCloudInstance instance, final Shell shell) {
+		if (instance != null) {
+			Display.getDefault().asyncExec(new Runnable() {
 
-					@Override
-					public void run() {
-						IWizard wizard = new InstanceFilter(cloud);
-						WizardDialog dialog = new WizardDialog(shell, wizard);
-						dialog.create();
-						dialog.open();
-					}
-				});
-			}
+				@Override
+				public void run() {
+					IWizard wizard = new InstanceFilter(instance.getDeltaCloud());
+					WizardDialog dialog = new WizardDialog(shell, wizard);
+					dialog.create();
+					dialog.open();
+				}
+			});
 		}
 	}
 }

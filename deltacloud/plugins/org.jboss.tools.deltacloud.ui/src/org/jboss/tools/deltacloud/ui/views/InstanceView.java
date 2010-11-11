@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -37,6 +36,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.services.IEvaluationService;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
@@ -60,7 +60,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
 
-	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
 	private static final String FILTERED_LABEL = "Filtered.label"; //$NON-NLS-1$
 	private static final String FILTERED_TOOLTIP = "FilteredImages.tooltip"; //$NON-NLS-1$	
 
@@ -73,8 +72,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private DeltaCloud currCloud;
 
 	private InstanceViewLabelAndContentProvider contentProvider;
-
-	private IAction rseAction;
 
 	private InstanceView parentView;
 
@@ -334,26 +331,19 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 					viewer.setInput(finalList);
 					currCloud.addInstanceListListener(parentView);
 					viewer.refresh();
+					refreshToolbarCommandStates();
 				}
 			});
 		}
-		refreshToolbarCommandStates();
 	}
 
 	/**
-	 * Refresh the states of the commands in the toolsbar. This is a workaround
-	 * since activation and enablement is declarative and I found no way to
-	 * trigger their update. CommandService#refreshElements(COMMANDID) did not
-	 * help.
+	 * Refresh the states of the commands in the toolbar.
 	 */
 	private void refreshToolbarCommandStates() {
-		viewer.getControl().getDisplay().syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				viewer.setSelection(viewer.getSelection());
-			}
-		});
+		IEvaluationService evaluationService = (IEvaluationService) PlatformUI.getWorkbench().getService(
+				IEvaluationService.class);
+		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.isStopped");
 	}
 
 	@Override

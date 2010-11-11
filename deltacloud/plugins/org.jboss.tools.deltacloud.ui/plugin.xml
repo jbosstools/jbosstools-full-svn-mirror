@@ -284,8 +284,7 @@
                      variable="selection">
 					<iterate>
 	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
-	               		</instanceof>
+	                	     value="org.jboss.tools.deltacloud.ui.views.CVImageElement" />
 	               	</iterate>
                </with>
          </activeWhen>
@@ -297,9 +296,11 @@
                <with
                      variable="selection">
 			i		<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
-	               		</instanceof>
+							<adapt
+					             type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">								
+			               		<instanceof
+			                	     value="org.jboss.tools.deltacloud.core.DeltaCloudInstance" />
+			               	</adapt>
 	               	</iterate>
                </with>
          </activeWhen>
@@ -373,6 +374,17 @@
                tooltip="%command.destroyinstance.tooltip">
          </command>
  	  </menuContribution>
+	  <!-- filters -->
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=filters">	
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.filterinstances"
+               label="%command.filterinstances.label"
+               style="push"
+               tooltip="%command.filterinstances.tooltip">
+         </command>
+ 	  </menuContribution>
       <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=additions">	
@@ -439,6 +451,7 @@
          </command>
  	  </menuContribution>
    </extension>
+
    <!-- DeltaCloudView context menu ================================== -->
    <extension point="org.eclipse.ui.menus">
       <menuContribution
@@ -592,7 +605,7 @@
                      variable="selection">
 					<iterate>
 	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	                	     value="org.jboss.tools.deltacloud.core">
 	               		</instanceof>
 	               	</iterate>
                </with>

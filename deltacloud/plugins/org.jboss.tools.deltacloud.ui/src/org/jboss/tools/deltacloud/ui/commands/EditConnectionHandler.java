@@ -35,7 +35,7 @@ public class EditConnectionHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			CloudViewElement element = UIUtils.getFirstElement(selection, CloudViewElement.class);
+			CloudViewElement element = UIUtils.getFirstAdaptedElement(selection, CloudViewElement.class);
 			while (element != null && !(element instanceof CVCloudElement)) {
 				element = (CloudViewElement) element.getParent();
 			}

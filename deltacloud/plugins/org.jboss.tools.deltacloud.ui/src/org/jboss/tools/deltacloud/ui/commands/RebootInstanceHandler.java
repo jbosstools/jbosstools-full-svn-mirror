@@ -39,7 +39,7 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (isSingleInstanceSelected(selection)) {
-				DeltaCloudInstance cvInstance = UIUtils.getFirstElement(selection, DeltaCloudInstance.class);
+				DeltaCloudInstance cvInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 				rebootInstance(cvInstance);
 			} else {
 				rebootWithDialog((IStructuredSelection)selection);

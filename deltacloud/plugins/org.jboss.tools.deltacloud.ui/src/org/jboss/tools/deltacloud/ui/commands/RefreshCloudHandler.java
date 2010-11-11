@@ -32,7 +32,7 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			CloudViewElement cvImage = UIUtils.getFirstElement(selection, CloudViewElement.class);
+			CloudViewElement cvImage = UIUtils.getFirstAdaptedElement(selection, CloudViewElement.class);
 			refresh(cvImage);
 		}
 

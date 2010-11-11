@@ -38,7 +38,7 @@ public class CreateInstanceHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			CVImageElement cvImage = UIUtils.getFirstElement(selection, CVImageElement.class);
+			CVImageElement cvImage = UIUtils.getFirstAdaptedElement(selection, CVImageElement.class);
 			createInstance(cvImage, HandlerUtil.getActiveShell(event));
 		}
 

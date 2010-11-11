@@ -48,7 +48,7 @@ public class ShowInRemoteSystemExplorerHandler extends AbstractHandler implement
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudInstance instance = UIUtils.getFirstElement(selection, DeltaCloudInstance.class);
+			DeltaCloudInstance instance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 			launchRemoteSystemExplorer(instance);
 		}
 
