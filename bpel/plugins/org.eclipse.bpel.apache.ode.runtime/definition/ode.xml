@@ -28,7 +28,7 @@
 	</port>
 
 	<module>
-		<type>jbt.bpel.module</type>
+		<type>bpel.module</type>
 		<publishDir>${ode.home}/WEB-INF/processes</publishDir>
 		<publisherReference>org.eclipse.bpel.apache.ode.runtime.publisher</publisherReference>
 	</module>
