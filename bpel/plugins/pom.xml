@@ -18,6 +18,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>org.eclipse.bpel.xpath10</module>
 		<module>org.jboss.tools.bpel.cheatsheet</module>
 		<module>org.jboss.tools.bpel.runtimes</module>
+		<module>org.eclipse.bpel.runtimes</module>
 	</modules>
 </project>
 	
