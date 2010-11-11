@@ -136,7 +136,7 @@
                </with>
          </activeWhen>
       </handler>
-            <handler
+      <handler
             class="org.jboss.tools.deltacloud.ui.commands.RefreshCloudHandler"
             commandId="org.eclipse.ui.file.refresh">
          <activeWhen>
@@ -149,7 +149,21 @@
 	               	</iterate>
                </with>
          </activeWhen>
-      </handler>
+	</handler>
+    <handler
+		class="org.jboss.tools.deltacloud.ui.commands.RefreshInstancesHandler"
+        commandId="org.eclipse.ui.file.refresh">
+			<activeWhen>
+				<with
+					variable="selection">
+						<iterate>
+							<instanceof
+							     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+						</instanceof>
+					</iterate>
+				</with>
+			</activeWhen>
+	</handler>
    </extension>
   <!-- instance command handlers -->
    <extension
@@ -259,9 +273,9 @@
          </activeWhen>
       </handler>
    </extension>
+   <!-- Filter handlers -->
    <extension
          point="org.eclipse.ui.handlers">
-	  <!-- Filter handlers -->
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.FilterImagesHandler"
             commandId="org.jboss.tools.deltacloud.ui.filterimages">
@@ -291,8 +305,26 @@
          </activeWhen>
       </handler>
    </extension>
+   <!-- Show in remote system explorer handler  -->
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.ShowInRemoteSystemExplorerHandler"
+            commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer">
+         <activeWhen>
+               <with
+                     variable="selection">
+					<iterate>
+	               		<instanceof
+	                	     value="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
+	               		</instanceof>
+	               	</iterate>
+               </with>
+         </activeWhen>
+      </handler>
+   </extension>
+   <!-- InstanceView context menu ================================== -->
    <extension point="org.eclipse.ui.menus">
-      <!-- InstanceView context menu ================================== -->
       <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView">
@@ -301,6 +333,9 @@
 				visible="true" />
 			<separator
 				name="filters"
+				visible="true" />
+			<separator
+				name="additions"
 				visible="true" />
 	  </menuContribution>
       <!-- instance commands -->
@@ -337,14 +372,75 @@
                style="push"
                tooltip="%command.destroyinstance.tooltip">
          </command>
-		 <separator
-                  name="additions"
-                  visible="true">
-         </separator>         
  	  </menuContribution>
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=additions">	
+ 	           <command
+               commandId="org.eclipse.ui.file.refresh"
+               label="%command.refreshinstances.label"
+               style="push"
+               tooltip="%command.refreshinstances.tooltip">
+         </command>
+ 	  </menuContribution> 	  
    </extension>
    <extension point="org.eclipse.ui.menus">
-	  <!-- DeltaCloudView context menu ================================== -->
+   <!-- InstanceView toolbar ================================== -->
+      <menuContribution
+            allPopups="true"
+            locationURI="toolbar:org.jboss.tools.deltacloud.ui.views.InstanceView">
+			<separator
+				name="instances"
+				visible="true" />
+	  </menuContribution>
+      <!-- instance commands -->
+      <menuContribution
+            allPopups="true"
+            locationURI="toolbar:org.jboss.tools.deltacloud.ui.views.InstanceView?after=instances">	
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.startinstance"
+               disabledIcon="icons/runningd.gif"
+               icon="icons/running.gif"
+               label="%command.label"
+               style="push"
+               tooltip="%command.tooltip">
+         </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.stopinstance"
+               disabledIcon="icons/stoppedd.gif"
+               icon="icons/stopped.gif"
+               label="%command.stopinstance.label"
+               style="push"
+               tooltip="%command.stopinstance.tooltip">
+         </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.rebootinstance"
+               disabledIcon="icons/rebootd.gif"
+               icon="icons/reboot.gif"
+               label="%command.rebootinstance.label"
+               style="push"
+               tooltip="%command.rebootinstance.tooltip">
+         </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.destroyinstance"
+               disabledIcon="icons/destroyd.gif"
+               icon="icons/destroy.gif"
+               label="%command.destroyinstance.label"
+               style="push"
+               tooltip="%command.destroyinstance.tooltip">
+         </command>
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer"
+               disabledIcon="icons/cloud.gif"
+               icon="icons/cloud.gif"
+               label="%command.showInRemoteSysExplorer"
+               style="push"
+               tooltip="%command.showInRemoteSysExplorer.tooltip.tooltip">
+         </command>
+ 	  </menuContribution>
+   </extension>
+   <!-- DeltaCloudView context menu ================================== -->
+   <extension point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
@@ -592,6 +688,12 @@
             description="%command.filterinstances.description"
             id="org.jboss.tools.deltacloud.ui.filterinstances"
             name="%command.filterinstances.name">
+      </command>
+	  <!-- launch remote system explorer command -->
+      <command
+            description="%command.showInRemoteSysExplorer.description"
+            id="org.jboss.tools.deltacloud.ui.showremotesysexplorer"
+            name="%command.showInRemoteSysExplorer">
       </command>
 	</extension>
 	<extension point="org.eclipse.core.expressions.propertyTesters">

@@ -27,7 +27,6 @@ public class CVInstanceElement extends CloudViewElement {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Object getAdapter(Class adapter) {
-		System.err.println("CVInstanceElement#getAdapter: adapter = " + adapter);
 		if (adapter == DeltaCloudInstance.class) {
 			return getElement();
 		} 
