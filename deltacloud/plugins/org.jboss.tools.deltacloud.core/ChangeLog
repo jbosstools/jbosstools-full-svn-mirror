@@ -1,3 +1,11 @@
+2010-11-11  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (DeltaCloudInstance): 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (refreshInstance): 
+	(loadInstances): 
+	(createInstance): 
+	[JBIDE-7516] added reference to DeltaCloud in DeltaCloudInstance
+
 2010-11-10  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/utils/UrlBuilder.java: 

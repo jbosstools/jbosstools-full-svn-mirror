@@ -30,10 +30,12 @@ public class DeltaCloudInstance {
 	public final static String REBOOT = InstanceAction.REBOOT;
 	public final static String DESTROY = InstanceAction.DESTROY;
 
+	private DeltaCloud cloud;
 	private Instance instance;
 	private String givenName;
 
-	public DeltaCloudInstance(Instance instance) {
+	public DeltaCloudInstance(DeltaCloud cloud, Instance instance) {
+		this.cloud = cloud;
 		this.instance = instance;
 	}
 
@@ -92,6 +94,10 @@ public class DeltaCloudInstance {
 		return null;
 	}
 
+	public DeltaCloud getDeltaCloud() {
+		return cloud;
+	}
+	
 	protected boolean performInstanceAction(String actionId, DeltaCloudClientImpl client)
 			throws DeltaCloudClientException {
 		InstanceAction action = instance.getAction(actionId);

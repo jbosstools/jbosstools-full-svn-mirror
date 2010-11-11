@@ -287,7 +287,7 @@ public class DeltaCloud {
 			try {
 				List<Instance> list = client.listInstances();
 				for (Iterator<Instance> i = list.iterator(); i.hasNext();) {
-					DeltaCloudInstance instance = new DeltaCloudInstance(i.next());
+					DeltaCloudInstance instance = new DeltaCloudInstance(this, i.next());
 					instances.add(instance);
 				}
 			} catch (DeltaCloudClientException e) {
@@ -368,7 +368,7 @@ public class DeltaCloud {
 		DeltaCloudInstance retVal = null;
 		try {
 			Instance instance = client.listInstances(instanceId);
-			retVal = new DeltaCloudInstance(instance);
+			retVal = new DeltaCloudInstance(this, instance);
 			for (int i = 0; i < instances.size(); ++i) {
 				DeltaCloudInstance inst = instances.get(i);
 				if (inst.getId().equals(instanceId)) {
@@ -522,7 +522,7 @@ public class DeltaCloud {
 				instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
 			}
 			if (instance != null) {
-				DeltaCloudInstance newInstance = new DeltaCloudInstance(instance);
+				DeltaCloudInstance newInstance = new DeltaCloudInstance(this, instance);
 				newInstance.setGivenName(name);
 				instances.add(newInstance);
 				DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
