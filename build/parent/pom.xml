@@ -848,19 +848,21 @@
 	</pluginRepositories>
 
 	<distributionManagement>
-		<snapshotRepository>
-			<id>jboss-snapshots-repository</id>
-			<name>JBoss Snapshot Repository</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/
-			</url>
-			<uniqueVersion>true</uniqueVersion>
-		</snapshotRepository>
 		<repository>
 			<id>jboss-releases-repository</id>
 			<name>JBoss Releases Repository</name>
+			<uniqueVersion>false</uniqueVersion>
 			<url>https://repository.jboss.org/nexus/content/repositories/releases/
 			</url>
-			<uniqueVersion>false</uniqueVersion>
+			<layout>default</layout>
 		</repository>
+		<snapshotRepository>
+			<id>jboss-snapshots-repository</id>
+			<name>JBoss Snapshot Repository</name>
+			<uniqueVersion>true</uniqueVersion>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/
+			</url>
+			<layout>default</layout>
+		</snapshotRepository>
 	</distributionManagement>
 </project>
