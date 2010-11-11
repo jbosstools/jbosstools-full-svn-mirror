@@ -18,8 +18,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.CloudViewElementUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
@@ -40,10 +41,10 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 
 	private void refresh(CloudViewElement cloudViewElement) {
 		if (cloudViewElement != null) {
-			while (!(cloudViewElement instanceof CVCloudElement))
-				cloudViewElement = (CloudViewElement) cloudViewElement.getParent();
-			CVCloudElement cloud = (CVCloudElement) cloudViewElement;
-			cloud.loadChildren();
+			DeltaCloud cloud = CloudViewElementUtils.getCloud(cloudViewElement);
+			if (cloud != null) {
+				cloud.loadChildren();
+			}
 		}
 	}
 }
