@@ -264,7 +264,7 @@
          <activeWhen>
                <with
                      variable="selection">
-					<iterate>
+					<iterate operator="and">
 	               		<instanceof
 	                	     value="org.jboss.tools.deltacloud.ui.views.CVImageElement">
 	               		</instanceof>
@@ -282,9 +282,9 @@
          <activeWhen>
                <with
                      variable="selection">
-					<iterate>
+					<iterate operator="and">
 	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVImageElement" />
+	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement" />
 	               	</iterate>
                </with>
          </activeWhen>
@@ -295,11 +295,11 @@
          <activeWhen>
                <with
                      variable="selection">
-			i		<iterate>
+			i		<iterate operator="and">
 							<adapt
-					             type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">								
+					             type="org.jboss.tools.deltacloud.core.DeltaCloud">								
 			               		<instanceof
-			                	     value="org.jboss.tools.deltacloud.core.DeltaCloudInstance" />
+			                	     value="org.jboss.tools.deltacloud.core.DeltaCloud" />
 			               	</adapt>
 	               	</iterate>
                </with>
@@ -599,34 +599,12 @@
                label="%command.filterimages.label"
                style="push"
                tooltip="%command.filterimages.tooltip">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.core">
-	               		</instanceof>
-	               	</iterate>
-               </with>
-            </visibleWhen>
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.filterinstances"
                label="%command.filterinstances.label"
                style="push"
                tooltip="%command.filterinstances.tooltip">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
-	               		</instanceof>
-	               	</iterate>
-               </with>
-            </visibleWhen>
          </command>
       </menuContribution>
 	  <!-- DeltaCloudView local menu ========================================= -->
@@ -725,6 +703,20 @@
            class="org.jboss.tools.deltacloud.ui.CVInstanceElementAdapterFactory">
         <adapter
               type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
+        </adapter>
+     </factory>
+     <factory
+           adaptableType="org.jboss.tools.deltacloud.core.DeltaCloudInstance"
+           class="org.jboss.tools.deltacloud.ui.DeltaCloudInstanceAdapterFactory">
+        <adapter
+              type="org.jboss.tools.deltacloud.core.DeltaCloud">
+        </adapter>
+     </factory>
+     <factory
+           adaptableType="org.jboss.tools.deltacloud.core.DeltaCloudImage"
+           class="org.jboss.tools.deltacloud.ui.DeltaCloudImageAdapterFactory">
+        <adapter
+              type="org.jboss.tools.deltacloud.core.DeltaCloud">
         </adapter>
      </factory>
   </extension>

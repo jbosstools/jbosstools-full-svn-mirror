@@ -22,7 +22,7 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
 
@@ -35,20 +35,20 @@ public class FilterInstancesHandler extends AbstractHandler implements IHandler 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudInstance deltaCloudInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
-			createInstancesFilter(deltaCloudInstance, HandlerUtil.getActiveShell(event));
+			DeltaCloud deltaCloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			createInstancesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void createInstancesFilter(final DeltaCloudInstance instance, final Shell shell) {
-		if (instance != null) {
+	private void createInstancesFilter(final DeltaCloud cloud, final Shell shell) {
+		if (cloud != null) {
 			Display.getDefault().asyncExec(new Runnable() {
 
 				@Override
 				public void run() {
-					IWizard wizard = new InstanceFilter(instance.getDeltaCloud());
+					IWizard wizard = new InstanceFilter(cloud);
 					WizardDialog dialog = new WizardDialog(shell, wizard);
 					dialog.create();
 					dialog.open();

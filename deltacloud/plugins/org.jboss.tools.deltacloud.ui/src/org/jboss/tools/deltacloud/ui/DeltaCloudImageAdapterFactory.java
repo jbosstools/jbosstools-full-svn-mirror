@@ -12,21 +12,23 @@ package org.jboss.tools.deltacloud.ui;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 
-public class CVInstanceElementAdapterFactory implements IAdapterFactory {
+public class DeltaCloudImageAdapterFactory implements IAdapterFactory {
 
 	@SuppressWarnings("rawtypes")
 	private static final Class[] ADAPTERS = new Class[]{
-		DeltaCloudInstance.class,
 		DeltaCloud.class
 	};
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
-		return UIUtils.adapt(adaptableObject, adapterType);
+		if (adaptableObject instanceof DeltaCloudImage) {
+			return ((DeltaCloudImage) adaptableObject).getDeltaCloud();
+		} else {
+			return null;
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
