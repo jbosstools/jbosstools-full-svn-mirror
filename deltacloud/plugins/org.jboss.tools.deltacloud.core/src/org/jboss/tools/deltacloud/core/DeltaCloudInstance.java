@@ -12,9 +12,10 @@ package org.jboss.tools.deltacloud.core;
 
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.Instance;
+import org.jboss.tools.deltacloud.core.client.Instance.State;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
 
 public class DeltaCloudInstance {
@@ -87,6 +88,10 @@ public class DeltaCloudInstance {
 		return instance.getPublicAddresses();
 	}
 
+	public boolean isStopped() {
+		return instance.getState() == State.STOPPED;
+	}
+	
 	public String getHostName() {
 		List<String> hostNames = getHostNames();
 		if (hostNames != null && hostNames.size() > 0)

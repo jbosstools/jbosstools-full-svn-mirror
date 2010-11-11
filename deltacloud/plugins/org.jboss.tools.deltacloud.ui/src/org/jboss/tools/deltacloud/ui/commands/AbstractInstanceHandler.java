@@ -13,10 +13,7 @@ package org.jboss.tools.deltacloud.ui.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.jface.viewers.ISelection;
-import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
-import org.jboss.tools.deltacloud.ui.views.CloudViewElementUtils;
 import org.jboss.tools.deltacloud.ui.views.PerformInstanceActionThread;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -27,13 +24,11 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  */
 public abstract class AbstractInstanceHandler extends AbstractHandler implements IHandler {
 
-	protected void executeInstanceAction(CVInstanceElement cvInstance, String actionId, String expectedState,
+	protected void executeInstanceAction(DeltaCloudInstance instance, String actionId, String expectedState,
 			String title, String message) {
-		if (cvInstance != null) {
-			DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
-			DeltaCloud cloud = CloudViewElementUtils.getCloud(cvInstance);
+		if (instance != null) {
 			PerformInstanceActionThread t = new PerformInstanceActionThread(
-					cloud,
+					instance.getDeltaCloud(),
 					instance,
 					actionId,
 					title,
@@ -45,6 +40,6 @@ public abstract class AbstractInstanceHandler extends AbstractHandler implements
 	}
 	
 	protected boolean isSingleInstanceSelected(ISelection selection) {
-		return UIUtils.isSingleSelection(selection, CVInstanceElement.class);
+		return UIUtils.isSingleSelection(selection, DeltaCloudInstance.class);
 	}
 }

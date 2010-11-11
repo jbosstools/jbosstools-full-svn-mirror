@@ -20,7 +20,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -39,7 +38,7 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (isSingleInstanceSelected(selection)) {
-				CVInstanceElement cvInstance = UIUtils.getFirstElement(selection, CVInstanceElement.class);
+				DeltaCloudInstance cvInstance = UIUtils.getFirstElement(selection, DeltaCloudInstance.class);
 				stopInstance(cvInstance);
 			} else {
 				stopWithDialog((IStructuredSelection) selection);
@@ -51,9 +50,9 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void stopWithDialog(IStructuredSelection selection) {
-		CVInstanceElementsSelectionDialog dialog = new CVInstanceElementsSelectionDialog(
+		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, (List<CVInstanceElement>) selection.toList()
+					, (List<DeltaCloudInstance>) selection.toList()
 					, CVMessages.getString(STOP_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(STOP_INSTANCES_DIALOG_MSG));
 		if (Dialog.OK == dialog.open()) {
@@ -61,17 +60,16 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 		}
 	}
 
-	private void stopInstances(Object[] cvInstances) {
-		for (int i = 0; i < cvInstances.length; i++) {
-			stopInstance((CVInstanceElement) cvInstances[i]);
+	private void stopInstances(Object[] deltaCloudInstances) {
+		for (int i = 0; i < deltaCloudInstances.length; i++) {
+			stopInstance((DeltaCloudInstance) deltaCloudInstances[i]);
 		}
 	}
 
-	private void stopInstance(CVInstanceElement cvInstance) {
-		if (cvInstance != null) {
-			DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
+	private void stopInstance(DeltaCloudInstance instance) {
+		if (instance != null) {
 			executeInstanceAction(
-					cvInstance
+					instance
 					, DeltaCloudInstance.STOP
 					, DeltaCloudInstance.STOPPED
 					, CVMessages.getString(STOPPING_INSTANCE_TITLE)

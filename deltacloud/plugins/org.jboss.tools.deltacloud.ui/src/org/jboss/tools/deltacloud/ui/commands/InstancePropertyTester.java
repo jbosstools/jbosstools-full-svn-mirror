@@ -12,9 +12,8 @@ package org.jboss.tools.deltacloud.ui.commands;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.IAdaptable;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.client.Instance.State;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
  * A property tester for the command framework that answers if the given
@@ -22,15 +21,26 @@ import org.jboss.tools.deltacloud.core.client.Instance.State;
  * 
  * @author Andre Dietisheim
  */
-public class InstanceStoppedPropertyTester extends PropertyTester {
+public class InstancePropertyTester extends PropertyTester {
 
+	private static final String PROPERTY_STATE_STOPPED = "isStopped";
+	
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		Assert.isTrue(receiver instanceof IAdaptable);
-		DeltaCloudInstance instance = (DeltaCloudInstance) ((IAdaptable) receiver).getAdapter(DeltaCloudInstance.class);
+		DeltaCloudInstance instance = UIUtils.adapt(receiver, DeltaCloudInstance.class);
+		if (instance == null) {
+			return false;
+		}
+		if (PROPERTY_STATE_STOPPED.equals(property)) {
+			return isStopped(instance, expectedValue);
+		}
+		return false;
+	}
+
+	private boolean isStopped(DeltaCloudInstance instance, Object expectedValue) {
 		Assert.isTrue(expectedValue instanceof Boolean);
-		Boolean isExpectedValue = (Boolean) expectedValue;
-		boolean isStopped = State.STOPPED.toString().equals(instance.getState());
-		return isExpectedValue.equals(isStopped);
+		Boolean expectedBoolean = (Boolean) expectedValue;
+		Object propertyValue = instance.isStopped();
+		return expectedBoolean.equals(propertyValue);
 	}
 }

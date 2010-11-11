@@ -28,12 +28,10 @@ public class CVInstanceElement extends CloudViewElement {
 	@Override
 	public Object getAdapter(Class adapter) {
 		System.err.println("CVInstanceElement#getAdapter: adapter = " + adapter);
-		Object adapted = super.getAdapter(adapter);
-		if (adapted == null && adapter == DeltaCloudInstance.class) {
-			adapted = getElement();
+		if (adapter == DeltaCloudInstance.class) {
+			return getElement();
 		} 
-			
-		return adapted;
-	}
 
+		return super.getAdapter(adapter);
+	}
 }

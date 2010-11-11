@@ -14,13 +14,13 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -39,7 +39,7 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (isSingleInstanceSelected(selection)) {
-				CVInstanceElement cvinstance = UIUtils.getFirstElement(selection, CVInstanceElement.class);
+				DeltaCloudInstance cvinstance = UIUtils.getFirstElement(selection, DeltaCloudInstance.class);
 				startInstance(cvinstance);
 			} else {
 				startWithDialog((IStructuredSelection) selection);
@@ -51,9 +51,9 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void startWithDialog(IStructuredSelection selection) {
-		CVInstanceElementsSelectionDialog dialog = new CVInstanceElementsSelectionDialog(
+		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, (List<CVInstanceElement>) selection.toList()
+					, (List<DeltaCloudInstance>) selection.toList()
 					, CVMessages.getString(START_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(START_INSTANCES_DIALOG_MSG));
 		if (Dialog.OK == dialog.open()) {
@@ -61,17 +61,17 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 		}
 	}
 
-	private void startInstances(Object[] cvInstances) {
-		for (int i = 0; i < cvInstances.length; i++) {
-			startInstance((CVInstanceElement) cvInstances[i]);
+	private void startInstances(Object[] deltaCloudInstances) {
+		for (int i = 0; i < deltaCloudInstances.length; i++) {
+			Assert.isTrue(deltaCloudInstances[i] instanceof DeltaCloudInstance);
+			startInstance((DeltaCloudInstance) deltaCloudInstances[i]);
 		}
 	}
 
-	private void startInstance(CVInstanceElement cvInstance) {
-		if (cvInstance != null) {
-			DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
+	private void startInstance(DeltaCloudInstance instance) {
+		if (instance != null) {
 			executeInstanceAction(
-					cvInstance
+					instance
 					, DeltaCloudInstance.START
 					, DeltaCloudInstance.RUNNING
 					, CVMessages.getString(STARTING_INSTANCE_TITLE)

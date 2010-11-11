@@ -150,25 +150,31 @@
                </with>
          </activeWhen>
       </handler>
-	  <!-- instance command handlers -->
+   </extension>
+  <!-- instance command handlers -->
+   <extension
+         point="org.eclipse.ui.handlers">
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.StartInstanceHandler"
             commandId="org.jboss.tools.deltacloud.ui.startinstance">
-         <activeWhen>
+			<enabledWhen>
                <with
-                     variable="selection">
-						<iterate operator="and">
-							<and>
-			               		<instanceof
-			                	     value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-			               		</instanceof>
-								<test 
-									property="org.jboss.tools.deltacloud.ui.instance.isStopped"
-		         					value="true"/>
-			               	</and>
-		               	</iterate>
+                 variable="selection">
+					<iterate operator="and">
+						<and>
+<!--							<or>
+								<instanceof value="org.jboss.tools.deltacloud.ui.views.CVInstanceElement" />
+								<instanceof value="org.jboss.tools.deltacloud.core.DeltaCloudInstance" /> 
+							</or> -->
+							<adapt
+					             type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
+								<test property="org.jboss.tools.deltacloud.ui.commands.isStopped"
+									value="true"/>
+							</adapt>
+						</and>
+	               	</iterate>
                </with>
-         </activeWhen>
+			</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.StopInstanceHandler"
@@ -240,6 +246,9 @@
                </with>
          </activeWhen>
       </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
       <!-- image command handlers -->
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceHandler"
@@ -255,6 +264,9 @@
                </with>
          </activeWhen>
       </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
 	  <!-- Filter handlers -->
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.FilterImagesHandler"
@@ -561,16 +573,37 @@
             id="org.jboss.tools.deltacloud.ui.filterinstances"
             name="%command.filterinstances.name">
       </command>
-   </extension>
-    <extension
-          point="org.eclipse.core.expressions.propertyTesters">
-       <propertyTester
-             class="org.jboss.tools.deltacloud.ui.commands.InstanceStoppedPropertyTester"
-             id="org.jboss.tools.deltacloud.ui.commands.InstanceStoppedPropertyTester"
-             namespace="org.jboss.tools.deltacloud.ui.instance"
-             properties="isStopped"
-             type="org.jboss.tools.deltacloud.ui.views.CVInstanceElement">
-       </propertyTester>
-    </extension>
+	</extension>
+	<extension point="org.eclipse.core.expressions.propertyTesters">
+		<propertyTester
+			class="org.jboss.tools.deltacloud.ui.commands.InstancePropertyTester"
+			id="org.jboss.tools.deltacloud.ui.commands.instancepropertytester"
+			namespace="org.jboss.tools.deltacloud.ui.commands"
+			properties="isStopped,isStarted"
+			type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
+		</propertyTester>
+ 	</extension>
+ 	<extension point="org.eclipse.core.expressions.definitions">
+	    <definition id="org.jboss.tools.deltacloud.ui.commands.instanceStopped">
+               <with
+                 variable="selection">
+					<iterate operator="or">
+						<adapt
+							type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
+         				</adapt>
+	               	</iterate>
+               </with>
+	    </definition>
+	</extension>
+  <extension
+        point="org.eclipse.core.runtime.adapters">
+     <factory
+           adaptableType="org.jboss.tools.deltacloud.ui.views.CVInstanceElement"
+           class="org.jboss.tools.deltacloud.ui.CVInstanceElementAdapterFactory">
+        <adapter
+              type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
+        </adapter>
+     </factory>
+  </extension>
 
 </plugin>

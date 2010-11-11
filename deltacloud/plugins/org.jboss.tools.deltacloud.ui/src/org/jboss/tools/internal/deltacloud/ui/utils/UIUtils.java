@@ -11,6 +11,8 @@
 package org.jboss.tools.internal.deltacloud.ui.utils;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IContributionManager;
@@ -71,7 +73,9 @@ public class UIUtils {
 	}
 
 	/**
-	 * Gets the first element.
+	 * Gets the first element of a given selection in the given type. Returns
+	 * <code>null</null> if selection is selection is empty or adaption of the first element in 
+	 * the given selection fails. Adaption is tried by casting and by adapting it.
 	 * 
 	 * @param selection
 	 *            the selection
@@ -80,18 +84,16 @@ public class UIUtils {
 	 * 
 	 * @return the first element
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> T getFirstElement(final ISelection selection, final Class<T> expectedClass) {
 		if (selection == null) {
 			return null;
 		} else {
 			Assert.isTrue(selection instanceof IStructuredSelection);
 			Object firstElement = ((IStructuredSelection) selection).getFirstElement();
-			if (firstElement != null && expectedClass.isAssignableFrom(firstElement.getClass())) {
-				return (T) firstElement;
-			} else {
+			if (firstElement == null) {
 				return null;
 			}
+			return adapt(firstElement, expectedClass);
 		}
 	}
 
@@ -113,6 +115,28 @@ public class UIUtils {
 
 		return ((IStructuredSelection) selection).toList().size() == 1
 				&& getFirstElement(selection, expectedClass) != null;
+	}
+
+	/**
+	 * Adapts the given object to the given type. Returns <code>null</code> if
+	 * the given adaption is not possible. Adaption is tried by casting and by adapting it.
+	 * 
+	 * @param <T>
+	 * @param object
+	 * @param expectedClass
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T adapt(Object object, Class<T> expectedClass) {
+		if (object == null) {
+			return null;
+		} else if (expectedClass.isAssignableFrom(object.getClass())) {
+			return (T) object;
+		} else if (object instanceof IAdaptable) {
+			return (T) ((IAdaptable) object).getAdapter(expectedClass);
+		} else {
+			return (T) Platform.getAdapterManager().loadAdapter(object, expectedClass.getName());
+		}
 	}
 
 	/**

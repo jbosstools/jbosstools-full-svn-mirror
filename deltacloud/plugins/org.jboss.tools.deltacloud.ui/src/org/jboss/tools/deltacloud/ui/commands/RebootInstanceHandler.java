@@ -20,7 +20,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -40,7 +39,7 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			if (isSingleInstanceSelected(selection)) {
-				CVInstanceElement cvInstance = UIUtils.getFirstElement(selection, CVInstanceElement.class);
+				DeltaCloudInstance cvInstance = UIUtils.getFirstElement(selection, DeltaCloudInstance.class);
 				rebootInstance(cvInstance);
 			} else {
 				rebootWithDialog((IStructuredSelection)selection);
@@ -52,9 +51,9 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void rebootWithDialog(IStructuredSelection selection) {
-		CVInstanceElementsSelectionDialog dialog = new CVInstanceElementsSelectionDialog(
+		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, (List<CVInstanceElement>) selection.toList()
+					, (List<DeltaCloudInstance>) selection.toList()
 					, CVMessages.getString(REBOOT_INSTANCE_TITLE)
 					, CVMessages.getString(REBOOT_INSTANCE_MSG));
 		if (Dialog.OK == dialog.open()) {
@@ -62,17 +61,16 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 		}
 	}
 	
-	private void rebootInstances(Object[] cvInstances) {
-		for (int i = 0; i < cvInstances.length; i++) {
-			rebootInstance((CVInstanceElement) cvInstances[i]);
+	private void rebootInstances(Object[] deltaCloudInstances) {
+		for (int i = 0; i < deltaCloudInstances.length; i++) {
+			rebootInstance((DeltaCloudInstance) deltaCloudInstances[i]);
 		}
 	}
 	
-	private void rebootInstance(CVInstanceElement cvInstance) {
-		if (cvInstance != null) {
-			DeltaCloudInstance instance = (DeltaCloudInstance) cvInstance.getElement();
+	private void rebootInstance(DeltaCloudInstance instance) {
+		if (instance != null) {
 			executeInstanceAction(
-					cvInstance
+					instance
 					, DeltaCloudInstance.REBOOT
 					, DeltaCloudInstance.RUNNING
 					, CVMessages.getString(REBOOTING_INSTANCE_TITLE)
