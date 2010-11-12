@@ -18,7 +18,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -36,11 +35,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	 */
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.DeltaCloudView";
 
-	private static final String CONTEXT_MENU_ID = "popup:" + ID;
-	private static final String VIEW_MENU_ID = "menu:" + ID;
-
 	public static final String COLLAPSE_ALL = "CollapseAll.label"; //$NON-NLS-1$
-
 	private static final String HELP_CONTEXTID = "org.jboss.tools.deltacloud.ui.viewer";
 
 	private TreeViewer viewer;
@@ -76,15 +71,12 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 
 	private void hookContextMenu(Control control) {
 		IMenuManager contextMenu = UIUtils.createContextMenu(control);
-		UIUtils.registerContributionManager(CONTEXT_MENU_ID, contextMenu, control);
+		UIUtils.registerContributionManager(UIUtils.getContextMenuId(ID), contextMenu, control);
 	}
 
 	private void contributeToActionBars() {
 		// TODO: replace by declarative command
 		fillLocalToolBar(getViewSite().getActionBars().getToolBarManager());
-		IActionBars actionBars = getViewSite().getActionBars();
-		IMenuManager menuManager = actionBars.getMenuManager();
-		UIUtils.registerContributionManager(VIEW_MENU_ID, menuManager, viewer.getControl());
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
