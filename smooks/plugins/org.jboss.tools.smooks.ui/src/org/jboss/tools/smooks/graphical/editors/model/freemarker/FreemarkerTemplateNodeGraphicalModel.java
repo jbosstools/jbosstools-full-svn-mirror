@@ -38,6 +38,8 @@ import org.jboss.tools.smooks.templating.template.Mapping;
 import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
+import org.jboss.tools.smooks.templating.template.result.AddCollectionResult;
+import org.jboss.tools.smooks.templating.template.result.RemoveResult;
 import org.milyn.xml.DomUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -146,7 +148,7 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 		
 		try {
 			if (isCollectionConnection(connection)) {
-				CollectionMapping mapping = null;
+				AddCollectionResult mappingResult = null;
 
 				// if it's a directly mapping
 				if (mappingSourceNode instanceof InputDataTreeNodeModel) {
@@ -157,7 +159,7 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 					Object data = mappingSourceNode.getData();
 					String mappingString = connection.getTargetConnectionObjectRef();
 					String collectionItemName = normalizeFreemarkerVariable(DomUtils.getName((Element) sourceNode));
-					mapping = builder.addCollectionMapping(mappingString, (Element) targetNode, collectionItemName);
+					mappingResult = builder.addCollectionMapping(mappingString, (Element) targetNode, collectionItemName);
 				} else {
 					AbstractSmooksGraphicalModel beanGraph = connection.getSourceNode();
 	
@@ -175,12 +177,12 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 						}
 					}
 					BeanType javabeanModel = (BeanType) jobj;
-					mapping = builder.addCollectionMapping(javabeanModel.getBeanId(), (Element) targetNode, collectionName);
+					mappingResult = builder.addCollectionMapping(javabeanModel.getBeanId(), (Element) targetNode, collectionName);
 				}
 				
-				connection.setData(mapping);
-			}
-			if (isMappingValueConnection(connection)) {
+				connection.setData(mappingResult.getMapping());
+				((TreeNodeModel)getModelRootNode()).removeMappingConnections(mappingResult.getRemoveMappings());
+			} else if (isMappingValueConnection(connection)) {
 				String mappingString = null;
 				
 				// if it's a directly mapping
@@ -348,14 +350,16 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 		((TreeNodeModel)connection.getSourceNode()).getConnections().remove(connection);
 		getConnections().remove(connection);
 
+		RemoveResult removeResult;
 		try {
 			TemplateBuilder builder = getTemplateBuilder();
 			Object mapping = connection.getData();
 			if (builder == null || mapping == null)
 				return;
 			if (mapping instanceof Mapping) {
-				builder.removeMapping((Mapping) mapping);
+				removeResult = builder.removeMapping((Mapping) mapping);
 				changeFreemarkerContents();
+				connection.setData(removeResult);
 			}
 			super.removeTargetConnection(connection);
 		} catch (Exception e) {

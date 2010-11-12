@@ -59,6 +59,7 @@ public class XSDXMLFreeMarkerTemplateBuilderTest extends TestCase {
 				"src/org/jboss/tools/smooks/templating/template/xml/simple-person.xsd"), "person");
 		String theTemplate = builder.buildTemplate();
 
+		System.out.println(theTemplate);
 		TestUtil.assertXMLEquals(theTemplate, "expected/simple-person-01.xml", getClass());
 
 		// Now, test that we can parse the template ....
@@ -182,7 +183,7 @@ public class XSDXMLFreeMarkerTemplateBuilderTest extends TestCase {
 
 		// Remove the <dog> mapping... should reshow the <person> and <cat>
 		// nodes...
-		List<Node> showNodes = builder.removeMapping(mapping);
+		List<Node> showNodes = builder.removeMapping(mapping).getShowNodes();
 		assertEquals(2, showNodes.size());
 		assertEquals(builder.getModelNode("ns0:creature/smk:compositor/person"), showNodes.get(0));
 		assertEquals(builder.getModelNode("ns0:creature/smk:compositor/cat"), showNodes.get(1));
@@ -208,7 +209,7 @@ public class XSDXMLFreeMarkerTemplateBuilderTest extends TestCase {
 
 		// Remove the <cat> mapping... should reshow the <person> and <dog>
 		// nodes...
-		showNodes = builder.removeMapping(mapping);
+		showNodes = builder.removeMapping(mapping).getShowNodes();
 		assertEquals(2, showNodes.size());
 		assertEquals(builder.getModelNode("ns0:creature/smk:compositor/dog"), showNodes.get(0));
 		assertEquals(builder.getModelNode("ns0:creature/smk:compositor/person"), showNodes.get(1));

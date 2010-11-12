@@ -154,4 +154,25 @@ public class FreeMarkerUtil {
 			return srcPath;
 		}
 	}
+
+	public static String[] toPathTokens(String srcPath) {
+		Matcher matcher = varsPattern.matcher(srcPath);
+		if(matcher.matches()) {
+			return (matcher.group(1) + "/" + matcher.group(2)).split("/");
+		} else if(srcPath.indexOf("/") != -1) {
+			if(srcPath.startsWith("/")) {
+				return srcPath.substring(1).split("/");
+			} else {
+				return srcPath.split("/");
+			}
+		} else {
+			// TODO: Old style used a dot... need to standardize all templating code to use forward slash.
+			return srcPath.split(".");
+		}
+	}
+
+	public static boolean isVarsFormat(String srcPath) {
+		Matcher matcher = varsPattern.matcher(srcPath);
+		return matcher.matches();
+	}
 }

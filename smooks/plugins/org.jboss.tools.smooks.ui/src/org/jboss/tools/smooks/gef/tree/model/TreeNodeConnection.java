@@ -15,6 +15,7 @@ import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.templating.template.CollectionMapping;
+import org.jboss.tools.smooks.templating.template.result.RemoveResult;
 import org.milyn.xml.DomUtils;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -89,6 +90,9 @@ public class TreeNodeConnection implements IValidatableModel{
 
 	public void disconnectTarget() {
 		targetNode.removeTargetConnection(this);
+		if(data instanceof RemoveResult) {
+			((TreeNodeModel)targetNode.getModelRootNode()).removeMappingConnections(((RemoveResult)data).getRemoveMappings());
+		}
 	}
 
 	public AbstractSmooksGraphicalModel getSourceNode() {

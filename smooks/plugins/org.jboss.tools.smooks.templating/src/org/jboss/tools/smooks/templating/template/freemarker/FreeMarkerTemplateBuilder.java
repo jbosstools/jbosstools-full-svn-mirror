@@ -13,9 +13,11 @@ package org.jboss.tools.smooks.templating.template.freemarker;
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
 import org.jboss.tools.smooks.templating.template.CollectionMapping;
+import org.jboss.tools.smooks.templating.template.Mapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
+import org.jboss.tools.smooks.templating.template.result.AddCollectionResult;
 import org.jboss.tools.smooks.templating.template.util.FreeMarkerUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -46,9 +48,11 @@ public abstract class FreeMarkerTemplateBuilder extends TemplateBuilder {
 	}
 
 	@Override
-	public CollectionMapping addCollectionMapping(String srcCollectionPath, Element modelCollectionPath, String collectionItemName) throws InvalidMappingException {
+	public AddCollectionResult addCollectionMapping(String srcCollectionPath, Element modelCollectionPath, String collectionItemName) throws InvalidMappingException {
 		return super.addCollectionMapping(FreeMarkerUtil.normalizePath(srcCollectionPath), modelCollectionPath, collectionItemName);
 	}
 	
-	
+	protected String[] parseSourcePath(Mapping mapping) {
+		return FreeMarkerUtil.toPathTokens(mapping.getSrcPath());
+	}	
 }

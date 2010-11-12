@@ -96,16 +96,11 @@ public class AbstractSmooksGraphicalModel implements IConnectableNode, IValidata
 	}
 
 	public AbstractSmooksGraphicalModel getModelRootNode() {
-		
-		AbstractSmooksGraphicalModel modelRootParent = parent;
-		while(true) {
-			if(modelRootParent.getParent() == null || modelRootParent.getParent() instanceof RootModel) {
-				break;
-			}
-			modelRootParent = modelRootParent.getParent();
+		if(parent != null && !(parent instanceof RootModel)) {
+			return parent.getModelRootNode();
 		}
 		
-		return modelRootParent;
+		return this;
 	}
 
 	//

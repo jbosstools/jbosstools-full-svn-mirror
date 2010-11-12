@@ -28,9 +28,12 @@ import javax.xml.xpath.XPathExpressionException;
 import junit.framework.TestCase;
 
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
+import org.jboss.tools.smooks.templating.template.CollectionMapping;
 import org.jboss.tools.smooks.templating.template.TemplateBuilder;
 import org.jboss.tools.smooks.templating.template.TestUtil;
+import org.jboss.tools.smooks.templating.template.ValueMapping;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
+import org.jboss.tools.smooks.templating.template.result.AddCollectionResult;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -75,5 +78,21 @@ public class XMLSampleXMLFreeMarkerTemplateBuilderTest extends TestCase {
 		// Now, test that we can parse the template ....
 		XMLFreeMarkerTemplateBuilder builder2 = new XMLFreeMarkerTemplateBuilder(builder.getModelBuilder(), theTemplate);
 		assertEquals(theTemplate, builder2.buildTemplate());
+	}
+
+	public void testXMLOrder03() throws IOException, ParserConfigurationException, TemplateBuilderException, SAXException, ModelBuilderException, XPathExpressionException {
+		TemplateBuilder builder = TestUtil.createXMLSampleFreeMarkerTemplateBuilder(new File("src/org/jboss/tools/smooks/templating/template/xml/order-status-01.xml"));
+		
+		Node identNode = builder.getModelNode("ns0:OrderStatusResult/ns0:OrderStatusResultHeader/ns0:BuyerParty/ns1:PartyID/ns1:Ident");		
+		Element resultStatusCollectionNode = (Element) builder.getModelNode("ns0:OrderStatusResult/ns0:ListOfOrderStatusResultDetail/ns0:OrderStatusResultDetail");		
+		Node buyerRefNumberNode = builder.getModelNode("ns0:OrderStatusResult/ns0:ListOfOrderStatusResultDetail/ns0:OrderStatusResultDetail/ns0:OrderStatusResultReference/ns0:BuyerReferenceNumber");		
+
+		builder.addValueMapping("order.status.id", identNode);
+		ValueMapping refNumMapping = builder.addValueMapping("order.orderItemsStatusList.buyerRefNumber", buyerRefNumberNode);
+
+		// Adding the collection mapping after the refNumMapping should result in an instruction (in the collectionMapping) 
+		// to remove the refNumMapping...
+		AddCollectionResult collectionMapping = builder.addCollectionMapping("order.orderItemsStatusList", resultStatusCollectionNode, "itemStatus");
+		assertTrue(collectionMapping.getRemoveMappings().contains(refNumMapping));
 	}
 }

@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
 import org.jboss.tools.smooks.templating.model.ModelBuilder;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
 /**

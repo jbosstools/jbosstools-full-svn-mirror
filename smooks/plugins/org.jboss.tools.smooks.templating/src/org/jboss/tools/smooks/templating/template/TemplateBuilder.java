@@ -40,10 +40,13 @@ import org.jboss.tools.smooks.templating.model.ModelNodeResolver;
 import org.jboss.tools.smooks.templating.template.exception.InvalidMappingException;
 import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
 import org.jboss.tools.smooks.templating.template.exception.UnmappedCollectionNodeException;
+import org.jboss.tools.smooks.templating.template.result.AddCollectionResult;
+import org.jboss.tools.smooks.templating.template.result.RemoveResult;
 import org.jboss.tools.smooks.templating.template.util.FreeMarkerUtil;
 import org.milyn.xml.DomUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -159,26 +162,29 @@ public abstract class TemplateBuilder {
 	 * @throws InvalidMappingException
 	 *             Invalid mapping.
 	 */
-	public CollectionMapping addCollectionMapping(String srcCollectionPath, Element modelCollectionPath, String collectionItemName)
-			throws InvalidMappingException {
+	public AddCollectionResult addCollectionMapping(String srcCollectionPath, Element modelCollectionPath, String collectionItemName) throws InvalidMappingException {
 		asserValidMappingNode(modelCollectionPath);
 		assertCollectionsMapped(modelCollectionPath.getParentNode());
 
 		CollectionMapping mapping = new CollectionMapping(srcCollectionPath, modelCollectionPath, collectionItemName);
 		mappings.add(mapping);
 		addHideNodes(modelCollectionPath, mapping);
+		
+		List<Mapping> removeMappings = new ArrayList<Mapping>();
+		findChildMappings(modelCollectionPath, mapping, parseSourcePath(mapping), removeMappings);
+		
+		AddCollectionResult result = new AddCollectionResult(mapping, removeMappings);		
 
-		return mapping;
+		return result;
 	}
 
 	/**
-	 * Remove the specified mapping
+	 * Remove the specified mapping.
 	 * 
-	 * @param mapping
-	 *            The mapping instance to be removed.
-	 * @return A list of hidden Nodes that should be shown again.
+	 * @param mapping The mapping instance to be removed.
+	 * @return The remove mapping result.
 	 */
-	public List<Node> removeMapping(Mapping mapping) {
+	public RemoveResult removeMapping(Mapping mapping) {
 		List<Node> showNodes = new ArrayList<Node>();
 
 		mappings.remove(mapping);
@@ -194,7 +200,13 @@ public abstract class TemplateBuilder {
 			}
 		}
 
-		return showNodes;
+		// If the mapping is a collection mapping, we need to remove all child mappings...
+		List<Mapping> removeMappings = new ArrayList<Mapping>();
+		if(mapping instanceof CollectionMapping) {
+			findChildMappings((Element)mapping.getMappingNode(), (CollectionMapping)mapping, parseSourcePath(mapping), removeMappings);
+		}
+
+		return new RemoveResult(removeMappings, showNodes);
 	}
 
 	private void addHideNodes(Node modelPath, Mapping mapping) {
@@ -212,6 +224,65 @@ public abstract class TemplateBuilder {
 			}
 			parent = ModelBuilder.getParentNode(parent);
 		}
+	}
+
+	private void findChildMappings(Element modelPath, CollectionMapping collectionMapping, String[] srcPathTokens, List<Mapping> mappings) {		
+		// Find any Mappings to nodes inside the collection mapping node,
+		// where that mapping's source path is also inside the mapping source path of 
+		// the supplied collection mapping...
+		
+		// Check the attributes...
+		NamedNodeMap attributes = modelPath.getAttributes();
+		int attribCount = attributes.getLength();
+		for(int i = 0; i < attribCount; i++) {
+			Node attribNode = attributes.item(i);
+			Mapping attribMapping = getMapping(attribNode);
+			
+			if(attribMapping != null && attribMapping != collectionMapping) {
+				String[] attribMappingSrcPathTokens = parseSourcePath(attribMapping);
+				if(isChildSourceMapping(attribMappingSrcPathTokens, srcPathTokens)) {
+					mappings.add(attribMapping);
+				}
+			}
+		}
+		
+		// Check the child elements, drilling down recursively ...
+		NodeList childNodes = modelPath.getChildNodes();
+		int childCount = childNodes.getLength();
+		for(int i = 0; i < childCount; i++) {
+			Node childNode = childNodes.item(i);
+			
+			if(childNode.getNodeType() == Node.ELEMENT_NODE) {
+				Mapping childMapping = getMapping(childNode);
+				
+				if(childMapping != null && childMapping != collectionMapping) {
+					String[] childMappingSrcPathTokens = parseSourcePath(childMapping);
+					
+					if(childMappingSrcPathTokens.length > 0 && childMappingSrcPathTokens[0].equals(collectionMapping.getCollectionItemName())) {
+						mappings.add(childMapping);
+					} else if(isChildSourceMapping(childMappingSrcPathTokens, srcPathTokens)) {
+						mappings.add(childMapping);
+					}
+				}
+				
+				// Drill down recursively...
+				findChildMappings((Element) childNode, collectionMapping, srcPathTokens, mappings);
+			}
+		}
+	}
+
+	private boolean isChildSourceMapping(String[] childSrcPathTokens, String[] srcPathTokens) {
+		if(childSrcPathTokens.length < srcPathTokens.length) {
+			return false;
+		}
+
+		for(int i = 0; i < srcPathTokens.length; i++) {
+			if(!srcPathTokens[i].equals(childSrcPathTokens[i])) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	private void hideUnmappedPaths(Element compositor, Mapping mapping) {
@@ -423,6 +494,7 @@ public abstract class TemplateBuilder {
 	}
 
 	protected void addValueMapping(Node modelNode, String dollarVariable) throws TemplateBuilderException, InvalidMappingException {
+		// TODO: Need to get all FreeMarker specific code out of here and pushed down into the FreeMarkerTemplateBuilder class
 		String srcPath = FreeMarkerUtil.extractJavaPath(dollarVariable);
 		String rawFormatting = FreeMarkerUtil.extractRawFormatting(dollarVariable);
 		
@@ -442,7 +514,7 @@ public abstract class TemplateBuilder {
 	 * @return The fully resolved path.
 	 */
 	public String resolveMappingSrcPath(Mapping mapping) {
-		String[] srcPathTokens = mapping.getSrcPath().split("/");
+		String[] srcPathTokens = parseSourcePath(mapping);
 		
 		if(srcPathTokens.length > 1) {
 			CollectionMapping parentCollection = findParentCollection(srcPathTokens[0], mapping);
@@ -461,6 +533,10 @@ public abstract class TemplateBuilder {
 		
 		// No parent collection, so just pass back the path...
 		return mapping.getSrcPath();
+	}
+
+	protected String[] parseSourcePath(Mapping mapping) {
+		return mapping.getSrcPath().split("/");
 	}
 
 	public CollectionMapping findParentCollection(String collectionName, Mapping mapping) {
