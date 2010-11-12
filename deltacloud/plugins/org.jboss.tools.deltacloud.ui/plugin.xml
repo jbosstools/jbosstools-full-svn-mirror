@@ -368,6 +368,8 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.destroyinstance"
+               disabledIcon="icons/destroyd.gif"
+               icon="icons/destroy.gif"
                label="%command.destroyinstance.label"
                style="push"
                tooltip="%command.destroyinstance.tooltip">
@@ -450,9 +452,31 @@
          </command>
  	  </menuContribution>
    </extension>
-
-   <!-- DeltaCloudView context menu ================================== -->
-   <extension point="org.eclipse.ui.menus">
+   <!-- DeltaCloudView toolbar ================================== -->
+   <extension
+         id="org.jboss.tools.deltacloud.ui.views.DeltaCloudView"
+         name="DeltaCloudView commands"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="toolbar:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
+			<separator
+				name="connections"
+				visible="true" />
+	  </menuContribution>
+      <!-- instance commands -->
+      <menuContribution
+            allPopups="true"
+            locationURI="toolbar:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=connections">	
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.newconnection"
+               icon="icons/newdelta.gif"
+               label="%command.newconnection.label"
+               style="push"
+               tooltip="%command.newconnection.tooltip">
+         </command>
+ 	  </menuContribution>
+	  <!-- DeltaCloudView context menu ================================== -->
       <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
@@ -499,14 +523,12 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.destroyinstance"
+               disabledIcon="icons/destroyd.gif"
+               icon="icons/destroy.gif"
                label="%command.destroyinstance.label"
                style="push"
                tooltip="%command.destroyinstance.tooltip">
          </command>
-		 <separator
-                  name="additions"
-                  visible="true">
-         </separator>
     </menuContribution>
     <menuContribution
             allPopups="true"
@@ -514,6 +536,7 @@
 		 <!-- connection commands -->
          <command
                commandId="org.jboss.tools.deltacloud.ui.newconnection"
+               icon="icons/newdelta.gif"
                label="%command.newconnection.label"
                style="push"
                tooltip="%command.newconnection.tooltip">
@@ -606,21 +629,7 @@
                tooltip="%command.filterinstances.tooltip">
          </command>
       </menuContribution>
-	  <!-- DeltaCloudView local menu ========================================= -->
-      <menuContribution
-            allPopups="true"
-            locationURI="menu:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
-         <!-- connection commands -->
-         <command
-               commandId="org.jboss.tools.deltacloud.ui.newconnection"
-               label="%command.newconnection.label"
-               style="push"
-               tooltip="%command.newconnection.tooltip">
-         </command>
-		 <separator
-                  name="additions"
-                  visible="true" />
-      </menuContribution>
+
     </extension>
     
 	<!-- Commands ========================================= -->
