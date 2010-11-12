@@ -13,24 +13,26 @@ package org.jboss.tools.deltacloud.ui.adapter;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 public class DeltaCloudImageAdapterFactory implements IAdapterFactory {
 
 	@SuppressWarnings("rawtypes")
-	private static final Class[] ADAPTERS = new Class[]{
-		DeltaCloud.class
+	private static final Class[] ADAPTERS = new Class[] {
+			DeltaCloud.class,
+			DeltaCloudImage.class
 	};
-	
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adaptableObject instanceof DeltaCloudImage) {
-			System.err.println("DeltaCloudImageAdapterFactory#getAdapter for " + adapterType);
-			return ((DeltaCloudImage) adaptableObject).getDeltaCloud();
-		} else {
-			return UIUtils.adapt(adaptableObject, DeltaCloud.class);
+			if (adapterType == DeltaCloud.class) {
+				return ((DeltaCloudImage) adaptableObject).getDeltaCloud();
+			} else if (adapterType == DeltaCloudImage.class) {
+				return adaptableObject;
+			}
 		}
+		return null;
 	}
 
 	@SuppressWarnings("rawtypes")

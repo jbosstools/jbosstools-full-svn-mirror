@@ -164,6 +164,20 @@
 				</with>
 			</activeWhen>
 	</handler>
+    <handler
+		class="org.jboss.tools.deltacloud.ui.commands.RefreshImagesHandler"
+        commandId="org.eclipse.ui.file.refresh">
+			<activeWhen>
+				<with
+					variable="selection">
+					<iterate>
+						<instanceof
+						     value="org.jboss.tools.deltacloud.core.DeltaCloudImage">
+						</instanceof>
+					</iterate>
+				</with>
+			</activeWhen>
+	</handler>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -265,9 +279,8 @@
                <with
                      variable="selection">
 					<iterate operator="and">
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVImageElement">
-	               		</instanceof>
+						<adapt
+				             type="org.jboss.tools.deltacloud.core.DeltaCloudImage" />
 	               	</iterate>
                </with>
          </activeWhen>
@@ -386,6 +399,7 @@
                tooltip="%command.filterinstances.tooltip">
          </command>
  	  </menuContribution>
+ 	  <!-- refresh -->
       <menuContribution
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=additions">	
@@ -629,9 +643,60 @@
                tooltip="%command.filterinstances.tooltip">
          </command>
       </menuContribution>
-
     </extension>
-    
+
+   <extension point="org.eclipse.ui.menus">
+   <!-- ImageView context menu ================================== -->
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.ImageView">
+			<separator
+				name="images"
+				visible="true" />
+			<separator
+				name="filters"
+				visible="true" />
+			<separator
+				name="additions"
+				visible="true" />
+	  </menuContribution>
+	  <menuContribution
+	            allPopups="true"
+	            locationURI="popup:org.jboss.tools.deltacloud.ui.views.ImageView?after=images">	
+	        <!-- image commands -->
+	         <command
+	               commandId="org.jboss.tools.deltacloud.ui.createinstance"
+	               icon="icons/instance.gif"
+	               label="%command.createinstance.label"
+	               style="push"
+	               tooltip="%command.createinstance.tooltip">
+	         </command>
+	  </menuContribution>
+	  <!-- refresh images -->
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.ImageView?after=additions">	
+ 	        <command
+               commandId="org.eclipse.ui.file.refresh"
+               label="%command.refreshimages.label"
+               style="push"
+               tooltip="%command.refreshimages.tooltip">
+            </command>
+ 	  </menuContribution>
+ 	  <!-- filter images -->
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.ImageView?after=filters">	
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.filterimages"
+               label="%command.filterimages.label"
+               style="push"
+               tooltip="%command.filterimages.tooltip">
+         </command>
+ 	  </menuContribution>
+ 	  
+	</extension>
+
 	<!-- Commands ========================================= -->
     <extension
          point="org.eclipse.ui.commands">
@@ -718,6 +783,9 @@
         <adapter
               type="org.jboss.tools.deltacloud.ui.views.InstancePropertySource">
         </adapter>
+        <adapter
+              type="org.jboss.tools.deltacloud.core.DeltaCloudImage">
+        </adapter>
      </factory>
      <factory
            adaptableType="org.jboss.tools.deltacloud.core.DeltaCloudInstance"
@@ -731,6 +799,9 @@
            class="org.jboss.tools.deltacloud.ui.adapter.DeltaCloudImageAdapterFactory">
         <adapter
               type="org.jboss.tools.deltacloud.core.DeltaCloud">
+        </adapter>
+        <adapter
+              type="org.jboss.tools.deltacloud.core.DeltaCloudImage">
         </adapter>
      </factory>
   </extension>

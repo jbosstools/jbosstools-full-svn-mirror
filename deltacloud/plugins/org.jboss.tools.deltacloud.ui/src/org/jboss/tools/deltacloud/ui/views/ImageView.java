@@ -11,21 +11,13 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -41,13 +33,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -58,16 +45,14 @@ import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
-import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
-import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.osgi.service.prefs.Preferences;
 
 public class ImageView extends ViewPart implements ICloudManagerListener, IImageListListener {
 
+	public static final String ID = "org.jboss.tools.deltacloud.ui.views.ImageView";
+
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
-	private final static String LAUNCH_INSTANCE = "CreateInstance.label"; //$NON-NLS-1$
-	private static final String REFRESH = "Refresh.label"; //$NON-NLS-1$
-	private static final String FILTER = "Filter.label"; //$NON-NLS-1$
 	private static final String FILTERED_LABEL = "Filtered.label"; //$NON-NLS-1$
 	private static final String FILTERED_TOOLTIP = "FilteredImages.tooltip"; //$NON-NLS-1$	
 	private TableViewer viewer;
@@ -81,10 +66,6 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	private DeltaCloud currCloud;
 
 	private ImageViewLabelAndContentProvider contentProvider;
-
-	private Action refreshAction;
-	private Action filterAction;
-	private Action launchAction;
 
 	private ImageView parentView;
 
@@ -113,7 +94,6 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 						viewer.setInput(currCloud);
 						currCloud.addImageListListener(parentView);
 						viewer.refresh();
-
 					}
 
 				});
@@ -198,23 +178,13 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
+		createColumns(tableLayout, table);
 		contentProvider = new ImageViewLabelAndContentProvider();
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(contentProvider);
 		ImageComparator comparator = new ImageComparator(0);
 		viewer.setComparator(comparator);
-
-		for (int i = 0; i < ImageViewLabelAndContentProvider.Column.getSize(); ++i) {
-			ImageViewLabelAndContentProvider.Column c =
-					ImageViewLabelAndContentProvider.Column.getColumn(i);
-			TableColumn tc = new TableColumn(table, SWT.NONE);
-			if (i == 0)
-				table.setSortColumn(tc);
-			tc.setText(CVMessages.getString(c.name()));
-			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
-			tc.addSelectionListener(new ColumnListener(i, viewer));
-		}
-		table.setSortDirection(SWT.NONE);
+		getSite().setSelectionProvider(viewer);
 
 		if (currCloud != null) {
 			currCloud.removeImageListListener(parentView);
@@ -252,12 +222,24 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
-		makeActions();
 		hookContextMenu();
 		hookSelection();
-		contributeToActionBars();
 
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
+	}
+
+	private void createColumns(TableColumnLayout tableLayout, Table table) {
+		for (int i = 0; i < ImageViewLabelAndContentProvider.Column.getSize(); ++i) {
+			ImageViewLabelAndContentProvider.Column c =
+					ImageViewLabelAndContentProvider.Column.getColumn(i);
+			TableColumn tc = new TableColumn(table, SWT.NONE);
+			if (i == 0)
+				table.setSortColumn(tc);
+			tc.setText(CVMessages.getString(c.name()));
+			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
+			tc.addSelectionListener(new ColumnListener(i, viewer));
+		}
+		table.setSortDirection(SWT.NONE);
 	}
 
 	private void hookSelection() {
@@ -270,22 +252,8 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	}
 
 	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				ImageView.this.fillContextMenu(manager);
-			}
-		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
-	}
-
-	private void contributeToActionBars() {
-		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
-		fillLocalToolBar(bars.getToolBarManager());
+		IMenuManager contextMenu = UIUtils.createContextMenu(viewer.getTable());
+		UIUtils.registerContributionManager(UIUtils.getContextMenuId(ID), contextMenu, viewer.getTable());
 	}
 
 	private void handleSelection() {
@@ -293,93 +261,9 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		selectedElement = (DeltaCloudImage) selection.getFirstElement();
 	}
 
-	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(refreshAction);
-		manager.add(filterAction);
-	}
-
-	private void fillContextMenu(IMenuManager manager) {
-		manager.add(launchAction);
-		// Other plug-ins can contribute there actions here
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-	}
-
-	private void fillLocalToolBar(IToolBarManager manager) {
-		// TODO
-	}
-
-	private void makeActions() {
-		refreshAction = new Action() {
-			public void run() {
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						if (currCloud != null) {
-							currCloud.loadImages();
-						}
-					}
-
-				});
-				t.start();
-			}
-		};
-		refreshAction.setText(CVMessages.getString(REFRESH));
-		refreshAction.setToolTipText(CVMessages.getString(REFRESH));
-		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
-
-		filterAction = new Action() {
-			public void run() {
-				Display.getDefault().asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						Shell shell = viewer.getControl().getShell();
-						IWizard wizard = new ImageFilter(currCloud);
-						WizardDialog dialog = new WizardDialog(shell, wizard);
-						dialog.create();
-						dialog.open();
-						if (!currCloud.getImageFilter().toString().equals(IImageFilter.ALL_STRING))
-							filterLabel.setVisible(true);
-						else
-							filterLabel.setVisible(false);
-					}
-
-				});
-			}
-		};
-		filterAction.setText(CVMessages.getString(FILTER));
-		filterAction.setToolTipText(CVMessages.getString(FILTER));
-
-		launchAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				final DeltaCloudImage image = (DeltaCloudImage) ((IStructuredSelection) selection).getFirstElement();
-				Display.getDefault().asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						Shell shell = viewer.getControl().getShell();
-						IWizard wizard = new NewInstance(currCloud, image);
-						WizardDialog dialog = new WizardDialog(shell, wizard);
-						dialog.create();
-						dialog.open();
-					}
-
-				});
-			}
-		};
-		launchAction.setText(CVMessages.getString(LAUNCH_INSTANCE));
-		launchAction.setToolTipText(CVMessages.getString(LAUNCH_INSTANCE));
-	}
-
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
+		viewer.getTable().setFocus();
 	}
 
 	private void initializeCloudSelector() {

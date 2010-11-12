@@ -23,9 +23,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.ui.views.CVCategoryElement;
-import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
-import org.jboss.tools.deltacloud.ui.views.CVImageElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance;
 
@@ -38,20 +35,17 @@ public class CreateInstanceHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			CVImageElement cvImage = UIUtils.getFirstAdaptedElement(selection, CVImageElement.class);
-			createInstance(cvImage, HandlerUtil.getActiveShell(event));
+			DeltaCloudImage deltaCloudImage = UIUtils.getFirstAdaptedElement(selection, DeltaCloudImage.class);
+			createInstance(deltaCloudImage, HandlerUtil.getActiveShell(event));
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void createInstance(CVImageElement cvImage, Shell shell) {
-		if (cvImage != null) {
-			DeltaCloudImage image = (DeltaCloudImage) cvImage.getElement();
-			CVCategoryElement images = (CVCategoryElement) cvImage.getParent();
-			CVCloudElement cloudElement = (CVCloudElement) images.getParent();
-			DeltaCloud cloud = (DeltaCloud) cloudElement.getElement();
-			IWizard wizard = new NewInstance(cloud, image);
+	private void createInstance(DeltaCloudImage deltaCloudImage, Shell shell) {
+		if (deltaCloudImage != null) {
+			DeltaCloud deltaCloud = deltaCloudImage.getDeltaCloud();
+			IWizard wizard = new NewInstance(deltaCloud, deltaCloudImage);
 			WizardDialog dialog = new WizardDialog(shell, wizard);
 			dialog.create();
 			dialog.open();
