@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IEvaluationService;
@@ -194,7 +193,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
-		makeActions();
 		hookContextMenu(viewer.getTable());
 		getSite().setSelectionProvider(viewer);
 
@@ -256,12 +254,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private void hookContextMenu(Control control) {
 		IMenuManager contextMenu = UIUtils.createContextMenu(control);
 		UIUtils.registerContributionManager(UIUtils.getContextMenuId(ID), contextMenu, control);
-	}
-
-	private void makeActions() {
-		IActionBars actionBars = getViewSite().getActionBars();
-		IMenuManager menuManager = actionBars.getMenuManager();
-		UIUtils.registerContributionManager(UIUtils.getViewMenuId(ID), menuManager, viewer.getControl());
 	}
 
 	private void initializeCloudSelector() {
