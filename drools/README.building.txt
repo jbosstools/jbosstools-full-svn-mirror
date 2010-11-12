@@ -5,5 +5,3 @@ $ ant
 Then run maven:
 
 $ mvn clean install
-
-
