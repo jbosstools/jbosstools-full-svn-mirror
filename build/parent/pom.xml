@@ -816,6 +816,26 @@
 				</repository>
 			</repositories>
 		</profile>
+
+		<profile>
+			<id>jbosstools-nightly-tests-trunk</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-nightly-tests-trunk</id>
+					<url>http://download.jboss.org/jbosstools/builds/staging/jbosstools-tests/all/repo/ </url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
 	</profiles>
 
 	<repositories>
