@@ -100,7 +100,10 @@ public class InputDataTreeNodeModel extends TreeNodeModel {
 			if (((IFreemarkerTemplateModel) targetData).isHidden(builder)) {
 				return false;
 			}
-
+			List<TreeNodeConnection> exsitingConnection = targetNode.getTargetConnections();
+			if (!exsitingConnection.isEmpty()){
+				return false;
+			}
 			if (targetData instanceof FreemarkerTemplateXMLModel) {
 				FreemarkerTemplateXMLModel targetDataModel = (FreemarkerTemplateXMLModel) targetData;
 				if (!targetDataModel.getXMLNodeChildren().isEmpty()) {
@@ -119,9 +122,7 @@ public class InputDataTreeNodeModel extends TreeNodeModel {
 				}
 			}
 			
-			List<TreeNodeConnection> exsitingConnection = targetNode.getTargetConnections();
-			if (!exsitingConnection.isEmpty())
-				return false;
+			
 			for (Iterator<?> iterator = exsitingConnection.iterator(); iterator.hasNext();) {
 				TreeNodeConnection treeNodeConnection = (TreeNodeConnection) iterator.next();
 				if (treeNodeConnection.getSourceNode() == this) {
