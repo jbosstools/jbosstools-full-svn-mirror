@@ -5,6 +5,9 @@
 
 	<!-- https://jira.jboss.org/browse/JBIDE-7344 from JBoss Tools 3.2.0.Beta2 onward, use this: -->
 	<property name="drools.zip" value="drools-5.2.0.SNAPSHOT-eclipse-all.zip" />
+	<property name="drools.URL" value="http://hudson.qa.jboss.com/hudson/job/drools-stable-tag/lastStableBuild/artifact/trunk/target" />
+
+	<!-- or use Drools' latest nightly from trunk -->
 	<property name="drools.URL" value="http://hudson.qa.jboss.com/hudson/job/drools/lastStableBuild/artifact/trunk/target" />
 
 	<!-- https://jira.jboss.org/browse/JBIDE-7344 up to JBoss Tools 3.2.0.Beta1, use this: -->
