@@ -53,26 +53,9 @@ public class PerformInstanceActionThread extends Job {
 			// To handle the user starting a new action when we haven't
 			// confirmed the last one yet,
 			// cancel the previous job and then go on performing this action
-			Job job = cloud.getActionJob(id);
-			if (job != null) {
-				job.cancel();
-				try {
-					job.join();
-				} catch (InterruptedException e) {
-					// do nothing, this is ok
-				}
-			}
+			cancelPreviousJob(id);
 			cloud.performInstanceAction(id, action);
-			while (instance != null && expectedState != null
-					&& !(instance.getState().equals(expectedState))
-					&& !(instance.getState().equals(DeltaCloudInstance.TERMINATED))) {
-				instance = cloud.refreshInstance(id);
-				try {
-					Thread.sleep(300);
-				} catch (InterruptedException e) {
-					break;
-				}
-			}
+			waitForInstanceState(id);
 		} catch (DeltaCloudException e) {
 			final IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 			Activator.log(status);
@@ -92,5 +75,30 @@ public class PerformInstanceActionThread extends Job {
 			pm.done();
 		}
 		return Status.OK_STATUS;
+	}
+
+	private void cancelPreviousJob(String id) {
+		Job job = cloud.getActionJob(id);
+		if (job != null) {
+			job.cancel();
+			try {
+				job.join();
+			} catch (InterruptedException e) {
+				// do nothing, this is ok
+			}
+		}
+	}
+
+	private void waitForInstanceState(String id) {
+		while (instance != null && expectedState != null
+				&& !(instance.getState().equals(expectedState))
+				&& !(instance.getState().equals(DeltaCloudInstance.TERMINATED))) {
+			instance = cloud.refreshInstance(id);
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				break;
+			}
+		}
 	}
 }
