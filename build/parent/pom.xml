@@ -139,7 +139,8 @@
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
 					<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
-					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties} -Dusage_reporting_enabled=false</argLine>
+					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties}
+						-Dusage_reporting_enabled=false</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests (?) -->
@@ -578,7 +579,8 @@
 			</activation>
 			<properties>
 				<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
-				<systemProperties combine.children="append"> -d32 -Dosgi.arch=x86 -XstartOnFirstThread </systemProperties>
+				<systemProperties combine.children="append"> -d32
+					-Dosgi.arch=x86 -XstartOnFirstThread </systemProperties>
 			</properties>
 		</profile>
 
@@ -863,16 +865,18 @@
 		<repository>
 			<id>jboss-releases-repository</id>
 			<name>JBoss Releases Repository</name>
-			<uniqueVersion>false</uniqueVersion>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-			<layout>default</layout>
+			<url>https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<snapshotRepository>
 			<id>jboss-snapshots-repository</id>
-			<name>JBoss Snapshot Repository</name>
-			<uniqueVersion>false</uniqueVersion>
+			<name>JBoss Snapshots Repository</name>
 			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-			<layout>default</layout>
 		</snapshotRepository>
+		<!-- <repository> <id>jboss-releases-repository</id> <name>JBoss Releases 
+			Repository</name> <uniqueVersion>false</uniqueVersion> <url>https://repository.jboss.org/nexus/content/repositories/releases/</url> 
+			<layout>default</layout> </repository> <snapshotRepository> <id>jboss-snapshots-repository</id> 
+			<name>JBoss Snapshot Repository</name> <uniqueVersion>false</uniqueVersion> 
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url> 
+			<layout>default</layout> </snapshotRepository> -->
 	</distributionManagement>
 </project>
