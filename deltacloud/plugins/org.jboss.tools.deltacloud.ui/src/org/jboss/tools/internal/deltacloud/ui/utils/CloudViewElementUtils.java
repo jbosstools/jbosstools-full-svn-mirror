@@ -8,9 +8,11 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.internal.deltacloud.ui.utils;
 
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
+import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
 
 public class CloudViewElementUtils {
 

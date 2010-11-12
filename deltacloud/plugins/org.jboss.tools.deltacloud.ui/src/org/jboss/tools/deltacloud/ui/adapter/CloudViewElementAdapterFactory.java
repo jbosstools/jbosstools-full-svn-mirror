@@ -19,7 +19,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.views.CVImageElement;
 import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
-import org.jboss.tools.deltacloud.ui.views.CloudViewElementUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 
 public class CloudViewElementAdapterFactory implements IAdapterFactory {
 

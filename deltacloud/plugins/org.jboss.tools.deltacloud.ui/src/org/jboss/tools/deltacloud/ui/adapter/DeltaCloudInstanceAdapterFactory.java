@@ -26,7 +26,6 @@ public class DeltaCloudInstanceAdapterFactory implements IAdapterFactory {
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
 		if (adaptableObject instanceof DeltaCloudInstance) {
-			System.err.println("DeltaCloudInstanceAdapterFactory#getAdapter for " + adapterType);
 			return ((DeltaCloudInstance) adaptableObject).getDeltaCloud();
 		} else {
 			return UIUtils.adapt(adaptableObject, DeltaCloud.class);

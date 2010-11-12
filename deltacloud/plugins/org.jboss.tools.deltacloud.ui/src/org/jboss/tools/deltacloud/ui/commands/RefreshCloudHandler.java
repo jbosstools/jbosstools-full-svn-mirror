@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
-import org.jboss.tools.deltacloud.ui.views.CloudViewElementUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**

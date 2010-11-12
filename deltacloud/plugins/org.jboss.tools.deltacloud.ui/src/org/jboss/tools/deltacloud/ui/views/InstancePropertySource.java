@@ -17,6 +17,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 
 public class InstancePropertySource implements IPropertySource {
 
