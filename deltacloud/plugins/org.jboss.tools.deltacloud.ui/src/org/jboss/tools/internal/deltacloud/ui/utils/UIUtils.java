@@ -47,6 +47,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class UIUtils {
 
+	private static final String CONTEXT_MENU_PREFIX = "popup:";
+	private static final String VIEW_MENU_PREFIX = "menu:";
+	
 	private UIUtils() {
 	}
 
@@ -257,6 +260,14 @@ public class UIUtils {
 				menuService.releaseContributions((ContributionManager) contributionManager);
 			}
 		});
+	}
+	
+	public static String getContextMenuId(String viewId) {
+		return new StringBuffer(CONTEXT_MENU_PREFIX).append(viewId).toString();
+	}
+	
+	public static String getViewMenuId(String viewId) {
+		return new StringBuffer(VIEW_MENU_PREFIX).append(viewId).toString();
 	}
 
 	/**
