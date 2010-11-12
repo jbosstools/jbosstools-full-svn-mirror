@@ -137,17 +137,17 @@
          </activeWhen>
       </handler>
       <handler
-            class="org.jboss.tools.deltacloud.ui.commands.RefreshCloudHandler"
-            commandId="org.eclipse.ui.file.refresh">
-         <activeWhen>
-               <with
-                     variable="selection">
+			class="org.jboss.tools.deltacloud.ui.commands.RefreshCloudHandler"
+			commandId="org.eclipse.ui.file.refresh">
+			<activeWhen>
+				<with
+					variable="selection">
 					<iterate>
 	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	                		value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
 	               		</instanceof>
 	               	</iterate>
-               </with>
+				</with>
          </activeWhen>
 	</handler>
     <handler
@@ -156,9 +156,9 @@
 			<activeWhen>
 				<with
 					variable="selection">
-						<iterate>
-							<instanceof
-							     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+					<iterate>
+						<instanceof
+						     value="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
 						</instanceof>
 					</iterate>
 				</with>
