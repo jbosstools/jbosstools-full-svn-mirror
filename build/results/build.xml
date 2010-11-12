@@ -172,6 +172,7 @@ COMPONENT = ${COMPONENT}</echo>
 				</copy>
 				<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.txt" style="download.xsl" />
 				<xslt in="${output.dir}/download.xml" out="${output.dir}/buildResults.html" style="buildResults.xsl" />
+				<copy todir="${output.dir}" file="buildResults.css"/>
 				<delete file="${output.dir}/download.xml" />
 			</then>
 			<elseif>
