@@ -166,6 +166,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 		}
 		
 		nsIDOMElement anyElement = visualDocument.createElement(tagForDisplay);
+		nsIDOMElement anyElementName = visualDocument.createElement(tagForDisplay);
 		
 		VpeCreatorInfo creatorInfo = new VpeCreatorInfo(anyElement);
 
@@ -174,10 +175,10 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 			img.setAttribute("src","any.gif");  //$NON-NLS-1$//$NON-NLS-2$
 			img.setAttribute("width","16"); //$NON-NLS-1$ //$NON-NLS-2$
 			img.setAttribute("height","16"); //$NON-NLS-1$ //$NON-NLS-2$
-			anyElement.appendChild(img);
+			anyElementName.appendChild(img);
 		}
 		
-		anyElement.setAttribute(HTML.ATTR_CLASS, CLASS_TAG_CAPTION);
+		anyElementName.setAttribute(HTML.ATTR_CLASS, CLASS_TAG_CAPTION);
 		
 		String styleString = getExprValue(pageContext, styleExpr, sourceNode);
 
@@ -192,16 +193,16 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 //			styleString =  "border: 1px solid green;" +styleString; //$NON-NLS-1$
 //		}
 		
-		anyElement.setAttribute(HTML.ATTR_STYLE, styleString);
+		anyElementName.setAttribute(HTML.ATTR_STYLE, styleString);
 		
 		if (propertyCreators != null) {
 			for (int i = 0; i < propertyCreators.size(); i++) {
 				VpeCreator creator = (VpeCreator)propertyCreators.get(i);
 				if (creator != null) {
-					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, anyElement, visualNodeMap);
+					VpeCreatorInfo info = creator.create(pageContext, (Element) sourceNode, visualDocument, anyElementName, visualNodeMap);
 					if (info != null && info.getVisualNode() != null) {
 						nsIDOMAttr attr = (nsIDOMAttr)info.getVisualNode();
-						anyElement.setAttributeNode(attr);
+						anyElementName.setAttributeNode(attr);
 					}
 				}
 			}
@@ -209,7 +210,12 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 
 		String valueStr = getExprValue(pageContext, valueExpr, sourceNode);
 		nsIDOMNode valueNode = visualDocument.createTextNode(valueStr);
-		anyElement.appendChild(valueNode);
+		/*
+		 * 'Any tag name' will be placed in the first child of the root visual element.
+		 * If there are other children -- they'll be placed after tag's name
+		 */
+		anyElementName.appendChild(valueNode);
+		anyElement.appendChild(anyElementName);
 		creatorInfo.addDependencySet(dependencySet);
 		return creatorInfo;
 	}
