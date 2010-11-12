@@ -14,12 +14,16 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -36,16 +40,28 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			if (isSingleInstanceSelected(selection)) {
-				DeltaCloudInstance cvInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
-				stopInstance(cvInstance);
-			} else {
-				stopWithDialog((IStructuredSelection) selection);
+		try {
+			if (selection instanceof IStructuredSelection) {
+				if (isSingleInstanceSelected(selection)) {
+					DeltaCloudInstance instance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+					stopInstance(instance);
+				} else {
+					stopWithDialog((IStructuredSelection) selection);
+				}
 			}
+			return Status.OK_STATUS;
+		} catch (Exception e) {
+			String message = getInstanceNames(selection);
+			IStatus status = StatusFactory.getInstance(
+					IStatus.ERROR,
+					Activator.PLUGIN_ID,
+					e.getMessage(),
+					e);
+			ErrorDialog.openError(HandlerUtil.getActiveShell(event),
+					CVMessages.getString("StopInstancesDialogError.title"),
+					CVMessages.getFormattedString("StopInstancesDialogError.msg", message), status);
+			return status;
 		}
-
-		return Status.OK_STATUS;
 	}
 
 	@SuppressWarnings("unchecked")

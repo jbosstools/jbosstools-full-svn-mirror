@@ -14,12 +14,16 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.PerformDestroyInstanceActionThread;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
@@ -38,16 +42,29 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			if (isSingleInstanceSelected(selection)) {
-				DeltaCloudInstance cvInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
-				destroyInstance(cvInstance);
-			} else {
-				destroyWithDialog((IStructuredSelection) selection);
+		try {
+			if (selection instanceof IStructuredSelection) {
+				if (isSingleInstanceSelected(selection)) {
+					DeltaCloudInstance cvInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+					destroyInstance(cvInstance);
+				} else {
+					destroyWithDialog((IStructuredSelection) selection);
+				}
 			}
-		}
 
-		return Status.OK_STATUS;
+			return Status.OK_STATUS;
+		} catch (Exception e) {
+			String message = getInstanceNames(selection);
+			IStatus status = StatusFactory.getInstance(
+					IStatus.ERROR,
+					Activator.PLUGIN_ID,
+					e.getMessage(),
+					e);
+			ErrorDialog.openError(HandlerUtil.getActiveShell(event),
+					CVMessages.getString("DestroyInstancesDialogError.title"),
+					CVMessages.getFormattedString("DestroyInstancesDialogError.msg", message), status);
+			return status;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -67,11 +84,11 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 			destroyInstance((DeltaCloudInstance) cvInstances[i]);
 		}
 	}
-	
+
 	private void destroyInstance(DeltaCloudInstance instance) {
 		if (instance != null) {
 			PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(
-					instance.getDeltaCloud(), 
+					instance.getDeltaCloud(),
 					instance,
 					CVMessages.getString(DESTROYING_INSTANCE_TITLE),
 					CVMessages.getFormattedString(DESTROYING_INSTANCE_MSG, new String[] { instance.getName() }));

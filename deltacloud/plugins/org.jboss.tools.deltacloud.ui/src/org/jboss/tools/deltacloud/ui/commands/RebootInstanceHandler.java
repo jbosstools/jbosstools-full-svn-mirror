@@ -14,12 +14,16 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -37,16 +41,29 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			if (isSingleInstanceSelected(selection)) {
-				DeltaCloudInstance cvInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
-				rebootInstance(cvInstance);
-			} else {
-				rebootWithDialog((IStructuredSelection)selection);
+		try {
+			if (selection instanceof IStructuredSelection) {
+				if (isSingleInstanceSelected(selection)) {
+					DeltaCloudInstance cvInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+					rebootInstance(cvInstance);
+				} else {
+					rebootWithDialog((IStructuredSelection) selection);
+				}
 			}
-		}
 
-		return Status.OK_STATUS;
+			return Status.OK_STATUS;
+		} catch (Exception e) {
+			String message = getInstanceNames(selection);
+			IStatus status = StatusFactory.getInstance(
+					IStatus.ERROR,
+					Activator.PLUGIN_ID,
+					e.getMessage(),
+					e);
+			ErrorDialog.openError(HandlerUtil.getActiveShell(event),
+					CVMessages.getString("RebootInstancesDialogError.title"),
+					CVMessages.getFormattedString("RebootInstancesDialogError.msg", message), status);
+			return status;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,13 +77,13 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 			rebootInstances(dialog.getResult());
 		}
 	}
-	
+
 	private void rebootInstances(Object[] deltaCloudInstances) {
 		for (int i = 0; i < deltaCloudInstances.length; i++) {
 			rebootInstance((DeltaCloudInstance) deltaCloudInstances[i]);
 		}
 	}
-	
+
 	private void rebootInstance(DeltaCloudInstance instance) {
 		if (instance != null) {
 			executeInstanceAction(
