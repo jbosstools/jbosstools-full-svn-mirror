@@ -17,7 +17,7 @@
 	   </mediaobject>
 	</figure>
 	<para>
-	    To add a new file extention type or folder name to be filtered from publishing, click on the corresponding <guibutton>New</guibutton> button, enter the details and click the <guibutton>Apply</guibutton> button so that your preference changes are saved.
+	    To add a new file extension type or folder name to be filtered from publishing, click on the corresponding <guibutton>New</guibutton> button, enter the details and click the <guibutton>Apply</guibutton> button so that your preference changes are saved.
 	 </para>
 	 <para>
 	    Removing an entry is conducted by selecting an entry from one of the lists in the <guilabel>Preferences</guilabel> dialog and clicking on the <guibutton>Remove</guibutton> button. Ensure that you click the <guibutton>Apply</guibutton> button so that your preference changes are saved.
@@ -25,12 +25,9 @@
 	 <para>
 	    As the <guilabel>Preferences</guilabel> dialog lists file types and folders that will never be published to a repository, it follows that those listed will never be unpublished. If you decide to never have a certain file type or folder publishable, though it has been in the past, ensure that all instances of these are unpublished before setting any preferences for the file type or folder.
 	 </para>
-	 <para>
-	    If you do not ensure all file types and folders that are never to be published are unpublished before setting the prefences, then you will be left with instances of these in your ModeShape repositories that cannot be unpublished unless your preferences are changed.
-	 </para>
 	 <note>
 	    <para>
-	       Publishing folders or files of a certain file type before setting any preferences inhibiting the publishing of these types can be a way of ensuring that these files will never be removed (unpublished) from your ModeShape repositories by accident or someone else.
+	       Publishing folders or files of a certain file type before setting any preferences inhibiting the publishing of these file types, can be a way of ensuring that you will never remove these files (unpublish) from your ModeShape repositories by accident. However since preference settings are only local to your working environment, in a multi-user ModeShape repository someone else could still remove these files.
 	    </para>
 	 </note>
 </section>

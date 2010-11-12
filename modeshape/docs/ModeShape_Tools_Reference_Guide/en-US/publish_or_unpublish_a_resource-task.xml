@@ -5,9 +5,9 @@
 ]>-->
 
 <section id="sect-ModeShape_Tools_Reference_Guide-Tasks-Publish_or_unpublish_a_resource">
-   <title>Publish or unpublish a resorce</title>
+   <title>Publish or unpublish a resource</title>
 	 <para>
-	    Having registered your ModeShape instances in <xref linkend="sect-ModeShape_Tools_Reference_Guide-Tasks-Register_a_new_repository"/>, you can now publish files to the repositories.
+	    Having registered your ModeShape server instances in <xref linkend="sect-ModeShape_Tools_Reference_Guide-Tasks-Register_a_repository_on_a_new_server"/>, you can now publish files to the repositories on these servers.
 	</para>
 	<para>
 	    Right-clicking on one or more projects, folders, or files in your Eclipse workspace will display the context menu for those files. This menu will now include a ModeShape submenu that allows you to publish or unpublish the resources to your ModeShape repository.
@@ -24,7 +24,7 @@
 	   </mediaobject>
 	</figure>
 	<para>
-	   To assist with the publishing or unpublishing of your resource, a wizard will appear when either of these options are selected.
+	   The ModeShape publishing wizard is displayed when you select <guimenuitem>publish</guimenuitem> or <guimenuitem>unpublish</guimenuitem> from the context menu.
         </para>
 	<figure id="ModeShape_publishing_wizard">
 	   <title>ModeShape publishing wizard</title>
@@ -35,8 +35,35 @@
 	   </mediaobject>
 	</figure>
 	<para>
-	   The publishing wizard (shown in <xref linkend="ModeShape_publishing_wizard"/>) and unpublishing wizard allows you to choose which ModeShape repository to interact with and displays the selected files the operation will be performed on. When a project or folder is selected all their included files are acted upon. 
+	   The publishing wizard (shown in <xref linkend="ModeShape_publishing_wizard"/>) allows you to choose which ModeShape repository to interact with and displays the selected files the operation will be performed on. When a project or folder is selected all their included files are acted upon. 
         </para>
+	<warning>
+	    <para>
+		  When performing a publish operation, make sure you are aware of the following:
+	    </para>
+	    <itemizedlist>
+	       <listitem>
+		     <para>
+			   If you publish a file to a ModeShape repository where a version of the same file has previously been published to the repository by you or someone else, the publishing action will overwrite the file currently in the repository.
+		     </para>
+	       </listitem>
+	    </itemizedlist>
+	    <para>
+	       When performing an unpublish operation, make sure you are aware of the following:
+	    </para>
+	    <itemizedlist>
+		  <listitem>
+			<para>
+			      If you are interacting with a multi-user repository, the version of the file you are unpublishing may have been updated by someone else after you.
+			</para>
+		  </listitem>
+		  <listitem>
+			<para>
+			      It is important to be positive a file is no longer necessary when unpublishing as the file in question will be deleted from the repository with this operation.
+			</para>
+		  </listitem>
+	    </itemizedlist>
+	 </warning>
 	<para>
 	   When publishing or unpublishing files, you can see the operation output in the <guilabel>Console</guilabel> view. The type of information that you can view includes the repository where the operation took place, how long the operation took, the outcome for each file included in the operation, a hyperlink that allows you to open the file in an Eclipse editor, and a ModeShape repository workspace URL.
         </para>
