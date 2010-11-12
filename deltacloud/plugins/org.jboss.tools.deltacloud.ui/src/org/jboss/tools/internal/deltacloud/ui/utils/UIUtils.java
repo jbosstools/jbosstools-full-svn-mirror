@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
@@ -117,6 +120,17 @@ public class UIUtils {
 				&& getFirstAdaptedElement(selection, expectedClass) != null;
 	}
 
+	public static <T> Collection<T> adapt(Collection<?> objects, Class<T> expectedClass) {
+		ArrayList<T> adaptedObjects = new ArrayList<T>();
+		for (Object object : objects) {
+			T adaptedObject = adapt(object, expectedClass);
+			if (adaptedObject != null) {
+				adaptedObjects.add(adaptedObject);
+			}
+		}
+		return adaptedObjects;
+	}
+	
 	/**
 	 * Adapts the given object to the given type. Returns <code>null</code> if
 	 * the given adaption is not possible. Adaption is tried by casting and by adapting it.

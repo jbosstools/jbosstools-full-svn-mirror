@@ -71,7 +71,7 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 	private void destroyWithDialog(IStructuredSelection selection) {
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, (List<DeltaCloudInstance>) selection.toList()
+					, UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class)
 					, CVMessages.getString(DESTROY_INSTANCE_TITLE)
 					, CVMessages.getString(DESTROY_INSTANCE_MSG));
 		if (Dialog.OK == dialog.open()) {

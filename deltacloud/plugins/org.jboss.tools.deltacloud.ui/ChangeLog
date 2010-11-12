@@ -1,5 +1,11 @@
 2010-11-12  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/UIUtils.java (adapt): 
+	* src/org/jboss/tools/deltacloud/ui/commands/StartInstanceHandler.java (startWithDialog): 
+	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java (startWithDialog): 
+	* src/org/jboss/tools/deltacloud/ui/commands/DestroyInstanceHandler.java (startWithDialog): 
+	* src/org/jboss/tools/deltacloud/ui/commands/RebootInstanceHandler.java (startWithDialog): 
+	[JBIDE-7499] fixed ClassCastException by adapting objects to DeltaCloudInstance
 	* src/org/jboss/tools/internal/deltacloud/ui/utils/StringUtils.java (getFormattedString): 
 	* src/org/jboss/tools/deltacloud/ui/commands/AbstractInstanceHandler.java (getInstanceNames): 
 	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java (execute): 

@@ -70,7 +70,7 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 	private void rebootWithDialog(IStructuredSelection selection) {
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, (List<DeltaCloudInstance>) selection.toList()
+					, UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class)
 					, CVMessages.getString(REBOOT_INSTANCE_TITLE)
 					, CVMessages.getString(REBOOT_INSTANCE_MSG));
 		if (Dialog.OK == dialog.open()) {

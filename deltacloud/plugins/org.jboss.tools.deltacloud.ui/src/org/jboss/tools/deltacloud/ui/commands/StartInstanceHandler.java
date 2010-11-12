@@ -70,7 +70,7 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 	private void startWithDialog(IStructuredSelection selection) {
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, (List<DeltaCloudInstance>) selection.toList()
+					, UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class)
 					, CVMessages.getString(START_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(START_INSTANCES_DIALOG_MSG));
 		if (Dialog.OK == dialog.open()) {
