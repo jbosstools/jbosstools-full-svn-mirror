@@ -130,12 +130,19 @@ public class UIUtils {
 	public static <T> T adapt(Object object, Class<T> expectedClass) {
 		if (object == null) {
 			return null;
-		} else if (expectedClass.isAssignableFrom(object.getClass())) {
-			return (T) object;
+		} 
+		
+		Object adaptedObject = null;
+		if (expectedClass.isAssignableFrom(object.getClass())) {
+			adaptedObject = object;
 		} else if (object instanceof IAdaptable) {
-			return (T) ((IAdaptable) object).getAdapter(expectedClass);
+			adaptedObject = ((IAdaptable) object).getAdapter(expectedClass);
+		} 
+		
+		if (adaptedObject != null) {
+			return (T) adaptedObject;
 		} else {
-			return (T) Platform.getAdapterManager().loadAdapter(object, expectedClass.getName());
+			return (T) Platform.getAdapterManager().loadAdapter(object, expectedClass.getName());			
 		}
 	}
 

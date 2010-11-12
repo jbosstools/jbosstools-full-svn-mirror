@@ -23,8 +23,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
-import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
 
@@ -37,21 +35,15 @@ public class FilterImagesHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			CloudViewElement cloudViewElement = UIUtils.getFirstAdaptedElement(selection, CloudViewElement.class);
-			createImagesFilter(cloudViewElement, HandlerUtil.getActiveShell(event));
+			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			createImagesFilter(cloud, HandlerUtil.getActiveShell(event));
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void createImagesFilter(CloudViewElement element, final Shell shell) {
-		if (element != null) {
-			while (element != null && !(element	 instanceof CVCloudElement)) {
-				element = (CloudViewElement) element.getParent();
-			}
-			if (element != null) {
-				CVCloudElement cve = (CVCloudElement) element;
-				final DeltaCloud cloud = (DeltaCloud) cve.getElement();
+	private void createImagesFilter(final DeltaCloud cloud, final Shell shell) {
+		if (cloud != null) {
 				Display.getDefault().asyncExec(new Runnable() {
 					@Override
 					public void run() {
@@ -61,7 +53,6 @@ public class FilterImagesHandler extends AbstractHandler implements IHandler {
 						dialog.open();
 					}
 				});
-			}
 
 		}
 	}

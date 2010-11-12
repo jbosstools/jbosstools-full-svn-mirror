@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 
 public class CVInstanceElement extends CloudViewElement {
 
@@ -22,15 +21,5 @@ public class CVInstanceElement extends CloudViewElement {
 	@Override
 	public IPropertySource getPropertySource() {
 		return new InstancePropertySource(this, getElement());
-	}
-	
-	@SuppressWarnings("rawtypes")
-	@Override
-	public Object getAdapter(Class adapter) {
-		if (adapter == DeltaCloudInstance.class) {
-			return getElement();
-		} 
-
-		return super.getAdapter(adapter);
 	}
 }
