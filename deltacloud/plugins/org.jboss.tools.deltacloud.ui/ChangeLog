@@ -1,8 +1,9 @@
 2010-11-12  André Dietisheim  <adietish@redhat.com>
 
+	* plugin.xml: 
+	[JBIDE-7572] added <enabledWhen> to all handlers but the "new connection" handler
 	* src/org/jboss/tools/deltacloud/ui/commands/CreateInstanceHandler.java: 
 	[JBIDE-7558] corrected to use DeltaCloudImage (used CVImageElement before) so that it may be used in DeltaCloudView and ImageView
-	* plugin.xml: 
 	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java:
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshImagesHandler.java: 
 	[JBIDE-7558] added refresh images handler, added context menu to ImageView, removed old action code

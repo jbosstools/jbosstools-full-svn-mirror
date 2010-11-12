@@ -121,11 +121,17 @@
 				        </iterate>
                </with>
          </activeWhen>
+		<enabledWhen>
+			<with
+				variable="selection">
+				<count value="+" />
+			</with>
+		</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.DisconnectCloudHandler"
             commandId="org.eclipse.ui.edit.delete">
-         <activeWhen>
+			<activeWhen>
                <with
                      variable="selection">
 					<iterate>
@@ -134,7 +140,13 @@
 	               		</instanceof>
 	               	</iterate>
                </with>
-         </activeWhen>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
       </handler>
       <handler
 			class="org.jboss.tools.deltacloud.ui.commands.RefreshCloudHandler"
@@ -185,7 +197,7 @@
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.StartInstanceHandler"
             commandId="org.jboss.tools.deltacloud.ui.startinstance">
-			<enabledWhen>
+			<activeWhen>
                <with
                  variable="selection">
 					<iterate operator="and">
@@ -198,12 +210,18 @@
 						</and>
 	               	</iterate>
                </with>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
 			</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.StopInstanceHandler"
             commandId="org.jboss.tools.deltacloud.ui.stopinstance">
-         <activeWhen>
+			<activeWhen>
                <with
                  variable="selection">
 					<iterate operator="and">
@@ -216,12 +234,18 @@
 						</and>
 	               	</iterate>
                </with>
-         </activeWhen>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.RebootInstanceHandler"
             commandId="org.jboss.tools.deltacloud.ui.rebootinstance">
-         <activeWhen>
+			<activeWhen>
                <with
                  variable="selection">
 					<iterate operator="and">
@@ -234,12 +258,18 @@
 						</and>
 	               	</iterate>
                </with>
-         </activeWhen>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.DestroyInstanceHandler"
             commandId="org.jboss.tools.deltacloud.ui.destroyinstance">
-         <activeWhen>
+			<activeWhen>
                <with
                  variable="selection">
 					<iterate operator="and">
@@ -252,21 +282,33 @@
 						</and>
 	               	</iterate>
                </with>
-         </activeWhen>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceHandler2"
             commandId="org.jboss.tools.deltacloud.ui.createinstance2">
-         <activeWhen>
-               <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
-	               		</instanceof>
-	               	</iterate>
-               </with>
-         </activeWhen>
+			<activeWhen>
+	               <with
+	                     variable="selection">
+						<iterate>
+		               		<instanceof
+		                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+		               		</instanceof>
+		               	</iterate>
+	               </with>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
       </handler>
    </extension>
    <extension
@@ -284,6 +326,12 @@
 	               	</iterate>
                </with>
          </activeWhen>
+		<enabledWhen>
+			<with
+				variable="selection">
+				<count value="+" />
+			</with>
+		</enabledWhen>
       </handler>
    </extension>
    <extension
@@ -292,7 +340,7 @@
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.FilterImagesHandler"
             commandId="org.jboss.tools.deltacloud.ui.filterimages">
-         <activeWhen>
+			<activeWhen>
                <with
                      variable="selection">
 					<iterate operator="and">
@@ -301,12 +349,18 @@
 			               	</adapt>
 	               	</iterate>
                </with>
-         </activeWhen>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.FilterInstancesHandler"
             commandId="org.jboss.tools.deltacloud.ui.filterinstances">
-         <activeWhen>
+			<activeWhen>
                <with
                      variable="selection">
 					<iterate operator="and">
@@ -315,7 +369,13 @@
 			               	</adapt>
 	               	</iterate>
                </with>
-         </activeWhen>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
       </handler>
    </extension>
    <!-- Show in remote system explorer handler  -->
@@ -324,7 +384,7 @@
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.ShowInRemoteSystemExplorerHandler"
             commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer">
-         <activeWhen>
+			<activeWhen>
                <with
                      variable="selection">
 					<iterate>
@@ -333,7 +393,13 @@
 	               		</instanceof>
 	               	</iterate>
                </with>
-         </activeWhen>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
       </handler>
    </extension>
    <!-- InstanceView context menu ================================== -->
@@ -465,12 +531,7 @@
                tooltip="%command.showInRemoteSysExplorer.tooltip">
          </command>
  	  </menuContribution>
-   </extension>
    <!-- DeltaCloudView toolbar ================================== -->
-   <extension
-         id="org.jboss.tools.deltacloud.ui.views.DeltaCloudView"
-         name="DeltaCloudView commands"
-         point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="true"
             locationURI="toolbar:org.jboss.tools.deltacloud.ui.views.DeltaCloudView">
@@ -489,7 +550,7 @@
                style="push"
                tooltip="%command.newconnection.tooltip">
          </command>
- 	  </menuContribution>
+	    </menuContribution>
 	  <!-- DeltaCloudView context menu ================================== -->
       <menuContribution
             allPopups="true"
