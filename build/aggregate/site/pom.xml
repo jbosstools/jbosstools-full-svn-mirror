@@ -20,7 +20,7 @@
                 <inputRepo2>http://download.jboss.org/jbosstools/builds/staging/pi4soa-3.1.x</inputRepo2>
                 <inputRepo3>http://download.jboss.org/jbosstools/builds/staging/jbosstools-teiid-designer</inputRepo3>
                 <inputRepo4>http://download.jboss.org/jbosstools/builds/staging/jbosstools-drools-5.2</inputRepo4>
-                <inputRepo5>http://download.jboss.org/jbosstools/builds/staging/savara-1.1.x</inputRepo5>
+                <inputRepo5>http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1.x</inputRepo5>
 		<inputRepos>1,2,3,4,5</inputRepos>
 	</properties>
 
