@@ -113,9 +113,9 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 
 	private Image getStatusIcon(String status) {
 		if (DeltaCloudInstance.STOPPED.equals(status)) {
-			return SWTImagesFactory.get(SWTImagesFactory.IMG_STOP);
+			return SWTImagesFactory.get(SWTImagesFactory.IMG_STOPPED);
 		} else if (DeltaCloudInstance.RUNNING.equals(status)) {
-			return SWTImagesFactory.get(SWTImagesFactory.IMG_START);
+			return SWTImagesFactory.get(SWTImagesFactory.IMG_RUNNING);
 		} else if (DeltaCloudInstance.BOGUS.equals(status)) {
 			return PlatformUI.getWorkbench().getSharedImages().
 					getImage(ISharedImages.IMG_DEC_FIELD_WARNING);

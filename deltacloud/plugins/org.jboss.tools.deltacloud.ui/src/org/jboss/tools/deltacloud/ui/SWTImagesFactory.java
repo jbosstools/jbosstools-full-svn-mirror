@@ -41,12 +41,14 @@ public class SWTImagesFactory {
 	public static final String IMG_COLLAPSE_ALL= NAME_PREFIX + "collapseall.gif"; //$NON-NLS-1$
 	public static final String IMG_DELTA= NAME_PREFIX + "delta.gif"; //$NON-NLS-1$
 	public static final String IMG_DELTA_LARGE= NAME_PREFIX + "delta-large.gif"; //$NON-NLS-1$
-	public static final String IMG_START= NAME_PREFIX + "running.gif"; //$NON-NLS-1$
-	public static final String IMG_STARTD = NAME_PREFIX + "runningd.gif"; //$NON-NLS-1$
-	public static final String IMG_STOP = NAME_PREFIX + "stopped.gif"; //$NON-NLS-1$
-	public static final String IMG_STOPD = NAME_PREFIX + "stoppedd.gif"; //$NON-NLS-1$
+	public static final String IMG_START= NAME_PREFIX + "run.gif"; //$NON-NLS-1$
+	public static final String IMG_STARTD = NAME_PREFIX + "rund.gif"; //$NON-NLS-1$
+	public static final String IMG_STOP = NAME_PREFIX + "stop.gif"; //$NON-NLS-1$
+	public static final String IMG_STOPD = NAME_PREFIX + "stopd.gif"; //$NON-NLS-1$
+	public static final String IMG_STOPPED = NAME_PREFIX + "stopped.gif"; //$NON-NLS-1$
 	public static final String IMG_REBOOT = NAME_PREFIX + "reboot.gif"; //$NON-NLS-1$
 	public static final String IMG_REBOOTD = NAME_PREFIX + "rebootd.gif"; //$NON-NLS-1$
+	public static final String IMG_RUNNING= NAME_PREFIX + "running.gif"; //$NON-NLS-1$
 	public static final ImageDescriptor DESC_CLOUD= createManaged("", IMG_CLOUD);
 	public static final ImageDescriptor DESC_FOLDER= createManaged("", IMG_FOLDER);
 	public static final ImageDescriptor DESC_INSTANCE= createManaged("", IMG_INSTANCE);
@@ -56,8 +58,10 @@ public class SWTImagesFactory {
 	public static final ImageDescriptor DESC_DELTA_LARGE= createManaged("", IMG_DELTA_LARGE);
 	public static final ImageDescriptor DESC_START= createManaged("", IMG_START);
 	public static final ImageDescriptor DESC_STARTD= createManaged("", IMG_STARTD);
+	public static final ImageDescriptor DESC_RUNNING= createManaged("", IMG_RUNNING);
 	public static final ImageDescriptor DESC_STOP= createManaged("", IMG_STOP);
 	public static final ImageDescriptor DESC_STOPD= createManaged("", IMG_STOPD);
+	public static final ImageDescriptor DESC_STOPPED= createManaged("", IMG_STOPPED);
 	public static final ImageDescriptor DESC_REBOOT= createManaged("", IMG_REBOOT);
 	public static final ImageDescriptor DESC_REBOOTD= createManaged("", IMG_REBOOTD);
 

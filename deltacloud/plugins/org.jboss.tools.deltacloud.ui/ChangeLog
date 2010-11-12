@@ -1,3 +1,9 @@
+2010-11-12  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (getStatusIcon): 
+	* src/org/jboss/tools/deltacloud/ui/SWTImagesFactory.java: 
+	[JBIDE-7566] renamed running.gif to run.gif, stopped to stop.gif, added running.gif and stopped.gif
+
 2010-11-11  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (ColumnListener.widgetSelected): 
