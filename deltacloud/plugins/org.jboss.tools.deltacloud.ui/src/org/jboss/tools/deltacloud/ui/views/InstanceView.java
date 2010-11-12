@@ -55,9 +55,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	 */
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.InstanceView";
 
-	private static final String CONTEXT_MENU_ID = "popup:" + ID;
-	private static final String VIEW_MENU_ID = "menu:" + ID;
-
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
 
 	private static final String FILTERED_LABEL = "Filtered.label"; //$NON-NLS-1$
@@ -258,13 +255,13 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 
 	private void hookContextMenu(Control control) {
 		IMenuManager contextMenu = UIUtils.createContextMenu(control);
-		UIUtils.registerContributionManager(CONTEXT_MENU_ID, contextMenu, control);
+		UIUtils.registerContributionManager(UIUtils.getContextMenuId(ID), contextMenu, control);
 	}
 
 	private void makeActions() {
 		IActionBars actionBars = getViewSite().getActionBars();
 		IMenuManager menuManager = actionBars.getMenuManager();
-		UIUtils.registerContributionManager(VIEW_MENU_ID, menuManager, viewer.getControl());
+		UIUtils.registerContributionManager(UIUtils.getViewMenuId(ID), menuManager, viewer.getControl());
 	}
 
 	private void initializeCloudSelector() {
