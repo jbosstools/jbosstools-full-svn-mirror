@@ -8,7 +8,7 @@
 			description="Apache's BPEL 2.0 execution engine - Runtime"
        		vendor="Apache"
        		version="1.0"
-       		class="org.eclipse.jst.server.generic.core.internal.GenericServerRuntime">
+       		class="org.eclipse.bpel.apache.ode.runtime.OdeServerRuntime">
        		<moduleType
 				types="bpel.module"
          		versions="1.1, 2.0"/>

@@ -3,10 +3,14 @@ package org.eclipse.bpel.ui.wizards;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.bpel.runtimes.IBPELModuleFacetConstants;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.Templates;
 import org.eclipse.bpel.ui.Templates.Template;
+import org.eclipse.bpel.runtimes.IBPELRuntimeDelegate;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -19,6 +23,14 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wst.common.project.facet.core.IFacetedProject;
+import org.eclipse.wst.common.project.facet.core.IProjectFacet;
+import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
+import org.eclipse.wst.common.project.facet.core.runtime.IRuntime;
+import org.eclipse.wst.server.core.IRuntimeType;
+import org.eclipse.wst.server.core.IRuntimeWorkingCopy;
+import org.eclipse.wst.server.core.ServerCore;
+import org.eclipse.wst.server.core.model.RuntimeDelegate;
 
 public class WSDLCustomPage extends WizardPage {
 
@@ -64,6 +76,34 @@ public class WSDLCustomPage extends WizardPage {
 		setDescription(Messages.NewFileWizard_WSDLCustomPage_Description);
 		setImageDescriptor(BPELUIPlugin.INSTANCE
 				.getImageDescriptor(IBPELUIConstants.ICON_WIZARD_BANNER));
+		
+		
+		// TODO: test code - implement this when we switch over to generic runtime support
+		// for deployment to jboss/riftsaw and others...
+		try {
+			IProject project = ((NewFileWizard)getWizard()).getProject();
+			IFacetedProject facetedProject = null;
+			facetedProject = ProjectFacetsManager.create(project);
+			if (facetedProject != null 
+					&& ProjectFacetsManager.isProjectFacetDefined(IBPELModuleFacetConstants.BPEL20_PROJECT_FACET)) 
+			{
+				IProjectFacet projectFacet = ProjectFacetsManager.getProjectFacet(IBPELModuleFacetConstants.BPEL20_PROJECT_FACET);
+				IRuntime rt = facetedProject.getPrimaryRuntime();
+				String id = rt.getProperty("id");
+				org.eclipse.wst.server.core.IRuntime rt2 = ServerCore.findRuntime(id);
+				IRuntimeType rtt = rt2.getRuntimeType();
+				RuntimeDelegate delegate = (RuntimeDelegate) rt2.getAdapter(RuntimeDelegate.class);
+				if (delegate instanceof IBPELRuntimeDelegate) {
+					// get port, server address and deploy directory
+					// to build service name for WSDL
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
 	}
 
 	public void createControl(Composite parent) {
