@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
@@ -73,13 +74,19 @@ public class PerformInstanceActionThread extends Job {
 				}
 			}
 		} catch (DeltaCloudException e) {
-			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+			final IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 			Activator.log(status);
-			ErrorDialog.openError(
-					UIUtils.getActiveShell(),
-					CVMessages.getString(INSTANCEACTION_ERROR_TITLE),
-					CVMessages.getFormattedString(INSTANCEACTION_ERROR_MESSAGE, action, instance.getName()),
-					status);
+			Display.getDefault().syncExec(new Runnable() {
+				@Override
+				public void run() {
+					ErrorDialog.openError(
+							UIUtils.getActiveShell(),
+							CVMessages.getString(INSTANCEACTION_ERROR_TITLE),
+							CVMessages.getFormattedString(INSTANCEACTION_ERROR_MESSAGE, action, instance.getName()),
+							status);
+				}
+			});
+
 		} finally {
 			cloud.removeActionJob(id, this);
 			pm.done();
