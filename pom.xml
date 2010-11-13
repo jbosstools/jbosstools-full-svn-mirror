@@ -8,8 +8,9 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>build/parent</module>
-		<!--module>build/libs</module-->
+		<module>build/libs</module>
 		<module>build</module>
+		<module>build/reports/emma-coverage</module>
 	</modules>
 
 </project>
