@@ -555,18 +555,6 @@
 		</profile>
 
 		<profile>
-			<id>emma-coverage</id>
-			<!--activation>
-				<property>
-					<name>coverage</name>
-				</property>
-			</activation-->
-			<modules>
-				<module>reports/emma-coverage</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>gwt</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
