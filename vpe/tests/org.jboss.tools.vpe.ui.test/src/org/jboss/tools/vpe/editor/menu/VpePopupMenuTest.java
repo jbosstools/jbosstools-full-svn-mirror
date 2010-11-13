@@ -55,7 +55,7 @@ public class VpePopupMenuTest extends VpeTest {
 			VpeUIMessages.INSERT_INTO,
 			VpeUIMessages.REPLACE_WITH,
 			VpeUIMessages.STRIP_TAG_MENU_ITEM, 
-			JstUIMessages.EXTERNALIZE_STRINGS
+//			JstUIMessages.EXTERNALIZE_STRINGS
 	};
 	private static final Point CODE_POINT = new Point(14, 25);
 
