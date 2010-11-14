@@ -30,7 +30,7 @@ public class VpeUiTests {
 		suite.addTestSuite(VpeResourcesDialogTest.class);
 		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
 		suite.addTestSuite(CustomSashFormTest.class);
-		suite.addTestSuite(VpePopupMenuTest.class);
+		//suite.addTestSuite(VpePopupMenuTest.class);
 		suite.addTestSuite(VpeEditAnyDialogTest.class);
 		
 		return new VpeTestSetup(suite);
