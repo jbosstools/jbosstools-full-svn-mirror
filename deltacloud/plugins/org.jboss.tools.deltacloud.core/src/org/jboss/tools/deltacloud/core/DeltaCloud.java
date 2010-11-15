@@ -235,14 +235,19 @@ public class DeltaCloud {
 	}
 
 	public DeltaCloudImage[] notifyImageListListeners() {
-		DeltaCloudImage[] images = cloneImages();
+		DeltaCloudImage[] images = cloneImagesArray();
 		notifyImageListListeners(images);
 		return images;
 	}
 
-	private DeltaCloudImage[] cloneImages() {
+	private DeltaCloudImage[] cloneImagesArray() {
 		DeltaCloudImage[] imageArray = new DeltaCloudImage[images.size()];
 		return images.toArray(imageArray);
+	}
+
+	private DeltaCloudInstance[] cloneInstancesArray() {
+		DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
+		return instances.toArray(instanceArray);
 	}
 
 	public void notifyImageListListeners(DeltaCloudImage[] array) {
@@ -485,7 +490,7 @@ public class DeltaCloud {
 			if (images == null) {
 				return loadImages();
 			}
-			return cloneImages();
+			return cloneImagesArray();
 		}
 	}
 
@@ -539,9 +544,9 @@ public class DeltaCloud {
 			if (instance != null) {
 				DeltaCloudInstance newInstance = new DeltaCloudInstance(this, instance);
 				newInstance.setGivenName(name);
+				getCurrInstances(); // make sure instances are initialized
 				instances.add(newInstance);
-				DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
-				instanceArray = instances.toArray(instanceArray);
+				DeltaCloudInstance[] instanceArray = cloneInstancesArray();
 				notifyInstanceListListeners(instanceArray);
 				return newInstance;
 			}
