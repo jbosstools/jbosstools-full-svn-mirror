@@ -352,7 +352,7 @@ public class DeltaCloud {
 		}
 	}
 
-	public void addReplaceInstance(DeltaCloudInstance instance) {
+	public void replaceInstance(DeltaCloudInstance instance) {
 		String instanceId = instance.getId();
 		if (instance != null) {
 			boolean found = false;
