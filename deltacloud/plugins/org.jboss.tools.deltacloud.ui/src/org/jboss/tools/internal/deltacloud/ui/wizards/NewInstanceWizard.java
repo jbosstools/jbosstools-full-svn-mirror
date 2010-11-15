@@ -108,7 +108,7 @@ public class NewInstanceWizard extends Wizard {
 				} catch (Exception e) {
 					// do nothing
 				} finally {
-					cloud.addReplaceInstance(instance);
+					cloud.replaceInstance(instance);
 					cloud.removeActionJob(instanceId, this);
 					String hostname = instance.getHostName();
 					Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
