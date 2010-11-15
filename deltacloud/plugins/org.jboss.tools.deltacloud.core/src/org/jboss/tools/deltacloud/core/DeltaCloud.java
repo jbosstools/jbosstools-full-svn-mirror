@@ -82,7 +82,7 @@ public class DeltaCloud {
 	}
 
 	public void editCloud(String name, String url, String username, String passwd, String type)
-			throws MalformedURLException {
+			throws MalformedURLException, DeltaCloudException {
 		this.client = new DeltaCloudClientImpl(url, username, passwd); //$NON-NLS-1$
 		this.url = url;
 		this.name = name;
@@ -147,7 +147,7 @@ public class DeltaCloud {
 		return instanceFilter;
 	}
 
-	public void updateInstanceFilter(String ruleString) {
+	public void updateInstanceFilter(String ruleString) throws Exception {
 		String rules = getInstanceFilter().toString();
 		instanceFilter = createInstanceFilter(ruleString);
 		if (!rules.equals(ruleString)) {
@@ -177,7 +177,7 @@ public class DeltaCloud {
 		return imageFilter;
 	}
 
-	public void updateImageFilter(String ruleString) {
+	public void updateImageFilter(String ruleString) throws Exception {
 		String rules = getImageFilter().toString();
 		this.imageFilter = createImageFilter(ruleString);
 		if (!rules.equals(ruleString)) {
@@ -201,17 +201,9 @@ public class DeltaCloud {
 		return imageFilter;
 	}
 
-	public void loadChildren() {
-		Thread t = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				loadImages();
-				loadInstances();
-			}
-
-		});
-		t.start();
+	public void loadChildren() throws DeltaCloudException {
+		loadImages();
+		loadInstances();
 	}
 
 	public void save() {
@@ -240,6 +232,17 @@ public class DeltaCloud {
 
 	public void removeImageListListener(IImageListListener listener) {
 		imageListeners.remove(listener);
+	}
+
+	public DeltaCloudImage[] notifyImageListListeners() {
+		DeltaCloudImage[] images = cloneImages();
+		notifyImageListListeners(images);
+		return images;
+	}
+
+	private DeltaCloudImage[] cloneImages() {
+		DeltaCloudImage[] imageArray = new DeltaCloudImage[images.size()];
+		return images.toArray(imageArray);
 	}
 
 	public void notifyImageListListeners(DeltaCloudImage[] array) {
@@ -437,40 +440,52 @@ public class DeltaCloud {
 		return profileArray;
 	}
 
+	public DeltaCloudImage loadImage(String imageId) throws DeltaCloudException {
+		try {
+			Image image = client.listImages(imageId);
+			DeltaCloudImage deltaCloudImage = addImage(image);
+			return deltaCloudImage;
+		} catch (DeltaCloudClientException e) {
+			throw new DeltaCloudException(e);
+		}
+	}
+
 	/**
 	 * Loads the available images from the server and stores them locally.
 	 * Furthermore listeners get informed.
 	 * 
 	 * @return the delta cloud image[]
+	 * @throws DeltaCloudClientException
 	 * 
 	 * @see #notifyImageListListeners(DeltaCloudImage[])
 	 */
-	public DeltaCloudImage[] loadImages() {
+	public DeltaCloudImage[] loadImages() throws DeltaCloudException {
 		synchronized (imageLock) {
-			images = new ArrayList<DeltaCloudImage>();
 			try {
+				images = new ArrayList<DeltaCloudImage>();
 				List<Image> list = client.listImages();
 				for (Iterator<Image> i = list.iterator(); i.hasNext();) {
-					DeltaCloudImage image = new DeltaCloudImage(i.next(), this);
-					images.add(image);
+					addImage(i.next());
 				}
+				return notifyImageListListeners();
 			} catch (DeltaCloudClientException e) {
-				Activator.log(e);
+				throw new DeltaCloudException(e);
 			}
-			DeltaCloudImage[] imageArray = new DeltaCloudImage[images.size()];
-			imageArray = images.toArray(imageArray);
-			notifyImageListListeners(imageArray);
-			return imageArray;
 		}
 	}
 
-	public DeltaCloudImage[] getCurrImages() {
+	private DeltaCloudImage addImage(Image image) {
+		DeltaCloudImage deltaCloudImage = new DeltaCloudImage(image, this);
+		images.add(deltaCloudImage);
+		return deltaCloudImage;
+	}
+
+	public DeltaCloudImage[] getCurrImages() throws DeltaCloudException {
 		synchronized (imageLock) {
-			if (images == null)
+			if (images == null) {
 				return loadImages();
-			DeltaCloudImage[] imageArray = new DeltaCloudImage[images.size()];
-			imageArray = images.toArray(imageArray);
-			return imageArray;
+			}
+			return cloneImages();
 		}
 	}
 

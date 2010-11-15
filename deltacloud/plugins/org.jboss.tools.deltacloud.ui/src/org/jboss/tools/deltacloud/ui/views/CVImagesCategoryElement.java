@@ -12,11 +12,16 @@ package org.jboss.tools.deltacloud.ui.views;
 
 import java.util.ArrayList;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Display;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
+import org.jboss.tools.deltacloud.ui.Activator;
 
 public class CVImagesCategoryElement extends CVCategoryElement implements IImageListListener {
 
@@ -67,11 +72,24 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 	public Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
-			cloud.removeImageListListener(this);
-			DeltaCloudImage[] images = filter(cloud.getCurrImages());
-			addImages(images);
-			initialized = true;
-			cloud.addImageListListener(this);
+			DeltaCloudImage[] images;
+			try {
+				images = filter(cloud.getCurrImages());
+				cloud.removeImageListListener(this);
+				addImages(images);
+				initialized = true;
+				cloud.addImageListListener(this);
+			} catch (Exception e) {
+				IStatus status = StatusFactory.getInstance(
+						IStatus.ERROR,
+						Activator.PLUGIN_ID,
+						e.getMessage(),
+						e);
+				// TODO: internationalize strings
+				ErrorDialog.openError(Display.getDefault().getActiveShell(),
+						"Error",
+						"Cloud not get images from cloud " + cloud.getName(), status);
+			}
 		}
 		return super.getChildren();
 	}

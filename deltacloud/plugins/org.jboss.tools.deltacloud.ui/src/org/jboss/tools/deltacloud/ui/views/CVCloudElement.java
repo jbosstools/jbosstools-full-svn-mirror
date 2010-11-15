@@ -10,10 +10,15 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.ui.Activator;
 
 public class CVCloudElement extends CloudViewElement {
 
@@ -59,6 +64,18 @@ public class CVCloudElement extends CloudViewElement {
 
 	public void loadChildren() {
 		DeltaCloud cloud = (DeltaCloud)getElement();
-		cloud.loadChildren();
+		try {
+			cloud.loadChildren();
+		} catch (Exception e) {
+			IStatus status = StatusFactory.getInstance(
+					IStatus.ERROR,
+					Activator.PLUGIN_ID,
+					e.getMessage(),
+					e);
+			// TODO: internationalize strings
+			ErrorDialog.openError(Display.getDefault().getActiveShell(),
+					"Error",
+					"Cloud not get load children for " + cloud.getName(), status);
+		}
 	}
 }

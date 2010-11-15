@@ -109,8 +109,7 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 			cloud.editCloud(name, url, username, password, type);
 			if (!name.equals(oldName))
 				DeltaCloudManager.getDefault().notifyCloudRename();
-		} catch (MalformedURLException e) {
-			Activator.log(e);
+		} catch (Exception e) {
 		}
 		return true;
 	}

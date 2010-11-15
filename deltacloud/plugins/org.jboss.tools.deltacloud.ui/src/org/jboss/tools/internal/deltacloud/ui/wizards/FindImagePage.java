@@ -1,5 +1,7 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -22,11 +24,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.AllImageFilter;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.ImageFilter;
+import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.ImageComparator;
@@ -37,12 +41,10 @@ public class FindImagePage extends WizardPage {
 	private final static String NAME = "FindImage.name"; //$NON-NLS-1$
 	private final static String TITLE = "FindImage.title"; //$NON-NLS-1$
 	private final static String DESC = "FindImage.desc"; //$NON-NLS-1$
-	private final static String FILTER_LABEL = "Filter.label"; //$NON-NLS-1$
 	private final static String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private final static String ID_LABEL = "Id.label"; //$NON-NLS-1$
 	private final static String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
 	private final static String DESC_LABEL = "Desc.label"; //$NON-NLS-1$
-	private final static String EMPTY_RULE = "ErrorFilterEmptyRule.msg"; //$NON-NLS-1$
 	private final static String INVALID_SEMICOLON = "ErrorFilterSemicolon.msg"; //$NON-NLS-1$
 	
 	private DeltaCloud cloud;
@@ -146,9 +148,21 @@ public class FindImagePage extends WizardPage {
 
 					@Override
 					public void run() {
+						try {
 						contentProvider.setFilter(filter);
 						viewer.setInput(cloud.getCurrImages());
 						viewer.refresh();
+						} catch (Exception e) {
+							IStatus status = StatusFactory.getInstance(
+									IStatus.ERROR,
+									Activator.PLUGIN_ID,
+									e.getMessage(),
+									e);
+							// TODO: internationalize strings
+							ErrorDialog.openError(viewer.getControl().getShell(),
+									"Error",
+									"Cloud not get images from cloud " + cloud.getName(), status);
+						}
 					}
 
 				});

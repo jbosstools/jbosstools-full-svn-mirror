@@ -16,6 +16,7 @@ import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.ObservablePojo;
 
@@ -31,7 +32,7 @@ public class NewInstanceModel extends ObservablePojo {
 	public static final String PROPERTY_REALM = "realm"; //$NON-NLS-1$
 	public static final String PROPERTY_KEYNAME = "keyname"; //$NON-NLS-1$
 	public static final String PROPERTY_PROFILE = "profile"; //$NON-NLS-1$
-	
+
 	private static final String IMAGE_ID_NOT_FOUND = "ErrorImageIdNotFound.text"; //$NON-NLS-1$
 
 	private String name;
@@ -43,21 +44,21 @@ public class NewInstanceModel extends ObservablePojo {
 
 	public static class ImageContainer {
 		private DeltaCloudImage image;
-		
+
 		public DeltaCloudImage getImage() {
 			return image;
 		}
-		
+
 		public void setImage(DeltaCloudImage image) {
 			this.image = image;
 		}
 	}
-	
+
 	public static class ArchConverter extends Converter {
 
 		private DeltaCloud cloud;
 		private ImageContainer imageContainer;
-		
+
 		public ArchConverter(DeltaCloud cloud, ImageContainer imageContainer,
 				Object fromType, Object toType) {
 			super(fromType, toType);
@@ -67,13 +68,17 @@ public class NewInstanceModel extends ObservablePojo {
 
 		@Override
 		public Object convert(final Object fromObject) {
-			return getArch((String) fromObject);
+			try {
+				return getArch((String) fromObject);
+			} catch (DeltaCloudException e) {
+				return ValidationStatus.error("Could find image on the server", e);
+			}
 		}
 
-		private String getArch(String id) {
+		private String getArch(String imageId) throws DeltaCloudException {
 			String arch = "";
-			if (id != null && id.length() > 0) {
-				DeltaCloudImage image = getImage(id, arch, cloud.getCurrImages());
+			if (imageId != null && imageId.length() > 0) {
+				DeltaCloudImage image = getImage(imageId, arch);
 				if (image != null) {
 					imageContainer.setImage(image);
 					arch = image.getArchitecture();
@@ -82,7 +87,15 @@ public class NewInstanceModel extends ObservablePojo {
 			return arch;
 		}
 
-		private DeltaCloudImage getImage(String id, String arch, DeltaCloudImage[] images) {
+		private DeltaCloudImage getImage(String imageId, String arch) throws DeltaCloudException {
+			DeltaCloudImage image = getFromcachedImage(imageId, cloud.getCurrImages());
+			if (image == null) {
+				image = cloud.loadImage(imageId);
+			}
+			return image;
+		}
+
+		private DeltaCloudImage getFromcachedImage(String id, DeltaCloudImage[] images) {
 			for (int i = 0; i < images.length; ++i) {
 				DeltaCloudImage image = images[i];
 				if (image.getId().equals(id)) {
@@ -99,7 +112,7 @@ public class NewInstanceModel extends ObservablePojo {
 		@Override
 		public IStatus validate(Object value) {
 			Assert.isTrue(value instanceof String);
-			if (value != null && ((String)value).length() > 0) {
+			if (value != null && ((String) value).length() > 0) {
 				return ValidationStatus.ok();
 			} else {
 				return ValidationStatus.error(WizardMessages.getString(IMAGE_ID_NOT_FOUND));
@@ -107,8 +120,7 @@ public class NewInstanceModel extends ObservablePojo {
 		}
 	}
 
-	
-	public NewInstanceModel(String name, String imageId, String arch, String realm, 
+	public NewInstanceModel(String name, String imageId, String arch, String realm,
 			String keyname, String profile) {
 		this.name = name;
 		this.imageId = imageId;

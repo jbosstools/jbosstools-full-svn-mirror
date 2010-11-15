@@ -15,34 +15,38 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
+import org.jboss.tools.deltacloud.ui.Activator;
 
-public class ImageViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider, ITableLabelProvider {
+public class ImageViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider,
+		ITableLabelProvider {
 
 	private DeltaCloud cloud;
 	private IImageFilter localFilter;
 	private DeltaCloudImage[] images;
 
 	public enum Column {
-		NAME(0, 20), 
-		ID(1, 20), 
-		ARCH(2, 20), 
+		NAME(0, 20),
+		ID(1, 20),
+		ARCH(2, 20),
 		DESC(3, 40);
-		
+
 		private int column;
 		private int weight;
-		private static final Map<Integer,Column> lookup 
-		= new HashMap<Integer,Column>();
+		private static final Map<Integer, Column> lookup = new HashMap<Integer, Column>();
 
 		static {
-			for(Column c : EnumSet.allOf(Column.class))
+			for (Column c : EnumSet.allOf(Column.class))
 				lookup.put(c.getColumnNumber(), c);
 		}
 
@@ -54,7 +58,7 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 		public int getColumnNumber() {
 			return column;
 		}
-		
+
 		public int getWeight() {
 			return weight;
 		}
@@ -62,13 +66,13 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 		public static Column getColumn(int number) {
 			return lookup.get(number);
 		}
-		
+
 		public static int getSize() {
 			return lookup.size();
 		}
-		
+
 	};
-	
+
 	@Override
 	public Object[] getElements(Object inputElement) {
 		return images;
@@ -84,10 +88,22 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		if (newInput != null) {
 			if (newInput instanceof DeltaCloudImage[]) {
-				images = filter((DeltaCloudImage[])newInput);
+				images = filter((DeltaCloudImage[]) newInput);
 			} else {
-				cloud = (DeltaCloud)newInput;
-				images = filter(cloud.getCurrImages());
+				try {
+					cloud = (DeltaCloud) newInput;
+					images = filter(cloud.getCurrImages());
+				} catch (Exception e) {
+					IStatus status = StatusFactory.getInstance(
+							IStatus.ERROR,
+							Activator.PLUGIN_ID,
+							e.getMessage(),
+							e);
+					// TODO: internationalize strings
+					ErrorDialog.openError(viewer.getControl().getShell(),
+							"Error",
+							"Cloud not get images from cloud " + cloud.getName(), status);
+				}
 			}
 		}
 	}
@@ -96,7 +112,7 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 	public void setFilter(IImageFilter filter) {
 		this.localFilter = filter;
 	}
-	
+
 	private DeltaCloudImage[] filter(DeltaCloudImage[] input) {
 		ArrayList<DeltaCloudImage> array = new ArrayList<DeltaCloudImage>();
 		IImageFilter f = localFilter;
@@ -109,7 +125,7 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 		}
 		return array.toArray(new DeltaCloudImage[array.size()]);
 	}
-	
+
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		return null;
@@ -118,7 +134,7 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		Column c = Column.getColumn(columnIndex);
-		DeltaCloudImage i = (DeltaCloudImage)element;
+		DeltaCloudImage i = (DeltaCloudImage) element;
 		switch (c) {
 		case NAME:
 			return i.getName();

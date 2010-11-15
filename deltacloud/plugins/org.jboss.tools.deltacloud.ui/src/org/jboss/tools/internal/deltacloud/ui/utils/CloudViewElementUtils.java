@@ -18,23 +18,28 @@ public class CloudViewElementUtils {
 
 	/**
 	 * Returns a DeltaCloud instance for a given cloud view element
-	 *
-	 * @param element the cloud view element to get the DeltaCloud for
+	 * 
+	 * @param element
+	 *            the cloud view element to get the DeltaCloud for
 	 * @return the cloud for the given CloudViewElement
 	 * 
 	 * @see DeltaCloud
 	 * @see CloudViewElement
 	 */
 	public static DeltaCloud getCloud(CloudViewElement element) {
-		CVCloudElement cvcloud = getCVCloudElement(element);
-		DeltaCloud cloud = (DeltaCloud) cvcloud.getElement();
+		CVCloudElement cvCloud = getCVCloudElement(element);
+		if (cvCloud == null) {
+			return null;
+		}
+		DeltaCloud cloud = (DeltaCloud) cvCloud.getElement();
 		return cloud;
 	}
 
 	/**
 	 * Returns a CVCloudElement for a given cloud view element
-	 *
-	 * @param element the cloud view element to get the CVCloudElement for
+	 * 
+	 * @param element
+	 *            the cloud view element to get the CVCloudElement for
 	 * @return the CVCloudElement for the given CloudViewElement
 	 * 
 	 * @see CloudViewElement
@@ -46,5 +51,5 @@ public class CloudViewElementUtils {
 		}
 		return (CVCloudElement) element;
 	}
-	
+
 }
