@@ -1,5 +1,9 @@
 2010-11-15  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java (.modifyText): 
+	(validateDirectory): 
+	(createControl): 
+	[JBIDE-7598] corrected ok-enablement
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (createControl): 
 	[JBIDE-7317] removed erroneous, duplicate type binding.
 	(DeltaCloudTypeLabelAdapter.handleValueChange): 
