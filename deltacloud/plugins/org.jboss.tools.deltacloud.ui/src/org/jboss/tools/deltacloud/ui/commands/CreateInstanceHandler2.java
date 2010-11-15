@@ -24,7 +24,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
-import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstance2;
+import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstanceWizard2;
 
 /**
  * @author Jeff Johnston
@@ -42,7 +42,7 @@ public class CreateInstanceHandler2 extends AbstractHandler implements IHandler 
 			if (element != null) {
 				CVCloudElement cloudElement = (CVCloudElement) element;
 				DeltaCloud cloud = (DeltaCloud) cloudElement.getElement();
-				IWizard wizard = new NewInstance2(cloud);
+				IWizard wizard = new NewInstanceWizard2(cloud);
 				WizardDialog dialog = new WizardDialog(UIUtils.getActiveWorkbenchWindow().getShell(),
 						wizard);
 				dialog.create();

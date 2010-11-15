@@ -37,7 +37,7 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.osgi.service.prefs.Preferences;
 
-public class NewInstance2 extends Wizard {
+public class NewInstanceWizard2 extends Wizard {
 
 	private final static String CREATE_INSTANCE_FAILURE_TITLE = "CreateInstanceError.title"; //$NON-NLS-1$
 	private final static String CREATE_INSTANCE_FAILURE_MSG = "CreateInstanceError.msg"; //$NON-NLS-1$
@@ -55,7 +55,7 @@ public class NewInstance2 extends Wizard {
 	private DeltaCloud cloud;
 	private DeltaCloudInstance instance;
 
-	public NewInstance2(DeltaCloud cloud) {
+	public NewInstanceWizard2(DeltaCloud cloud) {
 		this.cloud = cloud;
 	}
 	
@@ -104,7 +104,7 @@ public class NewInstance2 extends Wizard {
 				} catch (Exception e) {
 					// do nothing
 				} finally {
-					cloud.addReplaceInstance(instance);
+					cloud.replaceInstance(instance);
 					cloud.removeActionJob(instanceId, this);
 					String hostname = instance.getHostName();
 					Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
