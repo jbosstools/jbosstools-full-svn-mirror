@@ -20,7 +20,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.ObservablePojo;
 
 /**
- * @author Andre Dietisheim
+ * @author Jeff Jonhston
  */
 public class NewInstanceModel extends ObservablePojo {
 
