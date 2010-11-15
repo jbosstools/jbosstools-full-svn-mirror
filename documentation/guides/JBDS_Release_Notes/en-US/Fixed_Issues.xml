@@ -173,7 +173,8 @@
 			</itemizedlist>
 		</para>
 	</formalpara>
-	<formalpara>
+<!-- Include in JBT Release Notes only!!! -->
+<!--	<formalpara>
 	   <title>Deltacloud</title>
 	   <para>
 	      <itemizedlist>
@@ -184,7 +185,7 @@
 	      </listitem>
 	   </itemizedlist>
 	</para>
-	</formalpara>
+     </formalpara> -->
 	<formalpara>
 	   <title>Drools</title>
 	   <para>

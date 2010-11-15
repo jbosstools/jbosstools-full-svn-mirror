@@ -6,19 +6,34 @@
 		</para>
 		<itemizedlist>
 			<listitem>
+			      <para>
+				 BIRT
+			      </para>
+			</listitem>
+			<listitem>
+			      <para>
+				 Contexts and Dependency Injection (CDI)
+			      </para>
+			</listitem>
+			<listitem>
 				<para>
 					Hibernate
 				</para>
 			</listitem>
 			<listitem>
-				<para>
-					JBoss Seam
-				</para>
+				 <para>
+				    JavaServer Faces (JSF)
+				 </para>
 			</listitem>
 			<listitem>
-				<para>
-					RichFaces
-				</para>
+				 <para>
+				    JBoss Drools
+				 </para>
+			</listitem>
+			<listitem>
+				 <para>
+				    JBoss ESB
+				 </para>
 			</listitem>
 			<listitem>
 				<para>
@@ -27,18 +42,13 @@
 			</listitem>
 			<listitem>
 				<para>
-					JBoss ESB
-				</para>
-			</listitem>
-			<listitem>
-				<para>
 					JBoss Portal
 				</para>
 			</listitem>
 			<listitem>
-				<para>
-					JBoss Drools
-				</para>
+				 <para>
+				       JBoss Seam
+				 </para>
 			</listitem>
 			<listitem>
 				<para>
@@ -46,9 +56,24 @@
 				</para>
 			</listitem>
 			<listitem>
+				 <para>
+				       RichFaces
+				 </para>
+			</listitem>
+			<listitem>
+				 <para>
+				       Smooks
+				 </para>
+			</listitem>
+			<listitem>
 				<para>
 					Teiid
 				</para>
+			</listitem>
+			<listitem>
+				 <para>
+				       Web Services
+				 </para>
 			</listitem>
 		</itemizedlist>
 		<para>
