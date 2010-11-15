@@ -242,7 +242,6 @@ public class NewInstancePage extends WizardPage {
 
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.addModifyListener(textListener);
-		nameText.setBackground(nameText.getDisplay().getSystemColor(SWT.COLOR_RED));
 
 		DeltaCloudRealm[] realms = cloud.getRealms();
 		realmIds = new ArrayList<String>();
