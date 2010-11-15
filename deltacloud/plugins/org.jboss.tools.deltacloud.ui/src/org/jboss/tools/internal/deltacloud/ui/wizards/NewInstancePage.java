@@ -48,7 +48,7 @@ public class NewInstancePage extends WizardPage {
 	private final static String NAME = "NewInstance.name"; //$NON-NLS-1$
 	private final static String DESCRIPTION = "NewInstance.desc"; //$NON-NLS-1$
 	private final static String TITLE = "NewInstance.title"; //$NON-NLS-1$
-	
+
 	private static final String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private static final String IMAGE_LABEL = "Image.label"; //$NON-NLS-1$
 	private static final String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
@@ -57,16 +57,15 @@ public class NewInstancePage extends WizardPage {
 	private static final String KEY_LABEL = "Key.label"; //$NON-NLS-1$
 	private static final String MANAGE_BUTTON_LABEL = "ManageButton.label"; //$NON-NLS-1$
 	private static final String PROPERTIES_LABEL = "Properties.label"; //$NON-NLS-1$
-	
+
 	private static final String NONE_RESPONSE = "None.response"; //$NON-NLS-1$
 	@SuppressWarnings("unused")
 	private static final String NAME_ALREADY_IN_USE = "ErrorNameInUse.text"; //$NON-NLS-1$
 
-
 	private DeltaCloud cloud;
 	private DeltaCloudImage image;
 	private ArrayList<DeltaCloudHardwareProfile> profiles;
-	
+
 	private Text nameText;
 	private Text keyText;
 	private Combo hardware;
@@ -76,7 +75,7 @@ public class NewInstancePage extends WizardPage {
 	private ProfileComposite currPage;
 	private ProfileComposite[] profilePages;
 	private ArrayList<String> realmIds;
-	
+
 	private ModifyListener textListener = new ModifyListener() {
 
 		@Override
@@ -95,12 +94,12 @@ public class NewInstancePage extends WizardPage {
 			currPage.setVisible(true);
 		}
 	};
-	
+
 	private SelectionListener manageListener = new SelectionAdapter() {
 
 		public void widgetSelected(SelectionEvent event) {
 			Shell shell = getShell();
-			ManageKeys wizard = new ManageKeys(cloud, ".pem");  //$NON-NLS-1$
+			ManageKeys wizard = new ManageKeys(cloud, ".pem"); //$NON-NLS-1$
 			WizardDialog dialog = new CustomWizardDialog(shell, wizard,
 					IDialogConstants.OK_LABEL);
 			dialog.create();
@@ -109,9 +108,9 @@ public class NewInstancePage extends WizardPage {
 			if (keyname != null)
 				keyText.setText(keyname);
 		}
-	
+
 	};
-	
+
 	public NewInstancePage(DeltaCloud cloud, DeltaCloudImage image) {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
@@ -129,29 +128,29 @@ public class NewInstancePage extends WizardPage {
 
 	public String getRealmId() {
 		if (realm instanceof Combo) {
-			int index = ((Combo)realm).getSelectionIndex();
+			int index = ((Combo) realm).getSelectionIndex();
 			return realmIds.get(index);
 		} else {
 			return null;
 		}
 	}
-	
+
 	public String getCpuProperty() {
 		return currPage.getCPU();
 	}
-	
+
 	public String getStorageProperty() {
 		return currPage.getStorage();
 	}
-	
+
 	public String getMemoryProperty() {
 		return currPage.getMemory();
 	}
-	
+
 	public String getInstanceName() {
 		return nameText.getText();
 	}
-	
+
 	public String getKeyName() {
 		if (keyText == null) {
 			return null;
@@ -159,13 +158,13 @@ public class NewInstancePage extends WizardPage {
 			return keyText.getText();
 		}
 	}
-	
+
 	private void validate() {
 		boolean complete = true;
 		boolean errorFree = true;
-		
+
 		setMessage(null);
-		
+
 		String name = nameText.getText();
 		if (name.length() == 0) {
 			complete = false;
@@ -178,18 +177,18 @@ public class NewInstancePage extends WizardPage {
 			else {
 				Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 				try {
-				    prefs.put(IDeltaCloudPreferenceConstants.LAST_EC2_KEYNAME, keyname);
+					prefs.put(IDeltaCloudPreferenceConstants.LAST_EC2_KEYNAME, keyname);
 				} catch (Exception e) {
 					// ignore
 				}
 			}
 		}
-		
+
 		if (errorFree)
 			setErrorMessage(null);
 		setPageComplete(complete & errorFree);
 	}
-	
+
 	private void getPossibleProfiles() {
 		profiles = new ArrayList<DeltaCloudHardwareProfile>();
 		DeltaCloudHardwareProfile[] allProfiles = cloud.getProfiles();
@@ -199,7 +198,7 @@ public class NewInstancePage extends WizardPage {
 			}
 		}
 	}
-	
+
 	private String[] getProfileIds(Composite container) {
 		String[] ids = new String[profiles.size()];
 		profilePages = new ProfileComposite[profiles.size()];
@@ -212,40 +211,39 @@ public class NewInstancePage extends WizardPage {
 		currPage = profilePages[0];
 		return ids;
 	}
-	
+
 	@Override
 	public void createControl(Composite parent) {
 		final Composite container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
 		layout.marginHeight = 5;
 		layout.marginWidth = 5;
-		container.setLayout(layout);		
-		
+		container.setLayout(layout);
+
 		Label dummyLabel = new Label(container, SWT.NULL);
 
 		Label imageLabel = new Label(container, SWT.NULL);
 		imageLabel.setText(WizardMessages.getString(IMAGE_LABEL));
-		
+
 		Label imageId = new Label(container, SWT.NULL);
 		imageId.setText(image.getName());
-		
+
 		Label archLabel = new Label(container, SWT.NULL);
 		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
-		
+
 		Label arch = new Label(container, SWT.NULL);
 		arch.setText(image.getArchitecture());
-		
+
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
-		
+
 		Label realmLabel = new Label(container, SWT.NULL);
 		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
-		
 
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.addModifyListener(textListener);
-		
-	
+		nameText.setBackground(nameText.getDisplay().getSystemColor(SWT.COLOR_RED));
+
 		DeltaCloudRealm[] realms = cloud.getRealms();
 		realmIds = new ArrayList<String>();
 		ArrayList<String> realmNames = new ArrayList<String>();
@@ -256,20 +254,11 @@ public class NewInstancePage extends WizardPage {
 				realmIds.add(r.getId());
 			}
 		}
-		if (realmIds.size() > 0) {
-			Combo combo = new Combo(container, SWT.BORDER | SWT.READ_ONLY);
-			combo.setItems(realmNames.toArray(new String[realmNames.size()]));
-			combo.setText(realmNames.get(0));
-			realm = combo;
-		} else {
-			Label label = new Label(container, SWT.NULL);
-			label.setText(WizardMessages.getString(NONE_RESPONSE));
-			realm = label;
-		}
-		
+		createRealmsControl(container, realmNames);
+
 		Label hardwareLabel = new Label(container, SWT.NULL);
 		hardwareLabel.setText(WizardMessages.getString(HARDWARE_LABEL));
-		
+
 		hardware = new Combo(container, SWT.READ_ONLY);
 		Group groupContainer = new Group(container, SWT.BORDER);
 		groupContainer.setText(WizardMessages.getString(PROPERTIES_LABEL));
@@ -277,37 +266,36 @@ public class NewInstancePage extends WizardPage {
 		groupLayout.marginHeight = 0;
 		groupLayout.marginWidth = 0;
 		groupContainer.setLayout(groupLayout);
-		
-		
+
 		profileIds = getProfileIds(groupContainer);
-		
+
 		if (profileIds.length > 0) {
 			hardware.setItems(profileIds);
 			hardware.setText(profileIds[0]);
 			profilePages[0].setVisible(true);
 			hardware.addModifyListener(comboListener);
 		}
-		
+
 		Point p1 = nameLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		int centering = (p2.y - p1.y + 1) / 2;
-		
+
 		FormData f = new FormData();
 		f.left = new FormAttachment(0, 0);
 		f.right = new FormAttachment(100, 0);
 		dummyLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(dummyLabel, 8 + centering);
 		f.left = new FormAttachment(0, 0);
 		nameLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(dummyLabel, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		nameText.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(nameText, 8);
 		f.left = new FormAttachment(0, 0);
@@ -318,22 +306,22 @@ public class NewInstancePage extends WizardPage {
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		imageId.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(imageLabel, 8);
 		f.left = new FormAttachment(0, 0);
 		archLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(imageLabel, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
 		arch.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(arch, 8 + centering);
 		f.left = new FormAttachment(0, 0);
 		realmLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(arch, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
@@ -341,7 +329,7 @@ public class NewInstancePage extends WizardPage {
 		realm.setLayoutData(f);
 
 		Control control = realm;
-		
+
 		if (cloud.getType().equals(DeltaCloud.EC2_TYPE)) {
 			Label keyLabel = new Label(container, SWT.NULL);
 			keyLabel.setText(WizardMessages.getString(KEY_LABEL));
@@ -364,9 +352,9 @@ public class NewInstancePage extends WizardPage {
 			keyLabel.setLayoutData(f);
 
 			f = new FormData();
-	        int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-	        Point minSize = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-	        f.width = Math.max(widthHint, minSize.x);
+			int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
+			Point minSize = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+			f.width = Math.max(widthHint, minSize.x);
 			f.top = new FormAttachment(realm, 8);
 			f.right = new FormAttachment(realm, 0, SWT.RIGHT);
 			keyManage.setLayoutData(f);
@@ -376,29 +364,52 @@ public class NewInstancePage extends WizardPage {
 			f.left = new FormAttachment(hardwareLabel, 5);
 			f.right = new FormAttachment(keyManage, -10);
 			keyText.setLayoutData(f);
-			
+
 			control = keyText;
 		}
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(control, 8 + centering);
 		f.left = new FormAttachment(0, 0);
 		hardwareLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(control, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
 		hardware.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(hardware, 10);
 		f.left = new FormAttachment(0, 0);
 		f.right = new FormAttachment(100, 0);
 		f.bottom = new FormAttachment(100, 0);
 		groupContainer.setLayoutData(f);
-		
+
 		setControl(container);
+	}
+
+	/**
+	 * Creates the control that shall display the available realms. It creates
+	 * either a combo, if there are realms available, or a label if none are
+	 * available.
+	 * 
+	 * @param parent
+	 *            the container
+	 * @param realmNames
+	 *            the realm names
+	 */
+	private void createRealmsControl(final Composite parent, ArrayList<String> realmNames) {
+		if (realmIds.size() > 0) {
+			Combo combo = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
+			combo.setItems(realmNames.toArray(new String[realmNames.size()]));
+			combo.setText(realmNames.get(0));
+			realm = combo;
+		} else {
+			Label label = new Label(parent, SWT.NULL);
+			label.setText(WizardMessages.getString(NONE_RESPONSE));
+			realm = label;
+		}
 	}
 
 }
