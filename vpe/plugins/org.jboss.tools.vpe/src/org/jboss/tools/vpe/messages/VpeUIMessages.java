@@ -163,6 +163,5 @@ public final class VpeUIMessages extends NLS {
 	public static String LIST_IS_EMPTY;
 	
 	public static String COULD_NOT_OPEN_VPE_RESOURCES_DIALOG;
-	
-	
+	public static String VPE_PREFERENCES_MENU_LABEL;
 }

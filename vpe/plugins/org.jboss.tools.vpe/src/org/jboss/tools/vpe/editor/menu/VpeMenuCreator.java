@@ -13,12 +13,18 @@ package org.jboss.tools.vpe.editor.menu;
 import java.text.MessageFormat;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.swt.events.HelpListener;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.menus.IMenuService;
@@ -35,6 +41,7 @@ import org.jboss.tools.vpe.editor.menu.action.EditAttributesAction;
 import org.jboss.tools.vpe.editor.menu.action.SelectThisTagAction;
 import org.jboss.tools.vpe.editor.menu.action.StripTagAction;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
 import org.jboss.tools.vpe.editor.template.IZoomEventManager;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
@@ -95,8 +102,8 @@ public class VpeMenuCreator {
 		menuManager.add(new InsertContributionItem(node));
 		addIfEnabled(new StripTagAction(node));
 		/*
-		 * https://jira.jboss.org/browse/JBIDE-7222 Adding ExternalizeStrings
-		 * dialog to the VPE context menu
+		 * https://jira.jboss.org/browse/JBIDE-7222 
+		 * Adding ExternalizeStrings dialog to the VPE context menu
 		 */
 		if (ExternalizeStringsUtils.isSelectionCorrect(vpeMenuUtil
 				.getSelection())) {
@@ -105,7 +112,22 @@ public class VpeMenuCreator {
 		addSeparator();
 		if (topLevelMenu) {
 			addZoomActions();
+			addSeparator();
 		}
+		/*
+		 * https://jira.jboss.org/browse/JBIDE-7584
+		 * Add Visual Page Editor Preferences Item to the context menu
+		 */
+		menuManager.add(new ActionContributionItem(new Action() {
+			@Override
+			public void run() {
+				VpeEditorPreferencesPage.openPreferenceDialog();
+			}
+			@Override
+			public String getText() {
+				return VpeUIMessages.VPE_PREFERENCES_MENU_LABEL;
+			}
+		}));
 		addSeparator();
 		if (topLevelMenu) {
 			addIfEnabled(new DumpSourceAction());

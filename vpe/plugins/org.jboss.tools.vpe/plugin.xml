@@ -117,46 +117,6 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			contextId="org.jboss.tools.vpe.editorContext"
 			sequence="M1+M2+Tab"/>
-		<key
-        	commandId="org.jboss.tools.vpe.commands.preferencesCommand"
-        	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+1"/>
-		<key
-        	commandId="org.jboss.tools.vpe.commands.refreshCommand"
-        	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+2"/>
-		<key
-        	commandId="org.jboss.tools.vpe.commands.pageDesignOptionsCommand"
-        	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+3"/>
-		<key
-        	commandId="org.jboss.tools.vpe.commands.rotateEditorsCommand"
-        	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+4"/>
-		<key
-        	commandId="org.jboss.tools.vpe.commands.showBorderCommand"
-        	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+5"/>
-		<key
-        	commandId="org.jboss.tools.vpe.commands.showNonVisualTagsCommand"
-        	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+6"/>
-		<key
-        	commandId="org.jboss.tools.vpe.commands.showTextFormattingCommand"
-        	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+7"/>
-		<key
-        	commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"
-        	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        	contextId="org.eclipse.ui.contexts.window"
-        	sequence="M1+M2+8"/>
 	</extension>
   <extension
         point="org.jboss.tools.jst.jsp.visulaEditorImplementations"  id="org.jboss.tools.vpe.editor.VpeEditorPartFactory">
@@ -220,63 +180,6 @@
                class="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem"
                id="org.jboss.tools.vpe.editor.menu.SetupTemplateContributionItem">
         	</dynamic>
-        </menuContribution>
-        <menuContribution
-              locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-           <separator
-           		name="org.jboss.tools.separator.vpePrefs" visible="true" >
-           </separator>
-           <menu
-                 id="org.jboss.tools.vpe.menus.VpePreferences"
-                 label="%vpe.menu.preferences"
-                 mnemonic="M">
-              <command
-                    commandId="org.jboss.tools.vpe.commands.preferencesCommand"
-	                icon="icons/preferences.gif"
-                    id="org.jboss.tools.vpe.menus.preferencesCommand"
-                    mnemonic="S"/>
-              <command
-                    commandId="org.jboss.tools.vpe.commands.refreshCommand"
-	                icon="icons/refresh.gif"
-                    id="org.jboss.tools.vpe.menus.refreshCommand"
-                    mnemonic="S"/>
-              <command
-                    commandId="org.jboss.tools.vpe.commands.pageDesignOptionsCommand"
-	                icon="icons/point_to_css.gif"
-                    id="org.jboss.tools.vpe.menus.pageDesignOptionsCommand"
-                    mnemonic="S"/>
-              <command
-                    commandId="org.jboss.tools.vpe.commands.rotateEditorsCommand"
-                    id="org.jboss.tools.vpe.menus.rotateEditorsCommand"
-                    mnemonic="S"/>
-              <command
-                    commandId="org.jboss.tools.vpe.commands.showBorderCommand"
-	                icon="icons/border.gif"
-	                style="toggle"
-                    id="org.jboss.tools.vpe.menus.showBorderCommand"
-                    mnemonic="S"/>
-              <command
-                    commandId="org.jboss.tools.vpe.commands.showNonVisualTagsCommand"
-	                icon="icons/non-visual-tags.gif"
-	                style="toggle"
-                    id="org.jboss.tools.vpe.menus.showNonVisualTagsCommand"
-                    mnemonic="S"/>
-              <command
-                    commandId="org.jboss.tools.vpe.commands.showTextFormattingCommand"
-	                icon="icons/text-formatting.gif"
-	                style="toggle"
-                    id="org.jboss.tools.vpe.menus.showTextFormattingCommand"
-                    mnemonic="S"/>
-              <command
-                    commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"
-	                icon="icons/bundle-as-el.gif"
-	                style="toggle"
-                    id="org.jboss.tools.vpe.menus.showBundleAsELCommand"
-                    mnemonic="S"/>
-              <visibleWhen checkEnabled="false">
-	          		<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
-	          </visibleWhen>
-           </menu>
         </menuContribution>
         <menuContribution
               locationURI="toolbar:org.jboss.tools.jst.jsp.toolbars.sampleToolbar?after=org.jboss.tools.jst.jsp.toolbars.i18">
