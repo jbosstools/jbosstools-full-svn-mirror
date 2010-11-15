@@ -88,7 +88,7 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String COULD_NOT_OPEN_BROWSER = "ErrorCouldNotOpenBrowser.text"; //$NON-NLS-1$
 	private static final String MUST_ENTER_A_NAME = "ErrorMustNameConnection.text"; //$NON-NLS-1$
 	private static final String MUST_ENTER_A_URL = "ErrorMustProvideUrl.text"; //$NON-NLS-1$;
-	
+
 	private CloudConnectionModel connectionModel;
 	private CloudConnection cloudConnection;
 
@@ -193,9 +193,9 @@ public class CloudConnectionPage extends WizardPage {
 						@Override
 						public void run() {
 							setMessage(success);
-							showDecorations(!success);						
+							showDecorations(!success);
 						}
-						
+
 					});
 					monitor.done();
 				}
@@ -307,12 +307,11 @@ public class CloudConnectionPage extends WizardPage {
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY, urlText),
-				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL)
-						.observe(connectionModel),
+				WidgetProperties.text(SWT.Modify).observe(urlText),
+				BeanProperties.value(
+						CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL).observe(connectionModel),
 				new UpdateValueStrategy().setAfterGetValidator(
-						new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))),
-				null);
+						new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))), null);
 
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
@@ -488,11 +487,21 @@ public class CloudConnectionPage extends WizardPage {
 
 		// bind url to cloud type in model
 		Binding urlTypeBinding = dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observe(urlText),
+				WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY,
+						urlText),
 				BeanProperties.value(CloudConnectionModel.PROPERTY_TYPE).observe(connectionModel),
 				updateStrategy,
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-
+		// Binding urlTypeBinding = dbc.bindValue(
+		// WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY,
+		// urlText),
+		// BeanProperties.value(CloudConnectionModel.class,
+		// CloudConnectionModel.PROPERTY_URL)
+		// .observe(connectionModel),
+		// new UpdateValueStrategy().setAfterGetValidator(
+		// new
+		// MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))),
+		// null);
 		/*
 		 * bind converter to delta cloud label.
 		 * 
@@ -505,7 +514,6 @@ public class CloudConnectionPage extends WizardPage {
 		DeltaCloudTypeLabelAdapter cloudTypeAdapter =
 				new DeltaCloudTypeLabelAdapter((DeltaCloudServerType) cloudTypeObservable.getValue(), typeLabel);
 		cloudTypeObservable.addValueChangeListener(cloudTypeAdapter);
-
 		ControlDecorationSupport.create(urlTypeBinding, SWT.LEFT | SWT.TOP);
 
 		return urlTypeBinding;
