@@ -25,7 +25,6 @@ import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
@@ -132,12 +131,11 @@ public class CloudConnectionPage extends WizardPage {
 		@Override
 		public void handleValueChange(ValueChangeEvent event) {
 			Object newValue = event.diff.getNewValue();
-			Assert.isTrue(newValue instanceof DeltaCloudServerType);
-			setLabelText((DeltaCloudServerType) newValue);
+			setLabelText(newValue);
 		}
 
-		private void setLabelText(DeltaCloudServerType cloudType) {
-			if (cloudType != null && cloudType != DeltaCloudServerType.UNKNOWN) {
+		private void setLabelText(Object cloudType) {
+			if (cloudType != null && !DeltaCloudServerType.UNKNOWN.equals(cloudType)) {
 				typeLabel.setText(cloudType.toString());
 			} else {
 				typeLabel.setText("?"); // $NON-NLS-1$

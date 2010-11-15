@@ -2,6 +2,8 @@
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (createControl): 
 	[JBIDE-7317] removed erroneous, duplicate type binding.
+	(DeltaCloudTypeLabelAdapter.handleValueChange): 
+	[JBIDE-7317] removed type assertion. Converter must be able to handle non-DeltaCloudServerType values.
 
 2010-11-12  André Dietisheim  <adietish@redhat.com>
 
