@@ -53,6 +53,9 @@ import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 
+/**
+ * @author Jeff Jonston
+ */
 public class NewInstancePage2 extends WizardPage {
 
 	private static final int IMAGE_CHECK_DELAY = 500;
@@ -197,7 +200,9 @@ public class NewInstancePage2 extends WizardPage {
 	public void clearProfiles() {
 		hardware.removeModifyListener(comboListener);
 		hardware.removeAll();
-		currPage.setVisible(false);
+		if (currPage != null) {
+			currPage.setVisible(false);
+		}
 		hardware.setEnabled(false);
 		hardware.addModifyListener(comboListener);
 	}
