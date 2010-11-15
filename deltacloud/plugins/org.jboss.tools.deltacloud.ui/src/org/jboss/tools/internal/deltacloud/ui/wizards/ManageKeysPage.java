@@ -63,7 +63,7 @@ public class ManageKeysPage extends WizardPage {
 		@Override
 		public void modifyText(ModifyEvent e) {
 			// TODO Auto-generated method stub
-			validate();
+			validateDirectory();
 		}
 		
 	};
@@ -114,8 +114,8 @@ public class ManageKeysPage extends WizardPage {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			currFile = fileList.getSelection()[0];
+			setPageComplete(isKeySelected());
 		}
-
 	};
 
 	private FilenameFilter extensionFilter = new FilenameFilter() {
@@ -143,13 +143,10 @@ public class ManageKeysPage extends WizardPage {
 		return currFile;
 	}
 	
-	private void validate() {
+	private void validateDirectory() {
 		boolean hasError = false;
-		boolean isComplete = true;
 		
-		if (directory.getText().length() == 0)
-			isComplete = false;
-		else {
+		if (directory.getText().length() > 0) {
 			File f = new File(directory.getText());
 			if (!f.exists() || !f.isDirectory()) {
 				hasError = true;
@@ -164,9 +161,14 @@ public class ManageKeysPage extends WizardPage {
 				loadFileList();
 			}
 		}
-		if (!hasError)
+		if (!hasError) {
 			setErrorMessage(null);
-		setPageComplete(isComplete && !hasError);
+		}
+		setPageComplete(!hasError && isKeySelected());
+	}
+	
+	private boolean isKeySelected() {
+		return fileList.getSelectionCount() == 1;
 	}
 	
 	private void loadFileList() {
@@ -190,7 +192,7 @@ public class ManageKeysPage extends WizardPage {
 	
 	@Override
 	public void createControl(Composite parent) {
-		// TODO Auto-generated method stub
+		setPageComplete(false);
 		final Composite container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
 		layout.marginHeight = 5;
@@ -293,7 +295,7 @@ public class ManageKeysPage extends WizardPage {
 	
         setControl(container);
 		loadFileList();
-		validate();
+		validateDirectory();
 	}
 
 }
