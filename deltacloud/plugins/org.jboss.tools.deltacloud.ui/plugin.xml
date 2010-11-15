@@ -154,13 +154,22 @@
 			<activeWhen>
 				<with
 					variable="selection">
-					<iterate>
-	               		<instanceof
-	                		value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
-	               		</instanceof>
-	               	</iterate>
+					<and>
+						<count value="+" />
+						<iterate>
+		               		<instanceof
+		                		value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+		               		</instanceof>
+		               	</iterate>
+		            </and>
 				</with>
          </activeWhen>
+		 <enabledWhen>
+			<with
+				variable="selection">
+				<count value="+" />
+			</with>
+		 </enabledWhen>
 	</handler>
     <handler
 		class="org.jboss.tools.deltacloud.ui.commands.RefreshInstancesHandler"
@@ -168,13 +177,22 @@
 			<activeWhen>
 				<with
 					variable="selection">
-					<iterate>
-						<instanceof
-						     value="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
-						</instanceof>
-					</iterate>
+					<and>
+						<count value="+" />
+						<iterate>
+							<instanceof
+							     value="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
+							</instanceof>
+						</iterate>
+					</and>
 				</with>
 			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
 	</handler>
     <handler
 		class="org.jboss.tools.deltacloud.ui.commands.RefreshImagesHandler"
@@ -182,13 +200,22 @@
 			<activeWhen>
 				<with
 					variable="selection">
-					<iterate>
-						<instanceof
-						     value="org.jboss.tools.deltacloud.core.DeltaCloudImage">
-						</instanceof>
-					</iterate>
+					<and>
+						<count value="+" />
+						<iterate>
+							<instanceof
+							     value="org.jboss.tools.deltacloud.core.DeltaCloudImage">
+							</instanceof>
+						</iterate>
+					</and>
 				</with>
 			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="+" />
+				</with>
+			</enabledWhen>
 	</handler>
    </extension>
    <extension

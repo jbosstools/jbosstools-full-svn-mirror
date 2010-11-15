@@ -1,5 +1,8 @@
 2010-11-15  André Dietisheim  <adietish@redhat.com>
 
+	* plugin.xml: 
+	[JBIDE-7599] corrected refresh handler activation to remove conflicts between the 3 refresh handlers
+	(cloud-, image-, instance-)
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java (.modifyText): 
 	(validateDirectory): 
 	(createControl): 
