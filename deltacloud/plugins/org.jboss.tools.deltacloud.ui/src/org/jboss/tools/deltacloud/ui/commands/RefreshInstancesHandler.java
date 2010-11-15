@@ -14,16 +14,15 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
@@ -38,30 +37,37 @@ public class RefreshInstancesHandler extends AbstractHandler implements IHandler
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			DeltaCloudInstance deltaCloudInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
-			try {
-				refresh(deltaCloudInstance);
-			} catch (Exception e) {
-				IStatus status = StatusFactory.getInstance(
-						IStatus.ERROR,
-						Activator.PLUGIN_ID,
-						e.getMessage(),
-						e);
-				// TODO: internationalize strings
-				ErrorDialog.openError(Display.getDefault().getActiveShell(),
-						"Error",
-						"Cloud not get load children for " + deltaCloudInstance.getDeltaCloud().getName(), status);
-			}
+			refresh(deltaCloudInstance);
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void refresh(DeltaCloudInstance deltaCloudInstance) throws DeltaCloudException {
+	private void refresh(final DeltaCloudInstance deltaCloudInstance) {
+		// TODO: internationalize strings
 		if (deltaCloudInstance != null) {
-			DeltaCloud cloud = deltaCloudInstance.getDeltaCloud();
+			final DeltaCloud cloud = deltaCloudInstance.getDeltaCloud();
 			if (cloud != null) {
-				cloud.loadChildren();
+				new Job("Refreshing instances on cloud " + cloud.getName()) {
+
+					@Override
+					protected IStatus run(IProgressMonitor monitor) {
+						try {
+							cloud.loadChildren();
+							return Status.OK_STATUS;
+						} catch (Exception e) {
+							IStatus status = StatusFactory.getInstance(
+									IStatus.ERROR,
+									Activator.PLUGIN_ID,
+									e.getMessage(),
+									e);
+							return status;
+						}
+					}
+
+				}.schedule();
 			}
 		}
+
 	}
 }
