@@ -13,7 +13,7 @@ package org.eclipse.bpel.apache.ode.runtime;
 
 import java.io.File;
 
-import org.eclipse.bpel.runtimes.publishers.GenericBPELPublisher;
+import org.eclipse.bpel.apache.ode.runtime.GenericBPELPublisher;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;

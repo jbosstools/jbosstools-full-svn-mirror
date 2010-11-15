@@ -13,7 +13,6 @@ package org.jboss.tools.bpel.runtimes;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.eclipse.bpel.runtimes.IRuntimesUIConstants;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

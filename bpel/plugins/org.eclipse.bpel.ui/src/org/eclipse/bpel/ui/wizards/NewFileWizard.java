@@ -203,16 +203,6 @@ public class NewFileWizard extends Wizard implements INewWizard {
 		return true;
 	}
 
-	public IProject getProject()
-	{
-		IContainer container = fContainerPage.getResourceContainer();
-		if (container == null) {
-			container = mContainer;
-		}
-		if (container!=null)
-			return container.getProject();
-		return null;
-	}
 	/**
 	 * Return the BPEL files container in which we can generate process from the
 	 * template.
