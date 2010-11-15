@@ -35,12 +35,12 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6983">JBIDE-6983</ulink>: The <filename>beans.xml</filename> editor now correctly supports elements in other namespaces. This has been achieved by supporting any child element of the &lt;beans&gt; root element and providing dynamic extentions to <filename>beans.xml</filename> in order to support different namespaces.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6983">JBIDE-6983</ulink>: The <filename>beans.xml</filename> editor now correctly supports elements in other namespaces. This has been achieved by supporting any child element of the &lt;beans&gt; root element and providing dynamic extensions to <filename>beans.xml</filename> in order to support different namespaces.
 				   </para>
 				</listitem>
 				<listitem>
 				   <para>
-				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6742">JBIDE-6742</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6743">JBIDE-6743</ulink>: Error messages have been rewritten to clarify the error that occured. For example, the error message <errorname>Session bean with a parameterized bean class declares any scope other than @Dependent</errorname> has been rewritten to say <errorname>Session bean with a parameterized bean class must have @Dependent scope</errorname>. For a list of all error messages affected view the associated JIRAs. 
+				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6742">JBIDE-6742</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6743">JBIDE-6743</ulink>: Error messages have been rewritten to clarify the error that occurred. For example, the error message <errorname>Session bean with a parameterized bean class declares any scope other than @Dependent</errorname> has been rewritten to say <errorname>Session bean with a parameterized bean class must have @Dependent scope</errorname>. For a list of all error messages affected view the associated JIRAs. 
 				   </para>
 				</listitem>
 				<listitem>
@@ -105,7 +105,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6418">JBIDE-6418</ulink>: When matching injections to CDI injection points, there was occasion when no injections existed or those that did exist were ambiguous, however no feedback was provided to the user indicating this. This has been rectified in this release by adding validation tests for CDI injection points where no matching injections exist or those that match are ambigious. In these circumstances validation tests will mark these injection points with an error or warning based on user preferences. 
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6418">JBIDE-6418</ulink>: When matching injections to CDI injection points, there was occasion when no injections existed or those that did exist were ambiguous, however no feedback was provided to the user indicating this. This has been rectified in this release by adding validation tests for CDI injection points where no matching injections exist or those that match are ambiguous. In these circumstances validation tests will mark these injection points with an error or warning based on user preferences. 
 				   </para>
 				</listitem>
 				<listitem>
@@ -206,12 +206,11 @@
 		<title>ESB</title>
 		<para>
 			<itemizedlist>
-<!-- Has been reopened - check closer to release date if it is resolved-->
-			<!--	 <listitem>
+			      <listitem>
 				    <para>
-				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7193">JBIDE-7193</ulink>: New optional parameters <parameter>ruleMultithreadEvaluation</parameter> and <parameter>ruleMaxThreads</parameter> have been added to the <classname>BussinessRulesProcessor</classname> class. <parameter>ruleMultithreadEvaluation</parameter> enables or disables <classname>KnowledgeBase</classname> partitioning. <parameter>ruleMaxThreads</parameter> defines the numer of threads to use when <classname>KnowledgeBase</classname> partitioning is enabled. The default values for these parameters is null, disabling them by default.
+				       <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7193">JBIDE-7193</ulink>: New optional parameters <parameter>ruleMultithreadEvaluation</parameter> and <parameter>ruleMaxThreads</parameter> have been added to the <classname>BussinessRulesProcessor</classname> class. <parameter>ruleMultithreadEvaluation</parameter> enables or disables <classname>KnowledgeBase</classname> partitioning. <parameter>ruleMaxThreads</parameter> defines the number of threads to use when <classname>KnowledgeBase</classname> partitioning is enabled. The default values for these parameters is null, disabling them by default.
 				    </para>
-				 </listitem> -->
+				 </listitem>
 				 <listitem>
 					  <para>
 					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7235">JBIDE-7235</ulink>: The ESB validator has been extended to cover the <classname>BussinessRulesProcessor</classname> class. This ensures that only one <methodname>ruleSet</methodname> is specified by the <classname>BussinessRulesProcessor</classname>, inhibiting conflicts.
@@ -314,7 +313,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6988">JBIDE-6988</ulink>: Console configuration would not take into account the schema and catalog being specified for a JPA project. This meant that if two schemas existed for one databse when a user opened the created console confitguration, it would error indicating there was two database schemas. The expected result is that the schema that has been set for the project would be used.
+					  <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6988">JBIDE-6988</ulink>: Console configuration would not take into account the schema and catalog being specified for a JPA project. This meant that if two schemas existed for one database when a user opened the created console configuration, it would error indicating there was two database schemas. The expected result is that the schema that has been set for the project would be used.
 					</para>
 					<para>
 					  Expected behavior has been implemented by setting a <property>default_schema</property> property in the properties for the project as if this was being set in the <filename>hibernate.properties</filename> file. However properties in the <filename>hibernate.properties</filename> file will overwrite project properties.
@@ -342,7 +341,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6621">JBIDE-6621</ulink>: In previous versions, when a user selected Ingres from the list of databases or databse dialects the <guilabel>Driver Name</guilabel> and <guilabel>Connection URL</guilabel> fields would not be auto-populated as they are for other databases in the list. This has lead to concerns of the compatibility of Ingres with JBoss Enterprise Application Platform. To correct this issue the new Ingres dialects <filename>Ingres9Dialect</filename> and <filename>Ingres10Dialect</filename> have been added, ensuring the aforementioned fields are auto-populated for both versions 9 and 10 of Hibernate core.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6621">JBIDE-6621</ulink>: In previous versions, when a user selected Ingres from the list of databases or database dialects the <guilabel>Driver Name</guilabel> and <guilabel>Connection URL</guilabel> fields would not be auto-populated as they are for other databases in the list. This has lead to concerns of the compatibility of Ingres with JBoss Enterprise Application Platform. To correct this issue the new Ingres dialects <filename>Ingres9Dialect</filename> and <filename>Ingres10Dialect</filename> have been added, ensuring the aforementioned fields are auto-populated for both versions 9 and 10 of Hibernate core.
 				   </para>
 				</listitem>
 				<listitem>
@@ -367,7 +366,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6115">JBIDE-6115</ulink>: The <guibutton>Schema Export (.ddl)</guibutton> exporter would apply any changes made by a user to the database during the export process. This was unexpected behavior and had the ability to cause unwanted data loss. This issue has been corrected by ensuring that the script is not exported to the database by default, thus no changes are applied to the databse by default now when using the <guibutton>Schema Export (.ddl)</guibutton> functionality.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6115">JBIDE-6115</ulink>: The <guibutton>Schema Export (.ddl)</guibutton> exporter would apply any changes made by a user to the database during the export process. This was unexpected behavior and had the ability to cause unwanted data loss. This issue has been corrected by ensuring that the script is not exported to the database by default, thus no changes are applied to the database by default now when using the <guibutton>Schema Export (.ddl)</guibutton> functionality.
 				   </para>
 				</listitem>
 				<listitem>
@@ -377,7 +376,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5805">JBIDE-5805</ulink>: Usability has been improved with this release by including matching bracket highlighting within the Hibernate Query Language (HQL) editor. When a user has the cursor beside a bracket in their code, the paired bracket will be highlighted. This functionality is useful for debuging applicaitons.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5805">JBIDE-5805</ulink>: Usability has been improved with this release by including matching bracket highlighting within the Hibernate Query Language (HQL) editor. When a user has the cursor beside a bracket in their code, the paired bracket will be highlighted. This functionality is useful for debuging applications.
 				   </para>
 				</listitem>
 				<listitem>
@@ -388,6 +387,11 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4663">JBIDE-4663</ulink>: <property>@DiscriminatorFormula</property> annotation has been fixed so that the assigned value appears in the <guilabel>Formula</guilabel> field of the <guilabel>JPA Details</guilabel> tab.
+				   </para>
+				</listitem>
+				<listitem>
+				   <para>
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4202">JBIDE-4202</ulink>: In previous releases a user was not able to enter a parameter list using the Hibernate Query Editor. For this release the <guilabel>Query Parameters</guilabel> view has been improved to allow a user to select a parameter type from a list, if more than one parameter exists. To achieve this a user can click on the <guibutton>...</guibutton> button in the <guilabel>Value</guilabel> field of the <guilabel>Query Parameters</guilabel> view. If the button does not appear then there is only one parameter available.
 				   </para>
 				</listitem>
 <!-- JBIDE-5960 was included in the JBDS 3.0.1 and JBT 3.1.1 releases. Mentioned in 3.0.1 Release Notes -->
@@ -417,12 +421,27 @@
 			<itemizedlist>
 			   <listitem>
 			      <para>
-			      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7439">JBIDE-7439</ulink>: Code completion has been added for the <property>name</property> attribute based on the assoicated <property>type</property>. For example: Code completion is now available for <code>&lt;cc:attribute name="myattr" type="java.lang.String" /&gt;</code>.
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7439">JBIDE-7439</ulink>: Code completion has been added for the <property>name</property> attribute based on the associated <property>type</property>. For example: Code completion is now available for <code>&lt;cc:attribute name="myattr" type="java.lang.String" /&gt;</code>.
+			      </para>
+			   </listitem>
+			   <listitem>
+			      <para>
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7433">JBIDE-7433</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7424">JBIDE-7424</ulink>: Palette tools have been added to the JSF tooling that support RichFaces 4.0.
+			      </para>
+			   </listitem>
+			   <listitem>
+			      <para>
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7422">JBIDE-7422</ulink>: Templates have been created and are included that combine JSF 2.0 and RichFaces 4.0.
+			      </para>
+			   </listitem>
+			   <listitem>
+			      <para>
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7265">JBIDE-7265</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7264">JBIDE-7264</ulink>: Refactoring speed has been improved. Previously when a user would perform a refactoring action, every Expression Language (EL) parameter would be checked, even if the Java class was not used in an Expression Language. Speed has been improved for this release by containing EL parameter checking to only those of relevance; this is achieved by using the <classname>ValidationContext</classname> class.
 			      </para>
 			   </listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7147">JBIDE-7147</ulink>: The validators create a marker for each problem found when conducting validation. An issue would arise where system performance would be drammatically decreased when an excesive amount of problems were discovered and subsequently marked. To ensure a system does not receive a performance hit, the <guimenuitem>Validator</guimenuitem> preferences screen now includes the ability to set the maximum number of problems reported per file. If there are more issues in a file than the maximum number to be reported, once the reported issues are corrected the others will be reported in subsequent validation attempts.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7147">JBIDE-7147</ulink>: The validators create a marker for each problem found when conducting validation. An issue would arise where system performance would be dramatically decreased when an excessive amount of problems were discovered and subsequently marked. To ensure a system does not receive a performance hit, the <guimenuitem>Validator</guimenuitem> preferences screen now includes the ability to set the maximum number of problems reported per file. If there are more issues in a file than the maximum number to be reported, once the reported issues are corrected the others will be reported in subsequent validation attempts.
 				   </para>
 				</listitem>
 				<listitem>
@@ -432,7 +451,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7021">JBIDE-7021</ulink>: Low performance issues existed for validation of web pages. Performance issues were caused by the XHTML syntax validator performing to slow if a DOCTYPE was not declared at the top of XHTML files, the <methodname>PageContextFactory.createPageContext</methodname> method created a SSE model for non-facelet pages, if a page contained Expression Language (EL) errors or warnings, a memory leak appeared in the <methodname>PageContextFactory.getSheetForTagAttribute</methodname> method by registerting <classname>ExtendedLinkElementAdapter</classname> and never releasing the memory allocated to it. These issues have been addressed in this release and the <classname>PageContextFactory</classname> class has been removed from the resource listeners since resources can be modified without changing their context in other places apart from the included validators. 
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7021">JBIDE-7021</ulink>: Low performance issues existed for validation of web pages. Performance issues were caused by the XHTML syntax validator performing to slow if a DOCTYPE was not declared at the top of XHTML files, the <methodname>PageContextFactory.createPageContext</methodname> method created a SSE model for non-facelet pages, if a page contained Expression Language (EL) errors or warnings, a memory leak appeared in the <methodname>PageContextFactory.getSheetForTagAttribute</methodname> method by registering <classname>ExtendedLinkElementAdapter</classname> and never releasing the memory allocated to it. These issues have been addressed in this release and the <classname>PageContextFactory</classname> class has been removed from the resource listeners since resources can be modified without changing their context in other places apart from the included validators. 
 				   </para>
 				</listitem>
 				<listitem>
@@ -452,7 +471,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6285">JBIDE-6285</ulink>: Previously when a user would insert a start and ending tag (for example, &lt;tag&gt;&lt;tag&gt;), code assistance would turn on when the cursor was placed between the tags. This behavior was not an assistance to the user under normal circumstances as when a user pressed the <keycode>Enter</keycode> key, to seperate the tags, the first code assist proposal would be inserted instead. For this release Code assistance has been improved by realizing that in the mentioned circumstance no assistance is required.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6285">JBIDE-6285</ulink>: Previously when a user would insert a start and ending tag (for example, &lt;tag&gt;&lt;tag&gt;), code assistance would turn on when the cursor was placed between the tags. This behavior was not an assistance to the user under normal circumstances as when a user pressed the <keycode>Enter</keycode> key, to separate the tags, the first code assist proposal would be inserted instead. For this release Code assistance has been improved by realizing that in the mentioned circumstance no assistance is required.
 				   </para>
 				</listitem>
 				<listitem>
@@ -462,12 +481,12 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6266">JBIDE-6266</ulink>: Content Assist now includes support for Web Standards Tools (WST) categories. A futher two categories have been added: JBoss JSF/Seam EL and JBoss JSF/Seam Tag Proposals.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6266">JBIDE-6266</ulink>: Content Assist now includes support for Web Standards Tools (WST) categories. A further two categories have been added: JBoss JSF/Seam EL and JBoss JSF/Seam Tag Proposals.
 				   </para>
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6259">JBIDE-6259</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6025">JBIDE-6025</ulink>: A new option has been added to the <guilabel>Preferences</guilabel> page allowing a user to <option>enable</option> or <option>disbale</option> code assist of <methodname>get</methodname> and <methodname>set</methodname> methods in the expression language.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6259">JBIDE-6259</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6025">JBIDE-6025</ulink>: A new option has been added to the <guilabel>Preferences</guilabel> page allowing a user to <option>enable</option> or <option>disable</option> code assist of <methodname>get</methodname> and <methodname>set</methodname> methods in the expression language.
 				   </para>
 				</listitem>
 				<listitem>
@@ -512,7 +531,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5677">JBIDE-5677</ulink>: JSF 2 is now supported for web projects. When a user is configuring Project Facets and selects to add JSF support, JSF 2 is now an avaiable option.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5677">JBIDE-5677</ulink>: JSF 2 is now supported for web projects. When a user is configuring Project Facets and selects to add JSF support, JSF 2 is now an available option.
 				   </para>
 				</listitem>
 				<listitem>
@@ -522,12 +541,12 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4990">JBIDE-4990</ulink>: When performing an Expression Language (EL) variable refactoring (renaming), all occurances of the specific variable are renamed accordingly. The refactoring action is available from the context menu of an Expression Language (EL) variable in the JSP and XHTML editors.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4990">JBIDE-4990</ulink>: When performing an Expression Language (EL) variable refactoring (renaming), all occurrences of the specific variable are renamed accordingly. The refactoring action is available from the context menu of an Expression Language (EL) variable in the JSP and XHTML editors.
 				   </para>
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4947">JBIDE-4947</ulink>: A new feature has been added that produces a tool tip for any Expression Language (EL) element that a user hovers the mouse cursor over. The tool tip displays informaiton about the EL element.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-4947">JBIDE-4947</ulink>: A new feature has been added that produces a tool tip for any Expression Language (EL) element that a user hovers the mouse cursor over. The tool tip displays information about the EL element.
 				   </para>
 				</listitem>
 				<listitem>
@@ -549,7 +568,7 @@
 		   </listitem>
 		   <listitem>
 		      <para>
-			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6796">JBIDE-6796</ulink>: Launch configuration of the server can now be altered to perform different tasks based on the server mode; sample modes include local and Remote System Explorer (RSE). This added functionality has been achieved by separating launch behaviour into seperate classes.
+			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6796">JBIDE-6796</ulink>: Launch configuration of the server can now be altered to perform different tasks based on the server mode; sample modes include local and Remote System Explorer (RSE). This added functionality has been achieved by separating launch behavior into separate classes.
 		      </para>
 		   </listitem>
 		   <listitem>
@@ -559,7 +578,7 @@
 		   </listitem>
 		   <listitem>
 		      <para>
-			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6612">JBIDE-6612</ulink>: The new version of Eclipse would not recognise JBoss Application Server 6 as a valid JEE6 environment. To rectify this bug, Java EE6 has been configured to support JBoss Application Server 6 by modifying <filename>/as/plugins/org.jboss.ide.eclipse.as.core/plugin.xml </filename>. 
+			 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6612">JBIDE-6612</ulink>: The new version of Eclipse would not recognize JBoss Application Server 6 as a valid JEE6 environment. To rectify this bug, Java EE6 has been configured to support JBoss Application Server 6 by modifying <filename>/as/plugins/org.jboss.ide.eclipse.as.core/plugin.xml </filename>. 
 		      </para>
 		   </listitem>
 		   <listitem>
@@ -621,6 +640,11 @@
 		<title>Seam</title>
 		<para>
 			<itemizedlist>
+			   <listitem>
+			      <para>
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7245">JBIDE-7245</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6360">JBIDE-6360</ulink>:Previously only <property>view-id</property> entries in the <code>redirect</code> tag were checked for validity. Error checking for this parameter has been extended to include occurrences of the attribute within all tags.
+			      </para>
+			   </listitem>
 				<listitem>
 					<para>
 					   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6877">JBIDE-6877</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6875">JBIDE-6875</ulink>: When a user writes code for the Seam component that won't compile, new quick fixes are now presented through annotations. Quick fixes include the ability to quickly add a <property>Name</property> annotation to the class and delete a <property>Create</property>, <property>Unwrap</property> or <property>Observer</property> annotation from the method.
@@ -659,11 +683,6 @@
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6610">JBIDE-6610</ulink>: Components defined in a custom <filename>component.xml</filename> file were not recognized. This bug has been corrected through the modification of <filename>XMLScanner.java</filename>, <filename>SeamComponentsEntityRecognizer.java</filename> and <filename>SeamResourceVisitor.java</filename>.
-				   </para>
-				</listitem>
-				<listitem>
-				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6360">JBIDE-6360</ulink>: Previously <property>view-id</property> entries in the navigation of XML files was not tested for validlity. Error checking for this parameter has been added to the Seam tools set with this release.
 				   </para>
 				</listitem>
 				<listitem>
@@ -762,11 +781,21 @@
 		<title>Visual Page Editor</title>
 		<para>
 			<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7059">JBIDE-7059</ulink>: XulRunner (XR) has become an optional install of the Visual Page Editor. This decision has meant that the buttons of the Visual Page Editor plug-in have been moved to be apart of the Eclipse icon bar.
-					</para>
-				</listitem>
+			   <listitem>
+			      <para>
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7434">JBIDE-7434</ulink>: Templates with support for RichFaces 4.0 have been added to the Visual Page Editor.
+			      </para>
+			   </listitem>
+			   <listitem>
+			      <para>
+				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7383">JBIDE-7383</ulink>: When using the Visual Page Editor (VPE), a new option has been introduced that allows a user to select where the editor toolbar icons should be displayed. The icons can now be displayed either as part of the general VPE toolbar or as part of the main Eclipse toolbar. To choose between these options navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>Editors</guimenuitem><guimenuitem>Visual Page Editor</guimenuitem></menuchoice>. By default the editor icons are included as part of the main Eclipse toolbar.
+			      </para>
+			   </listitem>
+			   <listitem>
+				<para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7059">JBIDE-7059</ulink>: XulRunner (XR) has become an optional install of the Visual Page Editor. This decision has meant that the buttons of the Visual Page Editor plug-in have been moved to be apart of the Eclipse icon bar.
+				</para>
+			   </listitem>
 				<listitem>
 				   <para>
 				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6981">JBIDE-6981</ulink>: Functionality has been added that provides a drop-down menu in the tag breadcrumbs that enables easy selection of any child element to the selected tag. If there are no children to be expanded, the last tag will remain highlighted.
@@ -789,7 +818,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6600">JBIDE-6600</ulink>: The Visual Page Editor would use all available template libraries reguardless of the opened content. This caused conflicts between templates; an example of this is the <property>head</property> tag appearing in both the docbook and HTML templates. The solution has been to create a seperate editor for docbook.
+				   <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6600">JBIDE-6600</ulink>: The Visual Page Editor would use all available template libraries regardless of the opened content. This caused conflicts between templates; an example of this is the <property>head</property> tag appearing in both the docbook and HTML templates. The solution has been to create a separate editor for docbook.
 				   </para>
 				</listitem>
 				<listitem>
@@ -918,7 +947,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6589">JBIDE-6589</ulink>: In previous releases a JAX-WS invocation could not be cancelled. Support for cancelling a long-running invocation has been implemented and improved for this release.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6589">JBIDE-6589</ulink>: In previous releases a JAX-WS invocation could not be canceled. Support for canceling a long-running invocation has been implemented and improved for this release.
 				   </para>
 				</listitem>
 				<listitem>
@@ -947,7 +976,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5975">JBIDE-5975</ulink>: The <filename>web.xml</filename> editor did not support the JavaEE 6 Servlet 3.0 specification. The <filename>web.xml</filename> editor has now been updated to suppor the new Servlet specification version.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-5975">JBIDE-5975</ulink>: The <filename>web.xml</filename> editor did not support the JavaEE 6 Servlet 3.0 specification. The <filename>web.xml</filename> editor has now been updated to support the new Servlet specification version.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -968,6 +997,11 @@
 				 <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6836">JBIDE-6836</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6695">JBIDE-6695</ulink>: Google Web Toolkit features are available for JBoss Tools through the update site as experimental. 
 			      </para>
 			   </listitem> -->
+			      <listitem>
+				 <para>
+				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7393">JBIDE-7393</ulink>: The search functionality has been upgraded for the tooling set. This upgrade now allows a user to search using the special characters <code>*</code> and <code>\</code>, for any string and any character respectively. To perform a literal search for these characters, append a <code>\</code> following the character in the search parameter.
+				 </para>
+			      </listitem>
 			      <listitem>
 				 <para>
 				    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6507">JBIDE-6507</ulink>: Support has been added for enabling and disabling project validators based on the JBoss KB (Knowledge Base) project validator. Validators that can be enabled or disabled include those for JSF, Seam and CDI.
