@@ -73,17 +73,23 @@ public class NewInstanceModel extends ObservablePojo {
 		private String getArch(String id) {
 			String arch = "";
 			if (id != null && id.length() > 0) {
-				DeltaCloudImage[] images = cloud.getCurrImages();
-				for (int i = 0; i < images.length; ++i) {
-					DeltaCloudImage image = images[i];
-					if (image.getId().equals(id)) {
-						imageContainer.setImage(image);
-						arch = image.getArchitecture();
-						break;
-					}
+				DeltaCloudImage image = getImage(id, arch, cloud.getCurrImages());
+				if (image != null) {
+					imageContainer.setImage(image);
+					arch = image.getArchitecture();
 				}
 			}
 			return arch;
+		}
+
+		private DeltaCloudImage getImage(String id, String arch, DeltaCloudImage[] images) {
+			for (int i = 0; i < images.length; ++i) {
+				DeltaCloudImage image = images[i];
+				if (image.getId().equals(id)) {
+					return image;
+				}
+			}
+			return null;
 		}
 
 	}
