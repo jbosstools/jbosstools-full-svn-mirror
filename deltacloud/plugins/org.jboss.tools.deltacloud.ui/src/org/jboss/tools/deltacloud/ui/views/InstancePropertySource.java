@@ -44,11 +44,6 @@ public class InstancePropertySource implements IPropertySource {
 	private DeltaCloudInstance instance;
 	private DeltaCloud cloud;
 	public InstancePropertySource(CVInstanceElement element, Object o) {
-//		CloudViewElement parent = (CloudViewElement)element.getParent();
-//		while (parent != null && !(parent instanceof CVCloudElement)) {
-//			parent = (CloudViewElement)parent.getParent();
-//		}
-//		cloud = (DeltaCloud)parent.getElement();
 		cloud = CloudViewElementUtils.getCloud(element);
 		instance = (DeltaCloudInstance)o;
 	}
@@ -124,7 +119,7 @@ public class InstancePropertySource implements IPropertySource {
 					if (instance != null) {
 						key = instance.getKey();
 						if (key != null && key.length() > 0)
-							cloud.addReplaceInstance(instance);
+							cloud.replaceInstance(instance);
 					}
 				}
 			}
