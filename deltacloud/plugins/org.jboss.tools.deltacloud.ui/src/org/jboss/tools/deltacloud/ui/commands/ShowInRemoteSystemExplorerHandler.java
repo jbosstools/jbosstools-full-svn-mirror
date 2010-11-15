@@ -14,6 +14,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -66,6 +67,8 @@ public class ShowInRemoteSystemExplorerHandler extends AbstractHandler implement
 	private void launchRemoteSystemExplorer(final DeltaCloudInstance instance, final Shell shell) throws Exception {
 		String hostname = instance.getHostName();
 		IRSESystemType sshType = getRSESystemType();
+		// TODO: internationalize string
+		Assert.isTrue(sshType != null, "Remote System Explorer could not initialize SSH subsystem: ssh type not found");
 		String connectionName = instance.getName() + " [" + instance.getId() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 		ISystemRegistry registry = SystemStartHere.getSystemRegistry();
 		IHost host = registry.createHost(sshType, connectionName, hostname, null);

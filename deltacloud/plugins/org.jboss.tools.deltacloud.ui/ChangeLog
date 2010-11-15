@@ -1,5 +1,7 @@
 2010-11-15  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/commands/ShowInRemoteSystemExplorerHandler.java (launchRemoteSystemExplorer):
+	[JBIDE-7603] added error dialogs and removed duplicate code 
 	* plugin.xml: 
 	[JBIDE-7599] corrected refresh handler activation to remove conflicts between the 3 refresh handlers
 	(cloud-, image-, instance-)
