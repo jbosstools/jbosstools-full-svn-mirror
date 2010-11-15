@@ -71,14 +71,14 @@ public class PerformInstanceActionThread extends Job {
 			});
 
 		} finally {
-			cloud.removeActionJob(id, this);
+			cloud.removeInstanceJob(id, this);
 			pm.done();
 		}
 		return Status.OK_STATUS;
 	}
 
 	private void cancelPreviousJob(String id) {
-		Job job = cloud.getActionJob(id);
+		Job job = cloud.getInstanceJob(id);
 		if (job != null) {
 			job.cancel();
 			try {

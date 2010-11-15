@@ -308,16 +308,16 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 
-	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] list) {
+	public void listChanged(DeltaCloud cloud, final DeltaCloudInstance[] instances) {
 		// Run following under Display thread since this can be
 		// triggered by a non-display thread notifying listeners.
-		final DeltaCloudInstance[] finalList = list;
 		if (cloud.getName().equals(currCloud.getName())) {
 			Display.getDefault().syncExec(new Runnable() {
 				@Override
 				public void run() {
 					currCloud.removeInstanceListListener(parentView);
-					viewer.setInput(finalList);
+
+					viewer.setInput(instances);
 					currCloud.addInstanceListListener(parentView);
 					viewer.refresh();
 					refreshToolbarCommandStates();

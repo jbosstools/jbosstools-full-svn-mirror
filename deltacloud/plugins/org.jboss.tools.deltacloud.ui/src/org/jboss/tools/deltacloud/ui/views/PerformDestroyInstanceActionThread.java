@@ -29,7 +29,7 @@ public class PerformDestroyInstanceActionThread extends Job {
  			pm.worked(1);
 			// To handle the user starting a new action when we haven't confirmed the last one yet,
 			// cancel the previous job and then go on performing this action
-			Job job = cloud.getActionJob(id);
+			Job job = cloud.getInstanceJob(id);
 			if (job != null) {
 				job.cancel();
 				try {
@@ -38,7 +38,7 @@ public class PerformDestroyInstanceActionThread extends Job {
 					// do nothing, this is ok
 				}
 			}
-			cloud.registerActionJob(id, this);
+			cloud.registerInstanceJob(id, this);
  			Display.getDefault().asyncExec(new Runnable() {
  				@Override
  				public void run() {
@@ -46,7 +46,7 @@ public class PerformDestroyInstanceActionThread extends Job {
  				}
  			});
  		} finally {
- 			cloud.removeActionJob(id, this);
+ 			cloud.removeInstanceJob(id, this);
  			pm.done();
  		}
  		return Status.OK_STATUS;

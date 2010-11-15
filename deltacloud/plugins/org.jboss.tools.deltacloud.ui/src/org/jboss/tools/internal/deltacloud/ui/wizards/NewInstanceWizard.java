@@ -96,20 +96,13 @@ public class NewInstanceWizard extends Wizard {
 				try {
 					pm.beginTask(WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] {instanceName}), IProgressMonitor.UNKNOWN);
 					pm.worked(1);
-					cloud.registerActionJob(instanceId, this);
-					boolean finished = false;
-					while (!finished && !pm.isCanceled()) {
-						instance = cloud.refreshInstance(instanceId);
-						if (instance != null && !instance.getState().equals(DeltaCloudInstance.PENDING))
-							break;
-						Thread.sleep(400);
-					}
-
+					cloud.registerInstanceJob(instanceId, this);
+					instance = cloud.waitWhilePending(instanceId, pm);
 				} catch (Exception e) {
 					// do nothing
 				} finally {
 					cloud.replaceInstance(instance);
-					cloud.removeActionJob(instanceId, this);
+					cloud.removeInstanceJob(instanceId, this);
 					String hostname = instance.getHostName();
 					Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 					boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
@@ -198,6 +191,7 @@ public class NewInstanceWizard extends Wizard {
 					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
 				}
 			}
+
 			instance = cloud.createInstance(name, imageId, realmId, profileId, keyname, memory, storage);
 			if (instance != null)
 				result = true;

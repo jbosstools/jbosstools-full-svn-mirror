@@ -44,10 +44,10 @@ public class RefreshInstancesHandler extends AbstractHandler implements IHandler
 	}
 
 	private void refresh(final DeltaCloudInstance deltaCloudInstance) {
-		// TODO: internationalize strings
 		if (deltaCloudInstance != null) {
 			final DeltaCloud cloud = deltaCloudInstance.getDeltaCloud();
 			if (cloud != null) {
+				// TODO: internationalize strings
 				new Job("Refreshing instances on cloud " + cloud.getName()) {
 
 					@Override
@@ -56,11 +56,8 @@ public class RefreshInstancesHandler extends AbstractHandler implements IHandler
 							cloud.loadChildren();
 							return Status.OK_STATUS;
 						} catch (Exception e) {
-							IStatus status = StatusFactory.getInstance(
-									IStatus.ERROR,
-									Activator.PLUGIN_ID,
-									e.getMessage(),
-									e);
+							IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+									e.getMessage(), e);
 							return status;
 						}
 					}

@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnection;
+import org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnectionWizard;
 
 /**
  * @author Andre Dietisheim
@@ -26,7 +26,7 @@ public class NewConnectionHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		NewCloudConnection wizard = new NewCloudConnection();
+		NewCloudConnectionWizard wizard = new NewCloudConnectionWizard();
 		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection());
 		WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
 				wizard);

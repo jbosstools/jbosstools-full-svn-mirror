@@ -111,8 +111,8 @@ public class NewInstanceModel extends ObservablePojo {
 
 		@Override
 		public IStatus validate(Object value) {
-			Assert.isTrue(value instanceof String);
-			if (value != null && ((String) value).length() > 0) {
+			if (value instanceof String
+					&& ((String) value).length() > 0) {
 				return ValidationStatus.ok();
 			} else {
 				return ValidationStatus.error(WizardMessages.getString(IMAGE_ID_NOT_FOUND));

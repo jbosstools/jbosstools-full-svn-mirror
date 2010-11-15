@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.PatternSyntaxException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.equinox.security.storage.EncodingUtils;
@@ -256,7 +257,7 @@ public class DeltaCloud {
 			((IImageListListener) listeners[i]).listChanged(this, array);
 	}
 
-	public Job getActionJob(String id) {
+	public Job getInstanceJob(String id) {
 		synchronized (actionLock) {
 			Job j = null;
 			if (actionJobs != null) {
@@ -266,7 +267,7 @@ public class DeltaCloud {
 		}
 	}
 
-	public void registerActionJob(String id, Job j) {
+	public void registerInstanceJob(String id, Job j) {
 		synchronized (actionLock) {
 			if (actionJobs == null)
 				actionJobs = new HashMap<String, Job>();
@@ -274,7 +275,19 @@ public class DeltaCloud {
 		}
 	}
 
-	public void removeActionJob(String id, Job j) {
+	public DeltaCloudInstance waitWhilePending(String instanceId, IProgressMonitor pm) throws InterruptedException {
+		DeltaCloudInstance instance = null;
+		while (!pm.isCanceled()) {
+				instance = refreshInstance(instanceId);
+				if (instance != null && !instance.getState().equals(DeltaCloudInstance.PENDING)) {
+					return instance;
+				}
+				Thread.sleep(400);
+			}
+			return instance;
+	}
+
+	public void removeInstanceJob(String id, Job j) {
 		synchronized (actionLock) {
 			if (actionJobs != null && actionJobs.get(id) == j)
 				actionJobs.remove(id);

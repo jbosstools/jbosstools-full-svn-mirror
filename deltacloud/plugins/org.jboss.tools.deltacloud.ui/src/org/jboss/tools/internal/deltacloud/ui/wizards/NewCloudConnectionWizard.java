@@ -24,12 +24,12 @@ import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.ui.Activator;
 
-public class NewCloudConnection extends Wizard implements INewWizard, CloudConnection {
+public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
 
 	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
 	private CloudConnectionPage mainPage;
 
-	public NewCloudConnection() {
+	public NewCloudConnectionWizard() {
 		super();
 	}
 

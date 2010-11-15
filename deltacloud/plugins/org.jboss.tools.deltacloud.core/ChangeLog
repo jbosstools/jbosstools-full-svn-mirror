@@ -1,3 +1,13 @@
+2010-11-16  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (registerInstanceJob): 
+	(getInstanceJob): 
+	(registerInstanceJob): 
+	(removeInstanceJob): 
+	[JBIDE-7603] renamed instance job related methods from action job to instance job (since jobs are not only used for actions)
+	(waitWhilePending): 
+	[JBIDE-7603] moved (duplicate) instance state waiting code to delta cloud and removed duplication 
+
 2010-11-11  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (DeltaCloudInstance): 

@@ -1,3 +1,13 @@
+2010-11-16  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard2.java (WatchCreateJob.run): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (WatchCreateJob.run): 
+	[JBIDE-7603] moved (duplicate) instance state waiting code to delta cloud and removed duplication 
+	* src/org/jboss/tools/deltacloud/ui/commands/ShowInRemoteSystemExplorerHandler.java (execute): 
+	[JBIDE-7603] unified RSE related (duplicate) code with code in NewConnectionHandler2
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java: 
+	[JBIDE-7603] renamed NewCloudConnection to NewCloudConnectionWizard (since it is a wizard)
+	
 2010-11-15  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/commands/ShowInRemoteSystemExplorerHandler.java (launchRemoteSystemExplorer):
