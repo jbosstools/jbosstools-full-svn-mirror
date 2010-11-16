@@ -99,7 +99,7 @@ public class NewInstancePage extends WizardPage {
 
 		public void widgetSelected(SelectionEvent event) {
 			Shell shell = getShell();
-			ManageKeys wizard = new ManageKeys(cloud, ".pem"); //$NON-NLS-1$
+			ManageKeysWizard wizard = new ManageKeysWizard(cloud, ".pem"); //$NON-NLS-1$
 			WizardDialog dialog = new CustomWizardDialog(shell, wizard,
 					IDialogConstants.OK_LABEL);
 			dialog.create();

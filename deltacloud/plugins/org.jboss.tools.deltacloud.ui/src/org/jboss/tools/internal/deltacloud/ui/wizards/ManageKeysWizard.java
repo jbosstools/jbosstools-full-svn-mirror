@@ -13,14 +13,14 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 
-public class ManageKeys extends Wizard {
+public class ManageKeysWizard extends Wizard {
 
 	private DeltaCloud cloud;
 	private String fileExtension;
 	private ManageKeysPage mainPage;
 	private String keyname;
 
-	public ManageKeys(DeltaCloud cloud, String fileExtension) {
+	public ManageKeysWizard(DeltaCloud cloud, String fileExtension) {
 		this.cloud = cloud;
 		this.fileExtension = fileExtension;
 	}
