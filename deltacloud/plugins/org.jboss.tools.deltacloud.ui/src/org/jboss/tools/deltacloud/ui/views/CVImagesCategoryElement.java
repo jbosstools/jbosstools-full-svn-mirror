@@ -72,9 +72,8 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 	public Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
-			DeltaCloudImage[] images;
 			try {
-				images = filter(cloud.getCurrImages());
+				DeltaCloudImage[] images = filter(cloud.getCurrImages());
 				cloud.removeImageListListener(this);
 				addImages(images);
 				initialized = true;
@@ -88,7 +87,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 				// TODO: internationalize strings
 				ErrorDialog.openError(Display.getDefault().getActiveShell(),
 						"Error",
-						"Cloud not get images from cloud " + cloud.getName(), status);
+						"Colud not get images from cloud " + cloud.getName(), status);
 			}
 		}
 		return super.getChildren();
