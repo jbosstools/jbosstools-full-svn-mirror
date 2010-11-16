@@ -19,7 +19,6 @@ import org.jboss.tools.common.log.StatusFactory;
 public class ErrorUtils {
 	public static IStatus openErrorDialog(final String title, final String message, Exception e, final Shell shell) {
 		final IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-		// TODO: internationalize strings
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
 				ErrorDialog.openError(shell, title, message, status);
