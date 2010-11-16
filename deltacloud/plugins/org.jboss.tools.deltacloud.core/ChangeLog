@@ -17,6 +17,7 @@
 	(removeInstanceJob): 
 	[JBIDE-7603] renamed instance job related methods from action job to instance job (since jobs are not only used for actions)
 	(waitWhilePending): 
+	(waitForState): 
 	[JBIDE-7603] moved (duplicate) instance state waiting code to delta cloud and removed duplication 
 
 2010-11-11  André Dietisheim  <adietish@redhat.com>
