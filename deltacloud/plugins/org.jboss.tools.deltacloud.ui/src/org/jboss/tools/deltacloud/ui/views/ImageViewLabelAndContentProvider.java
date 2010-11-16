@@ -15,18 +15,16 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
-import org.jboss.tools.common.log.StatusFactory;
+import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
-import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 public class ImageViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider,
 		ITableLabelProvider {
@@ -90,19 +88,14 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 			if (newInput instanceof DeltaCloudImage[]) {
 				images = filter((DeltaCloudImage[]) newInput);
 			} else {
+				cloud = (DeltaCloud) newInput;
 				try {
-					cloud = (DeltaCloud) newInput;
 					images = filter(cloud.getCurrImages());
 				} catch (Exception e) {
-					IStatus status = StatusFactory.getInstance(
-							IStatus.ERROR,
-							Activator.PLUGIN_ID,
-							e.getMessage(),
-							e);
-					// TODO: internationalize strings
-					ErrorDialog.openError(viewer.getControl().getShell(),
+					ErrorUtils.openErrorDialog(
 							"Error",
-							"Cloud not get images from cloud " + cloud.getName(), status);
+							"Could not get images for cloud " + cloud.getName(),
+							e, Display.getDefault().getActiveShell());
 				}
 			}
 		}

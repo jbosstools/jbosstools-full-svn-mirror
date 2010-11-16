@@ -1,5 +1,12 @@
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (inputChanged): 
+	* src/org/jboss/tools/deltacloud/ui/views/InstancePropertySource.java (getKey): 
+	[JBIDE-7597] errors while loading images/instances are now reported (exceptions are not swallowed any longer)
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java (inputChanged): 
+	[JBIDE-7597] using ErrorUtils now (removed code duplication)
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (getChildren): 
+	[JBIDE-7597] errors while loading images/instances are now reported (exceptions are not swallowed any longer)
 	* src/org/jboss/tools/deltacloud/ui/RSEUtils.java (createHostName): 
 	[JBIDE-7603] added null check
 	* src/org/jboss/tools/deltacloud/ui/views/PerformInstanceActionThread.java (run): 

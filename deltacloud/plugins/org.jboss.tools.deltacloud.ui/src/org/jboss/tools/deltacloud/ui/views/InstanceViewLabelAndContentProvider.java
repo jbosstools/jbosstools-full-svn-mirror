@@ -20,11 +20,13 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 public class InstanceViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider,
@@ -83,7 +85,14 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 				instances = filter((DeltaCloudInstance[]) newInput);
 			} else {
 				cloud = (DeltaCloud) newInput;
-				instances = filter(cloud.getCurrInstances());
+				try {
+					instances = filter(cloud.getCurrInstances());
+				} catch (Exception e) {
+					ErrorUtils.openErrorDialog(
+							"Error",
+							"Could not get instances for cloud " + cloud.getName(),
+							e, Display.getDefault().getActiveShell());
+				}
 			}
 		}
 	}

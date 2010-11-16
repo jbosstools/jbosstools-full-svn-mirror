@@ -13,10 +13,12 @@ package org.jboss.tools.deltacloud.ui.views;
 import java.util.ArrayList;
 
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 public class CVInstancesCategoryElement extends CVCategoryElement implements IInstanceListListener {
 
@@ -67,11 +69,18 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 	public Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud) getElement();
-			cloud.removeInstanceListListener(this);
-			DeltaCloudInstance[] instances = filter(cloud.getCurrInstances());
-			addInstances(instances);
-			initialized = true;
-			cloud.addInstanceListListener(this);
+			try {
+				cloud.removeInstanceListListener(this);
+				DeltaCloudInstance[] instances = filter(cloud.getCurrInstances());
+				addInstances(instances);
+				initialized = true;
+				cloud.addInstanceListListener(this);
+			} catch (Exception e) {
+				ErrorUtils.openErrorDialog(
+						"Error",
+						"Colud not get instances from cloud " + cloud.getName(),
+						e, Display.getDefault().getActiveShell());
+			}
 		}
 		return super.getChildren();
 	}
