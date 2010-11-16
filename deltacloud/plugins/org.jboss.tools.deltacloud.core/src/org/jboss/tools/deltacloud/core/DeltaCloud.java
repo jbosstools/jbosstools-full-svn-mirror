@@ -61,7 +61,7 @@ public class DeltaCloud {
 	public static interface IInstanceStateMatcher {
 		public boolean matchesState(DeltaCloudInstance instance, String instanceState);
 	}
-	
+
 	public DeltaCloud(String name, String url, String username, String passwd) throws MalformedURLException {
 		this(name, url, username, passwd, null, false, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
 	}
@@ -279,20 +279,21 @@ public class DeltaCloud {
 		}
 	}
 
-	public DeltaCloudInstance waitWhilePending(String instanceId, IProgressMonitor pm) throws InterruptedException {
+	public DeltaCloudInstance waitWhilePending(String instanceId, IProgressMonitor pm) throws InterruptedException, DeltaCloudException {
 		IInstanceStateMatcher differsFromPending = new IInstanceStateMatcher() {
-			
+
 			@Override
 			public boolean matchesState(DeltaCloudInstance instance, String instanceState) {
 				return !DeltaCloudInstance.PENDING.equals(instanceState);
 			}
 		};
-		return waitForState(instanceId, differsFromPending , pm);
+		return waitForState(instanceId, differsFromPending, pm);
 	}
 
-	public DeltaCloudInstance waitForState(String instanceId, final String expectedState, IProgressMonitor pm) throws InterruptedException {
+	public DeltaCloudInstance waitForState(String instanceId, final String expectedState, IProgressMonitor pm)
+			throws InterruptedException, DeltaCloudException {
 		IInstanceStateMatcher stateMatcher = new IInstanceStateMatcher() {
-			
+
 			@Override
 			public boolean matchesState(DeltaCloudInstance instance, String instanceState) {
 				return expectedState != null && expectedState.equals(instanceState);
@@ -301,17 +302,18 @@ public class DeltaCloud {
 		return waitForState(instanceId, stateMatcher, pm);
 	}
 
-	public DeltaCloudInstance waitForState(String instanceId, IInstanceStateMatcher stateMatcher, IProgressMonitor pm) throws InterruptedException {
+	public DeltaCloudInstance waitForState(String instanceId, IInstanceStateMatcher stateMatcher, IProgressMonitor pm)
+			throws InterruptedException, DeltaCloudException {
 		DeltaCloudInstance instance = getInstance(instanceId);
-		while(!pm.isCanceled()) {
-			if (stateMatcher.matchesState(instance, instance.getState()) 
+		while (!pm.isCanceled()) {
+			if (stateMatcher.matchesState(instance, instance.getState())
 					|| instance.getState().equals(DeltaCloudInstance.TERMINATED)) {
 				return instance;
 			}
 			Thread.sleep(400);
 			instance = refreshInstance(instance.getId());
 		}
-		return instance;		
+		return instance;
 	}
 
 	public void removeInstanceJob(String id, Job j) {
@@ -326,10 +328,11 @@ public class DeltaCloud {
 	 * Furthermore listeners get informed.
 	 * 
 	 * @return the instances
+	 * @throws DeltaCloudException 
 	 * 
 	 * @see #notifyInstanceListListeners(DeltaCloudInstance[])
 	 */
-	public DeltaCloudInstance[] loadInstances() {
+	public DeltaCloudInstance[] loadInstances() throws DeltaCloudException {
 		synchronized (instanceLock) {
 			instances = new ArrayList<DeltaCloudInstance>();
 			try {
@@ -338,18 +341,18 @@ public class DeltaCloud {
 					DeltaCloudInstance instance = new DeltaCloudInstance(this, i.next());
 					instances.add(instance);
 				}
+				// TODO: remove notification with all instances, replace by
+				// notifying the changed instance
+				DeltaCloudInstance[] instancesArray = instances.toArray(new DeltaCloudInstance[instances.size()]);
+				notifyInstanceListListeners(instancesArray);
+				return instancesArray;
 			} catch (DeltaCloudClientException e) {
-				Activator.log(e);
+				throw new DeltaCloudException(e);
 			}
-			// TODO: remove notification with all instances, replace by
-			// notifying the changed instance
-			DeltaCloudInstance[] instancesArray = instances.toArray(new DeltaCloudInstance[instances.size()]);
-			notifyInstanceListListeners(instancesArray);
-			return instancesArray;
 		}
 	}
 
-	public DeltaCloudInstance[] getCurrInstances() {
+	public DeltaCloudInstance[] getCurrInstances() throws DeltaCloudException {
 		synchronized (instanceLock) {
 			if (instances == null) {
 				return loadInstances();
@@ -412,7 +415,7 @@ public class DeltaCloud {
 		}
 	}
 
-	public DeltaCloudInstance refreshInstance(String instanceId) {
+	public DeltaCloudInstance refreshInstance(String instanceId) throws DeltaCloudException {
 		DeltaCloudInstance retVal = null;
 		try {
 			Instance instance = client.listInstances(instanceId);

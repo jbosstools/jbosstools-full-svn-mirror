@@ -24,6 +24,11 @@
 	(waitWhilePending): 
 	(waitForState): 
 	[JBIDE-7603] moved (duplicate) instance state waiting code to delta cloud and removed duplication 
+	(loadChildren): 
+	(loadInstances): 
+	(getCurrInstances): 
+	(refreshInstance): 
+	[JBIDE-7597] load images / instances now throw of DeltaCloudExceptions (exceptions are not swallowed any longer)
 
 2010-11-11  André Dietisheim  <adietish@redhat.com>
 
