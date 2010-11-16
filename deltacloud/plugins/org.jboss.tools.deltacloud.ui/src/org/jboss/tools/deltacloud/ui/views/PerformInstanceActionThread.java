@@ -18,7 +18,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
@@ -55,8 +54,8 @@ public class PerformInstanceActionThread extends Job {
 			// cancel the previous job and then go on performing this action
 			cancelPreviousJob(id);
 			cloud.performInstanceAction(id, action);
-			waitForInstanceState(id);
-		} catch (DeltaCloudException e) {
+			cloud.waitForState(id, expectedState, pm);
+		} catch (Exception e) {
 			final IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 			Activator.log(status);
 			Display.getDefault().syncExec(new Runnable() {
@@ -85,19 +84,6 @@ public class PerformInstanceActionThread extends Job {
 				job.join();
 			} catch (InterruptedException e) {
 				// do nothing, this is ok
-			}
-		}
-	}
-
-	private void waitForInstanceState(String id) {
-		while (instance != null && expectedState != null
-				&& !(instance.getState().equals(expectedState))
-				&& !(instance.getState().equals(DeltaCloudInstance.TERMINATED))) {
-			instance = cloud.refreshInstance(id);
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException e) {
-				break;
 			}
 		}
 	}

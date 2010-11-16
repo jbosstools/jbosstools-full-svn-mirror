@@ -58,6 +58,10 @@ public class DeltaCloud {
 	ListenerList instanceListeners = new ListenerList();
 	ListenerList imageListeners = new ListenerList();
 
+	public static interface IInstanceStateMatcher {
+		public boolean matchesState(DeltaCloudInstance instance, String instanceState);
+	}
+	
 	public DeltaCloud(String name, String url, String username, String passwd) throws MalformedURLException {
 		this(name, url, username, passwd, null, false, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
 	}
@@ -276,15 +280,38 @@ public class DeltaCloud {
 	}
 
 	public DeltaCloudInstance waitWhilePending(String instanceId, IProgressMonitor pm) throws InterruptedException {
-		DeltaCloudInstance instance = null;
-		while (!pm.isCanceled()) {
-				instance = refreshInstance(instanceId);
-				if (instance != null && !instance.getState().equals(DeltaCloudInstance.PENDING)) {
-					return instance;
-				}
-				Thread.sleep(400);
+		IInstanceStateMatcher differsFromPending = new IInstanceStateMatcher() {
+			
+			@Override
+			public boolean matchesState(DeltaCloudInstance instance, String instanceState) {
+				return !DeltaCloudInstance.PENDING.equals(instanceState);
 			}
-			return instance;
+		};
+		return waitForState(instanceId, differsFromPending , pm);
+	}
+
+	public DeltaCloudInstance waitForState(String instanceId, final String expectedState, IProgressMonitor pm) throws InterruptedException {
+		IInstanceStateMatcher stateMatcher = new IInstanceStateMatcher() {
+			
+			@Override
+			public boolean matchesState(DeltaCloudInstance instance, String instanceState) {
+				return expectedState != null && expectedState.equals(instanceState);
+			}
+		};
+		return waitForState(instanceId, stateMatcher, pm);
+	}
+
+	public DeltaCloudInstance waitForState(String instanceId, IInstanceStateMatcher stateMatcher, IProgressMonitor pm) throws InterruptedException {
+		DeltaCloudInstance instance = getInstance(instanceId);
+		while(!pm.isCanceled()) {
+			if (stateMatcher.matchesState(instance, instance.getState()) 
+					|| instance.getState().equals(DeltaCloudInstance.TERMINATED)) {
+				return instance;
+			}
+			Thread.sleep(400);
+			instance = refreshInstance(instance.getId());
+		}
+		return instance;		
 	}
 
 	public void removeInstanceJob(String id, Job j) {
