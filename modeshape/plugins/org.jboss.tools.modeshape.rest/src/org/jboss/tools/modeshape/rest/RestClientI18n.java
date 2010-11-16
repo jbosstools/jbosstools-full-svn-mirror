@@ -126,6 +126,9 @@ public final class RestClientI18n {
     public static I18n publishPageWorkspaceLabel;
     public static I18n publishPageWorkspacePublishToolTip;
     public static I18n publishPageWorkspaceUnpublishToolTip;
+    public static I18n publishPageWorkspaceAreaLabel;
+    public static I18n publishPageWorkspaceAreaToolTip;
+    public static I18n publishPageFinishedErrorMsg;
 
     public static I18n publishWizardPublishErrorMsg;
     public static I18n publishWizardPublishTitle;

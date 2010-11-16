@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.IServerRegistryListener;
@@ -67,9 +68,19 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     // ===========================================================================================================================
 
     /**
+     * The default repository workspace area where files are published.
+     */
+    private static final String DEFAULT_WORKSPACE_AREA = "/files";
+
+    /**
      * The key in the wizard <code>IDialogSettings</code> for the recurse flag.
      */
     private static final String RECURSE_KEY = "recurse";
+
+    /**
+     * The key in the wizard <code>IDialogSettings</code> for the workspace area path segment.
+     */
+    private static final String WORKSPACE_AREA_KEY = "workspaceArea";
 
     // ===========================================================================================================================
     // Class Fields
@@ -289,9 +300,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     private org.eclipse.swt.widgets.List lstResources;
 
     /**
-     * The flag indicating if child containers should be traversed.
+     * Indicates if resources should be found recursively.
      */
-    private boolean recurse;
+    private boolean recurse = true;
 
     /**
      * A collection of repositories for the selected server (never <code>null</code>).
@@ -332,6 +343,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
      * The workspace where the resources are being published/unpublished (may be <code>null</code>).
      */
     private Workspace workspace;
+
+    /**
+     * The path segment prepended to the resource project path.
+     */
+    private String workspaceArea;
 
     /**
      * A collection of workspaces for the selected server repository (never <code>null</code>).
@@ -375,6 +391,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         // row 1: label combobox button
         // row 2: label combobox
         // row 3: label combobox
+        // row 4: label textbox
 
         { // row 1: server row
             Composite pnlServer = new Composite(pnl, SWT.NONE);
@@ -450,6 +467,32 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 this.cbxWorkspace.setToolTipText(RestClientI18n.publishPageWorkspaceUnpublishToolTip.text());
             }
         }
+
+        { // row 4: workspace area
+            Label lblWorkspaceArea = new Label(pnl, SWT.LEFT);
+            lblWorkspaceArea.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+            lblWorkspaceArea.setText(RestClientI18n.publishPageWorkspaceAreaLabel.text());
+
+            Text txtWorkspaceArea = new Text(pnl, SWT.BORDER);
+            txtWorkspaceArea.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+            txtWorkspaceArea.setToolTipText(RestClientI18n.publishPageWorkspaceAreaToolTip.text());
+            txtWorkspaceArea.addModifyListener(new ModifyListener() {
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                 */
+                @Override
+                public void modifyText( ModifyEvent e ) {
+                    handleWorkspaceAreaModified(((Text)e.widget).getText());
+                }
+            });
+
+            // set the workspace area from the dialog settings
+            String temp = getDialogSettings().get(WORKSPACE_AREA_KEY);
+            this.workspaceArea = ((temp == null) ? DEFAULT_WORKSPACE_AREA : temp);
+            txtWorkspaceArea.setText(this.workspaceArea);
+        }
     }
 
     private void constructResourcesPanel( Composite parent ) {
@@ -500,10 +543,16 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         }
 
         { // row 3
-            final Button chkRecurse = new Button(pnl, SWT.CHECK);
+            Button chkRecurse = new Button(pnl, SWT.CHECK);
             chkRecurse.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
             chkRecurse.setText(RestClientI18n.publishPageRecurseCheckBox.text());
             chkRecurse.setToolTipText(RestClientI18n.publishPageRecurseCheckBoxToolTip.text());
+
+            // set the recurse flag based on dialog settings
+            if (getDialogSettings().get(RECURSE_KEY) != null) {
+                this.recurse = getDialogSettings().getBoolean(RECURSE_KEY);
+            }
+
             chkRecurse.setSelection(this.recurse);
             chkRecurse.addSelectionListener(new SelectionAdapter() {
                 /**
@@ -513,7 +562,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                  */
                 @Override
                 public void widgetSelected( SelectionEvent e ) {
-                    handleRecurseChanged(chkRecurse.getSelection());
+                    handleRecurseChanged(((Button)e.widget).getSelection());
                 }
             });
 
@@ -527,7 +576,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 @Override
                 public void widgetSelected( SelectionEvent e ) {
                     updateInitialMessage();
-                    chkRecurse.removeSelectionListener(this);
+                    ((Button)e.widget).removeSelectionListener(this);
                 }
             });
         }
@@ -574,20 +623,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     /**
      * @return the files to publish or unpublish (never <code>null</code>)
      */
-    public List<IFile> getFiles() {
+    List<IFile> getFiles() {
         return this.files;
-    }
-
-    /**
-     * Updates the initial page message.
-     */
-    void updateInitialMessage() {
-        String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg.text()
-                                                 : RestClientI18n.publishPageUnpublishOkStatusMsg.text());
-
-        if (msg.equals(getMessage())) {
-            updateState();
-        }
     }
 
     /**
@@ -600,9 +637,16 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     /**
      * @return thw workspace to use when publishing or unpublishing (page must be complete)
      */
-    public Workspace getWorkspace() {
+    Workspace getWorkspace() {
         assert isPageComplete();
         return this.workspace;
+    }
+
+    /**
+     * @return the path segment prepended to the resource project path (never <code>null</code> but can be empty)
+     */
+    String getWorkspaceArea() {
+        return this.workspaceArea;
     }
 
     /**
@@ -612,7 +656,6 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
      */
     void handleRecurseChanged( boolean selected ) {
         this.recurse = selected;
-        saveRecurseSetting();
 
         try {
             this.files = processResources(this.resources, isRecursing(), filter);
@@ -665,7 +708,16 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     }
 
     /**
-     * Handler for when the workspace control value is modified
+     * Handler for when the workspace area value is modified.
+     * 
+     * @param workspaceArea the new workspace area (never <code>null</code>)
+     */
+    void handleWorkspaceAreaModified( String workspaceArea ) {
+        this.workspaceArea = workspaceArea.trim();
+    }
+
+    /**
+     * Handler for when the workspace control value is modified.
      */
     void handleWorkspaceModified() {
         int index = this.cbxWorkspace.getSelectionIndex();
@@ -679,17 +731,10 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     }
 
     /**
-     * @return the flag indicating if resources found recursively under projects and folders should also be published or
-     *         unpublished
+     * @return <code>true</code> if resources found recursively under projects and folders should also be published or unpublished
      */
-    protected boolean isRecursing() {
-        boolean recurse = true;
-
-        if (getDialogSettings().get(RECURSE_KEY) != null) {
-            recurse = getDialogSettings().getBoolean(RECURSE_KEY);
-        }
-
-        return recurse;
+    boolean isRecursing() {
+        return this.recurse;
     }
 
     /**
@@ -874,15 +919,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     }
 
     /**
-     * Saves the current recurse value to the wizard <code>IDialogSettings</code>.
-     */
-    protected void saveRecurseSetting() {
-        getDialogSettings().put(RECURSE_KEY, this.recurse);
-    }
-
-    /**
      * {@inheritDoc}
-     *
+     * 
      * @see org.jboss.tools.modeshape.rest.IServerRegistryListener#serverRegistryChanged(org.jboss.tools.modeshape.rest.ServerRegistryEvent)
      */
     @Override
@@ -932,13 +970,22 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
     public void setWizard( IWizard newWizard ) {
         super.setWizard(newWizard);
 
-        // need to make sure the wizard has been set on the page since the recurse value is saved in the wizard dialog settings
-        this.recurse = isRecursing();
-
         try {
-            this.files = processResources(this.resources, this.recurse, this.filter);
+            this.files = processResources(this.resources, isRecursing(), this.filter);
         } catch (CoreException e) {
             Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageRecurseProcessingErrorMsg.text(), e));
+        }
+    }
+
+    /**
+     * Updates the initial page message.
+     */
+    void updateInitialMessage() {
+        String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg.text()
+                                                 : RestClientI18n.publishPageUnpublishOkStatusMsg.text());
+
+        if (msg.equals(getMessage())) {
+            updateState();
         }
     }
 
@@ -995,6 +1042,15 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         }
 
         this.status = new Status(severity, msg, null);
+    }
+
+    /**
+     * Processing done after wizard is finished. Wizard was not canceled.
+     */
+    void wizardFinished() {
+        // update dialog settings
+        getDialogSettings().put(RECURSE_KEY, this.recurse);
+        getDialogSettings().put(WORKSPACE_AREA_KEY, this.workspaceArea);
     }
 
 }

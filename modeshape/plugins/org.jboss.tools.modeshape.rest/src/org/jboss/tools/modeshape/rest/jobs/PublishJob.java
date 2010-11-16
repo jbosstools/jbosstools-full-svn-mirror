@@ -105,6 +105,11 @@ public final class PublishJob extends Job {
      */
     private final Workspace workspace;
 
+    /**
+     * The path segment prepended to the resource project path (never <code>null</code> but can be empty)
+     */
+    private final String workspaceArea;
+
     // ===========================================================================================================================
     // Constructors
     // ===========================================================================================================================
@@ -113,10 +118,12 @@ public final class PublishJob extends Job {
      * @param type the job type (never <code>null</code>)
      * @param files the files being published or unpublished (never <code>null</code>)
      * @param workspace the workspace to use when publishing or unpublishing (never <code>null</code>)
+     * @param workspaceArea the path segment prepended to the file project path (maybe be <code>null</code> or empty)
      */
     public PublishJob( Type type,
                        List<IFile> files,
-                       Workspace workspace ) {
+                       Workspace workspace,
+                       String workspaceArea ) {
         super(getJobName(type, JOB_ID.incrementAndGet()));
 
         CheckArg.isNotNull(files, "files");
@@ -126,6 +133,15 @@ public final class PublishJob extends Job {
         this.files = files;
         this.workspace = workspace;
         this.jobId = JOB_ID.get();
+        
+        // setup the workspace area and remove trailing separator if necessary
+        String temp = ((workspaceArea == null) ? "" : workspaceArea);
+
+        if (temp.endsWith(File.separator)) {
+            this.workspaceArea = temp.substring(0, (temp.length() - 1));
+        } else {
+            this.workspaceArea = temp;
+        }
 
         setUser(true); // allow user to run in background
     }
@@ -184,16 +200,16 @@ public final class PublishJob extends Job {
             // write initial message to console
             if (isPublishing()) {
                 ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublish.text(this.jobId,
-                                                                                serverUrl,
-                                                                                repositoryName,
-                                                                                workspaceName,
-                                                                                fileCount));
+                                                                                      serverUrl,
+                                                                                      repositoryName,
+                                                                                      workspaceName,
+                                                                                      fileCount));
             } else {
                 ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublish.text(this.jobId,
-                                                                                  serverUrl,
-                                                                                  repositoryName,
-                                                                                  workspaceName,
-                                                                                  fileCount));
+                                                                                        serverUrl,
+                                                                                        repositoryName,
+                                                                                        workspaceName,
+                                                                                        fileCount));
             }
 
             PublishedResourceHelper resourceHelper = new PublishedResourceHelper(getServerManager());
@@ -206,7 +222,7 @@ public final class PublishJob extends Job {
                 }
 
                 File file = eclipseFile.getLocation().toFile();
-                String path = eclipseFile.getParent().getFullPath().toString();
+                String path = this.workspaceArea + eclipseFile.getParent().getFullPath().toString();
                 Status status = null;
 
                 if (isPublishing()) {
@@ -278,14 +294,14 @@ public final class PublishJob extends Job {
             if (canceled) {
                 if (isPublishing()) {
                     ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublishCanceledMsg.text(this.jobId,
-                                                                                               numProcessed,
-                                                                                               this.files.size(),
-                                                                                               duration));
+                                                                                                     numProcessed,
+                                                                                                     this.files.size(),
+                                                                                                     duration));
                 } else {
                     ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublishCanceledMsg.text(this.jobId,
-                                                                                                 numProcessed,
-                                                                                                 this.files.size(),
-                                                                                                 duration));
+                                                                                                       numProcessed,
+                                                                                                       this.files.size(),
+                                                                                                       duration));
                 }
             } else {
                 if (isPublishing()) {

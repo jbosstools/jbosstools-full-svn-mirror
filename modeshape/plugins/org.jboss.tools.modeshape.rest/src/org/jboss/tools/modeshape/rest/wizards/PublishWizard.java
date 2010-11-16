@@ -24,6 +24,8 @@ import org.jboss.tools.modeshape.rest.ServerManager;
 import org.jboss.tools.modeshape.rest.jobs.PublishJob;
 import org.jboss.tools.modeshape.rest.jobs.PublishJob.Type;
 import org.modeshape.common.util.CheckArg;
+import org.modeshape.web.jcr.rest.client.Status;
+import org.modeshape.web.jcr.rest.client.Status.Severity;
 import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
@@ -127,9 +129,19 @@ public final class PublishWizard extends Wizard {
      */
     @Override
     public boolean performFinish() {
+        // let page know that wizard finished and was not canceled
+        try {
+            this.page.wizardFinished();
+        } catch (Exception e) {
+            // don't let this error stop the publishing operation
+            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageFinishedErrorMsg.text(), e));
+        }
+
+        // run publish job
         Workspace workspace = this.page.getWorkspace();
         List<IFile> files = this.page.getFiles();
-        PublishJob job = new PublishJob(this.type, files, workspace);
+        String workspaceArea = this.page.getWorkspaceArea();
+        PublishJob job = new PublishJob(this.type, files, workspace, workspaceArea);
         job.schedule();
 
         return true;
