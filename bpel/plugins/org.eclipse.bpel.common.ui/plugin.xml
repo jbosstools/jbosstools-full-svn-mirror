@@ -59,5 +59,28 @@
             name="BPEL Process"
             priority="normal"/>
    </extension>
+   
+   <!-- https://jira.jboss.org/browse/JBIDE-6016 -->
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            location="BOTTOM_LEFT"
+            lightweight="true"
+            label="BPEL File Decorator"
+            state="true"
+            class="org.eclipse.bpel.common.ui.ResourceMarkerDecorator"
+            id="org.eclipse.bpel.ui.decorators">
+         <enablement>
+            <and>
+               <objectClass name="org.eclipse.core.resources.IFile"/>
+               <objectState
+                  name="contentTypeId"
+                  value="org.eclipse.bpel.contenttype">
+               </objectState>
+            </and>
+         </enablement>
+      </decorator>
+    </extension>   
 
 </plugin>
