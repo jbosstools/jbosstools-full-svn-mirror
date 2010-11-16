@@ -56,12 +56,8 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 						try {
 							cloud.loadChildren();
 						} catch (Exception e) {
-							IStatus status = StatusFactory.getInstance(
-									IStatus.ERROR,
-									Activator.PLUGIN_ID,
-									e.getMessage(),
-									e);
-							// TODO: internationalize strings
+							IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+									e.getMessage(), e);
 							return status;
 						}
 						return Status.OK_STATUS;
