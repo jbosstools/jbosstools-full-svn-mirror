@@ -35,4 +35,8 @@ public class DeltaCloudPersistedConnectionsException extends Exception {
 	public List<Throwable> getErrors() {
 		return throwables;
 	}
+
+	public boolean isEmpty() {
+		return throwables.size() == 0;
+	}
 }

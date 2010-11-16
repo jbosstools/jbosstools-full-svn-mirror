@@ -43,7 +43,7 @@ public class DeltaCloudManager {
 	private DeltaCloudManager() {
 	}
 
-	public DeltaCloudPersistedConnectionsException loadClouds() {
+	public void loadClouds() throws DeltaCloudPersistedConnectionsException {
 		DeltaCloudPersistedConnectionsException connectionException = new DeltaCloudPersistedConnectionsException();
 		IPath stateLocation = Activator.getDefault().getStateLocation();
 		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
@@ -68,7 +68,9 @@ public class DeltaCloudManager {
 		} catch (Exception e) {
 			connectionException.addError(e);
 		}
-		return connectionException;
+		if (!connectionException.isEmpty()) {
+			throw connectionException;
+		}
 	}
 
 	private void loadCloud(String name, Node n) throws StorageException, MalformedURLException, DeltaCloudException {

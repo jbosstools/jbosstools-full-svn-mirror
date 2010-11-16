@@ -27,11 +27,18 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 	public CVRootElement(TreeViewer viewer) {
 		super(DeltaCloudManager.getDefault(), "root"); //$NON-NLS-1$
 		this.viewer = viewer;
-		DeltaCloudPersistedConnectionsException loadCloudsErrors = DeltaCloudManager.getDefault().loadClouds();
-		ErrorUtils.openErrorDialog(
+		loadClouds();
+	}
+
+	private void loadClouds() {
+		try {
+			DeltaCloudManager.getDefault().loadClouds();
+		} catch (DeltaCloudPersistedConnectionsException e) {
+			ErrorUtils.openErrorDialog(
 					"Error",
-					"Colud load clouds",
-					loadCloudsErrors.getErrors(), Display.getDefault().getActiveShell());
+					"Could not load all clouds",
+					e.getErrors(), Display.getDefault().getActiveShell());
+		}
 	}
 
 	@Override
