@@ -15,36 +15,36 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.equinox.security.storage.StorageException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 public class DeltaCloudManager {
 
+	private static final DeltaCloudManager INSTANCE = new DeltaCloudManager(); 
+	
 	public final static String CLOUDFILE_NAME = "clouds.xml"; //$NON-NLS-1$
-
-	private static DeltaCloudManager cloudManager;
 	private ArrayList<DeltaCloud> clouds = new ArrayList<DeltaCloud>();
 	private ListenerList cloudManagerListeners;
 
 	private DeltaCloudManager() {
-		loadClouds();
 	}
 
-	private void loadClouds() {
+	public DeltaCloudPersistedConnectionsException loadClouds() {
+		DeltaCloudPersistedConnectionsException connectionException = new DeltaCloudPersistedConnectionsException();
 		IPath stateLocation = Activator.getDefault().getStateLocation();
 		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -52,26 +52,27 @@ public class DeltaCloudManager {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			if (cloudFile.exists()) {
 				Document d = db.parse(cloudFile);
-				Element e = d.getDocumentElement();
+				Element element = d.getDocumentElement();
 				// Get the stored configuration data
-				NodeList cloudNodes = e.getElementsByTagName("cloud"); // $NON-NLS-1$
+				NodeList cloudNodes = element.getElementsByTagName("cloud"); // $NON-NLS-1$
 				for (int x = 0; x < cloudNodes.getLength(); ++x) {
 					Node n = cloudNodes.item(x);
-					loadCloud(n);
+					try {
+						String name = getCloudName(n);
+						loadCloud(name, n);
+					} catch (StorageException e) {
+						connectionException.addError(e);
+					} 
 				}
 			}
-		} catch (ParserConfigurationException e) {
-			Activator.log(e);
-		} catch (SAXException e) {
-			Activator.log(e);
-		} catch (IOException e) {
-			Activator.log(e);
+		} catch (Exception e) {
+			connectionException.addError(e);
 		}
+		return connectionException;
 	}
 
-	private void loadCloud(Node n) {
+	private void loadCloud(String name, Node n) throws StorageException, MalformedURLException, DeltaCloudException {
 		NamedNodeMap attrs = n.getAttributes();
-		String name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
 		String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
 		String username = attrs.getNamedItem("username").getNodeValue(); // $NON-NLS-1$
 		String type = attrs.getNamedItem("type").getNodeValue(); // $NON-NLS-1$
@@ -82,18 +83,18 @@ public class DeltaCloudManager {
 		String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage")); // $NON-NLS-1$
 		ISecurePreferences root = SecurePreferencesFactory.getDefault();
 		ISecurePreferences node = root.node(key);
-		try {
-			String password = node.get("password", null); //$NON-NLS-1$
-			DeltaCloud cloud = new DeltaCloud(name, url, username, password, type,
-					false, imageFilterRules, instanceFilterRules);
-			cloud.setLastImageId(lastImageId);
-			cloud.setLastKeyname(lastKeyName);
-			cloud.loadChildren();
-			clouds.add(cloud);
-		} catch (Exception e1) {
-			Activator.log(e1);
-			return;
-		}
+		String password = node.get("password", null); //$NON-NLS-1$
+		DeltaCloud cloud = new DeltaCloud(
+				name, url, username, password, type, false, imageFilterRules, instanceFilterRules);
+		cloud.setLastImageId(lastImageId);
+		cloud.setLastKeyname(lastKeyName);
+		cloud.loadChildren();
+		clouds.add(cloud);
+	}
+
+	private String getCloudName(Node n) {
+		String name = n.getAttributes().getNamedItem("name").getNodeValue(); // $NON-NLS-1$
+		return name;
 	}
 
 	private String getLastKeyName(Node lastKeyNameNode) {
@@ -160,9 +161,7 @@ public class DeltaCloudManager {
 	}
 
 	public static DeltaCloudManager getDefault() {
-		if (cloudManager == null)
-			cloudManager = new DeltaCloudManager();
-		return cloudManager;
+		return INSTANCE;
 	}
 
 	public DeltaCloud[] getClouds() {
@@ -204,9 +203,11 @@ public class DeltaCloudManager {
 
 	/**
 	 * Checks if any cloud uses the given url and username
-	 *
-	 * @param url the url
-	 * @param userName the user name
+	 * 
+	 * @param url
+	 *            the url
+	 * @param userName
+	 *            the user name
 	 * @return true, if is checks for any cloud
 	 */
 	private boolean isHasAnyCloud(String url, String userName) {

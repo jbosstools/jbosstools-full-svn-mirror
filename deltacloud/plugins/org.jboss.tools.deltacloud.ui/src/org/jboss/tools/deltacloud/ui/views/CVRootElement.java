@@ -15,7 +15,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.DeltaCloudPersistedConnectionsException;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 public class CVRootElement extends CloudViewElement implements ICloudManagerListener {
 
@@ -25,8 +27,13 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 	public CVRootElement(TreeViewer viewer) {
 		super(DeltaCloudManager.getDefault(), "root"); //$NON-NLS-1$
 		this.viewer = viewer;
+		DeltaCloudPersistedConnectionsException loadCloudsErrors = DeltaCloudManager.getDefault().loadClouds();
+		ErrorUtils.openErrorDialog(
+					"Error",
+					"Colud load clouds",
+					loadCloudsErrors.getErrors(), Display.getDefault().getActiveShell());
 	}
-	
+
 	@Override
 	public IPropertySource getPropertySource() {
 		// no property source for the root element
@@ -54,7 +61,7 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
 		super.finalize();
 	}
-	
+
 	public void changeEvent(int type) {
 		DeltaCloudManager m = DeltaCloudManager.getDefault();
 		m.removeCloudManagerListener(this);
@@ -69,7 +76,7 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				((TreeViewer)viewer).refresh(this, false);
+				((TreeViewer) viewer).refresh(this, false);
 			}
 		});
 	}

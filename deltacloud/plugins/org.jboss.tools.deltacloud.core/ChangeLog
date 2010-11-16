@@ -1,5 +1,9 @@
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (DeltaCloudManager): 
+	[JBIDE-7597] removed implicit loading of persisted connections. moved to explicit loading.
+	(loadClouds): 	
+	[JBIDE-7597] collecting exceptions are returning them as errors.
 	* src/org/jboss/tools/deltacloud/core/client/Image.java: 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudImage.java: 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java 

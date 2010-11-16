@@ -76,6 +76,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 				initialized = true;
 				cloud.addInstanceListListener(this);
 			} catch (Exception e) {
+				// TODO: internationalize strings
 				ErrorUtils.openErrorDialog(
 						"Error",
 						"Colud not get instances from cloud " + cloud.getName(),
