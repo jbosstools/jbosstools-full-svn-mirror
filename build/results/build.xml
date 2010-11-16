@@ -92,7 +92,7 @@
 	<target name="build.results" depends="init">
 		<!-- 
 			1. resolve variables in download-template.xml to produce download.xml
-			2. XSL transform download.xml to produce download-snippet.txt
+			2. XSL transform download.xml to produce download-snippet.html
 			3. manually copy the contents of this file into a page under 
 				http://www.jboss.org/tools/downloads/
 		-->
@@ -170,7 +170,7 @@ COMPONENT = ${COMPONENT}</echo>
 						<expandproperties />
 					</filterchain>
 				</copy>
-				<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.txt" style="download.xsl" />
+				<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.html" style="download.xsl" />
 				<xslt in="${output.dir}/download.xml" out="${output.dir}/buildResults.html" style="buildResults.xsl" />
 				<copy todir="${output.dir}" file="buildResults.css"/>
 				<delete file="${output.dir}/download.xml" />
@@ -191,7 +191,7 @@ COMPONENT = ${COMPONENT}</echo>
 							<!-- use pre-existing snippet file -->
 							<copy todir="${output.dir}" overwrite="true">
 								<fileset dir="${output.dir}" file="${template.file.cleaned}.in" />
-								<mapper type="merge" to="download-snippet.txt" />
+								<mapper type="merge" to="download-snippet.html" />
 								<filterchain>
 									<expandproperties />
 								</filterchain>
@@ -208,7 +208,7 @@ COMPONENT = ${COMPONENT}</echo>
 									<expandproperties />
 								</filterchain>
 							</copy>
-							<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.txt" style="download.xsl" />
+							<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.html" style="download.xsl" />
 							<delete file="${output.dir}/download.xml" />
 						</else>
 					</if>
