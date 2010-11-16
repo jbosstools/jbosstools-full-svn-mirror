@@ -42,36 +42,4 @@ public class DeltaCloudImage {
 	public String getId() {
 		return image.getId();
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((image == null) ? 0 : image.hashCode());
-		return result;
-	}
-
-	/**
-	 * The current strategy regarding instances is to create new instances (and
-	 * not update instances). We therefore need equals to be able to match
-	 * domain objects. We might have to change that since in my experience it is
-	 * not a good choice to create new instances, better is to update the ones
-	 * that are available in the client.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DeltaCloudImage other = (DeltaCloudImage) obj;
-		if (image == null) {
-			if (other.image != null)
-				return false;
-		} else if (!image.equals(other.image))
-			return false;
-		return true;
-	}
 }

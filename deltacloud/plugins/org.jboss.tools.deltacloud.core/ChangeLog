@@ -1,5 +1,10 @@
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/client/Image.java: 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudImage.java: 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java 
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java 
+	[JBIDE-7617] removed equals and hash code since it resulted in odd behaviors towards selection
 	* src/org/jboss/tools/deltacloud/core/client/Instance.java 
 	(canStart): 
 	(canStop): 

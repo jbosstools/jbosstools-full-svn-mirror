@@ -128,42 +128,4 @@ public class DeltaCloudInstance {
 		}
 		return client.performInstanceAction(action);
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((givenName == null) ? 0 : givenName.hashCode());
-		result = prime * result + ((instance == null) ? 0 : instance.hashCode());
-		return result;
-	}
-
-	/**
-	 * The current strategy regarding instances is to create new instances (and
-	 * not update instances). We therefore need equals to be able to match
-	 * domain objects. We might have to change that since in my experience it is
-	 * not a good choice to create new instances, better is to update the ones
-	 * that are available in the client.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DeltaCloudInstance other = (DeltaCloudInstance) obj;
-		if (givenName == null) {
-			if (other.givenName != null)
-				return false;
-		} else if (!givenName.equals(other.givenName))
-			return false;
-		if (instance == null) {
-			if (other.instance != null)
-				return false;
-		} else if (!instance.equals(other.instance))
-			return false;
-		return true;
-	}
 }
