@@ -1,5 +1,9 @@
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (refreshToolbarCommandStates): 
+	* src/org/jboss/tools/deltacloud/ui/commands/InstancePropertyTester.java (test): 
+	[JBIDE-7365] changed property tester to test available actions (tested state and guessed the available actions from it), 
+	added methods to deltacloud instance classes
 	* plugin.xml: 
 	[JBIDE-7599] switched refresh for image- and instance-view to be available as soon as the view is active 
 	(and not only when an item is selected)

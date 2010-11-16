@@ -332,7 +332,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private void refreshToolbarCommandStates() {
 		IEvaluationService evaluationService = (IEvaluationService) PlatformUI.getWorkbench().getService(
 				IEvaluationService.class);
-		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.isStopped");
+		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canStart");
+		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canStop");
+		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canReboot");
+		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canDestroy");
 	}
 
 	@Override

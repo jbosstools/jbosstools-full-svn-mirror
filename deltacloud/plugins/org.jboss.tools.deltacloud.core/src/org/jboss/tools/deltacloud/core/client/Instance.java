@@ -182,6 +182,22 @@ public class Instance extends DeltaCloudObject {
 		return null;
 	}
 
+	public boolean canStart() {
+		return actions.contains(InstanceAction.START);
+	}
+	
+	public boolean canStop() {
+		return actions.contains(InstanceAction.STOP);
+	}
+
+	public boolean canReboot() {
+		return actions.contains(InstanceAction.REBOOT);
+	}
+
+	public boolean canDestroy() {
+		return actions.contains(InstanceAction.DESTROY);
+	}
+
 	public List<String> getPublicAddresses() {
 		return publicAddresses.getAddress();
 	}

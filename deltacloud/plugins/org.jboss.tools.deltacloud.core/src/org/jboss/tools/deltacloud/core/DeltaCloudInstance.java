@@ -92,6 +92,23 @@ public class DeltaCloudInstance {
 		return instance.getState() == State.STOPPED;
 	}
 	
+	public boolean canStart() {
+		return instance.canStart();
+	}
+
+	public boolean canStop() {
+		return instance.canStop();
+	}
+
+	public boolean canReboot() {
+		return instance.canReboot();
+	}
+
+	public boolean canDestroy() {
+		return instance.canDestroy();
+	}
+
+	
 	public String getHostName() {
 		List<String> hostNames = getHostNames();
 		if (hostNames != null && hostNames.size() > 0)

@@ -23,24 +23,37 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  */
 public class InstancePropertyTester extends PropertyTester {
 
-	private static final String PROPERTY_STATE_STOPPED = "isStopped";
-	
+	private static final String PROPERTY_ACTION_CANSTART = "canStart";
+	private static final String PROPERTY_ACTION_CANSTOP = "canStop";
+	private static final String PROPERTY_ACTION_CANREBOOT = "canReboot";
+	private static final String PROPERTY_ACTION_CANDESTROY = "canDestroy";
+
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		DeltaCloudInstance instance = UIUtils.adapt(receiver, DeltaCloudInstance.class);
 		if (instance == null) {
 			return false;
 		}
-		if (PROPERTY_STATE_STOPPED.equals(property)) {
-			return isStopped(instance, expectedValue);
+
+		if (PROPERTY_ACTION_CANSTART.equals(property)) {
+			return equalsExpectedValue(instance.canStart(), expectedValue);
+		}
+		if (PROPERTY_ACTION_CANSTOP.equals(property)) {
+			return equalsExpectedValue(instance.canStop(), expectedValue);
+		}
+		if (PROPERTY_ACTION_CANREBOOT.equals(property)) {
+			return equalsExpectedValue(instance.canReboot(), expectedValue);
+		}
+		if (PROPERTY_ACTION_CANDESTROY.equals(property)) {
+			return equalsExpectedValue(instance.canDestroy(), expectedValue);
 		}
 		return false;
 	}
 
-	private boolean isStopped(DeltaCloudInstance instance, Object expectedValue) {
+	private boolean equalsExpectedValue(boolean propertyValue, Object expectedValue) {
 		Assert.isTrue(expectedValue instanceof Boolean);
 		Boolean expectedBoolean = (Boolean) expectedValue;
-		Object propertyValue = instance.isStopped();
 		return expectedBoolean.equals(propertyValue);
 	}
+	
 }
