@@ -80,7 +80,7 @@ public class MozillaPreview extends MozillaEditor {
 			setInitialContent();
 			getXulRunnerEditor().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		} catch (Throwable e) {
-			showXulRunnerException(parent, e);
+			showXulRunnerError(parent, e);
 		}		
 	}
 

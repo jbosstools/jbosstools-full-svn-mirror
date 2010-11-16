@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -31,13 +32,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -63,12 +60,8 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.internal.part.StatusPart;
 import org.eclipse.ui.part.EditorPart;
-import org.eclipse.wst.sse.ui.StructuredTextEditor;
+import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
-import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsDialog;
-import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsUtils;
-import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsWizard;
-import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
@@ -81,12 +74,12 @@ import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
+import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIDOMDocument;
@@ -102,10 +95,11 @@ import org.mozilla.interfaces.nsIHTMLAbsPosEditor;
 import org.mozilla.interfaces.nsIHTMLInlineTableEditor;
 import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
+	/**
+	 * 
+	 */
 	protected static final File INIT_FILE = new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html"); //$NON-NLS-1$ //$NON-NLS-2$
 	public static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
 	
@@ -127,9 +121,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_NON_VISUAL_TAGS = "icons/non-visusal-tags.gif"; //$NON-NLS-1$
 	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
 	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
-//	public static final String ICON_EXTERNALIZE_STRINGS= "icons/externalize.png"; //$NON-NLS-1$
-
-	//static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
+//static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
 	private XulRunnerEditor xulRunnerEditor;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
@@ -643,7 +635,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			/*
 			 * Show the exception
 			 */
-			showXulRunnerException(cmpEd, t);
+			showXulRunnerError(cmpEd, t);
 		}
 		
 		/*
@@ -704,14 +696,14 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	}
 
 	/**
-	 * Logs given {@code throwable} and shows error message in 
+	 * Logs given {@code throwable} (may be wrapped) and shows error message in 
 	 * the {@code parent} composite.
 	 */
-	protected void showXulRunnerException(Composite parent,
-			Throwable throwable) {
+	protected void showXulRunnerError(Composite parent,
+			Throwable originalThrowable) {
+		Throwable throwable = wrapIfItIsXulRunnerError(originalThrowable);
 		String errorMessage = MessageFormat.format(
 				VpeUIMessages.MOZILLA_LOADING_ERROR, throwable.getMessage());
-
 		VpePlugin.getPluginLog().logError(errorMessage, throwable);
 
 		parent.setLayout(new GridLayout());
@@ -761,6 +753,34 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			public void mouseUp(MouseEvent e) {
 			}
 		});
+	}
+	
+	/**
+	 * This is a workaround method for JBIDE-7601 (Show XULRunner exception only once).
+	 * <P>
+	 * The problem is that the method {@code VpePlugin.getPluginLog().logError(...)}
+	 * shows pop-ups for instances of {@code SWTError} because it considers
+	 * them as {@code fatal}. To workaround of it, these errors are wrapped
+	 * to an {@code Exception}.
+	 * 
+	 * @see org.eclipse.ui.internal.ide.IDEWorkbenchErrorHandler#isFatal(StatusAdapter)
+	 * @see org.eclipse.swt.browser.Mozilla
+	 */
+	private Throwable wrapIfItIsXulRunnerError(Throwable originalThrowable) {
+		Throwable throwable = originalThrowable;
+		if (throwable instanceof SWTError && throwable.getMessage() != null) {
+			String message = throwable.getMessage(); 
+			if(message.contains("XPCOM error ") //$NON-NLS-1$
+					|| message.contains(" [Failed to use detected XULRunner: ") //$NON-NLS-1$
+					|| message.contains(" [Could not detect registered XULRunner to use]") //$NON-NLS-1$
+					|| message.contains(" [Unknown Mozilla path (MOZILLA_FIVE_HOME not set)]") //$NON-NLS-1$
+					|| message.contains(" [Mozilla GTK2 required (GTK1.2 detected)]") //$NON-NLS-1$
+					|| message.contains(" [MOZILLA_FIVE_HOME='") //$NON-NLS-1$
+					|| message.contains(" [MOZILLA_FIVE_HOME may not point at an embeddable GRE] [NS_InitEmbedding ")) { //$NON-NLS-1$
+				throwable = new XulRunnerException(originalThrowable);
+			}
+		}
+		return throwable;
 	}
 
 	public void setFocus() {
