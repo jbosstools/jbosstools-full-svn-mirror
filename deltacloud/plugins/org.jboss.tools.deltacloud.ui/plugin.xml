@@ -176,38 +176,18 @@
         commandId="org.eclipse.ui.file.refresh">
 			<activeWhen>
 				<with
-					variable="selection">
-					<and>
-						<count value="+" />
-						<iterate>
-							<instanceof
-							     value="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
-							</instanceof>
-						</iterate>
-					</and>
+					variable="activePart">
+						<instanceof value="org.jboss.tools.deltacloud.ui.views.InstanceView" />
 				</with>
 			</activeWhen>
-			<enabledWhen>
-				<with
-					variable="selection">
-					<count value="+" />
-				</with>
-			</enabledWhen>
 	</handler>
     <handler
 		class="org.jboss.tools.deltacloud.ui.commands.RefreshImagesHandler"
         commandId="org.eclipse.ui.file.refresh">
 			<activeWhen>
 				<with
-					variable="selection">
-					<and>
-						<count value="+" />
-						<iterate>
-							<instanceof
-							     value="org.jboss.tools.deltacloud.core.DeltaCloudImage">
-							</instanceof>
-						</iterate>
-					</and>
+					variable="activePart">
+						<instanceof value="org.jboss.tools.deltacloud.ui.views.ImageView" />
 				</with>
 			</activeWhen>
 			<enabledWhen>

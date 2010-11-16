@@ -1,5 +1,8 @@
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
+	* plugin.xml: 
+	[JBIDE-7599] switched refresh for image- and instance-view to be available as soon as the view is active 
+	(and not only when an item is selected)
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard2.java (WatchCreateJob.run): 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (WatchCreateJob.run): 
 	[JBIDE-7603] moved (duplicate) instance state waiting code to delta cloud and removed duplication 
