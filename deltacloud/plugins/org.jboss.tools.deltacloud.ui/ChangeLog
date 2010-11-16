@@ -1,5 +1,9 @@
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/RSEUtils.java (createHostName): 
+	[JBIDE-7603] added null check
+	* src/org/jboss/tools/deltacloud/ui/views/PerformInstanceActionThread.java (run): 
+	[JBIDE-7365] moved state waiting to delta cloud, removed duplilcate code
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (refreshToolbarCommandStates): 
 	* src/org/jboss/tools/deltacloud/ui/commands/InstancePropertyTester.java (test): 
 	[JBIDE-7365] changed property tester to test available actions (tested state and guessed the available actions from it), 
@@ -10,6 +14,8 @@
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard2.java (WatchCreateJob.run): 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (WatchCreateJob.run): 
 	[JBIDE-7603] moved (duplicate) instance state waiting code to delta cloud and removed duplication 
+	(WatchCreateJob.run): 
+	[JBIDE-7603] removed duplicate RSE related code
 	* src/org/jboss/tools/deltacloud/ui/commands/ShowInRemoteSystemExplorerHandler.java (execute): 
 	[JBIDE-7603] unified RSE related (duplicate) code with code in NewConnectionHandler2
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java: 

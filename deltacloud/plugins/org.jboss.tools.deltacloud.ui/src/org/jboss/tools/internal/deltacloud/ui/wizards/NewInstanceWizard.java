@@ -22,20 +22,15 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.rse.core.IRSECoreRegistry;
-import org.eclipse.rse.core.IRSESystemType;
-import org.eclipse.rse.core.RSECorePlugin;
 import org.eclipse.rse.core.model.IHost;
-import org.eclipse.rse.core.model.ISystemRegistry;
-import org.eclipse.rse.core.model.SystemStartHere;
-import org.eclipse.rse.core.subsystems.IConnectorService;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
-import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.RSEUtils;
 import org.osgi.service.prefs.Preferences;
 
 /**
@@ -51,7 +46,6 @@ public class NewInstanceWizard extends Wizard {
 	private final static String DONT_SHOW_THIS_AGAIN_MSG = "DontShowThisAgain.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
-	private final static String RSE_CONNECTING_MSG = "ConnectingRSE.msg"; //$NON-NLS-1$
 	
 	private NewInstancePage mainPage;
 	
@@ -103,45 +97,17 @@ public class NewInstanceWizard extends Wizard {
 				} finally {
 					cloud.replaceInstance(instance);
 					cloud.removeInstanceJob(instanceId, this);
-					String hostname = instance.getHostName();
+					String hostname = RSEUtils.createHostName(instance);
 					Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 					boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
 					if (hostname != null && hostname.length() > 0 && autoConnect) {
-						ISystemRegistry registry = SystemStartHere.getSystemRegistry();
-						RSECorePlugin rsep = RSECorePlugin.getDefault();
-						IRSECoreRegistry coreRegistry = rsep.getCoreRegistry();
-						IRSESystemType[] sysTypes = coreRegistry.getSystemTypes();
-						IRSESystemType sshType = null;			
-						for (IRSESystemType sysType : sysTypes) {
-							if (sysType.getId().equals(IRSESystemType.SYSTEMTYPE_SSH_ONLY_ID))
-								sshType = sysType;
-						}
-						String connectionName = instance.getName() + " [" + instance.getId() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 						try {
-							IHost host = registry.createHost(sshType, connectionName, hostname, null);
-							if (host != null) {
-								host.setDefaultUserId("root"); //$NON-NLS-1$
-								IConnectorService[] services = host.getConnectorServices();
-								if (services.length > 0) {
-									final IConnectorService service = services[0];
-									Job connect = new Job(CVMessages.getFormattedString(RSE_CONNECTING_MSG, connectionName)) {
-										@Override
-										protected IStatus run(IProgressMonitor monitor) {
-											try {
-												service.connect(monitor);
-												return Status.OK_STATUS;
-											} catch(Exception e) {
-												return Status.CANCEL_STATUS;
-											}
-										}
-									};
-									connect.setUser(true);
-									connect.schedule();
-								}
-							}
+							String connectionName = RSEUtils.createConnectionName(instance);
+							IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance));
+							RSEUtils.launchRemoteSystemExplorer(instance.getName(), connectionName, host);
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							Activator.log(e);
+							ErrorUtils.openErrorDialog("Error", "Could not launch remote system explorer for instance \"" + instance.getName() + "\"", e, getShell());
+							return Status.OK_STATUS;
 						}
 					}
 					pm.done();

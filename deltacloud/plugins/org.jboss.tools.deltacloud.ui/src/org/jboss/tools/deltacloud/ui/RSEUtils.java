@@ -52,6 +52,9 @@ public class RSEUtils {
 	}
 
 	public static String createHostName(DeltaCloudInstance instance) {
+		if (instance == null) {
+			return null;
+		}
 		return instance.getHostName();
 	}
 
