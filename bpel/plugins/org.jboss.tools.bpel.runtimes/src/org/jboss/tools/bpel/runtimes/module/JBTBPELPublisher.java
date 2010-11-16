@@ -86,7 +86,9 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		IModule last = module[module.length-1];
 		IStatus status = null;
 		if(publishType == REMOVE_PUBLISH){
-        	removeAll(server, last.getProject());
+			// https://jira.jboss.org/browse/JBIDE-7620
+			if (last.getProject()!=null)
+				removeAll(server, last.getProject());
         } else if( publishType == FULL_PUBLISH ){
         	// Publish a new version forced
         	status = publish(module, delta, publishType, monitor);
