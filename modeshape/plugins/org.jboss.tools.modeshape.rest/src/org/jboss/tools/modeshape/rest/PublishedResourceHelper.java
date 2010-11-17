@@ -19,6 +19,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.modeshape.common.util.CheckArg;
+import org.modeshape.common.util.HashCode;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
 import org.modeshape.web.jcr.rest.client.domain.Repository;
@@ -80,64 +81,70 @@ public final class PublishedResourceHelper {
     /**
      * @param file the file that was just published (never <code>null</code>)
      * @param workspace the workspace where the file was published (never <code>null</code>)
+     * @param url the URL where the resource was published (never <code>null</code>)
      * @throws Exception if there is a problem setting the property
      */
     public void addPublishedProperty( IFile file,
-                                      Workspace workspace ) throws Exception {
+                                      Workspace workspace,
+                                      String url ) throws Exception {
         CheckArg.isNotNull(file, "file");
         CheckArg.isNotNull(workspace, "workspace");
+        CheckArg.isNotNull(url, "url");
 
-        Set<Workspace> workspaces = getPublishedOnWorkspaces(file);
-        workspaces.add(workspace);
+        Set<WorkspaceLocation> workspaceLocations = getPublishedWorkspaceLocations(file);
+        workspaceLocations.add(new WorkspaceLocation(workspace, url));
 
         // set new value
-        setPublishedOnPropertyValue(file, workspaces);
+        setPublishedOnPropertyValue(file, workspaceLocations);
     }
 
     /**
-     * @param workspaces the workspaces used to create the property value
+     * @param workspaceLocations the workspace locations used to create the property value
      * @return the property value
      */
-    private String createPublishedPropertyValue( Set<Workspace> workspaces ) {
+    private String createPublishedPropertyValue( Set<WorkspaceLocation> workspaceLocations ) {
         StringBuilder value = new StringBuilder();
 
-        for (Workspace workspace : workspaces) {
-            value.append(createWorkspaceId(workspace)).append(DELIM);
+        for (WorkspaceLocation workspaceLocation : workspaceLocations) {
+            value.append(createWorkspaceLocationId(workspaceLocation)).append(DELIM);
         }
 
         return value.toString();
     }
 
     /**
-     * @param workspace the workspace whose identifier is being created
+     * @param workspaceLocation the workspace location whose identifier is being created
      * @return the ID
      */
-    private String createWorkspaceId( Workspace workspace ) {
+    private String createWorkspaceLocationId( WorkspaceLocation workspaceLocation ) {
+        Workspace workspace = workspaceLocation.getWorkspace();
+
         StringBuilder result = new StringBuilder();
         result.append(workspace.getServer().getUrl()).append(ID_DELIM).append(workspace.getServer().getUser()).append(ID_DELIM);
         result.append(workspace.getRepository().getName()).append(ID_DELIM);
-        result.append(workspace.getName());
+        result.append(workspace.getName()).append(ID_DELIM);
+        result.append(workspaceLocation.getUrl());
 
         return result.toString();
     }
 
     /**
-     * @param file the file whose <code>Workspace</code>s it has been published on is being requested (never <code>null</code>)
-     * @return the workspaces (never <code>null</code>)
+     * @param file the file whose published <code>WorkspaceLocation</code>s is being requested (never <code>null</code>)
+     * @return the workspace locations (never <code>null</code>)
      * @throws Exception if there is a problem reading one of the file's persistent properties or a problem with the server
      *         manager
      */
-    public Set<Workspace> getPublishedOnWorkspaces( IFile file ) throws Exception {
+    public Set<WorkspaceLocation> getPublishedWorkspaceLocations( IFile file ) throws Exception {
         CheckArg.isNotNull(file, "file");
 
-        Set<Workspace> publishedOnWorkspaces = null;
+        Set<WorkspaceLocation> publishedWorkspaceLocations = null;
         String value = file.getPersistentProperty(PUBLISHED_RESOURCE_PROPERTY);
 
         if (value == null) {
-            publishedOnWorkspaces = new HashSet<Workspace>(1);
+            publishedWorkspaceLocations = new HashSet<WorkspaceLocation>(1);
         } else {
             StringTokenizer wsTokenizer = new StringTokenizer(value, DELIM);
-            publishedOnWorkspaces = new HashSet<Workspace>(wsTokenizer.countTokens());
+            publishedWorkspaceLocations = new HashSet<WorkspaceLocation>(wsTokenizer.countTokens());
 
             while (wsTokenizer.hasMoreTokens()) {
                 StringTokenizer propsTokenizer = new StringTokenizer(wsTokenizer.nextToken(), ID_DELIM);
@@ -145,11 +152,14 @@ public final class PublishedResourceHelper {
                 PARSE_WORKSPACE: while (propsTokenizer.hasMoreTokens()) {
                     String url = propsTokenizer.nextToken();
                     String user = propsTokenizer.nextToken();
+
+                    // find server
                     Server server = this.serverManager.findServer(url, user);
 
                     if ((server != null) && this.serverManager.ping(server).isOk()) {
                         Collection<Repository> repositories = this.serverManager.getRepositories(server);
 
+                        // find repository
                         if (!repositories.isEmpty()) {
                             String repositoryName = propsTokenizer.nextToken();
 
@@ -157,12 +167,15 @@ public final class PublishedResourceHelper {
                                 if (repository.getName().equals(repositoryName)) {
                                     Collection<Workspace> workspaces = this.serverManager.getWorkspaces(repository);
 
+                                    // find workspace
                                     if (!workspaces.isEmpty()) {
                                         String workspaceName = propsTokenizer.nextToken();
 
                                         for (Workspace workspace : workspaces) {
                                             if (workspace.getName().equals(workspaceName)) {
-                                                publishedOnWorkspaces.add(workspace);
+                                                // get URL
+                                                String publishedUrl = propsTokenizer.nextToken();
+                                                publishedWorkspaceLocations.add(new WorkspaceLocation(workspace, publishedUrl));
                                                 break PARSE_WORKSPACE;
                                             }
                                         }
@@ -179,7 +192,7 @@ public final class PublishedResourceHelper {
             }
         }
 
-        return publishedOnWorkspaces;
+        return publishedWorkspaceLocations;
     }
 
     /**
@@ -190,7 +203,7 @@ public final class PublishedResourceHelper {
         CheckArg.isNotNull(file, "file");
 
         try {
-            return !getPublishedOnWorkspaces(file).isEmpty();
+            return !getPublishedWorkspaceLocations(file).isEmpty();
         } catch (Exception e) {
             Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishedResourcePropertyErrorMsg.text(file), e));
         }
@@ -201,18 +214,21 @@ public final class PublishedResourceHelper {
     /**
      * @param file the file that was just unpublished (never <code>null</code>)
      * @param workspace the workspace where the file was unpublished (never <code>null</code>)
+     * @param url the URL where the resource was unpublished (never <code>null</code>)
      * @throws Exception if there is a problem changing the property value
      */
     public void removePublishedProperty( IFile file,
-                                         Workspace workspace ) throws Exception {
+                                         Workspace workspace,
+                                         String url ) throws Exception {
         CheckArg.isNotNull(file, "file");
         CheckArg.isNotNull(workspace, "workspace");
+        CheckArg.isNotNull(url, "url");
 
-        Set<Workspace> workspaces = getPublishedOnWorkspaces(file);
-        workspaces.remove(workspace);
+        Set<WorkspaceLocation> workspaceLocations = getPublishedWorkspaceLocations(file);
+        workspaceLocations.remove(new WorkspaceLocation(workspace, url));
 
         // set new value
-        setPublishedOnPropertyValue(file, workspaces);
+        setPublishedOnPropertyValue(file, workspaceLocations);
     }
 
     /**
@@ -225,17 +241,96 @@ public final class PublishedResourceHelper {
 
     /**
      * @param file the file whose property is being set
-     * @param workspaces the workspaces the file has been published to or <code>null</code> if the file has not been published
+     * @param workspaceLocations the workspace locations the file has been published to or <code>null</code> if the file has not
+     *        been published
      * @throws CoreException if there was a problem changing the property value
      */
     private void setPublishedOnPropertyValue( IFile file,
-                                              Set<Workspace> workspaces ) throws CoreException {
-        if ((workspaces == null) || workspaces.isEmpty()) {
+                                              Set<WorkspaceLocation> workspaceLocations ) throws CoreException {
+        if ((workspaceLocations == null) || workspaceLocations.isEmpty()) {
             clear(file);
         } else {
-            String value = createPublishedPropertyValue(workspaces);
+            String value = createPublishedPropertyValue(workspaceLocations);
             file.setPersistentProperty(PUBLISHED_RESOURCE_PROPERTY, value);
         }
+    }
+
+    /**
+     * Holds the workspace and the URL where the file was published to.
+     */
+    public class WorkspaceLocation {
+
+        private final Workspace workspace;
+
+        private final String url;
+
+        public WorkspaceLocation( Workspace workspace,
+                                  String url ) {
+            this.workspace = workspace;
+            this.url = url;
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals( Object obj ) {
+            if (obj == null) return false;
+            if (!getClass().equals(obj.getClass())) return false;
+
+            WorkspaceLocation thatLocation = (WorkspaceLocation)obj;
+
+            if (this.workspace.equals(thatLocation.workspace)) {
+                if ((this.url == null) || this.url.equals("")) {
+                    return ((thatLocation.url == null) || thatLocation.url.equals(""));
+                }
+
+                return this.url.equals(thatLocation.url);
+            }
+
+            return false;
+        }
+
+        /**
+         * @return the repository where the workspace is located (never <code>null</code>)
+         */
+        public Repository getRepository() {
+            return this.workspace.getRepository();
+        }
+
+        /**
+         * @return the server where the workspace is located (never <code>null</code>)
+         */
+        public Server getServer() {
+            return this.workspace.getServer();
+        }
+
+        /**
+         * @return the workspace where published (never <code>null</code>)
+         */
+        public Workspace getWorkspace() {
+            return this.workspace;
+        }
+
+        /**
+         * @return the URL where the file is published (never <code>null</code>)
+         */
+        public String getUrl() {
+            return this.url;
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            return HashCode.compute(this.workspace, this.url);
+        }
+
     }
 
 }

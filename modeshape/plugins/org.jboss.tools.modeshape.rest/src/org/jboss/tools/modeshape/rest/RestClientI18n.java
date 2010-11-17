@@ -54,7 +54,6 @@ public final class RestClientI18n {
 
     public static I18n publishedLocationsDialogCopyUrlButton;
     public static I18n publishedLocationsDialogCopyUrlButtonToolTip;
-    public static I18n publishedLocationsDialogErrorObtainingUrlMsg;
     public static I18n publishedLocationsDialogFileUrlColumnHeader;
     public static I18n publishedLocationsDialogMsg;
     public static I18n publishedLocationsDialogRepositoryColumnHeader;

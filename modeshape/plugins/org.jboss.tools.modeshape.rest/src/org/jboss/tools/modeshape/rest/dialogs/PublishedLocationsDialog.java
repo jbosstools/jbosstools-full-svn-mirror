@@ -16,7 +16,6 @@ import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
 import static org.jboss.tools.modeshape.rest.IUiConstants.REPOSITORY_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.SERVER_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.WORKSPACE_IMAGE;
-import java.io.File;
 import java.util.Collection;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -48,12 +47,9 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
-import org.jboss.tools.modeshape.rest.ServerManager;
+import org.jboss.tools.modeshape.rest.PublishedResourceHelper.WorkspaceLocation;
 import org.modeshape.common.util.CheckArg;
-import org.modeshape.web.jcr.rest.client.Status;
-import org.modeshape.web.jcr.rest.client.Status.Severity;
 import org.modeshape.web.jcr.rest.client.domain.Server;
-import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
  * The <code>PublishedLocationsDialog</code> class provides a UI for viewing a list of {@link Server servers} a selected file has
@@ -114,24 +110,14 @@ public final class PublishedLocationsDialog extends MessageDialog {
     private Button btnCopy;
 
     /**
-     * The file whose workspaces it was published to is being displayed by this dialog.
-     */
-    private final IFile file;
-
-    /**
-     * The server manager who can obtain the URL for the file at each of the workspaces.
-     */
-    private final ServerManager serverManager;
-
-    /**
      * The viewer of the table holding the published locations.
      */
     private TableViewer viewer;
 
     /**
-     * Collection of workspaces the selected file has been published to.
+     * Collection of workspace locations the selected file has been published to.
      */
-    private final Collection<Workspace> workspaces;
+    private final Collection<WorkspaceLocation> workspaceLocations;
 
     // ===========================================================================================================================
     // Constructors
@@ -139,26 +125,19 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
     /**
      * @param parentShell the dialog parent
-     * @param serverManager the server manager that this dialog will get URLs from (never <code>null</code>)
      * @param file the file whose workspaces it has been published on is being requested (never <code>null</code>)
-     * @param workspaces the workspaces (never <code>null</code>)
+     * @param workspaceLocations the workspace locations (never <code>null</code>)
      */
     public PublishedLocationsDialog( Shell parentShell,
-                                     ServerManager serverManager,
                                      IFile file,
-                                     Collection<Workspace> workspaces ) {
+                                     Collection<WorkspaceLocation> workspaceLocations ) {
         super(parentShell, RestClientI18n.publishedLocationsDialogTitle.text(),
               Activator.getDefault().getImage(ModeShape_IMAGE_16x),
               RestClientI18n.publishedLocationsDialogMsg.text(file.getFullPath()), MessageDialog.INFORMATION,
               new String[] {IDialogConstants.OK_LABEL}, 0);
 
-        CheckArg.isNotNull(serverManager, "serverManager");
-        CheckArg.isNotNull(file, "file");
-        CheckArg.isNotNull(workspaces, "workspaces");
-
-        this.file = file;
-        this.serverManager = serverManager;
-        this.workspaces = workspaces;
+        CheckArg.isNotNull(workspaceLocations, "workspaceLocations");
+        this.workspaceLocations = workspaceLocations;
 
         // make sure dialog is resizable
         setShellStyle(getShellStyle() | SWT.RESIZE);
@@ -261,49 +240,26 @@ public final class PublishedLocationsDialog extends MessageDialog {
     }
 
     /**
-     * @return the file system file this dialog is showing the published locations of (never <code>null</code>)
-     */
-    private File getFile() {
-        return this.file.getLocation().toFile();
-    }
-
-    /**
-     * This path does not include the name of the file.
-     * 
-     * @return the path the file was published (never <code>null</code>)
-     */
-    private String getPath() {
-        return this.file.getParent().getFullPath().toString();
-    }
-
-    /**
-     * @param workspace the workspace where the file was published
+     * @param workspaceLocation the workspace location where the file was published
      * @return the URL where the file was published
      */
-    String getPublishedAtUrl( Workspace workspace ) {
-        try {
-            return this.serverManager.getUrl(getFile(), getPath(), workspace).toString();
-        } catch (Exception e) {
-            String message = RestClientI18n.publishedLocationsDialogErrorObtainingUrlMsg.text();
-            Activator.getDefault().log(new Status(Severity.ERROR, message, e));
-            return message;
-        }
-
+    String getPublishedAtUrl( WorkspaceLocation workspaceLocation ) {
+        return workspaceLocation.getUrl();
     }
 
     /**
      * @return the workspaces the file has been published to (never <code>null</code>)
      */
-    Object[] getWorkspaces() {
-        return this.workspaces.toArray();
+    Object[] getWorkspaceLocations() {
+        return this.workspaceLocations.toArray();
     }
 
     /**
      * Handler for when the copy URL button is clicked.
      */
     void handleCopyUrl() {
-        Workspace workspace = (Workspace)((IStructuredSelection)this.viewer.getSelection()).getFirstElement();
-        String url = getPublishedAtUrl(workspace);
+        WorkspaceLocation workspaceLocation = (WorkspaceLocation)((IStructuredSelection)this.viewer.getSelection()).getFirstElement();
+        String url = getPublishedAtUrl(workspaceLocation);
         Clipboard clipboard = new Clipboard(Display.getCurrent());
         clipboard.setContents(new Object[] {url}, new Transfer[] {TextTransfer.getInstance()});
     }
@@ -367,26 +323,26 @@ public final class PublishedLocationsDialog extends MessageDialog {
         @Override
         public String getColumnText( Object element,
                                      int columnIndex ) {
-            Workspace workspace = (Workspace)element;
+            WorkspaceLocation workspaceLocation = (WorkspaceLocation)element;
 
             if (columnIndex == SERVER_URL_COL) {
-                return workspace.getServer().getUrl();
+                return workspaceLocation.getServer().getUrl();
             }
 
             if (columnIndex == USER_COL) {
-                return workspace.getServer().getUser();
+                return workspaceLocation.getServer().getUser();
             }
 
             if (columnIndex == REPOSITORY_COL) {
-                return workspace.getRepository().getName();
+                return workspaceLocation.getRepository().getName();
             }
 
             if (columnIndex == WORKSPACE_COL) {
-                return workspace.getName();
+                return workspaceLocation.getWorkspace().getName();
             }
 
             if (columnIndex == FILE_URL_COL) {
-                return getPublishedAtUrl(workspace);
+                return getPublishedAtUrl(workspaceLocation);
             }
 
             // should never get here
@@ -401,7 +357,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
          */
         @Override
         public Object[] getElements( Object inputElement ) {
-            return getWorkspaces();
+            return getWorkspaceLocations();
         }
 
         /**

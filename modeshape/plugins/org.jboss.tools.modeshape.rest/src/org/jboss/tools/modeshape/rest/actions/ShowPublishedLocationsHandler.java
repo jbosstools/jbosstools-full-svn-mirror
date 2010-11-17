@@ -21,10 +21,10 @@ import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.PublishedResourceHelper;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
+import org.jboss.tools.modeshape.rest.PublishedResourceHelper.WorkspaceLocation;
 import org.jboss.tools.modeshape.rest.dialogs.PublishedLocationsDialog;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
-import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
  * The <code>ShowPublishedLocationsHandler</code> displays a dialog that shows information on which ModeShape repositories a
@@ -54,9 +54,9 @@ public final class ShowPublishedLocationsHandler extends AbstractHandler {
         Shell shell = HandlerUtil.getActiveShell(event);
 
         try {
-            Set<Workspace> workspaces = resourceHelper.getPublishedOnWorkspaces((IFile)selection.getFirstElement());
-            PublishedLocationsDialog dialog = new PublishedLocationsDialog(shell, serverManager,
-                                                                           (IFile)selection.getFirstElement(), workspaces);
+            Set<WorkspaceLocation> workspaceLocations = resourceHelper.getPublishedWorkspaceLocations((IFile)selection.getFirstElement());
+            PublishedLocationsDialog dialog = new PublishedLocationsDialog(shell, (IFile)selection.getFirstElement(),
+                                                                           workspaceLocations);
             dialog.open();
         } catch (Exception e) {
             Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.showPublishedLocationsErrorMsg.text(), e));

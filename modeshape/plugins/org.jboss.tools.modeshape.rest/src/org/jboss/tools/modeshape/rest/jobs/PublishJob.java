@@ -133,7 +133,7 @@ public final class PublishJob extends Job {
         this.files = files;
         this.workspace = workspace;
         this.jobId = JOB_ID.get();
-        
+
         // setup the workspace area and remove trailing separator if necessary
         String temp = ((workspaceArea == null) ? "" : workspaceArea);
 
@@ -223,6 +223,7 @@ public final class PublishJob extends Job {
 
                 File file = eclipseFile.getLocation().toFile();
                 String path = this.workspaceArea + eclipseFile.getParent().getFullPath().toString();
+                URL url = getServerManager().getUrl(file, path, this.workspace);
                 Status status = null;
 
                 if (isPublishing()) {
@@ -230,14 +231,14 @@ public final class PublishJob extends Job {
 
                     // set persistent property on resource indicating it has been published
                     if (!status.isError()) {
-                        resourceHelper.addPublishedProperty(eclipseFile, workspace);
+                        resourceHelper.addPublishedProperty(eclipseFile, this.workspace, url.toString());
                     }
                 } else {
                     status = getServerManager().unpublish(this.workspace, path, file);
 
                     // clear persistent property on resource indicating it has been unpublished
                     if (!status.isError()) {
-                        resourceHelper.removePublishedProperty(eclipseFile, workspace);
+                        resourceHelper.removePublishedProperty(eclipseFile, this.workspace, url.toString());
                     }
                 }
 
@@ -253,7 +254,6 @@ public final class PublishJob extends Job {
 
                 // write outcome message to console
                 if (isPublishing() && status.isOk()) {
-                    URL url = getServerManager().getUrl(file, path, this.workspace);
                     writeToConsole(eclipseFile, url, status);
                 } else {
                     writeToConsole(eclipseFile, null, status);
