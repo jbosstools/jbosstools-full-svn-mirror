@@ -26,13 +26,12 @@ public class VpeUiTests {
     public static final String IMPORT_PROJECT_NAME = "TestProject"; //$NON-NLS-1$
 	public static Test suite(){
 		TestSuite suite = new TestSuite("UI Tests for vpe"); //$NON-NLS-1$
+		suite.addTestSuite(VpeCommandsTests.class);
 		suite.addTestSuite(VpeResourcesDialogTest.class);
 		suite.addTestSuite(VpeEditorPreferencesPageTest.class);
 		suite.addTestSuite(CustomSashFormTest.class);
 		//suite.addTestSuite(VpePopupMenuTest.class);
 		suite.addTestSuite(VpeEditAnyDialogTest.class);
-		suite.addTestSuite(VpeCommandsTests.class);
-		
 		return new VpeTestSetup(suite);
 	}
 }

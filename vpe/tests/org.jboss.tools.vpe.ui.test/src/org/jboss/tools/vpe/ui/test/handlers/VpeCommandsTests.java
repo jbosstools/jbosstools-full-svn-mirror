@@ -88,8 +88,6 @@ public class VpeCommandsTests extends VpeTest{
 	 */
 	 public void testCommandState() throws Throwable {
 	   //initially all commands should be disabled
-	   checkCommadState(false);
-		 
 	   IFile vpeFile = (IFile) TestUtil.getComponentPath("inputUserName.jsp",
 	           	VpeUiTests.IMPORT_PROJECT_NAME);
 	            
@@ -115,6 +113,7 @@ public class VpeCommandsTests extends VpeTest{
 		 pageChange.setAccessible(true);
 		 pageChange.invoke(multiPageEditor, index);
 		 multiPageEditor.pageChange(index);
+		 TestUtil.delay(1500);
 	 }
 	 //checks command state
 	 private void checkCommadState(boolean expected){
