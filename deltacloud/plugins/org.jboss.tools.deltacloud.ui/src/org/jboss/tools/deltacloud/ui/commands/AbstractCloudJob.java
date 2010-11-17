@@ -18,7 +18,7 @@ public abstract class AbstractCloudJob extends Job {
 
 	public AbstractCloudJob(String name) {
 		super(name);
-		setUser(true);
+//		setUser(true);
 	}
 
 	@Override

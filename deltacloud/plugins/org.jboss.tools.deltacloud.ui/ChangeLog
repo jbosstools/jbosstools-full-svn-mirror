@@ -1,5 +1,7 @@
 2010-11-17  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/commands/AbstractCloudJob.java (AbstractCloudJob): 
+	[JBIDE-7554] removed 'blocking' dialog since I now clear instances and images before reloading
 	* src/org/jboss/tools/deltacloud/ui/views/PerformDestroyInstanceActionThread.java (.run): 
 	[JBIDE-7597] added exception reporting	
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshImagesHandler.java (refresh): 
@@ -110,7 +112,7 @@
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (getStatusIcon):
 	* src/org/jboss/tools/deltacloud/ui/SWTImagesFactory.java: 
 	[JBIDE-7566] renamed running.gif to run.gif, stopped to stop.gif, added running.gif and stopped.gif
-
+to destroy instance
 2010-11-11  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (ColumnListener.widgetSelected): 

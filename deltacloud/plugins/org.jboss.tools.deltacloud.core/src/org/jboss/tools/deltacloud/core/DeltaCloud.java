@@ -244,6 +244,8 @@ public class DeltaCloud {
 	public void loadChildren() throws DeltaCloudException {
 		DeltaCloudMultiException multiException = new DeltaCloudMultiException(MessageFormat.format(
 				"Could not load children from cloud {0}", getName()));
+		clearImages();
+		clearInstances();
 		try {
 			loadImages();
 		} catch (DeltaCloudException e) {
@@ -292,6 +294,12 @@ public class DeltaCloud {
 		DeltaCloudImage[] images = cloneImagesArray();
 		notifyImageListListeners(images);
 		return images;
+	}
+
+	public DeltaCloudInstance[] notifyInstanceListeners() {
+		DeltaCloudInstance[] instances = cloneInstancesArray();
+		notifyInstanceListListeners(instances);
+		return instances;
 	}
 
 	private DeltaCloudImage[] cloneImagesArray() {
@@ -384,7 +392,7 @@ public class DeltaCloud {
 	 */
 	public DeltaCloudInstance[] loadInstances() throws DeltaCloudException {
 		synchronized (instanceLock) {
-			instances = new ArrayList<DeltaCloudInstance>();
+			clearInstances();
 			try {
 				List<Instance> list = getClient().listInstances();
 				for (Iterator<Instance> i = list.iterator(); i.hasNext();) {
@@ -393,13 +401,18 @@ public class DeltaCloud {
 				}
 				// TODO: remove notification with all instances, replace by
 				// notifying the changed instance
-				DeltaCloudInstance[] instancesArray = instances.toArray(new DeltaCloudInstance[instances.size()]);
-				notifyInstanceListListeners(instancesArray);
-				return instancesArray;
+				return notifyInstanceListeners();
 			} catch (DeltaCloudClientException e) {
 				throw new DeltaCloudException(MessageFormat.format("Could not load instances of cloud {0}: {1}",
 						getName(), e.getMessage()), e);
 			}
+		}
+	}
+
+	private void clearInstances() {
+		synchronized (instanceLock) {
+			instances = new ArrayList<DeltaCloudInstance>();
+			notifyInstanceListeners();
 		}
 	}
 
@@ -556,7 +569,7 @@ public class DeltaCloud {
 	public DeltaCloudImage[] loadImages() throws DeltaCloudException {
 		synchronized (imageLock) {
 			try {
-				images = new ArrayList<DeltaCloudImage>();
+				clearImages();
 				List<Image> list = getClient().listImages();
 				for (Iterator<Image> i = list.iterator(); i.hasNext();) {
 					addImage(i.next());
@@ -566,6 +579,13 @@ public class DeltaCloud {
 				throw new DeltaCloudException(MessageFormat.format("Could not load images of cloud {0}: {1}",
 						getName(), e.getMessage()), e);
 			}
+		}
+	}
+
+	private void clearImages() {
+		synchronized (imageLock) {
+			images = new ArrayList<DeltaCloudImage>();
+			notifyImageListListeners();
 		}
 	}
 

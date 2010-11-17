@@ -27,8 +27,14 @@
 	(testConnection): 
 	[JBIDE-7597] made sure no DeltaCloudClientException gets outside of DeltaCloud
 	(destroyInstance): 
-	[JBIDE-7597] added exception to destroy instance
-	
+	[JBIDE-7597] added exception to destroy instance	
+	(clearInstances): 
+	(clearImages): 
+	(loadInstances): 
+	(loadImages): 
+	(loadChildren): 
+	[JBIDE-7544] clearing images and instances before refreshing them (to avoid conflicting user actions)
+
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (DeltaCloudManager): 
