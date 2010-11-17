@@ -254,7 +254,7 @@ public class DeltaCloud {
 		} catch (DeltaCloudException e) {
 			multiException.addError(e);
 		}
-		
+
 		if (!multiException.isEmpty()) {
 			throw multiException;
 		}
@@ -414,20 +414,15 @@ public class DeltaCloud {
 		}
 	}
 
-	public DeltaCloudInstance[] destroyInstance(String instanceId) {
-		try {
-			DeltaCloudInstance instance = getInstance(instanceId);
-			performInstanceAction(instance, DeltaCloudInstance.DESTROY);
-			instances.remove(instance);
-		} catch (DeltaCloudException e) {
-			return null;
-		}
+	public DeltaCloudInstance[] destroyInstance(String instanceId) throws DeltaCloudException {
+		DeltaCloudInstance instance = getInstance(instanceId);
+		performInstanceAction(instance, DeltaCloudInstance.DESTROY);
+		instances.remove(instance);
 		// TODO: remove notification with all instances, replace by notifying
 		// the changed instance
-		DeltaCloudInstance[] instancesArray = instances.toArray(instances.toArray(new DeltaCloudInstance[instances
-				.size()]));
-		notifyInstanceListListeners(instancesArray);
-		return instancesArray;
+		DeltaCloudInstance[] instances = cloneInstancesArray();
+		notifyInstanceListListeners(instances);
+		return instances;
 	}
 
 	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
