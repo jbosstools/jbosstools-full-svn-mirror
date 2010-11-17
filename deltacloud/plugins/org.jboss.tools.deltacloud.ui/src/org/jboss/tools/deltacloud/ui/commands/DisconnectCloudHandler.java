@@ -99,9 +99,11 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 	}
 
 	private void removeWithDialog(Shell shell, List<?> selectedElements) {
+		Collection<?> clouds = getSelectedClouds(selectedElements);
 		DisconnectCloudsDialog dialog = new DisconnectCloudsDialog(
 				shell
-				, getSelectedClouds(selectedElements));
+				, clouds);
+		dialog.setInitialSelections(clouds.toArray());
 		if (Dialog.OK == dialog.open()) {
 			removeDeltaClouds(dialog.getResult());
 		}
