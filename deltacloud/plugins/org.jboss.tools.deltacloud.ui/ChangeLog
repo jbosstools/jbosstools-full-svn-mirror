@@ -1,5 +1,7 @@
 2010-11-17  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/commands/DisconnectCloudHandler.java (removeWithDialog): 
+	[JBIDE-7618] checked all clouds (connections) initially
 	* src/org/jboss/tools/deltacloud/ui/commands/DestroyInstanceHandler.java: 
 	* src/org/jboss/tools/deltacloud/ui/commands/StartInstanceHandler.java (startWithDialog): 
 	* src/org/jboss/tools/deltacloud/ui/commands/RebootInstanceHandler.java (rebootWithDialog): 
