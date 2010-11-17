@@ -86,44 +86,21 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 		pageContainer.setLayout(layout);
 		pageContainer.setLayoutData(gd);
 		
-		visualEditorToolbarGroup = createLayoutGroup(pageContainer, SWT.SHADOW_ETCHED_IN, VpeUIMessages.VISUAL_EDITOR_TOOLBAR_BEHAVIOR);
-
-		visualAppearanceGroup = createLayoutGroup(pageContainer, SWT.SHADOW_ETCHED_IN, VpeUIMessages.VISUAL_APPEARANCE_GROUP_TITLE);
-//			new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
-//		visualAppearanceGroup
-//				.setText(VpeUIMessages.VISUAL_APPEARANCE_GROUP_TITLE);
-//		layout = new GridLayout();
-//		layout.marginHeight = 10;
-//		layout.marginWidth = 10;
-//		layout.horizontalSpacing = 10;
-//		layout.verticalSpacing = 10;
-//		visualAppearanceGroup.setLayout(layout);
-//		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
-//		visualAppearanceGroup.setLayoutData(gd);
-
-		confirmationGroup = createLayoutGroup(pageContainer, SWT.SHADOW_ETCHED_IN, VpeUIMessages.CONFIRMATION_GROUP_TITLE);
-
-//			new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
-//		confirmationGroup.setText(VpeUIMessages.CONFIRMATION_GROUP_TITLE);
-//		layout = new GridLayout();
-//		layout.marginHeight = 10;
-//		layout.marginWidth = 10;
-//		layout.horizontalSpacing = 10;
-//		layout.verticalSpacing = 10;
-//		confirmationGroup.setLayout(layout);
-//		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
-//		confirmationGroup.setLayoutData(gd);
-
-		tabsGroup = createLayoutGroup(pageContainer, SWT.SHADOW_ETCHED_IN, VpeUIMessages.TABS_GROUP_TITLE);
-
-//			new Group(pageContainer, SWT.SHADOW_ETCHED_IN);
-//		tabsGroup.setText(VpeUIMessages.TABS_GROUP_TITLE);
-//		layout = new GridLayout();
-//		layout.marginHeight = 10;
-//		layout.marginWidth = 10;
-//		tabsGroup.setLayout(layout);
-//		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
-//		tabsGroup.setLayoutData(gd);
+		visualEditorToolbarGroup = createLayoutGroup(pageContainer,
+				SWT.SHADOW_ETCHED_IN,
+				VpeUIMessages.VISUAL_EDITOR_TOOLBAR_BEHAVIOR);
+		
+		visualAppearanceGroup = createLayoutGroup(pageContainer,
+				SWT.SHADOW_ETCHED_IN,
+				VpeUIMessages.VISUAL_APPEARANCE_GROUP_TITLE);
+		
+		confirmationGroup = createLayoutGroup(pageContainer,
+				SWT.SHADOW_ETCHED_IN, 
+				VpeUIMessages.CONFIRMATION_GROUP_TITLE);
+		
+		tabsGroup = createLayoutGroup(pageContainer, 
+				SWT.SHADOW_ETCHED_IN, 
+				VpeUIMessages.TABS_GROUP_TITLE);
 
 		createFieldEditors();
 		initialize();
@@ -214,8 +191,7 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
  */
 	private static Group createLayoutGroup(final Composite parent,final int style, final String groupTitle){
 		Group prefGroup = new Group(parent, style);
-		prefGroup
-				.setText(groupTitle);
+		prefGroup.setText(groupTitle);
 		GridLayout layout = new GridLayout();
 		layout.marginHeight = 10;
 		layout.marginWidth = 10;
