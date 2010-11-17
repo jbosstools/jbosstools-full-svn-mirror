@@ -22,7 +22,7 @@ consequently the ability to update using the update site, are provided to users 
 	<section id="sect-update_site_configuration-Upgrading_using_the_update_site">
 	<title>Upgrading using the update site</title>
 	<para>
-	    JBoss Developer Studio provides the facility to update from version 3.0.x to the the latest code fixes and enhancements without the need to download a complete installation. Updating can be achieved by adding the relevant remote update site to the list of available software sites then performing manual or scheduled updates. <!-- At present, the update site contains the latest 3.0.0.GA build so performing an update at this stage will leave your installation unchanged. -->
+	    JBoss Developer Studio provides the facility to update from version 3.0.x to the latest code fixes and enhancements without the need to download a complete installation. Updating can be achieved by adding the relevant remote update site to the list of available software sites then performing manual or scheduled updates. <!-- At present, the update site contains the latest 3.0.0.GA build so performing an update at this stage will leave your installation unchanged. -->
 	</para>
 	<para>
 	  <xref linkend="proc-Adding_Update_Sites"/> describes how to add the update site to the list of available sites. Configuring JBoss Developer Studio to check for and download updates is outlined in <xref linkend="proc-Configuring_Automatic_Updates"/>. Manual updates can be performed by selecting <menuchoice><guimenu>Help</guimenu><guisubmenu>Check For Updates</guisubmenu></menuchoice>.
