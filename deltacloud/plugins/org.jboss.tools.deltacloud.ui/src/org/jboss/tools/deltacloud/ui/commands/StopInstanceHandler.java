@@ -58,11 +58,14 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void stopWithDialog(IStructuredSelection selection) {
+		List<DeltaCloudInstance> deltaCloudInstances = UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(),
+				DeltaCloudInstance.class);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class)
+					, deltaCloudInstances
 					, CVMessages.getString(STOP_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(STOP_INSTANCES_DIALOG_MSG));
+		dialog.setInitialElementSelections(deltaCloudInstances);
 		if (Dialog.OK == dialog.open()) {
 			stopInstances(dialog.getResult());
 		}

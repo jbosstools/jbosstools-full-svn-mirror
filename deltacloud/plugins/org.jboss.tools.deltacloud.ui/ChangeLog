@@ -1,5 +1,10 @@
 2010-11-17  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/commands/DestroyInstanceHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/StartInstanceHandler.java (startWithDialog): 
+	* src/org/jboss/tools/deltacloud/ui/commands/RebootInstanceHandler.java (rebootWithDialog): 
+	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java (stopWithDialog): 
+	[JBIDE-7618] checked all instances initially
 	* src/org/jboss/tools/deltacloud/ui/commands/AbstractCloudJob.java (AbstractCloudJob): 
 	[JBIDE-7554] removed 'blocking' dialog since I now clear instances and images before reloading
 	* src/org/jboss/tools/deltacloud/ui/views/PerformDestroyInstanceActionThread.java (.run): 

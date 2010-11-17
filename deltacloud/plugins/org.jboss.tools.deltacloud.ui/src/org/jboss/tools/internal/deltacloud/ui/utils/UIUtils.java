@@ -12,6 +12,7 @@ package org.jboss.tools.internal.deltacloud.ui.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
@@ -123,8 +124,8 @@ public class UIUtils {
 				&& getFirstAdaptedElement(selection, expectedClass) != null;
 	}
 
-	public static <T> Collection<T> adapt(Collection<?> objects, Class<T> expectedClass) {
-		ArrayList<T> adaptedObjects = new ArrayList<T>();
+	public static <T> List<T> adapt(Collection<?> objects, Class<T> expectedClass) {
+		List<T> adaptedObjects = new ArrayList<T>();
 		for (Object object : objects) {
 			T adaptedObject = adapt(object, expectedClass);
 			if (adaptedObject != null) {

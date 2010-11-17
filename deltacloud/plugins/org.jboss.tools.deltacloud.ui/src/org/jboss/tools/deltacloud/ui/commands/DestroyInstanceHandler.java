@@ -61,11 +61,13 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void destroyWithDialog(IStructuredSelection selection) {
+		List<DeltaCloudInstance> deltaCloudInstances = UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class)
+					, deltaCloudInstances 
 					, CVMessages.getString(DESTROY_INSTANCE_TITLE)
 					, CVMessages.getString(DESTROY_INSTANCE_MSG));
+		dialog.setInitialElementSelections(deltaCloudInstances);
 		if (Dialog.OK == dialog.open()) {
 			destroyInstances(dialog.getResult());
 		}

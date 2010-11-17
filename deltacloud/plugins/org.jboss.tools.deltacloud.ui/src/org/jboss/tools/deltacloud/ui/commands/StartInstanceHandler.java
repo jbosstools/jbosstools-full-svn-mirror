@@ -60,11 +60,13 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void startWithDialog(IStructuredSelection selection) {
+		List<DeltaCloudInstance> deltaCloudInstances =  UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class)
+					, deltaCloudInstances
 					, CVMessages.getString(START_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(START_INSTANCES_DIALOG_MSG));
+		dialog.setInitialElementSelections(deltaCloudInstances);
 		if (Dialog.OK == dialog.open()) {
 			startInstances(dialog.getResult());
 		}
