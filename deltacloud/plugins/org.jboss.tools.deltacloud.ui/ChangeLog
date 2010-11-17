@@ -1,5 +1,7 @@
 2010-11-17  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/PerformDestroyInstanceActionThread.java (.run): 
+	[JBIDE-7597] added exception reporting	
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshImagesHandler.java (refresh): 
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshInstancesHandler.java (refresh): 
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshCloudHandler.java (refresh): 
