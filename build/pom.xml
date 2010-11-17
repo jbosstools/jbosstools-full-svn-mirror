@@ -10,7 +10,7 @@
 
 	<profiles>
 
-		<!--profile>
+		<profile>
 			<id>libs</id>
 			<activation>
 				<property>
@@ -20,7 +20,7 @@
 			<modules>
 				<module>libs</module>
 			</modules>
-		</profile-->
+		</profile>
 
 		<profile>
 			<id>tests</id>
