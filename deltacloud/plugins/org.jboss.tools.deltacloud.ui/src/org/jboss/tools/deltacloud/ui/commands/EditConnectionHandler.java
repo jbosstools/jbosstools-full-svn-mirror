@@ -24,7 +24,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
-import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnection;
+import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnectionWizard;
 
 /**
  * @author Andre Dietisheim
@@ -42,7 +42,7 @@ public class EditConnectionHandler extends AbstractHandler implements IHandler {
 			if (element != null) {
 				CVCloudElement cloudElement = (CVCloudElement) element;
 				DeltaCloud cloud = (DeltaCloud) cloudElement.getElement();
-				IWizard wizard = new EditCloudConnection(cloud);
+				IWizard wizard = new EditCloudConnectionWizard(cloud);
 				WizardDialog dialog = new WizardDialog(UIUtils.getActiveWorkbenchWindow().getShell(), wizard);
 				dialog.create();
 				dialog.open();

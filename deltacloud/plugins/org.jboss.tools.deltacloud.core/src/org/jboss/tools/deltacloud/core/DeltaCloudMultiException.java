@@ -14,17 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An exception that holds all errors that occured when loading persisted
- * connections to deltacloud servers.
+ * An exception that captures several exceptions that may have occured while
+ * delaing with the deltacloud server
  */
-public class DeltaCloudPersistedConnectionsException extends Exception {
+public class DeltaCloudMultiException extends DeltaCloudException {
 
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Throwable> throwables;
 
-	public DeltaCloudPersistedConnectionsException() {
-		super();
+	public DeltaCloudMultiException(String message) {
+		super(message);
 		this.throwables = new ArrayList<Throwable>();
 	}
 
@@ -32,7 +32,7 @@ public class DeltaCloudPersistedConnectionsException extends Exception {
 		throwables.add(throwable);
 	}
 
-	public List<Throwable> getErrors() {
+	public List<Throwable> getThrowables() {
 		return throwables;
 	}
 

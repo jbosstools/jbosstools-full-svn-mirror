@@ -22,17 +22,18 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
-public class EditCloudConnection extends Wizard implements INewWizard, CloudConnection {
+public class EditCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
 
 	private static final String MAINPAGE_NAME = "EditCloudConnection.name"; //$NON-NLS-1$
 	private CloudConnectionPage mainPage;
 	private DeltaCloud cloud;
 
-	public EditCloudConnection(DeltaCloud cloud) {
+	public EditCloudConnectionWizard(DeltaCloud cloud) {
 		super();
 		this.cloud = cloud;
 	}
@@ -50,9 +51,8 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 					cloud.getType(), this);
 			addPage(mainPage);
 		} catch (MalformedURLException e) {
-			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-			ErrorDialog.openError(getShell(), WizardMessages.getString("EditCloudConnectionError.title"),
-					WizardMessages.getString("EditCloudConnectionError.message"), status);
+			ErrorUtils.openErrorDialog(WizardMessages.getString("EditCloudConnectionError.title"),
+					WizardMessages.getString("EditCloudConnectionError.message"), e, getShell());
 		}
 	}
 
@@ -82,10 +82,7 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password);
 			return newCloud.testConnection();
-		} catch (MalformedURLException e) {
-			Activator.log(e);
-			return false;
-		} catch (DeltaCloudClientException e) {
+		} catch (DeltaCloudException e) {
 			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 			Activator.log(status);
 			ErrorDialog.openError(
@@ -93,7 +90,7 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 					WizardMessages.getString("CloudConnectionAuthError.title"),
 					WizardMessages.getFormattedString("CloudConnectionAuthError.message", url),
 					status);
-			return true;
+			return false;
 		}
 	}
 
@@ -107,16 +104,16 @@ public class EditCloudConnection extends Wizard implements INewWizard, CloudConn
 		try {
 			String oldName = cloud.getName();
 			cloud.editCloud(name, url, username, password, type);
+			DeltaCloudManager.getDefault().saveClouds();
 			if (!name.equals(oldName))
 				DeltaCloudManager.getDefault().notifyCloudRename();
 		} catch (Exception e) {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean needsProgressMonitor() {
 		return true;
 	}
-
 }

@@ -14,8 +14,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.DeltaCloudPersistedConnectionsException;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
@@ -33,11 +33,12 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 	private void loadClouds() {
 		try {
 			DeltaCloudManager.getDefault().loadClouds();
-		} catch (DeltaCloudPersistedConnectionsException e) {
+		} catch (DeltaCloudException e) {
+			// TODO: internationalize strings
 			ErrorUtils.openErrorDialog(
 					"Error",
-					"Could not load all clouds",
-					e.getErrors(), Display.getDefault().getActiveShell());
+					"Errors occurred while loading all clouds",
+					e, Display.getDefault().getActiveShell());
 		}
 	}
 

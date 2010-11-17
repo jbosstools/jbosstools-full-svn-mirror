@@ -10,44 +10,47 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.common.log.StatusFactory;
+import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
 
 public class ErrorUtils {
 	public static IStatus openErrorDialog(final String title, final String message, Throwable e, final Shell shell) {
-		final IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				ErrorDialog.openError(shell, title, message, status);
-			}
-		});
+		IStatus status = createStatus(e);
+		openErrorDialog(title, status, shell);
 		return status;
 	}
 
-	public static IStatus openErrorDialog(final String title, final String message, Collection<Throwable> throwables, final Shell shell) {
-		final IStatus status = createMultiStatus(message, throwables);
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				ErrorDialog.openError(shell, title, message, status);
-			}
-		});
-		return status;
-	}
-
-	// TODO: move to appropriate util class
-	private static IStatus createMultiStatus(String message, Collection<Throwable> throwables) {
-		MultiStatus multiStatus = new MultiStatus(Activator.PLUGIN_ID, 0, message, null);
-		for(Throwable e : throwables) {
-			IStatus childStatus = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-			multiStatus.add(childStatus );
+	private static IStatus createStatus(Throwable e) {
+		if (e instanceof DeltaCloudMultiException) {
+			return createMultiStatus(e.getMessage(), e, ((DeltaCloudMultiException) e).getThrowables());
+		} else {
+			return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 		}
-		return multiStatus;
 	}
-	
+
+	private static IStatus openErrorDialog(final String title, final IStatus status, final Shell shell) {
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				ErrorDialog.openError(shell, title, status.getMessage(), status);
+			}
+		});
+		return status;
+	}
+
+	private static IStatus createMultiStatus(String message, Throwable throwable, Collection<Throwable> throwables) {
+		List<IStatus> states = new ArrayList<IStatus>(throwables.size());
+		for(Throwable childThrowable : throwables) {
+			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, childThrowable.getMessage(), childThrowable);
+			states.add(status);
+		}
+		return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, message, throwable, states.toArray(new IStatus[states.size()]));
+	}
 }

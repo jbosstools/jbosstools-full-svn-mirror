@@ -113,4 +113,14 @@ public interface DeltaCloudClient {
 	 */
 	public Instance createInstance(String imageId, String flavor, String realm, String name)
 			throws DeltaCloudClientException;
+
+	public Instance createInstance(String imageId, String profileId, String realmId, String name, String memory,
+			String storage) throws DeltaCloudClientException;
+
+	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyname,
+			String memory, String storage) throws DeltaCloudClientException;
+
+	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudClientException;
+
+	public void deleteKey(String keyname) throws DeltaCloudClientException;
 }

@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -35,10 +38,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.osgi.service.prefs.Preferences;
@@ -70,11 +75,11 @@ public class NewInstancePage extends WizardPage {
 	private Text keyText;
 	private Combo hardware;
 	private Button keyManage;
-	private Control realm;
+	private Control realmCombo;
 	private String[] profileIds;
 	private ProfileComposite currPage;
 	private ProfileComposite[] profilePages;
-	private ArrayList<String> realmIds;
+	private List<DeltaCloudRealm> realms;
 
 	private ModifyListener textListener = new ModifyListener() {
 
@@ -127,9 +132,9 @@ public class NewInstancePage extends WizardPage {
 	}
 
 	public String getRealmId() {
-		if (realm instanceof Combo) {
-			int index = ((Combo) realm).getSelectionIndex();
-			return realmIds.get(index);
+		if (realmCombo instanceof Combo) {
+			int index = ((Combo) realmCombo).getSelectionIndex();
+			return realms.get(index).getId();
 		} else {
 			return null;
 		}
@@ -191,11 +196,17 @@ public class NewInstancePage extends WizardPage {
 
 	private void getPossibleProfiles() {
 		profiles = new ArrayList<DeltaCloudHardwareProfile>();
-		DeltaCloudHardwareProfile[] allProfiles = cloud.getProfiles();
-		for (DeltaCloudHardwareProfile p : allProfiles) {
-			if (p.getArchitecture() == null || image.getArchitecture().equals(p.getArchitecture())) {
-				profiles.add(p);
+		try {
+			DeltaCloudHardwareProfile[] allProfiles = cloud.getProfiles();
+			for (DeltaCloudHardwareProfile p : allProfiles) {
+				if (p.getArchitecture() == null || image.getArchitecture().equals(p.getArchitecture())) {
+					profiles.add(p);
+				}
 			}
+		} catch (DeltaCloudException e) {
+			// TODO internationalize strings
+			ErrorUtils.openErrorDialog("Error",
+					MessageFormat.format("Could not get profiles from cloud {0}", cloud.getName()), e, getShell());
 		}
 	}
 
@@ -243,17 +254,8 @@ public class NewInstancePage extends WizardPage {
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.addModifyListener(textListener);
 
-		DeltaCloudRealm[] realms = cloud.getRealms();
-		realmIds = new ArrayList<String>();
-		ArrayList<String> realmNames = new ArrayList<String>();
-		for (int i = 0; i < realms.length; ++i) {
-			DeltaCloudRealm r = realms[i];
-			if (r.getState() == null || r.getState().equals(DeltaCloudRealm.AVAILABLE)) {
-				realmNames.add(r.getId() + "   [" + r.getName() + "]"); //$NON-NLS-1$ //$NON-NLS-2$
-				realmIds.add(r.getId());
-			}
-		}
-		createRealmsControl(container, realmNames);
+		realms = getRealms();
+		createRealmsControl(container, getRealmNames(realms));
 
 		Label hardwareLabel = new Label(container, SWT.NULL);
 		hardwareLabel.setText(WizardMessages.getString(HARDWARE_LABEL));
@@ -325,9 +327,9 @@ public class NewInstancePage extends WizardPage {
 		f.top = new FormAttachment(arch, 8);
 		f.left = new FormAttachment(hardwareLabel, 5);
 		f.right = new FormAttachment(100, 0);
-		realm.setLayoutData(f);
+		realmCombo.setLayoutData(f);
 
-		Control control = realm;
+		Control control = realmCombo;
 
 		if (cloud.getType().equals(DeltaCloud.EC2_TYPE)) {
 			Label keyLabel = new Label(container, SWT.NULL);
@@ -346,7 +348,7 @@ public class NewInstancePage extends WizardPage {
 			int centering2 = (p3.y - p2.y + 1) / 2;
 
 			f = new FormData();
-			f.top = new FormAttachment(realm, 8 + centering + centering2);
+			f.top = new FormAttachment(realmCombo, 8 + centering + centering2);
 			f.left = new FormAttachment(0, 0);
 			keyLabel.setLayoutData(f);
 
@@ -354,12 +356,12 @@ public class NewInstancePage extends WizardPage {
 			int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
 			Point minSize = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
 			f.width = Math.max(widthHint, minSize.x);
-			f.top = new FormAttachment(realm, 8);
-			f.right = new FormAttachment(realm, 0, SWT.RIGHT);
+			f.top = new FormAttachment(realmCombo, 8);
+			f.right = new FormAttachment(realmCombo, 0, SWT.RIGHT);
 			keyManage.setLayoutData(f);
 
 			f = new FormData();
-			f.top = new FormAttachment(realm, 8 + centering2);
+			f.top = new FormAttachment(realmCombo, 8 + centering2);
 			f.left = new FormAttachment(hardwareLabel, 5);
 			f.right = new FormAttachment(keyManage, -10);
 			keyText.setLayoutData(f);
@@ -388,6 +390,31 @@ public class NewInstancePage extends WizardPage {
 		setControl(container);
 	}
 
+	private List<String> getRealmNames(List<DeltaCloudRealm> realms) {
+		List<String> realmNames = new ArrayList<String>();
+		for (DeltaCloudRealm realm : realms) {
+			realmNames.add(
+					new StringBuilder()
+							.append(realm.getId())
+							.append("   [") //$NON-NLS-1$
+							.append(realm.getName())
+							.append("]") //$NON-NLS-1$ 
+							.toString());
+		}
+		return realmNames;
+	}
+
+	private List<DeltaCloudRealm> getRealms() {
+		List<DeltaCloudRealm> realms = new ArrayList<DeltaCloudRealm>();
+		try {
+			realms = Arrays.asList(cloud.getRealms());
+		} catch (DeltaCloudException e) {
+			ErrorUtils.openErrorDialog("Error",
+					MessageFormat.format("Could not get realms from cloud {0}", cloud.getName()), e, getShell());
+		}
+		return realms;
+	}
+
 	/**
 	 * Creates the control that shall display the available realms. It creates
 	 * either a combo, if there are realms available, or a label if none are
@@ -398,17 +425,16 @@ public class NewInstancePage extends WizardPage {
 	 * @param realmNames
 	 *            the realm names
 	 */
-	private void createRealmsControl(final Composite parent, ArrayList<String> realmNames) {
-		if (realmIds.size() > 0) {
+	private void createRealmsControl(final Composite parent, List<String> realmNames) {
+		if (realmNames.size() > 0) {
 			Combo combo = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
 			combo.setItems(realmNames.toArray(new String[realmNames.size()]));
 			combo.setText(realmNames.get(0));
-			realm = combo;
+			realmCombo = combo;
 		} else {
 			Label label = new Label(parent, SWT.NULL);
 			label.setText(WizardMessages.getString(NONE_RESPONSE));
-			realm = label;
+			realmCombo = label;
 		}
 	}
-
 }

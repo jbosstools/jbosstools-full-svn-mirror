@@ -1,3 +1,29 @@
+2010-11-17  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard2.java (performFinish): 
+	[JBIDE-7597] added saving of cloud instances
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage2.java: 
+	[JBIDE-7597] code cleanup, extracted individual methods
+	(getProfiles): 
+	[JBIDE-7597] added error handling when getting realms
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java (performTest): 
+	[JBIDE-7597] switched to ErrorUtils
+	(performFinish): 	
+	[JBIDE-7597] added saving of the cloud instances (removed from cloud)
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilter.java (performFinish): 
+	[JBIDE-7597] switched to ErrorUtils
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilter.java (performFinish): 
+	[JBIDE-7597] switched to ErrorUtils
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (addPages): 
+	[JBIDE-7597] switched to ErrorUtils, corrected catched exceptions (no MalformedURLException any more)
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (getChildren): 
+	[JBIDE-7597] switched to ErrorUtils
+	* src/org/jboss/tools/deltacloud/ui/commands/EditConnectionHandler.java (execute): 
+	[JBIDE-7597] renamed EditConnection to EditConnectionWizard since it is a wizard
+	* src/org/jboss/tools/deltacloud/ui/ErrorUtils.java (createMultiStatus): 
+	[JBIDE-7597] added multi status capabilities
+	(createStatus): 
+
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVRootElement.java (CVRootElement): 

@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -25,7 +25,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
-import org.eclipse.equinox.security.storage.StorageException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -34,8 +33,8 @@ import org.w3c.dom.NodeList;
 
 public class DeltaCloudManager {
 
-	private static final DeltaCloudManager INSTANCE = new DeltaCloudManager(); 
-	
+	private static final DeltaCloudManager INSTANCE = new DeltaCloudManager();
+
 	public final static String CLOUDFILE_NAME = "clouds.xml"; //$NON-NLS-1$
 	private ArrayList<DeltaCloud> clouds = new ArrayList<DeltaCloud>();
 	private ListenerList cloudManagerListeners;
@@ -43,8 +42,8 @@ public class DeltaCloudManager {
 	private DeltaCloudManager() {
 	}
 
-	public void loadClouds() throws DeltaCloudPersistedConnectionsException {
-		DeltaCloudPersistedConnectionsException connectionException = new DeltaCloudPersistedConnectionsException();
+	public void loadClouds() throws DeltaCloudException {
+		DeltaCloudMultiException connectionException = new DeltaCloudMultiException("Errors occurred while loading clouds from the preferences");
 		IPath stateLocation = Activator.getDefault().getStateLocation();
 		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -58,45 +57,44 @@ public class DeltaCloudManager {
 				for (int x = 0; x < cloudNodes.getLength(); ++x) {
 					Node n = cloudNodes.item(x);
 					try {
-						String name = getCloudName(n);
-						loadCloud(name, n);
-					} catch (StorageException e) {
+						loadCloud(n);
+					} catch (DeltaCloudException e) {
 						connectionException.addError(e);
-					} 
+					}
 				}
 			}
 		} catch (Exception e) {
 			connectionException.addError(e);
 		}
+
 		if (!connectionException.isEmpty()) {
 			throw connectionException;
 		}
 	}
 
-	private void loadCloud(String name, Node n) throws StorageException, MalformedURLException, DeltaCloudException {
+	private DeltaCloud loadCloud(Node n) throws DeltaCloudException {
 		NamedNodeMap attrs = n.getAttributes();
+		String name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
 		String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
 		String username = attrs.getNamedItem("username").getNodeValue(); // $NON-NLS-1$
 		String type = attrs.getNamedItem("type").getNodeValue(); // $NON-NLS-1$
 		String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
-		String key = DeltaCloud.getPreferencesKey(url, username); // $NON-NLS-1$
 		String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
 		String lastKeyName = getLastKeyName(attrs.getNamedItem("lastkeyname")); // $NON-NLS-1$
 		String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage")); // $NON-NLS-1$
-		ISecurePreferences root = SecurePreferencesFactory.getDefault();
-		ISecurePreferences node = root.node(key);
-		String password = node.get("password", null); //$NON-NLS-1$
-		DeltaCloud cloud = new DeltaCloud(
-				name, url, username, password, type, false, imageFilterRules, instanceFilterRules);
+		DeltaCloud cloud = new DeltaCloud(name, url, username, type, imageFilterRules, instanceFilterRules);
+		clouds.add(cloud);
 		cloud.setLastImageId(lastImageId);
 		cloud.setLastKeyname(lastKeyName);
-		cloud.loadChildren();
-		clouds.add(cloud);
-	}
-
-	private String getCloudName(Node n) {
-		String name = n.getAttributes().getNamedItem("name").getNodeValue(); // $NON-NLS-1$
-		return name;
+		try {
+			cloud.loadChildren();
+		} catch (DeltaCloudException e) {
+			throw e;
+		} catch (Exception e) {
+			// TODO: internationalize strings
+			throw new DeltaCloudException(MessageFormat.format("Could not load cloud {0} from preferences", name), e);
+		}
+		return cloud;
 	}
 
 	private String getLastKeyName(Node lastKeyNameNode) {

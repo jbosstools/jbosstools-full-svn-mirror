@@ -26,6 +26,7 @@ import org.eclipse.rse.core.model.IHost;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
@@ -54,7 +55,6 @@ public class NewInstanceWizard2 extends Wizard {
 
 	@Override
 	public void addPages() {
-		// TODO Auto-generated method stub
 		mainPage = new NewInstancePage2(cloud);
 		addPage(mainPage);
 	}
@@ -129,8 +129,8 @@ public class NewInstanceWizard2 extends Wizard {
 		// Save persistent settings for this particular cloud
 		cloud.setLastImageId(imageId);
 		cloud.setLastKeyname(keyname);
-		cloud.save();
-
+		DeltaCloudManager.getDefault().saveClouds();
+		
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 
 		try {

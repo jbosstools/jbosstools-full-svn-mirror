@@ -110,10 +110,9 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (IOException e) {
-			logger.error("Error processing request to: " + deltaCloudRequest.getUrl(), e);
-			throw new DeltaCloudClientException("Error processing request to: " + deltaCloudRequest.getUrl(), e);
+			throw new DeltaCloudClientException(e);
 		} catch (Exception e) {
-			throw new DeltaCloudClientException(e.getMessage());
+			throw new DeltaCloudClientException(e);
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 		}
@@ -586,7 +585,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
-			throw new DeltaCloudClientException("Could not list object of type " + clazz, e);
+			throw new DeltaCloudClientException(MessageFormat.format("Could not list object of type {0}", clazz), e);
 		}
 	}
 

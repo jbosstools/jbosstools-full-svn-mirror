@@ -22,6 +22,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 public class CVImagesCategoryElement extends CVCategoryElement implements IImageListListener {
 
@@ -79,15 +80,10 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 				initialized = true;
 				cloud.addImageListListener(this);
 			} catch (Exception e) {
-				IStatus status = StatusFactory.getInstance(
-						IStatus.ERROR,
-						Activator.PLUGIN_ID,
-						e.getMessage(),
-						e);
-				// TODO: internationalize strings
-				ErrorDialog.openError(Display.getDefault().getActiveShell(),
+				ErrorUtils.openErrorDialog(
 						"Error",
-						"Colud not get images from cloud " + cloud.getName(), status);
+						"Colud not get images from cloud " + cloud.getName(),
+						e, Display.getDefault().getActiveShell());
 			}
 		}
 		return super.getChildren();

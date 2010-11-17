@@ -1,3 +1,32 @@
+2010-11-17  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java
+	(createInstance): 
+	(createKey): 
+	(deleteKey): 
+	[JBIDE-7597] added missing methods to interface
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java 
+	(loadCloud):
+	(loadClouds): 
+	[JBIDE-7597] continue loading clouds even if a single cloud fails
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(loadImages): 
+	(loadInstances): 
+	[JBIDE-7597] added proper error messages to exceptions thrown
+	(editCloud): 
+	(updateInstanceFilter): 
+	(updateImageFilter): 
+	[JBIDE-7597] removed saving (ring dependency DeltaCloud <--> DeltaCloudManager) in DeltaCloud. 
+	Ideal solution would be dirty notification to DeltaCloud -> DeltaCloudManager
+	(getClient): 
+	[JBIDE-7597] delayed client creation after instantiation so that DeltaCloud may be created without throwing exceptions.
+	(loadChildren): 
+	[JBIDE-7597] made sure loading instances and images throw exceptions individually. Collecting them in a multi exception
+	(getProfiles): 
+	[JBIDE-7597] removed exception swalloing, made sure exceptions get thrown
+	(testConnection): 
+	[JBIDE-7597] made sure no DeltaCloudClientException gets outside of DeltaCloud
+
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (DeltaCloudManager): 

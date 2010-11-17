@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerFake;
@@ -47,7 +48,7 @@ public class DeltaCloudMockIntegrationTest {
 	}
 
 	@Test
-	public void testConnectionReportsFalseOnAuthFailure() throws MalformedURLException, DeltaCloudClientException {
+	public void testConnectionReportsFalseOnAuthFailure() throws MalformedURLException, DeltaCloudClientException, DeltaCloudException {
 		ServerFake serverFake = setupServerFake("HTTP/1.1 403 Forbidden\n\n\n");
 		try {
 			DeltaCloud deltaCloud = new DeltaCloud(
@@ -62,7 +63,7 @@ public class DeltaCloudMockIntegrationTest {
 	}
 
 	@Test(expected = DeltaCloudClientException.class)
-	public void testConnectionThrowsOnGeneralFailure() throws MalformedURLException, DeltaCloudClientException {
+	public void testConnectionThrowsOnGeneralFailure() throws MalformedURLException, DeltaCloudClientException, DeltaCloudException {
 		ServerFake serverFake = setupServerFake("HTTP/1.1 501 Some Error\ndummy dummy dummy\n\n");
 		try {
 			DeltaCloud deltaCloud = new DeltaCloud("aName", "http://localhost:" + ServerFake.DEFAULT_PORT, "badUser",
