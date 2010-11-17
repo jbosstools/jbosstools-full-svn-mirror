@@ -23,7 +23,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
@@ -55,6 +57,9 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 					protected IStatus run(IProgressMonitor monitor) {
 						try {
 							cloud.loadChildren();
+						} catch (DeltaCloudMultiException e) {
+							// TODO internationalize strings
+							return ErrorUtils.createMultiStatus(e);
 						} catch (Exception e) {
 							// TODO internationalize strings
 							return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, "Could not load children of cloud " + cloud.getName(), e);

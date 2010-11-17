@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.ui;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
@@ -21,6 +20,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
 
+/**
+ * @author Andre Dietisheim
+ */
 public class ErrorUtils {
 	public static IStatus openErrorDialog(final String title, final String message, Throwable e, final Shell shell) {
 		IStatus status = createStatus(e);
@@ -30,7 +32,7 @@ public class ErrorUtils {
 
 	private static IStatus createStatus(Throwable e) {
 		if (e instanceof DeltaCloudMultiException) {
-			return createMultiStatus(e.getMessage(), e, ((DeltaCloudMultiException) e).getThrowables());
+			return createMultiStatus((DeltaCloudMultiException) e);
 		} else {
 			return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 		}
@@ -44,13 +46,13 @@ public class ErrorUtils {
 		});
 		return status;
 	}
-
-	private static IStatus createMultiStatus(String message, Throwable throwable, Collection<Throwable> throwables) {
-		List<IStatus> states = new ArrayList<IStatus>(throwables.size());
-		for(Throwable childThrowable : throwables) {
+	
+	public static IStatus createMultiStatus(DeltaCloudMultiException throwable) {
+		List<IStatus> states = new ArrayList<IStatus>(throwable.getThrowables().size());
+		for(Throwable childThrowable : throwable.getThrowables()) {
 			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, childThrowable.getMessage(), childThrowable);
 			states.add(status);
 		}
-		return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, message, throwable, states.toArray(new IStatus[states.size()]));
+		return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, throwable.getMessage(), throwable, states.toArray(new IStatus[states.size()]));
 	}
 }
