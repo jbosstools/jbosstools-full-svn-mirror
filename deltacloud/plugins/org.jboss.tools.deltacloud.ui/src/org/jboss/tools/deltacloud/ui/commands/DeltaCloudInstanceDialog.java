@@ -37,9 +37,9 @@ public class DeltaCloudInstanceDialog extends ListSelectionDialog {
 		}
 	};
 
-	public DeltaCloudInstanceDialog(Shell parentShell, Collection<DeltaCloudInstance> cloudViewElements, String title, String message) {
+	public DeltaCloudInstanceDialog(Shell parentShell, Collection<DeltaCloudInstance> deltaCloudInstances, String title, String message) {
 		super(parentShell
-				, cloudViewElements
+				, deltaCloudInstances
 				, ArrayContentProvider.getInstance()
 				, new CloudElementNameProvider()
 				, message);
