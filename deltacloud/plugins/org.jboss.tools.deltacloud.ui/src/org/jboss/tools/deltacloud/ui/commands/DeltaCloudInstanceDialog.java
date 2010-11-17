@@ -26,7 +26,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  */
 public class DeltaCloudInstanceDialog extends ListSelectionDialog {
 
-	private static class CloudElementNameProvider extends LabelProvider {
+	private static class DeltaCloudInstanceNameProvider extends LabelProvider {
 		public String getText(Object element) {
 			DeltaCloudInstance instance = UIUtils.adapt(element, DeltaCloudInstance.class);
 			if (instance != null) {
@@ -41,7 +41,7 @@ public class DeltaCloudInstanceDialog extends ListSelectionDialog {
 		super(parentShell
 				, deltaCloudInstances
 				, ArrayContentProvider.getInstance()
-				, new CloudElementNameProvider()
+				, new DeltaCloudInstanceNameProvider()
 				, message);
 		setTitle(title);
 	}
