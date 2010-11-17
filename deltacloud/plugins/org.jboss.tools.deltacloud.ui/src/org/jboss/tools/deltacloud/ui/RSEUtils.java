@@ -25,6 +25,7 @@ import org.eclipse.rse.core.subsystems.IConnectorService;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.commands.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
 public class RSEUtils {
@@ -80,12 +81,14 @@ public class RSEUtils {
 	public static void connect(final String instanceName, final IConnectorService service, String connectionName) {
 		// TODO: internationalize strings
 		Assert.isLegal(service != null, "Remote System Explorer could not connect: connector service not found.");
-		Job connect = new Job(CVMessages.getFormattedString(RSE_CONNECTING_MSG, connectionName)) {
+		Job connect = new AbstractCloudJob(CVMessages.getFormattedString(RSE_CONNECTING_MSG, connectionName)) {
 			@Override
-			protected IStatus run(IProgressMonitor monitor) {
+			protected IStatus doRun(IProgressMonitor monitor) {
 				try {
+					monitor.worked(1);
 					service.connect(monitor);
 					Display.getDefault().asyncExec(new ShowRSEViewRunnable(instanceName));
+					monitor.done();
 					return Status.OK_STATUS;
 				} catch (Exception e) {
 					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
