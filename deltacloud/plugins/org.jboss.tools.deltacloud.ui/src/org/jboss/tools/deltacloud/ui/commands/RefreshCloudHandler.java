@@ -17,7 +17,6 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -51,18 +50,20 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 			final DeltaCloud cloud = CloudViewElementUtils.getCloud(cloudViewElement);
 			if (cloud != null) {
 				// TODO: internationalize strings
-				new Job("Refreshing images and instances on " + cloud.getName()) {
+				new AbstractCloudJob("Refreshing images and instances on " + cloud.getName()) {
 
 					@Override
-					protected IStatus run(IProgressMonitor monitor) {
+					protected IStatus doRun(IProgressMonitor monitor) {
 						try {
+							monitor.worked(1);
 							cloud.loadChildren();
+							monitor.done();
 						} catch (DeltaCloudMultiException e) {
-							// TODO internationalize strings
 							return ErrorUtils.createMultiStatus(e);
 						} catch (Exception e) {
 							// TODO internationalize strings
-							return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, "Could not load children of cloud " + cloud.getName(), e);
+							return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+									"Could not load children of cloud " + cloud.getName(), e);
 						}
 						return Status.OK_STATUS;
 					}

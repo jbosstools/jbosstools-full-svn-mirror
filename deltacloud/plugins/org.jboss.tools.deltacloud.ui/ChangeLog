@@ -1,7 +1,13 @@
 2010-11-17  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshImagesHandler.java (refresh): 
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshInstancesHandler.java (refresh): 
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshCloudHandler.java (refresh): 
+	[JBIDE-7554] added background jobs for all 3 refresh types (cloud, image, instance)
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshCloudHandler.java (.run): 
 	[JBIDE-7597] corrected to handle multi exceptions
+	(refresh): 
+	[JBIDE-7554] added background jobs for all 3 refresh types (cloud, image, instance)
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard2.java (performFinish): 
 	[JBIDE-7597] added saving of cloud instances
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage2.java: 

@@ -17,7 +17,6 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -48,12 +47,14 @@ public class RefreshImagesHandler extends AbstractHandler implements IHandler {
 			final DeltaCloud cloud = deltaCloudImage.getDeltaCloud();
 			if (cloud != null) {
 				// TODO: internationalize strings
-				new Job("Refreshing images on cloud " + cloud.getName()) {
-
+				new AbstractCloudJob("Refreshing images on cloud " + cloud.getName()) {
+					
 					@Override
-					protected IStatus run(IProgressMonitor monitor) {
+					protected IStatus doRun(IProgressMonitor monitor) {
 						try {
+							monitor.worked(1);
 							cloud.loadChildren();
+							monitor.done();
 							return Status.OK_STATUS;
 
 						} catch (Exception e) {
