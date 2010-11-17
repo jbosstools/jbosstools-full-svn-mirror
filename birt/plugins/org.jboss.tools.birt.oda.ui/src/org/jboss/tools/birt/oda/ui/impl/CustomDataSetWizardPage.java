@@ -318,7 +318,7 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 				return null;
 			}
 
-			public String getQueryString() {
+			public String getEditorText() {
 				return null;
 			}
 
