@@ -318,6 +318,10 @@ public class CustomDataSetWizardPage extends DataSetWizardPage {
 				return null;
 			}
 
+			public String getQueryString() {
+				return null;
+			}
+
 			public void setConsoleConfigurationName(String text) {
 			}
 
