@@ -26,7 +26,9 @@
 	[JBIDE-7597] removed exception swalloing, made sure exceptions get thrown
 	(testConnection): 
 	[JBIDE-7597] made sure no DeltaCloudClientException gets outside of DeltaCloud
-
+	(destroyInstance): 
+	[JBIDE-7597] added exception to destroy instance
+	
 2010-11-16  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (DeltaCloudManager): 
