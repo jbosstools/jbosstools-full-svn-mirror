@@ -39,17 +39,13 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
  */
 public class ResourceMarkerDecorator implements ILightweightLabelDecorator, ICommonUIConstants {
 
-	private static ImageDescriptor img_error;
-	private static ImageDescriptor img_warning;
-	private static ImageDescriptor img_info;
+	private static ImageDescriptor img_error = null;
+	private static ImageDescriptor img_warning = null;
+	private static ImageDescriptor img_info = null;
 	
 	public ResourceMarkerDecorator()
 	{
 		super();
-		
-		img_error = CommonUIPlugin.getDefault().getImageRegistry().getDescriptor(ICommonUIConstants.ICON_ERROR);
-		img_warning = CommonUIPlugin.getDefault().getImageRegistry().getDescriptor(ICommonUIConstants.ICON_WARNING);
-		img_info = CommonUIPlugin.getDefault().getImageRegistry().getDescriptor(ICommonUIConstants.ICON_INFO);
 	}
 	
 	public void addListener(ILabelProviderListener listener) {
@@ -70,12 +66,18 @@ public class ResourceMarkerDecorator implements ILightweightLabelDecorator, ICom
 			int severity = ((IResource)element).findMaxProblemSeverity(IMarker.PROBLEM, true, IResource.DEPTH_ONE);
 			switch (severity) {
 			case IMarker.SEVERITY_ERROR:
+				if (img_error==null)
+					img_error = CommonUIPlugin.getDefault().getImageRegistry().getDescriptor(ICommonUIConstants.ICON_ERROR);
 				decoration.addOverlay(img_error);
 				break;
 			case IMarker.SEVERITY_WARNING:
+				if (img_warning==null)
+					img_warning = CommonUIPlugin.getDefault().getImageRegistry().getDescriptor(ICommonUIConstants.ICON_WARNING);
 				decoration.addOverlay(img_warning);
 				break;
 			case IMarker.SEVERITY_INFO:
+				if (img_info==null)
+					img_info = CommonUIPlugin.getDefault().getImageRegistry().getDescriptor(ICommonUIConstants.ICON_INFO);
 				decoration.addOverlay(img_info);
 				break;
 			}
