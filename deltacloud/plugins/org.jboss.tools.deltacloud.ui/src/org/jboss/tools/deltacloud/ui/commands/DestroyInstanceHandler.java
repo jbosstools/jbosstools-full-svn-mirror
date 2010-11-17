@@ -17,7 +17,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -54,16 +53,9 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 
 			return Status.OK_STATUS;
 		} catch (Exception e) {
-			String message = getInstanceNames(selection);
-			IStatus status = StatusFactory.getInstance(
-					IStatus.ERROR,
-					Activator.PLUGIN_ID,
-					e.getMessage(),
-					e);
-			ErrorDialog.openError(HandlerUtil.getActiveShell(event),
-					CVMessages.getString("DestroyInstancesDialogError.title"),
-					CVMessages.getFormattedString("DestroyInstancesDialogError.msg", message), status);
-			return status;
+			String errorMessage = CVMessages.getFormattedString("DestroyInstancesDialogError.msg",
+					getInstanceNames(selection));
+			return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, errorMessage, e);
 		}
 	}
 

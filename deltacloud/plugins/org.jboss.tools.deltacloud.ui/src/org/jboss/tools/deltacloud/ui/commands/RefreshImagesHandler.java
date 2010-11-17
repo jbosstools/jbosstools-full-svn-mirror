@@ -57,14 +57,8 @@ public class RefreshImagesHandler extends AbstractHandler implements IHandler {
 							return Status.OK_STATUS;
 
 						} catch (Exception e) {
-							IStatus status = StatusFactory.getInstance(
-									IStatus.ERROR,
-									Activator.PLUGIN_ID,
-									e.getMessage(),
-									e);
-							return status;
+							return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
 						}
-
 					}
 				}.schedule();
 			}

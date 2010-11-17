@@ -16,11 +16,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.rse.core.model.IHost;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
@@ -38,18 +36,14 @@ public class ShowInRemoteSystemExplorerHandler extends AbstractHandler implement
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			DeltaCloudInstance instance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
-			Shell shell = HandlerUtil.getActiveShell(event);
 			try {
 				String connectionName = RSEUtils.createConnectionName(instance);
 				IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance));
 				RSEUtils.launchRemoteSystemExplorer(instance.getName(), connectionName, host);
 			} catch (Exception e) {
-				IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-				// TODO: internationalize strings
-				ErrorDialog.openError(shell, "Error",
+				return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, 
 						"Could not launch remote system explorer for instance \"" + instance.getName() + "\"",
-						status);
-				return status;
+						e);
 			}
 		}
 
