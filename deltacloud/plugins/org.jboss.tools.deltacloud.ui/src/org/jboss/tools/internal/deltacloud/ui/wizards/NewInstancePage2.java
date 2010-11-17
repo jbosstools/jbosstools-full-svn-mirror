@@ -97,7 +97,6 @@ public class NewInstancePage2 extends WizardPage {
 	private Control realmCombo;
 	private ProfileComposite currPage;
 	private Map<String, ProfileComposite> profilePages;
-	private ArrayList<String> realmIds;
 	private DeltaCloudHardwareProfile[] allProfiles;
 	private List<DeltaCloudRealm> realms;
 
@@ -168,7 +167,7 @@ public class NewInstancePage2 extends WizardPage {
 	public String getRealmId() {
 		if (realmCombo instanceof Combo) {
 			int index = ((Combo) realmCombo).getSelectionIndex();
-			return realmIds.get(index);
+			return realms.get(index).getId();
 		} else {
 			return null;
 		}
