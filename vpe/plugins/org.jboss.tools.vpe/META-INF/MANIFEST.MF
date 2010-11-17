@@ -34,6 +34,7 @@ Export-Package:
  org.jboss.tools.vpe.editor.util,
  org.jboss.tools.vpe.editor.wizards,
  org.jboss.tools.vpe.editor.xpl,
+ org.jboss.tools.vpe.handlers,
  org.jboss.tools.vpe.messages
 Require-Bundle: org.eclipse.jface.text,
  org.jboss.tools.jst.jsp,

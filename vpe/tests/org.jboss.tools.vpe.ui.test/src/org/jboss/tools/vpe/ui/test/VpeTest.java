@@ -185,7 +185,7 @@ public class VpeTest extends TestCase implements ILogListener {
 		// TestUtil.waitForJobs();
 		IWorkbenchPage page = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
-		IWorkbenchPart part = page.getViewReferences()[0].getPart(false);
+		IWorkbenchPart part = page.getActivePart();
 		page.activate(part);
 		// close
 		page.closeAllEditors(false);

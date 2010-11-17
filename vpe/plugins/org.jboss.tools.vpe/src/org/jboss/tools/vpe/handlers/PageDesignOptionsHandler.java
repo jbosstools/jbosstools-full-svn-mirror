@@ -13,11 +13,13 @@ package org.jboss.tools.vpe.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -66,31 +68,38 @@ public class PageDesignOptionsHandler extends VisualPartAbstractHandler {
 
 	@Override
 	public void setEnabled(Object evaluationContext) {
-		IEditorPart activeEditor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		if (activeEditor == null) {
-			return;
-		}
-		IEditorInput input = activeEditor.getEditorInput();
-		IFile file = null;
-		if (input instanceof IFileEditorInput) {
-			file = ((IFileEditorInput) input).getFile();
-		} else if (input instanceof ILocationProvider) {
-			ILocationProvider provider = (ILocationProvider) input;
-			IPath path = provider.getPath(input);
-			if (path != null) {
-				file = FileUtil.getFile(input, path.lastSegment());
+		IEditorPart activeEditor = null;
+		if (evaluationContext instanceof IEvaluationContext) {
+			IEvaluationContext context = (IEvaluationContext) evaluationContext;
+			Object editor = context.getVariable(ISources.ACTIVE_EDITOR_NAME);
+			if(editor instanceof IEditorPart){
+				activeEditor = (IEditorPart) editor;
 			}
 		}
 		boolean isVisualPartVisible=false;
+		boolean isFileExists=false;
+		if (activeEditor != null) {
+		
+			IEditorInput input = activeEditor.getEditorInput();
+			IFile file = null;
+			if (input instanceof IFileEditorInput) {
+					file = ((IFileEditorInput) input).getFile();
+				} else if (input instanceof ILocationProvider) {
+					ILocationProvider provider = (ILocationProvider) input;
+					IPath path = provider.getPath(input);
+					if (path != null) {
+						file = FileUtil.getFile(input, path.lastSegment());
+						isFileExists = file != null && file.exists();
+					}
+				}
+			isFileExists = file != null && file.exists();
+			
 			if(activeEditor instanceof JSPMultiPageEditor){
-				JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
-				if(jspEditor.getVisualEditor().getController()!=null)
-				isVisualPartVisible=((VpeController)(jspEditor.getVisualEditor().getController())).isVisualEditorVisible();
+					JSPMultiPageEditor jspEditor = (JSPMultiPageEditor) activeEditor;
+					if(jspEditor.getVisualEditor().getController()!=null)
+					isVisualPartVisible=((VpeController)(jspEditor.getVisualEditor().getController())).isVisualEditorVisible();
 			}
-		
-		
-		boolean isFileExists = file != null && file.exists();
+		}
 		boolean enabled=isFileExists&&isVisualPartVisible;
 		if (isEnabled() != enabled) {
 			setBaseEnabled(enabled);
