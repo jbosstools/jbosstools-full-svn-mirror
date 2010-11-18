@@ -105,7 +105,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	}
 
 	@Override
-	public void changeEvent(int type) {
+	public void cloudsChanged(int type) {
 		viewer.setInput(new CVRootElement(viewer));
 	}
 
