@@ -41,8 +41,8 @@ public class DeltaCloudManager {
 	private DeltaCloudManager() {
 	}
 
-	private void loadClouds() throws DeltaCloudException {
-		clouds = new ArrayList<DeltaCloud>(); // clear present clouds
+	private List<DeltaCloud> loadClouds() throws DeltaCloudException {
+		List<DeltaCloud> clouds = new ArrayList<DeltaCloud>(); // clear present clouds
 		DeltaCloudMultiException connectionException = new DeltaCloudMultiException("Errors occurred while loading clouds from the preferences");
 		IPath stateLocation = Activator.getDefault().getStateLocation();
 		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
@@ -57,7 +57,7 @@ public class DeltaCloudManager {
 				for (int x = 0; x < cloudNodes.getLength(); ++x) {
 					Node n = cloudNodes.item(x);
 					try {
-						loadCloud(n);
+						loadCloud(n, clouds);
 					} catch (DeltaCloudException e) {
 						connectionException.addError(e);
 					}
@@ -70,9 +70,10 @@ public class DeltaCloudManager {
 		if (!connectionException.isEmpty()) {
 			throw connectionException;
 		}
+		return clouds;
 	}
 
-	private DeltaCloud loadCloud(Node n) throws DeltaCloudException {
+	private DeltaCloud loadCloud(Node n, List<DeltaCloud> clouds) throws DeltaCloudException {
 		NamedNodeMap attrs = n.getAttributes();
 		String name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
 		String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
@@ -166,14 +167,18 @@ public class DeltaCloudManager {
 	}
 
 	public DeltaCloud[] getClouds() throws DeltaCloudException {
-		if (clouds == null) {
-			loadClouds();
-		}
-		return clouds.toArray(new DeltaCloud[clouds.size()]);
+		return doGetClouds().toArray(new DeltaCloud[clouds.size()]);
 	}
 
-	public DeltaCloud findCloud(String name) {
-		for (DeltaCloud cloud : clouds) {
+	private List<DeltaCloud> doGetClouds() throws DeltaCloudException {
+		if (clouds == null) {
+			clouds = loadClouds();
+		}
+		return clouds;
+	}
+	
+	public DeltaCloud findCloud(String name) throws DeltaCloudException {
+		for (DeltaCloud cloud : getClouds()) {
 			if (cloud.getName().equals(name))
 				return cloud;
 		}
@@ -181,13 +186,13 @@ public class DeltaCloudManager {
 	}
 
 	public void addCloud(DeltaCloud d) throws DeltaCloudException {
-		clouds.add(d);
+		doGetClouds().add(d);
 		saveClouds();
 		notifyListeners(ICloudManagerListener.ADD_EVENT);
 	}
 
 	public void removeCloud(DeltaCloud d) throws DeltaCloudException {
-		clouds.remove(d);
+		doGetClouds().remove(d);
 		d.removePassword(d.getName(), d.getName());
 		saveClouds();
 		notifyListeners(ICloudManagerListener.REMOVE_EVENT);
