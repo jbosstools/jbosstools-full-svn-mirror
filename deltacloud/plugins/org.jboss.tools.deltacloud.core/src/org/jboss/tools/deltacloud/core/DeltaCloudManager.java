@@ -35,13 +35,13 @@ public class DeltaCloudManager {
 	private static final DeltaCloudManager INSTANCE = new DeltaCloudManager();
 
 	public final static String CLOUDFILE_NAME = "clouds.xml"; //$NON-NLS-1$
-	private List<DeltaCloud> clouds = new ArrayList<DeltaCloud>();
+	private List<DeltaCloud> clouds;
 	private ListenerList cloudManagerListeners;
 
 	private DeltaCloudManager() {
 	}
 
-	public void loadClouds() throws DeltaCloudException {
+	private void loadClouds() throws DeltaCloudException {
 		clouds = new ArrayList<DeltaCloud>(); // clear present clouds
 		DeltaCloudMultiException connectionException = new DeltaCloudMultiException("Errors occurred while loading clouds from the preferences");
 		IPath stateLocation = Activator.getDefault().getStateLocation();
@@ -121,7 +121,7 @@ public class DeltaCloudManager {
 		return imageFilterRules;
 	}
 
-	public void saveClouds() {
+	public void saveClouds() throws DeltaCloudException {
 		try {
 			File cloudFile = getOrCreateCloudFile();
 			if (cloudFile.exists()) {
@@ -135,7 +135,8 @@ public class DeltaCloudManager {
 				p.close();
 			}
 		} catch (Exception e) {
-			Activator.log(e);
+			// TODO: internationalize strings
+			throw new DeltaCloudException("Could not save clouds", e);
 		}
 	}
 
@@ -164,7 +165,10 @@ public class DeltaCloudManager {
 		return INSTANCE;
 	}
 
-	public DeltaCloud[] getClouds() {
+	public DeltaCloud[] getClouds() throws DeltaCloudException {
+		if (clouds == null) {
+			loadClouds();
+		}
 		return clouds.toArray(new DeltaCloud[clouds.size()]);
 	}
 
@@ -176,7 +180,7 @@ public class DeltaCloudManager {
 		return null;
 	}
 
-	public void addCloud(DeltaCloud d) {
+	public void addCloud(DeltaCloud d) throws DeltaCloudException {
 		clouds.add(d);
 		saveClouds();
 		notifyListeners(ICloudManagerListener.ADD_EVENT);
@@ -189,7 +193,7 @@ public class DeltaCloudManager {
 		notifyListeners(ICloudManagerListener.REMOVE_EVENT);
 	}
 
-	public void notifyCloudRename() {
+	public void notifyCloudRename() throws DeltaCloudException {
 		saveClouds();
 		notifyListeners(ICloudManagerListener.RENAME_EVENT);
 	}
@@ -209,7 +213,7 @@ public class DeltaCloudManager {
 		if (cloudManagerListeners != null) {
 			Object[] listeners = cloudManagerListeners.getListeners();
 			for (int i = 0; i < listeners.length; ++i) {
-				((ICloudManagerListener) listeners[i]).changeEvent(type);
+				((ICloudManagerListener) listeners[i]).cloudsChanged(type);
 			}
 		}
 	}
