@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
@@ -17,7 +18,7 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 public abstract class AbstractDeltaCloudRequest implements DeltaCloudRequest {
 		
-	private String url;
+	private URL url;
 	private HttpMethod httpMethod;
 	private UrlBuilder urlBuilder;
 
@@ -32,9 +33,9 @@ public abstract class AbstractDeltaCloudRequest implements DeltaCloudRequest {
 		return new UrlBuilder(baseURL).path(API_PATH_SEGMENT);
 	}
 	
-	public String getUrl() {
+	public URL getUrl() throws MalformedURLException {
 		if (url == null) {
-			this.url = doCreateUrl(urlBuilder);
+			this.url = new URL(doCreateUrl(urlBuilder));
 		}
 		return url;
 	}

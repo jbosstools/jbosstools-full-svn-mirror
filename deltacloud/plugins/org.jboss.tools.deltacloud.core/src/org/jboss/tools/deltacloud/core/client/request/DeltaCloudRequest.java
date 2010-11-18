@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public interface DeltaCloudRequest {
 
 	public static final char PATH_SEPARATOR = '/';
@@ -20,7 +23,7 @@ public interface DeltaCloudRequest {
 		GET, POST, PUT, DELETE, HEAD;
 	}
 
-	public String getUrl();
+	public URL getUrl() throws MalformedURLException;
 
 	public HttpMethod getHttpMethod();
 

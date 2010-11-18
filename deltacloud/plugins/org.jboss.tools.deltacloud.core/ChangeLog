@@ -1,5 +1,14 @@
 2010-11-18  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/client/request/DeltaCloudRequest.java (getUrl): 
+	* src/org/jboss/tools/deltacloud/core/client/request/AbstractDeltaCloudRequest.java (getUrl): 
+	[JBIDE-7593] need to return URL (not String)
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java
+ 	(addCredentials): 
+	[JBIDE-7593] need to use URL (not String)
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java
+ 	(sendRequest): 
+	[JBIDE-7593] need to add credentials using the url that is effectively used in the request (which may be either the baseURL or the url in the action)
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): 
 	[JBIDE-7625] store password in the constructor
 	(editCloud): 

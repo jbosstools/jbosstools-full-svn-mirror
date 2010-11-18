@@ -20,6 +20,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,8 +53,8 @@ import org.jboss.tools.deltacloud.core.client.request.DeleteKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.request.ListHardwareProfileRequest;
-import org.jboss.tools.deltacloud.core.client.request.ListImageRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListHardwareProfilesRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListImageRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListImagesRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListInstancesRequest;
@@ -99,10 +100,11 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	protected String sendRequest(DeltaCloudRequest deltaCloudRequest) throws DeltaCloudClientException {
-		DefaultHttpClient httpClient = addCredentials(new DefaultHttpClient());
-		logger.debug("Sending Request to: " + deltaCloudRequest.getUrl());
-
+		DefaultHttpClient httpClient = new DefaultHttpClient();
 		try {
+			URL url = deltaCloudRequest.getUrl();
+			addCredentials(url, httpClient, username, password);
+			logger.debug("Sending Request to: " + url);
 			HttpUriRequest request = createRequest(deltaCloudRequest);
 			HttpResponse httpResponse = httpClient.execute(request);
 			throwOnHttpErrors(deltaCloudRequest.getUrl(), httpResponse);
@@ -118,7 +120,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	private void throwOnHttpErrors(String requestUrl, HttpResponse httpResponse) throws DeltaCloudClientException {
+	private void throwOnHttpErrors(URL requestUrl, HttpResponse httpResponse) throws DeltaCloudClientException {
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
 		if (HttpStatusCode.OK.isStatus(statusCode)) {
 			return;
@@ -155,10 +157,11 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	 * @param requestUrl
 	 *            the requested url
 	 * @return the request instance
+	 * @throws MalformedURLException 
 	 */
-	protected HttpUriRequest createRequest(DeltaCloudRequest deltaCloudRequest) {
+	protected HttpUriRequest createRequest(DeltaCloudRequest deltaCloudRequest) throws MalformedURLException {
 		HttpUriRequest request = null;
-		String url = deltaCloudRequest.getUrl();
+		String url = deltaCloudRequest.getUrl().toString();
 		HttpMethod httpMethod = deltaCloudRequest.getHttpMethod();
 		switch (httpMethod) {
 		case POST:
@@ -181,11 +184,12 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	 * @param httpClient
 	 *            the http client
 	 * @return the default http client
+	 * @throws UnknownHostException 
 	 */
-	private DefaultHttpClient addCredentials(DefaultHttpClient httpClient) {
+	private DefaultHttpClient addCredentials(URL url, DefaultHttpClient httpClient, String username, String password) throws UnknownHostException {
 		if (username != null && password != null) {
 			httpClient.getCredentialsProvider().setCredentials(
-					new AuthScope(baseUrl.getHost(), baseUrl.getPort()),
+					new AuthScope(url.getHost(), url.getPort()),
 					new UsernamePasswordCredentials(username, password));
 		}
 		return httpClient;
@@ -612,8 +616,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	public boolean performInstanceAction(InstanceAction action) throws DeltaCloudClientException {
 		if (action != null) {
 			try {
-				String response = sendRequest(new PerformInstanceActionRequest(
-						new URL(action.getUrl()),
+				String response = sendRequest(
+						new PerformInstanceActionRequest(new URL(action.getUrl()),
 						action.getMethod()));
 				if (!InstanceAction.DESTROY.equals(action.getName())) {
 					updateInstance(response, action.getInstance());

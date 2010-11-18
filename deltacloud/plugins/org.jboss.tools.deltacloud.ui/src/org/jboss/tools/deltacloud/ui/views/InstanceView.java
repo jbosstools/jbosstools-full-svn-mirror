@@ -80,6 +80,10 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		@Override
 		public void modifyText(ModifyEvent e) {
 			int index = cloudSelector.getSelectionIndex();
+			if (index < 0) {
+				return;
+			}
+			
 			if (currCloud != null) {
 				currCloud.removeInstanceListListener(parentView);
 			}
@@ -311,7 +315,9 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	public void listChanged(DeltaCloud cloud, final DeltaCloudInstance[] instances) {
 		// Run following under Display thread since this can be
 		// triggered by a non-display thread notifying listeners.
-		if (cloud.getName().equals(currCloud.getName())) {
+		if (cloud != null 
+				&& currCloud != null
+				&& cloud.getName().equals(currCloud.getName())) {
 			Display.getDefault().syncExec(new Runnable() {
 				@Override
 				public void run() {
