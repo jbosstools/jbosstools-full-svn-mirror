@@ -1,4 +1,4 @@
-Total of 24 req'd tgzs/zips/jars.
+Total of 23 req'd tgzs/zips/jars.
 
 BIRT 2.6 -> http://www.eclipse.org/downloads/download.php?file=/birt/downloads/build_list.php 
 ->
@@ -54,11 +54,10 @@ wget http://www.eclipse.org/downloads/download.php?file=/webtools/downloads/drop
 
 SWTBot 2.0 e36 ->
 http://www.eclipse.org/swtbot/downloads.php ->
-wget "http://www.eclipse.org/downloads/download.php?file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.test.junit4-2.0.0.595-dev-e36.zip&r=1" &
-wget "http://www.eclipse.org/downloads/download.php?file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot-2.0.0.595-dev-e36.zip&r=1" &
-wget "http://www.eclipse.org/downloads/download.php?file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse-2.0.0.595-dev-e36.zip&r=1" &
-wget "http://www.eclipse.org/downloads/download.php?file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.gef-2.0.0.595-dev-e36.zip&r=1"
-wget "http://www.eclipse.org/downloads/download.php?r=1&file=/athena/repos/swtbot-update-site-2.0.0.595-dev-e36.zip&r=1"
+wget "http://www.eclipse.org/downloads/download.php?file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.test.junit4-2.0.1.20101106_1831-73ca7af-dev-e36.zip&r=1" &
+wget "http://www.eclipse.org/downloads/download.php?file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse-2.0.1.20101106_1831-73ca7af-dev-e36.zip&r=1" &
+wget "http://www.eclipse.org/downloads/download.php?file=/technology/swtbot/helios/dev-build/org.eclipse.swtbot.eclipse.gef-2.0.1.20101106_1831-73ca7af-dev-e36.zip&r=1"
+wget "http://www.eclipse.org/downloads/download.php?r=1&file=/athena/repos/swtbot-update-site-2.0.1.20101106_1831-73ca7af-dev-e36.zip&r=1"
 
 ------------
 
