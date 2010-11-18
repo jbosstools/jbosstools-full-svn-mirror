@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +33,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
@@ -80,7 +83,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 			setTitle(CVMessages.getString(CONFIRM_CLOUD_DELETE_TITLE));
 		}
 	}
-	
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
@@ -88,17 +91,25 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		if (selection instanceof IStructuredSelection) {
 			List<?> selectedElements = ((IStructuredSelection) selection).toList();
 			DeltaCloud deltaCloud = getFirstSelectedCloud(selectedElements);
-			if (selectedElements.size() == 1 && deltaCloud != null) {
-				removeDeltaCloud(deltaCloud);
-			} else {
-				removeWithDialog(shell, selectedElements);
+			try {
+				if (selectedElements != null
+						&& selectedElements.size() == 1
+						&& deltaCloud != null) {
+					removeDeltaCloud(deltaCloud);
+				} else {
+					removeWithDialog(shell, selectedElements);
+				}
+			} catch (DeltaCloudException e) {
+				// TODO internationalize strings
+				ErrorUtils.openErrorDialog("Error",
+						MessageFormat.format("Could not disconnect cloud {0}", deltaCloud.getName()), e, shell);
 			}
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void removeWithDialog(Shell shell, List<?> selectedElements) {
+	private void removeWithDialog(Shell shell, List<?> selectedElements) throws DeltaCloudException {
 		Collection<?> clouds = getSelectedClouds(selectedElements);
 		DisconnectCloudsDialog dialog = new DisconnectCloudsDialog(
 				shell
@@ -108,7 +119,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 			removeDeltaClouds(dialog.getResult());
 		}
 	}
-	
+
 	private DeltaCloud getFirstSelectedCloud(List<?> selectedElements) {
 		DeltaCloud deltaCloud = null;
 		if (selectedElements.size() > 0) {
@@ -159,13 +170,13 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		return getDeltaCloud((CloudViewElement) element.getParent());
 	}
 
-	private void removeDeltaClouds(Object[] deltaClouds) {
+	private void removeDeltaClouds(Object[] deltaClouds) throws DeltaCloudException {
 		for (Object deltaCloud : deltaClouds) {
 			removeDeltaCloud((DeltaCloud) deltaCloud);
 		}
 	}
-	
-	private void removeDeltaCloud(DeltaCloud deltaCloud) {
+
+	private void removeDeltaCloud(DeltaCloud deltaCloud) throws DeltaCloudException {
 		DeltaCloudManager.getDefault().removeCloud((DeltaCloud) deltaCloud);
 	}
 }

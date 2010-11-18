@@ -13,10 +13,10 @@ package org.jboss.tools.deltacloud.core;
 import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.Instance.State;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
+import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
 
 public class DeltaCloudInstance {
 
@@ -120,7 +120,7 @@ public class DeltaCloudInstance {
 		return cloud;
 	}
 	
-	protected boolean performInstanceAction(String actionId, DeltaCloudClientImpl client)
+	protected boolean performInstanceAction(String actionId, InternalDeltaCloudClient client)
 			throws DeltaCloudClientException {
 		InstanceAction action = instance.getAction(actionId);
 		if (action == null) {

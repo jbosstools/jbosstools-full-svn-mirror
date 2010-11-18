@@ -1,3 +1,10 @@
+2010-11-18  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/commands/DisconnectCloudHandler.java (execute): 
+	[JBIDE-7625] added error reporting
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java (performTest): 
+	[JBIDE-7625] corrected where name is fetched (was UI, should be model)
+
 2010-11-17  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/commands/DisconnectCloudHandler.java (removeWithDialog): 

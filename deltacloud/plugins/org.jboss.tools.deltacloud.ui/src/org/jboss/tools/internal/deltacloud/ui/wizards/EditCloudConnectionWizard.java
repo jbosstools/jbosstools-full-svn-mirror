@@ -105,8 +105,9 @@ public class EditCloudConnectionWizard extends Wizard implements INewWizard, Clo
 			String oldName = cloud.getName();
 			cloud.editCloud(name, url, username, password, type);
 			DeltaCloudManager.getDefault().saveClouds();
-			if (!name.equals(oldName))
+			if (!name.equals(oldName)) {
 				DeltaCloudManager.getDefault().notifyCloudRename();
+			}
 		} catch (Exception e) {
 		}
 		return true;

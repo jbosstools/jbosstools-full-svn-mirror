@@ -46,7 +46,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	}
 
 	public boolean performTest() {
-		String name = mainPage.getName();
+		String name = mainPage.getModel().getName();
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();

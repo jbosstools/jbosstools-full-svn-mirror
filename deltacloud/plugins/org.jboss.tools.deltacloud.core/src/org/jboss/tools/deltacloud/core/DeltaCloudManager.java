@@ -17,14 +17,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
-import org.eclipse.equinox.security.storage.ISecurePreferences;
-import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -36,13 +35,14 @@ public class DeltaCloudManager {
 	private static final DeltaCloudManager INSTANCE = new DeltaCloudManager();
 
 	public final static String CLOUDFILE_NAME = "clouds.xml"; //$NON-NLS-1$
-	private ArrayList<DeltaCloud> clouds = new ArrayList<DeltaCloud>();
+	private List<DeltaCloud> clouds = new ArrayList<DeltaCloud>();
 	private ListenerList cloudManagerListeners;
 
 	private DeltaCloudManager() {
 	}
 
 	public void loadClouds() throws DeltaCloudException {
+		clouds = new ArrayList<DeltaCloud>(); // clear present clouds
 		DeltaCloudMultiException connectionException = new DeltaCloudMultiException("Errors occurred while loading clouds from the preferences");
 		IPath stateLocation = Activator.getDefault().getStateLocation();
 		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
@@ -182,41 +182,11 @@ public class DeltaCloudManager {
 		notifyListeners(ICloudManagerListener.ADD_EVENT);
 	}
 
-	public void removeCloud(DeltaCloud d) {
+	public void removeCloud(DeltaCloud d) throws DeltaCloudException {
 		clouds.remove(d);
-		String url = d.getURL();
-		String userName = d.getUsername();
-		// check if we have a duplicate cloud connection using the same
-		// url/username combo.
-		// if we have removed a cloud and no other cloud shares the
-		// url/username combo, then we should clear the node out which
-		// includes the password.
-		if (!isHasAnyCloud(url, userName)) {
-			ISecurePreferences root = SecurePreferencesFactory.getDefault();
-			String key = DeltaCloud.getPreferencesKey(url, userName);
-			ISecurePreferences node = root.node(key);
-			node.clear();
-		}
+		d.removePassword(d.getName(), d.getName());
 		saveClouds();
 		notifyListeners(ICloudManagerListener.REMOVE_EVENT);
-	}
-
-	/**
-	 * Checks if any cloud uses the given url and username
-	 * 
-	 * @param url
-	 *            the url
-	 * @param userName
-	 *            the user name
-	 * @return true, if is checks for any cloud
-	 */
-	private boolean isHasAnyCloud(String url, String userName) {
-		for (DeltaCloud cloud : clouds) {
-			if (cloud.getURL().equals(url) && cloud.getUsername().equals(userName)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public void notifyCloudRename() {

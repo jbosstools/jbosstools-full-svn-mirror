@@ -1,3 +1,14 @@
+2010-11-18  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (DeltaCloud): 
+	[JBIDE-7625] store password in the constructor
+	(editCloud): 
+	[JBIDE-7625] have to create new client when cloud was edited
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (removeCloud): 
+	[JBIDE-7625] removed check for pw on identical url any more since we now save the pw with the name of the cloud
+	(loadCloud): 
+	[JBIDE-7627] reinitialize cloud list when loading clouds (otherwise clouds loaded will simply get added to the existing ones)
+
 2010-11-17  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java
