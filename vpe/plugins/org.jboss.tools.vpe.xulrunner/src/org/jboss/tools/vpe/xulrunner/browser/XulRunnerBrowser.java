@@ -15,6 +15,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -36,7 +39,6 @@ import org.mozilla.interfaces.nsITooltipListener;
 import org.mozilla.interfaces.nsIURI;
 import org.mozilla.interfaces.nsIWebBrowser;
 import org.mozilla.interfaces.nsIWebBrowserChrome;
-import org.mozilla.interfaces.nsIWebBrowserSetup;
 import org.mozilla.interfaces.nsIWebNavigation;
 import org.mozilla.interfaces.nsIWebProgress;
 import org.mozilla.interfaces.nsIWebProgressListener;
@@ -57,31 +59,42 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private static final String XULRUNNER_HIGHER_VERSION = "1.9.2.9"; //$NON-NLS-1$
 	// TODO Sergey Vasilyev Think. May be XULRUNNER_BUNDLE shouldn't be final?
 	private static final String XULRUNNER_BUNDLE;
-	private static final String XULRUNNER_ENTRY = "/xulrunner"; //$NON-NLS-1$
 	
 	// TEMPORARY CODE (@see org.eclipse.swt.browser.Mozilla)
 	static final String XULRUNNER_INITIALIZED = "org.eclipse.swt.browser.XULRunnerInitialized"; //$NON-NLS-1$
-	static final String XULRUNNER_PATH = "org.eclipse.swt.browser.XULRunnerPath"; //$NON-NLS-1$
+	public static final String XULRUNNER_PATH = "org.eclipse.swt.browser.XULRunnerPath"; //$NON-NLS-1$
 
 	private static final String ROOT_BRANCH_NAME = ""; //$NON-NLS-1$
 	
 	private static final String PREFERENCE_DISABLEOPENDURINGLOAD = "dom.disable_open_during_load"; //$NON-NLS-1$
 	private static final String PREFERENCE_DISABLEWINDOWSTATUSCHANGE = "dom.disable_window_status_change"; //$NON-NLS-1$	
-	
-	private static final Mozilla mozilla;
+
 	private Browser browser = null;
 	private nsIWebBrowser webBrowser = null;
 	private long chrome_flags = nsIWebBrowserChrome.CHROME_ALL; 
 	public static final long NS_ERROR_FAILURE = 0x80004005L;
-	
+	private static final String XULRUNNER_ENTRY = "/xulrunner"; //$NON-NLS-1$
+
+	public static final Set<String> OFFICIALLY_SUPPORTED_PLATFORM_IDS = new HashSet<String>();
 	static {
-		StringBuffer buff = new StringBuffer("org.mozilla.xulrunner");
-		buff.append(".").append(Platform.getWS()) //$NON-NLS-1$
-			.append(".").append(Platform.getOS()); //$NON-NLS-1$
+		Collections.addAll(OFFICIALLY_SUPPORTED_PLATFORM_IDS,
+				"carbon.macosx",    //$NON-NLS-1$
+				"cocoa.macosx",     //$NON-NLS-1$
+				"gtk.linux.x86",    //$NON-NLS-1$
+				"gtk.linux.x86_64", //$NON-NLS-1$
+				"win32.win32.x86"); //$NON-NLS-1$
+	}
+	public static final String CURRENT_PLATFORM_ID;
+	private static final Mozilla mozilla;
+	static {
+		StringBuffer buff = new StringBuffer();
+		buff.append(Platform.getWS())
+			.append('.').append(Platform.getOS());
 		if(! Platform.OS_MACOSX.equals(Platform.getOS())) {
-			buff.append(".").append(Platform.getOSArch());
+			buff.append('.').append(Platform.getOSArch());
 		}
-		XULRUNNER_BUNDLE = buff.toString();
+		CURRENT_PLATFORM_ID = buff.toString();
+		XULRUNNER_BUNDLE = "org.mozilla.xulrunner." + CURRENT_PLATFORM_ID; //$NON-NLS-1$
 		mozilla = Mozilla.getInstance();
 	}
 
@@ -460,4 +473,16 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	        }
 	}
 	
+	/**
+	 * Return {@code true} if and only if the current
+	 * platform is officially supported in JBoss Tools.
+	 * But {@code false} does not necessary mean that XULRunner
+	 * cannot be run on the system.
+	 * 
+	 * @see #CURRENT_PLATFORM_ID
+	 * @see #OFFICIALLY_SUPPORTED_PLATFORM_IDS
+	 */
+	public static boolean isCurrentPlatformOfficiallySupported() {
+		return OFFICIALLY_SUPPORTED_PLATFORM_IDS.contains(CURRENT_PLATFORM_ID);
+	}
 }
