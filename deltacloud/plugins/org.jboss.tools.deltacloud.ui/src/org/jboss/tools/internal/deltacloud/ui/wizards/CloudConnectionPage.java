@@ -53,6 +53,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.log.LogHelper;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.ui.Activator;
@@ -247,14 +248,17 @@ public class CloudConnectionPage extends WizardPage {
 			/*
 			 * keeping the same name when editing must be valid
 			 */
-			if (!connectionName.equals(connectionModel.getInitialName())
-					/* all new names must be unique */
-					&& DeltaCloudManager.getDefault().findCloud(connectionName) != null) {
-				return ValidationStatus
-						.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
-			} else {
-				return ValidationStatus.ok();
+			try {
+				if (!connectionName.equals(connectionModel.getInitialName())
+						/* all new names must be unique */
+						&& DeltaCloudManager.getDefault().findCloud(connectionName) != null) {
+					return ValidationStatus
+							.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
+				}
+			} catch (DeltaCloudException e) {
+				// do nothing
 			}
+			return ValidationStatus.ok();
 		}
 	}
 
