@@ -15,7 +15,7 @@ import org.eclipse.ui.views.properties.tabbed.AbstractTypeMapper;
 
 public class CVTypeMapper extends AbstractTypeMapper {
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Class mapType(Object object) {
         if (object instanceof TreeNode) {
