@@ -200,7 +200,7 @@ public class DeltaCloud {
 			// save();
 			// TODO: remove notification with all instances, replace by
 			// notifying the changed instance
-			notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
+			notifyInstanceListListeners();
 		}
 	}
 
@@ -296,13 +296,13 @@ public class DeltaCloud {
 		imageListeners.remove(listener);
 	}
 
-	public DeltaCloudImage[] notifyImageListeners() {
+	public DeltaCloudImage[] notifyImageListListeners() {
 		DeltaCloudImage[] images = cloneImagesArray();
 		notifyImageListListeners(images);
 		return images;
 	}
 
-	public DeltaCloudInstance[] notifyInstanceListeners() {
+	public DeltaCloudInstance[] notifyInstanceListListeners() {
 		DeltaCloudInstance[] instances = cloneInstancesArray();
 		notifyInstanceListListeners(instances);
 		return instances;
@@ -407,7 +407,7 @@ public class DeltaCloud {
 				}
 				// TODO: remove notification with all instances, replace by
 				// notifying the changed instance
-				return notifyInstanceListeners();
+				return notifyInstanceListListeners();
 			} catch (DeltaCloudClientException e) {
 				throw new DeltaCloudException(MessageFormat.format("Could not load instances of cloud {0}: {1}",
 						getName(), e.getMessage()), e);
@@ -418,7 +418,7 @@ public class DeltaCloud {
 	private void clearInstances() {
 		synchronized (instanceLock) {
 			instances = new ArrayList<DeltaCloudInstance>();
-			notifyInstanceListeners();
+			notifyInstanceListListeners();
 		}
 	}
 
@@ -427,9 +427,7 @@ public class DeltaCloud {
 			if (instances == null) {
 				return loadInstances();
 			}
-			DeltaCloudInstance[] instanceArray = new DeltaCloudInstance[instances.size()];
-			instanceArray = instances.toArray(instanceArray);
-			return instanceArray;
+			return cloneInstancesArray();
 		}
 	}
 
@@ -439,9 +437,7 @@ public class DeltaCloud {
 		instances.remove(instance);
 		// TODO: remove notification with all instances, replace by notifying
 		// the changed instance
-		DeltaCloudInstance[] instances = cloneInstancesArray();
-		notifyInstanceListListeners(instances);
-		return instances;
+		return notifyInstanceListListeners();
 	}
 
 	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
@@ -476,7 +472,7 @@ public class DeltaCloud {
 			}
 			// TODO: remove notification with all instances, replace by
 			// notifying the changed instance
-			notifyInstanceListListeners(instances.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
+			notifyInstanceListListeners();
 		}
 	}
 
@@ -493,8 +489,7 @@ public class DeltaCloud {
 					if (!(retVal.getState().equals(DeltaCloudInstance.BOGUS))
 							&& !(inst.getState().equals(retVal.getState()))) {
 						instances.set(i, retVal);
-						// TODO: is this correct? getCurrInstances notifies, too
-						notifyInstanceListListeners(getCurrInstances());
+						notifyInstanceListListeners();
 						return retVal;
 					}
 				}
@@ -519,8 +514,7 @@ public class DeltaCloud {
 			if (result) {
 				// TODO: remove notification with all instances, replace by
 				// notifying the changed instance
-				notifyInstanceListListeners(instances
-						.toArray(instances.toArray(new DeltaCloudInstance[instances.size()])));
+				notifyInstanceListListeners();
 			}
 			return result;
 		} catch (DeltaCloudClientException e) {
@@ -580,7 +574,7 @@ public class DeltaCloud {
 				for (Iterator<Image> i = list.iterator(); i.hasNext();) {
 					addImage(i.next());
 				}
-				return notifyImageListeners();
+				return notifyImageListListeners();
 			} catch (DeltaCloudClientException e) {
 				throw new DeltaCloudException(MessageFormat.format("Could not load images of cloud {0}: {1}",
 						getName(), e.getMessage()), e);
@@ -591,7 +585,7 @@ public class DeltaCloud {
 	private void clearImages() {
 		synchronized (imageLock) {
 			images = new ArrayList<DeltaCloudImage>();
-			notifyImageListeners();
+			notifyImageListListeners();
 		}
 	}
 
@@ -664,8 +658,7 @@ public class DeltaCloud {
 				newInstance.setGivenName(name);
 				getCurrInstances(); // make sure instances are initialized
 				instances.add(newInstance);
-				DeltaCloudInstance[] instanceArray = cloneInstancesArray();
-				notifyInstanceListListeners(instanceArray);
+				notifyInstanceListListeners();
 				return newInstance;
 			}
 		} catch (DeltaCloudClientException e) {
