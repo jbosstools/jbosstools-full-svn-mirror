@@ -27,19 +27,6 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 	public CVRootElement(TreeViewer viewer) {
 		super(DeltaCloudManager.getDefault(), "root"); //$NON-NLS-1$
 		this.viewer = viewer;
-		loadClouds();
-	}
-
-	private void loadClouds() {
-		try {
-			DeltaCloudManager.getDefault().loadClouds();
-		} catch (DeltaCloudException e) {
-			// TODO: internationalize strings
-			ErrorUtils.openErrorDialog(
-					"Error",
-					"Errors occurred while loading all clouds",
-					e, Display.getDefault().getActiveShell());
-		}
 	}
 
 	@Override
@@ -52,14 +39,23 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 	public Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloudManager m = DeltaCloudManager.getDefault();
-			DeltaCloud[] clouds = m.getClouds();
-			for (int i = 0; i < clouds.length; ++i) {
-				DeltaCloud cloud = clouds[i];
-				CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), viewer);
-				addChild(e);
+			m.removeCloudManagerListener(this);
+			try {
+				DeltaCloud[] clouds = m.getClouds();
+				for (int i = 0; i < clouds.length; ++i) {
+					DeltaCloud cloud = clouds[i];
+					CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), viewer);
+					addChild(e);
+				}
+				m.addCloudManagerListener(this);
+				initialized = true;
+			} catch (DeltaCloudException e) {
+				// TODO: internationalize strings
+				ErrorUtils.openErrorDialog(
+						"Error",
+						"Could not get all clouds",
+						e, Display.getDefault().getActiveShell());
 			}
-			m.addCloudManagerListener(this);
-			initialized = true;
 		}
 		return super.getChildren();
 	}
@@ -70,23 +66,31 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 		super.finalize();
 	}
 
-	public void changeEvent(int type) {
+	public void cloudsChanged(int type) {
 		DeltaCloudManager m = DeltaCloudManager.getDefault();
-		m.removeCloudManagerListener(this);
-		DeltaCloud[] clouds = m.getClouds();
-		for (int i = 0; i < clouds.length; ++i) {
-			DeltaCloud cloud = clouds[i];
-			CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), viewer);
-			addChild(e);
-		}
-		initialized = true;
-		m.addCloudManagerListener(this);
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				((TreeViewer) viewer).refresh(this, false);
+		try {
+			m.removeCloudManagerListener(this);
+			DeltaCloud[] clouds = m.getClouds();
+			for (int i = 0; i < clouds.length; ++i) {
+				DeltaCloud cloud = clouds[i];
+				CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), viewer);
+				addChild(e);
 			}
-		});
+			initialized = true;
+			m.addCloudManagerListener(this);
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					((TreeViewer) viewer).refresh(this, false);
+				}
+			});
+		} catch (DeltaCloudException e) {
+			// TODO: internationalize strings
+			ErrorUtils.openErrorDialog(
+					"Error",
+					"Could not get all clouds",
+					e, Display.getDefault().getActiveShell());
+		}
 	}
 
 }
