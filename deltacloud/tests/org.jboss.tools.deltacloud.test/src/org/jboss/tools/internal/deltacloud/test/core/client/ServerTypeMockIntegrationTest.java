@@ -94,8 +94,8 @@ public class ServerTypeMockIntegrationTest {
 					sendRequest(new DeltaCloudRequest() {
 
 						@Override
-						public String getUrl() {
-							return MockIntegrationTestContext.DELTACLOUD_URL + "/DUMMY";
+						public URL getUrl() throws MalformedURLException {
+							return new URL(MockIntegrationTestContext.DELTACLOUD_URL + "/DUMMY");
 						}
 
 						@Override
