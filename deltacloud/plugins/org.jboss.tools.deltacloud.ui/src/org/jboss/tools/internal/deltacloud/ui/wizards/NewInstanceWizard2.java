@@ -124,25 +124,18 @@ public class NewInstanceWizard2 extends Wizard {
 		String memory = mainPage.getMemoryProperty();
 		String storage = mainPage.getStorageProperty();
 		String keyname = mainPage.getKeyName();
-		String name = null;
+		String name = getName();
 
 		// Save persistent settings for this particular cloud
 		cloud.setLastImageId(imageId);
 		cloud.setLastKeyname(keyname);
-		DeltaCloudManager.getDefault().saveClouds();
 		
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-
-		try {
-			name = URLEncoder.encode(mainPage.getInstanceName(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} //$NON-NLS-1$
 
 		boolean result = false;
 		String errorMessage = WizardMessages.getString(DEFAULT_REASON);
 		try {
+			DeltaCloudManager.getDefault().saveClouds();
 			boolean dontShowDialog = prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE,
 					false);
 			if (!dontShowDialog) {
@@ -185,6 +178,15 @@ public class NewInstanceWizard2 extends Wizard {
 					new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMessage));
 		}
 		return result;
+	}
+
+	private String getName() {
+		try {
+			return URLEncoder.encode(mainPage.getInstanceName(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO: implement proper handling
+			return "";
+		} //$NON-NLS-1$
 	}
 
 }

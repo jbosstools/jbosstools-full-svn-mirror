@@ -38,12 +38,14 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.osgi.service.prefs.Preferences;
@@ -67,18 +69,12 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 
 	private ImageViewLabelAndContentProvider contentProvider;
 
-	private ImageView parentView;
-
-	public ImageView() {
-		parentView = this;
-	}
-
 	private ModifyListener cloudModifyListener = new ModifyListener() {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
 			if (currCloud != null) {
-				currCloud.removeImageListListener(parentView);
+				currCloud.removeImageListListener(ImageView.this);
 			}
 			int index = cloudSelector.getSelectionIndex();
 			if (index >= 0) {
@@ -92,7 +88,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 					@Override
 					public void run() {
 						viewer.setInput(currCloud);
-						currCloud.addImageListListener(parentView);
+						currCloud.addImageListListener(ImageView.this);
 						viewer.refresh();
 					}
 
@@ -155,7 +151,8 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		cloudSelectorLabel.setText(CVMessages.getString(CLOUD_SELECTOR_LABEL));
 
 		cloudSelector = new Combo(container, SWT.BORDER | SWT.READ_ONLY);
-		initializeCloudSelector();
+		clouds = getClouds();
+		initializeCloudSelector(clouds);
 		cloudSelector.addModifyListener(cloudModifyListener);
 		// Following is a kludge so that on Linux the Combo is read-only but
 		// has a white background.
@@ -187,9 +184,9 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		getSite().setSelectionProvider(viewer);
 
 		if (currCloud != null) {
-			currCloud.removeImageListListener(parentView);
+			currCloud.removeImageListListener(this);
 			viewer.setInput(currCloud);
-			currCloud.addImageListListener(parentView);
+			currCloud.addImageListListener(this);
 			IImageFilter filter = currCloud.getImageFilter();
 			filterLabel.setVisible(!filter.toString().equals(IImageFilter.ALL_STRING));
 		}
@@ -224,7 +221,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		hookContextMenu();
 		hookSelection();
-
+		
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
 
@@ -266,9 +263,8 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		viewer.getTable().setFocus();
 	}
 
-	private void initializeCloudSelector() {
+	private void initializeCloudSelector(DeltaCloud[] clouds) {
 		int defaultIndex = 0;
-		clouds = DeltaCloudManager.getDefault().getClouds();
 		String[] cloudNames = new String[clouds.length];
 		// If we have saved the last cloud used from a previous session,
 		// default to using that cloud to start unless it no longer exists
@@ -286,10 +282,10 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		}
 	}
 
-	public void changeEvent(int type) {
+	public void cloudsChanged(int type) {
 		String currName = null;
 		int currIndex = 0;
-		clouds = DeltaCloudManager.getDefault().getClouds();
+		clouds = getClouds();
 		if (currCloud != null) {
 			currName = currCloud.getName();
 			currIndex = cloudSelector.getSelectionIndex();
@@ -325,14 +321,29 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					currCloud.removeImageListListener(parentView);
+					currCloud.removeImageListListener(ImageView.this);
 					viewer.setInput(finalList);
-					currCloud.addImageListListener(parentView);
+					currCloud.addImageListListener(ImageView.this);
 					viewer.refresh();
 				}
 
 			});
 		}
 	}
+	
+	private DeltaCloud[] getClouds() {
+		DeltaCloud[] clouds = new DeltaCloud[]{};
+		try {
+			clouds = DeltaCloudManager.getDefault().getClouds();
+		} catch (DeltaCloudException e) {
+			// TODO: internationalize strings
+			ErrorUtils.openErrorDialog(
+					"Error",
+					"Could not get all clouds",
+					e, Display.getDefault().getActiveShell());
+		}
+		return clouds;
+	}
+
 
 }

@@ -38,21 +38,20 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IEvaluationService;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.osgi.service.prefs.Preferences;
 
 public class InstanceView extends ViewPart implements ICloudManagerListener, IInstanceListListener {
 
-	/**
-	 * The ID of the view as specified by the extension.
-	 */
 	public static final String ID = "org.jboss.tools.deltacloud.ui.views.InstanceView";
 
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
@@ -149,7 +148,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		layout.marginWidth = 0;
 		container.setLayout(layout);
 
-		clouds = DeltaCloudManager.getDefault().getClouds();
+		clouds = getClouds();
 
 		createCloudSelector();
 		initCloudSelector(getLastSelectedCloud(), cloudSelector, clouds);
@@ -163,7 +162,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 
 		currCloud = getCurrentCloud(cloudSelector.getSelectionIndex(), clouds);
 
-		initCurrentCloud(currCloud, viewer);
+		addInstanceListener(currCloud, viewer);
 		setFilterLabelVisible(currCloud, filterLabel);
 
 		Point p1 = cloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -196,8 +195,22 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		hookContextMenu(viewer.getTable());
 		getSite().setSelectionProvider(viewer);
-
+		
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
+	}
+
+	private DeltaCloud[] getClouds() {
+		DeltaCloud[] clouds = new DeltaCloud[]{};
+		try {
+			clouds = DeltaCloudManager.getDefault().getClouds();
+		} catch (DeltaCloudException e) {
+			// TODO: internationalize strings
+			ErrorUtils.openErrorDialog(
+					"Error",
+					"Could not get all clouds",
+					e, Display.getDefault().getActiveShell());
+		}
+		return clouds;
 	}
 
 	private void setFilterLabelVisible(DeltaCloud currentCloud, Label filterLabel) {
@@ -210,11 +223,11 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		filterLabel.setVisible(!filter.toString().equals(IInstanceFilter.ALL_STRING));
 	}
 
-	private void initCurrentCloud(DeltaCloud currentCloud, Viewer viewer) {
+	private void addInstanceListener(DeltaCloud currentCloud, Viewer viewer) {
 		if (currentCloud != null) {
 			currentCloud.removeInstanceListListener(this);
-			viewer.setInput(currentCloud);
 			currentCloud.addInstanceListListener(this);
+			viewer.setInput(currentCloud);
 		}
 	}
 
@@ -301,14 +314,14 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		}
 	}
 
-	public void changeEvent(int type) {
+	public void cloudsChanged(int type) {
 		String currName = null;
 		int currIndex = 0;
 		if (currCloud != null) {
 			currName = currCloud.getName();
 			currIndex = cloudSelector.getSelectionIndex();
 		}
-		clouds = DeltaCloudManager.getDefault().getClouds();
+		clouds = getClouds();
 		String[] cloudNames = new String[clouds.length];
 		int index = 0;
 		for (int i = 0; i < clouds.length; ++i) {

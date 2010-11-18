@@ -1,5 +1,17 @@
 2010-11-18  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard2.java (performFinish): 
+	[JBIDE-7628] moved saveClouds() to try block so that its errors are reported
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java (getClouds): 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (getClouds): 
+	[JBIDE-7628] removed explicit loading of the clouds (is now done implicitly by the first caller of #getClouds()) -> added exception handling
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudView.java (cloudsChanged): 
+	[JBIDE-7628] renamed notification method (to better reflect what it notifies)
+	* src/org/jboss/tools/deltacloud/ui/views/CVRootElement.java (CVRootElement): 
+	[JBIDE-7628] removed explicit loading of the clouds (is now done implicitly by the first caller of #getClouds())
+	(getChildren): 
+	(cloudsChanged): 
+	[JBIDE-7628] getClouds() can throw DeltaCloudException now (since it may trigger cloud loading) -> added proper exception catching & reporting 
 	* src/org/jboss/tools/deltacloud/ui/commands/DisconnectCloudHandler.java (execute): 
 	[JBIDE-7625] added error reporting
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java (performTest): 
