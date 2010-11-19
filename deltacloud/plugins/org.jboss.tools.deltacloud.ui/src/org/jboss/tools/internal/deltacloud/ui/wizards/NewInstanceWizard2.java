@@ -94,12 +94,11 @@ public class NewInstanceWizard2 extends Wizard {
 					cloud.replaceInstance(instance);
 					cloud.removeInstanceJob(instanceId, this);
 					String hostname = RSEUtils.createHostName(instance);
-					Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-					boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
+					boolean autoConnect = isAutoconnect();
 					if (hostname != null && hostname.length() > 0 && autoConnect) {
 						try {
 							String connectionName = RSEUtils.createConnectionName(instance);
-							IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance));
+							IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance), RSEUtils.getSSHOnlySystemType());
 							RSEUtils.launchRemoteSystemExplorer(instance.getName(), connectionName, host);
 						} catch (Exception e) {
 							ErrorUtils.handleError("Error", "Could not launch remote system explorer for instance \"" + instance.getName() + "\"", e, getShell());
@@ -113,6 +112,12 @@ public class NewInstanceWizard2 extends Wizard {
 				pm.done();
 				return Status.CANCEL_STATUS;
 			}
+		}
+
+		private boolean isAutoconnect() {
+			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+			boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
+			return autoConnect;
 		};
 	};
 
