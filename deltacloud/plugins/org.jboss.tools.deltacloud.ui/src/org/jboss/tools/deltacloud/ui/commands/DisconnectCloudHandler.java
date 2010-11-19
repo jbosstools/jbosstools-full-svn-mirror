@@ -23,6 +23,7 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -95,7 +96,14 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 				if (selectedElements != null
 						&& selectedElements.size() == 1
 						&& deltaCloud != null) {
-					removeDeltaCloud(deltaCloud);
+					// TODO internationalize strings
+					if (MessageDialog.openConfirm(
+							HandlerUtil.getActiveShell(event),
+							"Confirm disconnect",
+							MessageFormat.format("Are you sure that you want to disconnect cloud \"{0}\"?",
+									deltaCloud.getName()))) {
+						removeDeltaCloud(deltaCloud);
+					}
 				} else {
 					removeWithDialog(shell, selectedElements);
 				}
