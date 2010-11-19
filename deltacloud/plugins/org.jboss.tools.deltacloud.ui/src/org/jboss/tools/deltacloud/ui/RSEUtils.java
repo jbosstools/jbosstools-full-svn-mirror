@@ -102,7 +102,7 @@ public class RSEUtils {
 	public static void launchRemoteSystemExplorer(String instanceName, String connectionName, IHost host) throws Exception {
 		if (host != null) {
 			IConnectorService service = RSEUtils.getConnectorService(host);
-			RSEUtils.connect(instanceName, service, connectionName);
+			connect(instanceName, service, connectionName);
 		} else {
 			// Assume failure is due to name already in use
 			Display.getDefault().asyncExec(new ShowRSEViewRunnable(instanceName));
