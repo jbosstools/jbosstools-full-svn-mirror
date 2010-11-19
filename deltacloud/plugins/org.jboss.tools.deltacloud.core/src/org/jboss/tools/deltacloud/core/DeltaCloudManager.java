@@ -73,9 +73,9 @@ public class DeltaCloudManager {
 	}
 
 	private DeltaCloud loadCloud(Node n, List<DeltaCloud> clouds) throws DeltaCloudException {
-		DeltaCloud cloud = null;
-		String name = "";
+		String name = "<UNKNOWN>";
 		try {
+			DeltaCloud cloud = null;
 			NamedNodeMap attrs = n.getAttributes();
 			name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
 			String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
@@ -90,13 +90,13 @@ public class DeltaCloudManager {
 			cloud.setLastImageId(lastImageId);
 			cloud.setLastKeyname(lastKeyName);
 			// cloud.loadChildren();
+			return cloud;
 		} catch (DeltaCloudException e) {
 			throw e;
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			throw new DeltaCloudException(MessageFormat.format("Could not load cloud {0}", name), e);
 		}
-		return cloud;
 	}
 
 	private String getLastKeyName(Node lastKeyNameNode) {
