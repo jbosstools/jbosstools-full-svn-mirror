@@ -102,7 +102,17 @@ public class VpeCommandsTests extends VpeTest {
 	 * @throws Throwable
 	 */
 	public void testCommandState() throws Throwable {
-		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
+		// initially all commands should be disabled
+		IFile vpeFile = (IFile) TestUtil.getComponentPath("inputUserName.jsp",
+				VpeUiTests.IMPORT_PROJECT_NAME);
+
+		/*
+		 * Open file in the VPE
+		 */
+		IEditorInput input = new FileEditorInput(vpeFile);
+		JSPMultiPageEditor multiPageEditor = openEditor(input);
+		TestUtil.delay(500);
+		pageChange(multiPageEditor, 0);
 		checkCommandState(true);
 		pageChange(multiPageEditor, 1);
 		checkCommandState(false);
@@ -165,7 +175,7 @@ public class VpeCommandsTests extends VpeTest {
 	 * @throws Throwable
 	 */
 	public void testShowBorderForUnknownTags() throws Throwable {
-		
+
 		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
 
 		Command command = getCommandById(ShowBorderHandler.COMMAND_ID);
@@ -183,7 +193,7 @@ public class VpeCommandsTests extends VpeTest {
 		boolean prefBorderVisibility = prefStore
 				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
 		assertEquals(!oldToogleState, prefBorderVisibility);
-		
+
 		VpeController vpeController = (VpeController) multiPageEditor
 				.getVisualEditor().getController();
 		VpeVisualDomBuilder visualDomBuilder = vpeController.getVisualBuilder();
@@ -191,21 +201,22 @@ public class VpeCommandsTests extends VpeTest {
 				.isShowBorderForUnknownTags();
 		assertEquals(!oldToogleState, uiBorderVisibility);
 	}
-	
+
 	/**
 	 * Test 'Show non-visual tags' toolbar button
 	 * 
 	 * @throws Throwable
 	 */
 	public void testShowNonVisualTags() throws Throwable {
-		
+
 		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
 
 		Command command = getCommandById(ShowNonVisualTagsHandler.COMMAND_ID);
 		State state = command.getState(RegistryToggleState.STATE_ID);
 		boolean oldToogleState = ((Boolean) state.getValue()).booleanValue();
 
-		handlerService.executeCommand(ShowNonVisualTagsHandler.COMMAND_ID, null);
+		handlerService
+				.executeCommand(ShowNonVisualTagsHandler.COMMAND_ID, null);
 		TestUtil.delay(500);
 
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
@@ -216,7 +227,7 @@ public class VpeCommandsTests extends VpeTest {
 		boolean prefNonVisualTagsVisibility = prefStore
 				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
 		assertEquals(!oldToogleState, prefNonVisualTagsVisibility);
-		
+
 		VpeController vpeController = (VpeController) multiPageEditor
 				.getVisualEditor().getController();
 		VpeVisualDomBuilder visualDomBuilder = vpeController.getVisualBuilder();
@@ -224,14 +235,14 @@ public class VpeCommandsTests extends VpeTest {
 				.isShowInvisibleTags();
 		assertEquals(!oldToogleState, uiNonVisualTagsVisibility);
 	}
-	
+
 	/**
 	 * Test 'Show bundle's messages as EL expressions' toolbar button
 	 * 
 	 * @throws Throwable
 	 */
 	public void testShowBundleAsEL() throws Throwable {
-		
+
 		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
 
 		Command command = getCommandById(ShowBundleAsELHandler.COMMAND_ID);
@@ -249,7 +260,7 @@ public class VpeCommandsTests extends VpeTest {
 		boolean prefBundleAsELVisibility = prefStore
 				.getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
 		assertEquals(!oldToogleState, prefBundleAsELVisibility);
-		
+
 		VpeController vpeController = (VpeController) multiPageEditor
 				.getVisualEditor().getController();
 		BundleMap bundle = vpeController.getPageContext().getBundle();
