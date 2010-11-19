@@ -27,8 +27,6 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Point;
@@ -1246,4 +1244,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		}
 	}
 	
+	public CustomSashForm getContainer() {
+		return container;
+	}	
 }
