@@ -30,6 +30,7 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditorPart;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
@@ -222,6 +223,38 @@ public class VpeCommandsTests extends VpeTest {
 		boolean uiNonVisualTagsVisibility = visualDomBuilder
 				.isShowInvisibleTags();
 		assertEquals(!oldToogleState, uiNonVisualTagsVisibility);
+	}
+	
+	/**
+	 * Test 'Show bundle's messages as EL expressions' toolbar button
+	 * 
+	 * @throws Throwable
+	 */
+	public void testShowBundleAsEL() throws Throwable {
+		
+		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
+
+		Command command = getCommandById(ShowBundleAsELHandler.COMMAND_ID);
+		State state = command.getState(RegistryToggleState.STATE_ID);
+		boolean oldToogleState = ((Boolean) state.getValue()).booleanValue();
+
+		handlerService.executeCommand(ShowBundleAsELHandler.COMMAND_ID, null);
+		TestUtil.delay(500);
+
+		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
+		assertEquals(!oldToogleState, newToogleState);
+
+		IPreferenceStore prefStore = JspEditorPlugin.getDefault()
+				.getPreferenceStore();
+		boolean prefBundleAsELVisibility = prefStore
+				.getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+		assertEquals(!oldToogleState, prefBundleAsELVisibility);
+		
+		VpeController vpeController = (VpeController) multiPageEditor
+				.getVisualEditor().getController();
+		BundleMap bundle = vpeController.getPageContext().getBundle();
+		boolean uiBundleAsELVisibility = bundle.isShowBundleUsageAsEL();
+		assertEquals(!oldToogleState, uiBundleAsELVisibility);
 	}
 
 	private JSPMultiPageEditor openInputUserNameJsp() throws CoreException,
