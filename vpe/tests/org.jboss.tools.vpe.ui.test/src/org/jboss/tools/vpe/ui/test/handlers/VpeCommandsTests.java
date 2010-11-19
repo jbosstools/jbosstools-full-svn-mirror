@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.State;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -26,6 +27,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
@@ -33,6 +35,7 @@ import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditorPart;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
+import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.handlers.PageDesignOptionsHandler;
 import org.jboss.tools.vpe.handlers.PreferencesHandler;
 import org.jboss.tools.vpe.handlers.RefreshHandler;
@@ -109,7 +112,7 @@ public class VpeCommandsTests extends VpeTest {
 	}
 
 	/**
-	 * Test rotate editors toolbar button
+	 * Test 'Rotate editors' toolbar button
 	 * 
 	 * @throws Throwable
 	 */
@@ -155,6 +158,39 @@ public class VpeCommandsTests extends VpeTest {
 		}
 	}
 
+	/**
+	 * Test 'Show border for unknown tags' toolbar button
+	 * 
+	 * @throws Throwable
+	 */
+	public void testShowBorderForUnknownTags() throws Throwable {
+		
+		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
+
+		Command command = getCommandById(ShowBorderHandler.COMMAND_ID);
+		State state = command.getState(RegistryToggleState.STATE_ID);
+		boolean oldToogleState = ((Boolean) state.getValue()).booleanValue();
+
+		handlerService.executeCommand(ShowBorderHandler.COMMAND_ID, null);
+		TestUtil.delay(500);
+
+		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
+		assertEquals(!oldToogleState, newToogleState);
+		
+		VpeController vpeController = (VpeController) multiPageEditor
+				.getVisualEditor().getController();
+		VpeVisualDomBuilder visualDomBuilder = vpeController.getVisualBuilder();
+		boolean uiBorderVisibility = visualDomBuilder
+				.isShowBorderForUnknownTags();
+		assertEquals(!oldToogleState, uiBorderVisibility);
+
+		IPreferenceStore prefStore = JspEditorPlugin.getDefault()
+				.getPreferenceStore();
+		boolean prefBorderVisibility = prefStore
+				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+		assertEquals(!oldToogleState, prefBorderVisibility);
+	}
+
 	private JSPMultiPageEditor openInputUserNameJsp() throws CoreException,
 			IOException, SecurityException, IllegalArgumentException,
 			NoSuchMethodException, IllegalAccessException,
@@ -196,5 +232,16 @@ public class VpeCommandsTests extends VpeTest {
 			assertEquals("Command " + vpeCommand.getId() + " should be active",
 					expected, vpeCommand.isEnabled());
 		}
+	}
+
+	private Command getCommandById(String commandId) throws Exception {
+
+		for (Command vpeCommand : commands) {
+			if (vpeCommand.getId().equals(commandId)) {
+				return vpeCommand;
+			}
+		}
+		throw new IllegalArgumentException("There is no commands with id " //$NON-NLS-1$
+				+ commandId);
 	}
 }
