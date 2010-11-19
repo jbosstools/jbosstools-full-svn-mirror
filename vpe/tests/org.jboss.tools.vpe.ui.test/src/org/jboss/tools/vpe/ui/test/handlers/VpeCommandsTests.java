@@ -176,6 +176,12 @@ public class VpeCommandsTests extends VpeTest {
 
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
 		assertEquals(!oldToogleState, newToogleState);
+
+		IPreferenceStore prefStore = JspEditorPlugin.getDefault()
+				.getPreferenceStore();
+		boolean prefBorderVisibility = prefStore
+				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+		assertEquals(!oldToogleState, prefBorderVisibility);
 		
 		VpeController vpeController = (VpeController) multiPageEditor
 				.getVisualEditor().getController();
@@ -183,12 +189,39 @@ public class VpeCommandsTests extends VpeTest {
 		boolean uiBorderVisibility = visualDomBuilder
 				.isShowBorderForUnknownTags();
 		assertEquals(!oldToogleState, uiBorderVisibility);
+	}
+	
+	/**
+	 * Test 'Show non-visual tags' toolbar button
+	 * 
+	 * @throws Throwable
+	 */
+	public void testShowNonVisualTags() throws Throwable {
+		
+		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
+
+		Command command = getCommandById(ShowNonVisualTagsHandler.COMMAND_ID);
+		State state = command.getState(RegistryToggleState.STATE_ID);
+		boolean oldToogleState = ((Boolean) state.getValue()).booleanValue();
+
+		handlerService.executeCommand(ShowNonVisualTagsHandler.COMMAND_ID, null);
+		TestUtil.delay(500);
+
+		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
+		assertEquals(!oldToogleState, newToogleState);
 
 		IPreferenceStore prefStore = JspEditorPlugin.getDefault()
 				.getPreferenceStore();
-		boolean prefBorderVisibility = prefStore
-				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
-		assertEquals(!oldToogleState, prefBorderVisibility);
+		boolean prefNonVisualTagsVisibility = prefStore
+				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+		assertEquals(!oldToogleState, prefNonVisualTagsVisibility);
+		
+		VpeController vpeController = (VpeController) multiPageEditor
+				.getVisualEditor().getController();
+		VpeVisualDomBuilder visualDomBuilder = vpeController.getVisualBuilder();
+		boolean uiNonVisualTagsVisibility = visualDomBuilder
+				.isShowInvisibleTags();
+		assertEquals(!oldToogleState, uiNonVisualTagsVisibility);
 	}
 
 	private JSPMultiPageEditor openInputUserNameJsp() throws CoreException,
