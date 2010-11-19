@@ -94,8 +94,7 @@ public class NewInstanceWizard2 extends Wizard {
 					cloud.replaceInstance(instance);
 					cloud.removeInstanceJob(instanceId, this);
 					String hostname = RSEUtils.createHostName(instance);
-					boolean autoConnect = isAutoconnect();
-					if (hostname != null && hostname.length() > 0 && autoConnect) {
+					if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
 						try {
 							String connectionName = RSEUtils.createConnectionName(instance);
 							IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance), RSEUtils.getSSHOnlySystemType());
