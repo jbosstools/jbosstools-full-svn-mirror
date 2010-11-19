@@ -428,7 +428,8 @@
 				name="additions"
 				visible="true" />
 			<separator
-				name="remoteSysExplorer"/>
+				name="remoteSysExplorer"
+				visible="true" />
 	  </menuContribution>
       <!-- instance commands -->
       <menuContribution
