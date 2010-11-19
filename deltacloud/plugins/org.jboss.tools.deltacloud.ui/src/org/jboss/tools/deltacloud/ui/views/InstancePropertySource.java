@@ -144,7 +144,7 @@ public class InstancePropertySource implements IPropertySource {
 				}
 			}
 		} catch (DeltaCloudException e) {
-			ErrorUtils.openErrorDialog(
+			ErrorUtils.handleError(
 					"Error", "Could not get key for instance " + instance.getName(),
 					e, Display.getDefault().getActiveShell());
 		}

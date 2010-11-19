@@ -1,3 +1,8 @@
+2010-11-19  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (loadCloud): 
+	[JBIDE-7663] removed loading of images and instances on startup
+
 2010-11-18  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/ICloudManagerListener.java (cloudsChanged): 

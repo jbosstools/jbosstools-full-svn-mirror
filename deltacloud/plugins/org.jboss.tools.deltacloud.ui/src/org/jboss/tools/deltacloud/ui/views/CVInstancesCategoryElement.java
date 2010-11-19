@@ -71,13 +71,13 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 			DeltaCloud cloud = (DeltaCloud) getElement();
 			try {
 				cloud.removeInstanceListListener(this);
-				DeltaCloudInstance[] instances = filter(cloud.getCurrInstances());
+				DeltaCloudInstance[] instances = filter(cloud.getInstances());
 				addInstances(instances);
 				initialized = true;
 				cloud.addInstanceListListener(this);
 			} catch (Exception e) {
 				// TODO: internationalize strings
-				ErrorUtils.openErrorDialog(
+				ErrorUtils.handleError(
 						"Error",
 						"Colud not get instances from cloud " + cloud.getName(),
 						e, Display.getDefault().getActiveShell());

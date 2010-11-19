@@ -228,7 +228,7 @@ public class DeltaCloud {
 		this.imageFilter = createImageFilter(ruleString);
 		if (!rules.equals(ruleString)) {
 			// save();
-			notifyImageListListeners(getCurrImages());
+			notifyImageListListeners(getImages());
 		}
 	}
 
@@ -422,7 +422,7 @@ public class DeltaCloud {
 		}
 	}
 
-	public DeltaCloudInstance[] getCurrInstances() throws DeltaCloudException {
+	public DeltaCloudInstance[] getInstances() throws DeltaCloudException {
 		synchronized (instanceLock) {
 			if (instances == null) {
 				return loadInstances();
@@ -595,7 +595,7 @@ public class DeltaCloud {
 		return deltaCloudImage;
 	}
 
-	public DeltaCloudImage[] getCurrImages() throws DeltaCloudException {
+	public DeltaCloudImage[] getImages() throws DeltaCloudException {
 		synchronized (imageLock) {
 			if (images == null) {
 				return loadImages();
@@ -656,7 +656,7 @@ public class DeltaCloud {
 			if (instance != null) {
 				DeltaCloudInstance newInstance = new DeltaCloudInstance(this, instance);
 				newInstance.setGivenName(name);
-				getCurrInstances(); // make sure instances are initialized
+				getInstances(); // make sure instances are initialized
 				instances.add(newInstance);
 				notifyInstanceListListeners();
 				return newInstance;

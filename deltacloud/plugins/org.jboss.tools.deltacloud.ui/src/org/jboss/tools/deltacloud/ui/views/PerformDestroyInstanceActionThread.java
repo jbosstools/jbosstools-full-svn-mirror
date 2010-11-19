@@ -50,7 +50,7 @@ public class PerformDestroyInstanceActionThread extends Job {
 					try {
 						cloud.destroyInstance(instance.getId());
 					} catch (DeltaCloudException e) {
-						ErrorUtils.openErrorDialog("Error",
+						ErrorUtils.handleError("Error",
 								MessageFormat.format("Could not destroy instance {0}", instance.getName()), e,
 								Display.getDefault().getActiveShell());
 					}

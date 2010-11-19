@@ -41,7 +41,7 @@ public class ImageFilter extends Wizard {
 			DeltaCloudManager.getDefault().saveClouds();
 		} catch (Exception e) {
 			// TODO: internationalize strings
-			ErrorUtils.openErrorDialog(
+			ErrorUtils.handleError(
 					"Error",
 					"Cloud not get update filters on cloud " + cloud.getName(), e, getShell());
 		}

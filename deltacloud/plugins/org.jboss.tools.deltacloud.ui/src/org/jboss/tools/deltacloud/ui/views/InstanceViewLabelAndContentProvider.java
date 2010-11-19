@@ -86,13 +86,13 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 			} else {
 				cloud = (DeltaCloud) newInput;
 				try {
-					instances = filter(cloud.getCurrInstances());
+					instances = filter(cloud.getInstances());
 				} catch (Exception e) {
 					if (instances == null) {
 						instances = new DeltaCloudInstance[]{};
 					}
 					// TODO internationalize strings
-					ErrorUtils.openErrorDialog("Instance View Error", "Could not display instances for cloud " + cloud.getName(),
+					ErrorUtils.handleError("Instance View Error", "Could not display instances for cloud " + cloud.getName(),
 							e, Display.getDefault().getActiveShell());
 				}
 			}

@@ -24,7 +24,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
  * @author Andre Dietisheim
  */
 public class ErrorUtils {
-	public static IStatus openErrorDialog(final String title, final String message, Throwable e, final Shell shell) {
+	public static IStatus handleError(final String title, final String message, Throwable e, final Shell shell) {
 		IStatus status = createStatus(e);
 		openErrorDialog(title, status, shell);
 		return status;

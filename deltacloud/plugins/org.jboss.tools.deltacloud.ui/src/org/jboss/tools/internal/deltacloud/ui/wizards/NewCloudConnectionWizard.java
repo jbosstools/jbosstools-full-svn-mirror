@@ -55,7 +55,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 			return newCloud.testConnection();
 		} catch (DeltaCloudException e) {
 			ErrorUtils
-					.openErrorDialog(WizardMessages.getString("CloudConnectionAuthError.title"),
+					.handleError(WizardMessages.getString("CloudConnectionAuthError.title"),
 							WizardMessages.getFormattedString("CloudConnectionAuthError.message", url), e, getShell());
 			return true;
 		}
@@ -75,7 +75,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		} catch (Exception e) {
 			// TODO internationalize strings
 			ErrorUtils
-					.openErrorDialog("Error", MessageFormat.format("Could not create cloud {0}", name), e, getShell());
+					.handleError("Error", MessageFormat.format("Could not create cloud {0}", name), e, getShell());
 		}
 		return true;
 	}

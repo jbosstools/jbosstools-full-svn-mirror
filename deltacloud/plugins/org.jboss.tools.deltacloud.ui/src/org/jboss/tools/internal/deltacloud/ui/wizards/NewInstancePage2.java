@@ -220,7 +220,7 @@ public class NewInstancePage2 extends WizardPage {
 			}
 		} catch (DeltaCloudException e) {
 			// TODO internationalize strings
-			ErrorUtils.openErrorDialog("Error",
+			ErrorUtils.handleError("Error",
 					MessageFormat.format("Could not get profiles from cloud {0}", cloud.getName()), e, getShell());
 		}
 		return profiles.toArray(new DeltaCloudHardwareProfile[profiles.size()]);
@@ -557,7 +557,7 @@ public class NewInstancePage2 extends WizardPage {
 		try {
 			realms = Arrays.asList(cloud.getRealms());
 		} catch (DeltaCloudException e) {
-			ErrorUtils.openErrorDialog("Error",
+			ErrorUtils.handleError("Error",
 					MessageFormat.format("Could not get realms from cloud {0}", cloud.getName()), e, getShell());
 		}
 		return realms;

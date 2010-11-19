@@ -337,7 +337,7 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 			clouds = DeltaCloudManager.getDefault().getClouds();
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
-			ErrorUtils.openErrorDialog(
+			ErrorUtils.handleError(
 					"Error",
 					"Could not get all clouds",
 					e, Display.getDefault().getActiveShell());

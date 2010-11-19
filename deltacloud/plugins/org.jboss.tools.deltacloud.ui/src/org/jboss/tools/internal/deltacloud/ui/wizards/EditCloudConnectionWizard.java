@@ -51,7 +51,7 @@ public class EditCloudConnectionWizard extends Wizard implements INewWizard, Clo
 					cloud.getType(), this);
 			addPage(mainPage);
 		} catch (MalformedURLException e) {
-			ErrorUtils.openErrorDialog(WizardMessages.getString("EditCloudConnectionError.title"),
+			ErrorUtils.handleError(WizardMessages.getString("EditCloudConnectionError.title"),
 					WizardMessages.getString("EditCloudConnectionError.message"), e, getShell());
 		}
 	}

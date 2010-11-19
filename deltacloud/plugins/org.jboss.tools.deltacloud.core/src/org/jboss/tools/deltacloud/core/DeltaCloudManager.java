@@ -41,9 +41,9 @@ public class DeltaCloudManager {
 	private DeltaCloudManager() {
 	}
 
-	private List<DeltaCloud> loadClouds() throws DeltaCloudException {
-		List<DeltaCloud> clouds = new ArrayList<DeltaCloud>(); // clear present clouds
-		DeltaCloudMultiException connectionException = new DeltaCloudMultiException("Errors occurred while loading clouds from the preferences");
+	private void loadClouds() throws DeltaCloudException {
+		this.clouds = new ArrayList<DeltaCloud>(); // clear present clouds
+		DeltaCloudMultiException connectionException = new DeltaCloudMultiException("Could not load some clouds");
 		IPath stateLocation = Activator.getDefault().getStateLocation();
 		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -70,30 +70,31 @@ public class DeltaCloudManager {
 		if (!connectionException.isEmpty()) {
 			throw connectionException;
 		}
-		return clouds;
 	}
 
 	private DeltaCloud loadCloud(Node n, List<DeltaCloud> clouds) throws DeltaCloudException {
-		NamedNodeMap attrs = n.getAttributes();
-		String name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
-		String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
-		String username = attrs.getNamedItem("username").getNodeValue(); // $NON-NLS-1$
-		String type = attrs.getNamedItem("type").getNodeValue(); // $NON-NLS-1$
-		String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
-		String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
-		String lastKeyName = getLastKeyName(attrs.getNamedItem("lastkeyname")); // $NON-NLS-1$
-		String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage")); // $NON-NLS-1$
-		DeltaCloud cloud = new DeltaCloud(name, url, username, type, imageFilterRules, instanceFilterRules);
-		clouds.add(cloud);
-		cloud.setLastImageId(lastImageId);
-		cloud.setLastKeyname(lastKeyName);
+		DeltaCloud cloud = null;
+		String name = "";
 		try {
-			cloud.loadChildren();
+			NamedNodeMap attrs = n.getAttributes();
+			name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
+			String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
+			String username = attrs.getNamedItem("username").getNodeValue(); // $NON-NLS-1$
+			String type = attrs.getNamedItem("type").getNodeValue(); // $NON-NLS-1$
+			String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
+			String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
+			String lastKeyName = getLastKeyName(attrs.getNamedItem("lastkeyname")); // $NON-NLS-1$
+			String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage")); // $NON-NLS-1$
+			cloud = new DeltaCloud(name, url, username, type, imageFilterRules, instanceFilterRules);
+			clouds.add(cloud);
+			cloud.setLastImageId(lastImageId);
+			cloud.setLastKeyname(lastKeyName);
+			// cloud.loadChildren();
 		} catch (DeltaCloudException e) {
 			throw e;
 		} catch (Exception e) {
 			// TODO: internationalize strings
-			throw new DeltaCloudException(MessageFormat.format("Could not load cloud {0} from preferences", name), e);
+			throw new DeltaCloudException(MessageFormat.format("Could not load cloud {0}", name), e);
 		}
 		return cloud;
 	}
@@ -172,11 +173,11 @@ public class DeltaCloudManager {
 
 	private List<DeltaCloud> doGetClouds() throws DeltaCloudException {
 		if (clouds == null) {
-			clouds = loadClouds();
+			loadClouds();
 		}
 		return clouds;
 	}
-	
+
 	public DeltaCloud findCloud(String name) throws DeltaCloudException {
 		for (DeltaCloud cloud : getClouds()) {
 			if (cloud.getName().equals(name))

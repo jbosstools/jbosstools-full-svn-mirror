@@ -87,7 +87,7 @@ public class NewInstanceModel extends ObservablePojo {
 		}
 
 		private DeltaCloudImage getImage(String imageId, String arch) throws DeltaCloudException {
-			DeltaCloudImage image = getFromcachedImage(imageId, cloud.getCurrImages());
+			DeltaCloudImage image = getFromcachedImage(imageId, cloud.getImages());
 			if (image == null) {
 				image = cloud.loadImage(imageId);
 			}

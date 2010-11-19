@@ -101,7 +101,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 				}
 			} catch (DeltaCloudException e) {
 				// TODO internationalize strings
-				ErrorUtils.openErrorDialog("Error",
+				ErrorUtils.handleError("Error",
 						MessageFormat.format("Could not disconnect cloud {0}", deltaCloud.getName()), e, shell);
 			}
 		}

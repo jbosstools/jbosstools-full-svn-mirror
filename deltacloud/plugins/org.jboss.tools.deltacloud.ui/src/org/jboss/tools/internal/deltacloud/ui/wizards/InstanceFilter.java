@@ -48,7 +48,7 @@ public class InstanceFilter extends Wizard {
 			DeltaCloudManager.getDefault().saveClouds();
 		} catch (Exception e) {
 			// TODO: internationalize strings
-			ErrorUtils.openErrorDialog(
+			ErrorUtils.handleError(
 					"Error",
 					"Could not update filters", e, Display.getDefault().getActiveShell());
 		}

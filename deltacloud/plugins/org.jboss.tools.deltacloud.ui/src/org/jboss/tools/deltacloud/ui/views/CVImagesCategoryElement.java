@@ -12,16 +12,12 @@ package org.jboss.tools.deltacloud.ui.views;
 
 import java.util.ArrayList;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
-import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
-import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 public class CVImagesCategoryElement extends CVCategoryElement implements IImageListListener {
@@ -74,13 +70,13 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
 			try {
-				DeltaCloudImage[] images = filter(cloud.getCurrImages());
+				DeltaCloudImage[] images = filter(cloud.getImages());
 				cloud.removeImageListListener(this);
 				addImages(images);
 				initialized = true;
 				cloud.addImageListListener(this);
 			} catch (Exception e) {
-				ErrorUtils.openErrorDialog(
+				ErrorUtils.handleError(
 						"Error",
 						"Colud not get images from cloud " + cloud.getName(),
 						e, Display.getDefault().getActiveShell());

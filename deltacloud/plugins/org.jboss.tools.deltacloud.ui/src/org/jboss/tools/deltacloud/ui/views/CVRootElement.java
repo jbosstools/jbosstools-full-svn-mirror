@@ -40,22 +40,23 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 		if (!initialized) {
 			DeltaCloudManager m = DeltaCloudManager.getDefault();
 			m.removeCloudManagerListener(this);
+			DeltaCloud[] clouds = new DeltaCloud[] {};
 			try {
-				DeltaCloud[] clouds = m.getClouds();
-				for (int i = 0; i < clouds.length; ++i) {
-					DeltaCloud cloud = clouds[i];
-					CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), viewer);
-					addChild(e);
-				}
-				m.addCloudManagerListener(this);
-				initialized = true;
+				clouds = m.getClouds();
 			} catch (DeltaCloudException e) {
 				// TODO: internationalize strings
-				ErrorUtils.openErrorDialog(
+				ErrorUtils.handleError(
 						"Error",
 						"Could not get all clouds",
 						e, Display.getDefault().getActiveShell());
 			}
+			for (int i = 0; i < clouds.length; ++i) {
+				DeltaCloud cloud = clouds[i];
+				CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), viewer);
+				addChild(e);
+			}
+			m.addCloudManagerListener(this);
+			initialized = true;
 		}
 		return super.getChildren();
 	}
@@ -86,7 +87,7 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 			});
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
-			ErrorUtils.openErrorDialog(
+			ErrorUtils.handleError(
 					"Error",
 					"Could not get all clouds",
 					e, Display.getDefault().getActiveShell());

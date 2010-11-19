@@ -150,7 +150,7 @@ public class FindImagePage extends WizardPage {
 					public void run() {
 						try {
 						contentProvider.setFilter(filter);
-						viewer.setInput(cloud.getCurrImages());
+						viewer.setInput(cloud.getImages());
 						viewer.refresh();
 						} catch (Exception e) {
 							IStatus status = StatusFactory.getInstance(

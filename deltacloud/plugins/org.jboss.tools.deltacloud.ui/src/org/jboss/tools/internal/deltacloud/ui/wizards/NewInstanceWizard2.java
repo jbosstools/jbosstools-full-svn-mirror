@@ -102,7 +102,7 @@ public class NewInstanceWizard2 extends Wizard {
 							IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance));
 							RSEUtils.launchRemoteSystemExplorer(instance.getName(), connectionName, host);
 						} catch (Exception e) {
-							ErrorUtils.openErrorDialog("Error", "Could not launch remote system explorer for instance \"" + instance.getName() + "\"", e, getShell());
+							ErrorUtils.handleError("Error", "Could not launch remote system explorer for instance \"" + instance.getName() + "\"", e, getShell());
 							return Status.OK_STATUS;
 						}
 					}

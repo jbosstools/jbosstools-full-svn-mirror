@@ -90,9 +90,9 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 			} else {
 				cloud = (DeltaCloud) newInput;
 				try {
-					images = filter(cloud.getCurrImages());
+					images = filter(cloud.getImages());
 				} catch (Exception e) {
-					ErrorUtils.openErrorDialog(
+					ErrorUtils.handleError(
 							"Error",
 							"Could not get images for cloud " + cloud.getName(),
 							e, Display.getDefault().getActiveShell());

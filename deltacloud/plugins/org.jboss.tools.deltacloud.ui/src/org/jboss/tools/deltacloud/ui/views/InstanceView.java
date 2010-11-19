@@ -205,7 +205,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			clouds = DeltaCloudManager.getDefault().getClouds();
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
-			ErrorUtils.openErrorDialog(
+			ErrorUtils.handleError(
 					"Error",
 					"Could not get all clouds",
 					e, Display.getDefault().getActiveShell());
