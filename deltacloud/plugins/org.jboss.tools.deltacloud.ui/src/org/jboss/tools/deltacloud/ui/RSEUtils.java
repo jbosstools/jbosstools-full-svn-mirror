@@ -110,9 +110,9 @@ public class RSEUtils {
 					monitor.done();
 					return Status.OK_STATUS;
 				} catch (Exception e) {
-					// odd behavior: ignore errors since things work even if
-					// service report connection failure.
-					
+					// odd behavior: service reports connection failure even if things seem to work (view opens up with connection in it)
+					// ignore errors since things work
+					//
 					// return StatusFactory.getInstance(IStatus.ERROR,
 					// Activator.PLUGIN_ID, e.getMessage(), e);
 					return Status.OK_STATUS;
