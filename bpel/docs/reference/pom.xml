@@ -170,7 +170,6 @@
     </distributionManagement>
     
     <properties>
-        
         <xsl-single>classpath:/xslt/org/jboss/tools/xhtml-single.xsl</xsl-single>
         <xsl-chunked>classpath:/xslt/org/jboss/tools/xhtml.xsl</xsl-chunked>
         <xsl-pdf>classpath:/xslt/org/jboss/tools/pdf.xsl</xsl-pdf>
@@ -178,4 +177,34 @@
         <cssdir>${pom.basedir}/target/docbook/staging/css/org/css</cssdir>
         <master>master.xml</master>
     </properties>
+
+	<repositories>
+		<repository>
+			<id>jboss-public-repository-group</id>
+			<name>JBoss Public Repository Group</name>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jboss-public-repository-group</id>
+			<name>JBoss Public Repository Group</name>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
