@@ -2,7 +2,7 @@
 
 	* src/org/jboss/tools/internal/deltacloud/test/core/client/InstanceMockIntegrationTest.java: 
 	* src/org/jboss/tools/internal/deltacloud/test/context/MockIntegrationTestContext.java: 
-	[JBIDE-7688] renamed State to InstanceState, added property isRunning, testing for ShowInRemoteSystemExplorerHandler	
+	[JBIDE-7678] renamed State to InstanceState, added property isRunning, testing for ShowInRemoteSystemExplorerHandler	
 
 2010-10-21  André Dietisheim  <adietish@redhat.com>
 
