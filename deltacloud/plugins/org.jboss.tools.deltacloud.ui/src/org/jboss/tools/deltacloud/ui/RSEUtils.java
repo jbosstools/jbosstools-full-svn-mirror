@@ -110,7 +110,12 @@ public class RSEUtils {
 					monitor.done();
 					return Status.OK_STATUS;
 				} catch (Exception e) {
-					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
+					// odd behavior: ignore errors since things work even if
+					// service report connection failure.
+					
+					// return StatusFactory.getInstance(IStatus.ERROR,
+					// Activator.PLUGIN_ID, e.getMessage(), e);
+					return Status.OK_STATUS;
 				}
 			}
 		};
@@ -118,7 +123,7 @@ public class RSEUtils {
 		job.schedule();
 		return job;
 	}
-	
+
 	public static void showRemoteSystemExplorer(Job job) {
 		job.addJobChangeListener(new JobChangeAdapter() {
 
@@ -126,7 +131,8 @@ public class RSEUtils {
 			public void done(IJobChangeEvent event) {
 				super.done(event);
 				showRemoteSystemExplorer();
-			}});
+			}
+		});
 	}
 
 	public static void showRemoteSystemExplorer() {
