@@ -1,6 +1,7 @@
 2010-11-19  André Dietisheim  <adietish@redhat.com>
 
 	* plugin.xml: 
+	[JBIDE-7679] added "Show in Remote System Explorer" command to the context menu of the instance view
 	* src/org/jboss/tools/deltacloud/ui/commands/InstancePropertyTester.java (test): 
 	[JBIDE-7678] added property isRunning, testing for ShowInRemoteSystemExplorerHandler handler
 
