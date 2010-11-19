@@ -14,17 +14,17 @@ import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.Instance.State;
+import org.jboss.tools.deltacloud.core.client.Instance.InstanceState;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
 import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
 
 public class DeltaCloudInstance {
 
-	public final static String PENDING = Instance.State.PENDING.toString();
-	public final static String RUNNING = Instance.State.RUNNING.toString();
-	public final static String STOPPED = Instance.State.STOPPED.toString();
-	public final static String TERMINATED = Instance.State.TERMINATED.toString();
-	public final static String BOGUS = Instance.State.BOGUS.toString();
+	public final static String PENDING = Instance.InstanceState.PENDING.toString();
+	public final static String RUNNING = Instance.InstanceState.RUNNING.toString();
+	public final static String STOPPED = Instance.InstanceState.STOPPED.toString();
+	public final static String TERMINATED = Instance.InstanceState.TERMINATED.toString();
+	public final static String BOGUS = Instance.InstanceState.BOGUS.toString();
 
 	public final static String START = InstanceAction.START;
 	public final static String STOP = InstanceAction.STOP;
@@ -89,7 +89,7 @@ public class DeltaCloudInstance {
 	}
 
 	public boolean isStopped() {
-		return instance.getState() == State.STOPPED;
+		return instance.getState() == InstanceState.STOPPED;
 	}
 	
 	public boolean canStart() {
@@ -109,6 +109,10 @@ public class DeltaCloudInstance {
 	}
 
 	
+	public boolean isRunning() {
+		return instance.isRunning();
+	}
+
 	public String getHostName() {
 		List<String> hostNames = getHostNames();
 		if (hostNames != null && hostNames.size() > 0)

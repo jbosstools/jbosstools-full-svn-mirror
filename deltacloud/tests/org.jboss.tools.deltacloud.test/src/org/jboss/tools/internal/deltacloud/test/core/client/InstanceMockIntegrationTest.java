@@ -31,7 +31,7 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.Instance.State;
+import org.jboss.tools.deltacloud.core.client.Instance.InstanceState;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
 import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
@@ -137,7 +137,7 @@ public class InstanceMockIntegrationTest {
 			instance = testSetup.getClient().createInstance(image.getId());
 			assertTrue(instance != null);
 			assertEquals(image.getId(), instance.getImageId());
-			assertEquals(State.RUNNING, instance.getState());
+			assertEquals(InstanceState.RUNNING, instance.getState());
 		} finally {
 			testSetup.quietlyDestroyInstance(instance);
 		}
@@ -215,31 +215,31 @@ public class InstanceMockIntegrationTest {
 		DeltaCloudClient client = testSetup.getClient();
 		testInstance.stop(client);
 		testInstance = client.listInstances(testInstance.getId()); // reload!
-		assertEquals(State.STOPPED, testInstance.getState());
+		assertEquals(InstanceState.STOPPED, testInstance.getState());
 	}
 
 	@Test
 	public void canStartInstance() throws DeltaCloudClientException {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
-		if (testInstance.getState() == State.RUNNING) {
+		if (testInstance.getState() == InstanceState.RUNNING) {
 			testInstance.stop(client);
 		}
 		testInstance.start(client);
 		testInstance = client.listInstances(testInstance.getId()); // reload!
-		assertEquals(State.RUNNING, testInstance.getState());
+		assertEquals(InstanceState.RUNNING, testInstance.getState());
 	}
 
 	@Test
 	public void canStartInstanceByAction() throws DeltaCloudClientException {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
-		if (testInstance.getState() == State.RUNNING) {
+		if (testInstance.getState() == InstanceState.RUNNING) {
 			testInstance.stop(client);
 		}
 		assertTrue(testInstance.start(client));
 		testInstance = client.listInstances(testInstance.getId()); // reload!
-		assertEquals(State.RUNNING, testInstance.getState());
+		assertEquals(InstanceState.RUNNING, testInstance.getState());
 	}
 
 	@Test
@@ -267,7 +267,7 @@ public class InstanceMockIntegrationTest {
 		Instance testInstance = testSetup.getTestInstance();
 		DeltaCloudClient client = testSetup.getClient();
 		testInstance = client.listInstances(testInstance.getId()); // reload
-		assertTrue(testInstance.getState() == State.RUNNING);
+		assertTrue(testInstance.getState() == InstanceState.RUNNING);
 		assertFalse(testInstance.destroy(client));
 	}
 
@@ -279,7 +279,7 @@ public class InstanceMockIntegrationTest {
 		try {
 			testInstance.stop(client);
 			testInstance = client.listInstances(testInstance.getId()); // reload
-			assertTrue(testInstance.getState() == State.STOPPED);
+			assertTrue(testInstance.getState() == InstanceState.STOPPED);
 			assertFalse(testInstance.reboot(client));
 		} finally {
 			testInstance.start(client);

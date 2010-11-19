@@ -29,7 +29,7 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.Instance.State;
+import org.jboss.tools.deltacloud.core.client.Instance.InstanceState;
 
 /**
  * A class that holds the integration test context
@@ -103,7 +103,7 @@ public class MockIntegrationTestContext {
 	public void quietlyDestroyInstance(Instance instance) {
 		if (instance != null) {
 			try {
-				if (instance.getState() == Instance.State.RUNNING) {
+				if (instance.getState() == Instance.InstanceState.RUNNING) {
 					instance.stop(client);
 				}
 				instance.destroy(client);
@@ -127,7 +127,7 @@ public class MockIntegrationTestContext {
 	 * @throws ExecutionException
 	 * @throws InterruptedException
 	 */
-	public boolean waitForInstanceState(final String instanceId, final State state, final long timeout)
+	public boolean waitForInstanceState(final String instanceId, final InstanceState state, final long timeout)
 			throws InterruptedException, ExecutionException {
 		final long startTime = System.currentTimeMillis();
 		Callable<Boolean> waitingCallable = new Callable<Boolean>() {

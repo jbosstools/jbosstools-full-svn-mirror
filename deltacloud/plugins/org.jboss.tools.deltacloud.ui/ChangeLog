@@ -1,3 +1,9 @@
+2010-11-19  André Dietisheim  <adietish@redhat.com>
+
+	* plugin.xml: 
+	* src/org/jboss/tools/deltacloud/ui/commands/InstancePropertyTester.java (test): 
+	[JBIDE-7688] added property isRunning, testing for ShowInRemoteSystemExplorerHandler handler
+
 2010-11-18  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard2.java (performFinish): 

@@ -1,5 +1,11 @@
 2010-11-19  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: 
+	(isRunning): 
+	[JBIDE-7688] renamed State to InstanceState, added property isRunning, testing for ShowInRemoteSystemExplorerHandler
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java (InstanceState): 
+	(isRunning): 
+	[JBIDE-7688] renamed State to InstanceState, added property isRunning, testing for ShowInRemoteSystemExplorerHandler
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (loadCloud): 
 	[JBIDE-7663] removed loading of images and instances on startup
 

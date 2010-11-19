@@ -19,7 +19,7 @@ public class Instance extends DeltaCloudObject {
 
 	private static final long serialVersionUID = 1L;
 
-	public static enum State {
+	public static enum InstanceState {
 		RUNNING, STOPPED, PENDING, TERMINATED, BOGUS
 	};
 
@@ -44,7 +44,7 @@ public class Instance extends DeltaCloudObject {
 	private String keyname;
 
 	@XmlElement
-	private State state;
+	private InstanceState state;
 
 	private List<InstanceAction> actions;
 
@@ -97,9 +97,9 @@ public class Instance extends DeltaCloudObject {
 
 	protected void setState(String state) {
 		try {
-			this.state = State.valueOf(state);
+			this.state = InstanceState.valueOf(state);
 		} catch (Exception e) {
-			this.state = State.BOGUS;
+			this.state = InstanceState.BOGUS;
 		}
 	}
 
@@ -153,7 +153,7 @@ public class Instance extends DeltaCloudObject {
 		return realmId;
 	}
 
-	public State getState() {
+	public InstanceState getState() {
 		return state;
 	}
 
@@ -196,6 +196,10 @@ public class Instance extends DeltaCloudObject {
 
 	public boolean canDestroy() {
 		return getAction(InstanceAction.DESTROY) != null;
+	}
+
+	public boolean isRunning() {
+		return getState() == InstanceState.RUNNING;
 	}
 
 	public List<String> getPublicAddresses() {

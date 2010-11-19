@@ -27,6 +27,7 @@ public class InstancePropertyTester extends PropertyTester {
 	private static final String PROPERTY_ACTION_CANSTOP = "canStop";
 	private static final String PROPERTY_ACTION_CANREBOOT = "canReboot";
 	private static final String PROPERTY_ACTION_CANDESTROY = "canDestroy";
+	private static final String PROPERTY_ACTION_ISRUNNING = "isRunning";
 
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
@@ -38,14 +39,17 @@ public class InstancePropertyTester extends PropertyTester {
 		if (PROPERTY_ACTION_CANSTART.equals(property)) {
 			return equalsExpectedValue(instance.canStart(), expectedValue);
 		}
-		if (PROPERTY_ACTION_CANSTOP.equals(property)) {
+		else if (PROPERTY_ACTION_CANSTOP.equals(property)) {
 			return equalsExpectedValue(instance.canStop(), expectedValue);
 		}
-		if (PROPERTY_ACTION_CANREBOOT.equals(property)) {
+		else if (PROPERTY_ACTION_CANREBOOT.equals(property)) {
 			return equalsExpectedValue(instance.canReboot(), expectedValue);
 		}
-		if (PROPERTY_ACTION_CANDESTROY.equals(property)) {
+		else if (PROPERTY_ACTION_CANDESTROY.equals(property)) {
 			return equalsExpectedValue(instance.canDestroy(), expectedValue);
+		}
+		else if (PROPERTY_ACTION_ISRUNNING.equals(property)) {
+			return equalsExpectedValue(instance.isRunning(), expectedValue);
 		}
 		return false;
 	}
