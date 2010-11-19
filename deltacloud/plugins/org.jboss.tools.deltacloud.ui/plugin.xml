@@ -531,8 +531,8 @@
          </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer"
-               disabledIcon="icons/cloud.gif"
-               icon="icons/cloud.gif"
+               disabledIcon="icons/system_viewd.gif"
+               icon="icons/system_view.gif"
                label="%command.showInRemoteSysExplorer"
                style="push"
                tooltip="%command.showInRemoteSysExplorer.tooltip">
