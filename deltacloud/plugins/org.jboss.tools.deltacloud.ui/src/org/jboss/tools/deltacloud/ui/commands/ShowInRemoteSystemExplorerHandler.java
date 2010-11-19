@@ -16,6 +16,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.rse.core.model.IHost;
@@ -38,10 +39,14 @@ public class ShowInRemoteSystemExplorerHandler extends AbstractHandler implement
 			DeltaCloudInstance instance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 			try {
 				String connectionName = RSEUtils.createConnectionName(instance);
-				IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance));
-				RSEUtils.launchRemoteSystemExplorer(instance.getName(), connectionName, host);
+				IHost host = RSEUtils.createHost(connectionName, 
+						RSEUtils.createHostName(instance),
+						RSEUtils.getSSHOnlySystemType(), 
+						RSEUtils.getSystemRegistry());
+				Job connectJob = RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));
+				RSEUtils.showRemoteSystemExplorer(connectJob);
 			} catch (Exception e) {
-				return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, 
+				return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
 						"Could not launch remote system explorer for instance \"" + instance.getName() + "\"",
 						e);
 			}

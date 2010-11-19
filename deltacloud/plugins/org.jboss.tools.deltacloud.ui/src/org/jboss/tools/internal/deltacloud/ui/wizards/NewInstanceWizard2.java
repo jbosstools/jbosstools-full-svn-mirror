@@ -97,10 +97,14 @@ public class NewInstanceWizard2 extends Wizard {
 					if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
 						try {
 							String connectionName = RSEUtils.createConnectionName(instance);
-							IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance), RSEUtils.getSSHOnlySystemType());
-							RSEUtils.launchRemoteSystemExplorer(instance.getName(), connectionName, host);
+							IHost host = RSEUtils.createHost(connectionName,
+									RSEUtils.createHostName(instance),
+									RSEUtils.getSSHOnlySystemType(),
+									RSEUtils.getSystemRegistry());
+							RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));
 						} catch (Exception e) {
-							ErrorUtils.handleError("Error", "Could not launch remote system explorer for instance \"" + instance.getName() + "\"", e, getShell());
+							ErrorUtils.handleError("Error", "Could not launch remote system explorer for instance \""
+									+ instance.getName() + "\"", e, getShell());
 							return Status.OK_STATUS;
 						}
 					}
@@ -133,7 +137,7 @@ public class NewInstanceWizard2 extends Wizard {
 		// Save persistent settings for this particular cloud
 		cloud.setLastImageId(imageId);
 		cloud.setLastKeyname(keyname);
-		
+
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 
 		boolean result = false;

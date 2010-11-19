@@ -38,6 +38,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.EditorPart;
@@ -326,6 +327,11 @@ public class UIUtils {
 		IWorkbenchPartSite site = editor.getSite();
 		Assert.isNotNull(site);
 		return site.getPage();
+	}
+
+	public static void showView(String viewId) throws PartInitException {
+		Assert.isLegal(viewId != null && viewId.length() > 0);
+		getActivePage().showView(viewId);
 	}
 
 }

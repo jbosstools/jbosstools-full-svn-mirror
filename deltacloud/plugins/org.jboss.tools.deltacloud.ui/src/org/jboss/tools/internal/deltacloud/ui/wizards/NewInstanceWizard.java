@@ -46,9 +46,9 @@ public class NewInstanceWizard extends Wizard {
 	private final static String DONT_SHOW_THIS_AGAIN_MSG = "DontShowThisAgain.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
-	
+
 	private NewInstancePage mainPage;
-	
+
 	private DeltaCloud cloud;
 	private DeltaCloudImage image;
 	private DeltaCloudInstance instance;
@@ -57,38 +57,39 @@ public class NewInstanceWizard extends Wizard {
 		this.cloud = cloud;
 		this.image = image;
 	}
-	
+
 	@Override
 	public void addPages() {
 		mainPage = new NewInstancePage(cloud, image);
 		addPage(mainPage);
 	}
-	
+
 	@Override
 	public boolean canFinish() {
 		return mainPage.isPageComplete();
 	}
-	
-	
+
 	private class WatchCreateJob extends Job {
-		
+
 		private DeltaCloud cloud;
 		private String instanceId;
 		private String instanceName;
-		
-		public WatchCreateJob(String title, DeltaCloud cloud, 
+
+		public WatchCreateJob(String title, DeltaCloud cloud,
 				String instanceId, String instanceName) {
 			super(title);
 			this.cloud = cloud;
 			this.instanceId = instanceId;
 			this.instanceName = instanceName;
 		}
-		
+
 		public IStatus run(IProgressMonitor pm) {
-			if (!pm.isCanceled()){
+			if (!pm.isCanceled()) {
 				DeltaCloudInstance instance = null;
 				try {
-					pm.beginTask(WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] {instanceName}), IProgressMonitor.UNKNOWN);
+					pm.beginTask(
+							WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] { instanceName }),
+							IProgressMonitor.UNKNOWN);
 					pm.worked(1);
 					cloud.registerInstanceJob(instanceId, this);
 					instance = cloud.waitWhilePending(instanceId, pm);
@@ -103,24 +104,27 @@ public class NewInstanceWizard extends Wizard {
 					if (hostname != null && hostname.length() > 0 && autoConnect) {
 						try {
 							String connectionName = RSEUtils.createConnectionName(instance);
-							IHost host = RSEUtils.createHost(connectionName, RSEUtils.createHostName(instance));
-							RSEUtils.launchRemoteSystemExplorer(instance.getName(), connectionName, host);
+							IHost host = RSEUtils.createHost(connectionName, 
+									RSEUtils.createHostName(instance),
+									RSEUtils.getSSHOnlySystemType(),
+									RSEUtils.getSystemRegistry());
+							RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));
 						} catch (Exception e) {
-							ErrorUtils.handleError("Error", "Could not launch remote system explorer for instance \"" + instance.getName() + "\"", e, getShell());
+							ErrorUtils.handleError("Error", "Could not launch remote system explorer for instance \""
+									+ instance.getName() + "\"", e, getShell());
 							return Status.OK_STATUS;
 						}
 					}
 					pm.done();
 				}
 				return Status.OK_STATUS;
-			}
-			else {
+			} else {
 				pm.done();
 				return Status.CANCEL_STATUS;
 			}
 		};
 	};
-	
+
 	@Override
 	public boolean performFinish() {
 		String imageId = image.getId();
@@ -135,24 +139,27 @@ public class NewInstanceWizard extends Wizard {
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		
+		}
+
 		boolean result = false;
 		String errorMessage = WizardMessages.getString(DEFAULT_REASON);
 		try {
 			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-			boolean dontShowDialog = prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, false);
+			boolean dontShowDialog = prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE,
+					false);
 			if (!dontShowDialog) {
 				MessageDialogWithToggle dialog =
-					MessageDialogWithToggle.openOkCancelConfirm(getShell(), WizardMessages.getString(CONFIRM_CREATE_TITLE), 
-							WizardMessages.getString(CONFIRM_CREATE_MSG), 
-							WizardMessages.getString(DONT_SHOW_THIS_AGAIN_MSG), 
-							false, null, null);
+						MessageDialogWithToggle.openOkCancelConfirm(getShell(),
+								WizardMessages.getString(CONFIRM_CREATE_TITLE),
+								WizardMessages.getString(CONFIRM_CREATE_MSG),
+								WizardMessages.getString(DONT_SHOW_THIS_AGAIN_MSG),
+								false, null, null);
 				int retCode = dialog.getReturnCode();
 				boolean toggleState = dialog.getToggleState();
 				if (retCode == Dialog.CANCEL)
 					return true;
-				// If warning turned off by user, set the preference for future usage
+				// If warning turned off by user, set the preference for future
+				// usage
 				if (toggleState) {
 					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
 				}
@@ -173,9 +180,11 @@ public class NewInstanceWizard extends Wizard {
 			errorMessage = e.getLocalizedMessage();
 		}
 		if (!result) {
-			ErrorDialog.openError(this.getShell(),
+			ErrorDialog.openError(
+					this.getShell(),
 					WizardMessages.getString(CREATE_INSTANCE_FAILURE_TITLE),
-					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG, new String[] {name, imageId, realmId, profileId}),
+					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG, new String[] { name, imageId,
+							realmId, profileId }),
 					new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMessage));
 		}
 		return result;
