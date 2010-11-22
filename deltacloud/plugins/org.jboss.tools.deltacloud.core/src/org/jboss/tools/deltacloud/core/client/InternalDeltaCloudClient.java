@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
+/**
+ * @author Andre Dietisheim
+ */
 public interface InternalDeltaCloudClient extends DeltaCloudClient {
 
 	/**

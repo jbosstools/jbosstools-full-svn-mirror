@@ -15,6 +15,7 @@ import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMeth
 /**
  * An action that is executable on an instance
  * 
+ * @author Martin Taylor
  * @author André Dietisheim
  * @see Instance
  * @see DeltaCloudClient#performInstanceAction(String, String);

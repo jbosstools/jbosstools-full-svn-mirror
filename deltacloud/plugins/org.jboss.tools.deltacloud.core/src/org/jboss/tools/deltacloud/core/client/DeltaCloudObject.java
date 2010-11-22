@@ -14,6 +14,9 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
+/**
+ * @author Martyn Taylor
+ */
 public abstract class DeltaCloudObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;

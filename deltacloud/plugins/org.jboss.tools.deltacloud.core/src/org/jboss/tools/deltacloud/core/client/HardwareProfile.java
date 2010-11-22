@@ -13,6 +13,9 @@ package org.jboss.tools.deltacloud.core.client;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Martyn Taylor
+ */
 public class HardwareProfile extends DeltaCloudObject
 {
 	private static final long serialVersionUID = 1L;

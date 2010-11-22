@@ -9,6 +9,10 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
+
+/**
+ * @author Andre Dietisheim
+ */
 public enum HttpStatusCode {
 
 	OK(200), NOT_FOUND(404), FORBIDDEN(403);

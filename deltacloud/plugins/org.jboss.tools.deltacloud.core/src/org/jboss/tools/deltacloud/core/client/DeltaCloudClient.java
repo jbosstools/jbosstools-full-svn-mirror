@@ -14,6 +14,10 @@ import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 
+/**
+ * @author Martyn Taylor
+ * @author Andre Dietisheim
+ */
 public interface DeltaCloudClient {
 
 	/**

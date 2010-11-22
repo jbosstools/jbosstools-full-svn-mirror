@@ -12,6 +12,9 @@ package org.jboss.tools.deltacloud.core.client;
 
 import javax.xml.bind.annotation.XmlElement;
 
+/**
+ * @author Martyn Taylor
+ */
 public class Realm extends DeltaCloudObject
 {
 	private static final long serialVersionUID = 1L;

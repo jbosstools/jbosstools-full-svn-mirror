@@ -15,6 +15,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * @author Martyn Taylor
+ */
 @XmlType
 public class AddressList
 {

@@ -70,6 +70,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+/**
+ * @author Andre Dietisheim (based on prior implementation by Martyn Taylor)
+ */
 public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	private static final String PEM_FILE_SUFFIX = "pem";
