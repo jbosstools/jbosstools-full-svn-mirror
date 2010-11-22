@@ -3,13 +3,13 @@
 "http://www.docbook.org/xml/5.0/dtd/docbook.dtd"
 
 [
-<!ENTITY introduction SYSTEM "modules/introduction.xml">
-<!ENTITY birt_integration_with_seam SYSTEM "modules/birt_integration_with_seam.xml">
-<!ENTITY hibernate_datasource SYSTEM "modules/hibernate_datasource.xml">      
-<!ENTITY birt_reports_deployment SYSTEM "modules/birt_reports_deployment.xml">    
-<!ENTITY framework SYSTEM "modules/framework.xml">  
-<!ENTITY tasks SYSTEM "modules/tasks.xml"> 
-<!ENTITY links SYSTEM "modules/links.xml"> 
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY birt_integration_with_seam SYSTEM "birt_integration_with_seam.xml">
+<!ENTITY hibernate_datasource SYSTEM "hibernate_datasource.xml">      
+<!ENTITY birt_reports_deployment SYSTEM "birt_reports_deployment.xml">    
+<!ENTITY framework SYSTEM "framework.xml">  
+<!ENTITY tasks SYSTEM "tasks.xml"> 
+<!ENTITY links SYSTEM "links.xml"> 
 ]>
  
 <book>
