@@ -405,8 +405,9 @@ public class Bpmn2VisualIDRegistry {
 		}
 		return -1;
 	}
-	
-	public static int getLabelVisualId(EObject containerElement, EObject domainElement) {
+
+	public static int getLabelVisualId(EObject containerElement,
+			EObject domainElement) {
 		if (containerElement instanceof Process) {
 			if (domainElement instanceof UserTask) {
 				return UserTaskNameEditPart.VISUAL_ID;

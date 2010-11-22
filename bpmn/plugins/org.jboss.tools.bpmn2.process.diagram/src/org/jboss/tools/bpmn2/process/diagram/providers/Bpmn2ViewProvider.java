@@ -439,12 +439,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated 
 	 */
 	public Node createUserTask_2001(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(UserTaskEditPart.VISUAL_ID));
@@ -485,13 +483,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated 
 	 */
 	public Node createServiceTask_2002(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -534,13 +530,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createStartEvent_2003(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -580,13 +574,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createStartEvent_2007(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -626,12 +618,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createEndEvent_2004(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(EndEventEditPart.VISUAL_ID));
@@ -670,13 +660,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createExclusiveGateway_2005(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -716,13 +704,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createParallelGateway_2006(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -762,12 +748,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createEndEvent_2008(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(EndEvent2EditPart.VISUAL_ID));
@@ -806,12 +790,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createEndEvent_2009(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(EndEvent3EditPart.VISUAL_ID));
@@ -850,13 +832,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createIntermediateCatchEvent_2010(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -896,13 +876,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createIntermediateThrowEvent_2011(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -942,13 +920,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createIntermediateCatchEvent_2012(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -988,13 +964,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createIntermediateCatchEvent_2013(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1034,13 +1008,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createDataObject_2014(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1078,9 +1050,8 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 				FigureUtilities.RGBToInteger(fillRGB));
 		Node label5003 = createLabel(node,
 				Bpmn2VisualIDRegistry.getType(DataObjectNameEditPart.VISUAL_ID));
-//		label5003.setLayoutConstraint(NotationFactory.eINSTANCE
-//				.createLocation());
-		label5003.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
+		label5003.setLayoutConstraint(NotationFactory.eINSTANCE
+				.createLocation());
 		Location location5003 = (Location) label5003.getLayoutConstraint();
 		location5003.setX(0);
 		location5003.setY(5);
@@ -1088,13 +1059,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createTextAnnotation_2015(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1137,13 +1106,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createSubProcess_2016(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1183,13 +1150,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createScriptTask_2017(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1231,13 +1196,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createSubProcess_3001(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1276,12 +1239,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createUserTask_3002(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(UserTask2EditPart.VISUAL_ID));
@@ -1321,13 +1282,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createServiceTask_3004(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1369,13 +1328,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createStartEvent_3003(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1414,13 +1371,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createStartEvent_3005(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1459,12 +1414,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createEndEvent_3006(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(EndEvent4EditPart.VISUAL_ID));
@@ -1502,13 +1455,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createExclusiveGateway_3007(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1547,13 +1498,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createParallelGateway_3008(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1592,12 +1541,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createEndEvent_3009(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(EndEvent5EditPart.VISUAL_ID));
@@ -1635,12 +1582,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createEndEvent_3010(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(EndEvent6EditPart.VISUAL_ID));
@@ -1678,13 +1623,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createIntermediateCatchEvent_3011(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1723,13 +1666,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createIntermediateThrowEvent_3012(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1768,13 +1709,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createIntermediateCatchEvent_3013(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1813,13 +1752,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createDataObject_3014(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1866,13 +1803,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createTextAnnotation_3015(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1914,13 +1849,11 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	}
 
 	/**
-	 * @generated not
+	 * @generated
 	 */
 	public Node createScriptTask_3016(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Shape node = NotationFactory.eINSTANCE.createShape();
-//		node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
@@ -1967,12 +1900,13 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	public Edge createSequenceFlow_4001(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-//		Connector edge = NotationFactory.eINSTANCE.createConnector();
+		//		Connector edge = NotationFactory.eINSTANCE.createConnector();
 		Connector edge = BpmnNotationFactory.INSTANCE.createEdge();
 		edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
-//		RelativeBendpoints bendpoints = NotationFactory.eINSTANCE
-//				.createRelativeBendpoints();
-		RelativeBendpoints bendpoints = BpmnNotationFactory.INSTANCE.createRelativeBendpoints();
+		//		RelativeBendpoints bendpoints = NotationFactory.eINSTANCE
+		//				.createRelativeBendpoints();
+		RelativeBendpoints bendpoints = BpmnNotationFactory.INSTANCE
+				.createRelativeBendpoints();
 		ArrayList<RelativeBendpoint> points = new ArrayList<RelativeBendpoint>(
 				2);
 		points.add(new RelativeBendpoint());
@@ -2090,7 +2024,7 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	 * @generated not
 	 */
 	private Node createLabel(View owner, String hint) {
-//		DecorationNode rv = NotationFactory.eINSTANCE.createDecorationNode();
+		//		DecorationNode rv = NotationFactory.eINSTANCE.createDecorationNode();
 		DecorationNode rv = BpmnNotationFactory.INSTANCE.createLabel();
 		rv.setType(hint);
 		ViewUtil.insertChildView(owner, rv, ViewUtil.APPEND, true);

@@ -46,6 +46,7 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
+import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart;
@@ -54,6 +55,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
+import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.wizard.Wizard;
@@ -63,6 +65,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart;
 
 /**
  * @generated
@@ -174,11 +177,11 @@ public class Bpmn2DiagramEditorUtil {
 				Messages.Bpmn2DiagramEditorUtil_CreateDiagramProgressTask, 3);
 		final Resource diagramResource = editingDomain.getResourceSet()
 				.createResource(diagramURI);
-//		((XMLResource) diagramResource).getDefaultSaveOptions().put(
-//				XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
-//		((XMLResource) diagramResource).getDefaultLoadOptions().put(
-//				XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
-//		final String diagramName = diagramURI.lastSegment();
+		//		((XMLResource) diagramResource).getDefaultSaveOptions().put(
+		//				XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+		//		((XMLResource) diagramResource).getDefaultLoadOptions().put(
+		//				XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
+		//		final String diagramName = diagramURI.lastSegment();
 		AbstractTransactionalCommand command = new AbstractTransactionalCommand(
 				editingDomain,
 				Messages.Bpmn2DiagramEditorUtil_CreateDiagramCommandLabel,
@@ -191,29 +194,29 @@ public class Bpmn2DiagramEditorUtil {
 				EStructuralFeature definitionsFeature = Bpmn2Package.Literals.DOCUMENT_ROOT__DEFINITIONS;
 				Definitions definitionsObject = (Definitions) model
 						.eGet(definitionsFeature);
-//				List<RootElement> rootElements = definitionsObject
-//						.getRootElements();
-//				RootElement rootElement = rootElements.get(0);
+				//				List<RootElement> rootElements = definitionsObject
+				//						.getRootElements();
+				//				RootElement rootElement = rootElements.get(0);
 				BPMNDiagram diagram = definitionsObject.getDiagrams().get(0);
-//				DiagramElement element = diagram.getPlane().getPlaneElement().get(0);
-//				if (rootElement instanceof Process) {
-//					((Process)rootElement).setName(diagramName);
-//				}
-//				Diagram diagram = ViewService.createDiagram(rootElement,
-//						ProcessEditPart.MODEL_ID,
-//						Bpmn2DiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
-//				if (diagram != null) {
-//					diagramResource.getContents().add(diagram);
-//					diagram.setName(diagramName);
-//					diagram.setElement(rootElement);
-//				}
+				//				DiagramElement element = diagram.getPlane().getPlaneElement().get(0);
+				//				if (rootElement instanceof Process) {
+				//					((Process)rootElement).setName(diagramName);
+				//				}
+				//				Diagram diagram = ViewService.createDiagram(rootElement,
+				//						ProcessEditPart.MODEL_ID,
+				//						Bpmn2DiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+				//				if (diagram != null) {
+				//					diagramResource.getContents().add(diagram);
+				//					diagram.setName(diagramName);
+				//					diagram.setElement(rootElement);
+				//				}
 
 				try {
 
 					diagramResource
 							.save(org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorUtil
 									.getSaveOptions());
-//					diagram.getPlane().getPlaneElement().remove(element);
+					//					diagram.getPlane().getPlaneElement().remove(element);
 					diagram.getPlane().getPlaneElement().clear();
 					diagramResource
 							.save(org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorUtil
