@@ -494,16 +494,6 @@ public class CloudConnectionPage extends WizardPage {
 				BeanProperties.value(CloudConnectionModel.PROPERTY_TYPE).observe(connectionModel),
 				updateStrategy,
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		// Binding urlTypeBinding = dbc.bindValue(
-		// WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY,
-		// urlText),
-		// BeanProperties.value(CloudConnectionModel.class,
-		// CloudConnectionModel.PROPERTY_URL)
-		// .observe(connectionModel),
-		// new UpdateValueStrategy().setAfterGetValidator(
-		// new
-		// MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))),
-		// null);
 		/*
 		 * bind converter to delta cloud label.
 		 * 
