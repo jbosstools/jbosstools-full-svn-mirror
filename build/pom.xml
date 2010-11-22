@@ -13,9 +13,7 @@
 		<profile>
 			<id>libs</id>
 			<activation>
-				<property>
-					<name>coverage</name>
-				</property>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
 				<module>libs</module>
@@ -611,6 +609,16 @@
 			</activation>
 			<modules>
 				<module>../site</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>aggregate-coverage</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>reports/emma-coverage</module>
 			</modules>
 		</profile>
 

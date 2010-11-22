@@ -8,10 +8,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>build/parent</module>
-		<!-- this is included in the build pom when coverage profile is enabled <module>build/libs</module> -->
 		<module>build</module>
-		<module>build/reports/emma-coverage</module>
 	</modules>
-
 </project>
 	
