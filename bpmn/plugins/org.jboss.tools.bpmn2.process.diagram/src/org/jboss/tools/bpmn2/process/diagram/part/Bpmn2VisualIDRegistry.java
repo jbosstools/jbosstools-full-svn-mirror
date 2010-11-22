@@ -1,15 +1,21 @@
 package org.jboss.tools.bpmn2.process.diagram.part;
 
 import org.eclipse.bpmn2.Bpmn2Package;
+import org.eclipse.bpmn2.DataObject;
 import org.eclipse.bpmn2.EndEvent;
 import org.eclipse.bpmn2.ErrorEventDefinition;
 import org.eclipse.bpmn2.IntermediateCatchEvent;
 import org.eclipse.bpmn2.IntermediateThrowEvent;
 import org.eclipse.bpmn2.MessageEventDefinition;
 import org.eclipse.bpmn2.Process;
+import org.eclipse.bpmn2.ScriptTask;
+import org.eclipse.bpmn2.ServiceTask;
 import org.eclipse.bpmn2.StartEvent;
+import org.eclipse.bpmn2.SubProcess;
 import org.eclipse.bpmn2.TerminateEventDefinition;
+import org.eclipse.bpmn2.TextAnnotation;
 import org.eclipse.bpmn2.TimerEventDefinition;
+import org.eclipse.bpmn2.UserTask;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
@@ -396,6 +402,35 @@ public class Bpmn2VisualIDRegistry {
 				return ScriptTask2EditPart.VISUAL_ID;
 			}
 			break;
+		}
+		return -1;
+	}
+	
+	public static int getLabelVisualId(EObject containerElement, EObject domainElement) {
+		if (containerElement instanceof Process) {
+			if (domainElement instanceof UserTask) {
+				return UserTaskNameEditPart.VISUAL_ID;
+			} else if (domainElement instanceof ServiceTask) {
+				return ServiceTaskNameEditPart.VISUAL_ID;
+			} else if (domainElement instanceof DataObject) {
+				return DataObjectNameEditPart.VISUAL_ID;
+			} else if (domainElement instanceof TextAnnotation) {
+				return TextAnnotationTextEditPart.VISUAL_ID;
+			} else if (domainElement instanceof ScriptTask) {
+				return ScriptTaskNameEditPart.VISUAL_ID;
+			}
+		} else if (containerElement instanceof SubProcess) {
+			if (domainElement instanceof UserTask) {
+				return UserTaskName2EditPart.VISUAL_ID;
+			} else if (domainElement instanceof ServiceTask) {
+				return ServiceTaskName2EditPart.VISUAL_ID;
+			} else if (domainElement instanceof DataObject) {
+				return DataObjectName2EditPart.VISUAL_ID;
+			} else if (domainElement instanceof TextAnnotation) {
+				return TextAnnotationText2EditPart.VISUAL_ID;
+			} else if (domainElement instanceof ScriptTask) {
+				return ScriptTaskName2EditPart.VISUAL_ID;
+			}
 		}
 		return -1;
 	}

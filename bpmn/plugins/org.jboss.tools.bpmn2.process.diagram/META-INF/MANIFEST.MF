@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.jboss.tools.bpmn2.process.diagram; singleton:=true
+Bundle-SymbolicName: org.eclipse.bpmn2.diagram; singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin
@@ -36,6 +36,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.bpmn2;visibility:=reexport,
  org.eclipse.bpmn2.edit;visibility:=reexport,
  org.eclipse.gef;visibility:=reexport,
- org.eclipse.jdt.ui;bundle-version="3.6.0"
+ org.eclipse.jdt.ui;bundle-version="3.6.0",
+ org.eclipse.ocl.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -17,7 +17,7 @@ public class Bpmn2UriEditorInputTester extends PropertyTester {
 			return false;
 		}
 		URIEditorInput editorInput = (URIEditorInput) receiver;
-		return "prd".equals(editorInput.getURI().fileExtension()); //$NON-NLS-1$
+		return "bpmn2".equals(editorInput.getURI().fileExtension()); //$NON-NLS-1$
 	}
 
 }

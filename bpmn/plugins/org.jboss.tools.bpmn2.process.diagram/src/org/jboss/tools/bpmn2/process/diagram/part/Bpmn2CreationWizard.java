@@ -37,11 +37,6 @@ public class Bpmn2CreationWizard extends Wizard implements INewWizard {
 	/**
 	 * @generated
 	 */
-	protected Bpmn2CreationWizardPage domainModelFilePage;
-
-	/**
-	 * @generated
-	 */
 	protected Resource diagram;
 
 	/**
@@ -102,32 +97,12 @@ public class Bpmn2CreationWizard extends Wizard implements INewWizard {
 	 */
 	public void addPages() {
 		diagramModelFilePage = new Bpmn2CreationWizardPage(
-				"DiagramModelFile", getSelection(), "prd"); //$NON-NLS-1$ //$NON-NLS-2$
+				"DiagramModelFile", getSelection(), "jbpmn"); //$NON-NLS-1$ //$NON-NLS-2$
 		diagramModelFilePage
 				.setTitle(Messages.Bpmn2CreationWizard_DiagramModelFilePageTitle);
 		diagramModelFilePage
 				.setDescription(Messages.Bpmn2CreationWizard_DiagramModelFilePageDescription);
 		addPage(diagramModelFilePage);
-
-		domainModelFilePage = new Bpmn2CreationWizardPage(
-				"DomainModelFile", getSelection(), "bpmn2") { //$NON-NLS-1$ //$NON-NLS-2$
-
-			public void setVisible(boolean visible) {
-				if (visible) {
-					String fileName = diagramModelFilePage.getFileName();
-					fileName = fileName.substring(0,
-							fileName.length() - ".prd".length()); //$NON-NLS-1$
-					setFileName(Bpmn2DiagramEditorUtil.getUniqueFileName(
-							getContainerFullPath(), fileName, "bpmn2")); //$NON-NLS-1$
-				}
-				super.setVisible(visible);
-			}
-		};
-		domainModelFilePage
-				.setTitle(Messages.Bpmn2CreationWizard_DomainModelFilePageTitle);
-		domainModelFilePage
-				.setDescription(Messages.Bpmn2CreationWizard_DomainModelFilePageDescription);
-		addPage(domainModelFilePage);
 	}
 
 	/**
@@ -139,8 +114,7 @@ public class Bpmn2CreationWizard extends Wizard implements INewWizard {
 			protected void execute(IProgressMonitor monitor)
 					throws CoreException, InterruptedException {
 				diagram = Bpmn2DiagramEditorUtil.createDiagram(
-						diagramModelFilePage.getURI(),
-						domainModelFilePage.getURI(), monitor);
+						diagramModelFilePage.getURI(), monitor);
 				if (isOpenNewlyCreatedDiagramEditor() && diagram != null) {
 					try {
 						Bpmn2DiagramEditorUtil.openDiagram(diagram);

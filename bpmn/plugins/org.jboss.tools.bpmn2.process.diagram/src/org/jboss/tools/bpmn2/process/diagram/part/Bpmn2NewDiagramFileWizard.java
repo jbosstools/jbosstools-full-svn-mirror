@@ -81,7 +81,7 @@ public class Bpmn2NewDiagramFileWizard extends Wizard {
 		}
 		myFileCreationPage.setContainerFullPath(filePath);
 		myFileCreationPage.setFileName(Bpmn2DiagramEditorUtil
-				.getUniqueFileName(filePath, fileName, "prd")); //$NON-NLS-1$
+				.getUniqueFileName(filePath, fileName, "jbpmn")); //$NON-NLS-1$
 
 		diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
 				Messages.Bpmn2NewDiagramFileWizard_RootSelectionPageName);
@@ -135,6 +135,7 @@ public class Bpmn2NewDiagramFileWizard extends Wizard {
 						ProcessEditPart.MODEL_ID,
 						Bpmn2DiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 				diagramResource.getContents().add(diagram);
+				diagramResource.getContents().add(diagram.getElement());
 				return CommandResult.newOKCommandResult();
 			}
 		};

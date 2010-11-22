@@ -135,114 +135,114 @@ public class Bpmn2NavigatorLabelProvider extends LabelProvider implements
 	 */
 	public Image getImage(View view) {
 		switch (Bpmn2VisualIDRegistry.getVisualID(view)) {
-		case ProcessEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Diagram?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?Process", Bpmn2ElementTypes.Process_1000); //$NON-NLS-1$
-		case EndEvent2EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_2008); //$NON-NLS-1$
-		case ExclusiveGatewayEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ExclusiveGateway", Bpmn2ElementTypes.ExclusiveGateway_2005); //$NON-NLS-1$
-		case ScriptTask2EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ScriptTask", Bpmn2ElementTypes.ScriptTask_3016); //$NON-NLS-1$
-		case StartEvent3EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?StartEvent", Bpmn2ElementTypes.StartEvent_3003); //$NON-NLS-1$
-		case EndEvent3EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_2009); //$NON-NLS-1$
 		case EndEventEditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_2004); //$NON-NLS-1$
-		case IntermediateThrowEvent2EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateThrowEvent", Bpmn2ElementTypes.IntermediateThrowEvent_3012); //$NON-NLS-1$
-		case IntermediateThrowEventEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateThrowEvent", Bpmn2ElementTypes.IntermediateThrowEvent_2011); //$NON-NLS-1$
-		case TextAnnotation2EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?TextAnnotation", Bpmn2ElementTypes.TextAnnotation_3015); //$NON-NLS-1$
-		case EndEvent5EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_3009); //$NON-NLS-1$
-		case ServiceTaskEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ServiceTask", Bpmn2ElementTypes.ServiceTask_2002); //$NON-NLS-1$
-		case IntermediateCatchEventEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_2010); //$NON-NLS-1$
-		case IntermediateCatchEvent4EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_3011); //$NON-NLS-1$
-		case EndEvent6EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_3010); //$NON-NLS-1$
-		case StartEvent4EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?StartEvent", Bpmn2ElementTypes.StartEvent_3005); //$NON-NLS-1$
-		case IntermediateCatchEvent3EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_2013); //$NON-NLS-1$
-		case ExclusiveGateway2EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ExclusiveGateway", Bpmn2ElementTypes.ExclusiveGateway_3007); //$NON-NLS-1$
-		case StartEvent2EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?StartEvent", Bpmn2ElementTypes.StartEvent_2007); //$NON-NLS-1$
-		case ServiceTask2EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ServiceTask", Bpmn2ElementTypes.ServiceTask_3004); //$NON-NLS-1$
-		case TextAnnotationEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?TextAnnotation", Bpmn2ElementTypes.TextAnnotation_2015); //$NON-NLS-1$
-		case SequenceFlowEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Link?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?SequenceFlow", Bpmn2ElementTypes.SequenceFlow_4001); //$NON-NLS-1$
-		case SubProcessEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?SubProcess", Bpmn2ElementTypes.SubProcess_2016); //$NON-NLS-1$
-		case ParallelGateway2EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ParallelGateway", Bpmn2ElementTypes.ParallelGateway_3008); //$NON-NLS-1$
-		case AssociationEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Link?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?Association", Bpmn2ElementTypes.Association_4002); //$NON-NLS-1$
-		case EndEvent4EditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_3006); //$NON-NLS-1$
-		case ScriptTaskEditPart.VISUAL_ID:
-			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ScriptTask", Bpmn2ElementTypes.ScriptTask_2017); //$NON-NLS-1$
 		case ParallelGatewayEditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ParallelGateway", Bpmn2ElementTypes.ParallelGateway_2006); //$NON-NLS-1$
-		case UserTaskEditPart.VISUAL_ID:
+		case EndEvent5EditPart.VISUAL_ID:
 			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?UserTask", Bpmn2ElementTypes.UserTask_2001); //$NON-NLS-1$
-		case UserTask2EditPart.VISUAL_ID:
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_3009); //$NON-NLS-1$
+		case SubProcessEditPart.VISUAL_ID:
 			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?UserTask", Bpmn2ElementTypes.UserTask_3002); //$NON-NLS-1$
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?SubProcess", Bpmn2ElementTypes.SubProcess_2016); //$NON-NLS-1$
 		case SubProcess2EditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?SubProcess", Bpmn2ElementTypes.SubProcess_3001); //$NON-NLS-1$
+		case ServiceTask2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ServiceTask", Bpmn2ElementTypes.ServiceTask_3004); //$NON-NLS-1$
+		case UserTask2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?UserTask", Bpmn2ElementTypes.UserTask_3002); //$NON-NLS-1$
 		case DataObjectEditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?DataObject", Bpmn2ElementTypes.DataObject_2014); //$NON-NLS-1$
-		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+		case ProcessEditPart.VISUAL_ID:
 			return getImage(
-					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_3013); //$NON-NLS-1$
-		case IntermediateCatchEvent2EditPart.VISUAL_ID:
+					"Navigator?Diagram?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?Process", Bpmn2ElementTypes.Process_1000); //$NON-NLS-1$
+		case IntermediateCatchEvent3EditPart.VISUAL_ID:
 			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_2012); //$NON-NLS-1$
-		case StartEventEditPart.VISUAL_ID:
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_2013); //$NON-NLS-1$
+		case TextAnnotation2EditPart.VISUAL_ID:
 			return getImage(
-					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?StartEvent", Bpmn2ElementTypes.StartEvent_2003); //$NON-NLS-1$
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?TextAnnotation", Bpmn2ElementTypes.TextAnnotation_3015); //$NON-NLS-1$
 		case DataObject2EditPart.VISUAL_ID:
 			return getImage(
 					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?DataObject", Bpmn2ElementTypes.DataObject_3014); //$NON-NLS-1$
+		case SequenceFlowEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Link?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?SequenceFlow", Bpmn2ElementTypes.SequenceFlow_4001); //$NON-NLS-1$
+		case AssociationEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Link?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?Association", Bpmn2ElementTypes.Association_4002); //$NON-NLS-1$
+		case StartEventEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?StartEvent", Bpmn2ElementTypes.StartEvent_2003); //$NON-NLS-1$
+		case EndEvent4EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_3006); //$NON-NLS-1$
+		case ExclusiveGatewayEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ExclusiveGateway", Bpmn2ElementTypes.ExclusiveGateway_2005); //$NON-NLS-1$
+		case TextAnnotationEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?TextAnnotation", Bpmn2ElementTypes.TextAnnotation_2015); //$NON-NLS-1$
+		case EndEvent6EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_3010); //$NON-NLS-1$
+		case IntermediateCatchEvent2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_2012); //$NON-NLS-1$
+		case EndEvent2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_2008); //$NON-NLS-1$
+		case IntermediateCatchEvent4EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_3011); //$NON-NLS-1$
+		case IntermediateThrowEventEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateThrowEvent", Bpmn2ElementTypes.IntermediateThrowEvent_2011); //$NON-NLS-1$
+		case UserTaskEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?UserTask", Bpmn2ElementTypes.UserTask_2001); //$NON-NLS-1$
+		case ScriptTask2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ScriptTask", Bpmn2ElementTypes.ScriptTask_3016); //$NON-NLS-1$
+		case EndEvent3EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?EndEvent", Bpmn2ElementTypes.EndEvent_2009); //$NON-NLS-1$
+		case StartEvent4EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?StartEvent", Bpmn2ElementTypes.StartEvent_3005); //$NON-NLS-1$
+		case IntermediateCatchEventEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_2010); //$NON-NLS-1$
+		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateCatchEvent", Bpmn2ElementTypes.IntermediateCatchEvent_3013); //$NON-NLS-1$
+		case IntermediateThrowEvent2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?IntermediateThrowEvent", Bpmn2ElementTypes.IntermediateThrowEvent_3012); //$NON-NLS-1$
+		case ScriptTaskEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ScriptTask", Bpmn2ElementTypes.ScriptTask_2017); //$NON-NLS-1$
+		case StartEvent2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?StartEvent", Bpmn2ElementTypes.StartEvent_2007); //$NON-NLS-1$
+		case StartEvent3EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?StartEvent", Bpmn2ElementTypes.StartEvent_3003); //$NON-NLS-1$
+		case ExclusiveGateway2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ExclusiveGateway", Bpmn2ElementTypes.ExclusiveGateway_3007); //$NON-NLS-1$
+		case ServiceTaskEditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?TopLevelNode?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ServiceTask", Bpmn2ElementTypes.ServiceTask_2002); //$NON-NLS-1$
+		case ParallelGateway2EditPart.VISUAL_ID:
+			return getImage(
+					"Navigator?Node?http://www.omg.org/spec/BPMN/20100524/MODEL-XMI?ParallelGateway", Bpmn2ElementTypes.ParallelGateway_3008); //$NON-NLS-1$
 		}
 		return getImage("Navigator?UnknownElement", null); //$NON-NLS-1$
 	}
@@ -295,78 +295,78 @@ public class Bpmn2NavigatorLabelProvider extends LabelProvider implements
 			return getUnresolvedDomainElementProxyText(view);
 		}
 		switch (Bpmn2VisualIDRegistry.getVisualID(view)) {
-		case ProcessEditPart.VISUAL_ID:
-			return getProcess_1000Text(view);
-		case EndEvent2EditPart.VISUAL_ID:
-			return getEndEvent_2008Text(view);
-		case ExclusiveGatewayEditPart.VISUAL_ID:
-			return getExclusiveGateway_2005Text(view);
-		case ScriptTask2EditPart.VISUAL_ID:
-			return getScriptTask_3016Text(view);
-		case StartEvent3EditPart.VISUAL_ID:
-			return getStartEvent_3003Text(view);
-		case EndEvent3EditPart.VISUAL_ID:
-			return getEndEvent_2009Text(view);
 		case EndEventEditPart.VISUAL_ID:
 			return getEndEvent_2004Text(view);
-		case IntermediateThrowEvent2EditPart.VISUAL_ID:
-			return getIntermediateThrowEvent_3012Text(view);
-		case IntermediateThrowEventEditPart.VISUAL_ID:
-			return getIntermediateThrowEvent_2011Text(view);
-		case TextAnnotation2EditPart.VISUAL_ID:
-			return getTextAnnotation_3015Text(view);
-		case EndEvent5EditPart.VISUAL_ID:
-			return getEndEvent_3009Text(view);
-		case ServiceTaskEditPart.VISUAL_ID:
-			return getServiceTask_2002Text(view);
-		case IntermediateCatchEventEditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_2010Text(view);
-		case IntermediateCatchEvent4EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_3011Text(view);
-		case EndEvent6EditPart.VISUAL_ID:
-			return getEndEvent_3010Text(view);
-		case StartEvent4EditPart.VISUAL_ID:
-			return getStartEvent_3005Text(view);
-		case IntermediateCatchEvent3EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_2013Text(view);
-		case ExclusiveGateway2EditPart.VISUAL_ID:
-			return getExclusiveGateway_3007Text(view);
-		case StartEvent2EditPart.VISUAL_ID:
-			return getStartEvent_2007Text(view);
-		case ServiceTask2EditPart.VISUAL_ID:
-			return getServiceTask_3004Text(view);
-		case TextAnnotationEditPart.VISUAL_ID:
-			return getTextAnnotation_2015Text(view);
-		case SequenceFlowEditPart.VISUAL_ID:
-			return getSequenceFlow_4001Text(view);
-		case SubProcessEditPart.VISUAL_ID:
-			return getSubProcess_2016Text(view);
-		case ParallelGateway2EditPart.VISUAL_ID:
-			return getParallelGateway_3008Text(view);
-		case AssociationEditPart.VISUAL_ID:
-			return getAssociation_4002Text(view);
-		case EndEvent4EditPart.VISUAL_ID:
-			return getEndEvent_3006Text(view);
-		case ScriptTaskEditPart.VISUAL_ID:
-			return getScriptTask_2017Text(view);
 		case ParallelGatewayEditPart.VISUAL_ID:
 			return getParallelGateway_2006Text(view);
-		case UserTaskEditPart.VISUAL_ID:
-			return getUserTask_2001Text(view);
-		case UserTask2EditPart.VISUAL_ID:
-			return getUserTask_3002Text(view);
+		case EndEvent5EditPart.VISUAL_ID:
+			return getEndEvent_3009Text(view);
+		case SubProcessEditPart.VISUAL_ID:
+			return getSubProcess_2016Text(view);
 		case SubProcess2EditPart.VISUAL_ID:
 			return getSubProcess_3001Text(view);
+		case ServiceTask2EditPart.VISUAL_ID:
+			return getServiceTask_3004Text(view);
+		case UserTask2EditPart.VISUAL_ID:
+			return getUserTask_3002Text(view);
 		case DataObjectEditPart.VISUAL_ID:
 			return getDataObject_2014Text(view);
-		case IntermediateCatchEvent5EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_3013Text(view);
-		case IntermediateCatchEvent2EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_2012Text(view);
-		case StartEventEditPart.VISUAL_ID:
-			return getStartEvent_2003Text(view);
+		case ProcessEditPart.VISUAL_ID:
+			return getProcess_1000Text(view);
+		case IntermediateCatchEvent3EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_2013Text(view);
+		case TextAnnotation2EditPart.VISUAL_ID:
+			return getTextAnnotation_3015Text(view);
 		case DataObject2EditPart.VISUAL_ID:
 			return getDataObject_3014Text(view);
+		case SequenceFlowEditPart.VISUAL_ID:
+			return getSequenceFlow_4001Text(view);
+		case AssociationEditPart.VISUAL_ID:
+			return getAssociation_4002Text(view);
+		case StartEventEditPart.VISUAL_ID:
+			return getStartEvent_2003Text(view);
+		case EndEvent4EditPart.VISUAL_ID:
+			return getEndEvent_3006Text(view);
+		case ExclusiveGatewayEditPart.VISUAL_ID:
+			return getExclusiveGateway_2005Text(view);
+		case TextAnnotationEditPart.VISUAL_ID:
+			return getTextAnnotation_2015Text(view);
+		case EndEvent6EditPart.VISUAL_ID:
+			return getEndEvent_3010Text(view);
+		case IntermediateCatchEvent2EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_2012Text(view);
+		case EndEvent2EditPart.VISUAL_ID:
+			return getEndEvent_2008Text(view);
+		case IntermediateCatchEvent4EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3011Text(view);
+		case IntermediateThrowEventEditPart.VISUAL_ID:
+			return getIntermediateThrowEvent_2011Text(view);
+		case UserTaskEditPart.VISUAL_ID:
+			return getUserTask_2001Text(view);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return getScriptTask_3016Text(view);
+		case EndEvent3EditPart.VISUAL_ID:
+			return getEndEvent_2009Text(view);
+		case StartEvent4EditPart.VISUAL_ID:
+			return getStartEvent_3005Text(view);
+		case IntermediateCatchEventEditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_2010Text(view);
+		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3013Text(view);
+		case IntermediateThrowEvent2EditPart.VISUAL_ID:
+			return getIntermediateThrowEvent_3012Text(view);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return getScriptTask_2017Text(view);
+		case StartEvent2EditPart.VISUAL_ID:
+			return getStartEvent_2007Text(view);
+		case StartEvent3EditPart.VISUAL_ID:
+			return getStartEvent_3003Text(view);
+		case ExclusiveGateway2EditPart.VISUAL_ID:
+			return getExclusiveGateway_3007Text(view);
+		case ServiceTaskEditPart.VISUAL_ID:
+			return getServiceTask_2002Text(view);
+		case ParallelGateway2EditPart.VISUAL_ID:
+			return getParallelGateway_3008Text(view);
 		}
 		return getUnknownElementText(view);
 	}
