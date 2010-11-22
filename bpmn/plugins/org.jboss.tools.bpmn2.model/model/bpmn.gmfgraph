@@ -722,7 +722,8 @@
   </nodes>
   <nodes
       name="MessageCatchIntermediateEvent"
-      figure="MessageCatchIntermediateEventFigureDescriptor">
+      figure="MessageCatchIntermediateEventFigureDescriptor"
+      resizeConstraint="NONE">
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize

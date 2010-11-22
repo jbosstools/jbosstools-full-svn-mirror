@@ -3,7 +3,12 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:gmfgen="http://www.eclipse.org/gmf/2009/GenModel" packageNamePrefix="org.jboss.tools.bpmn2.process.diagram"
-    diagramFileExtension="prd"
+    modelID="bpmn2"
+    sameFileForDiagramAndModel="true"
+    diagramFileExtension="jbpmn"
+    domainFileExtension="jbpmn"
+    dynamicTemplates="true"
+    templateDirectory="/org.jboss.tools.bpmn2.model/gmf-templates"
     pluginDirectory="/org.jboss.tools.bpmn2.process.diagram/src">
   <diagram
       visualID="1000"
