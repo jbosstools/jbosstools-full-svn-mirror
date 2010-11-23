@@ -1228,12 +1228,6 @@ public class EDIMapFormPage extends FormPage implements ISmooksModelValidateList
 				return;
 			}
 
-			// IPath path1 = file.getFullPath().removeFirstSegments(1);
-
-			// ProjectClassLoader classLoader = new
-			// ProjectClassLoader(JavaCore.create(file.getProject()));
-			//
-			// Thread.currentThread().setContextClassLoader(classLoader);
 			Smooks smooks = new Smooks();
 
 			SmooksResourceConfiguration readerConfig = new SmooksResourceConfiguration("org.xml.sax.driver", //$NON-NLS-1$
