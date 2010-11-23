@@ -249,7 +249,7 @@ public class DeltaCloud {
 
 	public void loadChildren() throws DeltaCloudException {
 		DeltaCloudMultiException multiException = new DeltaCloudMultiException(MessageFormat.format(
-				"Could not load children from cloud {0}", getName()));
+				"Could not load children of cloud {0}", getName()));
 		clearImages();
 		clearInstances();
 		try {
@@ -429,15 +429,6 @@ public class DeltaCloud {
 			}
 			return cloneInstancesArray();
 		}
-	}
-
-	public DeltaCloudInstance[] destroyInstance(String instanceId) throws DeltaCloudException {
-		DeltaCloudInstance instance = getInstance(instanceId);
-		performInstanceAction(instance, DeltaCloudInstance.DESTROY);
-		instances.remove(instance);
-		// TODO: remove notification with all instances, replace by notifying
-		// the changed instance
-		return notifyInstanceListListeners();
 	}
 
 	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
