@@ -827,6 +827,35 @@
 				</repository>
 			</repositories>
 		</profile>
+		<profile>
+			<!-- this plugin is available from https://github.com/nickboldt/maven-plugins/tree/master/unique-GAV-plugin/ -->
+			<id>GAV</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jboss.maven.plugin</groupId>
+						<artifactId>unique-GAV-plugin</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<verbose>true</verbose>
+							<doInfo>true</doInfo>
+							<doWarn>true</doWarn>
+							<doError>true</doError>
+							<sourceDirectory>.</sourceDirectory>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 	</profiles>
 
 	<repositories>
