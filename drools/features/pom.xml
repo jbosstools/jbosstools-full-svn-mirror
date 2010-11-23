@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.tools.drools</groupId>
 	<artifactId>org.jboss.tools.drools.features</artifactId>
-	<name>drools.features</name>
+	<name>org.jboss.tools.drools.features</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
