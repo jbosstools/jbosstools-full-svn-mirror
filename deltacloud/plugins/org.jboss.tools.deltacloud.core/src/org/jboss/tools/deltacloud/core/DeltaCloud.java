@@ -657,4 +657,8 @@ public class DeltaCloud {
 		}
 		return null;
 	}
+
+	public void destroyInstance(String id) throws DeltaCloudException{
+		throw new DeltaCloudException("Method destroyInstance(String id) has not implemented yet"); //$NON-NLS-1$
+	}
 }
