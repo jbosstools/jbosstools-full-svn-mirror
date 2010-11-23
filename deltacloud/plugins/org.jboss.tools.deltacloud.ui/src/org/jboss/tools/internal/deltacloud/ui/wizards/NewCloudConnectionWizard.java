@@ -19,6 +19,7 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
@@ -67,7 +68,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
-		String type = mainPage.getModel().getType().toString();
+		String type = getServerType();
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, type);
 			DeltaCloudManager.getDefault().addCloud(newCloud);
@@ -78,6 +79,15 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 					.handleError("Error", MessageFormat.format("Could not create cloud {0}", name), e, getShell());
 		}
 		return true;
+	}
+
+	private String getServerType() {
+		DeltaCloudServerType type = mainPage.getModel().getType();
+		if (type == null) {
+			return null;
+		}
+		
+		return type.toString();
 	}
 
 	@Override
