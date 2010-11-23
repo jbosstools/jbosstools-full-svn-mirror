@@ -1,8 +1,8 @@
 <project
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.tools.drools</groupId>
-	<artifactId>features</artifactId>
+	<artifactId>org.jboss.tools.drools.features</artifactId>
 	<name>drools.features</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -12,4 +12,3 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>org.guvnor.tools.feature</module>
 	</modules>
 </project>
-	
