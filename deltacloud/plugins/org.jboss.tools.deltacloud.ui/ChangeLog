@@ -1,3 +1,10 @@
+2010-11-23  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java
+	(performFinish): 
+	(getServerType):
+	[JBIDE-7695] added check against <code>null</code> server type. fixed NPE that occurred when nonsense url was entered in connection wizard 
+
 2010-11-19  André Dietisheim  <adietish@redhat.com>
 
 	* plugin.xml: 
