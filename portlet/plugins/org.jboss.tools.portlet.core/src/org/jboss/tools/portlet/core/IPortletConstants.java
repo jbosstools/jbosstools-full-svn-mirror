@@ -52,6 +52,8 @@ public interface IPortletConstants {
 	static final String JSF_SECTION = "jsfSection"; //$NON-NLS-1$
 
 	static final String WEB_INF_LIB = "WEB-INF/lib"; //$NON-NLS-1$
+	
+	static final String LIB = "lib"; //$NON-NLS-1$
 
 	static final String JBOSS_PORTLET_FILE = "WEB-INF/jboss-portlet.xml"; //$NON-NLS-1$
 

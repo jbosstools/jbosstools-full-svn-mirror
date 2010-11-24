@@ -433,6 +433,9 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 				deleteOldRichFacesApi(folder);
 				destPath = folder.getFullPath();
 				ZipEntry root = zipFile.getEntry(IPortletConstants.WEB_INF_LIB);
+				if (root == null) {
+					root = zipFile.getEntry(IPortletConstants.LIB);
+				}
 				op = new ImportOperation( destPath,
 						root, structureProvider, OVERWRITE_NONE_QUERY,
 						list );
@@ -446,14 +449,30 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 	}
 
 	private File getRichFacesExamples(File examplesHome) {
-		File file = new File(examplesHome,"RichFacesPortlet.war"); //$NON-NLS-1$
-		if (file.exists() && file.isFile()) {
+		File file = getExampleFile(examplesHome,"RichFacesPortlet", "war"); //$NON-NLS-1$ //$NON-NLS-2$
+		if (file != null && file.isFile()) {
 			return file;
 		}
+		file = getExampleFile(examplesHome, "richFacesPortlet", ".war");  //$NON-NLS-1$//$NON-NLS-2$
+		if (file != null && file.isFile()) {
+			return file;
+		}
+		file = getExampleFile(examplesHome, "seamPortlet", ".war");  //$NON-NLS-1$//$NON-NLS-2$
+		if (file != null && file.isFile()) {
+			return file;
+		}
+		file = getExampleFile(examplesHome, "seam", ".ear");  //$NON-NLS-1$//$NON-NLS-2$
+		if (file != null && file.isFile()) {
+			return file;
+		}
+		return null;
+	}
+
+	private File getExampleFile(File examplesHome, final String prefix, final String suffix) {
 		File[] listFiles = examplesHome.listFiles(new FilenameFilter() {
 			
 			public boolean accept(File dir, String name) {
-				if (name.startsWith("seamPortlet") && name.endsWith(".war")) { //$NON-NLS-1$ //$NON-NLS-2$
+				if (name.startsWith(prefix) && name.endsWith(suffix)) { 
 					return true;
 				}
 				return false;
