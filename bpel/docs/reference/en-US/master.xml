@@ -1,56 +1,1106 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN" 
-"http://www.docbook.org/xml/4.3/docbookx.dtd"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd">
+<book>   
+     <bookinfo>
+         <title>JBoss BPEL User Guide</title>
+         <corpauthor>
+             <inlinemediaobject>
+                 <imageobject role="fo">
+                     <imagedata fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+                 </imageobject>	
+                 <imageobject role="html">
+                     <imagedata></imagedata>
+                 </imageobject>	
+             </inlinemediaobject>           
+         </corpauthor>
+         <author><firstname>Denny</firstname><surname>Xu</surname><email>dxu@redhat.com</email></author>
+         <author><firstname>Grid</firstname><surname>Qian</surname><email>fqian@redhat.com</email></author> 
+         <author><firstname>Bob</firstname><surname>Brodt</surname><email>bbrodt@redhat.com</email></author>        
+       	 <copyright>
+	          <year>2009</year>
+	           <year>2010</year>
+	          <holder>JBoss by Red Hat</holder>
+	     </copyright>
+         <releaseinfo>
+               Version: 1.0.0.trunk
+         </releaseinfo>
+         <abstract>
+              <title></title>
+              <para><ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/bpel_ref_guide/pdf/BPEL_Reference_Guide.pdf">PDF version</ulink></para>
+         </abstract>
+    </bookinfo>
+    <toc></toc> 
+  
+<chapter id="overview" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/overview.xml">
+   <title>JBoss BPEL project Overview</title>
 
-[<!ENTITY  overview SYSTEM "overview.xml">
-<!ENTITY install SYSTEM "install.xml">
-<!ENTITY detail SYSTEM "detail.xml">
-<!ENTITY deploy SYSTEM "deploy.xml">
-<!ENTITY reference SYSTEM "reference.xml">
-<!ENTITY summary SYSTEM "summary.xml">
-<!ENTITY tasks SYSTEM "tasks.xml">
-]>
-<book>
-  <bookinfo>
-    <title>JBoss BPEL User Guide</title>
-    <corpauthor>
-      <inlinemediaobject>
-        <imageobject role="fo">
-          <imagedata fileref="images/jbosstools_logo.png" format="PNG"/>
-        </imageobject>
-        <imageobject role="html">
-          <imagedata/>
-        </imageobject>
-      </inlinemediaobject>
-    </corpauthor>
-    <author>
-      <firstname>Denny</firstname>
-      <surname>Xu</surname>
-      <email>dxu@redhat.com</email>
-    </author>
-    <author>
-      <firstname>Grid</firstname>
-      <surname>Qian</surname>
-      <email>fqian@redhat.com</email>
-    </author>
-    <author>
-      <firstname>Bob</firstname>
-      <surname>Brodt</surname>
-      <email>bbrodt@redhat.com</email>
-    </author>
-    <copyright>
-      <year>2009</year>
-      <year>2010</year>
-      <holder>JBoss by Red Hat</holder>
-    </copyright>
-    <releaseinfo> Version: 1.0.0.trunk </releaseinfo>
-    <abstract>
-      <title/>
-      <para>
-           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/bpel_ref_guide/pdf/BPEL_Reference_Guide.pdf">PDF version</ulink>
-       </para>
-    </abstract>
-  </bookinfo>
-  <toc/>
-&overview;&install;&tasks;<!--  &detail;
-        &deploy;-->&reference;&summary;</book>
+   <para>JBoss BPEL project is a WS-BPEL 2.0 project that gives a way to create, edit, validate and deploy BPEL files to JBoss BPEL runtime. It is based on Eclipse 
+        <ulink url="http://www.eclipse.org/bpel/">BPEL
+            project </ulink>. </para>
+   
+   <para>It improves the Eclipse BPEL project in the following way: </para>
+   <itemizedlist>
+       <listitem><para> Implements close integration with JBoss BPEL runtime. Adds a new project type for the deployment to JBoss BPEL runtime.</para></listitem>
+       <listitem><para> Supports two ways of deployment: one way is to deploy a bpel project directly to JBoss BPEL runtime. The other way is to deploy bpel files in JBoss ESB project to JBoss BPEL runtime. </para></listitem>
+       <listitem><para> Improves the BPEL validator and increases Eclipse BPEL editor's quality. </para></listitem>
+   </itemizedlist>
+   
+   <para>
+   <ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html">WS-BPEL 2.0</ulink> 
+   stands for Web Service Business Process Execution Language. Like EAI, BPEL is an XML-based language,
+   but BPEL is more specific and targeted. A programmer uses BPEL to join sometimes 
+   disparate functions into an integrated process, resulting in a seamless use of the Internet to 
+   conduct business transactions ranging from simple money exchanges to complex calculations and 
+   asset reallocation.
+   </para>
+
+   <section>
+    <title>Key Features of JBoss BPEL project</title>
+    <para>Let's start with looking through the table of the main features of JBoss BPEL editor project: </para>
+    
+    <table>
+        <title>Key Functionality for JBoss BPEL editor project</title>
+        <tgroup cols="2">          
+            <colspec align="left" colnum="1" colwidth="2*"></colspec>
+            <colspec colnum="2" colwidth="4*"></colspec>
+            <thead>
+                <row>
+                    <entry>Feature</entry>
+                    <entry>Benefit</entry>
+                </row>
+            </thead> 
+            <tbody>            
+                <row>
+                    <entry><para>WS-BPEL 2.0 support</para></entry>
+                    <entry><para>JBoss BPEL project supports the newest WS-BPEL 2.0 specifications. </para></entry>   
+                </row>          
+                <row>
+                    <entry><para>Close integration with JBoss BPEL runtime</para></entry>
+                    <entry><para>There are two ways to deploy BPEL files to JBoss BPEL runtime.
+                        The user can deploy a BPEL project as a whole and can deploy BPEL files in
+                        JBoss ESB project to JBoss BPEL runtime. </para></entry> 
+                </row>               
+                <row>
+                    <entry><para>BPEL file editor</para></entry>
+                    <entry><para>The user can use the editor separately to edit a BPEL file. </para></entry>  
+                </row>               
+                <row>
+                    <entry><para>BPEL file validator</para></entry>
+                    <entry><para>The validator can give the error messages about BPEL files to the user. </para></entry>  
+                </row>                              
+            </tbody>           
+        </tgroup>
+    </table>    
+   </section>
+</chapter>
+    
+<chapter id="install" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/install.xml">
+    <title>Installation JBoss BPEL Tools</title>
+    <section id="installeclipse">
+        <title>Installation JBoss BPEL editor</title>
+        <para>At first, you need Eclipse 3.6. You can get it from <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/">Eclipse Web Site</ulink>. 
+        </para>
+        <para>The JBoss BPEL editor is included into JBoss Tools. 
+            You have some methods to install JBoss Tools. 
+            See <ulink url="http://www.jboss.org/tools/download/installation.html">Installing JBoss Tools</ulink> for more information.</para>
+        <para>If you  want to install only the JBoss BPEL editor, you can install it from <ulink url="http://jboss.org/tools/download/dev.html">JBoss Tools</ulink> page separately.
+            Please, note, that only JBoss Tools 3.1 or higher version includes JBoss BPEL editor.
+        </para>
+    </section>
+    <section id="installriftsaw">
+        <title>Prerequisites</title>
+        <para>For installation and configuring BPEL engine into a JBossAS environment you will need the following: </para>
+        <itemizedlist>
+            <listitem><para>JBossAS (version 5.1.0.GA or higher), available from <ulink url="http://www.jboss.org/jbossas">http://www.jboss.org/jbossas</ulink>.</para></listitem>
+            <listitem><para>RiftSaw (version 2.1 or higher), available from <ulink url="http://www.jboss.org/riftsaw">http://www.jboss.org/riftsaw</ulink>.</para></listitem>
+            <listitem><para>Ant, available from <ulink url="http://ant.apache.org">here</ulink>.</para></listitem>
+        </itemizedlist>   
+    </section>
+    <section id="installRuntime">
+        <title>Installation JBoss BPEL Runtime</title>
+        <itemizedlist>
+            <listitem>
+                <para>Unpack the JBossAS installation archive into the required location.</para>
+            </listitem>
+            <listitem>
+                <para>Unpack the RiftSaw distribution into the location alongside the JBossAS installation:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Edit the <property moreinfo="none">install/deployment.properties</property> file to update the JBossAS location settings.</para>
+                    </listitem>
+                    <listitem>
+                        <para>From the <property moreinfo="none">install</property> folder,
+                            run: <property moreinfo="none">ant deploy -Ddatabase=hsql</property>
+                        to deploy RiftSaw to JBossAS.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para>Then in the 
+                <property moreinfo="none">${RiftSaw}/install</property> folder run the command:
+                <property moreinfo="none">ant deploy -Ddatabase=hsql -Dws.stack=native -Dws.version=3.2.2.GA</property>  
+                It will help you to download the web service stack, and then upgrade it for JBoss AS. Anyway, you can  do it step by step by following the guide from  <ulink url="http://www.jboss.org/riftsaw/documentation">JBoss RiftSaw documents</ulink> or the README file in <property moreinfo="none">${RiftSaw}/install</property>
+                </para>
+            </listitem>
+                    </itemizedlist>
+        
+    </section>
+</chapter>
+    
+<chapter id="tasks" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/tasks.xml">
+    <title>Tasks</title>
+    <section id="detail">
+        <title>Creating and editing a BPEL project</title>
+        <para>In the chapter we describe the necessary steps to create a new BPEL project and edit the BPEL files.
+            You can get the source of the example from <property moreinfo="none">
+            riftsaw/samples/quickstart/hello_world</property>.
+            Here and further in the guide we will create
+            a simple echo example, used to respond to a sent message with a
+            modified version of the request message being returned in a response.
+            First of all, you should create a BPEL project.
+            
+        </para>
+        <section id="createproject">
+            <title>Creating a BPEL project</title>
+            <para>Create the project by selecting 
+                <emphasis><property moreinfo="none">New &gt; Project... &gt; BPEL 2.0 &gt; BPEL Project</property></emphasis> from the menu bar.
+                Then click the <property moreinfo="none">Next</property> button. 
+            </para>
+            <figure float="0">
+                <title>New BPEL Project</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/detail_createproject_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>On this page of the <property moreinfo="none">New BPEL Project Wizard</property> enter a project name in the <property moreinfo="none">Project Name</property>
+                field,e.g enter <property moreinfo="none">HelloWorld</property>.</para>
+            
+            <figure float="0">
+                <title>New BPEL Project Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/detail_createproject_2.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Click the <property moreinfo="none">Finish</property> button.
+                So you have created the BPEL project named <property moreinfo="none">HelloWorld</property>.
+                Its structure is like this: </para>
+            <figure float="0">
+                <title>The BPEL Project structure</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/detail_createproject_3.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+        </section>
+        <section id="createprocess">
+            <title>Creating a BPEL process</title>
+            <para>Now you should create a BPEL process. You can create it by selecting 
+                <emphasis><property moreinfo="none">New &gt; Others... &gt; BPEL 2.0 &gt; New BPEL Process File</property></emphasis>.
+            </para>
+            <figure float="0">
+                <title>New BPEL Process File</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/detail_createprocess_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Click the <property moreinfo="none">Next</property> button. Enter the following information:</para>
+            <table>
+                
+                <title>Fields and values</title>
+                <tgroup cols="2">          
+                    <colspec align="left" colnum="1" colwidth="2*"></colspec>
+                    <colspec colnum="2" colwidth="4*"></colspec>
+                    <thead>
+                        <row>
+                            <entry>Field</entry>
+                            <entry>Value</entry>
+                            
+                        </row>
+                    </thead> 
+                    <tbody>            
+                        <row>
+                            <entry><para>BPEL Process Name</para></entry>
+                            <entry><para>enter a process name. For example, <property moreinfo="none">HelloWorld</property>.</para></entry>   
+                        </row>          
+                        <row>
+                            <entry><para>Namespace</para></entry>
+                            <entry><para>enter or select a namespace for the BPEL process.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Template</para></entry>
+                            <entry><para>Select the necessary template for the BPEL process.
+                                When you select the template, you will see the information 
+                                about the template below on the page.In our case you should
+                                select <property moreinfo="none">Synchronous BPEL Process</property>.</para></entry>  
+                        </row>               
+                        
+                    </tbody>           
+                </tgroup>
+            </table>
+            
+            <figure float="0">
+                <title>New BPEL Process File Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/detail_createprocess_2.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            <para>Click the <property moreinfo="none">Next</property> button. On the second page, you can custom your wsdl service details. Enter the following information:</para>
+            <table>
+                
+                <title>Fields and values</title>
+                <tgroup cols="2">          
+                    <colspec align="left" colnum="1" colwidth="2*"></colspec>
+                    <colspec colnum="2" colwidth="4*"></colspec>
+                    <thead>
+                        <row>
+                            <entry>Field</entry>
+                            <entry>Value</entry>
+                            
+                        </row>
+                    </thead> 
+                    <tbody>            
+                        <row>
+                            <entry><para>Service Name</para></entry>
+                            <entry><para>a wsdl service name for the BPEL process. The default is, <property moreinfo="none">HelloWorld</property>.</para></entry>   
+                        </row>          
+                        <row>
+                            <entry><para>Port Name</para></entry>
+                            <entry><para>a wsdl port name for the BPEL process. The default is, <property moreinfo="none">HelloWorldPort</property>.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Service Address</para></entry>
+                            <entry><para>an address of the wsdl service for the BPEL process. The default is, <property moreinfo="none">http://localhost:8080/HelloWorld</property>.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Binding Protocol</para></entry>
+                            <entry><para>the binding protocal that you use in the wsdl. You can choose SOAP or HTTP. The default is, <property moreinfo="none">SOAP</property>.</para></entry> 
+                        </row>                        
+                    </tbody>           
+                </tgroup>
+            </table>
+            
+            <figure float="0">
+                <title>Create WSDL file for the BPEL Process wizardpage</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/detail_createprocess_2a.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            <para>Click the <property moreinfo="none">Next</property> button. On the third page, you can choose a folder for the process file from the projects in your workspace. If not choose, The default folder <property moreinfo="none">HelloWorld/bpelContent</property> is selected.
+                Click <property moreinfo="none">Finish</property>.
+            </para>
+            <note>
+                <para>All of your files that are used in your BPEL project must be under the <property moreinfo="none">bpelContent</property> folder of a BPEL project. Only in this case 
+                    these files can be deployed to JBoss server.
+                </para>
+            </note>
+            
+            <para>Up to now, you have got a simple BPEL process as on the screen below.</para>
+            <figure float="0">
+                <title>A simple BPEL Process File</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/detail_createprocess_3.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>The next step, you can do is to edit the BPEL process file and then deploy it to JBoss server. </para>
+        </section>
+        <section id="editprocess">
+            <title>Editing a BPEL process file</title>
+            <para>If the <emphasis><property moreinfo="none">Properties view</property></emphasis> and <emphasis><property moreinfo="none">Palette view</property></emphasis> are not opened, you can open the views by right-clicking the BPEL editor and selecting  
+                <property moreinfo="none">Show in Properties</property>, <property moreinfo="none">Show Palette in Palette view</property>. Then you should have the view like this: 
+            </para>
+            <figure float="0">
+                <title>The BPEL editor view</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/detail_editprocess_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>  
+            <para>In the <emphasis><property moreinfo="none">Palette view</property></emphasis>, you can drag a BPEL element to the BPEL editor and drop it in the place you want.</para>   
+            <para>In the <emphasis><property moreinfo="none">Properties view</property></emphasis>, you can get the information about every element of the BPEL process.
+                In the BPEL editor select any element  you want,and then
+                the element's properties will be shown in the Properties view.The table below describes the tabs of the Properties view: 
+            </para>
+            <table>
+                
+                <title>Tabs of the Property view</title>
+                <tgroup cols="2">          
+                    <colspec align="left" colnum="1" colwidth="2*"></colspec>
+                    <colspec colnum="2" colwidth="4*"></colspec>
+                    <thead>
+                        <row>
+                            <entry>Tab</entry>
+                            <entry>Description</entry>
+                            
+                        </row>
+                    </thead> 
+                    <tbody>            
+                        <row>
+                            <entry><para>Description</para></entry>
+                            <entry><para>Shows the descriptive information about the element,e.g. <property moreinfo="none">Name</property> of the element.</para></entry>   
+                        </row>          
+                        <row>
+                            <entry><para>Details</para></entry>
+                            <entry><para>Shows the detailed and important information about the element.
+                                It is the most important section of an element.
+                                Most of the properties of an element are set in this section.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Join Behavior</para></entry>
+                            <entry><para>Shows the <property moreinfo="none">Join Failure</property> property of the element.</para></entry>  
+                        </row>               
+                        <row>
+                            <entry><para>Documentation</para></entry>
+                            <entry><para>Shows the <property moreinfo="none">documentation</property> sub-element of an element.</para></entry>  
+                        </row> 
+                        <row>
+                            <entry><para>Other</para></entry>
+                            <entry><para>Every BPEL element has its own sections: Correlation section, Message Exchange section, and so on. We will
+                                introduce them while using them.</para></entry>  
+                        </row> 
+                    </tbody>           
+                </tgroup>
+            </table>
+            <para>In order to see how a simple BPEL process works in action, you should do some steps as below: </para>   
+            <itemizedlist>
+                <listitem>
+                    <para>Modify two variables of the process:</para>
+                    <itemizedlist>
+                    <listitem><para>Click on the details tab of the input variable,
+                        select <property moreinfo="none">Browse...</property>.
+                        Then choose <property moreinfo="none">string</property> primitive from the list.</para>
+                        <figure float="0">
+                            <title>Edit variable in <property moreinfo="none">process</property> file</title>
+                            <mediaobject>
+                                <imageobject>
+                                    <imagedata fileref="images/bpel_task_1.png"></imagedata>
+                                </imageobject>
+                            </mediaobject>
+                        </figure>   
+                    </listitem>
+                    <listitem>
+                        <para>Select <property moreinfo="none">xsd</property> as a namespace in the popup menu.</para>
+                    </listitem>
+                </itemizedlist>
+      
+                </listitem>
+                <listitem>
+                    <para>Add an <property moreinfo="none">Assign</property> element between the <property moreinfo="none">receiveInput</property> element and <property moreinfo="none">replyOutput</property> element.</para>
+                </listitem>
+                <listitem>
+                    <para>Click the <property moreinfo="none">Assign</property> element in the BPEL editor in order to get the properties information of it in the Properties view. 
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Set its name in the <property moreinfo="none">Description</property> tab as <property moreinfo="none">assignHelloMesg</property>.</para>
+                    <para>In the <property moreinfo="none">Details</property> section of Properties view,
+                        you should click the <property moreinfo="none">New</property> button to add a <property moreinfo="none">copy</property> sub-element to the element. 
+                        Assign "Variable to Variable"(input:string to output). At this time, an "<property moreinfo="none">initializer</property>" popup dialog appears. Click on the <property moreinfo="none">Yes</property> button in the dialog.
+                    </para>
+                    <figure float="0">
+                        <title>Add <property moreinfo="none">Assign</property> to the process</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/bpel_task_3.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>  
+                    <para>Then you should click <property moreinfo="none">New</property> once more and select Expression to Variable (assign <code>concat($input,' World')</code>) to <property moreinfo="none">result:string</property>.</para>
+                    <figure float="0">
+                        <title>Add <property moreinfo="none">Expression assign</property> to the process</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/bpel_task_2.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>         
+                </listitem>
+                </itemizedlist>
+        </section>
+       
+         <section id="wsdl">
+               <title>Adding Service to WSDL file</title>
+               <para></para>
+               <para>The HelloWorldArtifacts.wsdl has been added a service when you create a BPEL process file. You have a default service in this WSDL file. But if you want to add a service by yourself, you can follow the steps as below: </para>
+               <itemizedlist>
+                    <listitem>
+                    <para>Open the file "<property moreinfo="none">HelloWorldArtifacts.wsdl</property>" in the "<property moreinfo="none">HelloWorld</property>" project by double-clicking the file. Right-click the WSDL editor and select 
+                        <property moreinfo="none">Add Service</property>. A new service should appear in the editor. Name it <property moreinfo="none">HelloWorldProcessService</property>. It has the Port 
+                        named <property moreinfo="none">NewPort</property>. Select it, right-click on it and rename it to <property moreinfo="none">HelloWorldProcessPort</property> in the Properties 
+                        view.
+                    </para>
+                    <figure float="0">
+                        <title>Add <property moreinfo="none">Service</property> to the WSDL file</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/detail_editprocess_3.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                  
+                </listitem>
+                <listitem>
+                    <para>Right-click somewhere in the whitespace of the WSDL editor and select 
+                        <property moreinfo="none">Add Binding</property>. A new Binding component will appear in the editor. Name it <property moreinfo="none">HelloWorldSOAPBinding</property>. Select it, in the 
+                        General tab of the Properties view and select <property moreinfo="none">HelloWorld</property> as a port type in the <property moreinfo="none">PortType</property>. Then click on the 
+                        <property moreinfo="none">Generate Binding Content...</property> button to open the  <property moreinfo="none">Binding Wizard</property>. In the wizard, select <property moreinfo="none">SOAP </property> 
+                        as the <property moreinfo="none">Protocol</property>. Finally, click  the <property moreinfo="none">Finish</property> button to close the wizard.
+                    </para>
+                    <figure float="0">
+                        <title>Add a <property moreinfo="none">Binding</property> to the WSDL file</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/detail_editprocess_4.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>  
+                </listitem>
+                <listitem>
+                    <para>Click the <property moreinfo="none">HelloWorldProcessPort</property> property in the General section of the Properties view, select <property moreinfo="none">HelloWorldSOAPBinding</property> in
+                        the <property moreinfo="none">Binding</property> combobox. In the <property moreinfo="none">Address</property> field input <ulink url="http://localhost:8080/bpel/processes/HelloWorld?wsdl">http://localhost:8080/bpel/processes/HelloWorld?wsdl</ulink>.
+                    </para>
+                    <figure float="0">
+                        <title>Add the <property moreinfo="none">HelloWorldSOAPBinding</property> to the <property moreinfo="none">HelloWorldProcessPort</property></title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/detail_editprocess_5.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>  
+                </listitem> 
+                        <listitem><para>You should also change some service part configurations.
+                        To do this,click part element in the WSDL editor,
+                        then put the following data in the Properties view. 
+                        </para>
+                          <figure float="0">
+                                <title>Configuration of service part</title>
+                                <mediaobject>
+                                    <imageobject>
+                                        <imagedata fileref="images/detail_editprocess_5.png"></imagedata>
+                                    </imageobject>
+                                </mediaobject>
+                            </figure>  
+                        </listitem>
+                    </itemizedlist>
+                    
+            <para>Now you have finished creating a simple BPEL process. As a next step, you can deploy the BPEL project to JBoss BPEL Runtime.</para>              
+            
+                </section>    
+         
+    </section>
+    <section id="deploy">
+        <title>Deploy a JBoss BPEL project to JBoss BPEL Runtime</title>
+        <section id="createdeploy">
+            <title>Creating a deploy.xml file</title>
+            <para>If you want to deploy a BPEL project to JBoss BPEL Runtime, you should create a deploy.xml file. 
+                JBoss tools can help you to create it:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>Create the deploy.xml by selecting 
+                        <emphasis><property moreinfo="none">New &gt; Other... &gt; BPEL 2.0 &gt; Apache ODE Deployment Descriptor</property></emphasis>. Click the <property moreinfo="none">Next</property> button. 
+                    </para>
+                    <figure float="0">
+                        <title>New BPEL Deploy file</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_1.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                
+                </listitem>
+                <listitem>
+                    <para>On the next wizard page you should enter the following information:</para>
+                    <para><emphasis><property moreinfo="none">BPEL Project</property></emphasis>: Click  the <property moreinfo="none">Browse...</property> button to select the BPEL project in your workspace which you want to deploy to the runtime.
+                        Please note, that you should select the <property moreinfo="none">bpelContent</property> folder in your new BPEL project as a value of <property moreinfo="none">BPEL Project</property> field because the deploy.xml should be created in this place.
+                    </para>
+                    <para><emphasis><property moreinfo="none">File name</property></emphasis>: The default value is deploy.xml. Please, don't change it.</para>
+                    <para>Click on <property moreinfo="none">Finish</property> button to close the wizard and a new deploy.xml file will be created.</para>
+                    <figure float="0">
+                        <title>New BPEL Deploy file Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_2.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                
+                </listitem>
+                <listitem>
+                    <para>Double-click the deploy.xml file to open it in ODE Descriptor Deployment Editor.
+                        In the <property moreinfo="none">Inbound Interfaces</property> section, click the 
+                        <property moreinfo="none">Associated Port</property> column and select <property moreinfo="none">HelloWorldProcessPort</property>
+                        in the dropdown box.The <property moreinfo="none">Related Service</property> and <property moreinfo="none">Binding Used</property> 
+                        columns should  be automatically filled in. Save the <emphasis><property moreinfo="none">deploy.xml</property></emphasis>.
+                    </para>
+                    <figure float="0">
+                        <title>deploy.xml file editor</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_3.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                
+                </listitem>            
+            </itemizedlist>
+        </section>
+        <section id="createruntime">
+            <title>Creating JBoss BPEL Server</title>
+            <para>Suppose you have installed the <property moreinfo="none">JBoss BPEL Runtime-RiftSaw</property> as it was described <link linkend="installRuntime">before</link>, now you can create a server for JBoss BPEL runtime.</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Open the <property moreinfo="none">Servers</property> view by selecting 
+                        <emphasis><property moreinfo="none">Windows &gt; Show View &gt; Other... &gt; Server &gt; Servers</property></emphasis>.
+                    </para>                
+                </listitem>
+                <listitem>
+                    <para>Right-click the Servers view and select  
+                        <emphasis><property moreinfo="none">New &gt; Server</property></emphasis> to open the New Server Wizard: 
+                    </para>
+                    <figure float="0">
+                        <title>New Server Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_4.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                
+                </listitem>
+                <listitem>
+                    <para>Select <property moreinfo="none">JBoss AS 5.1 </property>as a server type. </para>
+                    <note>
+                        <para>Please note, that only JBoss As 5.1 or higher version supports BPEL.</para>
+                    </note>
+                </listitem>
+                <listitem>
+                    
+                    <para>Click the <property moreinfo="none">Next</property> button. On the next page, you should input your <emphasis><property moreinfo="none">JBoss As</property></emphasis> location. Then click the <property moreinfo="none">Next</property> button and
+                        you will get the page like this: 
+                    </para>
+                    <figure float="0">
+                        <title>Add resource to the server</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_5.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                 
+                </listitem>
+                <listitem>
+                    <para>Select <property moreinfo="none">HelloWorld</property>, then click the <property moreinfo="none">Add </property> button to add the project to the server.
+                        Then click on the <property moreinfo="none">Finish</property> button.
+                    </para>
+                    <para>Start the server by right-clicking on the server and selecting the <property moreinfo="none">Start</property> item. </para> 
+                    
+                    <figure float="0">
+                        <title>The started server</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_6.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure> 
+                    <para>If some aspects of server creation is not clear, please, read  <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/html_single/index.html">JBoss Server Manager Reference Guide</ulink> for more details.</para>
+                </listitem>
+                <listitem>
+                    <para>You can enter the link <ulink url="http://localhost:8080/bpel-console/app.html">http://localhost:8080/bpel-console/app.html</ulink> to the browser to get the deployed processes.</para>                 
+                    <figure float="0">
+                        <title>The BPEL console</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_7.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                 
+                </listitem>            
+            </itemizedlist>  
+            <para>If there's anything we didn't cover or you can't figure out, please feel free to visit our <ulink
+                url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+                >JBoss Tools Users Forum</ulink> to ask questions.
+                There we are also waiting for your suggestions and comments.</para>   </section>
+    </section>
+</chapter>
+
+    <!--  &detail;
+        &deploy;-->
+    
+<chapter id="reference" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/reference.xml">
+    <?dbhtml filename="reference.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>BPEL</keyword>
+            <keyword>JBT</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>Reference</title>
+    <para>This chapter includes detailed reference information about all BPEL tools wizards and editors.</para>
+    <section>
+        <title>Wizards</title>
+        <section>
+            <title>New BPEL project Wizard</title>
+            <para>This wizard helps to create new BPEL project.It is available with clicking
+                <property moreinfo="none">File-&gt;New-&gt;Other-&gt;BPEL project</property> in the menu bar.</para>
+            <figure float="0">
+                <title>New BPEL Project Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/reference/bpel_ref_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>It consists of only one page:</para>
+            <itemizedlist>
+                <listitem><para>On the page you can adjust the name of the project and the directory where it will be created.</para>
+                    <para>If "<property moreinfo="none">Use default</property>" option is checked the output directory will be the workspace,
+                        othervise the user should specify it by himself using <property moreinfo="none">Browse</property> button.</para>
+                    <figure float="0">
+                        <title>New BPEL Project Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/reference/bpel_ref_2.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section>
+            <title>Apache ODE Deployment Descriptor Wizard</title>
+            <para>Using this wizard user can create ODE deployment descriptor (deploy.xml) and place it in the temporary directory.It is available with clicking
+                <property moreinfo="none">File-&gt;New-&gt;Other-&gt;Apache ODE Deployment Descriptor Wizard</property> in the menu bar.</para>
+            <figure float="0">
+                <title>New BPEL Project Wizard</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/deploy_createdeploy_2.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>On the page you can adjust the name of the deployment descriptor and
+                the directory where it will be created.Note,that you should use <property moreinfo="none">
+                    /PROJECT_NAME/bpelContent</property> directory as an output one.</para>
+                                   
+        </section>
+        <section>
+            <title>New BPEL Process file Wizard</title>
+            <para>Using <property moreinfo="none">New BPEL Process file Wizard</property>
+                user can create BPEL process file and WSDL file if it is necessary.
+            The wizard includes several pages:</para>
+            <itemizedlist>
+                <listitem><para>The first page has the following options to set:</para>
+                    <table>
+                        <title>New BPEL Process file Wizard. First Page Options.</title>   
+                        <tgroup cols="3">
+                            <colspec align="left" colnum="1" colwidth="1*"></colspec>
+                            <colspec align="left" colnum="2" colwidth="3*"></colspec>
+                            <colspec align="left" colnum="3" colwidth="1*"></colspec>
+                            
+                            <thead>
+                                <row>
+                                    <entry>Option</entry>									
+                                    <entry>Description</entry>
+                                    <entry>Default</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>Name</entry>
+                                    <entry>Enter the process name.</entry>
+                                    <entry>no default value</entry>
+                                </row> 
+                              
+                                       
+                                <row>
+                                    <entry>Namespace</entry>
+                                    <entry>Enter the namespace url here</entry>
+                                    <entry>no default value</entry>
+                                </row> 
+                                
+                                <row>
+                                    <entry>Template</entry>
+                                    <entry>Select one of the provided templates: 
+                                        <itemizedlist>
+                                            <listitem><para><emphasis>Asynchronous BPEL Process</emphasis>  - 
+                                                generates the basis of orchestration logic:  receive and reply activities
+                                                are included into the process;client WSDL is generated, 
+                                                service is defined in the <property moreinfo="none">parentlink</property> of the process.
+                                                The caller is notified asynchronously when the process completes.
+                                            </para></listitem>
+                                            <listitem><para><emphasis>Empty BPEL Process</emphasis>  - list of services participating in this BPEL process together
+                                                with the one of messages used within the process is empty.There are no any orchestration logic.</para></listitem>
+                                            <listitem><para><emphasis>Synchronous BPEL Process</emphasis>  - 
+                                                similar to Asynchronous BPEL Process template except the fact that here
+                                                the caller is notified synchronously when the process completes.</para></listitem>
+                                        </itemizedlist></entry>
+                                    <entry>Asynchronous BPEL Process</entry>
+                               </row>
+                                <row>
+                                    <entry>Abstract Process</entry>
+                                    <entry>Specifies the created process as an abstract one -partially
+                                        specified processes that are not intended to be executed.</entry>
+                                    <entry>unchecked</entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>  
+                    <figure float="0">
+                        <title>New BPEL Process file Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/reference/bpel_ref_3.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    
+                </listitem>
+                
+                <listitem><para>The second page has the following options to set:</para>
+                    <table>
+                        <title>New BPEL Process file Wizard. Second Page Options.</title>   
+                        <tgroup cols="3">
+                            <colspec align="left" colnum="1" colwidth="1*"></colspec>
+                            <colspec align="left" colnum="2" colwidth="3*"></colspec>
+                            <colspec align="left" colnum="3" colwidth="1*"></colspec>
+                            
+                            <thead>
+                                <row>
+                                    <entry>Option</entry>									
+                                    <entry>Description</entry>
+                                    <entry>Default</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>Service Name</entry>
+                                    <entry>Enter a wsdl service name for the BPEL process.</entry>
+                                    <entry>The process name</entry>
+                                </row> 
+                                                                     
+                                <row>
+                                    <entry>Port Name</entry>
+                                    <entry>Enter a wsdl port name for the BPEL process.</entry>
+                                    <entry>The process name + 'Port' </entry>
+                                </row> 
+
+                                <row>
+                                    <entry>Service Address</entry>
+                                    <entry>Enter an address of the wsdl service for the BPEL process.</entry>
+                                    <entry>http://localhost:8080/ + process name </entry>
+                                </row>
+
+                                <row>
+                                    <entry>Binding Protocol</entry>
+                                    <entry>Choose the binding protocal that you use in the wsdl: SOAP or HTTP </entry>
+                                    <entry>SOAP </entry>
+                                </row>                                
+                            </tbody>
+                        </tgroup>
+                    </table>  
+                    <figure float="0">
+                        <title>New BPEL Process file Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/reference/bpel_ref_3a.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    
+                </listitem>
+                
+                
+                
+                <listitem><para>On the third page the user should select the BPEL project 
+                    and folder where the process file will be created:</para>
+                <figure float="0">
+                    <title>New BPEL Process file Wizard</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/reference/bpel_ref_4.png"></imagedata>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                </listitem>
+            </itemizedlist>
+            <note>
+                <para>Process files that are used in the BPEL project must be under the <property moreinfo="none">bpelContent</property> folder. Only in this case 
+                    these files can be deployed to JBoss server.
+                </para>
+            </note>
+        </section>
+    </section>
+    <section>
+        <title>Editors</title>
+        <section>
+            <title>Business Process Editor</title>
+            <para>Business Process Editor is intended to facilitate the process of changing and 
+                adding new logic to BPEL process file.You can open <emphasis>.bpel</emphasis> 
+                in this editor by right click the file in the project explorer and selecting  
+                <property moreinfo="none">Open With...-&gt;Business Process Editor</property>
+            </para>
+            <figure float="0">
+                <title>Business Process Editor</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/reference/bpel_ref_5.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>The editor consists of two tabs:<property moreinfo="none">Design</property> tab and <property moreinfo="none">Source</property> tab.</para>
+       <section>
+           <title>Design tab</title>
+           <para>Design tab is the main part of Business Process Editor.It consists of 3 parts:</para>
+           <itemizedlist>
+               <listitem><para>Visual Pane:</para>
+                   <figure float="0">
+                       <title>Visual Pane of Business Process Editor</title>
+                       <mediaobject>
+                           <imageobject>
+                               <imagedata fileref="images/reference/bpel_ref_6.png"></imagedata>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>
+                   <para>The Visual Pane graphically displays the order in which the activities are executed.</para>
+               </listitem>
+               <listitem><para>Palette:</para>
+                   <figure float="0">
+                       <title>Palette of Business Process Editor</title>
+                       <mediaobject>
+                           <imageobject>
+                               <imagedata fileref="images/reference/bpel_ref_7.png"></imagedata>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>
+                   <para>The <property moreinfo="none">Palette</property> represents  different elements of the BPEL activities
+                       organized into functional categories.
+                       Using it the user can easily add new elements to the sequence activity.
+                       To do this,he should just click the required element and then drug
+                       and drop it to the place on the Visual Pane where it should be added.</para>
+               </listitem>
+               <listitem><para>Behavior Components View:</para>
+                  <figure float="0">
+                      <title>Behavior Components View of Business Process Editor</title>
+                       <mediaobject>
+                           <imageobject>
+                               <imagedata fileref="images/reference/bpel_ref_8.png"></imagedata>
+                           </imageobject>
+                       </mediaobject>
+                  </figure>
+                   <para>Execution behavior components are grouped into the <property moreinfo="none">
+                       Behavior Components View</property>.
+                       The view is also fully syncronized with Properties view where you can customize all
+                       the properties of the component.</para>
+                   <figure float="0">
+                       <title>Process Structure View of Business Process Editor</title>
+                       <mediaobject>
+                           <imageobject>
+                               <imagedata fileref="images/reference/bpel_ref_9.png"></imagedata>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>                  
+                   <para>To add an element to some component group click plus(<inlinemediaobject>
+                       <imageobject>
+                           <imagedata fileref="images/reference/bpel_ref_10.png"></imagedata>
+                       </imageobject>
+                   </inlinemediaobject>) icon,
+                       for its deleting you should click the element and
+                       use its <property moreinfo="none">Delete</property> option in the popup menu.</para>  
+               </listitem>
+             
+           </itemizedlist>
+           
+           
+       </section>
+            <section>
+                <title>Source tab</title>
+                <para>Source tab can be used for editing BPEL process file directly.
+                    The validation of file structure is also available.
+                 </para>
+                <figure float="0">
+                    <title>Validation error in Source tab</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/reference/bpel_ref_11.png"></imagedata>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para>If the user wants to disable/unable validation he can do it by following
+                    <property moreinfo="none">Window-&gt;Preferences-&gt;Validation</property>.</para>
+                <figure float="0">
+                    <title>Validation configuration</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/reference/bpel_ref_12.png"></imagedata>
+                        </imageobject>
+                    </mediaobject>
+                </figure>     
+            </section>
+       </section>
+      <section>
+          <title>ODE Deployment Descriptor Editor</title>
+          <para>To deploy your process in Ode you need to create a
+              simple deployment descriptor with basic information and
+              <property moreinfo="none">ODE Deployment Descriptor Editor</property> facilitates the process of descriptor configuration.
+              You can see how the descriptor file,opened in the editor looks like on the picture below:
+          </para>
+          <figure float="0">
+              <title>ODE Deployment Descriptor Editor</title>
+              <mediaobject>
+                  <imageobject>
+                      <imagedata fileref="images/reference/bpel_ref_13.png"></imagedata>
+                  </imageobject>
+              </mediaobject>
+          </figure> 
+          <para>The table below describes the configuration options of the
+              ODE Deployment Descriptor Editor:</para>
+          <table>
+              <title>ODE Deployment Descriptor Editor.Options.</title>   
+              <tgroup cols="3">
+                  <colspec align="left" colnum="1" colwidth="1*"></colspec>
+                  <colspec align="left" colnum="2" colwidth="3*"></colspec>
+                  <colspec align="left" colnum="3" colwidth="1*"></colspec>
+                  
+                  <thead>
+                      <row>
+                          <entry>Section</entry>									
+                          <entry>Options</entry>
+                          <entry>Description</entry>
+                      </row>
+                  </thead>
+                  <tbody>
+                      <row>
+                          <entry morerows="1" valign="middle"><para> 
+                              General</para></entry>
+                          
+                          <entry>This process is</entry>
+                          <entry>Select one of the provided options: 
+                              <itemizedlist>
+                                  <listitem>
+                                      <para><emphasis>activated</emphasis> 
+                                      </para>
+                                  </listitem>
+                                  <listitem>
+                                      <para><emphasis>deactivated</emphasis></para>
+                                  </listitem>
+                                  <listitem>
+                                      <para><emphasis>retired</emphasis> 
+                                      </para>
+                                  </listitem>
+                              </itemizedlist></entry>
+                          
+                      </row> 
+                      <row><entry>Run this process in memory</entry>
+                          <entry>for performance purposes,
+                              you can define the process as being 
+                              executed only in-memory.</entry>
+                      </row>
+                      
+                      <row>
+                          <entry>Inbound Interfaces(Services)</entry>
+                          <entry>Associated Port</entry>
+                          <entry>Click Associated Port and the dropdown list with all available port names will appear.
+                              Select the one you need ,other fields will be filled automatically.
+                              This action configure the services
+                              provided by the process and 
+                              bind each service to an endpoint
+                          </entry>
+                          
+                      </row> 
+                      
+                      <row>
+                          <entry>Outbound Interfaces(Invokes)</entry>
+                          <entry>Associated Port</entry>
+                          <entry>Click Associated Port and the dropdown list with all available port names will appear.
+                              Select the one you need, other fields will be filled automatically.
+                              This action configure the services
+                              invoked by the process</entry>
+                      </row>
+                      <row>
+                          <entry>Process-level Monitoring Events</entry>
+                          <entry>  <itemizedlist>
+                              <listitem><para>
+                                  <emphasis>None</emphasis>
+                              </para></listitem>
+                              <listitem>
+                              <para>
+                                  <emphasis>All</emphasis>
+                              </para>
+                              </listitem>
+                              <listitem>
+                              <para>
+                                  <emphasis>Selected</emphasis>:
+                              </para>
+                                  <itemizedlist>
+                                      <listitem><para>Instance life cycle</para></listitem>
+                                      <listitem><para>Activity life cycle</para></listitem>
+                                      <listitem><para>Data handling</para></listitem>
+                                      <listitem><para>Scope handling</para></listitem>
+                                      <listitem><para>Correlation</para></listitem>
+                                      
+                                  </itemizedlist>
+                                  
+                              </listitem>
+                          </itemizedlist>
+                          </entry>
+                          <entry>Using ODE's deployment descriptor, it's also 
+                              possible to make events generation to 
+                              filtrate which ones get created.
+                              All option  just duplicates the default behaviour,
+                              when nothing is specified in the deployment.</entry>
+                      </row>
+                      <row>
+                          <entry>Scope-level Monitoring Events</entry>
+                          <entry>Scope</entry>
+                          <entry>This section makes it possible to
+                              define filtering for each scope of your process.
+                              </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+      </section>
+        
+    </section>
+    
+    
+</chapter>
+
+
+    
+<chapter xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/summary.xml">
+    <?dbhtml filename="summary.html"?>
+    <title>Summary</title>
+    <para>In conclusion, with this document you know all the capabilities of BPEL Tools 
+        and could easily start with them.
+        The chapters above walked you through the steps on how to create and configure BPEL process and 
+        deployment descriptor files.     
+        If you have questions or suggestions concerned both the documentation and tools behavior,
+        you are welcome to JBoss Tools Users forum.
+        Please, use Jira to report bugs and requests on documentation.</para>
+    
+    <section>
+        <title>Other relevant resources on the topic</title>
+        <para>All JBoss Developer Studio/JBoss Tools release documentation you can find at
+            <ulink url="http://docs.jboss.org/tools">http://docs.jboss.org/tools</ulink> in the corresponding release directory.
+        </para>   
+        <para>The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs">http://download.jboss.org/jbosstools/nightly-docs</ulink>. </para>
+
+        </section>
+</chapter>
+
+</book>
