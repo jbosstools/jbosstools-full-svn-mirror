@@ -41,16 +41,21 @@
 						<tasks>
 							<taskdef resource="emma_ant.properties" />
 							<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
-
+							<move todir="${project.build.directory}/emma">
+								<fileset dir="${basedir}/../../.." includes="*/tests/*/target/emma/*.es" />
+							</move>
 							<if>
-								<not>
-									<isset property="maven.test.skip"/>
-								</not>
+								<and>
+									<not>
+										<isset property="maven.test.skip"/>
+									</not>
+									<available type="dir" file="${project.build.directory}/emma" />
+								</and>
 								<then>
 									<echo>Process emma report...</echo>
 									<emma enabled="true">
 										<report>
-											<infileset dir="${basedir}/../../.." includes="*/tests/*/target/emma/*.es" />
+											<infileset dir="${project.build.directory}/emma" includes="*/tests/*/target/emma/*.es" />
 											<txt outfile="${project.build.directory}/coverage.txt" />
 											<xml outfile="${project.build.directory}/coverage.xml" />
 											<html outfile="${project.build.directory}/coverage.html" />
@@ -61,6 +66,9 @@
 										failonerror="false" />
 									<echo>${emma.txt}</echo>
 								</then>
+								<else>
+									<echo>No emma session files were found</echo>
+								</else>
 							</if>
 						</tasks>
 					</configuration>
