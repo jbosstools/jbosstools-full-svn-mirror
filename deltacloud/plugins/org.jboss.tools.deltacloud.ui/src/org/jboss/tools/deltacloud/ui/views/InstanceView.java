@@ -64,7 +64,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 	private Combo cloudSelector;
 	private Label filterLabel;
 
-	private DeltaCloud[] clouds;
 	private DeltaCloud currCloud;
 
 	private InstanceViewLabelAndContentProvider contentProvider;
@@ -81,7 +80,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			if (currCloud != null) {
 				currCloud.removeInstanceListListener(InstanceView.this);
 			}
-			currCloud = clouds[index];
+			setCurrentCloud(index);
 			storeSelectedCloud();
 			Display.getCurrent().asyncExec(new Runnable() {
 
@@ -89,7 +88,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 				public void run() {
 					viewer.setInput(currCloud);
 					currCloud.addInstanceListListener(InstanceView.this);
-					viewer.refresh();
 				}
 
 			});
@@ -133,7 +131,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 
 	@Override
 	public void dispose() {
-		for (DeltaCloud cloud : clouds) {
+		for (DeltaCloud cloud : getClouds()) {
 			cloud.removeInstanceListListener(this);
 		}
 		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
@@ -148,7 +146,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		layout.marginWidth = 0;
 		container.setLayout(layout);
 
-		clouds = getClouds();
+		DeltaCloud[] clouds = getClouds();
 
 		createCloudSelector();
 		initCloudSelector(getLastSelectedCloud(), cloudSelector, clouds);
@@ -163,6 +161,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		currCloud = getCurrentCloud(cloudSelector.getSelectionIndex(), clouds);
 
 		addInstanceListener(currCloud, viewer);
+		setViewerInput(currCloud);
 		setFilterLabelVisible(currCloud, filterLabel);
 
 		Point p1 = cloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -195,12 +194,18 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		hookContextMenu(viewer.getTable());
 		getSite().setSelectionProvider(viewer);
-		
+
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
 
+	private void setViewerInput(DeltaCloud currentCloud) {
+		if (currentCloud != null) {
+			viewer.setInput(currentCloud);
+		}
+	}
+
 	private DeltaCloud[] getClouds() {
-		DeltaCloud[] clouds = new DeltaCloud[]{};
+		DeltaCloud[] clouds = new DeltaCloud[] {};
 		try {
 			clouds = DeltaCloudManager.getDefault().getClouds();
 		} catch (DeltaCloudException e) {
@@ -211,6 +216,15 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 					e, Display.getDefault().getActiveShell());
 		}
 		return clouds;
+	}
+
+	private void setCurrentCloud(int index) {
+		DeltaCloud[] clouds = getClouds();
+		if (index >= clouds.length) {
+			currCloud = null;
+		} else {
+			currCloud = getClouds()[index];
+		}
 	}
 
 	private void setFilterLabelVisible(DeltaCloud currentCloud, Label filterLabel) {
@@ -227,7 +241,6 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		if (currentCloud != null) {
 			currentCloud.removeInstanceListListener(this);
 			currentCloud.addInstanceListListener(this);
-			viewer.setInput(currentCloud);
 		}
 	}
 
@@ -321,7 +334,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			currName = currCloud.getName();
 			currIndex = cloudSelector.getSelectionIndex();
 		}
-		clouds = getClouds();
+		DeltaCloud[] clouds = getClouds();
 		String[] cloudNames = new String[clouds.length];
 		int index = 0;
 		for (int i = 0; i < clouds.length; ++i) {
@@ -332,17 +345,22 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		if (type == ICloudManagerListener.RENAME_EVENT) {
 			index = currIndex; // no change in cloud displayed
 		}
-		cloudSelector.removeModifyListener(cloudModifyListener);
-		cloudSelector.setItems(cloudNames);
+
+		setCloudSelectorItems(cloudNames);
+		setCurrentCloud(index);
+
 		if (cloudNames.length > 0) {
 			cloudSelector.setText(cloudNames[index]);
-			currCloud = clouds[index];
 			viewer.setInput(currCloud);
 		} else {
-			currCloud = null;
 			cloudSelector.setText("");
 			viewer.setInput(new DeltaCloudInstance[0]);
 		}
+	}
+
+	private void setCloudSelectorItems(String[] cloudNames) {
+		cloudSelector.removeModifyListener(cloudModifyListener);
+		cloudSelector.setItems(cloudNames);
 		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 
@@ -355,11 +373,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			Display.getDefault().syncExec(new Runnable() {
 				@Override
 				public void run() {
-					currCloud.removeInstanceListListener(InstanceView.this);
-
+					currCloud.addInstanceListListener(InstanceView.this); // does not add identical instance twice
 					viewer.setInput(instances);
-					currCloud.addInstanceListListener(InstanceView.this);
-					viewer.refresh();
 					refreshToolbarCommandStates();
 				}
 			});
