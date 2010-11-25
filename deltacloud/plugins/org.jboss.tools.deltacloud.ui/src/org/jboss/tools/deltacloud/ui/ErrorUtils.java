@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
@@ -38,13 +37,13 @@ public class ErrorUtils {
 		}
 	}
 
-	private static IStatus openErrorDialog(final String title, final IStatus status, final Shell shell) {
-		Display.getDefault().syncExec(new Runnable() {
-			public void run() {
-				ErrorDialog.openError(shell, title, status.getMessage(), status);
-			}
-		});
-		return status;
+	private static void openErrorDialog(final String title, final IStatus status, final Shell shell) {
+//		Display.getDefault().syncExec(new Runnable() {
+//			public void run() {
+//				ErrorDialog.openError(shell, title, status.getMessage(), status);
+//			}
+//		});
+		ErrorDialog.openError(shell, title, status.getMessage(), status);
 	}
 	
 	public static IStatus createMultiStatus(DeltaCloudMultiException throwable) {

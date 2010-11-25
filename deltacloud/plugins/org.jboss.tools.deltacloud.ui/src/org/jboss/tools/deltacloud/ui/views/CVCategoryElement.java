@@ -59,7 +59,7 @@ public abstract class CVCategoryElement extends CloudViewElement {
 	}
 
 	protected void refresh() {
-		Display.getDefault().asyncExec(new Runnable() {
+		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				IStructuredSelection oldSelection = (IStructuredSelection) viewer.getSelection();

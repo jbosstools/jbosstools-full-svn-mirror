@@ -13,7 +13,6 @@ package org.jboss.tools.deltacloud.ui.views;
 import java.util.ArrayList;
 
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
@@ -79,7 +78,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 				ErrorUtils.handleError(
 						"Error",
 						"Colud not get images from cloud " + cloud.getName(),
-						e, Display.getDefault().getActiveShell());
+						e, getViewer().getControl().getShell());
 			}
 		}
 		return super.getChildren();
