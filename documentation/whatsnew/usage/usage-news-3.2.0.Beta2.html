@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Language" content="en-us" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
 <link rel="stylesheet" href="../whatsnew.css" /> 
-<title>What's New Usage Reporting 3.2.0.M2</title>
+<title>What's New Usage Reporting 3.2.0.Beta2</title>
 </head>
 <body>
 <h1>What's New Usage Reporting 3.2.0.Beta2</h1>
@@ -24,21 +24,21 @@ href="../as/as-news-3.2.0.Beta2.html">AS Tools</a></p>
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Preferences</b></td>
 		<td valign="top">
-			We extended the preferences and now show what usage reporting collects and reports. This shows to the user what we collect, demonstrates that we are clearly try to collect usage patterns and want to enhance the user experience. 
+			We now show to the user what we collect in the preferences. This leads to even more transparency 
+			and clearly demonstrates that we track installation- and usage-patterns. The statistics shall allow us to enhance the user experience. 
 			<p><img src="../images/usage-reporting-preferences-values.png"></img></p>
 			<p><small><a href="https://jira.jboss.org/browse/JBIDE-7144">Related Jira</a></small></p>
-	</td>
+		</td>
+	</tr>
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Operating systems</b></td>
 		<td valign="top">
-
-			<p>
-			Usage Reporting now reports linux distributions and versions.
+			Usage Reporting now reports linux distributions and versions. Earlier versions could not report any linux specific OS details.
 			<p><img src="../images/usage-reporting-linux.png"></img></p>
 			<p><img src="../images/usage-reporting-linux-distro.png"></img></p>
 			<p><small><a href="https://jira.jboss.org/browse/JBIDE-7142">Related Jira</a></small></p>
 			<p>
-			Usage Reporting could not distinguish the various windows version. It now reports all major windows variants.
+			Usage Reporting could not distinguish the various windows versions. It can now report all major windows variants.
 			</p>
 			<p><img src="../images/usage-reporting-windowsversions.png"></img></p>
 			<p><small><a href="https://jira.jboss.org/browse/JBIDE-7043">Related Jira</a></small></p>
@@ -46,9 +46,7 @@ href="../as/as-news-3.2.0.Beta2.html">AS Tools</a></p>
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Various bugs</b></td>
 		<td valign="top">
-			<p>
 			Usage Reporting was rather verbose and created an entry to the log when the internet connection was not available. Beta2 now only logs if debug/tracing is enabled.
-			</p>
 			<p><small><a href="https://jira.jboss.org/browse/JBIDE-7474">Related Jira</a></small></p>
 		</td>
 	</tr>
