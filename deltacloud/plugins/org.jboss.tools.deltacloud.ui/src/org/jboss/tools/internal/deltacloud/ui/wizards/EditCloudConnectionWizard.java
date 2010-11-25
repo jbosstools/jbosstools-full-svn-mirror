@@ -24,6 +24,7 @@ import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
@@ -100,7 +101,7 @@ public class EditCloudConnectionWizard extends Wizard implements INewWizard, Clo
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
-		String type = mainPage.getModel().getType().toString();
+		String type = getServerType();
 		try {
 			String oldName = cloud.getName();
 			cloud.editCloud(name, url, username, password, type);
@@ -113,6 +114,15 @@ public class EditCloudConnectionWizard extends Wizard implements INewWizard, Clo
 		return true;
 	}
 
+	private String getServerType() {
+		DeltaCloudServerType type = mainPage.getModel().getType();
+		if (type == null) {
+			return null;
+		}
+		
+		return type.toString();
+	}
+	
 	@Override
 	public boolean needsProgressMonitor() {
 		return true;
