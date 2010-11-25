@@ -17,6 +17,12 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * @author André Dietisheim
+ *
+ * @param <E> Element to store
+ * @param <C> Criteria to match element against
+ */
 public abstract class AbstractDeltaCloudObjectRepository<E, C> {
 
 	private List<E> objects = new ArrayList<E>();

@@ -1,3 +1,12 @@
+2010-11-25  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java: 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudImagesRepository.java: 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstancesRepository.java: 
+	* src/org/jboss/tools/deltacloud/core/AbstractDeltaCloudObjectRepository.java:
+	[JBIDE-7694] revamped synchronization in class DeltaCloud: extracted image- and instance-list to their own classes 
+	(and could drop all synchronization in deltacloud) 
+
 2010-11-19  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: 
