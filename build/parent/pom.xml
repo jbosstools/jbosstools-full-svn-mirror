@@ -815,8 +815,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>jbosstools-nightly-tests-trunk</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/jbosstools-tests/all/repo/ </url>
+					<id>jbosstools-nightly-staging-composite-trunk</id>
+					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/ </url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
