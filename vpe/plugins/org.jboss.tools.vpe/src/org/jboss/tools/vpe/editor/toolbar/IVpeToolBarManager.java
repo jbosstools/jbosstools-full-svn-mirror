@@ -7,23 +7,26 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 
 package org.jboss.tools.vpe.editor.toolbar;
 
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * This interface create a toolbarmanager for swt toolbar in the VPE. 
- * To use it procede only in the following order: first call 
- * createToolBarComposite(composite) where composite is the parent for the future toolbar
- * then call addToolBar(IvpeToolbar) to add it and finally createMenuComposite(Composite) to add it to the menu bar. 
+ * This interface create a toolbarmanager for swt toolbar in the VPE. To use it
+ * procede only in the following order: first call
+ * createToolBarComposite(composite) where composite is the parent for the
+ * future toolbar then call addToolBar(IvpeToolbar) to add it and finally
+ * createMenuComposite(Composite) to add it to the menu bar.
+ * 
  * @author Igels
  */
 public interface IVpeToolBarManager {
 
 	/**
 	 * This method create a splitter in the given composite
+	 * 
 	 * @param parent
 	 * @return
 	 */
@@ -31,6 +34,7 @@ public interface IVpeToolBarManager {
 
 	/**
 	 * This method add the Toolbar to the splitter with the scpecified layout
+	 * 
 	 * @param bar
 	 */
 	public void addToolBar(IVpeToolBar bar);
@@ -38,7 +42,14 @@ public interface IVpeToolBarManager {
 	/*
 	 * Sets the toolbar visibility
 	 */
-	 void setToolbarVisibility(boolean isVisible);
-	
+	void setToolbarVisibility(boolean isVisible);
+
+	/**
+	 * This method determines whether the toolbar visible.
+	 * 
+	 * @return <code>true</code> if the Toolbar visible and <code>false</code> otherwise.
+	 */
+	boolean isToolbarVisible();
+
 	public void dispose();
 }

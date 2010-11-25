@@ -94,6 +94,14 @@ public class VpeToolBarManager implements IVpeToolBarManager {
 		}
 	}
 
+	public boolean isToolbarVisible() {
+		boolean toolbarVisibility = false;
+		if (cmpToolBar != null) {
+			toolbarVisibility = cmpToolBar.isVisible();
+		}
+		return toolbarVisibility;
+	}
+
 	/**
 	 * show/hide toolbar
 	 * 

@@ -13,6 +13,8 @@ package org.jboss.tools.vpe.ui.test.handlers;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.State;
@@ -37,6 +39,8 @@ import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
+import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
 import org.jboss.tools.vpe.handlers.PageDesignOptionsHandler;
 import org.jboss.tools.vpe.handlers.PreferencesHandler;
 import org.jboss.tools.vpe.handlers.RefreshHandler;
@@ -59,8 +63,10 @@ import org.jboss.tools.vpe.ui.test.VpeUiTests;
 public class VpeCommandsTests extends VpeTest {
 
 	private static String[] VPE_COMMAND_ID;
+	private static Map<String, Boolean> VPE_PREF_COMMANDS_STATES;
 	private Command[] commands;
 	private IHandlerService handlerService;
+	private static IPreferenceStore preferences;
 
 	private static final int ROTATION_NUM = 4;
 
@@ -71,6 +77,29 @@ public class VpeCommandsTests extends VpeTest {
 				ShowBundleAsELHandler.COMMAND_ID,
 				ShowNonVisualTagsHandler.COMMAND_ID,
 				ShowTextFormattingHandler.COMMAND_ID };
+
+		preferences = JspEditorPlugin.getDefault().getPreferenceStore();
+		VPE_PREF_COMMANDS_STATES = new HashMap<String, Boolean>();
+
+		boolean showBorderToogleState = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+		VPE_PREF_COMMANDS_STATES.put(ShowBorderHandler.COMMAND_ID,
+				showBorderToogleState);
+
+		boolean showBundleAsELToogleState = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+		VPE_PREF_COMMANDS_STATES.put(ShowBundleAsELHandler.COMMAND_ID,
+				showBundleAsELToogleState);
+
+		boolean showNonVisualTagsToogleState = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+		VPE_PREF_COMMANDS_STATES.put(ShowNonVisualTagsHandler.COMMAND_ID,
+				showNonVisualTagsToogleState);
+
+		boolean showTextFormattingToogleState = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
+		VPE_PREF_COMMANDS_STATES.put(ShowTextFormattingHandler.COMMAND_ID,
+				showTextFormattingToogleState);
 	}
 
 	@Override
@@ -80,7 +109,14 @@ public class VpeCommandsTests extends VpeTest {
 				.getWorkbench().getService(ICommandService.class);
 		commands = new Command[VPE_COMMAND_ID.length];
 		for (int i = 0; i < commands.length; i++) {
-			commands[i] = commandService.getCommand(VPE_COMMAND_ID[i]);
+			String commandId = VPE_COMMAND_ID[i];
+			Boolean commandStateVal = VPE_PREF_COMMANDS_STATES.get(commandId);
+			Command command = commandService.getCommand(commandId);
+			State commandState = command.getState(RegistryToggleState.STATE_ID);
+			if (commandState != null) {
+				commandState.setValue(commandStateVal);
+			}
+			commands[i] = command;
 		}
 		IWorkbenchPage page = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
@@ -102,17 +138,7 @@ public class VpeCommandsTests extends VpeTest {
 	 * @throws Throwable
 	 */
 	public void testCommandState() throws Throwable {
-		// initially all commands should be disabled
-		IFile vpeFile = (IFile) TestUtil.getComponentPath("inputUserName.jsp",
-				VpeUiTests.IMPORT_PROJECT_NAME);
-
-		/*
-		 * Open file in the VPE
-		 */
-		IEditorInput input = new FileEditorInput(vpeFile);
-		JSPMultiPageEditor multiPageEditor = openEditor(input);
-		TestUtil.delay(500);
-		pageChange(multiPageEditor, 0);
+		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
 		checkCommandState(true);
 		pageChange(multiPageEditor, 1);
 		checkCommandState(false);
@@ -136,8 +162,6 @@ public class VpeCommandsTests extends VpeTest {
 		int oldVisualOrientation = editPart.getContainer().getOrientation();
 		int prevVisualOrientation = oldVisualOrientation;
 
-		IPreferenceStore preferences = JspEditorPlugin.getDefault()
-				.getPreferenceStore();
 		String oldPrefOrientation = preferences
 				.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
 
@@ -182,24 +206,31 @@ public class VpeCommandsTests extends VpeTest {
 		State state = command.getState(RegistryToggleState.STATE_ID);
 		boolean oldToogleState = ((Boolean) state.getValue()).booleanValue();
 
+		boolean oldPrefBorderVisibility = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+
+		VpeController vpeController = (VpeController) multiPageEditor
+				.getVisualEditor().getController();
+		VpeVisualDomBuilder visualDomBuilder = vpeController.getVisualBuilder();
+		boolean oldUiBorderVisibility = visualDomBuilder
+				.isShowBorderForUnknownTags();
+
+		assertEquals(oldToogleState, oldPrefBorderVisibility);
+		assertEquals(oldPrefBorderVisibility, oldUiBorderVisibility);
+
 		handlerService.executeCommand(ShowBorderHandler.COMMAND_ID, null);
 		TestUtil.delay(500);
 
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
 		assertEquals(!oldToogleState, newToogleState);
 
-		IPreferenceStore prefStore = JspEditorPlugin.getDefault()
-				.getPreferenceStore();
-		boolean prefBorderVisibility = prefStore
+		boolean newPrefBorderVisibility = preferences
 				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
-		assertEquals(!oldToogleState, prefBorderVisibility);
+		assertEquals(!oldPrefBorderVisibility, newPrefBorderVisibility);
 
-		VpeController vpeController = (VpeController) multiPageEditor
-				.getVisualEditor().getController();
-		VpeVisualDomBuilder visualDomBuilder = vpeController.getVisualBuilder();
-		boolean uiBorderVisibility = visualDomBuilder
+		boolean newUiBorderVisibility = visualDomBuilder
 				.isShowBorderForUnknownTags();
-		assertEquals(!oldToogleState, uiBorderVisibility);
+		assertEquals(!oldUiBorderVisibility, newUiBorderVisibility);
 	}
 
 	/**
@@ -215,6 +246,19 @@ public class VpeCommandsTests extends VpeTest {
 		State state = command.getState(RegistryToggleState.STATE_ID);
 		boolean oldToogleState = ((Boolean) state.getValue()).booleanValue();
 
+		boolean oldPrefNonVisualTagsVisibility = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+
+		VpeController vpeController = (VpeController) multiPageEditor
+				.getVisualEditor().getController();
+		VpeVisualDomBuilder visualDomBuilder = vpeController.getVisualBuilder();
+		boolean oldUiNonVisualTagsVisibility = visualDomBuilder
+				.isShowInvisibleTags();
+
+		assertEquals(oldToogleState, oldPrefNonVisualTagsVisibility);
+		assertEquals(oldPrefNonVisualTagsVisibility,
+				oldUiNonVisualTagsVisibility);
+
 		handlerService
 				.executeCommand(ShowNonVisualTagsHandler.COMMAND_ID, null);
 		TestUtil.delay(500);
@@ -222,18 +266,15 @@ public class VpeCommandsTests extends VpeTest {
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
 		assertEquals(!oldToogleState, newToogleState);
 
-		IPreferenceStore prefStore = JspEditorPlugin.getDefault()
-				.getPreferenceStore();
-		boolean prefNonVisualTagsVisibility = prefStore
+		boolean newPrefNonVisualTagsVisibility = preferences
 				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
-		assertEquals(!oldToogleState, prefNonVisualTagsVisibility);
+		assertEquals(!oldPrefNonVisualTagsVisibility,
+				newPrefNonVisualTagsVisibility);
 
-		VpeController vpeController = (VpeController) multiPageEditor
-				.getVisualEditor().getController();
-		VpeVisualDomBuilder visualDomBuilder = vpeController.getVisualBuilder();
-		boolean uiNonVisualTagsVisibility = visualDomBuilder
+		boolean newUiNonVisualTagsVisibility = visualDomBuilder
 				.isShowInvisibleTags();
-		assertEquals(!oldToogleState, uiNonVisualTagsVisibility);
+		assertEquals(!oldUiNonVisualTagsVisibility,
+				newUiNonVisualTagsVisibility);
 	}
 
 	/**
@@ -249,23 +290,74 @@ public class VpeCommandsTests extends VpeTest {
 		State state = command.getState(RegistryToggleState.STATE_ID);
 		boolean oldToogleState = ((Boolean) state.getValue()).booleanValue();
 
+		boolean oldPrefBundleAsELVisibility = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+
+		VpeController vpeController = (VpeController) multiPageEditor
+				.getVisualEditor().getController();
+		BundleMap bundle = vpeController.getPageContext().getBundle();
+		boolean oldUiBundleAsELVisibility = bundle.isShowBundleUsageAsEL();
+
+		assertEquals(oldToogleState, oldPrefBundleAsELVisibility);
+		assertEquals(oldPrefBundleAsELVisibility, oldUiBundleAsELVisibility);
+
 		handlerService.executeCommand(ShowBundleAsELHandler.COMMAND_ID, null);
 		TestUtil.delay(500);
 
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
 		assertEquals(!oldToogleState, newToogleState);
 
-		IPreferenceStore prefStore = JspEditorPlugin.getDefault()
-				.getPreferenceStore();
-		boolean prefBundleAsELVisibility = prefStore
+		boolean newPrefBundleAsELVisibility = preferences
 				.getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
-		assertEquals(!oldToogleState, prefBundleAsELVisibility);
+		assertEquals(!oldPrefBundleAsELVisibility, newPrefBundleAsELVisibility);
 
-		VpeController vpeController = (VpeController) multiPageEditor
-				.getVisualEditor().getController();
-		BundleMap bundle = vpeController.getPageContext().getBundle();
-		boolean uiBundleAsELVisibility = bundle.isShowBundleUsageAsEL();
-		assertEquals(!oldToogleState, uiBundleAsELVisibility);
+		boolean newUiBundleAsELVisibility = bundle.isShowBundleUsageAsEL();
+		assertEquals(!oldUiBundleAsELVisibility, newUiBundleAsELVisibility);
+	}
+
+	/**
+	 * Test 'Show text formatting bar' toolbar button
+	 * 
+	 * @throws Throwable
+	 */
+	public void testShowTextFormattingBar() throws Throwable {
+
+		JSPMultiPageEditor multiPageEditor = openInputUserNameJsp();
+
+		Command command = getCommandById(ShowTextFormattingHandler.COMMAND_ID);
+		State state = command.getState(RegistryToggleState.STATE_ID);
+		boolean oldToogleState = ((Boolean) state.getValue()).booleanValue();
+
+		boolean oldPrefTextFormattingBarVisibility = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
+
+		MozillaEditor mozillaEditor = ((VpeEditorPart) multiPageEditor
+				.getVisualEditor()).getVisualEditor();
+		IVpeToolBarManager vpeToolBarManager = mozillaEditor
+				.getVpeToolBarManager();
+		boolean oldUiTextFormattingBarVisibility = vpeToolBarManager
+				.isToolbarVisible();
+
+		assertEquals(oldToogleState, oldPrefTextFormattingBarVisibility);
+		assertEquals(oldPrefTextFormattingBarVisibility,
+				oldUiTextFormattingBarVisibility);
+
+		handlerService.executeCommand(ShowTextFormattingHandler.COMMAND_ID,
+				null);
+		TestUtil.delay(500);
+
+		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
+		assertEquals(!oldToogleState, newToogleState);
+
+		boolean newPrefTextFormattingBarVisibility = preferences
+				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
+		assertEquals(!oldPrefTextFormattingBarVisibility,
+				newPrefTextFormattingBarVisibility);
+
+		boolean newUiTextFormattingBarVisibility = vpeToolBarManager
+				.isToolbarVisible();
+		assertEquals(!oldUiTextFormattingBarVisibility,
+				newUiTextFormattingBarVisibility);
 	}
 
 	private JSPMultiPageEditor openInputUserNameJsp() throws CoreException,
