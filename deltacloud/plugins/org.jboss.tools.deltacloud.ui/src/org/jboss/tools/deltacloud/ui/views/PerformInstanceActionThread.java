@@ -57,7 +57,6 @@ public class PerformInstanceActionThread extends Job {
 			cloud.waitForState(id, expectedState, pm);
 		} catch (Exception e) {
 			final IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-			Activator.log(status);
 			Display.getDefault().syncExec(new Runnable() {
 				@Override
 				public void run() {
