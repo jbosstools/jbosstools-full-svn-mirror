@@ -1,3 +1,10 @@
+2010-11-26  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (addPages): 
+	[JBIDE-7731] extracted password storage to its own class (removed duplicate code in EditCloudConnectionWizard, NewCloudConnectionWizard and DeltaCloud)
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.modifyText): 
+	[JBIDE-7628] cleanup, added null-check
+
 2010-11-25  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (performTest): 
