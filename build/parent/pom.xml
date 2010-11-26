@@ -814,7 +814,7 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>jbosstools-nightly-tests-trunk</id>
+					<id>jbosstools-nightly-staging-composite-stable-branch</id>
 					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2.0.Beta2/</url>
 					<layout>p2</layout>
 					<snapshots>

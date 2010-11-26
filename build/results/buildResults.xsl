@@ -154,7 +154,7 @@
 							<br />
 							See
 							<a
-								href="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2.0.Beta2.aggregate/logs/SVN_REVISION.txt">SVN_REVISION.txt</a>
+								href="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_stable_branch.aggregate/logs/SVN_REVISION.txt">SVN_REVISION.txt</a>
 						</div>
 						<div id="buildDrivers-blue">
 							<b>Target Platform</b>
@@ -192,7 +192,7 @@
 
 							See
 							<a
-								href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Tycho/job/jbosstools-3.2.0.Beta2.tests/">jbosstools-3.2.0.Beta2.tests</a>
+								href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/job/jbosstools-3.2_stable_branch.tests/">jbosstools-3.2_stable_branch.tests</a>
 							<!-- <table> <tr> <td> <img src="images/test.gif" /> Tests </td> <td 
 								align="right">??? </td> </tr> <tr> <td> <img src="images/testerr.gif" /> 
 								Errors </td> <td align="right">???</td> </tr> <tr> <td> <img src="images/testfail.gif" 

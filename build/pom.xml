@@ -13,8 +13,8 @@
 		<profile>
 			<id>libs</id>
 			<activation>
-                                <activeByDefault>true</activeByDefault>
-                        </activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<modules>
 				<module>libs</module>
 			</modules>
