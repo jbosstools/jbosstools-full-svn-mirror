@@ -80,23 +80,24 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			if (currCloud != null) {
 				currCloud.removeInstanceListListener(InstanceView.this);
 			}
-			setCurrentCloud(index);
-			storeSelectedCloud();
-			Display.getCurrent().asyncExec(new Runnable() {
+			DeltaCloud currentCloud = setCurrentCloud(index);
+			if (currentCloud != null) {
+				storeSelectedCloud(currentCloud);
+				Display.getCurrent().asyncExec(new Runnable() {
 
-				@Override
-				public void run() {
-					viewer.setInput(currCloud);
-					currCloud.addInstanceListListener(InstanceView.this);
-				}
-
-			});
+					@Override
+					public void run() {
+						viewer.setInput(currCloud);
+						currCloud.addInstanceListListener(InstanceView.this);
+					}
+				});
+			}
 		}
 
-		private void storeSelectedCloud() {
+		private void storeSelectedCloud(DeltaCloud cloud) {
 			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 			try {
-				prefs.put(IDeltaCloudPreferenceConstants.LAST_CLOUD_INSTANCE_VIEW, currCloud.getName());
+				prefs.put(IDeltaCloudPreferenceConstants.LAST_CLOUD_INSTANCE_VIEW, cloud.getName());
 			} catch (Exception exc) {
 				// do nothing
 			}
@@ -218,13 +219,14 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 		return clouds;
 	}
 
-	private void setCurrentCloud(int index) {
+	private DeltaCloud setCurrentCloud(int index) {
 		DeltaCloud[] clouds = getClouds();
 		if (index >= clouds.length) {
 			currCloud = null;
 		} else {
 			currCloud = getClouds()[index];
 		}
+		return currCloud;
 	}
 
 	private void setFilterLabelVisible(DeltaCloud currentCloud, Label filterLabel) {
@@ -373,7 +375,8 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 			Display.getDefault().syncExec(new Runnable() {
 				@Override
 				public void run() {
-					currCloud.addInstanceListListener(InstanceView.this); // does not add identical instance twice
+					// does not add identical instance twice
+					currCloud.addInstanceListListener(InstanceView.this); 
 					viewer.setInput(instances);
 					refreshToolbarCommandStates();
 				}
