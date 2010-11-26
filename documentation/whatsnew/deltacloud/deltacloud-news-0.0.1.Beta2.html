@@ -40,7 +40,7 @@
 					<b>Deltacloud Server</b>
 				</td>
 				<td valign="top">
-					We updated the tools to be able to work against the latest Deltacloud server. The tools are currently works well against a Deltacloud server in version 0.0.9. 
+					We updated the tools to be able to work against the latest Deltacloud server. The tools currently work well against a Deltacloud server running version 0.0.9. 
 					<p>
 						Related Jiras:<br /> 
 						<a href="http://jira.jboss.org/browse/JBIDE-7401">JBIDE-7401</a>, 
@@ -56,7 +56,7 @@
 				</td>
 				<td valign="top">
 					The connection wizard (that allows you to create new connections or edit existing ones) 
-					now shows errors and warnings in the title area, like most eclipse wizard do. 
+					now shows errors and warnings in the title area, like most eclipse wizards do. 
 					It now also decorates fields if you enter bogus values.
 					<p><img src="../images/deltacloud-connectionwizard.png" alt="" /></p>
 					<p>
@@ -83,11 +83,11 @@
 					<b>Cloud View</b>
 				</td>
 				<td valign="top">
-					We tried to stick to the patterns used in eclipse so that we better match the user expectations.
-					We therefore added all relevant actions to the context menu and removed the local view menu. 
+					We tried to stick to the usage patterns known in eclipse so that we better match the user expectations.
+					We therefore added all relevant actions to the context menu and removed the local view menu.<br/> 
 					You may now refresh the view, create new connections, launch instances, start and stop instances etc. 
 					right from your context menu.
-					We furthermore made sure that we use the default for refresh (F5) and disconnect (delete).
+					Furthermore we made sure that you may use the default key bindings for refresh (F5) and disconnect (delete).
 					<p><img src="../images/deltacloud-cloudview-contextmenu.png" alt="" /></p>
 					Related Jiras:<br /> 
 					<a href="http://jira.jboss.org/browse/JBIDE-7479">JBIDE-7479</a>, 
@@ -97,7 +97,7 @@
 					<a href="http://jira.jboss.org/browse/JBIDE-7307">JBIDE-7307</a>,  
 					<a href="http://jira.jboss.org/browse/JBIDE-7479">JBIDE-7479</a>  
 					<p>
-						You may now also select several entries in the cloud viewer and choose an action to apply on them
+						You now may select several entries in the cloud viewer and choose an action that shall be applied to all of them
 					</p>
 					<p><img src="../images/deltacloud-actions-toseveral.png" alt="" /></p>
 					<p>Related Jiras:</br> 
@@ -109,7 +109,8 @@
 					<a href="http://jira.jboss.org/browse/JBIDE-7499">JBIDE-7499</a>,  
 					<a href="http://jira.jboss.org/browse/JBIDE-7498">JBIDE-7498</a>
 					<p>
-						You may now also notice faster startup times since we delayed loading operations to when they're really needed.
+						Deltacloud takes less time to start since we now only load data when the data shall be shown in the UI. Prior versions did initial
+						data loads when starting up. 
 					</p>
 					<p>
 						The views now refresh immediately as soon as you change any setting to a cloud connection. You don't need to refresh the views any more. 
@@ -118,7 +119,7 @@
 					<a href="http://jira.jboss.org/browse/JBIDE-7396">JBIDE-7396</a>,  
 					<a href="http://jira.jboss.org/browse/JBIDE-7518">JBIDE-7518</a>
 					<p>
-						Any errors that occur while interacting with the server are now reported in a user friendly manner. 
+						We now report all errors in a user friendly manner. 
 					</p>
 					<p><img src="../images/deltacloud-servererror.png" alt="" /></p>
 					<p>Related Jiras:<br /> 
@@ -126,7 +127,7 @@
 					<a href="http://jira.jboss.org/browse/JBIDE-7586">JBIDE-7586</a>,  
 					<a href="http://jira.jboss.org/browse/JBIDE-7459">JBIDE-7459</a>  
 					<p>
-						We unfortunately had a bug in Beta1 that made credentials mix up if you had two connections to the same cloud. We fixed this for Beta2. 
+						Beta1 unfortunately had a bug that made credentials mix up if you had several distinct connections to the same cloud. We fixed this for Beta2. 
 					</p>
 					Related Jiras:<br />
 					<a href="http://jira.jboss.org/browse/JBIDE-7625">JBIDE-7625</a>
@@ -139,22 +140,24 @@
 				</td>
 				<td valign="top">
 					The properties view had several small issues when it was up to reflect updated settings.
-					Related Jiras:<br /> 
-					<a href="http://jira.jboss.org/browse/JBIDE-7523">JBIDE-7523</a>,  
-					<a href="http://jira.jboss.org/browse/JBIDE-7366">JBIDE-7366</a>
+					<p>
+						Related Jiras:<br /> 
+						<a href="http://jira.jboss.org/browse/JBIDE-7523">JBIDE-7523</a>,  
+						<a href="http://jira.jboss.org/browse/JBIDE-7366">JBIDE-7366</a>
+					</p>
 				</td>
 			</tr>
 			<tr> 
 				<td valign="top" align="left">
 					<a name="itemname3" id="itemname3"></a>
-					<b>Instance View</b>
+					<b>Instance View / Image View</b>
 				</td>
 				<td valign="top">
-					We enhanced the instance view in several ways and fixed bugs, too. <br />
 					There was an issue that prevented the Remote System Explorer to work with instances that run on EC2. <a href="https://jira.jboss.org/browse/JBIDE-7194">This</a> issue was fixed in Beta2.<br />
-					We removed the local view menu and put all actions to the context menu so that it better matches what eclipse users may expect. 
+					We removed the local view menu and put all actions to the context menu so that it better matches what eclipse users may expect. <br />
 					You can now select multiple instances and operate on them. The actions now behave exactly as they do in the 
-					cloud view. We also changed the icons and now display instance states by icons instead of plain text.
+					cloud view.<br>
+					We also changed the icons and now display instance states by icons instead of plain text.
 					<p><img src="../images/deltacloud-instanceview.png" alt="" /></p>
 					<p>Related Jiras:<br /> 
 					<a href="http://jira.jboss.org/browse/JBIDE-7194">JBIDE-7194</a>,  
@@ -165,7 +168,25 @@
 					<a href="http://jira.jboss.org/browse/JBIDE-7194">JBIDE-7194</a>, 
 					<a href="http://jira.jboss.org/browse/JBIDE-7549">JBIDE-7549</a>,  
 					<a href="http://jira.jboss.org/browse/JBIDE-7503">JBIDE-7503</a>
-		</td>
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Launch instances on EC2</b>
+				</td>
+				<td valign="top">
+					Deltacloud does unfortunately not report all images that are available in EC2. 
+					You may therefore not find your image in the appropriate lists (neither in the instance view nor in the cloud view).
+					We work around this issue and allow you to type an image name in a free text field. We then check if that image's 
+					known to the client or available on EC2. 
+					<p><img src="../images/deltacloud-launch-image.png" alt="" /></p>
+					<p>Related Jiras: 
+					<a href="http://jira.jboss.org/browse/JBIDE-7181">JBIDE-7181</a>,  
+					<a href="http://jira.jboss.org/browse/JBIDE-7180">JBIDE-7180</a>,  
+					<a href="http://jira.jboss.org/browse/JBIDE-7187">JBIDE-7187</a>,  
+					<a href="http://jira.jboss.org/browse/JBIDE-7581">JBIDE-7581</a>
+				</td>
 			</tr>
 		</table>
 	</body>
