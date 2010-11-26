@@ -3,17 +3,24 @@
 <repository name='JBoss Tools Staging Repository' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1290455663747'/>
+<!-- 
+     get new time w/ 
+      date +%s000
+      set new time w/ 
+       :%s/[0-9]\{13\}/1290752419000/g
+       -->
+<property name='p2.timestamp' value='1290752419000'/>
 </properties>
 <children size='9'>
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2.0.Beta2.nightly/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_stable_branch.nightly/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tests/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jmx/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-common/all/repo/'/>
+
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-pi4soa-3.1_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-teiid-designer-7.1_stable_branch/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-drools-5.2_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_stable_branch/tools/'/>
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-tests/all/repo/'/>
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-common/all/repo/'/>
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-jmx/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/xulrunner-1.9.1.2/all/repo/'/>
 </children>
 </repository>
