@@ -22,10 +22,6 @@ import java.util.regex.PatternSyntaxException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.equinox.security.storage.EncodingUtils;
-import org.eclipse.equinox.security.storage.ISecurePreferences;
-import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
-import org.eclipse.equinox.security.storage.StorageException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
@@ -54,8 +50,8 @@ public class DeltaCloud {
 
 	private InternalDeltaCloudClient client;
 
-	private DeltaCloudImagesRepository images = new DeltaCloudImagesRepository();
-	private DeltaCloudInstancesRepository instances = new DeltaCloudInstancesRepository();
+	private DeltaCloudImagesRepository images;
+	private DeltaCloudInstancesRepository instances;
 
 	private IImageFilter imageFilter;
 	private IInstanceFilter instanceFilter;
@@ -63,10 +59,10 @@ public class DeltaCloud {
 	private Map<String, Job> actionJobs;
 
 	private Object actionLock = new Object();
-	// TODO: switch to readwrite lock
 
 	ListenerList instanceListeners = new ListenerList();
 	ListenerList imageListeners = new ListenerList();
+	private SecurePasswordStore passwordStore;
 
 	public static interface IInstanceStateMatcher {
 		public boolean matchesState(DeltaCloudInstance instance, String instanceState);
@@ -92,8 +88,8 @@ public class DeltaCloud {
 		this.name = name;
 		this.username = username;
 		this.type = type;
-		storePassword(name, username, password);
-		this.client = createClient(name, url, username, password);
+		this.passwordStore = new SecurePasswordStore(new DeltaCloudPasswordStorageKey(name, username), password);
+		this.client = createClient(name, url, username, passwordStore.getPassword());
 		imageFilter = createImageFilter(imageFilterRules);
 		instanceFilter = createInstanceFilter(instanceFilterRules);
 	}
@@ -104,67 +100,18 @@ public class DeltaCloud {
 		this.name = name;
 		this.username = username;
 		this.type = type;
-		removePassword(name, username);
-		storePassword(name, username, password);
-		client = createClient(name, url, username, password);
+		this.passwordStore.update(new DeltaCloudPasswordStorageKey(name, username), password);
+		client = createClient(name, url, username, passwordStore.getPassword());
 		loadChildren();
 	}
 
 	private InternalDeltaCloudClient createClient(String name, String url, String username, String password)
 			throws DeltaCloudException {
 		try {
-			if (password == null) {
-				password = getPasswordFromPreferences(name, username);
-			}
 			return new DeltaCloudClientImpl(url, username, password);
 		} catch (MalformedURLException e) {
 			throw new DeltaCloudException(MessageFormat.format("Could not access cloud at {0}", url), e);
-		} catch (StorageException e) {
-			throw new DeltaCloudException(MessageFormat.format(
-					"Could not get password for user {0} on cloud at {1} in the preferences", username, url), e);
 		}
-	}
-
-	private String getPasswordFromPreferences(String cloudName, String username) throws StorageException {
-		String key = getPreferencesKey(cloudName, username); // $NON-NLS-1$
-		ISecurePreferences root = SecurePreferencesFactory.getDefault();
-		ISecurePreferences node = root.node(key);
-		String password = node.get("password", null); //$NON-NLS-1$
-		return password;
-	}
-
-	private void storePassword(String cloudName, String username, String passwd) throws DeltaCloudException {
-		if (passwd != null) {
-			ISecurePreferences root = SecurePreferencesFactory.getDefault();
-			String key = getPreferencesKey(cloudName, username);
-			ISecurePreferences node = root.node(key);
-			try {
-				node.put("password", passwd, true /* encrypt */); //$NON-NLS-1$
-			} catch (StorageException e) {
-				// TODO: internationalize string
-				throw new DeltaCloudException("Could not store password", e);
-			}
-		}
-	}
-
-	public void removePassword(String cloudName, String userName) throws DeltaCloudException {
-		String key = getPreferencesKey(cloudName, userName);
-		ISecurePreferences root = SecurePreferencesFactory.getDefault();
-		ISecurePreferences node = root.node(key);
-		if (node == null) {
-			throw new DeltaCloudException(MessageFormat.format(
-					"Could not remove password for cloud {0} from secure preferences store", cloudName));
-		}
-		node.clear();
-	}
-
-	public static String getPreferencesKey(String cloudName, String username) {
-		String key = new StringBuilder("/org/jboss/tools/deltacloud/core/") //$NON-NLS-1$
-				.append(cloudName)
-				.append('/') //$NON-NLS-1$
-				.append(username)
-				.toString();
-		return EncodingUtils.encodeSlashes(key);
 	}
 
 	public String getName() {
@@ -177,6 +124,10 @@ public class DeltaCloud {
 
 	public String getUsername() {
 		return username;
+	}
+
+	public String getPassword() throws DeltaCloudException {
+		return passwordStore.getPassword();
 	}
 
 	public String getType() {
@@ -257,6 +208,13 @@ public class DeltaCloud {
 		return imageFilter;
 	}
 
+	/**
+	 * Loads all children of this delta cloud instance (regardless if things
+	 * have already been loaded before). Catched and collects individual errors
+	 * that may occur and throws a multi exception.
+	 * 
+	 * @throws DeltaCloudException
+	 */
 	public void loadChildren() throws DeltaCloudException {
 		DeltaCloudMultiException multiException = new DeltaCloudMultiException(MessageFormat.format(
 				"Could not load children of cloud {0}", getName()));
@@ -305,14 +263,6 @@ public class DeltaCloud {
 
 	public void removeImageListListener(IImageListListener listener) {
 		imageListeners.remove(listener);
-	}
-
-	private DeltaCloudInstance[] cloneInstancesArray() {
-		return instances.get();
-	}
-
-	private DeltaCloudImage[] cloneImagesArray() {
-		return images.get();
 	}
 
 	private DeltaCloudImage[] notifyImageListListeners(DeltaCloudImage[] array) {
@@ -397,9 +347,12 @@ public class DeltaCloud {
 	 * 
 	 * @see #notifyInstanceListListeners(DeltaCloudInstance[])
 	 */
-	public DeltaCloudInstance[] loadInstances() throws DeltaCloudException {
+	private DeltaCloudInstance[] loadInstances() throws DeltaCloudException {
 		try {
 			clearInstances();
+			if (instances == null) {
+				instances = new DeltaCloudInstancesRepository();
+			}
 			instances.add(client.listInstances(), this);
 			// TODO: remove notification with all instances, replace by
 			// notifying the changed instance
@@ -411,28 +364,31 @@ public class DeltaCloud {
 	}
 
 	private void clearInstances() {
-		instances.clear();
-		notifyInstanceListListeners(instances.get());
+		if (instances != null) {
+			instances.clear();
+			notifyInstanceListListeners(instances.get());
+		}
 	}
 
 	private void clearImages() {
-		images.clear();
-		notifyImageListListeners(images.get());
+		if (images != null) {
+			images.clear();
+			notifyImageListListeners(images.get());
+		}
 	}
 
 	public DeltaCloudInstance[] getInstances() throws DeltaCloudException {
 		if (instances == null) {
-			instances = new DeltaCloudInstancesRepository();
 			return loadInstances();
 		}
-		return cloneInstancesArray();
+		return instances.get();
 	}
 
 	public DeltaCloudImage[] getImages() throws DeltaCloudException {
 		if (images == null) {
 			return loadImages();
 		}
-		return cloneImagesArray();
+		return images.get();
 	}
 
 	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
@@ -538,15 +494,6 @@ public class DeltaCloud {
 		return profileArray;
 	}
 
-	public DeltaCloudImage loadImage(String imageId) throws DeltaCloudException {
-		try {
-			Image image = client.listImages(imageId);
-			return images.add(image, this);
-		} catch (DeltaCloudClientException e) {
-			throw new DeltaCloudException(e);
-		}
-	}
-
 	/**
 	 * Loads the available images from the server and stores them locally.
 	 * Furthermore listeners get informed.
@@ -556,9 +503,12 @@ public class DeltaCloud {
 	 * 
 	 * @see #notifyImageListListeners(DeltaCloudImage[])
 	 */
-	public DeltaCloudImage[] loadImages() throws DeltaCloudException {
+	private DeltaCloudImage[] loadImages() throws DeltaCloudException {
 		try {
 			clearImages();
+			if (images == null) {
+				images = new DeltaCloudImagesRepository();
+			}
 			images.add(client.listImages(), this);
 			return notifyImageListListeners(images.get());
 		} catch (DeltaCloudClientException e) {
@@ -568,19 +518,15 @@ public class DeltaCloud {
 
 	}
 
-	public DeltaCloudImage getImage(String imageId) {
-		DeltaCloudImage deltaCloudImage = null;
+	public DeltaCloudImage loadImage(String imageId) throws DeltaCloudException {
 		try {
 			Image image = client.listImages(imageId);
-			deltaCloudImage = new DeltaCloudImage(image, this);
-		} catch (Exception e) {
-			// TODO: implement proper logging / error reporting / ignore
-			e.printStackTrace();
-			// do nothing and return null
+			return images.add(image, this);
+		} catch (DeltaCloudClientException e) {
+			throw new DeltaCloudException(e);
 		}
-		return deltaCloudImage;
 	}
-
+	
 	public boolean testConnection() throws DeltaCloudException {
 		String instanceId = "nonexistingInstance"; //$NON-NLS-1$
 		try {
@@ -629,5 +575,9 @@ public class DeltaCloud {
 			throw new DeltaCloudException(e);
 		}
 		return null;
+	}
+
+	public void dispose() throws DeltaCloudException {
+		passwordStore.remove();
 	}
 }

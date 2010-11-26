@@ -194,7 +194,7 @@ public class DeltaCloudManager {
 
 	public void removeCloud(DeltaCloud d) throws DeltaCloudException {
 		doGetClouds().remove(d);
-		d.removePassword(d.getName(), d.getName());
+		d.dispose();
 		saveClouds();
 		notifyListeners(ICloudManagerListener.REMOVE_EVENT);
 	}
