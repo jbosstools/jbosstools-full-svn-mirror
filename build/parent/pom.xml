@@ -804,8 +804,7 @@
 			<repositories>
 				<repository>
 					<id>jbosstools-nightly-trunk</id>
-					<url>http://download.jboss.org/jbosstools/updates/nightly/trunk/
-					</url>
+					<url>http://download.jboss.org/jbosstools/updates/nightly/3.2_stable_branch/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -816,7 +815,7 @@
 				</repository>
 				<repository>
 					<id>jbosstools-nightly-tests-trunk</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/jbosstools-tests/all/repo/ </url>
+					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2.0.Beta2/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
