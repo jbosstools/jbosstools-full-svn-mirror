@@ -13,8 +13,6 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import java.net.MalformedURLException;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.equinox.security.storage.ISecurePreferences;
-import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -45,29 +43,21 @@ public class EditCloudConnectionWizard extends Wizard implements INewWizard, Clo
 
 	@Override
 	public void addPages() {
-		String password = getPassword();
 		try {
+			String cloudName = cloud.getName();
+			String userName = cloud.getUsername();
+			String password = cloud.getPassword();
 			mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME),
-					cloud.getName(), cloud.getURL(), cloud.getUsername(), password,
-					cloud.getType(), this);
+					cloudName, cloud.getURL(), userName, password, cloud.getType(), this);
 			addPage(mainPage);
 		} catch (MalformedURLException e) {
 			ErrorUtils.handleError(WizardMessages.getString("EditCloudConnectionError.title"),
 					WizardMessages.getString("EditCloudConnectionError.message"), e, getShell());
+		} catch (DeltaCloudException e) {
+			// TODO: internationalize strings
+			ErrorUtils.handleError("Error",
+					"Could not create wizard page", e, getShell());
 		}
-	}
-
-	private String getPassword() {
-		String password = "";
-		String key = DeltaCloud.getPreferencesKey(cloud.getURL(), cloud.getUsername());
-		ISecurePreferences root = SecurePreferencesFactory.getDefault();
-		ISecurePreferences node = root.node(key);
-		try {
-			password = node.get("password", null); //$NON-NLS-1$
-		} catch (Exception e) {
-			Activator.log(e);
-		}
-		return password;
 	}
 
 	@Override
@@ -119,10 +109,10 @@ public class EditCloudConnectionWizard extends Wizard implements INewWizard, Clo
 		if (type == null) {
 			return null;
 		}
-		
+
 		return type.toString();
 	}
-	
+
 	@Override
 	public boolean needsProgressMonitor() {
 		return true;
