@@ -363,8 +363,9 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 			throws JavaModelException {
 		
 		String implementationLibrary = config.getStringProperty(IPortletConstants.IMPLEMENTATION_LIBRARY);
+		boolean isEPP = config.getBooleanProperty(IPortletConstants.IS_EPP);
 
-		if (IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE.equals(implementationLibrary)) {
+		if (IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE.equals(implementationLibrary) || isEPP) {
 			addLibrariesFromPortletBridgeRuntime(project,monitor,config);
 		} else if (IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME.equals(implementationLibrary)) {
 			addLibrariesFromServerRuntime(project,monitor,config);

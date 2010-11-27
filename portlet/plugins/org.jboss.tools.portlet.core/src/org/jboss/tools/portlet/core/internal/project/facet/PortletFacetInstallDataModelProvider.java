@@ -61,6 +61,9 @@ public class PortletFacetInstallDataModelProvider extends
 		if (propertyName.equals(IPortletConstants.ENABLE_IMPLEMENTATION_LIBRARY)) {
 			return Boolean.TRUE;
 		}
+		if (propertyName.equals(IPortletConstants.IS_EPP)) {
+			return Boolean.FALSE;
+		}
 		if (propertyName.equals(IPortletConstants.USER_LIBRARY_NAME)) {
 			return ""; //$NON-NLS-1$
 		}
@@ -88,6 +91,7 @@ public class PortletFacetInstallDataModelProvider extends
 		propertyNames.add(IPortletConstants.ENABLE_IMPLEMENTATION_LIBRARY);
 		propertyNames.add(IPortletConstants.USER_LIBRARY_NAME);
 		propertyNames.add(IPortletConstants.IMPLEMENTATION_LIBRARY);
+		propertyNames.add(IPortletConstants.IS_EPP);
 		propertyNames.add(PORTLET_LIBRARY_PROVIDER_DELEGATE);
 		
 		return propertyNames;

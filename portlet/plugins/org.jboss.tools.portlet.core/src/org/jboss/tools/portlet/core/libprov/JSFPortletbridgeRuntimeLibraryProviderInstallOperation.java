@@ -36,6 +36,7 @@ public class JSFPortletbridgeRuntimeLibraryProviderInstallOperation extends
 		String pbRuntime = portletbridgeConfig.getPortletbridgeHome();
 		getPortletbridgeLibraries(monitor, project, pbRuntime);
 		boolean addRichfacesCapabilities = portletbridgeConfig.isAddRichfacesCapabilities();
+		boolean isEPP = portletbridgeConfig.isEPP();
 		String richfacesType = portletbridgeConfig.getRichfacesType();
 		String richfacesRuntime = portletbridgeConfig.getRichfacesRuntime();
 		try {
@@ -43,6 +44,7 @@ public class JSFPortletbridgeRuntimeLibraryProviderInstallOperation extends
 			prefs = prefs.node(IPortletConstants.PORTLET_BRIDGE_HOME);
 			prefs.put(IPortletConstants.PREFS_PORTLETBRIDGE_HOME, pbRuntime);
 			prefs.putBoolean(IPortletConstants.RICHFACES_CAPABILITIES, addRichfacesCapabilities);
+			prefs.putBoolean(IPortletConstants.IS_EPP, isEPP);
 			prefs.put(IPortletConstants.RICHFACES_LIBRARIES_TYPE, richfacesType);
 			prefs.put(IPortletConstants.RICHFACES_RUNTIME, richfacesRuntime);
 			prefs.flush();

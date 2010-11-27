@@ -23,6 +23,7 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 	private boolean addRichfacesCapabilities;
 	private String richfacesType;
 	private String richfacesRuntime;
+	private Boolean isEPP = null;
 	
 	@Override
 	public synchronized IStatus validate() {
@@ -31,6 +32,9 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 			return status;
 		}
 		if (!addRichfacesCapabilities) {
+			return status;
+		}
+		if (isEPP()) {
 			return status;
 		}
 		if (!IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES.equals(richfacesType)) {
@@ -79,6 +83,7 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 			Preferences prefs = FacetedProjectFramework.getPreferences( f );
 			prefs = prefs.node(IPortletConstants.PORTLET_BRIDGE_HOME);
 			prefs.putBoolean(IPortletConstants.RICHFACES_CAPABILITIES, addRichfacesCapabilities);
+			prefs.putBoolean(IPortletConstants.IS_EPP, isEPP());
 			prefs.put(IPortletConstants.RICHFACES_LIBRARIES_TYPE, richfacesType);
 			prefs.put(IPortletConstants.RICHFACES_RUNTIME, richfacesRuntime);
 		} catch (BackingStoreException e) {
@@ -100,6 +105,7 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 	@Override
 	public void reset() {
 		super.reset();
+		isEPP = null;
 		IProjectFacet f = getProjectFacet();
         try {
 			Preferences prefs = FacetedProjectFramework.getPreferences( f );
@@ -138,4 +144,23 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 		notifyListeners(IPortletConstants.RICHFACES_RUNTIME, oldValue, richfacesRuntime);
 		updatePreferences();
 	}
+
+	public boolean isEPP() {
+		if (isEPP == null) {
+			IFacetedProjectBase facetedProject = getFacetedProject();
+			if (facetedProject == null) {
+				return false;
+			}
+			isEPP = PortletCoreActivator.isEPP(facetedProject);
+			IProjectFacet f = getProjectFacet();
+	        try {
+				Preferences prefs = FacetedProjectFramework.getPreferences( f );
+				prefs.putBoolean(IPortletConstants.IS_EPP, isEPP());
+			} catch (BackingStoreException e) {
+				PortletCoreActivator.log(e);
+			}
+		}
+		return isEPP;
+	}
+
 }

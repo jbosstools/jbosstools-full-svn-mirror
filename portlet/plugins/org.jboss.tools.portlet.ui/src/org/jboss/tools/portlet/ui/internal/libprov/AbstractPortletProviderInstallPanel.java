@@ -19,7 +19,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.PortletCoreActivator;
 import org.jboss.tools.portlet.core.libprov.AbstractLibraryProviderInstallOperationConfig;
 import org.jboss.tools.portlet.ui.Messages;
 
@@ -30,6 +32,7 @@ public abstract class AbstractPortletProviderInstallPanel extends LibraryProvide
 	private Text richfacesText;
 	private AbstractLibraryProviderInstallOperationConfig config;
 	private Button richfacesButton;
+	private boolean isEPP;
 
 	@Override
     public Control createControl( final Composite parent )
@@ -38,22 +41,24 @@ public abstract class AbstractPortletProviderInstallPanel extends LibraryProvide
         final GridLayout layout = new GridLayout( 1, false );
         config = (AbstractLibraryProviderInstallOperationConfig) getOperationConfig();
 		
+        isEPP = config.isEPP();
+        
         layout.marginWidth = 0;
         layout.marginHeight = 0;
         composite.setLayout( layout );
         addMessage(composite);
-        addPortletBridgeGroup(composite);
-        addRichfacesGroup(composite);
+        addPortletBridgeGroup(composite, isEPP);
+        addRichfacesGroup(composite, isEPP);
         return composite;
     }
 	
 	protected abstract void addMessage(Composite composite);
 	
-	protected abstract void addPortletBridgeGroup(Composite composite);
+	protected abstract void addPortletBridgeGroup(Composite composite, boolean isEPP);
 	
 	protected abstract List<String> getRichfacesTypes();
 
-	private void addRichfacesGroup(Composite composite) {
+	private void addRichfacesGroup(Composite composite, boolean isEPP) {
 		Group richfacesGroup = new Group(composite, SWT.NONE);
 		richfacesGroup.setLayout(new GridLayout(2, false));
 		richfacesGroup.setText(Messages.JSFPortletFacetInstallPage_Richfaces_Capabilities);
@@ -70,6 +75,9 @@ public abstract class AbstractPortletProviderInstallPanel extends LibraryProvide
 			}
 			
 		});
+		if (isEPP) {
+			return;
+		}
 		richFacesLibraryCombo = new Combo(richfacesGroup, SWT.READ_ONLY);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan=2;
@@ -93,6 +101,11 @@ public abstract class AbstractPortletProviderInstallPanel extends LibraryProvide
 		enableRichfacesLibraries();
 		richFacesLibraryCombo.select(0);
 		config.setRichfacesType(richFacesLibraryCombo.getText());
+		if (isEPP) {
+			richFacesLibraryCombo.setEnabled(false);
+			richfacesButton.setEnabled(false);
+			richfacesText.setEnabled(false);
+		}
 	}
 
 	private void configureRichfacesCombo() {
@@ -145,6 +158,9 @@ public abstract class AbstractPortletProviderInstallPanel extends LibraryProvide
 	}
 	
 	private void enableRichfacesLibraries() {
+		if (isEPP) {
+			return;
+		}
 		boolean enabled = addRichFacesLibraries.getSelection();
 		richFacesLibraryCombo.setEnabled(enabled);
 		if (enabled) {
@@ -161,5 +177,4 @@ public abstract class AbstractPortletProviderInstallPanel extends LibraryProvide
 		return Display.getCurrent().getActiveShell();
 	}
 
-	
 }

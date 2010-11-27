@@ -22,7 +22,7 @@ public class JSFPortletServerRuntimeProviderInstallPanel extends AbstractPortlet
 	}
 
 	@Override
-	protected void addPortletBridgeGroup(Composite composite) {
+	protected void addPortletBridgeGroup(Composite composite, boolean isEPP) {
 	}
 	
 	@Override

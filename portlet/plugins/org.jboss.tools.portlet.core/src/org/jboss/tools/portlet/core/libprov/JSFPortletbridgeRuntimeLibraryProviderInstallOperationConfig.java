@@ -27,6 +27,9 @@ public class JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig extend
 		if (!status.isOK()) {
 			return status;
 		}
+		if (isEPP()) {
+			return status;
+		}
 		if (portletbridgeHome == null) {
 			return getInvalidPortletbridgeRuntime();
 		}
@@ -61,6 +64,9 @@ public class JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig extend
 	}
 
 	public String getPortletbridgeHome() {
+		if (isEPP()) {
+			return PortletCoreActivator.getEPPDir(getFacetedProject(), PortletCoreActivator.PORTLETBRIDGE).getAbsolutePath();
+		}
 		return portletbridgeHome;
 	}
 

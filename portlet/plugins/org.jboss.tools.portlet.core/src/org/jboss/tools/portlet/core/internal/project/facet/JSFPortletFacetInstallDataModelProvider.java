@@ -75,6 +75,9 @@ public class JSFPortletFacetInstallDataModelProvider extends
 		if (propertyName.equals(IPortletConstants.IMPLEMENTATION_LIBRARY)) {
 			return IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE;
 		}
+		if (propertyName.equals(IPortletConstants.IS_EPP)) {
+			return Boolean.FALSE;
+		}
 		if (propertyName.equals(IPortletConstants.USER_LIBRARY_NAME)) {
 			return ""; //$NON-NLS-1$
 		}
@@ -90,6 +93,7 @@ public class JSFPortletFacetInstallDataModelProvider extends
 		propertyNames.add(IPortletConstants.DEPLOY_JARS);
 		propertyNames.add(IPortletConstants.PORTLET_BRIDGE_RUNTIME);
 		propertyNames.add(IPortletConstants.IMPLEMENTATION_LIBRARY);
+		propertyNames.add(IPortletConstants.IS_EPP);
 		propertyNames.add(IPortletConstants.USER_LIBRARY_NAME);
 		propertyNames.add(IPortletConstants.RICHFACES_RUNTIME);
 		propertyNames.add(IPortletConstants.RICHFACES_LIBRARIES_SELECTED);

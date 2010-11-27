@@ -22,6 +22,7 @@ public class Messages extends NLS {
 	public static String NewPortletWizard_Specify_modifiers_interfaces_to_implement_and_method_stubs_to_generate;
 	public static String No_portlets_exist_to_add;
 	public static String IPortletUIConstants_Add_the_jboss_portlet_xml_file;
+	public static String IPortletUIConstants_Configure_GateIn_parameters;
 	public static String IPortletUIConstants_Copy_JSF_Templates;
 	public static String IPortletUIConstants_Create_JBoss_Application;
 	public static String IPortletUIConstants_Create_JBoss_JSF_Portlet;
@@ -46,22 +47,13 @@ public class Messages extends NLS {
 	public static String JSFPortletFacetInstallPage_Add_Change_Richfaces_Libraries;
 	public static String JSFPortletFacetInstallPage_Add_JBoss_JSF_Portlet_capabilities_to_this_Web_Project;
 	public static String JSFPortletFacetInstallPage_Browse;
-	public static String JSFPortletFacetInstallPage_Deploy_jars;
-	public static String JSFPortletFacetInstallPage_Invalid_Portletbridge_Runtime_directory;
-	public static String JSFPortletFacetInstallPage_Invalid_Richfaces_Runtime_directory;
 	public static String JSFPortletFacetInstallPage_JBoss_JSF_Portlet_Capabilities;
 	public static String JSFPortletFacetInstallPage_Portletbridge_Runtime;
-	public static String JSFPortletFacetInstallPage_Portletbridge_Runtime_directory_is_required;
 	public static String JSFPortletFacetInstallPage_Richfaces_Capabilities;
-	public static String JSFPortletFacetInstallPage_RichFaces_Runtime_directory_is_required;
 	public static String JSFPortletFacetInstallPage_Select_Portletbridge_Runtime;
 	public static String JSFPortletFacetInstallPage_Select_RichFaces_Runtime;
-	public static String PortletFacetInstallPage_Add;
 	public static String PortletFacetInstallPage_Add_JBoss_Portlet_capabilities_to_this_Web_Project;
-	//public static String PortletFacetInstallPage_Enable_implementation_library;
 	public static String PortletFacetInstallPage_JBoss_Portlet_Capabilities;
-	public static String PortletFacetInstallPage_User_Library;
-	//public static String PortletFacetInstallPage_You_have_to_choose_an_user_library;
 	public static String PortletServerRuntimeProviderInstallPanel_The_targeted_runtime_contains_a_portlet_library;
 	public static String PortletUIActivator_The_portlet_xml_file_doesnt_exist;
 	static {

@@ -3,6 +3,7 @@ package org.jboss.tools.portlet.core;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -22,8 +23,10 @@ import org.eclipse.jst.j2ee.model.IModelProvider;
 import org.eclipse.jst.j2ee.model.ModelProviderManager;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.wst.common.componentcore.ComponentCore;
+import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.ServerCore;
+import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -31,6 +34,8 @@ import org.osgi.framework.BundleContext;
  */
 public class PortletCoreActivator extends Plugin {
 
+	public static final String PORTLETBRIDGE = "portletbridge"; //$NON-NLS-1$
+	public static final String SEAM = "seam"; //$NON-NLS-1$
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.jboss.tools.portlet.core"; //$NON-NLS-1$
 	public static final String RESOURCES_FOLDER = "resources"; //$NON-NLS-1$
@@ -260,6 +265,76 @@ public class PortletCoreActivator extends Plugin {
 				return r;
 		}
 		
+		return null;
+	}
+	
+	public static boolean isEPP(IFacetedProjectBase facetedProject) {
+		if (facetedProject == null) {
+			return false;
+		}
+		boolean hasSeamAndPortletBridge = getEPPDir(facetedProject, PORTLETBRIDGE) != null &&
+			getEPPDir(facetedProject, PORTLETBRIDGE).isDirectory() &&
+			getEPPDir(facetedProject, SEAM) != null &&
+			getEPPDir(facetedProject, SEAM).isDirectory();
+		if (!hasSeamAndPortletBridge) {
+			return false;
+		}
+		File portletBridgeHome = getEPPDir(facetedProject, PORTLETBRIDGE);
+		String[] list = portletBridgeHome.list(new FilenameFilter() {
+			
+			public boolean accept(File dir, String name) {
+				if (name.startsWith("portletbridge") && name.endsWith(".jar")) {  //$NON-NLS-1$//$NON-NLS-2$
+					return true;
+				}
+				return false;
+			}
+		});
+		boolean ok = list != null && list.length >= 2;
+		if (!ok) {
+			return false;
+		}
+		File seamHome = getEPPDir(facetedProject, SEAM);
+		File seamLib = new File(seamHome, "lib"); //$NON-NLS-1$
+		list = seamLib.list(new FilenameFilter() {
+			
+			public boolean accept(File dir, String name) {
+				if (name.startsWith("jsf-facelets") && name.endsWith(".jar")) {  //$NON-NLS-1$//$NON-NLS-2$
+					return true;
+				}
+				return false;
+			}
+		});
+		return list != null && list.length >= 1;
+	}
+
+	public static File getEPPDir(IFacetedProjectBase facetedProject, String dir) {
+		File location = getRuntimeLocation(facetedProject);
+		if (location != null) {
+			return new File(location.getParentFile(), dir);
+		}
+		return null;
+	}
+	
+	private static File getRuntimeLocation(IFacetedProjectBase facetedProject) {
+		if (facetedProject == null) {
+			return null;
+		}
+		org.eclipse.wst.common.project.facet.core.runtime.IRuntime facetRuntime = facetedProject.getPrimaryRuntime();
+		if (facetRuntime == null) {
+			return null;
+		}
+		IRuntime runtime = getRuntime(facetRuntime);
+		if (runtime == null) {
+			return null;
+		}
+		File location = runtime.getLocation().toFile();
+		if (location == null || !location.isDirectory()) {
+			return null;
+		}
+		IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
+		if (jbossRuntime != null) {
+			return location;
+		}
 		return null;
 	}
 }

@@ -93,6 +93,8 @@ public interface IPortletConstants {
 
 	static final String RICHFACES_RUNTIME = "RICHFACES_RUNTIME"; //$NON-NLS-1$
 
+	static final String IS_EPP = "IS_EPP"; //$NON-NLS-1$
+
 	static final String RICHFACES_LIBRARIES_SELECTED = "RICHFACES_LIBRARIES_SELECTED"; //$NON-NLS-1$
 	
 	static final String RICHFACES_LIBRARIES_TYPE = "RICHFACES_LIBRARIES_TYPE"; //$NON-NLS-1$
