@@ -450,7 +450,6 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 	private List<File> prepareEarList(File seamLib) {
 		File[] files = seamLib.listFiles(new FileFilter() {
 			
-			@Override
 			public boolean accept(File pathname) {
 				String name = pathname.getName();
 				if (name.endsWith(".jar") && name.startsWith("richfaces-api")) { //$NON-NLS-1$ //$NON-NLS-2$
