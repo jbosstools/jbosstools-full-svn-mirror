@@ -186,8 +186,15 @@ public class TestUtil {
 		long start = System.currentTimeMillis();
 		while (!Job.getJobManager().isIdle()) {
 			delay(500);
-			if ( (System.currentTimeMillis()-start) > maxIdle ) 
-				throw new RuntimeException("A long running task detected"); //$NON-NLS-1$
+			if ( (System.currentTimeMillis()-start) > maxIdle ) {
+				Job[] jobs = Job.getJobManager().find(null);
+				StringBuffer jobsList = new StringBuffer("A long running task detected\n");
+				
+				for (Job job : jobs) {
+					jobsList.append(job.getName()).append("\n");
+				}
+				throw new RuntimeException(jobsList.toString()); //$NON-NLS-1$
+			}
 		}
 	}
 	
