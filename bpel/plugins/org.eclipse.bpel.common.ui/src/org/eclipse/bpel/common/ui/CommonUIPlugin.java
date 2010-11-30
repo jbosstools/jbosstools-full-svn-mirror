@@ -48,14 +48,16 @@ public class CommonUIPlugin extends AbstractUIPlugin {
 	private static CommonUIPlugin plugin;
 	
 	private ColorRegistry colorRegistry;
-	protected boolean imagesAndColorsInitialized;
+	
+	// https://jira.jboss.org/browse/JBIDE-7762
+	// simplify, simplify, simplify!
+	private ImageRegistry imageRegistry;
 	
 	/**
 	 * The constructor.
 	 */
 	public CommonUIPlugin() {
 		plugin = this;
-		imagesAndColorsInitialized = false;
 	}
 
 	/**
@@ -101,9 +103,11 @@ public class CommonUIPlugin extends AbstractUIPlugin {
 	@Override
 	// https://jira.jboss.org/browse/JBIDE-7724
 	public synchronized ImageRegistry getImageRegistry() {
-		ImageRegistry result = super.getImageRegistry();
-		initialize();
-		return result;
+		if (imageRegistry == null) {
+			imageRegistry = super.getImageRegistry();
+			initializeImages(Display.getCurrent());
+		}
+		return imageRegistry;
 	}
 	
 	/**
@@ -114,7 +118,7 @@ public class CommonUIPlugin extends AbstractUIPlugin {
 	public synchronized ColorRegistry getColorRegistry() {
 		if (colorRegistry == null) {
 			colorRegistry = new ColorRegistry();
-			initialize();
+			registerColors(Display.getCurrent());
 		}
 		return colorRegistry;
 	}
@@ -198,15 +202,6 @@ public class CommonUIPlugin extends AbstractUIPlugin {
 		// selection handler
 		Color selectionColor = Display.getCurrent().getSystemColor(SWT.COLOR_LIST_SELECTION);
 		colorRegistry.put(ICommonUIConstants.COLOR_SELECTION_HANDLE_CORNER, ColorUtils.getLightShade(selectionColor.getRGB(), 2, 3));
-	}
-
-	protected void initialize() {
-		if (!imagesAndColorsInitialized) {
-			imagesAndColorsInitialized = true;
-			Display display = Display.getCurrent();
-			initializeImages(display);
-			registerColors(display);
-		}
 	}
 
 	/**
