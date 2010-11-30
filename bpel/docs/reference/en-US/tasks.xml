@@ -73,7 +73,6 @@
                         <row>
                             <entry>Field</entry>
                             <entry>Value</entry>
-                            
                         </row>
                     </thead> 
                     <tbody>            
@@ -115,8 +114,7 @@
                     <thead>
                         <row>
                             <entry>Field</entry>
-                            <entry>Value</entry>
-                            
+                            <entry>Value</entry>  
                         </row>
                     </thead> 
                     <tbody>            
@@ -195,8 +193,7 @@
                     <thead>
                         <row>
                             <entry>Tab</entry>
-                            <entry>Description</entry>
-                            
+                            <entry>Description</entry>      
                         </row>
                     </thead> 
                     <tbody>            
