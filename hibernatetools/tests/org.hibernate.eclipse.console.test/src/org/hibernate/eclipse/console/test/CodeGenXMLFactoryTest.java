@@ -234,6 +234,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryRevengAll() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(true, true, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestSimple(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
 		String sample = getSample("AntCodeGenReveng_test1.xml"); //$NON-NLS-1$
@@ -244,6 +245,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryRevengOne() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(true, false, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestSimple(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
 		String sample = getSample("AntCodeGenReveng_test2.xml"); //$NON-NLS-1$
@@ -254,6 +256,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryAll() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, true, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestRelative(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		//
 		String strPlace = "project/src"; //$NON-NLS-1$
 		codeGenFactory.setPlace2Generate(strPlace);
@@ -269,6 +272,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryOne() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, false, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestRelative(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		//
 		String strPlace = "project/src"; //$NON-NLS-1$
 		codeGenFactory.setPlace2Generate(strPlace);
@@ -284,6 +288,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryJpaAll() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, true, true);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestJpa(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
 		codeGen = updatePaths(codeGen);
@@ -295,6 +300,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryJpaOne() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, false, true);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestJpa(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
 		codeGen = updatePaths(codeGen);
@@ -306,6 +312,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryNullableAll() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, true, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestNullable(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
 		codeGen = updatePaths(codeGen);
@@ -317,6 +324,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryNullableOne() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, false, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestNullable(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
 		codeGen = updatePaths(codeGen);
@@ -328,6 +336,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryPropertiesAll() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, true, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestProperties(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
 		codeGen = updatePaths(codeGen);
@@ -340,6 +349,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryPropertiesOne() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, false, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestProperties(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
 		codeGen = updatePaths(codeGen);
@@ -352,6 +362,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryInternalPropertiesAll() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, true, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestProperties(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		codeGenFactory.setExternalPropFile(false);
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();
@@ -365,6 +376,7 @@ public class CodeGenXMLFactoryTest extends TestCase {
 	public void testCodeGenXMLFactoryInternalPropertiesOne() {
 		TestLaunchConfig testLaunchConfig = createTestLaunchConfig(false, false, false);
 		CodeGenXMLFactory codeGenFactory = new CodeGenXMLFactory4TestProperties(testLaunchConfig);
+		assertEquals(codeGenFactory.getVersionTestMarker(), "qwerty"); //$NON-NLS-1$
 		codeGenFactory.setExternalPropFile(false);
 		String codeGen = adjustXmlText(codeGenFactory.createCodeGenXML());
 		String codeGenProperties = codeGenFactory.getPropFileContentPreSave();

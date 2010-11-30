@@ -556,4 +556,9 @@ public class CodeGenXMLFactory {
 		externalPropFileName = fileName + "." + externalPropFileName; //$NON-NLS-1$
 		return externalPropFileName;
 	}
+	
+	// special test code -> to fix tests on Hudson...
+	public String getVersionTestMarker() {
+		return "qwerty"; //$NON-NLS-1$
+	}
 }
