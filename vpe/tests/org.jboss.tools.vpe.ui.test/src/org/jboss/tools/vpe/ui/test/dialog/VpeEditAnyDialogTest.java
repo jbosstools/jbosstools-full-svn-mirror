@@ -11,11 +11,11 @@ package org.jboss.tools.vpe.ui.test.dialog;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.vpe.base.test.VpeTest;
 import org.jboss.tools.vpe.editor.template.VpeAnyData;
 import org.jboss.tools.vpe.editor.template.VpeEditAnyDialog;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.Constants;
-import org.jboss.tools.vpe.ui.test.VpeTest;
 
 public class VpeEditAnyDialogTest extends VpeTest {
 

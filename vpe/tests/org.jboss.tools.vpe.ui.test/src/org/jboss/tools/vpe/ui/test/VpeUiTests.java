@@ -12,6 +12,8 @@ package org.jboss.tools.vpe.ui.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.jboss.tools.vpe.base.test.VpeTestSetup;
 import org.jboss.tools.vpe.ui.test.dialog.VpeEditAnyDialogTest;
 import org.jboss.tools.vpe.ui.test.dialog.VpeResourcesDialogTest;
 import org.jboss.tools.vpe.ui.test.editor.CustomSashFormTest;

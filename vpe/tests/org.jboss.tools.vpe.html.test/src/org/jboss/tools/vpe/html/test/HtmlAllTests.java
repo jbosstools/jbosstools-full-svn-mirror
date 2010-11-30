@@ -13,8 +13,8 @@ package org.jboss.tools.vpe.html.test;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.jboss.tools.vpe.base.test.VpeTestSetup;
 import org.jboss.tools.vpe.html.test.jbide.JBIDE3280Test;
-import org.jboss.tools.vpe.ui.test.VpeTestSetup;
 
 
 /**

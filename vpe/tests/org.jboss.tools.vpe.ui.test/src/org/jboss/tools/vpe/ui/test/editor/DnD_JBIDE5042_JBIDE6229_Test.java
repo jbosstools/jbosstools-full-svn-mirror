@@ -8,7 +8,7 @@
   * Contributor:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.jsf.vpe.jsf.test.jbide;
+package org.jboss.tools.vpe.ui.test.editor;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -21,15 +21,14 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
-import org.jboss.tools.jsf.vpe.jsf.test.JsfAllTests;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.vpe.base.test.TestUtil;
+import org.jboss.tools.vpe.base.test.VpeTest;
 import org.jboss.tools.vpe.dnd.VpeDnD;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEventAdapter;
-import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.ui.test.VpeTest;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.api.Invocation;
@@ -214,7 +213,7 @@ public class DnD_JBIDE5042_JBIDE6229_Test  extends VpeTest {
 	private JSPMultiPageEditor openPageInVpe(final String pageName) throws CoreException,
 			PartInitException, IOException {
 		IFile elementPageFile = (IFile) TestUtil.getComponentPath(
-				pageName, JsfAllTests.IMPORT_PROJECT_NAME);
+				pageName, "jsfTest" /* JsfAllTests.IMPORT_PROJECT_NAME */);
 		IEditorInput input = new FileEditorInput(elementPageFile);
 
 		JSPMultiPageEditor editor = (JSPMultiPageEditor) PlatformUI.getWorkbench()
