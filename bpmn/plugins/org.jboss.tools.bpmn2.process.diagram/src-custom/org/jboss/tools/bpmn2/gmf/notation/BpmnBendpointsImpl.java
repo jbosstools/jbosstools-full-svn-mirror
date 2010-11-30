@@ -2,12 +2,10 @@ package org.jboss.tools.bpmn2.gmf.notation;
 
 import java.util.List;
 
-import org.eclipse.bpmn2.di.BPMNEdge;
 import org.eclipse.bpmn2.di.BPMNShape;
 import org.eclipse.dd.dc.Bounds;
 import org.eclipse.dd.dc.DcFactory;
 import org.eclipse.dd.dc.Point;
-import org.eclipse.dd.di.DiagramElement;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
 import org.eclipse.gmf.runtime.notation.View;
@@ -21,6 +19,10 @@ public class BpmnBendpointsImpl extends RelativeBendpointsImpl implements
 	
 	public void setEdge(Edge edge) {
 		this.edge = edge;
+	}
+	
+	public Edge getEdge() {
+		return edge;
 	}
 	
 	@SuppressWarnings("rawtypes")

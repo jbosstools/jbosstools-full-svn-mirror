@@ -6,10 +6,8 @@ import java.util.Map;
 
 import org.eclipse.bpmn2.Artifact;
 import org.eclipse.bpmn2.FlowElement;
-import org.eclipse.bpmn2.FlowNode;
-import org.eclipse.bpmn2.Process;
 import org.eclipse.bpmn2.FlowElementsContainer;
-import org.eclipse.bpmn2.SequenceFlow;
+import org.eclipse.bpmn2.Process;
 import org.eclipse.bpmn2.SubProcess;
 import org.eclipse.bpmn2.di.BPMNDiagram;
 import org.eclipse.bpmn2.di.BPMNEdge;
@@ -87,18 +85,18 @@ public class BpmnDiagramImpl extends DiagramImpl implements Diagram {
 			BpmnEdgeImpl edge = (BpmnEdgeImpl)view;
 			View parentView = viewMap.get(parent);
 			if (parentView != null && parentView instanceof Diagram) {
-				edge.initialize((Diagram)parentView);
+				edge.initialize((Diagram)parentView, viewMap);
 			}
-			EObject bpmnElement = edge.getElement();
-			if (bpmnElement instanceof SequenceFlow) {
-				SequenceFlow sequenceFlow = (SequenceFlow)bpmnElement;
-				FlowNode source = sequenceFlow.getSourceRef();
-				FlowNode target = sequenceFlow.getTargetRef();
-				View sourceView = viewMap.get(source);
-				View targetView = viewMap.get(target);
-				edge.setSource(sourceView);
-				edge.setTarget(targetView);
-			}
+//			EObject bpmnElement = edge.getElement();
+//			if (bpmnElement instanceof SequenceFlow) {
+//				SequenceFlow sequenceFlow = (SequenceFlow)bpmnElement;
+//				FlowNode source = sequenceFlow.getSourceRef();
+//				FlowNode target = sequenceFlow.getTargetRef();
+//				View sourceView = viewMap.get(source);
+//				View targetView = viewMap.get(target);
+//				edge.setSource(sourceView);
+//				edge.setTarget(targetView);
+//			}
 		}
 	}
 	

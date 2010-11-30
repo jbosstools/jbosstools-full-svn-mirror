@@ -2,21 +2,18 @@ package org.jboss.tools.bpmn2.gmf.notation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.bpmn2.BaseElement;
+import org.eclipse.bpmn2.FlowNode;
+import org.eclipse.bpmn2.SequenceFlow;
 import org.eclipse.bpmn2.di.BPMNEdge;
 import org.eclipse.dd.dc.Bounds;
 import org.eclipse.dd.dc.Point;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.gmf.runtime.notation.Bendpoints;
 import org.eclipse.gmf.runtime.notation.Connector;
 import org.eclipse.gmf.runtime.notation.Diagram;
-import org.eclipse.gmf.runtime.notation.NotationFactory;
-import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
@@ -47,15 +44,17 @@ public class BpmnEdgeImpl extends ConnectorImpl implements Connector {
 	public void setBendpoints(Bendpoints bendpoints) {
 		if (bendpoints != null && bendpoints instanceof BpmnBendpointsImpl) {
 			BpmnBendpointsImpl bpmnBendpoints = (BpmnBendpointsImpl)bendpoints;
-			bpmnBendpoints.setEdge(this);
-			// force refresh of the points list
-			bpmnBendpoints.setPoints(bpmnBendpoints.getPoints());
+			if (bpmnBendpoints.getEdge() != this) { 
+				bpmnBendpoints.setEdge(this);
+				// force refresh of the points list
+				bpmnBendpoints.setPoints(bpmnBendpoints.getPoints());
+			}
 		} 
 		super.setBendpoints(bendpoints);
 	}
 		
-	public void initialize(Diagram parentView) {
-		initializeElement();
+	public void initialize(Diagram parentView, Map<EObject, View> viewMap) {
+		initializeElement(viewMap);
 		initializeBendpoints();
 		setType(Bpmn2VisualIDRegistry.getType(
 						Bpmn2VisualIDRegistry.getLinkWithClassVisualID(getElement())));
@@ -87,10 +86,19 @@ public class BpmnEdgeImpl extends ConnectorImpl implements Connector {
 		
 	}
 
-	private void initializeElement() {
+	private void initializeElement(Map<EObject, View> viewMap) {
 		EObject element = bpmnEdge.getBpmnElement();
 		if (element != null) {
 			super.setElement(element);
+		}
+		if (element instanceof SequenceFlow) {
+			SequenceFlow sequenceFlow = (SequenceFlow)element;
+			FlowNode source = sequenceFlow.getSourceRef();
+			FlowNode target = sequenceFlow.getTargetRef();
+			View sourceView = viewMap.get(source);
+			View targetView = viewMap.get(target);
+			setSource(sourceView);
+			setTarget(targetView);
 		}
 	}
 
