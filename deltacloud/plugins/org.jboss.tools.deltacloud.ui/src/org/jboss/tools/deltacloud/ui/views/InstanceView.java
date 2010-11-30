@@ -221,7 +221,7 @@ public class InstanceView extends ViewPart implements ICloudManagerListener, IIn
 
 	private DeltaCloud setCurrentCloud(int index) {
 		DeltaCloud[] clouds = getClouds();
-		if (index >= clouds.length) {
+		if (index < 0 || index >= clouds.length) {
 			currCloud = null;
 		} else {
 			currCloud = getClouds()[index];
