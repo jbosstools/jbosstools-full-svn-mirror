@@ -594,6 +594,9 @@
 			<separator
 				name="filters"
 				visible="true" />
+			<separator
+				name="remoteSysExplorer"
+				visible="true" />
 	</menuContribution>
 	<!-- instance commands -->
     <menuContribution
@@ -729,6 +732,19 @@
                label="%command.filterinstances.label"
                style="push"
                tooltip="%command.filterinstances.tooltip">
+         </command>
+      </menuContribution>
+	  <!-- remote system explorer -->
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=remoteSysExplorer">	
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer"
+               disabledIcon="icons/system_viewd.gif"
+               icon="icons/system_view.gif"
+               label="%command.showInRemoteSysExplorer"
+               style="push"
+               tooltip="%command.showInRemoteSysExplorer.tooltip">
          </command>
       </menuContribution>
     </extension>

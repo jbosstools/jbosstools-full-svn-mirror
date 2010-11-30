@@ -1,3 +1,8 @@
+2010-11-30  André Dietisheim  <adietish@redhat.com>
+
+	* plugin.xml: 
+	[JBIDE-7761] added "show in remote system explorer" to the context menu of the Cloud View
+
 2010-11-26  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (addPages): 
