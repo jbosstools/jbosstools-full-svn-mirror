@@ -3,7 +3,7 @@
     <title>Installation JBoss BPEL Tools</title>
     <section id="installeclipse">
         <title>Installation JBoss BPEL editor</title>
-        <para>At first, you need Eclipse 3.5. You can get it from <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/galileo/">Eclipse Web Site</ulink>. 
+        <para>At first, you need Eclipse 3.6. You can get it from <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/">Eclipse Web Site</ulink>. 
         </para>
         <para>The JBoss BPEL editor is included into JBoss Tools. 
             You have some methods to install JBoss Tools. 
@@ -20,7 +20,7 @@
             <listitem><para> JBossAS (version 5.1.0.GA or higher), 
                 available from <ulink url="http://www.jboss.org/jbossas">
                 http://www.jboss.org/jbossas</ulink>.</para></listitem>
-                <listitem><para>RiftSaw (version 2.0 or higher), available from <ulink url="http://www.jboss.org/riftsaw">http://www.jboss.org/riftsaw</ulink>.</para></listitem>
+                <listitem><para>RiftSaw (version 2.1 or higher), available from <ulink url="http://www.jboss.org/riftsaw">http://www.jboss.org/riftsaw</ulink>.</para></listitem>
             <listitem><para>Ant, available from <ulink url="http://ant.apache.org">here</ulink>.</para></listitem>
         </itemizedlist>
         
@@ -53,7 +53,7 @@
                 <para>Then in the 
                 <property>${RiftSaw}/install</property> folder run the command:
                 <property>ant deploy -Ddatabase=hsql -Dws.stack=native -Dws.version=3.2.2.GA</property>  
-                It will help you to download the web service stack, and then upgrade it for JBoss AS.
+It will help you to download the web service stack, and then upgrade it for JBoss AS. Anyway, you can  do it step by step by following the guide from <ulink url="http://www.jboss.org/riftsaw/documentation">JBoss RiftSaw documents</ulink> or the README file in <property moreinfo="none">${RiftSaw}/install</property>
                 </para>
             </listitem>
                     </itemizedlist>

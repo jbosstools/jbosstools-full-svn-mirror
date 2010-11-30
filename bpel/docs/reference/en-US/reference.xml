@@ -48,7 +48,7 @@
                 <title>New BPEL Project Wizard</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/reference/bpel_ref_2a.png"/>
+                        <imagedata fileref="images/deploy_createdeploy_2.png"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -129,8 +129,55 @@
                     </figure>
                     
                 </listitem>
-                <listitem><para>On the second page the user should select the BPEL project 
-                    and folder where the process file will be created:</para>
+                <listitem><para>The second page has the following options to set:</para>
+                    <table>
+                        <title>New BPEL Process file Wizard. Second Page Options.</title>   
+                        <tgroup cols="3">
+                            <colspec align="left" colnum="1" colwidth="1*"></colspec>
+                            <colspec align="left" colnum="2" colwidth="3*"></colspec>
+                            <colspec align="left" colnum="3" colwidth="1*"></colspec>
+                            <thead>
+                                <row>
+                                    <entry>Option</entry>
+                                    <entry>Description</entry>
+                                    <entry>Default</entry>
+                                </row>
+                            </thead>
+                            <tbody>
+                                <row>
+                                    <entry>Service Name</entry>
+                                    <entry>Enter a wsdl service name for the BPEL process.</entry>
+                                    <entry>The process name</entry>
+                                </row>                                                                      
+                                <row
+                                    <entry>Port Name</entry>
+                                    <entryEnter a wsdl port name for the BPEL process.</entry>
+                                    <entry>The process name + 'Port'</entry>
+                                </row> 
+                                <row>
+                                    <entry>Service Address</entry>
+                                    <entry>Enter an address of the wsdl service for the BPEL process.</entry>
+                                    <entry>http://localhost:8080/ + process name </entry>
+                                </row>
+
+                                <row>
+                                    <entry>Binding Protocol</entry>
+                                    <entry>Choose the binding protocal that you use in the wsdl: SOAP or HTTP</entry>
+                                    <entry>SOAP</entry>
+                                </row>                                
+                            </tbody>
+                        </tgroup>
+                    </table>  
+                    <figurefloat="0">
+                        <title>New BPEL Process file Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/reference/bpel_ref_3a.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </listitem>             
+                <listitem><para>On the third page the user should select the BPEL project and folder where the process file will be created:</para>
                 <figure>
                     <title>New BPEL Process file Wizard</title>
                     <mediaobject>

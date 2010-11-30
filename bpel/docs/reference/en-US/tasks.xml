@@ -105,12 +105,55 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>Click the <property>Next</property> button. On the second page make sure that the folder <property>HelloWorld/bpelContent</property> is selected.
+                       <para>Click the <property moreinfo="none">Next</property> button. On the second page, you can custom your wsdl service details. Enter the following information:</para>
+            <table>
+                
+                <title>Fields and values</title>
+                <tgroup cols="2">          
+                    <colspec align="left" colnum="1" colwidth="2*"></colspec>
+                    <colspec colnum="2" colwidth="4*"></colspec>
+                    <thead>
+                        <row>
+                            <entry>Field</entry>
+                            <entry>Value</entry>
+                            
+                        </row>
+                    </thead> 
+                    <tbody>            
+                        <row>
+                            <entry><para>Service Name</para></entry>
+                            <entry><para>a wsdl service name for the BPEL process. The default is, <property moreinfo="none">HelloWorld</property>.</para></entry>   
+                        </row>          
+                        <row>
+                            <entry><para>Port Name</para></entry>
+                            <entry><para>a wsdl port name for the BPEL process. The default is, <property moreinfo="none">HelloWorldPort</property>.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Service Address</para></entry>
+                            <entry><para>an address of the wsdl service for the BPEL process. The default is, <property moreinfo="none">http://localhost:8080/HelloWorld</property>.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Binding Protocol</para></entry>
+                            <entry><para>the binding protocal that you use in the wsdl. You can choose SOAP or HTTP. The default is, <property moreinfo="none">SOAP</property>.</para></entry> 
+                        </row>                        
+                    </tbody>           
+                </tgroup>
+            </table>
+            
+            <figure float="0">
+                <title>Create WSDL file for the BPEL Process wizardpage</title>
+                <mediaobject >
+                    <imageobject>
+                        <imagedata fileref="images/detail_createprocess_2a.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            <para>Click the <property moreinfo="none">Next</property> button. On the third page, you can choose a folder for the process file from the projects in your workspace. If not choose, The default folder <property moreinfo="none">HelloWorld/bpelContent</property> is selected.
                 Click <property>Finish</property>.
             </para>
             <note>
-                <para>All of your files that are used in your BPEL project must be under the <property>bpelContent</property> folder. Only in this case 
-                    these files can be deployed to JBoss server.
+                <para>All of your files that are used in your BPEL project must be under the <property>bpelContent</property> folder of a BPEL project. Only in this case these files can be deployed to JBoss server.
                 </para>
             </note>
             
@@ -242,9 +285,10 @@
         </section>
        
          <section id="wsdl">
-                    <title>Adding Service to WSDL file</title>
-             <para></para>
-                    <itemizedlist>
+               <title>Adding Service to WSDL file</title>
+               <para></para>
+               <para>The HelloWorldArtifacts.wsdl has been added a service when you create a BPEL process file. You have a default service in this WSDL file. But if you want to add a service by yourself, you can follow the steps as below: </para>
+               <itemizedlist>
  
                     <listitem>
                     <para>Open the file "<property>HelloWorldArtifacts.wsdl</property>" in the "<property>HelloWorld</property>" project by double-clicking the file. Right-click the WSDL editor and select 
@@ -313,13 +357,13 @@
     <section id="deploy">
         <title>Deploy a JBoss BPEL project to JBoss BPEL Runtime</title>
         <section id="createdeploy">
-            <title>Creating a bpel-deploy.xml file</title>
+            <title>Creating a deploy.xml file</title>
             <para>If you want to deploy a BPEL project to JBoss BPEL Runtime, you should create a bpel-deploy.xml file. 
                 JBoss tools can help you to create it:
             </para>
             <itemizedlist>
                 <listitem>
-                    <para>Create the bpel-deploy.xml by selecting 
+                    <para>Create the deploy.xml by selecting 
                         <emphasis><property>New > Other... > BPEL 2.0 > Apache ODE Deployment Descriptor</property></emphasis>. Click the <property>Next</property> button. 
                     </para>
                     <figure>
@@ -334,10 +378,10 @@
                 <listitem>
                     <para>On the next wizard page you should enter the following information:</para>
                     <para><emphasis><property>BPEL Project</property></emphasis>: Click  the <property>Browse...</property> button to select the BPEL project in your workspace which you want to deploy to the runtime.
-                        Please note, that you should select the <property>bpelContent</property> folder in your new BPEL project as a value of <property>BPEL Project</property> field because the bpel-deploy.xml should be created in this place.
+                        Please note, that you should select the <property>bpelContent</property> folder in your new BPEL project as a value of <property>BPEL Project</property> field because the deploy.xml should be created in this place.
                     </para>
-                    <para><emphasis><property>File name</property></emphasis>: The default value is bpel-deploy.xml. Please, don't change it.</para>
-                    <para>Click on <property>Finish</property> button to close the wizard and a new bpel-deploy.xml file will be created.</para>
+                    <para><emphasis><property>File name</property></emphasis>: The default value is deploy.xml. Please, don't change it.</para>
+                    <para>Click on <property>Finish</property> button to close the wizard and a new deploy.xml file will be created.</para>
                     <figure>
                         <title>New BPEL Deploy file Wizard</title>
                         <mediaobject>
@@ -348,14 +392,14 @@
                     </figure>                
                 </listitem>
                 <listitem>
-                    <para>Double-click the bpel-deploy.xml file to open it in ODE Descriptor Deployment Editor.
+                    <para>Double-click the deploy.xml file to open it in ODE Descriptor Deployment Editor.
                         In the <property>Inbound Interfaces</property> section, click the 
                         <property>Associated Port</property> column and select <property>HelloWorldProcessPort</property>
                         in the dropdown box.The <property>Related Service</property> and <property>Binding Used</property> 
-                        columns should  be automatically filled in. Save the <emphasis><property>bpel-deploy.xml</property></emphasis>.
+                        columns should  be automatically filled in. Save the <emphasis><property>deploy.xml</property></emphasis>.
                     </para>
                     <figure>
-                        <title>bpel-deploy.xml file editor</title>
+                        <title>deploy.xml file editor</title>
                         <mediaobject>
                             <imageobject>
                                 <imagedata fileref="images/deploy_createdeploy_3.png"/>
@@ -424,7 +468,7 @@
                     <para>If some aspects of server creation is not clear, please, read  <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/html_single/index.html">JBoss Server Manager Reference Guide</ulink> for more details.</para>
                 </listitem>
                 <listitem>
-                    <para>You can enter the link <ulink url="http://localhost:8080/bpel/processes.html">http://localhost:8080/bpel/processes.html</ulink> to the browser to get the deployed processes.</para>                 
+                    <para>You can enter the link <ulink url="http://localhost:8080/bpel-console/app.html">http://localhost:8080/bpel-console/app.html</ulink> to the browser to get the deployed processes.</para>                 
                     <figure>
                         <title>The BPEL console</title>
                         <mediaobject>
