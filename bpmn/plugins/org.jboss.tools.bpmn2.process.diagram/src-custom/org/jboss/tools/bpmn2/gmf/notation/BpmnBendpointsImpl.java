@@ -10,6 +10,7 @@ import org.eclipse.dd.dc.Point;
 import org.eclipse.dd.di.DiagramElement;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
 import org.eclipse.gmf.runtime.notation.impl.RelativeBendpointsImpl;
 
@@ -33,9 +34,8 @@ public class BpmnBendpointsImpl extends RelativeBendpointsImpl implements
 					if (object instanceof RelativeBendpoint) {
 						RelativeBendpoint relativeBendPoint = (RelativeBendpoint)object;
 						Point absoluteBendpoint = DcFactory.eINSTANCE.createPoint();
-						BPMNEdge bpmnEdge = ((BpmnEdgeImpl)edge).getBPMNEdge();
-						DiagramElement source = bpmnEdge.getSourceElement();
-						if (source != null && source instanceof BPMNShape) {
+						BPMNShape source = getEdgeSource();
+						if (source != null) {
 							Bounds sourceBounds = ((BPMNShape)source).getBounds();
 							absoluteBendpoint.setX(sourceBounds.getX() + relativeBendPoint.getSourceX());
 							absoluteBendpoint.setY(sourceBounds.getY() + relativeBendPoint.getSourceY());
@@ -46,6 +46,13 @@ public class BpmnBendpointsImpl extends RelativeBendpointsImpl implements
 			}
 		}
 		super.setPoints(newPoints);
+	}
+	
+	private BPMNShape getEdgeSource() {
+		if (edge == null) return null;
+		View source = edge.getSource();
+		if (!(source instanceof BpmnShapeImpl)) return null;
+		return ((BpmnShapeImpl)source).getBPMNShape();
 	}
 	
 }

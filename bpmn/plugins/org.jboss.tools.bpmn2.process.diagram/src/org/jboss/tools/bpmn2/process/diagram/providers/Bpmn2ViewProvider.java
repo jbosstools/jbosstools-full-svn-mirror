@@ -1913,8 +1913,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		points.add(new RelativeBendpoint());
 		bendpoints.setPoints(points);
 		edge.setBendpoints(bendpoints);
-		bendpoints.setPoints(points);
-		edge.setBendpoints(bendpoints);
 		ViewUtil.insertChildView(containerView, edge, index, persisted);
 		edge.setType(Bpmn2VisualIDRegistry
 				.getType(SequenceFlowEditPart.VISUAL_ID));
