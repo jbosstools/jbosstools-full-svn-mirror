@@ -158,7 +158,6 @@ public class DeltaCloud {
 		String rules = getInstanceFilter().toString();
 		instanceFilter = createInstanceFilter(ruleString);
 		if (!rules.equals(ruleString)) {
-			// save();
 			// TODO: remove notification with all instances, replace by
 			// notifying the changed instance
 			notifyInstanceListListeners(instances.get());
@@ -188,7 +187,6 @@ public class DeltaCloud {
 		String rules = getImageFilter().toString();
 		this.imageFilter = createImageFilter(ruleString);
 		if (!rules.equals(ruleString)) {
-			// save();
 			notifyImageListListeners(getImages());
 		}
 	}
@@ -235,11 +233,6 @@ public class DeltaCloud {
 			throw multiException;
 		}
 	}
-
-	// public void save() {
-	// // Currently we have to save all clouds instead of just this one
-	// DeltaCloudManager.getDefault().saveClouds();
-	// }
 
 	public void addInstanceListListener(IInstanceListListener listener) {
 		instanceListeners.add(listener);
