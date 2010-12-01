@@ -87,7 +87,7 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 		if (newInput != null) {
 			if (newInput instanceof DeltaCloudImage[]) {
 				images = filter((DeltaCloudImage[]) newInput);
-			} else {
+			} else if (newInput instanceof DeltaCloud){
 				cloud = (DeltaCloud) newInput;
 				try {
 					images = filter(cloud.getImages());

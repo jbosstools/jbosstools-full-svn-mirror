@@ -83,7 +83,7 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 		if (newInput != null) {
 			if (newInput instanceof DeltaCloudInstance[]) {
 				instances = filter((DeltaCloudInstance[]) newInput);
-			} else {
+			} else if (newInput instanceof DeltaCloud) {
 				cloud = (DeltaCloud) newInput;
 				try {
 					instances = filter(cloud.getInstances());
