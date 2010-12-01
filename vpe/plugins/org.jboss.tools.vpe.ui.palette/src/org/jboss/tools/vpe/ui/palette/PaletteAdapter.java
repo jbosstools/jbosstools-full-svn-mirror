@@ -214,5 +214,12 @@ public class PaletteAdapter implements IPaletteAdapter {
 		}
 	}
 
+	/**
+	 * Test method
+	 * @return
+	 */
+	public PaletteViewer getViewer() {
+		return viewer;
+	}
 
 }
