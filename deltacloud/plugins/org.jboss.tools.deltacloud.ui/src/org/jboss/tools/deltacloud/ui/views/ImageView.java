@@ -14,9 +14,6 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -61,13 +58,8 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 	private Composite container;
 	private Combo cloudSelector;
 	private Label filterLabel;
-	@SuppressWarnings("unused")
-	private DeltaCloudImage selectedElement;
-
 	private DeltaCloud[] clouds;
 	private DeltaCloud currCloud;
-
-	private ImageViewLabelAndContentProvider contentProvider;
 
 	private ModifyListener cloudModifyListener = new ModifyListener() {
 
@@ -81,8 +73,6 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 				currCloud = clouds[index];
 				storeSelectedCloud();
 
-//				viewer.setInput(new DeltaCloudImage[0]);
-//				viewer.refresh();
 				Display.getCurrent().asyncExec(new Runnable() {
 
 					@Override
@@ -167,18 +157,8 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		filterLabel.setText(CVMessages.getString(FILTERED_LABEL));
 		filterLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
 
-		Composite tableArea = new Composite(container, SWT.NULL);
-		TableColumnLayout tableLayout = new TableColumnLayout();
-		tableArea.setLayout(tableLayout);
+		Composite tableArea = createTableViewer();
 
-		viewer = new TableViewer(tableArea, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-		Table table = viewer.getTable();
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
-		createColumns(tableLayout, table);
-		contentProvider = new ImageViewLabelAndContentProvider();
-		viewer.setContentProvider(contentProvider);
-		viewer.setLabelProvider(contentProvider);
 		ImageComparator comparator = new ImageComparator(0);
 		viewer.setComparator(comparator);
 		getSite().setSelectionProvider(viewer);
@@ -220,9 +200,24 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		hookContextMenu();
-		hookSelection();
 		
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
+	}
+
+	private Composite createTableViewer() {
+		Composite tableArea = new Composite(container, SWT.NULL);
+		TableColumnLayout tableLayout = new TableColumnLayout();
+		tableArea.setLayout(tableLayout);
+
+		viewer = new TableViewer(tableArea, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		Table table = viewer.getTable();
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		createColumns(tableLayout, table);
+		ImageViewLabelAndContentProvider provider = new ImageViewLabelAndContentProvider();
+		viewer.setContentProvider(provider);
+		viewer.setLabelProvider(provider);
+		return tableArea;
 	}
 
 	private void createColumns(TableColumnLayout tableLayout, Table table) {
@@ -239,23 +234,9 @@ public class ImageView extends ViewPart implements ICloudManagerListener, IImage
 		table.setSortDirection(SWT.NONE);
 	}
 
-	private void hookSelection() {
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				handleSelection();
-			}
-		});
-	}
-
 	private void hookContextMenu() {
 		IMenuManager contextMenu = UIUtils.createContextMenu(viewer.getTable());
 		UIUtils.registerContributionManager(UIUtils.getContextMenuId(ID), contextMenu, viewer.getTable());
-	}
-
-	private void handleSelection() {
-		IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-		selectedElement = (DeltaCloudImage) selection.getFirstElement();
 	}
 
 	@Override
