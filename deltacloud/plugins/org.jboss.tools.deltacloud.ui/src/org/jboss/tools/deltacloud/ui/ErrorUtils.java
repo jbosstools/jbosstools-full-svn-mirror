@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
@@ -27,19 +26,29 @@ public class ErrorUtils {
 	public static IStatus handleError(final String title, final String message, Throwable e, final Shell shell) {
 		IStatus status = createStatus(e);
 		openErrorDialog(title, status, shell);
+		log(status);
 		return status;
 	}
+
+	private static void log(IStatus status) {
+		if (Activator.getDefault().isDebugging()) {
+			Activator.log(status);
+		}
+	}
+
 	/**
 	 * Launch the error dialog asynchronously on the display thread
+	 * 
 	 * @param title
 	 * @param message
 	 * @param e
 	 * @param shell
 	 * @return
 	 */
-	public static IStatus handleErrorAsync(final String title, final String message, final Throwable e, final Shell shell) {
+	public static IStatus handleErrorAsync(final String title, final String message, final Throwable e,
+			final Shell shell) {
 		IStatus status = createStatus(e);
-		Display.getDefault().asyncExec(new Runnable(){
+		shell.getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				handleError(title, message, e, shell);
 			}
@@ -56,20 +65,22 @@ public class ErrorUtils {
 	}
 
 	private static void openErrorDialog(final String title, final IStatus status, final Shell shell) {
-//		Display.getDefault().syncExec(new Runnable() {
-//			public void run() {
-//				ErrorDialog.openError(shell, title, status.getMessage(), status);
-//			}
-//		});
+		// Display.getDefault().syncExec(new Runnable() {
+		// public void run() {
+		// ErrorDialog.openError(shell, title, status.getMessage(), status);
+		// }
+		// });
 		ErrorDialog.openError(shell, title, status.getMessage(), status);
 	}
-	
+
 	public static IStatus createMultiStatus(DeltaCloudMultiException throwable) {
 		List<IStatus> states = new ArrayList<IStatus>(throwable.getThrowables().size());
-		for(Throwable childThrowable : throwable.getThrowables()) {
-			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, childThrowable.getMessage(), childThrowable);
+		for (Throwable childThrowable : throwable.getThrowables()) {
+			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, childThrowable.getMessage(),
+					childThrowable);
 			states.add(status);
 		}
-		return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, throwable.getMessage(), throwable, states.toArray(new IStatus[states.size()]));
+		return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, throwable.getMessage(), throwable,
+				states.toArray(new IStatus[states.size()]));
 	}
 }
