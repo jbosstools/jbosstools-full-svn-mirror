@@ -33,7 +33,7 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 		ITableLabelProvider {
 
 	private DeltaCloud cloud;
-	private DeltaCloudInstance[] instances;
+	private DeltaCloudInstance[] instances = new DeltaCloudInstance[]{};
 
 	public enum Column {
 		NAME(0, 20),
@@ -88,11 +88,8 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 				try {
 					instances = filter(cloud.getInstances());
 				} catch (Exception e) {
-					if (instances == null) {
-						instances = new DeltaCloudInstance[]{};
-					}
 					// TODO internationalize strings
-					ErrorUtils.handleError("Instance View Error", "Could not display instances for cloud " + cloud.getName(),
+					ErrorUtils.handleError("Error", "Could not display instances for cloud " + cloud.getName(),
 							e, Display.getDefault().getActiveShell());
 				}
 			}

@@ -31,7 +31,7 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 
 	private DeltaCloud cloud;
 	private IImageFilter localFilter;
-	private DeltaCloudImage[] images;
+	private DeltaCloudImage[] images = new DeltaCloudImage[]{};
 
 	public enum Column {
 		NAME(0, 20),
@@ -94,7 +94,7 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 				} catch (Exception e) {
 					ErrorUtils.handleError(
 							"Error",
-							"Could not get images for cloud " + cloud.getName(),
+							"Could not display images for cloud " + cloud.getName(),
 							e, Display.getDefault().getActiveShell());
 				}
 			}
