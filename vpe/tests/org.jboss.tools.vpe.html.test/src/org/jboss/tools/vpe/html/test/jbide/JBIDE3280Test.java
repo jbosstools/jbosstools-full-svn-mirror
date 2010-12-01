@@ -17,12 +17,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.VpeDebug;
+import org.jboss.tools.vpe.base.test.TestUtil;
+import org.jboss.tools.vpe.base.test.VpeTest;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.html.test.HtmlAllTests;
-import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.ui.test.VpeTest;
 import org.jboss.tools.vpe.xulrunner.util.DOMTreeDumper;
 import org.mozilla.interfaces.nsIDOMDocument;
 

@@ -4,8 +4,8 @@
 package org.jboss.tools.jsf.vpe.jsf.test.jbide;
 
 import org.jboss.tools.jsf.vpe.jsf.test.JsfAllTests;
-import org.jboss.tools.vpe.ui.test.ComponentContentTest;
-import org.jboss.tools.vpe.ui.test.VpeTest;
+import org.jboss.tools.vpe.base.test.ComponentContentTest;
+import org.jboss.tools.vpe.base.test.VpeTest;
 
 /**
  * Junit test class for https://jira.jboss.org/browse/JBIDE-6600

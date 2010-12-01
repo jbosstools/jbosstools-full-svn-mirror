@@ -34,6 +34,8 @@ import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditorPart;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
+import org.jboss.tools.vpe.base.test.TestUtil;
+import org.jboss.tools.vpe.base.test.VpeTest;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
@@ -45,8 +47,6 @@ import org.jboss.tools.vpe.handlers.ShowBorderHandler;
 import org.jboss.tools.vpe.handlers.ShowBundleAsELHandler;
 import org.jboss.tools.vpe.handlers.ShowNonVisualTagsHandler;
 import org.jboss.tools.vpe.handlers.ShowTextFormattingHandler;
-import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.ui.test.VpeTest;
 import org.jboss.tools.vpe.ui.test.VpeUiTests;
 
 /**

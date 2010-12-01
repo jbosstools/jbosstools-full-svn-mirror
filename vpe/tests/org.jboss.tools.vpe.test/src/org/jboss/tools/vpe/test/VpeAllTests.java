@@ -14,8 +14,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jboss.tools.vpe.base.test.VpeTestSetup;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
-import org.jboss.tools.vpe.ui.test.VpeTestSetup;
 
 /**
  * Class created for run tests for org.jboss.tools.vpe plugin.

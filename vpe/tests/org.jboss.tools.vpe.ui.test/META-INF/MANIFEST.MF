@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.vpe.ui.palette;visibility:=reexport,
  org.jboss.tools.vpe.resref,
  javax.servlet;bundle-version="2.5.0",
- org.eclipse.wst.xml.xpath.core
+ org.eclipse.wst.xml.xpath.core,
+ org.jboss.tools.vpe.base.test;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/jmock-2.5.1/jmock-2.5.1.jar,

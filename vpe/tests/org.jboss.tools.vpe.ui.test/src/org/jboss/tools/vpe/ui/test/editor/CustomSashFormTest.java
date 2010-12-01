@@ -7,9 +7,9 @@ import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.vpe.base.test.TestUtil;
+import org.jboss.tools.vpe.base.test.VpeTest;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
-import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.ui.test.VpeTest;
 import org.jboss.tools.vpe.ui.test.VpeUiTests;
 
 public class CustomSashFormTest extends VpeTest {

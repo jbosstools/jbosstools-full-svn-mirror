@@ -19,8 +19,8 @@ import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.jst.web.ui.navigator.WebProjectsNavigator;
-import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.ui.test.VpeTest;
+import org.jboss.tools.vpe.base.test.TestUtil;
+import org.jboss.tools.vpe.base.test.VpeTest;
 
 /**
  * 

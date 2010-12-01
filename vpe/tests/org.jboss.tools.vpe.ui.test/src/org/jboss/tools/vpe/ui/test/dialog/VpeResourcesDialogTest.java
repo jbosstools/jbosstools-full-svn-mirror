@@ -12,9 +12,9 @@ package org.jboss.tools.vpe.ui.test.dialog;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.vpe.base.test.TestUtil;
+import org.jboss.tools.vpe.base.test.VpeTest;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
-import org.jboss.tools.vpe.ui.test.TestUtil;
-import org.jboss.tools.vpe.ui.test.VpeTest;
 import org.jboss.tools.vpe.ui.test.VpeUiTests;
 
 public class VpeResourcesDialogTest extends VpeTest {

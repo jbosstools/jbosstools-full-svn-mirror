@@ -25,7 +25,7 @@ public class VPETestPlugin extends BaseUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.jboss.tools.vpe.ui.test";
 	
-	public static final String VPE_TEST_EXTENTION_POINT_ID = "org.jboss.tools.vpe.ui.tests"; //$NON-NLS-1$
+	public static final String VPE_TEST_EXTENTION_POINT_ID = "org.jboss.tools.vpe.ui.test"; //$NON-NLS-1$
 
 	// The shared instance
 	private static VPETestPlugin plugin;

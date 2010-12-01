@@ -6,14 +6,14 @@ Bundle-Version: 3.2.0.qualifier
 Bundle-Activator: org.jboss.tools.vpe.spring.test.SpringTestPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jboss.tools.vpe.ui.test,
  org.jboss.tools.common.text.ext,
  org.jboss.tools.common.model,
  org.jboss.tools.vpe.xulrunner,
  org.junit,
  org.jboss.tools.vpe.spring;bundle-version="3.1.0",
  org.jboss.tools.vpe.jsp;bundle-version="3.1.0",
- org.jboss.tools.vpe.html;bundle-version="3.1.0"
+ org.jboss.tools.vpe.html;bundle-version="3.1.0",
+ org.jboss.tools.vpe.base.test;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.vpe.spring.test
 Bundle-Vendor: %Bundle-Vendor.0
