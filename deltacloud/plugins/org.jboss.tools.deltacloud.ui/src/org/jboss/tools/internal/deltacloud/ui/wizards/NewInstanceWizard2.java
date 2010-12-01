@@ -25,6 +25,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.rse.core.model.IHost;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
+import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
@@ -44,18 +45,28 @@ public class NewInstanceWizard2 extends Wizard {
 	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
 
-	private NewInstancePage2 mainPage;
-
-	private DeltaCloud cloud;
-	private DeltaCloudInstance instance;
+	protected NewInstancePage2 mainPage;
+	protected DeltaCloud cloud;
+	protected DeltaCloudInstance instance;
+	/**
+	 * Initial image, may be null
+	 */
+	private DeltaCloudImage image;
 
 	public NewInstanceWizard2(DeltaCloud cloud) {
 		this.cloud = cloud;
 	}
 
+	public NewInstanceWizard2(DeltaCloud cloud, DeltaCloudImage image) {
+		this(cloud);
+		this.image = image;
+	}
+
 	@Override
 	public void addPages() {
 		mainPage = new NewInstancePage2(cloud);
+		if( image != null )
+			mainPage.setImage(image);
 		addPage(mainPage);
 	}
 
@@ -120,7 +131,7 @@ public class NewInstanceWizard2 extends Wizard {
 			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 			boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
 			return autoConnect;
-		};
+		}
 	};
 
 	@Override

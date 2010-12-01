@@ -24,7 +24,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
-import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstanceWizard;
+import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstanceWizard2;
 
 /**
  * @author Andre Dietisheim
@@ -45,7 +45,7 @@ public class CreateInstanceHandler extends AbstractHandler implements IHandler {
 	private void createInstance(DeltaCloudImage deltaCloudImage, Shell shell) {
 		if (deltaCloudImage != null) {
 			DeltaCloud deltaCloud = deltaCloudImage.getDeltaCloud();
-			IWizard wizard = new NewInstanceWizard(deltaCloud, deltaCloudImage);
+			IWizard wizard = new NewInstanceWizard2(deltaCloud, deltaCloudImage);
 			WizardDialog dialog = new WizardDialog(shell, wizard);
 			dialog.create();
 			dialog.open();

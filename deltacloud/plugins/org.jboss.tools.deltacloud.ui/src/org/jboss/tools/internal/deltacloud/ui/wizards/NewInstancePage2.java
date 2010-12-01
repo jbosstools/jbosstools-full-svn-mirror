@@ -111,10 +111,14 @@ public class NewInstancePage2 extends WizardPage {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			String id = hardware.getItem(hardware.getSelectionIndex());
-			currPage.setVisible(false);
-			currPage = profilePages.get(id);
-			currPage.setVisible(true);
+			int index = hardware.getSelectionIndex();
+			String id = index > -1 ? hardware.getItem(hardware.getSelectionIndex()) : null;
+			if( currPage != null )
+				currPage.setVisible(false);
+			if( id != null ) {
+				currPage = profilePages.get(id);
+				currPage.setVisible(true);
+			}
 		}
 	};
 
@@ -232,6 +236,9 @@ public class NewInstancePage2 extends WizardPage {
 	}
 
 	public void filterProfiles() {
+		if( allProfiles == null ) 
+			return;
+		
 		ArrayList<DeltaCloudHardwareProfile> profiles = new ArrayList<DeltaCloudHardwareProfile>();
 		for (DeltaCloudHardwareProfile p : allProfiles) {
 			if (p.getArchitecture() == null || image.getArchitecture().equals(p.getArchitecture())) {
@@ -260,7 +267,6 @@ public class NewInstancePage2 extends WizardPage {
 		DataBindingContext dbc = new DataBindingContext();
 		WizardPageSupport.create(this, dbc);
 		Composite container = createWidgets(parent);
-		//layoutWidgets();
 		bindWidgets(dbc);
 
 		launchFetchRealms();
@@ -272,6 +278,12 @@ public class NewInstancePage2 extends WizardPage {
 		String defaultImage = cloud.getLastImageId();
 		model.setImageId(defaultImage);
 		setControl(container);
+		
+		// lastly, if there's already an image set, use it
+		if( image != null ) {
+			imageText.setText(image.getId());
+			filterProfiles();
+		}
 	}
 	
 	private void bindWidgets(DataBindingContext dbc) {
@@ -456,6 +468,7 @@ public class NewInstancePage2 extends WizardPage {
 			profilePages.put(p.getId(), pc);
 			pc.setVisible(false);
 		}
+		groupContainer.layout();
 	}
 
 	private void launchFetchRealms() {
@@ -483,6 +496,7 @@ public class NewInstancePage2 extends WizardPage {
 						clearProfiles();
 						if( allProfiles.length > 0 )
 							hardware.setEnabled(true);
+						filterProfiles();
 					}
 				});
 			}
