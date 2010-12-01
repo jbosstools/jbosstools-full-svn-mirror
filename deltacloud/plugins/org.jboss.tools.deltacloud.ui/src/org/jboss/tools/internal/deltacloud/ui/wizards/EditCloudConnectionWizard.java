@@ -16,7 +16,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 
 	private static final String MAINPAGE_NAME = "EditCloudConnection.name"; //$NON-NLS-1$
-	private CloudConnectionPage mainPage;
 
 	public EditCloudConnectionWizard(DeltaCloud cloud) {
 		super(WizardMessages.getString(MAINPAGE_NAME), cloud);
