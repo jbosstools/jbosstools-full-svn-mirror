@@ -5,17 +5,17 @@ Bundle-SymbolicName: org.jboss.tools.vpe.base.test;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: JBoss by RedHat
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.ui;bundle-version="3.6.0",
+Require-Bundle: org.eclipse.ui;bundle-version="[3.6.0,4.0.0)",
  org.junit,
  org.eclipse.core.runtime;bundle-version="3.6.0",
  org.jboss.tools.common;bundle-version="3.2.0",
- org.eclipse.core.resources;bundle-version="3.6.0",
+ org.eclipse.core.resources;bundle-version="[3.6.0,4.0.0)",
  org.jboss.tools.tests;bundle-version="3.1.0",
- org.eclipse.jface.text;bundle-version="3.6.0",
+ org.eclipse.jface.text;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.wst.sse.core;bundle-version="1.1.500",
  org.eclipse.wst.sse.ui;bundle-version="1.2.0",
  org.jboss.tools.vpe;bundle-version="3.2.0",
- org.eclipse.ui.ide;bundle-version="3.6.0",
+ org.eclipse.ui.ide;bundle-version="[3.6.0,4.0.0)",
  org.jboss.tools.jst.jsp;bundle-version="3.2.0",
  org.eclipse.wst.xml.xpath.core;bundle-version="1.1.1",
  org.mozilla.xpcom;bundle-version="1.9.1",
