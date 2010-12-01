@@ -359,6 +359,13 @@ public class NewInstancePage2 extends WizardPage {
 		groupLayout.marginWidth = 0;
 		groupContainer.setLayout(groupLayout);
 		hardware.setEnabled(false);
+		
+		// add invisible dummy widget to guarantee a min size
+		Label dummyLabel = new Label(groupContainer, SWT.NONE);
+		dummyLabel.setText("\n\n\n\n\n");
+		FormData dummyData = UIUtils.createFormData(0,0,0,150,null,0,null,0);
+		dummyLabel.setLayoutData(dummyData);
+		dummyLabel.setVisible(false);
 
 		keyManage = new Button(container, SWT.NULL);
 		keyManage.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
@@ -405,15 +412,10 @@ public class NewInstancePage2 extends WizardPage {
 		f = UIUtils.createFormData(imageLabel, 8+centering, null, 0, hardwareLabel, 5, 100, 0);
 		arch.setLayoutData(f);
 
-		f = new FormData();
-		f.top = new FormAttachment(arch, 8 + centering);
-		f.left = new FormAttachment(0, 0);
+		f = UIUtils.createFormData(arch, 8+centering, null, 0, 0, 0, null, 0);
 		realmLabel.setLayoutData(f);
 
-		f = new FormData();
-		f.top = new FormAttachment(arch, 8);
-		f.left = new FormAttachment(hardwareLabel, 5);
-		f.right = new FormAttachment(100, 0);
+		f = UIUtils.createFormData(arch, 8, null, 0, hardwareLabel, 5, 100, 0);
 		realmCombo.setLayoutData(f);
 
 		Control control = realmCombo;
@@ -423,9 +425,7 @@ public class NewInstancePage2 extends WizardPage {
 
 		keyText = new Text(container, SWT.BORDER | SWT.SINGLE);
 
-		f = new FormData();
-		f.top = new FormAttachment(realmCombo, 8 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
+		f = UIUtils.createFormData(realmCombo, 8+centering+centering2, null, 0, 0,0,null,0);
 		keyLabel.setLayoutData(f);
 
 		f = new FormData();
@@ -434,30 +434,18 @@ public class NewInstancePage2 extends WizardPage {
 		f.right = new FormAttachment(realmCombo, 0, SWT.RIGHT);
 		keyManage.setLayoutData(f);
 
-		f = new FormData();
-		f.top = new FormAttachment(realmCombo, 8 + centering2);
-		f.left = new FormAttachment(hardwareLabel, 5);
-		f.right = new FormAttachment(keyManage, -10);
+		f = UIUtils.createFormData(realmCombo, 8+centering2, null, 0, hardwareLabel, 5, keyManage, -10);
 		keyText.setLayoutData(f);
 
 		control = keyText;
 
-		f = new FormData();
-		f.top = new FormAttachment(control, 8 + centering);
-		f.left = new FormAttachment(0, 0);
+		f = UIUtils.createFormData(control, 8+centering, null,0, 0,0, null,0);
 		hardwareLabel.setLayoutData(f);
 
-		f = new FormData();
-		f.top = new FormAttachment(control, 8);
-		f.left = new FormAttachment(hardwareLabel, 5);
-		f.right = new FormAttachment(100, 0);
+		f = UIUtils.createFormData(control,8, null,0, hardwareLabel,5, 100,0);
 		hardware.setLayoutData(f);
 
-		f = new FormData();
-		f.top = new FormAttachment(hardware, 10);
-		f.left = new FormAttachment(0, 0);
-		f.right = new FormAttachment(100, 0);
-		f.bottom = new FormAttachment(100, 0);
+		f = UIUtils.createFormData(hardware,10, 100,0, 0,0, 100,0);
 		groupContainer.setLayoutData(f);
 		return container;
 	}
