@@ -1,3 +1,8 @@
+2010-12-01  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (performFinish): 
+	[JBIDE-7777] removed shadowing instance variable, fixed NPE
+
 2010-11-30  André Dietisheim  <adietish@redhat.com>
 
 	* plugin.xml: 
