@@ -13,6 +13,7 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import java.net.MalformedURLException;
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -21,11 +22,15 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
+import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
 
 public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection  {
 
 	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
+	public static final String LAST_USED_URL = "org.jboss.tools.internal.deltacloud.ui.wizards.LAST_CREATED_URL";
 	private CloudConnectionPage mainPage;
 	protected DeltaCloud initialCloud;
 	private String pageTitle;
@@ -118,6 +123,19 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
 		String type = getServerType();
+		
+		// save URL in some plugin preference key!
+		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+		String previousURL = prefs.get(LAST_USED_URL, "");
+		if( previousURL == null || previousURL.equals("") || !previousURL.equals(url)) {
+			prefs.put(LAST_USED_URL, url);
+			try {
+				prefs.flush();
+			} catch( BackingStoreException bse ) {
+				// intentionally ignore, non-critical
+			}
+		}
+		
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, type);
 			DeltaCloudManager.getDefault().addCloud(newCloud);

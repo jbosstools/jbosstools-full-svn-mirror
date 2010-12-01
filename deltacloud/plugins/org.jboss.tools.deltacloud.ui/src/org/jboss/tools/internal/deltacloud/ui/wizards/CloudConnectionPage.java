@@ -27,6 +27,7 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -62,6 +63,7 @@ import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.CompositeValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.swt.JFaceUtils;
+import org.osgi.service.prefs.Preferences;
 
 /**
  * @author Jeff Jonhston
@@ -449,6 +451,12 @@ public class CloudConnectionPage extends WizardPage {
 		f.top = new FormAttachment(passwordText, 5);
 		ec2pwLink.setLayoutData(f);
 
+		if( urlText.getText().equals("")) {
+			// pre-set with previously used
+			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+			String previousURL = prefs.get(NewCloudConnectionWizard.LAST_USED_URL, "");
+			urlText.setText(previousURL);
+		}
 		setControl(container);
 	}
 
