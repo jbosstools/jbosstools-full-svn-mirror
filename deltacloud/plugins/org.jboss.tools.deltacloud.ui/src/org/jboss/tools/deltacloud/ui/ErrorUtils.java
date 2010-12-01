@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
@@ -26,6 +27,23 @@ public class ErrorUtils {
 	public static IStatus handleError(final String title, final String message, Throwable e, final Shell shell) {
 		IStatus status = createStatus(e);
 		openErrorDialog(title, status, shell);
+		return status;
+	}
+	/**
+	 * Launch the error dialog asynchronously on the display thread
+	 * @param title
+	 * @param message
+	 * @param e
+	 * @param shell
+	 * @return
+	 */
+	public static IStatus handleErrorAsync(final String title, final String message, final Throwable e, final Shell shell) {
+		IStatus status = createStatus(e);
+		Display.getDefault().asyncExec(new Runnable(){
+			public void run() {
+				handleError(title, message, e, shell);
+			}
+		});
 		return status;
 	}
 
