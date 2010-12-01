@@ -53,6 +53,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.log.LogHelper;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
@@ -270,7 +271,14 @@ public class CloudConnectionPage extends WizardPage {
 		this.connectionModel = new CloudConnectionModel();
 		this.cloudConnection = cloudConnection;
 	}
+	
+	public CloudConnectionPage(String pageName, DeltaCloud initial, CloudConnection connection) 
+		throws MalformedURLException, DeltaCloudException {
 
+		this(pageName, initial.getName(), initial.getURL(), initial.getUsername(),
+				initial.getPassword(), initial.getType(), connection);
+	}
+	
 	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl,
 			String defaultUsername, String defaultPassword, String defaultType,
 			CloudConnection cloudConnection) throws MalformedURLException {

@@ -10,79 +10,16 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.net.MalformedURLException;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.ui.INewWizard;
-import org.eclipse.ui.IWorkbench;
-import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
-import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
-public class EditCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
+public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 
 	private static final String MAINPAGE_NAME = "EditCloudConnection.name"; //$NON-NLS-1$
 	private CloudConnectionPage mainPage;
-	private DeltaCloud cloud;
 
 	public EditCloudConnectionWizard(DeltaCloud cloud) {
-		super();
-		this.cloud = cloud;
-	}
-
-	@Override
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-	}
-
-	@Override
-	public void addPages() {
-		try {
-			String cloudName = cloud.getName();
-			String userName = cloud.getUsername();
-			String password = cloud.getPassword();
-			mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME),
-					cloudName, cloud.getURL(), userName, password, cloud.getType(), this);
-			addPage(mainPage);
-		} catch (MalformedURLException e) {
-			ErrorUtils.handleError(WizardMessages.getString("EditCloudConnectionError.title"),
-					WizardMessages.getString("EditCloudConnectionError.message"), e, getShell());
-		} catch (DeltaCloudException e) {
-			// TODO: internationalize strings
-			ErrorUtils.handleError("Error",
-					"Could not create wizard page", e, getShell());
-		}
-	}
-
-	@Override
-	public boolean canFinish() {
-		return mainPage.isPageComplete();
-	}
-
-	public boolean performTest() {
-		String name = mainPage.getName();
-		String url = mainPage.getModel().getUrl();
-		String username = mainPage.getModel().getUsername();
-		String password = mainPage.getModel().getPassword();
-		try {
-			DeltaCloud newCloud = new DeltaCloud(name, url, username, password);
-			return newCloud.testConnection();
-		} catch (DeltaCloudException e) {
-			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-			Activator.log(status);
-			ErrorDialog.openError(
-					getShell(),
-					WizardMessages.getString("CloudConnectionAuthError.title"),
-					WizardMessages.getFormattedString("CloudConnectionAuthError.message", url),
-					status);
-			return false;
-		}
+		super(WizardMessages.getString(MAINPAGE_NAME), cloud);
 	}
 
 	@Override
@@ -93,28 +30,14 @@ public class EditCloudConnectionWizard extends Wizard implements INewWizard, Clo
 		String password = mainPage.getModel().getPassword();
 		String type = getServerType();
 		try {
-			String oldName = cloud.getName();
-			cloud.editCloud(name, url, username, password, type);
+			String oldName = initialCloud.getName();
+			initialCloud.editCloud(name, url, username, password, type);
 			DeltaCloudManager.getDefault().saveClouds();
 			if (!name.equals(oldName)) {
 				DeltaCloudManager.getDefault().notifyCloudRename();
 			}
 		} catch (Exception e) {
 		}
-		return true;
-	}
-
-	private String getServerType() {
-		DeltaCloudServerType type = mainPage.getModel().getType();
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	@Override
-	public boolean needsProgressMonitor() {
 		return true;
 	}
 }

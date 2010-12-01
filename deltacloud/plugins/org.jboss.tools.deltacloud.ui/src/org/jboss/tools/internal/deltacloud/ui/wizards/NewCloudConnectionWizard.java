@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.net.MalformedURLException;
 import java.text.MessageFormat;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -22,32 +23,66 @@ import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
-public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
+public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection  {
 
 	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
 	private CloudConnectionPage mainPage;
+	protected DeltaCloud initialCloud;
+	private String pageTitle;
 
 	public NewCloudConnectionWizard() {
+		this(WizardMessages.getString(MAINPAGE_NAME));
+	}
+	
+	public NewCloudConnectionWizard(String pageTitle) {
 		super();
+		this.pageTitle = pageTitle;
+	}
+	
+	public NewCloudConnectionWizard(String pageTitle, DeltaCloud initial) {
+		this(pageTitle);
+		this.initialCloud = initial;
+	}
+	
+	protected CloudConnectionPage createCloudConnectionPage() {
+		Exception e = null;
+		try {
+			if( initialCloud == null )
+				return new CloudConnectionPage(pageTitle, this);
+			// else
+			return new CloudConnectionPage(pageTitle, initialCloud, this);
+		} catch (MalformedURLException e2) {
+			e = e2;
+		} catch (DeltaCloudException e2) {
+			e = e2;
+		}
+		if( e != null ) {
+			ErrorUtils.handleError(WizardMessages.getString("EditCloudConnectionError.title"),
+					WizardMessages.getString("EditCloudConnectionError.message"), e, getShell());
+		}
+		return null;
 	}
 
+	
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 	}
 
-	@Override
-	public void addPages() {
-		mainPage = new CloudConnectionPage(WizardMessages.getString(MAINPAGE_NAME), this);
-		addPage(mainPage);
-	}
 
 	@Override
 	public boolean canFinish() {
 		return mainPage.isPageComplete();
 	}
-
+	
+	@Override
+	public void addPages() {
+		mainPage = createCloudConnectionPage();
+		if( mainPage != null ) 
+			addPage(mainPage);
+	}
+	
 	public boolean performTest() {
-		String name = mainPage.getModel().getName();
+		String name = mainPage.getName();
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
@@ -60,6 +95,20 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 							WizardMessages.getFormattedString("CloudConnectionAuthError.message", url), e, getShell());
 			return true;
 		}
+	}
+	
+	protected String getServerType() {
+		DeltaCloudServerType type = mainPage.getModel().getType();
+		if (type == null) {
+			return null;
+		}
+		
+		return type.toString();
+	}
+
+	@Override
+	public boolean needsProgressMonitor() {
+		return true;
 	}
 
 	@Override
@@ -78,20 +127,6 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 			ErrorUtils
 					.handleError("Error", MessageFormat.format("Could not create cloud {0}", name), e, getShell());
 		}
-		return true;
-	}
-
-	private String getServerType() {
-		DeltaCloudServerType type = mainPage.getModel().getType();
-		if (type == null) {
-			return null;
-		}
-		
-		return type.toString();
-	}
-
-	@Override
-	public boolean needsProgressMonitor() {
 		return true;
 	}
 }
