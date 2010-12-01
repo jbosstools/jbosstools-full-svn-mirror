@@ -31,7 +31,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 
 	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
 	public static final String LAST_USED_URL = "org.jboss.tools.internal.deltacloud.ui.wizards.LAST_CREATED_URL";
-	private CloudConnectionPage mainPage;
+	protected CloudConnectionPage mainPage;
 	protected DeltaCloud initialCloud;
 	private String pageTitle;
 
