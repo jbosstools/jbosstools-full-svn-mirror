@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.rse.core.model.IHost;
@@ -136,7 +135,7 @@ public class NewInstanceWizard2 extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		String imageId = mainPage.getImageId();
+		String imageId = mainPage.getImageId().trim();
 		String profileId = mainPage.getHardwareProfile();
 		String realmId = mainPage.getRealmId();
 		String memory = mainPage.getMemoryProperty();
@@ -151,6 +150,7 @@ public class NewInstanceWizard2 extends Wizard {
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 
 		boolean result = false;
+		Exception e = null;
 		String errorMessage = WizardMessages.getString(DEFAULT_REASON);
 		try {
 			DeltaCloudManager.getDefault().saveClouds();
@@ -184,16 +184,15 @@ public class NewInstanceWizard2 extends Wizard {
 				job.setUser(true);
 				job.schedule();
 			}
-		} catch (DeltaCloudException e) {
-			errorMessage = e.getLocalizedMessage();
+		} catch (DeltaCloudException ex) {
+			errorMessage = ex.getLocalizedMessage();
+			e = ex;
 		}
 		if (!result) {
-			ErrorDialog.openError(
-					this.getShell(),
-					WizardMessages.getString(CREATE_INSTANCE_FAILURE_TITLE),
-					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG, new String[] { name, imageId,
-							realmId, profileId }),
-					new Status(IStatus.ERROR, Activator.PLUGIN_ID, errorMessage));
+			ErrorUtils.handleError(
+					WizardMessages.getString(CREATE_INSTANCE_FAILURE_TITLE), 
+					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG, new String[] { name, imageId, realmId, profileId }), 
+					e, getShell());
 		}
 		return result;
 	}
