@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.net.MalformedURLException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -74,8 +73,9 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	@Override
 	public void addPages() {
 		mainPage = createCloudConnectionPage();
-		if (mainPage != null)
+		if (mainPage != null) {
 			addPage(mainPage);
+		}
 	}
 
 	public boolean performTest() {
