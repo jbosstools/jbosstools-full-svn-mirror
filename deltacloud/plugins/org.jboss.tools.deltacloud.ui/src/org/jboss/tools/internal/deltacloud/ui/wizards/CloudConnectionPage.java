@@ -27,7 +27,6 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -63,7 +62,8 @@ import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.CompositeValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.swt.JFaceUtils;
-import org.osgi.service.prefs.Preferences;
+import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
+import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
 
 /**
  * @author Jeff Jonhston
@@ -273,14 +273,14 @@ public class CloudConnectionPage extends WizardPage {
 		this.connectionModel = new CloudConnectionModel();
 		this.cloudConnection = cloudConnection;
 	}
-	
-	public CloudConnectionPage(String pageName, DeltaCloud initial, CloudConnection connection) 
-		throws MalformedURLException, DeltaCloudException {
+
+	public CloudConnectionPage(String pageName, DeltaCloud initial, CloudConnection connection)
+			throws MalformedURLException, DeltaCloudException {
 
 		this(pageName, initial.getName(), initial.getURL(), initial.getUsername(),
 				initial.getPassword(), initial.getType(), connection);
 	}
-	
+
 	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl,
 			String defaultUsername, String defaultPassword, String defaultType,
 			CloudConnection cloudConnection) throws MalformedURLException {
@@ -324,6 +324,10 @@ public class CloudConnectionPage extends WizardPage {
 						CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL).observe(connectionModel),
 				new UpdateValueStrategy().setAfterGetValidator(
 						new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))), null);
+
+		String url = new TextPreferenceValue(IPreferenceKeys.LAST_URL, Activator.getDefault())
+				.get(urlText.getText());
+		urlText.setText(url);
 
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
@@ -451,12 +455,6 @@ public class CloudConnectionPage extends WizardPage {
 		f.top = new FormAttachment(passwordText, 5);
 		ec2pwLink.setLayoutData(f);
 
-		if( urlText.getText().equals("")) {
-			// pre-set with previously used
-			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-			String previousURL = prefs.get(NewCloudConnectionWizard.LAST_USED_URL, "");
-			urlText.setText(previousURL);
-		}
 		setControl(container);
 	}
 

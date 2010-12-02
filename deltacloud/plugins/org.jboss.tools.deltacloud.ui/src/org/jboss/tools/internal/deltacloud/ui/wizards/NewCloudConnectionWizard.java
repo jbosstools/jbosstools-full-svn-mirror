@@ -12,7 +12,6 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.text.MessageFormat;
 
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -23,13 +22,12 @@ import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
-import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
+import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
+import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
 
 public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
 
 	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
-	public static final String LAST_USED_URL = "org.jboss.tools.internal.deltacloud.ui.wizards.LAST_CREATED_URL";
 	protected CloudConnectionPage mainPage;
 	protected DeltaCloud initialCloud;
 	private String pageTitle;
@@ -112,7 +110,10 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	public boolean performFinish() {
 		String name = mainPage.getModel().getName();
 		String url = mainPage.getModel().getUrl();
-		storeUrl(url);
+
+		new TextPreferenceValue(IPreferenceKeys.LAST_URL, Activator.getDefault())
+				.store(url);
+
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
 		String type = getServerType();
@@ -127,19 +128,5 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 					.handleError("Error", MessageFormat.format("Could not create cloud {0}", name), e, getShell());
 		}
 		return true;
-	}
-
-	private void storeUrl(String url) {
-		// save URL in some plugin preference key!
-		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-		String previousURL = prefs.get(LAST_USED_URL, "");
-		if (previousURL == null || previousURL.equals("") || !previousURL.equals(url)) {
-			prefs.put(LAST_USED_URL, url);
-			try {
-				prefs.flush();
-			} catch (BackingStoreException bse) {
-				// intentionally ignore, non-critical
-			}
-		}
 	}
 }
