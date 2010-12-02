@@ -21,6 +21,7 @@ import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 /**
+ * @author Jeff Johnston
  * @author Andre Dietisheim
  */
 public class CVInstancesCategoryElement extends CVCategoryElement implements IInstanceListListener {

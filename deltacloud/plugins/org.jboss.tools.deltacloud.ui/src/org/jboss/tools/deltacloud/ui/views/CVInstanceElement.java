@@ -24,10 +24,17 @@ public class CVInstanceElement extends CloudViewElement {
 	}
 
 	private static String getName(DeltaCloudInstance instance) {
-		return new StringBuilder(
-				instance.getName())
-				.append("[").append(instance.getId()).append("]")
-				.toString();
+		StringBuilder sb = new StringBuilder();
+		if (instance != null) {
+			if (instance.getName() != null) {
+				sb.append(instance.getName());
+			}
+			if (instance.getId() != null) {
+				sb.append(" [").append(instance.getId()).append("] ");
+			}
+		}
+		return sb.toString();
+
 	}
 
 	@Override
