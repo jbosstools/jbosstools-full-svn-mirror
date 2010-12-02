@@ -20,7 +20,9 @@ path=$(wget -q http://download.jboss.org/jbosstools/builds/staging/${JOBNAMEREDU
 #echo "Fetch ${path} as ${JOBNAMEREDUX}-Update.zip"
 # to test locally, may need to use --protocol=29 and -P instead of -q
 date; rsync -arzq --rsh=ssh ${DESTINATION}/builds/staging/${JOBNAMEREDUX}/${path} ${JOBNAMEREDUX}-Update.zip
+# generate MD5 sum for each zip
+md5sum ${JOBNAMEREDUX}-Update.zip > ${JOBNAMEREDUX}-Update.zip.MD5
 
 #echo "Publish ${path} as ${JOBNAMEREDUX}-Update.zip"
 # to test locally, may need to use --protocol=29 and -P instead of -q
-date; rsync -arzq --rsh=ssh ${JOBNAMEREDUX}-Update.zip ${DESTINATION}/updates/staging/
+date; rsync -arzq --rsh=ssh ${JOBNAMEREDUX}-Update.zip ${JOBNAMEREDUX}-Update.zip.MD5 ${DESTINATION}/updates/staging/

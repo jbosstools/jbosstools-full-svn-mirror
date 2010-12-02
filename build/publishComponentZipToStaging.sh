@@ -35,8 +35,10 @@ for path in $paths; do
 	#echo "Fetch ${path} as ${targetZip}"
 	# to test locally, may need to use --protocol=29 and -P instead of -q
 	date; rsync -arzq --rsh=ssh ${DESTINATION}/builds/staging/${JOBNAMEREDUX}/${path} ${targetZip}
+	# generate MD5 sums for each zip
+	md5sum ${targetZip} > ${targetZip}.MD5
 	
 	#echo "Publish ${path} as ${targetZip}"
 	# to test locally, may need to use --protocol=29 and -P instead of -q
-	date; rsync -arzq --rsh=ssh ${targetZip} ${DESTINATION}/updates/staging/$BRANCH/
+	date; rsync -arzq --rsh=ssh ${targetZip} ${targetZip}.MD5 ${DESTINATION}/updates/staging/$BRANCH/
 done
