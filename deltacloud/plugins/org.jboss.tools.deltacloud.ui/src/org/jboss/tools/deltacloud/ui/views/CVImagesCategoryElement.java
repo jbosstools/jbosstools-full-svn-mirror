@@ -37,66 +37,42 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 		return CVMessages.getString(IMAGE_CATEGORY_NAME);
 	}
 
-	private void addImages(DeltaCloudImage[] images) {
-		if (images.length > CVNumericFoldingElement.FOLDING_SIZE) {
-			int min = 0;
-			int max = CVNumericFoldingElement.FOLDING_SIZE;
-			int length = images.length;
-			while (length > CVNumericFoldingElement.FOLDING_SIZE) {
-				CVNumericFoldingElement f = new CVNumericFoldingElement(min, max);
-				addChild(f);
-				for (int i = min; i < max; ++i) {
-					DeltaCloudImage d = images[i];
-					CVImageElement element = new CVImageElement(d);
-					f.addChild(element);
-				}
-				min += CVNumericFoldingElement.FOLDING_SIZE;
-				max += CVNumericFoldingElement.FOLDING_SIZE;
-				length -= CVNumericFoldingElement.FOLDING_SIZE;
-			}
-			if (length > 0) {
-				CVNumericFoldingElement f = new CVNumericFoldingElement(min, max);
-				addChild(f);
-				for (int i = min; i < min + length; ++i) {
-					DeltaCloudImage d = images[i];
-					CVImageElement element = new CVImageElement(d);
-					f.addChild(element);
-				}
-			}
-		} else {
-			for (int i = 0; i < images.length; ++i) {
-				DeltaCloudImage d = images[i];
-				CVImageElement element = new CVImageElement(d);
-				addChild(element);
-			}
-		}
-	}
-
 	@Override
-	public Object[] getChildren() {
+	public synchronized Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud) getElement();
 			try {
-				DeltaCloudImage[] images = filter(cloud.getImages());
 				cloud.removeImageListListener(this);
-				addImages(images);
+				DeltaCloudImage[] images = filter(cloud.getImages());
+				addChildren(images);
 				initialized = true;
-				cloud.addImageListListener(this);
 			} catch (Exception e) {
 				ErrorUtils.handleError(
 						"Error",
 						"Colud not get images from cloud " + cloud.getName(),
 						e, getViewer().getControl().getShell());
+			} finally {
+				cloud.addImageListListener(this);
 			}
 		}
 		return super.getChildren();
 	}
 
 	@Override
-	public void listChanged(DeltaCloud cloud, DeltaCloudImage[] newImages) {
+	protected CloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
+		CloudViewElement[] elements = new CloudViewElement[stopIndex - startIndex];
+		for (int i = startIndex; i < stopIndex; ++i) {
+			elements[i - startIndex] = new CVImageElement(modelElements[i]);
+		}
+		return elements;
+	}
+	
+	@Override
+	public synchronized void listChanged(DeltaCloud cloud, DeltaCloudImage[] newImages) {
 		clearChildren();
+		initialized = false;
 		DeltaCloudImage[] images = filter(newImages);
-		addImages(images);
+		addChildren(images);
 		initialized = true;
 		// refresh();
 	}
