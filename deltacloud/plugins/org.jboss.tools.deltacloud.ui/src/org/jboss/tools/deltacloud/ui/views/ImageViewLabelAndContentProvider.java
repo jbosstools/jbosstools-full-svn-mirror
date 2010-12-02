@@ -73,6 +73,9 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 
 	@Override
 	public Object[] getElements(Object inputElement) {
+		if (images == null) {
+			return new DeltaCloudImage[]{};
+		}
 		return images;
 	}
 
