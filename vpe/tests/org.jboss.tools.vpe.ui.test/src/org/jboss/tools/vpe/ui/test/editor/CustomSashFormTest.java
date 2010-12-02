@@ -2,8 +2,6 @@ package org.jboss.tools.vpe.ui.test.editor;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.WorkbenchPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
@@ -44,14 +42,14 @@ public class CustomSashFormTest extends VpeTest {
         /*
          * Close editor part
          */
-        ((WorkbenchPage)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()).getEditorPresentation().closeEditor(part);
+        closeEditor(part);
         TestUtil.waitForJobs();
         TestUtil.delay(5000);
         input = new FileEditorInput(file1);
         part = openEditor(input);
         visualEditor = (VpeEditorPart) part.getVisualEditor();
         TestUtil.waitForJobs();
-        ((WorkbenchPage)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()).getEditorPresentation().closeEditor(part);
+        closeEditor(part);
         
         /*
          * Test it on another file
@@ -75,7 +73,7 @@ public class CustomSashFormTest extends VpeTest {
         /*
          * Close part without saving
          */
-        ((WorkbenchPage)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()).getEditorPresentation().closeEditor(part);
+        closeEditor(part);
         TestUtil.waitForJobs();
         part = openEditor(input);
         
@@ -83,10 +81,8 @@ public class CustomSashFormTest extends VpeTest {
          * If there are any exceptions it would be thrown.
          */
         TestUtil.waitForJobs();
-	if(getException()!=null) {
-		throw getException();
-	}
-        
+		if(getException()!=null) {
+			throw new Exception(getException());
+		}
     }
-    
 }

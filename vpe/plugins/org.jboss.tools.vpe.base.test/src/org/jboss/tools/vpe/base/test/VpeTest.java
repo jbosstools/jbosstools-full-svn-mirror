@@ -176,6 +176,16 @@ public class VpeTest extends TestCase implements ILogListener {
 		}
 
 	}
+	
+	/**
+	 * Closes given {@code editor}.
+	 */
+    protected void closeEditor(IEditorPart editor) {
+		boolean closed = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+				.getActivePage().closeEditor(editor, false);
+		
+		assertTrue(closed);
+	}
 
 	/**
 	 * close all opened editors.
