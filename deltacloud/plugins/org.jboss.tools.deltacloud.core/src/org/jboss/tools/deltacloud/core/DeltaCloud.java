@@ -503,6 +503,8 @@ public class DeltaCloud {
 				images = new DeltaCloudImagesRepository();
 			}
 			images.add(client.listImages(), this);
+			// TODO: remove notification with all instances, replace by
+			// notifying the changed instance
 			return notifyImageListListeners(images.get());
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(MessageFormat.format("Could not load images of cloud {0}: {1}",
