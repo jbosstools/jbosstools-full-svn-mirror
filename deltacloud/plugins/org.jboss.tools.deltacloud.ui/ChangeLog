@@ -1,5 +1,7 @@
 2010-12-02  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java (getChildren): 
+	[JBIDE-7780] synchronized children initialisation
 	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java (getName): 
 	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java (getName): 
 	* src/org/jboss/tools/deltacloud/ui/views/CVImageElement.java (getName): 
