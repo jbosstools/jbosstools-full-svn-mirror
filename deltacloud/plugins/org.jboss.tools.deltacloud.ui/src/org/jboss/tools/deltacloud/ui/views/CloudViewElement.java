@@ -11,6 +11,7 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -23,7 +24,7 @@ public abstract class CloudViewElement implements IAdaptable {
 
 	private Object element;
 	private CloudViewElement parent;
-	private ArrayList<CloudViewElement> children;
+	private List<CloudViewElement> children;
 
 	public abstract IPropertySource getPropertySource();
 	
@@ -48,6 +49,12 @@ public abstract class CloudViewElement implements IAdaptable {
 		e.setParent(this);
 	}
 	
+	public void addChildren(CloudViewElement[] elements) {
+		for(CloudViewElement element : elements) {
+			addChild(element);
+		}
+	}
+
 	public void setParent(CloudViewElement e) {
 		parent = e;
 	}

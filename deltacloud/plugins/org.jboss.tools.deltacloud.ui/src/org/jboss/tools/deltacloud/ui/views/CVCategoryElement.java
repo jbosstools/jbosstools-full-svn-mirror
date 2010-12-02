@@ -52,6 +52,35 @@ public abstract class CVCategoryElement extends CloudViewElement {
 		return true;
 	}
 
+	protected void addChildren(Object[] modelElements) {
+		if (modelElements.length > CVNumericFoldingElement.FOLDING_SIZE) {
+			addFoldedChildren(modelElements);
+		} else {
+			addChildren(getElements(modelElements, 0, modelElements.length));
+		}
+	}
+
+	protected void addFoldedChildren(Object[] modelElements) {
+		int min = 0;
+		int max = CVNumericFoldingElement.FOLDING_SIZE;
+		int length = modelElements.length;
+		while (length > CVNumericFoldingElement.FOLDING_SIZE) {
+			CVNumericFoldingElement f = new CVNumericFoldingElement(min, max);
+			addChild(f);
+			f.addChildren(getElements(modelElements, min, max));
+			min += CVNumericFoldingElement.FOLDING_SIZE;
+			max += CVNumericFoldingElement.FOLDING_SIZE;
+			length -= CVNumericFoldingElement.FOLDING_SIZE;
+		}
+		if (length > 0) {
+			CVNumericFoldingElement f = new CVNumericFoldingElement(min, max);
+			addChild(f);
+			f.addChildren(getElements(modelElements, min, min + length));
+		}
+	}
+
+	protected abstract CloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex);
+	
 	@Override
 	public IPropertySource getPropertySource() {
 		// no property source for cathegories
