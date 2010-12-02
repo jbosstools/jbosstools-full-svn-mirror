@@ -43,8 +43,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 			int max = CVNumericFoldingElement.FOLDING_SIZE;
 			int length = images.length;
 			while (length > CVNumericFoldingElement.FOLDING_SIZE) {
-				CVNumericFoldingElement f =
-						new CVNumericFoldingElement(null, "[" + min + ".." + (max - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				CVNumericFoldingElement f = new CVNumericFoldingElement(min, max);
 				addChild(f);
 				for (int i = min; i < max; ++i) {
 					DeltaCloudImage d = images[i];
@@ -56,8 +55,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 				length -= CVNumericFoldingElement.FOLDING_SIZE;
 			}
 			if (length > 0) {
-				CVNumericFoldingElement f = new CVNumericFoldingElement(null,
-						"[" + min + ".." + (max - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				CVNumericFoldingElement f = new CVNumericFoldingElement(min, max);
 				addChild(f);
 				for (int i = min; i < min + length; ++i) {
 					DeltaCloudImage d = images[i];

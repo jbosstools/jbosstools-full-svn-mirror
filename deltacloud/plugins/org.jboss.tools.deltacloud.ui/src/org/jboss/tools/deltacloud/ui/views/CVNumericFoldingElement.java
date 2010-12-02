@@ -19,28 +19,35 @@ import org.eclipse.ui.views.properties.IPropertySource;
 public class CVNumericFoldingElement extends CloudViewElement {
 
 	public static int FOLDING_SIZE = 50;
-	private String name;
-	
-	public CVNumericFoldingElement(Object element, String name) {
-		super(element);
-		this.name = name;
+	private Object min;
+	private int max;
+
+	public CVNumericFoldingElement(int min, int max) {
+		super(null);
+		this.min = min;
+		this.max = max;
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return new StringBuilder()
+				.append("[")
+				.append(min)
+				.append("..")
+				.append(max - 1)
+				.append("]").toString();
 	}
 
 	@Override
 	public Object[] getChildren() {
 		return super.getChildren();
 	}
-	
+
 	@Override
 	public boolean hasChildren() {
 		return true;
 	}
-	
+
 	@Override
 	public IPropertySource getPropertySource() {
 		return null;

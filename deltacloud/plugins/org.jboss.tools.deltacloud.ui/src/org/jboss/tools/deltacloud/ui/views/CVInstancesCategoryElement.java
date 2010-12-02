@@ -44,8 +44,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 			int max = CVNumericFoldingElement.FOLDING_SIZE;
 			int length = instances.length;
 			while (length > CVNumericFoldingElement.FOLDING_SIZE) {
-				CVNumericFoldingElement f = new CVNumericFoldingElement(null,
-						"[" + min + ".." + (max - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				CVNumericFoldingElement f = new CVNumericFoldingElement(min, max);
 				addChild(f);
 				for (int i = min; i < max; ++i) {
 					DeltaCloudInstance d = instances[i];
@@ -57,8 +56,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 				length -= CVNumericFoldingElement.FOLDING_SIZE;
 			}
 			if (length > 0) {
-				CVNumericFoldingElement f = new CVNumericFoldingElement(null,
-						"[" + min + ".." + (max - 1) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				CVNumericFoldingElement f = new CVNumericFoldingElement(min, max);
 				addChild(f);
 				for (int i = min; i < min + length; ++i) {
 					DeltaCloudInstance d = instances[i];

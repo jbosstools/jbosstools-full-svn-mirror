@@ -6,9 +6,11 @@
 	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java (getName): 
 	* src/org/jboss/tools/deltacloud/ui/views/CVImageElement.java (getName): 
 	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (getName): 
+	(addImages): 
 	* src/org/jboss/tools/deltacloud/ui/views/CVNumericFoldingElement.java (getName): 
 	* src/org/jboss/tools/deltacloud/ui/views/CVRootElement.java (getName): 
 	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (getName): 
+	(addInstances): 
 	* src/org/jboss/tools/deltacloud/ui/views/CVInstanceElement.java (getName): 	
 	[JBIDE-7780] removed "name" parameter from constructor, implemented #getName on each CloudViewElement
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (createControl): 
