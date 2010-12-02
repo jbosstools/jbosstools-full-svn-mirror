@@ -103,7 +103,7 @@ public class NewInstancePage2 extends WizardPage {
 	private DeltaCloudHardwareProfile[] allProfiles;
 	private List<DeltaCloudRealm> realms;
 
-	private Label dummyLabel, imageLabel, archLabel, nameLabel, realmLabel;
+	private Label imageLabel, archLabel, nameLabel, realmLabel;
 	private Group groupContainer;
 
 	
@@ -318,7 +318,7 @@ public class NewInstancePage2 extends WizardPage {
 		layout.marginWidth = 5;
 		container.setLayout(layout);
 
-		dummyLabel = new Label(container, SWT.NULL);
+		Label dummyLabel = new Label(container, SWT.NULL);
 		imageLabel = new Label(container, SWT.NULL);
 		imageLabel.setText(WizardMessages.getString(IMAGE_LABEL));
 
@@ -361,7 +361,7 @@ public class NewInstancePage2 extends WizardPage {
 		hardware.setEnabled(false);
 		
 		// add invisible dummy widget to guarantee a min size
-		Label dummyLabel = new Label(groupContainer, SWT.NONE);
+		dummyLabel = new Label(groupContainer, SWT.NONE);
 		dummyLabel.setText("\n\n\n\n\n");
 		FormData dummyData = UIUtils.createFormData(0,0,0,150,null,0,null,0);
 		dummyLabel.setLayoutData(dummyData);
