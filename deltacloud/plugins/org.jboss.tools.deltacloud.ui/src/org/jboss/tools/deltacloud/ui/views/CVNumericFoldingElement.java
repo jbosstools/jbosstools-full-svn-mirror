@@ -12,12 +12,23 @@ package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.ui.views.properties.IPropertySource;
 
+/**
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
 public class CVNumericFoldingElement extends CloudViewElement {
 
 	public static int FOLDING_SIZE = 50;
+	private String name;
 	
 	public CVNumericFoldingElement(Object element, String name) {
-		super(element, name);
+		super(element);
+		this.name = name;
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 
 	@Override

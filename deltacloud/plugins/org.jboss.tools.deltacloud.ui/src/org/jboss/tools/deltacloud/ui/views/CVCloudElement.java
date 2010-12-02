@@ -20,19 +20,29 @@ import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.ui.Activator;
 
+/**
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
 public class CVCloudElement extends CloudViewElement {
-
-	private static final String INSTANCE_CATEGORY_NAME = "InstanceCategoryName"; //$NON-NLS-1$
-	private static final String IMAGE_CATEGORY_NAME = "ImageCategoryName"; //$NON-NLS-1$
 
 	private TreeViewer viewer;
 	private boolean initialized;
-	
+
 	public CVCloudElement(Object element, String name, TreeViewer viewer) {
-		super(element, name);
+		super(element);
 		this.viewer = viewer;
 	}
 
+	public String getName() {
+		Object element = getElement();
+		if (element instanceof DeltaCloud) {
+			return ((DeltaCloud) element).getName();
+		} else {
+			return "";
+		}
+	}
+	
 	public Viewer getViewer() {
 		return viewer;
 	}
@@ -41,29 +51,27 @@ public class CVCloudElement extends CloudViewElement {
 	public boolean hasChildren() {
 		return true;
 	}
-	
+
 	@Override
 	public Object[] getChildren() {
 		if (!initialized) {
-			DeltaCloud cloud = (DeltaCloud)getElement();
-			CVCategoryElement c1 = new CVInstancesCategoryElement(cloud, CVMessages.getString(INSTANCE_CATEGORY_NAME),
-					viewer);
-			CVCategoryElement c2 = new CVImagesCategoryElement(cloud, CVMessages.getString(IMAGE_CATEGORY_NAME),
-					viewer);
+			DeltaCloud cloud = (DeltaCloud) getElement();
+			CVCategoryElement c1 = new CVInstancesCategoryElement(cloud, viewer);
+			CVCategoryElement c2 = new CVImagesCategoryElement(cloud, viewer);
 			addChild(c1);
 			addChild(c2);
 		}
 		initialized = true;
 		return super.getChildren();
 	}
-	
+
 	@Override
 	public IPropertySource getPropertySource() {
 		return new CloudPropertySource(getElement());
 	}
 
 	public void loadChildren() {
-		DeltaCloud cloud = (DeltaCloud)getElement();
+		DeltaCloud cloud = (DeltaCloud) getElement();
 		try {
 			cloud.loadChildren();
 		} catch (Exception e) {

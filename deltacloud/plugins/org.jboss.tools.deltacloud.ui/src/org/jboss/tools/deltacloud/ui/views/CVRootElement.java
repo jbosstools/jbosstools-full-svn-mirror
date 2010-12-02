@@ -19,16 +19,25 @@ import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
+/**
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
 public class CVRootElement extends CloudViewElement implements ICloudManagerListener {
 
 	private boolean initialized;
 	private TreeViewer viewer;
 
 	public CVRootElement(TreeViewer viewer) {
-		super(DeltaCloudManager.getDefault(), "root"); //$NON-NLS-1$
+		super(DeltaCloudManager.getDefault()); //$NON-NLS-1$
 		this.viewer = viewer;
 	}
 
+	@Override
+	public String getName() {
+		return "root";
+	}
+	
 	@Override
 	public IPropertySource getPropertySource() {
 		// no property source for the root element

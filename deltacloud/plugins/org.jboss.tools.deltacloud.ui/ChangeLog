@@ -1,5 +1,14 @@
 2010-12-02  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java (getName): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java (getName): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVImageElement.java (getName): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (getName): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVNumericFoldingElement.java (getName): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVRootElement.java (getName): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (getName): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstanceElement.java (getName): 	
+	[JBIDE-7780] removed "name" parameter from constructor, implemented #getName on each CloudViewElement
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (createControl): 
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: 
 	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java: 
@@ -7,9 +16,11 @@
 	* src/org/jboss/tools/deltacloud/ui/views/AbstractCloudChildrenTableView.java: 
 	* src/org/jboss/tools/deltacloud/ui/views/TableViewerColumnComparator.java: 
 	[JBIDE-7693] removed a lot of duplicate code, unified Instance- and ImageView, Image- and InstanceComparator	
-	* src/org/jboss/tools/deltacloud/ui/views/CVInstanceElement.java (getName): 
+
+	
 	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (addInstances): 
 	[JBIDE-7779] changed label for instances in CloudView
+	
 
 2010-12-01  André Dietisheim  <adietish@redhat.com>
 

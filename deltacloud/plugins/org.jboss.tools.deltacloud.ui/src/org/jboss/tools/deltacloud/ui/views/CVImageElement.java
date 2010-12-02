@@ -11,13 +11,27 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 
+/**
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
 public class CVImageElement extends CloudViewElement {
 
-	public CVImageElement(Object element, String name) {
-		super(element, name);
+	public CVImageElement(Object element) {
+		super(element);
 	}
-
+	
+	public String getName() {
+		Object element = getElement();
+		if (element instanceof DeltaCloudImage) {
+			return ((DeltaCloudImage) element).getName();
+		} else {
+			return "";
+		}
+	}
+	
 	@Override
 	public IPropertySource getPropertySource() {
 		return new ImagePropertySource(getElement());

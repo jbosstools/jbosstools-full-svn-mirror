@@ -26,12 +26,18 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
  */
 public class CVInstancesCategoryElement extends CVCategoryElement implements IInstanceListListener {
 
-	public CVInstancesCategoryElement(Object element, String name, TreeViewer viewer) {
-		super(element, name, viewer);
+	private static final String INSTANCE_CATEGORY_NAME = "InstanceCategoryName"; //$NON-NLS-1$
+
+	public CVInstancesCategoryElement(Object element, TreeViewer viewer) {
+		super(element, viewer);
 		DeltaCloud cloud = (DeltaCloud) getElement();
 		cloud.addInstanceListListener(this);
 	}
 
+	public String getName() {
+		return CVMessages.getString(INSTANCE_CATEGORY_NAME);
+	}
+	
 	private void addInstances(DeltaCloudInstance[] instances) {
 		if (instances.length > CVNumericFoldingElement.FOLDING_SIZE) {
 			int min = 0;
@@ -96,7 +102,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 		final DeltaCloudInstance[] instances = filter(newInstances);
 		addInstances(instances);
 		initialized = true;
-		refresh();
+//		refresh();
 	}
 
 	private DeltaCloudInstance[] filter(DeltaCloudInstance[] input) {

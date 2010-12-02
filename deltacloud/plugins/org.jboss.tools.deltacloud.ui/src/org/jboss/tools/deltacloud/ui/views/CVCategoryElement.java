@@ -27,13 +27,17 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 
+/**
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
 public abstract class CVCategoryElement extends CloudViewElement {
 
 	protected boolean initialized;
 	private TreeViewer viewer;
 
-	public CVCategoryElement(Object element, String name, TreeViewer viewer) {
-		super(element, name);
+	public CVCategoryElement(Object element, TreeViewer viewer) {
+		super(element);
 		this.viewer = viewer;
 		viewer.getControl().addDisposeListener(onDispose());
 	}

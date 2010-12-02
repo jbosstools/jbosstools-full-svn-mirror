@@ -20,12 +20,14 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 public class CVInstanceElement extends CloudViewElement {
 
 	public CVInstanceElement(Object element) {
-		super(element, getName((DeltaCloudInstance) element));
+		super(element);
 	}
 
-	private static String getName(DeltaCloudInstance instance) {
+	public String getName() {
+		Object element = getElement();
 		StringBuilder sb = new StringBuilder();
-		if (instance != null) {
+		if (element instanceof DeltaCloudInstance) {
+			DeltaCloudInstance instance = (DeltaCloudInstance) element;
 			if (instance.getName() != null) {
 				sb.append(instance.getName());
 			}

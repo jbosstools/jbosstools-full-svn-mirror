@@ -15,13 +15,16 @@ import java.util.ArrayList;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.views.properties.IPropertySource;
 
+/**
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
 public abstract class CloudViewElement implements IAdaptable {
 
 	private Object element;
 	private CloudViewElement parent;
 	private ArrayList<CloudViewElement> children;
-	private String name;
-	
+
 	public abstract IPropertySource getPropertySource();
 	
 	public Object[] getChildren() {
@@ -49,15 +52,12 @@ public abstract class CloudViewElement implements IAdaptable {
 		parent = e;
 	}
 	
-	public CloudViewElement(Object element, String name) {
+	public CloudViewElement(Object element) {
 		this.element = element;
-		this.name = name;
 		children = new ArrayList<CloudViewElement>();
 	}
 	
-	public String getName() {
-		return name;
-	}
+	public abstract String getName();
 	
 	public Object getElement() {
 		return element;
