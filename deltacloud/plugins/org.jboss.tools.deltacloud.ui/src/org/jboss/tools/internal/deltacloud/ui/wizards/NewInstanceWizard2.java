@@ -37,7 +37,6 @@ public class NewInstanceWizard2 extends Wizard {
 
 	private final static String CREATE_INSTANCE_FAILURE_TITLE = "CreateInstanceError.title"; //$NON-NLS-1$
 	private final static String CREATE_INSTANCE_FAILURE_MSG = "CreateInstanceError.msg"; //$NON-NLS-1$
-	private final static String DEFAULT_REASON = "CreateInstanceErrorReason.msg"; //$NON-NLS-1$
 	private final static String CONFIRM_CREATE_TITLE = "ConfirmCreate.title"; //$NON-NLS-1$
 	private final static String CONFIRM_CREATE_MSG = "ConfirmCreate.msg"; //$NON-NLS-1$
 	private final static String DONT_SHOW_THIS_AGAIN_MSG = "DontShowThisAgain.msg"; //$NON-NLS-1$
@@ -151,7 +150,6 @@ public class NewInstanceWizard2 extends Wizard {
 
 		boolean result = false;
 		Exception e = null;
-		String errorMessage = WizardMessages.getString(DEFAULT_REASON);
 		try {
 			DeltaCloudManager.getDefault().saveClouds();
 			boolean dontShowDialog = prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE,
@@ -185,7 +183,6 @@ public class NewInstanceWizard2 extends Wizard {
 				job.schedule();
 			}
 		} catch (DeltaCloudException ex) {
-			errorMessage = ex.getLocalizedMessage();
 			e = ex;
 		}
 		if (!result) {
