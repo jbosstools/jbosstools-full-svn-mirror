@@ -50,9 +50,10 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 
 	protected CloudConnectionPage createCloudConnectionPage() {
 		try {
-			if (initialCloud == null)
+			if (initialCloud == null) {
 				return new CloudConnectionPage(pageTitle, this);
-			// else
+			}
+
 			return new CloudConnectionPage(pageTitle, initialCloud, this);
 		} catch (Exception e) {
 			ErrorUtils.handleError(WizardMessages.getString("EditCloudConnectionError.title"),
@@ -87,8 +88,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password);
 			return newCloud.testConnection();
 		} catch (DeltaCloudException e) {
-			ErrorUtils
-					.handleError(WizardMessages.getString("CloudConnectionAuthError.title"),
+			ErrorUtils.handleError(WizardMessages.getString("CloudConnectionAuthError.title"),
 							WizardMessages.getFormattedString("CloudConnectionAuthError.message", url), e, getShell());
 			return true;
 		}
@@ -112,21 +112,10 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	public boolean performFinish() {
 		String name = mainPage.getModel().getName();
 		String url = mainPage.getModel().getUrl();
+		storeUrl(url);
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
 		String type = getServerType();
-
-		// save URL in some plugin preference key!
-		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-		String previousURL = prefs.get(LAST_USED_URL, "");
-		if (previousURL == null || previousURL.equals("") || !previousURL.equals(url)) {
-			prefs.put(LAST_USED_URL, url);
-			try {
-				prefs.flush();
-			} catch (BackingStoreException bse) {
-				// intentionally ignore, non-critical
-			}
-		}
 
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, type);
@@ -138,5 +127,19 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 					.handleError("Error", MessageFormat.format("Could not create cloud {0}", name), e, getShell());
 		}
 		return true;
+	}
+
+	private void storeUrl(String url) {
+		// save URL in some plugin preference key!
+		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+		String previousURL = prefs.get(LAST_USED_URL, "");
+		if (previousURL == null || previousURL.equals("") || !previousURL.equals(url)) {
+			prefs.put(LAST_USED_URL, url);
+			try {
+				prefs.flush();
+			} catch (BackingStoreException bse) {
+				// intentionally ignore, non-critical
+			}
+		}
 	}
 }
