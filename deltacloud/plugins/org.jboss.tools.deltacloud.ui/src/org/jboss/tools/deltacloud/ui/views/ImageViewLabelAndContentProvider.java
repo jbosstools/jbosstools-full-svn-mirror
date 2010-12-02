@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.viewers.BaseLabelProvider;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -26,8 +24,10 @@ import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
-public class ImageViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider,
-		ITableLabelProvider {
+/**
+ * @author Jeff Johnston
+ */
+public class ImageViewLabelAndContentProvider extends BaseLabelProvider implements ITableContentAndLabelProvider {
 
 	private DeltaCloud cloud;
 	private IImageFilter localFilter;

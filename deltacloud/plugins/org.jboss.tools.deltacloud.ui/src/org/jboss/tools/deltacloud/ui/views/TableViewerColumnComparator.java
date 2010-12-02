@@ -10,48 +10,63 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import org.eclipse.core.runtime.Assert;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 
-public class ImageComparator extends ViewerComparator {
-	
+/**
+ * A viewer comparator that compares labels in a column of a table.<br>
+ * This implementation was extracted out of the former Image- and
+ * InstanceComparator which were mostly identical.
+ * 
+ * @see ViewerComparator
+ * 
+ * @author Jeff Johnston
+ * @author André Dietisheim
+ */
+public class TableViewerColumnComparator extends ViewerComparator {
+
 	private final static int UP = 1;
-			
+
 	private int column;
 	private int direction;
-	
-	public ImageComparator(int column) {
+
+	public TableViewerColumnComparator() {
+		this(0);
+	}
+
+	public TableViewerColumnComparator(int column) {
 		this.column = column;
 		this.direction = UP;
 	}
-	
+
 	public void setColumn(int newColumn) {
 		if (column != newColumn)
 			direction = UP;
 		column = newColumn;
 	}
-	
+
 	public int getColumn() {
 		return column;
 	}
-	
+
 	public void reverseDirection() {
 		direction *= -1;
 	}
-	
+
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
-		if (!(e1 instanceof DeltaCloudImage) || !(e2 instanceof DeltaCloudImage))
-			return 0;
-		
-		int tmp = compareByColumn(viewer, (DeltaCloudImage)e1, (DeltaCloudImage)e2);
+		int tmp = compareByColumn(viewer, e1, e2);
 		return tmp * direction;
 	}
-	
-	private int compareByColumn(Viewer viewer, DeltaCloudImage e1, DeltaCloudImage e2) {
-		ImageViewLabelAndContentProvider provider = (ImageViewLabelAndContentProvider)((TableViewer)viewer).getContentProvider();
+
+	private int compareByColumn(Viewer viewer, Object e1, Object e2) {
+		Assert.isTrue(viewer instanceof TableViewer
+				&& ((TableViewer) viewer).getLabelProvider() instanceof ITableLabelProvider);
+
+		ITableLabelProvider provider = (ITableLabelProvider) ((TableViewer) viewer).getLabelProvider();
 		String s1 = provider.getColumnText(e1, column);
 		String s2 = provider.getColumnText(e2, column);
 		return s1.compareToIgnoreCase(s2);

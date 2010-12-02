@@ -33,8 +33,8 @@ import org.jboss.tools.deltacloud.core.ImageFilter;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.ImageComparator;
 import org.jboss.tools.deltacloud.ui.views.ImageViewLabelAndContentProvider;
+import org.jboss.tools.deltacloud.ui.views.TableViewerColumnComparator;
 
 public class FindImagePage extends WizardPage {
 
@@ -83,7 +83,7 @@ public class FindImagePage extends WizardPage {
 		}
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			ImageComparator comparator = (ImageComparator)viewer.getComparator();
+			TableViewerColumnComparator comparator = (TableViewerColumnComparator)viewer.getComparator();
 			Table t = viewer.getTable();
 			if (comparator.getColumn() == column) {
 				comparator.reverseDirection();
@@ -220,7 +220,7 @@ public class FindImagePage extends WizardPage {
 		contentProvider = new ImageViewLabelAndContentProvider();
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(contentProvider);
-		ImageComparator comparator = new ImageComparator(0);
+		TableViewerColumnComparator comparator = new TableViewerColumnComparator();
 		viewer.setComparator(comparator);
 		
 		for (int i = 0; i < ImageViewLabelAndContentProvider.Column.getSize(); ++i) {

@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.viewers.BaseLabelProvider;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -29,8 +27,11 @@ import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
-public class InstanceViewLabelAndContentProvider extends BaseLabelProvider implements IStructuredContentProvider,
-		ITableLabelProvider {
+/**
+ * @author Jeff Jonhston
+ * @author Andre Dietisheim
+ */
+public class InstanceViewLabelAndContentProvider extends BaseLabelProvider implements ITableContentAndLabelProvider {
 
 	private DeltaCloud cloud;
 	private DeltaCloudInstance[] instances = new DeltaCloudInstance[]{};
