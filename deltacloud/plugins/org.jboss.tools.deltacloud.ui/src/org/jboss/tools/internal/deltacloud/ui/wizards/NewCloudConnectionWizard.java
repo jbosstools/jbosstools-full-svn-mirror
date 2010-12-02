@@ -27,7 +27,7 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection  {
+public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
 
 	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
 	public static final String LAST_USED_URL = "org.jboss.tools.internal.deltacloud.ui.wizards.LAST_CREATED_URL";
@@ -38,54 +38,46 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	public NewCloudConnectionWizard() {
 		this(WizardMessages.getString(MAINPAGE_NAME));
 	}
-	
+
 	public NewCloudConnectionWizard(String pageTitle) {
 		super();
 		this.pageTitle = pageTitle;
 	}
-	
+
 	public NewCloudConnectionWizard(String pageTitle, DeltaCloud initial) {
 		this(pageTitle);
 		this.initialCloud = initial;
 	}
-	
+
 	protected CloudConnectionPage createCloudConnectionPage() {
-		Exception e = null;
 		try {
-			if( initialCloud == null )
+			if (initialCloud == null)
 				return new CloudConnectionPage(pageTitle, this);
 			// else
 			return new CloudConnectionPage(pageTitle, initialCloud, this);
-		} catch (MalformedURLException e2) {
-			e = e2;
-		} catch (DeltaCloudException e2) {
-			e = e2;
-		}
-		if( e != null ) {
+		} catch (Exception e) {
 			ErrorUtils.handleError(WizardMessages.getString("EditCloudConnectionError.title"),
 					WizardMessages.getString("EditCloudConnectionError.message"), e, getShell());
 		}
 		return null;
 	}
 
-	
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 	}
-
 
 	@Override
 	public boolean canFinish() {
 		return mainPage.isPageComplete();
 	}
-	
+
 	@Override
 	public void addPages() {
 		mainPage = createCloudConnectionPage();
-		if( mainPage != null ) 
+		if (mainPage != null)
 			addPage(mainPage);
 	}
-	
+
 	public boolean performTest() {
 		String name = mainPage.getName();
 		String url = mainPage.getModel().getUrl();
@@ -101,13 +93,13 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 			return true;
 		}
 	}
-	
+
 	protected String getServerType() {
 		DeltaCloudServerType type = mainPage.getModel().getType();
 		if (type == null) {
 			return null;
 		}
-		
+
 		return type.toString();
 	}
 
@@ -123,19 +115,19 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
 		String type = getServerType();
-		
+
 		// save URL in some plugin preference key!
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 		String previousURL = prefs.get(LAST_USED_URL, "");
-		if( previousURL == null || previousURL.equals("") || !previousURL.equals(url)) {
+		if (previousURL == null || previousURL.equals("") || !previousURL.equals(url)) {
 			prefs.put(LAST_USED_URL, url);
 			try {
 				prefs.flush();
-			} catch( BackingStoreException bse ) {
+			} catch (BackingStoreException bse) {
 				// intentionally ignore, non-critical
 			}
 		}
-		
+
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, type);
 			DeltaCloudManager.getDefault().addCloud(newCloud);
