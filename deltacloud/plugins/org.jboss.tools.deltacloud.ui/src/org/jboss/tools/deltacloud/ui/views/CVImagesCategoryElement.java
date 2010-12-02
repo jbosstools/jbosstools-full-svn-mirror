@@ -70,16 +70,18 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud)getElement();
 			try {
+				// do not listen to model when loading. we would add images twice otherwise.
+				cloud.removeImageListListener(this); 
 				DeltaCloudImage[] images = filter(cloud.getImages());
-				cloud.removeImageListListener(this);
 				addImages(images);
 				initialized = true;
-				cloud.addImageListListener(this);
 			} catch (Exception e) {
 				ErrorUtils.handleError(
 						"Error",
 						"Colud not get images from cloud " + cloud.getName(),
 						e, Display.getDefault().getActiveShell());
+			} finally {
+				cloud.addImageListListener(this);
 			}
 		}
 		return super.getChildren();
