@@ -53,7 +53,7 @@ public class CVCloudElement extends CloudViewElement {
 	}
 
 	@Override
-	public Object[] getChildren() {
+	public synchronized Object[] getChildren() {
 		if (!initialized) {
 			DeltaCloud cloud = (DeltaCloud) getElement();
 			CVCategoryElement c1 = new CVInstancesCategoryElement(cloud, viewer);
