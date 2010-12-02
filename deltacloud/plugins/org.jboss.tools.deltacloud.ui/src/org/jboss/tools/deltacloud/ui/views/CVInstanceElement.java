@@ -11,13 +11,25 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 
+/**
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
 public class CVInstanceElement extends CloudViewElement {
 
-	public CVInstanceElement(Object element, String name) {
-		super(element, name);
+	public CVInstanceElement(Object element) {
+		super(element, getName((DeltaCloudInstance) element));
 	}
-	
+
+	private static String getName(DeltaCloudInstance instance) {
+		return new StringBuilder(
+				instance.getName())
+				.append("[").append(instance.getId()).append("]")
+				.toString();
+	}
+
 	@Override
 	public IPropertySource getPropertySource() {
 		return new InstancePropertySource(this, getElement());

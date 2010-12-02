@@ -20,6 +20,9 @@ import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
+/**
+ * @author Andre Dietisheim
+ */
 public class CVInstancesCategoryElement extends CVCategoryElement implements IInstanceListListener {
 
 	public CVInstancesCategoryElement(Object element, String name, TreeViewer viewer) {
@@ -39,7 +42,7 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 				addChild(f);
 				for (int i = min; i < max; ++i) {
 					DeltaCloudInstance d = instances[i];
-					CVInstanceElement element = new CVInstanceElement(d, d.getName());
+					CVInstanceElement element = new CVInstanceElement(d);
 					f.addChild(element);
 				}
 				min += CVNumericFoldingElement.FOLDING_SIZE;
@@ -52,14 +55,14 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 				addChild(f);
 				for (int i = min; i < min + length; ++i) {
 					DeltaCloudInstance d = instances[i];
-					CVInstanceElement element = new CVInstanceElement(d, d.getName());
+					CVInstanceElement element = new CVInstanceElement(d);
 					f.addChild(element);
 				}
 			}
 		} else {
 			for (int i = 0; i < instances.length; ++i) {
 				DeltaCloudInstance d = instances[i];
-				CVInstanceElement element = new CVInstanceElement(d, d.getName());
+				CVInstanceElement element = new CVInstanceElement(d);
 				addChild(element);
 			}
 		}
