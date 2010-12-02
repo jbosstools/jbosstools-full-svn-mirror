@@ -1,5 +1,8 @@
 2010-12-02  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java 
+	(inputChanged): 
+	[JBIDE-7789] fixed NPE when invalid cloud is selected in combo. images was NULL
 	* src/org/jboss/tools/deltacloud/ui/views/CVCloudElement.java (getChildren): 
 	[JBIDE-7780] synchronized children initialisation
 	* src/org/jboss/tools/deltacloud/ui/views/CloudViewElement.java (getName): 
