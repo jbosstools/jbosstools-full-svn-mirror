@@ -10,15 +10,19 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
+import java.util.Iterator;
 import java.util.regex.PatternSyntaxException;
 
 /**
+ * A filter that may be applied on DeltaCloudInstances
+ * 
+ * @see DeltaCloudInstance
+ * 
  * @author Jeff Johnston
+ * @author André Dietisheim
  */
-public class InstanceFilter implements IInstanceFilter {
+public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstance> implements IInstanceFilter {
 
-	private IFieldMatcher nameRule;
-	private IFieldMatcher idRule;
 	private IFieldMatcher imageIdRule;
 	private IFieldMatcher realmRule;
 	private IFieldMatcher profileRule;
@@ -26,9 +30,8 @@ public class InstanceFilter implements IInstanceFilter {
 	private IFieldMatcher keyNameRule;
 	
 	@Override
-	public boolean isVisible(DeltaCloudInstance instance) {
-		return nameRule.matches(instance.getName()) &&
-		idRule.matches(instance.getId()) &&
+	public boolean matches(DeltaCloudInstance instance) {
+		return super.matches(instance) &&
 		imageIdRule.matches(instance.getImageId()) &&
 		ownerIdRule.matches(instance.getOwnerId()) &&
 		keyNameRule.matches(instance.getKey()) &&
@@ -38,43 +41,22 @@ public class InstanceFilter implements IInstanceFilter {
 
 	@Override
 	public void setRules(String ruleString) throws PatternSyntaxException {
-		String[] tokens = ruleString.split(";");
-		this.nameRule = createRule(tokens[0]);
-		this.idRule = createRule(tokens[1]);
-		this.imageIdRule = createRule(tokens[2]);
-		this.ownerIdRule = createRule(tokens[3]);
-		this.keyNameRule = createRule(tokens[4]);
-		this.realmRule = createRule(tokens[5]);
-		this.profileRule = createRule(tokens[6]);
-	}
-
-	private IFieldMatcher createRule(String expression) {
-		if (expression.equals(ALL_MATCHER_EXPRESSION)) { //$NON-NLS-1$
-			return new AllFieldMatcher();
-		} else {
-			return new FieldMatcher(expression);
-		}
+		Iterator<String> rulesIterator = super.setRules(ruleString, getRulesIterator(ruleString));
+		this.imageIdRule = createRule(rulesIterator);
+		this.ownerIdRule = createRule(rulesIterator);
+		this.keyNameRule = createRule(rulesIterator);
+		this.realmRule = createRule(rulesIterator);
+		this.profileRule = createRule(rulesIterator);
 	}
 	
 	@Override
 	public String toString() {
-		return nameRule + ";" //$NON-NLS-1$ 
-		+ idRule + ";"  //$NON-NLS-1$
+		return super.toString()
 		+ imageIdRule + ";" //$NON-NLS-1$
 		+ ownerIdRule + ";" //$NON-NLS-1$
 		+ keyNameRule + ";" //$NON-NLS-1$
 		+ realmRule + ";" //$NON-NLS-1$
 		+ profileRule; //$NON-NLS-1$
-	}
-
-	@Override
-	public IFieldMatcher getNameRule() {
-		return nameRule;
-	}
-	
-	@Override
-	public IFieldMatcher getIdRule() {
-		return idRule;
 	}
 
 	@Override

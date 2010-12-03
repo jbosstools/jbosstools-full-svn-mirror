@@ -10,12 +10,21 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-public class AllImageFilter implements IImageFilter {
+/**
+ * A filter for images that matches on all elements (no criteria checked)
+ * 
+ * @see IImageFilter
+ * @see DeltaCloud#getImageFilter()
+ * 
+ * @author Jeff Johnston
+ * @author André Dietisheim
+ */
+public class AllImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> implements IImageFilter {
 
 	private IFieldMatcher matcher = new AllFieldMatcher();
 	
 	@Override
-	public boolean isVisible(DeltaCloudImage image) {
+	public boolean matches(DeltaCloudImage image) {
 		return true;
 	}
 
@@ -28,15 +37,7 @@ public class AllImageFilter implements IImageFilter {
 	public String toString() {
 		return ALL_STRING;
 	}
-	
-	public IFieldMatcher getNameRule() {
-		return matcher; 
-	}
-	
-	public IFieldMatcher getIdRule() {
-		return matcher; 
-	}
-	
+
 	public IFieldMatcher getArchRule() {
 		return matcher; 
 	}

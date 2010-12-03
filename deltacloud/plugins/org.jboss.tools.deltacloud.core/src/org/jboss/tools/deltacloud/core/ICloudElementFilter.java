@@ -10,27 +10,38 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
+import java.util.Collection;
+
+
 /**
+ * A filter interface that may be applied on IDeltaCloudElement. Known implementors are IImageFilter and IInstanceFilter
+ * 
+ * @see IDeltaCloudElement
+ * @see IImageFilter
+ * @see IInstanceFilter
+ * 
  * @author Jeff Johnston
  * @author André Dietisheim
  */
-public interface ICloudElementFilter<CLOUDCHILD> {
+public interface ICloudElementFilter<CLOUDELEMENT extends IDeltaCloudElement> {
 
 	public static final String EXPRESSION_DELIMITER = ";"; // $NON-NLS-1$
 
 	public static final String ALL_MATCHER_EXPRESSION = "*"; //$NON-NLS-1$
 
-	public static final String ALL_STRING = 
-		ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // name
-		+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // id
-		+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // arch
-		+ ALL_MATCHER_EXPRESSION; // desc
+	public static final String ALL_STRING =
+			ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // name
+					+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // id
+					+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // arch
+					+ ALL_MATCHER_EXPRESSION; // desc
 
-	public boolean isVisible(CLOUDCHILD cloudChild);
+	public Collection<CLOUDELEMENT> filter(CLOUDELEMENT[] cloudElements);
+
+//	public boolean matches(CLOUDELEMENT cloudElement);
+
 	public void setRules(String ruleString);
+
 	public IFieldMatcher getNameRule();
+
 	public IFieldMatcher getIdRule();
-
-
-	
 }

@@ -1,11 +1,20 @@
 package org.jboss.tools.deltacloud.core;
 
-public class AllInstanceFilter implements IInstanceFilter {
+/**
+ * A filter for instances that matches on all elements (no criteria checked)
+ * 
+ * @see IInstanceFilter
+ * @see DeltaCloud#getInstanceFilter()
+ * 
+ * @author Jeff Johnston
+ * @author André Dietisheim
+ */
+public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstance> implements IInstanceFilter {
 
 	private IFieldMatcher matcher = new AllFieldMatcher();
-	
+
 	@Override
-	public boolean isVisible(DeltaCloudInstance instance) {
+	public boolean matches(DeltaCloudInstance instance) {
 		return true;
 	}
 
@@ -13,22 +22,12 @@ public class AllInstanceFilter implements IInstanceFilter {
 	public void setRules(String ruleString) {
 		// ignore, never set the rules for this filter
 	}
-	
+
 	@Override
 	public String toString() {
 		return ALL_STRING;
 	}
-	
-	@Override
-	public IFieldMatcher getNameRule() {
-		return matcher; //$NON-NLS-1$
-	}
-	
-	@Override
-	public IFieldMatcher getIdRule() {
-		return matcher; //$NON-NLS-1$
-	}
-	
+
 	@Override
 	public IFieldMatcher getImageIdRule() {
 		return matcher;

@@ -10,19 +10,25 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
+import java.util.Iterator;
 import java.util.regex.PatternSyntaxException;
 
-public class ImageFilter implements IImageFilter {
+/**
+ * A filter that may be applied on DeltaCloudImages
+ * 
+ * @see DeltaCloudImage
+ * 
+ * @author Jeff Johnston
+ * @author André Dietisheim
+ */
+public class ImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> implements IImageFilter {
 
-	private IFieldMatcher nameRule;
-	private IFieldMatcher idRule;
 	private IFieldMatcher archRule;
 	private IFieldMatcher descRule;
 	
 	@Override
-	public boolean isVisible(DeltaCloudImage image) {
-		return nameRule.matches(image.getName()) &&
-		idRule.matches(image.getId()) &&
+	public boolean matches(DeltaCloudImage image) {
+		return super.matches(image) &&
 		archRule.matches(image.getArchitecture()) &&
 		descRule.matches(image.getDescription());
 	}
@@ -30,35 +36,16 @@ public class ImageFilter implements IImageFilter {
 	@Override
 	public void setRules(String ruleString) throws PatternSyntaxException {
 		// TODO: replace filter passing (;-delimited string) by list
-		String[] tokens = ruleString.split(";");
-		this.nameRule = createRule(tokens[0]);
-		this.idRule = createRule(tokens[1]);
-		this.archRule = createRule(tokens[2]);
-		this.descRule = createRule(tokens[3]);
-	}
-
-	private IFieldMatcher createRule(String token) {
-		if (token.equals(ALL_MATCHER_EXPRESSION)) { //$NON-NLS-1$
-			return new AllFieldMatcher();
-		} else {
-			return new FieldMatcher(token);
-		}
+		Iterator<String> rulesIterator = super.setRules(ruleString, getRulesIterator(ruleString));		
+		this.archRule = createRule(rulesIterator);
+		this.descRule = createRule(rulesIterator);
 	}
 	
 	@Override
 	public String toString() {
-		return nameRule + ";" //$NON-NLS-1$ 
-		+ idRule + ";"  //$NON-NLS-1$
+		return super.toString()  //$NON-NLS-1$
 		+ archRule + ";"  //$NON-NLS-1$
 		+ descRule; //$NON-NLS-1$
-	}
-
-	public IFieldMatcher getNameRule() {
-		return nameRule;
-	}
-	
-	public IFieldMatcher getIdRule() {
-		return idRule;
 	}
 	
 	public IFieldMatcher getArchRule() {
