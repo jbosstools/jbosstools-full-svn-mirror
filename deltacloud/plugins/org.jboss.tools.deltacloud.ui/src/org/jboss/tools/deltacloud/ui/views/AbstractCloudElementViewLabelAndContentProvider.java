@@ -79,7 +79,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 
 	protected Collection<CLOUDELEMENT> filter(ICloudElementFilter<CLOUDELEMENT> filter, CLOUDELEMENT[] cloudElements)
 			throws DeltaCloudException {
-		if (filter == null) {
+		if (filter == null && cloud != null) {
 			return Arrays.asList(cloudElements);
 		} else {
 			return filter.filter(cloudElements);
