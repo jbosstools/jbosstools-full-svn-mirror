@@ -2,6 +2,7 @@
 
 	* src/org/jboss/tools/deltacloud/ui/views/AbstractCloudChildrenTableView.java: 
 	[JBIDE-7790] corrected storage & retrieval of selected cloud in the preferences
+	[JBIDE-7149] added listener to gloabl selection, changing selected cloud in instance- and image-view accordingly
 
 2010-12-02  André Dietisheim  <adietish@redhat.com>
 

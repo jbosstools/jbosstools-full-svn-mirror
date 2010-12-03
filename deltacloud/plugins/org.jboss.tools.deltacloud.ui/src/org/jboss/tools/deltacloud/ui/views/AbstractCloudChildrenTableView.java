@@ -10,9 +10,13 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -32,6 +36,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -56,30 +62,26 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 	private static final String FILTERED_LABEL = "Filtered.label"; //$NON-NLS-1$
 	private static final String FILTERED_TOOLTIP = "FilteredImages.tooltip"; //$NON-NLS-1$	
 
-	private Combo cloudSelector;
-	private Label cloudSelectorLabel;
+	private Combo currentCloudSelector;
+	private Label currentCloudSelectorLabel;
 	private TableViewer viewer;
 
-	private DeltaCloud currCloud;
+	private DeltaCloud currentCloud;
 
-	TextPreferenceValue lastSelectedCloudPref;
-
-	public AbstractCloudChildrenTableView() {
-		lastSelectedCloudPref = new TextPreferenceValue(getSelectedCloudPrefsKey(), Activator.getDefault());
-	}
+	private TextPreferenceValue lastSelectedCloudPref;
 
 	private ModifyListener cloudModifyListener = new ModifyListener() {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			int index = cloudSelector.getSelectionIndex();
+			int index = currentCloudSelector.getSelectionIndex();
 			if (index < 0) {
 				return;
 			}
 
-			removeListener(currCloud);
+			removeListener(currentCloud);
 
-			final DeltaCloud currentCloud = setCurrentCloud(index);
+			final DeltaCloud currentCloud = getCurrentCloud(index);
 			if (currentCloud != null) {
 				lastSelectedCloudPref.store(currentCloud.getName());
 				Display.getCurrent().asyncExec(new Runnable() {
@@ -93,6 +95,21 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 			}
 		}
 	};
+
+	private ISelectionListener workbenchSelectionListener = new ISelectionListener() {
+
+		@Override
+		public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			if (cloud != null) {
+				currentCloudSelector.select(getIndexInClouds(cloud, getClouds()));
+			}
+		}
+	};
+
+	public AbstractCloudChildrenTableView() {
+		lastSelectedCloudPref = new TextPreferenceValue(getSelectedCloudPrefsKey(), Activator.getDefault());
+	}
 
 	private class ColumnListener extends SelectionAdapter {
 
@@ -144,7 +161,7 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 
 		createCloudSelector(container);
 
-		initCloudSelector(lastSelectedCloudPref.get(null), cloudSelector, clouds);
+		initCloudSelector(lastSelectedCloudPref.get(null), currentCloudSelector, clouds);
 
 		Label filterLabel = new Label(container, SWT.NULL);
 		filterLabel.setText(CVMessages.getString(FILTERED_LABEL));
@@ -153,25 +170,25 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 		Composite tableArea = new Composite(container, SWT.NULL);
 		viewer = createTableViewer(tableArea);
 
-		currCloud = getCurrentCloud(cloudSelector.getSelectionIndex(), clouds);
+		currentCloud = getCurrentCloud(currentCloudSelector.getSelectionIndex(), clouds);
 
-		addListener(currCloud);
-		setViewerInput(currCloud);
-		setFilterLabelVisible(currCloud, filterLabel);
+		addListener(currentCloud);
+		setViewerInput(currentCloud);
+		setFilterLabelVisible(currentCloud, filterLabel);
 
-		Point p1 = cloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point p2 = cloudSelector.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point p1 = currentCloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point p2 = currentCloudSelector.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		int centering = (p2.y - p1.y + 1) / 2;
 
 		FormData f = new FormData();
 		f.top = new FormAttachment(0, 5 + centering);
 		f.left = new FormAttachment(0, 30);
-		cloudSelectorLabel.setLayoutData(f);
+		currentCloudSelectorLabel.setLayoutData(f);
 
 		f = new FormData();
 		f.top = new FormAttachment(0, 5);
-		f.left = new FormAttachment(cloudSelectorLabel, 5);
-		cloudSelector.setLayoutData(f);
+		f.left = new FormAttachment(currentCloudSelectorLabel, 5);
+		currentCloudSelector.setLayoutData(f);
 
 		f = new FormData();
 		f.top = new FormAttachment(0, 5 + centering);
@@ -179,7 +196,7 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 		filterLabel.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(cloudSelector, 8);
+		f.top = new FormAttachment(currentCloudSelector, 8);
 		f.left = new FormAttachment(0, 0);
 		f.right = new FormAttachment(100, 0);
 		f.bottom = new FormAttachment(100, 0);
@@ -189,6 +206,7 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		hookContextMenu(viewer.getControl());
 		getSite().setSelectionProvider(viewer);
+		getSite().getWorkbenchWindow().getSelectionService().addPostSelectionListener(workbenchSelectionListener);
 
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
@@ -225,6 +243,11 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 		viewer.setInput(input);
 	}
 
+	/**
+	 * Gets the clouds that are available in the model.
+	 * 
+	 * @return the clouds
+	 */
 	private DeltaCloud[] getClouds() {
 		DeltaCloud[] clouds = new DeltaCloud[] {};
 		try {
@@ -239,14 +262,34 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 		return clouds;
 	}
 
-	private DeltaCloud setCurrentCloud(int index) {
+	private DeltaCloud getCurrentCloud(int index) {
 		DeltaCloud[] clouds = getClouds();
 		if (index < 0 || index >= clouds.length) {
-			currCloud = null;
+			return null;
 		} else {
-			currCloud = getClouds()[index];
+			return clouds[index];
 		}
-		return currCloud;
+	}
+
+	private int getIndexInClouds(DeltaCloud cloudToSelect, DeltaCloud[] clouds) {
+		if (cloudToSelect == null) {
+			return 0;
+		}
+		return getCurrentCloud(cloudToSelect.getName(), clouds);
+	}
+
+	private int getCurrentCloud(String cloudName, DeltaCloud[] clouds) {
+		int index = 0;
+		if (cloudName != null && clouds.length > 0) {
+			for (int i = 0; i < clouds.length; i++) {
+				DeltaCloud cloud = clouds[i];
+				if (cloudName != null && cloudName.equals(cloud.getName())) {
+					index = i;
+					break;
+				}
+			}
+		}
+		return index;
 	}
 
 	private void setFilterLabelVisible(DeltaCloud currentCloud, Label filterLabel) {
@@ -282,14 +325,14 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 	}
 
 	private void createCloudSelector(Composite parent) {
-		this.cloudSelectorLabel = new Label(parent, SWT.NULL);
-		cloudSelectorLabel.setText(CVMessages.getString(CLOUD_SELECTOR_LABEL));
+		this.currentCloudSelectorLabel = new Label(parent, SWT.NULL);
+		currentCloudSelectorLabel.setText(CVMessages.getString(CLOUD_SELECTOR_LABEL));
 
-		this.cloudSelector = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
-		cloudSelector.addModifyListener(cloudModifyListener);
+		this.currentCloudSelector = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
+		currentCloudSelector.addModifyListener(cloudModifyListener);
 		// Following is a kludge so that on Linux the Combo is read-only but
 		// has a white background.
-		cloudSelector.addVerifyListener(new VerifyListener() {
+		currentCloudSelector.addVerifyListener(new VerifyListener() {
 			@Override
 			public void verifyText(VerifyEvent e) {
 				e.doit = false;
@@ -319,40 +362,43 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 	}
 
 	public void cloudsChanged(int type) {
-		String currName = null;
 		int currIndex = 0;
-		if (currCloud != null) {
-			currName = currCloud.getName();
-			currIndex = cloudSelector.getSelectionIndex();
+		if (currentCloud != null) {
+			currIndex = currentCloudSelector.getSelectionIndex();
 		}
 		DeltaCloud[] clouds = getClouds();
-		String[] cloudNames = new String[clouds.length];
-		int index = 0;
-		for (int i = 0; i < clouds.length; ++i) {
-			cloudNames[i] = clouds[i].getName();
-			if (cloudNames[i].equals(currName))
-				index = i;
-		}
+		int index = getIndexInClouds(currentCloud, getClouds());
 		if (type == ICloudManagerListener.RENAME_EVENT) {
 			index = currIndex; // no change in cloud displayed
 		}
 
+		String[] cloudNames = toCloudNames(clouds);
 		setCloudSelectorItems(cloudNames);
-		setCurrentCloud(index);
+		this.currentCloud = getCurrentCloud(index);
 
 		if (cloudNames.length > 0) {
-			cloudSelector.setText(cloudNames[index]);
-			viewer.setInput(currCloud);
+			currentCloudSelector.setText(cloudNames[index]);
+			viewer.setInput(currentCloud);
 		} else {
-			cloudSelector.setText("");
+			currentCloudSelector.setText("");
 			viewer.setInput(new DeltaCloudInstance[0]);
 		}
 	}
 
+	private String[] toCloudNames(DeltaCloud[] clouds) {
+		List<String> cloudNames = new ArrayList<String>();
+		for (DeltaCloud cloud : clouds) {
+			if (cloud != null) {
+				cloudNames.add(cloud.getName());
+			}
+		}
+		return (String[]) cloudNames.toArray(new String[cloudNames.size()]);
+	}
+
 	private void setCloudSelectorItems(String[] cloudNames) {
-		cloudSelector.removeModifyListener(cloudModifyListener);
-		cloudSelector.setItems(cloudNames);
-		cloudSelector.addModifyListener(cloudModifyListener);
+		currentCloudSelector.removeModifyListener(cloudModifyListener);
+		currentCloudSelector.setItems(cloudNames);
+		currentCloudSelector.addModifyListener(cloudModifyListener);
 	}
 
 	/**
@@ -364,8 +410,8 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 		// Run following under Display thread since this can be
 		// triggered by a non-display thread notifying listeners.
 		if (cloud != null
-				&& currCloud != null
-				&& cloud.getName().equals(currCloud.getName())) {
+				&& currentCloud != null
+				&& cloud.getName().equals(currentCloud.getName())) {
 			Display.getDefault().syncExec(new Runnable() {
 				@Override
 				public void run() {
