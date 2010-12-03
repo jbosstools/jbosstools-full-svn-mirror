@@ -28,6 +28,10 @@ public class TextPreferenceValue {
 		this.prefsKey = prefsKey;
 	}
 
+	public String get() {
+		return get(null);
+	}
+	
 	public String get(String currentValue) {
 		if( currentValue == null || currentValue.equals("")) {
 			// pre-set with previously used
