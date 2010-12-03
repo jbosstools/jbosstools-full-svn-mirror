@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
-import java.util.ArrayList;
-
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -85,16 +83,10 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 //		refresh();
 	}
 
-	private DeltaCloudInstance[] filter(DeltaCloudInstance[] input) {
-		ArrayList<DeltaCloudInstance> array = new ArrayList<DeltaCloudInstance>();
+	public DeltaCloudInstance[] filter(DeltaCloudInstance[] instances) {
 		DeltaCloud cloud = (DeltaCloud) getElement();
 		IInstanceFilter f = cloud.getInstanceFilter();
-		for (int i = 0; i < input.length; ++i) {
-			DeltaCloudInstance instance = input[i];
-			if (f.isVisible(instance))
-				array.add(instance);
-		}
-		return array.toArray(new DeltaCloudInstance[array.size()]);
+		return f.filter(instances).toArray(new DeltaCloudInstance[instances.length]);
 	}
 
 	protected void dispose() {

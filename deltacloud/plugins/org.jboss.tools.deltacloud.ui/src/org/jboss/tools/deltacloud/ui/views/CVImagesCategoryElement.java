@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
-import java.util.ArrayList;
-
 import org.eclipse.jface.viewers.TreeViewer;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
@@ -77,17 +75,10 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 		// refresh();
 	}
 
-	public DeltaCloudImage[] filter(DeltaCloudImage[] input) {
-		ArrayList<DeltaCloudImage> array = new ArrayList<DeltaCloudImage>();
+	public DeltaCloudImage[] filter(DeltaCloudImage[] images) {
 		DeltaCloud cloud = (DeltaCloud) getElement();
 		IImageFilter f = cloud.getImageFilter();
-		for (int i = 0; i < input.length; ++i) {
-			DeltaCloudImage image = input[i];
-			if (f.isVisible(image))
-				array.add(image);
-		}
-		return array.toArray(new DeltaCloudImage[array.size()]);
-
+		return f.filter(images).toArray(new DeltaCloudImage[images.length]);
 	}
 
 	protected void dispose() {
