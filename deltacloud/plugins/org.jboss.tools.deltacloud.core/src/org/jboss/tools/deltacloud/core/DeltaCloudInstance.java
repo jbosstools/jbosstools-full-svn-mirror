@@ -18,7 +18,16 @@ import org.jboss.tools.deltacloud.core.client.Instance.InstanceState;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
 import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
 
-public class DeltaCloudInstance {
+/**
+ * An instance that may be reached on a DeltaCloud instance. Wraps Instance from upper layers.
+ * 
+ * @see Instance
+ * @see DeltaCloud
+ * 
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
+public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 
 	public final static String PENDING = Instance.InstanceState.PENDING.toString();
 	public final static String RUNNING = Instance.InstanceState.RUNNING.toString();
@@ -31,12 +40,11 @@ public class DeltaCloudInstance {
 	public final static String REBOOT = InstanceAction.REBOOT;
 	public final static String DESTROY = InstanceAction.DESTROY;
 
-	private DeltaCloud cloud;
 	private Instance instance;
 	private String givenName;
 
 	public DeltaCloudInstance(DeltaCloud cloud, Instance instance) {
-		this.cloud = cloud;
+		super(cloud);
 		this.instance = instance;
 	}
 
@@ -118,10 +126,6 @@ public class DeltaCloudInstance {
 		if (hostNames != null && hostNames.size() > 0)
 			return hostNames.get(0);
 		return null;
-	}
-
-	public DeltaCloud getDeltaCloud() {
-		return cloud;
 	}
 	
 	protected boolean performInstanceAction(String actionId, InternalDeltaCloudClient client)

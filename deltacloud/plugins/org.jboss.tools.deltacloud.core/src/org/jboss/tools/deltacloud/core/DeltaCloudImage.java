@@ -13,14 +13,23 @@ package org.jboss.tools.deltacloud.core;
 import org.jboss.tools.deltacloud.core.client.Image;
 
 
-public class DeltaCloudImage {
+/**
+ * A image that may be reached on a DeltaCloud instance. Wraps Image from upper layers.
+ * 
+ * @see Image
+ * @see DeltaCloud
+ * 
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ */
+public class DeltaCloudImage extends AbstractDeltaCloudElement {
 
 	private Image image;
 	private DeltaCloud deltaCloud;
 	
 	public DeltaCloudImage(Image image, DeltaCloud deltaCloud) {
+		super(deltaCloud);
 		this.image = image;
-		this.deltaCloud = deltaCloud;
 	}
 	
 	public DeltaCloud getDeltaCloud() {
@@ -31,15 +40,15 @@ public class DeltaCloudImage {
 		return image.getName();
 	}
 	
+	public String getId() {
+		return image.getId();
+	}
+
 	public String getArchitecture() {
 		return image.getArchitecture();
 	}
 	
 	public String getDescription() {
 		return image.getDescription();
-	}
-	
-	public String getId() {
-		return image.getId();
 	}
 }
