@@ -80,14 +80,14 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 			return null;
 		}
 
-		ICloudElementFilter<CLOUDELEMENT> filter = null;
-		filter = getCloudFilter(cloud);
+		CLOUDELEMENT[] cloudElements = getCloudElements(cloud);
+		ICloudElementFilter<CLOUDELEMENT> filter = getCloudFilter(cloud);
 
 		if (filter == null) {
-			return Arrays.asList(getCloudElements(cloud));
+			return Arrays.asList(cloudElements);
+		} else {
+			return filter.filter(cloudElements);
 		}
-
-		return filter.filter(getCloudElements(cloud));
 	}
 
 	private ICloudElementFilter<CLOUDELEMENT> getFilter(DeltaCloud cloud) {

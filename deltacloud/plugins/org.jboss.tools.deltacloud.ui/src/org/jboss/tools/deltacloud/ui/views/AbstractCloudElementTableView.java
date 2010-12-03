@@ -373,7 +373,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		}
 
 		String[] cloudNames = toCloudNames(clouds);
-		setCloudSelectorItems(cloudNames);
+		setCloudSelectorItems(cloudNames, currentCloudSelector);
 		this.currentCloud = getCurrentCloud(index, clouds);
 
 		if (cloudNames.length > 0) {
@@ -395,10 +395,10 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		return (String[]) cloudNames.toArray(new String[cloudNames.size()]);
 	}
 
-	private void setCloudSelectorItems(String[] cloudNames) {
-		currentCloudSelector.removeModifyListener(cloudModifyListener);
-		currentCloudSelector.setItems(cloudNames);
-		currentCloudSelector.addModifyListener(cloudModifyListener);
+	private void setCloudSelectorItems(String[] cloudNames, Combo cloudSelector) {
+		cloudSelector.removeModifyListener(cloudModifyListener);
+		cloudSelector.setItems(cloudNames);
+		cloudSelector.addModifyListener(cloudModifyListener);
 	}
 
 	/**
