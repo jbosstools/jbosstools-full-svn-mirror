@@ -5,12 +5,12 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
-public class ImageFilter extends Wizard {
+public class ImageFilterWizard extends Wizard {
 
 	private DeltaCloud cloud;
 	private ImageFilterPage mainPage;
 
-	public ImageFilter(DeltaCloud cloud) {
+	public ImageFilterWizard(DeltaCloud cloud) {
 		this.cloud = cloud;
 	}
 
