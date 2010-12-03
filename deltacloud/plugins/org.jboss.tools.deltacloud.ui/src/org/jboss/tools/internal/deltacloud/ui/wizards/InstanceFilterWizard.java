@@ -6,18 +6,17 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
-public class InstanceFilter extends Wizard {
+public class InstanceFilterWizard extends Wizard {
 
 	private DeltaCloud cloud;
 	private InstanceFilterPage mainPage;
 	
-	public InstanceFilter(DeltaCloud cloud) {
+	public InstanceFilterWizard(DeltaCloud cloud) {
 		this.cloud = cloud;
 	}
 	
 	@Override
 	public void addPages() {
-		// TODO Auto-generated method stub
 		mainPage = new InstanceFilterPage(cloud);
 		addPage(mainPage);
 	}
