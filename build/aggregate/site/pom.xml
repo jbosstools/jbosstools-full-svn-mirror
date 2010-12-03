@@ -85,14 +85,6 @@
 			can be referred to in Ant script later -->
 		<repository>
 			<id>inputRepo1</id>
-			<url>${inputRepo1}</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>inputRepo1</id>
 			<url>${inputRepo1}/all/repo/</url>
 			<layout>p2</layout>
 			<snapshots>
