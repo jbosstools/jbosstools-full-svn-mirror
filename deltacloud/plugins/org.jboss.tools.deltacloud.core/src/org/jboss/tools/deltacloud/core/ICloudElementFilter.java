@@ -10,7 +10,11 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-public interface ICloudElementFilter {
+/**
+ * @author Jeff Johnston
+ * @author André Dietisheim
+ */
+public interface ICloudElementFilter<CLOUDCHILD> {
 
 	public static final String EXPRESSION_DELIMITER = ";"; // $NON-NLS-1$
 
@@ -21,6 +25,11 @@ public interface ICloudElementFilter {
 		+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // id
 		+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // arch
 		+ ALL_MATCHER_EXPRESSION; // desc
+
+	public boolean isVisible(CLOUDCHILD cloudChild);
+	public void setRules(String ruleString);
+	public IFieldMatcher getNameRule();
+	public IFieldMatcher getIdRule();
 
 
 	

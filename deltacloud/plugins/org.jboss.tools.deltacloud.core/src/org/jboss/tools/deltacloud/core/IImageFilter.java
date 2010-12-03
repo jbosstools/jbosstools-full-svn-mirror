@@ -10,12 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-public interface IImageFilter extends ICloudElementFilter {
+/**
+ * @author Jeff Johnston
+ * @author André Dietisheim
+ */
+public interface IImageFilter extends ICloudElementFilter<DeltaCloudImage> {
 	
-	public boolean isVisible(DeltaCloudImage image);
-	public void setRules(String ruleString);
-	public IFieldMatcher getNameRule();
-	public IFieldMatcher getIdRule();
 	public IFieldMatcher getArchRule();
 	public IFieldMatcher getDescRule();
 }
