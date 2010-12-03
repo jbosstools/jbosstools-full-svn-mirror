@@ -10,7 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Andre Dietisheim
@@ -21,12 +23,12 @@ public class StringUtils {
 	 * Returns a formatted string for a collection of elements that get
 	 * formatted by a user supplied element formatter.
 	 * 
-	 * @param <E>
-	 *            the element type
+	 * @param elements
+	 *            the elements to be processed
 	 * @param elements
 	 *            the elements
 	 * @param elementFormatter
-	 *            the element formatter
+	 *            the formatter to apply on each element to be processed
 	 * @return the formatted string
 	 */
 	public static <E> String getFormattedString(Collection<E> elements, IElementFormatter<E> elementFormatter) {
@@ -48,4 +50,27 @@ public class StringUtils {
 		public String format(E element);
 	}
 
+	/**
+	 * Returns a collection of formatted strings for the given collection of
+	 * elements and given formatter
+	 * 
+	 * @param <E>
+	 *            the type of elements that shall be processed
+	 * @param elements
+	 *            the elements to be processed
+	 * @param elementFormatter
+	 *            the formatter to apply on each element to be processed
+	 * @return the formatted strings
+	 */
+	public static <E> Collection<String> getFormattedStrings(Collection<E> elements,
+			IElementFormatter<E> elementFormatter) {
+		List<String> strings = new ArrayList<String>();
+		for (E element : elements) {
+			String formattedElement = elementFormatter.format(element);
+			if (formattedElement != null && formattedElement.length() > 0) {
+				strings.add(formattedElement);
+			}
+		}
+		return strings;
+	}
 }
