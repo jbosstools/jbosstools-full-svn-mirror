@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
-import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilter;
+import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilterWizard;
 
 /**
  * @author Andre Dietisheim
@@ -48,7 +48,7 @@ public class FilterInstancesHandler extends AbstractHandler implements IHandler 
 
 				@Override
 				public void run() {
-					IWizard wizard = new InstanceFilter(cloud);
+					IWizard wizard = new InstanceFilterWizard(cloud);
 					WizardDialog dialog = new WizardDialog(shell, wizard);
 					dialog.create();
 					dialog.open();
