@@ -63,7 +63,9 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 			try {
 				Assert.isLegal(newInput instanceof DeltaCloud);
 				this.cloud = (DeltaCloud) newInput;
-				this.cloudElements = filter(cloud);
+				CLOUDELEMENT[] cloudElements = getCloudElements(cloud);
+				ICloudElementFilter<CLOUDELEMENT> filter = getCloudFilter(cloud);
+				this.cloudElements = filter(filter, cloudElements);
 			} catch (DeltaCloudException e) {
 				this.cloudElements = Collections.emptyList();
 				// TODO: internationalize strings
@@ -75,14 +77,8 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		}
 	}
 
-	protected Collection<CLOUDELEMENT> filter(DeltaCloud cloud) throws DeltaCloudException {
-		if (cloud == null) {
-			return null;
-		}
-
-		CLOUDELEMENT[] cloudElements = getCloudElements(cloud);
-		ICloudElementFilter<CLOUDELEMENT> filter = getCloudFilter(cloud);
-
+	protected Collection<CLOUDELEMENT> filter(ICloudElementFilter<CLOUDELEMENT> filter, CLOUDELEMENT[] cloudElements)
+			throws DeltaCloudException {
 		if (filter == null) {
 			return Arrays.asList(cloudElements);
 		} else {
