@@ -89,7 +89,6 @@ public class DeltaCloudManager {
 			clouds.add(cloud);
 			cloud.setLastImageId(lastImageId);
 			cloud.setLastKeyname(lastKeyName);
-			// cloud.loadChildren();
 			return cloud;
 		} catch (DeltaCloudException e) {
 			throw e;
