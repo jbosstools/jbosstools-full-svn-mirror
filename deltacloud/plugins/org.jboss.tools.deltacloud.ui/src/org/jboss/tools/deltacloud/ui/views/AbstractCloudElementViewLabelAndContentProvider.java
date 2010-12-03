@@ -72,7 +72,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 				ErrorUtils.handleError(
 						"Error",
 						"Could not display elements for cloud " + cloud.getName(),
-						e, Display.getDefault().getActiveShell());
+						e, viewer.getControl().getShell());
 			}
 		}
 	}
