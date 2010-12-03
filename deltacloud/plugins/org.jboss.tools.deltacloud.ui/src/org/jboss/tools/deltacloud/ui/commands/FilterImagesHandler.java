@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
-import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilter;
+import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilterWizard;
 
 /**
  * @author Andre Dietisheim
@@ -47,7 +47,7 @@ public class FilterImagesHandler extends AbstractHandler implements IHandler {
 				Display.getDefault().asyncExec(new Runnable() {
 					@Override
 					public void run() {
-						IWizard wizard = new ImageFilter(cloud);
+						IWizard wizard = new ImageFilterWizard(cloud);
 						WizardDialog dialog = new WizardDialog(shell, wizard);
 						dialog.create();
 						dialog.open();
