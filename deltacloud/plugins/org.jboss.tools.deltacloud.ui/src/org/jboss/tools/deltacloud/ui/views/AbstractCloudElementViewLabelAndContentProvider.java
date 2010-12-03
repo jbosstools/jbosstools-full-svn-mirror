@@ -38,7 +38,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 	private DeltaCloud cloud;
 	private Collection<CLOUDELEMENT> cloudElements;
 	private ICloudElementFilter<CLOUDELEMENT> localFilter;
-	
+
 	@Override
 	public Object[] getElements(Object inputElement) {
 		if (cloudElements == null) {
@@ -50,7 +50,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 	public void setFilter(ICloudElementFilter<CLOUDELEMENT> filter) {
 		this.localFilter = filter;
 	}
-	
+
 	@Override
 	public void dispose() {
 		this.cloud = null;
@@ -79,10 +79,10 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		if (cloud == null) {
 			return null;
 		}
-		
+
 		ICloudElementFilter<CLOUDELEMENT> filter = null;
 		filter = getCloudFilter(cloud);
-		
+
 		if (filter == null) {
 			return Arrays.asList(getCloudElements(cloud));
 		}
