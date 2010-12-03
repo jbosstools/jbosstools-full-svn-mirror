@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -43,9 +42,8 @@ import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
-import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
+import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
-import org.osgi.service.prefs.Preferences;
 
 /**
  * @author Jeff Johnston
@@ -64,6 +62,12 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 
 	private DeltaCloud currCloud;
 
+	TextPreferenceValue lastSelectedCloudPref;
+
+	public AbstractCloudChildrenTableView() {
+		lastSelectedCloudPref = new TextPreferenceValue(getSelectedCloudPrefsKey(), Activator.getDefault());
+	}
+
 	private ModifyListener cloudModifyListener = new ModifyListener() {
 
 		@Override
@@ -77,7 +81,7 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 
 			final DeltaCloud currentCloud = setCurrentCloud(index);
 			if (currentCloud != null) {
-				storeSelectedCloud(currentCloud);
+				lastSelectedCloudPref.store(currentCloud.getName());
 				Display.getCurrent().asyncExec(new Runnable() {
 
 					@Override
@@ -86,15 +90,6 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 						addListener(currentCloud);
 					}
 				});
-			}
-		}
-
-		private void storeSelectedCloud(DeltaCloud cloud) {
-			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-			try {
-				prefs.put(getSelectedCloudPrefsKey(), cloud.getName());
-			} catch (Exception exc) {
-				// do nothing
 			}
 		}
 	};
@@ -148,7 +143,8 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 		DeltaCloud[] clouds = getClouds();
 
 		createCloudSelector(container);
-		initCloudSelector(getLastSelectedCloud(), cloudSelector, clouds);
+
+		initCloudSelector(lastSelectedCloudPref.get(null), cloudSelector, clouds);
 
 		Label filterLabel = new Label(container, SWT.NULL);
 		filterLabel.setText(CVMessages.getString(FILTERED_LABEL));
@@ -269,12 +265,6 @@ public abstract class AbstractCloudChildrenTableView<T> extends ViewPart impleme
 		}
 
 		return clouds[selectedCloudIndex];
-	}
-
-	private String getLastSelectedCloud() {
-		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-		String lastSelectedCloud = prefs.get(IDeltaCloudPreferenceConstants.LAST_CLOUD_INSTANCE_VIEW, "");
-		return lastSelectedCloud;
 	}
 
 	private void createColumns(TableColumnLayout tableLayout, Table table) {

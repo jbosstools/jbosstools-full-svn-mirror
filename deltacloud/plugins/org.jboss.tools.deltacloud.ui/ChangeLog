@@ -1,3 +1,8 @@
+2010-12-03  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/AbstractCloudChildrenTableView.java: 
+	[JBIDE-7790] corrected storage & retrieval of selected cloud in the preferences
+
 2010-12-02  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java 
