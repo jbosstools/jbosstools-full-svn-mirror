@@ -1,5 +1,19 @@
 2010-12-03  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (filter): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (filter):
+	[JBIDE-7688] remove duplicate code and delegate to filter	
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/AbstractCloudElementTableView.java: 
+	[JBIDE-7688] provide common superclass for ImageView and InstanceView	
+	* src/org/jboss/tools/deltacloud/ui/views/AbstractCloudElementViewLabelAndContentProvider.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java: 
+	[JBIDE-7688] provide common superclass for ImageViewContentAndLabelProvider and InstanceViewContentAndLabelProvider	
+	* src/org/jboss/tools/deltacloud/ui/commands/FilterInstancesHandler.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterWizard.java: 
+	[JBIDE-7688] renamed InstanceFilter to InstanceFilterWizard since it is a wizard (and shall not be mixed up with the filter IntanceFilter)
 	* src/org/jboss/tools/deltacloud/ui/views/AbstractCloudChildrenTableView.java: 
 	[JBIDE-7790] corrected storage & retrieval of selected cloud in the preferences
 	[JBIDE-7149] added listener to gloabl selection, changing selected cloud in instance- and image-view accordingly
