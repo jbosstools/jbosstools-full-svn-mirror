@@ -145,18 +145,24 @@ public class FreeMarkerUtil {
 		}
 	}
 	
-	private static Pattern varsPattern = Pattern.compile(".vars\\[\"(.*)\"\\]\\[\"(.*)\"\\]");
+	private static Pattern varsSinglePattern = Pattern.compile(".vars\\[\"(.*)\"\\]");
+	private static Pattern varsDoublePattern = Pattern.compile(".vars\\[\"(.*)\"\\]\\[\"(.*)\"\\]");
 	public static String normalizePath(String srcPath) {
-		Matcher matcher = varsPattern.matcher(srcPath);
-		if(matcher.matches()) {
-			return matcher.group(1) + "/" + matcher.group(2);
+		Matcher doubleMatcher = varsDoublePattern.matcher(srcPath);
+		if(doubleMatcher.matches()) {
+			return doubleMatcher.group(1) + "/" + doubleMatcher.group(2);
 		} else {
-			return srcPath;
+			Matcher singleMatcher = varsSinglePattern.matcher(srcPath);
+			if(singleMatcher.matches()) {
+				return singleMatcher.group(1);
+			} else {
+				return srcPath;
+			}
 		}
 	}
 
 	public static String[] toPathTokens(String srcPath) {
-		Matcher matcher = varsPattern.matcher(srcPath);
+		Matcher matcher = varsDoublePattern.matcher(srcPath);
 		if(matcher.matches()) {
 			return (matcher.group(1) + "/" + matcher.group(2)).split("/");
 		} else if(srcPath.indexOf("/") != -1) {
@@ -172,7 +178,7 @@ public class FreeMarkerUtil {
 	}
 
 	public static boolean isVarsFormat(String srcPath) {
-		Matcher matcher = varsPattern.matcher(srcPath);
+		Matcher matcher = varsDoublePattern.matcher(srcPath);
 		return matcher.matches();
 	}
 }
