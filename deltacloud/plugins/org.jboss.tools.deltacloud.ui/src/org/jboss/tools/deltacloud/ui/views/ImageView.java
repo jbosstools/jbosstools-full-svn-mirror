@@ -16,10 +16,14 @@ import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 
 /**
+ * A view that displays images of a DeltaCloud.
+ * 
+ * @see DeltaCloud#getImages()
+ * 
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class ImageView extends AbstractCloudChildrenTableView<DeltaCloudImage> implements IImageListListener {
+public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> implements IImageListListener {
 
 	@Override
 	protected String getSelectedCloudPrefsKey() {

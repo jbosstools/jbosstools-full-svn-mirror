@@ -18,10 +18,14 @@ import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 
 /**
+ * A view that displays instances of a DeltaCloud
+ * 
+ * @see DeltaCloud#getInstances()
+ * 
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class InstanceView extends AbstractCloudChildrenTableView<DeltaCloudInstance> implements IInstanceListListener {
+public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstance> implements IInstanceListListener {
 
 	protected String getSelectedCloudPrefsKey() {
 		return IDeltaCloudPreferenceConstants.LAST_CLOUD_INSTANCE_VIEW;
