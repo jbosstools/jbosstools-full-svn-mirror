@@ -26,7 +26,11 @@ import org.jboss.tools.deltacloud.core.IDeltaCloudElement;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 /**
- * @author André Dietisheim
+ * A common superclass for content- and label-providers that operate on
+ * IDeltaCloudElements (currently DeltaCloudImage and DeltaCloudInstance)
+ * 
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
  */
 public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEMENT extends IDeltaCloudElement> extends
 		BaseLabelProvider implements ITableContentAndLabelProvider {
