@@ -1,3 +1,17 @@
+2010-12-03  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/AllImageFilter.java: 
+	* src/org/jboss/tools/deltacloud/core/AllInstanceFilter.java: 
+	* src/org/jboss/tools/deltacloud/core/ImageFilter.java: 
+	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java: 
+	* src/org/jboss/tools/deltacloud/core/ICloudElementFilter.java: 
+	[JBIDE-7688] provide common superclass and interface to ImageFilter and InstanceFilter
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java: 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudImage.java: 
+	* src/org/jboss/tools/deltacloud/core/AbstractDeltaCloudElement.java: 
+	* src/org/jboss/tools/deltacloud/core/IDeltaCloudElement.java: 
+	[JBIDE-7688] provide common superclass and interface to DeltaCloudImage and DeltaCloudInstance
+
 2010-11-26  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/SecurePasswordStore.java: 
