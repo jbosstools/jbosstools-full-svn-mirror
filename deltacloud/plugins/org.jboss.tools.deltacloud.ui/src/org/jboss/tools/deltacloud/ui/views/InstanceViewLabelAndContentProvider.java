@@ -10,31 +10,25 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jface.viewers.BaseLabelProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.IInstanceFilter;
-import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 /**
  * @author Jeff Jonhston
  * @author Andre Dietisheim
  */
-public class InstanceViewLabelAndContentProvider extends BaseLabelProvider implements ITableContentAndLabelProvider {
-
-	private DeltaCloud cloud;
-	private DeltaCloudInstance[] instances = new DeltaCloudInstance[]{};
+public class InstanceViewLabelAndContentProvider extends
+		AbstractCloudElementViewLabelAndContentProvider<DeltaCloudInstance> implements ITableContentAndLabelProvider {
 
 	public enum Column {
 		NAME(0, 20),
@@ -73,40 +67,6 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 		}
 
 	};
-
-	@Override
-	public Object[] getElements(Object inputElement) {
-		return instances;
-	}
-
-	@Override
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		if (newInput != null) {
-			if (newInput instanceof DeltaCloudInstance[]) {
-				instances = filter((DeltaCloudInstance[]) newInput);
-			} else if (newInput instanceof DeltaCloud) {
-				cloud = (DeltaCloud) newInput;
-				try {
-					instances = filter(cloud.getInstances());
-				} catch (Exception e) {
-					// TODO internationalize strings
-					ErrorUtils.handleError("Error", "Could not display instances for cloud " + cloud.getName(),
-							e, Display.getDefault().getActiveShell());
-				}
-			}
-		}
-	}
-
-	private DeltaCloudInstance[] filter(DeltaCloudInstance[] input) {
-		ArrayList<DeltaCloudInstance> array = new ArrayList<DeltaCloudInstance>();
-		IInstanceFilter f = cloud.getInstanceFilter();
-		for (int i = 0; i < input.length; ++i) {
-			DeltaCloudInstance instance = input[i];
-			if (f.isVisible(instance))
-				array.add(instance);
-		}
-		return array.toArray(new DeltaCloudInstance[array.size()]);
-	}
 
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
@@ -154,6 +114,15 @@ public class InstanceViewLabelAndContentProvider extends BaseLabelProvider imple
 
 	@Override
 	public void dispose() {
+	}
+
+	protected ICloudElementFilter<DeltaCloudInstance> getCloudFilter(DeltaCloud cloud) {
+		return cloud.getInstanceFilter();
+	}
+
+	@Override
+	protected DeltaCloudInstance[] getCloudElements(DeltaCloud cloud) throws DeltaCloudException {
+		return cloud.getInstances();
 	}
 
 }

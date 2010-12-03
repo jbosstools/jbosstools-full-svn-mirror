@@ -10,29 +10,21 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jface.viewers.BaseLabelProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.core.IImageFilter;
-import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 
 /**
  * @author Jeff Johnston
  * @author André Dietisheim
  */
-public class ImageViewLabelAndContentProvider extends BaseLabelProvider implements ITableContentAndLabelProvider {
-
-	private DeltaCloud cloud;
-	private IImageFilter localFilter;
-	private DeltaCloudImage[] images = new DeltaCloudImage[] {};
+public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLabelAndContentProvider<DeltaCloudImage> implements ITableContentAndLabelProvider {
 
 	public enum Column {
 		NAME(0, 20),
@@ -73,69 +65,6 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 	};
 
 	@Override
-	public Object[] getElements(Object inputElement) {
-		if (images == null) {
-			return new DeltaCloudImage[] {};
-		}
-		return images;
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		if (newInput != null) {
-			if (newInput instanceof DeltaCloud) {
-				this.cloud = (DeltaCloud) newInput;
-			}
-			this.images = filter(cloud, getImages(newInput));
-		}
-	}
-
-	private DeltaCloudImage[] getImages(Object newInput) {
-		DeltaCloudImage[] images = new DeltaCloudImage[] {};
-		if (newInput instanceof DeltaCloudImage[]) {
-			images = ((DeltaCloudImage[]) newInput);
-		} else if (newInput instanceof DeltaCloud) {
-			cloud = (DeltaCloud) newInput;
-			try {
-				return cloud.getImages();
-			} catch (Exception e) {
-				ErrorUtils.handleError(
-						"Error",
-						"Could not display images for cloud " + cloud.getName(),
-						e, Display.getDefault().getActiveShell());
-			}
-
-		}
-		return images;
-	}
-
-	// Allow override of filter for Finding Images
-	public void setFilter(IImageFilter filter) {
-		this.localFilter = filter;
-	}
-
-	private DeltaCloudImage[] filter(DeltaCloud cloud, DeltaCloudImage[] input) {
-		ArrayList<DeltaCloudImage> array = new ArrayList<DeltaCloudImage>();
-		IImageFilter f = localFilter;
-		if (localFilter == null && cloud != null) {
-			f = cloud.getImageFilter();
-		}
-		for (int i = 0; i < input.length; ++i) {
-			DeltaCloudImage image = input[i];
-			if (f != null && f.isVisible(image)) {
-				array.add(image);
-			}
-		}
-		return array.toArray(new DeltaCloudImage[array.size()]);
-	}
-
-	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		return null;
 	}
@@ -155,6 +84,15 @@ public class ImageViewLabelAndContentProvider extends BaseLabelProvider implemen
 			return i.getDescription();
 		}
 		return "";
+	}
+
+	protected ICloudElementFilter<DeltaCloudImage> getCloudFilter(DeltaCloud cloud) {
+		return cloud.getImageFilter();
+	}
+
+	@Override
+	protected DeltaCloudImage[] getCloudElements(DeltaCloud cloud) throws DeltaCloudException {
+		return cloud.getImages();
 	}
 
 }
