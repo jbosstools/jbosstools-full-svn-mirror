@@ -13,10 +13,6 @@ package org.jboss.tools.deltacloud.ui.views;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -90,7 +86,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 				return;
 			}
 
-			removeListener(currentCloud);
+//			removeListener(currentCloud);
 
 			AbstractCloudElementTableView.this.currentCloud = getCurrentCloud(index, getClouds());
 			if (currentCloud != null) {
@@ -100,7 +96,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 					@Override
 					public void run() {
 						setViewerInput(currentCloud);
-						addListener(currentCloud);
+//						addListener(currentCloud);
 					}
 				});
 			}
@@ -118,14 +114,14 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		}
 	};
 
-	private Job viewerInputJob = new Job("") {
-
-		@Override
-		protected IStatus run(IProgressMonitor monitor) {
-
-			return Status.OK_STATUS;
-		}
-	};
+//	private Job viewerInputJob = new Job("") {
+//
+//		@Override
+//		protected IStatus run(IProgressMonitor monitor) {
+//
+//			return Status.OK_STATUS;
+//		}
+//	};
 
 	public AbstractCloudElementTableView() {
 		lastSelectedCloudPref = new TextPreferenceValue(getSelectedCloudPrefsKey(), Activator.getDefault());
@@ -156,15 +152,8 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 	protected abstract String getSelectedCloudPrefsKey();
 
-	protected abstract void addListener(DeltaCloud cloud);
-
-	protected abstract void removeListener(DeltaCloud cloud);
-
 	@Override
 	public void dispose() {
-		for (DeltaCloud cloud : getClouds()) {
-			removeListener(cloud);
-		}
 		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
 		super.dispose();
 	}
@@ -191,7 +180,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 		currentCloud = getCurrentCloud(currentCloudSelector.getSelectionIndex(), clouds);
 
-		addListener(currentCloud);
+//		addListener(currentCloud);
 		setViewerInput(currentCloud);
 		setFilterLabelVisible(currentCloud, filterLabel);
 
@@ -406,27 +395,8 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	 */
 	protected abstract void refreshToolbarCommandStates();
 
-	public void listChanged(final DeltaCloud cloud, final CLOUDELEMENT[] cloudChildren) {
-		// Run following under Display thread since this can be
-		// triggered by a non-display thread notifying listeners.
-		if (cloud != null
-				&& currentCloud != null
-				&& cloud.getName().equals(currentCloud.getName())) {
-			Display.getDefault().syncExec(new Runnable() {
-				@Override
-				public void run() {
-					// does not add identical instance twice
-					addListener(cloud);
-					setViewerInput(cloud);
-					refreshToolbarCommandStates();
-				}
-			});
-		}
-	}
-
 	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
-
 }

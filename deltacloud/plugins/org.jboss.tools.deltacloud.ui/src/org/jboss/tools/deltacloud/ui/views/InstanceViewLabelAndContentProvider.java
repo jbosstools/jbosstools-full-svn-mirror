@@ -21,6 +21,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
+import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 /**
@@ -28,7 +29,7 @@ import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
  * @author Andre Dietisheim
  */
 public class InstanceViewLabelAndContentProvider extends
-		AbstractCloudElementViewLabelAndContentProvider<DeltaCloudInstance> implements ITableContentAndLabelProvider {
+		AbstractCloudElementViewLabelAndContentProvider<DeltaCloudInstance> implements ITableContentAndLabelProvider, IInstanceListListener {
 
 	public enum Column {
 		NAME(0, 20),
@@ -123,6 +124,20 @@ public class InstanceViewLabelAndContentProvider extends
 	@Override
 	protected DeltaCloudInstance[] getCloudElements(DeltaCloud cloud) throws DeltaCloudException {
 		return cloud.getInstances();
+	}
+
+	@Override
+	protected void addListener(DeltaCloud currentCloud) {
+		if (currentCloud != null) {
+			currentCloud.addInstanceListListener(this);
+		}
+	}
+
+	@Override
+	protected void removeListener(DeltaCloud currentCloud) {
+		if (currentCloud != null) {
+			currentCloud.removeInstanceListListener(this);
+		}
 	}
 
 }

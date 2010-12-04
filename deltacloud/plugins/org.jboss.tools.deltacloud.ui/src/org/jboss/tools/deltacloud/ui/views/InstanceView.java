@@ -14,7 +14,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.services.IEvaluationService;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 
 /**
@@ -25,7 +24,7 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstance> implements IInstanceListListener {
+public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstance> {
 
 	protected String getSelectedCloudPrefsKey() {
 		return IDeltaCloudPreferenceConstants.LAST_CLOUD_INSTANCE_VIEW;
@@ -49,20 +48,5 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canStop");
 		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canReboot");
 		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canDestroy");
-	}
-
-
-	protected void addListener(DeltaCloud currentCloud) {
-		if (currentCloud != null) {
-			currentCloud.removeInstanceListListener(this);
-			currentCloud.addInstanceListListener(this);
-		}
-	}
-
-	protected void removeListener(DeltaCloud currentCloud) {
-		if (currentCloud != null) {
-			currentCloud.removeInstanceListListener(this);
-			currentCloud.addInstanceListListener(this);
-		}
 	}
 }

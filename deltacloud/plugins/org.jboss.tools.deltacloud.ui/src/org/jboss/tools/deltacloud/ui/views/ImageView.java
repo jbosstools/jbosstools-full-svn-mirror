@@ -12,7 +12,6 @@ package org.jboss.tools.deltacloud.ui.views;
 
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 
 /**
@@ -23,7 +22,7 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> implements IImageListListener {
+public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> { //implements IImageListListener {
 
 	@Override
 	protected String getSelectedCloudPrefsKey() {
@@ -43,21 +42,5 @@ public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> im
 	@Override
 	protected void refreshToolbarCommandStates() {
 		// do nothing
-	}
-
-	@Override
-	protected void addListener(DeltaCloud currentCloud) {
-		if (currentCloud != null) {
-			currentCloud.removeImageListListener(this);
-			currentCloud.addImageListListener(this);
-		}
-	}
-
-	@Override
-	protected void removeListener(DeltaCloud currentCloud) {
-		if (currentCloud != null) {
-			currentCloud.removeImageListListener(this);
-			currentCloud.addImageListListener(this);
-		}
 	}
 }

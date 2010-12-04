@@ -19,12 +19,14 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
+import org.jboss.tools.deltacloud.core.IImageListListener;
 
 /**
  * @author Jeff Johnston
  * @author André Dietisheim
  */
-public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLabelAndContentProvider<DeltaCloudImage> implements ITableContentAndLabelProvider {
+public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLabelAndContentProvider<DeltaCloudImage>
+		implements ITableContentAndLabelProvider, IImageListListener {
 
 	public enum Column {
 		NAME(0, 20),
@@ -95,4 +97,17 @@ public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLa
 		return cloud.getImages();
 	}
 
+	@Override
+	protected void addListener(DeltaCloud currentCloud) {
+		if (currentCloud != null) {
+			currentCloud.addImageListListener(this);
+		}
+	}
+
+	@Override
+	protected void removeListener(DeltaCloud currentCloud) {
+		if (currentCloud != null) {
+			currentCloud.removeImageListListener(this);
+		}
+	}
 }
