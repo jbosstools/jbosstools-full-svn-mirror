@@ -82,3 +82,20 @@ b3 Aggregator Engine
 	ssh nickb@build.eclipse.org "cd /home/data/httpd/download.eclipse.org/tools/buckminster/updates-3.6; zip -9r ~/downloads/athena/repos/buckminster-repo-1.3.1.r11579_e36.zip * -x \*.gz"
 	scp nickb@build.eclipse.org:~/downloads/athena/repos/b3.agg*.zip .
 	scp nickb@build.eclipse.org:~/downloads/athena/repos/buckminster*.zip .
+
+Spring IDE 2.5
+# NOTE: as of 2.5.1, creating the runnable zip using repo2runnable fails. So, instead of ant script, do this:
+# 1. launch clean Eclipse 3.6.1 Classic or JEE (eg., in ~/eclipse/36clean)
+# 2. install ONLY these 7 Spring IDE features into ~/eclipse/36clean:
+#    org.springframework.ide.eclipse.feature
+#	 org.springframework.ide.eclipse.aop.feature
+#	 org.springframework.ide.eclipse.osgi.feature
+#	 org.springframework.ide.eclipse.webflow.feature
+#	 org.springframework.ide.eclipse.batch.feature
+#	 org.springframework.ide.eclipse.integration.feature
+#	 org.springframework.ide.eclipse.autowire.feature
+# 3. zip up installed features/plugins using
+#    cd ~/eclipse/36clean; \
+#    zip -r9 ~/tru/download.jboss.org/jbosstools/requirements/helios/spring-ide-2.5.1.201011101000-RELEASE.zip \
+#    $(find . -mindepth 3 -maxdepth 3 -name "???.spring*")
+
