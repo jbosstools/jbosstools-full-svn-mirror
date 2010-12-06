@@ -20,10 +20,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jboss.tools.common.log.StatusFactory;
+import org.jboss.tools.deltacloud.core.AbstractCloudJob;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
@@ -50,15 +50,11 @@ public class RefreshInstancesHandler extends AbstractHandler implements IHandler
 				new AbstractCloudJob("Refreshing instances on cloud " + cloud.getName()) {
 
 					@Override
-					protected IStatus doRun(IProgressMonitor monitor) {
-						try {
-							monitor.worked(1);
-							cloud.loadChildren();
-							monitor.done();
-							return Status.OK_STATUS;
-						} catch (Exception e) {
-							return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);
-						}
+					protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
+						monitor.worked(1);
+						cloud.loadChildren();
+						monitor.done();
+						return Status.OK_STATUS;
 					}
 
 				}.setUser(true);

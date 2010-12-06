@@ -77,7 +77,7 @@ public class NewInstanceModel extends ObservablePojo {
 		private String getArch(String imageId) throws DeltaCloudException {
 			String arch = "";
 			if (imageId != null && imageId.length() > 0) {
-				DeltaCloudImage image = getImage(imageId, arch);
+				DeltaCloudImage image = cloud.getImage(imageId);
 				if (image != null) {
 					imageContainer.setImage(image);
 					arch = image.getArchitecture();
@@ -85,25 +85,6 @@ public class NewInstanceModel extends ObservablePojo {
 			}
 			return arch;
 		}
-
-		private DeltaCloudImage getImage(String imageId, String arch) throws DeltaCloudException {
-			DeltaCloudImage image = getFromcachedImage(imageId, cloud.getImages());
-			if (image == null) {
-				image = cloud.loadImage(imageId);
-			}
-			return image;
-		}
-
-		private DeltaCloudImage getFromcachedImage(String id, DeltaCloudImage[] images) {
-			for (int i = 0; i < images.length; ++i) {
-				DeltaCloudImage image = images[i];
-				if (image.getId().equals(id)) {
-					return image;
-				}
-			}
-			return null;
-		}
-
 	}
 
 	public static class ArchValidator implements IValidator {

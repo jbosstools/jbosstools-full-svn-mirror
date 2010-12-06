@@ -176,5 +176,9 @@ public abstract class CVCategoryElement extends CloudViewElement {
 		};
 	}
 
+	protected DeltaCloud getCloud() {
+		return (DeltaCloud) getElement();
+	}
+	
 	protected abstract void dispose();
 }

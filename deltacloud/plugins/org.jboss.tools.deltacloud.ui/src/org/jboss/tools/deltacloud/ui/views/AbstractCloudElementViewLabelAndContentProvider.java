@@ -10,23 +10,15 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
-import java.text.MessageFormat;
-
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
-import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.core.IDeltaCloudElement;
-import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 /**
@@ -63,27 +55,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		this.currentCloud = (DeltaCloud) newInput;
 		addListener(currentCloud);
 		// TODO internationalize strings
-		final String workTitle = MessageFormat.format("Loading elements of cloud \"{0}\"", currentCloud.getName());
-		new Job(workTitle) {
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					monitor.beginTask(workTitle, IProgressMonitor.UNKNOWN);
-					/*
-					 * trigger load of elements, data will get in through
-					 * notification (#listChanged)
-					 */
-					getCloudElements(currentCloud);
-					monitor.done();
-					return Status.OK_STATUS;
-				} catch (DeltaCloudException e) {
-					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-							MessageFormat.format("Could not get elements of cloud \"{0}\"", currentCloud.getName()), e);
-				}
-			}
-
-		}.schedule();
+		asyncGetCloudElements(currentCloud);
 	}
 
 	public void listChanged(final DeltaCloud cloud, final CLOUDELEMENT[] cloudElements) {
@@ -134,7 +106,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		if (filter == null) {
 			return cloudElements;
 		} else {
-			return filter.filter(cloudElements).toArray();
+			return filter.filter().toArray();
 		}
 	}
 
@@ -149,5 +121,5 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 
 	protected abstract ICloudElementFilter<CLOUDELEMENT> getCloudFilter(DeltaCloud cloud);
 
-	protected abstract CLOUDELEMENT[] getCloudElements(DeltaCloud cloud) throws DeltaCloudException;
+	protected abstract void asyncGetCloudElements(DeltaCloud cloud);
 }

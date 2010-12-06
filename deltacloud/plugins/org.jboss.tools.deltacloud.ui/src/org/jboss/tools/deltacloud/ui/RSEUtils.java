@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.commands.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -101,9 +100,9 @@ public class RSEUtils {
 				"Remote System Explorer could not connect: connection name is not defined");
 		Assert.isLegal(service != null, "Remote System Explorer could not connect: connector service not found.");
 
-		Job job = new AbstractCloudJob(CVMessages.getFormattedString(RSE_CONNECTING_MSG, connectionName)) {
+		Job job = new Job(CVMessages.getFormattedString(RSE_CONNECTING_MSG, connectionName)) {
 			@Override
-			protected IStatus doRun(IProgressMonitor monitor) {
+			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					monitor.worked(1);
 					service.connect(monitor);

@@ -1,3 +1,11 @@
+2010-12-06  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (validate): 
+	* src/org/jboss/tools/deltacloud/ui/views/ImageViewLabelAndContentProvider.java (asyncGetCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/InstanceViewLabelAndContentProvider.java (asyncGetCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVInstancesCategoryElement.java (getChildren): 
+	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (getChildren): 
+
 2010-12-03  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVImagesCategoryElement.java (filter): 

@@ -20,10 +20,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jboss.tools.common.log.StatusFactory;
+import org.jboss.tools.deltacloud.core.AbstractCloudJob;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
-import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
@@ -53,17 +53,13 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 				new AbstractCloudJob("Refreshing images and instances on " + cloud.getName()) {
 
 					@Override
-					protected IStatus doRun(IProgressMonitor monitor) {
+					protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 						try {
 							monitor.worked(1);
 							cloud.loadChildren();
 							monitor.done();
 						} catch (DeltaCloudMultiException e) {
 							return ErrorUtils.createMultiStatus(e);
-						} catch (Exception e) {
-							// TODO internationalize strings
-							return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-									"Could not load children of cloud " + cloud.getName(), e);
 						}
 						return Status.OK_STATUS;
 					}

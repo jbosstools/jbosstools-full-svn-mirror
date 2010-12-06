@@ -16,8 +16,8 @@ import java.util.Map;
 
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.GetImagesCommand;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
 
@@ -93,8 +93,8 @@ public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLa
 	}
 
 	@Override
-	protected DeltaCloudImage[] getCloudElements(DeltaCloud cloud) throws DeltaCloudException {
-		return cloud.getImages();
+	protected void asyncGetCloudElements(DeltaCloud cloud) {
+		new GetImagesCommand(cloud).execute();
 	}
 
 	@Override

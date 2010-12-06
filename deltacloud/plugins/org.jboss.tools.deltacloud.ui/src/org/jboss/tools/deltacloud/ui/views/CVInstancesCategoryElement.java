@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import java.text.MessageFormat;
+
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.GetInstancesCommand;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
@@ -35,26 +38,11 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 	public String getName() {
 		return CVMessages.getString(INSTANCE_CATEGORY_NAME);
 	}
-	
 
 	@Override
 	public Object[] getChildren() {
 		if (!initialized) {
-			DeltaCloud cloud = (DeltaCloud) getElement();
-			try {
-				cloud.removeInstanceListListener(this);
-				DeltaCloudInstance[] instances = filter(cloud.getInstances());
-				addChildren(instances);
-				initialized = true;
-			} catch (Exception e) {
-				// TODO: internationalize strings
-				ErrorUtils.handleError(
-						"Error",
-						"Colud not get instances from cloud " + cloud.getName(),
-						e, Display.getDefault().getActiveShell());
-			} finally {
-				cloud.addInstanceListListener(this);
-			}
+			new GetInstancesCommand(getCloud()).execute();
 		}
 		return super.getChildren();
 	}
@@ -76,19 +64,27 @@ public class CVInstancesCategoryElement extends CVCategoryElement implements IIn
 
 	@Override
 	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] newInstances) {
-		clearChildren();
-		final DeltaCloudInstance[] instances = filter(newInstances);
-		addChildren(instances);
-		initialized = true;
-//		refresh();
+		try {
+			clearChildren();
+			final DeltaCloudInstance[] instances = filter();
+			addChildren(instances);
+		} catch (DeltaCloudException e) {
+			// TODO: internationalize strings
+			ErrorUtils.handleError(
+					"Error",
+					MessageFormat.format("Could not get instanceso from cloud \"{0}\"", cloud.getName()), e,
+					getViewer().getControl().getShell());
+		} finally {
+			initialized = true;
+		}
 	}
 
-	public DeltaCloudInstance[] filter(DeltaCloudInstance[] instances) {
-		DeltaCloud cloud = (DeltaCloud) getElement();
-		IInstanceFilter f = cloud.getInstanceFilter();
-		return f.filter(instances).toArray(new DeltaCloudInstance[instances.length]);
+	public DeltaCloudInstance[] filter() throws DeltaCloudException {
+		IInstanceFilter f = getCloud().getInstanceFilter();
+		return f.filter().toArray(new DeltaCloudInstance[] {});
 	}
 
+	@Override
 	protected void dispose() {
 		DeltaCloud cloud = (DeltaCloud) getElement();
 		if (cloud != null) {

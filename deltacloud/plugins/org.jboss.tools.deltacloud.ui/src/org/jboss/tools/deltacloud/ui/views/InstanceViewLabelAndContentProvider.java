@@ -18,8 +18,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.GetInstancesCommand;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
@@ -122,8 +122,8 @@ public class InstanceViewLabelAndContentProvider extends
 	}
 
 	@Override
-	protected DeltaCloudInstance[] getCloudElements(DeltaCloud cloud) throws DeltaCloudException {
-		return cloud.getInstances();
+	protected void asyncGetCloudElements(DeltaCloud cloud) {
+		new GetInstancesCommand(cloud).execute();
 	}
 
 	@Override
