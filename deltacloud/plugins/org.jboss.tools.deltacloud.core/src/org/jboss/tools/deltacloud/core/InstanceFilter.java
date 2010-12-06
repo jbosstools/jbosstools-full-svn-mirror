@@ -23,6 +23,10 @@ import java.util.regex.PatternSyntaxException;
  */
 public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstance> implements IInstanceFilter {
 
+	public InstanceFilter(DeltaCloud cloud) {
+		super(cloud);
+	}
+
 	private IFieldMatcher imageIdRule;
 	private IFieldMatcher realmRule;
 	private IFieldMatcher profileRule;
@@ -82,5 +86,10 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 	@Override
 	public IFieldMatcher getRealmRule() {
 		return realmRule;
+	}
+
+	@Override
+	protected DeltaCloudInstance[] getCloudElements() throws DeltaCloudException {
+		return getCloud().getInstances();
 	}
 }

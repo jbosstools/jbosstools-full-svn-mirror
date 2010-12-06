@@ -23,6 +23,15 @@ public class AllImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> 
 
 	private IFieldMatcher matcher = new AllFieldMatcher();
 	
+	
+	public AllImageFilter(DeltaCloud cloud) {
+		super(cloud);
+	}
+
+	protected DeltaCloudImage[] getCloudElements() throws DeltaCloudException {
+		return getCloud().getImages();
+	}
+
 	@Override
 	public boolean matches(DeltaCloudImage image) {
 		return true;

@@ -26,18 +26,26 @@ import org.eclipse.core.runtime.Assert;
 public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaCloudElement> implements
 		ICloudElementFilter<CLOUDELEMENT> {
 
+	private DeltaCloud cloud;
+
+	public AbstractCloudElementFilter(DeltaCloud cloud) {
+		this.cloud = cloud;
+	}
+
 	private IFieldMatcher nameRule;
 	private IFieldMatcher idRule;
 
-	public Collection<CLOUDELEMENT> filter(CLOUDELEMENT[] cloudElements) {
+	public Collection<CLOUDELEMENT> filter() throws DeltaCloudException {
 		List<CLOUDELEMENT> filteredElements = new ArrayList<CLOUDELEMENT>();
-		for (CLOUDELEMENT cloudElement : cloudElements) {
+		for (CLOUDELEMENT cloudElement : getCloudElements()) {
 			if (matches(cloudElement)) {
 				filteredElements.add(cloudElement);
 			}
 		}
 		return filteredElements;
 	}
+
+	protected abstract CLOUDELEMENT[] getCloudElements() throws DeltaCloudException;
 
 	protected boolean matches(CLOUDELEMENT cloudElement) {
 		return nameRule.matches(cloudElement.getName())
@@ -65,6 +73,10 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 		} else {
 			return new FieldMatcher(expression);
 		}
+	}
+
+	protected DeltaCloud getCloud() {
+		return cloud;
 	}
 
 	@Override

@@ -24,6 +24,11 @@ import java.util.regex.PatternSyntaxException;
 public class ImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> implements IImageFilter {
 
 	private IFieldMatcher archRule;
+
+	public ImageFilter(DeltaCloud cloud) {
+		super(cloud);
+	}
+
 	private IFieldMatcher descRule;
 	
 	@Override
@@ -54,5 +59,10 @@ public class ImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> imp
 	
 	public IFieldMatcher getDescRule() {
 		return descRule;
+	}
+
+	@Override
+	protected DeltaCloudImage[] getCloudElements() throws DeltaCloudException {
+		return getCloud().getImages();
 	}
 }

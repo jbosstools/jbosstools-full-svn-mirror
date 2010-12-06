@@ -11,7 +11,16 @@ package org.jboss.tools.deltacloud.core;
  */
 public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstance> implements IInstanceFilter {
 
+	public AllInstanceFilter(DeltaCloud cloud) {
+		super(cloud);
+	}
+
 	private IFieldMatcher matcher = new AllFieldMatcher();
+
+	@Override
+	protected DeltaCloudInstance[] getCloudElements() throws DeltaCloudException {
+		return getCloud().getInstances();
+	}
 
 	@Override
 	public boolean matches(DeltaCloudInstance instance) {
@@ -52,5 +61,4 @@ public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInst
 	public IFieldMatcher getRealmRule() {
 		return matcher;
 	}
-
 }

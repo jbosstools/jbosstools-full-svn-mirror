@@ -35,9 +35,7 @@ public interface ICloudElementFilter<CLOUDELEMENT extends IDeltaCloudElement> {
 					+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // arch
 					+ ALL_MATCHER_EXPRESSION; // desc
 
-	public Collection<CLOUDELEMENT> filter(CLOUDELEMENT[] cloudElements);
-
-//	public boolean matches(CLOUDELEMENT cloudElement);
+	public Collection<CLOUDELEMENT> filter() throws DeltaCloudException;
 
 	public void setRules(String ruleString);
 
