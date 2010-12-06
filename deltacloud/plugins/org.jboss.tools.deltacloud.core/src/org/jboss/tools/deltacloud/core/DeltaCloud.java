@@ -187,7 +187,7 @@ public class DeltaCloud {
 		String rules = getImageFilter().toString();
 		this.imageFilter = createImageFilter(ruleString);
 		if (!rules.equals(ruleString)) {
-			notifyImageListListeners(getImages());
+			notifyImageListListeners(images.get());
 		}
 	}
 
