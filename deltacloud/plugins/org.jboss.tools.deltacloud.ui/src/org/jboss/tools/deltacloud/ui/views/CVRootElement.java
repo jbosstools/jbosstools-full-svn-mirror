@@ -25,8 +25,6 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
  */
 public class CVRootElement extends CloudViewElement implements ICloudManagerListener {
 
-	private boolean initialized;
-
 	public CVRootElement(TreeViewer viewer) {
 		super(DeltaCloudManager.getDefault(), viewer); //$NON-NLS-1$
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
@@ -34,7 +32,7 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 
 	@Override
 	public String getName() {
-		return "root";
+		return "root"; //$NON-NLS-1$
 	}
 
 	@Override
@@ -45,27 +43,24 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 
 	@Override
 	public Object[] getChildren() {
-		if (!initialized) {
+		if (!initialized.get()) {
 			DeltaCloudManager m = DeltaCloudManager.getDefault();
-			m.removeCloudManagerListener(this);
 			try {
-				addChildren(m.getClouds());
+				addClouds(m.getClouds());
 			} catch (DeltaCloudException e) {
 				// TODO: internationalize strings
-				ErrorUtils.handleError("Error", "Could not get all clouds", e, Display.getDefault().getActiveShell());
+				ErrorUtils.handleError("Error", "Could not get clouds", e, Display.getDefault().getActiveShell());
 			} finally {
-				initialized = true;
-				m.addCloudManagerListener(this);
+				initialized.set(true);
 			}
 		}
 		return super.getChildren();
 	}
 
-	private void addChildren(DeltaCloud[] clouds) {
-		for (int i = 0; i < clouds.length; ++i) {
-			DeltaCloud cloud = clouds[i];
+	private void addClouds(DeltaCloud[] clouds) {
+		for (DeltaCloud cloud : clouds) {
 			CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), getViewer());
-			addChild(e);
+			children.add(e);
 		}
 	}
 
@@ -77,17 +72,9 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 	public void cloudsChanged(int type) {
 		DeltaCloudManager m = DeltaCloudManager.getDefault();
 		try {
-			m.removeCloudManagerListener(this);
 			DeltaCloud[] clouds = m.getClouds();
-			addChildren(clouds);
-			initialized = true;
-			m.addCloudManagerListener(this);
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					getViewer().refresh(this, false);
-				}
-			});
+			addClouds(clouds);
+			initialized.set(true);
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(

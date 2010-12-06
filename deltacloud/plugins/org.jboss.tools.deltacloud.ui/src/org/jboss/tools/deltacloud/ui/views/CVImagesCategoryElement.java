@@ -31,21 +31,14 @@ public class CVImagesCategoryElement extends CVCloudElementCategoryElement imple
 
 	public CVImagesCategoryElement(Object element, TreeViewer viewer) {
 		super(element, viewer);
-		DeltaCloud cloud = getCloud();
-		cloud.addImageListListener(this);
 	}
 
 	public String getName() {
 		return CVMessages.getString(IMAGE_CATEGORY_NAME);
 	}
 
-	@Override
-	public synchronized Object[] getChildren() {
-		if (!initialized.get()) {
-			new GetImagesCommand(getCloud()).execute();
-			initialized.set(true);
-		}
-		return super.getChildren();
+	protected void asyncGetCloudElements() {
+		new GetImagesCommand(getCloud()).execute();
 	}
 
 	@Override
@@ -64,6 +57,7 @@ public class CVImagesCategoryElement extends CVCloudElementCategoryElement imple
 			initialized.set(false);
 			DeltaCloudImage[] images = filter(newImages);
 			addChildren(images);
+//			refresh();
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
@@ -76,17 +70,32 @@ public class CVImagesCategoryElement extends CVCloudElementCategoryElement imple
 		// refresh();
 	}
 
+	// private void refresh() {
+	// getViewer().getControl().getDisplay().asyncExec(new Runnable() {
+	//
+	// @Override
+	// public void run() {
+	// getViewer().refresh(this, true);
+	// }
+	// });
+	// }
+
 	public DeltaCloudImage[] filter(DeltaCloudImage[] images) throws DeltaCloudException {
 		DeltaCloud cloud = (DeltaCloud) getElement();
 		IImageFilter f = cloud.getImageFilter();
 		return f.filter(images).toArray(new DeltaCloudImage[images.length]);
 	}
 
-	@Override
-	protected void dispose() {
-		DeltaCloud cloud = (DeltaCloud) getElement();
+	protected void addCloudElementListener(DeltaCloud cloud) {
+		if (cloud != null) {
+			cloud.addImageListListener(this);
+		}
+	}
+
+	protected void removeCloudElementListener(DeltaCloud cloud) {
 		if (cloud != null) {
 			cloud.removeImageListListener(this);
 		}
 	}
+
 }

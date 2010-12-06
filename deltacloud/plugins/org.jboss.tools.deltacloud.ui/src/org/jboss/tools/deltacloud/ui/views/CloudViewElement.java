@@ -32,13 +32,13 @@ public abstract class CloudViewElement implements IAdaptable {
 	private TreeViewer viewer;
 	private Object element;
 	private CloudViewElement parent;
-	private Collection<CloudViewElement> children;
+	protected Collection<CloudViewElement> children =
+			Collections.synchronizedCollection(new ArrayList<CloudViewElement>());
 	protected AtomicBoolean initialized = new AtomicBoolean();
 
 	public CloudViewElement(Object element, TreeViewer viewer) {
 		this.element = element;
 		this.viewer = viewer;
-		children = Collections.synchronizedCollection(new ArrayList<CloudViewElement>());
 		initDisposeListener(viewer);
 	}
 
@@ -47,7 +47,7 @@ public abstract class CloudViewElement implements IAdaptable {
 	public Object[] getChildren() {
 		return children.toArray();
 	}
-
+	
 	protected void clearChildren() {
 		children.clear();
 	}

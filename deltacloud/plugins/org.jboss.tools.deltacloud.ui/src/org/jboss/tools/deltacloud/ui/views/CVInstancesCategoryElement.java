@@ -31,21 +31,14 @@ public class CVInstancesCategoryElement extends CVCloudElementCategoryElement im
 
 	public CVInstancesCategoryElement(Object element, TreeViewer viewer) {
 		super(element, viewer);
-		DeltaCloud cloud = (DeltaCloud) getElement();
-		cloud.addInstanceListListener(this);
 	}
 
 	public String getName() {
 		return CVMessages.getString(INSTANCE_CATEGORY_NAME);
 	}
 
-	@Override
-	public Object[] getChildren() {
-		if (!initialized.get()) {
-			new GetInstancesCommand(getCloud()).execute();
-			initialized.set(true);
-		}
-		return super.getChildren();
+	protected void asyncGetCloudElements() {
+		new GetInstancesCommand(getCloud()).execute();
 	}
 
 	@Override
@@ -86,9 +79,13 @@ public class CVInstancesCategoryElement extends CVCloudElementCategoryElement im
 		return f.filter(instances).toArray(new DeltaCloudInstance[instances.length]);
 	}
 
-	@Override
-	protected void dispose() {
-		DeltaCloud cloud = (DeltaCloud) getElement();
+	protected void addCloudElementListener(DeltaCloud cloud) {
+		if (cloud != null) {
+			cloud.addInstanceListListener(this);
+		}
+	}
+
+	protected void removeCloudElementListener(DeltaCloud cloud) {
 		if (cloud != null) {
 			cloud.removeInstanceListListener(this);
 		}

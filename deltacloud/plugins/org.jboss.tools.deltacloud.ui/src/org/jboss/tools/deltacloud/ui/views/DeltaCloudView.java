@@ -57,6 +57,7 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		viewer.setContentProvider(new CloudViewContentProvider());
 		viewer.setLabelProvider(new CloudViewLabelProvider());
+		viewer.setUseHashlookup(true);
 		viewer.setInput(new CVRootElement(viewer));
 		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		getSite().setSelectionProvider(viewer);

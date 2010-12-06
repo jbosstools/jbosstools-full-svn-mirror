@@ -22,12 +22,29 @@ public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 
 	public CVCloudElementCategoryElement(Object element, TreeViewer viewer) {
 		super(element, viewer);
+		addCloudElementListener(getCloud());
 	}
 
 	@Override
 	public boolean hasChildren() {
 		return true;
 	}
+
+	@Override
+	public Object[] getChildren() {
+		if (!initialized.get()) {
+			setLoadingIndicator();
+			asyncGetCloudElements();
+			initialized.set(true);
+		}
+		return super.getChildren();
+	}
+
+	private void setLoadingIndicator() {
+		children.add(new LoadingCloudViewElement(getViewer()));		
+	}
+
+	protected abstract void asyncGetCloudElements();
 
 	protected void addChildren(Object[] modelElements) {
 		if (modelElements.length > CVNumericFoldingElement.FOLDING_SIZE) {
@@ -67,4 +84,14 @@ public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 	protected DeltaCloud getCloud() {
 		return (DeltaCloud) getElement();
 	}
+
+	@Override
+	protected void dispose() {
+		removeCloudElementListener(getCloud());
+	}
+
+	protected abstract void addCloudElementListener(DeltaCloud cloud);
+
+	protected abstract void removeCloudElementListener(DeltaCloud cloud);
+
 }

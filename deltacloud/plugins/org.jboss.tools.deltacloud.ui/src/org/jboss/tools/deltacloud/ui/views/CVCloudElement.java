@@ -46,16 +46,22 @@ public class CVCloudElement extends CloudViewElement {
 		if (!initialized.get()) {
 			DeltaCloud cloud = (DeltaCloud) getElement();
 			CVCloudElementCategoryElement instances = new CVInstancesCategoryElement(cloud, viewer);
-			addChild(instances);
+			addCategory(instances);
 			CVCloudElementCategoryElement images = new CVImagesCategoryElement(cloud, viewer);
-			addChild(images);
+			addCategory(images);
 		}
 		initialized.set(true);
 		return super.getChildren();
+	}
+
+	private void addCategory(CVCloudElementCategoryElement categoryElement) {
+		children.add(categoryElement);
 	}
 
 	@Override
 	public IPropertySource getPropertySource() {
 		return new CloudPropertySource(getElement());
 	}
+	
+	
 }
