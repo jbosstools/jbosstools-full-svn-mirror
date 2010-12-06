@@ -1,3 +1,28 @@
+2010-12-06  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java (InstanceFilter): 
+	* src/org/jboss/tools/deltacloud/core/GetImagesCommand.java: 
+	* src/org/jboss/tools/deltacloud/core/AbstractDeltaCloudCommand.java: 
+	[JBIDE-7688][JBIDE-7813] now getting images and instances in async manner by commands
+	* src/org/jboss/tools/deltacloud/core/AbstractCloudElementFilter.java 
+	(filter): 
+	(AbstractCloudElementFilter): 
+	(getCloud): 
+	(getCloudElements): 
+	* src/org/jboss/tools/deltacloud/core/AllImageFilter.java (AllImageFilter): 
+	* src/org/jboss/tools/deltacloud/core/ImageFilter.java 
+	(ImageFilter): 
+	(getCloudElements): 
+	* src/org/jboss/tools/deltacloud/core/AllInstanceFilter.java (AllInstanceFilter): 
+	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java 
+	(InstanceFilter): 
+	(getCloudElements): 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java
+	(createInstanceFilter): 
+	(createImageFilter): 
+	* src/org/jboss/tools/deltacloud/core/ICloudElementFilter.java (filter): 
+	[JBIDE-7688][JBIDE-7813] CloudElementFilter#filter is now cloud instance specific (is instantiated with a reference to a cloud)
+
 2010-12-03  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/AllImageFilter.java: 
