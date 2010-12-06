@@ -25,7 +25,7 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CVImagesCategoryElement extends CVCategoryElement implements IImageListListener {
+public class CVImagesCategoryElement extends CVCloudElementCategoryElement implements IImageListListener {
 
 	private static final String IMAGE_CATEGORY_NAME = "ImageCategoryName"; //$NON-NLS-1$
 
@@ -41,8 +41,9 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 
 	@Override
 	public synchronized Object[] getChildren() {
-		if (!initialized) {
+		if (!initialized.get()) {
 			new GetImagesCommand(getCloud()).execute();
+			initialized.set(true);
 		}
 		return super.getChildren();
 	}
@@ -51,7 +52,7 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 	protected CloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
 		CloudViewElement[] elements = new CloudViewElement[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new CVImageElement(modelElements[i]);
+			elements[i - startIndex] = new CVImageElement(modelElements[i], getViewer());
 		}
 		return elements;
 	}
@@ -60,8 +61,8 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 	public synchronized void listChanged(DeltaCloud cloud, DeltaCloudImage[] newImages) {
 		try {
 			clearChildren();
-			initialized = false;
-			DeltaCloudImage[] images = filter();
+			initialized.set(false);
+			DeltaCloudImage[] images = filter(newImages);
 			addChildren(images);
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
@@ -70,15 +71,15 @@ public class CVImagesCategoryElement extends CVCategoryElement implements IImage
 					MessageFormat.format("Could not get images from cloud \"{0}\"", cloud.getName()), e,
 					getViewer().getControl().getShell());
 		} finally {
-			initialized = true;
+			initialized.set(true);
 		}
 		// refresh();
 	}
 
-	public DeltaCloudImage[] filter() throws DeltaCloudException {
+	public DeltaCloudImage[] filter(DeltaCloudImage[] images) throws DeltaCloudException {
 		DeltaCloud cloud = (DeltaCloud) getElement();
 		IImageFilter f = cloud.getImageFilter();
-		return f.filter().toArray(new DeltaCloudImage[] {});
+		return f.filter(images).toArray(new DeltaCloudImage[images.length]);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class CloudViewLabelProvider extends LabelProvider {
 	public Image getImage(Object element) {
 		if (element instanceof CVCloudElement) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_CLOUD);
-		} else if (element instanceof CVCategoryElement ||
+		} else if (element instanceof CVCloudElementCategoryElement ||
 				element instanceof CVNumericFoldingElement) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_FOLDER);
 		} else if (element instanceof CVInstanceElement) {

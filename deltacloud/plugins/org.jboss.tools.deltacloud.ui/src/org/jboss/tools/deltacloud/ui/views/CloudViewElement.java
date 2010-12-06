@@ -11,9 +11,16 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -22,50 +29,69 @@ import org.eclipse.ui.views.properties.IPropertySource;
  */
 public abstract class CloudViewElement implements IAdaptable {
 
+	private TreeViewer viewer;
 	private Object element;
 	private CloudViewElement parent;
-	private List<CloudViewElement> children;
+	private Collection<CloudViewElement> children;
+	protected AtomicBoolean initialized = new AtomicBoolean();
 
-	public abstract IPropertySource getPropertySource();
-	
+	public CloudViewElement(Object element, TreeViewer viewer) {
+		this.element = element;
+		this.viewer = viewer;
+		children = Collections.synchronizedCollection(new ArrayList<CloudViewElement>());
+		initDisposeListener(viewer);
+	}
+
+	public abstract String getName();
+
 	public Object[] getChildren() {
 		return children.toArray();
 	}
-	
+
 	protected void clearChildren() {
 		children.clear();
 	}
-	
+
 	public boolean hasChildren() {
 		return children.size() > 0;
 	}
-	
+
 	public Object getParent() {
 		return parent;
 	}
-	
-	public void addChild(CloudViewElement e) {
-		children.add(e);
-		e.setParent(this);
+
+	public void addChild(final CloudViewElement e) {
+		addChildToModel(e);
+		getViewer().getControl().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				getViewer().add(this, e);
+			}
+		});
 	}
-	
-	public void addChildren(CloudViewElement[] elements) {
-		for(CloudViewElement element : elements) {
-			addChild(element);
+
+	public void addChildToModel(CloudViewElement element) {
+		children.add(element);
+		element.setParent(this);
+	}
+
+	public void addChildren(final CloudViewElement[] elements) {
+		for (CloudViewElement element : elements) {
+			addChildToModel(element);
 		}
+
+		getViewer().getControl().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				getViewer().add(this, elements);
+			}
+		});
 	}
 
 	public void setParent(CloudViewElement e) {
 		parent = e;
 	}
-	
-	public CloudViewElement(Object element) {
-		this.element = element;
-		children = new ArrayList<CloudViewElement>();
-	}
-	
-	public abstract String getName();
-	
+
 	public Object getElement() {
 		return element;
 	}
@@ -78,5 +104,32 @@ public abstract class CloudViewElement implements IAdaptable {
 			return p;
 		}
 		return null;
+	}
+
+	public abstract IPropertySource getPropertySource();
+
+	protected TreeViewer getViewer() {
+		return viewer;
+	}
+
+	private void initDisposeListener(Viewer viewer) {
+		final Control control = viewer.getControl();
+		control.getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				control.addDisposeListener(new DisposeListener() {
+
+					@Override
+					public void widgetDisposed(DisposeEvent e) {
+						dispose();
+					}
+				});
+			}
+		});
+	}
+
+	protected void dispose() {
+		// nothing to do
 	}
 }

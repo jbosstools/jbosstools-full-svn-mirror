@@ -35,17 +35,15 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 	private IFieldMatcher nameRule;
 	private IFieldMatcher idRule;
 
-	public Collection<CLOUDELEMENT> filter() throws DeltaCloudException {
+	public Collection<CLOUDELEMENT> filter(CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
 		List<CLOUDELEMENT> filteredElements = new ArrayList<CLOUDELEMENT>();
-		for (CLOUDELEMENT cloudElement : getCloudElements()) {
+		for (CLOUDELEMENT cloudElement : cloudElements) {
 			if (matches(cloudElement)) {
 				filteredElements.add(cloudElement);
 			}
 		}
 		return filteredElements;
 	}
-
-	protected abstract CLOUDELEMENT[] getCloudElements() throws DeltaCloudException;
 
 	protected boolean matches(CLOUDELEMENT cloudElement) {
 		return nameRule.matches(cloudElement.getName())

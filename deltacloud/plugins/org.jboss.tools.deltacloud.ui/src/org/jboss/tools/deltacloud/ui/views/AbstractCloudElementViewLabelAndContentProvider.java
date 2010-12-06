@@ -106,7 +106,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		if (filter == null) {
 			return cloudElements;
 		} else {
-			return filter.filter().toArray();
+			return filter.filter(cloudElements).toArray();
 		}
 	}
 

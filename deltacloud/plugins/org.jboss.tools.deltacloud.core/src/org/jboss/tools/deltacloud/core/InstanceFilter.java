@@ -87,9 +87,4 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 	public IFieldMatcher getRealmRule() {
 		return realmRule;
 	}
-
-	@Override
-	protected DeltaCloudInstance[] getCloudElements() throws DeltaCloudException {
-		return getCloud().getInstances();
-	}
 }

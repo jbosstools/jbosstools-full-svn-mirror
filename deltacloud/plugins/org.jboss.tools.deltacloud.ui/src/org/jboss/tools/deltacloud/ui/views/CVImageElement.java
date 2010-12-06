@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 
@@ -19,8 +20,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloudImage;
  */
 public class CVImageElement extends CloudViewElement {
 
-	public CVImageElement(Object element) {
-		super(element);
+	public CVImageElement(Object element, TreeViewer viewer) {
+		super(element, viewer);
 	}
 	
 	public String getName() {

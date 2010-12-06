@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views;
 
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -22,8 +23,8 @@ public class CVNumericFoldingElement extends CloudViewElement {
 	private Object min;
 	private int max;
 
-	public CVNumericFoldingElement(int min, int max) {
-		super(null);
+	public CVNumericFoldingElement(int min, int max, TreeViewer viewer) {
+		super(null, viewer);
 		this.min = min;
 		this.max = max;
 	}

@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.ui.views;
 
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 
@@ -22,10 +21,9 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 public class CVCloudElement extends CloudViewElement {
 
 	private TreeViewer viewer;
-	private boolean initialized;
 
 	public CVCloudElement(Object element, String name, TreeViewer viewer) {
-		super(element);
+		super(element, viewer);
 		this.viewer = viewer;
 	}
 
@@ -37,10 +35,6 @@ public class CVCloudElement extends CloudViewElement {
 			return "";
 		}
 	}
-	
-	public Viewer getViewer() {
-		return viewer;
-	}
 
 	@Override
 	public boolean hasChildren() {
@@ -49,14 +43,14 @@ public class CVCloudElement extends CloudViewElement {
 
 	@Override
 	public synchronized Object[] getChildren() {
-		if (!initialized) {
+		if (!initialized.get()) {
 			DeltaCloud cloud = (DeltaCloud) getElement();
-			CVCategoryElement c1 = new CVInstancesCategoryElement(cloud, viewer);
-			CVCategoryElement c2 = new CVImagesCategoryElement(cloud, viewer);
-			addChild(c1);
-			addChild(c2);
+			CVCloudElementCategoryElement instances = new CVInstancesCategoryElement(cloud, viewer);
+			addChild(instances);
+			CVCloudElementCategoryElement images = new CVImagesCategoryElement(cloud, viewer);
+			addChild(images);
 		}
-		initialized = true;
+		initialized.set(true);
 		return super.getChildren();
 	}
 

@@ -60,9 +60,4 @@ public class ImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> imp
 	public IFieldMatcher getDescRule() {
 		return descRule;
 	}
-
-	@Override
-	protected DeltaCloudImage[] getCloudElements() throws DeltaCloudException {
-		return getCloud().getImages();
-	}
 }

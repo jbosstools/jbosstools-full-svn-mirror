@@ -18,11 +18,6 @@ public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInst
 	private IFieldMatcher matcher = new AllFieldMatcher();
 
 	@Override
-	protected DeltaCloudInstance[] getCloudElements() throws DeltaCloudException {
-		return getCloud().getInstances();
-	}
-
-	@Override
 	public boolean matches(DeltaCloudInstance instance) {
 		return true;
 	}

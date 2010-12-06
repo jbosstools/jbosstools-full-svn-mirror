@@ -23,7 +23,6 @@ public class AllImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> 
 
 	private IFieldMatcher matcher = new AllFieldMatcher();
 	
-	
 	public AllImageFilter(DeltaCloud cloud) {
 		super(cloud);
 	}
