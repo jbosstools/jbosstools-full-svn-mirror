@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.ui.views.properties.tabbed.AbstractTypeMapper;

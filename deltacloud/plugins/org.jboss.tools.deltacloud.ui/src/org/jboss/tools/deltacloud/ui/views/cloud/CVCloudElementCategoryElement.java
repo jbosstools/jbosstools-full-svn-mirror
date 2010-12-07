@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -20,8 +20,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
  */
 public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 
-	public CVCloudElementCategoryElement(Object element, TreeViewer viewer) {
-		super(element, viewer);
+	public CVCloudElementCategoryElement(Object element, CloudViewElement parent, TreeViewer viewer) {
+		super(element, parent, viewer);
 		addCloudElementListener(getCloud());
 	}
 
@@ -41,7 +41,7 @@ public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 	}
 
 	private void setLoadingIndicator() {
-		children.add(new LoadingCloudViewElement(getViewer()));		
+		children.add(new LoadingCloudViewElement(this, viewer));		
 	}
 
 	protected abstract void asyncGetCloudElements();
@@ -59,7 +59,7 @@ public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 		int max = CVNumericFoldingElement.FOLDING_SIZE;
 		int length = modelElements.length;
 		while (length > CVNumericFoldingElement.FOLDING_SIZE) {
-			CVNumericFoldingElement f = new CVNumericFoldingElement(min, max, getViewer());
+			CVNumericFoldingElement f = new CVNumericFoldingElement(min, max, this, viewer);
 			addChild(f);
 			f.addChildren(getElements(modelElements, min, max));
 			min += CVNumericFoldingElement.FOLDING_SIZE;
@@ -67,7 +67,7 @@ public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 			length -= CVNumericFoldingElement.FOLDING_SIZE;
 		}
 		if (length > 0) {
-			CVNumericFoldingElement f = new CVNumericFoldingElement(min, max, getViewer());
+			CVNumericFoldingElement f = new CVNumericFoldingElement(min, max, this, viewer);
 			addChild(f);
 			f.addChildren(getElements(modelElements, min, min + length));
 		}

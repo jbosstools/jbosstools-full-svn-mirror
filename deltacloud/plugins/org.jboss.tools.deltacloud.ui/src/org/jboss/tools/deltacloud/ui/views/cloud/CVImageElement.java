@@ -8,50 +8,34 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.ui.views.cloud.property.ImagePropertySource;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CVNumericFoldingElement extends CloudViewElement {
+public class CVImageElement extends CloudViewElement {
 
-	public static int FOLDING_SIZE = 50;
-	private Object min;
-	private int max;
-
-	public CVNumericFoldingElement(int min, int max, TreeViewer viewer) {
-		super(null, viewer);
-		this.min = min;
-		this.max = max;
+	public CVImageElement(Object element, CloudViewElement parent, TreeViewer viewer) {
+		super(element, parent, viewer);
 	}
-
-	@Override
+	
 	public String getName() {
-		return new StringBuilder()
-				.append("[")
-				.append(min)
-				.append("..")
-				.append(max - 1)
-				.append("]").toString();
+		Object element = getElement();
+		if (element instanceof DeltaCloudImage) {
+			return ((DeltaCloudImage) element).getName();
+		} else {
+			return "";
+		}
 	}
-
-	@Override
-	public Object[] getChildren() {
-		return super.getChildren();
-	}
-
-	@Override
-	public boolean hasChildren() {
-		return true;
-	}
-
+	
 	@Override
 	public IPropertySource getPropertySource() {
-		return null;
+		return new ImagePropertySource(getElement());
 	}
-
 }

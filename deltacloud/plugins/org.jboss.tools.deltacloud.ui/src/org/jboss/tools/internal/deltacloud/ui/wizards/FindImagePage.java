@@ -30,8 +30,8 @@ import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.core.ImageFilter;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.ImageViewLabelAndContentProvider;
-import org.jboss.tools.deltacloud.ui.views.TableViewerColumnComparator;
+import org.jboss.tools.deltacloud.ui.views.cloudelements.ImageViewLabelAndContentProvider;
+import org.jboss.tools.deltacloud.ui.views.cloudelements.TableViewerColumnComparator;
 
 public class FindImagePage extends WizardPage implements IImageListListener {
 

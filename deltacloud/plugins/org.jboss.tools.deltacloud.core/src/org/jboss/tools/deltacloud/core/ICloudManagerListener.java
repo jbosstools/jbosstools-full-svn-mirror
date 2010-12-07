@@ -16,5 +16,5 @@ public interface ICloudManagerListener {
 	public static int REMOVE_EVENT = 2;
 	public static int RENAME_EVENT = 3;
 	
-	void cloudsChanged(int type);
+	void cloudsChanged(int type, DeltaCloud cloud);
 }

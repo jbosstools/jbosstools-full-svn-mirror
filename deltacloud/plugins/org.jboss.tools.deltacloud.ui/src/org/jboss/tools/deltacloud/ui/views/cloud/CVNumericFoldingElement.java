@@ -8,40 +8,50 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CVInstanceElement extends CloudViewElement {
+public class CVNumericFoldingElement extends CloudViewElement {
 
-	public CVInstanceElement(Object element, TreeViewer viewer) {
-		super(element, viewer);
+	public static int FOLDING_SIZE = 50;
+	private Object min;
+	private int max;
+
+	public CVNumericFoldingElement(int min, int max, CloudViewElement parent, TreeViewer viewer) {
+		super(null, parent, viewer);
+		this.min = min;
+		this.max = max;
 	}
 
+	@Override
 	public String getName() {
-		Object element = getElement();
-		StringBuilder sb = new StringBuilder();
-		if (element instanceof DeltaCloudInstance) {
-			DeltaCloudInstance instance = (DeltaCloudInstance) element;
-			if (instance.getName() != null) {
-				sb.append(instance.getName());
-			}
-			if (instance.getId() != null) {
-				sb.append(" [").append(instance.getId()).append("] ");
-			}
-		}
-		return sb.toString();
+		return new StringBuilder()
+				.append("[")
+				.append(min)
+				.append("..")
+				.append(max - 1)
+				.append("]").toString();
+	}
 
+	@Override
+	public Object[] getChildren() {
+		return super.getChildren();
+	}
+
+	@Override
+	public boolean hasChildren() {
+		return true;
 	}
 
 	@Override
 	public IPropertySource getPropertySource() {
-		return new InstancePropertySource(this, getElement());
+		return null;
 	}
+
 }

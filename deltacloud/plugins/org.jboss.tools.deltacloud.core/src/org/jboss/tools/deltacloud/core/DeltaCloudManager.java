@@ -188,19 +188,19 @@ public class DeltaCloudManager {
 	public void addCloud(DeltaCloud d) throws DeltaCloudException {
 		doGetClouds().add(d);
 		saveClouds();
-		notifyListeners(ICloudManagerListener.ADD_EVENT);
+		notifyListeners(ICloudManagerListener.ADD_EVENT, d);
 	}
 
 	public void removeCloud(DeltaCloud d) throws DeltaCloudException {
 		doGetClouds().remove(d);
 		d.dispose();
 		saveClouds();
-		notifyListeners(ICloudManagerListener.REMOVE_EVENT);
+		notifyListeners(ICloudManagerListener.REMOVE_EVENT, d);
 	}
 
-	public void notifyCloudRename() throws DeltaCloudException {
+	public void notifyCloudRename(DeltaCloud cloud) throws DeltaCloudException {
 		saveClouds();
-		notifyListeners(ICloudManagerListener.RENAME_EVENT);
+		notifyListeners(ICloudManagerListener.RENAME_EVENT, cloud);
 	}
 
 	public void addCloudManagerListener(ICloudManagerListener listener) {
@@ -214,11 +214,11 @@ public class DeltaCloudManager {
 			cloudManagerListeners.remove(listener);
 	}
 
-	public void notifyListeners(int type) {
+	public void notifyListeners(int type, DeltaCloud cloud) {
 		if (cloudManagerListeners != null) {
 			Object[] listeners = cloudManagerListeners.getListeners();
 			for (int i = 0; i < listeners.length; ++i) {
-				((ICloudManagerListener) listeners[i]).cloudsChanged(type);
+				((ICloudManagerListener) listeners[i]).cloudsChanged(type, cloud);
 			}
 		}
 	}

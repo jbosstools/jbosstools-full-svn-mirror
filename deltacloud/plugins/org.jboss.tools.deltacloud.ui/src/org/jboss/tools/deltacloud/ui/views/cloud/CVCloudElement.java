@@ -8,11 +8,12 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.ui.views.cloud.property.CloudPropertySource;
 
 /**
  * @author Jeff Johnston
@@ -22,8 +23,8 @@ public class CVCloudElement extends CloudViewElement {
 
 	private TreeViewer viewer;
 
-	public CVCloudElement(Object element, String name, TreeViewer viewer) {
-		super(element, viewer);
+	public CVCloudElement(Object element, CloudViewElement parent, TreeViewer viewer) {
+		super(element, parent, viewer);
 		this.viewer = viewer;
 	}
 
@@ -45,9 +46,9 @@ public class CVCloudElement extends CloudViewElement {
 	public synchronized Object[] getChildren() {
 		if (!initialized.get()) {
 			DeltaCloud cloud = (DeltaCloud) getElement();
-			CVCloudElementCategoryElement instances = new CVInstancesCategoryElement(cloud, viewer);
+			CVCloudElementCategoryElement instances = new CVInstancesCategoryElement(cloud, this, viewer);
 			addCategory(instances);
-			CVCloudElementCategoryElement images = new CVImagesCategoryElement(cloud, viewer);
+			CVCloudElementCategoryElement images = new CVImagesCategoryElement(cloud, this, viewer);
 			addCategory(images);
 		}
 		initialized.set(true);

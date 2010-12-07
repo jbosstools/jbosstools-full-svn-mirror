@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +48,7 @@ import org.jboss.tools.deltacloud.core.IDeltaCloudElement;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -350,7 +351,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		}
 	}
 
-	public void cloudsChanged(int type) {
+	public void cloudsChanged(int type, DeltaCloud cloud) {
 		int currIndex = 0;
 		if (currentCloud != null) {
 			currIndex = currentCloudSelector.getSelectionIndex();

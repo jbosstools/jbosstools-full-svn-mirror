@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.viewers.ITableLabelProvider;

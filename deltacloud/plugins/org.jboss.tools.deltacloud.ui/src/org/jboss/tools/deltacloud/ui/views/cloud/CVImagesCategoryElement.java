@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import java.text.MessageFormat;
 
@@ -20,6 +20,7 @@ import org.jboss.tools.deltacloud.core.GetImagesCommand;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
 /**
  * @author Jeff Johnston
@@ -29,8 +30,8 @@ public class CVImagesCategoryElement extends CVCloudElementCategoryElement imple
 
 	private static final String IMAGE_CATEGORY_NAME = "ImageCategoryName"; //$NON-NLS-1$
 
-	public CVImagesCategoryElement(Object element, TreeViewer viewer) {
-		super(element, viewer);
+	public CVImagesCategoryElement(Object element, CloudViewElement parent, TreeViewer viewer) {
+		super(element, parent, viewer);
 	}
 
 	public String getName() {
@@ -45,7 +46,7 @@ public class CVImagesCategoryElement extends CVCloudElementCategoryElement imple
 	protected CloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
 		CloudViewElement[] elements = new CloudViewElement[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new CVImageElement(modelElements[i], getViewer());
+			elements[i - startIndex] = new CVImageElement(modelElements[i], this, viewer);
 		}
 		return elements;
 	}
@@ -57,28 +58,17 @@ public class CVImagesCategoryElement extends CVCloudElementCategoryElement imple
 			initialized.set(false);
 			DeltaCloudImage[] images = filter(newImages);
 			addChildren(images);
-//			refresh();
+			expand();
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
 					"Error",
 					MessageFormat.format("Could not get images from cloud \"{0}\"", cloud.getName()), e,
-					getViewer().getControl().getShell());
+					viewer.getControl().getShell());
 		} finally {
 			initialized.set(true);
 		}
-		// refresh();
 	}
-
-	// private void refresh() {
-	// getViewer().getControl().getDisplay().asyncExec(new Runnable() {
-	//
-	// @Override
-	// public void run() {
-	// getViewer().refresh(this, true);
-	// }
-	// });
-	// }
 
 	public DeltaCloudImage[] filter(DeltaCloudImage[] images) throws DeltaCloudException {
 		DeltaCloud cloud = (DeltaCloud) getElement();

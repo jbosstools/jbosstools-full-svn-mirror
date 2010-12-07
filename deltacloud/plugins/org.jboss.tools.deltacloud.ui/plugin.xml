@@ -11,19 +11,19 @@
             name="%CloudViewerName"
             icon="icons/delta.gif"
             category="org.jboss.tools.deltacloud.ui"
-            class="org.jboss.tools.deltacloud.ui.views.DeltaCloudView"
+            class="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudView"
             id="org.jboss.tools.deltacloud.ui.views.CloudView">
       </view>
       <view
             category="org.jboss.tools.deltacloud.ui"
-            class="org.jboss.tools.deltacloud.ui.views.InstanceView"
+            class="org.jboss.tools.deltacloud.ui.views.cloudelements.InstanceView"
             icon="icons/delta.gif"
             id="org.jboss.tools.deltacloud.ui.views.InstanceView"
             name="%InstanceViewer.name">
       </view>
       <view
             category="org.jboss.tools.deltacloud.ui"
-            class="org.jboss.tools.deltacloud.ui.views.ImageView"
+            class="org.jboss.tools.deltacloud.ui.views.cloudelements.ImageView"
             icon="icons/delta.gif"
             id="org.jboss.tools.deltacloud.ui.views.ImageView"
             name="%ImageViewer.name"
@@ -40,7 +40,7 @@
          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
       <propertyContributor
             contributorId="org.jboss.tools.deltacloud.ui.views.CloudView"
-            typeMapper="org.jboss.tools.deltacloud.ui.views.CVTypeMapper">
+            typeMapper="org.jboss.tools.deltacloud.ui.views.cloud.CVTypeMapper">
          <propertyCategory
                category="main"></propertyCategory>
       </propertyContributor>
@@ -61,11 +61,11 @@
       <propertySections
             contributorId="org.jboss.tools.deltacloud.ui.views.CloudView">
          <propertySection
-               class="org.jboss.tools.deltacloud.ui.views.CVPropertySection"
+               class="org.jboss.tools.deltacloud.ui.views.cloud.property.CVPropertySection"
                id="org.jboss.tools.deltacloud.ui.propertySection.advanced"
                tab="cloudview.advancedTab">
             <input
-                  type="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+                  type="org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement">
             </input>
          </propertySection>
       </propertySections>
@@ -116,7 +116,7 @@
 	                 variable="selection">
 				        <iterate>
 					           <instanceof
-					                 value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+					                 value="org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement">
 					           </instanceof>
 				        </iterate>
                </with>
@@ -136,7 +136,7 @@
                      variable="selection">
 					<iterate>
 	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+	                	     value="org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement">
 	               		</instanceof>
 	               	</iterate>
                </with>
@@ -158,7 +158,7 @@
 						<count value="+" />
 						<iterate>
 		               		<instanceof
-		                		value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+		                		value="org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement">
 		               		</instanceof>
 		               	</iterate>
 		            </and>
@@ -177,7 +177,7 @@
 			<activeWhen>
 				<with
 					variable="activePart">
-						<instanceof value="org.jboss.tools.deltacloud.ui.views.InstanceView" />
+						<instanceof value="org.jboss.tools.deltacloud.ui.views.cloudelements.InstanceView" />
 				</with>
 			</activeWhen>
 	</handler>
@@ -187,15 +187,9 @@
 			<activeWhen>
 				<with
 					variable="activePart">
-						<instanceof value="org.jboss.tools.deltacloud.ui.views.ImageView" />
+						<instanceof value="org.jboss.tools.deltacloud.ui.views.cloudelements.ImageView" />
 				</with>
 			</activeWhen>
-			<enabledWhen>
-				<with
-					variable="selection">
-					<count value="+" />
-				</with>
-			</enabledWhen>
 	</handler>
    </extension>
    <extension
@@ -305,7 +299,7 @@
 	                     variable="selection">
 						<iterate>
 		               		<instanceof
-		                	     value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+		                	     value="org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement">
 		               		</instanceof>
 		               	</iterate>
 	               </with>
@@ -681,7 +675,7 @@
                      variable="selection">
 					<iterate>
 	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.CVImageElement">
+	                	     value="org.jboss.tools.deltacloud.ui.views.cloud.CVImageElement">
 	               		</instanceof>
 	               	</iterate>
                </with>
@@ -705,11 +699,11 @@
 					<iterate>
 				        <and>
 				           <instanceof
-				                 value="org.jboss.tools.deltacloud.ui.views.CloudViewElement">
+				                 value="org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement">
 				           </instanceof>
 				           <not>
 				              <instanceof
-				                    value="org.jboss.tools.deltacloud.ui.views.CVImageElement">
+				                    value="org.jboss.tools.deltacloud.ui.views.cloud.CVImageElement">
 				              </instanceof>
 				           </not>
 				        </and>
@@ -876,7 +870,7 @@
   <extension
         point="org.eclipse.core.runtime.adapters">
      <factory
-           adaptableType="org.jboss.tools.deltacloud.ui.views.CloudViewElement"
+           adaptableType="org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement"
            class="org.jboss.tools.deltacloud.ui.adapter.CloudViewElementAdapterFactory">
         <adapter
               type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
@@ -885,7 +879,7 @@
               type="org.jboss.tools.deltacloud.core.DeltaCloud">
         </adapter>
         <adapter
-              type="org.jboss.tools.deltacloud.ui.views.InstancePropertySource">
+              type="org.jboss.tools.deltacloud.ui.views.cloud.property.InstancePropertySource">
         </adapter>
         <adapter
               type="org.jboss.tools.deltacloud.core.DeltaCloudImage">

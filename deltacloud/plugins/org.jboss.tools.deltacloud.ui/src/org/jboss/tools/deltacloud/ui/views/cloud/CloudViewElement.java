@@ -8,11 +8,11 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -29,15 +30,16 @@ import org.eclipse.ui.views.properties.IPropertySource;
  */
 public abstract class CloudViewElement implements IAdaptable {
 
-	private TreeViewer viewer;
 	private Object element;
 	private CloudViewElement parent;
-	protected Collection<CloudViewElement> children =
-			Collections.synchronizedCollection(new ArrayList<CloudViewElement>());
+	protected List<CloudViewElement> children =
+			Collections.synchronizedList(new ArrayList<CloudViewElement>());
+	protected TreeViewer viewer;
 	protected AtomicBoolean initialized = new AtomicBoolean();
 
-	public CloudViewElement(Object element, TreeViewer viewer) {
+	public CloudViewElement(Object element, CloudViewElement parent, TreeViewer viewer) {
 		this.element = element;
+		this.parent = parent;
 		this.viewer = viewer;
 		initDisposeListener(viewer);
 	}
@@ -47,8 +49,19 @@ public abstract class CloudViewElement implements IAdaptable {
 	public Object[] getChildren() {
 		return children.toArray();
 	}
-	
+
 	protected void clearChildren() {
+		getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				// viewer.getTree().setRedraw(false);
+				for (final CloudViewElement element : children) {
+					viewer.remove(element);
+				}
+				// viewer.getTree().setRedraw(true);
+			}
+		});
 		children.clear();
 	}
 
@@ -60,36 +73,51 @@ public abstract class CloudViewElement implements IAdaptable {
 		return parent;
 	}
 
-	public void addChild(final CloudViewElement e) {
-		addChildToModel(e);
-		getViewer().getControl().getDisplay().asyncExec(new Runnable() {
+	public void addChild(final CloudViewElement element) {
+		children.add(element);
+
+		getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				getViewer().add(this, e);
+				viewer.add(CloudViewElement.this, element);
 			}
 		});
-	}
-
-	public void addChildToModel(CloudViewElement element) {
-		children.add(element);
-		element.setParent(this);
 	}
 
 	public void addChildren(final CloudViewElement[] elements) {
 		for (CloudViewElement element : elements) {
-			addChildToModel(element);
+			children.add(element);
 		}
 
-		getViewer().getControl().getDisplay().asyncExec(new Runnable() {
+		getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				getViewer().add(this, elements);
+				viewer.add(CloudViewElement.this, elements);
 			}
 		});
 	}
 
-	public void setParent(CloudViewElement e) {
-		parent = e;
+	public void removeChild(final CloudViewElement element) {
+
+		getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (element != null) {
+					int index = children.indexOf(element);
+					viewer.remove(CloudViewElement.this, index);
+				}
+			}
+		});
+	}
+
+	protected void expand() {
+		getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				viewer.setExpandedState(CloudViewElement.this, true);
+			}
+		});
 	}
 
 	public Object getElement() {
@@ -108,10 +136,6 @@ public abstract class CloudViewElement implements IAdaptable {
 
 	public abstract IPropertySource getPropertySource();
 
-	protected TreeViewer getViewer() {
-		return viewer;
-	}
-
 	private void initDisposeListener(Viewer viewer) {
 		final Control control = viewer.getControl();
 		control.getDisplay().asyncExec(new Runnable() {
@@ -127,6 +151,10 @@ public abstract class CloudViewElement implements IAdaptable {
 				});
 			}
 		});
+	}
+
+	protected Display getDisplay() {
+		return viewer.getControl().getDisplay();
 	}
 
 	protected void dispose() {

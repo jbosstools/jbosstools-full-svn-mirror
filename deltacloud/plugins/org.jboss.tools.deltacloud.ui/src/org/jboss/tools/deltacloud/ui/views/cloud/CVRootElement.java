@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Display;
@@ -26,7 +26,7 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
 public class CVRootElement extends CloudViewElement implements ICloudManagerListener {
 
 	public CVRootElement(TreeViewer viewer) {
-		super(DeltaCloudManager.getDefault(), viewer); //$NON-NLS-1$
+		super(DeltaCloudManager.getDefault(), null, viewer); //$NON-NLS-1$
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
 
@@ -59,9 +59,23 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 
 	private void addClouds(DeltaCloud[] clouds) {
 		for (DeltaCloud cloud : clouds) {
-			CVCloudElement e = new CVCloudElement(cloud, cloud.getName(), getViewer());
-			children.add(e);
+			addCloud(cloud);
 		}
+	}
+
+	private void addCloud(DeltaCloud cloud) {
+		CVCloudElement e = new CVCloudElement(cloud, this, viewer);
+		children.add(e);
+	}
+
+	private CloudViewElement getCloudViewElement(DeltaCloud cloudToMatch) {
+		for (CloudViewElement cloudElement : children) {
+			DeltaCloud cloud = (DeltaCloud) cloudElement.getElement();
+			if (cloudToMatch.equals(cloud)) {
+				return cloudElement;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -69,19 +83,19 @@ public class CVRootElement extends CloudViewElement implements ICloudManagerList
 		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
 	}
 
-	public void cloudsChanged(int type) {
-		DeltaCloudManager m = DeltaCloudManager.getDefault();
-		try {
-			DeltaCloud[] clouds = m.getClouds();
-			addClouds(clouds);
-			initialized.set(true);
-		} catch (DeltaCloudException e) {
-			// TODO: internationalize strings
-			ErrorUtils.handleError(
-					"Error",
-					"Could not get all clouds",
-					e, Display.getDefault().getActiveShell());
+	public void cloudsChanged(int type, DeltaCloud cloud) {
+		switch (type) {
+		case ICloudManagerListener.ADD_EVENT:
+			addChild(new CVCloudElement(cloud, this, viewer));
+			break;
+		case ICloudManagerListener.REMOVE_EVENT:
+			removeChild(getCloudViewElement(cloud));
+			break;
+		case ICloudManagerListener.RENAME_EVENT:
+			CloudViewElement cloudViewElement = getCloudViewElement(cloud);
+			viewer.refresh(cloudViewElement);
+			break;
 		}
+		initialized.set(true);
 	}
-
 }

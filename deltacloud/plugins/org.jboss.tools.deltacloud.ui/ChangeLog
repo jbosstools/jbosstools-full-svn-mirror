@@ -1,3 +1,17 @@
+2010-12-07  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CVCloudElementCategoryElement.java (setLoadingIndicator): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/LoadingCloudViewElement.java: 
+	[JBIDE-7819] I now show the user that things are being loaded ("Loading..." node)
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CVImagesCategoryElement.java (listChanged): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CVInstancesCategoryElement.java (listChanged): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CloudViewElement.java 
+	(addChild): 
+	(addChildren): 
+	(removeChild): 
+	[JBIDE-7819] since loading data async now, nodes are added in #listChanged and I have to add children 
+	to the tree manually (and not return them on #getChildren)
+
 2010-12-06  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (validate): 

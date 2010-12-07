@@ -33,7 +33,7 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 			initialCloud.editCloud(name, url, username, password, type);
 			DeltaCloudManager.getDefault().saveClouds();
 			if (!name.equals(oldName)) {
-				DeltaCloudManager.getDefault().notifyCloudRename();
+				DeltaCloudManager.getDefault().notifyCloudRename(initialCloud);
 			}
 		} catch (Exception e) {
 		}

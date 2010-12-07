@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
@@ -22,13 +22,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
-import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.ICloudManagerListener;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.cloud.property.CVPropertySheetPage;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
-public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
-		ITabbedPropertySheetPageContributor {
+public class DeltaCloudView extends ViewPart implements ITabbedPropertySheetPageContributor {
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -50,7 +49,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		makeActions();
 		hookContextMenu(viewer.getTree());
 		contributeToActionBars();
-		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
 
 	private TreeViewer createTreeViewer(Composite parent) {
@@ -62,12 +60,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		getSite().setSelectionProvider(viewer);
 		return viewer;
-	}
-
-	@Override
-	public void dispose() {
-		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
-		super.dispose();
 	}
 
 	private void hookContextMenu(Control control) {
@@ -103,11 +95,6 @@ public class DeltaCloudView extends ViewPart implements ICloudManagerListener,
 	@Override
 	public void setFocus() {
 		viewer.getControl().setFocus();
-	}
-
-	@Override
-	public void cloudsChanged(int type) {
-		viewer.setInput(new CVRootElement(viewer));
 	}
 
 	@Override

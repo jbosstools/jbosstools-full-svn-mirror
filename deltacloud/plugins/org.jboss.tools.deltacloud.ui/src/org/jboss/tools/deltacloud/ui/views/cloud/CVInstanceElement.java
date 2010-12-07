@@ -8,33 +8,41 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.views.cloud.property.InstancePropertySource;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CVImageElement extends CloudViewElement {
+public class CVInstanceElement extends CloudViewElement {
 
-	public CVImageElement(Object element, TreeViewer viewer) {
-		super(element, viewer);
+	public CVInstanceElement(Object element, CloudViewElement parent, TreeViewer viewer) {
+		super(element, parent, viewer);
 	}
-	
+
 	public String getName() {
 		Object element = getElement();
-		if (element instanceof DeltaCloudImage) {
-			return ((DeltaCloudImage) element).getName();
-		} else {
-			return "";
+		StringBuilder sb = new StringBuilder();
+		if (element instanceof DeltaCloudInstance) {
+			DeltaCloudInstance instance = (DeltaCloudInstance) element;
+			if (instance.getName() != null) {
+				sb.append(instance.getName());
+			}
+			if (instance.getId() != null) {
+				sb.append(" [").append(instance.getId()).append("] ");
+			}
 		}
+		return sb.toString();
+
 	}
-	
+
 	@Override
 	public IPropertySource getPropertySource() {
-		return new ImagePropertySource(getElement());
+		return new InstancePropertySource(this, getElement());
 	}
 }

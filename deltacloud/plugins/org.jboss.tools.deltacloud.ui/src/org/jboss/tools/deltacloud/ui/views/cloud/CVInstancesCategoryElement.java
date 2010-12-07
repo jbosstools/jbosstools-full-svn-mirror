@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import java.text.MessageFormat;
 
@@ -20,6 +20,7 @@ import org.jboss.tools.deltacloud.core.GetInstancesCommand;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
 /**
  * @author Jeff Johnston
@@ -29,8 +30,8 @@ public class CVInstancesCategoryElement extends CVCloudElementCategoryElement im
 
 	private static final String INSTANCE_CATEGORY_NAME = "InstanceCategoryName"; //$NON-NLS-1$
 
-	public CVInstancesCategoryElement(Object element, TreeViewer viewer) {
-		super(element, viewer);
+	public CVInstancesCategoryElement(Object element, CloudViewElement parent, TreeViewer viewer) {
+		super(element, parent, viewer);
 	}
 
 	public String getName() {
@@ -45,30 +46,25 @@ public class CVInstancesCategoryElement extends CVCloudElementCategoryElement im
 	protected CloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
 		CloudViewElement[] elements = new CloudViewElement[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new CVInstanceElement(modelElements[i], getViewer());
+			elements[i - startIndex] = new CVInstanceElement(modelElements[i], this, viewer);
 		}
 		return elements;
-	}
-
-	protected void addChildrenFor(Object[] modelElements, int startIndex, int stopIndex) {
-		for (int i = startIndex; i < stopIndex; ++i) {
-			addChild(new CVInstanceElement(modelElements[i], getViewer()));
-		}
 	}
 
 	@Override
 	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] newInstances) {
 		try {
-			initialized.set(false);
 			clearChildren();
+			initialized.set(false);
 			final DeltaCloudInstance[] instances = filter(newInstances);
 			addChildren(instances);
+			expand();
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
 					"Error",
 					MessageFormat.format("Could not get instanceso from cloud \"{0}\"", cloud.getName()), e,
-					getViewer().getControl().getShell());
+					viewer.getControl().getShell());
 		} finally {
 			initialized.set(true);
 		}

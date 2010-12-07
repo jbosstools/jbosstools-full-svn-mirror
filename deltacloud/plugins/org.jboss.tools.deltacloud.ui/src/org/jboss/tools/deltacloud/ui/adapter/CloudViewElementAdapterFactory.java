@@ -16,9 +16,9 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.CVImageElement;
-import org.jboss.tools.deltacloud.ui.views.CVInstanceElement;
-import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.CVImageElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.CVInstanceElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 
 public class CloudViewElementAdapterFactory implements IAdapterFactory {

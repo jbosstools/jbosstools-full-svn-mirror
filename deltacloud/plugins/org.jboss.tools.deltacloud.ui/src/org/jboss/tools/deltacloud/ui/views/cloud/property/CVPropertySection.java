@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud.property;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.events.ControlAdapter;

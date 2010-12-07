@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud.property;
 
 import java.util.List;
 
@@ -20,6 +20,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.cloud.CVInstanceElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 
 public class InstancePropertySource implements IPropertySource {

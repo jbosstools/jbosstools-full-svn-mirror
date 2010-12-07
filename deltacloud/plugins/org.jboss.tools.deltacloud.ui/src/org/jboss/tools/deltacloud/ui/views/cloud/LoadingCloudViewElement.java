@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -18,8 +18,8 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * elements
  */
 public class LoadingCloudViewElement extends CloudViewElement {
-	protected LoadingCloudViewElement(TreeViewer viewer) {
-		super(null, viewer);
+	protected LoadingCloudViewElement(CloudViewElement parent, TreeViewer viewer) {
+		super(null, parent, viewer);
 	}
 
 	@Override

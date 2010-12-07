@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
@@ -22,7 +22,7 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> { //implements IImageListListener {
+public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> { 
 
 	@Override
 	protected String getSelectedCloudPrefsKey() {

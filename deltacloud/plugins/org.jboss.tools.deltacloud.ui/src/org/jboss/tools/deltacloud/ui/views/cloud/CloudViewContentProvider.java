@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -16,22 +16,28 @@ import org.eclipse.jface.viewers.Viewer;
 public class CloudViewContentProvider implements ITreeContentProvider {
 
 	private CloudViewElement root;
-	
+
 	@Override
-	public Object[] getChildren(Object parentElement) {
-		CloudViewElement e = (CloudViewElement)parentElement;
-		return e.getChildren();
+	public Object[] getChildren(Object element) {
+		if (element instanceof CloudViewElement) {
+			return ((CloudViewElement) element).getChildren();	
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public Object getParent(Object element) {
-		CloudViewElement e = (CloudViewElement)element;
-		return e.getParent();
+		if (element instanceof CloudViewElement) {
+			return ((CloudViewElement) element).getParent();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public boolean hasChildren(Object element) {
-		CloudViewElement e = (CloudViewElement)element;
+		CloudViewElement e = (CloudViewElement) element;
 		return e.hasChildren();
 	}
 
@@ -47,7 +53,7 @@ public class CloudViewContentProvider implements ITreeContentProvider {
 
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		root = (CloudViewElement)newInput;
+		root = (CloudViewElement) newInput;
 	}
 
 }

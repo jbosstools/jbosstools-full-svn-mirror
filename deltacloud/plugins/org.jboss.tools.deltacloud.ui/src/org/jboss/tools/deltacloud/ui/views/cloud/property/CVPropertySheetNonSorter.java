@@ -8,15 +8,15 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views;
+package org.jboss.tools.deltacloud.ui.views.cloud.property;
 
-import org.eclipse.ui.views.properties.PropertySheetPage;
+import org.eclipse.ui.views.properties.IPropertySheetEntry;
+import org.eclipse.ui.views.properties.PropertySheetSorter;
 
-public class CVPropertySheetPage extends PropertySheetPage {
+public class CVPropertySheetNonSorter extends PropertySheetSorter {
 	
-	public CVPropertySheetPage() {
-		super();
-		setSorter(new CVPropertySheetNonSorter());
+	public void sort(IPropertySheetEntry[] entries) {
+		// do nothing
 	}
 
 }

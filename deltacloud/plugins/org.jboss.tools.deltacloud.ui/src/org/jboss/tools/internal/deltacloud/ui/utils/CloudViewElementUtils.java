@@ -11,8 +11,8 @@
 package org.jboss.tools.internal.deltacloud.ui.utils;
 
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.ui.views.CVCloudElement;
-import org.jboss.tools.deltacloud.ui.views.CloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.CVCloudElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement;
 
 public class CloudViewElementUtils {
 
@@ -46,7 +46,8 @@ public class CloudViewElementUtils {
 	 * @see CVCloudElement
 	 */
 	public static CVCloudElement getCVCloudElement(CloudViewElement element) {
-		while (!(element instanceof CVCloudElement)) {
+		while (!(element instanceof CVCloudElement) 
+				&& element != null) {
 			element = (CloudViewElement) element.getParent();
 		}
 		return (CVCloudElement) element;
