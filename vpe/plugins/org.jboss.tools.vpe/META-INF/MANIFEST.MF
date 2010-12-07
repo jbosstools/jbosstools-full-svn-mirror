@@ -59,6 +59,7 @@ Require-Bundle: org.eclipse.jface.text,
  org.eclipse.wst.sse.core,
  org.eclipse.core.expressions,
  org.jboss.tools.common.model.ui,
- org.eclipse.wst.xml.xpath.core
+ org.eclipse.wst.xml.xpath.core,
+ org.jboss.tools.jst.css;bundle-version="3.2.0"
 Bundle-Version: 3.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

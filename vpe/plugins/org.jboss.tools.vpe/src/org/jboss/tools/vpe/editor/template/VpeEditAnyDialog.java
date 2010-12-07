@@ -10,29 +10,19 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
-import java.io.IOException;
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -50,12 +40,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.common.model.ui.ModelUIImages;
+import org.jboss.tools.jst.css.dialog.CSSStyleDialog;
+import org.jboss.tools.jst.css.dialog.common.Util;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
-import org.jboss.tools.jst.jsp.outline.cssdialog.CSSStyleDialog;
-import org.jboss.tools.jst.jsp.outline.cssdialog.common.Constants;
+import org.jboss.tools.jst.jsp.util.Constants;
 import org.jboss.tools.vpe.VpePlugin;
-import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.Message;
+import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilder;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionBuilderException;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.w3c.dom.DOMException;
@@ -247,7 +238,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		button.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
 		button.setToolTipText(VpeUIMessages.EDIT_STYLE_TIP);
 		ImageDescriptor colorDesc = JspEditorPlugin
-			.getImageDescriptor(Constants.IMAGE_COLORLARGE_FILE_LOCATION);
+			.getImageDescriptor(Util.IMAGE_COLORLARGE_FILE_LOCATION);
 		Image im = colorDesc.createImage();
 		button.setImage(im);
 		
