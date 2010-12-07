@@ -657,7 +657,9 @@ public class VpeController implements INodeAdapter,
 				int type = ((Node) notifier).getNodeType();
 				visualEditor.hideResizer();
 				visualBuilder.setSelectionRectangle(null);
-				if (type == Node.TEXT_NODE) {
+				if (type == Node.CDATA_SECTION_NODE) {
+					visualBuilder.setCdataText((Node) notifier);					
+				} else if (type == Node.TEXT_NODE) {
 					boolean update = visualBuilder.setText((Node) notifier);
 					visualEditor.showResizer();
 					// Added by Max Areshkau JBIDE-1554

@@ -55,6 +55,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
+import org.jboss.tools.vpe.editor.util.Docbook;
 import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -340,8 +341,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		// we shouldn't process this node
 		if (sourceNode == null
 				|| (sourceNode.getNodeType() != Node.TEXT_NODE
-						&& sourceNode.getNodeType() != Node.ELEMENT_NODE && sourceNode
-						.getNodeType() != Node.COMMENT_NODE)) {
+						&& sourceNode.getNodeType() != Node.ELEMENT_NODE
+						&& sourceNode.getNodeType() != Node.COMMENT_NODE 
+						&& sourceNode.getNodeType() != Node.CDATA_SECTION_NODE)) {
 			return null;
 		}
 
@@ -871,6 +873,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 		}
 		return null;
+	}
+	
+	public void setCdataText(Node sourceNode) {
+		Node sourceParent = sourceNode.getParentNode();
+		if (sourceParent != null && sourceParent.getLocalName() != null) {
+			String sourceParentName = sourceParent.getLocalName();
+			if (Docbook.ELEMENT_PROGRAMLISTING.equalsIgnoreCase(sourceParentName)) {
+				updateNode(sourceParent);
+			}
+		}
 	}
 
 	public boolean setText(Node sourceText) {

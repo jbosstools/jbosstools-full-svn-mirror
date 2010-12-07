@@ -11,7 +11,7 @@
 
 package org.jboss.tools.vpe.docbook.template;
 
-import org.jboss.tools.vpe.docbook.template.util.Docbook;
+import org.jboss.tools.vpe.editor.util.Docbook;
 
 /**
  * Class for <important>

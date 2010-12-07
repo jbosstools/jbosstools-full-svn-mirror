@@ -13,11 +13,12 @@ package org.jboss.tools.vpe.docbook.template;
 
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
-import org.jboss.tools.vpe.editor.template.VpeChildrenInfo;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.util.HTML;
+import org.jboss.tools.vpe.editor.util.TextUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMText;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -40,14 +41,12 @@ public class DocbookProgramlistingTemplate extends VpeAbstractTemplate {
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node childNode = childNodes.item(i);
 			if (childNode.getNodeType() == Node.CDATA_SECTION_NODE) {
-				String cdataText = childNode.getNodeValue();
-				newElement.appendChild(visualDocument.createTextNode(cdataText));
+				String cdataText = TextUtil.visualText(childNode.getNodeValue());
+				nsIDOMText textElement = visualDocument.createTextNode(cdataText);
+				newElement.appendChild(textElement);
 			} else {
 				nsIDOMElement spanElement = visualDocument.createElement(HTML.TAG_SPAN);
 				newElement.appendChild(spanElement);
-				VpeChildrenInfo info = new VpeChildrenInfo(spanElement);
-				info.addSourceChild(childNode);
-				creationData.addChildrenInfo(info);
 			}
 		}
 		

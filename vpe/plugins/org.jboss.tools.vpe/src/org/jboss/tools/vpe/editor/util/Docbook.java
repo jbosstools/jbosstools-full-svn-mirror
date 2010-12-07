@@ -9,7 +9,7 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.vpe.docbook.template.util;
+package org.jboss.tools.vpe.editor.util;
 
 /**
  * @author Denis Vinnichek (dvinnichek)
@@ -27,4 +27,5 @@ public class Docbook {
 	public static final String ELEMENT_WARNING = "warning"; //$NON-NLS-1$
 	public static final String ELEMENT_CAUTION = "caution"; //$NON-NLS-1$
 	public static final String ELEMENT_IMPORTANT = "important"; //$NON-NLS-1$
+	public static final String ELEMENT_PROGRAMLISTING = "programlisting"; //$NON-NLS-1$
 }
