@@ -34,6 +34,7 @@ public abstract class AbstractCloudJob extends Job {
 		try {
 			return doRun(monitor);
 		} catch (Exception e) {
+			// TODO: internationalize strings
 			return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
 					MessageFormat.format("Could not {0}", getName()));
 		}
