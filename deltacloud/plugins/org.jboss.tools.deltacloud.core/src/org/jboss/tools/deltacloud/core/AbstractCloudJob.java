@@ -17,6 +17,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
 import org.jboss.tools.common.log.StatusFactory;
 
+/**
+ * @author André Dietisheim
+ */
 public abstract class AbstractCloudJob extends Job {
 
 	public AbstractCloudJob(String name) {
