@@ -13,7 +13,7 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.ui.views.properties.tabbed.AbstractTypeMapper;
 
-public class CVTypeMapper extends AbstractTypeMapper {
+public class DeltaCloudViewElementTypeMapper extends AbstractTypeMapper {
 
 	@SuppressWarnings("rawtypes")
 	@Override

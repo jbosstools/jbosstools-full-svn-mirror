@@ -53,10 +53,10 @@ public class DeltaCloudView extends ViewPart implements ITabbedPropertySheetPage
 
 	private TreeViewer createTreeViewer(Composite parent) {
 		TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-		viewer.setContentProvider(new CloudViewContentProvider());
-		viewer.setLabelProvider(new CloudViewLabelProvider());
+		viewer.setContentProvider(new DeltaCloudViewContentProvider());
+		viewer.setLabelProvider(new DeltaCloudViewLabelProvider());
 		viewer.setUseHashlookup(true);
-		viewer.setInput(new CVRootElement(viewer));
+		viewer.setInput(new RootViewElement(viewer));
 		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		getSite().setSelectionProvider(viewer);
 		return viewer;

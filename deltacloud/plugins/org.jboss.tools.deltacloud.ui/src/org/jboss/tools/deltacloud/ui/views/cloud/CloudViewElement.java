@@ -10,154 +10,59 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloud;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.ui.views.cloud.property.CloudPropertySource;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public abstract class CloudViewElement implements IAdaptable {
+public class CloudViewElement extends DeltaCloudViewElement {
 
-	private Object element;
-	private CloudViewElement parent;
-	protected List<CloudViewElement> children =
-			Collections.synchronizedList(new ArrayList<CloudViewElement>());
-	protected TreeViewer viewer;
-	protected AtomicBoolean initialized = new AtomicBoolean();
+	private TreeViewer viewer;
 
-	public CloudViewElement(Object element, CloudViewElement parent, TreeViewer viewer) {
-		this.element = element;
-		this.parent = parent;
+	protected CloudViewElement(Object element, DeltaCloudViewElement parent, TreeViewer viewer) {
+		super(element, parent, viewer);
 		this.viewer = viewer;
-		initDisposeListener(viewer);
 	}
 
-	public abstract String getName();
-
-	public Object[] getChildren() {
-		return children.toArray();
-	}
-
-	protected void clearChildren() {
-		getDisplay().syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				// viewer.getTree().setRedraw(false);
-				for (final CloudViewElement element : children) {
-					viewer.remove(element);
-				}
-				// viewer.getTree().setRedraw(true);
-			}
-		});
-		children.clear();
-	}
-
-	public boolean hasChildren() {
-		return children.size() > 0;
-	}
-
-	public Object getParent() {
-		return parent;
-	}
-
-	public void addChild(final CloudViewElement element) {
-		children.add(element);
-
-		getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				viewer.add(CloudViewElement.this, element);
-			}
-		});
-	}
-
-	public void addChildren(final CloudViewElement[] elements) {
-		for (CloudViewElement element : elements) {
-			children.add(element);
+	public String getName() {
+		Object element = getModel();
+		if (element instanceof DeltaCloud) {
+			return ((DeltaCloud) element).getName();
+		} else {
+			return "";
 		}
-
-		getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				viewer.add(CloudViewElement.this, elements);
-			}
-		});
 	}
 
-	public void removeChild(final CloudViewElement element) {
-
-		getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				if (element != null) {
-					int index = children.indexOf(element);
-					viewer.remove(CloudViewElement.this, index);
-				}
-			}
-		});
-	}
-
-	protected void expand() {
-		getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				viewer.setExpandedState(CloudViewElement.this, true);
-			}
-		});
-	}
-
-	public Object getElement() {
-		return element;
-	}
-
-	@SuppressWarnings("rawtypes")
 	@Override
-	public Object getAdapter(Class adapter) {
-		if (adapter == IPropertySource.class) {
-			IPropertySource p = getPropertySource();
-			return p;
+	public boolean hasChildren() {
+		return true;
+	}
+
+	@Override
+	public synchronized Object[] getChildren() {
+		if (!initialized.get()) {
+			DeltaCloud cloud = (DeltaCloud) getModel();
+			CloudElementCategoryViewElement instances = new InstancesCategoryViewElement(cloud, this, viewer);
+			addCategory(instances);
+			CloudElementCategoryViewElement images = new ImagesCategoryViewElement(cloud, this, viewer);
+			addCategory(images);
 		}
-		return null;
+		initialized.set(true);
+		return super.getChildren();
 	}
 
-	public abstract IPropertySource getPropertySource();
-
-	private void initDisposeListener(Viewer viewer) {
-		final Control control = viewer.getControl();
-		control.getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				control.addDisposeListener(new DisposeListener() {
-
-					@Override
-					public void widgetDisposed(DisposeEvent e) {
-						dispose();
-					}
-				});
-			}
-		});
+	private void addCategory(CloudElementCategoryViewElement categoryElement) {
+		children.add(categoryElement);
 	}
 
-	protected Display getDisplay() {
-		return viewer.getControl().getDisplay();
+	@Override
+	public IPropertySource getPropertySource() {
+		return new CloudPropertySource(getModel());
 	}
-
-	protected void dispose() {
-		// nothing to do
-	}
+	
+	
 }

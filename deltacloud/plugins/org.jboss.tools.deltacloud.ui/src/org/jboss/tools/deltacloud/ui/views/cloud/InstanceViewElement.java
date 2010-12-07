@@ -12,30 +12,37 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.ui.views.cloud.property.ImagePropertySource;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.views.cloud.property.InstancePropertySource;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CVImageElement extends CloudViewElement {
+public class InstanceViewElement extends DeltaCloudViewElement {
 
-	public CVImageElement(Object element, CloudViewElement parent, TreeViewer viewer) {
-		super(element, parent, viewer);
+	protected InstanceViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
+		super(model, parent, viewer);
 	}
-	
+
 	public String getName() {
-		Object element = getElement();
-		if (element instanceof DeltaCloudImage) {
-			return ((DeltaCloudImage) element).getName();
-		} else {
-			return "";
+		Object element = getModel();
+		StringBuilder sb = new StringBuilder();
+		if (element instanceof DeltaCloudInstance) {
+			DeltaCloudInstance instance = (DeltaCloudInstance) element;
+			if (instance.getName() != null) {
+				sb.append(instance.getName());
+			}
+			if (instance.getId() != null) {
+				sb.append(" [").append(instance.getId()).append("] ");
+			}
 		}
+		return sb.toString();
+
 	}
-	
+
 	@Override
 	public IPropertySource getPropertySource() {
-		return new ImagePropertySource(getElement());
+		return new InstancePropertySource(this, getModel());
 	}
 }

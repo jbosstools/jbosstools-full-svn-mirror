@@ -13,15 +13,16 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public abstract class CVCloudElementCategoryElement extends CloudViewElement {
+public abstract class CloudElementCategoryViewElement<CLOUDELEMENT> extends DeltaCloudViewElement {
 
-	public CVCloudElementCategoryElement(Object element, CloudViewElement parent, TreeViewer viewer) {
-		super(element, parent, viewer);
+	protected CloudElementCategoryViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
+		super(model, parent, viewer);
 		addCloudElementListener(getCloud());
 	}
 
@@ -33,21 +34,21 @@ public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 	@Override
 	public Object[] getChildren() {
 		if (!initialized.get()) {
-			setLoadingIndicator();
+//			setLoadingIndicator();
 			asyncGetCloudElements();
 			initialized.set(true);
 		}
 		return super.getChildren();
 	}
 
-	private void setLoadingIndicator() {
-		children.add(new LoadingCloudViewElement(this, viewer));		
+	protected void setLoadingIndicator() {
+		children.add(new LoadingCloudElementViewElement(this, viewer));
 	}
 
 	protected abstract void asyncGetCloudElements();
 
 	protected void addChildren(Object[] modelElements) {
-		if (modelElements.length > CVNumericFoldingElement.FOLDING_SIZE) {
+		if (modelElements.length > NumericFoldingViewElement.FOLDING_SIZE) {
 			addFoldedChildren(modelElements);
 		} else {
 			addChildren(getElements(modelElements, 0, modelElements.length));
@@ -56,24 +57,38 @@ public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 
 	protected void addFoldedChildren(Object[] modelElements) {
 		int min = 0;
-		int max = CVNumericFoldingElement.FOLDING_SIZE;
+		int max = NumericFoldingViewElement.FOLDING_SIZE;
 		int length = modelElements.length;
-		while (length > CVNumericFoldingElement.FOLDING_SIZE) {
-			CVNumericFoldingElement f = new CVNumericFoldingElement(min, max, this, viewer);
+		while (length > NumericFoldingViewElement.FOLDING_SIZE) {
+			NumericFoldingViewElement f = new NumericFoldingViewElement(min, max, this, viewer);
 			addChild(f);
 			f.addChildren(getElements(modelElements, min, max));
-			min += CVNumericFoldingElement.FOLDING_SIZE;
-			max += CVNumericFoldingElement.FOLDING_SIZE;
-			length -= CVNumericFoldingElement.FOLDING_SIZE;
+			min += NumericFoldingViewElement.FOLDING_SIZE;
+			max += NumericFoldingViewElement.FOLDING_SIZE;
+			length -= NumericFoldingViewElement.FOLDING_SIZE;
 		}
 		if (length > 0) {
-			CVNumericFoldingElement f = new CVNumericFoldingElement(min, max, this, viewer);
+			NumericFoldingViewElement f = new NumericFoldingViewElement(min, max, this, viewer);
 			addChild(f);
 			f.addChildren(getElements(modelElements, min, min + length));
 		}
 	}
 
-	protected abstract CloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex);
+	protected void onListChanged(DeltaCloud cloud, CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
+		try {
+			clearChildren();
+			initialized.set(false);
+			final CLOUDELEMENT[] filteredElements = filter(cloudElements);
+			addChildren(filteredElements);
+			expand();
+		} finally {
+			initialized.set(true);
+		}
+	}
+
+	protected abstract CLOUDELEMENT[] filter(CLOUDELEMENT[] cloudElements)  throws DeltaCloudException;
+	
+	protected abstract DeltaCloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex);
 
 	@Override
 	public IPropertySource getPropertySource() {
@@ -82,7 +97,7 @@ public abstract class CVCloudElementCategoryElement extends CloudViewElement {
 	}
 
 	protected DeltaCloud getCloud() {
-		return (DeltaCloud) getElement();
+		return (DeltaCloud) getModel();
 	}
 
 	@Override

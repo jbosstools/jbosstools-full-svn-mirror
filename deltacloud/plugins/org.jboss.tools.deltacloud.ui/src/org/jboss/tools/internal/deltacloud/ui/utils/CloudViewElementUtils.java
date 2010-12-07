@@ -11,8 +11,8 @@
 package org.jboss.tools.internal.deltacloud.ui.utils;
 
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.ui.views.cloud.CVCloudElement;
 import org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement;
 
 public class CloudViewElementUtils {
 
@@ -24,14 +24,14 @@ public class CloudViewElementUtils {
 	 * @return the cloud for the given CloudViewElement
 	 * 
 	 * @see DeltaCloud
-	 * @see CloudViewElement
+	 * @see DeltaCloudViewElement
 	 */
-	public static DeltaCloud getCloud(CloudViewElement element) {
-		CVCloudElement cvCloud = getCVCloudElement(element);
+	public static DeltaCloud getCloud(DeltaCloudViewElement element) {
+		CloudViewElement cvCloud = getCVCloudElement(element);
 		if (cvCloud == null) {
 			return null;
 		}
-		DeltaCloud cloud = (DeltaCloud) cvCloud.getElement();
+		DeltaCloud cloud = (DeltaCloud) cvCloud.getModel();
 		return cloud;
 	}
 
@@ -42,15 +42,15 @@ public class CloudViewElementUtils {
 	 *            the cloud view element to get the CVCloudElement for
 	 * @return the CVCloudElement for the given CloudViewElement
 	 * 
+	 * @see DeltaCloudViewElement
 	 * @see CloudViewElement
-	 * @see CVCloudElement
 	 */
-	public static CVCloudElement getCVCloudElement(CloudViewElement element) {
-		while (!(element instanceof CVCloudElement) 
+	public static CloudViewElement getCVCloudElement(DeltaCloudViewElement element) {
+		while (!(element instanceof CloudViewElement) 
 				&& element != null) {
-			element = (CloudViewElement) element.getParent();
+			element = (DeltaCloudViewElement) element.getParent();
 		}
-		return (CVCloudElement) element;
+		return (CloudViewElement) element;
 	}
 
 }

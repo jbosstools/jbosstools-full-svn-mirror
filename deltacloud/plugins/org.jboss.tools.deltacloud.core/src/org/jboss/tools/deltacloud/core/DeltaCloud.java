@@ -160,7 +160,7 @@ public class DeltaCloud {
 		if (!rules.equals(ruleString)) {
 			// TODO: remove notification with all instances, replace by
 			// notifying the changed instance
-			notifyInstanceListListeners(instances.get());
+			notifyInstanceListListeners(getInstancesRepository().get());
 		}
 	}
 
@@ -187,7 +187,7 @@ public class DeltaCloud {
 		String rules = getImageFilter().toString();
 		this.imageFilter = createImageFilter(ruleString);
 		if (!rules.equals(ruleString)) {
-			notifyImageListListeners(images.get());
+			notifyImageListListeners(getImagesRepository().get());
 		}
 	}
 
@@ -342,11 +342,7 @@ public class DeltaCloud {
 	 */
 	private void loadInstances() throws DeltaCloudException {
 		try {
-			clearInstances();
-			if (instances == null) {
-				instances = new DeltaCloudInstancesRepository();
-			}
-			instances.add(client.listInstances(), this);
+			getInstancesRepository().add(client.listInstances(), this);
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(MessageFormat.format("Could not load instances of cloud {0}: {1}",
 						getName(), e.getMessage()), e);
@@ -367,13 +363,19 @@ public class DeltaCloud {
 		}
 	}
 
-	protected DeltaCloudInstance[] getInstances() throws DeltaCloudException {
+	private DeltaCloudInstancesRepository getInstancesRepository() {
 		if (instances == null) {
-			loadInstances();
+			instances = new DeltaCloudInstancesRepository();
 		}
-		return instances.get();
+		return instances;
 	}
 
+	/**
+	 * Gets the instances in async manner. The method does not return the
+	 * instances but notifies observers of the instances.
+	 * 
+	 * @throws DeltaCloudException
+	 */
 	protected void asyncGetInstances() throws DeltaCloudException {
 		if (instances == null) {
 			loadInstances();
@@ -381,11 +383,11 @@ public class DeltaCloud {
 		notifyInstanceListListeners(instances.get());
 	}
 
-	protected DeltaCloudImage[] getImages() throws DeltaCloudException {
+	private DeltaCloudImagesRepository getImagesRepository() {
 		if (images == null) {
-			loadImages();
+			images = new DeltaCloudImagesRepository();
 		}
-		return images.get();
+		return images;
 	}
 
 	protected void asyncGetImages() throws DeltaCloudException {
@@ -394,12 +396,12 @@ public class DeltaCloud {
 		}
 		// TODO: remove notification with all instances, replace by
 		// notifying the changed instance
-		notifyImageListListeners(images.get());
+		notifyImageListListeners(getImagesRepository().get());
 	}
 
 	public DeltaCloudImage getImage(String id) throws DeltaCloudException {
 		DeltaCloudImage matchingImage = null;
-		for (DeltaCloudImage image : getImages()) {
+		for (DeltaCloudImage image : getImagesRepository().get()) {
 			if (id.equals(image.getId())) {
 				matchingImage = image;
 				break;
@@ -438,12 +440,12 @@ public class DeltaCloud {
 			replaceInstance(instance, instanceToReplace);
 			// TODO: remove notification with all instances, replace by
 			// notifying the changed instance
-			notifyInstanceListListeners(instances.get());
+			notifyInstanceListListeners(getInstancesRepository().get());
 		}
 	}
 
 	private DeltaCloudInstance findInstanceById(String instanceId) {
-		return instances.getById(instanceId);
+		return getInstancesRepository().getById(instanceId);
 	}
 
 	// TODO: remove duplicate code with #replaceInstance
@@ -458,7 +460,7 @@ public class DeltaCloud {
 			if (!(deltaCloudInstance.getState().equals(DeltaCloudInstance.BOGUS))
 							&& !(currentInstance.getState().equals(deltaCloudInstance.getState()))) {
 				replaceInstance(deltaCloudInstance, currentInstance);
-				notifyInstanceListListeners(instances.get());
+				notifyInstanceListListeners(getInstancesRepository().get());
 			}
 		} catch (DeltaCloudClientException e) {
 			// TODO: is this correct?
@@ -469,8 +471,8 @@ public class DeltaCloud {
 	}
 
 	private void replaceInstance(DeltaCloudInstance deltaCloudInstance, DeltaCloudInstance currentInstance) {
-		instances.remove(currentInstance);
-		instances.add(deltaCloudInstance);
+		getInstancesRepository().remove(currentInstance);
+		getInstancesRepository().add(deltaCloudInstance);
 	}
 
 	public boolean performInstanceAction(String instanceId, String actionId) throws DeltaCloudException {
@@ -487,7 +489,7 @@ public class DeltaCloud {
 			if (result) {
 				// TODO: remove notification with all instances, replace by
 				// notifying the changed instance
-				notifyInstanceListListeners(instances.get());
+				notifyInstanceListListeners(getInstancesRepository().get());
 			}
 			return result;
 		} catch (DeltaCloudClientException e) {
@@ -522,12 +524,9 @@ public class DeltaCloud {
 	 */
 	private void loadImages() throws DeltaCloudException {
 		try {
-			clearImages();
-			if (images == null) {
-				images = new DeltaCloudImagesRepository();
-			}
-			images.add(client.listImages(), this);
+			getImagesRepository().add(client.listImages(), this);
 		} catch (DeltaCloudClientException e) {
+			clearImages();
 			throw new DeltaCloudException(MessageFormat.format("Could not load images of cloud {0}: {1}",
 						getName(), e.getMessage()), e);
 		}
@@ -537,7 +536,7 @@ public class DeltaCloud {
 	public DeltaCloudImage loadImage(String imageId) throws DeltaCloudException {
 		try {
 			Image image = client.listImages(imageId);
-			return images.add(image, this);
+			return getImagesRepository().add(image, this);
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(e);
 		}
@@ -581,10 +580,9 @@ public class DeltaCloud {
 				instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
 			}
 			if (instance != null) {
-				getInstances(); // make sure instances are initialized
-				DeltaCloudInstance deltaCloudInstance = instances.add(instance, this);
+				DeltaCloudInstance deltaCloudInstance = getInstancesRepository().add(instance, this);
 				deltaCloudInstance.setGivenName(name);
-				notifyInstanceListListeners(instances.get());
+				notifyInstanceListListeners(getInstancesRepository().get());
 				return deltaCloudInstance;
 			}
 		} catch (DeltaCloudClientException e) {

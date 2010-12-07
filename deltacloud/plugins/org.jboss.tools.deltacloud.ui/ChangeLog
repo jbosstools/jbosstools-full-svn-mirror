@@ -2,7 +2,7 @@
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/CVCloudElementCategoryElement.java (setLoadingIndicator): 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/LoadingCloudViewElement.java: 
-	[JBIDE-7819] I now show the user that things are being loaded ("Loading..." node)
+	[JBIDE-7569] I now show the user that things are being loaded ("Loading..." node)
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/CVImagesCategoryElement.java (listChanged): 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/CVInstancesCategoryElement.java (listChanged): 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/CloudViewElement.java 

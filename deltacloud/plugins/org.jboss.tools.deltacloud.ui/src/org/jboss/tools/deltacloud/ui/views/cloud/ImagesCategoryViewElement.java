@@ -26,27 +26,41 @@ import org.jboss.tools.deltacloud.ui.views.CVMessages;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CVImagesCategoryElement extends CVCloudElementCategoryElement implements IImageListListener {
+public class ImagesCategoryViewElement extends CloudElementCategoryViewElement<DeltaCloudImage> implements IImageListListener {
 
 	private static final String IMAGE_CATEGORY_NAME = "ImageCategoryName"; //$NON-NLS-1$
 
-	public CVImagesCategoryElement(Object element, CloudViewElement parent, TreeViewer viewer) {
-		super(element, parent, viewer);
+	protected ImagesCategoryViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
+		super(model, parent, viewer);
 	}
 
 	public String getName() {
 		return CVMessages.getString(IMAGE_CATEGORY_NAME);
 	}
 
+	@Override
 	protected void asyncGetCloudElements() {
-		new GetImagesCommand(getCloud()).execute();
+		setLoadingIndicator();
+		new GetImagesCommand(getCloud()){
+
+			@Override
+			protected void asyncGetImages() throws DeltaCloudException {
+				try {
+					super.asyncGetImages();
+				} catch(DeltaCloudException e) {
+					clearChildren();
+					throw e;
+				}
+			}
+
+		}.execute();
 	}
 
 	@Override
-	protected CloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
-		CloudViewElement[] elements = new CloudViewElement[stopIndex - startIndex];
+	protected DeltaCloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
+		DeltaCloudViewElement[] elements = new DeltaCloudViewElement[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new CVImageElement(modelElements[i], this, viewer);
+			elements[i - startIndex] = new ImageViewElement(modelElements[i], this, viewer);
 		}
 		return elements;
 	}
@@ -54,24 +68,19 @@ public class CVImagesCategoryElement extends CVCloudElementCategoryElement imple
 	@Override
 	public synchronized void listChanged(DeltaCloud cloud, DeltaCloudImage[] newImages) {
 		try {
-			clearChildren();
-			initialized.set(false);
-			DeltaCloudImage[] images = filter(newImages);
-			addChildren(images);
-			expand();
+			onListChanged(cloud, newImages);
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
 					"Error",
 					MessageFormat.format("Could not get images from cloud \"{0}\"", cloud.getName()), e,
 					viewer.getControl().getShell());
-		} finally {
-			initialized.set(true);
 		}
 	}
 
-	public DeltaCloudImage[] filter(DeltaCloudImage[] images) throws DeltaCloudException {
-		DeltaCloud cloud = (DeltaCloud) getElement();
+	@Override
+	protected DeltaCloudImage[] filter(DeltaCloudImage[] images) throws DeltaCloudException {
+		DeltaCloud cloud = (DeltaCloud) getModel();
 		IImageFilter f = cloud.getImageFilter();
 		return f.filter(images).toArray(new DeltaCloudImage[images.length]);
 	}

@@ -38,8 +38,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.cloud.CVCloudElement;
 import org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement;
 
 /**
  * @author Andre Dietisheim
@@ -132,8 +132,8 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		DeltaCloud deltaCloud = null;
 		if (selectedElements.size() > 0) {
 			Object object = selectedElements.get(0);
-			if (object instanceof CVCloudElement) {
-				Object element = ((CVCloudElement) object).getElement();
+			if (object instanceof CloudViewElement) {
+				Object element = ((CloudViewElement) object).getModel();
 				if (element instanceof DeltaCloud) {
 					deltaCloud = (DeltaCloud) element;
 				}
@@ -154,11 +154,11 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 	}
 
 	private DeltaCloud getDeltaCloud(Object item) {
-		if (!(item instanceof CloudViewElement)) {
+		if (!(item instanceof DeltaCloudViewElement)) {
 			return null;
 		}
 
-		DeltaCloud cloud = getDeltaCloud((CloudViewElement) item);
+		DeltaCloud cloud = getDeltaCloud((DeltaCloudViewElement) item);
 
 		if (cloud == null) {
 			return null;
@@ -166,16 +166,16 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		return cloud;
 	}
 
-	private DeltaCloud getDeltaCloud(CloudViewElement element) {
+	private DeltaCloud getDeltaCloud(DeltaCloudViewElement element) {
 		if (element == null) {
 			return null;
 		}
-		Object cloud = element.getElement();
+		Object cloud = element.getModel();
 		if (cloud instanceof DeltaCloud) {
 			return (DeltaCloud) cloud;
 		}
 
-		return getDeltaCloud((CloudViewElement) element.getParent());
+		return getDeltaCloud((DeltaCloudViewElement) element.getParent());
 	}
 
 	private void removeDeltaClouds(Object[] deltaClouds) throws DeltaCloudException {

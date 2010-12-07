@@ -14,18 +14,18 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
-public class CloudViewLabelProvider extends LabelProvider {
+public class DeltaCloudViewLabelProvider extends LabelProvider {
 
 	@Override
 	public Image getImage(Object element) {
-		if (element instanceof CVCloudElement) {
+		if (element instanceof CloudViewElement) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_CLOUD);
-		} else if (element instanceof CVCloudElementCategoryElement ||
-				element instanceof CVNumericFoldingElement) {
+		} else if (element instanceof CloudElementCategoryViewElement ||
+				element instanceof NumericFoldingViewElement) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_FOLDER);
-		} else if (element instanceof CVInstanceElement) {
+		} else if (element instanceof InstanceViewElement) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_INSTANCE);
-		} else if (element instanceof CVImageElement) {
+		} else if (element instanceof ImageViewElement) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_IMAGE);
 		}
 		return null;
@@ -33,7 +33,7 @@ public class CloudViewLabelProvider extends LabelProvider {
 	
 	@Override
 	public String getText(Object element) {
-		CloudViewElement e = (CloudViewElement)element;
+		DeltaCloudViewElement e = (DeltaCloudViewElement)element;
 		return e.getName();
 	}
 

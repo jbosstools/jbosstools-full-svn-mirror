@@ -32,10 +32,15 @@ public class GetInstancesCommand extends AbstractDeltaCloudCommand {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
-				getCloud().asyncGetInstances();
+				asyncGetInstances();
 				return Status.OK_STATUS;
 			}
 
+
 		}.schedule();
+	}
+
+	protected void asyncGetInstances() throws DeltaCloudException {
+		getCloud().asyncGetInstances();
 	}
 }

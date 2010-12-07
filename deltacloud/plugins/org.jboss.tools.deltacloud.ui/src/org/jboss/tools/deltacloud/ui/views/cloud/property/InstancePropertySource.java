@@ -21,7 +21,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.cloud.CVInstanceElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.InstanceViewElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 
 public class InstancePropertySource implements IPropertySource {
@@ -49,7 +49,7 @@ public class InstancePropertySource implements IPropertySource {
 	private DeltaCloudInstance instance;
 	private DeltaCloud cloud;
 
-	public InstancePropertySource(CVInstanceElement element, Object o) {
+	public InstancePropertySource(InstanceViewElement element, Object o) {
 		cloud = CloudViewElementUtils.getCloud(element);
 		instance = (DeltaCloudInstance) o;
 	}

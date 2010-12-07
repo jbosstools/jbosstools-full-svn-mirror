@@ -16,9 +16,9 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.cloud.CVImageElement;
-import org.jboss.tools.deltacloud.ui.views.cloud.CVInstanceElement;
-import org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.ImageViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.InstanceViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 
 public class CloudViewElementAdapterFactory implements IAdapterFactory {
@@ -33,8 +33,8 @@ public class CloudViewElementAdapterFactory implements IAdapterFactory {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Object getAdapter(Object adaptableObject, Class adapterType) {
-		Assert.isLegal(adaptableObject instanceof CloudViewElement);
-		CloudViewElement element = (CloudViewElement) adaptableObject;
+		Assert.isLegal(adaptableObject instanceof DeltaCloudViewElement);
+		DeltaCloudViewElement element = (DeltaCloudViewElement) adaptableObject;
 		if (adapterType == IPropertySource.class) {
 			return element.getPropertySource();
 		} else if (adapterType == DeltaCloudImage.class) {
@@ -48,17 +48,17 @@ public class CloudViewElementAdapterFactory implements IAdapterFactory {
 		}
 	}
 
-	private DeltaCloudInstance getDeltaCloudInstance(CloudViewElement element) {
-		if (element instanceof CVInstanceElement) {		
-			return (DeltaCloudInstance) element.getElement();
+	private DeltaCloudInstance getDeltaCloudInstance(DeltaCloudViewElement element) {
+		if (element instanceof InstanceViewElement) {		
+			return (DeltaCloudInstance) element.getModel();
 		} else {
 			return null;
 		}
 	}
 
-	private DeltaCloudImage getDeltaCloudImage(CloudViewElement element) {
-		if (element instanceof CVImageElement) {		
-			return (DeltaCloudImage) element.getElement();
+	private DeltaCloudImage getDeltaCloudImage(DeltaCloudViewElement element) {
+		if (element instanceof ImageViewElement) {		
+			return (DeltaCloudImage) element.getModel();
 		} else {
 			return null;
 		}

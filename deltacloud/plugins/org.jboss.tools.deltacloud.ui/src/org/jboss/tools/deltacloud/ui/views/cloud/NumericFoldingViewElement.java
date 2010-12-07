@@ -17,13 +17,13 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CVNumericFoldingElement extends CloudViewElement {
+public class NumericFoldingViewElement extends DeltaCloudViewElement {
 
 	public static int FOLDING_SIZE = 50;
 	private Object min;
 	private int max;
 
-	public CVNumericFoldingElement(int min, int max, CloudViewElement parent, TreeViewer viewer) {
+	protected NumericFoldingViewElement(int min, int max, DeltaCloudViewElement parent, TreeViewer viewer) {
 		super(null, parent, viewer);
 		this.min = min;
 		this.max = max;

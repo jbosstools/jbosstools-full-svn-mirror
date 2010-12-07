@@ -13,14 +13,14 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-public class CloudViewContentProvider implements ITreeContentProvider {
+public class DeltaCloudViewContentProvider implements ITreeContentProvider {
 
-	private CloudViewElement root;
+	private DeltaCloudViewElement root;
 
 	@Override
 	public Object[] getChildren(Object element) {
-		if (element instanceof CloudViewElement) {
-			return ((CloudViewElement) element).getChildren();	
+		if (element instanceof DeltaCloudViewElement) {
+			return ((DeltaCloudViewElement) element).getChildren();	
 		} else {
 			return null;
 		}
@@ -28,8 +28,8 @@ public class CloudViewContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object getParent(Object element) {
-		if (element instanceof CloudViewElement) {
-			return ((CloudViewElement) element).getParent();
+		if (element instanceof DeltaCloudViewElement) {
+			return ((DeltaCloudViewElement) element).getParent();
 		} else {
 			return null;
 		}
@@ -37,7 +37,7 @@ public class CloudViewContentProvider implements ITreeContentProvider {
 
 	@Override
 	public boolean hasChildren(Object element) {
-		CloudViewElement e = (CloudViewElement) element;
+		DeltaCloudViewElement e = (DeltaCloudViewElement) element;
 		return e.hasChildren();
 	}
 
@@ -53,7 +53,7 @@ public class CloudViewContentProvider implements ITreeContentProvider {
 
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		root = (CloudViewElement) newInput;
+		root = (DeltaCloudViewElement) newInput;
 	}
 
 }

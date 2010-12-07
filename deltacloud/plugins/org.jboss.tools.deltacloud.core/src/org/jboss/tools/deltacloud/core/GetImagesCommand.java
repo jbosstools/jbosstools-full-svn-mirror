@@ -32,10 +32,15 @@ public class GetImagesCommand extends AbstractDeltaCloudCommand {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
-				getCloud().asyncGetImages();
+				asyncGetImages();
 				return Status.OK_STATUS;
 			}
 
+
 		}.schedule();
+	}
+
+	protected void asyncGetImages() throws DeltaCloudException {
+		getCloud().asyncGetImages();
 	}
 }

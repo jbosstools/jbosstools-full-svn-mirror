@@ -26,27 +26,41 @@ import org.jboss.tools.deltacloud.ui.views.CVMessages;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CVInstancesCategoryElement extends CVCloudElementCategoryElement implements IInstanceListListener {
+public class InstancesCategoryViewElement extends CloudElementCategoryViewElement<DeltaCloudInstance> implements IInstanceListListener {
 
 	private static final String INSTANCE_CATEGORY_NAME = "InstanceCategoryName"; //$NON-NLS-1$
 
-	public CVInstancesCategoryElement(Object element, CloudViewElement parent, TreeViewer viewer) {
-		super(element, parent, viewer);
+	protected InstancesCategoryViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
+		super(model, parent, viewer);
 	}
 
 	public String getName() {
 		return CVMessages.getString(INSTANCE_CATEGORY_NAME);
 	}
 
+	@Override
 	protected void asyncGetCloudElements() {
-		new GetInstancesCommand(getCloud()).execute();
+		setLoadingIndicator();
+		new GetInstancesCommand(getCloud()){
+
+			@Override
+			protected void asyncGetInstances() throws DeltaCloudException {
+				try {
+					super.asyncGetInstances();
+				} catch(DeltaCloudException e) {
+					clearChildren();
+					throw e;
+				}
+			}
+
+		}.execute();
 	}
 
 	@Override
-	protected CloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
-		CloudViewElement[] elements = new CloudViewElement[stopIndex - startIndex];
+	protected DeltaCloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
+		DeltaCloudViewElement[] elements = new DeltaCloudViewElement[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new CVInstanceElement(modelElements[i], this, viewer);
+			elements[i - startIndex] = new InstanceViewElement(modelElements[i], this, viewer);
 		}
 		return elements;
 	}
@@ -54,24 +68,20 @@ public class CVInstancesCategoryElement extends CVCloudElementCategoryElement im
 	@Override
 	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] newInstances) {
 		try {
-			clearChildren();
-			initialized.set(false);
-			final DeltaCloudInstance[] instances = filter(newInstances);
-			addChildren(instances);
-			expand();
+			onListChanged(cloud, newInstances);
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
 					"Error",
-					MessageFormat.format("Could not get instanceso from cloud \"{0}\"", cloud.getName()), e,
+					MessageFormat.format("Could not get instances from cloud \"{0}\"", cloud.getName()), e,
 					viewer.getControl().getShell());
-		} finally {
-			initialized.set(true);
 		}
 	}
 
-	public DeltaCloudInstance[] filter(DeltaCloudInstance[] instances) throws DeltaCloudException {
-		IInstanceFilter f = getCloud().getInstanceFilter();
+	@Override
+	protected DeltaCloudInstance[] filter(DeltaCloudInstance[] instances) throws DeltaCloudException {
+		DeltaCloud cloud = (DeltaCloud) getModel();
+		IInstanceFilter f = cloud.getInstanceFilter();
 		return f.filter(instances).toArray(new DeltaCloudInstance[instances.length]);
 	}
 
