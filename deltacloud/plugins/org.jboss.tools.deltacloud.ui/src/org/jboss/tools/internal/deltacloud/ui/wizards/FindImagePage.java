@@ -117,6 +117,7 @@ public class FindImagePage extends WizardPage implements IImageListListener {
 		String arch = archText.getText();
 		String desc = descText.getText();
 
+		// TODO remove this filter related functionality. bad encapsulation!
 		hasError = validateFilters(hasError, name, id, arch, desc);
 
 		if (selectedElement == null)
@@ -124,6 +125,7 @@ public class FindImagePage extends WizardPage implements IImageListListener {
 
 		if (!hasError) {
 			setErrorMessage(null);
+			// TODO remove this filter related functionality. bad encapsulation!
 			String newRules = name + "*;" //$NON-NLS-1$ 
 					+ id + "*;" //$NON-NLS-1$
 					+ arch + "*;" //$NON-NLS-1$ 
