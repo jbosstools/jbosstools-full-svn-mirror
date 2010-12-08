@@ -27,13 +27,13 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 		ICloudElementFilter<CLOUDELEMENT> {
 
 	private DeltaCloud cloud;
+	private IFieldMatcher nameRule;
+	private IFieldMatcher idRule;
 
 	public AbstractCloudElementFilter(DeltaCloud cloud) {
 		this.cloud = cloud;
 	}
 
-	private IFieldMatcher nameRule;
-	private IFieldMatcher idRule;
 
 	public Collection<CLOUDELEMENT> filter(CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
 		List<CLOUDELEMENT> filteredElements = new ArrayList<CLOUDELEMENT>();
