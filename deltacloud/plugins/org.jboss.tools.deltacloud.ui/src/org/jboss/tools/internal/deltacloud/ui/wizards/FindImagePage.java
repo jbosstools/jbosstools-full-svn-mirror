@@ -46,9 +46,6 @@ public class FindImagePage extends WizardPage implements IImageListListener {
 
 	private DeltaCloud cloud;
 	private TableViewer viewer;
-	private Composite container;
-
-	private ImageViewLabelAndContentProvider contentProvider;
 
 	private Text nameText;
 	private Text idText;
@@ -120,13 +117,7 @@ public class FindImagePage extends WizardPage implements IImageListListener {
 		String arch = archText.getText();
 		String desc = descText.getText();
 
-		if (name.contains(";") || //$NON-NLS-1$
-				id.contains(";") || //$NON-NLS-1$
-				arch.contains(";") || //$NON-NLS-1$
-				desc.contains(";")) { //$NON-NLS-1$
-			setErrorMessage(WizardMessages.getString(INVALID_SEMICOLON));
-			hasError = true;
-		}
+		hasError = validateFilters(hasError, name, id, arch, desc);
 
 		if (selectedElement == null)
 			isComplete = false;
@@ -148,10 +139,20 @@ public class FindImagePage extends WizardPage implements IImageListListener {
 		setPageComplete(isComplete && !hasError);
 	}
 
+	private boolean validateFilters(boolean hasError, String name, String id, String arch, String desc) {
+		if (name.contains(";") || //$NON-NLS-1$
+				id.contains(";") || //$NON-NLS-1$
+				arch.contains(";") || //$NON-NLS-1$
+				desc.contains(";")) { //$NON-NLS-1$
+			setErrorMessage(WizardMessages.getString(INVALID_SEMICOLON));
+			hasError = true;
+		}
+		return hasError;
+	}
+
 	@Override
 	public void createControl(Composite parent) {
-		// TODO Auto-generated method stub
-		container = new Composite(parent, SWT.NULL);
+		Composite container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
 		layout.marginHeight = 5;
 		layout.marginWidth = 5;
@@ -193,7 +194,7 @@ public class FindImagePage extends WizardPage implements IImageListListener {
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		contentProvider = new ImageViewLabelAndContentProvider();
+		ImageViewLabelAndContentProvider contentProvider = new ImageViewLabelAndContentProvider();
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(contentProvider);
 		TableViewerColumnComparator comparator = new TableViewerColumnComparator();
