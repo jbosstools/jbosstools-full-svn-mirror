@@ -141,7 +141,7 @@ public class NewInstancePage2 extends WizardPage {
 
 		public void widgetSelected(SelectionEvent event) {
 			Shell shell = getShell();
-			FindImage wizard = new FindImage(cloud);
+			FindImageWizard wizard = new FindImageWizard(cloud);
 			WizardDialog dialog = new CustomWizardDialog(shell, wizard,
 					IDialogConstants.OK_LABEL);
 			dialog.create();

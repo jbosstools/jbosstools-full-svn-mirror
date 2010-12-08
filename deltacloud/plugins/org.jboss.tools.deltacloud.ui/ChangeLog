@@ -1,3 +1,8 @@
+2010-12-08  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImageWizard.java: 
+	renamed FindImage to FindImageWizard since it is a wizard
+
 2010-12-07  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/CVCloudElementCategoryElement.java (setLoadingIndicator): 
