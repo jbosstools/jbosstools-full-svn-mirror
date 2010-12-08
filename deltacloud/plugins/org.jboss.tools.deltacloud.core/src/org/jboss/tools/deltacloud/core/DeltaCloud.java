@@ -138,6 +138,10 @@ public class DeltaCloud {
 		return lastImageId;
 	}
 
+	public DeltaCloudImage getLastImage() throws DeltaCloudException {
+		return getImage(lastImageId);
+	}
+
 	public void setLastImageId(String lastImageId) {
 		this.lastImageId = lastImageId;
 	}
@@ -310,7 +314,7 @@ public class DeltaCloud {
 
 	public DeltaCloudInstance waitForState(String instanceId, IInstanceStateMatcher stateMatcher, IProgressMonitor pm)
 			throws InterruptedException, DeltaCloudException {
-		DeltaCloudInstance instance = findInstanceById(instanceId);
+		DeltaCloudInstance instance = instances.getById(instanceId);
 		if (instance != null) {
 			while (!pm.isCanceled()) {
 				if (stateMatcher.matchesState(instance, instance.getState())
@@ -399,15 +403,27 @@ public class DeltaCloud {
 		notifyImageListListeners(getImagesRepository().get());
 	}
 
+	/**
+	 * Gets an image for the given image id. In a first step, the local cache is
+	 * queried and if no image is found, the server is queried.
+	 * 
+	 * @param id
+	 *            the image id to match
+	 * @return the image that has the given id
+	 * @throws DeltaCloudException
+	 */
 	public DeltaCloudImage getImage(String id) throws DeltaCloudException {
-		DeltaCloudImage matchingImage = null;
-		for (DeltaCloudImage image : getImagesRepository().get()) {
-			if (id.equals(image.getId())) {
-				matchingImage = image;
-				break;
+		DeltaCloudImage deltaCloudImage = getImagesRepository().getById(id);
+		if (deltaCloudImage == null) {
+			try {
+				Image image = client.listImages(id);
+				deltaCloudImage = images.add(image, this);
+			} catch (DeltaCloudClientException e) {
+				throw new DeltaCloudException(MessageFormat.format("Cloud not find image with id \"{0}\"", id), e);
 			}
 		}
-		return matchingImage;
+
+		return deltaCloudImage;
 	}
 
 	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
@@ -436,16 +452,12 @@ public class DeltaCloud {
 	public void replaceInstance(DeltaCloudInstance instance) {
 		String instanceId = instance.getId();
 		if (instance != null) {
-			DeltaCloudInstance instanceToReplace = findInstanceById(instanceId);
+			DeltaCloudInstance instanceToReplace = instances.getById(instanceId);
 			replaceInstance(instance, instanceToReplace);
 			// TODO: remove notification with all instances, replace by
 			// notifying the changed instance
 			notifyInstanceListListeners(getInstancesRepository().get());
 		}
-	}
-
-	private DeltaCloudInstance findInstanceById(String instanceId) {
-		return getInstancesRepository().getById(instanceId);
 	}
 
 	// TODO: remove duplicate code with #replaceInstance
@@ -454,7 +466,7 @@ public class DeltaCloud {
 		try {
 			Instance instance = client.listInstances(instanceId);
 			deltaCloudInstance = new DeltaCloudInstance(this, instance);
-			DeltaCloudInstance currentInstance = findInstanceById(instanceId);
+			DeltaCloudInstance currentInstance = instances.getById(instanceId);
 			// FIXME: remove BOGUS state when server fixes state
 			// problems
 			if (!(deltaCloudInstance.getState().equals(DeltaCloudInstance.BOGUS))
@@ -476,7 +488,7 @@ public class DeltaCloud {
 	}
 
 	public boolean performInstanceAction(String instanceId, String actionId) throws DeltaCloudException {
-		return performInstanceAction(findInstanceById(instanceId), actionId);
+		return performInstanceAction(instances.getById(instanceId), actionId);
 	}
 
 	protected boolean performInstanceAction(DeltaCloudInstance instance, String actionId) throws DeltaCloudException {
@@ -531,15 +543,6 @@ public class DeltaCloud {
 						getName(), e.getMessage()), e);
 		}
 
-	}
-
-	public DeltaCloudImage loadImage(String imageId) throws DeltaCloudException {
-		try {
-			Image image = client.listImages(imageId);
-			return getImagesRepository().add(image, this);
-		} catch (DeltaCloudClientException e) {
-			throw new DeltaCloudException(e);
-		}
 	}
 
 	public boolean testConnection() throws DeltaCloudException {
