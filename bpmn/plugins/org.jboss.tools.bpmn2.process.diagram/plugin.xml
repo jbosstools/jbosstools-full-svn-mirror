@@ -184,6 +184,15 @@
       </propertyTabs>
    </extension>
 
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="bpmnTabs">
+      <propertyTabs contributorId="org.eclipse.bpmn2.diagram">
+          <propertyTab
+             category="domain"
+             id="property.tab.bpmn"
+             label="BPMN"/>
+      </propertyTabs>
+   </extension>
+
    <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
       <?gmfgen generated="true"?>   
       <propertySections contributorId="org.eclipse.bpmn2.diagram">
@@ -210,7 +219,20 @@
          <propertySection
             id="property.section.domain" 
             tab="property.tab.domain"
-            class="org.jboss.tools.bpmn2.process.diagram.sheet.Bpmn2PropertySection">
+            class="org.jboss.tools.bpmn2.process.diagram.sheet.Bpmn2PropertySectionBis">
+            <input type="org.eclipse.gmf.runtime.notation.View"/>
+            <input type="org.eclipse.gef.EditPart"/>
+            <input type="org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2AbstractNavigatorItem"/>
+         </propertySection>
+      </propertySections>
+   </extension>
+
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="bpmnSection">
+      <propertySections contributorId="org.eclipse.bpmn2.diagram">
+         <propertySection
+            id="property.section.bpmn" 
+            tab="property.tab.bpmn"
+            class="org.jboss.tools.bpmn2.process.diagram.sheet.Bpmn2PropertySectionBis">
             <input type="org.eclipse.gmf.runtime.notation.View"/>
             <input type="org.eclipse.gef.EditPart"/>
             <input type="org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2AbstractNavigatorItem"/>
