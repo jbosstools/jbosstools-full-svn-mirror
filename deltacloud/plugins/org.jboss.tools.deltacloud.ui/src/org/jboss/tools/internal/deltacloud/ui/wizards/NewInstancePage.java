@@ -95,8 +95,6 @@ public class NewInstancePage extends WizardPage {
 	private Text imageText;
 	private Text keyText;
 	private Combo hardware;
-	private Button keyManage;
-	private Button findImageButton;
 	private Combo realmCombo;
 	private ProfileComposite currPage;
 	private Map<String, ProfileComposite> profilePages;
@@ -324,14 +322,7 @@ public class NewInstancePage extends WizardPage {
 		Label imageLabel = new Label(container, SWT.NULL);
 		imageLabel.setText(WizardMessages.getString(IMAGE_LABEL));
 		imageText = new Text(container, SWT.BORDER | SWT.SINGLE);
-
-		Label realmLabel = new Label(container, SWT.NULL);
-		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
-
-		// createRealmsControl(container, getRealmNames(realms));
-		createRealmsControl(container);
-
-		findImageButton = new Button(container, SWT.NULL);
+		Button findImageButton = new Button(container, SWT.NULL);
 		findImageButton.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
 		findImageButton.addSelectionListener(findListener);
 
@@ -339,9 +330,23 @@ public class NewInstancePage extends WizardPage {
 		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
 		arch = new Label(container, SWT.NULL);
 
+		Label realmLabel = new Label(container, SWT.NULL);
+		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
+		// createRealmsControl(container, getRealmNames(realms));
+		createRealmsControl(container);
+
+		Label keyLabel = new Label(container, SWT.NULL);
+		keyLabel.setText(WizardMessages.getString(KEY_LABEL));
+		keyText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		Button keyManageButton = new Button(container, SWT.NULL);
+		keyManageButton.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
+		keyManageButton.addSelectionListener(manageListener);
+		if (cloud.getType().equals(DeltaCloud.MOCK_TYPE)) {
+			keyManageButton.setEnabled(false);
+		}
+
 		Label hardwareLabel = new Label(container, SWT.NULL);
 		hardwareLabel.setText(WizardMessages.getString(HARDWARE_LABEL));
-
 		hardware = new Combo(container, SWT.READ_ONLY);
 		hardware.setEnabled(false);
 		hardware.setItems(new String[] { WizardMessages.getString(LOADING_VALUE) });
@@ -361,12 +366,6 @@ public class NewInstancePage extends WizardPage {
 		FormData dummyData = UIUtils.createFormData(0, 0, 0, 150, null, 0, null, 0);
 		dummyLabel.setLayoutData(dummyData);
 		dummyLabel.setVisible(false);
-
-		keyManage = new Button(container, SWT.NULL);
-		keyManage.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
-		keyManage.addSelectionListener(manageListener);
-		if (cloud.getType().equals(DeltaCloud.MOCK_TYPE))
-			keyManage.setEnabled(false);
 
 		Point p1 = nameLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -388,7 +387,7 @@ public class NewInstancePage extends WizardPage {
 
 		int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
 		Point minSize1 = findImageButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-		Point minSize2 = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+		Point minSize2 = keyManageButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
 		int buttonWidth = Math.max(widthHint, minSize1.x);
 		buttonWidth = Math.max(buttonWidth, minSize2.x);
 
@@ -415,11 +414,6 @@ public class NewInstancePage extends WizardPage {
 
 		Control control = realmCombo;
 
-		Label keyLabel = new Label(container, SWT.NULL);
-		keyLabel.setText(WizardMessages.getString(KEY_LABEL));
-
-		keyText = new Text(container, SWT.BORDER | SWT.SINGLE);
-
 		f = UIUtils.createFormData(realmCombo, 8 + centering + centering2, null, 0, 0, 0, null, 0);
 		keyLabel.setLayoutData(f);
 
@@ -427,9 +421,9 @@ public class NewInstancePage extends WizardPage {
 		f.width = buttonWidth;
 		f.top = new FormAttachment(realmCombo, 8);
 		f.right = new FormAttachment(realmCombo, 0, SWT.RIGHT);
-		keyManage.setLayoutData(f);
+		keyManageButton.setLayoutData(f);
 
-		f = UIUtils.createFormData(realmCombo, 8 + centering2, null, 0, hardwareLabel, 5, keyManage, -10);
+		f = UIUtils.createFormData(realmCombo, 8 + centering2, null, 0, hardwareLabel, 5, keyManageButton, -10);
 		keyText.setLayoutData(f);
 
 		control = keyText;
