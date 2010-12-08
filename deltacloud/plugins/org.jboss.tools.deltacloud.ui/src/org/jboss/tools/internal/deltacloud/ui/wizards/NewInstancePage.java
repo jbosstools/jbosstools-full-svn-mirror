@@ -63,7 +63,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 /**
  * @author Jeff Jonston
  */
-public class NewInstancePage2 extends WizardPage {
+public class NewInstancePage extends WizardPage {
 
 	private static final int IMAGE_CHECK_DELAY = 500;
 
@@ -153,7 +153,7 @@ public class NewInstancePage2 extends WizardPage {
 
 	};
 
-	public NewInstancePage2(DeltaCloud cloud) {
+	public NewInstancePage(DeltaCloud cloud) {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
 		String defaultKeyname = cloud.getLastKeyname();
@@ -501,11 +501,11 @@ public class NewInstancePage2 extends WizardPage {
 
 		private Label archLabel;
 		private NewInstanceModel.ImageContainer container;
-		private NewInstancePage2 page;
+		private NewInstancePage page;
 
 		public ArchAdapter(Label archLabel,
 				NewInstanceModel.ImageContainer container,
-				NewInstancePage2 page) {
+				NewInstancePage page) {
 			this.archLabel = archLabel;
 			this.page = page;
 			this.container = container;
@@ -540,7 +540,7 @@ public class NewInstancePage2 extends WizardPage {
 	 * @return the binding that was created
 	 */
 	private Binding bindArchLabel(DataBindingContext dbc, Text imageText, final Label archLabel,
-			final NewInstancePage2 page) {
+			final NewInstancePage page) {
 		UpdateValueStrategy updateStrategy = new UpdateValueStrategy();
 		NewInstanceModel.ImageContainer c = new NewInstanceModel.ImageContainer();
 		updateStrategy.setConverter(new NewInstanceModel.ArchConverter(cloud, c, String.class, String.class));

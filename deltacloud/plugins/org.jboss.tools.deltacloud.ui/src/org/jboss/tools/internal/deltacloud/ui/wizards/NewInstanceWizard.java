@@ -33,7 +33,7 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.RSEUtils;
 import org.osgi.service.prefs.Preferences;
 
-public class NewInstanceWizard2 extends Wizard {
+public class NewInstanceWizard extends Wizard {
 
 	private final static String CREATE_INSTANCE_FAILURE_TITLE = "CreateInstanceError.title"; //$NON-NLS-1$
 	private final static String CREATE_INSTANCE_FAILURE_MSG = "CreateInstanceError.msg"; //$NON-NLS-1$
@@ -43,7 +43,7 @@ public class NewInstanceWizard2 extends Wizard {
 	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
 
-	protected NewInstancePage2 mainPage;
+	protected NewInstancePage mainPage;
 	protected DeltaCloud cloud;
 	protected DeltaCloudInstance instance;
 	/**
@@ -51,18 +51,18 @@ public class NewInstanceWizard2 extends Wizard {
 	 */
 	private DeltaCloudImage image;
 
-	public NewInstanceWizard2(DeltaCloud cloud) {
+	public NewInstanceWizard(DeltaCloud cloud) {
 		this.cloud = cloud;
 	}
 
-	public NewInstanceWizard2(DeltaCloud cloud, DeltaCloudImage image) {
+	public NewInstanceWizard(DeltaCloud cloud, DeltaCloudImage image) {
 		this(cloud);
 		this.image = image;
 	}
 
 	@Override
 	public void addPages() {
-		mainPage = new NewInstancePage2(cloud);
+		mainPage = new NewInstancePage(cloud);
 		if( image != null )
 			mainPage.setImage(image);
 		addPage(mainPage);
