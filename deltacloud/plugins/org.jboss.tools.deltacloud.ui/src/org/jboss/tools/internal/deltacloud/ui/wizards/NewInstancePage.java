@@ -476,18 +476,30 @@ public class NewInstancePage extends WizardPage {
 	}
 
 	private IObservableValue bindImage(Text imageText, DataBindingContext dbc) {
-		UpdateValueStrategy imageUpdateStrategy = new UpdateValueStrategy();
+		UpdateValueStrategy widgetToModelUpdateStrategy = new UpdateValueStrategy();
 		ImageConverter imageConverter = new ImageConverter();
-		imageUpdateStrategy.setConverter(imageConverter);
-		imageUpdateStrategy.setAfterGetValidator(
+		widgetToModelUpdateStrategy.setConverter(imageConverter);
+		widgetToModelUpdateStrategy.setAfterGetValidator(
 				new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_IMAGE_ID)));
-		imageUpdateStrategy.setAfterConvertValidator(new ImageValidator());
+		widgetToModelUpdateStrategy.setAfterConvertValidator(new ImageValidator());
 
+		UpdateValueStrategy modelToTextUpdateStrategy = new UpdateValueStrategy();
+		modelToTextUpdateStrategy.setConverter(new Converter(DeltaCloudImage.class, String.class) {		
+			@Override
+			public Object convert(Object fromObject) {
+				if (fromObject instanceof DeltaCloudImage) {
+					return ((DeltaCloudImage) fromObject).getName();
+				} else {
+					return "";
+				}
+			}
+		});
+		
 		Binding imageBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(IMAGE_CHECK_DELAY, imageText),
 				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_IMAGE).observe(model),
-				imageUpdateStrategy,
-				null);
+				widgetToModelUpdateStrategy,
+				modelToTextUpdateStrategy);
 		ControlDecorationSupport.create(imageBinding, SWT.LEFT | SWT.TOP);
 		return imageConverter.getImageObservable();
 	}
