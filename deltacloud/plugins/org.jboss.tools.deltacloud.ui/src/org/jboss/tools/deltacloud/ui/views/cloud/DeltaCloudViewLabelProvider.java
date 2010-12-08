@@ -18,14 +18,14 @@ public class DeltaCloudViewLabelProvider extends LabelProvider {
 
 	@Override
 	public Image getImage(Object element) {
-		if (element instanceof CloudViewElement) {
+		if (element instanceof CloudItem) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_CLOUD);
-		} else if (element instanceof CloudElementCategoryViewElement ||
-				element instanceof NumericFoldingViewElement) {
+		} else if (element instanceof CloudElementCategoryItem ||
+				element instanceof NumericFoldingItem) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_FOLDER);
-		} else if (element instanceof InstanceViewElement) {
+		} else if (element instanceof InstanceItem) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_INSTANCE);
-		} else if (element instanceof ImageViewElement) {
+		} else if (element instanceof ImageItem) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_IMAGE);
 		}
 		return null;
@@ -33,7 +33,7 @@ public class DeltaCloudViewLabelProvider extends LabelProvider {
 	
 	@Override
 	public String getText(Object element) {
-		DeltaCloudViewElement e = (DeltaCloudViewElement)element;
+		DeltaCloudViewItem e = (DeltaCloudViewItem)element;
 		return e.getName();
 	}
 

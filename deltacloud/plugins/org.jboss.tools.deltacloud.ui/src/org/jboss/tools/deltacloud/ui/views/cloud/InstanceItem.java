@@ -12,46 +12,37 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.views.cloud.property.InstancePropertySource;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class NumericFoldingViewElement extends DeltaCloudViewElement {
+public class InstanceItem extends DeltaCloudViewItem {
 
-	public static int FOLDING_SIZE = 50;
-	private Object min;
-	private int max;
-
-	protected NumericFoldingViewElement(int min, int max, DeltaCloudViewElement parent, TreeViewer viewer) {
-		super(null, parent, viewer);
-		this.min = min;
-		this.max = max;
+	protected InstanceItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
+		super(model, parent, viewer);
 	}
 
-	@Override
 	public String getName() {
-		return new StringBuilder()
-				.append("[")
-				.append(min)
-				.append("..")
-				.append(max - 1)
-				.append("]").toString();
-	}
+		Object element = getModel();
+		StringBuilder sb = new StringBuilder();
+		if (element instanceof DeltaCloudInstance) {
+			DeltaCloudInstance instance = (DeltaCloudInstance) element;
+			if (instance.getName() != null) {
+				sb.append(instance.getName());
+			}
+			if (instance.getId() != null) {
+				sb.append(" [").append(instance.getId()).append("] ");
+			}
+		}
+		return sb.toString();
 
-	@Override
-	public Object[] getChildren() {
-		return super.getChildren();
-	}
-
-	@Override
-	public boolean hasChildren() {
-		return true;
 	}
 
 	@Override
 	public IPropertySource getPropertySource() {
-		return null;
+		return new InstancePropertySource(this, getModel());
 	}
-
 }

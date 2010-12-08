@@ -23,9 +23,9 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class RootViewElement extends DeltaCloudViewElement implements ICloudManagerListener {
+public class RootItem extends DeltaCloudViewItem implements ICloudManagerListener {
 
-	protected RootViewElement(TreeViewer viewer) {
+	protected RootItem(TreeViewer viewer) {
 		super(DeltaCloudManager.getDefault(), null, viewer); //$NON-NLS-1$
 		DeltaCloudManager.getDefault().addCloudManagerListener(this);
 	}
@@ -64,12 +64,12 @@ public class RootViewElement extends DeltaCloudViewElement implements ICloudMana
 	}
 
 	private void addCloud(DeltaCloud cloud) {
-		CloudViewElement e = new CloudViewElement(cloud, this, viewer);
+		CloudItem e = new CloudItem(cloud, this, viewer);
 		children.add(e);
 	}
 
-	private DeltaCloudViewElement getCloudViewElement(DeltaCloud cloudToMatch) {
-		for (DeltaCloudViewElement cloudElement : children) {
+	private DeltaCloudViewItem getCloudViewElement(DeltaCloud cloudToMatch) {
+		for (DeltaCloudViewItem cloudElement : children) {
 			DeltaCloud cloud = (DeltaCloud) cloudElement.getModel();
 			if (cloudToMatch.equals(cloud)) {
 				return cloudElement;
@@ -86,13 +86,13 @@ public class RootViewElement extends DeltaCloudViewElement implements ICloudMana
 	public void cloudsChanged(int type, DeltaCloud cloud) {
 		switch (type) {
 		case ICloudManagerListener.ADD_EVENT:
-			addChild(new CloudViewElement(cloud, this, viewer));
+			addChild(new CloudItem(cloud, this, viewer));
 			break;
 		case ICloudManagerListener.REMOVE_EVENT:
 			removeChild(getCloudViewElement(cloud));
 			break;
 		case ICloudManagerListener.RENAME_EVENT:
-			DeltaCloudViewElement cloudViewElement = getCloudViewElement(cloud);
+			DeltaCloudViewItem cloudViewElement = getCloudViewElement(cloud);
 			viewer.refresh(cloudViewElement);
 			break;
 		}

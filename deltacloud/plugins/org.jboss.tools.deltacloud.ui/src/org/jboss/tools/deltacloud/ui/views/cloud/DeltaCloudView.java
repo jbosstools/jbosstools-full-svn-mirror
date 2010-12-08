@@ -56,7 +56,7 @@ public class DeltaCloudView extends ViewPart implements ITabbedPropertySheetPage
 		viewer.setContentProvider(new DeltaCloudViewContentProvider());
 		viewer.setLabelProvider(new DeltaCloudViewLabelProvider());
 		viewer.setUseHashlookup(true);
-		viewer.setInput(new RootViewElement(viewer));
+		viewer.setInput(new RootItem(viewer));
 		viewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		getSite().setSelectionProvider(viewer);
 		return viewer;

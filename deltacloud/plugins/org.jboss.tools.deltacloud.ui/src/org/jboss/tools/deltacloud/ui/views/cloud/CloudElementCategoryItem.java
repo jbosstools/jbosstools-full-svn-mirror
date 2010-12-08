@@ -19,9 +19,9 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public abstract class CloudElementCategoryViewElement<CLOUDELEMENT> extends DeltaCloudViewElement {
+public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudViewItem {
 
-	protected CloudElementCategoryViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
+	protected CloudElementCategoryItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
 		super(model, parent, viewer);
 		addCloudElementListener(getCloud());
 	}
@@ -42,13 +42,13 @@ public abstract class CloudElementCategoryViewElement<CLOUDELEMENT> extends Delt
 	}
 
 	protected void setLoadingIndicator() {
-		children.add(new LoadingCloudElementViewElement(this, viewer));
+		children.add(new LoadingItem(this, viewer));
 	}
 
 	protected abstract void asyncGetCloudElements();
 
 	protected void addChildren(Object[] modelElements) {
-		if (modelElements.length > NumericFoldingViewElement.FOLDING_SIZE) {
+		if (modelElements.length > NumericFoldingItem.FOLDING_SIZE) {
 			addFoldedChildren(modelElements);
 		} else {
 			addChildren(getElements(modelElements, 0, modelElements.length));
@@ -57,18 +57,18 @@ public abstract class CloudElementCategoryViewElement<CLOUDELEMENT> extends Delt
 
 	protected void addFoldedChildren(Object[] modelElements) {
 		int min = 0;
-		int max = NumericFoldingViewElement.FOLDING_SIZE;
+		int max = NumericFoldingItem.FOLDING_SIZE;
 		int length = modelElements.length;
-		while (length > NumericFoldingViewElement.FOLDING_SIZE) {
-			NumericFoldingViewElement f = new NumericFoldingViewElement(min, max, this, viewer);
+		while (length > NumericFoldingItem.FOLDING_SIZE) {
+			NumericFoldingItem f = new NumericFoldingItem(min, max, this, viewer);
 			addChild(f);
 			f.addChildren(getElements(modelElements, min, max));
-			min += NumericFoldingViewElement.FOLDING_SIZE;
-			max += NumericFoldingViewElement.FOLDING_SIZE;
-			length -= NumericFoldingViewElement.FOLDING_SIZE;
+			min += NumericFoldingItem.FOLDING_SIZE;
+			max += NumericFoldingItem.FOLDING_SIZE;
+			length -= NumericFoldingItem.FOLDING_SIZE;
 		}
 		if (length > 0) {
-			NumericFoldingViewElement f = new NumericFoldingViewElement(min, max, this, viewer);
+			NumericFoldingItem f = new NumericFoldingItem(min, max, this, viewer);
 			addChild(f);
 			f.addChildren(getElements(modelElements, min, min + length));
 		}
@@ -88,7 +88,7 @@ public abstract class CloudElementCategoryViewElement<CLOUDELEMENT> extends Delt
 
 	protected abstract CLOUDELEMENT[] filter(CLOUDELEMENT[] cloudElements)  throws DeltaCloudException;
 	
-	protected abstract DeltaCloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex);
+	protected abstract DeltaCloudViewItem[] getElements(Object[] modelElements, int startIndex, int stopIndex);
 
 	@Override
 	public IPropertySource getPropertySource() {

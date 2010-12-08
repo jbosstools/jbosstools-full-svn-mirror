@@ -17,9 +17,9 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * A tree element that shows the user that the tree is currently loading
  * elements
  */
-public class LoadingCloudElementViewElement extends DeltaCloudViewElement {
+public class LoadingItem extends DeltaCloudViewItem {
 
-	protected LoadingCloudElementViewElement(DeltaCloudViewElement parent, TreeViewer viewer) {
+	protected LoadingItem(DeltaCloudViewItem parent, TreeViewer viewer) {
 		super(null, parent, viewer);
 	}
 

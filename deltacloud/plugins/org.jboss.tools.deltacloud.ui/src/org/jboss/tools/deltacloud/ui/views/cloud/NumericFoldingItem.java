@@ -12,30 +12,46 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
-import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.ui.views.cloud.property.ImagePropertySource;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class ImageViewElement extends DeltaCloudViewElement {
+public class NumericFoldingItem extends DeltaCloudViewItem {
 
-	protected ImageViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
-		super(model, parent, viewer);
+	public static int FOLDING_SIZE = 50;
+	private Object min;
+	private int max;
+
+	protected NumericFoldingItem(int min, int max, DeltaCloudViewItem parent, TreeViewer viewer) {
+		super(null, parent, viewer);
+		this.min = min;
+		this.max = max;
 	}
-	
+
+	@Override
 	public String getName() {
-		Object element = getModel();
-		if (element instanceof DeltaCloudImage) {
-			return ((DeltaCloudImage) element).getName();
-		} else {
-			return "";
-		}
+		return new StringBuilder()
+				.append("[")
+				.append(min)
+				.append("..")
+				.append(max - 1)
+				.append("]").toString();
 	}
-	
+
+	@Override
+	public Object[] getChildren() {
+		return super.getChildren();
+	}
+
+	@Override
+	public boolean hasChildren() {
+		return true;
+	}
+
 	@Override
 	public IPropertySource getPropertySource() {
-		return new ImagePropertySource(getModel());
+		return null;
 	}
+
 }

@@ -38,8 +38,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement;
-import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.CloudItem;
+import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem;
 
 /**
  * @author Andre Dietisheim
@@ -132,8 +132,8 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		DeltaCloud deltaCloud = null;
 		if (selectedElements.size() > 0) {
 			Object object = selectedElements.get(0);
-			if (object instanceof CloudViewElement) {
-				Object element = ((CloudViewElement) object).getModel();
+			if (object instanceof CloudItem) {
+				Object element = ((CloudItem) object).getModel();
 				if (element instanceof DeltaCloud) {
 					deltaCloud = (DeltaCloud) element;
 				}
@@ -154,11 +154,11 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 	}
 
 	private DeltaCloud getDeltaCloud(Object item) {
-		if (!(item instanceof DeltaCloudViewElement)) {
+		if (!(item instanceof DeltaCloudViewItem)) {
 			return null;
 		}
 
-		DeltaCloud cloud = getDeltaCloud((DeltaCloudViewElement) item);
+		DeltaCloud cloud = getDeltaCloud((DeltaCloudViewItem) item);
 
 		if (cloud == null) {
 			return null;
@@ -166,7 +166,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		return cloud;
 	}
 
-	private DeltaCloud getDeltaCloud(DeltaCloudViewElement element) {
+	private DeltaCloud getDeltaCloud(DeltaCloudViewItem element) {
 		if (element == null) {
 			return null;
 		}
@@ -175,7 +175,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 			return (DeltaCloud) cloud;
 		}
 
-		return getDeltaCloud((DeltaCloudViewElement) element.getParent());
+		return getDeltaCloud((DeltaCloudViewItem) element.getParent());
 	}
 
 	private void removeDeltaClouds(Object[] deltaClouds) throws DeltaCloudException {

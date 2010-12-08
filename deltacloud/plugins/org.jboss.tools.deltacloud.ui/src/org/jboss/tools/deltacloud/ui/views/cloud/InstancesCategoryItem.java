@@ -26,11 +26,11 @@ import org.jboss.tools.deltacloud.ui.views.CVMessages;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class InstancesCategoryViewElement extends CloudElementCategoryViewElement<DeltaCloudInstance> implements IInstanceListListener {
+public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudInstance> implements IInstanceListListener {
 
 	private static final String INSTANCE_CATEGORY_NAME = "InstanceCategoryName"; //$NON-NLS-1$
 
-	protected InstancesCategoryViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
+	protected InstancesCategoryItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
 		super(model, parent, viewer);
 	}
 
@@ -57,10 +57,10 @@ public class InstancesCategoryViewElement extends CloudElementCategoryViewElemen
 	}
 
 	@Override
-	protected DeltaCloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
-		DeltaCloudViewElement[] elements = new DeltaCloudViewElement[stopIndex - startIndex];
+	protected DeltaCloudViewItem[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
+		DeltaCloudViewItem[] elements = new DeltaCloudViewItem[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new InstanceViewElement(modelElements[i], this, viewer);
+			elements[i - startIndex] = new InstanceItem(modelElements[i], this, viewer);
 		}
 		return elements;
 	}

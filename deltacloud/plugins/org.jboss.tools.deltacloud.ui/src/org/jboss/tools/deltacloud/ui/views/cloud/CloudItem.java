@@ -19,11 +19,11 @@ import org.jboss.tools.deltacloud.ui.views.cloud.property.CloudPropertySource;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CloudViewElement extends DeltaCloudViewElement {
+public class CloudItem extends DeltaCloudViewItem {
 
 	private TreeViewer viewer;
 
-	protected CloudViewElement(Object element, DeltaCloudViewElement parent, TreeViewer viewer) {
+	protected CloudItem(Object element, DeltaCloudViewItem parent, TreeViewer viewer) {
 		super(element, parent, viewer);
 		this.viewer = viewer;
 	}
@@ -46,8 +46,8 @@ public class CloudViewElement extends DeltaCloudViewElement {
 	public synchronized Object[] getChildren() {
 		if (!initialized.get()) {
 			DeltaCloud cloud = (DeltaCloud) getModel();
-			children.add(new InstancesCategoryViewElement(cloud, this, viewer));
-			children.add(new ImagesCategoryViewElement(cloud, this, viewer));
+			children.add(new InstancesCategoryItem(cloud, this, viewer));
+			children.add(new ImagesCategoryItem(cloud, this, viewer));
 		}
 		initialized.set(true);
 		return super.getChildren();

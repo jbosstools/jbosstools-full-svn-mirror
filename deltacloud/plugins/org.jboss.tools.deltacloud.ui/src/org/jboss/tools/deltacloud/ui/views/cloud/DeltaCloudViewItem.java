@@ -28,16 +28,16 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public abstract class DeltaCloudViewElement implements IAdaptable {
+public abstract class DeltaCloudViewItem implements IAdaptable {
 
 	private Object model;
-	private DeltaCloudViewElement parent;
-	protected List<DeltaCloudViewElement> children =
-			Collections.synchronizedList(new ArrayList<DeltaCloudViewElement>());
+	private DeltaCloudViewItem parent;
+	protected List<DeltaCloudViewItem> children =
+			Collections.synchronizedList(new ArrayList<DeltaCloudViewItem>());
 	protected TreeViewer viewer;
 	protected AtomicBoolean initialized = new AtomicBoolean();
 
-	protected DeltaCloudViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
+	protected DeltaCloudViewItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
 		this.model = model;
 		this.parent = parent;
 		this.viewer = viewer;
@@ -56,7 +56,7 @@ public abstract class DeltaCloudViewElement implements IAdaptable {
 			@Override
 			public void run() {
 				// viewer.getTree().setRedraw(false);
-				for (final DeltaCloudViewElement element : children) {
+				for (final DeltaCloudViewItem element : children) {
 					viewer.remove(element);
 				}
 				// viewer.getTree().setRedraw(true);
@@ -73,38 +73,38 @@ public abstract class DeltaCloudViewElement implements IAdaptable {
 		return parent;
 	}
 
-	public void addChild(final DeltaCloudViewElement element) {
+	public void addChild(final DeltaCloudViewItem element) {
 		children.add(element);
 
 		getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				viewer.add(DeltaCloudViewElement.this, element);
+				viewer.add(DeltaCloudViewItem.this, element);
 			}
 		});
 	}
 
-	public void addChildren(final DeltaCloudViewElement[] elements) {
-		for (DeltaCloudViewElement element : elements) {
+	public void addChildren(final DeltaCloudViewItem[] elements) {
+		for (DeltaCloudViewItem element : elements) {
 			children.add(element);
 		}
 
 		getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				viewer.add(DeltaCloudViewElement.this, elements);
+				viewer.add(DeltaCloudViewItem.this, elements);
 			}
 		});
 	}
 
-	public void removeChild(final DeltaCloudViewElement element) {
+	public void removeChild(final DeltaCloudViewItem element) {
 
 		getDisplay().asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (element != null) {
 					int index = children.indexOf(element);
-					viewer.remove(DeltaCloudViewElement.this, index);
+					viewer.remove(DeltaCloudViewItem.this, index);
 				}
 			}
 		});
@@ -115,7 +115,7 @@ public abstract class DeltaCloudViewElement implements IAdaptable {
 
 			@Override
 			public void run() {
-				viewer.setExpandedState(DeltaCloudViewElement.this, true);
+				viewer.setExpandedState(DeltaCloudViewItem.this, true);
 			}
 		});
 	}

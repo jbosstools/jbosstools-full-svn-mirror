@@ -21,8 +21,8 @@ import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.ui.views.cloud.CloudViewElement;
-import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.CloudItem;
+import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnectionWizard;
 
@@ -35,12 +35,12 @@ public class EditConnectionHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudViewElement element = UIUtils.getFirstAdaptedElement(selection, DeltaCloudViewElement.class);
-			while (element != null && !(element instanceof CloudViewElement)) {
-				element = (DeltaCloudViewElement) element.getParent();
+			DeltaCloudViewItem element = UIUtils.getFirstAdaptedElement(selection, DeltaCloudViewItem.class);
+			while (element != null && !(element instanceof CloudItem)) {
+				element = (DeltaCloudViewItem) element.getParent();
 			}
 			if (element != null) {
-				CloudViewElement cloudElement = (CloudViewElement) element;
+				CloudItem cloudElement = (CloudItem) element;
 				DeltaCloud cloud = (DeltaCloud) cloudElement.getModel();
 				IWizard wizard = new EditCloudConnectionWizard(cloud);
 				WizardDialog dialog = new WizardDialog(UIUtils.getActiveWorkbenchWindow().getShell(), wizard);

@@ -65,7 +65,7 @@
                id="org.jboss.tools.deltacloud.ui.propertySection.advanced"
                tab="cloudview.advancedTab">
             <input
-                  type="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement">
+                  type="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
             </input>
          </propertySection>
       </propertySections>
@@ -116,7 +116,7 @@
 	                 variable="selection">
 				        <iterate>
 					           <instanceof
-					                 value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement">
+					                 value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
 					           </instanceof>
 				        </iterate>
                </with>
@@ -136,7 +136,7 @@
                      variable="selection">
 					<iterate>
 	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement">
+	                	     value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
 	               		</instanceof>
 	               	</iterate>
                </with>
@@ -158,7 +158,7 @@
 						<count value="+" />
 						<iterate>
 		               		<instanceof
-		                		value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement">
+		                		value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
 		               		</instanceof>
 		               	</iterate>
 		            </and>
@@ -299,7 +299,7 @@
 	                     variable="selection">
 						<iterate>
 		               		<instanceof
-		                	     value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement">
+		                	     value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
 		               		</instanceof>
 		               	</iterate>
 	               </with>
@@ -675,7 +675,7 @@
                      variable="selection">
 					<iterate>
 	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.cloud.ImageViewElement">
+	                	     value="org.jboss.tools.deltacloud.ui.views.cloud.ImageItem">
 	               		</instanceof>
 	               	</iterate>
                </with>
@@ -699,11 +699,11 @@
 					<iterate>
 				        <and>
 				           <instanceof
-				                 value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement">
+				                 value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
 				           </instanceof>
 				           <not>
 				              <instanceof
-				                    value="org.jboss.tools.deltacloud.ui.views.cloud.ImageViewElement">
+				                    value="org.jboss.tools.deltacloud.ui.views.cloud.ImageItem">
 				              </instanceof>
 				           </not>
 				        </and>
@@ -870,7 +870,7 @@
   <extension
         point="org.eclipse.core.runtime.adapters">
      <factory
-           adaptableType="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement"
+           adaptableType="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem"
            class="org.jboss.tools.deltacloud.ui.adapter.CloudViewElementAdapterFactory">
         <adapter
               type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">

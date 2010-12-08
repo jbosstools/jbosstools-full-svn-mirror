@@ -25,7 +25,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
-import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElement;
+import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -38,14 +38,14 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudViewElement cloudViewElement = UIUtils.getFirstAdaptedElement(selection, DeltaCloudViewElement.class);
+			DeltaCloudViewItem cloudViewElement = UIUtils.getFirstAdaptedElement(selection, DeltaCloudViewItem.class);
 			refresh(cloudViewElement);
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void refresh(final DeltaCloudViewElement cloudViewElement) {
+	private void refresh(final DeltaCloudViewItem cloudViewElement) {
 		if (cloudViewElement != null) {
 			final DeltaCloud cloud = CloudViewElementUtils.getCloud(cloudViewElement);
 			if (cloud != null) {

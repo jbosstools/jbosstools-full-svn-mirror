@@ -26,11 +26,11 @@ import org.jboss.tools.deltacloud.ui.views.CVMessages;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class ImagesCategoryViewElement extends CloudElementCategoryViewElement<DeltaCloudImage> implements IImageListListener {
+public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage> implements IImageListListener {
 
 	private static final String IMAGE_CATEGORY_NAME = "ImageCategoryName"; //$NON-NLS-1$
 
-	protected ImagesCategoryViewElement(Object model, DeltaCloudViewElement parent, TreeViewer viewer) {
+	protected ImagesCategoryItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
 		super(model, parent, viewer);
 	}
 
@@ -57,10 +57,10 @@ public class ImagesCategoryViewElement extends CloudElementCategoryViewElement<D
 	}
 
 	@Override
-	protected DeltaCloudViewElement[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
-		DeltaCloudViewElement[] elements = new DeltaCloudViewElement[stopIndex - startIndex];
+	protected DeltaCloudViewItem[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
+		DeltaCloudViewItem[] elements = new DeltaCloudViewItem[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new ImageViewElement(modelElements[i], this, viewer);
+			elements[i - startIndex] = new ImageItem(modelElements[i], this, viewer);
 		}
 		return elements;
 	}
