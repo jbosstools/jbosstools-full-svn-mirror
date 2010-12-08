@@ -96,7 +96,7 @@ public class NewInstancePage extends WizardPage {
 	private Text keyText;
 	private Combo hardware;
 	private Button keyManage;
-	private Button findImage;
+	private Button findImageButton;
 	private Combo realmCombo;
 	private ProfileComposite currPage;
 	private Map<String, ProfileComposite> profilePages;
@@ -331,9 +331,9 @@ public class NewInstancePage extends WizardPage {
 		// createRealmsControl(container, getRealmNames(realms));
 		createRealmsControl(container);
 
-		findImage = new Button(container, SWT.NULL);
-		findImage.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
-		findImage.addSelectionListener(findListener);
+		findImageButton = new Button(container, SWT.NULL);
+		findImageButton.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
+		findImageButton.addSelectionListener(findListener);
 
 		Label archLabel = new Label(container, SWT.NULL);
 		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
@@ -370,7 +370,7 @@ public class NewInstancePage extends WizardPage {
 
 		Point p1 = nameLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point p3 = findImage.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		Point p3 = findImageButton.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		int centering = (p2.y - p1.y + 1) / 2;
 		int centering2 = (p3.y - p2.y + 1) / 2;
 
@@ -387,7 +387,7 @@ public class NewInstancePage extends WizardPage {
 		imageLabel.setLayoutData(f);
 
 		int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-		Point minSize1 = findImage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+		Point minSize1 = findImageButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
 		Point minSize2 = keyManage.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
 		int buttonWidth = Math.max(widthHint, minSize1.x);
 		buttonWidth = Math.max(buttonWidth, minSize2.x);
@@ -396,9 +396,9 @@ public class NewInstancePage extends WizardPage {
 		f.top = new FormAttachment(nameText, 8);
 		f.right = new FormAttachment(realmCombo, 0, SWT.RIGHT);
 		f.width = buttonWidth;
-		findImage.setLayoutData(f);
+		findImageButton.setLayoutData(f);
 
-		f = UIUtils.createFormData(nameText, 8 + centering2, null, 0, hardwareLabel, 5, findImage, -10);
+		f = UIUtils.createFormData(nameText, 8 + centering2, null, 0, hardwareLabel, 5, findImageButton, -10);
 		imageText.setLayoutData(f);
 
 		f = UIUtils.createFormData(imageLabel, 8 + centering, null, 0, 0, 0, null, 0);
