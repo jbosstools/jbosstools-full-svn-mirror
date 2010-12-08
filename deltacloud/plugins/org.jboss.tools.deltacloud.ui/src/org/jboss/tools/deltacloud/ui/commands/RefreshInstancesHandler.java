@@ -20,10 +20,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jboss.tools.deltacloud.core.AbstractCloudJob;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
@@ -47,7 +47,7 @@ public class RefreshInstancesHandler extends AbstractHandler implements IHandler
 			final DeltaCloud cloud = deltaCloudInstance.getDeltaCloud();
 			if (cloud != null) {
 				// TODO: internationalize strings
-				new AbstractCloudJob("Refreshing instances on cloud " + cloud.getName()) {
+				new AbstractCloudJob("Refreshing instances on cloud " + cloud.getName(), cloud) {
 
 					@Override
 					protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
