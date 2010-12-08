@@ -49,6 +49,7 @@ import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudView;
 import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -87,8 +88,6 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 				return;
 			}
 
-//			removeListener(currentCloud);
-
 			AbstractCloudElementTableView.this.currentCloud = getCurrentCloud(index, getClouds());
 			if (currentCloud != null) {
 				lastSelectedCloudPref.store(currentCloud.getName());
@@ -97,7 +96,6 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 					@Override
 					public void run() {
 						setViewerInput(currentCloud);
-//						addListener(currentCloud);
 					}
 				});
 			}
@@ -108,21 +106,15 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 		@Override
 		public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
-			if (cloud != null) {
-				currentCloudSelector.select(getCloudIndex(cloud, getClouds()));
+			if (DeltaCloudView.class.equals(part.getClass())) {
+				// we want to listen to selection changes in the deltacloud view only
+				DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+				if (cloud != null) {
+					currentCloudSelector.select(getCloudIndex(cloud, getClouds()));
+				}
 			}
 		}
 	};
-
-//	private Job viewerInputJob = new Job("") {
-//
-//		@Override
-//		protected IStatus run(IProgressMonitor monitor) {
-//
-//			return Status.OK_STATUS;
-//		}
-//	};
 
 	public AbstractCloudElementTableView() {
 		lastSelectedCloudPref = new TextPreferenceValue(getSelectedCloudPrefsKey(), Activator.getDefault());
@@ -181,7 +173,6 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 		currentCloud = getCurrentCloud(currentCloudSelector.getSelectionIndex(), clouds);
 
-//		addListener(currentCloud);
 		setViewerInput(currentCloud);
 		setFilterLabelVisible(currentCloud, filterLabel);
 
