@@ -103,7 +103,6 @@ public class NewInstancePage extends WizardPage {
 	private DeltaCloudHardwareProfile[] allProfiles;
 	private List<DeltaCloudRealm> realms;
 
-	private Label imageLabel, archLabel, nameLabel, realmLabel;
 	private Group groupContainer;
 
 	private ModifyListener comboListener = new ModifyListener() {
@@ -317,29 +316,27 @@ public class NewInstancePage extends WizardPage {
 		container.setLayout(layout);
 
 		Label dummyLabel = new Label(container, SWT.NULL);
-		imageLabel = new Label(container, SWT.NULL);
-		imageLabel.setText(WizardMessages.getString(IMAGE_LABEL));
 
-		archLabel = new Label(container, SWT.NULL);
-		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
-
-		nameLabel = new Label(container, SWT.NULL);
+		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
-
-		realmLabel = new Label(container, SWT.NULL);
-		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
-
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
+
+		Label imageLabel = new Label(container, SWT.NULL);
+		imageLabel.setText(WizardMessages.getString(IMAGE_LABEL));
+		imageText = new Text(container, SWT.BORDER | SWT.SINGLE);
+
+		Label realmLabel = new Label(container, SWT.NULL);
+		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
 
 		// createRealmsControl(container, getRealmNames(realms));
 		createRealmsControl(container);
-
-		imageText = new Text(container, SWT.BORDER | SWT.SINGLE);
 
 		findImage = new Button(container, SWT.NULL);
 		findImage.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
 		findImage.addSelectionListener(findListener);
 
+		Label archLabel = new Label(container, SWT.NULL);
+		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
 		arch = new Label(container, SWT.NULL);
 
 		Label hardwareLabel = new Label(container, SWT.NULL);

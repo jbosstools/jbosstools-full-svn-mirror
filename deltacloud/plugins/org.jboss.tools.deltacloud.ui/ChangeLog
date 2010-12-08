@@ -1,5 +1,7 @@
 2010-12-08  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (createWidgets): 
+	[JBIDE-7836] corrected tab order (bad widget creation order)
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImageWizard.java: 
 	renamed FindImage to FindImageWizard since it is a wizard
 
