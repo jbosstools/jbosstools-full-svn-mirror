@@ -13,7 +13,8 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.apache.http.client.methods;x-friends:="org.jboss.tools.deltacloud.test",
  org.jboss.tools.deltacloud.core;x-friends:="org.jboss.tools.deltacloud.ui,org.jboss.tools.deltacloud.test",
  org.jboss.tools.deltacloud.core.client;x-friends:="org.jboss.tools.deltacloud.test,org.jboss.tools.deltacloud.ui",
- org.jboss.tools.deltacloud.core.client.request;x-friends:="org.jboss.tools.deltacloud.test"
+ org.jboss.tools.deltacloud.core.client.request;x-friends:="org.jboss.tools.deltacloud.test",
+ org.jboss.tools.deltacloud.core.job
 Bundle-ClassPath: .,
  lib/apache-mime4j-0.6.jar,
  lib/commons-codec-1.3.jar,

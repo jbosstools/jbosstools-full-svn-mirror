@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 
 /**
  * @author Andre Dietisheim
@@ -28,7 +29,7 @@ public class GetImagesCommand extends AbstractDeltaCloudCommand {
 	public void execute() {
 		// TODO: internationalize strings
 		new AbstractCloudJob(
-				MessageFormat.format("Get images from cloud {0}", getCloud().getName())) {
+				MessageFormat.format("Get images from cloud {0}", getCloud().getName()), getCloud()) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {

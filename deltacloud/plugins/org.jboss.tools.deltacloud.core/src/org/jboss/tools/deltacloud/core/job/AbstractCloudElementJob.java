@@ -8,38 +8,34 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core;
-
-import java.text.MessageFormat;
+package org.jboss.tools.deltacloud.core.job;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.jobs.Job;
-import org.jboss.tools.common.log.StatusFactory;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 
 /**
  * @author André Dietisheim
  */
-public abstract class AbstractCloudJob extends Job {
+public abstract class AbstractCloudElementJob extends AbstractCloudJob {
 
-	public AbstractCloudJob(String name) {
-		super(name);
-		// setUser(true);
+	public static enum CLOUDELEMENT {
+		IMAGES, INSTANCES
 	}
 
-	@Override
-	protected IStatus run(IProgressMonitor monitor) {
-		monitor.beginTask(getName(), IProgressMonitor.UNKNOWN);
-		monitor.worked(1);
-		try {
-			return doRun(monitor);
-		} catch (Exception e) {
-			// TODO: internationalize strings
-			return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-					MessageFormat.format("Could not {0}", getName()));
-		}
+	private CLOUDELEMENT cloudElement;
+
+	public AbstractCloudElementJob(String name, DeltaCloud cloud, CLOUDELEMENT cloudElement) {
+		super(name, cloud);
+		this.cloudElement = cloudElement;
+		// setUser(true);
 	}
 
 	protected abstract IStatus doRun(IProgressMonitor monitor) throws Exception;
 
+	@Override
+	protected ISchedulingRule getSchedulingRule() {
+		return new CloudElementSchedulingRule(getCloud(), cloudElement);
+	}
 }
