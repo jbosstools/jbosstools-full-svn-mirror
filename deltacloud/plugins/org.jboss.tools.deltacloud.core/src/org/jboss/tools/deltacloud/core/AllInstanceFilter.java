@@ -27,9 +27,15 @@ public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInst
 		// ignore, never set the rules for this filter
 	}
 
+	
 	@Override
-	public String toString() {
-		return ALL_STRING;
+	public IFieldMatcher getNameRule() {
+		return matcher;
+	}
+
+	@Override
+	public IFieldMatcher getIdRule() {
+		return matcher;
 	}
 
 	@Override
@@ -55,5 +61,10 @@ public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInst
 	@Override
 	public IFieldMatcher getRealmRule() {
 		return matcher;
+	}
+
+	@Override
+	public String toString() {
+		return ALL_STRING;
 	}
 }

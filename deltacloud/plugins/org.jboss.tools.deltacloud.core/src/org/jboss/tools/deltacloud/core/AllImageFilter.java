@@ -36,10 +36,15 @@ public class AllImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> 
 	public void setRules(String ruleString) {
 		// ignore, never set the rules for this filter
 	}
-	
+
 	@Override
-	public String toString() {
-		return ALL_STRING;
+	public IFieldMatcher getNameRule() {
+		return matcher;
+	}
+
+	@Override
+	public IFieldMatcher getIdRule() {
+		return matcher;
 	}
 
 	public IFieldMatcher getArchRule() {
@@ -50,4 +55,8 @@ public class AllImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> 
 		return matcher;
 	}
 
+	@Override
+	public String toString() {
+		return ALL_STRING;
+	}
 }
