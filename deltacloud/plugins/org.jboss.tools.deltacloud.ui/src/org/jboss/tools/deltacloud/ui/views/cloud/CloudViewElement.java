@@ -46,17 +46,11 @@ public class CloudViewElement extends DeltaCloudViewElement {
 	public synchronized Object[] getChildren() {
 		if (!initialized.get()) {
 			DeltaCloud cloud = (DeltaCloud) getModel();
-			CloudElementCategoryViewElement instances = new InstancesCategoryViewElement(cloud, this, viewer);
-			addCategory(instances);
-			CloudElementCategoryViewElement images = new ImagesCategoryViewElement(cloud, this, viewer);
-			addCategory(images);
+			children.add(new InstancesCategoryViewElement(cloud, this, viewer));
+			children.add(new ImagesCategoryViewElement(cloud, this, viewer));
 		}
 		initialized.set(true);
 		return super.getChildren();
-	}
-
-	private void addCategory(CloudElementCategoryViewElement categoryElement) {
-		children.add(categoryElement);
 	}
 
 	@Override
