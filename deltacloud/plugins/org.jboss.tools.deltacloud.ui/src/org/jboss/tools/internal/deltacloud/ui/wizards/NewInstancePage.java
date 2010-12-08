@@ -21,9 +21,14 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.databinding.validation.IValidator;
+import org.eclipse.core.databinding.validation.ValidationStatus;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -85,6 +90,7 @@ public class NewInstancePage extends WizardPage {
 	private static final String MUST_ENTER_IMAGE_ID = "ErrorMustProvideImageId.text"; //$NON-NLS-1$	
 	private static final String NONE_RESPONSE = "None.response"; //$NON-NLS-1$
 	private static final String LOADING_VALUE = "Loading.value"; //$NON-NLS-1$
+	private static final String IMAGE_ID_NOT_FOUND = "ErrorImageIdNotFound.text"; //$NON-NLS-1$
 
 	private NewInstanceModel model;
 
@@ -134,18 +140,18 @@ public class NewInstancePage extends WizardPage {
 
 	};
 
-	private SelectionListener findListener = new SelectionAdapter() {
+	private SelectionListener findImageButtonListener = new SelectionAdapter() {
 
 		public void widgetSelected(SelectionEvent event) {
 			Shell shell = getShell();
 			FindImageWizard wizard = new FindImageWizard(cloud);
-			WizardDialog dialog = new CustomWizardDialog(shell, wizard,
-					IDialogConstants.OK_LABEL);
+			WizardDialog dialog = new CustomWizardDialog(shell, wizard, IDialogConstants.OK_LABEL);
 			dialog.create();
 			dialog.open();
 			String imageId = wizard.getImageId();
-			if (imageId != null)
+			if (imageId != null) {
 				imageText.setText(imageId);
+			}
 		}
 
 	};
@@ -154,11 +160,7 @@ public class NewInstancePage extends WizardPage {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
 		String defaultKeyname = cloud.getLastKeyname();
-		model = new NewInstanceModel("", //$NON-NLS-1$ 
-				"", //$NON-NLS-1$
-				"", //$NON-NLS-1$
-				"", //$NON-NLS-1$
-				defaultKeyname, ""); //$NON-NLS-1$
+		model = new NewInstanceModel(defaultKeyname); //$NON-NLS-1$
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -261,49 +263,28 @@ public class NewInstancePage extends WizardPage {
 	public void createControl(Composite parent) {
 		DataBindingContext dbc = new DataBindingContext();
 		WizardPageSupport.create(this, dbc);
-		Composite container = createWidgets(parent);
+		Composite control = createWidgets(parent);
 		bindWidgets(dbc);
 
 		launchFetchRealms();
 		launchFetchProfiles();
 
-		// We have to set the image id here instead of in the constructor
-		// of the model because the image id triggers other items to fill
-		// in their values such as the architecture and hardware profiles.
-		String defaultImage = cloud.getLastImageId();
-		model.setImageId(defaultImage);
-		setControl(container);
+		// We have to set the imageObservable id here instead of in the
+		// constructor of the model because the imageObservable id triggers
+		// other items to fill in their values such as the architecture 
+		// and hardware profiles.
+		try {
+			model.setImage(cloud.getLastImage());
+		} catch (DeltaCloudException e) {
+			// ignore
+		}
+		setControl(control);
 
-		// lastly, if there's already an image set, use it
+		// lastly, if there's already an imageObservable set, use it
 		if (image != null) {
 			imageText.setText(image.getId());
 			filterProfiles();
 		}
-	}
-
-	private void bindWidgets(DataBindingContext dbc) {
-		bindText(dbc, nameText, NewInstanceModel.PROPERTY_NAME, MUST_ENTER_A_NAME);
-		dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(IMAGE_CHECK_DELAY, imageText),
-				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_IMAGE_ID)
-						.observe(model),
-				new UpdateValueStrategy().setAfterGetValidator(new MandatoryStringValidator(
-						WizardMessages.getString(MUST_ENTER_IMAGE_ID))),
-				null);
-		bindArchLabel(dbc, imageText, arch, this);
-
-		IObservableValue realmObservable = WidgetProperties.text().observe(realmCombo);
-		dbc.bindValue(
-				realmObservable,
-				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_REALM).observe(
-						model));
-
-		IObservableValue hardwareObservable = WidgetProperties.text().observe(hardware);
-		dbc.bindValue(
-				hardwareObservable,
-				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_PROFILE).observe(
-						model));
-		bindText(dbc, keyText, NewInstanceModel.PROPERTY_KEYNAME, MUST_ENTER_A_KEYNAME);
 	}
 
 	private Composite createWidgets(Composite parent) {
@@ -324,7 +305,7 @@ public class NewInstancePage extends WizardPage {
 		imageText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		Button findImageButton = new Button(container, SWT.NULL);
 		findImageButton.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
-		findImageButton.addSelectionListener(findListener);
+		findImageButton.addSelectionListener(findImageButtonListener);
 
 		Label archLabel = new Label(container, SWT.NULL);
 		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
@@ -448,6 +429,112 @@ public class NewInstancePage extends WizardPage {
 		groupContainer.layout();
 	}
 
+	private void bindWidgets(DataBindingContext dbc) {
+
+		bindText(nameText, NewInstanceModel.PROPERTY_NAME, WizardMessages.getString(MUST_ENTER_A_NAME), dbc);
+		IObservableValue imageObservable = bindImage(imageText, dbc);
+
+		// arch label
+		imageObservable.addValueChangeListener(new IValueChangeListener() {
+			@Override
+			public void handleValueChange(ValueChangeEvent event) {
+				DeltaCloudImage image = (DeltaCloudImage) event.diff.getNewValue();
+				if (image != null) {
+					arch.setText(image.getArchitecture());
+				} else {
+					arch.setText("");
+				}
+			}
+		});
+
+		// realms
+		IObservableValue realmObservable = WidgetProperties.text().observe(realmCombo);
+		dbc.bindValue(
+				realmObservable,
+				BeanProperties.value(
+						NewInstanceModel.class, NewInstanceModel.PROPERTY_REALM).observe(model));
+
+		// hardware
+		IObservableValue hardwareObservable = WidgetProperties.text().observe(hardware);
+		dbc.bindValue(
+				hardwareObservable,
+				BeanProperties.value(
+						NewInstanceModel.class, NewInstanceModel.PROPERTY_PROFILE).observe(model));
+
+		// key
+		bindText(keyText, NewInstanceModel.PROPERTY_KEYNAME, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
+	}
+
+	private void bindText(Text text, String property, String errorMessage, DataBindingContext dbc) {
+		Binding textBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observe(text),
+				BeanProperties.value(NewInstanceModel.class, property).observe(model),
+				new UpdateValueStrategy().setBeforeSetValidator(
+						new MandatoryStringValidator(errorMessage)),
+				null);
+		ControlDecorationSupport.create(textBinding, SWT.LEFT | SWT.TOP);
+	}
+
+	private IObservableValue bindImage(Text imageText, DataBindingContext dbc) {
+		UpdateValueStrategy imageUpdateStrategy = new UpdateValueStrategy();
+		ImageConverter imageConverter = new ImageConverter();
+		imageUpdateStrategy.setConverter(imageConverter);
+		imageUpdateStrategy.setAfterGetValidator(
+				new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_IMAGE_ID)));
+		imageUpdateStrategy.setAfterConvertValidator(new ImageValidator());
+
+		Binding imageBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observeDelayed(IMAGE_CHECK_DELAY, imageText),
+				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_IMAGE).observe(model),
+				imageUpdateStrategy,
+				null);
+		ControlDecorationSupport.create(imageBinding, SWT.LEFT | SWT.TOP);
+		return imageConverter.getImageObservable();
+	}
+
+	private class ImageValidator implements IValidator {
+
+		@Override
+		public IStatus validate(Object value) {
+			if (value instanceof DeltaCloudImage) {
+				return ValidationStatus.ok();
+			} else {
+				return ValidationStatus.error(WizardMessages.getFormattedString(
+						IMAGE_ID_NOT_FOUND, imageText.getText()));
+			}
+		}
+	}
+
+	private class ImageConverter extends Converter {
+
+		private WritableValue imageObservable = new WritableValue();
+
+		public ImageConverter() {
+			super(String.class, DeltaCloudImage.class);
+		}
+
+		@Override
+		public Object convert(Object fromObject) {
+			Assert.isLegal(fromObject instanceof String);
+			String id = (String) fromObject;
+			DeltaCloudImage image = getImage(id);
+			imageObservable.setValue(image);
+			return image;
+		}
+
+		private DeltaCloudImage getImage(String id) {
+			try {
+				return cloud.getImage(id);
+			} catch (DeltaCloudException e) {
+				return null;
+			}
+		}
+
+		public IObservableValue getImageObservable() {
+			return imageObservable;
+		}
+	}
+
 	private void launchFetchRealms() {
 		Thread t = new Thread() {
 			public void run() {
@@ -481,92 +568,6 @@ public class NewInstancePage extends WizardPage {
 		t.start();
 	}
 
-	/**
-	 * Displays the arch in the given label if the given binding is valid.
-	 * 
-	 * @param archLabel
-	 *            the arch label
-	 * @return the value change listener
-	 */
-	private class ArchAdapter implements IValueChangeListener {
-
-		private Label archLabel;
-		private NewInstanceModel.ImageContainer container;
-		private NewInstancePage page;
-
-		public ArchAdapter(Label archLabel,
-				NewInstanceModel.ImageContainer container,
-				NewInstancePage page) {
-			this.archLabel = archLabel;
-			this.page = page;
-			this.container = container;
-		}
-
-		@Override
-		public void handleValueChange(ValueChangeEvent event) {
-			IStatus status = (IStatus) event.diff.getNewValue();
-			if (status.isOK()) {
-				archLabel.setText(model.getArch());
-				page.setImage(container.getImage());
-				page.filterProfiles();
-			} else {
-				archLabel.setText("");
-				page.clearProfiles();
-			}
-		}
-	}
-
-	/**
-	 * Binds the architecture label to the given image id text widget. Attaches
-	 * a listener to the image id text widget Adds a validity decorator to the
-	 * image text widget.
-	 * 
-	 * @param dbc
-	 *            the databinding context to use
-	 * @param imageText
-	 *            the image id text widget
-	 * @param archLabel
-	 *            the label to display the image architecture in
-	 * @return
-	 * @return the binding that was created
-	 */
-	private Binding bindArchLabel(DataBindingContext dbc, Text imageText, final Label archLabel,
-			final NewInstancePage page) {
-		UpdateValueStrategy updateStrategy = new UpdateValueStrategy();
-		NewInstanceModel.ImageContainer c = new NewInstanceModel.ImageContainer();
-		updateStrategy.setConverter(new NewInstanceModel.ArchConverter(cloud, c, String.class, String.class));
-		updateStrategy.setBeforeSetValidator(new NewInstanceModel.ArchValidator());
-
-		Binding binding = dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(100, imageText),
-				BeanProperties.value(NewInstanceModel.PROPERTY_ARCH).observe(model),
-				updateStrategy,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		binding.getValidationStatus().addValueChangeListener(new ArchAdapter(archLabel, c, page));
-		ControlDecorationSupport.create(binding, SWT.LEFT | SWT.TOP);
-		return binding;
-	}
-
-	/**
-	 * Bind the given text widget to the cloud connection model. Attaches
-	 * validator to the binding that enforce a non-empty input.
-	 * 
-	 * @param dbc
-	 *            the databinding context to use
-	 * @param text
-	 *            the name text widget to bind
-	 */
-	private void bindText(DataBindingContext dbc, final Text text, String property, String errMsgId) {
-		Binding nameTextBinding = dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observe(text),
-				BeanProperties.value(NewInstanceModel.class, property)
-						.observe(model),
-				new UpdateValueStrategy().setBeforeSetValidator(new MandatoryStringValidator(WizardMessages
-						.getString(errMsgId))),
-				null);
-		ControlDecorationSupport.create(nameTextBinding, SWT.LEFT | SWT.TOP);
-	}
-
 	private List<String> getRealmNames(List<DeltaCloudRealm> realms) {
 		List<String> realmNames = new ArrayList<String>();
 		for (DeltaCloudRealm realm : realms) {
@@ -586,6 +587,7 @@ public class NewInstancePage extends WizardPage {
 		try {
 			realms = Arrays.asList(cloud.getRealms());
 		} catch (DeltaCloudException e) {
+			// TODO: internationalize strings
 			ErrorUtils.handleErrorAsync("Error",
 					MessageFormat.format("Could not get realms from cloud {0}", cloud.getName()), e, getShell());
 		}

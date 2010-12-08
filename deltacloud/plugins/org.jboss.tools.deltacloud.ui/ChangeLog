@@ -1,5 +1,8 @@
 2010-12-08  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java 
+	(bindWidgets): 
+	[JBIDE-7834] simplified binding, fixed find image by id (moved implementation to DeltaCloud)
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (createWidgets): 
 	[JBIDE-7836] corrected tab order (bad widget creation order)
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImageWizard.java: 
