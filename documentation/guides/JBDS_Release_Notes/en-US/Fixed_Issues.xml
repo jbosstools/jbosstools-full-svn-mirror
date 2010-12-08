@@ -25,7 +25,7 @@
             <itemizedlist>
 				<listitem>
                     <para>
-                        <ulink url="https://jira.jboss.org/browse/JBIDE-2708">JBIDE-2708</ulink>: The <productname>CDI Validator</productname> now implements all the definitions, non-portable behaviors and deployment problems mentioned in <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/index.html">JSR-299</ulink> with the exception of those that can not be tracked at design time.
+                        <ulink url="https://jira.jboss.org/browse/JBIDE-2708">JBIDE-2708</ulink>: The <productname>CDI Validator</productname> now implements all the definitions, non-portable behaviors and deployment problems mentioned in <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/index.html">JSR-299</ulink> with the exception of those that can not be tracked at design time. You can view the complete list of implemented rules in the <ulink url="https://anonsvn.jboss.org/repos/jbosstools/trunk/cdi/plugins/org.jboss.tools.cdi.core/src/org/jboss/tools/cdi/internal/core/validation/errorList.txt">errorList.txt</ulink> file.
                     </para>
 					<para>
 						The severity levels for optional CDI Validation rules can be set 2 ways:
