@@ -150,12 +150,6 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	protected abstract String getSelectedCloudPrefsKey();
 
 	@Override
-	public void dispose() {
-		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
-		super.dispose();
-	}
-
-	@Override
 	public void createPartControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
@@ -395,4 +389,12 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
+
+	@Override
+	public void dispose() {
+		getSite().getWorkbenchWindow().getSelectionService().removePostSelectionListener(workbenchSelectionListener);
+		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
+		super.dispose();
+	}
+
 }

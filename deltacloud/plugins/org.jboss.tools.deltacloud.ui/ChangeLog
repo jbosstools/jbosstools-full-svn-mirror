@@ -2,6 +2,8 @@
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java (.selectionChanged): 
 	[JBIDE-7849] only change selected cloud if a new cloud has been selected
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java (dispose): 
+	[JBIDE-7853] removing workbench selection listener on dispose
 
 2010-12-08  André Dietisheim  <adietish@redhat.com>
 
