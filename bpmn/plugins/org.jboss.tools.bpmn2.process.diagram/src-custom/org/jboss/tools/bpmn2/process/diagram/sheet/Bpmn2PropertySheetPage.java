@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.bpmn2.Artifact;
+import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.provider.Bpmn2ItemProviderAdapterFactory;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;
@@ -17,6 +18,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
+import org.eclipse.emf.edit.ui.action.CreateSiblingAction;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.gef.EditPart;
@@ -195,7 +197,7 @@ public class Bpmn2PropertySheetPage implements IPropertySheetPage {
 			if (descriptor instanceof CommandParameter) {
 				CommandParameter commandParameter = (CommandParameter)descriptor;
 				Object value = commandParameter.getValue();
-				if (value instanceof FlowElement || value instanceof Artifact) continue;
+				if (value instanceof FlowElement || value instanceof Artifact || !(value instanceof BaseElement)) continue;
 				actions.add(new CreateChildAction(editor.getEditingDomain(), treeViewer.getSelection(), descriptor));
 			}			
 		}
@@ -220,15 +222,42 @@ public class Bpmn2PropertySheetPage implements IPropertySheetPage {
 		addSiblingMenuItem.setMenu(addSiblingSubmenu);	
 		if (!canEnableAddSibling()) {
 			addSiblingMenuItem.setEnabled(false);
+		} else {
+			Object obj = getTreeViewerSelectionUnwrapped();
+			Collection<?> descriptors = editor.getEditingDomain().getNewChildDescriptors(null, obj);
+			ArrayList<IAction> actions = new ArrayList<IAction>();
+			for (Object descriptor : descriptors) {
+				if (descriptor instanceof CommandParameter) {
+					CommandParameter commandParameter = (CommandParameter)descriptor;
+					Object value = commandParameter.getValue();
+					if (value instanceof FlowElement || value instanceof Artifact || !(value instanceof BaseElement)) continue;
+					actions.add(new CreateSiblingAction(editor.getEditingDomain(), treeViewer.getSelection(), descriptor));
+				}			
+			}			
+			addSiblingMenuItem.setEnabled(!actions.isEmpty());
+			for (final IAction action : actions) {
+				MenuItem menuItem = new MenuItem(addSiblingSubmenu, SWT.PUSH);
+				menuItem.setText(action.getText());
+				menuItem.setImage(action.getImageDescriptor().createImage());
+				menuItem.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						action.run();
+					}
+				});
+			}
 		}
 	}
 	
 	private boolean canEnableAddSibling() {
 		ISelection selection = treeViewer.getSelection();
 		if (selection instanceof IStructuredSelection) {
-			return ((IStructuredSelection)selection).getFirstElement() == treeViewer.getInput();
+			Object object = ((IStructuredSelection)selection).getFirstElement();
+			if (object != null && object instanceof EObject) {
+				return ((EObject)object).eContainer() != treeViewer.getInput();
+			}
 		}
-		return true;
+		return false;
 	}
 	
 	private void depopulatePopupMenu() {
