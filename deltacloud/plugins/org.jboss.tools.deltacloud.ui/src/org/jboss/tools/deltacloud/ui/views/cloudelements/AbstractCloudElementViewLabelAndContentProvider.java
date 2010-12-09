@@ -34,10 +34,16 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 	private DeltaCloud currentCloud;
 	private ICloudElementFilter<CLOUDELEMENT> localFilter;
 	private TableViewer viewer;
-
+	
 	@Override
 	public Object[] getElements(Object input) {
-		return new Object[] {};
+		/*
+		 * items are added in asynchronous manner.
+		 * 
+		 * @see #inputChanged
+		 * @see #asyncAddCloudElements
+		 */
+		return new Object[]{};
 	}
 
 	public void setFilter(ICloudElementFilter<CLOUDELEMENT> filter) {
@@ -49,7 +55,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		if (!(newInput instanceof DeltaCloud)) {
 			return;
 		}
-		Assert.isTrue(viewer instanceof TableViewer);
+		Assert.isLegal(viewer instanceof TableViewer);
 		this.viewer = (TableViewer) viewer;
 		removeListener(currentCloud);
 		this.currentCloud = (DeltaCloud) newInput;
@@ -75,13 +81,13 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 			@Override
 			public void run() {
 				try {
+					viewer.refresh();
 					Object[] elements = filter(getFilter(currentCloud), cloudElements);
 					viewer.add(elements);
 				} catch (DeltaCloudException e) {
 					// TODO: internationalize strings
 					ErrorUtils.handleError(
-							"Error",
-							"Could not get elements of clouds " + currentCloud.getName(),
+							"Error", "Could not filter the elements for cloud " + currentCloud.getName(),
 							e, Display.getDefault().getActiveShell());
 
 				}

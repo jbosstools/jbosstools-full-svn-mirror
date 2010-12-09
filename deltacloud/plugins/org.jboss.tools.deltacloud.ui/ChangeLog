@@ -1,5 +1,7 @@
 2010-12-09  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementViewLabelAndContentProvider.java (inputChanged): 
+	[JBIDE-7848] refreshing viewer before adding new items 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java 
 	(.modifyText): 
 	(asyncSetImagesToViewer): 
