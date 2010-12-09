@@ -13,6 +13,7 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,9 @@ import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
@@ -60,6 +63,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
@@ -218,45 +222,21 @@ public class NewInstancePage extends WizardPage {
 		hardware.addModifyListener(comboListener);
 	}
 
-	private DeltaCloudHardwareProfile[] getProfiles() {
-		List<DeltaCloudHardwareProfile> profiles = new ArrayList<DeltaCloudHardwareProfile>();
-		try {
-			DeltaCloudHardwareProfile[] allProfiles = cloud.getProfiles();
-			for (DeltaCloudHardwareProfile p : allProfiles) {
-				profiles.add(p);
-			}
-		} catch (DeltaCloudException e) {
-			// TODO internationalize strings
-			ErrorUtils.handleError("Error",
-					MessageFormat.format("Could not get profiles from cloud {0}", cloud.getName()), e, getShell());
+	private List<DeltaCloudHardwareProfile> filterProfiles(DeltaCloudHardwareProfile[] profiles) {
+		if (profiles == null) {
+			return Collections.emptyList();
 		}
-		return profiles.toArray(new DeltaCloudHardwareProfile[profiles.size()]);
-	}
 
-	public void filterProfiles() {
-		if (allProfiles == null)
-			return;
-
-		ArrayList<DeltaCloudHardwareProfile> profiles = new ArrayList<DeltaCloudHardwareProfile>();
-		for (DeltaCloudHardwareProfile p : allProfiles) {
-			if (p.getArchitecture() == null || image == null || image.getArchitecture().equals(p.getArchitecture())) {
-				profiles.add(p);
+		List<DeltaCloudHardwareProfile> filteredProfiles = new ArrayList<DeltaCloudHardwareProfile>();
+		for (DeltaCloudHardwareProfile p : profiles) {
+			if (p.getArchitecture() == null 
+					|| image == null 
+					|| image.getArchitecture().equals(p.getArchitecture())) {
+				filteredProfiles.add(p);
 			}
 		}
-		String[] ids = new String[profiles.size()];
-		for (int i = 0; i < profiles.size(); ++i) {
-			DeltaCloudHardwareProfile p = profiles.get(i);
-			ids[i] = p.getId();
-		}
-		if (ids.length > 0) {
-			hardware.removeModifyListener(comboListener);
-			hardware.setItems(ids);
-			hardware.setText(ids[0]);
-			currPage = profilePages.get(ids[0]);
-			currPage.setVisible(true);
-			hardware.setEnabled(true);
-			hardware.addModifyListener(comboListener);
-		}
+		
+		return filteredProfiles;
 	}
 
 	@Override
@@ -266,8 +246,8 @@ public class NewInstancePage extends WizardPage {
 		Composite control = createWidgets(parent);
 		bindWidgets(dbc);
 
-		launchFetchRealms();
-		launchFetchProfiles();
+		asyncGetRealms();
+		asyncGetProfiles();
 
 		// We have to set the imageObservable id here instead of in the
 		// constructor of the model because the imageObservable id triggers
@@ -280,10 +260,9 @@ public class NewInstancePage extends WizardPage {
 		}
 		setControl(control);
 
-		// lastly, if there's already an imageObservable set, use it
+		// lastly, if there's already an image set, use it
 		if (image != null) {
 			imageText.setText(image.getId());
-			filterProfiles();
 		}
 	}
 
@@ -547,39 +526,83 @@ public class NewInstancePage extends WizardPage {
 		}
 	}
 
-	private void launchFetchRealms() {
-		Thread t = new Thread() {
-			public void run() {
+	private void asyncGetRealms() {
+		// TODO: internationalize strings
+		new AbstractCloudJob("Get realms", cloud) {
+			
+			@Override
+			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 				realms = getRealms();
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						updateRealmCombo();
 					}
 				});
+				return Status.OK_STATUS;
 			}
-		};
-		t.start();
+		}.schedule();		
 	}
 
-	private void launchFetchProfiles() {
-		Thread t = new Thread() {
-			public void run() {
+	private void asyncGetProfiles() {
+		// TODO: internationalize strings
+		new AbstractCloudJob("Get Profiles", cloud) {
+			
+			@Override
+			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 				allProfiles = getProfiles();
 				profilePages = new HashMap<String, ProfileComposite>();
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						createProfileComposites();
 						clearProfiles();
-						if (allProfiles.length > 0)
+						if (allProfiles.length > 0) {
 							hardware.setEnabled(true);
-						filterProfiles();
+						}
+						List<DeltaCloudHardwareProfile> filteredProfiles = filterProfiles(allProfiles);
+						updateWidgets(getProfileIds(filteredProfiles));
 					}
 				});
+				return Status.OK_STATUS;
 			}
-		};
-		t.start();
+		}.schedule();
 	}
 
+	private DeltaCloudHardwareProfile[] getProfiles() {
+		List<DeltaCloudHardwareProfile> profiles = new ArrayList<DeltaCloudHardwareProfile>();
+		try {
+			DeltaCloudHardwareProfile[] allProfiles = cloud.getProfiles();
+			for (DeltaCloudHardwareProfile p : allProfiles) {
+				profiles.add(p);
+			}
+		} catch (DeltaCloudException e) {
+			// TODO internationalize strings
+			ErrorUtils.handleError("Error",
+					MessageFormat.format("Could not get profiles from cloud {0}", cloud.getName()), e, getShell());
+		}
+		return profiles.toArray(new DeltaCloudHardwareProfile[profiles.size()]);
+	}
+
+	private void updateWidgets(String[] ids) {
+		if (ids.length > 0) {
+			hardware.removeModifyListener(comboListener);
+			hardware.setItems(ids);
+			hardware.setText(ids[0]);
+			currPage = profilePages.get(ids[0]);
+			currPage.setVisible(true);
+			hardware.setEnabled(true);
+			hardware.addModifyListener(comboListener);
+		}
+	}
+
+	private String[] getProfileIds(List<DeltaCloudHardwareProfile> filteredProfiles) {
+		String[] ids = new String[filteredProfiles.size()];
+		for (int i = 0; i < filteredProfiles.size(); ++i) {
+			DeltaCloudHardwareProfile p = filteredProfiles.get(i);
+			ids[i] = p.getId();
+		}
+		return ids;
+	}
+	
 	private List<String> getRealmNames(List<DeltaCloudRealm> realms) {
 		List<String> realmNames = new ArrayList<String>();
 		for (DeltaCloudRealm realm : realms) {
