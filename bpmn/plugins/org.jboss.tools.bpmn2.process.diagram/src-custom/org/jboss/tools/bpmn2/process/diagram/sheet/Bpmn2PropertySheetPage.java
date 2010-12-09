@@ -7,9 +7,15 @@ import org.eclipse.bpmn2.Artifact;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.provider.Bpmn2ItemProviderAdapterFactory;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -18,7 +24,9 @@ import org.eclipse.gmf.runtime.emf.ui.properties.sections.UndoableModelPropertyS
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -45,7 +53,8 @@ import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditor;
 
 public class Bpmn2PropertySheetPage implements IPropertySheetPage {
 	
-	private EObject selectedObject = null;
+	private EObject selectedEditorObject = null;
+	private EObject selectedTreeObject = null;
 	private Bpmn2DiagramEditor editor;
 	private Composite mainControl, masterArea, detailsArea;
 	private TreeViewer treeViewer;
@@ -87,6 +96,31 @@ public class Bpmn2PropertySheetPage implements IPropertySheetPage {
 		treeViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 		treeViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
 		treeViewer.setFilters(new ViewerFilter[] { new RootFilter(), new FlowElementFilter() });
+		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				handleTreeViewerSelectionChanged(event);
+			}
+		});
+	}
+	
+	private void handleTreeViewerSelectionChanged(SelectionChangedEvent event) {
+		propertySheetPage.selectionChanged(null, event.getSelection());
+		EObject object = unwrapTreeViewerSelection(event.getSelection());
+		if (object != selectedTreeObject) {
+			selectedTreeObject = object;
+		}
+	}
+	
+	private EObject unwrapTreeViewerSelection(ISelection selection) {
+		EObject result = null;
+		if (selection instanceof IStructuredSelection) {
+			Object object = ((IStructuredSelection)selection).getFirstElement();
+			if (object != null && object instanceof EObject) {
+				result = (EObject)object;
+			}
+		}
+		return result;
 	}
 	
 	private FormData createMasterAreaLayoutData() {
@@ -243,14 +277,27 @@ public class Bpmn2PropertySheetPage implements IPropertySheetPage {
 
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-        selectedObject = unwrapSelection(selection);
-        treeViewer.setInput(selectedObject.eContainer());
-        StructuredSelection sel = new StructuredSelection(selectedObject);
-        treeViewer.setSelection(sel);
-        propertySheetPage.selectionChanged(part, sel);
+		if (part == editor) {
+			EObject object = unwrapEditorSelection(selection);
+			if (object != selectedEditorObject) {
+				if (selectedEditorObject != null) {
+					selectedEditorObject.eAdapters().remove(selectedElementObserver);
+				}
+				selectedEditorObject = object;
+				if (selectedEditorObject != null) {
+					selectedEditorObject.eAdapters().add(selectedElementObserver);
+					treeViewer.setInput(selectedEditorObject.eContainer());
+					treeViewer.setSelection(new StructuredSelection(selectedEditorObject));
+				} else {
+					treeViewer.setInput(null);
+					treeViewer.setSelection(null);
+				}
+				
+			}
+		}
 	}
 
- 	private EObject unwrapSelection(ISelection selection) {
+ 	private EObject unwrapEditorSelection(ISelection selection) {
  		if (!(selection instanceof StructuredSelection)) {
  			return null;
  		}
@@ -267,7 +314,7 @@ public class Bpmn2PropertySheetPage implements IPropertySheetPage {
  	
  	class RootFilter extends ViewerFilter {
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
-			if (parentElement == selectedObject.eContainer() && element != selectedObject) {
+			if (parentElement == selectedEditorObject.eContainer() && element != selectedEditorObject) {
 				return false;
 			}
 			return true;
@@ -276,11 +323,49 @@ public class Bpmn2PropertySheetPage implements IPropertySheetPage {
  	
  	class FlowElementFilter extends ViewerFilter {
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
-			if (parentElement != selectedObject.eContainer() && element instanceof FlowElement) {
+			if (parentElement != selectedEditorObject.eContainer() && (element instanceof FlowElement || element instanceof Artifact)) {
 				return false;
 			}
 			return true;
 		} 		
  	}
  	
+ 	private SelectedElementObserver selectedElementObserver = new SelectedElementObserver();
+ 	class SelectedElementObserver extends EContentAdapter {
+		public void notifyChanged(Notification notification) {
+			super.notifyChanged(notification);
+			handleSelectedElementChanged(notification);
+		}
+ 	}
+ 	
+ 	private void handleSelectedElementChanged(Notification notification) {
+ 		int eventType = notification.getEventType();
+ 		if (eventType == Notification.ADD || eventType == Notification.SET) {
+ 			Object object = notification.getNewValue();
+ 			if (object instanceof EObject) {
+ 				setIdIfNotSet((EObject)object);
+ 				updateTreeSelection(object);
+ 			}
+ 		}
+ 	}
+ 	
+ 	private void updateTreeSelection(final Object object) {
+		getControl().getDisplay().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				treeViewer.setSelection(new StructuredSelection(object));
+			} 					
+		});
+ 	}
+ 	
+    protected void setIdIfNotSet(EObject obj) {
+        if (obj.eClass() != null) {
+            EStructuralFeature idAttr = obj.eClass().getEIDAttribute();
+            if (idAttr != null && !obj.eIsSet(idAttr)) {
+            	CommandParameter commandParameter = new CommandParameter(obj, idAttr, EcoreUtil.generateUUID(), CommandParameter.NO_INDEX);
+            	Command command = editor.getEditingDomain().createCommand(SetCommand.class, commandParameter);
+                editor.getEditingDomain().getCommandStack().execute(command);
+            }
+        }
+    }
 }
