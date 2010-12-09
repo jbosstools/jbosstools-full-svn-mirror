@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: DeltaCloud Core (Experimental)
+Bundle-SymbolicName: org.jboss.tools.deltacloud.as
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Red Hat Inc.
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
