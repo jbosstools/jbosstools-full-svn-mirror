@@ -1,3 +1,7 @@
+2010-10-12  André Dietisheim  <adietishn@redhat.com>
+
+        * feature.xml: Added org.jboss.tools.deltacloud.as
+
 2010-10-12  Jeff Johnston  <jjohnstn@redhat.com>
 
 	* feature.xml: Fix warning regarding docs plugin id not being found by
