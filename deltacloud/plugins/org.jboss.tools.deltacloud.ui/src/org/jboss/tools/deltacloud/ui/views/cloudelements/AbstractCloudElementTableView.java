@@ -115,6 +115,8 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		}
 	};
 
+	private Composite container;
+
 	private boolean isNewCloud(DeltaCloud cloud) {
 		return currentCloud == null
 				|| !currentCloud.equals(cloud);
@@ -151,7 +153,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 	@Override
 	public void createPartControl(Composite parent) {
-		Composite container = new Composite(parent, SWT.NULL);
+		this.container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
@@ -362,6 +364,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			currentCloudSelector.setText("");
 			setViewerInput(null);
 		}
+		container.layout(true, true);
 	}
 
 	private String[] toCloudNames(DeltaCloud[] clouds) {

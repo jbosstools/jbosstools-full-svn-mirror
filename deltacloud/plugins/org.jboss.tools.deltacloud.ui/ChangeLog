@@ -1,5 +1,8 @@
 2010-12-09  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java 
+	(cloudsChanged): 
+	[JBIDE-7694] relayouting combo parent when a new cloud is added -> resizes the combo
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (asyncGetProfiles): 
 	[JBIDE-7818] replaced threads by jobs (so that I can implement proper job scheduling rules across deltacloud tools),
 	cleaned code - split code in several methods, removed profile combo initialization that was done in parallel to the 
