@@ -25,17 +25,12 @@ import org.jboss.tools.deltacloud.core.client.Image;
 public class DeltaCloudImage extends AbstractDeltaCloudElement {
 
 	private Image image;
-	private DeltaCloud deltaCloud;
 	
 	public DeltaCloudImage(Image image, DeltaCloud deltaCloud) {
 		super(deltaCloud);
 		this.image = image;
 	}
 	
-	public DeltaCloud getDeltaCloud() {
-		return deltaCloud;
-	}
-
 	public String getName() {
 		return image.getName();
 	}

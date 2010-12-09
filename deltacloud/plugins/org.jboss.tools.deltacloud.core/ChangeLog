@@ -1,3 +1,8 @@
+2010-12-09  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudImage.java: 
+	[JBIDE-7849] removed shadowing instance variable to DeltaCloud
+
 2010-12-08  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/job/AbstractCloudElementJob.java: 
