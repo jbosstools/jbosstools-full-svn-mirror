@@ -77,6 +77,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 			public void run() {
 				try {
 					Object[] elements = filter(getFilter(currentCloud), cloudElements);
+//					viewer.getTable().clearAll();
 					viewer.add(elements);
 				} catch (DeltaCloudException e) {
 					// TODO: internationalize strings
