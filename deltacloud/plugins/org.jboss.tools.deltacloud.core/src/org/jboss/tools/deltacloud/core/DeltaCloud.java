@@ -597,4 +597,8 @@ public class DeltaCloud {
 	public void dispose() throws DeltaCloudException {
 		passwordStore.remove();
 	}
+
+	public String toString() {
+		return name;
+	}
 }
