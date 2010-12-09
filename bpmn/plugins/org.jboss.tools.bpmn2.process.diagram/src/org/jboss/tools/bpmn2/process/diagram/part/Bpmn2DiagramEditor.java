@@ -35,12 +35,15 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2NavigatorItem;
+import org.jboss.tools.bpmn2.process.diagram.sheet.Bpmn2PropertySheetPage;
 
 /**
  * @generated
@@ -96,7 +99,7 @@ public class Bpmn2DiagramEditor extends DiagramDocumentEditor implements
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	@SuppressWarnings("rawtypes")
 	public Object getAdapter(Class type) {
@@ -106,6 +109,8 @@ public class Bpmn2DiagramEditor extends DiagramDocumentEditor implements
 					return new String[] { ProjectExplorer.VIEW_ID };
 				}
 			};
+		} else if (type == IPropertySheetPage.class) {
+			return new Bpmn2PropertySheetPage(this);
 		}
 		return super.getAdapter(type);
 	}
@@ -283,6 +288,14 @@ public class Bpmn2DiagramEditor extends DiagramDocumentEditor implements
 		getDiagramGraphicalViewer().setContextMenu(provider);
 		getSite().registerContextMenu(ActionIds.DIAGRAM_EDITOR_CONTEXT_MENU,
 				provider, getDiagramGraphicalViewer());
+	}
+	
+	private FormToolkit formToolkit;
+	public FormToolkit getFormToolkit() {
+		if (formToolkit == null) {
+			formToolkit = new FormToolkit(getSite().getShell().getDisplay());
+		}
+		return formToolkit;
 	}
 
 }
