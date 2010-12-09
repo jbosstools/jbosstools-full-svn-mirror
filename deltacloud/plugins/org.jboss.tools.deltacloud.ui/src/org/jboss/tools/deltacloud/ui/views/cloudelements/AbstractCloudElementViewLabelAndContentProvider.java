@@ -54,7 +54,6 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		removeListener(currentCloud);
 		this.currentCloud = (DeltaCloud) newInput;
 		addListener(currentCloud);
-		// TODO internationalize strings
 		asyncGetCloudElements(currentCloud);
 	}
 
