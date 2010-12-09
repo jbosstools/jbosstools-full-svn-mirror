@@ -1,5 +1,16 @@
 2010-12-09  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java 
+	(.modifyText): 
+	(asyncSetImagesToViewer): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImagesCategoryItem.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstancesCategoryItem.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageViewLabelAndContentProvider.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CloudElementCategoryItem.java 
+	(getChildren): 
+	(asyncAddCloudElements): 
+	[JBIDE-7848] separated the usecases: actively getting images/instances and passive updates. You now get the images and dont need to trigger getting and get the update of it. 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java (.selectionChanged): 
 	[JBIDE-7849] only change selected cloud if a new cloud has been selected
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java (dispose): 

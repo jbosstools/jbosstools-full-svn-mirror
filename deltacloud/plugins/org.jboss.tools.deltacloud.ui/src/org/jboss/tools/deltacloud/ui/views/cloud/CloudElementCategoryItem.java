@@ -34,8 +34,7 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 	@Override
 	public Object[] getChildren() {
 		if (!initialized.get()) {
-//			setLoadingIndicator();
-			asyncGetCloudElements();
+			asyncAddCloudElements();
 			initialized.set(true);
 		}
 		return super.getChildren();
@@ -45,7 +44,7 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 		children.add(new LoadingItem(this, viewer));
 	}
 
-	protected abstract void asyncGetCloudElements();
+	protected abstract void asyncAddCloudElements();
 
 	protected void addChildren(Object[] modelElements) {
 		if (modelElements.length > NumericFoldingItem.FOLDING_SIZE) {

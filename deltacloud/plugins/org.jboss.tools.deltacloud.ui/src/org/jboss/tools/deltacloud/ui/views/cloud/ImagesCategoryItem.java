@@ -12,13 +12,16 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.core.GetImagesCommand;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
@@ -39,21 +42,25 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 	}
 
 	@Override
-	protected void asyncGetCloudElements() {
+	protected void asyncAddCloudElements() {
 		setLoadingIndicator();
-		new GetImagesCommand(getCloud()){
+		new AbstractCloudJob(
+				MessageFormat.format("Get images from cloud {0}", getCloud().getName()), getCloud()) {
 
 			@Override
-			protected void asyncGetImages() throws DeltaCloudException {
+			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					super.asyncGetImages();
+					DeltaCloudImage[] images = getCloud().getImages();
+					clearChildren();
+					addChildren(images);
+					expand();
+					return Status.OK_STATUS;
 				} catch(DeltaCloudException e) {
 					clearChildren();
 					throw e;
 				}
 			}
-
-		}.execute();
+		}.schedule();
 	}
 
 	@Override

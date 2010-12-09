@@ -1,5 +1,11 @@
 2010-12-09  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(loadImages): 
+	(loadInstances):
+	(getInstances): 
+	(getImages): 
+	[JBIDE-7848] separated the usecases: actively getting images/instances and passive updates. You now get the images and dont need to trigger getting and get the update of it. 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudImage.java: 
 	[JBIDE-7849] removed shadowing instance variable to DeltaCloud
 

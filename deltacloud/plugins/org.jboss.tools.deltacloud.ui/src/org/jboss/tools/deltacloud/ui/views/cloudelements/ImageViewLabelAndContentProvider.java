@@ -10,16 +10,21 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
+import java.text.MessageFormat;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.core.GetImagesCommand;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.core.IImageListListener;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 
 /**
  * @author Jeff Johnston
@@ -93,8 +98,20 @@ public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLa
 	}
 
 	@Override
-	protected void asyncGetCloudElements(DeltaCloud cloud) {
-		new GetImagesCommand(cloud).execute();
+	protected void asyncAddCloudElements(final DeltaCloud cloud) {
+		new AbstractCloudJob(
+				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud) {
+
+			@Override
+			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
+				try {
+					addToViewer(cloud.getImages());;
+					return Status.OK_STATUS;
+				} catch(DeltaCloudException e) {
+					throw e;
+				}
+			}
+		}.schedule();
 	}
 
 	@Override

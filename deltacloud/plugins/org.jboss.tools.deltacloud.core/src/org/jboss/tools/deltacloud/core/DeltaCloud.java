@@ -347,6 +347,7 @@ public class DeltaCloud {
 	private void loadInstances() throws DeltaCloudException {
 		try {
 			getInstancesRepository().add(client.listInstances(), this);
+			notifyImageListListeners(images.get());
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(MessageFormat.format("Could not load instances of cloud {0}: {1}",
 						getName(), e.getMessage()), e);
@@ -380,11 +381,11 @@ public class DeltaCloud {
 	 * 
 	 * @throws DeltaCloudException
 	 */
-	protected void asyncGetInstances() throws DeltaCloudException {
+	public DeltaCloudInstance[] getInstances() throws DeltaCloudException {
 		if (instances == null) {
 			loadInstances();
 		}
-		notifyInstanceListListeners(instances.get());
+		return instances.get();
 	}
 
 	private DeltaCloudImagesRepository getImagesRepository() {
@@ -394,13 +395,11 @@ public class DeltaCloud {
 		return images;
 	}
 
-	protected void asyncGetImages() throws DeltaCloudException {
+	public DeltaCloudImage[] getImages() throws DeltaCloudException {
 		if (images == null) {
 			loadImages();
 		}
-		// TODO: remove notification with all instances, replace by
-		// notifying the changed instance
-		notifyImageListListeners(getImagesRepository().get());
+		return images.get();
 	}
 
 	/**
@@ -537,6 +536,7 @@ public class DeltaCloud {
 	private void loadImages() throws DeltaCloudException {
 		try {
 			getImagesRepository().add(client.listImages(), this);
+			notifyImageListListeners(images.get());
 		} catch (DeltaCloudClientException e) {
 			clearImages();
 			throw new DeltaCloudException(MessageFormat.format("Could not load images of cloud {0}: {1}",

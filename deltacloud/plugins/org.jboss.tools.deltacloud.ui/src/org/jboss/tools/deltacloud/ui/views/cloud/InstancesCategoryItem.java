@@ -12,13 +12,16 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.GetInstancesCommand;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.core.IInstanceListListener;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
@@ -39,21 +42,26 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 	}
 
 	@Override
-	protected void asyncGetCloudElements() {
+	protected void asyncAddCloudElements() {
 		setLoadingIndicator();
-		new GetInstancesCommand(getCloud()){
+		new AbstractCloudJob(
+				MessageFormat.format("Get instances from cloud {0}", getCloud().getName()), getCloud()) {
 
 			@Override
-			protected void asyncGetInstances() throws DeltaCloudException {
+			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					super.asyncGetInstances();
+					DeltaCloudInstance[] instances = getCloud().getInstances();
+					clearChildren();
+					addChildren(instances);
+					expand();
+					return Status.OK_STATUS;
 				} catch(DeltaCloudException e) {
 					clearChildren();
 					throw e;
 				}
 			}
+		}.schedule();
 
-		}.execute();
 	}
 
 	@Override

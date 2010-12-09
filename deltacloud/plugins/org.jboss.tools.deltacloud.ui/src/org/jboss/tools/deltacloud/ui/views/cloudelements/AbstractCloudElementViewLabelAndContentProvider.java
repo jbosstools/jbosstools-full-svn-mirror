@@ -54,7 +54,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		removeListener(currentCloud);
 		this.currentCloud = (DeltaCloud) newInput;
 		addListener(currentCloud);
-		asyncGetCloudElements(currentCloud);
+		asyncAddCloudElements(currentCloud);
 	}
 
 	public void listChanged(final DeltaCloud cloud, final CLOUDELEMENT[] cloudElements) {
@@ -69,14 +69,13 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 				&& cloud.getName().equals(currentCloud.getName());
 	}
 
-	private void addToViewer(final CLOUDELEMENT[] cloudElements) {
+	protected void addToViewer(final CLOUDELEMENT[] cloudElements) {
 		viewer.getControl().getDisplay().asyncExec(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
 					Object[] elements = filter(getFilter(currentCloud), cloudElements);
-//					viewer.getTable().clearAll();
 					viewer.add(elements);
 				} catch (DeltaCloudException e) {
 					// TODO: internationalize strings
@@ -121,5 +120,5 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 
 	protected abstract ICloudElementFilter<CLOUDELEMENT> getCloudFilter(DeltaCloud cloud);
 
-	protected abstract void asyncGetCloudElements(DeltaCloud cloud);
+	protected abstract void asyncAddCloudElements(DeltaCloud cloud);
 }

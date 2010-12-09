@@ -1,5 +1,10 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.text.MessageFormat;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -23,17 +28,17 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.AllImageFilter;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.core.GetImagesCommand;
 import org.jboss.tools.deltacloud.core.IImageFilter;
-import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.core.ImageFilter;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.ImageViewLabelAndContentProvider;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.TableViewerColumnComparator;
 
-public class FindImagePage extends WizardPage implements IImageListListener {
+public class FindImagePage extends WizardPage {
 
 	private final static String NAME = "FindImage.name"; //$NON-NLS-1$
 	private final static String TITLE = "FindImage.title"; //$NON-NLS-1$
@@ -135,7 +140,7 @@ public class FindImagePage extends WizardPage implements IImageListListener {
 				filter = new ImageFilter(cloud);
 				filter.setRules(newRules);
 				oldRules = newRules;
-				new GetImagesCommand(cloud).execute();
+				asyncSetImagesToViewer();
 			}
 		}
 		setPageComplete(isComplete && !hasError);
@@ -295,14 +300,30 @@ public class FindImagePage extends WizardPage implements IImageListListener {
 		validate();
 	}
 
-	@Override
-	public void listChanged(DeltaCloud cloud, final DeltaCloudImage[] images) {
+	private void asyncSetImagesToViewer() {
+		new AbstractCloudJob(
+				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud) {
+
+			@Override
+			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
+				try {
+					setViewerInput(cloud.getImages());
+					return Status.OK_STATUS;
+				} catch (DeltaCloudException e) {
+					setViewerInput(new DeltaCloudImage[] {});
+					throw e;
+				}
+			}
+		}.schedule();
+	}
+
+	private void setViewerInput(final DeltaCloudImage[] images) {
 		viewer.getControl().getDisplay().asyncExec(new Runnable() {
 
 			@Override
 			public void run() {
 				viewer.setInput(images);
-			}});
+			}
+		});
 	}
-
 }
