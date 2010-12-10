@@ -1,3 +1,28 @@
+2010-12-10  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (notifyCloudRename):
+	[JBIDE-7856] removed notifyCloudRename since DeltaCloud now notifies about changes in its properties (images, instances, name) 
+	* src/org/jboss/tools/internal/deltacloud/core/observable/ObservablePojo.java: 
+	[JBIDE-7856] switched the observer pattern in DeltaCloud to PropertyChangeSupport, moved ObservablePojo
+	to core to get PropertyChangeSupport in DeltaCloud.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java: 
+	[JBIDE-7856] switched the observer pattern in DeltaCloud to PropertyChangeSupport, removed 
+	IInstanceListListener and IImageListlistener. 
+	(update): 
+	(setName): 
+	(updateConnectionProperties): 
+	(updateInstanceFilter): 
+	(updateImageFilter): 
+	(loadInstances): 
+	(clearImages): 
+	(clearInstances): 
+	(replaceInstance): 
+	(performInstanceAction): 
+	(loadImages): 
+	(createInstance): 
+	[JBIDE-7856] switched the observer pattern in DeltaCloud to PropertyChangeSupport, fireing changes when name is changed.
+	Loading instances and images only if url, username, pw change.
+
 2010-12-09  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 

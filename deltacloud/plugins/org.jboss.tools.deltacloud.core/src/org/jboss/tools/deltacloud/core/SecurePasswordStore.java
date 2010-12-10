@@ -51,6 +51,10 @@ public class SecurePasswordStore {
 			}
 		}
 	}
+	
+	public void setPassword(String password) throws DeltaCloudException {
+		update(storageKey, password);
+	}
 
 	public void update(IStorageKey key, String password) throws DeltaCloudException {
 		if (!storageKey.equals(key)

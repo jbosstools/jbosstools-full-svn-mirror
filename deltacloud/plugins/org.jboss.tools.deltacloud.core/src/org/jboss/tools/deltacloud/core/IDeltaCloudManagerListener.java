@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-public interface IInstanceListListener {
-
-	public void listChanged(DeltaCloud cloud, DeltaCloudInstance[] list);
+public interface IDeltaCloudManagerListener {
 	
+	public static int ADD_EVENT = 1;
+	public static int REMOVE_EVENT = 2;
+	
+	void cloudsChanged(int type, DeltaCloud cloud);
 }

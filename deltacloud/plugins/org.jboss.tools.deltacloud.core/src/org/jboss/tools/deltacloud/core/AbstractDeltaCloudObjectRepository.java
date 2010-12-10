@@ -23,7 +23,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @param <E> Element to store
  * @param <C> Criteria to match element against
  */
-public abstract class AbstractDeltaCloudObjectRepository<E, C> {
+public abstract class AbstractDeltaCloudObjectRepository<E extends IDeltaCloudElement, C> {
 
 	private List<E> objects = new ArrayList<E>();
 	// TODO switch to readwrite lock to gain performance
@@ -34,30 +34,33 @@ public abstract class AbstractDeltaCloudObjectRepository<E, C> {
 		this.typeClass = typeClass;
 	}
 
-	public void add(E object) {
+	public E[] add(E object) {
 		try {
 			lock();
 			objects.add(object);
+			return get();
 		} finally {
 			unlock();
 		}
 	}
 
-	public void add(Collection<E> objects) {
+	public E[] add(Collection<E> objects) {
 		try {
 			lock();
 			for (E object : objects) {
 				objects.add(object);
 			}
+			return get();
 		} finally {
 			unlock();
 		}
 	}
 
-	public void clear() {
+	public E[] clear() {
 		try {
 			lock();
 			objects.clear();
+			return get();
 		} finally {
 			unlock();
 		}
