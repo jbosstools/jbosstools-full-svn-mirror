@@ -5,11 +5,11 @@
 ]>
 <bookinfo id="book-ModeShape_Tools_Reference_Guide-ModeShape_Tools_Reference_Guide">
 	<title>ModeShape Tools Reference Guide</title>
-	<subtitle>ModeShape tools allows you to interact with the contents of numerious ModeShape repositories.</subtitle>
+	<subtitle>ModeShape tools allows you to interact with the contents of numerous ModeShape repositories.</subtitle>
 	<productname>JBoss Developer Studio</productname>
 	<productnumber>4.0</productnumber>
 	<edition>4.0.0</edition>
-	<pubsnumber>1</pubsnumber>
+	<pubsnumber>2</pubsnumber>
 	<abstract>
 		<para>
 			ModeShape Tools provides the ability to publish and remove content from ModeShape repositories.
