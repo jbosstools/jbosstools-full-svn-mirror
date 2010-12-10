@@ -1,5 +1,8 @@
 2010-12-10  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java
+	(isNewCloud): 
+	[JBIDE-7872] fixed case where new cloud == null was erroneously detected as new selected cloud 
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshImagesHandler.java: 
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshInstancesHandler.java:
 	[JBIDE-7738] RefreshImagesHandler and RefreshInstancesHandler are now subclasses of 

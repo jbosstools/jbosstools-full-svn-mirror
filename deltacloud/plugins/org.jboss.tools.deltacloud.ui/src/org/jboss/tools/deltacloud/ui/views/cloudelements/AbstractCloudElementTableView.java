@@ -147,6 +147,10 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	}
 
 	private boolean isNewCloud(DeltaCloud cloud) {
+		if (cloud == null) {
+			return false;
+		}
+
 		return currentCloud == null
 				|| !currentCloud.equals(cloud);
 	}
@@ -396,7 +400,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			cloud.addPropertyChangeListener(DeltaCloud.PROP_NAME, this);
 		}
 	}
-	
+
 	protected void removePropertyChangeListener(DeltaCloud cloud) {
 		if (cloud != null) {
 			cloud.removePropertyChangeListener(this);
