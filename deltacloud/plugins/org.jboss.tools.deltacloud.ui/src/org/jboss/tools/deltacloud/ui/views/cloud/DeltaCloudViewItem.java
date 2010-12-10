@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloud;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,20 +31,21 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public abstract class DeltaCloudViewItem implements IAdaptable {
+public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, PropertyChangeListener {
 
-	private Object model;
-	private DeltaCloudViewItem parent;
-	protected List<DeltaCloudViewItem> children =
-			Collections.synchronizedList(new ArrayList<DeltaCloudViewItem>());
+	private DELTACLOUDITEM model;
+	private DeltaCloudViewItem<?> parent;
+	protected List<DeltaCloudViewItem<?>> children =
+			Collections.synchronizedList(new ArrayList<DeltaCloudViewItem<?>>());
 	protected TreeViewer viewer;
 	protected AtomicBoolean initialized = new AtomicBoolean();
 
-	protected DeltaCloudViewItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
+	protected DeltaCloudViewItem(DELTACLOUDITEM model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		this.model = model;
 		this.parent = parent;
 		this.viewer = viewer;
 		initDisposeListener(viewer);
+		addPropertyChangeListener(model);
 	}
 
 	public abstract String getName();
@@ -56,7 +60,7 @@ public abstract class DeltaCloudViewItem implements IAdaptable {
 			@Override
 			public void run() {
 				// viewer.getTree().setRedraw(false);
-				for (final DeltaCloudViewItem element : children) {
+				for (final DeltaCloudViewItem<?> element : children) {
 					viewer.remove(element);
 				}
 				// viewer.getTree().setRedraw(true);
@@ -73,7 +77,7 @@ public abstract class DeltaCloudViewItem implements IAdaptable {
 		return parent;
 	}
 
-	public void addChild(final DeltaCloudViewItem element) {
+	public void addChild(final DeltaCloudViewItem<?> element) {
 		children.add(element);
 
 		getDisplay().asyncExec(new Runnable() {
@@ -84,8 +88,8 @@ public abstract class DeltaCloudViewItem implements IAdaptable {
 		});
 	}
 
-	public void addChildren(final DeltaCloudViewItem[] elements) {
-		for (DeltaCloudViewItem element : elements) {
+	public void addChildren(final DeltaCloudViewItem<?>[] elements) {
+		for (DeltaCloudViewItem<?> element : elements) {
 			children.add(element);
 		}
 
@@ -97,7 +101,7 @@ public abstract class DeltaCloudViewItem implements IAdaptable {
 		});
 	}
 
-	public void removeChild(final DeltaCloudViewItem element) {
+	public void removeChild(final DeltaCloudViewItem<?> element) {
 
 		getDisplay().asyncExec(new Runnable() {
 			@Override
@@ -120,7 +124,7 @@ public abstract class DeltaCloudViewItem implements IAdaptable {
 		});
 	}
 
-	public Object getModel() {
+	public DELTACLOUDITEM getModel() {
 		return model;
 	}
 
@@ -158,6 +162,24 @@ public abstract class DeltaCloudViewItem implements IAdaptable {
 	}
 
 	protected void dispose() {
-		// nothing to do
+		removePropertyChangeListener(getModel());
 	}
+
+	public void propertyChange(PropertyChangeEvent event) {
+		// do nothing
+	}
+
+	protected void removePropertyChangeListener(DELTACLOUDITEM model) {
+		try {
+			Method method = model.getClass().getMethod("removePropertyChangeListener", PropertyChangeListener.class);
+			if (method != null) {
+				method.invoke(model, this);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	protected abstract void addPropertyChangeListener(DELTACLOUDITEM object);
 }

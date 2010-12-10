@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
+import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -23,7 +24,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
-import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 
 /**
@@ -31,7 +31,7 @@ import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
  * @author André Dietisheim
  */
 public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLabelAndContentProvider<DeltaCloudImage>
-		implements ITableContentAndLabelProvider, IImageListListener {
+		implements ITableContentAndLabelProvider {
 
 	public enum Column {
 		NAME(0, 20),
@@ -115,16 +115,20 @@ public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLa
 	}
 
 	@Override
-	protected void addListener(DeltaCloud currentCloud) {
-		if (currentCloud != null) {
-			currentCloud.addImageListListener(this);
+	public void propertyChange(PropertyChangeEvent event) {
+		if (DeltaCloud.PROP_IMAGES.equals(event.getPropertyName())) {
+			DeltaCloud cloud = (DeltaCloud) event.getSource();
+			DeltaCloudImage[] images = (DeltaCloudImage[]) event.getNewValue();
+			updateCloudElements(images, cloud);
 		}
 	}
-
+	
 	@Override
-	protected void removeListener(DeltaCloud currentCloud) {
-		if (currentCloud != null) {
-			currentCloud.removeImageListListener(this);
-		}
+	public void addPropertyChangeListener(DeltaCloud cloud) {
+		cloud.addPropertyChangeListener(DeltaCloud.PROP_IMAGES, this);
+	}
+	
+	protected DeltaCloudImage[] getCloudElements(DeltaCloud cloud) throws DeltaCloudException {
+		return cloud.getImages();
 	}
 }

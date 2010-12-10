@@ -19,9 +19,9 @@ import org.jboss.tools.deltacloud.ui.views.cloud.property.InstancePropertySource
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class InstanceItem extends DeltaCloudViewItem {
+public class InstanceItem extends DeltaCloudViewItem<DeltaCloudInstance> {
 
-	protected InstanceItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
+	protected InstanceItem(DeltaCloudInstance model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		super(model, parent, viewer);
 	}
 
@@ -44,5 +44,10 @@ public class InstanceItem extends DeltaCloudViewItem {
 	@Override
 	public IPropertySource getPropertySource() {
 		return new InstancePropertySource(this, getModel());
+	}
+
+	@Override
+	protected void addPropertyChangeListener(DeltaCloudInstance object) {
+		// do nothing
 	}
 }

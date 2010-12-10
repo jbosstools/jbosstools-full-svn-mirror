@@ -11,7 +11,7 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.internal.deltacloud.ui.common.databinding.ObservablePojo;
+import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 
 /**
  * @author Jeff Jonhston

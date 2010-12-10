@@ -16,14 +16,14 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.ICloudManagerListener;
+import org.jboss.tools.deltacloud.core.IDeltaCloudManagerListener;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class RootItem extends DeltaCloudViewItem implements ICloudManagerListener {
+public class RootItem extends DeltaCloudViewItem<DeltaCloudManager> implements IDeltaCloudManagerListener {
 
 	protected RootItem(TreeViewer viewer) {
 		super(DeltaCloudManager.getDefault(), null, viewer); //$NON-NLS-1$
@@ -68,8 +68,8 @@ public class RootItem extends DeltaCloudViewItem implements ICloudManagerListene
 		children.add(e);
 	}
 
-	private DeltaCloudViewItem getCloudViewElement(DeltaCloud cloudToMatch) {
-		for (DeltaCloudViewItem cloudElement : children) {
+	private DeltaCloudViewItem<?> getCloudViewElement(DeltaCloud cloudToMatch) {
+		for (DeltaCloudViewItem<?> cloudElement : children) {
 			DeltaCloud cloud = (DeltaCloud) cloudElement.getModel();
 			if (cloudToMatch.equals(cloud)) {
 				return cloudElement;
@@ -85,17 +85,17 @@ public class RootItem extends DeltaCloudViewItem implements ICloudManagerListene
 
 	public void cloudsChanged(int type, DeltaCloud cloud) {
 		switch (type) {
-		case ICloudManagerListener.ADD_EVENT:
+		case IDeltaCloudManagerListener.ADD_EVENT:
 			addChild(new CloudItem(cloud, this, viewer));
 			break;
-		case ICloudManagerListener.REMOVE_EVENT:
+		case IDeltaCloudManagerListener.REMOVE_EVENT:
 			removeChild(getCloudViewElement(cloud));
 			break;
-		case ICloudManagerListener.RENAME_EVENT:
-			DeltaCloudViewItem cloudViewElement = getCloudViewElement(cloud);
-			viewer.refresh(cloudViewElement);
-			break;
 		}
-		initialized.set(true);
+	}
+
+	@Override
+	protected void addPropertyChangeListener(DeltaCloudManager object) {
+		// do nothing
 	}
 }

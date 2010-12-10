@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloud;
 
+import java.beans.PropertyChangeEvent;
+
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -19,22 +21,17 @@ import org.jboss.tools.deltacloud.ui.views.cloud.property.CloudPropertySource;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CloudItem extends DeltaCloudViewItem {
+public class CloudItem extends DeltaCloudViewItem<DeltaCloud> {
 
 	private TreeViewer viewer;
 
-	protected CloudItem(Object element, DeltaCloudViewItem parent, TreeViewer viewer) {
-		super(element, parent, viewer);
+	protected CloudItem(DeltaCloud model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
+		super(model, parent, viewer);
 		this.viewer = viewer;
 	}
 
 	public String getName() {
-		Object element = getModel();
-		if (element instanceof DeltaCloud) {
-			return ((DeltaCloud) element).getName();
-		} else {
-			return "";
-		}
+		return getModel().getName();
 	}
 
 	@Override
@@ -57,6 +54,14 @@ public class CloudItem extends DeltaCloudViewItem {
 	public IPropertySource getPropertySource() {
 		return new CloudPropertySource(getModel());
 	}
-	
-	
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		viewer.update(this, new String[]{DeltaCloud.PROP_NAME});
+	}
+
+	@Override
+	protected void addPropertyChangeListener(DeltaCloud cloud) {
+		cloud.addPropertyChangeListener(DeltaCloud.PROP_NAME, this);
+	}
 }

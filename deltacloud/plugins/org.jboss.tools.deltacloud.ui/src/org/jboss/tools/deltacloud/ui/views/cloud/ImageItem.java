@@ -19,23 +19,23 @@ import org.jboss.tools.deltacloud.ui.views.cloud.property.ImagePropertySource;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class ImageItem extends DeltaCloudViewItem {
+public class ImageItem extends DeltaCloudViewItem<DeltaCloudImage> {
 
-	protected ImageItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
+	protected ImageItem(DeltaCloudImage model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		super(model, parent, viewer);
 	}
 	
 	public String getName() {
-		Object element = getModel();
-		if (element instanceof DeltaCloudImage) {
-			return ((DeltaCloudImage) element).getName();
-		} else {
-			return "";
-		}
+		return getModel().getName();
 	}
 	
 	@Override
 	public IPropertySource getPropertySource() {
 		return new ImagePropertySource(getModel());
+	}
+
+	@Override
+	protected void addPropertyChangeListener(DeltaCloudImage object) {
+		// do nothing
 	}
 }

@@ -172,8 +172,9 @@ public class NewInstanceWizard extends Wizard {
 				}
 			}
 			instance = cloud.createInstance(name, imageId, realmId, profileId, keyname, memory, storage);
-			if (instance != null)
+			if (instance != null) {
 				result = true;
+			}
 			if (instance != null && instance.getState().equals(DeltaCloudInstance.PENDING)) {
 				final String instanceId = instance.getId();
 				final String instanceName = name;

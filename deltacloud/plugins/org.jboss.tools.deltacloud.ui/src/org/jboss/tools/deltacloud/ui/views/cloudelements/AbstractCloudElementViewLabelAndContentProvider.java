@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -29,7 +31,7 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
  * @author Andre Dietisheim
  */
 public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEMENT extends IDeltaCloudElement> extends
-		BaseLabelProvider implements ITableContentAndLabelProvider {
+		BaseLabelProvider implements ITableContentAndLabelProvider, PropertyChangeListener {
 
 	private DeltaCloud currentCloud;
 	private ICloudElementFilter<CLOUDELEMENT> localFilter;
@@ -59,13 +61,13 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		this.viewer = (TableViewer) viewer;
 		removeListener(currentCloud);
 		this.currentCloud = (DeltaCloud) newInput;
-		addListener(currentCloud);
+		addPropertyChangeListener(currentCloud);
 		asyncAddCloudElements(currentCloud);
 	}
-
-	public void listChanged(final DeltaCloud cloud, final CLOUDELEMENT[] cloudElements) {
+	
+	protected void updateCloudElements(CLOUDELEMENT[] elements, DeltaCloud cloud) {
 		if (isCurrentCloud(cloud)) {
-			addToViewer(cloudElements);
+			addToViewer(elements);
 		}
 	}
 
@@ -120,11 +122,15 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		removeListener(currentCloud);
 	}
 
-	protected abstract void addListener(DeltaCloud cloud);
-
-	protected abstract void removeListener(DeltaCloud cloud);
+	protected void removeListener(DeltaCloud cloud) {
+		if (cloud != null) {
+			cloud.removePropertyChangeListener(this);
+		}
+	}
 
 	protected abstract ICloudElementFilter<CLOUDELEMENT> getCloudFilter(DeltaCloud cloud);
 
 	protected abstract void asyncAddCloudElements(DeltaCloud cloud);
+
+	protected abstract void addPropertyChangeListener(DeltaCloud cloud);
 }

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloud;
 
+import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -20,7 +21,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
-import org.jboss.tools.deltacloud.core.IImageListListener;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
@@ -29,11 +29,11 @@ import org.jboss.tools.deltacloud.ui.views.CVMessages;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage> implements IImageListListener {
+public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage> {
 
 	private static final String IMAGE_CATEGORY_NAME = "ImageCategoryName"; //$NON-NLS-1$
 
-	protected ImagesCategoryItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
+	protected ImagesCategoryItem(DeltaCloud model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		super(model, parent, viewer);
 	}
 
@@ -45,7 +45,7 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 	protected void asyncAddCloudElements() {
 		setLoadingIndicator();
 		new AbstractCloudJob(
-				MessageFormat.format("Get images from cloud {0}", getCloud().getName()), getCloud()) {
+				MessageFormat.format("Get images from cloud {0}", getModel().getName()), getModel()) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
@@ -64,8 +64,8 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 	}
 
 	@Override
-	protected DeltaCloudViewItem[] getElements(Object[] modelElements, int startIndex, int stopIndex) {
-		DeltaCloudViewItem[] elements = new DeltaCloudViewItem[stopIndex - startIndex];
+	protected DeltaCloudViewItem<?>[] getElements(DeltaCloudImage[] modelElements, int startIndex, int stopIndex) {
+		DeltaCloudViewItem<?>[] elements = new DeltaCloudViewItem[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
 			elements[i - startIndex] = new ImageItem(modelElements[i], this, viewer);
 		}
@@ -73,35 +73,30 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 	}
 
 	@Override
-	public synchronized void listChanged(DeltaCloud cloud, DeltaCloudImage[] newImages) {
+	public void propertyChange(PropertyChangeEvent event) {
+		super.propertyChange(event);
+		DeltaCloud cloud = (DeltaCloud) event.getSource();
+		DeltaCloudImage[] newImages = (DeltaCloudImage[]) event.getNewValue();
 		try {
-			onListChanged(cloud, newImages);
+			onCloudElementsChanged(cloud, newImages);
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
 					"Error",
-					MessageFormat.format("Could not get images from cloud \"{0}\"", cloud.getName()), e,
+					MessageFormat.format("Could not display new images from cloud \"{0}\"", cloud.getName()), e,
 					viewer.getControl().getShell());
 		}
 	}
 
 	@Override
 	protected DeltaCloudImage[] filter(DeltaCloudImage[] images) throws DeltaCloudException {
-		DeltaCloud cloud = (DeltaCloud) getModel();
+		DeltaCloud cloud = getModel();
 		IImageFilter f = cloud.getImageFilter();
 		return f.filter(images).toArray(new DeltaCloudImage[images.length]);
 	}
 
-	protected void addCloudElementListener(DeltaCloud cloud) {
-		if (cloud != null) {
-			cloud.addImageListListener(this);
-		}
+	@Override
+	protected void addPropertyChangeListener(DeltaCloud cloud) {
+		cloud.addPropertyChangeListener(DeltaCloud.PROP_IMAGES, this);
 	}
-
-	protected void removeCloudElementListener(DeltaCloud cloud) {
-		if (cloud != null) {
-			cloud.removeImageListListener(this);
-		}
-	}
-
 }

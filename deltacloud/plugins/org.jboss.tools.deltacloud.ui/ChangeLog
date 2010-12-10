@@ -1,3 +1,34 @@
+2010-12-10  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (performFinish): 
+	[JBIDE-7856] removed DeltaCloudManager#notifyCloudRename and IDeltaCloudManagerListener#RENAME_EVENT. 
+	DeltaCloud now notifies about changes in its properties (images, instances, name),
+	no manual triggering of change notification needed any more 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageViewLabelAndContentProvider.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementViewLabelAndContentProvider.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/DeltaCloudViewLabelProvider.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/DeltaCloudViewContentProvider.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/RootItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/LoadingItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/NumericFoldingItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImageItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/DeltaCloudViewItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CloudItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CloudElementCategoryItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImagesCategoryItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstancesCategoryItem.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImageItem.java:
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstanceItem.java: 
+	[JBIDE-7856] switched the observer pattern in DeltaCloud to PropertyChangeSupport, 
+	listening to changes in name, image and instances of the cloud,
+	updating CloudViewItem in tree if cloud name changes,
+	updating cloud combo in InstanceView and ImageView if cloud name changes,
+	now using Generics in the various Items to gain strict typing,
+
 2010-12-09  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java 

@@ -33,7 +33,7 @@ public class DeltaCloudViewLabelProvider extends LabelProvider {
 	
 	@Override
 	public String getText(Object element) {
-		DeltaCloudViewItem e = (DeltaCloudViewItem)element;
+		DeltaCloudViewItem<?> e = (DeltaCloudViewItem<?>)element;
 		return e.getName();
 	}
 

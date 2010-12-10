@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
+import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -25,7 +26,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
-import org.jboss.tools.deltacloud.core.IInstanceListListener;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
@@ -34,7 +34,7 @@ import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
  * @author Andre Dietisheim
  */
 public class InstanceViewLabelAndContentProvider extends
-		AbstractCloudElementViewLabelAndContentProvider<DeltaCloudInstance> implements ITableContentAndLabelProvider, IInstanceListListener {
+		AbstractCloudElementViewLabelAndContentProvider<DeltaCloudInstance> implements ITableContentAndLabelProvider {
 
 	public enum Column {
 		NAME(0, 20),
@@ -118,10 +118,6 @@ public class InstanceViewLabelAndContentProvider extends
 		return "";
 	}
 
-	@Override
-	public void dispose() {
-	}
-
 	protected ICloudElementFilter<DeltaCloudInstance> getCloudFilter(DeltaCloud cloud) {
 		return cloud.getInstanceFilter();
 	}
@@ -134,9 +130,10 @@ public class InstanceViewLabelAndContentProvider extends
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					addToViewer(cloud.getInstances());;
+					addToViewer(cloud.getInstances());
+					;
 					return Status.OK_STATUS;
-				} catch(DeltaCloudException e) {
+				} catch (DeltaCloudException e) {
 					throw e;
 				}
 			}
@@ -144,17 +141,18 @@ public class InstanceViewLabelAndContentProvider extends
 	}
 
 	@Override
-	protected void addListener(DeltaCloud currentCloud) {
-		if (currentCloud != null) {
-			currentCloud.addInstanceListListener(this);
+	public void propertyChange(PropertyChangeEvent event) {
+		if (DeltaCloud.PROP_INSTANCES.equals(event.getPropertyName())) {
+			DeltaCloud cloud = (DeltaCloud) event.getSource();
+			DeltaCloudInstance[] instances = (DeltaCloudInstance[]) event.getNewValue();
+			updateCloudElements(instances, cloud);
 		}
 	}
 
 	@Override
-	protected void removeListener(DeltaCloud currentCloud) {
+	public void addPropertyChangeListener(DeltaCloud currentCloud) {
 		if (currentCloud != null) {
-			currentCloud.removeInstanceListListener(this);
+			currentCloud.addPropertyChangeListener(DeltaCloud.PROP_INSTANCES, this);
 		}
 	}
-
 }

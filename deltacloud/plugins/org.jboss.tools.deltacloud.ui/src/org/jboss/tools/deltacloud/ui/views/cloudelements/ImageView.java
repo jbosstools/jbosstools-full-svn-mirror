@@ -22,7 +22,7 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> { 
+public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> {
 
 	@Override
 	protected String getSelectedCloudPrefsKey() {
@@ -42,5 +42,13 @@ public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> {
 	@Override
 	protected void refreshToolbarCommandStates() {
 		// do nothing
+	}
+
+	@Override
+	protected void addPropertyChangeListener(DeltaCloud cloud) {
+		if (cloud != null) {
+			super.addPropertyChangeListener(cloud);
+			cloud.addPropertyChangeListener(DeltaCloud.PROP_IMAGES, this);
+		}
 	}
 }

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloud;
 
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -19,11 +21,12 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudViewItem {
+public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudViewItem<DeltaCloud> implements
+		PropertyChangeListener {
 
-	protected CloudElementCategoryItem(Object model, DeltaCloudViewItem parent, TreeViewer viewer) {
+	protected CloudElementCategoryItem(DeltaCloud model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		super(model, parent, viewer);
-		addCloudElementListener(getCloud());
+		addPropertyChangeListener(model);
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 
 	protected abstract void asyncAddCloudElements();
 
-	protected void addChildren(Object[] modelElements) {
+	protected void addChildren(CLOUDELEMENT[] modelElements) {
 		if (modelElements.length > NumericFoldingItem.FOLDING_SIZE) {
 			addFoldedChildren(modelElements);
 		} else {
@@ -54,7 +57,7 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 		}
 	}
 
-	protected void addFoldedChildren(Object[] modelElements) {
+	protected void addFoldedChildren(CLOUDELEMENT[] modelElements) {
 		int min = 0;
 		int max = NumericFoldingItem.FOLDING_SIZE;
 		int length = modelElements.length;
@@ -73,7 +76,7 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 		}
 	}
 
-	protected void onListChanged(DeltaCloud cloud, CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
+	protected void onCloudElementsChanged(DeltaCloud cloud, CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
 		try {
 			clearChildren();
 			initialized.set(false);
@@ -85,9 +88,9 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 		}
 	}
 
-	protected abstract CLOUDELEMENT[] filter(CLOUDELEMENT[] cloudElements)  throws DeltaCloudException;
-	
-	protected abstract DeltaCloudViewItem[] getElements(Object[] modelElements, int startIndex, int stopIndex);
+	protected abstract CLOUDELEMENT[] filter(CLOUDELEMENT[] cloudElements) throws DeltaCloudException;
+
+	protected abstract DeltaCloudViewItem<?>[] getElements(CLOUDELEMENT[] modelElements, int startIndex, int stopIndex);
 
 	@Override
 	public IPropertySource getPropertySource() {
@@ -95,17 +98,5 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 		return null;
 	}
 
-	protected DeltaCloud getCloud() {
-		return (DeltaCloud) getModel();
-	}
-
-	@Override
-	protected void dispose() {
-		removeCloudElementListener(getCloud());
-	}
-
-	protected abstract void addCloudElementListener(DeltaCloud cloud);
-
-	protected abstract void removeCloudElementListener(DeltaCloud cloud);
-
+	protected abstract void addPropertyChangeListener(DeltaCloud cloud);
 }

@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.text.MessageFormat;
+
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 
@@ -29,13 +32,13 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 		String password = mainPage.getModel().getPassword();
 		String type = getServerType();
 		try {
-			String oldName = initialCloud.getName();
-			initialCloud.editCloud(name, url, username, password, type);
+			initialCloud.update(name, url, username, password, type);
 			DeltaCloudManager.getDefault().saveClouds();
-			if (!name.equals(oldName)) {
-				DeltaCloudManager.getDefault().notifyCloudRename(initialCloud);
-			}
 		} catch (Exception e) {
+			// TODO internationalize strings
+			ErrorUtils.handleError("Error",
+					MessageFormat.format("Could not edit cloud \"{0}\"", initialCloud.getName()),
+					e, getShell());
 		}
 		return true;
 	}

@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
-import org.jboss.tools.internal.deltacloud.ui.common.databinding.ObservablePojo;
+import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 
 /**
  * @author Andre Dietisheim

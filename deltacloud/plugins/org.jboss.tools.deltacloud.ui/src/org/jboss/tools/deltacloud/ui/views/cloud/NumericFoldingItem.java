@@ -17,13 +17,13 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class NumericFoldingItem extends DeltaCloudViewItem {
+public class NumericFoldingItem extends DeltaCloudViewItem<Object> {
 
 	public static int FOLDING_SIZE = 50;
 	private Object min;
 	private int max;
 
-	protected NumericFoldingItem(int min, int max, DeltaCloudViewItem parent, TreeViewer viewer) {
+	protected NumericFoldingItem(int min, int max, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		super(null, parent, viewer);
 		this.min = min;
 		this.max = max;
@@ -52,6 +52,11 @@ public class NumericFoldingItem extends DeltaCloudViewItem {
 	@Override
 	public IPropertySource getPropertySource() {
 		return null;
+	}
+
+	@Override
+	protected void addPropertyChangeListener(Object object) {
+		// do nothing
 	}
 
 }

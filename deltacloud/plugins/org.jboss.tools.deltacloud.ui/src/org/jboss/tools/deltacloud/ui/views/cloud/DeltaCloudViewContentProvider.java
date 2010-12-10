@@ -15,12 +15,12 @@ import org.eclipse.jface.viewers.Viewer;
 
 public class DeltaCloudViewContentProvider implements ITreeContentProvider {
 
-	private DeltaCloudViewItem root;
+	private DeltaCloudViewItem<?> root;
 
 	@Override
 	public Object[] getChildren(Object element) {
 		if (element instanceof DeltaCloudViewItem) {
-			return ((DeltaCloudViewItem) element).getChildren();	
+			return ((DeltaCloudViewItem<?>) element).getChildren();	
 		} else {
 			return null;
 		}
@@ -29,7 +29,7 @@ public class DeltaCloudViewContentProvider implements ITreeContentProvider {
 	@Override
 	public Object getParent(Object element) {
 		if (element instanceof DeltaCloudViewItem) {
-			return ((DeltaCloudViewItem) element).getParent();
+			return ((DeltaCloudViewItem<?>) element).getParent();
 		} else {
 			return null;
 		}
@@ -37,7 +37,7 @@ public class DeltaCloudViewContentProvider implements ITreeContentProvider {
 
 	@Override
 	public boolean hasChildren(Object element) {
-		DeltaCloudViewItem e = (DeltaCloudViewItem) element;
+		DeltaCloudViewItem<?> e = (DeltaCloudViewItem<?>) element;
 		return e.hasChildren();
 	}
 
@@ -53,7 +53,7 @@ public class DeltaCloudViewContentProvider implements ITreeContentProvider {
 
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		root = (DeltaCloudViewItem) newInput;
+		root = (DeltaCloudViewItem<?>) newInput;
 	}
 
 }
