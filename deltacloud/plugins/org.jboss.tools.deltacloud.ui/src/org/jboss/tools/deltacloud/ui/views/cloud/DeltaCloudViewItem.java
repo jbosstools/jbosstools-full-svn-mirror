@@ -170,15 +170,17 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 	}
 
 	protected void removePropertyChangeListener(DELTACLOUDITEM model) {
-		try {
-			Method method = model.getClass().getMethod("removePropertyChangeListener", PropertyChangeListener.class);
-			if (method != null) {
-				method.invoke(model, this);
+		if (model != null) {
+			try {
+				Method method = model.getClass()
+						.getMethod("removePropertyChangeListener", PropertyChangeListener.class);
+				if (method != null) {
+					method.invoke(model, this);
+				}
+			} catch (Exception e) {
+				// ignore
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-
 	}
 
 	protected abstract void addPropertyChangeListener(DELTACLOUDITEM object);
