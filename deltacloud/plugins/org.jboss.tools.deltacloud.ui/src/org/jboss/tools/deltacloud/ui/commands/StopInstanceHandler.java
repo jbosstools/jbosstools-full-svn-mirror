@@ -23,7 +23,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.cloud.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**

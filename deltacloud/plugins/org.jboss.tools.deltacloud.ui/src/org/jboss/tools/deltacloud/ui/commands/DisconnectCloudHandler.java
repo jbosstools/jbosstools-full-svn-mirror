@@ -37,7 +37,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
-import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.cloud.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloud.CloudItem;
 import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem;
 

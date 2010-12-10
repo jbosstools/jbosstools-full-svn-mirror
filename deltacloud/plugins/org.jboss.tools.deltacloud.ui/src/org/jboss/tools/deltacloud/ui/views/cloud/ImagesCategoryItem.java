@@ -23,7 +23,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
-import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
 /**
  * @author Jeff Johnston

@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.cloud.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 public class RSEUtils {
