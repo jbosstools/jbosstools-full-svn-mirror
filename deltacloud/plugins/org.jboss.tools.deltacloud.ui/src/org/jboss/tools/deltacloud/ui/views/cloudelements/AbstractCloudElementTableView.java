@@ -361,6 +361,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			currentCloudSelector.select(selectionIndex);
 			currentCloudSelector.addModifyListener(cloudCloudModifyListener);
 		}
+		container.layout(true, true);
 	}
 
 	public void cloudsChanged(int type, DeltaCloud cloud) {

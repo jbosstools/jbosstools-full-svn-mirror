@@ -1,5 +1,9 @@
 2010-12-10  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java: 
+	(updateCloudSelector): 
+	[JBIDE-7862] layouting the combo's parent as soon as the cloud name gets edited 
+	-> combo resizes to the space needed to show the whole name
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (performFinish): 
 	[JBIDE-7856] removed DeltaCloudManager#notifyCloudRename and IDeltaCloudManagerListener#RENAME_EVENT. 
 	DeltaCloud now notifies about changes in its properties (images, instances, name),
