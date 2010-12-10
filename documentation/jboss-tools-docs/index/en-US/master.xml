@@ -29,6 +29,14 @@
                 >(pdf)</ulink>
             </primaryie>
         </indexentry>
+	 <indexentry>
+            <primaryie>Cloud Tools Reference Guide <ulink
+                    url="en/deltacloud/html/index.html">(html)</ulink>
+                <ulink url="en/deltacloud/html_single/index.html">(html single)</ulink>
+                <ulink url="en/deltacloud/pdf/Beginners_Guide.pdf"
+                >(pdf)</ulink>
+            </primaryie>
+        </indexentry>
         <indexentry>
             <primaryie>Seam Dev Tools Reference Guide <ulink url="en/seam/html/index.html"
                     >(html)</ulink>
@@ -200,6 +208,16 @@
                 url="en/bpel_user_guide/html/index.html">(html)</ulink>
                 <ulink url="en/bpel_user_guide/html_single/index.html">(html single)</ulink>
                 <ulink url="en/bpel_user_guide/pdf/JBoss BPEL User Guide.pdf"
+                    >(pdf)</ulink>
+            </primaryie>
+        </indexentry>
+
+	<indexentry>
+            <primaryie>ModeShape Tools Reference Guide<ulink
+                url="en/modeshape/html/index.html">(html)</ulink>
+                <ulink url="en/modeshape/html_single/index.html">(html single)</ulink>
+                <ulink url="en/modeshape/pdf/JBoss BPEL User Guide.pdf"
+
                     >(pdf)</ulink>
             </primaryie>
         </indexentry>

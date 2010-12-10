@@ -15,6 +15,7 @@
 		<module>../guides/GettingStartedGuide</module>
 		<module>../guides/Beginners_Guide</module>
 		<module>../../as/docs/reference</module>
+		<module>../../deltacloud/docs/Cloud_Tools_Reference_Guide</module>
 		<module>../../hibernatetools/docs/reference</module>
 		<module>../../jbpm/docs/reference</module>
 		<module>../../jsf/docs/userguide</module>
@@ -33,6 +34,7 @@
 		<module>../../jbpm/docs/converter_ref</module>
 		<module>../../jmx/docs/reference</module>
 		<module>../../bpel/docs/reference</module>
+		<module>../../modeshape/docs/ModeShape_Tools_Reference_Guide</module>
 		<module>index</module>
 	</modules>
 
@@ -69,11 +71,11 @@
                         <fileset>
                             <directory>${pom.basedir}/target/docbook/publish/en-US/</directory>
                             <includes>
-                                <include>html/com/</include>
+                              <!--  <include>html/com/</include> -->
                                 <include>html/org/</include>
-                                <include>html_single/com/</include>
+                             <!--   <include>html_single/com/</include> -->
                                 <include>html_single/org/</include>
-                                <include>eclipse/com/</include>
+                             <!--   <include>eclipse/com/</include> -->
                                 <include>eclipse/org/</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>

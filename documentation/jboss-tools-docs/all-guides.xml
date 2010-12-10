@@ -99,6 +99,19 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
+				<directory>../../deltacloud/docs/Cloud_Tools_Reference_Guide/target/docbook/publish/en-US</directory>
+				<outputDirectory>/deltacloud</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
 				<directory>../../hibernatetools/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/hibernatetools</outputDirectory>
 				<filtered>false</filtered>
@@ -334,6 +347,19 @@
 			<fileSet>
 				<directory>../../bpel/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/bpel_user_guide</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
+				<directory>../../modeshape/docs/ModeShape_Tools_Reference_Guide/target/docbook/publish/en-US</directory>
+				<outputDirectory>/modeshape</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
