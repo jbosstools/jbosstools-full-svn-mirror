@@ -34,7 +34,7 @@ import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.ImageFilter;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.jboss.tools.deltacloud.ui.views.cloud.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.ImageViewLabelAndContentProvider;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.TableViewerColumnComparator;
 

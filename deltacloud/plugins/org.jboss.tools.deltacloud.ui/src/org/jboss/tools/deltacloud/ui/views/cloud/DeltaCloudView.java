@@ -23,6 +23,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloud.property.CVPropertySheetPage;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 

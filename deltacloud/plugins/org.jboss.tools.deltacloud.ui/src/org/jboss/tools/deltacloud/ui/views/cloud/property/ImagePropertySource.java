@@ -14,7 +14,7 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.deltacloud.ui.views.cloud.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
 public class ImagePropertySource implements IPropertySource {
 

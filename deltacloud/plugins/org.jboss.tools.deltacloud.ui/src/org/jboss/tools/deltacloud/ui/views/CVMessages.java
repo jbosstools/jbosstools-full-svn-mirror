@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui.views.cloud;
+package org.jboss.tools.deltacloud.ui.views;
 
 import java.text.MessageFormat;
 import java.util.MissingResourceException;

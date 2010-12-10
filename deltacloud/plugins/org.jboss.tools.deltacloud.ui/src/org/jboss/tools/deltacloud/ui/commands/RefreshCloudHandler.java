@@ -25,8 +25,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
-import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem;
-import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
@@ -38,16 +36,14 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudViewItem cloudViewElement = UIUtils.getFirstAdaptedElement(selection, DeltaCloudViewItem.class);
-			refresh(cloudViewElement);
+			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			refresh(cloud);
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void refresh(final DeltaCloudViewItem cloudViewElement) {
-		if (cloudViewElement != null) {
-			final DeltaCloud cloud = CloudViewElementUtils.getCloud(cloudViewElement);
+	private void refresh(final DeltaCloud cloud) {
 			if (cloud != null) {
 				// TODO: internationalize strings
 				new AbstractCloudJob("Refreshing images and instances on " + cloud.getName(), cloud) {
@@ -64,7 +60,6 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 						return Status.OK_STATUS;
 					}
 				}.schedule();
-			}
 		}
 	}
 }
