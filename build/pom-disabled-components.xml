@@ -23,37 +23,6 @@
 		</profile>
 
 		<profile>
-			<id>tests</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-				<property>
-					<name>as-bootstrap</name>
-				</property>
-			</activation>
-			<modules>
-				<module>../tests</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>jmx</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>../jmx</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>jmx-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../jmx</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>archives</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -69,7 +38,6 @@
 		<profile>
 			<id>archives-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../archives</module>
 			</modules>
 		</profile>
@@ -90,9 +58,7 @@
 		<profile>
 			<id>as-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../archives</module>
-				<module>../jmx</module>
 				<module>../as</module>
 			</modules>
 		</profile>
@@ -110,7 +76,6 @@
 		<profile>
 			<id>common-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../common</module>
 			</modules>
 		</profile>
@@ -128,7 +93,6 @@
 		<profile>
 			<id>jst-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
 			</modules>
@@ -165,7 +129,6 @@
 		<profile>
 			<id>vpe-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
 				<module>../xulrunner</module>
@@ -186,7 +149,6 @@
 		<profile>
 			<id>jsf-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
 				<module>../xulrunner</module>
@@ -208,7 +170,6 @@
 		<profile>
 			<id>freemarker-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../freemarker</module>
 			</modules>
 		</profile>
@@ -226,7 +187,6 @@
 		<profile>
 			<id>hibernatetools-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../freemarker</module>
 				<module>../hibernatetools</module>
 			</modules>
@@ -245,7 +205,6 @@
 		<profile>
 			<id>portlet-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../portlet</module>
 			</modules>
 		</profile>
@@ -263,7 +222,6 @@
 		<profile>
 			<id>workingset-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../workingset</module>
 			</modules>
 		</profile>
@@ -281,7 +239,6 @@
 		<profile>
 			<id>struts-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
 				<module>../xulrunner</module>
@@ -303,7 +260,6 @@
 		<profile>
 			<id>profiler-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../profiler</module>
 			</modules>
 		</profile>
@@ -321,7 +277,6 @@
 		<profile>
 			<id>smooks-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../smooks</module>
 			</modules>
 		</profile>
@@ -339,7 +294,6 @@
 		<profile>
 			<id>cdi-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
 				<module>../cdi</module>
@@ -359,26 +313,7 @@
 		<profile>
 			<id>birt-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../birt</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>bpel</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../bpel</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>bpel-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../bpel</module>
 			</modules>
 		</profile>
 
@@ -395,7 +330,6 @@
 		<profile>
 			<id>esb-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../esb</module>
 			</modules>
 		</profile>
@@ -413,8 +347,6 @@
 		<profile>
 			<id>seam-bootstrap</id>
 			<modules>
-				<module>../tests</module>
-				<module>../jmx</module>
 				<module>../archives</module>
 				<module>../as</module>
 				<module>../hibernatetools</module>
@@ -440,7 +372,6 @@
 		<profile>
 			<id>examples-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../examples</module>
 			</modules>
 		</profile>
@@ -458,7 +389,6 @@
 		<profile>
 			<id>maven-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../maven</module>
 			</modules>
 		</profile>
@@ -476,7 +406,6 @@
 		<profile>
 			<id>tptp-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../tptp</module>
 			</modules>
 		</profile>
@@ -494,63 +423,8 @@
 		<profile>
 			<id>ws-bootstrap</id>
 			<modules>
-				<module>../tests</module>
 				<module>../common</module>
 				<module>../ws</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>modeshape</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../modeshape</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>modeshape-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../modeshape</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>flow</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../flow</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>flow-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../flow</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>jbpm</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../jbpm</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>jbpm-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../jbpm</module>
 			</modules>
 		</profile>
 
