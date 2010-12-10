@@ -100,7 +100,7 @@
 			</fileSet>
 			<fileSet>
 				<directory>../../deltacloud/docs/Cloud_Tools_Reference_Guide/target/docbook/publish/en-US</directory>
-				<outputDirectory>/deltacloud</outputDirectory>
+				<outputDirectory>/cloud</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>
