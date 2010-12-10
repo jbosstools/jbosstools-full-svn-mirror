@@ -99,15 +99,29 @@ public class DeltaCloud extends ObservablePojo {
 	public void update(String name, String url, String username, String password, String type)
 			throws DeltaCloudException {
 		this.type = type;
-		setName(name);
 
-		boolean changed = updateConnectionProperties(url, username, password);
-		if (changed) {
-			client = createClient(name, url, username, passwordStore.getPassword());
+		boolean nameChanged = updateName(name);
+		boolean connectionPropertiesChanged = updateConnectionProperties(url, username, password); 
+		
+		if (nameChanged || connectionPropertiesChanged) {
+			this.passwordStore.update(new DeltaCloudPasswordStorageKey(name, username), password);
+		}
+
+		if (connectionPropertiesChanged) {
+			client = createClient(name, url, username, password);
 			loadChildren();
 		}
 	}
+	
+	private boolean updateName(String name) {
+		if (equals(this.name, name)) {
+			return false;
+		}
 
+		setName(name);
+		return true;
+	}
+	
 	private boolean updateConnectionProperties(String url, String username, String password)
 			throws DeltaCloudException {
 		boolean changed = false;
@@ -120,9 +134,9 @@ public class DeltaCloud extends ObservablePojo {
 			changed = true;
 		}
 		if (!equals(this.passwordStore.getPassword(), password)) {
-			this.passwordStore.setPassword(password);
 			changed = true;
 		}
+
 		return changed;
 	}
 
@@ -173,7 +187,7 @@ public class DeltaCloud extends ObservablePojo {
 		this.lastImageId = lastImageId;
 	}
 
-	protected void setName(String name) {
+	private void setName(String name) {
 		firePropertyChange(PROP_NAME, this.name, this.name = name);
 	}
 
