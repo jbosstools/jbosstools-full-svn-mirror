@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
-import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -65,7 +66,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  * @author Andre Dietisheim
  */
 public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaCloudElement> extends ViewPart implements
-		IDeltaCloudManagerListener, PropertyChangeListener {
+		IDeltaCloudManagerListener, PropertyChangeListener, IAdaptable {
 
 	private final static String CLOUD_SELECTOR_LABEL = "CloudSelector.label"; //$NON-NLS-1$
 
@@ -433,5 +434,14 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		getSite().getWorkbenchWindow().getSelectionService().removePostSelectionListener(workbenchSelectionListener);
 		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
 		super.dispose();
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Object getAdapter(Class adapter) {
+		if (adapter == DeltaCloud.class) {
+			return currentCloud;
+		} else {
+			return super.getAdapter(adapter);
+		}
 	}
 }
