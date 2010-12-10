@@ -98,7 +98,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			<fileSet>
+	<!--		<fileSet>
 				<directory>../../deltacloud/docs/Cloud_Tools_Reference_Guide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/cloud</outputDirectory>
 				<filtered>false</filtered>
@@ -110,7 +110,7 @@
 				<useDefaultExcludes>true</useDefaultExcludes>
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
-			</fileSet>
+			</fileSet> -->
 			<fileSet>
 				<directory>../../hibernatetools/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/hibernatetools</outputDirectory>
@@ -357,7 +357,7 @@
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
 			</fileSet>
-			<fileSet>
+		<!--	<fileSet>
 				<directory>../../modeshape/docs/ModeShape_Tools_Reference_Guide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/modeshape</outputDirectory>
 				<filtered>false</filtered>
@@ -369,7 +369,7 @@
 				<useDefaultExcludes>true</useDefaultExcludes>
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
-			</fileSet>
+			</fileSet> -->
 	</fileSets>
 
 </assembly>

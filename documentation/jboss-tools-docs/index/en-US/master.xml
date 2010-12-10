@@ -29,14 +29,14 @@
                 >(pdf)</ulink>
             </primaryie>
         </indexentry>
-	 <indexentry>
+<!--	 <indexentry>
             <primaryie>Cloud Tools Reference Guide <ulink
                     url="en/cloud/html/index.html">(html)</ulink>
                 <ulink url="en/cloud/html_single/index.html">(html single)</ulink>
                 <ulink url="en/cloud/pdf/Beginners_Guide.pdf"
                 >(pdf)</ulink>
             </primaryie>
-        </indexentry>
+        </indexentry> -->
         <indexentry>
             <primaryie>Seam Dev Tools Reference Guide <ulink url="en/seam/html/index.html"
                     >(html)</ulink>
@@ -212,7 +212,7 @@
             </primaryie>
         </indexentry>
 
-	<indexentry>
+<!--	<indexentry>
             <primaryie>ModeShape Tools Reference Guide<ulink
                 url="en/modeshape/html/index.html">(html)</ulink>
                 <ulink url="en/modeshape/html_single/index.html">(html single)</ulink>
@@ -220,7 +220,7 @@
 
                     >(pdf)</ulink>
             </primaryie>
-        </indexentry>
+        </indexentry> -->
 
     </index>
 </book>

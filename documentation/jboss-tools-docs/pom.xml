@@ -15,7 +15,7 @@
 		<module>../guides/GettingStartedGuide</module>
 		<module>../guides/Beginners_Guide</module>
 		<module>../../as/docs/reference</module>
-		<module>../../deltacloud/docs/Cloud_Tools_Reference_Guide</module>
+	<!--	<module>../../deltacloud/docs/Cloud_Tools_Reference_Guide</module> -->
 		<module>../../hibernatetools/docs/reference</module>
 		<module>../../jbpm/docs/reference</module>
 		<module>../../jsf/docs/userguide</module>
@@ -34,7 +34,7 @@
 		<module>../../jbpm/docs/converter_ref</module>
 		<module>../../jmx/docs/reference</module>
 		<module>../../bpel/docs/reference</module>
-		<module>../../modeshape/docs/ModeShape_Tools_Reference_Guide</module>
+	<!--	<module>../../modeshape/docs/ModeShape_Tools_Reference_Guide</module> -->
 		<module>index</module>
 	</modules>
 
