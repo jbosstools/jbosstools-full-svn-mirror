@@ -363,7 +363,7 @@ public class DeltaCloud extends ObservablePojo {
 	 * 
 	 * @see #notifyInstanceListListeners(DeltaCloudInstance[])
 	 */
-	private void loadInstances() throws DeltaCloudException {
+	public void loadInstances() throws DeltaCloudException {
 		try {
 			DeltaCloudInstancesRepository repo = getInstancesRepository();
 			DeltaCloudInstance[] oldInstances = repo.get();
@@ -558,7 +558,7 @@ public class DeltaCloud extends ObservablePojo {
 	 * 
 	 * @see #notifyImageListListeners(DeltaCloudImage[])
 	 */
-	private void loadImages() throws DeltaCloudException {
+	public void loadImages() throws DeltaCloudException {
 		try {
 			DeltaCloudImagesRepository repo = getImagesRepository();
 			DeltaCloudImage[] oldImages = repo.get();

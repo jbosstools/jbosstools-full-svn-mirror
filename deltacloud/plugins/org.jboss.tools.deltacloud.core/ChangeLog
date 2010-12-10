@@ -1,6 +1,10 @@
 2010-12-10  André Dietisheim  <adietish@redhat.com>
 
-	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 	(update): 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (loadImages):
+	[JBIDE-7738] made #loadImages public, RefreshImagesHandler needs access to it  
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (loadInstances):
+	[JBIDE-7738] made #loadInstances public, RefreshInstancesHandler needs access to it  
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (update): 
 	[JBIDE-7863] need to store the password if either connection name, username, pw or url changes
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java (notifyCloudRename):
 	[JBIDE-7856] removed notifyCloudRename since DeltaCloud now notifies about changes in its properties (images, instances, name) 
