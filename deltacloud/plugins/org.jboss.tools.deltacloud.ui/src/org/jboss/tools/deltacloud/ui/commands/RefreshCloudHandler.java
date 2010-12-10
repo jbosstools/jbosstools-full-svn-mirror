@@ -17,8 +17,6 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
@@ -34,32 +32,40 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+		DeltaCloud cloud = getDeltaCloud(event);
+		if (cloud != null) {
 			refresh(cloud);
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void refresh(final DeltaCloud cloud) {
-			if (cloud != null) {
-				// TODO: internationalize strings
-				new AbstractCloudJob("Refreshing images and instances on " + cloud.getName(), cloud) {
-
-					@Override
-					protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
-						try {
-							monitor.worked(1);
-							cloud.loadChildren();
-							monitor.done();
-						} catch (DeltaCloudMultiException e) {
-							return ErrorUtils.createMultiStatus(e);
-						}
-						return Status.OK_STATUS;
-					}
-				}.schedule();
+	private DeltaCloud getDeltaCloud(ExecutionEvent event) {
+		DeltaCloud cloud = null;
+		// first try selected item
+		cloud = UIUtils.getFirstAdaptedElement(HandlerUtil.getCurrentSelection(event), DeltaCloud.class);
+		if (cloud == null) {
+			// no item selected: try active part
+			cloud = UIUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class);
 		}
+		return cloud;
+	}
+
+	protected void refresh(final DeltaCloud cloud) {
+		// TODO: internationalize strings
+		new AbstractCloudJob("Refreshing images and instances on " + cloud.getName(), cloud) {
+
+			@Override
+			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
+				try {
+					monitor.worked(1);
+					cloud.loadChildren();
+					monitor.done();
+				} catch (DeltaCloudMultiException e) {
+					return ErrorUtils.createMultiStatus(e);
+				}
+				return Status.OK_STATUS;
+			}
+		}.schedule();
 	}
 }
