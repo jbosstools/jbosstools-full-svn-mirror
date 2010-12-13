@@ -20,7 +20,7 @@ import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
  */
 public class DeleteConnectionCommand extends Command {
 
-	private TreeNodeConnection connection;
+	protected TreeNodeConnection connection;
 
 	public DeleteConnectionCommand(TreeNodeConnection connection) {
 		Assert.isNotNull(connection);

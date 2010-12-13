@@ -90,4 +90,14 @@ public class CreateConnectionCommand extends Command {
 	public void setTarget(AbstractSmooksGraphicalModel target) {
 		this.target = target;
 	}
+
+	public TreeNodeConnection getTempConnectionHandle() {
+		return tempConnectionHandle;
+	}
+
+	public void setTempConnectionHandle(TreeNodeConnection tempConnectionHandle) {
+		this.tempConnectionHandle = tempConnectionHandle;
+	}
+	
+	
 }

@@ -29,11 +29,11 @@ public class TreeNodeConnection implements IValidatableModel{
 	
 	protected int severity = IFieldMarker.TYPE_NONE;
 	
-	private Object data;
+	protected Object data;
 
-	private AbstractSmooksGraphicalModel sourceNode;
+	protected AbstractSmooksGraphicalModel sourceNode;
 
-	private AbstractSmooksGraphicalModel targetNode;
+	protected AbstractSmooksGraphicalModel targetNode;
 	
 	protected List<String> markerMessages = null;
 	
@@ -81,7 +81,11 @@ public class TreeNodeConnection implements IValidatableModel{
 	}
 
 	public void connectTarget() {
+//		if(data instanceof RemoveResult) {
+//			((TreeNodeModel)targetNode.getModelRootNode()).reAddMappingConnections(((RemoveResult)data).getRemoveMappings());
+//		}
 		targetNode.addTargetConnection(this, sourceNode);
+		
 	}
 
 	public void disconnectSource() {
@@ -90,9 +94,9 @@ public class TreeNodeConnection implements IValidatableModel{
 
 	public void disconnectTarget() {
 		targetNode.removeTargetConnection(this);
-		if(data instanceof RemoveResult) {
-			((TreeNodeModel)targetNode.getModelRootNode()).removeMappingConnections(((RemoveResult)data).getRemoveMappings());
-		}
+//		if(data instanceof RemoveResult) {
+//			((TreeNodeModel)targetNode.getModelRootNode()).removeMappingConnections(((RemoveResult)data).getRemoveMappings());
+//		}
 	}
 
 	public AbstractSmooksGraphicalModel getSourceNode() {

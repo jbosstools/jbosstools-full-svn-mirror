@@ -58,7 +58,7 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 		this.domainProvider = domainProvider;
 	}
 
-	protected TemplateBuilder getTemplateBuilder() {
+	public TemplateBuilder getTemplateBuilder() {
 		AbstractSmooksGraphicalModel parent = this;
 		while (parent != null
 				&& !(parent instanceof FreemarkerTemplateGraphicalModel)) {
@@ -181,7 +181,10 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 				}
 				
 				connection.setData(mappingResult.getMapping());
-				((TreeNodeModel)getModelRootNode()).removeMappingConnections(mappingResult.getRemoveMappings());
+				if(connection instanceof FreemarkerTemplateConnection){
+					((FreemarkerTemplateConnection)connection).setRemoveMappingConnections(mappingResult.getRemoveMappings());
+				}
+//				((TreeNodeModel)getModelRootNode()).removeMappingConnections(mappingResult.getRemoveMappings());
 			} else if (isMappingValueConnection(connection)) {
 				String mappingString = null;
 				
@@ -349,7 +352,8 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 	public void removeTargetConnection(TreeNodeConnection connection) {
 		((TreeNodeModel)connection.getSourceNode()).getConnections().remove(connection);
 		getConnections().remove(connection);
-
+//		changeFreemarkerContents();
+//		super.removeTargetConnection(connection);
 		RemoveResult removeResult;
 		try {
 			TemplateBuilder builder = getTemplateBuilder();
@@ -358,9 +362,10 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 				return;
 			if (mapping instanceof Mapping) {
 				removeResult = builder.removeMapping((Mapping) mapping);
-				changeFreemarkerContents();
+				
 				connection.setData(removeResult);
 			}
+			changeFreemarkerContents();
 			super.removeTargetConnection(connection);
 		} catch (Exception e) {
 			e.printStackTrace();

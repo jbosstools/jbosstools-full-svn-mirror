@@ -3229,7 +3229,9 @@ public class SmooksUIUtils {
 				if (Collection.class.isAssignableFrom(clazz)) {
 					return true;
 				}
+				if(clazz.isArray()) return true;
 			} catch (Throwable t) {
+				t.printStackTrace();
 			}
 		}
 

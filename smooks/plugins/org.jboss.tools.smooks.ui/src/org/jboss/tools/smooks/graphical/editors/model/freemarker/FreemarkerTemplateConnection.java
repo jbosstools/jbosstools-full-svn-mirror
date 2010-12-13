@@ -10,12 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.model.freemarker;
 
+import java.util.List;
+
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
+import org.jboss.tools.smooks.templating.template.Mapping;
 
 /**
  * @author Dart
  *
  */
 public class FreemarkerTemplateConnection extends TreeNodeConnection {
+	protected List<Mapping> removeMappings;
 
+	public void setRemoveMappingConnections(List<Mapping> removeMappings) {
+		this.removeMappings = removeMappings;
+	}
+
+	public List<Mapping> getRemoveMappings() {
+		return removeMappings;
+	}
 }

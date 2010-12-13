@@ -12,7 +12,6 @@ import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
-import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateNodeGraphicalModel;
 import org.jboss.tools.smooks.templating.template.CollectionMapping;
 import org.jboss.tools.smooks.templating.template.Mapping;
 
@@ -201,35 +200,69 @@ public class TreeNodeModel extends AbstractSmooksGraphicalModel {
 		
 		return parentNode.getParentCollectionConnection();
 	}
+	
+//	public void reAddMappingConnections(List<Mapping> removeMappings){
+//		if(removeMappings == null || removeMappings.isEmpty()) {
+//			return;
+//		}
+//		
+//		// Remove from all the children first...
+//		for(AbstractSmooksGraphicalModel child : children) {
+//			if(child instanceof TreeNodeModel) {
+//				((TreeNodeModel)child).reAddMappingConnections(removeMappings);
+//			}
+//		}
+//		for (Mapping mapping : removeMappings) {
+//			Object mappingObj = mapping.getMappingNode();
+//			if(this.data == mappingObj){
+//				
+//			}
+//		}
+//		// Now remove from this node...		
+//		if(targetConnections != null && !targetConnections.isEmpty()) {
+//			List<TreeNodeConnection> connectionsToAdd =  new ArrayList<TreeNodeConnection>();
+//			for(TreeNodeConnection connection : targetConnections) {
+//				Object connectionData = connection.getData();
+//				if(connectionData instanceof Mapping) {
+//					if(removeMappings.contains(connectionData)) {
+//						connectionsToAdd.add(connection);
+//					}
+//				}
+//			}
+//			for(TreeNodeConnection connection : connectionsToAdd) {
+//				connection.connect();
+//			}
+//		}
+//	}
 
-	public void removeMappingConnections(List<Mapping> removeMappings) {
-		if(removeMappings == null || removeMappings.isEmpty()) {
-			return;
-		}
-		
-		// Remove from all the children first...
-		for(AbstractSmooksGraphicalModel child : children) {
-			if(child instanceof TreeNodeModel) {
-				((TreeNodeModel)child).removeMappingConnections(removeMappings);
-			}
-		}
-		
-		// Now remove from this node...		
-		if(targetConnections != null && !targetConnections.isEmpty()) {
-			List<TreeNodeConnection> connectionsToRemove =  new ArrayList<TreeNodeConnection>();
-			for(TreeNodeConnection connection : targetConnections) {
-				Object connectionData = connection.getData();
-				if(connectionData instanceof Mapping) {
-					if(removeMappings.contains(connectionData)) {
-						connectionsToRemove.add(connection);
-					}
-				}
-			}
-			for(TreeNodeConnection connection : connectionsToRemove) {
-				connection.disconnect();
-			}
-		}
-	}
+//	public void removeMappingConnections(List<Mapping> removeMappings) {
+//		if(removeMappings == null || removeMappings.isEmpty()) {
+//			return;
+//		}
+//		
+//		// Remove from all the children first...
+//		for(AbstractSmooksGraphicalModel child : children) {
+//			if(child instanceof TreeNodeModel) {
+//				((TreeNodeModel)child).removeMappingConnections(removeMappings);
+//			}
+//		}
+//		
+//		// Now remove from this node...		
+//		if(targetConnections != null && !targetConnections.isEmpty()) {
+//			List<TreeNodeConnection> connectionsToRemove =  new ArrayList<TreeNodeConnection>();
+//			for(TreeNodeConnection connection : targetConnections) {
+//				Object connectionData = connection.getData();
+//				if(connectionData instanceof Mapping) {
+//					if(removeMappings.contains(connectionData)) {
+//						connectionsToRemove.add(connection);
+//					}
+//				}
+//			}
+//			for(TreeNodeConnection connection : connectionsToRemove) {
+//				connection.disconnect();
+//			}
+//		}
+//	}
 
 	public void setText(String text) {
 		// if (text != null && !text.equals(this.text)) {
