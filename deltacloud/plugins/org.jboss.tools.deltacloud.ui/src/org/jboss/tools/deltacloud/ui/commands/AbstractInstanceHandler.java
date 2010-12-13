@@ -15,7 +15,7 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.views.PerformInstanceActionThread;
+import org.jboss.tools.deltacloud.ui.views.PerformInstanceActionJob;
 import org.jboss.tools.internal.deltacloud.ui.utils.StringUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.StringUtils.IElementFormatter;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
@@ -27,13 +27,13 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  */
 public abstract class AbstractInstanceHandler extends AbstractHandler implements IHandler {
 
-	protected void executeInstanceAction(DeltaCloudInstance instance, String actionId, String expectedState,
+	protected void executeInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action, DeltaCloudInstance.State expectedState,
 			String title, String message) {
 		if (instance != null) {
-			PerformInstanceActionThread t = new PerformInstanceActionThread(
+			PerformInstanceActionJob t = new PerformInstanceActionJob(
 					instance.getDeltaCloud(),
 					instance,
-					actionId,
+					action,
 					title,
 					message,
 					expectedState);

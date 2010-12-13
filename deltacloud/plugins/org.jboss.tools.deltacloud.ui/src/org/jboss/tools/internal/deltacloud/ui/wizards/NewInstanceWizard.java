@@ -175,7 +175,7 @@ public class NewInstanceWizard extends Wizard {
 			if (instance != null) {
 				result = true;
 			}
-			if (instance != null && instance.getState().equals(DeltaCloudInstance.PENDING)) {
+			if (instance != null && instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
 				final String instanceId = instance.getId();
 				final String instanceName = name;
 				Job job = new WatchCreateJob(WizardMessages.getString(STARTING_INSTANCE_TITLE),

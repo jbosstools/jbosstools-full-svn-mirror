@@ -1,5 +1,15 @@
 2010-12-13  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (performFinish): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java (getStatusIcon): 
+	* src/org/jboss/tools/deltacloud/ui/views/PerformDestroyInstanceActionThread.java (run): 
+	* src/org/jboss/tools/deltacloud/ui/views/PerformInstanceActionJob.java (PerformInstanceActionJob): 
+	(run): 
+	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java (stopInstance): 
+	* src/org/jboss/tools/deltacloud/ui/commands/StartInstanceHandler.java (startInstance): 
+	* src/org/jboss/tools/deltacloud/ui/commands/RebootInstanceHandler.java (rebootInstance): 
+	* src/org/jboss/tools/deltacloud/ui/commands/AbstractInstanceHandler.java (executeInstanceAction): 
+	[JBIDE-7877] replaced state- and action-strings in DeltaCloudInstace by enums
 	* plugin.xml: 
 	[JBIDE-7864] added hasImages property tester, rename CreateInstanceHandler2 to CreateInstanceFromAnyImage,
 	renamed CreateInstanceHandler to CreateInstanceFromSpecificImage

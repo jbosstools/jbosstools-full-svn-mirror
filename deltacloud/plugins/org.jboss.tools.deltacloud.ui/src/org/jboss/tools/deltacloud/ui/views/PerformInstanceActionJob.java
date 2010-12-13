@@ -22,19 +22,19 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
-public class PerformInstanceActionThread extends Job {
+public class PerformInstanceActionJob extends Job {
 
 	private static final String INSTANCEACTION_ERROR_TITLE = "InstanceActionError.title"; //$NON-NLS-1$
 	private static final String INSTANCEACTION_ERROR_MESSAGE = "InstanceActionError.msg"; //$NON-NLS-1$
 
 	private DeltaCloud cloud;
 	private DeltaCloudInstance instance;
-	private String action;
+	private DeltaCloudInstance.Action action;
 	private String taskName;
-	private String expectedState;
+	private DeltaCloudInstance.State expectedState;
 
-	public PerformInstanceActionThread(DeltaCloud cloud, DeltaCloudInstance instance,
-			String action, String title, String taskName, String expectedState) {
+	public PerformInstanceActionJob(DeltaCloud cloud, DeltaCloudInstance instance,
+			DeltaCloudInstance.Action action, String title, String taskName, DeltaCloudInstance.State expectedState) {
 		super(title);
 		this.cloud = cloud;
 		this.instance = instance;
@@ -63,7 +63,7 @@ public class PerformInstanceActionThread extends Job {
 					ErrorDialog.openError(
 							UIUtils.getActiveShell(),
 							CVMessages.getString(INSTANCEACTION_ERROR_TITLE),
-							CVMessages.getFormattedString(INSTANCEACTION_ERROR_MESSAGE, action, instance.getName()),
+							CVMessages.getFormattedString(INSTANCEACTION_ERROR_MESSAGE, action.getName(), instance.getName()),
 							status);
 				}
 			});

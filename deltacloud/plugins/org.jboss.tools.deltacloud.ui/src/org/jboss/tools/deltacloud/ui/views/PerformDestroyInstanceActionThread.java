@@ -48,7 +48,7 @@ public class PerformDestroyInstanceActionThread extends Job {
 				@Override
 				public void run() {
 					try {
-						cloud.performInstanceAction(instance.getId(), DeltaCloudInstance.DESTROY);
+						cloud.performInstanceAction(instance.getId(), DeltaCloudInstance.Action.DESTROY);
 					} catch (DeltaCloudException e) {
 						// TODO internationalize strings
 						ErrorUtils.handleError("Error",

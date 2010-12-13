@@ -81,8 +81,8 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 		if (instance != null) {
 			executeInstanceAction(
 					instance
-					, DeltaCloudInstance.REBOOT
-					, DeltaCloudInstance.RUNNING
+					, DeltaCloudInstance.Action.REBOOT
+					, DeltaCloudInstance.State.RUNNING
 					, CVMessages.getString(REBOOTING_INSTANCE_TITLE)
 					, CVMessages.getFormattedString(REBOOTING_INSTANCE_MSG, new String[] { instance.getName() }));
 		}

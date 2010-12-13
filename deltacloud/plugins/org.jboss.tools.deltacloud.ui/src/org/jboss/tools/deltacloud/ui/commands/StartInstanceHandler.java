@@ -83,8 +83,8 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 		if (instance != null) {
 			executeInstanceAction(
 					instance
-					, DeltaCloudInstance.START
-					, DeltaCloudInstance.RUNNING
+					, DeltaCloudInstance.Action.START
+					, DeltaCloudInstance.State.RUNNING
 					, CVMessages.getString(STARTING_INSTANCE_TITLE)
 					, CVMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] { instance.getName() }));
 		}

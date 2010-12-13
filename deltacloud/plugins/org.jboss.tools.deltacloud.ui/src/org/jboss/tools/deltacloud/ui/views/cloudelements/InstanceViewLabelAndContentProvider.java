@@ -86,12 +86,12 @@ public class InstanceViewLabelAndContentProvider extends
 		}
 	}
 
-	private Image getStatusIcon(String status) {
-		if (DeltaCloudInstance.STOPPED.equals(status)) {
+	private Image getStatusIcon(DeltaCloudInstance.State status) {
+		if (DeltaCloudInstance.State.STOPPED.equals(status)) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_STOPPED);
-		} else if (DeltaCloudInstance.RUNNING.equals(status)) {
+		} else if (DeltaCloudInstance.State.RUNNING.equals(status)) {
 			return SWTImagesFactory.get(SWTImagesFactory.IMG_RUNNING);
-		} else if (DeltaCloudInstance.BOGUS.equals(status)) {
+		} else if (DeltaCloudInstance.State.BOGUS.equals(status)) {
 			return PlatformUI.getWorkbench().getSharedImages().
 					getImage(ISharedImages.IMG_DEC_FIELD_WARNING);
 		} else {
