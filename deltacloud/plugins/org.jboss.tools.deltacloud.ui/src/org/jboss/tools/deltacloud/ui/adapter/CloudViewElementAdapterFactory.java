@@ -16,9 +16,9 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem;
 import org.jboss.tools.deltacloud.ui.views.cloud.ImageItem;
 import org.jboss.tools.deltacloud.ui.views.cloud.InstanceItem;
-import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 
 public class CloudViewElementAdapterFactory implements IAdapterFactory {
@@ -48,7 +48,7 @@ public class CloudViewElementAdapterFactory implements IAdapterFactory {
 		}
 	}
 
-	private DeltaCloudInstance getDeltaCloudInstance(DeltaCloudViewItem element) {
+	private DeltaCloudInstance getDeltaCloudInstance(DeltaCloudViewItem<?> element) {
 		if (element instanceof InstanceItem) {		
 			return (DeltaCloudInstance) element.getModel();
 		} else {
@@ -56,7 +56,7 @@ public class CloudViewElementAdapterFactory implements IAdapterFactory {
 		}
 	}
 
-	private DeltaCloudImage getDeltaCloudImage(DeltaCloudViewItem element) {
+	private DeltaCloudImage getDeltaCloudImage(DeltaCloudViewItem<?> element) {
 		if (element instanceof ImageItem) {		
 			return (DeltaCloudImage) element.getModel();
 		} else {
