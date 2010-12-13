@@ -93,7 +93,6 @@ public class Bpmn2DetailsPageImpl extends Page implements IBpmn2DetailsPage {
    		super.init(site);
     }
 
-	@Override
 	public void createControl(Composite parent) {
 		Tree eventTree = editor.getFormToolkit().createTree(
 				parent, SWT.SINGLE | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
@@ -106,7 +105,6 @@ public class Bpmn2DetailsPageImpl extends Page implements IBpmn2DetailsPage {
 		treeViewer.setFilters(new ViewerFilter[] { new RootFilter(), new FlowElementFilter() });
 		treeViewer.setAutoExpandLevel(2);
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {			
-			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				handleTreeViewerSelectionChanged(event);
 			}
@@ -216,7 +214,6 @@ public class Bpmn2DetailsPageImpl extends Page implements IBpmn2DetailsPage {
 				menuItem.setText(action.getText());
 				menuItem.setImage(action.getImageDescriptor().createImage());
 				menuItem.addSelectionListener(new SelectionAdapter() {
-					@Override
 					public void widgetSelected(SelectionEvent e) {
 						action.run();
 					}
@@ -258,24 +255,20 @@ public class Bpmn2DetailsPageImpl extends Page implements IBpmn2DetailsPage {
 		}
 	}
 	
-	@Override
 	public Control getControl() {
 		return treeViewer.getControl();
 	}
 
-	@Override
 	public void setFocus() {
 		// Nothing to do
 		
 	}
     	
-    @Override
 	public void dispose() {
     	super.dispose();
 		popupMenu.dispose();
 	}
 
-	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		if (part == editor) {
 			EObject object = unwrapEditorSelection(selection);
@@ -325,7 +318,6 @@ public class Bpmn2DetailsPageImpl extends Page implements IBpmn2DetailsPage {
  	
  	private void updateTreeSelection(final Object object) {
 		getControl().getDisplay().asyncExec(new Runnable() {
-			@Override
 			public void run() {
 				treeViewer.setSelection(new StructuredSelection(object));
 			} 					
@@ -343,24 +335,20 @@ public class Bpmn2DetailsPageImpl extends Page implements IBpmn2DetailsPage {
         }
     }
 
-	@Override
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
 		treeViewer.addSelectionChangedListener(listener);
 	}
 
-	@Override
 	public ISelection getSelection() {
 		return treeViewer.getSelection();
 	}
 
-	@Override
 	public void removeSelectionChangedListener(
 			ISelectionChangedListener listener) {
 		treeViewer.removeSelectionChangedListener(listener);
 		
 	}
 
-	@Override
 	public void setSelection(ISelection selection) {
 		// ignore
 	}

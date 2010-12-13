@@ -19,7 +19,6 @@ public class Bpmn2ResourceFactoryImpl extends org.eclipse.bpmn2.util.Bpmn2Resour
 	
 	private ResourceHandler resourceHandler = new Bpmn2ResourceHandlerImpl();
 
-    @Override
     public Resource createResource(URI uri) {
     	XMLResource result = (XMLResource)super.createResource(uri);
     	result.getDefaultLoadOptions().put(XMLResource.OPTION_RESOURCE_HANDLER, resourceHandler);
@@ -29,12 +28,10 @@ public class Bpmn2ResourceFactoryImpl extends org.eclipse.bpmn2.util.Bpmn2Resour
     
     class Bpmn2ResourceHandlerImpl implements ResourceHandler {
 
-		@Override
 		public void preLoad(XMLResource resource, InputStream inputStream,
 				Map<?, ?> options) {
 		}
 
-		@Override
 		public void postLoad(XMLResource resource, InputStream inputStream,
 				Map<?, ?> options) {
 			TreeIterator<EObject> contents = resource.getAllContents();
@@ -54,23 +51,10 @@ public class Bpmn2ResourceFactoryImpl extends org.eclipse.bpmn2.util.Bpmn2Resour
 			return BpmnNotationFactory.INSTANCE.createDiagram(bpmnDiagram);
 		}
 
-		@Override
 		public void preSave(XMLResource resource, OutputStream outputStream,
 				Map<?, ?> options) {
 		}
 		
-//		private View getParentView(View candidate, View view) {
-//			for (Object child : candidate.getVisibleChildren()) {
-//				if (child == view) {
-//					return candidate;
-//				} else {
-//					return getParentView((View)child, view);
-//				}
-//			}
-//			return null;
-//		}
-
-		@Override
 		public void postSave(XMLResource resource, OutputStream outputStream,
 				Map<?, ?> options) {
 		}
@@ -78,16 +62,4 @@ public class Bpmn2ResourceFactoryImpl extends org.eclipse.bpmn2.util.Bpmn2Resour
     	
     }
     
-
-//    private void prepareSave(Resource resource) {
-//        EObject cur;
-//        for (Iterator<EObject> iter = resource.getAllContents(); iter.hasNext();) {
-//            cur = iter.next();
-//
-//            EStructuralFeature idAttr = cur.eClass().getEIDAttribute();
-//            if (idAttr != null && !cur.eIsSet(idAttr)) {
-//                cur.eSet(idAttr, EcoreUtil.generateUUID());
-//            }
-//        }
-//    }
 }
