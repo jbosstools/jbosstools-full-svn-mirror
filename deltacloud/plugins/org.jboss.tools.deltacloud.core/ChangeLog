@@ -1,3 +1,10 @@
+2010-12-13  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+ 	(PROP_INSTANCES_ADDED):
+ 	(createInstance): 
+	[JBIDE-7877] added notification for instances being added
+
 2010-12-10  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (loadImages):

@@ -41,7 +41,9 @@ public class DeltaCloud extends ObservablePojo {
 	public final static String MOCK_TYPE = "MOCK"; //$NON-NLS-1$
 	public final static String EC2_TYPE = "EC2"; //$NON-NLS-1$
 
-	public static final String PROP_INSTANCES = "instanceRepo";
+	public static final String PROP_INSTANCES = "instances";
+	public static final String PROP_INSTANCES_ADDED = "instancesAdded";
+	public static final String PROP_INSTANCES_REMOVED = "instancesRemoved";
 	public static final String PROP_IMAGES = "images";
 	public static final String PROP_NAME = "name";
 
@@ -619,6 +621,7 @@ public class DeltaCloud extends ObservablePojo {
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
 				firePropertyChange(PROP_INSTANCES, instances, repo.get());
+				firePropertyChange(PROP_INSTANCES_ADDED, null, deltaCloudInstance);
 				return deltaCloudInstance;
 			}
 		} catch (DeltaCloudClientException e) {
