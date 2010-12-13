@@ -158,7 +158,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 			return null;
 		}
 
-		DeltaCloud cloud = getDeltaCloud((DeltaCloudViewItem) item);
+		DeltaCloud cloud = getDeltaCloud((DeltaCloudViewItem<?>) item);
 
 		if (cloud == null) {
 			return null;
@@ -166,7 +166,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		return cloud;
 	}
 
-	private DeltaCloud getDeltaCloud(DeltaCloudViewItem element) {
+	private DeltaCloud getDeltaCloud(DeltaCloudViewItem<?> element) {
 		if (element == null) {
 			return null;
 		}
@@ -175,7 +175,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 			return (DeltaCloud) cloud;
 		}
 
-		return getDeltaCloud((DeltaCloudViewItem) element.getParent());
+		return getDeltaCloud((DeltaCloudViewItem<?>) element.getParent());
 	}
 
 	private void removeDeltaClouds(Object[] deltaClouds) throws DeltaCloudException {
