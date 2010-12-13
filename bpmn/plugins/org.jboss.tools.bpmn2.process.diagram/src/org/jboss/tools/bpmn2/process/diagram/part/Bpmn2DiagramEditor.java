@@ -44,6 +44,10 @@ import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2NavigatorItem;
 import org.jboss.tools.bpmn2.process.diagram.sheet.Bpmn2PropertySheetPage;
+import org.jboss.tools.bpmn2.view.Bpmn2DefinitionsPageImpl;
+import org.jboss.tools.bpmn2.view.Bpmn2DetailsPageImpl;
+import org.jboss.tools.bpmn2.view.IBpmn2DefinitionsPage;
+import org.jboss.tools.bpmn2.view.IBpmn2DetailsPage;
 
 /**
  * @generated
@@ -109,12 +113,16 @@ public class Bpmn2DiagramEditor extends DiagramDocumentEditor implements
 					return new String[] { ProjectExplorer.VIEW_ID };
 				}
 			};
+		} else if (type == IBpmn2DefinitionsPage.class) {
+			return new Bpmn2DefinitionsPageImpl(this);
+		} else if (type == IBpmn2DetailsPage.class) {
+			return new Bpmn2DetailsPageImpl(this);
 		} else if (type == IPropertySheetPage.class) {
 			return new Bpmn2PropertySheetPage(this);
 		}
 		return super.getAdapter(type);
 	}
-
+	
 	/**
 	 * @generated
 	 */

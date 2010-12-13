@@ -48,11 +48,13 @@
    <extension point="org.eclipse.ui.newWizards" id="creation-wizard">
       <?gmfgen generated="false"?>
   	  <wizard
-  	     name="%newWizardName"
-  	     icon="icons/obj16/jbpm_icon_16.png"
-  	     category="org.jboss.tools.jbpm"
-  	     class="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2CreationWizard"
-  	     id="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2CreationWizardID">
+           category="org.jboss.tools.jbpm"
+           class="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2CreationWizard"
+           finalPerspective="org.jboss.tools.bpmn2"
+           icon="icons/obj16/jbpm_icon_16.png"
+           id="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2CreationWizardID"
+           name="%newWizardName"
+           preferredPerspectives="org.jboss.tools.bpmn2">
   	  	 <description>%newWizardDesc</description>  
       </wizard>
      <category
@@ -880,5 +882,41 @@
       </perspectiveExtension>
    </extension>
 
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.jboss.tools.bpmn2"
+            name="BPMN 2.0"/>
+      <view
+            category="org.jboss.tools.bpmn2"
+            class="org.jboss.tools.bpmn2.view.Bpmn2Details"
+            icon="icons/obj16/jbpm_icon_16.png"
+            id="org.jboss.tools.bpmn2.details"
+            name="Details"
+            restorable="true">
+      </view>
+      <view
+            category="org.jboss.tools.bpmn2"
+            class="org.jboss.tools.bpmn2.view.Bpmn2Definitions"
+            icon="icons/obj16/jbpm_icon_16.png"
+            id="org.jboss.tools.bpmn2.definitions"
+            name="Definitions"
+            restorable="true">
+      </view>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="BPMN 2.0"
+            icon="icons/obj16/jbpm_icon_16.png"
+            class="org.jboss.tools.bpmn2.Bpmn2PerspectiveFactory"
+            id="org.jboss.tools.bpmn2">
+         <description>
+            A perspective to facilitate creation of jBPM JPDL process definitions.
+         </description>
+      </perspective>
+   </extension>
+   
    <!-- optionally, specify keybindings -->
 </plugin>
