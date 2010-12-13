@@ -69,7 +69,7 @@ public class DeltaCloud extends ObservablePojo {
 	private SecurePasswordStore passwordStore;
 
 	public static interface IInstanceStateMatcher {
-		public boolean matchesState(DeltaCloudInstance instance, String instanceState);
+		public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState);
 	}
 
 	public DeltaCloud(String name, String url, String username, String passwd) throws DeltaCloudException {
@@ -314,20 +314,20 @@ public class DeltaCloud extends ObservablePojo {
 		IInstanceStateMatcher differsFromPending = new IInstanceStateMatcher() {
 
 			@Override
-			public boolean matchesState(DeltaCloudInstance instance, String instanceState) {
-				return !DeltaCloudInstance.PENDING.equals(instanceState);
+			public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState) {
+				return !DeltaCloudInstance.State.PENDING.equals(instanceState);
 			}
 		};
 		return waitForState(instanceId, differsFromPending, pm);
 	}
 
-	public DeltaCloudInstance waitForState(String instanceId, final String expectedState, IProgressMonitor pm)
+	public DeltaCloudInstance waitForState(String instanceId, final DeltaCloudInstance.State expectedState, IProgressMonitor pm)
 			throws InterruptedException, DeltaCloudException {
 		IInstanceStateMatcher stateMatcher = new IInstanceStateMatcher() {
 
 			@Override
-			public boolean matchesState(DeltaCloudInstance instance, String instanceState) {
-				return expectedState != null && expectedState.equals(instanceState);
+			public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState) {
+				return expectedState != null && expectedState.equals(instanceState.getName());
 			}
 		};
 		return waitForState(instanceId, stateMatcher, pm);
@@ -339,7 +339,7 @@ public class DeltaCloud extends ObservablePojo {
 		if (instance != null) {
 			while (!pm.isCanceled()) {
 				if (stateMatcher.matchesState(instance, instance.getState())
-						|| instance.getState().equals(DeltaCloudInstance.TERMINATED)) {
+						|| instance.getState().equals(DeltaCloudInstance.State.TERMINATED)) {
 					return instance;
 				}
 				Thread.sleep(400);
@@ -488,9 +488,9 @@ public class DeltaCloud extends ObservablePojo {
 			Instance instance = client.listInstances(instanceId);
 			deltaCloudInstance = new DeltaCloudInstance(this, instance);
 			DeltaCloudInstance currentInstance = instanceRepo.getById(instanceId);
-			// FIXME: remove BOGUS state when server fixes state
+			// FIXME: remove STATE_BOGUS state when server fixes state
 			// problems
-			if (!(deltaCloudInstance.getState().equals(DeltaCloudInstance.BOGUS))
+			if (!(deltaCloudInstance.getState().equals(DeltaCloudInstance.State.BOGUS))
 							&& !(currentInstance.getState().equals(deltaCloudInstance.getState()))) {
 				replaceInstance(deltaCloudInstance, currentInstance);
 			}
@@ -512,19 +512,23 @@ public class DeltaCloud extends ObservablePojo {
 		firePropertyChange(PROP_INSTANCES, instances, repo.get());
 	}
 
-	public boolean performInstanceAction(String instanceId, String actionId) throws DeltaCloudException {
-		return performInstanceAction(instanceRepo.getById(instanceId), actionId);
+	public boolean performInstanceAction(String instanceId, DeltaCloudInstance.Action action) throws DeltaCloudException {
+		return performInstanceAction(instanceRepo.getById(instanceId), action);
 	}
 
-	protected boolean performInstanceAction(DeltaCloudInstance instance, String actionId) throws DeltaCloudException {
+	protected boolean performInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action) throws DeltaCloudException {
 		try {
 			if (instance == null) {
 				return false;
 			}
 			DeltaCloudInstancesRepository repo = getInstancesRepository();
 			DeltaCloudInstance[] instances = repo.get();
-			boolean result = instance.performInstanceAction(actionId, client);
+			boolean result = instance.performInstanceAction(action, client);
 			if (result) {
+				if (DeltaCloudInstance.Action.DESTROY.equals(action)) {
+					repo.remove(instance);
+					firePropertyChange(PROP_INSTANCES_REMOVED, null, instance);
+				}
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
 				firePropertyChange(PROP_INSTANCES, instances, repo.get());
