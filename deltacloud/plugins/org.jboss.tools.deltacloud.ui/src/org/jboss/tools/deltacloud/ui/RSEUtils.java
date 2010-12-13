@@ -34,6 +34,9 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
+/**
+ * @author André Dietisheim
+ */
 public class RSEUtils {
 
 	private static final String VIEW_REMOTESYSEXPLORER_ID = "org.eclipse.rse.ui.view.systemView";
@@ -152,47 +155,4 @@ public class RSEUtils {
 			}
 		});
 	}
-
-	// private static void test() {
-	// ISystemRegistry registry = SystemStartHere.getSystemRegistry();
-	// RSECorePlugin rsep = RSECorePlugin.getDefault();
-	// IRSECoreRegistry coreRegistry = rsep.getCoreRegistry();
-	// IRSESystemType[] sysTypes = coreRegistry.getSystemTypes();
-	// IRSESystemType sshType = null;
-	// for (IRSESystemType sysType : sysTypes) {
-	// if (sysType.getId().equals(IRSESystemType.SYSTEMTYPE_SSH_ONLY_ID))
-	// sshType = sysType;
-	// }
-	//		String connectionName = instance.getName() + " [" + instance.getId() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-	// try {
-	// IHost host = registry.createHost(sshType, connectionName, hostname,
-	// null);
-	// if (host != null) {
-	//				host.setDefaultUserId("root"); //$NON-NLS-1$
-	// IConnectorService[] services = host.getConnectorServices();
-	// if (services.length > 0) {
-	// final IConnectorService service = services[0];
-	// Job connect = new Job(CVMessages.getFormattedString(RSE_CONNECTING_MSG,
-	// connectionName)) {
-	// @Override
-	// protected IStatus run(IProgressMonitor monitor) {
-	// try {
-	// service.connect(monitor);
-	// return Status.OK_STATUS;
-	// } catch (Exception e) {
-	// return Status.CANCEL_STATUS;
-	// }
-	// }
-	// };
-	// connect.setUser(true);
-	// connect.schedule();
-	// }
-	// }
-	// } catch (Exception e) {
-	// // TODO Auto-generated catch block
-	// Activator.log(e);
-	// }
-	//
-	// }
-
 }
