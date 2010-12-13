@@ -1,3 +1,9 @@
+2010-12-13  André Dietisheim  <adietish@redhat.com>
+
+	* plugin.xml: 
+	[JBIDE-7864] added hasImages property tester, rename CreateInstanceHandler2 to CreateInstanceFromAnyImage,
+	renamed CreateInstanceHandler to CreateInstanceFromSpecificImage
+
 2010-12-10  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java

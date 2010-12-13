@@ -21,7 +21,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  * 
  * @author Andre Dietisheim
  */
-public class InstancePropertyTester extends PropertyTester {
+public class DeltaCloudInstancePropertyTester extends PropertyTester {
 
 	private static final String PROPERTY_ACTION_CANSTART = "canStart";
 	private static final String PROPERTY_ACTION_CANSTOP = "canStop";

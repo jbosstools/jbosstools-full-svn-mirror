@@ -19,36 +19,30 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstanceWizard;
 
 /**
- * @author Andre Dietisheim
+ * @author Jeff Johnston
+ * @author André Dietisheim
  */
-public class CreateInstanceHandler extends AbstractHandler implements IHandler {
+public class CreateInstanceFromAnyImageHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudImage deltaCloudImage = UIUtils.getFirstAdaptedElement(selection, DeltaCloudImage.class);
-			createInstance(deltaCloudImage, HandlerUtil.getActiveShell(event));
+			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			IWizard wizard = new NewInstanceWizard(cloud);
+			WizardDialog dialog = new WizardDialog(UIUtils.getActiveWorkbenchWindow().getShell(),
+						wizard);
+			dialog.create();
+			dialog.open();
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void createInstance(DeltaCloudImage deltaCloudImage, Shell shell) {
-		if (deltaCloudImage != null) {
-			DeltaCloud deltaCloud = deltaCloudImage.getDeltaCloud();
-			IWizard wizard = new NewInstanceWizard(deltaCloud, deltaCloudImage);
-			WizardDialog dialog = new WizardDialog(shell, wizard);
-			dialog.create();
-			dialog.open();
-		}
-	}
 }

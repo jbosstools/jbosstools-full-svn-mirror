@@ -292,17 +292,19 @@
 			</enabledWhen>
       </handler>
       <handler
-            class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceHandler2"
-            commandId="org.jboss.tools.deltacloud.ui.createinstance2">
+            class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceFromAnyImageHandler"
+            commandId="org.jboss.tools.deltacloud.ui.createinstanceFromAnyImage">
 			<activeWhen>
-	               <with
-	                     variable="selection">
-						<iterate>
-		               		<instanceof
-		                	     value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
-		               		</instanceof>
-		               	</iterate>
-	               </with>
+               <with
+                     variable="selection">
+					<iterate operator="and">
+						<adapt
+				             type="org.jboss.tools.deltacloud.core.DeltaCloud">
+								<test property="org.jboss.tools.deltacloud.ui.commands.hasImages"
+									value="true"/>
+						</adapt>
+	               	</iterate>
+               </with>
 			</activeWhen>
 			<enabledWhen>
 				<with
@@ -316,8 +318,8 @@
          point="org.eclipse.ui.handlers">
       <!-- image command handlers -->
       <handler
-            class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceHandler"
-            commandId="org.jboss.tools.deltacloud.ui.createinstance">
+            class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceFromSpecificImageHandler"
+            commandId="org.jboss.tools.deltacloud.ui.createinstanceFromSpecificImage">
          <activeWhen>
                <with
                      variable="selection">
@@ -664,7 +666,7 @@
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=images">	
         <!-- image commands -->
          <command
-               commandId="org.jboss.tools.deltacloud.ui.createinstance"
+               commandId="org.jboss.tools.deltacloud.ui.createinstanceFromSpecificImage"
                icon="icons/instance.gif"
                label="%command.createinstance.label"
                style="push"
@@ -687,7 +689,7 @@
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=images">	
         <!-- image commands -->
          <command
-               commandId="org.jboss.tools.deltacloud.ui.createinstance2"
+               commandId="org.jboss.tools.deltacloud.ui.createinstanceFromAnyImage"
                icon="icons/instance.gif"
                label="%command.createinstance.label"
                style="push"
@@ -763,7 +765,7 @@
 	            locationURI="popup:org.jboss.tools.deltacloud.ui.views.ImageView?after=images">	
 	        <!-- image commands -->
 	         <command
-	               commandId="org.jboss.tools.deltacloud.ui.createinstance"
+	               commandId="org.jboss.tools.deltacloud.ui.createinstanceFromSpecificImage"
 	               icon="icons/instance.gif"
 	               label="%command.createinstance.label"
 	               style="push"
@@ -810,13 +812,13 @@
       </command>
       <command
             description="%command.createinstance.description"
-            id="org.jboss.tools.deltacloud.ui.createinstance2"
+            id="org.jboss.tools.deltacloud.ui.createinstanceFromAnyImage"
             name="%command.createinstance.name">
       </command>
 	  <!-- image commands -->
       <command
             description="%command.createinstance.description"
-            id="org.jboss.tools.deltacloud.ui.createinstance"
+            id="org.jboss.tools.deltacloud.ui.createinstanceFromSpecificImage"
             name="%command.createinstance.name">
       </command>
 	  <!-- instance commands -->
@@ -860,11 +862,18 @@
 	</extension>
 	<extension point="org.eclipse.core.expressions.propertyTesters">
 		<propertyTester
-			class="org.jboss.tools.deltacloud.ui.commands.InstancePropertyTester"
+			class="org.jboss.tools.deltacloud.ui.commands.DeltaCloudInstancePropertyTester"
 			id="org.jboss.tools.deltacloud.ui.commands.instancepropertytester"
 			namespace="org.jboss.tools.deltacloud.ui.commands"
 			properties="canStart,canStop,canReboot,canDestroy,isRunning"
 			type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
+		</propertyTester>
+		<propertyTester
+			class="org.jboss.tools.deltacloud.ui.commands.DeltaCloudPropertyTester"
+			id="org.jboss.tools.deltacloud.ui.commands.cloudpropertytester"
+			namespace="org.jboss.tools.deltacloud.ui.commands"
+			properties="hasImages"
+			type="org.jboss.tools.deltacloud.core.DeltaCloud">
 		</propertyTester>
  	</extension>
   <extension
