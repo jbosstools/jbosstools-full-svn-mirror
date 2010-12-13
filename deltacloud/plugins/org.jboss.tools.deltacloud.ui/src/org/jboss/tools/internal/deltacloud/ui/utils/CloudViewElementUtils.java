@@ -26,13 +26,12 @@ public class CloudViewElementUtils {
 	 * @see DeltaCloud
 	 * @see DeltaCloudViewItem
 	 */
-	public static DeltaCloud getCloud(DeltaCloudViewItem element) {
-		CloudItem cvCloud = getCVCloudElement(element);
-		if (cvCloud == null) {
+	public static DeltaCloud getCloud(DeltaCloudViewItem<?> element) {
+		CloudItem cloudItem = getCloudItem(element);
+		if (cloudItem == null) {
 			return null;
 		}
-		DeltaCloud cloud = (DeltaCloud) cvCloud.getModel();
-		return cloud;
+		return cloudItem.getModel();
 	}
 
 	/**
@@ -45,12 +44,11 @@ public class CloudViewElementUtils {
 	 * @see DeltaCloudViewItem
 	 * @see CloudItem
 	 */
-	public static CloudItem getCVCloudElement(DeltaCloudViewItem element) {
+	public static CloudItem getCloudItem(DeltaCloudViewItem<?> element) {
 		while (!(element instanceof CloudItem) 
 				&& element != null) {
-			element = (DeltaCloudViewItem) element.getParent();
+			element = (DeltaCloudViewItem<?>) element.getParent();
 		}
 		return (CloudItem) element;
 	}
-
 }

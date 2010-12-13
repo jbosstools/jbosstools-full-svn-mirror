@@ -136,7 +136,7 @@ public class InstancePropertySource implements IPropertySource {
 		try {
 			key = instance.getKey();
 			if (!cloud.getType().equals(DeltaCloud.MOCK_TYPE)) {
-				if (instance.getState().equals(DeltaCloudInstance.RUNNING) && (key == null || key.length() == 0)) {
+				if (instance.getState().equals(DeltaCloudInstance.State.RUNNING) && (key == null || key.length() == 0)) {
 					instance = cloud.refreshInstance(instance.getId());
 					if (instance != null) {
 						key = instance.getKey();
