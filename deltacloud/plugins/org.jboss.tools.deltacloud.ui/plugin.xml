@@ -42,7 +42,8 @@
             contributorId="org.jboss.tools.deltacloud.ui.views.CloudView"
             typeMapper="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewElementTypeMapper">
          <propertyCategory
-               category="main"></propertyCategory>
+               category="main">
+         </propertyCategory>
       </propertyContributor>
    </extension>
    <extension
