@@ -30,7 +30,6 @@ public abstract class AbstractInstanceHandler extends AbstractHandler implements
 	protected void executeInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action,
 			DeltaCloudInstance.State expectedState, String title, String message) {
 		if (instance != null) {
-			// TODO internationalize strings
 			new InstanceActionJob(message, instance, action, expectedState)
 					.schedule();
 		}
