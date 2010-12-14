@@ -472,8 +472,10 @@ public class DeltaCloud extends ObservablePojo {
 
 	private DeltaCloudInstance refreshInstance(DeltaCloudInstance deltaCloudInstance) throws DeltaCloudException {
 		try {
+			DeltaCloudInstance[] instances = getInstancesRepository().get();
 			Instance newInstance = client.listInstances(deltaCloudInstance.getId());
 			deltaCloudInstance.setInstance(newInstance);
+			firePropertyChange(PROP_INSTANCES, instances, getInstancesRepository().get());
 			return deltaCloudInstance;
 		} catch (DeltaCloudClientException e) {
 			// TODO : internationalize strings
