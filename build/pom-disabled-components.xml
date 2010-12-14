@@ -318,23 +318,6 @@
 		</profile>
 
 		<profile>
-			<id>esb</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../esb</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>esb-bootstrap</id>
-			<modules>
-				<module>../esb</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>seam</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -465,16 +448,6 @@
 			</activation>
 			<modules>
 				<module>../runtime</module>
-			</modules>
-		</profile>
-		
-		<profile>
-			<id>usage</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../usage</module>
 			</modules>
 		</profile>
 		
