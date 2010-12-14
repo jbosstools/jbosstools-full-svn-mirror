@@ -10,7 +10,7 @@ Require-Bundle: org.jboss.tools.common;bundle-version="[3.2.0,4.0.0)",
  org.eclipse.equinox.security;bundle-version="[1.0.100,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: org.jboss.tools.deltacloud.core;x-friends:="org.jboss.tools.deltacloud.ui,org.jboss.tools.deltacloud.test",
+Export-Package: org.jboss.tools.deltacloud.core;x-friends:="org.jboss.tools.deltacloud.ui,org.jboss.tools.deltacloud.test,org.jboss.tools.deltacloud.integration",
  org.jboss.tools.deltacloud.core.client;x-friends:="org.jboss.tools.deltacloud.test,org.jboss.tools.deltacloud.ui",
  org.jboss.tools.deltacloud.core.client.request;x-friends:="org.jboss.tools.deltacloud.test",
  org.jboss.tools.deltacloud.core.job,
