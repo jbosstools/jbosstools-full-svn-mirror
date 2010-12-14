@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.Activator;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -23,7 +24,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 /**
  * @author André Dietisheim
  */
-public abstract class AbstractCloudJob extends Job {
+public abstract class AbstractCloudJob extends ChainedJob {
 
 	private DeltaCloud cloud;
 
