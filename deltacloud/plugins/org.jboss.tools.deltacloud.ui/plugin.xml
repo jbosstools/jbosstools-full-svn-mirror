@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="newInstanceWizardPage" name="org.jboss.tools.deltacloud.ui.newInstanceWizardPage" schema="schema/newInstanceWizardPage.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <category
@@ -382,34 +383,6 @@
 			</enabledWhen>
       </handler>
    </extension>
-   <!-- Show in remote system explorer handler  -->
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="org.jboss.tools.deltacloud.ui.commands.ShowInRemoteSystemExplorerHandler"
-            commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer">
-			<activeWhen>
-               <with
-                 variable="selection">
-					<iterate operator="and">
-						<and>
-							<adapt
-					             type="org.jboss.tools.deltacloud.core.DeltaCloudInstance">
-								<test property="org.jboss.tools.deltacloud.ui.commands.isRunning"
-									value="true"/>
-							</adapt>
-						</and>
-	               	</iterate>
-               </with>
-			</activeWhen>
-			<enabledWhen>
-				<with
-					variable="selection">
-					<count value="+" />
-				</with>
-			</enabledWhen>
-      </handler>
-   </extension>
    <!-- InstanceView context menu ================================== -->
    <extension point="org.eclipse.ui.menus">
       <menuContribution
@@ -423,9 +396,6 @@
 				visible="true" />
 			<separator
 				name="additions"
-				visible="true" />
-			<separator
-				name="remoteSysExplorer"
 				visible="true" />
 	  </menuContribution>
       <!-- instance commands -->
@@ -487,19 +457,6 @@
                tooltip="%command.refreshinstances.tooltip">
          </command>
  	  </menuContribution> 	  
-	  <!-- remote system explorer -->
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=remoteSysExplorer">	
-         <command
-               commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer"
-               disabledIcon="icons/system_viewd.gif"
-               icon="icons/system_view.gif"
-               label="%command.showInRemoteSysExplorer"
-               style="push"
-               tooltip="%command.showInRemoteSysExplorer.tooltip">
-         </command>
-      </menuContribution>
    </extension>
    <extension point="org.eclipse.ui.menus">
    <!-- InstanceView toolbar ================================== -->
@@ -546,14 +503,6 @@
                style="push"
                tooltip="%command.destroyinstance.tooltip">
          </command>
-         <command
-               commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer"
-               disabledIcon="icons/system_viewd.gif"
-               icon="icons/system_view.gif"
-               label="%command.showInRemoteSysExplorer"
-               style="push"
-               tooltip="%command.showInRemoteSysExplorer.tooltip">
-         </command>
  	  </menuContribution>
    <!-- DeltaCloudView toolbar ================================== -->
       <menuContribution
@@ -590,9 +539,6 @@
 				visible="true" />
 			<separator
 				name="filters"
-				visible="true" />
-			<separator
-				name="remoteSysExplorer"
 				visible="true" />
 	</menuContribution>
 	<!-- instance commands -->
@@ -731,19 +677,6 @@
                tooltip="%command.filterinstances.tooltip">
          </command>
       </menuContribution>
-	  <!-- remote system explorer -->
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=remoteSysExplorer">	
-         <command
-               commandId="org.jboss.tools.deltacloud.ui.showremotesysexplorer"
-               disabledIcon="icons/system_viewd.gif"
-               icon="icons/system_view.gif"
-               label="%command.showInRemoteSysExplorer"
-               style="push"
-               tooltip="%command.showInRemoteSysExplorer.tooltip">
-         </command>
-      </menuContribution>
     </extension>
 
    <extension point="org.eclipse.ui.menus">
@@ -853,12 +786,6 @@
             description="%command.filterinstances.description"
             id="org.jboss.tools.deltacloud.ui.filterinstances"
             name="%command.filterinstances.name">
-      </command>
-	  <!-- launch remote system explorer command -->
-      <command
-            description="%command.showInRemoteSysExplorer.description"
-            id="org.jboss.tools.deltacloud.ui.showremotesysexplorer"
-            name="%command.showInRemoteSysExplorer">
       </command>
 	</extension>
 	<extension point="org.eclipse.core.expressions.propertyTesters">

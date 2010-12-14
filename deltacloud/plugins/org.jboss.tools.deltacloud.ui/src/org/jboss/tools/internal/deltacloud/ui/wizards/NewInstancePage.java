@@ -530,8 +530,6 @@ public class NewInstancePage extends WizardPage {
 	private void asyncGetRealms() {
 		// TODO: internationalize strings
 		new AbstractCloudElementJob("Get realms", cloud, CLOUDELEMENT.REALMS) {
-			
-			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 				realms = getRealms();
 				Display.getDefault().asyncExec(new Runnable() {
@@ -547,8 +545,6 @@ public class NewInstancePage extends WizardPage {
 	private void asyncGetProfiles() {
 		// TODO: internationalize strings
 		new AbstractCloudElementJob("Get Profiles", cloud, CLOUDELEMENT.PROFILES) {
-			
-			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 				allProfiles = getProfiles();
 				profilePages = new HashMap<String, ProfileComposite>();

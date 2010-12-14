@@ -20,17 +20,17 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.rse.core.model.IHost;
+import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.job.InstanceStateJob;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.DeltacloudUIExtensionManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
-import org.jboss.tools.deltacloud.ui.RSEUtils;
+import org.jboss.tools.deltacloud.ui.INewInstanceWizardPage;
 import org.osgi.service.prefs.Preferences;
 
 public class NewInstanceWizard extends Wizard {
@@ -40,9 +40,11 @@ public class NewInstanceWizard extends Wizard {
 	private final static String CONFIRM_CREATE_TITLE = "ConfirmCreate.title"; //$NON-NLS-1$
 	private final static String CONFIRM_CREATE_MSG = "ConfirmCreate.msg"; //$NON-NLS-1$
 	private final static String DONT_SHOW_THIS_AGAIN_MSG = "DontShowThisAgain.msg"; //$NON-NLS-1$
+	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
 
 	protected NewInstancePage mainPage;
+	protected INewInstanceWizardPage[] additionalPages;
 	protected DeltaCloud cloud;
 	protected DeltaCloudInstance instance;
 	/**
@@ -62,9 +64,13 @@ public class NewInstanceWizard extends Wizard {
 	@Override
 	public void addPages() {
 		mainPage = new NewInstancePage(cloud);
-		if (image != null)
+		if( image != null )
 			mainPage.setImage(image);
 		addPage(mainPage);
+		additionalPages = DeltacloudUIExtensionManager.getDefault().loadNewInstanceWizardPages();
+		for( int i = 0; i < additionalPages.length; i++ ) {
+			addPage(additionalPages[i]);
+		}
 	}
 
 	@Override
@@ -72,45 +78,44 @@ public class NewInstanceWizard extends Wizard {
 		return mainPage.isPageComplete();
 	}
 
-	private class WatchCreateJob extends InstanceStateJob {
+	private class WatchCreateJob extends ChainedJob {
 
-		public WatchCreateJob(DeltaCloudInstance instance) {
-			super(WizardMessages.getString(STARTING_INSTANCE_TITLE), instance, DeltaCloudInstance.State.RUNNING);
-			setUser(true);
+		private DeltaCloud cloud;
+		private String instanceId;
+		private String instanceName;
+
+		public WatchCreateJob(String title, DeltaCloud cloud,
+				String instanceId, String instanceName) {
+			super(title, INewInstanceWizardPage.NEW_INSTANCE_FAMILY);
+			this.cloud = cloud;
+			this.instanceId = instanceId;
+			this.instanceName = instanceName;
 		}
 
-		@Override
-		public IStatus doRun(IProgressMonitor monitor) {
-			// DeltaCloudInstance instance = null;
-			try {
-				super.doRun(monitor);
-			} catch (Exception e) {
-				// do nothing
-			} finally {
-				// cloud.replaceInstance(instance);
-				String hostname = RSEUtils.createHostName(instance);
-				if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
-					try {
-						String connectionName = RSEUtils.createConnectionName(instance);
-						IHost host = RSEUtils.createHost(connectionName,
-									RSEUtils.createHostName(instance),
-									RSEUtils.getSSHOnlySystemType(),
-									RSEUtils.getSystemRegistry());
-						RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));
-					} catch (Exception e) {
-						return ErrorUtils.handleError("Error",
-								"Could not launch remote system explorer for instance \""
-										+ instance.getName() + "\"", e, getShell());
-					}
+		public IStatus run(IProgressMonitor pm) {
+			if (!pm.isCanceled()) {
+				DeltaCloudInstance instance = null;
+				try {
+					pm.beginTask(
+							WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] { instanceName }),
+							IProgressMonitor.UNKNOWN);
+					pm.worked(1);
+					cloud.registerInstanceJob(instanceId, this);
+					instance = cloud.waitWhilePending(instanceId, pm);
+					
+				} catch (Exception e) {
+					// do nothing
+				} finally {
+					cloud.replaceInstance(instance);
+					cloud.removeInstanceJob(instanceId, this);
+					System.out.println(instance.getHostName());
+					pm.done();
 				}
+				return Status.OK_STATUS;
+			} else {
+				pm.done();
+				return Status.CANCEL_STATUS;
 			}
-			return Status.OK_STATUS;
-		}
-
-		private boolean isAutoconnect() {
-			Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-			boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
-			return autoConnect;
 		}
 	};
 
@@ -158,7 +163,23 @@ public class NewInstanceWizard extends Wizard {
 				result = true;
 			}
 			if (instance != null && instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
-				new WatchCreateJob(instance).schedule();
+				final String instanceId = instance.getId();
+				final String instanceName = name;
+				
+				// TODO use chained job? Maybe. But chainedJob needs to be moved
+				ChainedJob first = new WatchCreateJob(WizardMessages.getString(STARTING_INSTANCE_TITLE),
+						cloud, instanceId, instanceName);
+				first.setUser(true);
+				ChainedJob last = first;
+				ChainedJob temp;
+				for( int i = 0; i < additionalPages.length; i++ ) {
+					temp = additionalPages[i].getPerformFinishJob(instance);
+					if( temp != null ) {
+						last.setNextJob(temp);
+						last = temp;
+					}
+				}
+				first.schedule();
 			}
 		} catch (DeltaCloudException ex) {
 			e = ex;
