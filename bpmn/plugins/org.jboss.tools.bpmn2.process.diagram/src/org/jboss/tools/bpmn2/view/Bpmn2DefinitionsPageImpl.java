@@ -321,7 +321,7 @@ public class Bpmn2DefinitionsPageImpl extends Page implements IBpmn2DefinitionsP
  		if (eventType == Notification.ADD || eventType == Notification.SET) {
  			Object object = notification.getNewValue();
  			if (object instanceof EObject) {
- 				setIdIfNotSet((EObject)object);
+ 				setIdIfNeeded((EObject)object);
  				updateTreeSelection(object);
  			}
  		}
@@ -335,10 +335,10 @@ public class Bpmn2DefinitionsPageImpl extends Page implements IBpmn2DefinitionsP
 		});
  	}
  	
-    protected void setIdIfNotSet(EObject obj) {
+    protected void setIdIfNeeded(EObject obj) {
         if (obj.eClass() != null) {
             EStructuralFeature idAttr = obj.eClass().getEIDAttribute();
-            if (idAttr != null && !obj.eIsSet(idAttr)) {
+            if (idAttr != null && idAttr.isRequired() && !obj.eIsSet(idAttr)) {
             	CommandParameter commandParameter = new CommandParameter(obj, idAttr, EcoreUtil.generateUUID(), CommandParameter.NO_INDEX);
             	Command command = editor.getEditingDomain().createCommand(SetCommand.class, commandParameter);
                 editor.getEditingDomain().getCommandStack().execute(command);
