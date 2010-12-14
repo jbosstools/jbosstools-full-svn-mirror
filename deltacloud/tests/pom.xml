@@ -6,8 +6,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<name>org.jboss.tools.deltacloud.tests</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-<!--	<modules>
+	<modules>
 		<module>org.jboss.tools.deltacloud.test</module>
-	</modules> -->
+	</modules>
 </project>
 	
