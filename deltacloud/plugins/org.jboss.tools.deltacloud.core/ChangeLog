@@ -1,3 +1,15 @@
+2010-12-14  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/job/InstanceSchedulingRule.java: 
+	* src/org/jboss/tools/deltacloud/core/job/InstanceStateJob.java: 
+	* src/org/jboss/tools/deltacloud/core/job/InstanceActionJob.java: 
+	[JBIDE-7594] added instance related job & scheduling rule 
+	(blocks instance jobs on same instance and superclass jobs on same cloud & element)
+	* src/org/jboss/tools/deltacloud/core/job/CloudElementSchedulingRule.java (isOnSameElement): 
+	[JBIDE-7594] corrected scheduling rule to block superclass scheduling rule on the same cloud 
+	* src/org/jboss/tools/deltacloud/core/job/AbstractCloudElementJob.java (CLOUDELEMENT): 
+	[JBIDE-7594] added scheduling element that reflects cloud properties being processed (instances, images, realms, profiles)
+
 2010-12-13  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 

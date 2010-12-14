@@ -47,10 +47,20 @@ public class CloudSchedulingRule implements ISchedulingRule {
 	}
 
 	private boolean isCloudRule(ISchedulingRule rule) {
-		return rule.getClass().isAssignableFrom(CloudSchedulingRule.class);
+		return CloudSchedulingRule.class.isAssignableFrom(rule.getClass());
 	}
 
-	private DeltaCloud getCloud() {
+	protected DeltaCloud getCloud() {
 		return cloud;
+	}
+
+	public String toString() {
+		return new StringBuilder()
+				.append("[InstanceSchedulingRule ")
+				.append("cloud :\"")
+				.append(getCloud().getName())
+				.append("\"")
+				.append("]")
+				.toString();
 	}
 }

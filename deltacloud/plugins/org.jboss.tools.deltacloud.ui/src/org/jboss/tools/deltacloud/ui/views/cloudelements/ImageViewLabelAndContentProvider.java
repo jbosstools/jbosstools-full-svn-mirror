@@ -24,7 +24,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 
 /**
  * @author Jeff Johnston
@@ -99,8 +100,8 @@ public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLa
 
 	@Override
 	protected void asyncAddCloudElements(final DeltaCloud cloud) {
-		new AbstractCloudJob(
-				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud) {
+		new AbstractCloudElementJob(
+				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.IMAGES) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {

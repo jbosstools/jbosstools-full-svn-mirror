@@ -1,5 +1,37 @@
+2010-12-14  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (WatchCreateJob): 
+	[JBIDE-7594] switched WatchCreateJob to InstanceStateJob to have consistent blocking with all other jobs
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (asyncGetProfiles): 
+	[JBIDE-7594] switched to AbstractCloudElementJob to have consistent blocking with all other jobs
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (asyncSetImagesToViewer): 
+	[JBIDE-7594] switched to AbstractCloudElementJob to have consistent blocking with all other jobs
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageViewLabelAndContentProvider.java (asyncAddCloudElements): 
+	[JBIDE-7594] switched to AbstractCloudElementJob to have consistent blocking with all other jobs
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstancesCategoryItem.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImagesCategoryItem.java (asyncAddCloudElements): 
+	[JBIDE-7594] switched to AbstractCloudElementJob to have consistent blocking with all other jobs
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshImagesHandler.java (refresh): 
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshInstancesHandler.java (refresh): 
+	[JBIDE-7594] switched to AbstractCloudElementJob to have consistent blocking with all other jobs
+	* src/org/jboss/tools/deltacloud/ui/commands/DestroyInstanceHandler.java (destroyInstance): 
+	[JBIDE-7594] switched to DestroyInstanceJob to have consistent blocking with all other jobs
+	* src/org/jboss/tools/deltacloud/ui/commands/AbstractInstanceHandler.java (executeInstanceAction): 
+	[JBIDE-7594] switched to InstanceActionJob to have consistent blocking with all other jobs
+	
+
 2010-12-13  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (asyncGetRealms): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (asyncSetImagesToViewer): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageViewLabelAndContentProvider.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstancesCategoryItem.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImagesCategoryItem.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshInstancesHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshImagesHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java (asyncAddCloudElements): 
+	[JBIDE-7594] switched all cloud element jobs to cloud element related jobs, so that scheduling rules may be applied
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (performFinish): 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java (getStatusIcon): 
 	* src/org/jboss/tools/deltacloud/ui/views/PerformDestroyInstanceActionThread.java (run): 

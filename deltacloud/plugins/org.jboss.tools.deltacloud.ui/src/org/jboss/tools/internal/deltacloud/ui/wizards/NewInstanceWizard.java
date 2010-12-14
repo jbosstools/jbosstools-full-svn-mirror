@@ -16,7 +16,6 @@ import java.net.URLEncoder;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -27,6 +26,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.job.InstanceStateJob;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
@@ -40,7 +40,6 @@ public class NewInstanceWizard extends Wizard {
 	private final static String CONFIRM_CREATE_TITLE = "ConfirmCreate.title"; //$NON-NLS-1$
 	private final static String CONFIRM_CREATE_MSG = "ConfirmCreate.msg"; //$NON-NLS-1$
 	private final static String DONT_SHOW_THIS_AGAIN_MSG = "DontShowThisAgain.msg"; //$NON-NLS-1$
-	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
 
 	protected NewInstancePage mainPage;
@@ -63,7 +62,7 @@ public class NewInstanceWizard extends Wizard {
 	@Override
 	public void addPages() {
 		mainPage = new NewInstancePage(cloud);
-		if( image != null )
+		if (image != null)
 			mainPage.setImage(image);
 		addPage(mainPage);
 	}
@@ -73,56 +72,39 @@ public class NewInstanceWizard extends Wizard {
 		return mainPage.isPageComplete();
 	}
 
-	private class WatchCreateJob extends Job {
+	private class WatchCreateJob extends InstanceStateJob {
 
-		private DeltaCloud cloud;
-		private String instanceId;
-		private String instanceName;
-
-		public WatchCreateJob(String title, DeltaCloud cloud,
-				String instanceId, String instanceName) {
-			super(title);
-			this.cloud = cloud;
-			this.instanceId = instanceId;
-			this.instanceName = instanceName;
+		public WatchCreateJob(DeltaCloudInstance instance) {
+			super(WizardMessages.getString(STARTING_INSTANCE_TITLE), instance, DeltaCloudInstance.State.RUNNING);
+			setUser(true);
 		}
 
-		public IStatus run(IProgressMonitor pm) {
-			if (!pm.isCanceled()) {
-				DeltaCloudInstance instance = null;
-				try {
-					pm.beginTask(
-							WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] { instanceName }),
-							IProgressMonitor.UNKNOWN);
-					pm.worked(1);
-					cloud.registerInstanceJob(instanceId, this);
-					instance = cloud.waitWhilePending(instanceId, pm);
-				} catch (Exception e) {
-					// do nothing
-				} finally {
-					cloud.replaceInstance(instance);
-					cloud.removeInstanceJob(instanceId, this);
-					String hostname = RSEUtils.createHostName(instance);
-					if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
-						try {
-							String connectionName = RSEUtils.createConnectionName(instance);
-							IHost host = RSEUtils.createHost(connectionName,
+		@Override
+		public IStatus doRun(IProgressMonitor monitor) {
+			// DeltaCloudInstance instance = null;
+			try {
+				super.doRun(monitor);
+			} catch (Exception e) {
+				// do nothing
+			} finally {
+				// cloud.replaceInstance(instance);
+				String hostname = RSEUtils.createHostName(instance);
+				if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
+					try {
+						String connectionName = RSEUtils.createConnectionName(instance);
+						IHost host = RSEUtils.createHost(connectionName,
 									RSEUtils.createHostName(instance),
 									RSEUtils.getSSHOnlySystemType(),
 									RSEUtils.getSystemRegistry());
-							RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));
-						} catch (Exception e) {
-							return ErrorUtils.handleError("Error", "Could not launch remote system explorer for instance \""
-									+ instance.getName() + "\"", e, getShell());
-						}
+						RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));
+					} catch (Exception e) {
+						return ErrorUtils.handleError("Error",
+								"Could not launch remote system explorer for instance \""
+										+ instance.getName() + "\"", e, getShell());
 					}
-					pm.done();
 				}
-				return Status.OK_STATUS;
-			} else {
-				pm.done();
-				return Status.CANCEL_STATUS;
 			}
+			return Status.OK_STATUS;
 		}
 
 		private boolean isAutoconnect() {
@@ -176,12 +158,7 @@ public class NewInstanceWizard extends Wizard {
 				result = true;
 			}
 			if (instance != null && instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
-				final String instanceId = instance.getId();
-				final String instanceName = name;
-				Job job = new WatchCreateJob(WizardMessages.getString(STARTING_INSTANCE_TITLE),
-						cloud, instanceId, instanceName);
-				job.setUser(true);
-				job.schedule();
+				new WatchCreateJob(instance).schedule();
 			}
 		} catch (DeltaCloudException ex) {
 			e = ex;

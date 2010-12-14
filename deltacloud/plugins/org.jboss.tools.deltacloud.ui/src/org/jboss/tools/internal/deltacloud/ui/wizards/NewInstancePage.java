@@ -63,7 +63,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
@@ -528,7 +529,7 @@ public class NewInstancePage extends WizardPage {
 
 	private void asyncGetRealms() {
 		// TODO: internationalize strings
-		new AbstractCloudJob("Get realms", cloud) {
+		new AbstractCloudElementJob("Get realms", cloud, CLOUDELEMENT.REALMS) {
 			
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
@@ -545,7 +546,7 @@ public class NewInstancePage extends WizardPage {
 
 	private void asyncGetProfiles() {
 		// TODO: internationalize strings
-		new AbstractCloudJob("Get Profiles", cloud) {
+		new AbstractCloudElementJob("Get Profiles", cloud, CLOUDELEMENT.PROFILES) {
 			
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws Exception {

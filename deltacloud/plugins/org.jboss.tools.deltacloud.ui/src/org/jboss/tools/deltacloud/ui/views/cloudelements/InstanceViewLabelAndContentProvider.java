@@ -26,7 +26,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 /**
@@ -124,8 +125,8 @@ public class InstanceViewLabelAndContentProvider extends
 
 	@Override
 	protected void asyncAddCloudElements(final DeltaCloud cloud) {
-		new AbstractCloudJob(
-				MessageFormat.format("Get instances from cloud {0}", cloud.getName()), cloud) {
+		new AbstractCloudElementJob(
+				MessageFormat.format("Get instances from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.INSTANCES) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {

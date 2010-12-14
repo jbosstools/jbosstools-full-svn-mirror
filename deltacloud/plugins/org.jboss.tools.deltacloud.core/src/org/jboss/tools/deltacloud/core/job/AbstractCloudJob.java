@@ -30,7 +30,6 @@ public abstract class AbstractCloudJob extends Job {
 	public AbstractCloudJob(String name, DeltaCloud cloud) {
 		super(name);
 		this.cloud = cloud;
-		// setUser(true);
 	}
 
 	@Override
@@ -38,7 +37,6 @@ public abstract class AbstractCloudJob extends Job {
 		ISchedulingRule rule = getSchedulingRule();
 		Job.getJobManager().beginRule(rule, monitor);
 		monitor.beginTask(getName(), IProgressMonitor.UNKNOWN);
-		monitor.worked(1);
 		try {
 			return doRun(monitor);
 		} catch (Exception e) {
@@ -46,6 +44,7 @@ public abstract class AbstractCloudJob extends Job {
 			return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
 					MessageFormat.format("Could not {0}", getName()));
 		} finally {
+			monitor.done();
 			Job.getJobManager().endRule(rule);
 		}
 	}

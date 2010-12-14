@@ -58,9 +58,7 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					monitor.worked(1);
 					cloud.loadChildren();
-					monitor.done();
 				} catch (DeltaCloudMultiException e) {
 					return ErrorUtils.createMultiStatus(e);
 				}

@@ -12,6 +12,7 @@ package org.jboss.tools.deltacloud.core.job;
 
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 
 /**
@@ -20,32 +21,45 @@ import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
  * 
  * @author André Dietisheim
  */
-public class CloudElementSchedulingRule extends CloudSchedulingRule {
+public class InstanceSchedulingRule extends CloudElementSchedulingRule {
 
-	private CLOUDELEMENT element;
+	private DeltaCloudInstance instance;
 
-	public CloudElementSchedulingRule(DeltaCloud cloud, CLOUDELEMENT element) {
-		super(cloud);
-		this.element = element;
+	public InstanceSchedulingRule(DeltaCloud cloud, CLOUDELEMENT element, DeltaCloudInstance instance) {
+		super(cloud, element);
+		this.instance = instance;
 	}
 
 	@Override
 	public boolean isConflicting(ISchedulingRule rule) {
 		return super.isConflicting(rule)
-				&& isOnSameElement(rule);
+				&& isOnSameInstance(rule);
 	}
 
-	private boolean isOnSameElement(ISchedulingRule rule) {
-		if (CloudElementSchedulingRule.class.isAssignableFrom(rule.getClass())) {
-			return ((CloudElementSchedulingRule) rule).getCloudElement().equals(element);
+	private boolean isOnSameInstance(ISchedulingRule rule) {
+		if (InstanceSchedulingRule.class.isAssignableFrom(rule.getClass())) {
+			return instance.equals(((InstanceSchedulingRule) rule).getInstance());
 		} else {
-			// this rules conflicts with a cloud rule which is not an element
-			// rule
+			// this rules conflicts with a cloud element rule which is not an instance rule
 			return true;
 		}
 	}
-
-	private CLOUDELEMENT getCloudElement() {
-		return element;
+	
+	protected DeltaCloudInstance getInstance() {
+		return instance;
 	}
+
+	public String toString() {
+		return new StringBuilder()
+				.append("[InstanceSchedulingRule ")
+				.append("cloud :\"")
+				.append(getCloud().getName())
+				.append("\"")
+				.append("instance :\"")
+				.append(getInstance().getName())
+				.append("\"")
+				.append("]")
+				.toString();
+	}
+
 }

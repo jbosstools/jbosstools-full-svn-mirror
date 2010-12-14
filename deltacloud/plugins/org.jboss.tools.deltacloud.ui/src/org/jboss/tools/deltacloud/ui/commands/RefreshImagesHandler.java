@@ -15,7 +15,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 
 /**
  * @author Andre Dietisheim
@@ -24,7 +25,7 @@ public class RefreshImagesHandler extends RefreshCloudHandler {
 
 	protected void refresh(final DeltaCloud cloud) {
 		// TODO: internationalize strings
-		new AbstractCloudJob("Refreshing images on cloud " + cloud.getName(), cloud) {
+		new AbstractCloudElementJob("Refreshing images on cloud " + cloud.getName(), cloud, CLOUDELEMENT.IMAGES) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {

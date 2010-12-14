@@ -10,33 +10,30 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.job;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
-import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 
 /**
  * @author André Dietisheim
  */
-public abstract class AbstractCloudElementJob extends AbstractCloudJob {
+public class DestroyCloudInstanceJob extends InstanceActionJob {
 
-	public static enum CLOUDELEMENT {
-		IMAGES, INSTANCES, PROFILES, REALMS
+	public DestroyCloudInstanceJob(String name, DeltaCloudInstance instance) {
+		super(name, instance, DeltaCloudInstance.Action.DESTROY, DeltaCloudInstance.State.TERMINATED);
 	}
 
-	private CLOUDELEMENT cloudElement;
-
-	public AbstractCloudElementJob(String name, DeltaCloud cloud, CLOUDELEMENT cloudElement) {
-		super(name, cloud);
-		this.cloudElement = cloudElement;
-		// setUser(true);
+	@Override
+	protected IStatus doRun(IProgressMonitor monitor) throws Exception {
+		String id = getInstance().getId();
+		getCloud().performInstanceAction(id, getAction());
+		return Status.OK_STATUS;
 	}
 
 	@Override
 	protected ISchedulingRule getSchedulingRule() {
-		return new CloudElementSchedulingRule(getCloud(), cloudElement);
+		return new InstanceSchedulingRule(getCloud(), getCloudElement(), getInstance());
 	}
-	
-	protected CLOUDELEMENT getCloudElement() {
-		return cloudElement;
-	}
-
 }

@@ -22,19 +22,15 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.job.DestroyCloudInstanceJob;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.PerformDestroyInstanceActionThread;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
  * @author Andre Dietisheim
  */
 public class DestroyInstanceHandler extends AbstractInstanceHandler {
-
-	private final static String DESTROYING_INSTANCE_TITLE = "DestroyingInstance.title"; //$NON-NLS-1$
-	private final static String DESTROYING_INSTANCE_MSG = "DestroyingInstance.msg"; //$NON-NLS-1$
-
 	private final static String DESTROY_INSTANCE_TITLE = "DestroyInstancesDialog.title"; //$NON-NLS-1$
 	private final static String DESTROY_INSTANCE_MSG = "DestroyInstancesDialog.msg"; //$NON-NLS-1$
 
@@ -61,10 +57,11 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void destroyWithDialog(IStructuredSelection selection) {
-		List<DeltaCloudInstance> deltaCloudInstances = UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
+		List<DeltaCloudInstance> deltaCloudInstances = 
+			UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(),DeltaCloudInstance.class);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, deltaCloudInstances 
+					, deltaCloudInstances
 					, CVMessages.getString(DESTROY_INSTANCE_TITLE)
 					, CVMessages.getString(DESTROY_INSTANCE_MSG));
 		dialog.setInitialElementSelections(deltaCloudInstances);
@@ -81,13 +78,8 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 
 	private void destroyInstance(DeltaCloudInstance instance) {
 		if (instance != null) {
-			PerformDestroyInstanceActionThread t = new PerformDestroyInstanceActionThread(
-					instance.getDeltaCloud(),
-					instance,
-					CVMessages.getString(DESTROYING_INSTANCE_TITLE),
-					CVMessages.getFormattedString(DESTROYING_INSTANCE_MSG, new String[] { instance.getName() }));
-			t.setUser(true);
-			t.schedule();
+			new DestroyCloudInstanceJob("Destroy" + instance.getName(), instance)
+					.schedule();
 		}
 	}
 }

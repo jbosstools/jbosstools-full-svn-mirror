@@ -32,7 +32,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.core.ImageFilter;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.ImageViewLabelAndContentProvider;
@@ -301,8 +302,8 @@ public class FindImagePage extends WizardPage {
 	}
 
 	private void asyncSetImagesToViewer() {
-		new AbstractCloudJob(
-				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud) {
+		new AbstractCloudElementJob(
+				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.IMAGES) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {

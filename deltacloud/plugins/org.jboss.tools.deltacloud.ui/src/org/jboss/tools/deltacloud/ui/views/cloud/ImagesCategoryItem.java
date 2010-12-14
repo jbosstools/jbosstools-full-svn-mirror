@@ -21,7 +21,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.IImageFilter;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
@@ -44,8 +45,8 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 	@Override
 	protected void asyncAddCloudElements() {
 		setLoadingIndicator();
-		new AbstractCloudJob(
-				MessageFormat.format("Get images from cloud {0}", getModel().getName()), getModel()) {
+		new AbstractCloudElementJob(
+				MessageFormat.format("Get images from cloud {0}", getModel().getName()), getModel(), CLOUDELEMENT.IMAGES) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {

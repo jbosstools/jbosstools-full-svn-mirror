@@ -21,7 +21,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 
@@ -44,8 +45,9 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 	@Override
 	protected void asyncAddCloudElements() {
 		setLoadingIndicator();
-		new AbstractCloudJob(
-				MessageFormat.format("Get instances from cloud {0}", getModel().getName()), getModel()) {
+		new AbstractCloudElementJob(
+				MessageFormat.format("Get instances from cloud {0}", getModel().getName()), getModel(),
+				CLOUDELEMENT.INSTANCES) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
@@ -55,7 +57,7 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 					addChildren(instances);
 					expand();
 					return Status.OK_STATUS;
-				} catch(DeltaCloudException e) {
+				} catch (DeltaCloudException e) {
 					clearChildren();
 					throw e;
 				}
