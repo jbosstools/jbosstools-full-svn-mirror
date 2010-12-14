@@ -153,9 +153,11 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 
 	public String getHostName() {
 		List<String> hostNames = getHostNames();
-		if (hostNames != null && hostNames.size() > 0)
-			return hostNames.get(0);
-		return null;
+		String hostName = null;
+		if (hostNames != null && hostNames.size() >= 1) {
+			hostName = hostNames.get(0);
+		}
+		return hostName;
 	}
 
 	protected boolean performInstanceAction(Action action, InternalDeltaCloudClient client)
