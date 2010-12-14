@@ -343,23 +343,6 @@
 		</profile>
 
 		<profile>
-			<id>examples</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../examples</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>examples-bootstrap</id>
-			<modules>
-				<module>../examples</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>maven</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -428,16 +411,6 @@
 			</activation>
 			<modules>
 				<module>../deltacloud</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>drools</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>../drools</module>
 			</modules>
 		</profile>
 
