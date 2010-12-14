@@ -1008,25 +1008,28 @@ public class VpeTemplateManager {
 		String nameSpaceIdentifyer = templateElement
 				.getAttribute(VpeTemplateManager.NAMESPACE_IDENTIFIER_ATTRIBUTE);
 		if (templateClassName != null && templateClassName.length() > 0) {
-			try {
-				Bundle bundle;
-				if (nameSpaceIdentifyer == null
-						|| nameSpaceIdentifyer.length() == 0) {
-					nameSpaceIdentifyer = confElement.getNamespaceIdentifier();
-				}
-				bundle = Platform.getBundle(nameSpaceIdentifyer);
+			if (nameSpaceIdentifyer == null
+					|| nameSpaceIdentifyer.length() == 0) {
+				nameSpaceIdentifyer = confElement.getNamespaceIdentifier();
+			}
 
-				Class templateClass = bundle.loadClass(templateClassName);
-				template = (VpeTemplate) templateClass.newInstance();
-			} catch (ClassNotFoundException e) {
-				template = handleTemplateClassLoadException(template,
-						templateClassName, nameSpaceIdentifyer, e);
-			} catch (IllegalAccessException e) {
-				template = handleTemplateClassLoadException(template,
-						templateClassName, nameSpaceIdentifyer, e);
-			} catch (InstantiationException e) {
-				template = handleTemplateClassLoadException(template,
-						templateClassName, nameSpaceIdentifyer, e);
+			Bundle bundle = Platform.getBundle(nameSpaceIdentifyer);
+			if (bundle == null) {
+				template = null;
+			} else {
+				try {
+					Class templateClass = bundle.loadClass(templateClassName);
+					template = (VpeTemplate) templateClass.newInstance();
+				} catch (ClassNotFoundException e) {
+					template = handleTemplateClassLoadException(template,
+							templateClassName, nameSpaceIdentifyer, e);
+				} catch (IllegalAccessException e) {
+					template = handleTemplateClassLoadException(template,
+							templateClassName, nameSpaceIdentifyer, e);
+				} catch (InstantiationException e) {
+					template = handleTemplateClassLoadException(template,
+							templateClassName, nameSpaceIdentifyer, e);
+				}
 			}
 		} else {
 			template = new VpeHtmlTemplate();
