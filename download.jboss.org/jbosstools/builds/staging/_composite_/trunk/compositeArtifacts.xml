@@ -7,19 +7,27 @@
      get new time w/ 
       date +%s000
       set new time w/ 
-       :%s/[0-9]\{13\}/1291923964000/g
+       :%s/[0-9]\{13\}/1292345725000/g
        -->
-<property name='p2.timestamp' value='1291923964000'/>
+<property name='p2.timestamp' value='1292345725000'/>
 </properties>
-<children size='13'>
+<children size='19'>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.nightly/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--bpel/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--common/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--cdi/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--deltacloud/all/repo/'/>
+
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--esb/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--examples/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--gwt/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--flow/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jbpm/all/repo/'/>
+
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jmx/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--modeshape/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tests/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--usage/all/repo/'/>
 
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-pi4soa-3.1_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-teiid-designer-7.1_trunk/all/repo/'/>
