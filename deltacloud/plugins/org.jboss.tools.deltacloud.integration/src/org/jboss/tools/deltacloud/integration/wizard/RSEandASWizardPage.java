@@ -25,8 +25,8 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
-import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.job.AbstractInstanceJob;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
 import org.jboss.tools.deltacloud.integration.rse.util.RSEUtils;
@@ -47,13 +47,13 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	private Button createServer;
 	private final static String CREATE_RSE_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_RSE_PREF_KEY";
 	private final static String CREATE_SERVER_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_SERVER_PREF_KEY";
-	
+
 	public RSEandASWizardPage() {
 		super("Blah Wizard Page");
 		setTitle("Blah Title");
 		setDescription("Blah Desc");
 	}
-	
+
 	public void createControl(Composite parent) {
 		Composite c2 = new Composite(parent, SWT.NONE);
 		c2.setLayout(new FormLayout());
@@ -63,18 +63,19 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		createServer = new Button(c2, SWT.CHECK);
 		createServer.setText("Create Server Adapter");
 		createServer.setLayoutData(UIUtils.createFormData(createRSE, 5, null, 0, 0, 5, 100, -5));
-		
+
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
 		boolean initRSE, initServer;
 		initRSE = prefs.getBoolean(CREATE_RSE_PREF_KEY, true);
 		initServer = prefs.getBoolean(CREATE_SERVER_PREF_KEY, true);
 		createRSE.setSelection(initRSE);
 		createServer.setSelection(initServer);
-		
-		SelectionListener listener = new SelectionListener(){
+
+		SelectionListener listener = new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				handleSelection(e.widget);
 			}
+
 			public void widgetDefaultSelected(SelectionEvent e) {
 				handleSelection(e.widget);
 			}
@@ -86,8 +87,8 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	}
 
 	private void handleSelection(Widget w) {
-		if( w == createRSE ) {
-			if( !createRSE.getSelection()) {
+		if (w == createRSE) {
+			if (!createRSE.getSelection()) {
 				createServer.setEnabled(false);
 				createServer.setSelection(false);
 			} else {
@@ -95,8 +96,8 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			}
 		}
 	}
-	
-	public ChainedJob getPerformFinishJob(final DeltaCloudInstance instance) {
+
+	public AbstractInstanceJob getPerformFinishJob(final DeltaCloudInstance instance) {
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
 		prefs.putBoolean(CREATE_RSE_PREF_KEY, createRSE.getSelection());
 		prefs.putBoolean(CREATE_SERVER_PREF_KEY, createServer.getSelection());
@@ -105,16 +106,16 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		} catch (BackingStoreException e1) {
 			// ignore
 		}
-		
-		ChainedJob j = new ChainedJob("Register RSE Connection", INewInstanceWizardPage.NEW_INSTANCE_FAMILY) {
-			public IStatus run(IProgressMonitor monitor) {
+
+		AbstractInstanceJob j = new AbstractInstanceJob(
+				"Register RSE Connection", instance, INewInstanceWizardPage.NEW_INSTANCE_FAMILY) {
+			public IStatus doRun(IProgressMonitor monitor) {
 				return runJob(instance, monitor);
 			}
 		};
 		return j;
 	}
 
-	
 	private IStatus runJob(DeltaCloudInstance instance, IProgressMonitor monitor) {
 		String hostname = RSEUtils.createHostName(instance);
 		if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
@@ -133,7 +134,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		}
 		return Status.OK_STATUS;
 	}
-	
+
 	private boolean isAutoconnect() {
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 		boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
