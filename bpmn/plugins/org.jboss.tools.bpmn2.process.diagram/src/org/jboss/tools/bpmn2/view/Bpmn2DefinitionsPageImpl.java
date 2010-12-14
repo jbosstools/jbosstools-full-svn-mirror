@@ -21,9 +21,11 @@ import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.action.CreateSiblingAction;
+import org.eclipse.emf.edit.ui.action.DeleteAction;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -45,6 +47,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.Page;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditor;
@@ -73,6 +76,7 @@ public class Bpmn2DefinitionsPageImpl extends Page implements IBpmn2DefinitionsP
 	private AdapterFactory adapterFactory = new Bpmn2ItemProviderAdapterFactory();
 	private Menu popupMenu, addChildSubmenu, addSiblingSubmenu;
  	private SelectedElementObserver selectedElementObserver = new SelectedElementObserver();
+ 	private ImageDescriptor deleteImageDescriptor;
 	
     public Bpmn2DefinitionsPageImpl(Bpmn2DiagramEditor editor) {
     	this.editor = editor;
@@ -162,6 +166,37 @@ public class Bpmn2DefinitionsPageImpl extends Page implements IBpmn2DefinitionsP
 	private void populatePopupMenu() {
 		createAddChildSubmenu();
 		createAddSiblingSubmenu();
+		if (!(selectedTreeObject instanceof Definitions)) {
+			createSeparator();
+			createDeleteMenuItem();
+		}
+	}
+	
+	private void createSeparator() {
+		new MenuItem(popupMenu, SWT.SEPARATOR);
+	}
+	
+	private ImageDescriptor getDeleteImageDescriptor() {
+		if (deleteImageDescriptor == null) {
+			ISharedImages sharedImages = getSite().getWorkbenchWindow().getWorkbench().getSharedImages();
+			deleteImageDescriptor = sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE);
+		}
+		return deleteImageDescriptor;
+	}
+	
+	private void createDeleteMenuItem() {
+		MenuItem deleteMenuItem = new MenuItem(popupMenu, SWT.PUSH);
+		DeleteAction deleteAction = new DeleteAction(editor.getEditingDomain());
+		deleteMenuItem.setText(deleteAction.getText());
+		deleteMenuItem.setImage(getDeleteImageDescriptor().createImage());
+		ArrayList<EObject> selection = new ArrayList<EObject>();
+		selection.add(selectedTreeObject);
+		final Command deleteCommand = deleteAction.createCommand(selection);
+		deleteMenuItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {				
+				editor.getEditingDomain().getCommandStack().execute(deleteCommand);
+			}
+		});
 	}
 	
 	private void createAddChildSubmenu() {	

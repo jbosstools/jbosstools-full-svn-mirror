@@ -1,16 +1,15 @@
 package org.jboss.tools.bpmn2.process.diagram.sheet;
 
 import org.eclipse.bpmn2.provider.Bpmn2ItemProviderAdapterFactory;
-import org.eclipse.core.commands.operations.OperationHistoryFactory;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.emf.ui.properties.sections.UndoableModelPropertySheetEntry;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.views.properties.PropertySheetEntry;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditor;
 
@@ -28,8 +27,9 @@ public class Bpmn2PropertySheetPage extends PropertySheetPage {
 	
 	public Bpmn2PropertySheetPage(Bpmn2DiagramEditor editor) {
 		this.editor = editor;
-        UndoableModelPropertySheetEntry root = new UndoableModelPropertySheetEntry(
-                OperationHistoryFactory.getOperationHistory());       
+		PropertySheetEntry root = new PropertySheetEntry();
+//        UndoableModelPropertySheetEntry root = new UndoableModelPropertySheetEntry(
+//                OperationHistoryFactory.getOperationHistory());       
         root.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
         setRootEntry(root);
 	}
