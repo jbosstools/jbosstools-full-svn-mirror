@@ -7,8 +7,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.deltacloud</groupId>
-	<artifactId>deltacloud.site</artifactId> 
-	<name>deltacloud.site</name>
+	<artifactId>org.jboss.tools.deltacloud.site</artifactId> 
+	<name>org.jboss.tools.deltacloud.site</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
 </project>
