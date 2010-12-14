@@ -10,32 +10,31 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.job;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance.State;
 
 /**
  * @author André Dietisheim
  */
-public class InstanceStateJob extends AbstractInstanceJob {
+public abstract class AbstractInstanceJob extends AbstractCloudElementJob {
 
-	private State expectedState;
+	private DeltaCloudInstance instance;
 
-	public InstanceStateJob(String name, DeltaCloudInstance instance, State expectedState) {
-		super(name, instance);
-		this.expectedState = expectedState;
+	public AbstractInstanceJob(String name, DeltaCloudInstance instance) {
+		this(name, instance, null);
+	}
+
+	public AbstractInstanceJob(String name, DeltaCloudInstance instance, String family) {
+		super(name, instance.getDeltaCloud(), CLOUDELEMENT.INSTANCES, family);
+		this.instance = instance;
 	}
 
 	@Override
-	protected IStatus doRun(IProgressMonitor monitor) throws Exception {
-		String id = getInstance().getId();
-		getCloud().waitForState(id, expectedState, monitor);
-		return Status.OK_STATUS;
+	protected ISchedulingRule getSchedulingRule() {
+		return new InstanceSchedulingRule(getCloud(), getCloudElement(), instance);
 	}
 
-	protected State getExpectedState() {
-		return expectedState;
+	protected DeltaCloudInstance getInstance() {
+		return instance;
 	}
 }

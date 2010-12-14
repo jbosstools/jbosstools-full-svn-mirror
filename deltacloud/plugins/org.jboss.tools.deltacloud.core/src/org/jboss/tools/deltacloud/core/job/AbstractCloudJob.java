@@ -29,7 +29,11 @@ public abstract class AbstractCloudJob extends ChainedJob {
 	private DeltaCloud cloud;
 
 	public AbstractCloudJob(String name, DeltaCloud cloud) {
-		super(name);
+		this(name, cloud, null);
+	}
+
+	public AbstractCloudJob(String name, DeltaCloud cloud, String family) {
+		super(name, family);
 		this.cloud = cloud;
 	}
 

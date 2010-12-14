@@ -25,9 +25,12 @@ public abstract class AbstractCloudElementJob extends AbstractCloudJob {
 	private CLOUDELEMENT cloudElement;
 
 	public AbstractCloudElementJob(String name, DeltaCloud cloud, CLOUDELEMENT cloudElement) {
-		super(name, cloud);
+		this(name, cloud, cloudElement, null);
+	}
+
+	public AbstractCloudElementJob(String name, DeltaCloud cloud, CLOUDELEMENT cloudElement, String family) {
+		super(name, cloud, family);
 		this.cloudElement = cloudElement;
-		// setUser(true);
 	}
 
 	@Override
