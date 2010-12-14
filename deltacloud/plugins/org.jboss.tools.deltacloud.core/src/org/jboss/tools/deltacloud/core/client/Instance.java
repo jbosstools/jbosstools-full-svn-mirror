@@ -115,13 +115,11 @@ public class Instance extends DeltaCloudObject {
 		return keyname;
 	}
 
-	@SuppressWarnings("unused")
-	private void setPrivateAddresses(AddressList privateAddresses) {
+	protected void setPrivateAddresses(AddressList privateAddresses) {
 		this.privateAddresses = privateAddresses;
 	}
 
-	@SuppressWarnings("unused")
-	private void setPublicAddresses(AddressList publicAddresses) {
+	protected void setPublicAddresses(AddressList publicAddresses) {
 		this.publicAddresses = publicAddresses;
 	}
 

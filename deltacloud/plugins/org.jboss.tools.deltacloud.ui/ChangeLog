@@ -1,5 +1,9 @@
 2010-12-14  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/property/InstancePropertySource.java (getKey): 
+	[JBIDE-7789] removed DeltaCloud#replaceInstance code since DeltaCloud now handles this	 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (WatchCreateJob.run):
+	[JBIDE-7789] removed DeltaCloud#replaceInstance since DeltaCloud now handles this	 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (WatchCreateJob): 
 	[JBIDE-7594] switched WatchCreateJob to InstanceStateJob to have consistent blocking with all other jobs
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (asyncGetProfiles): 

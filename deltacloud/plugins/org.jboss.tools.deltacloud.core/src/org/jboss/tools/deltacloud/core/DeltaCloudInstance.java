@@ -155,6 +155,10 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	public boolean isRunning() {
 		return instance.isRunning();
 	}
+	
+	protected void setInstance(Instance instance) {
+		this.instance = instance;
+	}
 
 	public String getHostName() {
 		List<String> hostNames = getHostNames();

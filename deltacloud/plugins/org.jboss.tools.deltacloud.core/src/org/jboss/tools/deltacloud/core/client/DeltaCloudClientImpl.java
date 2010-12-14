@@ -25,6 +25,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXB;
 import javax.xml.parsers.DocumentBuilder;
@@ -79,6 +81,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver";
 	private static final String DOCUMENT_ELEMENT_API = "api";
 
+	private static final Pattern ELEMENT_TEXTVALUE_REGEX = Pattern.compile("[^\n\t ]+[^\n]+");
+	
 	public static Logger logger = Logger.getLogger(DeltaCloudClientImpl.class);
 
 	public static enum DeltaCloudServerType {
@@ -290,6 +294,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public Instance listInstances(String instanceId) throws DeltaCloudClientException {
+//		return JAXB.unmarshal(new StringReader(sendRequest(new ListInstanceRequest(baseUrl, instanceId))), Instance.class);
 		return buildInstance(sendRequest(new ListInstanceRequest(baseUrl, instanceId)));
 	}
 
@@ -351,7 +356,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document document = db.parse(new InputSource(new StringReader(xml)));
-		List<String> keyText = getElementText(document, PEM_FILE_SUFFIX); //$NON-NLS-1$
+		List<String> keyText = getElementTextValues(document, PEM_FILE_SUFFIX); //$NON-NLS-1$
 		return keyText;
 	}
 
@@ -381,10 +386,11 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 			getProfileProperties(instance, getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
 			instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
-			instance.setState(getElementText(document, "state").get(0)); //$NON-NLS-1$
+			instance.setState(getElementTextValues(document, "state").get(0)); //$NON-NLS-1$
 			getAuthentication(document, instance);
 			instance.setActions(createInstanceActions(instance, document));
-
+			instance.setPublicAddresses(new AddressList(getElementTextValues(document, "public_addresses")));
+			instance.setPrivateAddresses(new AddressList(getElementTextValues(document, "private_addresses")));
 			return instance;
 		} catch (DeltaCloudClientException e) {
 			throw e;
@@ -396,8 +402,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	private Instance buildInstance(String xml) throws DeltaCloudClientException {
 		Instance instance = JAXB.unmarshal(new StringReader(xml), Instance.class);
-		updateInstance(xml, instance);
-		return instance;
+		return updateInstance(xml, instance);
 	}
 
 	private List<InstanceAction> createInstanceActions(final Instance instance, Document document)
@@ -500,11 +505,16 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return values;
 	}
 
-	private List<String> getElementText(Document document, String elementName) {
+	private List<String> getElementTextValues(Document document, String elementName) {
 		NodeList elements = document.getElementsByTagName(elementName);
 		ArrayList<String> values = new ArrayList<String>();
 		for (int i = 0; i < elements.getLength(); i++) {
-			values.add(elements.item(i).getTextContent());
+			String textValue = elements.item(i).getTextContent();
+			Matcher matcher = ELEMENT_TEXTVALUE_REGEX.matcher(textValue);
+			if (matcher.find()) {
+				String group = matcher.group();
+				values.add(group);
+			}
 		}
 		return values;
 	}

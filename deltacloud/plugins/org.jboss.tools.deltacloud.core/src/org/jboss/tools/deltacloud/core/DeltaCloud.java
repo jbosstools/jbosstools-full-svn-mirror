@@ -103,8 +103,8 @@ public class DeltaCloud extends ObservablePojo {
 		this.type = type;
 
 		boolean nameChanged = updateName(name);
-		boolean connectionPropertiesChanged = updateConnectionProperties(url, username, password); 
-		
+		boolean connectionPropertiesChanged = updateConnectionProperties(url, username, password);
+
 		if (nameChanged || connectionPropertiesChanged) {
 			this.passwordStore.update(new DeltaCloudPasswordStorageKey(name, username), password);
 		}
@@ -114,7 +114,7 @@ public class DeltaCloud extends ObservablePojo {
 			loadChildren();
 		}
 	}
-	
+
 	private boolean updateName(String name) {
 		if (equals(this.name, name)) {
 			return false;
@@ -123,7 +123,7 @@ public class DeltaCloud extends ObservablePojo {
 		setName(name);
 		return true;
 	}
-	
+
 	private boolean updateConnectionProperties(String url, String username, String password)
 			throws DeltaCloudException {
 		boolean changed = false;
@@ -321,7 +321,8 @@ public class DeltaCloud extends ObservablePojo {
 		return waitForState(instanceId, differsFromPending, pm);
 	}
 
-	public DeltaCloudInstance waitForState(String instanceId, final DeltaCloudInstance.State expectedState, IProgressMonitor pm)
+	public DeltaCloudInstance waitForState(String instanceId, final DeltaCloudInstance.State expectedState,
+			IProgressMonitor pm)
 			throws InterruptedException, DeltaCloudException {
 		IInstanceStateMatcher stateMatcher = new IInstanceStateMatcher() {
 
@@ -343,7 +344,7 @@ public class DeltaCloud extends ObservablePojo {
 					return instance;
 				}
 				Thread.sleep(400);
-				instance = refreshInstance(instance.getId());
+				instance = refreshInstance(instance);
 			}
 		}
 		return instance;
@@ -469,55 +470,25 @@ public class DeltaCloud extends ObservablePojo {
 		}
 	}
 
-	/**
-	 * Replaces the current instance with the given one. The instanceRepo are
-	 * matched against identical id
-	 * 
-	 * @param instance
-	 *            the instance that shall replace the current one
-	 */
-	public void replaceInstance(DeltaCloudInstance instance) {
-		String instanceId = instance.getId();
-		if (instance != null) {
-			replaceInstance(instance, instanceRepo.getById(instanceId));
-		}
-	}
-
-	public DeltaCloudInstance refreshInstance(String instanceId) throws DeltaCloudException {
-		DeltaCloudInstance deltaCloudInstance = null;
+	private DeltaCloudInstance refreshInstance(DeltaCloudInstance deltaCloudInstance) throws DeltaCloudException {
 		try {
-			Instance instance = client.listInstances(instanceId);
-			deltaCloudInstance = new DeltaCloudInstance(this, instance);
-			DeltaCloudInstance currentInstance = instanceRepo.getById(instanceId);
-			// FIXME: remove STATE_BOGUS state when server fixes state
-			// problems
-			if (!(deltaCloudInstance.getState().equals(DeltaCloudInstance.State.BOGUS))
-							&& !(currentInstance.getState().equals(deltaCloudInstance.getState()))) {
-				replaceInstance(deltaCloudInstance, currentInstance);
-			}
+			Instance newInstance = client.listInstances(deltaCloudInstance.getId());
+			deltaCloudInstance.setInstance(newInstance);
+			return deltaCloudInstance;
 		} catch (DeltaCloudClientException e) {
-			// TODO: is this correct?
-			e.printStackTrace();
-			// will get here when a pending instance is being checked
+			// TODO : internationalize strings
+			throw new DeltaCloudException(MessageFormat.format("Coud not refresh instance \"{0}\"",
+					deltaCloudInstance.getId()), e);
 		}
-		return deltaCloudInstance;
 	}
 
-	private void replaceInstance(DeltaCloudInstance deltaCloudInstance, DeltaCloudInstance currentInstance) {
-		DeltaCloudInstancesRepository repo = getInstancesRepository();
-		DeltaCloudInstance[] instances = repo.get();
-		repo.remove(currentInstance);
-		repo.add(deltaCloudInstance);
-		// TODO: remove notification with all instanceRepo, replace by
-		// notifying the changed instance
-		firePropertyChange(PROP_INSTANCES, instances, repo.get());
-	}
-
-	public boolean performInstanceAction(String instanceId, DeltaCloudInstance.Action action) throws DeltaCloudException {
+	public boolean performInstanceAction(String instanceId, DeltaCloudInstance.Action action)
+			throws DeltaCloudException {
 		return performInstanceAction(instanceRepo.getById(instanceId), action);
 	}
 
-	protected boolean performInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action) throws DeltaCloudException {
+	protected boolean performInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action)
+			throws DeltaCloudException {
 		try {
 			if (instance == null) {
 				return false;

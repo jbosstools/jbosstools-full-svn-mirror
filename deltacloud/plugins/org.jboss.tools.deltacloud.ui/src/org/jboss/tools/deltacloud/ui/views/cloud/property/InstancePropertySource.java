@@ -12,14 +12,11 @@ package org.jboss.tools.deltacloud.ui.views.cloud.property;
 
 import java.util.List;
 
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloud.InstanceItem;
 import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
@@ -133,23 +130,29 @@ public class InstancePropertySource implements IPropertySource {
 		// it will be complete for future requests until a refresh gets the
 		// entire list again.
 		String key = null;
-		try {
-			key = instance.getKey();
-			if (!cloud.getType().equals(DeltaCloud.MOCK_TYPE)) {
-				if (instance.getState().equals(DeltaCloudInstance.State.RUNNING) && (key == null || key.length() == 0)) {
-					instance = cloud.refreshInstance(instance.getId());
-					if (instance != null) {
-						key = instance.getKey();
-						if (key != null && key.length() > 0)
-							cloud.replaceInstance(instance);
-					}
-				}
-			}
-		} catch (DeltaCloudException e) {
-			ErrorUtils.handleError(
-					"Error", "Could not get key for instance " + instance.getName(),
-					e, Display.getDefault().getActiveShell());
-		}
+		// TODO: very weird stuff here. Why should we check for the server to be
+		// a mock and then refresh the instance? investigate what are the
+		// consequences of uncommenting this stuff here
+		// try {
+		key = instance.getKey();
+		// if (!cloud.getType().equals(DeltaCloud.MOCK_TYPE)) {
+		// if (instance.getState().equals(DeltaCloudInstance.State.RUNNING) &&
+		// (key == null || key.length() == 0)) {
+		// instance = cloud.refreshInstance(instance.getId());
+		// consequences
+		//
+		// if (instance != null) {
+		// key = instance.getKey();
+		// if (key != null && key.length() > 0)
+		// cloud.replaceInstance(instance);
+		// }
+		// }
+		// }
+		// } catch (DeltaCloudException e) {
+		// ErrorUtils.handleError(
+		// "Error", "Could not get key for instance " + instance.getName(),
+		// e, Display.getDefault().getActiveShell());
+		// }
 		return key;
 	}
 

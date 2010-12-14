@@ -106,7 +106,7 @@ public class NewInstanceWizard extends Wizard {
 				} catch (Exception e) {
 					// do nothing
 				} finally {
-					cloud.replaceInstance(instance);
+//					cloud.replaceInstance(instance);
 					cloud.removeInstanceJob(instanceId, this);
 					System.out.println(instance.getHostName());
 					pm.done();

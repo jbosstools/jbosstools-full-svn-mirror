@@ -17,28 +17,33 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Martyn Taylor
+ * @author André Dietisheim
  */
 @XmlType
 public class AddressList
 {
 	private static final long serialVersionUID = 1L;
-	
-	private AddressList()
+
+	@XmlElement
+	@XmlList
+	private List<String> addresses;
+
+	protected AddressList()
 	{
 	}
 	
-	@XmlElement
-	@XmlList
-	private List<String> address;
-	
-	@SuppressWarnings("unused")
-	private void setAddress(List<String> address)
+	protected AddressList(List<String> addresses)
 	{
-		this.address = address;
+		setAddress(addresses);
+	}
+
+	protected void setAddress(List<String> addresses)
+	{
+		this.addresses = addresses;
 	}
 
 	public List<String> getAddress()
 	{
-		return address;
+		return addresses;
 	}
 }

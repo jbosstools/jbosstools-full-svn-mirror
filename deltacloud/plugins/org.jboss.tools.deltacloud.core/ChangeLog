@@ -1,5 +1,12 @@
 2010-12-14  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (updateInstance): 
+	[JBIDE-7889] now also set pulic_adresses and private_adresses when updating instances 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (refreshInstance): 
+	[JBIDE-7889] removed code that replaced instances in the local cache. 
+	I now set a new instance to the DeltaCloudInstance (DeltaCloudInstance#setInstance)
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java 	(setInstance): 
+	[JBIDE-7889] added #setInstance to be able to refresh instances  
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (toString): 
 	[JBIDE-7889] added #toString to facilitate debuggin
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (getActions): 
