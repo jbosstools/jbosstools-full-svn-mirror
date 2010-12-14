@@ -1,9 +1,13 @@
 2010-12-13  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(loadInstances): 
+	(loadImages):
+	[JBIDE-7880] clear images and clear instances before loading them.
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
  	(PROP_INSTANCES_ADDED):
  	(createInstance): 
-	[JBIDE-7877] added notification for instances being added
+	[JBIDE-7877] added notification for instances that are added
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
 	(IInstanceStateMatcher.matchesState): 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (State): 

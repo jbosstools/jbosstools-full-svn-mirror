@@ -327,7 +327,7 @@ public class DeltaCloud extends ObservablePojo {
 
 			@Override
 			public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState) {
-				return expectedState != null && expectedState.equals(instanceState.getName());
+				return expectedState != null && expectedState.equals(instanceState);
 			}
 		};
 		return waitForState(instanceId, stateMatcher, pm);
@@ -367,6 +367,7 @@ public class DeltaCloud extends ObservablePojo {
 	 */
 	public void loadInstances() throws DeltaCloudException {
 		try {
+			clearInstances();
 			DeltaCloudInstancesRepository repo = getInstancesRepository();
 			DeltaCloudInstance[] oldInstances = repo.get();
 			repo.add(client.listInstances(), this);
@@ -566,6 +567,7 @@ public class DeltaCloud extends ObservablePojo {
 	 */
 	public void loadImages() throws DeltaCloudException {
 		try {
+			clearImages();
 			DeltaCloudImagesRepository repo = getImagesRepository();
 			DeltaCloudImage[] oldImages = repo.get();
 			repo.add(client.listImages(), this);
