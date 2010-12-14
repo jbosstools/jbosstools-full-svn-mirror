@@ -16,15 +16,17 @@
 		<emma.instrument.bundles />
 	</properties>
 	<build>
-		<plugin>
-			<groupId>org.sonatype.tycho</groupId>
-			<artifactId>maven-osgi-test-plugin</artifactId>
-			<version>${tychoVersion}</version>
-			<configuration>
-				<excludes>
-					<exclude>**/IntegrationTestSuite*.class</exclude>
-				</excludes>
-			</configuration>
-		</plugin>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-test-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<excludes>
+						<exclude>**/IntegrationTestSuite*.class</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>
