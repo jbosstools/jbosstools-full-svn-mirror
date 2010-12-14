@@ -1,5 +1,9 @@
 2010-12-14  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (toString): 
+	[JBIDE-7889] added #toString to facilitate debuggin
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (getActions): 
+	[JBIDE-7889] changed #getActions to return DeltaCloudInstance#Action (and not strings)
 	* src/org/jboss/tools/deltacloud/core/job/InstanceSchedulingRule.java: 
 	* src/org/jboss/tools/deltacloud/core/job/InstanceStateJob.java: 
 	* src/org/jboss/tools/deltacloud/core/job/InstanceActionJob.java: 

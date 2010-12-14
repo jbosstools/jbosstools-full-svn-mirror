@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
@@ -107,8 +108,12 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		return instance.getKey();
 	}
 
-	public List<String> getActions() {
-		return instance.getActionNames();
+	public List<Action> getActions() {
+		List<Action> actions = new ArrayList<Action>();
+		for (InstanceAction action : instance.getActions()) {
+			actions.add(Action.valueOf(action.getName()));
+		}
+		return actions;
 	}
 
 	public String getProfileId() {
@@ -167,5 +172,34 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 			return false;
 		}
 		return client.performInstanceAction(instanceAction);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder("DeltaCloudInstance");
+		builder.append(" [");
+		appendActions(builder);
+		builder.append("id: ").append(getId())
+				.append("givenName: ").append(givenName)
+				.append("name: ").append(getName())
+				.append("hostName: ").append(getHostName())
+				.append("imageId: ").append(getImageId())
+				.append("key: ").append(getKey())
+				.append("ownerId: ").append(getOwnerId())
+				.append("profileId: ").append(getProfileId())
+				.append("realmId: ").append(getRealmId())
+				.append("state: ").append(getState());
+		builder.append("]");
+		return builder.toString();
+	}
+
+	private StringBuilder appendActions(StringBuilder builder) {
+		builder.append(" actions: [");
+		for (Action action : getActions()) {
+			builder.append("action: ")
+					.append(action.getName());
+		}
+		builder.append("] ");
+		return builder;
 	}
 }
