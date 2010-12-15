@@ -125,11 +125,11 @@ public class NewInstanceWizard extends Wizard {
 			}
 			if (instance != null && instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
 				// TODO use chained job? Maybe. But chainedJob needs to be moved
-				ChainedJob first = 
-					new InstanceStateJob(
-						WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()), 
-						instance,
-						DeltaCloudInstance.State.RUNNING);
+				ChainedJob first =
+						new InstanceStateJob(
+								WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()),
+								instance,
+								DeltaCloudInstance.State.RUNNING);
 				first.setUser(true);
 				ChainedJob last = first;
 				ChainedJob temp;
@@ -148,8 +148,8 @@ public class NewInstanceWizard extends Wizard {
 		if (!result) {
 			ErrorUtils.handleError(
 					WizardMessages.getString(CREATE_INSTANCE_FAILURE_TITLE),
-					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG, new String[] { name, imageId,
-							realmId, profileId }),
+					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG,
+							new String[] { name, imageId, realmId, profileId }),
 					e, getShell());
 		}
 		return result;
