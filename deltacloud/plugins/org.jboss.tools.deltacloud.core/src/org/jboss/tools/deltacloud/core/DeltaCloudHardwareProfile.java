@@ -16,6 +16,9 @@ import java.util.List;
 import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Property;
 
+/**
+ * @author Jeff Johnston
+ */
 public class DeltaCloudHardwareProfile {
 
 	private HardwareProfile profile;
