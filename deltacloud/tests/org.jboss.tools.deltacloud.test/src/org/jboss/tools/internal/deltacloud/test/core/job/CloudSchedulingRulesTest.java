@@ -98,6 +98,13 @@ public class CloudSchedulingRulesTest {
 		assertTrue(cloudInstancesRule.isConflicting(cloudRule));
 	}
 
+	@Test
+	public void cloudImagesRule2CloudImagesRule() throws DeltaCloudException {
+		CloudElementSchedulingRule cloudImagesRule =
+				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.IMAGES);
+		assertTrue(cloudImagesRule.isConflicting(cloudImagesRule));
+	}
+
 	private static class DeltaCloudFake extends DeltaCloud {
 
 		public DeltaCloudFake() throws DeltaCloudException {
