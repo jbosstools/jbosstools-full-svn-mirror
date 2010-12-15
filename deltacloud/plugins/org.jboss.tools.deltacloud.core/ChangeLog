@@ -1,5 +1,10 @@
 2010-12-15  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(getInstanceJob):
+	(waitWhilePending): 
+	(registerInstanceJob):
+	[JBIDE-7912] removed since job concurrency is dealt with job scheduling rules now 
 	* src/org/jboss/tools/deltacloud/core/job/InstanceSchedulingRule.java (isConflicting): 
 	* src/org/jboss/tools/deltacloud/core/job/CloudSchedulingRule.java (isConflicting): 
 	* src/org/jboss/tools/deltacloud/core/job/CloudElementSchedulingRule.java (isConflicting): 

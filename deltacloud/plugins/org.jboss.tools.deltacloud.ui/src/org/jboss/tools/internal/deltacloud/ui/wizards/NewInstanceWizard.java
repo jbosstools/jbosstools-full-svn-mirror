@@ -14,9 +14,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -27,6 +24,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.job.InstanceStateJob;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.DeltacloudUIExtensionManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
@@ -41,7 +39,6 @@ public class NewInstanceWizard extends Wizard {
 	private final static String CONFIRM_CREATE_TITLE = "ConfirmCreate.title"; //$NON-NLS-1$
 	private final static String CONFIRM_CREATE_MSG = "ConfirmCreate.msg"; //$NON-NLS-1$
 	private final static String DONT_SHOW_THIS_AGAIN_MSG = "DontShowThisAgain.msg"; //$NON-NLS-1$
-	private final static String STARTING_INSTANCE_MSG = "StartingInstance.msg"; //$NON-NLS-1$
 	private final static String STARTING_INSTANCE_TITLE = "StartingInstance.title"; //$NON-NLS-1$
 
 	protected NewInstancePage mainPage;
@@ -76,47 +73,6 @@ public class NewInstanceWizard extends Wizard {
 	public boolean canFinish() {
 		return mainPage.isPageComplete();
 	}
-
-	private class WatchCreateJob extends ChainedJob {
-
-		private DeltaCloud cloud;
-		private String instanceId;
-		private String instanceName;
-
-		public WatchCreateJob(String title, DeltaCloud cloud,
-				String instanceId, String instanceName) {
-			super(title, INewInstanceWizardPage.NEW_INSTANCE_FAMILY);
-			this.cloud = cloud;
-			this.instanceId = instanceId;
-			this.instanceName = instanceName;
-		}
-
-		public IStatus run(IProgressMonitor pm) {
-			if (!pm.isCanceled()) {
-				DeltaCloudInstance instance = null;
-				try {
-					pm.beginTask(
-							WizardMessages.getFormattedString(STARTING_INSTANCE_MSG, new String[] { instanceName }),
-							IProgressMonitor.UNKNOWN);
-					pm.worked(1);
-					cloud.registerInstanceJob(instanceId, this);
-					instance = cloud.waitWhilePending(instanceId, pm);
-
-				} catch (Exception e) {
-					// do nothing
-				} finally {
-					// cloud.replaceInstance(instance);
-					cloud.removeInstanceJob(instanceId, this);
-					System.out.println(instance.getHostName());
-					pm.done();
-				}
-				return Status.OK_STATUS;
-			} else {
-				pm.done();
-				return Status.CANCEL_STATUS;
-			}
-		}
-	};
 
 	@Override
 	public boolean performFinish() {
@@ -168,12 +124,12 @@ public class NewInstanceWizard extends Wizard {
 				result = true;
 			}
 			if (instance != null && instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
-				final String instanceId = instance.getId();
-				final String instanceName = name;
-
 				// TODO use chained job? Maybe. But chainedJob needs to be moved
-				ChainedJob first = new WatchCreateJob(WizardMessages.getString(STARTING_INSTANCE_TITLE),
-						cloud, instanceId, instanceName);
+				ChainedJob first = 
+					new InstanceStateJob(
+						WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()), 
+						instance,
+						DeltaCloudInstance.State.RUNNING);
 				first.setUser(true);
 				ChainedJob last = first;
 				ChainedJob temp;

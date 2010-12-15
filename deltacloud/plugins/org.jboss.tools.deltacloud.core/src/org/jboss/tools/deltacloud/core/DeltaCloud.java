@@ -13,14 +13,11 @@ package org.jboss.tools.deltacloud.core;
 import java.net.MalformedURLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.jobs.Job;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
@@ -61,10 +58,6 @@ public class DeltaCloud extends ObservablePojo {
 
 	private IImageFilter imageFilter;
 	private IInstanceFilter instanceFilter;
-
-	private Map<String, Job> actionJobs;
-
-	private Object actionLock = new Object();
 
 	private SecurePasswordStore passwordStore;
 
@@ -295,36 +288,6 @@ public class DeltaCloud extends ObservablePojo {
 		}
 	}
 
-	public Job getInstanceJob(String id) {
-		synchronized (actionLock) {
-			Job j = null;
-			if (actionJobs != null) {
-				return actionJobs.get(id);
-			}
-			return j;
-		}
-	}
-
-	public void registerInstanceJob(String id, Job j) {
-		synchronized (actionLock) {
-			if (actionJobs == null)
-				actionJobs = new HashMap<String, Job>();
-			actionJobs.put(id, j);
-		}
-	}
-
-	public DeltaCloudInstance waitWhilePending(String instanceId, IProgressMonitor pm) throws InterruptedException,
-			DeltaCloudException {
-		IInstanceStateMatcher differsFromPending = new IInstanceStateMatcher() {
-
-			@Override
-			public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState) {
-				return !DeltaCloudInstance.State.PENDING.equals(instanceState);
-			}
-		};
-		return waitForState(instanceId, differsFromPending, pm);
-	}
-
 	public DeltaCloudInstance waitForState(String instanceId, final DeltaCloudInstance.State expectedState,
 			IProgressMonitor pm)
 			throws InterruptedException, DeltaCloudException {
@@ -352,13 +315,6 @@ public class DeltaCloud extends ObservablePojo {
 			}
 		}
 		return instance;
-	}
-
-	public void removeInstanceJob(String id, Job j) {
-		synchronized (actionLock) {
-			if (actionJobs != null && actionJobs.get(id) == j)
-				actionJobs.remove(id);
-		}
 	}
 
 	/**

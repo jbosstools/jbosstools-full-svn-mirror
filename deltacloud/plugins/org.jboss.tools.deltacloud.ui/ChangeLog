@@ -1,3 +1,9 @@
+2010-12-15  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (WatchCreateJob): 
+	[JBIDE-7912] replaced custom WatchCreateJob and replaced with InstanceStateJob to have consistent scheduling across jobs 
+	in the client 
+
 2010-12-14  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/property/InstancePropertySource.java (getKey): 
