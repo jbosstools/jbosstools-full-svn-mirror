@@ -279,23 +279,20 @@
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceFromAnyImageHandler"
             commandId="org.jboss.tools.deltacloud.ui.createinstanceFromAnyImage">
-			<activeWhen>
+			<enabledWhen>
                <with
                      variable="selection">
-					<iterate operator="and">
-						<adapt
-				             type="org.jboss.tools.deltacloud.core.DeltaCloud">
-								<test property="org.jboss.tools.deltacloud.ui.commands.hasImages"
-									value="true"/>
-						</adapt>
-	               	</iterate>
+                     <and>
+						<count value="+" />
+						<iterate operator="and">
+							<adapt
+					             type="org.jboss.tools.deltacloud.core.DeltaCloud">
+									<test property="org.jboss.tools.deltacloud.ui.commands.hasImages"
+										value="true"/>
+							</adapt>
+		               	</iterate>
+		             </and>
                </with>
-			</activeWhen>
-			<enabledWhen>
-				<with
-					variable="selection">
-					<count value="+" />
-				</with>
 			</enabledWhen>
       </handler>
    </extension>
