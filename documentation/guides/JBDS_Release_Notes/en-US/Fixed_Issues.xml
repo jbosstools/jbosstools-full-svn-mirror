@@ -27,6 +27,7 @@
 		  <para>
 		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7842">JBIDE-7842</ulink>: A new wizard has been added for the <filename>beans.xml</filename> file. This new wizard uses the <guilabel>New File</guilabel> wizard as a foundation, setting the <guilabel>File Name</guilabel> input field set to <filename>beans.xml</filename> and the <guilabel>Parent Folder</guilabel> to the projects <filename>beans.xml</filename> default location (if determinable).
 		  </para>
+	       </listitem>
 	      	<listitem>
                     <para>
                         <ulink url="https://jira.jboss.org/browse/JBIDE-7823">JBIDE-7823</ulink>: A new option has been added to the <guilabel>Dynamic Web Project</guilabel> wizard which enables support for <productname>CDI</productname>. The new option can be accessed using the following steps:
@@ -60,7 +61,7 @@
 		   <para>
 		      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7803">JBIDE-7803</ulink>: After creating a project for the Web Tools Platform (WTP), a user would have to manually create the <filename>beans.xml</filename> file that will located at <filename>WEB-INF/beans.xml</filename> for WAR files and <filename>META-INF/beans.xml</filename> for EJB files. The CDI facet has now been updated to ensure that an empty <filename>beans.xml</filename> file is generated in the correct locations during the creation of a WTP project when the <guilabel>Generate beans.xml</guilabel> box is checked. This update helps to ensure the necessary CDI file exists for the WTP project.
 		   </para>
-		   <listitem>
+		</listitem>
                 <listitem>
                     <para>
                         <ulink url="https://jira.jboss.org/browse/JBIDE-7721">JBIDE-7721</ulink>: It is possible to declare custom decorators and interceptors without using the @Decorator and @Interceptor annotations, like so:
@@ -228,14 +229,13 @@
                          and press <guibutton>Next</guibutton>. The interceptor wizard declares an interceptor for an existing web bean, and implements <property>@Interceptor</property> annotation.
                     </para>
                 </listitem>
-	     </listitem>
 	     <listitem>
 		<para>
 		   <ulink url="https://jira.jboss.org/browse/JBIDE-2708">JBIDE-2708</ulink>: The <productname>CDI Validator</productname> now implements all the definitions, non-portable behaviors and deployment problems mentioned in <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/index.html">JSR-299</ulink> with the exception of those that can not be tracked at design time. You can view the complete list of implemented rules in the <ulink url="https://anonsvn.jboss.org/repos/jbosstools/trunk/cdi/plugins/org.jboss.tools.cdi.core/src/org/jboss/tools/cdi/internal/core/validation/errorList.txt">errorList.txt</ulink> file.
 		</para>
 		<para>
 		   The severity levels for optional CDI Validation rules can be set 2 ways:
-		      <orderedlist>
+		      <itemizedlist>
 			 <listitem>
 			    <para>
 			    Globally for all projects by selecting <menuchoice>
@@ -256,7 +256,7 @@
                             </menuchoice>
 								</para>
 							</listitem>
-						</orderedlist>
+						</itemizedlist>
 					</para>
                 </listitem>
                 <listitem>
