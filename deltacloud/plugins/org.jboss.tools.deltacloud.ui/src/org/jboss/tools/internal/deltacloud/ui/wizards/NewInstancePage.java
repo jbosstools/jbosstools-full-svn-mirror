@@ -174,18 +174,14 @@ public class NewInstancePage extends WizardPage {
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
 	}
 
-//	public String getHardwareProfile() {
-//		return hardwareCombo.getText();
-//	}
-//
-//	public String getRealmId() {
-//		if (realmCombo instanceof Combo) {
-//			int index = ((Combo) realmCombo).getSelectionIndex();
-//			return realms.get(index).getId();
-//		} else {
-//			return null;
-//		}
-//	}
+	// public String getRealmId() {
+	// if (realmCombo instanceof Combo) {
+	// int index = ((Combo) realmCombo).getSelectionIndex();
+	// return realms.get(index).getId();
+	// } else {
+	// return null;
+	// }
+	// }
 
 	public String getCpuProperty() {
 		return currProfilePage.getCPU();
@@ -198,18 +194,6 @@ public class NewInstancePage extends WizardPage {
 	public String getMemoryProperty() {
 		return currProfilePage.getMemory();
 	}
-
-//	public String getInstanceName() {
-//		return nameText.getText();
-//	}
-
-//	public String getKeyName() {
-//		return keyText.getText();
-//	}
-//
-//	public String getImageId() {
-//		return imageText.getText();
-//	}
 
 	private void clearProfiles() {
 		hardwareCombo.removeModifyListener(hardwareComboListener);
@@ -320,7 +304,7 @@ public class NewInstancePage extends WizardPage {
 		groupLayout.marginHeight = 0;
 		groupLayout.marginWidth = 0;
 		groupContainer.setLayout(groupLayout);
-//		hardwareCombo.setEnabled(false);
+		// hardwareCombo.setEnabled(false);
 
 		// add invisible dummy widget to guarantee a min size
 		dummyLabel = new Label(groupContainer, SWT.NONE);
@@ -430,9 +414,20 @@ public class NewInstancePage extends WizardPage {
 
 		// realms
 		// TODO: internationalize strings
-		UpdateValueStrategy realmComboStrategy = new UpdateValueStrategy().setBeforeSetValidator(new MandatoryStringValidator("You must select a realm."));
+		UpdateValueStrategy realmComboStrategy = new UpdateValueStrategy();
+		realmComboStrategy.setConverter(new Converter(Integer.class, String.class)
+			{
+				@Override
+				public Object convert(Object fromObject) {
+					int selectedRealmIndex = (Integer) fromObject;
+					if (realms == null || selectedRealmIndex >= realms.size()) {
+						return "";
+					}
+					return realms.get(selectedRealmIndex);
+				}
+			});
 		dbc.bindValue(
-				WidgetProperties.text().observe(realmCombo),
+				WidgetProperties.singleSelectionIndex().observe(realmCombo),
 				BeanProperties.value(
 						NewInstanceModel.class, NewInstanceModel.PROPERTY_REALM).observe(model),
 						realmComboStrategy,
@@ -440,7 +435,8 @@ public class NewInstancePage extends WizardPage {
 
 		// hardwareCombo
 		// TODO: internationalize strings
-		UpdateValueStrategy hardwareComboStrategy = new UpdateValueStrategy().setBeforeSetValidator(new MandatoryStringValidator("You must select a hardware profile."));
+		UpdateValueStrategy hardwareComboStrategy = new UpdateValueStrategy()
+				.setBeforeSetValidator(new MandatoryStringValidator("You must select a hardware profile."));
 		dbc.bindValue(
 				WidgetProperties.text().observe(hardwareCombo),
 				BeanProperties.value(
@@ -538,7 +534,7 @@ public class NewInstancePage extends WizardPage {
 		// TODO: internationalize strings
 		new AbstractCloudElementJob("Get realms", cloud, CLOUDELEMENT.REALMS) {
 			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
-				realms = getRealms();
+				realms = loadRealms();
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
 						updateRealmCombo(getRealmNames(realms));
@@ -623,7 +619,7 @@ public class NewInstancePage extends WizardPage {
 		return realmNames;
 	}
 
-	private List<DeltaCloudRealm> getRealms() {
+	private List<DeltaCloudRealm> loadRealms() {
 		List<DeltaCloudRealm> realms = new ArrayList<DeltaCloudRealm>();
 		try {
 			realms = Arrays.asList(cloud.getRealms());
