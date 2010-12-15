@@ -23,27 +23,11 @@
 		<title>Contexts and Dependency Injection (CDI)</title>
         <para>
             <itemizedlist>
-				<listitem>
-                    <para>
-                        <ulink url="https://jira.jboss.org/browse/JBIDE-2708">JBIDE-2708</ulink>: The <productname>CDI Validator</productname> now implements all the definitions, non-portable behaviors and deployment problems mentioned in <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/index.html">JSR-299</ulink> with the exception of those that can not be tracked at design time. You can view the complete list of implemented rules in the <ulink url="https://anonsvn.jboss.org/repos/jbosstools/trunk/cdi/plugins/org.jboss.tools.cdi.core/src/org/jboss/tools/cdi/internal/core/validation/errorList.txt">errorList.txt</ulink> file.
-                    </para>
-					<para>
-						The severity levels for optional CDI Validation rules can be set 2 ways:
-						<orderedlist>
-							<listitem>
-								<para>
-									Globally for all projects by selecting <menuchoice><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>CDI</guimenuitem><guimenuitem>Validator</guimenuitem></menuchoice>
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									At the project level, overriding the global preferences, by selecting <menuchoice><guimenuitem>Project</guimenuitem><guimenuitem>Properties</guimenuitem><guimenuitem>CDI Settings</guimenuitem><guimenuitem>Validator</guimenuitem></menuchoice>
-								</para>
-							</listitem>
-						</orderedlist>
-					</para>
-                </listitem>
-				<listitem>
+	       <listitem>
+		  <para>
+		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7842">JBIDE-7842</ulink>: A new wizard has been added for the <filename>beans.xml</filename> file. This new wizard uses the <guilabel>New File</guilabel> wizard as a foundation, setting the <guilabel>File Name</guilabel> input field set to <filename>beans.xml</filename> and the <guilabel>Parent Folder</guilabel> to the projects <filename>beans.xml</filename> default location (if determinable).
+		  </para>
+	      	<listitem>
                     <para>
                         <ulink url="https://jira.jboss.org/browse/JBIDE-7823">JBIDE-7823</ulink>: A new option has been added to the <guilabel>Dynamic Web Project</guilabel> wizard which enables support for <productname>CDI</productname>. The new option can be accessed using the following steps:
 						<orderedlist>
@@ -72,6 +56,11 @@
 						When the <option>Dynamic Web Project with CDI (Context and Dependency Injection)</option> option is selected the <productname>CDI Facet</productname> will be installed along with all required and preferred dependencies such as JSF 2, Java 6 and Servlets 3.
 					</para>
                 </listitem>
+		<listitem>
+		   <para>
+		      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7803">JBIDE-7803</ulink>: After creating a project for the Web Tools Platform (WTP), a user would have to manually create the <filename>beans.xml</filename> file that will located at <filename>WEB-INF/beans.xml</filename> for WAR files and <filename>META-INF/beans.xml</filename> for EJB files. The CDI facet has now been updated to ensure that an empty <filename>beans.xml</filename> file is generated in the correct locations during the creation of a WTP project when the <guilabel>Generate beans.xml</guilabel> box is checked. This update helps to ensure the necessary CDI file exists for the WTP project.
+		   </para>
+		   <listitem>
                 <listitem>
                     <para>
                         <ulink url="https://jira.jboss.org/browse/JBIDE-7721">JBIDE-7721</ulink>: It is possible to declare custom decorators and interceptors without using the @Decorator and @Interceptor annotations, like so:
@@ -238,6 +227,37 @@
                         </menuchoice>
                          and press <guibutton>Next</guibutton>. The interceptor wizard declares an interceptor for an existing web bean, and implements <property>@Interceptor</property> annotation.
                     </para>
+                </listitem>
+	     </listitem>
+	     <listitem>
+		<para>
+		   <ulink url="https://jira.jboss.org/browse/JBIDE-2708">JBIDE-2708</ulink>: The <productname>CDI Validator</productname> now implements all the definitions, non-portable behaviors and deployment problems mentioned in <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/index.html">JSR-299</ulink> with the exception of those that can not be tracked at design time. You can view the complete list of implemented rules in the <ulink url="https://anonsvn.jboss.org/repos/jbosstools/trunk/cdi/plugins/org.jboss.tools.cdi.core/src/org/jboss/tools/cdi/internal/core/validation/errorList.txt">errorList.txt</ulink> file.
+		</para>
+		<para>
+		   The severity levels for optional CDI Validation rules can be set 2 ways:
+		      <orderedlist>
+			 <listitem>
+			    <para>
+			    Globally for all projects by selecting <menuchoice>
+			       <guimenuitem>JBoss Tools</guimenuitem>
+			       <guimenuitem>Web</guimenuitem>
+			       <guimenuitem>CDI</guimenuitem>
+			       <guimenuitem>Validator</guimenuitem>
+			    </menuchoice>
+			 </para>
+		      </listitem>
+		      <listitem>
+			 <para>
+			 At the project level, overriding the global preferences, by selecting <menuchoice>
+                               <guimenuitem>Project</guimenuitem>
+                               <guimenuitem>Properties</guimenuitem>
+                               <guimenuitem>CDI Settings</guimenuitem>
+                               <guimenuitem>Validator</guimenuitem>
+                            </menuchoice>
+								</para>
+							</listitem>
+						</orderedlist>
+					</para>
                 </listitem>
                 <listitem>
                     <para>
@@ -630,6 +650,11 @@
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5677">JBIDE-5677</ulink>: JSF 2 is now supported for web projects. When a user is configuring Project Facets and selects to add JSF support, JSF 2 is now an available option.
                     </para>
                 </listitem>
+		<listitem>
+		   <para>
+		      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5661">JBIDE-5661</ulink>: JavaServer Pages Standard Tag Library (JSTL)  functions (<code>fn:*</code>) were not supported and an empty panel would appear in a users workspace after attempting to add a JSTL function to a project. Support has been added for JSTL functions with this release. Support has been achieved through the modification of the following files: <filename>TLDToPaletteHelper.java</filename>, <filename>JSPAdopt.java</filename> and <filename>JSPPaletteInsertHelper.java</filename>. 
+		   </para>
+		</listitem>
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-5219">JBIDE-5219</ulink>: The JSF 2 kick start project template has been added and is now available within the <guilabel>New JSF Project Wizard</guilabel>.
@@ -1116,6 +1141,11 @@
         <title>General Issues</title>
         <para>
             <itemizedlist>
+	       <listitem>
+		  <para>
+		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7830">JBIDE-7830</ulink>: The wizard that would display available attributes for JSP and HTML tags has been updated to improve usability. In the past the wizard would show a complete list of attributes for a tag, in one list. This could potentially overwhelm a user with options and make it hard to define the necessary attribute items for a tag. This update for the wizard ensures that required and preferable attributes are seperated from the others by placing them under a <guilabel>General</guilabel> tab, with the rest being listed under the <guilabel>Advanced</guilabel> tab. 
+		  </para>
+	       </listitem>
                 <!-- These two issues only in release notes for JBT -->
                 <!--	   <listitem>
 			      <para>
