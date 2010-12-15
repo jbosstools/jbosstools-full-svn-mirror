@@ -16,14 +16,11 @@ import org.eclipse.equinox.security.storage.StorageException;
 
 /**
  * @author Andre Dietisheim
- * 
- *         TODO: remove DeltaCloudException
  */
 public class SecurePasswordStore {
 
 	public static interface IStorageKey {
 		public String getKey();
-
 		public boolean equals(IStorageKey key);
 	}
 
@@ -47,6 +44,7 @@ public class SecurePasswordStore {
 			try {
 				return this.password = getFromPreferences(storageKey);
 			} catch (StorageException e) {
+				// TODO: internationalize strings
 				throw new DeltaCloudException("Could get password", e);
 			}
 		}
@@ -58,12 +56,12 @@ public class SecurePasswordStore {
 
 	public void update(IStorageKey key, String password) throws DeltaCloudException {
 		if (!storageKey.equals(key)
-				|| hasPasswordChanged(password)) {
+				|| isPasswordChanged(password)) {
 			storeInPreferences(this.password = password, this.storageKey = key);
 		}
 	}
 
-	private boolean hasPasswordChanged(String password) {
+	private boolean isPasswordChanged(String password) {
 		if (this.password == null && password == null) {
 			return false;
 		} else {
@@ -76,6 +74,7 @@ public class SecurePasswordStore {
 	public void remove() throws DeltaCloudException {
 		ISecurePreferences node = getNode(storageKey);
 		if (node == null) {
+			// TODO: internationalize strings
 			throw new DeltaCloudException("Could not remove password");
 		}
 		node.clear();

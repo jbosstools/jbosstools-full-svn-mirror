@@ -14,7 +14,7 @@ import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.jboss.tools.deltacloud.core.SecurePasswordStore.IStorageKey;
 
 /**
- * Implements a key to be used to store keywords with.
+ * Implements a key to be used to store values in the preferences store.
  * 
  * @author Andre Dietisheim
  *
