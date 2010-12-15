@@ -59,11 +59,7 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 
 			@Override
 			public void run() {
-				// viewer.getTree().setRedraw(false);
-				for (final DeltaCloudViewItem<?> element : children) {
-					viewer.remove(element);
-				}
-				// viewer.getTree().setRedraw(true);
+				viewer.remove(children.toArray());
 			}
 		});
 		children.clear();
