@@ -28,6 +28,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProperty;
 
 /**
  * @author Jeff Johnston
+ * @author André Dietisheim
  */
 public class ProfileComposite {
 

@@ -72,6 +72,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
  * @author Jeff Jonston
+ * @author André Dietisheim
  */
 public class NewInstancePage extends WizardPage {
 
@@ -105,26 +106,27 @@ public class NewInstancePage extends WizardPage {
 	private Text nameText;
 	private Text imageText;
 	private Text keyText;
-	private Combo hardware;
+	private Combo hardwareCombo;
 	private Combo realmCombo;
-	private ProfileComposite currPage;
+	private ProfileComposite currProfilePage;
 	private Map<String, ProfileComposite> profilePages;
 	private DeltaCloudHardwareProfile[] allProfiles;
 	private List<DeltaCloudRealm> realms;
 
 	private Group groupContainer;
 
-	private ModifyListener comboListener = new ModifyListener() {
+	private ModifyListener hardwareComboListener = new ModifyListener() {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			int index = hardware.getSelectionIndex();
-			String id = index > -1 ? hardware.getItem(hardware.getSelectionIndex()) : null;
-			if (currPage != null)
-				currPage.setVisible(false);
+			int index = hardwareCombo.getSelectionIndex();
+			String id = index > -1 ? hardwareCombo.getItem(hardwareCombo.getSelectionIndex()) : null;
+			if (currProfilePage != null) {
+				currProfilePage.setVisible(false);
+			}
 			if (id != null) {
-				currPage = profilePages.get(id);
-				currPage.setVisible(true);
+				currProfilePage = profilePages.get(id);
+				currProfilePage.setVisible(true);
 			}
 		}
 	};
@@ -161,66 +163,62 @@ public class NewInstancePage extends WizardPage {
 
 	};
 
-	public NewInstancePage(DeltaCloud cloud) {
+	public NewInstancePage(DeltaCloud cloud, DeltaCloudImage image) {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
+		this.image = image;
 		String defaultKeyname = cloud.getLastKeyname();
-		model = new NewInstanceModel(defaultKeyname); //$NON-NLS-1$
+		model = new NewInstanceModel(defaultKeyname, image); //$NON-NLS-1$
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
-		setPageComplete(false);
 	}
 
-	public String getHardwareProfile() {
-		return hardware.getText();
-	}
-
-	public String getRealmId() {
-		if (realmCombo instanceof Combo) {
-			int index = ((Combo) realmCombo).getSelectionIndex();
-			return realms.get(index).getId();
-		} else {
-			return null;
-		}
-	}
+//	public String getHardwareProfile() {
+//		return hardwareCombo.getText();
+//	}
+//
+//	public String getRealmId() {
+//		if (realmCombo instanceof Combo) {
+//			int index = ((Combo) realmCombo).getSelectionIndex();
+//			return realms.get(index).getId();
+//		} else {
+//			return null;
+//		}
+//	}
 
 	public String getCpuProperty() {
-		return currPage.getCPU();
+		return currProfilePage.getCPU();
 	}
 
 	public String getStorageProperty() {
-		return currPage.getStorage();
+		return currProfilePage.getStorage();
 	}
 
 	public String getMemoryProperty() {
-		return currPage.getMemory();
+		return currProfilePage.getMemory();
 	}
 
-	public String getInstanceName() {
-		return nameText.getText();
-	}
+//	public String getInstanceName() {
+//		return nameText.getText();
+//	}
 
-	public String getKeyName() {
-		return keyText.getText();
-	}
+//	public String getKeyName() {
+//		return keyText.getText();
+//	}
+//
+//	public String getImageId() {
+//		return imageText.getText();
+//	}
 
-	public String getImageId() {
-		return imageText.getText();
-	}
-
-	public void setImage(DeltaCloudImage image) {
-		this.image = image;
-	}
-
-	public void clearProfiles() {
-		hardware.removeModifyListener(comboListener);
-		hardware.removeAll();
-		if (currPage != null) {
-			currPage.setVisible(false);
+	private void clearProfiles() {
+		hardwareCombo.removeModifyListener(hardwareComboListener);
+		hardwareCombo.removeAll();
+		if (currProfilePage != null) {
+			currProfilePage.setVisible(false);
 		}
-		hardware.setEnabled(false);
-		hardware.addModifyListener(comboListener);
+		hardwareCombo.setEnabled(false);
+		hardwareCombo.addModifyListener(hardwareComboListener);
 	}
 
 	private List<DeltaCloudHardwareProfile> filterProfiles(DeltaCloudHardwareProfile[] profiles) {
@@ -230,13 +228,13 @@ public class NewInstancePage extends WizardPage {
 
 		List<DeltaCloudHardwareProfile> filteredProfiles = new ArrayList<DeltaCloudHardwareProfile>();
 		for (DeltaCloudHardwareProfile p : profiles) {
-			if (p.getArchitecture() == null 
-					|| image == null 
+			if (p.getArchitecture() == null
+					|| image == null
 					|| image.getArchitecture().equals(p.getArchitecture())) {
 				filteredProfiles.add(p);
 			}
 		}
-		
+
 		return filteredProfiles;
 	}
 
@@ -252,19 +250,22 @@ public class NewInstancePage extends WizardPage {
 
 		// We have to set the imageObservable id here instead of in the
 		// constructor of the model because the imageObservable id triggers
-		// other items to fill in their values such as the architecture 
-		// and hardware profiles.
-		try {
-			model.setImage(cloud.getLastImage());
-		} catch (DeltaCloudException e) {
-			// ignore
-		}
+		// other items to fill in their values such as the architecture
+		// and hardwareCombo profiles.
+		// try {
+		// model.setImage(cloud.getLastImage());
+		// } catch (DeltaCloudException e) {
+		// // ignore
+		// }
 		setControl(control);
 
 		// lastly, if there's already an image set, use it
 		if (image != null) {
 			imageText.setText(image.getId());
+		} else {
+			imageText.setText(cloud.getLastImageId());
 		}
+		setPageComplete(false);
 	}
 
 	private Composite createWidgets(Composite parent) {
@@ -308,10 +309,10 @@ public class NewInstancePage extends WizardPage {
 
 		Label hardwareLabel = new Label(container, SWT.NULL);
 		hardwareLabel.setText(WizardMessages.getString(HARDWARE_LABEL));
-		hardware = new Combo(container, SWT.READ_ONLY);
-		hardware.setEnabled(false);
-		hardware.setItems(new String[] { WizardMessages.getString(LOADING_VALUE) });
-		hardware.select(0);
+		hardwareCombo = new Combo(container, SWT.READ_ONLY);
+		hardwareCombo.setEnabled(false);
+		hardwareCombo.setItems(new String[] { WizardMessages.getString(LOADING_VALUE) });
+		hardwareCombo.select(0);
 
 		groupContainer = new Group(container, SWT.BORDER);
 		groupContainer.setText(WizardMessages.getString(PROPERTIES_LABEL));
@@ -319,7 +320,7 @@ public class NewInstancePage extends WizardPage {
 		groupLayout.marginHeight = 0;
 		groupLayout.marginWidth = 0;
 		groupContainer.setLayout(groupLayout);
-		hardware.setEnabled(false);
+//		hardwareCombo.setEnabled(false);
 
 		// add invisible dummy widget to guarantee a min size
 		dummyLabel = new Label(groupContainer, SWT.NONE);
@@ -393,9 +394,9 @@ public class NewInstancePage extends WizardPage {
 		hardwareLabel.setLayoutData(f);
 
 		f = UIUtils.createFormData(control, 8, null, 0, hardwareLabel, 5, 100, 0);
-		hardware.setLayoutData(f);
+		hardwareCombo.setLayoutData(f);
 
-		f = UIUtils.createFormData(hardware, 10, 100, 0, 0, 0, 100, 0);
+		f = UIUtils.createFormData(hardwareCombo, 10, 100, 0, 0, 0, 100, 0);
 		groupContainer.setLayoutData(f);
 		return container;
 	}
@@ -428,18 +429,24 @@ public class NewInstancePage extends WizardPage {
 		});
 
 		// realms
-		IObservableValue realmObservable = WidgetProperties.text().observe(realmCombo);
+		// TODO: internationalize strings
+		UpdateValueStrategy realmComboStrategy = new UpdateValueStrategy().setBeforeSetValidator(new MandatoryStringValidator("You must select a realm."));
 		dbc.bindValue(
-				realmObservable,
+				WidgetProperties.text().observe(realmCombo),
 				BeanProperties.value(
-						NewInstanceModel.class, NewInstanceModel.PROPERTY_REALM).observe(model));
+						NewInstanceModel.class, NewInstanceModel.PROPERTY_REALM).observe(model),
+						realmComboStrategy,
+						null);
 
-		// hardware
-		IObservableValue hardwareObservable = WidgetProperties.text().observe(hardware);
+		// hardwareCombo
+		// TODO: internationalize strings
+		UpdateValueStrategy hardwareComboStrategy = new UpdateValueStrategy().setBeforeSetValidator(new MandatoryStringValidator("You must select a hardware profile."));
 		dbc.bindValue(
-				hardwareObservable,
+				WidgetProperties.text().observe(hardwareCombo),
 				BeanProperties.value(
-						NewInstanceModel.class, NewInstanceModel.PROPERTY_PROFILE).observe(model));
+						NewInstanceModel.class, NewInstanceModel.PROPERTY_PROFILE).observe(model),
+						hardwareComboStrategy,
+						null);
 
 		// key
 		bindText(keyText, NewInstanceModel.PROPERTY_KEYNAME, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
@@ -464,7 +471,7 @@ public class NewInstancePage extends WizardPage {
 		widgetToModelUpdateStrategy.setAfterConvertValidator(new ImageValidator());
 
 		UpdateValueStrategy modelToTextUpdateStrategy = new UpdateValueStrategy();
-		modelToTextUpdateStrategy.setConverter(new Converter(DeltaCloudImage.class, String.class) {		
+		modelToTextUpdateStrategy.setConverter(new Converter(DeltaCloudImage.class, String.class) {
 			@Override
 			public Object convert(Object fromObject) {
 				if (fromObject instanceof DeltaCloudImage) {
@@ -474,7 +481,7 @@ public class NewInstancePage extends WizardPage {
 				}
 			}
 		});
-		
+
 		Binding imageBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(IMAGE_CHECK_DELAY, imageText),
 				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_IMAGE).observe(model),
@@ -534,12 +541,12 @@ public class NewInstancePage extends WizardPage {
 				realms = getRealms();
 				Display.getDefault().asyncExec(new Runnable() {
 					public void run() {
-						updateRealmCombo();
+						updateRealmCombo(getRealmNames(realms));
 					}
 				});
 				return Status.OK_STATUS;
 			}
-		}.schedule();		
+		}.schedule();
 	}
 
 	private void asyncGetProfiles() {
@@ -553,7 +560,9 @@ public class NewInstancePage extends WizardPage {
 						createProfileComposites();
 						clearProfiles();
 						if (allProfiles.length > 0) {
-							hardware.setEnabled(true);
+							hardwareCombo.setEnabled(true);
+							hardwareCombo.select(0);
+							setPageComplete(true);
 						}
 						List<DeltaCloudHardwareProfile> filteredProfiles = filterProfiles(allProfiles);
 						updateWidgets(getProfileIds(filteredProfiles));
@@ -581,13 +590,13 @@ public class NewInstancePage extends WizardPage {
 
 	private void updateWidgets(String[] ids) {
 		if (ids.length > 0) {
-			hardware.removeModifyListener(comboListener);
-			hardware.setItems(ids);
-			hardware.setText(ids[0]);
-			currPage = profilePages.get(ids[0]);
-			currPage.setVisible(true);
-			hardware.setEnabled(true);
-			hardware.addModifyListener(comboListener);
+			hardwareCombo.removeModifyListener(hardwareComboListener);
+			hardwareCombo.setItems(ids);
+			hardwareCombo.setText(ids[0]);
+			currProfilePage = profilePages.get(ids[0]);
+			currProfilePage.setVisible(true);
+			hardwareCombo.setEnabled(true);
+			hardwareCombo.addModifyListener(hardwareComboListener);
 		}
 	}
 
@@ -599,7 +608,7 @@ public class NewInstancePage extends WizardPage {
 		}
 		return ids;
 	}
-	
+
 	private List<String> getRealmNames(List<DeltaCloudRealm> realms) {
 		List<String> realmNames = new ArrayList<String>();
 		for (DeltaCloudRealm realm : realms) {
@@ -644,15 +653,18 @@ public class NewInstancePage extends WizardPage {
 		combo.select(0);
 	}
 
-	private void updateRealmCombo() {
-		List<String> names = getRealmNames(realms != null ? realms : new ArrayList<DeltaCloudRealm>());
-		if (names.size() > 0) {
-			realmCombo.setItems(names.toArray(new String[names.size()]));
+	private void updateRealmCombo(List<String> realms) {
+		if (realms != null && realms.size() > 0) {
+			realmCombo.setItems(realms.toArray(new String[realms.size()]));
 			realmCombo.setEnabled(true);
-			realmCombo.select(0);
 		} else {
 			realmCombo.setItems(new String[] { WizardMessages.getString(NONE_RESPONSE) });
-			realmCombo.select(0);
+			realmCombo.setEnabled(false);
 		}
+		realmCombo.select(0);
+	}
+
+	public NewInstanceModel getModel() {
+		return model;
 	}
 }

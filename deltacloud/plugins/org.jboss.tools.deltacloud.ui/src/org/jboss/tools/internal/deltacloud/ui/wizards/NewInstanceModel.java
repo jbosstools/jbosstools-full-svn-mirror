@@ -33,8 +33,9 @@ public class NewInstanceModel extends ObservablePojo {
 	private String keyname;
 	private String profile;
 
-	protected NewInstanceModel(String keyname) {
+	protected NewInstanceModel(String keyname, DeltaCloudImage image) {
 		this.keyname = keyname;
+		this.image = image;
 	}
 
 	public String getName() {
@@ -52,7 +53,7 @@ public class NewInstanceModel extends ObservablePojo {
 	public void setImage(DeltaCloudImage image) {
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_IMAGE, this.image, this.image = image);
 	}
-
+	
 	public String getRealm() {
 		return realm;
 	}

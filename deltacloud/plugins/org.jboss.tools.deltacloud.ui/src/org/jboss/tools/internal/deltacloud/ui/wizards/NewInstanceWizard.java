@@ -13,6 +13,7 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -63,12 +64,10 @@ public class NewInstanceWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		mainPage = new NewInstancePage(cloud);
-		if( image != null )
-			mainPage.setImage(image);
+		mainPage = new NewInstancePage(cloud, image);
 		addPage(mainPage);
 		additionalPages = DeltacloudUIExtensionManager.getDefault().loadNewInstanceWizardPages();
-		for( int i = 0; i < additionalPages.length; i++ ) {
+		for (int i = 0; i < additionalPages.length; i++) {
 			addPage(additionalPages[i]);
 		}
 	}
@@ -102,11 +101,11 @@ public class NewInstanceWizard extends Wizard {
 					pm.worked(1);
 					cloud.registerInstanceJob(instanceId, this);
 					instance = cloud.waitWhilePending(instanceId, pm);
-					
+
 				} catch (Exception e) {
 					// do nothing
 				} finally {
-//					cloud.replaceInstance(instance);
+					// cloud.replaceInstance(instance);
 					cloud.removeInstanceJob(instanceId, this);
 					System.out.println(instance.getHostName());
 					pm.done();
@@ -121,13 +120,19 @@ public class NewInstanceWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		String imageId = mainPage.getImageId().trim();
-		String profileId = mainPage.getHardwareProfile();
-		String realmId = mainPage.getRealmId();
+		NewInstanceModel model = mainPage.getModel();
+
+		DeltaCloudImage image = model.getImage();
+		Assert.isTrue(image != null);
+		String imageId = image.getId();
+
+		String profileId = model.getProfile();
+		String realmId = model.getRealm();
 		String memory = mainPage.getMemoryProperty();
 		String storage = mainPage.getStorageProperty();
-		String keyname = mainPage.getKeyName();
-		String name = getName();
+
+		String keyname = model.getKeyname();
+		String name = utf8Encode(model.getName());
 
 		// Save persistent settings for this particular cloud
 		cloud.setLastImageId(imageId);
@@ -165,16 +170,16 @@ public class NewInstanceWizard extends Wizard {
 			if (instance != null && instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
 				final String instanceId = instance.getId();
 				final String instanceName = name;
-				
+
 				// TODO use chained job? Maybe. But chainedJob needs to be moved
 				ChainedJob first = new WatchCreateJob(WizardMessages.getString(STARTING_INSTANCE_TITLE),
 						cloud, instanceId, instanceName);
 				first.setUser(true);
 				ChainedJob last = first;
 				ChainedJob temp;
-				for( int i = 0; i < additionalPages.length; i++ ) {
+				for (int i = 0; i < additionalPages.length; i++) {
 					temp = additionalPages[i].getPerformFinishJob(instance);
-					if( temp != null ) {
+					if (temp != null) {
 						last.setNextJob(temp);
 						last = temp;
 					}
@@ -186,16 +191,17 @@ public class NewInstanceWizard extends Wizard {
 		}
 		if (!result) {
 			ErrorUtils.handleError(
-					WizardMessages.getString(CREATE_INSTANCE_FAILURE_TITLE), 
-					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG, new String[] { name, imageId, realmId, profileId }), 
+					WizardMessages.getString(CREATE_INSTANCE_FAILURE_TITLE),
+					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG, new String[] { name, imageId,
+							realmId, profileId }),
 					e, getShell());
 		}
 		return result;
 	}
 
-	private String getName() {
+	private String utf8Encode(String string) {
 		try {
-			return URLEncoder.encode(mainPage.getInstanceName(), "UTF-8");
+			return URLEncoder.encode(string, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO: implement proper handling
 			return "";
