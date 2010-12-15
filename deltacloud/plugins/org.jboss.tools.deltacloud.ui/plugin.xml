@@ -113,65 +113,48 @@
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.EditConnectionHandler"
             commandId="org.jboss.tools.deltacloud.ui.editconnection">
-         <activeWhen>
-               <with
-	                 variable="selection">
-				        <iterate>
-					           <instanceof
-					                 value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
-					           </instanceof>
-				        </iterate>
-               </with>
-         </activeWhen>
 		<enabledWhen>
 			<with
 				variable="selection">
-				<count value="+" />
+				<and>
+					<count value="1" />
+					<iterate operator="and">
+						<adapt
+				             type="org.jboss.tools.deltacloud.core.DeltaCloud" />
+				    </iterate>
+				</and>
 			</with>
 		</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.DisconnectCloudHandler"
             commandId="org.eclipse.ui.edit.delete">
-			<activeWhen>
-               <with
-                     variable="selection">
-					<iterate>
-	               		<instanceof
-	                	     value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
-	               		</instanceof>
-	               	</iterate>
-               </with>
-			</activeWhen>
-			<enabledWhen>
-				<with
-					variable="selection">
+		<enabledWhen>
+			<with
+				variable="selection">
+				<and>
 					<count value="+" />
-				</with>
-			</enabledWhen>
+					<iterate operator="and">
+						<adapt
+				             type="org.jboss.tools.deltacloud.core.DeltaCloud" />
+				    </iterate>
+				</and>
+			</with>
+		</enabledWhen>
       </handler>
       <handler
 			class="org.jboss.tools.deltacloud.ui.commands.RefreshCloudHandler"
 			commandId="org.eclipse.ui.file.refresh">
-			<activeWhen>
-				<with
-					variable="selection">
-					<and>
-						<count value="+" />
-						<iterate>
-		               		<instanceof
-		                		value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
-		               		</instanceof>
-		               	</iterate>
-		            </and>
-				</with>
-         </activeWhen>
-		 <enabledWhen>
+		<enabledWhen>
 			<with
 				variable="selection">
-				<count value="+" />
+				<and>
+					<count value="1" />
+					<adapt
+			             type="org.jboss.tools.deltacloud.core.DeltaCloud" />
+				</and>
 			</with>
-		 </enabledWhen>
+		</enabledWhen>
 	</handler>
     <handler
 		class="org.jboss.tools.deltacloud.ui.commands.RefreshInstancesHandler"

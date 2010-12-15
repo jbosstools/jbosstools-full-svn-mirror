@@ -38,8 +38,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.cloud.CloudItem;
-import org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
  * @author Andre Dietisheim
@@ -109,8 +108,15 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 				}
 			} catch (DeltaCloudException e) {
 				// TODO internationalize strings
+				String message = "";
+				if (deltaCloud != null) {
+					message = MessageFormat.format("Could not disconnect cloud {0}", deltaCloud.getName());
+				} else {
+					// TODO: internationalize strings
+					message = "Could not disconnect cloud";
+				}
 				ErrorUtils.handleError("Error",
-						MessageFormat.format("Could not disconnect cloud {0}", deltaCloud.getName()), e, shell);
+						message, e, shell);
 			}
 		}
 
@@ -132,12 +138,7 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 		DeltaCloud deltaCloud = null;
 		if (selectedElements.size() > 0) {
 			Object object = selectedElements.get(0);
-			if (object instanceof CloudItem) {
-				Object element = ((CloudItem) object).getModel();
-				if (element instanceof DeltaCloud) {
-					deltaCloud = (DeltaCloud) element;
-				}
-			}
+			deltaCloud = UIUtils.adapt(object, DeltaCloud.class);
 		}
 		return deltaCloud;
 	}
@@ -145,37 +146,12 @@ public class DisconnectCloudHandler extends AbstractHandler implements IHandler 
 	private Collection<DeltaCloud> getSelectedClouds(List<?> selectedElements) {
 		Set<DeltaCloud> selectedClouds = new HashSet<DeltaCloud>();
 		for (Object element : selectedElements) {
-			DeltaCloud deltaCloud = getDeltaCloud(element);
+			DeltaCloud deltaCloud = UIUtils.adapt(element, DeltaCloud.class);
 			if (deltaCloud != null) {
 				selectedClouds.add(deltaCloud);
 			}
 		}
 		return selectedClouds;
-	}
-
-	private DeltaCloud getDeltaCloud(Object item) {
-		if (!(item instanceof DeltaCloudViewItem)) {
-			return null;
-		}
-
-		DeltaCloud cloud = getDeltaCloud((DeltaCloudViewItem<?>) item);
-
-		if (cloud == null) {
-			return null;
-		}
-		return cloud;
-	}
-
-	private DeltaCloud getDeltaCloud(DeltaCloudViewItem<?> element) {
-		if (element == null) {
-			return null;
-		}
-		Object cloud = element.getModel();
-		if (cloud instanceof DeltaCloud) {
-			return (DeltaCloud) cloud;
-		}
-
-		return getDeltaCloud((DeltaCloudViewItem<?>) element.getParent());
 	}
 
 	private void removeDeltaClouds(Object[] deltaClouds) throws DeltaCloudException {
