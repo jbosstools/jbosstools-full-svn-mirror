@@ -25,6 +25,21 @@
             <itemizedlist>
 	       <listitem>
 		  <para>
+		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7897">JBIDE-7897</ulink>: Stereotypes that were declared with <property>@Target(type)</property> annotation could not be applied to steretypes where the <property>@Target</property> annotaiton only accepted values of <property>type, method, field</property>, <property>method</property>, <property>field</property> or <property>method, field</property>. This has been corrected for this release. A stereotype allows a developer to use the same recurring bean role within a framework.
+		  </para>
+	       </listitem>
+	       <listitem>
+		  <para>
+		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7895">JBIDE-7895</ulink>: A bug existed that would cause interceptor binding types that were declared using the <property>@Target(type)</property> annotation to not be applied correctly to interceptor binding types declared using <property>@Target({type, method})</property> annotation. This bug has now been corrected by modifying the following files: <filename>CDICoreValidator.java</filename>, <filename>AnnotationValidationDelegate.java</filename> and <filename>CDIValidationMessages.java</filename>. This now allows interceptor binding types that are declared using the <property>@Target(type)</property> annotation to be applied correctly to interceptor binding types declared using <property>@Target({type, method})</property> annotation.
+		  </para>
+	       </listitem>
+	       <listitem>
+		  <para>
+		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7894">JBIDE-7894</ulink>: Stereotype declaration has been improved for this release. If the stereotype role declares interceptor bindings it must also be defined using the <property>@Target(type)</property> annotation.
+		  </para>
+	       </listitem>
+	       <listitem>
+		  <para>
 		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7842">JBIDE-7842</ulink>: A new wizard has been added for the <filename>beans.xml</filename> file. This new wizard uses the <guilabel>New File</guilabel> wizard as a foundation, setting the <guilabel>File Name</guilabel> input field set to <filename>beans.xml</filename> and the <guilabel>Parent Folder</guilabel> to the projects <filename>beans.xml</filename> default location (if determinable).
 		  </para>
 	       </listitem>
