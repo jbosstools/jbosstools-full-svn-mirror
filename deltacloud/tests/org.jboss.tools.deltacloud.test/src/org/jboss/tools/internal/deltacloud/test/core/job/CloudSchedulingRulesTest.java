@@ -50,7 +50,7 @@ public class CloudSchedulingRulesTest {
 	}
 
 	@Test
-	public void instanceRule2CloudElementInstanceRule() throws DeltaCloudException {
+	public void instanceRule2CloudElementInstancesRule() throws DeltaCloudException {
 		InstanceSchedulingRule instanceRule = new InstanceSchedulingRule(
 				cloudFake, AbstractCloudElementJob.CLOUDELEMENT.INSTANCES, deltaCloudInstanceFake);
 		CloudElementSchedulingRule cloudRule =
@@ -59,7 +59,7 @@ public class CloudSchedulingRulesTest {
 	}
 
 	@Test
-	public void instanceRule2CloudElementImageRule() throws DeltaCloudException {
+	public void instanceRule2CloudElementImagesRule() throws DeltaCloudException {
 		InstanceSchedulingRule instanceRule =
 				new InstanceSchedulingRule(cloudFake, CLOUDELEMENT.INSTANCES, deltaCloudInstanceFake);
 		CloudElementSchedulingRule cloudRule = new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.IMAGES);
@@ -72,17 +72,18 @@ public class CloudSchedulingRulesTest {
 				new InstanceSchedulingRule(cloudFake, CLOUDELEMENT.INSTANCES, deltaCloudInstanceFake);
 		CloudSchedulingRule cloudRule = new CloudSchedulingRule(cloudFake);
 		assertTrue(instanceRule.isConflicting(cloudRule));
+		assertTrue(cloudRule.isConflicting(instanceRule));
 	}
 
 	@Test
-	public void cloudInstancesRule2CloudInstancesRule() throws DeltaCloudException {
+	public void cloudElementInstancesRule2CloudInstancesRule() throws DeltaCloudException {
 		CloudElementSchedulingRule cloudInstancesRule =
 				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.INSTANCES);
 		assertTrue(cloudInstancesRule.isConflicting(cloudInstancesRule));
 	}
 
 	@Test
-	public void cloudInstancesRule2CloudImageRule() throws DeltaCloudException {
+	public void cloudElementInstancesRule2CloudImageRule() throws DeltaCloudException {
 		CloudElementSchedulingRule cloudInstancesRule =
 				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.INSTANCES);
 		CloudElementSchedulingRule cloudImagesRule =
@@ -91,7 +92,7 @@ public class CloudSchedulingRulesTest {
 	}
 
 	@Test
-	public void cloudInstancesRule2CloudRule() throws DeltaCloudException {
+	public void cloudElementInstancesRule2CloudRule() throws DeltaCloudException {
 		CloudElementSchedulingRule cloudInstancesRule =
 				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.INSTANCES);
 		CloudSchedulingRule cloudRule = new CloudSchedulingRule(cloudFake);
@@ -99,7 +100,7 @@ public class CloudSchedulingRulesTest {
 	}
 
 	@Test
-	public void cloudImagesRule2CloudImagesRule() throws DeltaCloudException {
+	public void cloudElementImagesRule2CloudImagesRule() throws DeltaCloudException {
 		CloudElementSchedulingRule cloudImagesRule =
 				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.IMAGES);
 		assertTrue(cloudImagesRule.isConflicting(cloudImagesRule));
