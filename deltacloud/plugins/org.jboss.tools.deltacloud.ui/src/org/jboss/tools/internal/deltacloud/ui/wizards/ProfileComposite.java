@@ -121,11 +121,11 @@ public class ProfileComposite {
 		fd.top = new FormAttachment(memoryControl, 8);
 		storageLabel.setLayoutData(fd);
 		DeltaCloudHardwareProperty storageProperty = profile.getNamedProperty("storage"); //$NON-NLS-1$
-		createStorageControls(memoryControl, memoryProperty, storageProperty, container);
+		createStorageControls(memoryControl, memoryProperty, storageProperty, storageLabel, container);
 	}
 
 	private Control createStorageControls(Control memoryControl, DeltaCloudHardwareProperty memoryProperty,
-			DeltaCloudHardwareProperty storageProperty, Composite container) {
+			DeltaCloudHardwareProperty storageProperty, Label storageLabel, Composite container) {
 		Control storageControl = null;
 		if (storageProperty != null) {
 			if (storageProperty.getKind() == DeltaCloudHardwareProperty.Kind.FIXED) {
