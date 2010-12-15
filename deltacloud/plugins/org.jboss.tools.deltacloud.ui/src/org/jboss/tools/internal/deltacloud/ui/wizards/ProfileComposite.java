@@ -107,6 +107,7 @@ public class ProfileComposite {
 		fd.top = new FormAttachment(0, 0);
 		cpuLabel.setLayoutData(fd);
 		DeltaCloudHardwareProperty cpuProperty = profile.getNamedProperty("cpu"); //$NON-NLS-1$
+		setCPU(cpuProperty.getValue()); 
 		Control cpuControl = createCpuControls(cpuProperty, storageLabel, container);
 
 		fd = new FormData();
@@ -114,6 +115,7 @@ public class ProfileComposite {
 		fd.top = new FormAttachment(cpuLabel, 8);
 		memoryLabel.setLayoutData(fd);
 		DeltaCloudHardwareProperty memoryProperty = profile.getNamedProperty("memory"); //$NON-NLS-1$
+		setMemody(memoryProperty.getValue());
 		Control memoryControl = createMemoyControl(cpuControl, memoryProperty, storageLabel, container);
 
 		fd = new FormData();
@@ -121,6 +123,7 @@ public class ProfileComposite {
 		fd.top = new FormAttachment(memoryControl, 8);
 		storageLabel.setLayoutData(fd);
 		DeltaCloudHardwareProperty storageProperty = profile.getNamedProperty("storage"); //$NON-NLS-1$
+		setStorage(storageProperty.getValue());
 		createStorageControls(memoryControl, memoryProperty, storageProperty, storageLabel, container);
 	}
 
@@ -129,14 +132,14 @@ public class ProfileComposite {
 		Control storageControl = null;
 		if (storageProperty != null) {
 			if (storageProperty.getKind() == DeltaCloudHardwareProperty.Kind.FIXED) {
-				Label storage = new Label(container, SWT.NULL);
-				storage.setText(storageProperty.getValue());
+				Label storageValueLabel = new Label(container, SWT.NULL);
+				storageValueLabel.setText(storageProperty.getValue());
 				FormData f = new FormData();
 				f.left = new FormAttachment(storageLabel, 50);
 				f.top = new FormAttachment(memoryControl, 8);
-				storage.setLayoutData(f);
-				storage.setVisible(true);
-				storageControl = storage;
+				storageValueLabel.setLayoutData(f);
+				storageValueLabel.setVisible(true);
+				storageControl = storageValueLabel;
 			} else if (storageProperty.getKind() == DeltaCloudHardwareProperty.Kind.RANGE) {
 				storageDefaultValue = storageProperty.getValue();
 				int indexDefault = storageDefaultValue.indexOf('.');
@@ -328,13 +331,13 @@ public class ProfileComposite {
 		Control cpuControl = null;
 		if (cpuProperty != null) {
 			if (cpuProperty.getKind() == DeltaCloudHardwareProperty.Kind.FIXED) {
-				Label cpu = new Label(container, SWT.NULL);
-				cpu.setText(cpuProperty.getValue());
+				Label cpuLabel = new Label(container, SWT.NULL);
+				cpuLabel.setText(cpuProperty.getValue());
 				FormData f = new FormData();
 				f.left = new FormAttachment(storageLabel, 50);
 				f.right = new FormAttachment(100, 0);
-				cpu.setLayoutData(f);
-				cpuControl = cpu;
+				cpuLabel.setLayoutData(f);
+				cpuControl = cpuLabel;
 			} else if (cpuProperty.getKind() == DeltaCloudHardwareProperty.Kind.RANGE) {
 				cpuDefaultValue = cpuProperty.getValue();
 				cpuSpinner = new Spinner(container, SWT.READ_ONLY);
@@ -387,10 +390,19 @@ public class ProfileComposite {
 		container.setVisible(visible);
 	}
 
+	private void setCPU(String value) {
+		this.cpu = value;
+	}
+	
 	public String getCPU() {
-		if (cpu != null && !cpu.equals(cpuDefaultValue))
+		if (cpu != null && !cpu.equals(cpuDefaultValue)) {
 			return cpu;
+		}
 		return null;
+	}
+
+	private void setMemody(String value) {
+		this.memory = value;
 	}
 
 	public String getMemory() {
@@ -400,6 +412,10 @@ public class ProfileComposite {
 		return null;
 	}
 
+	private void setStorage(String value) {
+		this.storage = value;
+	}
+	
 	public String getStorage() {
 		if (storage != null && !storage.equals(storageDefaultValue)) {
 			return storage;
