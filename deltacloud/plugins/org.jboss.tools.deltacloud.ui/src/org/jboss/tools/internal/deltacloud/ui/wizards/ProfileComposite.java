@@ -26,6 +26,9 @@ import org.eclipse.swt.widgets.Spinner;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProperty;
 
+/**
+ * @author Jeff Johnston
+ */
 public class ProfileComposite {
 	
 	private static final String CPU_LABEL = "Cpu.label"; //$NON-NLS-1$
