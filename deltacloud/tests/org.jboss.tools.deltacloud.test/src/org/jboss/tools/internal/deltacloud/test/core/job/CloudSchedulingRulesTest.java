@@ -56,6 +56,7 @@ public class CloudSchedulingRulesTest {
 		CloudElementSchedulingRule cloudRule =
 				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.INSTANCES);
 		assertTrue(instanceRule.isConflicting(cloudRule));
+		assertTrue(cloudRule.isConflicting(instanceRule));
 	}
 
 	@Test
@@ -64,6 +65,7 @@ public class CloudSchedulingRulesTest {
 				new InstanceSchedulingRule(cloudFake, CLOUDELEMENT.INSTANCES, deltaCloudInstanceFake);
 		CloudElementSchedulingRule cloudRule = new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.IMAGES);
 		assertFalse(instanceRule.isConflicting(cloudRule));
+		assertFalse(cloudRule.isConflicting(instanceRule));
 	}
 
 	@Test
@@ -89,6 +91,7 @@ public class CloudSchedulingRulesTest {
 		CloudElementSchedulingRule cloudImagesRule =
 				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.IMAGES);
 		assertFalse(cloudInstancesRule.isConflicting(cloudImagesRule));
+		assertFalse(cloudImagesRule.isConflicting(cloudInstancesRule));
 	}
 
 	@Test
@@ -97,6 +100,7 @@ public class CloudSchedulingRulesTest {
 				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.INSTANCES);
 		CloudSchedulingRule cloudRule = new CloudSchedulingRule(cloudFake);
 		assertTrue(cloudInstancesRule.isConflicting(cloudRule));
+		assertTrue(cloudRule.isConflicting(cloudInstancesRule));
 	}
 
 	@Test
