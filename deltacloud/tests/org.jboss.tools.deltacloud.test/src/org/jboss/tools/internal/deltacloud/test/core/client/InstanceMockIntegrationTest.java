@@ -173,7 +173,8 @@ public class InstanceMockIntegrationTest {
 
 	private Instance createInstance() throws IllegalArgumentException, InstantiationException, IllegalAccessException,
 			InvocationTargetException, SecurityException, NoSuchMethodException {
-		Constructor<Instance> constructor = (Constructor<Instance>) Instance.class.getDeclaredConstructor(null);
+		Constructor<Instance> constructor =
+				(Constructor<Instance>) Instance.class.getDeclaredConstructor((Class<?>) null);
 		constructor.setAccessible(true);
 		return constructor.newInstance();
 	}
