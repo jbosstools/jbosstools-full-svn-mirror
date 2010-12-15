@@ -20,7 +20,7 @@
         </para>
     </formalpara>
     <formalpara>
-		<title>Contexts and Dependency Injection (CDI)</title>
+      <title>Contexts and Dependency Injection (CDI)</title>
         <para>
             <itemizedlist>
 	       <listitem>
@@ -78,6 +78,16 @@
 					Previously, <productname>CDI Tools</productname> did not recognize these custom decorators and interceptors, which caused issues including injection points in classes not annotated using <property>@Decorator</property> being flagged as a definition error and problems with the <productname>OpenOn</productname> feature. <productname>CDI Tools</productname> now correctly recognizes these custom decorators/interceptors.
 					</para>
                 </listitem>
+		<listitem>
+		   <para>
+		      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7672">JBIDE-7672</ulink>: The quick fix for session bean and EJB non-static methods has been updated. This update ensures that when the method is annotated with <property>@Disposes</property> or <property>@Observes</property> respectively, the quick fix changes the method to correctly be, a business method. 
+		   </para>
+		</listitem>
+		<listitem>
+		   <para>
+		      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7669">JBIDE-7669</ulink>: The quick fix for <property>@Produces</property> annotation has been updated to suggest the addition of <property>@LocalBean</property> annotation when used in a session bean class. When specified, the <property>@LocalBean</property> annotation ensures the current class and subsequent methods are private instead of public (unless a method is specifically annotated otherwise).
+		   </para>
+		</listitem>
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7025">JBIDE-7025</ulink>: OpenOn support has been added for the <filename>beans.xml</filename> editor. OpenOn support allows you to easily navigate around your project without the use of the <guilabel>Package Explorer</guilabel> or <guilabel>Project Explorer</guilabel>. This is achieved by using the class and method names in your code as links to those code segments.
