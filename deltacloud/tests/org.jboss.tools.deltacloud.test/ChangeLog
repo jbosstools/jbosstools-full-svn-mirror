@@ -1,3 +1,8 @@
+2010-12-15  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/test/core/job/SchedulingRulesTest.java: 
+	[JBIDE-7594] created tests for all scheduling rules
+
 2010-11-19  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/test/core/client/InstanceMockIntegrationTest.java: 

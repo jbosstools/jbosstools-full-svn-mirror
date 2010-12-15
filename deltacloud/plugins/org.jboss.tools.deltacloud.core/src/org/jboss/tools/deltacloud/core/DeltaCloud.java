@@ -92,7 +92,7 @@ public class DeltaCloud extends ObservablePojo {
 		this.name = name;
 		this.username = username;
 		this.type = type;
-		this.passwordStore = new SecurePasswordStore(new DeltaCloudPasswordStorageKey(name, username), password);
+		this.passwordStore = createSecurePasswordStore(name, username, password);
 		this.client = createClient(name, url, username, passwordStore.getPassword());
 		imageFilter = createImageFilter(imageFilterRules);
 		instanceFilter = createInstanceFilter(instanceFilterRules);
@@ -148,7 +148,11 @@ public class DeltaCloud extends ObservablePojo {
 				|| (thisObject == null && thatObject == null);
 	}
 
-	private InternalDeltaCloudClient createClient(String name, String url, String username, String password)
+	protected SecurePasswordStore createSecurePasswordStore(String name2, String username2, String password) {
+		return new SecurePasswordStore(new DeltaCloudPasswordStorageKey(name, username), password);
+	}
+
+	protected InternalDeltaCloudClient createClient(String name, String url, String username, String password)
 			throws DeltaCloudException {
 		try {
 			return new DeltaCloudClientImpl(url, username, password);

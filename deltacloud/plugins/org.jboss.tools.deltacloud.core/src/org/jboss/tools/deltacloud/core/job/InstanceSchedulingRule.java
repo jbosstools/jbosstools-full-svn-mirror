@@ -32,23 +32,28 @@ public class InstanceSchedulingRule extends CloudElementSchedulingRule {
 
 	@Override
 	public boolean isConflicting(ISchedulingRule rule) {
-		return super.isConflicting(rule)
-				&& isOnSameInstance(rule);
-	}
-
-	private boolean isOnSameInstance(ISchedulingRule rule) {
-		if (InstanceSchedulingRule.class.isAssignableFrom(rule.getClass())) {
-			return instance.equals(((InstanceSchedulingRule) rule).getInstance());
-		} else {
-			// this rules conflicts with a cloud element rule which is not an instance rule
+		if (super.isConflicting(rule)) {
+			if (isInstanceSchedulingRule(rule)) {
+				return isOnSameInstance((InstanceSchedulingRule) rule);
+			}
 			return true;
 		}
+		return false;
 	}
-	
+
+	private boolean isOnSameInstance(InstanceSchedulingRule rule) {
+		return instance.equals(((InstanceSchedulingRule) rule).getInstance());
+	}
+
+	private boolean isInstanceSchedulingRule(ISchedulingRule rule) {
+		return InstanceSchedulingRule.class.isAssignableFrom(rule.getClass());
+	}
+
 	protected DeltaCloudInstance getInstance() {
 		return instance;
 	}
 
+	@Override
 	public String toString() {
 		return new StringBuilder()
 				.append("[InstanceSchedulingRule ")

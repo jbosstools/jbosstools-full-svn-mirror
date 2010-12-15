@@ -1,3 +1,12 @@
+2010-12-15  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/job/InstanceSchedulingRule.java (isConflicting): 
+	* src/org/jboss/tools/deltacloud/core/job/CloudSchedulingRule.java (isConflicting): 
+	* src/org/jboss/tools/deltacloud/core/job/CloudElementSchedulingRule.java (isConflicting): 
+	[JBIDE-7594] corrected scheduling rules to have correct blocking across the scheduling class hierarchy
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (createSecurePasswordStore): 
+	[JBIDE-7594] created #createSecurePasswordStore to be able to fake store in tests
+
 2010-12-14  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (updateInstance): 

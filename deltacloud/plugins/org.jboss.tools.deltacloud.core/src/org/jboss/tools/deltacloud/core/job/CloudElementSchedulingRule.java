@@ -31,18 +31,25 @@ public class CloudElementSchedulingRule extends CloudSchedulingRule {
 
 	@Override
 	public boolean isConflicting(ISchedulingRule rule) {
-		return super.isConflicting(rule)
-				&& isOnSameElement(rule);
+		if (super.isConflicting(rule)) {
+			if (isCloudElementSchedulingRule(rule)) {
+				return isOnSameElement((CloudElementSchedulingRule) rule);
+			}
+			return true;
+		}
+		return false;
 	}
 
 	private boolean isOnSameElement(ISchedulingRule rule) {
-		if (CloudElementSchedulingRule.class.isAssignableFrom(rule.getClass())) {
-			return ((CloudElementSchedulingRule) rule).getCloudElement().equals(element);
+		if (isCloudElementSchedulingRule(rule)) {
+			return element.equals(((CloudElementSchedulingRule) rule).getCloudElement());
 		} else {
-			// this rules conflicts with a cloud rule which is not an element
-			// rule
-			return true;
+			return false;
 		}
+	}
+
+	private boolean isCloudElementSchedulingRule(ISchedulingRule rule) {
+		return CloudElementSchedulingRule.class.isAssignableFrom(rule.getClass());
 	}
 
 	private CLOUDELEMENT getCloudElement() {

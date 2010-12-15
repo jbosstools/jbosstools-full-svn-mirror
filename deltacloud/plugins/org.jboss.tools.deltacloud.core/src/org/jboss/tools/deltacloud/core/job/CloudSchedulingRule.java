@@ -54,9 +54,11 @@ public class CloudSchedulingRule implements ISchedulingRule {
 		return cloud;
 	}
 
+	@Override
 	public String toString() {
 		return new StringBuilder()
-				.append("[InstanceSchedulingRule ")
+				.append("[CloudSchedulingRule ")
+				.append("@").append(System.identityHashCode(this)).append(" ")
 				.append("cloud :\"")
 				.append(getCloud().getName())
 				.append("\"")

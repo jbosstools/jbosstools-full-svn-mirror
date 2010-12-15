@@ -58,7 +58,7 @@ public class Instance extends DeltaCloudObject {
 	@XmlElement(name = "private_addresses")
 	private AddressList privateAddresses;
 
-	private Instance() {
+	public Instance() {
 	}
 
 	@SuppressWarnings("unused")
