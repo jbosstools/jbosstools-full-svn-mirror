@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.test;
 
-import org.jboss.tools.internal.deltacloud.test.core.job.SchedulingRulesTest;
+import org.jboss.tools.internal.deltacloud.test.core.job.CloudSchedulingRulesTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	SchedulingRulesTest.class
+	CloudSchedulingRulesTest.class
 })
 public class DeltaCloudTestSuite {
 

@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author André Dietisheim
  */
-public class SchedulingRulesTest {
+public class CloudSchedulingRulesTest {
 
 	private DeltaCloudFake cloudFake;
 	private Instance instanceFake;
