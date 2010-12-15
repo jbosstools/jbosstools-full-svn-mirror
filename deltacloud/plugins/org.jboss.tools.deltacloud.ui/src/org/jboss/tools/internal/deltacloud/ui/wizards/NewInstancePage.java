@@ -63,6 +63,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
+import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
@@ -287,7 +288,7 @@ public class NewInstancePage extends WizardPage {
 		Button keyManageButton = new Button(container, SWT.NULL);
 		keyManageButton.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
 		keyManageButton.addSelectionListener(manageListener);
-		if (cloud.getType().equals(DeltaCloud.MOCK_TYPE)) {
+		if (Driver.MOCK.equals(cloud.getDriver())) {
 			keyManageButton.setEnabled(false);
 		}
 

@@ -30,6 +30,10 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * @author Jeff Johnston
+ * @author André Dietisheim
+ */
 public class DeltaCloudManager {
 
 	private static final DeltaCloudManager INSTANCE = new DeltaCloudManager();
@@ -80,12 +84,12 @@ public class DeltaCloudManager {
 			name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
 			String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
 			String username = attrs.getNamedItem("username").getNodeValue(); // $NON-NLS-1$
-			String type = attrs.getNamedItem("type").getNodeValue(); // $NON-NLS-1$
+			Driver driver = Driver.checkedValueOf(attrs.getNamedItem("type").getNodeValue()); // $NON-NLS-1$
 			String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
 			String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
 			String lastKeyName = getLastKeyName(attrs.getNamedItem("lastkeyname")); // $NON-NLS-1$
 			String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage")); // $NON-NLS-1$
-			cloud = new DeltaCloud(name, url, username, type, imageFilterRules, instanceFilterRules);
+			cloud = new DeltaCloud(name, url, username, driver, imageFilterRules, instanceFilterRules);
 			clouds.add(cloud);
 			cloud.setLastImageId(lastImageId);
 			cloud.setLastKeyname(lastKeyName);
@@ -144,7 +148,7 @@ public class DeltaCloudManager {
 	private String createCloudXML(DeltaCloud d) {
 		return "<cloud name=\"" + d.getName() + "\" url=\"" //$NON-NLS-1$ //$NON-NLS-2$ 
 				+ d.getURL() + "\" username=\"" + d.getUsername() + //$NON-NLS-1$ //$NON-NLS-2$ 
-				"\" type=\"" + d.getType() + //$NON-NLS-1$ //$NON-NLS-2$
+				"\" type=\"" + d.getDriver() + //$NON-NLS-1$ //$NON-NLS-2$
 				"\" imagefilter=\"" + d.getImageFilter() + //$NON-NLS-1$ //$NON-NLS-2$
 				"\" instancefilter=\"" + d.getInstanceFilter() + //$NON-NLS-1$ //$NON-NLS-2$
 				"\" lastkeyname=\"" + d.getLastKeyname() + //$NON-NLS-1$ //$NON-NLS-2$

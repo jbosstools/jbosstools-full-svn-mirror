@@ -19,12 +19,17 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
+import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
 import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
 
+/**
+ * @author Jeff Johnston
+ * @author Andre Dietisheim
+ *
+ */
 public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
 
 	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
@@ -92,15 +97,6 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		}
 	}
 
-	protected String getServerType() {
-		DeltaCloudServerType type = mainPage.getModel().getType();
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
 	@Override
 	public boolean needsProgressMonitor() {
 		return true;
@@ -116,10 +112,10 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
-		String type = getServerType();
+		Driver driver = mainPage.getModel().getDriver();
 
 		try {
-			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, type);
+			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, driver);
 			DeltaCloudManager.getDefault().addCloud(newCloud);
 			DeltaCloudManager.getDefault().saveClouds();
 		} catch (Exception e) {

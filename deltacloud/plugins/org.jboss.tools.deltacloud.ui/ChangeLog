@@ -1,5 +1,12 @@
 2010-12-15  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudTypeValidator.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionModel.java: 
+	[JBIDE-7864] removing references to DeltaCloudClient#DeltaCloudServerType, replacing by DeltaCloud#Type
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (WatchCreateJob): 
 	[JBIDE-7912] replaced custom WatchCreateJob and replaced with InstanceStateJob to have consistent scheduling across jobs 
 	in the client 

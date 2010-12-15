@@ -25,6 +25,7 @@ import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
@@ -56,6 +57,7 @@ import org.jboss.tools.common.log.LogHelper;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
@@ -123,12 +125,12 @@ public class CloudConnectionPage extends WizardPage {
 
 		private Label typeLabel;
 
-		public DeltaCloudTypeLabelAdapter(DeltaCloudServerType cloudType, Label typeLabel) {
+		public DeltaCloudTypeLabelAdapter(Driver cloudType, Label typeLabel) {
 			this.typeLabel = typeLabel;
 			init(cloudType);
 		}
 
-		private void init(DeltaCloudServerType cloudType) {
+		private void init(Driver cloudType) {
 			setLabelText(cloudType);
 		}
 
@@ -139,7 +141,7 @@ public class CloudConnectionPage extends WizardPage {
 		}
 
 		private void setLabelText(Object cloudType) {
-			if (cloudType != null && !DeltaCloudServerType.UNKNOWN.equals(cloudType)) {
+			if (cloudType != null && !Driver.UNKNOWN.equals(cloudType)) {
 				typeLabel.setText(cloudType.toString());
 			} else {
 				typeLabel.setText("?"); // $NON-NLS-1$
@@ -278,15 +280,15 @@ public class CloudConnectionPage extends WizardPage {
 			throws MalformedURLException, DeltaCloudException {
 
 		this(pageName, initial.getName(), initial.getURL(), initial.getUsername(),
-				initial.getPassword(), initial.getType(), connection);
+				initial.getPassword(), initial.getDriver(), connection);
 	}
 
 	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl,
-			String defaultUsername, String defaultPassword, String defaultType,
+			String defaultUsername, String defaultPassword, Driver defaultDriver,
 			CloudConnection cloudConnection) throws MalformedURLException {
 		super(pageName);
 		this.connectionModel = new CloudConnectionModel(defaultName, defaultUrl, defaultUsername, defaultPassword,
-				defaultType);
+				defaultDriver);
 		this.cloudConnection = cloudConnection;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
@@ -318,12 +320,14 @@ public class CloudConnectionPage extends WizardPage {
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
+
 		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(urlText),
 				BeanProperties.value(
 						CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL).observe(connectionModel),
-				new UpdateValueStrategy().setAfterGetValidator(
-						new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))), null);
+				new UpdateValueStrategy()
+						.setAfterGetValidator(new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))),
+						null);
 
 		String url = new TextPreferenceValue(IPreferenceKeys.LAST_URL, Activator.getDefault())
 				.get(urlText.getText());
@@ -497,15 +501,15 @@ public class CloudConnectionPage extends WizardPage {
 	 */
 	private Binding bindCloudType(DataBindingContext dbc, Text urlText, final Label typeLabel) {
 		UpdateValueStrategy updateStrategy = new UpdateValueStrategy();
-		Url2DeltaCloudTypeConverter urlToCloudTypeConverter = new Url2DeltaCloudTypeConverter();
+		Url2DriverConverter urlToCloudTypeConverter = new Url2DriverConverter();
 		updateStrategy.setConverter(urlToCloudTypeConverter);
-		updateStrategy.setBeforeSetValidator(new CloudTypeValidator());
+		updateStrategy.setBeforeSetValidator(new CloudDriverValidator());
 
 		// bind url to cloud type in model
 		Binding urlTypeBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY,
 						urlText),
-				BeanProperties.value(CloudConnectionModel.PROPERTY_TYPE).observe(connectionModel),
+				BeanProperties.value(CloudConnectionModel.PROPERTY_DRIVER).observe(connectionModel),
 				updateStrategy,
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
 		/*
@@ -517,8 +521,9 @@ public class CloudConnectionPage extends WizardPage {
 		 * in the model.
 		 */
 		IObservableValue cloudTypeObservable = urlToCloudTypeConverter.getCloudTypeObservable();
-		DeltaCloudTypeLabelAdapter cloudTypeAdapter =
-				new DeltaCloudTypeLabelAdapter((DeltaCloudServerType) cloudTypeObservable.getValue(), typeLabel);
+		Object value = cloudTypeObservable.getValue();
+		Assert.isTrue(value == null || value instanceof Driver);
+		DeltaCloudTypeLabelAdapter cloudTypeAdapter = new DeltaCloudTypeLabelAdapter((Driver) value, typeLabel);
 		cloudTypeObservable.addValueChangeListener(cloudTypeAdapter);
 		ControlDecorationSupport.create(urlTypeBinding, SWT.LEFT | SWT.TOP);
 

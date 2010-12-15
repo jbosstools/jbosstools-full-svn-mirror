@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Image;
@@ -35,9 +36,6 @@ import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
  */
 public class DeltaCloud extends ObservablePojo {
 
-	public final static String MOCK_TYPE = "MOCK"; //$NON-NLS-1$
-	public final static String EC2_TYPE = "EC2"; //$NON-NLS-1$
-
 	public static final String PROP_INSTANCES = "instances";
 	public static final String PROP_INSTANCES_ADDED = "instancesAdded";
 	public static final String PROP_INSTANCES_REMOVED = "instancesRemoved";
@@ -47,7 +45,7 @@ public class DeltaCloud extends ObservablePojo {
 	private String name;
 	private String username;
 	private String url;
-	private String type;
+	private Driver driver;
 	private String lastKeyname = "";
 	private String lastImageId = "";
 
@@ -69,31 +67,31 @@ public class DeltaCloud extends ObservablePojo {
 		this(name, url, username, passwd, null);
 	}
 
-	public DeltaCloud(String name, String url, String username, String password, String type)
+	public DeltaCloud(String name, String url, String username, String password, Driver driver)
 			throws DeltaCloudException {
-		this(name, url, username, password, type, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
+		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
 	}
 
-	public DeltaCloud(String name, String url, String username, String type, String imageFilterRules,
+	public DeltaCloud(String name, String url, String username, Driver driver, String imageFilterRules,
 			String instanceFilterRules) throws DeltaCloudException {
-		this(name, url, username, null, type, imageFilterRules, instanceFilterRules);
+		this(name, url, username, null, driver, imageFilterRules, instanceFilterRules);
 	}
 
 	public DeltaCloud(String name, String url, String username, String password,
-			String type, String imageFilterRules, String instanceFilterRules) throws DeltaCloudException {
+			Driver driver, String imageFilterRules, String instanceFilterRules) throws DeltaCloudException {
 		this.url = url;
 		this.name = name;
 		this.username = username;
-		this.type = type;
+		this.driver = driver;
 		this.passwordStore = createSecurePasswordStore(name, username, password);
 		this.client = createClient(name, url, username, passwordStore.getPassword());
 		imageFilter = createImageFilter(imageFilterRules);
 		instanceFilter = createInstanceFilter(instanceFilterRules);
 	}
 
-	public void update(String name, String url, String username, String password, String type)
+	public void update(String name, String url, String username, String password, Driver driver)
 			throws DeltaCloudException {
-		this.type = type;
+		this.driver = driver;
 
 		boolean nameChanged = updateName(name);
 		boolean connectionPropertiesChanged = updateConnectionProperties(url, username, password);
@@ -170,8 +168,8 @@ public class DeltaCloud extends ObservablePojo {
 		return passwordStore.getPassword();
 	}
 
-	public String getType() {
-		return type;
+	public Driver getDriver() {
+		return driver;
 	}
 
 	public String getLastImageId() {
@@ -575,5 +573,15 @@ public class DeltaCloud extends ObservablePojo {
 
 	public String toString() {
 		return name;
+	}
+
+	public static Driver getServerDriver(String url) throws DeltaCloudException {
+		try {
+			DeltaCloudServerType serverType = new DeltaCloudClientImpl(url, "", "").getServerType();
+			return Driver.valueOf(serverType);
+		} catch (Exception e) {
+			// TODO internationalize strings
+			throw new DeltaCloudException("Could not determine the driver of the server on url " + url, e);
+		}
 	}
 }

@@ -14,8 +14,13 @@ import java.text.MessageFormat;
 
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
+/**
+ * @author Jeff Johnston
+ * @author André Dietisheim
+ */
 public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 
 	private static final String MAINPAGE_NAME = "EditCloudConnection.name"; //$NON-NLS-1$
@@ -30,9 +35,9 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
-		String type = getServerType();
+		Driver driver = mainPage.getModel().getDriver();
 		try {
-			initialCloud.update(name, url, username, password, type);
+			initialCloud.update(name, url, username, password, driver);
 			DeltaCloudManager.getDefault().saveClouds();
 		} catch (Exception e) {
 			// TODO internationalize strings

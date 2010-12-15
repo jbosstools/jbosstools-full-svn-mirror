@@ -12,8 +12,7 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.MalformedURLException;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
+import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 
 /**
@@ -25,7 +24,7 @@ public class CloudConnectionModel extends ObservablePojo {
 	public static final String PROPERTY_NAME = "name"; //$NON-NLS-1$
 	public static final String PROPERTY_PASSWORD = "password"; //$NON-NLS-1$
 	public static final String PROPERTY_USERNAME = "username"; //$NON-NLS-1$
-	public static final String PROPERTY_TYPE = "type"; //$NON-NLS-1$
+	public static final String PROPERTY_DRIVER = "type"; //$NON-NLS-1$
 
 	public static final String UNKNOWN_TYPE_LABEL = "UnknownType.label"; //$NON-NLS-1$
 	public static final String INVALID_URL = "ErrorInvalidURL.text"; //$NON-NLS-1$
@@ -36,44 +35,24 @@ public class CloudConnectionModel extends ObservablePojo {
 	private String username;
 
 	private String password;
-	private DeltaCloudClientImpl.DeltaCloudServerType cloudType;
+	private Driver driver;
 	private String initialName;
 
 	public CloudConnectionModel() {
-		this("", "", "", "", (DeltaCloudServerType) null);
-	}
-
-	public CloudConnectionModel(String name, String url, String username, String password, String cloudType) throws MalformedURLException {
-		this(name, url, username, password, getDeltaCloudType(cloudType, url));
+		this("", "", "", "", (Driver) null);
 	}
 
 	public CloudConnectionModel(String name, String url, String username, String password) throws MalformedURLException {
-		this(name, url, username, password, getDeltaCloudTypeFromUrl(url));
+		this(name, url, username, password, (Driver) null);
 	}
 
-	public CloudConnectionModel(String name, String url, String username, String password, DeltaCloudServerType deltaCloudType) {
+	public CloudConnectionModel(String name, String url, String username, String password, Driver cloudType) {
 		this.name = name;
 		this.initialName = name;
 		this.url = url;
 		this.username = username;
 		this.password = password;
-		this.cloudType = deltaCloudType;
-	}
-	
-	private static DeltaCloudServerType getDeltaCloudTypeFromUrl(String url) throws MalformedURLException {
-		return new DeltaCloudClientImpl(url, "", "").getServerType();
-	}
-
-	private static DeltaCloudServerType getDeltaCloudType(String cloudType, String url) throws MalformedURLException {
-		if (cloudType == null) {
-			return null;
-		}
-
-		try {
-			return DeltaCloudServerType.valueOf(cloudType);
-		} catch (IllegalArgumentException e) {
-			return getDeltaCloudTypeFromUrl(url);
-		}
+		this.driver = cloudType;
 	}
 
 	public String getUsername() {
@@ -112,11 +91,11 @@ public class CloudConnectionModel extends ObservablePojo {
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_URL, this.url, this.url = url);
 	}
 
-	public DeltaCloudClientImpl.DeltaCloudServerType getType() {
-		return cloudType;
+	public Driver getDriver() {
+		return driver;
 	}
 
-	public void setType(DeltaCloudClientImpl.DeltaCloudServerType cloudType) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_TYPE, this.cloudType, this.cloudType = cloudType);
+	public void setType(Driver cloudType) {
+		getPropertyChangeSupport().firePropertyChange(PROPERTY_DRIVER, this.driver, this.driver = cloudType);
 	}
 }

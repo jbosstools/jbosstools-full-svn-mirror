@@ -1,6 +1,9 @@
 2010-12-15  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(Driver): 
+	[JBIDE-7864] replacing cloud type strings by Driver enum
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
 	(getInstanceJob):
 	(waitWhilePending): 
 	(registerInstanceJob):

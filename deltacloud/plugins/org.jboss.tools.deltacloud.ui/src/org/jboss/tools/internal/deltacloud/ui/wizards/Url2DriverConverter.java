@@ -10,13 +10,13 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.net.MalformedURLException;
-
+import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
+import org.jboss.tools.deltacloud.core.Driver;
 
 /**
  * A class that converts an url (string) to a DeltaCloudType (enum). The state
@@ -29,33 +29,27 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudSer
  * @see IObservableValue
  * @see #getCloudTypeObservable()
  */
-public class Url2DeltaCloudTypeConverter implements IConverter {
+public class Url2DriverConverter extends Converter {
 
 	IObservableValue cloudTypeObservable = new WritableValue();
 
-	@Override
-	public Object getFromType() {
-		return String.class;
-	}
-
-	@Override
-	public Object getToType() {
-		return DeltaCloudClientImpl.DeltaCloudServerType.class;
+	public Url2DriverConverter() {
+		super(String.class, Driver.class);
 	}
 
 	@Override
 	public Object convert(Object fromObject) {
 		String deltaCloudUrl = (String) fromObject;
-		DeltaCloudServerType cloudType = getCloudType(deltaCloudUrl);
+		Driver cloudType = getCloudType(deltaCloudUrl);
 		cloudTypeObservable.setValue(cloudType);
 		return cloudType;
 	}
 
-	private DeltaCloudServerType getCloudType(String deltaCloudUrl) {
+	private Driver getCloudType(String url) {
 		try {
-			return new DeltaCloudClientImpl(deltaCloudUrl, "", "").getServerType();
-		} catch (MalformedURLException e) {
-			return null;
+			return DeltaCloud.getServerDriver(url);
+		} catch (DeltaCloudException e) {
+			return Driver.UNKNOWN;
 		}
 	}
 
