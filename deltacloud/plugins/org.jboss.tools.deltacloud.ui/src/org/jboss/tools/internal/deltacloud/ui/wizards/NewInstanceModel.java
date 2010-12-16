@@ -213,8 +213,9 @@ public class NewInstanceModel extends ObservablePojo {
 		new AbstractCloudElementJob("Get Profiles", cloud, CLOUDELEMENT.PROFILES) {
 			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 				try {
-					setAllProfiles(Arrays.asList(cloud.getProfiles()));
-					setFilteredProfiles(filterProfiles(image, allProfiles));
+					List<DeltaCloudHardwareProfile> profiles = Arrays.asList(cloud.getProfiles());
+					setAllProfiles(profiles);
+					setFilteredProfiles(filterProfiles(image, profiles));
 					setSelectedProfileIndex(0);
 					return Status.OK_STATUS;
 				} catch (DeltaCloudException e) {

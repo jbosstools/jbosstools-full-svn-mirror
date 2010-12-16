@@ -217,10 +217,20 @@ public class NewInstancePage extends WizardPage {
 
 	private void bindWidgets(DataBindingContext dbc, Composite container) {
 
+		// name
 		bindText(nameText, NewInstanceModel.PROPERTY_NAME, WizardMessages.getString(MUST_ENTER_A_NAME), dbc);
+		// image
 		IObservableValue imageObservable = bindImage(imageText, dbc);
-
 		// arch label
+		bindArchLabel(imageObservable, dbc);
+		bindRealmCombo(realmCombo, dbc);
+		bindProfileCombo(hardwareCombo, dbc);
+		bindProfilePages(hardwareCombo, profilePages, dbc);
+		// key
+		bindText(keyText, NewInstanceModel.PROPERTY_KEYNAME, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
+	}
+
+	private void bindArchLabel(IObservableValue imageObservable, DataBindingContext dbc) {
 		dbc.bindValue(WidgetProperties.text().observe(arch),
 				imageObservable,
 				new UpdateValueStrategy(UpdateSetStrategy.POLICY_NEVER),
@@ -237,13 +247,6 @@ public class NewInstancePage extends WizardPage {
 
 					}
 				}));
-
-		bindRealmCombo(realmCombo, dbc);
-		bindProfileCombo(hardwareCombo, dbc);
-		bindProfilePages(hardwareCombo, profilePages, dbc);
-
-		// key
-		bindText(keyText, NewInstanceModel.PROPERTY_KEYNAME, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
 	}
 
 	private void bindRealmCombo(final Combo realmCombo, DataBindingContext dbc) {
@@ -294,6 +297,7 @@ public class NewInstancePage extends WizardPage {
 						}
 						));
 
+		// realm combo enablement
 		IObservableList realmsObservable = BeanProperties.list(NewInstanceModel.PROPERTY_REALMS).observe(model);
 		DataBindingUtils.addChangeListener(new IChangeListener() {
 
