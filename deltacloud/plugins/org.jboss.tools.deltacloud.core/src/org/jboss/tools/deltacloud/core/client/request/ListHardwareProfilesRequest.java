@@ -15,6 +15,8 @@ import java.net.URL;
 
 /**
  * Lists profiles on the deltacloud server. 
+ * 
+ * @author André Dietisheim
  */
 public class ListHardwareProfilesRequest extends AbstractListObjectsRequest {
 	

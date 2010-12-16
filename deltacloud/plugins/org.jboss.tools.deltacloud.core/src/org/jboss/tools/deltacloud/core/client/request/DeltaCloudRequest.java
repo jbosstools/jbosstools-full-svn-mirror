@@ -13,6 +13,9 @@ package org.jboss.tools.deltacloud.core.client.request;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * @author André Dietisheim
+ */
 public interface DeltaCloudRequest {
 
 	public static final char PATH_SEPARATOR = '/';

@@ -14,7 +14,9 @@ import java.net.URL;
 
 
 /**
- * Lists instances on the deltacloud server. 
+ * Lists instances on the deltacloud server.
+ *  
+ * @author André Dietisheim
  */
 public class ListInstancesRequest extends AbstractListObjectsRequest {
 	

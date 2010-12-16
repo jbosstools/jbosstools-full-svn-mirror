@@ -17,6 +17,8 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 /**
  * Deletes a key on the deltacloud server
+ * 
+ * @author André Dietisheim
  */
 public class DeleteKeyRequest extends AbstractDeltaCloudRequest {
 	

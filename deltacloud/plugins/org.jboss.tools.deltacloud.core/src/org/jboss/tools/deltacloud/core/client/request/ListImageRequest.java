@@ -17,6 +17,8 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 /**
  * A request for an image on a deltacloud server.
+ * 
+ * @author André Dietisheim
  */
 public class ListImageRequest extends AbstractDeltaCloudRequest {
 	

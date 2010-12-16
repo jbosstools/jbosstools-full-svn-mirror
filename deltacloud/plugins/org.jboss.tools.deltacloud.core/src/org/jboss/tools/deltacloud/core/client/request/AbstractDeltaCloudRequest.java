@@ -15,7 +15,9 @@ import java.net.URL;
 
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
-
+/**
+ * @author André Dietisheim
+ */
 public abstract class AbstractDeltaCloudRequest implements DeltaCloudRequest {
 		
 	private URL url;

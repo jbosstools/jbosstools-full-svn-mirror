@@ -17,6 +17,8 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 /**
  * A request for a hardware profile on a deltacloud server.
+ * 
+ * @author André Dietisheim
  */
 public class ListHardwareProfileRequest extends AbstractDeltaCloudRequest {
 

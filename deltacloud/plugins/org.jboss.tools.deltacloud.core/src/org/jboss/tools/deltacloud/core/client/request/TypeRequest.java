@@ -17,6 +17,8 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 /**
  * A request for the type of deltacloud server.
+ * 
+ * @author André Dietisheim
  */
 public class TypeRequest extends AbstractDeltaCloudRequest {
 

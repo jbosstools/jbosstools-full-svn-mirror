@@ -22,6 +22,8 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
  * @see ListHardwareProfilesRequest
  * @see ListHardwareProfilesRequest
  * @see ListInstancesRequest
+ * 
+ * @author André Dietisheim
  */
 public abstract class AbstractListObjectsRequest extends AbstractDeltaCloudRequest {
 	

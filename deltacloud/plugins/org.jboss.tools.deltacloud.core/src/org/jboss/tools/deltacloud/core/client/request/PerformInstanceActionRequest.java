@@ -17,6 +17,8 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 /**
  * Performs an action on a instance on the deltacloud server
+ * 
+ * @author André Dietisheim
  */
 public class PerformInstanceActionRequest extends AbstractDeltaCloudRequest {
 	

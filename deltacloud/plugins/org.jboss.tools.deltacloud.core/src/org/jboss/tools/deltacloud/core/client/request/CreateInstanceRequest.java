@@ -16,6 +16,8 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 /**
  * Creates a new instance
+ * 
+ * @author André Dietisheim
  */
 public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 
