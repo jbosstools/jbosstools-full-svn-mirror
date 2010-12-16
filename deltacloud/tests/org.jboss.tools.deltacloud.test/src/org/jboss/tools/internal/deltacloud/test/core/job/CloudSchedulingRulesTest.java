@@ -13,16 +13,15 @@ package org.jboss.tools.internal.deltacloud.test.core.job;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.SecurePasswordStore;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.core.job.CloudElementSchedulingRule;
 import org.jboss.tools.deltacloud.core.job.CloudSchedulingRule;
 import org.jboss.tools.deltacloud.core.job.InstanceSchedulingRule;
+import org.jboss.tools.internal.deltacloud.test.fakes.DeltaCloudFake;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -108,47 +107,5 @@ public class CloudSchedulingRulesTest {
 		CloudElementSchedulingRule cloudImagesRule =
 				new CloudElementSchedulingRule(cloudFake, CLOUDELEMENT.IMAGES);
 		assertTrue(cloudImagesRule.isConflicting(cloudImagesRule));
-	}
-
-	private static class DeltaCloudFake extends DeltaCloud {
-
-		public DeltaCloudFake() throws DeltaCloudException {
-			super("mock", "http://dummy.org", "dummyUser", "dummyPassword");
-		}
-
-		@Override
-		protected SecurePasswordStore createSecurePasswordStore(String name, String username, String password) {
-			return new SecurePasswordStoreFake("dummyPassword");
-		}
-	}
-
-	private static class SecurePasswordStoreFake extends SecurePasswordStore {
-
-		private String password;
-
-		public SecurePasswordStoreFake(String password) {
-			super(null, password);
-			this.password = password;
-		}
-
-		@Override
-		public String getPassword() throws DeltaCloudException {
-			return password;
-		}
-
-		@Override
-		public void setPassword(String password) throws DeltaCloudException {
-			this.password = password;
-		}
-
-		@Override
-		public void update(IStorageKey key, String password) throws DeltaCloudException {
-			setPassword(password);
-		}
-
-		@Override
-		public void remove() throws DeltaCloudException {
-		}
-
 	}
 }
