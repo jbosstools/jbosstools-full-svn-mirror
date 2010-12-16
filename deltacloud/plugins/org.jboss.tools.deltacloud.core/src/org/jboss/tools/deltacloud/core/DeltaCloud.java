@@ -513,29 +513,6 @@ public class DeltaCloud extends ObservablePojo {
 
 	}
 
-	/**
-	 * Tests the credentials defined in this DeltaCloud instance by connecting
-	 * to the server defined by the url in this instance. Returns
-	 * <code>true</code> if the credentials are valid, <code>false</code>
-	 * otherwise.
-	 * 
-	 * @return <code>true</code>, if successful
-	 * @throws DeltaCloudClientException
-	 *             if any other error occurs while trying to connect to the
-	 *             server
-	 */
-	public boolean testCredentials() throws DeltaCloudClientException {
-		String instanceId = "nonexistingInstance"; //$NON-NLS-1$
-		try {
-			client.listInstances(instanceId);
-			return true;
-		} catch (DeltaCloudNotFoundClientException e) {
-			return true;
-		} catch (DeltaCloudAuthException e) {
-			return false;
-		}
-	}
-
 	public DeltaCloudRealm[] getRealms() throws DeltaCloudException {
 		ArrayList<DeltaCloudRealm> realms = new ArrayList<DeltaCloudRealm>();
 		try {
@@ -592,5 +569,31 @@ public class DeltaCloud extends ObservablePojo {
 			// TODO internationalize strings
 			throw new DeltaCloudException("Could not determine the driver of the server on url " + url, e);
 		}
+	}
+
+	/**
+	 * Tests the credentials defined in this DeltaCloud instance by connecting
+	 * to the server defined by the url in this instance. Returns
+	 * <code>true</code> if the credentials are valid, <code>false</code>
+	 * otherwise.
+	 * 
+	 * @return <code>true</code>, if successful
+	 * @throws DeltaCloudClientException
+	 *             if any other error occurs while trying to connect to the
+	 *             server
+	 */
+	public boolean testCredentials() throws DeltaCloudException {
+		String instanceId = "nonexistingInstance"; //$NON-NLS-1$
+		try {
+			client.listInstances(instanceId);
+			return true;
+		} catch (DeltaCloudNotFoundClientException e) {
+			return true;
+		} catch (DeltaCloudAuthException e) {
+			return false;
+		} catch(DeltaCloudClientException e){
+			throw new DeltaCloudException("Could not connection to ", e);
+		}
+		
 	}
 }
