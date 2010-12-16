@@ -89,7 +89,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		String password = mainPage.getModel().getPassword();
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password);
-			return newCloud.testConnection();
+			return newCloud.testCredentials();
 		} catch (DeltaCloudException e) {
 			ErrorUtils.handleError(WizardMessages.getString("CloudConnectionAuthError.title"),
 							WizardMessages.getFormattedString("CloudConnectionAuthError.message", url), e, getShell());
