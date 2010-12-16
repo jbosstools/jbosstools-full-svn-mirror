@@ -1,5 +1,8 @@
 2010-12-16  André Dietisheim  <adietish@redhat.com>
 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListKeysRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/CreateKeyRequest.java: 
+	[JBIDE-7371] implementing listing keys with deltacloud client	
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (testCredentials): 
 	[JBIDE-7911] corrected: throws exceptions on error (internal server error, connection error etc)
 
