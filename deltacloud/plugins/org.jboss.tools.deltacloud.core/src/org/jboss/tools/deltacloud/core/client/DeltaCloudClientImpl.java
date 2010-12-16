@@ -51,6 +51,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
 import org.jboss.tools.deltacloud.core.client.request.AbstractListObjectsRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
+import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeleteKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
@@ -60,7 +61,7 @@ import org.jboss.tools.deltacloud.core.client.request.ListImageRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListImagesRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListInstancesRequest;
-import org.jboss.tools.deltacloud.core.client.request.ListKeyRequest;
+import org.jboss.tools.deltacloud.core.client.request.ListKeysRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
 import org.jboss.tools.deltacloud.core.client.request.PerformInstanceActionRequest;
@@ -82,7 +83,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private static final String DOCUMENT_ELEMENT_API = "api";
 
 	private static final Pattern ELEMENT_TEXTVALUE_REGEX = Pattern.compile("[^\n\t ]+[^\n]+");
-	
+
 	public static Logger logger = Logger.getLogger(DeltaCloudClientImpl.class);
 
 	public static enum DeltaCloudServerType {
@@ -152,7 +153,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			return null;
 		}
 		String xml = readInputStreamToString(entity.getContent());
-		logger.debug("Response\n" + xml);
+		logger.debug("Response:\n" + xml);
 		return xml;
 	}
 
@@ -164,7 +165,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	 * @param requestUrl
 	 *            the requested url
 	 * @return the request instance
-	 * @throws MalformedURLException 
+	 * @throws MalformedURLException
 	 */
 	protected HttpUriRequest createRequest(DeltaCloudRequest deltaCloudRequest) throws MalformedURLException {
 		HttpUriRequest request = null;
@@ -191,9 +192,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	 * @param httpClient
 	 *            the http client
 	 * @return the default http client
-	 * @throws UnknownHostException 
+	 * @throws UnknownHostException
 	 */
-	private DefaultHttpClient addCredentials(URL url, DefaultHttpClient httpClient, String username, String password) throws UnknownHostException {
+	private DefaultHttpClient addCredentials(URL url, DefaultHttpClient httpClient, String username, String password)
+			throws UnknownHostException {
 		if (username != null && password != null) {
 			httpClient.getCredentialsProvider().setCredentials(
 					new AuthScope(url.getHost(), url.getPort()),
@@ -262,19 +264,22 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return createInstance(imageId, profileId, realmId, name, null, memory, storage);
 	}
 
-	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyname, String memory, String storage) throws DeltaCloudClientException { 
-		return buildInstance(sendRequest(new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyname, memory, storage)));
+	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyname,
+			String memory, String storage) throws DeltaCloudClientException {
+		return buildInstance(sendRequest(new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyname,
+				memory, storage)));
 	}
 
 	@Override
 	public HardwareProfile listProfile(String profileId) throws DeltaCloudClientException {
-		return buildDeltaCloudObject(HardwareProfile.class, sendRequest(new ListHardwareProfileRequest(baseUrl, profileId)));
+		return buildDeltaCloudObject(HardwareProfile.class, sendRequest(new ListHardwareProfileRequest(baseUrl,
+				profileId)));
 	}
 
 	@Override
 	public List<HardwareProfile> listProfiles() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(HardwareProfile.class, 
-				new ListHardwareProfilesRequest(baseUrl),"hardware_profile");
+		return listDeltaCloudObjects(HardwareProfile.class,
+				new ListHardwareProfilesRequest(baseUrl), "hardware_profile");
 	}
 
 	@Override
@@ -294,7 +299,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public Instance listInstances(String instanceId) throws DeltaCloudClientException {
-//		return JAXB.unmarshal(new StringReader(sendRequest(new ListInstanceRequest(baseUrl, instanceId))), Instance.class);
+		// return JAXB.unmarshal(new StringReader(sendRequest(new
+		// ListInstanceRequest(baseUrl, instanceId))), Instance.class);
 		return buildInstance(sendRequest(new ListInstanceRequest(baseUrl, instanceId)));
 	}
 
@@ -308,20 +314,12 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return JAXB.unmarshal(new StringReader(sendRequest(new ListRealmRequest(baseUrl, realmId))), Realm.class);
 	}
 
-	/**
-	 * Retrieves a key for a given name on the deltacloud server and stores it
-	 * in the file at the given path. The file gets created if the file path
-	 * does not exist yet.
-	 * 
-	 * @param keyname
-	 *            the name of the key to retrieve from the server
-	 * @param keyStoreLocation
-	 *            the path to the file to store the key in
-	 * @throws DeltaCloudClientException
-	 *             the delta cloud client exception
-	 */
+	public String createKey(String keyname) throws DeltaCloudClientException {
+		return sendRequest(new CreateKeyRequest(baseUrl, keyname));
+	}
+
 	public void createKey(String keyname, String keyStoreLocation) throws DeltaCloudClientException {
-		String xml = sendRequest(new ListKeyRequest(baseUrl, keyname));
+		String xml = createKey(keyname);
 		try {
 			String key = trimKey(getKey(xml));
 			File keyFile = createKeyFile(keyname, keyStoreLocation);
@@ -361,7 +359,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	private File createKeyFile(String keyname, String keyStoreLocation) throws IOException {
-		File keyFile = Path.fromOSString(keyStoreLocation).append(keyname + "." + PEM_FILE_SUFFIX).toFile(); //$NON-NLS-1$
+		File keyFile =
+				Path.fromOSString(keyStoreLocation)
+						.append(keyname).append(".").append(PEM_FILE_SUFFIX)
+						.toFile(); //$NON-NLS-1$
 		if (!keyFile.exists()) {
 			keyFile.createNewFile();
 		}
@@ -373,6 +374,12 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	public void deleteKey(String keyname) throws DeltaCloudClientException {
 		sendRequest(new DeleteKeyRequest(baseUrl, keyname));
+	}
+	
+	public List<Key> listKeys() throws DeltaCloudClientException {
+		String xml = sendRequest(new ListKeysRequest(baseUrl));
+		Key instance = JAXB.unmarshal(new StringReader(xml), Key.class);
+		throw new UnsupportedOperationException();
 	}
 
 	private Instance updateInstance(String xml, Instance instance) throws DeltaCloudClientException {
@@ -631,12 +638,14 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			try {
 				String response = sendRequest(
 						new PerformInstanceActionRequest(new URL(action.getUrl()),
-						action.getMethod()));
+								action.getMethod()));
 				if (!InstanceAction.DESTROY.equals(action.getName())) {
 					updateInstance(response, action.getInstance());
 				}
 			} catch (MalformedURLException e) {
-				throw new DeltaCloudClientException(MessageFormat.format("Could not perform action {0} on instance {1}", action.getName(), action.getInstance().getName()), e);
+				throw new DeltaCloudClientException(MessageFormat.format(
+						"Could not perform action {0} on instance {1}", action.getName(), action.getInstance()
+								.getName()), e);
 			}
 			return true;
 		}

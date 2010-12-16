@@ -16,15 +16,15 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 
 /**
- * Lists a key on the deltacloud server
+ * Creates a key on the deltacloud server
  * 
  * @author André Dietisheim
  */
-public class ListKeyRequest extends AbstractDeltaCloudRequest {
+public class CreateKeyRequest extends AbstractDeltaCloudRequest {
 	
 	private String keyName;
 
-	public ListKeyRequest(URL baseUrl, String keyName) {
+	public CreateKeyRequest(URL baseUrl, String keyName) {
 		super(baseUrl, HttpMethod.POST);
 		this.keyName = keyName;
 	}

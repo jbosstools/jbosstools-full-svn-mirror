@@ -10,13 +10,16 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.test.core.client;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Integration tests for key related operations in delta cloud client.
@@ -39,5 +42,17 @@ public class KeyMockIntegrationTest {
 	@After
 	public void tearDown() {
 		testSetup.tearDown();
+	}
+
+	@Test
+	public void canCreateKey() throws DeltaCloudClientException {
+		String key = testSetup.getClient().createKey("test");
+		assertNotNull(key);
+
+	}
+	
+	@Test
+	public void canListKeys() {
+		
 	}
 }
