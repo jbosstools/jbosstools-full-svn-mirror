@@ -159,7 +159,7 @@ public class InstanceMockIntegrationTest {
 	}
 
 	@Test(expected = DeltaCloudClientException.class)
-	public void destroyThrowExceptionOnUnknowInstanceId() throws DeltaCloudClientException, IllegalArgumentException,
+	public void destroyThrowsExceptionOnUnknowInstanceId() throws DeltaCloudClientException, IllegalArgumentException,
 			InstantiationException, IllegalAccessException, InvocationTargetException, SecurityException,
 			NoSuchMethodException {
 		InternalDeltaCloudClient client = (InternalDeltaCloudClient) testSetup.getClient();
@@ -168,15 +168,7 @@ public class InstanceMockIntegrationTest {
 						InstanceAction.DESTROY,
 						MockIntegrationTestContext.DELTACLOUD_URL,
 						HttpMethod.POST,
-						createInstance()));
-	}
-
-	private Instance createInstance() throws IllegalArgumentException, InstantiationException, IllegalAccessException,
-			InvocationTargetException, SecurityException, NoSuchMethodException {
-		Constructor<Instance> constructor =
-				(Constructor<Instance>) Instance.class.getDeclaredConstructor((Class<?>) null);
-		constructor.setAccessible(true);
-		return constructor.newInstance();
+						new Instance()));
 	}
 
 	private InstanceAction createInstanceAction(String name, String url, HttpMethod method, Instance instance)
