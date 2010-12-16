@@ -1,3 +1,12 @@
+2010-12-16  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/DataBindingUtils.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfilePage.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceModel.java: 
+	[JBIDE-7918] reimplemented the whole launch Instance page with databinding since many cases did not work properly
+
 2010-12-15  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: 

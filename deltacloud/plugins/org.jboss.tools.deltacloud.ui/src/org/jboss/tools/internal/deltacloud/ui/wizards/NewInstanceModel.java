@@ -10,11 +10,29 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.jboss.tools.common.log.StatusFactory;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
+import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
+import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 
 /**
  * @author Jeff Jonhston
+ * @author André Dietisheim
  */
 public class NewInstanceModel extends ObservablePojo {
 
@@ -22,20 +40,34 @@ public class NewInstanceModel extends ObservablePojo {
 	public static final String PROPERTY_NAME = "name"; //$NON-NLS-1$
 	public static final String PROPERTY_IMAGE = "image"; //$NON-NLS-1$
 	public static final String PROPERTY_ARCH = "arch"; //$NON-NLS-1$
-	public static final String PROPERTY_REALM = "realm"; //$NON-NLS-1$
+	public static final String PROPERTY_REALMS = "realms"; //$NON-NLS-1$
+	public static final String PROPERTY_SELECTED_REALM_INDEX = "selectedRealmIndex"; //$NON-NLS-1$
 	public static final String PROPERTY_KEYNAME = "keyname"; //$NON-NLS-1$
 	public static final String PROPERTY_PROFILE = "profile"; //$NON-NLS-1$
+	public static final String PROPERTY_ALL_PROFILES = "allProfiles"; //$NON-NLS-1$
+	public static final String PROPERTY_FILTERED_PROFILES = "filteredProfiles"; //$NON-NLS-1$
+	public static final String PROPERTY_SELECTED_PROFILE_INDEX = "selectedProfileIndex"; //$NON-NLS-1$
 
 	private String name;
 	private DeltaCloudImage image;
 	private String arch;
-	private String realm;
 	private String keyname;
-	private String profile;
+	private DeltaCloud cloud;
+	private DeltaCloudRealm selectedRealm;
+	private List<DeltaCloudRealm> realms = new ArrayList<DeltaCloudRealm>();
+	private DeltaCloudHardwareProfile selectedProfile;
+	private List<DeltaCloudHardwareProfile> allProfiles = new ArrayList<DeltaCloudHardwareProfile>();
+	private List<DeltaCloudHardwareProfile> filteredProfiles = new ArrayList<DeltaCloudHardwareProfile>();
+	private String cpu;
+	private String storage;
+	private String memory;
 
-	protected NewInstanceModel(String keyname, DeltaCloudImage image) {
+	protected NewInstanceModel(DeltaCloud cloud, String keyname, DeltaCloudImage image) {
+		this.cloud = cloud;
 		this.keyname = keyname;
 		this.image = image;
+		asyncGetRealms();
+		asyncGetProfiles();
 	}
 
 	public String getName() {
@@ -51,15 +83,92 @@ public class NewInstanceModel extends ObservablePojo {
 	}
 
 	public void setImage(DeltaCloudImage image) {
+		List<DeltaCloudHardwareProfile> filteredProfiles = filterProfiles(image, allProfiles);
+		setFilteredProfiles(filteredProfiles);
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_IMAGE, this.image, this.image = image);
 	}
-	
-	public String getRealm() {
-		return realm;
+
+	public void setSelectedRealmIndex(int index) {
+		if (realms.size() > index) {
+			DeltaCloudRealm deltaCloudRealm = realms.get(index);
+			setSelectedRealm(deltaCloudRealm);
+			firePropertyChange(PROPERTY_SELECTED_REALM_INDEX, null, index);
+		}
 	}
 
-	public void setRealm(String realm) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_REALM, this.realm, this.realm = realm);
+	public int getSelectedRealmIndex() {
+		return realms.indexOf(selectedRealm);
+	}
+
+	public void setSelectedRealm(DeltaCloudRealm realm) {
+		selectedRealm = realm;
+	}
+
+	public String getRealmId() {
+		if (selectedRealm == null) {
+			return null;
+		}
+		return selectedRealm.getId();
+	}
+
+	private void setRealms(List<DeltaCloudRealm> realms) {
+		getPropertyChangeSupport().firePropertyChange(PROPERTY_REALMS, this.realms, this.realms = realms);
+	}
+
+	public List<DeltaCloudRealm> getRealms() {
+		return realms;
+	}
+
+	private void setAllProfiles(List<DeltaCloudHardwareProfile> profiles) {
+		getPropertyChangeSupport().firePropertyChange(PROPERTY_ALL_PROFILES, this.allProfiles, this.allProfiles = profiles);
+	}
+
+	public List<DeltaCloudHardwareProfile> getAllProfiles() {
+		return allProfiles;
+	}
+
+	private void setFilteredProfiles(List<DeltaCloudHardwareProfile> profiles) {
+		getPropertyChangeSupport().firePropertyChange(PROPERTY_FILTERED_PROFILES, this.filteredProfiles, this.filteredProfiles = profiles);
+	}
+
+	public List<DeltaCloudHardwareProfile> getFilteredProfiles() {
+		return filteredProfiles;
+	}
+
+	private List<DeltaCloudHardwareProfile> filterProfiles(DeltaCloudImage image, Collection<DeltaCloudHardwareProfile> profiles) {
+		List<DeltaCloudHardwareProfile> filteredProfiles = new ArrayList<DeltaCloudHardwareProfile>();
+		for (DeltaCloudHardwareProfile p : profiles) {
+			if (p.getArchitecture() == null
+					|| image == null
+					|| image.getArchitecture().equals(p.getArchitecture())) {
+				filteredProfiles.add(p);
+			}
+		}
+
+		return filteredProfiles;
+	}
+
+	public void setSelectedProfileIndex(int index) {
+		if (filteredProfiles.size() > index) {
+			DeltaCloudHardwareProfile hardwareProfile = filteredProfiles.get(index);
+			setSelectedProfile(hardwareProfile);
+			firePropertyChange(PROPERTY_SELECTED_PROFILE_INDEX, null, index);
+		}
+	}
+
+	public int getSelectedProfileIndex() {
+		return filteredProfiles.indexOf(selectedProfile);
+	}
+
+	public void setSelectedProfile(DeltaCloudHardwareProfile profile) {
+		selectedProfile = profile;
+	}
+
+	public String getProfileId() {
+		if (selectedProfile == null) {
+			return null;
+		}
+		return selectedProfile.getId();
 	}
 
 	public String getKeyname() {
@@ -78,11 +187,66 @@ public class NewInstanceModel extends ObservablePojo {
 		getPropertyChangeSupport().firePropertyChange(PROPERTY_ARCH, this.arch, this.arch = arch);
 	}
 
-	public String getProfile() {
-		return profile;
+	public int getSelectedProfile() {
+		return allProfiles.indexOf(selectedProfile);
 	}
 
-	public void setProfile(String profile) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_PROFILE, this.profile, this.profile = profile);
+	private void asyncGetRealms() {
+		// TODO: internationalize strings
+		new AbstractCloudElementJob("Get realms", cloud, CLOUDELEMENT.REALMS) {
+			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
+				try {
+					setRealms(Arrays.asList(cloud.getRealms()));
+					setSelectedRealmIndex(0);
+					return Status.OK_STATUS;
+				} catch (DeltaCloudException e) {
+					// TODO: internationalize strings
+					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+							MessageFormat.format("Could not get realms from cloud {0}", cloud.getName()));
+				}
+			}
+		}.schedule();
+	}
+
+	private void asyncGetProfiles() {
+		// TODO: internationalize strings
+		new AbstractCloudElementJob("Get Profiles", cloud, CLOUDELEMENT.PROFILES) {
+			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
+				try {
+					setAllProfiles(Arrays.asList(cloud.getProfiles()));
+					setFilteredProfiles(filterProfiles(image, allProfiles));
+					setSelectedProfileIndex(0);
+					return Status.OK_STATUS;
+				} catch (DeltaCloudException e) {
+					// TODO: internationalize strings
+					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+							MessageFormat.format("Could not get allProfiles from cloud {0}", cloud.getName()));
+				}
+			}
+		}.schedule();
+	}
+
+	public void setCpu(String cpu) {
+		this.cpu = cpu;
+	}
+	
+	public String getCpu() {
+		return this.cpu;
+	}
+
+	public void setMemory(String memory) {
+		this.memory = memory;
+	}
+
+	public String getMemory() {
+		return this.memory;
+	}
+
+	public void setStorage(String storage) {
+		this.storage = storage;
+	}
+
+	public String getStorage() {
+		return this.storage;
 	}
 }

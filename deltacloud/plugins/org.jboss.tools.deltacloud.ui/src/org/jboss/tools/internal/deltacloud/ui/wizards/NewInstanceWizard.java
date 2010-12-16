@@ -82,10 +82,10 @@ public class NewInstanceWizard extends Wizard {
 		Assert.isTrue(image != null);
 		String imageId = image.getId();
 
-		String profileId = model.getProfile();
-		String realmId = model.getRealm();
-		String memory = mainPage.getMemoryProperty();
-		String storage = mainPage.getStorageProperty();
+		String profileId = model.getProfileId();
+		String realmId = model.getRealmId();
+		String memory = model.getMemory();
+		String storage = model.getStorage();
 
 		String keyname = model.getKeyname();
 		String name = utf8Encode(model.getName());

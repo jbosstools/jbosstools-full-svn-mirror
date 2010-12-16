@@ -30,7 +30,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProperty;
  * @author Jeff Johnston
  * @author André Dietisheim
  */
-public class ProfileComposite {
+public class ProfilePage {
 
 	private static final String CPU_LABEL = "Cpu.label"; //$NON-NLS-1$
 	private static final String MEMORY_LABEL = "Memory.label"; //$NON-NLS-1$
@@ -88,7 +88,7 @@ public class ProfileComposite {
 
 	};
 
-	public ProfileComposite(DeltaCloudHardwareProfile p, Composite parent) {
+	public ProfilePage(DeltaCloudHardwareProfile p, Composite parent) {
 		this.profile = p;
 		container = new Composite(parent, SWT.NULL);
 		FormLayout layout = new FormLayout();
@@ -422,5 +422,9 @@ public class ProfileComposite {
 			return storage;
 		}
 		return null;
+	}
+	
+	public Composite getControl() {
+		return container;
 	}
 }
