@@ -19,6 +19,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
+import org.jboss.tools.internal.deltacloud.test.fakes.DeltaCloudFake;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerFake;
 import org.junit.After;
 import org.junit.Before;
@@ -29,7 +30,7 @@ import org.junit.Test;
  * 
  * @author Andre Dietisheim
  * 
- * @see DeltaCloud#testConnection()
+ * @see DeltaCloud#testCredentials()
  * 
  */
 public class DeltaCloudMockIntegrationTest {
@@ -48,15 +49,15 @@ public class DeltaCloudMockIntegrationTest {
 	}
 
 	@Test
-	public void testConnectionReportsFalseOnAuthFailure() throws MalformedURLException, DeltaCloudClientException, DeltaCloudException {
+	public void testConnectionReportsFalseOnAuthFailure() throws MalformedURLException, DeltaCloudClientException,
+			DeltaCloudException {
 		ServerFake serverFake = setupServerFake("HTTP/1.1 403 Forbidden\n\n\n");
 		try {
-			DeltaCloud deltaCloud = new DeltaCloud(
-					"aName",
-					"http://localhost:" + ServerFake.DEFAULT_PORT, 
-					"badUser", 
+			DeltaCloud deltaCloud = new DeltaCloudFake(
+					"http://localhost:" + ServerFake.DEFAULT_PORT,
+					"badUser",
 					"badPassword");
-			assertFalse(deltaCloud.testConnection());
+			assertFalse(deltaCloud.testCredentials());
 		} finally {
 			serverFake.stop();
 		}
@@ -66,9 +67,9 @@ public class DeltaCloudMockIntegrationTest {
 	public void testConnectionThrowsOnGeneralFailure() throws MalformedURLException, DeltaCloudClientException, DeltaCloudException {
 		ServerFake serverFake = setupServerFake("HTTP/1.1 501 Some Error\ndummy dummy dummy\n\n");
 		try {
-			DeltaCloud deltaCloud = new DeltaCloud("aName", "http://localhost:" + ServerFake.DEFAULT_PORT, "badUser",
-					"badPassword");
-			deltaCloud.testConnection();
+			DeltaCloud deltaCloud =
+					new DeltaCloudFake("http://localhost:" + ServerFake.DEFAULT_PORT, "badUser", "badPassword");
+			deltaCloud.testCredentials();
 		} finally {
 			serverFake.stop();
 		}

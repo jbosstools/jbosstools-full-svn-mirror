@@ -513,7 +513,18 @@ public class DeltaCloud extends ObservablePojo {
 
 	}
 
-	public boolean testConnection() throws DeltaCloudException {
+	/**
+	 * Tests the credentials defined in this DeltaCloud instance by connecting
+	 * to the server defined by the url in this instance. Returns
+	 * <code>true</code> if the credentials are valid, <code>false</code>
+	 * otherwise.
+	 * 
+	 * @return <code>true</code>, if successful
+	 * @throws DeltaCloudClientException
+	 *             if any other error occurs while trying to connect to the
+	 *             server
+	 */
+	public boolean testCredentials() throws DeltaCloudClientException {
 		String instanceId = "nonexistingInstance"; //$NON-NLS-1$
 		try {
 			client.listInstances(instanceId);
@@ -521,8 +532,6 @@ public class DeltaCloud extends ObservablePojo {
 		} catch (DeltaCloudNotFoundClientException e) {
 			return true;
 		} catch (DeltaCloudAuthException e) {
-			return false;
-		} catch (DeltaCloudClientException e) {
 			return false;
 		}
 	}
